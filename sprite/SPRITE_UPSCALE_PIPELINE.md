@@ -6,6 +6,10 @@ un registre `CreatureSprites-XN.registry` ou le flag `EnableCreatureSpriteUpscal
 plus [`SPRITE_UPSCALE_XN_FOUNDATION.md`](SPRITE_UPSCALE_XN_FOUNDATION.md), qui prévaut sur les
 constantes x2 de ce document.
 
+Pour produire toutes les variantes et tous les équipements d'un animation ID Character, appliquer
+directement [`CHARACTER_COMPLETE_X2_RUNBOOK.md`](CHARACTER_COMPLETE_X2_RUNBOOK.md). Ce runbook porte
+la validation opérationnelle de référence et la séquence sans décision manuelle.
+
 ## Contrat
 
 - Traiter une famille BAM V1 BG2EE.
@@ -20,8 +24,9 @@ constantes x2 de ce document.
   un registre unique pour couvrir les changements d’équipement ingame.
 
 CLI : `pipeline/scripts/run_creature_sprite_x2.py`  
-Jobs validés : `sprite/jobs/goblin-mgo1-xbr2x.json`,
-`sprite/jobs/human-female-fighter-chfb1-xbr2x.json`  
+Jobs de référence : `sprite/jobs/goblin-mgo1-xbr2x.json`,
+`sprite/jobs/human-female-fighter-chfb1-xbr2x.json` et
+`sprite/jobs/human-female-fighter-complete-xn-xbr2x.json`
 Point d'entrée agent : [`README.md`](README.md)  
 Contrat xBR : [`UPSCALE_XBR2X.md`](UPSCALE_XBR2X.md)  
 Inventaire global : [`index/README.md`](index/README.md)
@@ -172,6 +177,9 @@ la construction du Character complet. Chaque resref doit néanmoins tenir dans u
 
 Exécuter `extract --resume` puis `build --resume` sur les seuls membres sans build valide. Exécuter
 ensuite `prepare --resume` une seule fois sur l'agrégat pour construire le set global et le runtime.
+La boucle PowerShell canonique et les gates de reprise sont dans
+[`CHARACTER_COMPLETE_X2_RUNBOOK.md`](CHARACTER_COMPLETE_X2_RUNBOOK.md) ; ne pas réinventer cet
+ordonnancement pour chaque animation ID.
 
 ## Créer un job MonsterIcewind
 
@@ -268,10 +276,13 @@ python pipeline/scripts/run_creature_sprite_x2.py prepare `
   --resume
 ```
 
-Le bundle est ensuite installé, testé, restauré et validé avec les commandes standard. Pour la
-guerrière humaine, le bundle complet attendu contient `CHFB1`, `CHFB2`, `CHFB3`, `CHFF4`,
-`WQNJ6`, `WQNC0` et `WQNC4` : 116 ressources et 46 775 frames au total (corps : 92/41 294 ;
-équipement : 24/5 481). `qa-log` exige au moins une composition `NEAREST` pour chaque préfixe
+Le bundle est ensuite installé, testé, restauré et validé avec les commandes standard. Ne jamais
+reprendre l'ancien bundle abrégé de quelques équipements comme définition d'un Character complet.
+La référence guerrière humaine est
+`sprite/jobs/human-female-fighter-complete-xn-xbr2x.json` : elle contient toutes les familles avec
+BAM déclarées par l'inventaire canonique ; les familles sans BAM restent des exclusions explicites.
+Lire les comptes de ressources, frames et shards dans les manifestes générés plutôt que les recopier
+dans cette documentation. `qa-log` exige au moins une composition `NEAREST` pour chaque préfixe
 avant `record-qa --result pass`.
 
 Le runtime Character BG2EE 2.7.3 surveille jusqu’à quatre cellules : corps, arme,

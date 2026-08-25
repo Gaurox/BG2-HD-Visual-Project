@@ -15,7 +15,9 @@ dossiers d'extraction historiques comme source d'identité.
 5. Pour un équipement, résoudre l'ITM dans [`index/sprite_items.csv`](index/sprite_items.csv).
 6. Lire [`SPRITE_UPSCALE_XN_FOUNDATION.md`](SPRITE_UPSCALE_XN_FOUNDATION.md) pour tout job portant
    un bloc `upscale` explicite ou toute cible x4.
-7. Appliquer [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md) au workflow historique x2
+7. Pour produire un personnage et tous ses équipements x2, exécuter sans branchement libre
+   [`CHARACTER_COMPLETE_X2_RUNBOOK.md`](CHARACTER_COMPLETE_X2_RUNBOOK.md).
+8. Appliquer [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md) au workflow historique x2
    sans bloc `upscale`. Appliquer [`UPSCALE_XBR2X.md`](UPSCALE_XBR2X.md) aux seules frames x2.
 
 ## Sources de vérité
@@ -27,6 +29,7 @@ dossiers d'extraction historiques comme source d'identité.
 | BAM, cadres, cycles, géométrie, palette, coût registre et collisions | `sprite_resources.csv` |
 | Type ITM, code d'animation et familles Character candidates | `sprite_items.csv` |
 | Installation analysée, hashes, limites et totaux | `manifest.json` |
+| Exécution reproductible d'un Character complet x2 | `CHARACTER_COMPLETE_X2_RUNBOOK.md` |
 | Création, build, installation réversible et QA | `SPRITE_UPSCALE_PIPELINE.md` |
 | Échelle x2/x4 explicite, registres V3, registry-set, install/restore et gates | `SPRITE_UPSCALE_XN_FOUNDATION.md` |
 

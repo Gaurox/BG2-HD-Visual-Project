@@ -2,9 +2,12 @@
 
 ## Statut et périmètre
 
-Cette phase généralise le contrat d'échelle, ajoute le registry-set shardé et conserve les chemins
-monolithiques historiques. Elle ne valide encore aucun asset ingame. Le registry-set lève le
-plafond monolithique pour un Character complet sans charger tous ses payloads en mémoire.
+Cette fondation généralise le contrat d'échelle, ajoute le registry-set shardé et conserve les
+chemins monolithiques historiques. Le chemin Character complet x2 est validé pour réutilisation
+ingame ; son statut et sa procédure canonique sont consignés dans
+[`CHARACTER_COMPLETE_X2_RUNBOOK.md`](CHARACTER_COMPLETE_X2_RUNBOOK.md). Le pack de référence reste
+en vérification et le x4 n'est pas encore produit. Le registry-set lève le plafond monolithique pour
+un Character complet sans charger tous ses payloads en mémoire.
 
 Sources de vérité :
 
@@ -337,10 +340,9 @@ projection x4 du cas réel signalé par `maximum_resource_resref=WQNFSG1` dépas
 plafond de 512 Mio par shard x4 est nécessaire, tandis que le plafond de
 128 Mio reste inchangé en x2. Toujours relire les octets projetés dans le manifeste régénéré.
 
-Ce dimensionnement valide la capacité du format et du runtime, pas les sprites. Avant production
-complète, exiger un build déterministe du set, les tests de corruption/absence/doublon, la preuve du
-chargement lazy borné, puis une QA ingame x2 sur le Character et tous ses calques. Le x4 reste une
-production et une QA séparées.
+Le format, le runtime shardé et le processus Character complet x2 ont désormais une référence
+ingame positive. Cette preuve autorise leur réutilisation, mais ne remplace pas la QA propre à chaque
+nouvel animation ID. Le x4 reste une production et une QA séparées.
 
-Cette fondation ne produit aucun élément `validated-installed` et ne modifie pas le manifeste de
-release.
+Cette fondation ne rend aucun pack x2 éligible au manifeste de release. La référence courante reste
+`installed-pending-qa` et n'est pas `validated-installed`.
