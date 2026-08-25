@@ -530,8 +530,13 @@ $currentAdapterPath = Join-Path $workspaceRoot 'pipeline\scripts\xbr2x_batch.js'
 $currentAdapterSha256 = Get-Sha256 $currentAdapterPath
 if (-not $isArmorSet) {
     $sourceManifestPath = Resolve-JobPath ([string](Get-RequiredProperty $buildManifest 'source_manifest' 'build'))
+    $sourceRoot = Resolve-JobPath ([string](Get-RequiredProperty $job.paths 'source_dir' 'job.paths'))
+    if (-not $sourceRoot.StartsWith($workspaceRoot + '\',
+            [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Source du job hors workspace : $sourceRoot"
+    }
     $expectedSourceManifestPath = [System.IO.Path]::GetFullPath(
-        (Join-Path $runRoot 'source\source-manifest.json'))
+        (Join-Path $sourceRoot 'manifest.json'))
     if (-not [string]::Equals([System.IO.Path]::GetFullPath($sourceManifestPath),
             $expectedSourceManifestPath, [System.StringComparison]::OrdinalIgnoreCase)) {
         throw 'build.source_manifest ne désigne pas le manifeste source canonique du job.'
@@ -581,7 +586,13 @@ else {
                 [System.StringComparison]::OrdinalIgnoreCase)) {
             throw "Run membre hors workspace : $memberRunRoot"
         }
-        $memberSourceManifest = Join-Path $memberRunRoot 'source\source-manifest.json'
+        $memberSourceRoot = Resolve-JobPath `
+            ([string](Get-RequiredProperty $memberJob.paths 'source_dir' 'member job.paths'))
+        if (-not $memberSourceRoot.StartsWith($workspaceRoot + '\',
+                [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Source membre hors workspace : $memberSourceRoot"
+        }
+        $memberSourceManifest = Join-Path $memberSourceRoot 'manifest.json'
         $memberBuildManifestPath = Join-Path $memberRunRoot 'build\build-manifest.json'
         $memberSourceSha256 = [string](Get-RequiredProperty $member 'source_manifest_sha256' 'build.members[]')
         Assert-ExpectedHash $memberSourceManifest $memberSourceSha256 'Manifeste source membre'
@@ -589,6 +600,13 @@ else {
             ([string](Get-RequiredProperty $member 'build_manifest_sha256' 'build.members[]')) `
             'Manifeste build membre'
         $memberBuildManifest = Get-Content -LiteralPath $memberBuildManifestPath -Raw | ConvertFrom-Json
+        $declaredMemberSourceManifest = Resolve-JobPath `
+            ([string](Get-RequiredProperty $memberBuildManifest 'source_manifest' 'member build'))
+        if (-not [string]::Equals([System.IO.Path]::GetFullPath($declaredMemberSourceManifest),
+                [System.IO.Path]::GetFullPath($memberSourceManifest),
+                [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Le manifeste build membre ne désigne pas sa source canonique."
+        }
         if (-not [string]::Equals(
                 [string](Get-RequiredProperty $memberBuildManifest 'source_manifest_sha256' 'member build'),
                 $memberSourceSha256, [System.StringComparison]::OrdinalIgnoreCase)) {
@@ -796,7 +814,7 @@ else {
     }
 }
 
-if ($isArmorSet) {
+if ($registryLayoutDeclared -or $isArmorSet) {
     $layoutValidation = Get-RequiredProperty $buildManifest 'validation' 'build'
     $expectedShardCount = if ($registryLayout -eq 'set') { $sourceShards.Count } else { 1 }
     if ([int](Get-RequiredProperty $layoutValidation 'shard_count' 'build.validation') -ne $expectedShardCount -or
@@ -808,6 +826,9 @@ if ($isArmorSet) {
         [uint64](Get-RequiredProperty $layoutValidation 'maximum_set_registry_bytes' 'build.validation') -ne [uint64](8GB)) {
         throw 'Les limites déclarées dans build.validation diffèrent du contrat xN.'
     }
+}
+
+if ($isArmorSet) {
     $sourceFormats = @(Get-RequiredProperty $buildManifest 'source_registry_formats' 'build')
     if ($sourceFormats.Count -lt 1) { throw 'build.source_registry_formats est vide.' }
     $promotionRequired = $false

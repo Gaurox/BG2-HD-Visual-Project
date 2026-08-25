@@ -512,6 +512,157 @@ function xbr4x(source, width, height) {
                 manifest["validation"]["qa_samples_retained_max_per_resource"], 5
             )
 
+    def test_explicit_member_auto_shards_and_aggregate_flattens_its_records(self) -> None:
+        contract = pipeline.direct_upscale_contract(2)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_dir = root / "source"
+            source_dir.mkdir()
+            (source_dir / "manifest.json").write_text("{}\n", encoding="utf-8")
+            scalepix = root / "scalepix.html"
+            scalepix.write_text("fixture", encoding="utf-8")
+
+            resources = []
+            frames = []
+            for index, resref in enumerate(("CHFB1A1", "CHFB1A3")):
+                source_bam = source_dir / f"{resref}.BAM"
+                source_bam.write_bytes(f"fixture-{resref}".encode("ascii"))
+                frame = self.make_frame()
+                frame.resref = resref
+                frame.index = 0
+                frames.append(frame)
+                resources.append(
+                    {
+                        "source": {"name": resref},
+                        "source_path": source_bam,
+                        "frames": [frame],
+                        "cycles": [{"index": 0, "frame_indices": [0]}],
+                    }
+                )
+
+            job = {
+                "_job_file": str(root / "member-job.json"),
+                "job_id": "member-set-fixture-xbr2x",
+                "animation": {
+                    "id": "0x6110",
+                    "ids_symbol": "FIGHTER_FEMALE_HUMAN",
+                    "armor_code": 1,
+                    "bam_prefix": "CHFB1",
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                },
+                "paths": {
+                    "source_dir": str(source_dir),
+                    "run_dir": str(root / "member-run"),
+                    "scalepix": str(scalepix),
+                },
+                "upscale": contract.method,
+            }
+
+            def nearest_outputs(batch, _scalepix, _node, batch_contract):
+                outputs = []
+                for frame in batch:
+                    source = np.frombuffer(frame.rgba, dtype=np.uint8).reshape(
+                        frame.height, frame.width, 4
+                    )
+                    scaled = np.repeat(
+                        np.repeat(source, batch_contract.scale, axis=0),
+                        batch_contract.scale,
+                        axis=1,
+                    )
+                    outputs.append(
+                        (scaled.shape[1], scaled.shape[0], scaled.tobytes())
+                    )
+                return outputs
+
+            with (
+                mock.patch.object(pipeline, "verify_sources", return_value={}),
+                mock.patch.object(
+                    pipeline,
+                    "load_source_frames",
+                    return_value=(frames, resources, {}),
+                ),
+                mock.patch.object(pipeline, "assert_workspace_child"),
+                mock.patch.object(
+                    pipeline, "run_xbr", side_effect=nearest_outputs
+                ) as dispatch,
+                mock.patch.dict(pipeline.MAX_REGISTRY_BYTES_BY_SCALE, {2: 700}),
+            ):
+                built = pipeline.build_pack(
+                    job, force=False, resume=False, keep_frames=False
+                )
+                verified_member = pipeline.verify_build(job)
+                dispatch.reset_mock()
+                reused_member = pipeline.build_pack(
+                    job, force=False, resume=True, keep_frames=False
+                )
+                self.assertEqual(reused_member["status"], "reused")
+                dispatch.assert_not_called()
+
+                member_build = pipeline.build_dir(job)
+                member_manifest = pipeline.read_json(
+                    member_build / "build-manifest.json"
+                )
+                self.assertEqual(built["registry_layout"], "set")
+                self.assertEqual(member_manifest["registry_layout"], "set")
+                self.assertIsNone(member_manifest["registry"])
+                self.assertEqual(len(member_manifest["shards"]), 2)
+                self.assertEqual(
+                    verified_member["resources"], ["CHFB1A1", "CHFB1A3"]
+                )
+                pack_dir = member_build / "iee-assets" / "creature-sprites"
+                set_path = pack_dir / pipeline.XN_REGISTRY_SET_FILENAME
+                valid_set = set_path.read_bytes()
+                set_path.write_bytes(valid_set[:-1] + bytes([valid_set[-1] ^ 0x01]))
+                with self.assertRaises(RuntimeError):
+                    pipeline.verify_build(job)
+                set_path.write_bytes(valid_set)
+                shard_path = pack_dir / pipeline.XN_REGISTRY_SHARD_FILENAME.format(
+                    index=0
+                )
+                valid_shard = shard_path.read_bytes()
+                shard_path.write_bytes(
+                    valid_shard[:-1] + bytes([valid_shard[-1] ^ 0x01])
+                )
+                with self.assertRaises(RuntimeError):
+                    pipeline.verify_build(job)
+                shard_path.write_bytes(valid_shard)
+
+                aggregate = {
+                    "_build_dir": root / "aggregate" / "build",
+                    "_members": [job],
+                    "job_id": "aggregate-member-set-xbr2x",
+                    "animation": {
+                        "id": "0x6110",
+                        "ids_symbol": "FIGHTER_FEMALE_HUMAN",
+                        "runtime_profile": "character-bg2ee-2.7.3.0",
+                    },
+                    "upscale": contract.method,
+                }
+                def fake_build_dir(item):
+                    return (
+                        member_build
+                        if item is job
+                        else Path(item["_build_dir"])
+                    )
+
+                with (
+                    mock.patch.object(
+                        pipeline, "build_dir", side_effect=fake_build_dir
+                    ),
+                    mock.patch.object(
+                        pipeline, "verify_sources", return_value={"resources": 2}
+                    ),
+                ):
+                    aggregate_result = pipeline.build_armor_set(
+                        aggregate, force=False, resume=False
+                    )
+                    verified_aggregate = pipeline.verify_armor_set_build(aggregate)
+
+            self.assertEqual(aggregate_result["registry_layout"], "set")
+            self.assertEqual(
+                verified_aggregate["resources"], ["CHFB1A1", "CHFB1A3"]
+            )
+
     def test_character_runtime_profile_is_supported(self) -> None:
         pipeline.require_runtime_profile(
             {"animation": {"runtime_profile": "character-bg2ee-2.7.3.0"}}
@@ -1451,7 +1602,8 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
             for index, prefix in enumerate(("RESA", "RESB")):
                 member_id = f"xn-set-member-{index}"
                 member_run = workspace / "sprite" / "members" / member_id
-                member_source = member_run / "source" / "source-manifest.json"
+                member_source_root = workspace / "sprite" / "member-sources" / member_id
+                member_source = member_source_root / "manifest.json"
                 pipeline.write_json(
                     member_source,
                     {"schema": pipeline.SOURCE_SCHEMA, "member": member_id},
@@ -1460,6 +1612,7 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                 pipeline.write_json(
                     member_build,
                     {
+                        "source_manifest": str(member_source),
                         "source_manifest_sha256": pipeline.sha256_file(
                             member_source
                         ),
@@ -1476,6 +1629,7 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                         "animation": {"bam_prefix": prefix},
                         "upscale": method,
                         "paths": {
+                            "source_dir": str(member_source_root),
                             "run_dir": str(member_run),
                             "scalepix": str(scalepix),
                         },
@@ -2044,6 +2198,13 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                         RuntimeError, "top-level counters differ"
                     ):
                         pipeline.verify_armor_set_build(armor_set)
+                tampered_validation = json.loads(json.dumps(valid_manifest))
+                tampered_validation["validation"]["shard_count"] = 1
+                pipeline.write_json(manifest_path, tampered_validation)
+                with self.assertRaisesRegex(
+                    RuntimeError, "layout validation differs"
+                ):
+                    pipeline.verify_armor_set_build(armor_set)
                 pipeline.write_json(manifest_path, valid_manifest)
 
             manifest = pipeline.read_json(

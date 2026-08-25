@@ -171,6 +171,21 @@ class SpriteInventoryTests(unittest.TestCase):
         self.assertGreater(projected_aggregate, inventory.maximum_registry_bytes(4))
         self.assertLessEqual(projected_aggregate, inventory.MAX_REGISTRY_SET_BYTES)
 
+        families = {
+            row["bam_prefix"]: row
+            for row in rows("sprite_families.csv")
+            if row["animation_id"] == "0x6110"
+        }
+        self.assertGreater(
+            int(families["WQNFS"]["registry_estimated_bytes"]),
+            inventory.MAX_REGISTRY_BYTES,
+        )
+        self.assertEqual(families["WQNFS"]["registry_limit_pass"], "yes")
+        self.assertEqual(families["WQNFS"]["pipeline_ready"], "yes")
+        self.assertEqual(families["WQNFS"]["required_job_contract"], "explicit-xn")
+        self.assertEqual(families["WQNFS"]["registry_layout_x2"], "set")
+        self.assertEqual(families["WQNFS"]["shard_count_x2"], "2")
+
         manifest = json.loads((INDEX / "manifest.json").read_text(encoding="utf-8"))
         projection = manifest["registry_set_projections"]["animations"]["0x6110"]
         self.assertEqual(projection["resource_count"], len(selected))

@@ -10,6 +10,7 @@ edits release manifests.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import os
@@ -1823,7 +1824,7 @@ def preflight_registry_layout(
     resources: list[dict[str, Any]],
     scale: int,
     maximum_bytes: int | None = None,
-) -> dict[str, int]:
+) -> dict[str, Any]:
     if scale not in {2, 4}:
         raise RuntimeError("registry preflight scale must be 2 or 4")
     if maximum_bytes is None:
@@ -1834,7 +1835,9 @@ def preflight_registry_layout(
     index_bytes = 0
     frame_count = 0
     seen_resrefs: set[str] = set()
+    resource_records: list[dict[str, Any]] = []
     for resource in resources:
+        resource_start = registry_bytes
         source = resource.get("source") or {}
         resref = str(source.get("name", "")).upper()
         if resref:
@@ -1867,6 +1870,13 @@ def preflight_registry_layout(
             if any(int(value) < 0 or int(value) >= len(frames) for value in slots):
                 raise RuntimeError("invalid cycle lookup in registry preflight")
             registry_bytes += 4 + 4 * len(slots)
+        resource_records.append(
+            {
+                "resref": resref,
+                "bytes": registry_bytes - resource_start,
+                "frame_count": len(frames),
+            }
+        )
     if registry_bytes > maximum_bytes:
         raise RuntimeError(
             f"registry preflight exceeds {maximum_bytes} bytes before xBR: "
@@ -1877,6 +1887,7 @@ def preflight_registry_layout(
         "index_bytes": index_bytes,
         "resource_count": len(resources),
         "frame_count": frame_count,
+        "resource_records": resource_records,
     }
 
 
@@ -2141,7 +2152,9 @@ def write_registry_records(
     return info
 
 
-def inspect_registry_set(path: Path) -> dict[str, Any]:
+def inspect_registry_set(
+    path: Path, *, include_resource_records: bool = False
+) -> dict[str, Any]:
     if path.name != XN_REGISTRY_SET_FILENAME:
         raise RuntimeError("registry-set filename must be CreatureSprites-XN.set")
     file_bytes = path.stat().st_size
@@ -2197,6 +2210,7 @@ def inspect_registry_set(path: Path) -> dict[str, Any]:
 
     shards: list[dict[str, Any]] = []
     resources: list[str] = []
+    resource_records: list[dict[str, Any]] = []
     seen_resrefs: set[str] = set()
     calculated_frames = 0
     calculated_index_bytes = 0
@@ -2213,7 +2227,10 @@ def inspect_registry_set(path: Path) -> dict[str, Any]:
             expected_registry_bytes,
         ) = struct.unpack_from("<32sIIQQQ", raw, offset)
         shard_path = path.parent / filename
-        info = inspect_registry(shard_path)
+        info = inspect_registry(
+            shard_path,
+            include_resource_records=include_resource_records,
+        )
         if (
             info["registry_magic"] != registry_magic_name(XN_REGISTRY_MAGIC)
             or info["version"] != XN_REGISTRY_VERSION
@@ -2232,6 +2249,8 @@ def inspect_registry_set(path: Path) -> dict[str, Any]:
             raise RuntimeError("duplicate resref across registry-set shards")
         seen_resrefs.update(info["resources"])
         resources.extend(info["resources"])
+        if include_resource_records:
+            resource_records.extend(info["resource_records"])
         calculated_resources += info["resource_count"]
         calculated_frames += info["frame_count"]
         calculated_index_bytes += info["index_bytes"]
@@ -2255,7 +2274,7 @@ def inspect_registry_set(path: Path) -> dict[str, Any]:
         or calculated_registry_bytes != total_registry_bytes
     ):
         raise RuntimeError("registry-set aggregate totals differ from shard entries")
-    return {
+    result = {
         "version": version,
         "scale": scale,
         "registry_magic": registry_magic_name(magic),
@@ -2273,6 +2292,9 @@ def inspect_registry_set(path: Path) -> dict[str, Any]:
         "total_index_bytes": total_index_bytes,
         "total_registry_bytes": total_registry_bytes,
     }
+    if include_resource_records:
+        result["resource_records"] = resource_records
+    return result
 
 
 def write_registry_set_index(
@@ -2332,6 +2354,44 @@ def write_registry_set_index(
     return inspect_registry_set(path)
 
 
+def inspect_build_payload(
+    build_root: Path,
+    manifest: dict[str, Any],
+    *,
+    include_resource_records: bool = False,
+) -> dict[str, Any]:
+    """Inspect one job build, flattening a registry-set into member records."""
+
+    layout = str(manifest.get("registry_layout", "monolith"))
+    if layout == "monolith":
+        registry_name = manifest.get("registry")
+        if not isinstance(registry_name, str) or not registry_name:
+            raise RuntimeError("monolithic build manifest has no registry")
+        return inspect_registry(
+            build_root / registry_name,
+            include_resource_records=include_resource_records,
+        )
+    if layout != "set":
+        raise RuntimeError("unsupported member registry layout")
+    registry_set_name = manifest.get("registry_set")
+    if not isinstance(registry_set_name, str) or not registry_set_name:
+        raise RuntimeError("registry-set build manifest has no set index")
+    registry_set = build_root / registry_set_name
+    set_info = inspect_registry_set(
+        registry_set,
+        include_resource_records=include_resource_records,
+    )
+    info = dict(set_info)
+    info["registry_set_magic"] = set_info["registry_magic"]
+    info["registry_magic"] = registry_magic_name(XN_REGISTRY_MAGIC)
+    info["version"] = XN_REGISTRY_VERSION
+    if include_resource_records:
+        records = set_info["resource_records"]
+        if [str(record["resref"]) for record in records] != set_info["resources"]:
+            raise RuntimeError("registry-set resource records differ from its index")
+    return info
+
+
 def build_adapter_hash_matches(
     manifest: dict[str, Any], contract: UpscaleContract
 ) -> bool:
@@ -2343,52 +2403,15 @@ def build_adapter_hash_matches(
 
 
 def build_is_current(job: dict[str, Any], keep_frames: bool = False) -> bool:
-    report_path = build_dir(job) / "build-manifest.json"
-    if not report_path.is_file():
-        return False
-    report = read_json(report_path)
-    registry = build_dir(job) / str(report.get("registry", ""))
     contract = upscale_contract(job)
-    layer_matches = True
-    if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0":
-        layer_matches = report.get("layer", {"kind": "body"}) == character_layer_config(job)
-    if not registry.is_file():
-        return False
     try:
-        registry_info = inspect_registry(registry)
-        if report.get("xbr_batching") is not None:
-            verify_xbr_batching_manifest(
-                report, registry_info["frame_count"], registry_info["index_bytes"]
-            )
-    except (OSError, RuntimeError, ValueError):
+        verify_build(job)
+        report = read_json(build_dir(job) / "build-manifest.json")
+    except (OSError, RuntimeError, ValueError, KeyError, TypeError):
         return False
-    format_matches = (
-        registry_info["version"] == contract.registry_version
-        and registry_info["scale"] == contract.scale
-        and registry_info["registry_magic"]
-        == registry_magic_name(contract.registry_magic)
-        and str(report.get("registry", "")).endswith(contract.registry_filename)
-    )
-    adapter_matches = build_adapter_hash_matches(report, contract)
-    retention_matches = not keep_frames or report.get(
+    return not keep_frames or report.get(
         f"kept_individual_x{contract.scale}_frames"
     ) is True
-    return (
-        report.get("schema") == BUILD_SCHEMA
-        and report.get("job_id") == job["job_id"]
-        and str(report.get("animation_id", "")).upper() == job["animation"]["id"].upper()
-        and str(report.get("bam_prefix", "")).upper() == job["animation"]["bam_prefix"]
-        and report.get("runtime_profile") == job["animation"].get("runtime_profile")
-        and layer_matches
-        and report.get("method") == contract.method
-        and report.get("registry_version") == contract.registry_version
-        and format_matches
-        and report.get("source_manifest_sha256") == sha256_file(source_manifest_path(job))
-        and report.get("scalepix_sha256") == sha256_file(job_path(job, "scalepix"))
-        and adapter_matches
-        and retention_matches
-        and report.get("registry_sha256") == sha256_file(registry)
-    )
 
 
 def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool) -> dict[str, Any]:
@@ -2396,7 +2419,7 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
     output = build_dir(job)
     if resume and output.exists() and build_is_current(job, keep_frames):
         report = read_json(output / "build-manifest.json")
-        return {"status": "reused", **inspect_registry(output / report["registry"])}
+        return {"status": "reused", **inspect_build_payload(output, report)}
     if output.exists() and not (force or resume):
         raise RuntimeError(f"build exists; use --resume or --force: {output}")
     assert_workspace_child(output, "build output")
@@ -2405,7 +2428,40 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
     if not frames or len(resources) > MAX_RESOURCES:
         raise RuntimeError("invalid source inventory")
     contract = upscale_contract(job)
-    preflight = preflight_registry_layout(resources, contract.scale)
+    preflight = preflight_registry_layout(
+        resources,
+        contract.scale,
+        maximum_bytes=(
+            MAX_REGISTRY_SET_BYTES
+            if contract.explicit
+            else maximum_registry_bytes(contract.scale)
+        ),
+    )
+    if contract.explicit and preflight["frame_count"] > MAX_REGISTRY_SET_FRAMES:
+        raise RuntimeError("member frames exceed registry-set format limit")
+    use_registry_set = contract.explicit and (
+        preflight["resource_count"] > MAX_RESOURCES
+        or preflight["registry_bytes"] > maximum_registry_bytes(contract.scale)
+    )
+    partitions = (
+        partition_registry_resources(
+            preflight["resource_records"],
+            maximum_bytes=maximum_registry_bytes(contract.scale),
+        )
+        if use_registry_set
+        else [preflight["resource_records"]]
+    )
+    projected_registry_bytes = sum(
+        REGISTRY_HEADER_BYTES + sum(int(record["bytes"]) for record in partition)
+        for partition in partitions
+    )
+    if use_registry_set and projected_registry_bytes > MAX_REGISTRY_SET_BYTES:
+        raise RuntimeError("member registry-set exceeds aggregate byte limit")
+    resource_shards = {
+        str(record["resref"]): shard_index
+        for shard_index, partition in enumerate(partitions)
+        for record in partition
+    }
     scalepix = job_path(job, "scalepix")
     node = str(job.get("tools", {}).get("node", "node"))
     batch_ranges = xbr_output_batch_ranges(
@@ -2436,6 +2492,7 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                 "resref": resref,
                 "frames": resource_frames,
                 "cycles": cycles,
+                "shard_index": resource_shards[resref],
                 "start": resource_cursor,
                 "end": resource_end,
                 "sample_positions": set(
@@ -2454,22 +2511,33 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
     try:
         pack_dir = temporary / "iee-assets" / "creature-sprites"
         pack_dir.mkdir(parents=True, exist_ok=True)
-        registry_path = pack_dir / contract.registry_filename
+        registry_path: Path | None = None
+        registry_set_path: Path | None = None
+        shard_paths = [
+            pack_dir / XN_REGISTRY_SHARD_FILENAME.format(index=index)
+            for index in range(len(partitions))
+        ] if use_registry_set else [pack_dir / contract.registry_filename]
+        if not use_registry_set:
+            registry_path = shard_paths[0]
         report_resources: list[dict[str, Any]] = []
         total_scaled_pixels = 0
         processed_frames = 0
         current_resource_index = 0
-        with registry_path.open("wb") as registry_stream:
-            registry_stream.write(contract.registry_magic)
-            registry_stream.write(
-                struct.pack(
-                    "<IIII",
-                    contract.registry_version,
-                    contract.scale,
-                    len(resources),
-                    int(job["animation"]["id"], 16),
+        registry_streams: list[Any] = []
+        with contextlib.ExitStack() as stack:
+            for shard_path, partition in zip(shard_paths, partitions, strict=True):
+                registry_stream = stack.enter_context(shard_path.open("wb"))
+                registry_stream.write(contract.registry_magic)
+                registry_stream.write(
+                    struct.pack(
+                        "<IIII",
+                        contract.registry_version,
+                        contract.scale,
+                        len(partition),
+                        int(job["animation"]["id"], 16),
+                    )
                 )
-            )
+                registry_streams.append(registry_stream)
             for batch_start, batch_end, _ in batch_ranges:
                 if batch_start != processed_frames:
                     raise RuntimeError("non-contiguous xBR batch order")
@@ -2489,6 +2557,7 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                     if current_resource_index >= len(resource_states):
                         raise RuntimeError("xBR produced frames beyond the resource inventory")
                     state = resource_states[current_resource_index]
+                    registry_stream = registry_streams[int(state["shard_index"])]
                     if global_index == int(state["start"]):
                         resource = state["resource"]
                         resource_frames = state["frames"]
@@ -2592,7 +2661,7 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                             "qa_sheet": f"qa/{resref}-comparison.png",
                         }
                     )
-            registry_bytes_written = registry_stream.tell()
+            registry_bytes_written = sum(stream.tell() for stream in registry_streams)
 
         if processed_frames != len(frames) or current_resource_index != len(
             resource_states
@@ -2600,12 +2669,27 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             raise RuntimeError(f"unconsumed xBR{contract.scale}x frames")
         if len(report_resources) != len(resources):
             raise RuntimeError("not all resource QA sheets were finalized")
-        if registry_bytes_written != preflight["registry_bytes"]:
+        if registry_bytes_written != projected_registry_bytes:
             raise RuntimeError(
                 "registry size differs from the pre-xBR projection: "
-                f"{registry_bytes_written} != {preflight['registry_bytes']}"
+                f"{registry_bytes_written} != {projected_registry_bytes}"
             )
-        registry_info = inspect_registry(registry_path)
+        if use_registry_set:
+            shard_infos: list[dict[str, Any]] = []
+            for shard_path in shard_paths:
+                shard_info = inspect_registry(shard_path)
+                shard_info["path"] = shard_path
+                shard_infos.append(shard_info)
+            registry_set_path = pack_dir / XN_REGISTRY_SET_FILENAME
+            registry_info = write_registry_set_index(
+                registry_set_path,
+                contract.scale,
+                int(job["animation"]["id"], 16),
+                shard_infos,
+            )
+        else:
+            assert registry_path is not None
+            registry_info = inspect_registry(registry_path)
         projected_output_bytes = sum(batch[2] for batch in batch_ranges)
         if (
             total_scaled_pixels != preflight["index_bytes"]
@@ -2645,9 +2729,15 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             "frame_count": len(frames),
             f"x{contract.scale}_pixel_count": total_scaled_pixels,
             "xbr_batching": batching_report,
-            "registry": f"iee-assets/creature-sprites/{contract.registry_filename}",
+            "registry": (
+                f"iee-assets/creature-sprites/{contract.registry_filename}"
+                if registry_path is not None
+                else None
+            ),
             "registry_bytes": registry_info["registry_bytes"],
-            "registry_sha256": registry_info["sha256"],
+            "registry_sha256": (
+                registry_info["sha256"] if registry_path is not None else None
+            ),
             f"kept_individual_x{contract.scale}_frames": keep_frames,
             "validation": {
                 f"dimensions_exact_x{contract.scale}": len(frames),
@@ -2659,27 +2749,57 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             },
         }
         if contract.explicit:
-            report["registry_magic"] = registry_info["registry_magic"]
-            report["registry_scale"] = registry_info["scale"]
-            report["registry_layout"] = "monolith"
-            report["registry_set"] = None
-            report["registry_set_sha256"] = None
-            report["registry_set_bytes"] = None
-            report["shards"] = []
+            report["registry_magic"] = registry_magic_name(contract.registry_magic)
+            report["registry_scale"] = contract.scale
+            report["registry_layout"] = "set" if use_registry_set else "monolith"
+            report["registry_set"] = (
+                f"iee-assets/creature-sprites/{XN_REGISTRY_SET_FILENAME}"
+                if registry_set_path is not None
+                else None
+            )
+            report["registry_set_sha256"] = (
+                registry_info["sha256"] if registry_set_path is not None else None
+            )
+            report["registry_set_bytes"] = (
+                registry_info["registry_set_bytes"]
+                if registry_set_path is not None
+                else None
+            )
+            report["shards"] = (
+                registry_set_manifest_shards(registry_info)
+                if registry_set_path is not None
+                else []
+            )
             report["total_resources"] = registry_info["resource_count"]
             report["total_frames"] = registry_info["frame_count"]
             report["total_index_bytes"] = registry_info["index_bytes"]
             report["total_registry_bytes"] = registry_info["registry_bytes"]
-            report["validation"]["registry_bytes_preflight"] = preflight[
-                "registry_bytes"
-            ]
+            report["validation"].update(
+                {
+                    "monolithic_registry_bytes_preflight": preflight[
+                        "registry_bytes"
+                    ],
+                    "registry_bytes_preflight": projected_registry_bytes,
+                    "shard_count": len(partitions),
+                    "maximum_shard_resources": MAX_RESOURCES,
+                    "maximum_shard_bytes": maximum_registry_bytes(contract.scale),
+                    "maximum_set_shards": MAX_REGISTRY_SET_SHARDS,
+                    "maximum_set_resources": MAX_REGISTRY_SET_RESOURCES,
+                    "maximum_set_frames": MAX_REGISTRY_SET_FRAMES,
+                    "maximum_set_registry_bytes": MAX_REGISTRY_SET_BYTES,
+                }
+            )
         if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0":
             report["layer"] = character_layer_config(job)
         write_json(temporary / "build-manifest.json", report)
         if output.exists():
             shutil.rmtree(output)
         temporary.replace(output)
-        return {"status": "built", **registry_info}
+        return {
+            "status": "built",
+            "registry_layout": "set" if use_registry_set else "monolith",
+            **registry_info,
+        }
     except Exception:
         shutil.rmtree(temporary, ignore_errors=True)
         raise
@@ -2844,17 +2964,42 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
         or manifest.get("registry_scale") != contract.scale
     ):
         raise RuntimeError("build manifest registry magic/scale differs from job")
-    registry = build_dir(job) / str(manifest["registry"])
-    info = inspect_registry(registry)
-    if info["sha256"] != manifest.get("registry_sha256"):
-        raise RuntimeError("registry hash differs from build manifest")
+    layout = str(manifest.get("registry_layout", "monolith"))
+    if layout == "set" and not contract.explicit:
+        raise RuntimeError("legacy member builds cannot use registry-set layout")
+    info = inspect_build_payload(build_dir(job), manifest)
+    if layout == "monolith":
+        registry = build_dir(job) / str(manifest.get("registry", ""))
+        if info["sha256"] != manifest.get("registry_sha256"):
+            raise RuntimeError("registry hash differs from build manifest")
+        if registry.name != contract.registry_filename:
+            raise RuntimeError("registry filename differs from job")
+        if contract.explicit and "registry_layout" in manifest and (
+            manifest.get("registry_set") is not None
+            or manifest.get("registry_set_sha256") is not None
+            or manifest.get("registry_set_bytes") is not None
+            or manifest.get("shards") != []
+        ):
+            raise RuntimeError("build manifest monolithic layout metadata differs from registry")
+    elif layout == "set":
+        registry_set = build_dir(job) / str(manifest.get("registry_set", ""))
+        if (
+            manifest.get("registry") is not None
+            or manifest.get("registry_sha256") is not None
+            or registry_set.name != XN_REGISTRY_SET_FILENAME
+            or info["sha256"] != manifest.get("registry_set_sha256")
+            or info["registry_set_bytes"] != manifest.get("registry_set_bytes")
+            or manifest.get("shards") != registry_set_manifest_shards(info)
+        ):
+            raise RuntimeError("build manifest registry-set metadata differs from its index")
+    else:
+        raise RuntimeError("unsupported member registry layout")
     if info["animation_id"].upper() != job["animation"]["id"].upper():
         raise RuntimeError("registry animation id differs from job")
     if (
         info["version"] != contract.registry_version
         or info["scale"] != contract.scale
         or info["registry_magic"] != registry_magic_name(contract.registry_magic)
-        or registry.name != contract.registry_filename
     ):
         raise RuntimeError("registry magic/version/scale differs from job")
     prefix = job["animation"]["bam_prefix"]
@@ -2872,20 +3017,37 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
     ):
         raise RuntimeError("registry index bytes differ from build manifest pixel count")
     if contract.explicit and "registry_layout" in manifest and (
-        manifest.get("registry_layout") != "monolith"
-        or manifest.get("registry_set") is not None
-        or manifest.get("registry_set_sha256") is not None
-        or manifest.get("registry_set_bytes") is not None
-        or manifest.get("shards") != []
-        or manifest.get("total_resources") != info["resource_count"]
+        manifest.get("total_resources") != info["resource_count"]
         or manifest.get("total_frames") != info["frame_count"]
         or manifest.get("total_index_bytes") != info["index_bytes"]
         or manifest.get("total_registry_bytes") != info["registry_bytes"]
     ):
-        raise RuntimeError("build manifest monolithic layout metadata differs from registry")
+        raise RuntimeError("build manifest aggregate layout metadata differs from registry")
     validation = manifest.get("validation") or {}
     if validation.get(f"dimensions_exact_x{contract.scale}") != info["frame_count"]:
         raise RuntimeError("build manifest exact-dimension count differs from registry")
+    if contract.explicit and "registry_layout" in manifest:
+        shard_count = len(info["shards"]) if layout == "set" else 1
+        expected_monolithic_bytes = (
+            info["registry_bytes"] - (shard_count - 1) * REGISTRY_HEADER_BYTES
+        )
+        if (
+            validation.get("monolithic_registry_bytes_preflight")
+            != expected_monolithic_bytes
+            or validation.get("registry_bytes_preflight")
+            != info["registry_bytes"]
+            or validation.get("shard_count") != shard_count
+            or validation.get("maximum_shard_resources") != MAX_RESOURCES
+            or validation.get("maximum_shard_bytes")
+            != maximum_registry_bytes(contract.scale)
+            or validation.get("maximum_set_shards") != MAX_REGISTRY_SET_SHARDS
+            or validation.get("maximum_set_resources")
+            != MAX_REGISTRY_SET_RESOURCES
+            or validation.get("maximum_set_frames") != MAX_REGISTRY_SET_FRAMES
+            or validation.get("maximum_set_registry_bytes")
+            != MAX_REGISTRY_SET_BYTES
+        ):
+            raise RuntimeError("build registry layout validation differs from payload")
     verify_xbr_batching_manifest(manifest, info["frame_count"], info["index_bytes"])
     return info
 
@@ -2916,6 +3078,14 @@ def plan(job: dict[str, Any]) -> dict[str, Any]:
     exe = game / "BaldurReal.exe"
     expected = job["compatibility"]["baldur_real_sha256"].upper()
     contract = upscale_contract(job)
+    build_layout = None
+    if build_manifest.is_file():
+        try:
+            build_layout = str(
+                read_json(build_manifest).get("registry_layout", "monolith")
+            )
+        except (OSError, RuntimeError, ValueError, TypeError):
+            build_layout = "invalid-manifest"
     identity = None
     identity_compatible = None
     identity_error = None
@@ -2941,6 +3111,21 @@ def plan(job: dict[str, Any]) -> dict[str, Any]:
         "scalepix_exists": job_path(job, "scalepix").is_file(),
         "source_manifest_exists": source_manifest.is_file(),
         "build_manifest_exists": build_manifest.is_file(),
+        "build_registry_layout": build_layout,
+        "registry_layout_policy": (
+            "auto-shard-explicit-xn" if contract.explicit else "monolith-only-legacy"
+        ),
+        "maximum_shard_bytes": maximum_registry_bytes(contract.scale),
+        "maximum_set_shards": MAX_REGISTRY_SET_SHARDS if contract.explicit else 1,
+        "maximum_set_resources": (
+            MAX_REGISTRY_SET_RESOURCES if contract.explicit else MAX_RESOURCES
+        ),
+        "maximum_set_frames": (
+            MAX_REGISTRY_SET_FRAMES if contract.explicit else None
+        ),
+        "maximum_set_registry_bytes": (
+            MAX_REGISTRY_SET_BYTES if contract.explicit else None
+        ),
         "runtime_manifest_exists": runtime_manifest.is_file(),
         "install_is_explicit": True,
         "game_launch_is_never_automatic": True,
@@ -3002,6 +3187,8 @@ def armor_set_member_records(armor_set: dict[str, Any]) -> list[dict[str, Any]]:
         source = verify_sources(member, compare_game=True)
         build = verify_build(member)
         manifest_path = build_dir(member) / "build-manifest.json"
+        member_manifest = read_json(manifest_path)
+        member_layout = str(member_manifest.get("registry_layout", "monolith"))
         layer = character_layer_config(member)
         record: dict[str, Any]
         if layer["kind"] == "body":
@@ -3014,7 +3201,7 @@ def armor_set_member_records(armor_set: dict[str, Any]) -> list[dict[str, Any]]:
                 "bam_prefix": member["animation"]["bam_prefix"],
                 "source_manifest_sha256": sha256_file(source_manifest_path(member)),
                 "build_manifest_sha256": sha256_file(manifest_path),
-                "registry": str(read_json(manifest_path)["registry"]),
+                "registry": str(member_manifest["registry"]),
                 "registry_sha256": build["sha256"],
                 "resource_count": build["resource_count"],
                 "frame_count": build["frame_count"],
@@ -3032,12 +3219,19 @@ def armor_set_member_records(armor_set: dict[str, Any]) -> list[dict[str, Any]]:
                 "bam_prefix": member["animation"]["bam_prefix"],
                 "source_manifest_sha256": sha256_file(source_manifest_path(member)),
                 "build_manifest_sha256": sha256_file(manifest_path),
-                "registry": str(read_json(manifest_path)["registry"]),
+                "registry": str(member_manifest["registry"]),
                 "registry_sha256": build["sha256"],
                 "resource_count": build["resource_count"],
                 "frame_count": build["frame_count"],
                 "source_resource_count": source["resources"],
             }
+        if member_layout == "set":
+            record["registry"] = None
+            record["registry_sha256"] = None
+            record["registry_layout"] = "set"
+            record["registry_set"] = str(member_manifest["registry_set"])
+            record["registry_set_sha256"] = build["sha256"]
+            record["shards"] = member_manifest["shards"]
         records.append(record)
     return records
 
@@ -3142,8 +3336,7 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
     member_methods: list[dict[str, Any]] = []
     for member in armor_set["_members"]:
         member_manifest = read_json(build_dir(member) / "build-manifest.json")
-        member_registry = build_dir(member) / str(member_manifest["registry"])
-        member_info = inspect_registry(member_registry)
+        member_info = inspect_build_payload(build_dir(member), member_manifest)
         member_infos.append(member_info)
         member_methods.append(member_manifest.get("method"))
         expected_resources.extend(member_info["resources"])
@@ -3211,6 +3404,25 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
         or manifest.get("registry_bytes") != info["registry_bytes"]
     ):
         raise RuntimeError("armor-set top-level counters differ from registries")
+    validation = manifest.get("validation")
+    shard_count = len(info["shards"]) if layout == "set" else 1
+    expected_monolithic_bytes = (
+        info["registry_bytes"] - (shard_count - 1) * REGISTRY_HEADER_BYTES
+    )
+    if not isinstance(validation, dict) or (
+        validation.get("monolithic_registry_bytes_preflight")
+        != expected_monolithic_bytes
+        or validation.get("registry_bytes_preflight") != info["registry_bytes"]
+        or validation.get("shard_count") != shard_count
+        or validation.get("maximum_shard_resources") != MAX_RESOURCES
+        or validation.get("maximum_shard_bytes")
+        != maximum_registry_bytes(output_scale)
+        or validation.get("maximum_set_shards") != MAX_REGISTRY_SET_SHARDS
+        or validation.get("maximum_set_resources") != MAX_REGISTRY_SET_RESOURCES
+        or validation.get("maximum_set_frames") != MAX_REGISTRY_SET_FRAMES
+        or validation.get("maximum_set_registry_bytes") != MAX_REGISTRY_SET_BYTES
+    ):
+        raise RuntimeError("armor-set registry layout validation differs from payload")
     set_contract = upscale_contract(armor_set)
     if layout == "monolith" and (
         info["registry_magic"] != registry_magic_name(output_magic)
@@ -3218,6 +3430,13 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
         or info["scale"] != output_scale
     ):
         raise RuntimeError("armor-set monolith format differs from set contract")
+    if layout == "set" and (
+        output_magic != XN_REGISTRY_MAGIC
+        or info["registry_magic"] != registry_magic_name(XN_REGISTRY_SET_MAGIC)
+        or info["version"] != XN_REGISTRY_SET_VERSION
+        or info["scale"] != output_scale
+    ):
+        raise RuntimeError("armor-set registry-set format differs from set contract")
     if set_contract.explicit:
         source_formats = armor_set_source_registry_formats(member_infos)
         promoted_to_xn = any(
@@ -3279,12 +3498,15 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
     member_methods: list[dict[str, Any]] = []
     for member in armor_set["_members"]:
         member_manifest = read_json(build_dir(member) / "build-manifest.json")
-        member_registry = build_dir(member) / str(member_manifest["registry"])
-        info = inspect_registry(member_registry, include_resource_records=True)
+        info = inspect_build_payload(
+            build_dir(member),
+            member_manifest,
+            include_resource_records=True,
+        )
         if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
             raise RuntimeError("armor-set member registry animation id differs from set")
         member_registries.append(
-            {"path": member_registry, "info": info, "manifest": member_manifest}
+            {"info": info, "manifest": member_manifest}
         )
         member_methods.append(member_manifest.get("method"))
     member_infos = [entry["info"] for entry in member_registries]
@@ -3437,6 +3659,7 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
             report["promoted_to_xn"] = promoted_to_xn
             report["validation"] = {
                 "monolithic_registry_bytes_preflight": projected_registry_bytes,
+                "registry_bytes_preflight": info["registry_bytes"],
                 "shard_count": len(partitions),
                 "maximum_shard_resources": MAX_RESOURCES,
                 "maximum_shard_bytes": shard_byte_limit,
@@ -3445,8 +3668,6 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
                 "maximum_set_frames": MAX_REGISTRY_SET_FRAMES,
                 "maximum_set_registry_bytes": MAX_REGISTRY_SET_BYTES,
             }
-            if not use_registry_set:
-                report["validation"]["registry_bytes_preflight"] = projected_registry_bytes
         equipment_layers = armor_set_equipment_layers(armor_set)
         if equipment_layers:
             report["equipment_layers"] = equipment_layers
@@ -3490,6 +3711,15 @@ def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     game = job_path(armor_set, "game_root")
     expected = armor_set["compatibility"]["baldur_real_sha256"].upper()
     contract = effective_upscale_contract(armor_set)
+    build_manifest = armor_set_build_manifest_path(armor_set)
+    build_layout = None
+    if build_manifest.is_file():
+        try:
+            build_layout = str(
+                read_json(build_manifest).get("registry_layout", "monolith")
+            )
+        except (OSError, RuntimeError, ValueError, TypeError):
+            build_layout = "invalid-manifest"
     return {
         "job_id": armor_set["job_id"],
         "method": upscale_method_description(contract),
@@ -3502,7 +3732,22 @@ def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
         "baldur_real_compatible": (game / "BaldurReal.exe").is_file()
         and sha256_file(game / "BaldurReal.exe") == expected,
         "member_jobs": [member["job_id"] for member in armor_set["_members"]],
-        "build_manifest_exists": armor_set_build_manifest_path(armor_set).is_file(),
+        "build_manifest_exists": build_manifest.is_file(),
+        "build_registry_layout": build_layout,
+        "registry_layout_policy": (
+            "auto-shard-explicit-xn" if contract.explicit else "monolith-only-legacy"
+        ),
+        "maximum_shard_bytes": maximum_registry_bytes(contract.scale),
+        "maximum_set_shards": MAX_REGISTRY_SET_SHARDS if contract.explicit else 1,
+        "maximum_set_resources": (
+            MAX_REGISTRY_SET_RESOURCES if contract.explicit else MAX_RESOURCES
+        ),
+        "maximum_set_frames": (
+            MAX_REGISTRY_SET_FRAMES if contract.explicit else None
+        ),
+        "maximum_set_registry_bytes": (
+            MAX_REGISTRY_SET_BYTES if contract.explicit else None
+        ),
         "runtime_manifest_exists": (runtime_dir(armor_set) / "runtime-manifest.json").is_file(),
         "install_is_explicit": True,
         "game_launch_is_never_automatic": True,

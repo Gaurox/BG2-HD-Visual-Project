@@ -139,6 +139,9 @@ FAMILY_FIELDS = (
     "cycle_count",
     "registry_estimated_bytes",
     "registry_estimated_mib",
+    "required_job_contract",
+    "registry_layout_x2",
+    "shard_count_x2",
     "resource_limit_pass",
     "frame_limit_pass",
     "registry_limit_pass",
@@ -869,7 +872,44 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
             and 1 <= int(item["frame_count"]) <= MAX_FRAMES_PER_RESOURCE
             for item in decoded
         ) and bool(decoded)
-        registry_limit = registry_bytes <= MAX_REGISTRY_BYTES
+        registry_limit = False
+        family_partitions: list[list[dict[str, Any]]] = []
+        try:
+            family_partitions = partition_registry_resources(
+                [
+                    {
+                        "resref": str(item["bam_resref"]),
+                        "bytes": int(item["registry_resource_estimated_bytes"]),
+                    }
+                    for item in decoded
+                    if item["decode_status"] == "ok"
+                ],
+                maximum_bytes=MAX_REGISTRY_BYTES,
+            )
+            projected_set_bytes = sum(
+                REGISTRY_HEADER_BYTES
+                + sum(int(record["bytes"]) for record in partition)
+                for partition in family_partitions
+            )
+            registry_limit = (
+                frame_limit
+                and len(names) <= MAX_REGISTRY_SET_RESOURCES
+                and family["frame_count"] <= MAX_REGISTRY_SET_FRAMES
+                and projected_set_bytes <= MAX_REGISTRY_SET_BYTES
+            )
+        except (RuntimeError, TypeError, ValueError):
+            registry_limit = False
+        family["required_job_contract"] = (
+            "unavailable"
+            if not family_partitions
+            else "explicit-xn"
+            if len(family_partitions) > 1
+            else "legacy-or-explicit-xn"
+        )
+        family["registry_layout_x2"] = (
+            "set" if len(family_partitions) > 1 else "monolith"
+        ) if family_partitions else "unavailable"
+        family["shard_count_x2"] = len(family_partitions)
         suffixes_supported = not missing and not unexpected and bool(names)
         duplicate_frames = sum(
             int(item["duplicate_used_rgba_frames"] or 0) for item in decoded

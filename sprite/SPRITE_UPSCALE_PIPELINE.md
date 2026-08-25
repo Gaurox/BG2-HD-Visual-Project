@@ -147,6 +147,32 @@ Régressions BG2EE 2.7.3 pour `FIGHTER_FEMALE_HUMAN` (`height_code=WQN`) :
 Refuser `override/<ITEM>.ITM`, un type casque/bouclier incohérent ou un préfixe déclaré différent
 de celui dérivé du couple INI/ITM.
 
+## Générer un Character complet
+
+Pour couvrir toutes les familles visuelles d'un même ID Character, générer les jobs depuis
+`index/sprite_families.csv` plutôt que d'énumérer manuellement les ITM :
+
+```powershell
+python pipeline/scripts/generate_character_complete_x2_jobs.py `
+  --animation-id 0xFFFF `
+  --template-job sprite/jobs/<membre-existant>-xbr2x.json `
+  --job-stem <character> `
+  --aggregate-job sprite/jobs/<character>-complete-xbr2x.json
+```
+
+Le générateur réutilise un job x2 compatible par `bam_prefix`, crée un membre explicite x2 pour
+chaque préfixe manquant, choisit l'ITM lexicographiquement premier comme représentant et publie
+l'agrégat explicite en dernier. Une famille sans BAM est consignée comme exclue ; tout autre
+blocker arrête la production. Cette commande ne produit aucun pixel.
+
+Ne pas passer cet agrégat par `promote-armor-set-job` : il référence directement un mélange audité
+de membres legacy V2/x2 réutilisés et de membres XN V3/x2. Un membre explicite dépassant la limite
+du monolithe est automatiquement écrit comme registry-set, puis ses records sont aplatis lors de
+la construction du Character complet. Chaque resref doit néanmoins tenir dans un shard.
+
+Exécuter `extract --resume` puis `build --resume` sur les seuls membres sans build valide. Exécuter
+ensuite `prepare --resume` une seule fois sur l'agrégat pour construire le set global et le runtime.
+
 ## Créer un job MonsterIcewind
 
 Copier `sprite/jobs/goblin-mgo1-xbr2x.json`. Modifier `job_id`, `animation`,
