@@ -225,10 +225,16 @@ Utiliser `--force` uniquement pour remplacer les sorties exactes du job courant.
 ### Bundle de calques Character
 
 Le schéma historique `armor-set-v1` est conservé pour rétrocompatibilité, mais accepte désormais
-les jobs de corps, casque, bouclier et arme. Préparer d’abord chaque membre. Créer un bundle
+les jobs de corps, casque, bouclier et arme. Préparer d'abord chaque membre. Créer un bundle
 seulement si les membres ont le même ID, symbole `ANIMATE.IDS`, profil, jeu et hash de
 `BaldurReal.exe`. Le bundle refuse les codes corporels ou préfixes dupliqués et concatène les
 registres V2 sans modifier les BAM.
+
+Cette concaténation monolithique concerne seulement un set sans bloc top-level `upscale`. Un set
+explicite suit `SPRITE_UPSCALE_XN_FOUNDATION.md` : registres XN V3 shardés, index
+`CreatureSprites-XN.set`, validation SHA256/CRC32 et chargement lazy. En x2, le builder peut
+promouvoir les registres V2 membres déjà construits vers V3 sans relancer xBR ni modifier leurs
+records et payloads.
 
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py prepare `
@@ -279,9 +285,9 @@ Les commandes ci-dessous concernent le registre V2 historique et le flag alias
 `EnableCreatureSpriteX2Test`. Un job portant `upscale` doit utiliser les scripts xN et le registre V3
 décrits dans `SPRITE_UPSCALE_XN_FOUNDATION.md`.
 
-L'installateur historique refuse désormais tout `CreatureSprites-XN.registry` présent dans le jeu :
-le runtime donne priorité à XN et masquerait sinon le pack V2 soumis à la QA. Restaurer d'abord le
-test xN concerné.
+L'installateur historique refuse désormais tout `CreatureSprites-XN.set` ou
+`CreatureSprites-XN.registry` présent dans le jeu : le runtime donne priorité à XN et masquerait
+sinon le pack V2 soumis à la QA. Restaurer d'abord le test xN concerné.
 
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py install --job sprite/jobs/<job>.json
@@ -353,7 +359,9 @@ Fermer le jeu avant restauration.
 - Refuser source différente du KEY/BIF, inventaire incomplet, resref non corporel, cycle ou lookup
   invalide, géométrie modifiée, sortie non `2W×2H`, alpha partiel, nouvelle couleur ou palette
   ambiguë.
-- Refuser registre >128 Mio, >128 ressources ou >4096 frames par resref.
+- Refuser un monolithe ou shard x2 >128 Mio, x4 >512 Mio, >128 ressources par registre,
+  >4096 frames par resref,
+  ou un registry-set dépassant 64 shards, 8192 ressources, 1 048 576 frames et 8 Gio cumulés.
 - Refuser exécutable, RVA, signature, renderer, contexte ou encodage GL incompatibles.
 - Pour Character, refuser le composite x2 si un calque réellement rendu manque au registre ou si
   l’union calculée ne correspond pas à la taille logique finale fournie par le moteur.

@@ -40,6 +40,105 @@ int g_failures = 0;
 std::uint32_t g_writableSectionProbe = 0x13579BDFu;
 std::vector<int> g_creatureTextureLifecycle;
 
+#ifdef _WIN32
+std::array<std::byte, 32> test_sha256(const std::vector<std::byte>& bytes) {
+  constexpr std::array<std::uint32_t, 64> constants{{
+      0x428A2F98u, 0x71374491u, 0xB5C0FBCFu, 0xE9B5DBA5u, 0x3956C25Bu,
+      0x59F111F1u, 0x923F82A4u, 0xAB1C5ED5u, 0xD807AA98u, 0x12835B01u,
+      0x243185BEu, 0x550C7DC3u, 0x72BE5D74u, 0x80DEB1FEu, 0x9BDC06A7u,
+      0xC19BF174u, 0xE49B69C1u, 0xEFBE4786u, 0x0FC19DC6u, 0x240CA1CCu,
+      0x2DE92C6Fu, 0x4A7484AAu, 0x5CB0A9DCu, 0x76F988DAu, 0x983E5152u,
+      0xA831C66Du, 0xB00327C8u, 0xBF597FC7u, 0xC6E00BF3u, 0xD5A79147u,
+      0x06CA6351u, 0x14292967u, 0x27B70A85u, 0x2E1B2138u, 0x4D2C6DFCu,
+      0x53380D13u, 0x650A7354u, 0x766A0ABBu, 0x81C2C92Eu, 0x92722C85u,
+      0xA2BFE8A1u, 0xA81A664Bu, 0xC24B8B70u, 0xC76C51A3u, 0xD192E819u,
+      0xD6990624u, 0xF40E3585u, 0x106AA070u, 0x19A4C116u, 0x1E376C08u,
+      0x2748774Cu, 0x34B0BCB5u, 0x391C0CB3u, 0x4ED8AA4Au, 0x5B9CCA4Fu,
+      0x682E6FF3u, 0x748F82EEu, 0x78A5636Fu, 0x84C87814u, 0x8CC70208u,
+      0x90BEFFFAu, 0xA4506CEBu, 0xBEF9A3F7u, 0xC67178F2u,
+  }};
+  std::array<std::uint32_t, 8> state{{
+      0x6A09E667u, 0xBB67AE85u, 0x3C6EF372u, 0xA54FF53Au,
+      0x510E527Fu, 0x9B05688Cu, 0x1F83D9ABu, 0x5BE0CD19u,
+  }};
+  const auto rotateRight = [](std::uint32_t value, unsigned count) {
+    return (value >> count) | (value << (32u - count));
+  };
+  const auto transform = [&](const std::uint8_t* block) {
+    std::array<std::uint32_t, 64> words{};
+    for (std::size_t index = 0; index < 16; ++index) {
+      const auto offset = index * 4;
+      words[index] = (static_cast<std::uint32_t>(block[offset]) << 24u) |
+                     (static_cast<std::uint32_t>(block[offset + 1]) << 16u) |
+                     (static_cast<std::uint32_t>(block[offset + 2]) << 8u) |
+                     static_cast<std::uint32_t>(block[offset + 3]);
+    }
+    for (std::size_t index = 16; index < words.size(); ++index) {
+      const auto s0 = rotateRight(words[index - 15], 7) ^
+                      rotateRight(words[index - 15], 18) ^
+                      (words[index - 15] >> 3u);
+      const auto s1 = rotateRight(words[index - 2], 17) ^
+                      rotateRight(words[index - 2], 19) ^
+                      (words[index - 2] >> 10u);
+      words[index] = words[index - 16] + s0 + words[index - 7] + s1;
+    }
+    auto a = state[0];
+    auto b = state[1];
+    auto c = state[2];
+    auto d = state[3];
+    auto e = state[4];
+    auto f = state[5];
+    auto g = state[6];
+    auto h = state[7];
+    for (std::size_t index = 0; index < words.size(); ++index) {
+      const auto sum1 = rotateRight(e, 6) ^ rotateRight(e, 11) ^ rotateRight(e, 25);
+      const auto temporary1 = h + sum1 + ((e & f) ^ (~e & g)) +
+                              constants[index] + words[index];
+      const auto temporary2 =
+          (rotateRight(a, 2) ^ rotateRight(a, 13) ^ rotateRight(a, 22)) +
+          ((a & b) ^ (a & c) ^ (b & c));
+      h = g;
+      g = f;
+      f = e;
+      e = d + temporary1;
+      d = c;
+      c = b;
+      b = a;
+      a = temporary1 + temporary2;
+    }
+    for (std::size_t index = 0; index < state.size(); ++index) {
+      state[index] += std::array<std::uint32_t, 8>{{a, b, c, d, e, f, g, h}}[index];
+    }
+  };
+  const auto* data = reinterpret_cast<const std::uint8_t*>(bytes.data());
+  std::size_t offset = 0;
+  while (bytes.size() - offset >= 64) {
+    transform(data + offset);
+    offset += 64;
+  }
+  std::array<std::uint8_t, 128> tail{};
+  const auto remaining = bytes.size() - offset;
+  if (remaining != 0) std::memcpy(tail.data(), data + offset, remaining);
+  tail[remaining] = 0x80u;
+  const std::size_t tailBytes = remaining < 56 ? 64 : 128;
+  const auto bitLength = static_cast<std::uint64_t>(bytes.size()) * 8u;
+  for (unsigned index = 0; index < 8; ++index) {
+    tail[tailBytes - 1 - index] =
+        static_cast<std::uint8_t>(bitLength >> (index * 8u));
+  }
+  transform(tail.data());
+  if (tailBytes == 128) transform(tail.data() + 64);
+  std::array<std::byte, 32> digest{};
+  for (std::size_t index = 0; index < state.size(); ++index) {
+    for (unsigned byte = 0; byte < 4; ++byte) {
+      digest[index * 4 + byte] =
+          static_cast<std::byte>(state[index] >> (24u - byte * 8u));
+    }
+  }
+  return digest;
+}
+#endif
+
 void executable_section_probe() {}
 
 void record_creature_texture_bind(int textureId) {
@@ -772,12 +871,15 @@ void test_creature_sprite_registry_formats() {
       {'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
   constexpr std::array<char, 8> xnMagic{
       {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
+  constexpr std::array<char, 8> setMagic{
+      {'I', 'E', 'E', 'C', 'S', 'N', 'S', '\0'}};
   constexpr std::array<char, 8> target{{'T', 'E', 'S', 'T', '\0', '\0', '\0', '\0'}};
   const auto make_registry = [&](const std::array<char, 8>& magic,
                                  std::uint32_t version, std::uint32_t scale,
                                  std::uint32_t metadata,
                                  std::uint32_t resourceCount = 1,
-                                 std::uint32_t payloadScale = 0) {
+                                 std::uint32_t payloadScale = 0,
+                                 char resrefMarker = 'T') {
     std::vector<std::byte> bytes;
     append_raw(bytes, magic.data(), magic.size());
     for (const auto value :
@@ -787,6 +889,7 @@ void test_creature_sprite_registry_formats() {
     if (payloadScale == 0) payloadScale = scale;
     for (std::uint32_t resourceIndex = 0; resourceIndex < resourceCount; ++resourceIndex) {
       auto resref = target;
+      resref[0] = resrefMarker;
       resref[4] = static_cast<char>(resourceIndex & 0xFFu);
       resref[5] = static_cast<char>((resourceIndex >> 8u) & 0xFFu);
       append_raw(bytes, resref.data(), resref.size());
@@ -820,11 +923,241 @@ void test_creature_sprite_registry_formats() {
     return bytes;
   };
 
+  const auto test_crc32 = [](const std::vector<std::byte>& bytes) {
+    std::uint32_t value = 0xFFFFFFFFu;
+    for (const auto byte : bytes) {
+      value ^= std::to_integer<std::uint8_t>(byte);
+      for (unsigned bit = 0; bit < 8; ++bit) {
+        value = (value >> 1u) ^ (0xEDB88320u & (0u - (value & 1u)));
+      }
+    }
+    return value ^ 0xFFFFFFFFu;
+  };
+  struct TestShard {
+    std::vector<std::byte> registry;
+    std::uint32_t resourceCount{};
+    std::uint64_t frameCount{};
+    std::uint64_t indexBytes{};
+    std::array<std::byte, 32> sha256{};
+  };
+  const auto make_shard = [&](std::uint32_t registryScale, char marker) {
+    TestShard shard;
+    shard.registry = make_registry(xnMagic, 3, registryScale, 0x6110, 1, 0, marker);
+    shard.resourceCount = 1;
+    shard.frameCount = 1;
+    shard.indexBytes = registryScale * registryScale;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  };
+  const auto make_set = [&](std::uint32_t scale,
+                            const std::vector<TestShard>& shards) {
+    std::vector<std::byte> bytes;
+    std::uint32_t totalResources = 0;
+    std::uint64_t totalFrames = 0;
+    std::uint64_t totalIndexBytes = 0;
+    std::uint64_t totalRegistryBytes = 0;
+    for (const auto& shard : shards) {
+      totalResources += shard.resourceCount;
+      totalFrames += shard.frameCount;
+      totalIndexBytes += shard.indexBytes;
+      totalRegistryBytes += shard.registry.size();
+    }
+    append_raw(bytes, setMagic.data(), setMagic.size());
+    for (const auto value :
+         std::array<std::uint32_t, 6>{{1, scale,
+                                      static_cast<std::uint32_t>(shards.size()),
+                                      totalResources, 0x6110, 0}}) {
+      append(bytes, value);
+    }
+    append(bytes, totalFrames);
+    append(bytes, totalIndexBytes);
+    append(bytes, totalRegistryBytes);
+    for (const auto& shard : shards) {
+      append_raw(bytes, shard.sha256.data(), shard.sha256.size());
+      const auto checksum = test_crc32(shard.registry);
+      append(bytes, checksum);
+      append(bytes, shard.resourceCount);
+      append(bytes, shard.frameCount);
+      append(bytes, shard.indexBytes);
+      const auto registryBytes = static_cast<std::uint64_t>(shard.registry.size());
+      append(bytes, registryBytes);
+    }
+    return bytes;
+  };
+  const auto overwrite_u32 = [](std::vector<std::byte>& bytes, std::size_t offset,
+                                std::uint32_t value) {
+    std::memcpy(bytes.data() + offset, &value, sizeof(value));
+  };
+  const auto write_set_case = [&](std::uint32_t scale,
+                                  const std::vector<TestShard>& shards) {
+    write_file(root / "CreatureSprites-XN.set", make_set(scale, shards));
+    for (std::size_t index = 0; index < shards.size(); ++index) {
+      auto digits = std::to_string(index);
+      const auto filename = "CreatureSprites-XN-" +
+                            std::string(4 - digits.size(), '0') + digits + ".registry";
+      write_file(root / filename, shards[index].registry);
+    }
+  };
+
   const auto legacyPath = root / "CreatureSprites-X2.registry";
   const auto xnPath = root / "CreatureSprites-XN.registry";
+  const auto setPath = root / "CreatureSprites-XN.set";
   expect_eq(iee::creature_sprite_x2::kMaximumRegistryBytes,
             std::uint64_t{128} * 1024u * 1024u,
-            "Creature xN registries should fail closed above the 128 MiB pilot budget");
+            "Legacy and x2 registries should retain the 128 MiB byte bound");
+  expect_eq(iee::creature_sprite_x2::maximum_registry_bytes_for_scale(4),
+            std::uint64_t{512} * 1024u * 1024u,
+            "An x4 registry shard should admit measured 337 MiB equipment families");
+  expect_eq(iee::creature_sprite_x2::maximum_registry_bytes_for_scale(3),
+            std::uint64_t{0},
+            "Unsupported scales should have no registry byte allowance");
+  expect_eq(iee::creature_sprite_x2::kMaximumRegistrySetShards, std::uint32_t{64},
+            "Registry-sets should accept the measured complete Character inventory");
+  expect_eq(iee::creature_sprite_x2::kMaximumRegistrySetBytes,
+            std::uint64_t{8} * 1024u * 1024u * 1024u,
+            "Registry-set aggregate bytes should be bounded at 8 GiB");
+  expect_eq(iee::creature_sprite_x2::kLazyIndexCacheBudgetBytes,
+            std::uint64_t{128} * 1024u * 1024u,
+            "Lazy frame indices should retain a 128 MiB resident budget");
+
+  // A valid set has strict priority over both monolithic formats and keeps
+  // only metadata resident until a frame payload is requested.
+  write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0xE400));
+  write_file(xnPath, make_registry(xnMagic, 3, 2, 0x6220));
+  const auto x4ShardA = make_shard(4, 'A');
+  const auto x4ShardB = make_shard(4, 'B');
+  expect_eq(x4ShardA.registry.size(), std::size_t{624},
+            "The synthetic x4 shard should retain its exact binary layout");
+  constexpr std::array<std::byte, 32> expectedX4ShardAHash{{
+      std::byte{0xE1}, std::byte{0x6E}, std::byte{0x97}, std::byte{0x54},
+      std::byte{0x68}, std::byte{0xE1}, std::byte{0x3C}, std::byte{0x34},
+      std::byte{0xD3}, std::byte{0xA3}, std::byte{0xDD}, std::byte{0x0F},
+      std::byte{0x56}, std::byte{0x62}, std::byte{0xC8}, std::byte{0xFF},
+      std::byte{0x04}, std::byte{0xBD}, std::byte{0x44}, std::byte{0x86},
+      std::byte{0x68}, std::byte{0xDD}, std::byte{0x13}, std::byte{0xD7},
+      std::byte{0xF5}, std::byte{0x82}, std::byte{0x7E}, std::byte{0x5A},
+      std::byte{0x50}, std::byte{0x0C}, std::byte{0x69}, std::byte{0xB8},
+  }};
+  expect_true(x4ShardA.sha256 == expectedX4ShardAHash,
+              "The registry-set test fixture should use standard SHA-256 bytes");
+  expect_eq(test_crc32(x4ShardA.registry), std::uint32_t{0x10F08F54},
+            "The registry-set test fixture should use standard IEEE CRC-32");
+  expect_eq(make_set(4, {x4ShardA}).size(), std::size_t{120},
+            "A one-shard set should be exactly 56 header plus 64 entry bytes");
+  expect_eq(make_set(4, {x4ShardA, x4ShardB}).size(), std::size_t{184},
+            "Set entries should remain contiguous fixed 64-byte records");
+  write_set_case(4, {x4ShardA, x4ShardB});
+  auto targetA = target;
+  targetA[0] = 'A';
+  auto targetB = target;
+  targetB[0] = 'B';
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "A valid x4 registry-set should load atomically");
+  expect_true(iee::creature_sprite_x2::target_animation_id() == 0x6110 &&
+                  iee::creature_sprite_x2::loaded_scale() == 4 &&
+                  iee::creature_sprite_x2::contains_resource(targetA) &&
+                  iee::creature_sprite_x2::contains_resource(targetB),
+              "The set should override monolithic registries and expose every shard resref");
+  expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{0},
+            "Registry-set prepare should not retain multi-gigabyte frame payloads");
+  iee::creature_sprite_x2::FrameHandle lazyHandle{};
+  expect_true(iee::creature_sprite_x2::resolve_frame(targetA, 0, 0, lazyHandle) &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle),
+              "A set frame should materialize lazily from its owning shard");
+  expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{16},
+            "One synthetic x4 frame should occupy only its 16-byte lazy payload");
+  std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
+  expect_true(!iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle) &&
+                  !iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 0,
+              "The direct payload API should reject a retained cached handle after its "
+              "shard changes");
+  iee::creature_sprite_x2::release();
+  expect_true(!iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 0 &&
+                  iee::creature_sprite_x2::target_animation_id() == 0 &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 0,
+              "Releasing a registry-set should clear identity, scale, and lazy payloads");
+
+  write_set_case(4, {x4ShardA});
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::resolve_frame(targetA, 0, 0, lazyHandle) &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle),
+              "A resolution failure test should materialize a valid cached payload first");
+  std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
+  iee::creature_sprite_x2::FrameHandle changedSourceHandle{};
+  expect_true(!iee::creature_sprite_x2::resolve_frame(
+                  targetA, 0, 0, changedSourceHandle) &&
+                  !iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 0 &&
+                  changedSourceHandle == iee::creature_sprite_x2::FrameHandle{},
+              "A new resolution should disable a lazy pack whose cached shard changed");
+  iee::creature_sprite_x2::release();
+
+  const auto x2ShardA = make_shard(2, 'A');
+  const auto x2ShardB = make_shard(2, 'B');
+  write_set_case(2, {x2ShardA, x2ShardB});
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::loaded_scale() == 2,
+              "A valid x2 registry-set should share the same atomic lazy path");
+  expect_true(iee::creature_sprite_x2::resolve_frame(targetB, 0, 0, lazyHandle) &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle) &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 4,
+              "An x2 set frame should materialize its exact four-byte payload");
+  iee::creature_sprite_x2::release();
+
+  write_set_case(4, {x4ShardA, x4ShardB});
+  std::filesystem::remove(root / "CreatureSprites-XN-0001.registry", ec);
+  expect_true(!iee::creature_sprite_x2::prepare(root) &&
+                  !iee::creature_sprite_x2::ready(),
+              "A present set with a missing contiguous shard should fail closed");
+
+  write_set_case(4, {x4ShardA});
+  auto crcMismatch = make_set(4, {x4ShardA});
+  overwrite_u32(crcMismatch, 56 + 32, test_crc32(x4ShardA.registry) ^ 1u);
+  write_file(setPath, crcMismatch);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A set CRC that differs from an otherwise valid shard should fail closed");
+
+  write_set_case(4, {x4ShardA});
+  auto counterMismatch = make_set(4, {x4ShardA});
+  overwrite_u32(counterMismatch, 20, 2);
+  overwrite_u32(counterMismatch, 56 + 36, 2);
+  write_file(setPath, counterMismatch);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A set entry count that disagrees with its shard header should fail closed");
+
+  write_set_case(4, {x4ShardA});
+  auto zeroHash = make_set(4, {x4ShardA});
+  std::fill(zeroHash.begin() + 56, zeroHash.begin() + 88, std::byte{0});
+  write_file(setPath, zeroHash);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "An all-zero registry-set SHA-256 should fail closed");
+
+  const auto duplicateShard = make_shard(4, 'A');
+  write_set_case(4, {x4ShardA, duplicateShard});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A resref duplicated across two valid shards should fail closed");
+
+  write_set_case(4, {x4ShardA, x2ShardB});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A shard whose xN scale differs from its set should fail closed");
+
+  // Keep the expected SHA unchanged but acknowledge the modified file in the
+  // CRC field: runtime SHA verification must still reject the shard.
+  write_set_case(4, {x4ShardA});
+  auto shaMismatchShard = x4ShardA.registry;
+  shaMismatchShard[32] ^= std::byte{2};
+  auto shaMismatchSet = make_set(4, {x4ShardA});
+  overwrite_u32(shaMismatchSet, 56 + 32, test_crc32(shaMismatchShard));
+  write_file(setPath, shaMismatchSet);
+  write_file(root / "CreatureSprites-XN-0000.registry", shaMismatchShard);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A shard with an adjusted CRC but stale SHA-256 should fail closed");
+
+  std::filesystem::remove(setPath, ec);
+  std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
+  std::filesystem::remove(root / "CreatureSprites-XN-0001.registry", ec);
 
   write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0xE400));
   write_file(xnPath, make_registry(xnMagic, 3, 4, 0x6110));
@@ -834,10 +1167,14 @@ void test_creature_sprite_registry_formats() {
                   iee::creature_sprite_x2::loaded_scale() == 4 &&
                   iee::creature_sprite_x2::contains_resource(target),
               "A v3 x4 pack should expose its animation, scale, and registered resrefs");
+  expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{0},
+            "A monolithic xN pack should also keep its frame payloads lazy");
   iee::creature_sprite_x2::FrameHandle handle{};
   expect_true(iee::creature_sprite_x2::resolve_frame(target, 0, 0, handle) &&
-                  handle.resourceIndex == 0 && handle.frameIndex == 0,
-              "A v3 creature registry cycle should resolve its frame");
+                  handle.resourceIndex == 0 && handle.frameIndex == 0 &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(handle) &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 16,
+              "A v3 creature registry cycle should resolve and lazily load its frame");
   iee::creature_sprite_x2::release();
   expect_true(iee::creature_sprite_x2::loaded_scale() == 0,
               "Releasing a creature pack should clear its physical scale");
@@ -846,7 +1183,8 @@ void test_creature_sprite_registry_formats() {
   expect_true(iee::creature_sprite_x2::prepare(root) &&
                   iee::creature_sprite_x2::target_animation_id() == 0xE400 &&
                   iee::creature_sprite_x2::loaded_scale() == 2 &&
-                  iee::creature_sprite_x2::contains_resource(target),
+                  iee::creature_sprite_x2::contains_resource(target) &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 4,
               "The parser should fall back to the legacy x2 file only when xN is absent");
   iee::creature_sprite_x2::release();
 

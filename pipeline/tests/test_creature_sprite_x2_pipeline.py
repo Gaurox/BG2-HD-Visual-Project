@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 
@@ -160,6 +161,28 @@ function xbr4x(source, width, height) {
         self.assertEqual((legacy[0][0], legacy[0][1], len(legacy[0][2])), (4, 2, 32))
         self.assertEqual((explicit[0][0], explicit[0][1], len(explicit[0][2])), (8, 4, 128))
 
+    def test_xbr_output_batches_are_deterministic_ordered_and_budgeted(self) -> None:
+        frames = []
+        for index in range(5):
+            frame = self.make_frame()
+            frame.index = index
+            frames.append(frame)
+        ranges = pipeline.xbr_output_batch_ranges(
+            frames, 2, output_budget_bytes=64
+        )
+        self.assertEqual(ranges, [(0, 2, 64), (2, 4, 64), (4, 5, 32)])
+        self.assertEqual(
+            [index for start, end, _ in ranges for index in range(start, end)],
+            list(range(len(frames))),
+        )
+        oversized = pipeline.xbr_output_batch_ranges(
+            frames[:2], 2, output_budget_bytes=16
+        )
+        self.assertEqual(oversized, [(0, 1, 32), (1, 2, 32)])
+        self.assertTrue(
+            all(end - start == 1 for start, end, size in oversized if size > 16)
+        )
+
     def test_explicit_upscale_routes_install_and_restore_to_xn_scripts(self) -> None:
         work_item = {
             "upscale": {
@@ -236,11 +259,258 @@ function xbr4x(source, width, height) {
                 resources, 4, maximum_bytes=result["registry_bytes"] - 1
             )
 
+    def test_x4_registry_limit_is_centralized_at_512_mib(self) -> None:
+        self.assertEqual(pipeline.MAX_REGISTRY_BYTES, 128 * 1024 * 1024)
+        self.assertEqual(pipeline.maximum_registry_bytes(2), pipeline.MAX_REGISTRY_BYTES)
+        self.assertEqual(pipeline.maximum_registry_bytes(4), 512 * 1024 * 1024)
+        self.assertEqual(
+            pipeline.MAX_LAZY_FRAME_INDEX_BYTES, 128 * 1024 * 1024
+        )
+        frames = []
+        for index in range(5):
+            frame = self.make_frame()
+            frame.index = index
+            frame.width = 2048
+            frame.height = 2048
+            frames.append(frame)
+        resources = [
+            {
+                "frames": frames,
+                "cycles": [{"frame_indices": list(range(len(frames)))}],
+            }
+        ]
+        projected = pipeline.preflight_registry_layout(resources, 4)
+        self.assertGreater(projected["registry_bytes"], pipeline.MAX_REGISTRY_BYTES)
+        self.assertLess(projected["registry_bytes"], pipeline.maximum_registry_bytes(4))
+        with self.assertRaisesRegex(RuntimeError, "before xBR"):
+            pipeline.preflight_registry_layout(
+                resources, 4, maximum_bytes=pipeline.MAX_REGISTRY_BYTES
+            )
+        oversized_frame = self.make_frame()
+        oversized_frame.width = 4096
+        oversized_frame.height = 4096
+        with self.assertRaisesRegex(RuntimeError, "frame payload"):
+            pipeline.preflight_registry_layout(
+                [
+                    {
+                        "frames": [oversized_frame],
+                        "cycles": [{"frame_indices": [0]}],
+                    }
+                ],
+                4,
+            )
+
     def test_build_preflight_precedes_xbr_dispatch(self) -> None:
         source = inspect.getsource(pipeline.build_pack)
         self.assertLess(
             source.index("preflight_registry_layout"), source.index("run_xbr(")
         )
+
+    def test_build_pack_batches_streams_identical_registry_and_resumes_without_xbr(self) -> None:
+        contract = pipeline.direct_upscale_contract(4)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_dir = root / "source"
+            source_dir.mkdir()
+            manifest_path = source_dir / "manifest.json"
+            manifest_path.write_text("{}\n", encoding="utf-8")
+            source_bam = source_dir / "TEST.BAM"
+            source_bam.write_bytes(b"fixture-source")
+            scalepix = root / "scalepix.html"
+            scalepix.write_text("fixture", encoding="utf-8")
+
+            frames = []
+            for index in range(8):
+                frame = self.make_frame()
+                frame.index = index
+                frames.append(frame)
+            cycles = [{"index": 0, "frame_indices": list(range(len(frames)))}]
+            resources = [
+                {
+                    "source": {"name": "TEST"},
+                    "source_path": source_bam,
+                    "frames": frames,
+                    "cycles": cycles,
+                }
+            ]
+            job = {
+                "job_id": "streamed-fixture-xbr4x",
+                "animation": {
+                    "id": "0xE400",
+                    "bam_prefix": "TEST",
+                    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0",
+                },
+                "paths": {
+                    "source_dir": str(source_dir),
+                    "run_dir": str(root / "run"),
+                    "scalepix": str(scalepix),
+                },
+                "upscale": contract.method,
+            }
+
+            def nearest_outputs(batch, _scalepix, _node, batch_contract):
+                result = []
+                for frame in batch:
+                    source = np.frombuffer(frame.rgba, dtype=np.uint8).reshape(
+                        frame.height, frame.width, 4
+                    )
+                    scaled = np.repeat(
+                        np.repeat(source, batch_contract.scale, axis=0),
+                        batch_contract.scale,
+                        axis=1,
+                    )
+                    result.append(
+                        (scaled.shape[1], scaled.shape[0], scaled.tobytes())
+                    )
+                return result
+
+            all_outputs = nearest_outputs(frames, scalepix, "node", contract)
+            expected = bytearray(contract.registry_magic)
+            expected.extend(
+                struct.pack("<IIII", 3, 4, 1, 0xE400)
+            )
+            expected.extend(b"TEST\0\0\0\0")
+            expected.extend(bytes.fromhex(pipeline.sha256_file(source_bam)))
+            expected.extend(struct.pack("<II", len(frames), len(cycles)))
+            for frame, (_, _, rgba) in zip(frames, all_outputs, strict=True):
+                mapped, representatives = pipeline.map_output(frame, rgba)
+                expected.extend(
+                    struct.pack(
+                        "<HHhhB3xI",
+                        frame.width,
+                        frame.height,
+                        frame.center_x,
+                        frame.center_y,
+                        frame.transparent,
+                        mapped.size,
+                    )
+                )
+                expected.extend(representatives.astype("<u2", copy=False).tobytes())
+                expected.extend(mapped.tobytes())
+            expected.extend(struct.pack("<I", len(frames)))
+            expected.extend(struct.pack(f"<{len(frames)}I", *range(len(frames))))
+
+            qa_sample_counts = []
+            original_qa_renderer = pipeline.make_comparison_sheet_samples
+
+            def record_qa_samples(*args, **kwargs):
+                qa_sample_counts.append(len(args[1]))
+                return original_qa_renderer(*args, **kwargs)
+
+            with (
+                mock.patch.object(pipeline, "verify_sources", return_value={}),
+                mock.patch.object(
+                    pipeline,
+                    "load_source_frames",
+                    return_value=(frames, resources, {}),
+                ),
+                mock.patch.object(pipeline, "assert_workspace_child"),
+                mock.patch.object(
+                    pipeline, "XBR_OUTPUT_BATCH_BUDGET_BYTES", 128
+                ),
+                mock.patch.object(
+                    pipeline, "run_xbr", side_effect=nearest_outputs
+                ) as dispatch,
+                mock.patch.object(
+                    pipeline,
+                    "make_comparison_sheet_samples",
+                    side_effect=record_qa_samples,
+                ),
+            ):
+                built = pipeline.build_pack(
+                    job, force=False, resume=False, keep_frames=False
+                )
+                verified = pipeline.verify_build(job)
+                manifest_path = pipeline.build_dir(job) / "build-manifest.json"
+                valid_manifest = pipeline.read_json(manifest_path)
+                for field in ("resource_count", "registry_bytes"):
+                    tampered_manifest = dict(valid_manifest)
+                    tampered_manifest[field] += 1
+                    pipeline.write_json(manifest_path, tampered_manifest)
+                    with self.assertRaisesRegex(
+                        RuntimeError, "top-level counters differ"
+                    ):
+                        pipeline.verify_build(job)
+                pipeline.write_json(manifest_path, valid_manifest)
+                source_manifest_file = pipeline.source_manifest_path(job)
+                source_manifest_bytes = source_manifest_file.read_bytes()
+                source_manifest_file.write_text(
+                    '{"changed":true}\n', encoding="utf-8"
+                )
+                with self.assertRaisesRegex(RuntimeError, "source manifest hash"):
+                    pipeline.verify_build(job)
+                with self.assertRaisesRegex(RuntimeError, "source manifest hash"):
+                    pipeline.armor_set_member_records({"_members": [job]})
+                source_manifest_file.write_bytes(source_manifest_bytes)
+
+                scalepix_bytes = scalepix.read_bytes()
+                scalepix.write_bytes(b"changed")
+                with self.assertRaisesRegex(RuntimeError, "Scalepix hash"):
+                    pipeline.verify_build(job)
+                scalepix.write_bytes(scalepix_bytes)
+
+                stale_adapter = dict(valid_manifest)
+                stale_adapter["xbr_adapter_sha256"] = "0" * 64
+                pipeline.write_json(manifest_path, stale_adapter)
+                with self.assertRaisesRegex(RuntimeError, "adapter hash"):
+                    pipeline.verify_build(job)
+                pipeline.write_json(manifest_path, valid_manifest)
+                self.assertEqual(dispatch.call_count, 8)
+                self.assertEqual(qa_sample_counts, [5])
+                dispatch.reset_mock()
+                reused = pipeline.build_pack(
+                    job, force=False, resume=True, keep_frames=False
+                )
+                dispatch.assert_not_called()
+                stale_manifest = pipeline.read_json(manifest_path)
+                del stale_manifest["xbr_batching"]
+                pipeline.write_json(manifest_path, stale_manifest)
+                legacy_reused = pipeline.build_pack(
+                    job, force=False, resume=True, keep_frames=False
+                )
+                self.assertEqual(legacy_reused["status"], "reused")
+                dispatch.assert_not_called()
+                invalid_manifest = dict(stale_manifest)
+                invalid_manifest["xbr_batching"] = dict(
+                    valid_manifest["xbr_batching"]
+                )
+                invalid_manifest["xbr_batching"]["batch_count"] = 0
+                pipeline.write_json(manifest_path, invalid_manifest)
+                rebuilt = pipeline.build_pack(
+                    job, force=False, resume=True, keep_frames=False
+                )
+                self.assertEqual(rebuilt["status"], "built")
+                self.assertEqual(dispatch.call_count, 8)
+
+            build_root = pipeline.build_dir(job)
+            registry = (
+                build_root
+                / "iee-assets"
+                / "creature-sprites"
+                / pipeline.XN_REGISTRY_FILENAME
+            )
+            manifest = pipeline.read_json(build_root / "build-manifest.json")
+            self.assertEqual(registry.read_bytes(), bytes(expected))
+            self.assertEqual(built["sha256"], pipeline.sha256_file(registry))
+            self.assertEqual(verified["sha256"], built["sha256"])
+            self.assertEqual(reused["status"], "reused")
+            self.assertEqual(
+                manifest["xbr_batching"],
+                {
+                    "output_budget_bytes": 128,
+                    "batch_count": 8,
+                    "total_projected_output_bytes": 1024,
+                    "maximum_projected_batch_bytes": 128,
+                    "oversized_singleton_batches": 0,
+                    "ordering": "source-resource-frame",
+                },
+            )
+            self.assertEqual(manifest["registry_layout"], "monolith")
+            self.assertIsNone(manifest["registry_set"])
+            self.assertEqual(manifest["total_registry_bytes"], len(expected))
+            self.assertEqual(
+                manifest["validation"]["qa_samples_retained_max_per_resource"], 5
+            )
 
     def test_character_runtime_profile_is_supported(self) -> None:
         pipeline.require_runtime_profile(
@@ -252,6 +522,67 @@ function xbr4x(source, width, height) {
             pipeline.require_runtime_profile(
                 {"animation": {"runtime_profile": "character-unknown"}}
             )
+
+    def test_verify_runtime_rejects_missing_or_stale_engine_source_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "engine-source"
+            source_files = (
+                "CMakeLists.txt",
+                "src/iee/hooks.cpp",
+                "src/iee/dll_main.cpp",
+                "src/iee/creature_sprite_x2.cpp",
+                "src/iee/creature_sprite_x2.h",
+                "src/iee/core/config.cpp",
+                "src/iee/core/config.h",
+                "src/iee/game/build_manifest.cpp",
+                "src/iee/game/build_manifest.h",
+                "tests/iee_tests.cpp",
+            )
+            for index, relative in enumerate(source_files):
+                path = source / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(f"source-{index}\n", encoding="utf-8")
+            job = {
+                "job_id": "runtime-contract-gate",
+                "animation": {
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                },
+                "paths": {
+                    "engine_source": str(source),
+                    "run_dir": str(root / "run"),
+                },
+            }
+            runtime = pipeline.runtime_dir(job)
+            runtime.mkdir(parents=True)
+            dll = runtime / "InfinityEngine-Enhancer.dll"
+            dll.write_bytes(b"runtime")
+            manifest_path = runtime / "runtime-manifest.json"
+            manifest = {
+                "schema": pipeline.RUNTIME_SCHEMA,
+                "status": "built-tested",
+                "job_id": job["job_id"],
+                "runtime_profile": job["animation"]["runtime_profile"],
+                "engine_source_contract_sha256": pipeline.source_tree_hash(source),
+                "dll": dll.name,
+                "dll_sha256": pipeline.sha256_file(dll),
+                "tests_status": "passed",
+            }
+            pipeline.write_json(manifest_path, manifest)
+            self.assertEqual(pipeline.verify_runtime(job)["tests_status"], "passed")
+
+            missing_contract = dict(manifest)
+            del missing_contract["engine_source_contract_sha256"]
+            pipeline.write_json(manifest_path, missing_contract)
+            with self.assertRaisesRegex(RuntimeError, "source contract differs"):
+                pipeline.verify_runtime(job)
+
+            pipeline.write_json(manifest_path, manifest)
+            (source / "src/iee/creature_sprite_x2.h").write_text(
+                "changed contract\n", encoding="utf-8"
+            )
+            with self.assertRaisesRegex(RuntimeError, "source contract differs"):
+                pipeline.verify_runtime(job)
 
     def test_install_and_restore_scripts_accept_character_bundles(self) -> None:
         for script_name in (
@@ -268,7 +599,14 @@ function xbr4x(source, width, height) {
         legacy = (
             ROOT / "pipeline" / "scripts" / "Install-CreatureSprite-X2-Test.ps1"
         ).read_text(encoding="utf-8")
-        self.assertIn("CreatureSprites-XN.registry est présent", legacy)
+        self.assertIn("CreatureSprites-XN.registry", legacy)
+        self.assertIn("CreatureSprites-XN.set", legacy)
+        self.assertIn("restaure le test xN avant tout test legacy x2", legacy)
+        self.assertIn("'restoring'", legacy)
+        self.assertIn("Test-Path -LiteralPath $xnPriorityFile)", legacy)
+        self.assertNotIn(
+            "Test-Path -LiteralPath $xnPriorityFile -PathType Leaf", legacy
+        )
         xn_install = (
             ROOT / "pipeline" / "scripts" / "Install-CreatureSprite-XN-Test.ps1"
         ).read_text(encoding="utf-8")
@@ -277,9 +615,27 @@ function xbr4x(source, width, height) {
         ).read_text(encoding="utf-8")
         self.assertIn("Publier l'état récupérable avant la première mutation", xn_install)
         self.assertIn("-RecoverInstalling", xn_install)
+        self.assertIn("'restoring'", xn_install)
         self.assertIn("[switch]$RecoverInstalling", xn_restore)
         self.assertIn("$recoveringInterruptedInstall", xn_restore)
         self.assertIn("function Get-IniKey", xn_install)
+        self.assertIn("CreatureSprites-XN.set", xn_install)
+        self.assertIn(r"^CreatureSprites-XN-[0-9]{4}\.registry$", xn_install)
+        self.assertIn("function Get-MaxLazyFrameIndexBytes", xn_install)
+        self.assertIn("$frameBytes -gt (Get-MaxLazyFrameIndexBytes)", xn_install)
+        self.assertIn("'restoring'", xn_restore)
+        self.assertIn("RecoverInterrupted", xn_restore)
+        for script_name in (
+            "Install-CreatureSprite-X2-Test.ps1",
+            "Restore-CreatureSprite-X2-Test.ps1",
+            "Install-CreatureSprite-XN-Test.ps1",
+            "Restore-CreatureSprite-XN-Test.ps1",
+        ):
+            script = (ROOT / "pipeline" / "scripts" / script_name).read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("Global\\BG2UpscaleCreatureSpriteMutation_", script)
+            self.assertIn("finally", script)
 
     def test_character_runtime_has_no_texture_sweep_hook(self) -> None:
         hooks = (
@@ -347,15 +703,46 @@ function xbr4x(source, width, height) {
         self.assertFalse(destructive["runtime_health_pass"])
         self.assertEqual(destructive["character_unsafe_in_place_count"], 1)
 
+        lazy_failure = pipeline.runtime_session_health(
+            "Creature sprite lazy pack disabled after payload failure: read error\n"
+            "Composing creature sprite CHFB1A1 frame 000 via transient replacement "
+            "id 42 (NEAREST, delete-pending after queued draw)",
+            "character-bg2ee-2.7.3.0",
+            {
+                "CHFB1": [
+                    "Composing creature sprite CHFB1A1 frame 000 via transient "
+                    "replacement id 42 (NEAREST, delete-pending after queued draw)"
+                ]
+            },
+        )
+        self.assertFalse(lazy_failure["runtime_health_pass"])
+        self.assertEqual(lazy_failure["lazy_payload_failure_count"], 1)
+
     def test_explicit_qa_requires_xn_source_and_installed_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             game = root / "game"
             run = root / "run"
             game.mkdir()
+            runtime = game / "InfinityEngine-Enhancer.dll"
+            runtime.write_bytes(b"runtime")
+            runtime_ini = game / "InfinityEngine-Enhancer.ini"
+            runtime_ini.write_bytes(b"ini")
             registry = game / "iee-assets" / "creature-sprites" / "CreatureSprites-XN.registry"
             registry.parent.mkdir(parents=True)
             registry.write_bytes(b"xn")
+            legacy_registry = registry.with_name("CreatureSprites-X2.registry")
+            registry_set = registry.with_name("CreatureSprites-XN.set")
+
+            def target_state(path: Path, present: bool) -> dict[str, object]:
+                return {
+                    "relative_path": path.relative_to(game).as_posix(),
+                    "installed_present": present,
+                    "installed_sha256": (
+                        pipeline.sha256_file(path) if present else None
+                    ),
+                }
+
             job = {
                 "job_id": "qa-xn",
                 "animation": {
@@ -367,18 +754,31 @@ function xbr4x(source, width, height) {
                 "upscale": pipeline.direct_upscale_contract(2).method,
             }
             state = {
+                "schema": pipeline.XN_INSTALL_STATE_SCHEMA,
                 "installed_at_utc": "2026-08-25T18:00:00+00:00",
                 "game_root": str(game),
+                "registry_layout": "monolith",
+                "registry_relative_path": target_state(registry, True)[
+                    "relative_path"
+                ],
+                "registry_magic": "IEECSXN",
+                "registry_version": 3,
+                "registry_scale": 2,
+                "registry_set_magic": None,
+                "registry_set_version": None,
+                "registry_shard_count": 0,
+                "source_pack_sha256": pipeline.sha256_file(registry),
+                "source_shards": [],
                 "targets": [
-                    {
-                        "relative_path": "iee-assets/creature-sprites/CreatureSprites-XN.registry",
-                        "installed_present": True,
-                        "installed_sha256": pipeline.sha256_file(registry),
-                    }
+                    target_state(runtime, True),
+                    target_state(runtime_ini, True),
+                    target_state(registry, True),
+                    target_state(legacy_registry, False),
+                    target_state(registry_set, False),
                 ],
             }
             pipeline.write_json(pipeline.active_state_path(job), state)
-            log_template = """[2026-08-25 20:00:00] Creature sprite xBR2x pack ready: animation 0x6110, scale=x2, 1 resources, 1 frames, 4 index bytes; source={source}; filter=NEAREST; registry budget=128 MiB
+            log_template = """[2026-08-25 20:00:00] Creature sprite {ready_kind} pack ready: animation 0x6110, scale=x{scale}, 1 resources, 1 frames, 4 index bytes; source={source}; filter=NEAREST; registry budget=128 MiB
 [2026-08-25 20:00:01] Creature sprite xN owner scope installed: Character::Render
 [2026-08-25 20:00:02] Creature sprite animation 0x6110 reached CGameAnimationTypeCharacter::Render
 [2026-08-25 20:00:03] Creature sprite xBR2x uses an owner-scoped CVidPalette::Realize snapshot
@@ -386,21 +786,95 @@ function xbr4x(source, width, height) {
 """
             log = game / "InfinityEngine-Enhancer.log"
             log.write_text(
-                log_template.format(source="CreatureSprites-X2.registry"),
+                log_template.format(
+                    ready_kind="xBR2x",
+                    scale=2,
+                    source="CreatureSprites-X2.registry",
+                ),
                 encoding="utf-8",
             )
             wrong_source = pipeline.qa_log_report(job, write_report=False)
             self.assertFalse(wrong_source["pack_ready"])
             self.assertFalse(wrong_source["technical_pass"])
             log.write_text(
-                log_template.format(source="CreatureSprites-XN.registry"),
+                log_template.format(
+                    ready_kind="xBR2x",
+                    scale=2,
+                    source="CreatureSprites-XN.registry",
+                ),
                 encoding="utf-8",
             )
             valid = pipeline.qa_log_report(job, write_report=False)
             self.assertTrue(valid["pack_ready"])
             self.assertTrue(valid["installed_files_match"])
             self.assertTrue(valid["technical_pass"])
-            registry.write_bytes(b"changed")
+            state["registry_layout"] = "set"
+            pipeline.write_json(pipeline.active_state_path(job), state)
+            log.write_text(
+                log_template.format(
+                    ready_kind="xBR2x",
+                    scale=2,
+                    source="CreatureSprites-XN.set",
+                ),
+                encoding="utf-8",
+            )
+            incomplete_set = pipeline.qa_log_report(job, write_report=False)
+            self.assertTrue(incomplete_set["pack_ready"])
+            self.assertFalse(incomplete_set["installed_files_match"])
+            self.assertFalse(incomplete_set["technical_pass"])
+
+            registry.unlink()
+            registry_set.write_bytes(b"set")
+            shard = registry.with_name("CreatureSprites-XN-0000.registry")
+            shard.write_bytes(b"shard")
+            shard_relative = shard.relative_to(game).as_posix()
+            state.update(
+                {
+                    "registry_relative_path": registry_set.relative_to(game).as_posix(),
+                    "registry_set_magic": "IEECSNS",
+                    "registry_set_version": 1,
+                    "registry_shard_count": 1,
+                    "source_pack_sha256": pipeline.sha256_file(registry_set),
+                    "source_shards": [
+                        {
+                            "index": 0,
+                            "relative_path": shard_relative,
+                            "sha256": pipeline.sha256_file(shard),
+                            "crc32": pipeline.crc32_file(shard),
+                        }
+                    ],
+                    "targets": [
+                        target_state(runtime, True),
+                        target_state(runtime_ini, True),
+                        target_state(registry, False),
+                        target_state(legacy_registry, False),
+                        target_state(registry_set, True),
+                        target_state(shard, True),
+                    ],
+                }
+            )
+            pipeline.write_json(pipeline.active_state_path(job), state)
+            valid_set = pipeline.qa_log_report(job, write_report=False)
+            self.assertTrue(valid_set["pack_ready"])
+            self.assertEqual(valid_set["registry_layout"], "set")
+            self.assertTrue(valid_set["installed_files_match"])
+            self.assertTrue(valid_set["technical_pass"])
+
+            job["upscale"] = pipeline.direct_upscale_contract(4).method
+            state["registry_scale"] = 4
+            pipeline.write_json(pipeline.active_state_path(job), state)
+            log.write_text(
+                log_template.format(
+                    ready_kind="xBR",
+                    scale=4,
+                    source="CreatureSprites-XN.set",
+                ),
+                encoding="utf-8",
+            )
+            current_x4_set = pipeline.qa_log_report(job, write_report=False)
+            self.assertTrue(current_x4_set["pack_ready"])
+            self.assertTrue(current_x4_set["technical_pass"])
+            shard.write_bytes(b"changed")
             changed = pipeline.qa_log_report(job, write_report=False)
             self.assertFalse(changed["installed_files_match"])
             self.assertFalse(changed["technical_pass"])
@@ -693,17 +1167,22 @@ function xbr4x(source, width, height) {
             (
                 "[2026-08-25 00:10:00.000] Creature sprite xBR2x pack ready: animation 0x6310, old",
                 "[2026-08-25 00:20:00.000] Creature sprite xBR2x pack ready: animation 0x6110, stale",
-                "[2026-08-25 00:30:00.000] Creature sprite xBR2x pack ready: animation 0x6110, current",
-                "[2026-08-25 00:30:01.000] Composing creature sprite CHFB1A1 frame 000",
+                "[2026-08-25 00:30:00.000] Creature sprite xBR2x pack ready: animation 0x6110, historical",
+                "[2026-08-25 00:31:00.000] Creature sprite xBR pack ready: animation 0x6110, current",
+                "[2026-08-25 00:31:01.000] Composing creature sprite CHFB1A1 frame 000",
             )
         )
         session = pipeline.runtime_log_session_after_install(
             text,
-            "Creature sprite xBR2x pack ready: animation 0x6110,",
+            (
+                "Creature sprite xBR pack ready: animation 0x6110,",
+                "Creature sprite xBR2x pack ready: animation 0x6110,",
+            ),
             "2026-08-24T22:25:00+00:00",
         )
         self.assertIn("current", session)
         self.assertNotIn("stale", session)
+        self.assertNotIn("historical", session)
         self.assertNotIn("0x6310", session)
 
     @staticmethod
@@ -713,10 +1192,11 @@ function xbr4x(source, width, height) {
         *,
         scale: int = 2,
         magic: bytes = pipeline.REGISTRY_MAGIC,
+        resref: str = "TEST",
     ) -> bytes:
         data = bytearray(magic)
         data.extend(struct.pack("<IIII", version, scale, 1, metadata))
-        data.extend(b"TEST\0\0\0\0")
+        data.extend(resref.encode("ascii").ljust(8, b"\0"))
         data.extend(bytes(32))
         data.extend(struct.pack("<II", 1, 1))
         index_bytes = scale * scale
@@ -773,7 +1253,7 @@ $tokens = $null
 $errors = $null
 $ast = [System.Management.Automation.Language.Parser]::ParseFile(
   '{quote(install_script)}', [ref]$tokens, [ref]$errors)
-foreach ($name in @('Read-ExactBytes','Skip-RegistryBytes','Read-RegistryHeader')) {{
+foreach ($name in @('Get-MaxRegistryBytes','Get-MaxLazyFrameIndexBytes','Read-ExactBytes','Skip-RegistryBytes','Read-RegistryHeader')) {{
   $fn = $ast.FindAll({{ param($node)
     $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
     $node.Name -eq $name
@@ -792,6 +1272,465 @@ Read-RegistryHeader '{quote(registry)}' | ConvertTo-Json -Compress
         self.assertEqual(info["magic"], "IEECSXN")
         self.assertEqual(info["scale"], 4)
         self.assertEqual(info["index_bytes"], 16)
+
+    def test_xn_installer_reads_generated_registry_set_and_crc32(self) -> None:
+        powershell = shutil.which("pwsh") or shutil.which("powershell")
+        if powershell is None:
+            self.skipTest("PowerShell is required for the XN registry-set parser test")
+        install_script = ROOT / "pipeline" / "scripts" / "Install-CreatureSprite-XN-Test.ps1"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            member = root / "member.registry"
+            member.write_bytes(self.registry_bytes(2, 0x6110, resref="RESA"))
+            records = pipeline.inspect_registry(
+                member, include_resource_records=True
+            )["resource_records"]
+            shard_path = root / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=0)
+            shard_info = pipeline.write_registry_records(
+                shard_path,
+                pipeline.XN_REGISTRY_MAGIC,
+                pipeline.XN_REGISTRY_VERSION,
+                2,
+                0x6110,
+                records,
+            )
+            shard_info["path"] = shard_path
+            set_path = root / pipeline.XN_REGISTRY_SET_FILENAME
+            expected = pipeline.write_registry_set_index(
+                set_path, 2, 0x6110, [shard_info]
+            )
+            expected_crc32 = pipeline.crc32_file(shard_path)
+            quote = lambda value: str(value).replace("'", "''")
+            command = f"""
+$tokens = $null
+$errors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+  '{quote(install_script)}', [ref]$tokens, [ref]$errors)
+foreach ($name in @('Get-MaxRegistryBytes','Read-ExactBytes','Get-Crc32','Read-RegistrySet')) {{
+  $fn = $ast.FindAll({{ param($node)
+    $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+    $node.Name -eq $name
+  }}, $true) | Select-Object -First 1
+  Invoke-Expression $fn.Extent.Text
+}}
+$setInfo = Read-RegistrySet '{quote(set_path)}'
+[pscustomobject]@{{
+  set = $setInfo
+  shard_crc32 = [uint64](Get-Crc32 '{quote(shard_path)}')
+}} | ConvertTo-Json -Depth 6 -Compress
+"""
+            completed = subprocess.run(
+                [powershell, "-NoProfile", "-Command", command],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        parsed = json.loads(completed.stdout)
+        info = parsed["set"]
+        self.assertEqual(info["magic"], "IEECSNS")
+        self.assertEqual(info["version"], 1)
+        self.assertEqual(info["scale"], 2)
+        self.assertEqual(info["shard_count"], 1)
+        self.assertEqual(info["total_resources"], expected["total_resources"])
+        self.assertEqual(info["total_frames"], expected["total_frames"])
+        self.assertEqual(info["total_index_bytes"], expected["total_index_bytes"])
+        self.assertEqual(info["total_registry_bytes"], expected["total_registry_bytes"])
+        self.assertEqual(parsed["shard_crc32"], expected_crc32)
+        self.assertEqual(info["entries"][0]["sha256"], shard_info["sha256"])
+
+    def test_xn_registry_set_install_restore_is_transactional_in_fake_game(self) -> None:
+        powershell = shutil.which("pwsh") or shutil.which("powershell")
+        if powershell is None:
+            self.skipTest("PowerShell is required for the XN install/restore test")
+        temporary_parent = ROOT / "temp"
+        temporary_parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(
+            prefix="xn-install-e2e-", dir=temporary_parent
+        ) as temporary:
+            workspace = Path(temporary)
+            script_root = workspace / "pipeline" / "scripts"
+            script_root.mkdir(parents=True)
+            install_script = script_root / "Install-CreatureSprite-XN-Test.ps1"
+            restore_script = script_root / "Restore-CreatureSprite-XN-Test.ps1"
+            shutil.copy2(
+                ROOT / "pipeline" / "scripts" / install_script.name,
+                install_script,
+            )
+            shutil.copy2(
+                ROOT / "pipeline" / "scripts" / restore_script.name,
+                restore_script,
+            )
+            adapter = script_root / "xbr2x_batch.js"
+            shutil.copy2(
+                ROOT / "pipeline" / "scripts" / adapter.name,
+                adapter,
+            )
+
+            engine_source = workspace / "engine-source"
+            engine_files = (
+                "CMakeLists.txt",
+                "src/iee/hooks.cpp",
+                "src/iee/dll_main.cpp",
+                "src/iee/creature_sprite_x2.cpp",
+                "src/iee/creature_sprite_x2.h",
+                "src/iee/core/config.cpp",
+                "src/iee/core/config.h",
+                "src/iee/game/build_manifest.cpp",
+                "src/iee/game/build_manifest.h",
+                "tests/iee_tests.cpp",
+            )
+            for index, relative in enumerate(engine_files):
+                path = engine_source / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(f"contract-{index}\n", encoding="utf-8")
+
+            run_root = workspace / "sprite" / "e2e" / "runs" / "xn-set"
+            pack_root = run_root / "build" / "iee-assets" / "creature-sprites"
+            pack_root.mkdir(parents=True)
+            source_records = []
+            member_root = workspace / "members"
+            member_root.mkdir()
+            for resref in ("RESA", "RESB"):
+                member = member_root / f"{resref}.registry"
+                member.write_bytes(
+                    self.registry_bytes(
+                        3,
+                        0x6110,
+                        scale=2,
+                        magic=pipeline.XN_REGISTRY_MAGIC,
+                        resref=resref,
+                    )
+                )
+                source_records.extend(
+                    pipeline.inspect_registry(
+                        member, include_resource_records=True
+                    )["resource_records"]
+                )
+            shard_infos = []
+            for index, record in enumerate(source_records):
+                shard_path = pack_root / pipeline.XN_REGISTRY_SHARD_FILENAME.format(
+                    index=index
+                )
+                shard_info = pipeline.write_registry_records(
+                    shard_path,
+                    pipeline.XN_REGISTRY_MAGIC,
+                    pipeline.XN_REGISTRY_VERSION,
+                    2,
+                    0x6110,
+                    [record],
+                )
+                shard_info["path"] = shard_path
+                shard_infos.append(shard_info)
+            set_path = pack_root / pipeline.XN_REGISTRY_SET_FILENAME
+            set_info = pipeline.write_registry_set_index(
+                set_path, 2, 0x6110, shard_infos
+            )
+
+            job_id = "xn-set-install-e2e"
+            method = pipeline.direct_upscale_contract(2).method
+            scalepix = workspace / "scalepix.html"
+            scalepix.write_bytes(b"fixture-scalepix")
+            member_records = []
+            member_jobs_root = workspace / "sprite" / "jobs"
+            member_jobs_root.mkdir(parents=True)
+            for index, prefix in enumerate(("RESA", "RESB")):
+                member_id = f"xn-set-member-{index}"
+                member_run = workspace / "sprite" / "members" / member_id
+                member_source = member_run / "source" / "source-manifest.json"
+                pipeline.write_json(
+                    member_source,
+                    {"schema": pipeline.SOURCE_SCHEMA, "member": member_id},
+                )
+                member_build = member_run / "build" / "build-manifest.json"
+                pipeline.write_json(
+                    member_build,
+                    {
+                        "source_manifest_sha256": pipeline.sha256_file(
+                            member_source
+                        ),
+                        "scalepix_sha256": pipeline.sha256_file(scalepix),
+                        "xbr_adapter_sha256": pipeline.sha256_file(adapter),
+                    },
+                )
+                member_job = member_jobs_root / f"{member_id}.json"
+                pipeline.write_json(
+                    member_job,
+                    {
+                        "schema": pipeline.JOB_SCHEMA,
+                        "job_id": member_id,
+                        "animation": {"bam_prefix": prefix},
+                        "upscale": method,
+                        "paths": {
+                            "run_dir": str(member_run),
+                            "scalepix": str(scalepix),
+                        },
+                    },
+                )
+                member_records.append(
+                    {
+                        "job_file": str(member_job),
+                        "job_id": member_id,
+                        "bam_prefix": prefix,
+                        "source_manifest_sha256": pipeline.sha256_file(
+                            member_source
+                        ),
+                        "build_manifest_sha256": pipeline.sha256_file(
+                            member_build
+                        ),
+                    }
+                )
+            pipeline.write_json(
+                run_root / "build" / "build-manifest.json",
+                {
+                    "schema": pipeline.ARMOR_SET_BUILD_SCHEMA,
+                    "status": "built-pending-ingame-qa",
+                    "job_id": job_id,
+                    "animation_id": "0x6110",
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                    "registry_version": 3,
+                    "registry_magic": "IEECSXN",
+                    "registry_scale": 2,
+                    "method": method,
+                    "resource_count": set_info["resource_count"],
+                    "frame_count": set_info["frame_count"],
+                    "x2_index_bytes": set_info["index_bytes"],
+                    "registry_layout": "set",
+                    "registry": None,
+                    "registry_bytes": set_info["registry_bytes"],
+                    "registry_sha256": None,
+                    "registry_set": (
+                        "iee-assets/creature-sprites/CreatureSprites-XN.set"
+                    ),
+                    "registry_set_sha256": set_info["sha256"],
+                    "registry_set_bytes": set_info["registry_set_bytes"],
+                    "shards": pipeline.registry_set_manifest_shards(set_info),
+                    "total_resources": set_info["resource_count"],
+                    "total_frames": set_info["frame_count"],
+                    "total_index_bytes": set_info["index_bytes"],
+                    "total_registry_bytes": set_info["registry_bytes"],
+                    "bam_prefixes": ["RESA", "RESB"],
+                    "members": member_records,
+                    "source_registry_formats": [
+                        {
+                            "registry_magic": "IEECSXN",
+                            "registry_version": 3,
+                            "scale": 2,
+                        }
+                    ],
+                    "promoted_to_xn": False,
+                    "validation": {
+                        "shard_count": 2,
+                        "maximum_shard_resources": pipeline.MAX_RESOURCES,
+                        "maximum_shard_bytes": pipeline.maximum_registry_bytes(2),
+                        "maximum_set_shards": pipeline.MAX_REGISTRY_SET_SHARDS,
+                        "maximum_set_resources": pipeline.MAX_REGISTRY_SET_RESOURCES,
+                        "maximum_set_frames": pipeline.MAX_REGISTRY_SET_FRAMES,
+                        "maximum_set_registry_bytes": pipeline.MAX_REGISTRY_SET_BYTES,
+                    },
+                },
+            )
+
+            runtime_root = run_root / "runtime"
+            runtime_root.mkdir(parents=True)
+            source_dll = runtime_root / "InfinityEngine-Enhancer.dll"
+            source_dll.write_bytes(b"new-runtime")
+            pipeline.write_json(
+                runtime_root / "runtime-manifest.json",
+                {
+                    "schema": pipeline.RUNTIME_SCHEMA,
+                    "status": "built-tested",
+                    "tests_status": "passed",
+                    "job_id": job_id,
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                    "engine_source": str(engine_source),
+                    "engine_source_contract_sha256": pipeline.source_tree_hash(
+                        engine_source
+                    ),
+                    "dll": source_dll.name,
+                    "dll_sha256": pipeline.sha256_file(source_dll),
+                },
+            )
+
+            game = workspace / "fake-game"
+            game_sprite_root = game / "iee-assets" / "creature-sprites"
+            game_sprite_root.mkdir(parents=True)
+            executable = game / "BaldurReal.exe"
+            executable.write_bytes(b"fake-compatible-executable")
+            original_files = {
+                game / "InfinityEngine-Enhancer.dll": b"old-runtime",
+                game / "InfinityEngine-Enhancer.ini": (
+                    b"[Shaders]\nEnableCreatureSpriteUpscaleTest = false\n"
+                    b"EnableCreatureSpriteX2Test = true\n[Rendering]\n"
+                    b"EnableAnisotropicFiltering = true\n"
+                    b"EnableFullFrameFXAA = true\n"
+                    b"EnableFullFrameSSAA2x = true\n"
+                ),
+                game_sprite_root / "CreatureSprites-XN.registry": b"old-monolith",
+                game_sprite_root / "CreatureSprites-X2.registry": b"old-x2-fallback",
+                game_sprite_root / "CreatureSprites-XN.set": b"old-set",
+                game_sprite_root / "CreatureSprites-XN-0000.registry": b"old-shard-0",
+                game_sprite_root / "CreatureSprites-XN-0002.registry": b"old-stale-shard",
+            }
+            for path, payload in original_files.items():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(payload)
+            added_shard = game_sprite_root / "CreatureSprites-XN-0001.registry"
+            self.assertFalse(added_shard.exists())
+
+            job_file = workspace / "sprite" / "jobs" / f"{job_id}.json"
+            pipeline.write_json(
+                job_file,
+                {
+                    "schema": pipeline.ARMOR_SET_SCHEMA,
+                    "job_id": job_id,
+                    "animation": {
+                        "id": "0x6110",
+                        "runtime_profile": "character-bg2ee-2.7.3.0",
+                    },
+                    "upscale": method,
+                    "paths": {
+                        "run_dir": str(run_root),
+                        "game_root": str(game),
+                        "engine_source": str(engine_source),
+                    },
+                    "compatibility": {
+                        "baldur_real_sha256": pipeline.sha256_file(executable)
+                    },
+                },
+            )
+
+            def run_script(script: Path, *arguments: str) -> subprocess.CompletedProcess:
+                completed = subprocess.run(
+                    [
+                        powershell,
+                        "-NoProfile",
+                        "-NonInteractive",
+                        "-ExecutionPolicy",
+                        "Bypass",
+                        "-File",
+                        str(script),
+                        "-JobFile",
+                        str(job_file),
+                        *arguments,
+                    ],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                if completed.returncode != 0:
+                    self.fail(
+                        f"{script.name} failed ({completed.returncode}):\n"
+                        f"stdout:\n{completed.stdout}\nstderr:\n{completed.stderr}"
+                    )
+                return completed
+
+            run_script(install_script)
+            active_state_path = run_root / "ingame-test" / "active-test.json"
+            installed_state = pipeline.read_json(active_state_path)
+            self.assertEqual(installed_state["status"], "installed-pending-qa")
+            self.assertTrue(
+                pipeline.installed_state_integrity(installed_state, 2)[
+                    "installed_files_match"
+                ]
+            )
+            self.assertFalse((game_sprite_root / "CreatureSprites-XN.registry").exists())
+            self.assertFalse(
+                (game_sprite_root / "CreatureSprites-XN-0002.registry").exists()
+            )
+            self.assertEqual(
+                (game_sprite_root / "CreatureSprites-X2.registry").read_bytes(),
+                original_files[game_sprite_root / "CreatureSprites-X2.registry"],
+            )
+            self.assertEqual(pipeline.sha256_file(game_sprite_root / set_path.name), set_info["sha256"])
+            for index, shard_info in enumerate(shard_infos):
+                installed_shard = game_sprite_root / pipeline.XN_REGISTRY_SHARD_FILENAME.format(
+                    index=index
+                )
+                self.assertEqual(pipeline.sha256_file(installed_shard), shard_info["sha256"])
+            self.assertFalse(list(run_root.rglob(".*.tmp")))
+
+            installed_state["status"] = "restoring"
+            backup_state_path = (
+                Path(installed_state["backup_root"]) / "install-state.json"
+            )
+            pipeline.write_json(active_state_path, installed_state)
+            pipeline.write_json(backup_state_path, installed_state)
+            run_script(restore_script, "-RecoverInterrupted")
+
+            restored_state = pipeline.read_json(active_state_path)
+            self.assertEqual(restored_state["status"], "restored")
+            self.assertTrue(restored_state["recovered_interrupted_install"])
+            for path, payload in original_files.items():
+                self.assertEqual(path.read_bytes(), payload, path.name)
+            self.assertFalse(added_shard.exists())
+            self.assertFalse(list(run_root.rglob(".*.tmp")))
+
+    def test_xn_installer_accepts_x4_set_entry_above_legacy_128_mib_cap(self) -> None:
+        powershell = shutil.which("pwsh") or shutil.which("powershell")
+        if powershell is None:
+            self.skipTest("PowerShell is required for the XN registry-set cap test")
+        install_script = ROOT / "pipeline" / "scripts" / "Install-CreatureSprite-XN-Test.ps1"
+        index_bytes = 129 * 1024 * 1024
+        registry_bytes = index_bytes + pipeline.REGISTRY_HEADER_BYTES
+        with tempfile.TemporaryDirectory() as temporary:
+            set_path = Path(temporary) / pipeline.XN_REGISTRY_SET_FILENAME
+            raw = bytearray(
+                struct.pack(
+                    "<8sIIIIIIQQQ",
+                    pipeline.XN_REGISTRY_SET_MAGIC,
+                    pipeline.XN_REGISTRY_SET_VERSION,
+                    4,
+                    1,
+                    1,
+                    0x6110,
+                    0,
+                    1,
+                    index_bytes,
+                    registry_bytes,
+                )
+            )
+            raw.extend(
+                struct.pack(
+                    "<32sIIQQQ",
+                    bytes(range(1, 33)),
+                    0x12345678,
+                    1,
+                    1,
+                    index_bytes,
+                    registry_bytes,
+                )
+            )
+            set_path.write_bytes(raw)
+            quote = lambda value: str(value).replace("'", "''")
+            command = f"""
+$tokens = $null
+$errors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+  '{quote(install_script)}', [ref]$tokens, [ref]$errors)
+foreach ($name in @('Get-MaxRegistryBytes','Read-ExactBytes','Read-RegistrySet')) {{
+  $fn = $ast.FindAll({{ param($node)
+    $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+    $node.Name -eq $name
+  }}, $true) | Select-Object -First 1
+  Invoke-Expression $fn.Extent.Text
+}}
+Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
+"""
+            completed = subprocess.run(
+                [powershell, "-NoProfile", "-Command", command],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        info = json.loads(completed.stdout)
+        self.assertEqual(info["scale"], 4)
+        self.assertEqual(info["total_index_bytes"], index_bytes)
+        self.assertEqual(info["total_registry_bytes"], registry_bytes)
+        self.assertGreater(info["entries"][0]["index_bytes"], pipeline.MAX_REGISTRY_BYTES)
+        self.assertLess(
+            info["entries"][0]["registry_bytes"],
+            pipeline.maximum_registry_bytes(4),
+        )
 
     def test_registry_inspector_matches_runtime_strictness(self) -> None:
         base = self.registry_bytes(
@@ -851,6 +1790,353 @@ Read-RegistryHeader '{quote(registry)}' | ConvertTo-Json -Compress
             with self.subTest(mixed=mixed):
                 with self.assertRaisesRegex(RuntimeError, "mixed magic/version/scale"):
                     pipeline.require_compatible_registry_infos([x4, mixed])
+
+    def test_explicit_x2_aggregate_promotes_legacy_and_mixed_member_formats(self) -> None:
+        explicit_x2 = {"upscale": pipeline.direct_upscale_contract(2).method}
+        legacy = {
+            "registry_magic": "IEECSX2",
+            "version": 2,
+            "scale": 2,
+        }
+        xn_x2 = {
+            "registry_magic": "IEECSXN",
+            "version": 3,
+            "scale": 2,
+        }
+        self.assertEqual(
+            pipeline.armor_set_output_registry_identity(explicit_x2, [legacy]),
+            (pipeline.XN_REGISTRY_MAGIC, pipeline.XN_REGISTRY_VERSION, 2),
+        )
+        self.assertEqual(
+            pipeline.armor_set_output_registry_identity(explicit_x2, [legacy, xn_x2]),
+            (pipeline.XN_REGISTRY_MAGIC, pipeline.XN_REGISTRY_VERSION, 2),
+        )
+        with self.assertRaisesRegex(RuntimeError, "explicit x4"):
+            pipeline.armor_set_output_registry_identity(
+                {"upscale": pipeline.direct_upscale_contract(4).method}, [legacy]
+            )
+
+    def test_explicit_x2_armor_set_loads_legacy_member_jobs_without_rebuild(self) -> None:
+        template_path = (
+            ROOT / "sprite" / "jobs" / "human-female-fighter-character-set-xbr2x.json"
+        )
+        promoted = pipeline.read_json(template_path)
+        promoted["job_id"] = "test-promoted-character-set-x2"
+        promoted["upscale"] = pipeline.direct_upscale_contract(2).method
+        promoted["paths"] = dict(promoted["paths"])
+        promoted["paths"]["run_dir"] = "sprite/test_promoted/runs/xbr2x-x2-xn"
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "promoted.json"
+            pipeline.write_json(path, promoted)
+            loaded = pipeline.load_armor_set(path)
+        self.assertTrue(pipeline.upscale_contract(loaded).explicit)
+        self.assertTrue(
+            all(not pipeline.upscale_contract(member).explicit for member in loaded["_members"])
+        )
+        self.assertEqual(pipeline.upscale_contract(loaded).scale, 2)
+
+    def test_promote_armor_set_command_is_reproducible_and_x2_only(self) -> None:
+        parser = pipeline.make_parser()
+        args = parser.parse_args(
+            [
+                "promote-armor-set-job",
+                "--job",
+                "sprite/jobs/example-xn-x2.json",
+                "--template-job",
+                "sprite/jobs/example-legacy.json",
+                "--scale",
+                "2",
+            ]
+        )
+        self.assertEqual(args.scale, 2)
+        self.assertEqual(args.command, "promote-armor-set-job")
+        with self.assertRaisesRegex(RuntimeError, "--scale 2"):
+            pipeline.promote_armor_set_job(
+                Path("sprite/jobs/example-xn-x4.json"),
+                Path("sprite/jobs/example-legacy.json"),
+                4,
+                False,
+            )
+
+    def test_promote_armor_set_force_preserves_destination_on_validation_error(self) -> None:
+        source_template = (
+            ROOT
+            / "sprite"
+            / "jobs"
+            / "human-female-fighter-character-set-xbr2x.json"
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            jobs = project / "sprite" / "jobs"
+            jobs.mkdir(parents=True)
+            template = jobs / "legacy-template.json"
+            template.write_bytes(source_template.read_bytes())
+            destination = jobs / "promoted-xn-x2.json"
+            original_destination = source_template.read_bytes()
+            destination.write_bytes(original_destination)
+            legacy_template = pipeline.read_json(template)
+            with (
+                mock.patch.object(pipeline, "PROJECT_ROOT", project),
+                mock.patch.object(
+                    pipeline,
+                    "load_armor_set",
+                    side_effect=[
+                        legacy_template,
+                        RuntimeError("post-write validation failed"),
+                    ],
+                ),
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError, "post-write validation failed"
+                ):
+                    pipeline.promote_armor_set_job(
+                        destination, template, 2, force=True
+                    )
+            self.assertEqual(destination.read_bytes(), original_destination)
+            self.assertFalse(list(jobs.glob(f".{destination.name}.*.tmp")))
+
+    def test_registry_set_binary_contract_and_greedy_resource_boundaries(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            member_a = root / "member-a.registry"
+            member_b = root / "member-b.registry"
+            member_a.write_bytes(self.registry_bytes(2, 0x6110, resref="RESA"))
+            member_b.write_bytes(self.registry_bytes(2, 0x6110, resref="RESB"))
+            records = []
+            for member in (member_a, member_b):
+                records.extend(
+                    pipeline.inspect_registry(
+                        member, include_resource_records=True
+                    )["resource_records"]
+                )
+            one_shard_bytes = pipeline.REGISTRY_HEADER_BYTES + int(records[0]["bytes"])
+            partitions = pipeline.partition_registry_resources(
+                records, maximum_bytes=one_shard_bytes
+            )
+            self.assertEqual(
+                [[record["resref"] for record in shard] for shard in partitions],
+                [["RESA"], ["RESB"]],
+            )
+            shard_infos = []
+            for index, shard in enumerate(partitions):
+                path = root / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=index)
+                info = pipeline.write_registry_records(
+                    path,
+                    pipeline.XN_REGISTRY_MAGIC,
+                    pipeline.XN_REGISTRY_VERSION,
+                    2,
+                    0x6110,
+                    shard,
+                )
+                info["path"] = path
+                shard_infos.append(info)
+            set_path = root / pipeline.XN_REGISTRY_SET_FILENAME
+            info = pipeline.write_registry_set_index(set_path, 2, 0x6110, shard_infos)
+            raw = set_path.read_bytes()
+
+            self.assertEqual(len(raw), 56 + 2 * 64)
+            header = struct.unpack_from("<8sIIIIIIQQQ", raw, 0)
+            self.assertEqual(header[:7], (b"IEECSNS\0", 1, 2, 2, 2, 0x6110, 0))
+            self.assertEqual(info["resources"], ["RESA", "RESB"])
+            self.assertEqual(info["total_resources"], 2)
+            self.assertEqual(info["total_registry_bytes"], sum(
+                shard["registry_bytes"] for shard in shard_infos
+            ))
+            manifest_shards = pipeline.registry_set_manifest_shards(info)
+            self.assertEqual(
+                manifest_shards[0]["registry"],
+                "iee-assets/creature-sprites/CreatureSprites-XN-0000.registry",
+            )
+            self.assertIsInstance(manifest_shards[0]["crc32"], int)
+
+    def test_explicit_aggregate_build_promotes_legacy_records_without_xbr(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            member_jobs = []
+            member_records = []
+            for index, resref in enumerate(("RESA", "RESB"), start=1):
+                member_build = root / f"member-{index}" / "build"
+                relative_registry = Path(
+                    "iee-assets/creature-sprites/CreatureSprites-X2.registry"
+                )
+                registry = member_build / relative_registry
+                registry.parent.mkdir(parents=True)
+                registry.write_bytes(
+                    self.registry_bytes(2, 0x6110, resref=resref)
+                )
+                pipeline.write_json(
+                    member_build / "build-manifest.json",
+                    {
+                        "registry": relative_registry.as_posix(),
+                        "method": pipeline.LEGACY_UPSCALE.method,
+                    },
+                )
+                member_jobs.append(
+                    {
+                        "_build_dir": member_build,
+                        "animation": {
+                            "bam_prefix": f"CHFB{index}",
+                            "armor_code": index,
+                            "layer": {"kind": "body"},
+                        },
+                    }
+                )
+                member_records.append(
+                    {
+                        "resource_count": 1,
+                        "frame_count": 1,
+                        "bam_prefix": f"CHFB{index}",
+                    }
+                )
+            armor_set = {
+                "_build_dir": root / "aggregate" / "build",
+                "_members": member_jobs,
+                "job_id": "test-promoted-set-x2",
+                "animation": {
+                    "id": "0x6110",
+                    "ids_symbol": "FIGHTER_FEMALE_HUMAN",
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                },
+                "upscale": pipeline.direct_upscale_contract(2).method,
+            }
+
+            def fake_build_dir(item):
+                return Path(item["_build_dir"])
+
+            # A small test-only shard cap forces two shards without allocating
+            # a production-sized synthetic registry.  No xBR function is used.
+            with (
+                mock.patch.object(pipeline, "build_dir", side_effect=fake_build_dir),
+                mock.patch.object(
+                    pipeline,
+                    "armor_set_member_records",
+                    return_value=member_records,
+                ),
+                mock.patch.dict(pipeline.MAX_REGISTRY_BYTES_BY_SCALE, {2: 700}),
+                mock.patch.object(pipeline, "run_xbr") as xbr,
+            ):
+                result = pipeline.build_armor_set(armor_set, force=False, resume=False)
+                verified = pipeline.verify_armor_set_build(armor_set)
+                manifest_path = (
+                    Path(armor_set["_build_dir"]) / "build-manifest.json"
+                )
+                valid_manifest = pipeline.read_json(manifest_path)
+                for field in ("resource_count", "frame_count", "registry_bytes"):
+                    tampered_manifest = dict(valid_manifest)
+                    tampered_manifest[field] += 1
+                    pipeline.write_json(manifest_path, tampered_manifest)
+                    with self.assertRaisesRegex(
+                        RuntimeError, "top-level counters differ"
+                    ):
+                        pipeline.verify_armor_set_build(armor_set)
+                pipeline.write_json(manifest_path, valid_manifest)
+
+            manifest = pipeline.read_json(
+                Path(armor_set["_build_dir"]) / "build-manifest.json"
+            )
+            self.assertEqual(result["registry_layout"], "set")
+            self.assertEqual(verified["resources"], ["RESA", "RESB"])
+            self.assertEqual(manifest["registry_layout"], "set")
+            self.assertEqual(manifest["registry"], None)
+            self.assertEqual(len(manifest["shards"]), 2)
+            self.assertTrue(manifest["promoted_to_xn"])
+            self.assertEqual(
+                manifest["source_registry_formats"],
+                [
+                    {
+                        "registry_magic": "IEECSX2",
+                        "registry_version": 2,
+                        "scale": 2,
+                    }
+                ],
+            )
+            self.assertEqual(manifest["total_resources"], 2)
+            self.assertEqual(manifest["total_frames"], 2)
+            self.assertGreater(manifest["registry_set_bytes"], 0)
+            xbr.assert_not_called()
+
+    def test_registry_set_inspector_rejects_header_entry_and_shard_tampering(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            member = root / "member.registry"
+            member.write_bytes(self.registry_bytes(2, 0x6110, resref="RESA"))
+            records = pipeline.inspect_registry(
+                member, include_resource_records=True
+            )["resource_records"]
+            shard_path = root / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=0)
+            shard_info = pipeline.write_registry_records(
+                shard_path,
+                pipeline.XN_REGISTRY_MAGIC,
+                pipeline.XN_REGISTRY_VERSION,
+                2,
+                0x6110,
+                records,
+            )
+            shard_info["path"] = shard_path
+            set_path = root / pipeline.XN_REGISTRY_SET_FILENAME
+            pipeline.write_registry_set_index(set_path, 2, 0x6110, [shard_info])
+            valid_set = set_path.read_bytes()
+            valid_shard = shard_path.read_bytes()
+
+            reserved = bytearray(valid_set)
+            struct.pack_into("<I", reserved, 28, 1)
+            set_path.write_bytes(reserved)
+            with self.assertRaisesRegex(RuntimeError, "header"):
+                pipeline.inspect_registry_set(set_path)
+
+            set_path.write_bytes(valid_set)
+            crossed_hash = bytearray(valid_set)
+            crossed_hash[pipeline.REGISTRY_SET_HEADER_BYTES] ^= 0x01
+            set_path.write_bytes(crossed_hash)
+            with self.assertRaisesRegex(RuntimeError, "index entry"):
+                pipeline.inspect_registry_set(set_path)
+
+            set_path.write_bytes(valid_set)
+            changed_shard = bytearray(valid_shard)
+            changed_shard[-1] ^= 0x01
+            shard_path.write_bytes(changed_shard)
+            with self.assertRaises(RuntimeError):
+                pipeline.inspect_registry_set(set_path)
+
+    def test_registry_set_limits_cover_full_character_inventory(self) -> None:
+        self.assertEqual(pipeline.MAX_REGISTRY_SET_SHARDS, 64)
+        self.assertEqual(pipeline.MAX_REGISTRY_SET_RESOURCES, 8192)
+        self.assertEqual(pipeline.MAX_REGISTRY_SET_FRAMES, 1_048_576)
+        self.assertEqual(pipeline.MAX_REGISTRY_SET_BYTES, 8 * 1024 * 1024 * 1024)
+        records = [
+            {
+                "resref": f"R{index:07d}",
+                "bytes": 1,
+                "path": Path("unused"),
+                "offset": 0,
+            }
+            for index in range(129)
+        ]
+        partitions = pipeline.partition_registry_resources(records)
+        self.assertEqual([len(shard) for shard in partitions], [128, 1])
+
+    def test_registry_inspectors_reject_oversized_files_before_reading(self) -> None:
+        registry = mock.Mock()
+        registry.stat.return_value.st_size = pipeline.MAX_REGISTRY_BYTES + 1
+        header_stream = mock.MagicMock()
+        header_stream.__enter__.return_value.read.return_value = self.registry_bytes(
+            2, 0x6110
+        )[: pipeline.REGISTRY_HEADER_BYTES]
+        registry.open.return_value = header_stream
+        with self.assertRaisesRegex(RuntimeError, "header"):
+            pipeline.inspect_registry(registry)
+        registry.read_bytes.assert_not_called()
+
+        registry_set = mock.Mock()
+        registry_set.name = pipeline.XN_REGISTRY_SET_FILENAME
+        registry_set.stat.return_value.st_size = (
+            pipeline.REGISTRY_SET_HEADER_BYTES
+            + pipeline.MAX_REGISTRY_SET_SHARDS * pipeline.REGISTRY_SET_ENTRY_BYTES
+            + 1
+        )
+        with self.assertRaisesRegex(RuntimeError, "header"):
+            pipeline.inspect_registry_set(registry_set)
+        registry_set.read_bytes.assert_not_called()
 
     def test_legacy_registry_is_mgo1_only(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

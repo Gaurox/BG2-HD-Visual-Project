@@ -44,11 +44,39 @@ function Get-Sha256([string]$Path) {
     }
 }
 
+function Enter-GameMutationMutex([string]$GameRoot) {
+    $normalized = [System.IO.Path]::GetFullPath($GameRoot).TrimEnd('\').ToUpperInvariant()
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $key = ([System.BitConverter]::ToString(
+            $sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($normalized)))).Replace('-', '')
+    }
+    finally { $sha.Dispose() }
+    $mutex = New-Object System.Threading.Mutex($false, "Global\BG2UpscaleCreatureSpriteMutation_$key")
+    $owned = $false
+    try { $owned = $mutex.WaitOne(0) }
+    catch [System.Threading.AbandonedMutexException] { $owned = $true }
+    if (-not $owned) {
+        $mutex.Dispose()
+        throw "Une installation ou restauration sprite modifie déjà ce GameRoot : $GameRoot"
+    }
+    return $mutex
+}
+
+function Exit-GameMutationMutex($Mutex) {
+    if ($null -eq $Mutex) { return }
+    try { $Mutex.ReleaseMutex() }
+    finally { $Mutex.Dispose() }
+}
+
 if (@(Get-Process -Name 'InfinityLoader', 'Baldur', 'BaldurReal' -ErrorAction SilentlyContinue).Count -ne 0) {
     throw "Le jeu ou InfinityLoader est en cours d'exécution. Ferme-le avant la restauration."
 }
 
 $runRoot = Resolve-JobPath $job.paths.run_dir
+$gameFull = (Resolve-Path -LiteralPath (Resolve-JobPath $job.paths.game_root)).Path.TrimEnd('\')
+$gameMutationMutex = Enter-GameMutationMutex $gameFull
+try {
 $stateFile = Join-Path $runRoot 'ingame-test\active-test.json'
 if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) {
     throw "État de test absent : $stateFile"
@@ -58,7 +86,6 @@ if ($state.status -notin @('installed-pending-qa', 'validated-installed', 'qa-fa
     throw "État non restaurable : $($state.status)"
 }
 
-$gameFull = (Resolve-Path -LiteralPath (Resolve-JobPath $job.paths.game_root)).Path.TrimEnd('\')
 if (-not [string]::Equals([string]$state.game_root, $gameFull, [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "Le GameRoot diffère de l'état actif : $($state.game_root)"
 }
@@ -124,9 +151,14 @@ $state | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $stateFile -Encoding
 $backupStatePath = Join-Path ([string]$state.backup_root) 'install-state.json'
 $state | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $backupStatePath -Encoding utf8
 
-[pscustomobject]@{
+$result = [pscustomobject]@{
     Status = $state.status
     GameRoot = $gameFull
     Backup = $state.backup_root
     State = $stateFile
+}
+$result
+}
+finally {
+    Exit-GameMutationMutex $gameMutationMutex
 }

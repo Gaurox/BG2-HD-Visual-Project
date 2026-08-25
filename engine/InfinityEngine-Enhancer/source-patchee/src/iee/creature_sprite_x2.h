@@ -10,11 +10,34 @@
 namespace iee::creature_sprite_x2 {
 inline constexpr int kNativeLogicalBorder = 1;
 inline constexpr std::size_t kMaximumCompositeLayers = 8;
-inline constexpr std::uint64_t kMaximumRegistryBytes =
+inline constexpr std::uint64_t kMaximumX2RegistryBytes =
+    128ull * 1024ull * 1024ull;
+inline constexpr std::uint64_t kMaximumX4RegistryBytes =
+    512ull * 1024ull * 1024ull;
+// Compatibility name for the historical/legacy x2 bound.
+inline constexpr std::uint64_t kMaximumRegistryBytes = kMaximumX2RegistryBytes;
+// A registry-set is intentionally much larger than one process-resident pack:
+// each shard retains the 128-resource boundary and uses the scale-specific
+// 128-MiB (x2) or 512-MiB (x4) byte bound, while only frame metadata and a
+// bounded working set of palette indices stay resident. These limits cover the
+// measured complete 0x6110 x4 inventory without permitting an unbounded
+// manifest or cache allocation.
+inline constexpr std::uint32_t kMaximumRegistrySetShards = 64;
+inline constexpr std::uint32_t kMaximumRegistrySetResources = 8192;
+inline constexpr std::uint64_t kMaximumRegistrySetFrames = 1'048'576;
+inline constexpr std::uint64_t kMaximumRegistrySetBytes =
+    8ull * 1024ull * 1024ull * 1024ull;
+inline constexpr std::uint64_t kLazyIndexCacheBudgetBytes =
     128ull * 1024ull * 1024ull;
 
 [[nodiscard]] constexpr bool supported_physical_scale(std::uint32_t scale) noexcept {
   return scale == 2 || scale == 4;
+}
+
+[[nodiscard]] constexpr std::uint64_t maximum_registry_bytes_for_scale(
+    std::uint32_t scale) noexcept {
+  return scale == 2 ? kMaximumX2RegistryBytes
+                    : (scale == 4 ? kMaximumX4RegistryBytes : 0);
 }
 
 // CVidCell allocates one transparent logical pixel on every side of a BAM
@@ -108,8 +131,10 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
          (encoding.externalFormat == kBgra && encoding.type == kUnsignedInt8888Rev);
 }
 
-// Prefers the version-3 xN palette-index registry when present and otherwise
-// loads the legacy x2 registry. No game or GL state is touched.
+// Prefers the xN registry-set when present, then the version-3 monolithic xN
+// registry, and finally the legacy x2 registry. A present but invalid higher
+// priority source fails closed without falling through. No game or GL state is
+// touched.
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;
@@ -120,6 +145,15 @@ void release() noexcept;
 // Resolves CVidCell's current cycle slot through the original BAM lookup.
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    FrameHandle& out) noexcept;
+
+// Materializes a lazy xN frame in the bounded index cache. This is also a
+// read-only diagnostic surface for native tests; normal rendering calls it
+// implicitly before composing a frame. Any backing registry removal or
+// metadata change disables the whole pack so Character rendering falls back
+// atomically. Retained handles do not extend source validity: every public
+// payload/bind call rechecks the owning file identity before using a cache.
+bool ensure_frame_payload_available(FrameHandle handle) noexcept;
+[[nodiscard]] std::uint64_t resident_index_bytes() noexcept;
 
 // Reuses the synchronous CVidPalette::Realize output, reconstructs the upscaled
 // frame from its current palette colors, and binds a physical x2/x4 backing

@@ -8,14 +8,20 @@
 #include <cstring>
 #include <exception>
 #include <fstream>
+#include <iterator>
 #include <limits>
 #include <mutex>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <system_error>
 #include <type_traits>
 #include <utility>
 #include <vector>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
@@ -52,12 +58,20 @@ constexpr std::array<char, 8> kLegacyRegistryMagic{
     {'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
 constexpr std::array<char, 8> kXnRegistryMagic{
     {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
+constexpr std::array<char, 8> kRegistrySetMagic{
+    {'I', 'E', 'E', 'C', 'S', 'N', 'S', '\0'}};
 constexpr std::uint32_t kLegacyRegistryVersion = 1;
 constexpr std::uint32_t kLegacyCurrentRegistryVersion = 2;
 constexpr std::uint32_t kXnRegistryVersion = 3;
+constexpr std::uint32_t kRegistrySetVersion = 1;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
 constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
 constexpr char kXnRegistryFilename[] = "CreatureSprites-XN.registry";
+constexpr char kRegistrySetFilename[] = "CreatureSprites-XN.set";
+constexpr std::size_t kRegistrySetHeaderBytes = 56;
+constexpr std::size_t kRegistrySetEntryBytes = 64;
+constexpr std::uint32_t kResidentFrameShard =
+    (std::numeric_limits<std::uint32_t>::max)();
 // Four Character body armor codes require 92 split BAMs; the remaining room
 // carries the registered weapon/offhand/helmet overlays in the same pack.
 constexpr std::uint32_t kMaximumResources = 128;
@@ -82,6 +96,9 @@ struct Frame {
   std::uint8_t transparent{};
   std::array<std::uint16_t, 256> representatives{};
   std::vector<std::uint8_t> indices;
+  std::uint32_t lazyShardIndex{kResidentFrameShard};
+  std::uint64_t lazyIndexOffset{};
+  std::uint32_t lazyIndexBytes{};
 };
 
 struct Resource {
@@ -118,6 +135,24 @@ struct CompositePixelCacheEntry {
   std::uint64_t lastUse{};
 };
 
+struct FileIdentity {
+  std::uint64_t bytes{};
+  std::uint64_t writeStamp{};
+
+  [[nodiscard]] constexpr bool operator==(const FileIdentity&) const noexcept = default;
+};
+
+struct LazyShard {
+  std::filesystem::path path;
+  FileIdentity identity{};
+};
+
+struct LazyIndexCacheEntry {
+  FrameHandle handle{};
+  std::vector<std::uint8_t> indices;
+  std::uint64_t lastUse{};
+};
+
 class BinaryReader {
  public:
   explicit BinaryReader(std::vector<std::byte> bytes) : bytes_(std::move(bytes)) {}
@@ -149,6 +184,17 @@ class BinaryReader {
     return true;
   }
 
+  bool read_view(const std::byte*& out, std::size_t byteCount) noexcept {
+    out = nullptr;
+    if (offset_ > bytes_.size() || byteCount > bytes_.size() - offset_) return false;
+    out = bytes_.data() + offset_;
+    offset_ += byteCount;
+    return true;
+  }
+
+  [[nodiscard]] std::size_t position() const noexcept { return offset_; }
+  [[nodiscard]] std::size_t size() const noexcept { return bytes_.size(); }
+
   [[nodiscard]] bool at_end() const noexcept { return offset_ == bytes_.size(); }
 
  private:
@@ -163,7 +209,12 @@ std::atomic<std::uint32_t> g_loadedScale{0};
 std::vector<Resource> g_resources;
 std::vector<TextureCacheEntry> g_textureCache;
 std::vector<CompositePixelCacheEntry> g_compositePixelCache;
+std::vector<LazyShard> g_lazyShards;
+std::vector<LazyIndexCacheEntry> g_lazyIndexCache;
 std::uint64_t g_textureUseCounter{};
+std::uint64_t g_lazyIndexUseCounter{};
+bool g_lazyPackLoaded{};
+bool g_lazyPackFailureLogged{};
 bool g_creationFailureLogged{};
 bool g_dimensionMismatchLogged{};
 bool g_compositeDimensionMismatchLogged{};
@@ -189,12 +240,46 @@ void reset_diagnostics_locked() noexcept {
   g_compositeBackingFailureLogged = false;
 }
 
-std::vector<std::byte> read_file(const std::filesystem::path& path) {
+bool query_file_identity(const std::filesystem::path& path,
+                         FileIdentity& out) noexcept {
+  out = {};
+#ifdef _WIN32
+  WIN32_FILE_ATTRIBUTE_DATA attributes{};
+  if (!GetFileAttributesExW(path.c_str(), GetFileExInfoStandard, &attributes) ||
+      (attributes.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) {
+    return false;
+  }
+  out.bytes = (static_cast<std::uint64_t>(attributes.nFileSizeHigh) << 32u) |
+              attributes.nFileSizeLow;
+  out.writeStamp =
+      (static_cast<std::uint64_t>(attributes.ftLastWriteTime.dwHighDateTime) << 32u) |
+      attributes.ftLastWriteTime.dwLowDateTime;
+  return true;
+#else
+  std::error_code error;
+  const auto bytes = std::filesystem::file_size(path, error);
+  if (error) return false;
+  const auto writeTime = std::filesystem::last_write_time(path, error);
+  if (error) return false;
+  out.bytes = static_cast<std::uint64_t>(bytes);
+  out.writeStamp = static_cast<std::uint64_t>(writeTime.time_since_epoch().count());
+  return true;
+#endif
+}
+
+std::vector<std::byte> read_file(const std::filesystem::path& path,
+                                 std::uint64_t maximumBytes,
+                                 FileIdentity* identity = nullptr) {
+  FileIdentity initialIdentity{};
+  if (!query_file_identity(path, initialIdentity) || initialIdentity.bytes == 0 ||
+      initialIdentity.bytes > maximumBytes) {
+    throw std::runtime_error("invalid creature-sprite registry size: " + path.string());
+  }
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   if (!file) throw std::runtime_error("missing creature-sprite registry: " + path.string());
   const auto end = file.tellg();
-  if (end <= 0 || static_cast<std::uint64_t>(end) > kMaximumRegistryBytes) {
-    throw std::runtime_error("invalid creature-sprite registry size");
+  if (end <= 0 || static_cast<std::uint64_t>(end) != initialIdentity.bytes) {
+    throw std::runtime_error("creature-sprite registry changed while opening");
   }
   file.seekg(0);
   std::vector<std::byte> bytes(static_cast<std::size_t>(end));
@@ -202,7 +287,149 @@ std::vector<std::byte> read_file(const std::filesystem::path& path) {
                  static_cast<std::streamsize>(bytes.size()))) {
     throw std::runtime_error("cannot read creature-sprite registry");
   }
+  FileIdentity finalIdentity{};
+  if (!query_file_identity(path, finalIdentity) || finalIdentity != initialIdentity) {
+    throw std::runtime_error("creature-sprite registry changed while reading");
+  }
+  if (identity) *identity = finalIdentity;
   return bytes;
+}
+
+std::uint32_t crc32(const std::vector<std::byte>& bytes) noexcept {
+  static const auto table = [] {
+    std::array<std::uint32_t, 256> values{};
+    for (std::uint32_t index = 0; index < values.size(); ++index) {
+      auto value = index;
+      for (unsigned bit = 0; bit < 8; ++bit) {
+        value = (value >> 1u) ^ (0xEDB88320u & (0u - (value & 1u)));
+      }
+      values[index] = value;
+    }
+    return values;
+  }();
+  std::uint32_t value = 0xFFFFFFFFu;
+  for (const auto byte : bytes) {
+    value = table[(value ^ std::to_integer<std::uint8_t>(byte)) & 0xFFu] ^
+            (value >> 8u);
+  }
+  return value ^ 0xFFFFFFFFu;
+}
+
+std::array<std::byte, 32> sha256(const std::vector<std::byte>& bytes) noexcept {
+  constexpr std::array<std::uint32_t, 64> constants{{
+      0x428A2F98u, 0x71374491u, 0xB5C0FBCFu, 0xE9B5DBA5u, 0x3956C25Bu,
+      0x59F111F1u, 0x923F82A4u, 0xAB1C5ED5u, 0xD807AA98u, 0x12835B01u,
+      0x243185BEu, 0x550C7DC3u, 0x72BE5D74u, 0x80DEB1FEu, 0x9BDC06A7u,
+      0xC19BF174u, 0xE49B69C1u, 0xEFBE4786u, 0x0FC19DC6u, 0x240CA1CCu,
+      0x2DE92C6Fu, 0x4A7484AAu, 0x5CB0A9DCu, 0x76F988DAu, 0x983E5152u,
+      0xA831C66Du, 0xB00327C8u, 0xBF597FC7u, 0xC6E00BF3u, 0xD5A79147u,
+      0x06CA6351u, 0x14292967u, 0x27B70A85u, 0x2E1B2138u, 0x4D2C6DFCu,
+      0x53380D13u, 0x650A7354u, 0x766A0ABBu, 0x81C2C92Eu, 0x92722C85u,
+      0xA2BFE8A1u, 0xA81A664Bu, 0xC24B8B70u, 0xC76C51A3u, 0xD192E819u,
+      0xD6990624u, 0xF40E3585u, 0x106AA070u, 0x19A4C116u, 0x1E376C08u,
+      0x2748774Cu, 0x34B0BCB5u, 0x391C0CB3u, 0x4ED8AA4Au, 0x5B9CCA4Fu,
+      0x682E6FF3u, 0x748F82EEu, 0x78A5636Fu, 0x84C87814u, 0x8CC70208u,
+      0x90BEFFFAu, 0xA4506CEBu, 0xBEF9A3F7u, 0xC67178F2u,
+  }};
+  std::array<std::uint32_t, 8> state{{
+      0x6A09E667u, 0xBB67AE85u, 0x3C6EF372u, 0xA54FF53Au,
+      0x510E527Fu, 0x9B05688Cu, 0x1F83D9ABu, 0x5BE0CD19u,
+  }};
+  const auto rotateRight = [](std::uint32_t value, unsigned count) noexcept {
+    return (value >> count) | (value << (32u - count));
+  };
+  const auto transform = [&](const std::uint8_t* block) noexcept {
+    std::array<std::uint32_t, 64> words{};
+    for (std::size_t index = 0; index < 16; ++index) {
+      const auto offset = index * 4;
+      words[index] = (static_cast<std::uint32_t>(block[offset]) << 24u) |
+                     (static_cast<std::uint32_t>(block[offset + 1]) << 16u) |
+                     (static_cast<std::uint32_t>(block[offset + 2]) << 8u) |
+                     static_cast<std::uint32_t>(block[offset + 3]);
+    }
+    for (std::size_t index = 16; index < words.size(); ++index) {
+      const auto s0 = rotateRight(words[index - 15], 7) ^
+                      rotateRight(words[index - 15], 18) ^
+                      (words[index - 15] >> 3u);
+      const auto s1 = rotateRight(words[index - 2], 17) ^
+                      rotateRight(words[index - 2], 19) ^
+                      (words[index - 2] >> 10u);
+      words[index] = words[index - 16] + s0 + words[index - 7] + s1;
+    }
+    auto a = state[0];
+    auto b = state[1];
+    auto c = state[2];
+    auto d = state[3];
+    auto e = state[4];
+    auto f = state[5];
+    auto g = state[6];
+    auto h = state[7];
+    for (std::size_t index = 0; index < words.size(); ++index) {
+      const auto sum1 = rotateRight(e, 6) ^ rotateRight(e, 11) ^ rotateRight(e, 25);
+      const auto choice = (e & f) ^ (~e & g);
+      const auto temporary1 = h + sum1 + choice + constants[index] + words[index];
+      const auto sum0 = rotateRight(a, 2) ^ rotateRight(a, 13) ^ rotateRight(a, 22);
+      const auto majority = (a & b) ^ (a & c) ^ (b & c);
+      const auto temporary2 = sum0 + majority;
+      h = g;
+      g = f;
+      f = e;
+      e = d + temporary1;
+      d = c;
+      c = b;
+      b = a;
+      a = temporary1 + temporary2;
+    }
+    state[0] += a;
+    state[1] += b;
+    state[2] += c;
+    state[3] += d;
+    state[4] += e;
+    state[5] += f;
+    state[6] += g;
+    state[7] += h;
+  };
+
+  const auto* data = reinterpret_cast<const std::uint8_t*>(bytes.data());
+  std::size_t offset = 0;
+  while (bytes.size() - offset >= 64) {
+    transform(data + offset);
+    offset += 64;
+  }
+  std::array<std::uint8_t, 128> tail{};
+  const auto remaining = bytes.size() - offset;
+  if (remaining != 0) std::memcpy(tail.data(), data + offset, remaining);
+  tail[remaining] = 0x80u;
+  const std::size_t tailBytes = remaining < 56 ? 64 : 128;
+  const auto bitLength = static_cast<std::uint64_t>(bytes.size()) * 8u;
+  for (unsigned index = 0; index < 8; ++index) {
+    tail[tailBytes - 1 - index] =
+        static_cast<std::uint8_t>(bitLength >> (index * 8u));
+  }
+  transform(tail.data());
+  if (tailBytes == 128) transform(tail.data() + 64);
+  std::array<std::byte, 32> digest{};
+  for (std::size_t index = 0; index < state.size(); ++index) {
+    for (unsigned byte = 0; byte < 4; ++byte) {
+      digest[index * 4 + byte] =
+          static_cast<std::byte>(state[index] >> (24u - byte * 8u));
+    }
+  }
+  return digest;
+}
+
+bool checked_add(std::uint64_t& total, std::uint64_t value,
+                 std::uint64_t maximum) noexcept {
+  if (value > maximum || total > maximum - value) return false;
+  total += value;
+  return true;
+}
+
+std::string registry_shard_filename(std::uint32_t index) {
+  auto digits = std::to_string(index);
+  if (digits.size() > 4) throw std::runtime_error("creature-sprite shard index overflow");
+  return "CreatureSprites-XN-" + std::string(4 - digits.size(), '0') + digits +
+         ".registry";
 }
 
 std::string resref_name(const std::array<char, 8>& resref) {
@@ -334,6 +561,144 @@ void clear_texture_cache_locked() noexcept {
   g_textureUseCounter = 0;
 }
 
+std::uint64_t lazy_index_cache_bytes_locked() noexcept {
+  std::uint64_t total = 0;
+  for (const auto& entry : g_lazyIndexCache) {
+    if (!checked_add(total, static_cast<std::uint64_t>(entry.indices.size()),
+                     kLazyIndexCacheBudgetBytes)) {
+      return (std::numeric_limits<std::uint64_t>::max)();
+    }
+  }
+  return total;
+}
+
+void clear_lazy_index_cache_locked() noexcept {
+  g_lazyIndexCache.clear();
+  g_lazyIndexUseCounter = 0;
+}
+
+void disable_lazy_pack_locked(const char* reason) noexcept {
+  g_ready.store(false, std::memory_order_release);
+  g_targetAnimationId.store(0, std::memory_order_release);
+  g_loadedScale.store(0, std::memory_order_release);
+  clear_texture_cache_locked();
+  clear_lazy_index_cache_locked();
+  if (!g_lazyPackFailureLogged) {
+    g_lazyPackFailureLogged = true;
+    LOG_WARN(
+        "Creature sprite lazy pack disabled after payload failure: {}; native "
+        "Character rendering retained",
+        reason ? reason : "unknown shard error");
+  }
+}
+
+bool lazy_shard_identity_matches(const LazyShard& shard) noexcept {
+  FileIdentity current{};
+  return query_file_identity(shard.path, current) && current == shard.identity;
+}
+
+bool validate_lazy_frame_source_locked(FrameHandle handle) noexcept {
+  if (handle.resourceIndex >= g_resources.size() ||
+      handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
+    return false;
+  }
+  const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+  if (frame.lazyShardIndex == kResidentFrameShard) return true;
+  if (!g_lazyPackLoaded || frame.lazyShardIndex >= g_lazyShards.size()) {
+    disable_lazy_pack_locked("invalid lazy frame source metadata");
+    return false;
+  }
+  if (!lazy_shard_identity_matches(g_lazyShards[frame.lazyShardIndex])) {
+    disable_lazy_pack_locked("registry file was removed or changed before frame resolution");
+    return false;
+  }
+  return true;
+}
+
+const std::vector<std::uint8_t>* frame_indices_locked(
+    FrameHandle handle, bool sourceIdentityValidated = false) noexcept {
+  try {
+    if (!sourceIdentityValidated && !validate_lazy_frame_source_locked(handle)) {
+      return nullptr;
+    }
+    if (handle.resourceIndex >= g_resources.size() ||
+        handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
+      return nullptr;
+    }
+    const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+    if (frame.lazyShardIndex == kResidentFrameShard) return &frame.indices;
+    if (!g_lazyPackLoaded || frame.lazyShardIndex >= g_lazyShards.size() ||
+        frame.lazyIndexBytes == 0 ||
+        frame.lazyIndexBytes > kLazyIndexCacheBudgetBytes) {
+      disable_lazy_pack_locked("invalid lazy frame metadata");
+      return nullptr;
+    }
+    auto cached = std::find_if(
+        g_lazyIndexCache.begin(), g_lazyIndexCache.end(),
+        [&](const LazyIndexCacheEntry& entry) { return entry.handle == handle; });
+    if (cached != g_lazyIndexCache.end()) {
+      cached->lastUse = ++g_lazyIndexUseCounter;
+      return &cached->indices;
+    }
+    const auto& shard = g_lazyShards[frame.lazyShardIndex];
+    if (frame.lazyIndexOffset > shard.identity.bytes ||
+        frame.lazyIndexBytes > shard.identity.bytes - frame.lazyIndexOffset ||
+        frame.lazyIndexOffset >
+            static_cast<std::uint64_t>((std::numeric_limits<std::streamoff>::max)())) {
+      disable_lazy_pack_locked("lazy frame range is outside its registry");
+      return nullptr;
+    }
+    LazyIndexCacheEntry prepared{.handle = handle};
+    prepared.indices.resize(frame.lazyIndexBytes);
+    std::ifstream input(shard.path, std::ios::binary);
+    if (!input ||
+        !input.seekg(static_cast<std::streamoff>(frame.lazyIndexOffset), std::ios::beg) ||
+        !input.read(reinterpret_cast<char*>(prepared.indices.data()),
+                    static_cast<std::streamsize>(prepared.indices.size()))) {
+      disable_lazy_pack_locked("cannot read a lazy frame payload");
+      return nullptr;
+    }
+    if (!lazy_shard_identity_matches(shard)) {
+      disable_lazy_pack_locked("registry changed during a lazy frame read");
+      return nullptr;
+    }
+    for (const auto paletteIndex : prepared.indices) {
+      if (frame.representatives[paletteIndex] == 0xFFFFu) {
+        disable_lazy_pack_locked("lazy payload lacks a palette representative");
+        return nullptr;
+      }
+    }
+    auto cachedBytes = lazy_index_cache_bytes_locked();
+    while (!g_lazyIndexCache.empty() &&
+           (cachedBytes > kLazyIndexCacheBudgetBytes ||
+            prepared.indices.size() > kLazyIndexCacheBudgetBytes - cachedBytes)) {
+      const auto victim = std::min_element(
+          g_lazyIndexCache.begin(), g_lazyIndexCache.end(),
+          [](const LazyIndexCacheEntry& left, const LazyIndexCacheEntry& right) {
+            return left.lastUse < right.lastUse;
+          });
+      const auto victimBytes = static_cast<std::uint64_t>(victim->indices.size());
+      if (cachedBytes < victimBytes) {
+        disable_lazy_pack_locked("lazy payload cache accounting failed");
+        return nullptr;
+      }
+      cachedBytes -= victimBytes;
+      g_lazyIndexCache.erase(victim);
+    }
+    if (cachedBytes > kLazyIndexCacheBudgetBytes ||
+        prepared.indices.size() > kLazyIndexCacheBudgetBytes - cachedBytes) {
+      disable_lazy_pack_locked("lazy frame exceeds the payload cache budget");
+      return nullptr;
+    }
+    prepared.lastUse = ++g_lazyIndexUseCounter;
+    g_lazyIndexCache.push_back(std::move(prepared));
+    return &g_lazyIndexCache.back().indices;
+  } catch (...) {
+    disable_lazy_pack_locked("exception while loading a lazy frame payload");
+    return nullptr;
+  }
+}
+
 void delete_texture_entry_locked(const EngineTextureApi& api,
                                   std::size_t entryIndex) noexcept {
   if (entryIndex >= g_textureCache.size()) return;
@@ -404,7 +769,9 @@ void enforce_transparent_entry(const Frame& frame,
   realized[frame.transparent] = 0;
 }
 
-bool upload_frame_locked(const Frame& frame, const std::array<std::uint32_t, 256>& realized,
+bool upload_frame_locked(const Frame& frame,
+                         const std::vector<std::uint8_t>& indices,
+                         const std::array<std::uint32_t, 256>& realized,
                          NativePixelEncoding encoding, std::uint32_t physicalScale,
                          int textureId, int previousTextureId,
                          const EngineTextureApi& api) {
@@ -430,7 +797,7 @@ bool upload_frame_locked(const Frame& frame, const std::array<std::uint32_t, 256
       !checked_physical_metrics(textureLogicalWidth, textureLogicalHeight, physicalScale,
                                 physicalWidth, physicalHeight, texturePixels,
                                 textureBytes) ||
-      frame.indices.size() != expectedContentPixels ||
+      indices.size() != expectedContentPixels ||
       !maximum_texture_size_allows(gl, physicalWidth, physicalHeight)) {
     return false;
   }
@@ -443,7 +810,7 @@ bool upload_frame_locked(const Frame& frame, const std::array<std::uint32_t, 256
     for (int x = 0; x < contentPhysicalWidth; ++x) {
       const auto sourceIndex = sourceRow + static_cast<std::size_t>(x);
       replacement[destinationRow + static_cast<std::size_t>(x)] =
-          realized[frame.indices[sourceIndex]];
+          realized[indices[sourceIndex]];
     }
   }
 
@@ -524,6 +891,7 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
   for (std::size_t layerIndex = 0; layerIndex < layerCount; ++layerIndex) {
     const auto& layer = layers[layerIndex];
     const auto& frame = g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
+    const auto* indices = frame_indices_locked(layer.frame, true);
     int sourceWidth = 0;
     int sourceHeight = 0;
     std::uint64_t expectedPixels = 0;
@@ -531,7 +899,7 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
     if (!checked_physical_metrics(frame.logicalWidth, frame.logicalHeight, physicalScale,
                                   sourceWidth, sourceHeight, expectedPixels,
                                   sourceBytes) ||
-        frame.indices.size() != expectedPixels) {
+        !indices || indices->size() != expectedPixels) {
       return false;
     }
     const auto destinationX64 =
@@ -557,7 +925,7 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
       const auto destinationRow = static_cast<std::size_t>(destinationY + y) * physicalWidth +
                                   static_cast<std::size_t>(destinationX);
       for (int x = 0; x < sourceWidth; ++x) {
-        const auto pixel = realized[frame.indices[sourceRow + static_cast<std::size_t>(x)]];
+        const auto pixel = realized[(*indices)[sourceRow + static_cast<std::size_t>(x)]];
         // Character's native CPU compositor overwrites with every non-zero
         // palette color. Alpha is retained for the single final GPU draw.
         auto& destination = replacement[destinationRow + static_cast<std::size_t>(x)];
@@ -704,6 +1072,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
                             std::uint32_t physicalScale, int previousTextureId,
                             const EngineTextureApi& api, int& textureId) {
   textureId = 0;
+  if (!validate_lazy_frame_source_locked(handle)) return false;
   const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
   int physicalWidth = 0;
   int physicalHeight = 0;
@@ -726,6 +1095,8 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
     textureId = existing->textureId;
     return textureId > 0;
   }
+  const auto* indices = frame_indices_locked(handle, true);
+  if (!indices) return false;
 
   auto cachedBytes = texture_cache_bytes_locked();
   std::size_t entryIndex = 0;
@@ -779,7 +1150,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
     replacement.physicalBytes = physicalBytes;
   }
   auto& entry = g_textureCache[entryIndex];
-  if (!upload_frame_locked(frame, realized, encoding, physicalScale, entry.textureId,
+  if (!upload_frame_locked(frame, *indices, realized, encoding, physicalScale, entry.textureId,
                            previousTextureId, api)) {
     delete_texture_entry_locked(api, entryIndex);
     api.DrawBindTexture(previousTextureId);
@@ -810,6 +1181,9 @@ bool ensure_composite_pixels_locked(
     existing->lastUse = ++g_textureUseCounter;
     pixels = &existing->pixels;
     return !pixels->empty();
+  }
+  for (std::size_t index = 0; index < layerCount; ++index) {
+    if (!frame_indices_locked(layers[index].frame, true)) return false;
   }
   CompositePixelCacheEntry prepared{
       .layers = cacheLayers,
@@ -861,146 +1235,415 @@ bool ensure_composite_pixels_locked(
 }
 }  // namespace
 
+namespace {
+enum class RegistryFormat { Legacy, Xn };
+
+struct ParsedRegistry {
+  std::uint32_t scale{};
+  std::uint16_t animationId{};
+  std::uint32_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+  std::uint32_t checksum{};
+  std::array<std::byte, 32> sha256{};
+  FileIdentity identity{};
+  std::vector<Resource> resources;
+};
+
+struct RegistrySetEntry {
+  std::array<std::byte, 32> sha256{};
+  std::uint32_t checksum{};
+  std::uint32_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+};
+
+struct ParsedRegistrySet {
+  std::uint32_t scale{};
+  std::uint16_t animationId{};
+  std::uint32_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+  std::vector<RegistrySetEntry> entries;
+};
+
+struct LoadedPack {
+  std::uint32_t scale{};
+  std::uint16_t animationId{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  bool lazyPayloads{};
+  std::vector<Resource> resources;
+  std::vector<LazyShard> lazyShards;
+};
+
+bool file_exists(const std::filesystem::path& path, const char* description) {
+  std::error_code error;
+  const bool exists = std::filesystem::exists(path, error);
+  if (error) throw std::runtime_error(std::string("cannot inspect ") + description);
+  return exists;
+}
+
+std::uint64_t registry_read_limit(const std::filesystem::path& path,
+                                  RegistryFormat format) {
+  if (format == RegistryFormat::Legacy) return kMaximumX2RegistryBytes;
+  std::ifstream input(path, std::ios::binary);
+  std::array<char, 8> magic{};
+  std::uint32_t version = 0;
+  std::uint32_t scale = 0;
+  if (!input || !input.read(magic.data(), static_cast<std::streamsize>(magic.size())) ||
+      !input.read(reinterpret_cast<char*>(&version), sizeof(version)) ||
+      !input.read(reinterpret_cast<char*>(&scale), sizeof(scale)) ||
+      magic != kXnRegistryMagic || version != kXnRegistryVersion ||
+      !supported_physical_scale(scale)) {
+    throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
+                             path.filename().string());
+  }
+  return maximum_registry_bytes_for_scale(scale);
+}
+
+ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat format,
+                              bool lazyPayloads, std::uint32_t lazyShardIndex = 0,
+                              bool verifyDigests = false) {
+  ParsedRegistry parsed;
+  const auto maximumReadBytes = registry_read_limit(path, format);
+  auto bytes = read_file(path, maximumReadBytes, &parsed.identity);
+  parsed.registryBytes = static_cast<std::uint64_t>(bytes.size());
+  if (verifyDigests) {
+    parsed.checksum = crc32(bytes);
+    parsed.sha256 = sha256(bytes);
+  }
+  BinaryReader reader(std::move(bytes));
+  std::array<char, 8> magic{};
+  std::uint32_t version = 0;
+  std::uint32_t metadata = 0;
+  if (!reader.read(magic) || !reader.read(version) || !reader.read(parsed.scale) ||
+      !reader.read(parsed.resourceCount) || !reader.read(metadata)) {
+    throw std::runtime_error("truncated creature-sprite registry header");
+  }
+  const bool xnFormat = format == RegistryFormat::Xn;
+  const bool formatHeaderValid =
+      xnFormat
+          ? magic == kXnRegistryMagic && version == kXnRegistryVersion &&
+                supported_physical_scale(parsed.scale)
+          : magic == kLegacyRegistryMagic &&
+                (version == kLegacyRegistryVersion ||
+                 version == kLegacyCurrentRegistryVersion) &&
+                parsed.scale == 2;
+  if (!formatHeaderValid || parsed.resourceCount == 0 ||
+      parsed.resourceCount > kMaximumResources ||
+      parsed.registryBytes > maximum_registry_bytes_for_scale(parsed.scale)) {
+    throw std::runtime_error("invalid creature-sprite registry header: " +
+                             path.filename().string());
+  }
+  if (!xnFormat && version == kLegacyRegistryVersion) {
+    if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
+    parsed.animationId = kLegacyMgo1AnimationId;
+  } else {
+    if (metadata == 0 || metadata > std::numeric_limits<std::uint16_t>::max()) {
+      throw std::runtime_error("invalid creature-sprite animation id");
+    }
+    parsed.animationId = static_cast<std::uint16_t>(metadata);
+  }
+  parsed.resources.reserve(parsed.resourceCount);
+  for (std::uint32_t resourceIndex = 0; resourceIndex < parsed.resourceCount;
+       ++resourceIndex) {
+    Resource resource;
+    std::uint32_t frameCount = 0;
+    std::uint32_t cycleCount = 0;
+    if (!reader.read(resource.resref) || !reader.read(resource.sourceSha256) ||
+        !reader.read(frameCount) || !reader.read(cycleCount) || frameCount == 0 ||
+        frameCount > kMaximumFramesPerResource || cycleCount == 0 ||
+        cycleCount > kMaximumCyclesPerResource) {
+      throw std::runtime_error("invalid creature-sprite resource header");
+    }
+    if (std::find_if(parsed.resources.begin(), parsed.resources.end(),
+                     [&](const Resource& existing) {
+                       return existing.resref == resource.resref;
+                     }) != parsed.resources.end()) {
+      throw std::runtime_error("duplicate creature-sprite resref");
+    }
+    resource.frames.reserve(frameCount);
+    for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
+      Frame frame;
+      std::uint16_t width = 0;
+      std::uint16_t height = 0;
+      std::int16_t centerX = 0;
+      std::int16_t centerY = 0;
+      std::array<std::byte, 3> frameReserved{};
+      std::uint32_t indexBytes = 0;
+      if (!reader.read(width) || !reader.read(height) || !reader.read(centerX) ||
+          !reader.read(centerY) || !reader.read(frame.transparent) ||
+          !reader.read(frameReserved) || !reader.read(indexBytes) || width == 0 ||
+          height == 0 || frameReserved != std::array<std::byte, 3>{}) {
+        throw std::runtime_error("invalid creature-sprite frame header");
+      }
+      const auto nativePixels = static_cast<std::uint64_t>(width) * height;
+      const auto scaleSquared =
+          static_cast<std::uint64_t>(parsed.scale) * parsed.scale;
+      if (nativePixels > (std::numeric_limits<std::uint64_t>::max)() / scaleSquared) {
+        throw std::runtime_error("creature-sprite frame payload overflows");
+      }
+      const auto expectedIndices = nativePixels * scaleSquared;
+      if (expectedIndices > (std::numeric_limits<std::uint32_t>::max)() ||
+          expectedIndices != indexBytes ||
+          indexBytes > maximum_registry_bytes_for_scale(parsed.scale) ||
+          (lazyPayloads && indexBytes > kLazyIndexCacheBudgetBytes) ||
+          !checked_add(parsed.indexBytes, indexBytes,
+                       maximum_registry_bytes_for_scale(parsed.scale)) ||
+          !reader.read(frame.representatives)) {
+        throw std::runtime_error("invalid creature-sprite frame payload");
+      }
+      const auto indexOffset = reader.position();
+      const std::byte* indexData = nullptr;
+      if (!reader.read_view(indexData, indexBytes)) {
+        throw std::runtime_error("truncated creature-sprite frame payload");
+      }
+      for (std::uint32_t index = 0; index < indexBytes; ++index) {
+        const auto paletteIndex = std::to_integer<std::uint8_t>(indexData[index]);
+        if (frame.representatives[paletteIndex] == 0xFFFFu) {
+          throw std::runtime_error("creature-sprite payload lacks a palette representative");
+        }
+      }
+      if (lazyPayloads) {
+        frame.lazyShardIndex = lazyShardIndex;
+        frame.lazyIndexOffset = indexOffset;
+        frame.lazyIndexBytes = indexBytes;
+      } else {
+        frame.indices.assign(reinterpret_cast<const std::uint8_t*>(indexData),
+                             reinterpret_cast<const std::uint8_t*>(indexData) + indexBytes);
+      }
+      frame.logicalWidth = width;
+      frame.logicalHeight = height;
+      frame.centerX = centerX;
+      frame.centerY = centerY;
+      resource.frames.push_back(std::move(frame));
+    }
+    resource.cycles.resize(cycleCount);
+    for (std::uint32_t cycleIndex = 0; cycleIndex < cycleCount; ++cycleIndex) {
+      std::uint32_t slotCount = 0;
+      if (!reader.read(slotCount) || slotCount > kMaximumCycleSlots) {
+        throw std::runtime_error("invalid creature-sprite cycle");
+      }
+      auto& cycle = resource.cycles[cycleIndex];
+      cycle.resize(slotCount);
+      for (auto& frameIndex : cycle) {
+        if (!reader.read(frameIndex) || frameIndex >= frameCount) {
+          throw std::runtime_error("invalid creature-sprite cycle lookup");
+        }
+      }
+    }
+    resource.compositionLogged.resize(frameCount, false);
+    if (!checked_add(parsed.frameCount, frameCount,
+                     static_cast<std::uint64_t>(kMaximumResources) *
+                         kMaximumFramesPerResource)) {
+      throw std::runtime_error("creature-sprite frame count overflow");
+    }
+    parsed.resources.push_back(std::move(resource));
+  }
+  if (!reader.at_end()) throw std::runtime_error("trailing creature-sprite registry bytes");
+  return parsed;
+}
+
+ParsedRegistrySet parse_registry_set(const std::filesystem::path& path) {
+  constexpr auto kMaximumSetManifestBytes =
+      kRegistrySetHeaderBytes +
+      static_cast<std::size_t>(kMaximumRegistrySetShards) * kRegistrySetEntryBytes;
+  BinaryReader reader(read_file(path, kMaximumSetManifestBytes));
+  ParsedRegistrySet parsed;
+  std::array<char, 8> magic{};
+  std::uint32_t version = 0;
+  std::uint32_t shardCount = 0;
+  std::uint32_t animationId = 0;
+  std::uint32_t reserved = 0;
+  if (!reader.read(magic) || !reader.read(version) || !reader.read(parsed.scale) ||
+      !reader.read(shardCount) || !reader.read(parsed.resourceCount) ||
+      !reader.read(animationId) || !reader.read(reserved) ||
+      !reader.read(parsed.frameCount) || !reader.read(parsed.indexBytes) ||
+      !reader.read(parsed.registryBytes)) {
+    throw std::runtime_error("truncated creature-sprite registry-set header");
+  }
+  if (magic != kRegistrySetMagic || version != kRegistrySetVersion ||
+      !supported_physical_scale(parsed.scale) || shardCount == 0 ||
+      shardCount > kMaximumRegistrySetShards || parsed.resourceCount == 0 ||
+      parsed.resourceCount > kMaximumRegistrySetResources || animationId == 0 ||
+      animationId > std::numeric_limits<std::uint16_t>::max() || reserved != 0 ||
+      parsed.frameCount == 0 || parsed.frameCount > kMaximumRegistrySetFrames ||
+      parsed.indexBytes == 0 || parsed.indexBytes > kMaximumRegistrySetBytes ||
+      parsed.registryBytes == 0 || parsed.registryBytes > kMaximumRegistrySetBytes ||
+      parsed.indexBytes > parsed.registryBytes ||
+      parsed.resourceCount > shardCount * kMaximumResources) {
+    throw std::runtime_error("invalid creature-sprite registry-set header");
+  }
+  parsed.animationId = static_cast<std::uint16_t>(animationId);
+  const auto maximumShardBytes = maximum_registry_bytes_for_scale(parsed.scale);
+  parsed.entries.reserve(shardCount);
+  std::uint64_t resourceSum = 0;
+  std::uint64_t frameSum = 0;
+  std::uint64_t indexSum = 0;
+  std::uint64_t registrySum = 0;
+  for (std::uint32_t shardIndex = 0; shardIndex < shardCount; ++shardIndex) {
+    RegistrySetEntry entry;
+    if (!reader.read(entry.sha256) || !reader.read(entry.checksum) ||
+        !reader.read(entry.resourceCount) || !reader.read(entry.frameCount) ||
+        !reader.read(entry.indexBytes) || !reader.read(entry.registryBytes)) {
+      throw std::runtime_error("truncated creature-sprite registry-set entry");
+    }
+    const bool nonzeroHash = std::any_of(
+        entry.sha256.begin(), entry.sha256.end(),
+        [](std::byte value) { return value != std::byte{0}; });
+    if (!nonzeroHash || entry.resourceCount == 0 ||
+        entry.resourceCount > kMaximumResources || entry.frameCount == 0 ||
+        entry.frameCount > static_cast<std::uint64_t>(entry.resourceCount) *
+                               kMaximumFramesPerResource ||
+        entry.indexBytes == 0 || entry.indexBytes > maximumShardBytes ||
+        entry.registryBytes < 24 || entry.registryBytes > maximumShardBytes ||
+        entry.indexBytes > entry.registryBytes ||
+        !checked_add(resourceSum, entry.resourceCount, kMaximumRegistrySetResources) ||
+        !checked_add(frameSum, entry.frameCount, kMaximumRegistrySetFrames) ||
+        !checked_add(indexSum, entry.indexBytes, kMaximumRegistrySetBytes) ||
+        !checked_add(registrySum, entry.registryBytes, kMaximumRegistrySetBytes)) {
+      throw std::runtime_error("invalid creature-sprite registry-set entry");
+    }
+    parsed.entries.push_back(entry);
+  }
+  if (!reader.at_end() || resourceSum != parsed.resourceCount ||
+      frameSum != parsed.frameCount || indexSum != parsed.indexBytes ||
+      registrySum != parsed.registryBytes) {
+    throw std::runtime_error("creature-sprite registry-set totals mismatch");
+  }
+  return parsed;
+}
+
+LoadedPack load_registry_set(const std::filesystem::path& assetsDirectory,
+                             const std::filesystem::path& setPath) {
+  const auto set = parse_registry_set(setPath);
+  LoadedPack loaded{.scale = set.scale,
+                    .animationId = set.animationId,
+                    .frameCount = set.frameCount,
+                    .indexBytes = set.indexBytes,
+                    .lazyPayloads = true};
+  loaded.resources.reserve(set.resourceCount);
+  loaded.lazyShards.reserve(set.entries.size());
+  std::set<std::array<char, 8>> resrefs;
+  std::uint64_t resourceSum = 0;
+  std::uint64_t frameSum = 0;
+  std::uint64_t indexSum = 0;
+  std::uint64_t registrySum = 0;
+  for (std::uint32_t shardIndex = 0; shardIndex < set.entries.size(); ++shardIndex) {
+    const auto shardPath = assetsDirectory / registry_shard_filename(shardIndex);
+    auto shard = parse_registry(shardPath, RegistryFormat::Xn, true, shardIndex, true);
+    const auto& expected = set.entries[shardIndex];
+    if (shard.scale != set.scale || shard.animationId != set.animationId ||
+        shard.resourceCount != expected.resourceCount ||
+        shard.frameCount != expected.frameCount || shard.indexBytes != expected.indexBytes ||
+        shard.registryBytes != expected.registryBytes ||
+        shard.checksum != expected.checksum || shard.sha256 != expected.sha256) {
+      throw std::runtime_error("creature-sprite registry-set shard mismatch: " +
+                               shardPath.filename().string());
+    }
+    for (const auto& resource : shard.resources) {
+      if (!resrefs.insert(resource.resref).second) {
+        throw std::runtime_error("duplicate creature-sprite resref across shards");
+      }
+    }
+    if (!checked_add(resourceSum, shard.resourceCount, kMaximumRegistrySetResources) ||
+        !checked_add(frameSum, shard.frameCount, kMaximumRegistrySetFrames) ||
+        !checked_add(indexSum, shard.indexBytes, kMaximumRegistrySetBytes) ||
+        !checked_add(registrySum, shard.registryBytes, kMaximumRegistrySetBytes)) {
+      throw std::runtime_error("creature-sprite registry-set aggregate overflow");
+    }
+    loaded.lazyShards.push_back({.path = shardPath, .identity = shard.identity});
+    loaded.resources.insert(loaded.resources.end(),
+                            std::make_move_iterator(shard.resources.begin()),
+                            std::make_move_iterator(shard.resources.end()));
+  }
+  if (resourceSum != set.resourceCount || frameSum != set.frameCount ||
+      indexSum != set.indexBytes || registrySum != set.registryBytes ||
+      loaded.resources.size() != set.resourceCount) {
+    throw std::runtime_error("creature-sprite registry-set loaded totals mismatch");
+  }
+  return loaded;
+}
+
+LoadedPack load_monolithic_registry(const std::filesystem::path& path,
+                                    RegistryFormat format) {
+  const bool lazyPayloads = format == RegistryFormat::Xn;
+  auto parsed = parse_registry(path, format, lazyPayloads);
+  LoadedPack loaded{.scale = parsed.scale,
+                    .animationId = parsed.animationId,
+                    .frameCount = parsed.frameCount,
+                    .indexBytes = parsed.indexBytes,
+                    .lazyPayloads = lazyPayloads,
+                    .resources = std::move(parsed.resources)};
+  if (lazyPayloads) {
+    loaded.lazyShards.push_back({.path = path, .identity = parsed.identity});
+  }
+  return loaded;
+}
+
+void activate_loaded_pack(LoadedPack&& loaded) {
+  std::lock_guard lock(g_mutex);
+  g_resources = std::move(loaded.resources);
+  g_lazyShards = std::move(loaded.lazyShards);
+  g_lazyPackLoaded = loaded.lazyPayloads;
+  g_lazyPackFailureLogged = false;
+  clear_texture_cache_locked();
+  clear_lazy_index_cache_locked();
+  reset_diagnostics_locked();
+  g_targetAnimationId.store(loaded.animationId, std::memory_order_release);
+  g_loadedScale.store(loaded.scale, std::memory_order_release);
+  g_ready.store(true, std::memory_order_release);
+}
+}  // namespace
+
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   try {
+    const auto setPath = assetsDirectory / kRegistrySetFilename;
     const auto xnPath = assetsDirectory / kXnRegistryFilename;
     const auto legacyPath = assetsDirectory / kLegacyRegistryFilename;
-    std::error_code pathError;
-    const bool xnExists = std::filesystem::exists(xnPath, pathError);
-    if (pathError) {
-      throw std::runtime_error("cannot inspect creature-sprite xN registry");
+    if (file_exists(setPath, "creature-sprite registry-set")) {
+      auto loaded = load_registry_set(assetsDirectory, setPath);
+      const auto scale = loaded.scale;
+      const auto animationId = loaded.animationId;
+      const auto resourceCount = loaded.resources.size();
+      const auto frameCount = loaded.frameCount;
+      const auto indexBytes = loaded.indexBytes;
+      const auto shardCount = loaded.lazyShards.size();
+      activate_loaded_pack(std::move(loaded));
+      LOG_INFO(
+          "Creature sprite xBR pack ready: animation 0x{:04X}, scale=x{}, {} resources, "
+          "{} frames, {} index bytes across {} lazy shards; source={}; filter=NEAREST; "
+          "index cache budget={} MiB",
+          animationId, scale, resourceCount, frameCount, indexBytes, shardCount,
+          kRegistrySetFilename,
+          kLazyIndexCacheBudgetBytes / (1024ull * 1024ull));
+      return true;
     }
-    const bool xnFormat = xnExists;
-    const auto& registryPath = xnFormat ? xnPath : legacyPath;
-    BinaryReader reader(read_file(registryPath));
-    std::array<char, 8> magic{};
-    std::uint32_t version = 0;
-    std::uint32_t scale = 0;
-    std::uint32_t resourceCount = 0;
-    std::uint32_t metadata = 0;
-    if (!reader.read(magic) || !reader.read(version) || !reader.read(scale) ||
-        !reader.read(resourceCount) || !reader.read(metadata)) {
-      throw std::runtime_error("truncated creature-sprite registry header");
-    }
-    const bool formatHeaderValid =
-        xnFormat
-            ? magic == kXnRegistryMagic && version == kXnRegistryVersion &&
-                  supported_physical_scale(scale)
-            : magic == kLegacyRegistryMagic &&
-                  (version == kLegacyRegistryVersion ||
-                   version == kLegacyCurrentRegistryVersion) &&
-                  scale == 2;
-    if (!formatHeaderValid || resourceCount == 0 || resourceCount > kMaximumResources) {
-      throw std::runtime_error("invalid creature-sprite registry header: " +
-                               registryPath.filename().string());
-    }
-    std::uint16_t animationId = 0;
-    if (!xnFormat && version == kLegacyRegistryVersion) {
-      if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
-      animationId = kLegacyMgo1AnimationId;
-    } else {
-      if (metadata == 0 || metadata > std::numeric_limits<std::uint16_t>::max()) {
-        throw std::runtime_error("invalid creature-sprite animation id");
-      }
-      animationId = static_cast<std::uint16_t>(metadata);
-    }
-    std::vector<Resource> loaded;
-    loaded.reserve(resourceCount);
-    std::size_t totalFrames = 0;
-    std::uint64_t totalIndexBytes = 0;
-    for (std::uint32_t resourceIndex = 0; resourceIndex < resourceCount; ++resourceIndex) {
-      Resource resource;
-      std::uint32_t frameCount = 0;
-      std::uint32_t cycleCount = 0;
-      if (!reader.read(resource.resref) || !reader.read(resource.sourceSha256) ||
-          !reader.read(frameCount) || !reader.read(cycleCount) || frameCount == 0 ||
-          frameCount > kMaximumFramesPerResource || cycleCount == 0 ||
-          cycleCount > kMaximumCyclesPerResource) {
-        throw std::runtime_error("invalid creature-sprite resource header");
-      }
-      if (std::find_if(loaded.begin(), loaded.end(), [&](const Resource& existing) {
-            return existing.resref == resource.resref;
-          }) != loaded.end()) {
-        throw std::runtime_error("duplicate creature-sprite resref");
-      }
-      resource.frames.reserve(frameCount);
-      for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
-        Frame frame;
-        std::uint16_t width = 0;
-        std::uint16_t height = 0;
-        std::int16_t centerX = 0;
-        std::int16_t centerY = 0;
-        std::array<std::byte, 3> frameReserved{};
-        std::uint32_t indexBytes = 0;
-        if (!reader.read(width) || !reader.read(height) || !reader.read(centerX) ||
-            !reader.read(centerY) || !reader.read(frame.transparent) ||
-            !reader.read(frameReserved) || !reader.read(indexBytes) || width == 0 || height == 0 ||
-            frameReserved != std::array<std::byte, 3>{}) {
-          throw std::runtime_error("invalid creature-sprite frame header");
-        }
-        const auto nativePixels = static_cast<std::uint64_t>(width) * height;
-        const auto scaleSquared = static_cast<std::uint64_t>(scale) * scale;
-        if (nativePixels > (std::numeric_limits<std::uint64_t>::max)() / scaleSquared) {
-          throw std::runtime_error("creature-sprite frame payload overflows");
-        }
-        const auto expectedIndices = nativePixels * scaleSquared;
-        if (expectedIndices > (std::numeric_limits<std::uint32_t>::max)() ||
-            expectedIndices != indexBytes || indexBytes > kMaximumRegistryBytes ||
-            totalIndexBytes > kMaximumRegistryBytes - indexBytes ||
-            !reader.read(frame.representatives) ||
-            !reader.read_bytes(frame.indices, indexBytes)) {
-          throw std::runtime_error("invalid creature-sprite frame payload");
-        }
-        for (const auto paletteIndex : frame.indices) {
-          if (frame.representatives[paletteIndex] == 0xFFFFu) {
-            throw std::runtime_error("creature-sprite payload lacks a palette representative");
-          }
-        }
-        frame.logicalWidth = width;
-        frame.logicalHeight = height;
-        frame.centerX = centerX;
-        frame.centerY = centerY;
-        resource.frames.push_back(std::move(frame));
-        totalIndexBytes += indexBytes;
-      }
-      resource.cycles.resize(cycleCount);
-      for (std::uint32_t cycleIndex = 0; cycleIndex < cycleCount; ++cycleIndex) {
-        std::uint32_t slotCount = 0;
-        if (!reader.read(slotCount) || slotCount > kMaximumCycleSlots) {
-          throw std::runtime_error("invalid creature-sprite cycle");
-        }
-        auto& cycle = resource.cycles[cycleIndex];
-        cycle.resize(slotCount);
-        for (auto& frameIndex : cycle) {
-          if (!reader.read(frameIndex) || frameIndex >= frameCount) {
-            throw std::runtime_error("invalid creature-sprite cycle lookup");
-          }
-        }
-      }
-      resource.compositionLogged.resize(frameCount, false);
-      totalFrames += frameCount;
-      loaded.push_back(std::move(resource));
-    }
-    if (!reader.at_end()) throw std::runtime_error("trailing creature-sprite registry bytes");
-    {
-      std::lock_guard lock(g_mutex);
-      g_resources = std::move(loaded);
-      clear_texture_cache_locked();
-      reset_diagnostics_locked();
-      g_targetAnimationId.store(animationId, std::memory_order_release);
-      g_loadedScale.store(scale, std::memory_order_release);
-      g_ready.store(true, std::memory_order_release);
-    }
+    const bool xnExists = file_exists(xnPath, "creature-sprite xN registry");
+    const auto& registryPath = xnExists ? xnPath : legacyPath;
+    auto loaded = load_monolithic_registry(
+        registryPath, xnExists ? RegistryFormat::Xn : RegistryFormat::Legacy);
+    const auto scale = loaded.scale;
+    const auto animationId = loaded.animationId;
+    const auto resourceCount = loaded.resources.size();
+    const auto frameCount = loaded.frameCount;
+    const auto indexBytes = loaded.indexBytes;
+    activate_loaded_pack(std::move(loaded));
     LOG_INFO(
-        "Creature sprite xBR2x pack ready: animation 0x{:04X}, scale=x{}, {} resources, {} "
+        "Creature sprite xBR pack ready: animation 0x{:04X}, scale=x{}, {} resources, {} "
         "frames, {} index bytes; source={}; filter=NEAREST; registry budget={} MiB",
-        animationId, scale, resourceCount, totalFrames, totalIndexBytes,
-        registryPath.filename().string(), kMaximumRegistryBytes / (1024ull * 1024ull));
+        animationId, scale, resourceCount, frameCount, indexBytes,
+        registryPath.filename().string(),
+        maximum_registry_bytes_for_scale(scale) / (1024ull * 1024ull));
     return true;
   } catch (const std::exception& error) {
-    LOG_WARN("Creature sprite xBR2x pack disabled: {}", error.what());
+    LOG_WARN("Creature sprite xBR pack disabled: {}", error.what());
   } catch (...) {
-    LOG_WARN("Creature sprite xBR2x pack disabled by an unknown error");
+    LOG_WARN("Creature sprite xBR pack disabled by an unknown error");
   }
   release();
   return false;
@@ -1012,7 +1655,11 @@ void release() noexcept {
   g_targetAnimationId.store(0, std::memory_order_release);
   g_loadedScale.store(0, std::memory_order_release);
   g_resources.clear();
+  g_lazyShards.clear();
+  g_lazyPackLoaded = false;
+  g_lazyPackFailureLogged = false;
   clear_texture_cache_locked();
+  clear_lazy_index_cache_locked();
   reset_diagnostics_locked();
 #ifdef _WIN32
   g_textureContext = nullptr;
@@ -1088,11 +1735,49 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
     }
     const auto& cycle = resource->cycles[static_cast<std::size_t>(sequence)];
     if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
-    out.resourceIndex = static_cast<std::size_t>(std::distance(g_resources.begin(), resource));
-    out.frameIndex = cycle[static_cast<std::size_t>(currentFrame)];
-    return out.frameIndex < resource->frames.size();
+    const FrameHandle resolved{
+        .resourceIndex =
+            static_cast<std::size_t>(std::distance(g_resources.begin(), resource)),
+        .frameIndex = cycle[static_cast<std::size_t>(currentFrame)],
+    };
+    if (resolved.frameIndex >= resource->frames.size() ||
+        !validate_lazy_frame_source_locked(resolved)) {
+      return false;
+    }
+    out = resolved;
+    return true;
   } catch (...) {
     return false;
+  }
+}
+
+bool ensure_frame_payload_available(FrameHandle handle) noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           frame_indices_locked(handle) != nullptr;
+  } catch (...) {
+    return false;
+  }
+}
+
+std::uint64_t resident_index_bytes() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (g_lazyPackLoaded) return lazy_index_cache_bytes_locked();
+    std::uint64_t total = 0;
+    for (const auto& resource : g_resources) {
+      for (const auto& frame : resource.frames) {
+        if (!checked_add(total, static_cast<std::uint64_t>(frame.indices.size()),
+                         kMaximumRegistryBytes)) {
+          return (std::numeric_limits<std::uint64_t>::max)();
+        }
+      }
+    }
+    return total;
+  } catch (...) {
+    return (std::numeric_limits<std::uint64_t>::max)();
   }
 }
 
@@ -1215,6 +1900,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
     if (!supported_physical_scale(physicalScale)) return false;
     std::array<FrameGeometry, kMaximumCompositeLayers> geometries{};
+    std::array<bool, kMaximumRegistrySetShards> validatedSources{};
     NativePixelEncoding encoding{};
     for (std::size_t index = 0; index < layerCount; ++index) {
       const auto& layer = layers[index];
@@ -1231,6 +1917,17 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       }
       const auto& frame =
           g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
+      if (frame.lazyShardIndex != kResidentFrameShard) {
+        if (frame.lazyShardIndex >= validatedSources.size()) {
+          (void)validate_lazy_frame_source_locked(layer.frame);
+          return false;
+        }
+        if (!validatedSources[frame.lazyShardIndex] &&
+            !validate_lazy_frame_source_locked(layer.frame)) {
+          return false;
+        }
+        validatedSources[frame.lazyShardIndex] = true;
+      }
       geometries[index] = {.logicalWidth = frame.logicalWidth,
                            .logicalHeight = frame.logicalHeight,
                            .centerX = frame.centerX,

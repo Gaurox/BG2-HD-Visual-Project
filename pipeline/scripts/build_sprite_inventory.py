@@ -5,7 +5,12 @@ collision signals.  It never writes to the game directory.  Its four CSVs are
 intended to answer two separate questions without conflating them:
 
 * which animation, layer, item and BAM resources exist;
-* which exact families are accepted by the current x2 pipeline/runtime.
+* which exact families are accepted by the current xN pipeline/runtime.
+
+The manifest also records the canonical monolith and multi-shard registry-set
+contracts.  Per-resource size estimates remain the historical V2/x2 cost so
+existing consumers keep the same meaning; callers can project another scale
+with :func:`estimate_registry_resource_bytes`.
 """
 
 from __future__ import annotations
@@ -38,11 +43,25 @@ from run_creature_sprite_x2 import (  # noqa: E402
     IDS_TYPE,
     ITM_TYPE,
     MAX_FRAMES_PER_RESOURCE,
+    MAX_LAZY_FRAME_INDEX_BYTES,
     MAX_REGISTRY_BYTES,
+    MAX_REGISTRY_BYTES_BY_SCALE,
+    MAX_REGISTRY_SET_BYTES,
+    MAX_REGISTRY_SET_FRAMES,
+    MAX_REGISTRY_SET_RESOURCES,
+    MAX_REGISTRY_SET_SHARDS,
     MAX_RESOURCES,
+    REGISTRY_HEADER_BYTES,
+    XN_REGISTRY_MAGIC,
+    XN_REGISTRY_SET_MAGIC,
+    XN_REGISTRY_SET_VERSION,
+    XN_REGISTRY_VERSION,
+    XBR_OUTPUT_BATCH_BUDGET_BYTES,
     KeyIndex,
+    maximum_registry_bytes,
     parse_animation_ini,
     parse_ids,
+    partition_registry_resources,
 )
 
 
@@ -156,6 +175,7 @@ RESOURCE_FIELDS = (
     "center_y_min",
     "center_y_max",
     "native_pixel_count",
+    "native_frame_pixel_count_max",
     "transparent_pixel_count",
     "opaque_pixel_count",
     "used_palette_index_count",
@@ -221,6 +241,112 @@ def sha256_file(path: Path) -> str:
 
 def safe_int(value: str) -> int | None:
     return int(value) if value.isdigit() else None
+
+
+def estimate_registry_resource_bytes(resource: dict[str, Any], scale: int) -> int:
+    """Project one V2/V3 resource record without materializing scaled pixels."""
+
+    if scale not in (2, 4):
+        raise ValueError("inventory registry projection supports scale 2 or 4")
+    return (
+        48
+        + int(resource["frame_count"]) * 528
+        + int(resource["native_pixel_count"]) * scale * scale
+        + int(resource["cycle_count"]) * 4
+        + int(resource["cycle_slot_count"]) * 4
+    )
+
+
+def build_registry_set_projections(
+    resources: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Project deterministic x2/x4 sets for every runtime-relevant animation."""
+
+    by_animation: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for resource in resources:
+        if (
+            resource.get("decode_status") != "ok"
+            or resource.get("runtime_relevant") != "yes"
+            or resource.get("override_collision") != "no"
+        ):
+            continue
+        for animation_id in filter(None, str(resource.get("animation_ids", "")).split(";")):
+            by_animation[animation_id].append(resource)
+
+    animations: dict[str, Any] = {}
+    for animation_id in sorted(by_animation):
+        selected = sorted(by_animation[animation_id], key=lambda row: row["bam_resref"])
+        frame_count = sum(int(resource["frame_count"]) for resource in selected)
+        projection: dict[str, Any] = {
+            "resource_count": len(selected),
+            "frame_count": frame_count,
+        }
+        for scale in (2, 4):
+            sized = [
+                {
+                    "resref": resource["bam_resref"],
+                    "bytes": estimate_registry_resource_bytes(resource, scale),
+                }
+                for resource in selected
+            ]
+            largest = max(sized, key=lambda record: (record["bytes"], record["resref"]))
+            largest_frame = max(
+                selected,
+                key=lambda resource: (
+                    int(resource["native_frame_pixel_count_max"]),
+                    resource["bam_resref"],
+                ),
+            )
+            largest_frame_bytes = (
+                int(largest_frame["native_frame_pixel_count_max"]) * scale * scale
+            )
+            byte_limit = maximum_registry_bytes(scale)
+            blocker = ""
+            shards: list[list[dict[str, Any]]] = []
+            if len(sized) > MAX_REGISTRY_SET_RESOURCES:
+                blocker = "registry-set-resource-limit"
+            elif frame_count > MAX_REGISTRY_SET_FRAMES:
+                blocker = "registry-set-frame-limit"
+            elif largest_frame_bytes > MAX_LAZY_FRAME_INDEX_BYTES:
+                blocker = "registry-set-frame-index-size-limit"
+            elif REGISTRY_HEADER_BYTES + int(largest["bytes"]) > byte_limit:
+                blocker = "registry-set-resource-shard-size-limit"
+            else:
+                try:
+                    shards = partition_registry_resources(
+                        sized, maximum_bytes=byte_limit
+                    )
+                except RuntimeError:
+                    blocker = "registry-set-shard-count-limit"
+            aggregate_bytes = (
+                sum(int(record["bytes"]) for record in sized)
+                + len(shards) * REGISTRY_HEADER_BYTES
+                if not blocker
+                else None
+            )
+            if aggregate_bytes is not None and aggregate_bytes > MAX_REGISTRY_SET_BYTES:
+                blocker = "registry-set-aggregate-size-limit"
+                aggregate_bytes = None
+                shards = []
+            projection[f"x{scale}"] = {
+                "shard_byte_limit": byte_limit,
+                "maximum_resource_resref": largest["resref"],
+                "maximum_resource_bytes": int(largest["bytes"]),
+                "maximum_frame_resref": largest_frame["bam_resref"],
+                "maximum_frame_index_bytes": largest_frame_bytes,
+                "shard_count": len(shards) if not blocker else None,
+                "total_registry_bytes": aggregate_bytes,
+                "fits_set": not blocker,
+                "blocker": blocker,
+            }
+        animations[animation_id] = projection
+    return {
+        "policy": (
+            "unique decoded runtime-relevant stock BAMs without override collision, "
+            "grouped per animation_id and ordered by bam_resref"
+        ),
+        "animations": animations,
+    }
 
 
 def animation_symbol_parts(symbol: str) -> tuple[str, str, str, str]:
@@ -297,6 +423,7 @@ def bam_stats(index: KeyIndex, entry: tuple[str, int, int]) -> dict[str, Any]:
         "center_y_min": "",
         "center_y_max": "",
         "native_pixel_count": "",
+        "native_frame_pixel_count_max": "",
         "transparent_pixel_count": "",
         "opaque_pixel_count": "",
         "used_palette_index_count": "",
@@ -390,6 +517,9 @@ def bam_stats(index: KeyIndex, entry: tuple[str, int, int]) -> dict[str, Any]:
                 "center_y_min": min(centers_y) if centers_y else "",
                 "center_y_max": max(centers_y) if centers_y else "",
                 "native_pixel_count": native_pixels,
+                "native_frame_pixel_count_max": max(
+                    (int(indices.size) for indices, *_ in frames), default=0
+                ),
                 "transparent_pixel_count": transparent_pixels,
                 "opaque_pixel_count": native_pixels - transparent_pixels,
                 "used_palette_index_count": len(used_indices),
@@ -939,7 +1069,49 @@ def main() -> int:
             "max_resources_per_registry": MAX_RESOURCES,
             "max_frames_per_resource": MAX_FRAMES_PER_RESOURCE,
             "max_registry_bytes": MAX_REGISTRY_BYTES,
+            "max_lazy_frame_index_bytes": MAX_LAZY_FRAME_INDEX_BYTES,
+            "xbr_output_batch_budget_bytes": XBR_OUTPUT_BATCH_BUDGET_BYTES,
+            "max_registry_bytes_by_scale": {
+                str(scale): byte_limit
+                for scale, byte_limit in sorted(MAX_REGISTRY_BYTES_BY_SCALE.items())
+            },
+            "max_shards_per_registry_set": MAX_REGISTRY_SET_SHARDS,
+            "max_resources_per_registry_set": MAX_REGISTRY_SET_RESOURCES,
+            "max_frames_per_registry_set": MAX_REGISTRY_SET_FRAMES,
+            "max_registry_set_bytes": MAX_REGISTRY_SET_BYTES,
         },
+        "registry_contracts": {
+            "resource_cost_column": {
+                "field": "registry_resource_estimated_bytes",
+                "scale": 2,
+                "format": "IEECSX2/v2",
+                "projection_formula": (
+                    "48 + frame_count*528 + native_pixel_count*scale^2 + "
+                    "cycle_count*4 + cycle_slot_count*4"
+                ),
+                "projection_scales": [2, 4],
+            },
+            "explicit_xn": {
+                "magic": XN_REGISTRY_MAGIC.rstrip(b"\0").decode("ascii"),
+                "version": XN_REGISTRY_VERSION,
+                "supported_scales": [2, 4],
+            },
+            "registry_set": {
+                "magic": XN_REGISTRY_SET_MAGIC.rstrip(b"\0").decode("ascii"),
+                "version": XN_REGISTRY_SET_VERSION,
+                "member_magic": XN_REGISTRY_MAGIC.rstrip(b"\0").decode("ascii"),
+                "partition": "deterministic-greedy-at-resource-boundaries",
+                "shard_byte_limit": "scale-indexed-x2-128MiB-x4-512MiB",
+                "checksums": ["sha256", "crc32"],
+                "runtime_priority": ["registry-set", "xn-monolith", "legacy-monolith"],
+                "invalid_present_set_policy": "fail-closed-no-monolith-fallback",
+                "prepare_validation": "all-shards-before-ready",
+                "payload_loading": "frame-indices-lazy-bounded-lru",
+                "aggregate_size_definition": "sum-of-member-registry-bytes",
+                "member_header_bytes": REGISTRY_HEADER_BYTES,
+            },
+        },
+        "registry_set_projections": build_registry_set_projections(resources),
         "counts": {
             "key_resources": len(key_resources),
             "animations": len(animations),

@@ -55,6 +55,31 @@ function Get-Sha256([string]$Path) {
     }
 }
 
+function Enter-GameMutationMutex([string]$GameRoot) {
+    $normalized = [System.IO.Path]::GetFullPath($GameRoot).TrimEnd('\').ToUpperInvariant()
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $key = ([System.BitConverter]::ToString(
+            $sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($normalized)))).Replace('-', '')
+    }
+    finally { $sha.Dispose() }
+    $mutex = New-Object System.Threading.Mutex($false, "Global\BG2UpscaleCreatureSpriteMutation_$key")
+    $owned = $false
+    try { $owned = $mutex.WaitOne(0) }
+    catch [System.Threading.AbandonedMutexException] { $owned = $true }
+    if (-not $owned) {
+        $mutex.Dispose()
+        throw "Une installation ou restauration sprite modifie déjà ce GameRoot : $GameRoot"
+    }
+    return $mutex
+}
+
+function Exit-GameMutationMutex($Mutex) {
+    if ($null -eq $Mutex) { return }
+    try { $Mutex.ReleaseMutex() }
+    finally { $Mutex.Dispose() }
+}
+
 function Assert-ExpectedHash([string]$Path, [string]$Expected, [string]$Label) {
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
         throw "$Label absent : $Path"
@@ -66,6 +91,8 @@ function Assert-ExpectedHash([string]$Path, [string]$Expected, [string]$Label) {
 }
 
 $gameFull = (Resolve-Path -LiteralPath (Resolve-JobPath $job.paths.game_root)).Path.TrimEnd('\')
+$gameMutationMutex = Enter-GameMutationMutex $gameFull
+try {
 $runRoot = Resolve-JobPath $job.paths.run_dir
 $buildRoot = Join-Path $runRoot 'build'
 $runtimeRoot = Join-Path $runRoot 'runtime'
@@ -126,7 +153,7 @@ foreach ($scanRoot in @((Join-Path $workspaceRoot 'proto'), (Join-Path $workspac
     if (-not (Test-Path -LiteralPath $scanRoot -PathType Container)) { continue }
     foreach ($candidate in Get-ChildItem -LiteralPath $scanRoot -Filter 'active-test.json' -File -Recurse -ErrorAction SilentlyContinue) {
         $candidateState = Get-Content -LiteralPath $candidate.FullName -Raw | ConvertFrom-Json
-        if ($candidateState.status -in @('installing', 'installed-pending-qa', 'validated-installed', 'qa-failed')) {
+        if ($candidateState.status -in @('installing', 'restoring', 'installed-pending-qa', 'validated-installed', 'qa-failed')) {
             throw "Un test sprite est déjà actif : $($candidate.FullName) [$($candidateState.status)]"
         }
     }
@@ -142,9 +169,15 @@ Assert-ExpectedHash $sourcePack $expectedPackSha256 'Registre sprite x2'
 
 # Le runtime donne volontairement priorité au registre XN. Un test legacy ne
 # peut donc prouver son propre pack si un XN résiduel est présent.
-$xnRegistry = Assert-GameChildPath (Join-Path $gameFull 'iee-assets\creature-sprites\CreatureSprites-XN.registry')
-if (Test-Path -LiteralPath $xnRegistry -PathType Leaf) {
-    throw 'CreatureSprites-XN.registry est présent : restaure le test xN avant tout test legacy x2.'
+$xnPriorityFiles = @(
+    'iee-assets\creature-sprites\CreatureSprites-XN.set',
+    'iee-assets\creature-sprites\CreatureSprites-XN.registry'
+)
+foreach ($relative in $xnPriorityFiles) {
+    $xnPriorityFile = Assert-GameChildPath (Join-Path $gameFull $relative)
+    if (Test-Path -LiteralPath $xnPriorityFile) {
+        throw "$([System.IO.Path]::GetFileName($xnPriorityFile)) est présent : restaure le test xN avant tout test legacy x2."
+    }
 }
 
 $overridePath = Join-Path $gameFull 'override'
@@ -172,7 +205,8 @@ if ($collisions.Count -ne 0) {
     throw "Collision override détectée : $($collisions.Name -join ', ')"
 }
 
-$stamp = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
+$stamp = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmss.fffffffZ') +
+    "-$PID-$([Guid]::NewGuid().ToString('N'))"
 $backupRoot = Join-Path $runRoot "ingame-test\backups\$stamp"
 New-Item -ItemType Directory -Path $backupRoot -Force | Out-Null
 
@@ -344,11 +378,16 @@ catch {
     throw
 }
 
-[pscustomobject]@{
+$result = [pscustomobject]@{
     Status = $state.status
     GameRoot = $gameFull
     DllSha256 = $state.installed_dll_sha256
     PackSha256 = $state.installed_pack_sha256
     Backup = $backupRoot
     State = $activeStatePath
+}
+$result
+}
+finally {
+    Exit-GameMutationMutex $gameMutationMutex
 }

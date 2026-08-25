@@ -28,7 +28,7 @@ dossiers d'extraction historiques comme source d'identité.
 | Type ITM, code d'animation et familles Character candidates | `sprite_items.csv` |
 | Installation analysée, hashes, limites et totaux | `manifest.json` |
 | Création, build, installation réversible et QA | `SPRITE_UPSCALE_PIPELINE.md` |
-| Échelle x2/x4 explicite, registre V3, activation, install/restore et blocages | `SPRITE_UPSCALE_XN_FOUNDATION.md` |
+| Échelle x2/x4 explicite, registres V3, registry-set, install/restore et gates | `SPRITE_UPSCALE_XN_FOUNDATION.md` |
 
 Ne jamais déduire un préfixe BAM depuis le nom du personnage, son portrait, une apparence visuelle
 ou le nom d'un dossier historique. Priorité d'identité : ID lu dans CRE/sauvegarde, symbole

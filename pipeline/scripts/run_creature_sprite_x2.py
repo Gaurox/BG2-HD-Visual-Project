@@ -42,19 +42,26 @@ SOURCE_SCHEMA = "bg2-upscale-creature-sprite-source-v1"
 BUILD_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-pack-v1"
 ARMOR_SET_BUILD_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-armor-set-pack-v1"
 RUNTIME_SCHEMA = "bg2-upscale-creature-sprite-runtime-v1"
+XN_INSTALL_STATE_SCHEMA = "bg2-upscale-creature-sprite-xn-ingame-test-v2"
 REGISTRY_MAGIC = b"IEECSX2\0"
 REGISTRY_VERSION = 2
 LEGACY_REGISTRY_VERSION = 1
 XN_REGISTRY_MAGIC = b"IEECSXN\0"
 XN_REGISTRY_VERSION = 3
+XN_REGISTRY_SET_MAGIC = b"IEECSNS\0"
+XN_REGISTRY_SET_VERSION = 1
 LEGACY_SCALE = 2
 # Readability zoom for source-only QA sheets; it is not the upscale contract.
 SOURCE_PREVIEW_SCALE = 2
 REGISTRY_FILENAME = "CreatureSprites-X2.registry"
 XN_REGISTRY_FILENAME = "CreatureSprites-XN.registry"
+XN_REGISTRY_SET_FILENAME = "CreatureSprites-XN.set"
+XN_REGISTRY_SHARD_FILENAME = "CreatureSprites-XN-{index:04d}.registry"
 REGISTRY_HEADER_BYTES = 24
 REGISTRY_RESOURCE_HEADER_BYTES = 48
 REGISTRY_FRAME_HEADER_BYTES = 528
+REGISTRY_SET_HEADER_BYTES = 56
+REGISTRY_SET_ENTRY_BYTES = 64
 BAM_TYPE = 0x03E8
 ITM_TYPE = 0x03ED
 IDS_TYPE = 0x03F0
@@ -64,6 +71,16 @@ MAX_FRAMES_PER_RESOURCE = 4096
 MAX_CYCLES_PER_RESOURCE = 256
 MAX_CYCLE_SLOTS = 65536
 MAX_REGISTRY_BYTES = 128 * 1024 * 1024
+MAX_REGISTRY_BYTES_BY_SCALE = {
+    2: MAX_REGISTRY_BYTES,
+    4: 512 * 1024 * 1024,
+}
+MAX_LAZY_FRAME_INDEX_BYTES = 128 * 1024 * 1024
+MAX_REGISTRY_SET_SHARDS = 64
+MAX_REGISTRY_SET_RESOURCES = MAX_RESOURCES * MAX_REGISTRY_SET_SHARDS
+MAX_REGISTRY_SET_FRAMES = 1_048_576
+MAX_REGISTRY_SET_BYTES = 8 * 1024 * 1024 * 1024
+XBR_OUTPUT_BATCH_BUDGET_BYTES = 64 * 1024 * 1024
 # The xN adapter retains the baseline adapter's legacy protocol and xBR2x call
 # path byte-for-byte. Accepting this audited hash keeps existing x2 builds
 # resumable without spending another full xBR pass.
@@ -110,6 +127,12 @@ SUPPORTED_RUNTIME_PROFILES = frozenset(
         "character-bg2ee-2.7.3.0",
     }
 )
+
+
+def maximum_registry_bytes(scale: int) -> int:
+    if isinstance(scale, bool) or not isinstance(scale, int) or scale not in MAX_REGISTRY_BYTES_BY_SCALE:
+        raise RuntimeError("registry scale must be 2 or 4")
+    return MAX_REGISTRY_BYTES_BY_SCALE[scale]
 
 sys.path.insert(0, str(SCRIPT_DIR))
 from bam_export import decode_bam  # noqa: E402
@@ -257,6 +280,14 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest().upper()
+
+
+def crc32_file(path: Path) -> int:
+    checksum = 0
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            checksum = zlib.crc32(chunk, checksum)
+    return checksum & 0xFFFFFFFF
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -454,11 +485,24 @@ def load_armor_set(set_file: Path) -> dict[str, Any]:
         seen_prefixes.add(prefix)
         member_jobs.append(member)
     member_contracts = [upscale_contract(member) for member in member_jobs]
-    identities = {contract.identity for contract in member_contracts}
-    if len(identities) != 1:
-        raise RuntimeError("armor-set members mix registry magic/version/scale")
-    if set_contract.identity != member_contracts[0].identity:
-        raise RuntimeError("armor-set upscale contract differs from member registries")
+    if not set_contract.explicit:
+        identities = {contract.identity for contract in member_contracts}
+        if len(identities) != 1:
+            raise RuntimeError("armor-set members mix registry magic/version/scale")
+        if set_contract.identity != member_contracts[0].identity:
+            raise RuntimeError("armor-set upscale contract differs from member registries")
+    elif set_contract.scale == 2:
+        # V2/x2 and V3/x2 resource records have the same byte layout.  An
+        # explicit x2 aggregate may therefore promote existing audited V2
+        # members by rewriting only aggregate/shard headers, without spending
+        # another xBR pass.  No other legacy-to-xN promotion is valid.
+        allowed = {LEGACY_UPSCALE.identity, direct_upscale_contract(2).identity}
+        if any(contract.identity not in allowed for contract in member_contracts):
+            raise RuntimeError(
+                "explicit x2 armor set accepts only legacy V2/x2 or XN V3/x2 members"
+            )
+    elif any(contract.identity != set_contract.identity for contract in member_contracts):
+        raise RuntimeError("explicit x4 armor set requires XN V3/x4 members")
     armor_set["_job_file"] = str(set_file)
     armor_set["_kind"] = "armor-set"
     armor_set["_members"] = member_jobs
@@ -1160,6 +1204,81 @@ def create_character_equipment_job(
     }
 
 
+def promote_armor_set_job(
+    destination: Path,
+    template_file: Path | None,
+    requested_scale: int | None,
+    force: bool,
+) -> dict[str, Any]:
+    """Create an explicit x2 aggregate job over existing legacy x2 members.
+
+    This operation only writes a new job description.  Member builds and their
+    palette-index payloads are reused; the later aggregate build rewrites V3
+    headers and shards without dispatching Scalepix.
+    """
+
+    if template_file is None:
+        raise RuntimeError("promote-armor-set-job requires --template-job")
+    if requested_scale != 2:
+        raise RuntimeError("promote-armor-set-job requires --scale 2")
+    target = resolve_path(destination)
+    jobs_root = (PROJECT_ROOT / "sprite" / "jobs").resolve()
+    if target.parent != jobs_root or target.suffix.lower() != ".json":
+        raise RuntimeError(f"promoted armor-set job must be sprite/jobs/<job>.json: {target}")
+    job_id = target.stem
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,63}", job_id):
+        raise RuntimeError("destination filename must be a valid lowercase job id")
+    if target.exists() and not force:
+        raise RuntimeError(f"job already exists; use --force to replace exactly {target}")
+
+    template_path = resolve_path(template_file)
+    template = load_armor_set(template_path)
+    if upscale_contract(template).explicit:
+        raise RuntimeError("promote-armor-set-job requires a legacy armor-set template")
+    if target == template_path:
+        raise RuntimeError("promoted armor-set job must not overwrite its legacy template")
+
+    promoted = json.loads(json.dumps(read_json(template_path)))
+    promoted["job_id"] = job_id
+    promoted["upscale"] = direct_upscale_contract(2).method
+    promoted_paths = dict(promoted["paths"])
+    promoted_paths["run_dir"] = (
+        f"sprite/{job_id.replace('-', '_')}/runs/xbr2x-x2-xn"
+    )
+    promoted["paths"] = promoted_paths
+    descriptor, validation_name = tempfile.mkstemp(
+        prefix=f".{target.name}.", suffix=".tmp", dir=target.parent
+    )
+    os.close(descriptor)
+    validation_path = Path(validation_name)
+    try:
+        write_json(validation_path, promoted)
+        loaded = load_armor_set(validation_path)
+        os.replace(validation_path, target)
+    finally:
+        validation_path.unlink(missing_ok=True)
+    return {
+        "status": "armor-set-job-promoted",
+        "job_file": relative_project_path(target),
+        "job_id": loaded["job_id"],
+        "run_dir": promoted_paths["run_dir"],
+        "member_count": len(loaded["_members"]),
+        "source_registry_formats": [
+            {
+                "registry_magic": registry_magic_name(REGISTRY_MAGIC),
+                "registry_version": REGISTRY_VERSION,
+                "scale": LEGACY_SCALE,
+            }
+        ],
+        "promoted_to_xn": True,
+        "xbr_dispatched": False,
+        "next": (
+            "python pipeline/scripts/run_creature_sprite_x2.py build --resume --job "
+            f"{relative_project_path(target)}"
+        ),
+    }
+
+
 def canonical_bam(raw: bytes) -> tuple[bytes, bool]:
     if raw[:4] == b"BAMC":
         if len(raw) < 12:
@@ -1550,6 +1669,47 @@ def run_xbr2x(
     return run_xbr(frames, scalepix, node, LEGACY_UPSCALE)
 
 
+def projected_xbr_output_bytes(frame: SourceFrame, scale: int) -> int:
+    index_bytes = int(frame.width) * int(frame.height) * scale * scale
+    if index_bytes <= 0 or index_bytes > MAX_LAZY_FRAME_INDEX_BYTES:
+        raise RuntimeError(
+            f"{frame.resref} frame {frame.index}: projected xBR payload exceeds "
+            "the lazy frame-index cache limit"
+        )
+    return index_bytes * 4
+
+
+def xbr_output_batch_ranges(
+    frames: list[SourceFrame],
+    scale: int,
+    output_budget_bytes: int = XBR_OUTPUT_BATCH_BUDGET_BYTES,
+) -> list[tuple[int, int, int]]:
+    """Return deterministic [start, end) batches in canonical frame order.
+
+    A frame larger than the dispatch budget is kept as a singleton. Its
+    palette-index payload must still fit ``MAX_LAZY_FRAME_INDEX_BYTES``.
+    """
+
+    if not frames:
+        raise RuntimeError("xBR batching requires at least one frame")
+    if isinstance(output_budget_bytes, bool) or not isinstance(
+        output_budget_bytes, int
+    ) or output_budget_bytes <= 0:
+        raise RuntimeError("xBR output batch budget must be a positive integer")
+    ranges: list[tuple[int, int, int]] = []
+    start = 0
+    current_bytes = 0
+    for index, frame in enumerate(frames):
+        frame_bytes = projected_xbr_output_bytes(frame, scale)
+        if index > start and current_bytes + frame_bytes > output_budget_bytes:
+            ranges.append((start, index, current_bytes))
+            start = index
+            current_bytes = 0
+        current_bytes += frame_bytes
+    ranges.append((start, len(frames), current_bytes))
+    return ranges
+
+
 def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.ndarray]:
     source_flat = frame.indices.reshape(-1)
     representatives = np.full(256, 0xFFFF, dtype=np.uint16)
@@ -1584,13 +1744,29 @@ def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.n
     return mapped, representatives
 
 
-def make_comparison_sheet(
+def comparison_sample_positions(frame_count: int) -> list[int]:
+    if frame_count <= 0:
+        raise RuntimeError("comparison sheet requires at least one frame")
+    return sorted(
+        {
+            0,
+            frame_count // 4,
+            frame_count // 2,
+            3 * frame_count // 4,
+            frame_count - 1,
+        }
+    )
+
+
+def make_comparison_sheet_samples(
     frames: list[SourceFrame],
-    outputs: list[tuple[int, int, bytes]],
+    outputs: dict[int, tuple[int, int, bytes]],
     destination: Path,
     contract: UpscaleContract = LEGACY_UPSCALE,
 ) -> None:
-    positions = sorted({0, len(frames) // 4, len(frames) // 2, 3 * len(frames) // 4, len(frames) - 1})
+    positions = comparison_sample_positions(len(frames))
+    if sorted(outputs) != positions:
+        raise RuntimeError("comparison sheet samples are incomplete or non-canonical")
     pairs = []
     for position in positions:
         frame = frames[position]
@@ -1617,13 +1793,34 @@ def make_comparison_sheet(
     canvas.save(destination)
 
 
+def make_comparison_sheet(
+    frames: list[SourceFrame],
+    outputs: list[tuple[int, int, bytes]],
+    destination: Path,
+    contract: UpscaleContract = LEGACY_UPSCALE,
+) -> None:
+    if len(outputs) != len(frames):
+        raise RuntimeError("comparison sheet output count differs from source frames")
+    make_comparison_sheet_samples(
+        frames,
+        {
+            position: outputs[position]
+            for position in comparison_sample_positions(len(frames))
+        },
+        destination,
+        contract,
+    )
+
+
 def preflight_registry_layout(
     resources: list[dict[str, Any]],
     scale: int,
-    maximum_bytes: int = MAX_REGISTRY_BYTES,
+    maximum_bytes: int | None = None,
 ) -> dict[str, int]:
     if scale not in {2, 4}:
         raise RuntimeError("registry preflight scale must be 2 or 4")
+    if maximum_bytes is None:
+        maximum_bytes = maximum_registry_bytes(scale)
     if not resources or len(resources) > MAX_RESOURCES:
         raise RuntimeError("invalid source inventory")
     registry_bytes = REGISTRY_HEADER_BYTES
@@ -1651,7 +1848,7 @@ def preflight_registry_layout(
             if not (1 <= int(frame.width) <= 4096 and 1 <= int(frame.height) <= 4096):
                 raise RuntimeError("invalid frame dimensions in registry preflight")
             payload_bytes = int(frame.width) * int(frame.height) * scale * scale
-            if payload_bytes <= 0 or payload_bytes > 0xFFFFFFFF:
+            if payload_bytes <= 0 or payload_bytes > MAX_LAZY_FRAME_INDEX_BYTES:
                 raise RuntimeError("frame payload exceeds registry record capacity")
             registry_bytes += REGISTRY_FRAME_HEADER_BYTES + payload_bytes
             index_bytes += payload_bytes
@@ -1694,88 +1891,133 @@ def require_compatible_registry_infos(
     return next(iter(identities))
 
 
-def inspect_registry(path: Path) -> dict[str, Any]:
-    raw = path.read_bytes()
-    if len(raw) > MAX_REGISTRY_BYTES or len(raw) < REGISTRY_HEADER_BYTES:
+def inspect_registry(
+    path: Path, *, include_resource_records: bool = False
+) -> dict[str, Any]:
+    file_bytes = path.stat().st_size
+    if file_bytes < REGISTRY_HEADER_BYTES:
         raise RuntimeError("invalid creature registry header")
-    magic = raw[:8]
-    version, scale, resource_count, metadata = struct.unpack_from("<IIII", raw, 8)
-    legacy_format = magic == REGISTRY_MAGIC and version in (
-        LEGACY_REGISTRY_VERSION,
-        REGISTRY_VERSION,
-    )
-    xn_format = magic == XN_REGISTRY_MAGIC and version == XN_REGISTRY_VERSION
-    if (
-        not (legacy_format or xn_format)
-        or (legacy_format and scale != LEGACY_SCALE)
-        or (xn_format and scale not in {2, 4})
-        or not (1 <= resource_count <= MAX_RESOURCES)
-    ):
-        raise RuntimeError("unsupported creature registry header")
-    if version == LEGACY_REGISTRY_VERSION:
-        if metadata != 0:
-            raise RuntimeError("invalid legacy creature registry metadata")
-        animation_id = 0xE400
-    else:
-        if metadata == 0 or metadata > 0xFFFF:
-            raise RuntimeError("invalid creature registry animation id")
-        animation_id = metadata
-    offset = 24
-    resources = []
-    seen_resrefs: set[str] = set()
-    total_frames = 0
-    total_indices = 0
-    for _ in range(resource_count):
-        if offset + 48 > len(raw):
-            raise RuntimeError("truncated creature registry resource")
-        resref_bytes = raw[offset : offset + 8]
-        resref = resref_bytes.split(b"\0", 1)[0].decode("ascii")
+    def read_exact(stream: Any, count: int, label: str) -> bytes:
+        data = stream.read(count)
+        if len(data) != count:
+            raise RuntimeError(f"truncated creature registry {label}")
+        return data
+
+    with path.open("rb") as stream:
+        header = read_exact(stream, REGISTRY_HEADER_BYTES, "header")
+        magic = header[:8]
+        version, scale, resource_count, metadata = struct.unpack_from(
+            "<IIII", header, 8
+        )
+        legacy_format = magic == REGISTRY_MAGIC and version in (
+            LEGACY_REGISTRY_VERSION,
+            REGISTRY_VERSION,
+        )
+        xn_format = magic == XN_REGISTRY_MAGIC and version == XN_REGISTRY_VERSION
         if (
-            not re.fullmatch(r"[A-Z0-9_]{1,8}", resref)
-            or (b"\0" in resref_bytes and resref_bytes[len(resref) :] != b"\0" * (8 - len(resref)))
-            or resref in seen_resrefs
+            not (legacy_format or xn_format)
+            or (legacy_format and scale != LEGACY_SCALE)
+            or (xn_format and scale not in {2, 4})
+            or file_bytes > maximum_registry_bytes(scale)
+            or not (1 <= resource_count <= MAX_RESOURCES)
         ):
-            raise RuntimeError("invalid or duplicate registry resref")
-        seen_resrefs.add(resref)
-        frame_count, cycle_count = struct.unpack_from("<II", raw, offset + 40)
-        offset += 48
-        if not (1 <= frame_count <= MAX_FRAMES_PER_RESOURCE) or not (
-            1 <= cycle_count <= MAX_CYCLES_PER_RESOURCE
-        ):
-            raise RuntimeError(f"invalid registry counts for {resref}")
-        for _ in range(frame_count):
-            if offset + 528 > len(raw):
-                raise RuntimeError("truncated creature registry frame")
-            width, height, _, _, _, index_bytes = struct.unpack_from("<HHhhB3xI", raw, offset)
-            if width == 0 or height == 0 or raw[offset + 9 : offset + 12] != b"\0\0\0":
-                raise RuntimeError(f"invalid frame header for {resref}")
-            representatives = np.frombuffer(raw, dtype="<u2", count=256, offset=offset + 16)
-            offset += 528
-            if index_bytes != width * height * scale * scale or offset + index_bytes > len(raw):
-                raise RuntimeError(f"invalid x{scale} payload for {resref}")
-            indices = np.frombuffer(raw, dtype=np.uint8, count=index_bytes, offset=offset)
-            if np.any(representatives[indices] == 0xFFFF):
-                raise RuntimeError(f"missing representative in {resref}")
-            offset += index_bytes
-            total_indices += index_bytes
-        for _ in range(cycle_count):
-            if offset + 4 > len(raw):
-                raise RuntimeError("truncated registry cycle")
-            slots = struct.unpack_from("<I", raw, offset)[0]
-            offset += 4
-            if slots == 0 or slots > MAX_CYCLE_SLOTS:
-                raise RuntimeError(f"invalid cycle slot count in {resref}")
-            if offset + slots * 4 > len(raw):
-                raise RuntimeError("truncated registry cycle lookup")
-            values = np.frombuffer(raw, dtype="<u4", count=slots, offset=offset)
-            if values.size and np.any(values >= frame_count):
-                raise RuntimeError(f"invalid cycle lookup in {resref}")
-            offset += slots * 4
-        resources.append(resref)
-        total_frames += frame_count
-    if offset != len(raw):
-        raise RuntimeError("trailing bytes in creature registry")
-    return {
+            raise RuntimeError("unsupported creature registry header")
+        if version == LEGACY_REGISTRY_VERSION:
+            if metadata != 0:
+                raise RuntimeError("invalid legacy creature registry metadata")
+            animation_id = 0xE400
+        else:
+            if metadata == 0 or metadata > 0xFFFF:
+                raise RuntimeError("invalid creature registry animation id")
+            animation_id = metadata
+
+        resources = []
+        seen_resrefs: set[str] = set()
+        total_frames = 0
+        total_indices = 0
+        resource_records: list[dict[str, Any]] = []
+        for _ in range(resource_count):
+            resource_offset = stream.tell()
+            resource_header = read_exact(stream, 48, "resource")
+            resref_bytes = resource_header[:8]
+            try:
+                resref = resref_bytes.split(b"\0", 1)[0].decode("ascii")
+            except UnicodeDecodeError as error:
+                raise RuntimeError("invalid or duplicate registry resref") from error
+            if (
+                not re.fullmatch(r"[A-Z0-9_]{1,8}", resref)
+                or (
+                    b"\0" in resref_bytes
+                    and resref_bytes[len(resref) :] != b"\0" * (8 - len(resref))
+                )
+                or resref in seen_resrefs
+            ):
+                raise RuntimeError("invalid or duplicate registry resref")
+            seen_resrefs.add(resref)
+            frame_count, cycle_count = struct.unpack_from("<II", resource_header, 40)
+            if not (1 <= frame_count <= MAX_FRAMES_PER_RESOURCE) or not (
+                1 <= cycle_count <= MAX_CYCLES_PER_RESOURCE
+            ):
+                raise RuntimeError(f"invalid registry counts for {resref}")
+            resource_index_bytes = 0
+            for _ in range(frame_count):
+                frame_header = read_exact(stream, 528, "frame")
+                width, height, _, _, _, index_bytes = struct.unpack_from(
+                    "<HHhhB3xI", frame_header, 0
+                )
+                if width == 0 or height == 0 or frame_header[9:12] != b"\0\0\0":
+                    raise RuntimeError(f"invalid frame header for {resref}")
+                if (
+                    index_bytes != width * height * scale * scale
+                    or index_bytes > MAX_LAZY_FRAME_INDEX_BYTES
+                ):
+                    raise RuntimeError(f"invalid x{scale} payload for {resref}")
+                representatives = np.frombuffer(
+                    frame_header, dtype="<u2", count=256, offset=16
+                )
+                remaining = index_bytes
+                while remaining:
+                    chunk = read_exact(
+                        stream, min(1024 * 1024, remaining), "frame payload"
+                    )
+                    indices = np.frombuffer(chunk, dtype=np.uint8)
+                    if np.any(representatives[indices] == 0xFFFF):
+                        raise RuntimeError(f"missing representative in {resref}")
+                    remaining -= len(chunk)
+                total_indices += index_bytes
+                resource_index_bytes += index_bytes
+            for _ in range(cycle_count):
+                cycle_header = read_exact(stream, 4, "cycle")
+                slots = struct.unpack_from("<I", cycle_header, 0)[0]
+                if slots == 0 or slots > MAX_CYCLE_SLOTS:
+                    raise RuntimeError(f"invalid cycle slot count in {resref}")
+                remaining_slots = slots
+                while remaining_slots:
+                    slot_count = min(16_384, remaining_slots)
+                    lookup = read_exact(
+                        stream, slot_count * 4, "cycle lookup"
+                    )
+                    values = np.frombuffer(lookup, dtype="<u4")
+                    if np.any(values >= frame_count):
+                        raise RuntimeError(f"invalid cycle lookup in {resref}")
+                    remaining_slots -= slot_count
+            resource_end = stream.tell()
+            if include_resource_records:
+                resource_records.append(
+                    {
+                        "resref": resref,
+                        "path": path,
+                        "offset": resource_offset,
+                        "bytes": resource_end - resource_offset,
+                        "frame_count": frame_count,
+                        "index_bytes": resource_index_bytes,
+                    }
+                )
+            resources.append(resref)
+            total_frames += frame_count
+        if stream.tell() != file_bytes:
+            raise RuntimeError("trailing bytes in creature registry")
+    result = {
         "version": version,
         "scale": scale,
         "registry_magic": registry_magic_name(magic),
@@ -1784,9 +2026,313 @@ def inspect_registry(path: Path) -> dict[str, Any]:
         "resource_count": resource_count,
         "frame_count": total_frames,
         "index_bytes": total_indices,
-        "registry_bytes": len(raw),
+        "registry_bytes": file_bytes,
         "sha256": sha256_file(path),
     }
+    if include_resource_records:
+        result["resource_records"] = resource_records
+    return result
+
+
+def partition_registry_resources(
+    records: list[dict[str, Any]],
+    *,
+    maximum_resources: int = MAX_RESOURCES,
+    maximum_bytes: int = MAX_REGISTRY_BYTES,
+    maximum_shards: int = MAX_REGISTRY_SET_SHARDS,
+) -> list[list[dict[str, Any]]]:
+    """Greedily partition canonical resource records without splitting one."""
+
+    if not records or len(records) > MAX_REGISTRY_SET_RESOURCES:
+        raise RuntimeError("invalid registry-set resource inventory")
+    if not (1 <= maximum_resources <= MAX_RESOURCES):
+        raise RuntimeError("invalid registry-set resource limit")
+    if not (
+        REGISTRY_HEADER_BYTES
+        < maximum_bytes
+        <= max(MAX_REGISTRY_BYTES_BY_SCALE.values())
+    ):
+        raise RuntimeError("invalid registry-set byte limit")
+    if not (1 <= maximum_shards <= MAX_REGISTRY_SET_SHARDS):
+        raise RuntimeError("invalid registry-set shard limit")
+    seen_resrefs: set[str] = set()
+    shards: list[list[dict[str, Any]]] = []
+    current: list[dict[str, Any]] = []
+    current_bytes = REGISTRY_HEADER_BYTES
+    for record in records:
+        resref = str(record.get("resref", ""))
+        record_bytes = int(record.get("bytes", 0))
+        if (
+            not re.fullmatch(r"[A-Z0-9_]{1,8}", resref)
+            or resref in seen_resrefs
+        ):
+            raise RuntimeError("invalid or duplicate registry-set resref")
+        if record_bytes <= 0 or REGISTRY_HEADER_BYTES + record_bytes > maximum_bytes:
+            raise RuntimeError(f"registry resource {resref} cannot fit in one shard")
+        seen_resrefs.add(resref)
+        if current and (
+            len(current) >= maximum_resources
+            or current_bytes + record_bytes > maximum_bytes
+        ):
+            shards.append(current)
+            current = []
+            current_bytes = REGISTRY_HEADER_BYTES
+        current.append(record)
+        current_bytes += record_bytes
+    if current:
+        shards.append(current)
+    if len(shards) > maximum_shards:
+        raise RuntimeError(
+            f"registry set requires {len(shards)} shards; limit is {maximum_shards}"
+        )
+    return shards
+
+
+def _copy_registry_record(output_stream: Any, record: dict[str, Any]) -> None:
+    remaining = int(record["bytes"])
+    with Path(record["path"]).open("rb") as source_stream:
+        source_stream.seek(int(record["offset"]))
+        while remaining:
+            chunk = source_stream.read(min(1024 * 1024, remaining))
+            if not chunk:
+                raise RuntimeError(f"truncated source registry record {record['resref']}")
+            output_stream.write(chunk)
+            remaining -= len(chunk)
+
+
+def write_registry_records(
+    path: Path,
+    magic: bytes,
+    version: int,
+    scale: int,
+    animation_id: int,
+    records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    if (magic, version, scale) not in {
+        (REGISTRY_MAGIC, REGISTRY_VERSION, LEGACY_SCALE),
+        (XN_REGISTRY_MAGIC, XN_REGISTRY_VERSION, 2),
+        (XN_REGISTRY_MAGIC, XN_REGISTRY_VERSION, 4),
+    }:
+        raise RuntimeError("unsupported output registry identity")
+    if not (1 <= len(records) <= MAX_RESOURCES):
+        raise RuntimeError("invalid output registry resource count")
+    if not (1 <= animation_id <= 0xFFFF):
+        raise RuntimeError("invalid output registry animation id")
+    projected_bytes = REGISTRY_HEADER_BYTES + sum(int(record["bytes"]) for record in records)
+    if projected_bytes > maximum_registry_bytes(scale):
+        raise RuntimeError("output registry exceeds shard byte limit")
+    with path.open("wb") as output_stream:
+        output_stream.write(magic)
+        output_stream.write(
+            struct.pack("<IIII", version, scale, len(records), animation_id)
+        )
+        for record in records:
+            _copy_registry_record(output_stream, record)
+    info = inspect_registry(path)
+    if info["registry_bytes"] != projected_bytes:
+        raise RuntimeError("output registry size differs from resource projection")
+    return info
+
+
+def inspect_registry_set(path: Path) -> dict[str, Any]:
+    if path.name != XN_REGISTRY_SET_FILENAME:
+        raise RuntimeError("registry-set filename must be CreatureSprites-XN.set")
+    file_bytes = path.stat().st_size
+    if not (
+        REGISTRY_SET_HEADER_BYTES + REGISTRY_SET_ENTRY_BYTES
+        <= file_bytes
+        <= REGISTRY_SET_HEADER_BYTES
+        + MAX_REGISTRY_SET_SHARDS * REGISTRY_SET_ENTRY_BYTES
+    ):
+        raise RuntimeError("invalid creature registry-set header")
+    raw = path.read_bytes()
+    (
+        magic,
+        version,
+        scale,
+        shard_count,
+        total_resources,
+        animation_id,
+        reserved,
+        total_frames,
+        total_index_bytes,
+        total_registry_bytes,
+    ) = struct.unpack_from("<8sIIIIIIQQQ", raw, 0)
+    expected_bytes = REGISTRY_SET_HEADER_BYTES + shard_count * REGISTRY_SET_ENTRY_BYTES
+    if (
+        magic != XN_REGISTRY_SET_MAGIC
+        or version != XN_REGISTRY_SET_VERSION
+        or scale not in {2, 4}
+        or not (1 <= shard_count <= MAX_REGISTRY_SET_SHARDS)
+        or not (shard_count <= total_resources <= MAX_REGISTRY_SET_RESOURCES)
+        or total_resources > shard_count * MAX_RESOURCES
+        or not (1 <= total_frames <= MAX_REGISTRY_SET_FRAMES)
+        or not (1 <= animation_id <= 0xFFFF)
+        or reserved != 0
+        or len(raw) != expected_bytes
+        or not (1 <= total_index_bytes <= MAX_REGISTRY_SET_BYTES)
+        or not (REGISTRY_HEADER_BYTES <= total_registry_bytes <= MAX_REGISTRY_SET_BYTES)
+    ):
+        raise RuntimeError("unsupported creature registry-set header")
+
+    expected_names = [
+        XN_REGISTRY_SHARD_FILENAME.format(index=index)
+        for index in range(shard_count)
+    ]
+    actual_names = sorted(
+        candidate.name
+        for candidate in path.parent.iterdir()
+        if candidate.is_file()
+        and re.fullmatch(r"CreatureSprites-XN-[0-9]{4}\.registry", candidate.name)
+    )
+    if actual_names != expected_names:
+        raise RuntimeError("registry-set shard filenames are not contiguous and exact")
+
+    shards: list[dict[str, Any]] = []
+    resources: list[str] = []
+    seen_resrefs: set[str] = set()
+    calculated_frames = 0
+    calculated_index_bytes = 0
+    calculated_registry_bytes = 0
+    calculated_resources = 0
+    for index, filename in enumerate(expected_names):
+        offset = REGISTRY_SET_HEADER_BYTES + index * REGISTRY_SET_ENTRY_BYTES
+        (
+            expected_sha256,
+            expected_crc32,
+            expected_resource_count,
+            expected_frame_count,
+            expected_index_bytes,
+            expected_registry_bytes,
+        ) = struct.unpack_from("<32sIIQQQ", raw, offset)
+        shard_path = path.parent / filename
+        info = inspect_registry(shard_path)
+        if (
+            info["registry_magic"] != registry_magic_name(XN_REGISTRY_MAGIC)
+            or info["version"] != XN_REGISTRY_VERSION
+            or info["scale"] != scale
+            or info["animation_id"].upper() != f"0X{animation_id:04X}"
+            or info["resource_count"] != expected_resource_count
+            or info["frame_count"] != expected_frame_count
+            or info["index_bytes"] != expected_index_bytes
+            or info["registry_bytes"] != expected_registry_bytes
+            or bytes.fromhex(info["sha256"]) != expected_sha256
+            or crc32_file(shard_path) != expected_crc32
+        ):
+            raise RuntimeError(f"registry-set shard {index:04d} differs from its index entry")
+        duplicates = seen_resrefs.intersection(info["resources"])
+        if duplicates:
+            raise RuntimeError("duplicate resref across registry-set shards")
+        seen_resrefs.update(info["resources"])
+        resources.extend(info["resources"])
+        calculated_resources += info["resource_count"]
+        calculated_frames += info["frame_count"]
+        calculated_index_bytes += info["index_bytes"]
+        calculated_registry_bytes += info["registry_bytes"]
+        shards.append(
+            {
+                "index": index,
+                "registry": filename,
+                "sha256": info["sha256"],
+                "crc32": expected_crc32,
+                "resource_count": info["resource_count"],
+                "frame_count": info["frame_count"],
+                "index_bytes": info["index_bytes"],
+                "registry_bytes": info["registry_bytes"],
+            }
+        )
+    if (
+        calculated_resources != total_resources
+        or calculated_frames != total_frames
+        or calculated_index_bytes != total_index_bytes
+        or calculated_registry_bytes != total_registry_bytes
+    ):
+        raise RuntimeError("registry-set aggregate totals differ from shard entries")
+    return {
+        "version": version,
+        "scale": scale,
+        "registry_magic": registry_magic_name(magic),
+        "animation_id": f"0x{animation_id:04X}",
+        "resources": resources,
+        "resource_count": calculated_resources,
+        "frame_count": calculated_frames,
+        "index_bytes": calculated_index_bytes,
+        "registry_bytes": calculated_registry_bytes,
+        "registry_set_bytes": len(raw),
+        "sha256": sha256_file(path),
+        "shards": shards,
+        "total_resources": total_resources,
+        "total_frames": total_frames,
+        "total_index_bytes": total_index_bytes,
+        "total_registry_bytes": total_registry_bytes,
+    }
+
+
+def write_registry_set_index(
+    path: Path,
+    scale: int,
+    animation_id: int,
+    shard_infos: list[dict[str, Any]],
+) -> dict[str, Any]:
+    if path.name != XN_REGISTRY_SET_FILENAME:
+        raise RuntimeError("registry-set filename must be CreatureSprites-XN.set")
+    if scale not in {2, 4} or not (1 <= animation_id <= 0xFFFF):
+        raise RuntimeError("invalid registry-set scale or animation id")
+    if not (1 <= len(shard_infos) <= MAX_REGISTRY_SET_SHARDS):
+        raise RuntimeError("invalid registry-set shard count")
+    total_resources = sum(int(info["resource_count"]) for info in shard_infos)
+    total_frames = sum(int(info["frame_count"]) for info in shard_infos)
+    total_index_bytes = sum(int(info["index_bytes"]) for info in shard_infos)
+    total_registry_bytes = sum(int(info["registry_bytes"]) for info in shard_infos)
+    if (
+        total_resources > MAX_REGISTRY_SET_RESOURCES
+        or total_frames > MAX_REGISTRY_SET_FRAMES
+        or total_registry_bytes > MAX_REGISTRY_SET_BYTES
+    ):
+        raise RuntimeError("registry-set aggregate limit exceeded")
+    index_bytes = bytearray(
+        struct.pack(
+            "<8sIIIIIIQQQ",
+            XN_REGISTRY_SET_MAGIC,
+            XN_REGISTRY_SET_VERSION,
+            scale,
+            len(shard_infos),
+            total_resources,
+            animation_id,
+            0,
+            total_frames,
+            total_index_bytes,
+            total_registry_bytes,
+        )
+    )
+    for index, info in enumerate(shard_infos):
+        shard_path = Path(info["path"])
+        expected_name = XN_REGISTRY_SHARD_FILENAME.format(index=index)
+        if shard_path.parent != path.parent or shard_path.name != expected_name:
+            raise RuntimeError("registry-set shard path is not canonical")
+        index_bytes.extend(
+            struct.pack(
+                "<32sIIQQQ",
+                bytes.fromhex(str(info["sha256"])),
+                crc32_file(shard_path),
+                int(info["resource_count"]),
+                int(info["frame_count"]),
+                int(info["index_bytes"]),
+                int(info["registry_bytes"]),
+            )
+        )
+    path.write_bytes(index_bytes)
+    return inspect_registry_set(path)
+
+
+def build_adapter_hash_matches(
+    manifest: dict[str, Any], contract: UpscaleContract
+) -> bool:
+    adapter_hash = str(manifest.get("xbr_adapter_sha256", "")).upper()
+    return adapter_hash == sha256_file(XBR_ADAPTER) or (
+        not contract.explicit
+        and adapter_hash in LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S
+    )
 
 
 def build_is_current(job: dict[str, Any], keep_frames: bool = False) -> bool:
@@ -1803,6 +2349,10 @@ def build_is_current(job: dict[str, Any], keep_frames: bool = False) -> bool:
         return False
     try:
         registry_info = inspect_registry(registry)
+        if report.get("xbr_batching") is not None:
+            verify_xbr_batching_manifest(
+                report, registry_info["frame_count"], registry_info["index_bytes"]
+            )
     except (OSError, RuntimeError, ValueError):
         return False
     format_matches = (
@@ -1812,11 +2362,7 @@ def build_is_current(job: dict[str, Any], keep_frames: bool = False) -> bool:
         == registry_magic_name(contract.registry_magic)
         and str(report.get("registry", "")).endswith(contract.registry_filename)
     )
-    adapter_hash = str(report.get("xbr_adapter_sha256", "")).upper()
-    adapter_matches = adapter_hash == sha256_file(XBR_ADAPTER) or (
-        not contract.explicit
-        and adapter_hash in LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S
-    )
+    adapter_matches = build_adapter_hash_matches(report, contract)
     retention_matches = not keep_frames or report.get(
         f"kept_individual_x{contract.scale}_frames"
     ) is True
@@ -1855,101 +2401,223 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
     preflight = preflight_registry_layout(resources, contract.scale)
     scalepix = job_path(job, "scalepix")
     node = str(job.get("tools", {}).get("node", "node"))
-    xbr_outputs = run_xbr(frames, scalepix, node, contract)
+    batch_ranges = xbr_output_batch_ranges(
+        frames, contract.scale, XBR_OUTPUT_BATCH_BUDGET_BYTES
+    )
+    resource_states: list[dict[str, Any]] = []
+    resource_cursor = 0
+    for resource in resources:
+        source = resource["source"]
+        resref = str(source["name"]).upper()
+        resource_frames: list[SourceFrame] = resource["frames"]
+        cycles = sorted(resource["cycles"], key=lambda item: int(item["index"]))
+        if [int(item["index"]) for item in cycles] != list(range(len(cycles))):
+            raise RuntimeError(f"{resref}: non-contiguous cycles")
+        for cycle in cycles:
+            lookup = [int(value) for value in cycle["frame_indices"]]
+            if any(value < 0 or value >= len(resource_frames) for value in lookup):
+                raise RuntimeError(f"{resref}: invalid cycle lookup")
+        resource_end = resource_cursor + len(resource_frames)
+        if resource_end > len(frames) or any(
+            frames[resource_cursor + index] is not frame
+            for index, frame in enumerate(resource_frames)
+        ):
+            raise RuntimeError("global source frame order differs from resource inventory")
+        resource_states.append(
+            {
+                "resource": resource,
+                "resref": resref,
+                "frames": resource_frames,
+                "cycles": cycles,
+                "start": resource_cursor,
+                "end": resource_end,
+                "sample_positions": set(
+                    comparison_sample_positions(len(resource_frames))
+                ),
+                "samples": {},
+                "opaque_indices": set(),
+            }
+        )
+        resource_cursor = resource_end
+    if resource_cursor != len(frames):
+        raise RuntimeError("resource inventory does not consume all source frames")
+
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix="build.tmp-", dir=output.parent))
     try:
-        registry = bytearray(contract.registry_magic)
-        registry.extend(
-            struct.pack(
-                "<IIII",
-                contract.registry_version,
-                contract.scale,
-                len(resources),
-                int(job["animation"]["id"], 16),
-            )
-        )
-        cursor = 0
-        report_resources = []
-        total_scaled_pixels = 0
-        for resource in resources:
-            source = resource["source"]
-            resref = str(source["name"]).upper()
-            resource_frames: list[SourceFrame] = resource["frames"]
-            cycles = sorted(resource["cycles"], key=lambda item: int(item["index"]))
-            if [int(item["index"]) for item in cycles] != list(range(len(cycles))):
-                raise RuntimeError(f"{resref}: non-contiguous cycles")
-            registry.extend(resref.encode("ascii").ljust(8, b"\0"))
-            registry.extend(bytes.fromhex(sha256_file(resource["source_path"])))
-            registry.extend(struct.pack("<II", len(resource_frames), len(cycles)))
-            local_outputs = xbr_outputs[cursor : cursor + len(resource_frames)]
-            opaque_indices: set[int] = set()
-            for frame, (scaled_width, scaled_height, scaled_rgba) in zip(
-                resource_frames, local_outputs, strict=True
-            ):
-                if (
-                    scaled_width != frame.width * contract.scale
-                    or scaled_height != frame.height * contract.scale
-                ):
-                    raise RuntimeError(
-                        f"{resref} frame {frame.index}: output dimensions are not exact "
-                        f"x{contract.scale}"
-                    )
-                mapped, representatives = map_output(frame, scaled_rgba)
-                opaque_indices.update(int(value) for value in np.unique(mapped) if value != frame.transparent)
-                registry.extend(struct.pack("<HHhhB3xI", frame.width, frame.height, frame.center_x, frame.center_y, frame.transparent, mapped.size))
-                registry.extend(representatives.astype("<u2", copy=False).tobytes())
-                registry.extend(mapped.tobytes())
-                if keep_frames:
-                    frame_path = (
-                        temporary
-                        / f"x{contract.scale}"
-                        / resref
-                        / f"frame-{frame.index:04}.png"
-                    )
-                    frame_path.parent.mkdir(parents=True, exist_ok=True)
-                    Image.frombytes(
-                        "RGBA", (scaled_width, scaled_height), scaled_rgba
-                    ).save(frame_path)
-                total_scaled_pixels += mapped.size
-            for cycle in cycles:
-                lookup = [int(value) for value in cycle["frame_indices"]]
-                if any(value < 0 or value >= len(resource_frames) for value in lookup):
-                    raise RuntimeError(f"{resref}: invalid cycle lookup")
-                registry.extend(struct.pack("<I", len(lookup)))
-                if lookup:
-                    registry.extend(struct.pack(f"<{len(lookup)}I", *lookup))
-            make_comparison_sheet(
-                resource_frames,
-                local_outputs,
-                temporary / "qa" / f"{resref}-comparison.png",
-                contract,
-            )
-            cursor += len(resource_frames)
-            report_resources.append(
-                {
-                    "resref": resref,
-                    "source": relative_project_path(resource["source_path"]),
-                    "source_sha256": sha256_file(resource["source_path"]),
-                    "frames": len(resource_frames),
-                    "cycles": len(cycles),
-                    "cycle_slots": sum(len(item["frame_indices"]) for item in cycles),
-                    f"opaque_palette_indices_in_x{contract.scale}": len(opaque_indices),
-                    "qa_sheet": f"qa/{resref}-comparison.png",
-                }
-            )
-        if cursor != len(xbr_outputs):
-            raise RuntimeError(f"unconsumed xBR{contract.scale}x frames")
-        if len(registry) != preflight["registry_bytes"]:
-            raise RuntimeError(
-                "registry size differs from the pre-xBR projection: "
-                f"{len(registry)} != {preflight['registry_bytes']}"
-            )
         pack_dir = temporary / "iee-assets" / "creature-sprites"
         pack_dir.mkdir(parents=True, exist_ok=True)
         registry_path = pack_dir / contract.registry_filename
-        registry_path.write_bytes(registry)
+        report_resources: list[dict[str, Any]] = []
+        total_scaled_pixels = 0
+        processed_frames = 0
+        current_resource_index = 0
+        with registry_path.open("wb") as registry_stream:
+            registry_stream.write(contract.registry_magic)
+            registry_stream.write(
+                struct.pack(
+                    "<IIII",
+                    contract.registry_version,
+                    contract.scale,
+                    len(resources),
+                    int(job["animation"]["id"], 16),
+                )
+            )
+            for batch_start, batch_end, _ in batch_ranges:
+                if batch_start != processed_frames:
+                    raise RuntimeError("non-contiguous xBR batch order")
+                batch_frames = frames[batch_start:batch_end]
+                batch_outputs = run_xbr(
+                    batch_frames, scalepix, node, contract
+                )
+                if len(batch_outputs) != len(batch_frames):
+                    raise RuntimeError(
+                        f"xBR{contract.scale}x batch output count differs from input"
+                    )
+                completed_resources: list[int] = []
+                for batch_offset, (frame, output_record) in enumerate(
+                    zip(batch_frames, batch_outputs, strict=True)
+                ):
+                    global_index = batch_start + batch_offset
+                    if current_resource_index >= len(resource_states):
+                        raise RuntimeError("xBR produced frames beyond the resource inventory")
+                    state = resource_states[current_resource_index]
+                    if global_index == int(state["start"]):
+                        resource = state["resource"]
+                        resource_frames = state["frames"]
+                        cycles = state["cycles"]
+                        resref = str(state["resref"])
+                        registry_stream.write(resref.encode("ascii").ljust(8, b"\0"))
+                        registry_stream.write(
+                            bytes.fromhex(sha256_file(resource["source_path"]))
+                        )
+                        registry_stream.write(
+                            struct.pack("<II", len(resource_frames), len(cycles))
+                        )
+                    if not int(state["start"]) <= global_index < int(state["end"]):
+                        raise RuntimeError("xBR frame order differs from resource inventory")
+                    local_index = global_index - int(state["start"])
+                    if state["frames"][local_index] is not frame:
+                        raise RuntimeError("xBR batch frame identity differs from inventory")
+                    scaled_width, scaled_height, scaled_rgba = output_record
+                    if (
+                        scaled_width != frame.width * contract.scale
+                        or scaled_height != frame.height * contract.scale
+                    ):
+                        raise RuntimeError(
+                            f"{state['resref']} frame {frame.index}: output dimensions "
+                            f"are not exact x{contract.scale}"
+                        )
+                    mapped, representatives = map_output(frame, scaled_rgba)
+                    state["opaque_indices"].update(
+                        int(value)
+                        for value in np.unique(mapped)
+                        if value != frame.transparent
+                    )
+                    registry_stream.write(
+                        struct.pack(
+                            "<HHhhB3xI",
+                            frame.width,
+                            frame.height,
+                            frame.center_x,
+                            frame.center_y,
+                            frame.transparent,
+                            mapped.size,
+                        )
+                    )
+                    registry_stream.write(
+                        representatives.astype("<u2", copy=False).tobytes()
+                    )
+                    registry_stream.write(memoryview(mapped))
+                    if local_index in state["sample_positions"]:
+                        state["samples"][local_index] = output_record
+                    if keep_frames:
+                        frame_path = (
+                            temporary
+                            / f"x{contract.scale}"
+                            / str(state["resref"])
+                            / f"frame-{frame.index:04}.png"
+                        )
+                        frame_path.parent.mkdir(parents=True, exist_ok=True)
+                        Image.frombytes(
+                            "RGBA", (scaled_width, scaled_height), scaled_rgba
+                        ).save(frame_path)
+                    total_scaled_pixels += mapped.size
+                    del mapped, representatives, scaled_rgba, output_record
+                    processed_frames += 1
+                    if global_index + 1 == int(state["end"]):
+                        for cycle in state["cycles"]:
+                            lookup = [int(value) for value in cycle["frame_indices"]]
+                            registry_stream.write(struct.pack("<I", len(lookup)))
+                            registry_stream.write(
+                                struct.pack(f"<{len(lookup)}I", *lookup)
+                            )
+                        completed_resources.append(current_resource_index)
+                        current_resource_index += 1
+                del batch_outputs, batch_frames
+
+                # Render QA only after dropping non-sample batch outputs.
+                for completed_index in completed_resources:
+                    state = resource_states[completed_index]
+                    resource = state["resource"]
+                    resref = str(state["resref"])
+                    make_comparison_sheet_samples(
+                        state["frames"],
+                        state["samples"],
+                        temporary / "qa" / f"{resref}-comparison.png",
+                        contract,
+                    )
+                    state["samples"].clear()
+                    report_resources.append(
+                        {
+                            "resref": resref,
+                            "source": relative_project_path(resource["source_path"]),
+                            "source_sha256": sha256_file(resource["source_path"]),
+                            "frames": len(state["frames"]),
+                            "cycles": len(state["cycles"]),
+                            "cycle_slots": sum(
+                                len(item["frame_indices"])
+                                for item in state["cycles"]
+                            ),
+                            f"opaque_palette_indices_in_x{contract.scale}": len(
+                                state["opaque_indices"]
+                            ),
+                            "qa_sheet": f"qa/{resref}-comparison.png",
+                        }
+                    )
+            registry_bytes_written = registry_stream.tell()
+
+        if processed_frames != len(frames) or current_resource_index != len(
+            resource_states
+        ):
+            raise RuntimeError(f"unconsumed xBR{contract.scale}x frames")
+        if len(report_resources) != len(resources):
+            raise RuntimeError("not all resource QA sheets were finalized")
+        if registry_bytes_written != preflight["registry_bytes"]:
+            raise RuntimeError(
+                "registry size differs from the pre-xBR projection: "
+                f"{registry_bytes_written} != {preflight['registry_bytes']}"
+            )
         registry_info = inspect_registry(registry_path)
+        projected_output_bytes = sum(batch[2] for batch in batch_ranges)
+        if (
+            total_scaled_pixels != preflight["index_bytes"]
+            or projected_output_bytes != preflight["index_bytes"] * 4
+        ):
+            raise RuntimeError("xBR batching totals differ from registry preflight")
+        batching_report = {
+            "output_budget_bytes": XBR_OUTPUT_BATCH_BUDGET_BYTES,
+            "batch_count": len(batch_ranges),
+            "total_projected_output_bytes": projected_output_bytes,
+            "maximum_projected_batch_bytes": max(batch[2] for batch in batch_ranges),
+            "oversized_singleton_batches": sum(
+                1
+                for start, end, batch_bytes in batch_ranges
+                if end - start == 1
+                and batch_bytes > XBR_OUTPUT_BATCH_BUDGET_BYTES
+            ),
+            "ordering": "source-resource-frame",
+        }
         report = {
             "schema": BUILD_SCHEMA,
             "status": "built-pending-ingame-qa",
@@ -1969,8 +2637,9 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             "resource_count": len(resources),
             "frame_count": len(frames),
             f"x{contract.scale}_pixel_count": total_scaled_pixels,
+            "xbr_batching": batching_report,
             "registry": f"iee-assets/creature-sprites/{contract.registry_filename}",
-            "registry_bytes": len(registry),
+            "registry_bytes": registry_info["registry_bytes"],
             "registry_sha256": registry_info["sha256"],
             f"kept_individual_x{contract.scale}_frames": keep_frames,
             "validation": {
@@ -1978,11 +2647,22 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                 "frames_exactly_remapped_to_source_palette": len(frames),
                 "partial_alpha_pixels": 0,
                 "new_colors": 0,
+                "xbr_dispatch_batches": len(batch_ranges),
+                "qa_samples_retained_max_per_resource": 5,
             },
         }
         if contract.explicit:
             report["registry_magic"] = registry_info["registry_magic"]
             report["registry_scale"] = registry_info["scale"]
+            report["registry_layout"] = "monolith"
+            report["registry_set"] = None
+            report["registry_set_sha256"] = None
+            report["registry_set_bytes"] = None
+            report["shards"] = []
+            report["total_resources"] = registry_info["resource_count"]
+            report["total_frames"] = registry_info["frame_count"]
+            report["total_index_bytes"] = registry_info["index_bytes"]
+            report["total_registry_bytes"] = registry_info["registry_bytes"]
             report["validation"]["registry_bytes_preflight"] = preflight[
                 "registry_bytes"
             ]
@@ -2068,6 +2748,59 @@ def build_runtime(job: dict[str, Any]) -> dict[str, Any]:
     return manifest
 
 
+def verify_xbr_batching_manifest(
+    manifest: dict[str, Any], frame_count: int, index_bytes: int
+) -> None:
+    batching = manifest.get("xbr_batching")
+    # Builds made before bounded dispatch remain resumable and verifiable; the
+    # adapter, source and registry hashes still prove their payload identity.
+    if batching is None:
+        return
+    if not isinstance(batching, dict):
+        raise RuntimeError("build xBR batching metadata must be an object")
+    integer_fields = (
+        "output_budget_bytes",
+        "batch_count",
+        "total_projected_output_bytes",
+        "maximum_projected_batch_bytes",
+        "oversized_singleton_batches",
+    )
+    values: dict[str, int] = {}
+    for name in integer_fields:
+        value = batching.get(name)
+        if isinstance(value, bool) or not isinstance(value, int):
+            raise RuntimeError(f"build xBR batching field is invalid: {name}")
+        values[name] = value
+    if (
+        values["output_budget_bytes"] <= 0
+        or not (1 <= values["batch_count"] <= frame_count)
+        or values["total_projected_output_bytes"] != index_bytes * 4
+        or not (
+            1
+            <= values["maximum_projected_batch_bytes"]
+            <= values["total_projected_output_bytes"]
+        )
+        or not (
+            0
+            <= values["oversized_singleton_batches"]
+            <= values["batch_count"]
+        )
+        or (
+            values["maximum_projected_batch_bytes"]
+            > values["output_budget_bytes"]
+        )
+        != (values["oversized_singleton_batches"] > 0)
+        or batching.get("ordering") != "source-resource-frame"
+    ):
+        raise RuntimeError("build xBR batching metadata is inconsistent")
+    validation = manifest.get("validation") or {}
+    if (
+        validation.get("xbr_dispatch_batches") != values["batch_count"]
+        or validation.get("qa_samples_retained_max_per_resource") != 5
+    ):
+        raise RuntimeError("build xBR batching validation metadata is inconsistent")
+
+
 def verify_build(job: dict[str, Any]) -> dict[str, Any]:
     manifest_path = build_dir(job) / "build-manifest.json"
     manifest = read_json(manifest_path)
@@ -2089,6 +2822,14 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
     contract = upscale_contract(job)
     if manifest.get("method") != contract.method:
         raise RuntimeError("build manifest upscale method differs from job")
+    if manifest.get("source_manifest_sha256") != sha256_file(
+        source_manifest_path(job)
+    ):
+        raise RuntimeError("build source manifest hash differs from current source")
+    if manifest.get("scalepix_sha256") != sha256_file(job_path(job, "scalepix")):
+        raise RuntimeError("build Scalepix hash differs from current source")
+    if not build_adapter_hash_matches(manifest, contract):
+        raise RuntimeError("build xBR adapter hash differs from current contract")
     if manifest.get("registry_version") != contract.registry_version:
         raise RuntimeError("build manifest registry version differs from job")
     if contract.explicit and (
@@ -2114,13 +2855,31 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("registry contains an out-of-family resref")
     if info["frame_count"] != int(manifest["frame_count"]):
         raise RuntimeError("registry frame count differs from build manifest")
+    if (
+        manifest.get("resource_count") != info["resource_count"]
+        or manifest.get("registry_bytes") != info["registry_bytes"]
+    ):
+        raise RuntimeError("registry top-level counters differ from build manifest")
     if info["index_bytes"] != int(
         manifest.get(f"x{contract.scale}_pixel_count", -1)
     ):
         raise RuntimeError("registry index bytes differ from build manifest pixel count")
+    if contract.explicit and "registry_layout" in manifest and (
+        manifest.get("registry_layout") != "monolith"
+        or manifest.get("registry_set") is not None
+        or manifest.get("registry_set_sha256") is not None
+        or manifest.get("registry_set_bytes") is not None
+        or manifest.get("shards") != []
+        or manifest.get("total_resources") != info["resource_count"]
+        or manifest.get("total_frames") != info["frame_count"]
+        or manifest.get("total_index_bytes") != info["index_bytes"]
+        or manifest.get("total_registry_bytes") != info["registry_bytes"]
+    ):
+        raise RuntimeError("build manifest monolithic layout metadata differs from registry")
     validation = manifest.get("validation") or {}
     if validation.get(f"dimensions_exact_x{contract.scale}") != info["frame_count"]:
         raise RuntimeError("build manifest exact-dimension count differs from registry")
+    verify_xbr_batching_manifest(manifest, info["frame_count"], info["index_bytes"])
     return info
 
 
@@ -2133,6 +2892,9 @@ def verify_runtime(job: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("runtime manifest job id differs from job")
     if manifest.get("runtime_profile") != job["animation"].get("runtime_profile"):
         raise RuntimeError("runtime manifest profile differs from job")
+    source_contract_sha256 = source_tree_hash(job_path(job, "engine_source"))
+    if manifest.get("engine_source_contract_sha256") != source_contract_sha256:
+        raise RuntimeError("runtime engine source contract differs from current source")
     dll = runtime_dir(job) / str(manifest["dll"])
     if sha256_file(dll) != manifest.get("dll_sha256"):
         raise RuntimeError("runtime DLL hash differs from runtime manifest")
@@ -2277,6 +3039,79 @@ def armor_set_build_manifest_path(armor_set: dict[str, Any]) -> Path:
     return build_dir(armor_set) / "build-manifest.json"
 
 
+def armor_set_source_registry_formats(
+    infos: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    result: list[dict[str, Any]] = []
+    seen: set[tuple[str, int, int]] = set()
+    for info in infos:
+        identity = (
+            str(info["registry_magic"]),
+            int(info["version"]),
+            int(info["scale"]),
+        )
+        if identity in seen:
+            continue
+        seen.add(identity)
+        result.append(
+            {
+                "registry_magic": identity[0],
+                "registry_version": identity[1],
+                "scale": identity[2],
+            }
+        )
+    return result
+
+
+def armor_set_output_registry_identity(
+    armor_set: dict[str, Any], infos: list[dict[str, Any]]
+) -> tuple[bytes, int, int]:
+    contract = upscale_contract(armor_set)
+    identities = {
+        (str(info["registry_magic"]), int(info["version"]), int(info["scale"]))
+        for info in infos
+    }
+    legacy_identity = (
+        registry_magic_name(REGISTRY_MAGIC),
+        REGISTRY_VERSION,
+        LEGACY_SCALE,
+    )
+    xn_x2_identity = (
+        registry_magic_name(XN_REGISTRY_MAGIC),
+        XN_REGISTRY_VERSION,
+        2,
+    )
+    xn_x4_identity = (
+        registry_magic_name(XN_REGISTRY_MAGIC),
+        XN_REGISTRY_VERSION,
+        4,
+    )
+    if not contract.explicit:
+        if identities != {legacy_identity}:
+            raise RuntimeError("legacy armor set requires only V2/x2 member registries")
+        return REGISTRY_MAGIC, REGISTRY_VERSION, LEGACY_SCALE
+    if contract.scale == 2:
+        if not identities or not identities.issubset({legacy_identity, xn_x2_identity}):
+            raise RuntimeError(
+                "explicit x2 armor set accepts only legacy V2/x2 or XN V3/x2 registries"
+            )
+        return XN_REGISTRY_MAGIC, XN_REGISTRY_VERSION, 2
+    if identities != {xn_x4_identity}:
+        raise RuntimeError("explicit x4 armor set requires only XN V3/x4 registries")
+    return XN_REGISTRY_MAGIC, XN_REGISTRY_VERSION, 4
+
+
+def registry_set_manifest_shards(info: dict[str, Any]) -> list[dict[str, Any]]:
+    prefix = "iee-assets/creature-sprites/"
+    return [
+        {
+            **shard,
+            "registry": prefix + str(shard["registry"]),
+        }
+        for shard in info["shards"]
+    ]
+
+
 def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
     manifest_path = armor_set_build_manifest_path(armor_set)
     manifest = read_json(manifest_path)
@@ -2293,14 +3128,9 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
     expected_members = armor_set_member_records(armor_set)
     if manifest.get("members") != expected_members:
         raise RuntimeError("armor-set build members differ from current member jobs")
-    registry = build_dir(armor_set) / str(manifest.get("registry", ""))
-    info = inspect_registry(registry)
-    if info["sha256"] != manifest.get("registry_sha256"):
-        raise RuntimeError("armor-set registry hash differs from build manifest")
-    if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
-        raise RuntimeError("armor-set registry animation id differs from set")
     expected_resources: list[str] = []
     expected_frames = 0
+    expected_index_bytes = 0
     member_infos: list[dict[str, Any]] = []
     member_methods: list[dict[str, Any]] = []
     for member in armor_set["_members"]:
@@ -2311,31 +3141,95 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
         member_methods.append(member_manifest.get("method"))
         expected_resources.extend(member_info["resources"])
         expected_frames += member_info["frame_count"]
-    member_magic, member_version, member_scale = require_compatible_registry_infos(
-        member_infos
+        expected_index_bytes += member_info["index_bytes"]
+    output_magic, output_version, output_scale = armor_set_output_registry_identity(
+        armor_set, member_infos
     )
-    if (
-        info["registry_magic"] != member_magic
-        or info["version"] != member_version
-        or info["scale"] != member_scale
-        or any(method != member_methods[0] for method in member_methods[1:])
-        or manifest.get("method") != member_methods[0]
-    ):
-        raise RuntimeError("armor-set registry format differs from member registries")
+    if any(method != member_methods[0] for method in member_methods[1:]):
+        raise RuntimeError("armor-set members mix upscale methods")
+    if manifest.get("method") != upscale_contract(armor_set).method:
+        raise RuntimeError("armor-set build method differs from set contract")
     if len(expected_resources) != len(set(expected_resources)):
         raise RuntimeError("armor-set members contain duplicate BAM resources")
+
+    layout = str(manifest.get("registry_layout", "monolith"))
+    if layout == "monolith":
+        registry = build_dir(armor_set) / str(manifest.get("registry", ""))
+        info = inspect_registry(registry)
+        if info["sha256"] != manifest.get("registry_sha256"):
+            raise RuntimeError("armor-set registry hash differs from build manifest")
+        if registry.name != (
+            XN_REGISTRY_FILENAME
+            if output_magic == XN_REGISTRY_MAGIC
+            else REGISTRY_FILENAME
+        ):
+            raise RuntimeError("armor-set registry filename differs from output format")
+        if upscale_contract(armor_set).explicit and (
+            manifest.get("registry_set") is not None
+            or manifest.get("registry_set_sha256") is not None
+            or manifest.get("registry_set_bytes") is not None
+            or manifest.get("shards") != []
+        ):
+            raise RuntimeError("monolithic armor-set manifest has registry-set fields")
+    elif layout == "set":
+        if not upscale_contract(armor_set).explicit:
+            raise RuntimeError("legacy armor sets cannot use registry-set layout")
+        registry_set = build_dir(armor_set) / str(manifest.get("registry_set", ""))
+        info = inspect_registry_set(registry_set)
+        if (
+            info["sha256"] != manifest.get("registry_set_sha256")
+            or registry_set.name != XN_REGISTRY_SET_FILENAME
+            or manifest.get("registry") is not None
+            or manifest.get("registry_sha256") is not None
+            or manifest.get("registry_set_bytes") != info["registry_set_bytes"]
+            or manifest.get("shards") != registry_set_manifest_shards(info)
+        ):
+            raise RuntimeError("armor-set registry-set manifest differs from indexed shards")
+    else:
+        raise RuntimeError("unsupported armor-set registry layout")
+
+    if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
+        raise RuntimeError("armor-set registry animation id differs from set")
     if info["resources"] != expected_resources:
         raise RuntimeError("armor-set registry resources differ from member registries")
     if info["frame_count"] != expected_frames:
         raise RuntimeError("armor-set registry frame count differs from member registries")
-    if info["index_bytes"] != int(manifest.get(f"x{info['scale']}_index_bytes", -1)):
-        raise RuntimeError("armor-set index bytes differ from build manifest")
-    set_contract = upscale_contract(armor_set)
-    if set_contract.explicit and (
-        manifest.get("registry_magic") != info["registry_magic"]
-        or manifest.get("registry_scale") != info["scale"]
+    if info["index_bytes"] != expected_index_bytes or info["index_bytes"] != int(
+        manifest.get(f"x{output_scale}_index_bytes", -1)
     ):
-        raise RuntimeError("armor-set manifest registry magic/scale differs from set")
+        raise RuntimeError("armor-set index bytes differ from build manifest")
+    if (
+        manifest.get("resource_count") != info["resource_count"]
+        or manifest.get("frame_count") != info["frame_count"]
+        or manifest.get("registry_bytes") != info["registry_bytes"]
+    ):
+        raise RuntimeError("armor-set top-level counters differ from registries")
+    set_contract = upscale_contract(armor_set)
+    if layout == "monolith" and (
+        info["registry_magic"] != registry_magic_name(output_magic)
+        or info["version"] != output_version
+        or info["scale"] != output_scale
+    ):
+        raise RuntimeError("armor-set monolith format differs from set contract")
+    if set_contract.explicit:
+        source_formats = armor_set_source_registry_formats(member_infos)
+        promoted_to_xn = any(
+            info["registry_magic"] != registry_magic_name(XN_REGISTRY_MAGIC)
+            or info["version"] != XN_REGISTRY_VERSION
+            for info in member_infos
+        )
+        if (
+            manifest.get("registry_magic") != registry_magic_name(output_magic)
+            or manifest.get("registry_version") != output_version
+            or manifest.get("registry_scale") != output_scale
+            or manifest.get("source_registry_formats") != source_formats
+            or manifest.get("promoted_to_xn") is not promoted_to_xn
+            or manifest.get("total_resources") != info["resource_count"]
+            or manifest.get("total_frames") != info["frame_count"]
+            or manifest.get("total_index_bytes") != info["index_bytes"]
+            or manifest.get("total_registry_bytes") != info["registry_bytes"]
+        ):
+            raise RuntimeError("armor-set xN manifest metadata differs from registries")
     return info
 
 
@@ -2366,75 +3260,128 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
         raise RuntimeError(f"armor-set build exists; use --resume or --force: {output}")
     members = armor_set_member_records(armor_set)
     total_resources = sum(int(member["resource_count"]) for member in members)
-    if total_resources > MAX_RESOURCES:
-        raise RuntimeError(f"armor-set resources exceed registry limit {MAX_RESOURCES}")
+    total_frames = sum(int(member["frame_count"]) for member in members)
+    set_contract = upscale_contract(armor_set)
+    if total_resources > (
+        MAX_REGISTRY_SET_RESOURCES if set_contract.explicit else MAX_RESOURCES
+    ):
+        raise RuntimeError("armor-set resources exceed aggregate format limit")
+    if set_contract.explicit and total_frames > MAX_REGISTRY_SET_FRAMES:
+        raise RuntimeError("armor-set frames exceed registry-set format limit")
     member_registries: list[dict[str, Any]] = []
     member_methods: list[dict[str, Any]] = []
     for member in armor_set["_members"]:
         member_manifest = read_json(build_dir(member) / "build-manifest.json")
         member_registry = build_dir(member) / str(member_manifest["registry"])
-        info = inspect_registry(member_registry)
+        info = inspect_registry(member_registry, include_resource_records=True)
         if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
             raise RuntimeError("armor-set member registry animation id differs from set")
         member_registries.append(
             {"path": member_registry, "info": info, "manifest": member_manifest}
         )
         member_methods.append(member_manifest.get("method"))
-    magic_name, registry_version, registry_scale = require_compatible_registry_infos(
-        [entry["info"] for entry in member_registries]
+    member_infos = [entry["info"] for entry in member_registries]
+    registry_magic, registry_version, registry_scale = armor_set_output_registry_identity(
+        armor_set, member_infos
     )
+    shard_byte_limit = maximum_registry_bytes(registry_scale)
     if any(method != member_methods[0] for method in member_methods[1:]):
         raise RuntimeError("registry aggregation refuses mixed upscale methods")
-    set_contract = upscale_contract(armor_set)
-    if set_contract.explicit and (
-        magic_name != registry_magic_name(set_contract.registry_magic)
-        or registry_version != set_contract.registry_version
-        or registry_scale != set_contract.scale
-        or member_methods[0] != set_contract.method
-    ):
-        raise RuntimeError("armor-set upscale contract differs from member registries")
-    projected_registry_bytes = REGISTRY_HEADER_BYTES + sum(
-        int(entry["info"]["registry_bytes"]) - REGISTRY_HEADER_BYTES
+    if member_methods[0] != set_contract.method:
+        raise RuntimeError("armor-set upscale method differs from member registries")
+    records = [
+        record
         for entry in member_registries
+        for record in entry["info"]["resource_records"]
+    ]
+    if len(records) != total_resources:
+        raise RuntimeError("armor-set member record count differs from manifests")
+    if len({str(record["resref"]) for record in records}) != len(records):
+        raise RuntimeError("armor-set members contain duplicate BAM resources")
+    projected_registry_bytes = REGISTRY_HEADER_BYTES + sum(
+        int(record["bytes"]) for record in records
     )
-    if projected_registry_bytes > MAX_REGISTRY_BYTES:
+    use_registry_set = set_contract.explicit and (
+        total_resources > MAX_RESOURCES
+        or projected_registry_bytes > shard_byte_limit
+    )
+    if not set_contract.explicit and (
+        total_resources > MAX_RESOURCES or projected_registry_bytes > shard_byte_limit
+    ):
         raise RuntimeError(
-            f"armor-set registry preflight exceeds {MAX_REGISTRY_BYTES} bytes: "
-            f"{projected_registry_bytes}"
+            "legacy armor-set aggregate exceeds the monolithic registry limits"
         )
-    if magic_name == registry_magic_name(REGISTRY_MAGIC):
-        registry_magic = REGISTRY_MAGIC
-        registry_filename = REGISTRY_FILENAME
-    elif magic_name == registry_magic_name(XN_REGISTRY_MAGIC):
-        registry_magic = XN_REGISTRY_MAGIC
-        registry_filename = XN_REGISTRY_FILENAME
-    else:
-        raise RuntimeError("unsupported registry magic for aggregation")
+    partitions = (
+        partition_registry_resources(
+            records,
+            maximum_resources=MAX_RESOURCES,
+            maximum_bytes=shard_byte_limit,
+            maximum_shards=MAX_REGISTRY_SET_SHARDS,
+        )
+        if use_registry_set
+        else [records]
+    )
+    projected_set_registry_bytes = sum(
+        REGISTRY_HEADER_BYTES + sum(int(record["bytes"]) for record in partition)
+        for partition in partitions
+    )
+    if use_registry_set and projected_set_registry_bytes > MAX_REGISTRY_SET_BYTES:
+        raise RuntimeError(
+            "registry-set preflight exceeds the 8 GiB aggregate registry limit"
+        )
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix="armor-set-", dir=output.parent))
     try:
         pack_dir = temporary / "iee-assets" / "creature-sprites"
         pack_dir.mkdir(parents=True)
-        registry_path = pack_dir / registry_filename
-        with registry_path.open("wb") as output_stream:
-            output_stream.write(registry_magic)
-            output_stream.write(
-                struct.pack(
-                    "<IIII",
-                    registry_version,
+        animation_id = int(armor_set["animation"]["id"], 16)
+        registry_path: Path | None = None
+        registry_set_path: Path | None = None
+        if use_registry_set:
+            shard_infos: list[dict[str, Any]] = []
+            for index, shard_records in enumerate(partitions):
+                shard_path = pack_dir / XN_REGISTRY_SHARD_FILENAME.format(index=index)
+                shard_info = write_registry_records(
+                    shard_path,
+                    XN_REGISTRY_MAGIC,
+                    XN_REGISTRY_VERSION,
                     registry_scale,
-                    total_resources,
-                    int(armor_set["animation"]["id"], 16),
+                    animation_id,
+                    shard_records,
                 )
+                shard_info["path"] = shard_path
+                shard_infos.append(shard_info)
+            registry_set_path = pack_dir / XN_REGISTRY_SET_FILENAME
+            info = write_registry_set_index(
+                registry_set_path, registry_scale, animation_id, shard_infos
             )
-            for entry in member_registries:
-                raw = entry["path"].read_bytes()
-                output_stream.write(raw[REGISTRY_HEADER_BYTES:])
-        info = inspect_registry(registry_path)
+            registry_layout = "set"
+        else:
+            registry_filename = (
+                XN_REGISTRY_FILENAME
+                if registry_magic == XN_REGISTRY_MAGIC
+                else REGISTRY_FILENAME
+            )
+            registry_path = pack_dir / registry_filename
+            info = write_registry_records(
+                registry_path,
+                registry_magic,
+                registry_version,
+                registry_scale,
+                animation_id,
+                records,
+            )
+            registry_layout = "monolith"
         if info["resource_count"] != total_resources:
             raise RuntimeError("armor-set registry resource count differs from members")
-        if info["registry_bytes"] != projected_registry_bytes:
+        if not use_registry_set and info["registry_bytes"] != projected_registry_bytes:
             raise RuntimeError("armor-set registry size differs from preflight")
+        source_formats = armor_set_source_registry_formats(member_infos)
+        promoted_to_xn = set_contract.explicit and any(
+            member_info["registry_magic"] != registry_magic_name(XN_REGISTRY_MAGIC)
+            or member_info["version"] != XN_REGISTRY_VERSION
+            for member_info in member_infos
+        )
         report = {
             "schema": ARMOR_SET_BUILD_SCHEMA,
             "status": "built-pending-ingame-qa",
@@ -2447,20 +3394,52 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
             "bam_prefixes": [member["bam_prefix"] for member in members],
             "members": members,
             "registry_version": registry_version,
-            "method": member_methods[0],
+            "method": set_contract.method,
             "resource_count": info["resource_count"],
             "frame_count": info["frame_count"],
             f"x{registry_scale}_index_bytes": info["index_bytes"],
-            "registry": f"iee-assets/creature-sprites/{registry_filename}",
+            "registry_layout": registry_layout,
+            "registry": (
+                f"iee-assets/creature-sprites/{registry_path.name}"
+                if registry_path is not None
+                else None
+            ),
             "registry_bytes": info["registry_bytes"],
-            "registry_sha256": info["sha256"],
+            "registry_sha256": info["sha256"] if registry_path is not None else None,
+            "registry_set": (
+                f"iee-assets/creature-sprites/{XN_REGISTRY_SET_FILENAME}"
+                if registry_set_path is not None
+                else None
+            ),
+            "registry_set_sha256": (
+                info["sha256"] if registry_set_path is not None else None
+            ),
+            "registry_set_bytes": (
+                info["registry_set_bytes"] if registry_set_path is not None else None
+            ),
+            "shards": registry_set_manifest_shards(info) if use_registry_set else [],
+            "total_resources": info["resource_count"],
+            "total_frames": info["frame_count"],
+            "total_index_bytes": info["index_bytes"],
+            "total_registry_bytes": info["registry_bytes"],
         }
         if registry_version == XN_REGISTRY_VERSION:
-            report["registry_magic"] = info["registry_magic"]
-            report["registry_scale"] = info["scale"]
+            report["registry_magic"] = registry_magic_name(registry_magic)
+            report["registry_scale"] = registry_scale
+            report["source_registry_formats"] = source_formats
+            report["promoted_to_xn"] = promoted_to_xn
             report["validation"] = {
-                "registry_bytes_preflight": projected_registry_bytes
+                "monolithic_registry_bytes_preflight": projected_registry_bytes,
+                "shard_count": len(partitions),
+                "maximum_shard_resources": MAX_RESOURCES,
+                "maximum_shard_bytes": shard_byte_limit,
+                "maximum_set_shards": MAX_REGISTRY_SET_SHARDS,
+                "maximum_set_resources": MAX_REGISTRY_SET_RESOURCES,
+                "maximum_set_frames": MAX_REGISTRY_SET_FRAMES,
+                "maximum_set_registry_bytes": MAX_REGISTRY_SET_BYTES,
             }
+            if not use_registry_set:
+                report["validation"]["registry_bytes_preflight"] = projected_registry_bytes
         equipment_layers = armor_set_equipment_layers(armor_set)
         if equipment_layers:
             report["equipment_layers"] = equipment_layers
@@ -2468,7 +3447,7 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
         if output.exists():
             shutil.rmtree(output)
         temporary.replace(output)
-        return {"status": "built", **info}
+        return {"status": "built", "registry_layout": registry_layout, **info}
     except Exception:
         shutil.rmtree(temporary, ignore_errors=True)
         raise
@@ -2525,7 +3504,7 @@ def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
 
 
 def runtime_log_session_after_install(
-    text: str, exact_marker: str, installed_at_utc: str
+    text: str, exact_marker: str | tuple[str, ...], installed_at_utc: str
 ) -> str:
     try:
         installed = datetime.fromisoformat(installed_at_utc.replace("Z", "+00:00"))
@@ -2534,11 +3513,15 @@ def runtime_log_session_after_install(
         return ""
     lines = text.splitlines()
     start = -1
+    start_timestamp: datetime | None = None
+    markers = (exact_marker,) if isinstance(exact_marker, str) else exact_marker
+    if not markers:
+        return ""
     timestamp_pattern = re.compile(
         r"^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d+)?)\]"
     )
     for index, line in enumerate(lines):
-        if exact_marker not in line:
+        if not any(marker in line for marker in markers):
             continue
         match = timestamp_pattern.match(line)
         if not match:
@@ -2547,8 +3530,13 @@ def runtime_log_session_after_install(
             timestamp = datetime.fromisoformat(match.group(1))
         except ValueError:
             continue
-        if timestamp >= installed_local:
+        if timestamp >= installed_local and (
+            start_timestamp is None
+            or timestamp > start_timestamp
+            or (timestamp == start_timestamp and index > start)
+        ):
             start = index
+            start_timestamp = timestamp
     return "\n".join(lines[start:]) if start >= 0 else ""
 
 
@@ -2570,6 +3558,9 @@ def runtime_session_health(
     pixel_failures = session.count("Character pixel composition failed")
     backing_rejections = session.count("Character replacement backing rejected")
     unsafe_in_place_uploads = session.count("in-place (NEAREST")
+    lazy_payload_failures = session.count(
+        "Creature sprite lazy pack disabled after payload failure"
+    )
     transient_by_prefix = {
         prefix: any(
             "transient replacement id" in line
@@ -2586,6 +3577,7 @@ def runtime_session_health(
         "character_pixel_failure_count": pixel_failures,
         "character_backing_rejection_count": backing_rejections,
         "character_unsafe_in_place_count": unsafe_in_place_uploads,
+        "lazy_payload_failure_count": lazy_payload_failures,
         "character_transient_by_prefix": transient_by_prefix,
         "runtime_health_pass": bool(
             pool_resets == 0
@@ -2594,12 +3586,158 @@ def runtime_session_health(
             and pixel_failures == 0
             and backing_rejections == 0
             and unsafe_in_place_uploads == 0
+            and lazy_payload_failures == 0
             and character_transient
         ),
     }
 
 
-def installed_state_integrity(state: dict[str, Any]) -> dict[str, Any]:
+def installed_xn_state_contract_errors(
+    state: dict[str, Any],
+    targets_by_path: dict[str, dict[str, Any]],
+    expected_scale: int | None,
+) -> list[str]:
+    errors: list[str] = []
+
+    def path_key(value: Any) -> str:
+        return str(value).replace("\\", "/").casefold()
+
+    def require_target(relative_path: str, expected_present: bool) -> dict[str, Any] | None:
+        target = targets_by_path.get(path_key(relative_path))
+        if target is None:
+            errors.append(f"required installed target is missing: {relative_path}")
+            return None
+        if target.get("installed_present") is not expected_present:
+            errors.append(f"installed target layout differs: {relative_path}")
+        return target
+
+    if state.get("schema") != XN_INSTALL_STATE_SCHEMA:
+        errors.append("xN installation state schema is not v2")
+    layout = state.get("registry_layout")
+    if layout not in {"monolith", "set"}:
+        errors.append("xN installation registry layout is invalid")
+        return errors
+    if (
+        state.get("registry_magic") != registry_magic_name(XN_REGISTRY_MAGIC)
+        or state.get("registry_version") != XN_REGISTRY_VERSION
+        or isinstance(state.get("registry_scale"), bool)
+        or state.get("registry_scale") not in MAX_REGISTRY_BYTES_BY_SCALE
+        or (
+            expected_scale is not None
+            and state.get("registry_scale") != expected_scale
+        )
+    ):
+        errors.append("xN installation registry contract is invalid")
+
+    sprite_root = "iee-assets/creature-sprites/"
+    monolith_relative = sprite_root + XN_REGISTRY_FILENAME
+    legacy_relative = sprite_root + REGISTRY_FILENAME
+    set_relative = sprite_root + XN_REGISTRY_SET_FILENAME
+    allowed_core = {
+        path_key("InfinityEngine-Enhancer.dll"),
+        path_key("InfinityEngine-Enhancer.ini"),
+        path_key(monolith_relative),
+        path_key(legacy_relative),
+        path_key(set_relative),
+    }
+    shard_pattern = re.compile(
+        re.escape(path_key(sprite_root))
+        + r"creaturesprites-xn-[0-9]{4}\.registry"
+    )
+    for relative in targets_by_path:
+        if relative not in allowed_core and shard_pattern.fullmatch(relative) is None:
+            errors.append(f"installed target is outside the xN namespace: {relative}")
+
+    require_target("InfinityEngine-Enhancer.dll", True)
+    require_target("InfinityEngine-Enhancer.ini", True)
+    if targets_by_path.get(path_key(legacy_relative)) is None:
+        errors.append(f"required installed target is missing: {legacy_relative}")
+    source_shards = state.get("source_shards")
+    if not isinstance(source_shards, list):
+        errors.append("xN installation source_shards is invalid")
+        source_shards = []
+
+    if layout == "monolith":
+        primary_relative = monolith_relative
+        primary_target = require_target(monolith_relative, True)
+        require_target(set_relative, False)
+        if (
+            state.get("registry_shard_count") != 0
+            or source_shards
+            or "registry_set_magic" not in state
+            or state.get("registry_set_magic") is not None
+            or "registry_set_version" not in state
+            or state.get("registry_set_version") is not None
+        ):
+            errors.append("monolithic xN installation has registry-set metadata")
+        for relative, target in targets_by_path.items():
+            if shard_pattern.fullmatch(relative) and target.get("installed_present") is not False:
+                errors.append(f"monolithic xN installation retains a shard: {relative}")
+    else:
+        primary_relative = set_relative
+        primary_target = require_target(set_relative, True)
+        require_target(monolith_relative, False)
+        shard_count = state.get("registry_shard_count")
+        if (
+            state.get("registry_set_magic") != "IEECSNS"
+            or state.get("registry_set_version") != XN_REGISTRY_SET_VERSION
+            or isinstance(shard_count, bool)
+            or not isinstance(shard_count, int)
+            or not (1 <= shard_count <= MAX_REGISTRY_SET_SHARDS)
+            or len(source_shards) != shard_count
+        ):
+            errors.append("registry-set installation metadata is invalid")
+            shard_count = len(source_shards)
+        declared_shards: set[str] = set()
+        for index, source_shard in enumerate(source_shards):
+            expected_relative = sprite_root + XN_REGISTRY_SHARD_FILENAME.format(
+                index=index
+            )
+            expected_key = path_key(expected_relative)
+            declared_shards.add(expected_key)
+            if not isinstance(source_shard, dict):
+                errors.append(f"registry-set source shard {index} is invalid")
+                continue
+            source_hash = str(source_shard.get("sha256", "")).upper()
+            source_crc32 = source_shard.get("crc32")
+            if (
+                isinstance(source_shard.get("index"), bool)
+                or source_shard.get("index") != index
+                or path_key(source_shard.get("relative_path", "")) != expected_key
+                or re.fullmatch(r"[0-9A-F]{64}", source_hash) is None
+                or isinstance(source_crc32, bool)
+                or not isinstance(source_crc32, int)
+                or not (0 <= source_crc32 <= 0xFFFFFFFF)
+            ):
+                errors.append(f"registry-set source shard {index} metadata is invalid")
+            target = require_target(expected_relative, True)
+            if target is not None and str(
+                target.get("installed_sha256", "")
+            ).upper() != source_hash:
+                errors.append(f"registry-set source shard {index} hash differs from target")
+        for relative, target in targets_by_path.items():
+            if (
+                shard_pattern.fullmatch(relative)
+                and relative not in declared_shards
+                and target.get("installed_present") is not False
+            ):
+                errors.append(f"registry-set installation retains an undeclared shard: {relative}")
+
+    if path_key(state.get("registry_relative_path", "")) != path_key(primary_relative):
+        errors.append("xN installation primary registry target is invalid")
+    source_pack_hash = str(state.get("source_pack_sha256", "")).upper()
+    if re.fullmatch(r"[0-9A-F]{64}", source_pack_hash) is None:
+        errors.append("xN installation source pack hash is invalid")
+    elif primary_target is not None and str(
+        primary_target.get("installed_sha256", "")
+    ).upper() != source_pack_hash:
+        errors.append("xN installation source pack hash differs from primary target")
+    return errors
+
+
+def installed_state_integrity(
+    state: dict[str, Any], expected_scale: int | None = None
+) -> dict[str, Any]:
     errors: list[str] = []
     targets = state.get("targets")
     game_root_text = str(state.get("game_root", ""))
@@ -2611,6 +3749,7 @@ def installed_state_integrity(state: dict[str, Any]) -> dict[str, Any]:
         }
     game_root = Path(game_root_text).resolve()
     checked = 0
+    targets_by_path: dict[str, dict[str, Any]] = {}
     for target_state in targets:
         if not isinstance(target_state, dict):
             errors.append("invalid target state")
@@ -2626,6 +3765,11 @@ def installed_state_integrity(state: dict[str, Any]) -> dict[str, Any]:
         except ValueError:
             errors.append(f"installed target escapes game root: {relative_text}")
             continue
+        target_key = relative.as_posix().casefold()
+        if target_key in targets_by_path:
+            errors.append(f"duplicate installed target path: {relative_text}")
+            continue
+        targets_by_path[target_key] = target_state
         expected_present = target_state.get("installed_present")
         if not isinstance(expected_present, bool):
             errors.append(f"installed presence is missing: {relative_text}")
@@ -2643,6 +3787,12 @@ def installed_state_integrity(state: dict[str, Any]) -> dict[str, Any]:
                 errors.append(f"installed hash changed: {relative_text}")
                 continue
         checked += 1
+    if expected_scale is not None or state.get("registry_layout") is not None:
+        errors.extend(
+            installed_xn_state_contract_errors(
+                state, targets_by_path, expected_scale
+            )
+        )
     return {
         "installed_files_match": not errors and checked == len(targets),
         "installed_targets_checked": checked,
@@ -2657,9 +3807,12 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     state = read_json(state_path) if state_path.is_file() else {}
     animation_id = job["animation"]["id"]
     contract = effective_upscale_contract(job)
-    marker = f"Creature sprite xBR2x pack ready: animation {animation_id},"
+    ready_markers = tuple(
+        f"Creature sprite {kind} pack ready: animation {animation_id},"
+        for kind in ("xBR", "xBR2x")
+    )
     session = runtime_log_session_after_install(
-        text, marker, str(state.get("installed_at_utc", ""))
+        text, ready_markers, str(state.get("installed_at_utc", ""))
     )
     session_lower = session.lower()
     prefixes = (
@@ -2680,13 +3833,22 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     owner, render_owner = runtime_owner_labels(profile)
     owner_scope_marker = f"owner scope installed: {owner}".lower()
     reached_marker = f"Creature sprite animation {animation_id} reached {render_owner}".lower()
-    legacy_pack_ready = marker in session and "filter=NEAREST" in session
+    legacy_pack_ready = any(
+        any(marker in line for marker in ready_markers)
+        and "filter=NEAREST" in line
+        for line in session.splitlines()
+    )
     pack_ready = legacy_pack_ready
     if contract.explicit:
+        expected_source = (
+            XN_REGISTRY_SET_FILENAME
+            if state.get("registry_layout") == "set"
+            else XN_REGISTRY_FILENAME
+        )
         pack_ready = any(
-            marker in line
+            any(marker in line for marker in ready_markers)
             and f"scale=x{contract.scale}," in line
-            and "source=CreatureSprites-XN.registry;" in line
+            and f"source={expected_source};" in line
             and "filter=NEAREST" in line
             for line in session.splitlines()
         )
@@ -2709,7 +3871,8 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     }
     if contract.explicit:
         report["registry_scale"] = contract.scale
-        report.update(installed_state_integrity(state))
+        report["registry_layout"] = state.get("registry_layout", "monolith")
+        report.update(installed_state_integrity(state, contract.scale))
     report.update(runtime_session_health(session, profile, composition_by_prefix))
     report["technical_pass"] = bool(
         report["session_after_install"]
@@ -2782,6 +3945,7 @@ def make_parser() -> argparse.ArgumentParser:
         choices=(
             "new-character-job",
             "new-character-equipment-job",
+            "promote-armor-set-job",
             "plan",
             "extract",
             "verify-sources",
@@ -2833,8 +3997,9 @@ def main() -> None:
     if args.scale is not None and args.command not in {
         "new-character-job",
         "new-character-equipment-job",
+        "promote-armor-set-job",
     }:
-        raise RuntimeError("--scale is only valid when creating a Character job")
+        raise RuntimeError("--scale is only valid when creating or promoting a Character job")
     if args.command == "new-character-job":
         result = create_character_job(
             args.job,
@@ -2861,6 +4026,15 @@ def main() -> None:
             args.name,
             args.qa_area,
             args.qa_creature,
+            args.scale,
+            args.force,
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return
+    if args.command == "promote-armor-set-job":
+        result = promote_armor_set_job(
+            args.job,
+            args.template_job,
             args.scale,
             args.force,
         )

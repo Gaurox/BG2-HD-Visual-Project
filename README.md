@@ -25,7 +25,7 @@ directement plutôt que de chercher dans l'arborescence.
 | **Procédure d'upscale des menus** | [`interface/menus-options-bg2ee/docs/MENU_UPSCALE.md`](interface/menus-options-bg2ee/docs/MENU_UPSCALE.md) |
 | **Plan d'intégration du HUD** | [`interface/gameplay-hud-bg2ee/analysis/HUD_RESOURCE_INVENTORY.md`](interface/gameplay-hud-bg2ee/analysis/HUD_RESOURCE_INVENTORY.md) |
 | **Portraits** | [`portraits/README.md`](portraits/README.md) ; mod publié : [`portraits/mod-PPE/LISEZ-MOI.md`](portraits/mod-PPE/LISEZ-MOI.md) |
-| **Identifier, auditer ou upscaler un sprite de créature / Character** | [`sprite/README.md`](sprite/README.md) — point d'entrée agent et index normalisé ; procédure : [`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md) |
+| **Identifier, auditer ou upscaler un sprite de créature / Character** | [`sprite/README.md`](sprite/README.md) — point d'entrée agent et index normalisé ; legacy x2 : [`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md) ; xN/set : [`sprite/SPRITE_UPSCALE_XN_FOUNDATION.md`](sprite/SPRITE_UPSCALE_XN_FOUNDATION.md) |
 | **Animations de décor (BAM)** | [`pipeline/ANIMATION_UPSCALE_PIPELINE.md`](pipeline/ANIMATION_UPSCALE_PIPELINE.md) — x4 spatial V1 ; [`pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](pipeline/ANIMATION_UPSCALE_30FPS_V2.md) — x4 + 30 fps ; [`animations/UPSCALE_ANIMATIONS_ZONE.md`](animations/UPSCALE_ANIMATIONS_ZONE.md) — runtime |
 | **Découper et installer les animations par zone** (obligatoire dès qu'un pack global dépasserait 512 MiB) | [`pipeline/ANIMATION_PACKS_PAR_ZONE.md`](pipeline/ANIMATION_PACKS_PAR_ZONE.md) — découpage, préflight, installation réversible et QA |
 | **Ajouter une animation vidéo événementielle locale** (porte, pont, mécanisme sans animation native) | [`engine/InfinityEngine-Enhancer/source-patchee/docs/event-video-overlay-assets.md`](engine/InfinityEngine-Enhancer/source-patchee/docs/event-video-overlay-assets.md) — procédure LLM complète, de l'analyse WED à la QA carte/HUD |
@@ -109,13 +109,15 @@ avec autre chose.
 Utiliser [`sprite/README.md`](sprite/README.md) comme routeur du domaine. Les quatre CSV normalisent
 les relations `ANIMATE.IDS`/INI/BAM/ITM : animations, familles et variantes, ressources décodées,
 objets et équipements. `sprite/index/manifest.json` porte les hashes de l'installation analysée,
-les limites et les totaux ; ne recopier ces valeurs dans aucun autre document.
+les limites, les totaux et les projections x2/x4 de registry-set ; ne recopier ces valeurs dans
+aucun autre document.
 
 Une ligne `pipeline_ready=yes` signifie que les prérequis automatisables connus sont satisfaits.
 Elle ne vaut ni build, ni installation, ni validation ingame. Une tâche de production suit ensuite
-[`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md). Une tâche d'évolution du
-pipeline sélectionne une famille bloquée, traite chaque code `blocker`, régénère l'index et exécute
-les tests avant tout job QA.
+[`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md) pour le legacy x2 ou
+[`sprite/SPRITE_UPSCALE_XN_FOUNDATION.md`](sprite/SPRITE_UPSCALE_XN_FOUNDATION.md) pour un job xN.
+Une tâche d'évolution du pipeline sélectionne une famille bloquée, traite chaque code `blocker`,
+régénère l'index et exécute les tests avant tout job QA.
 
 ## Catalogue des zones — `areas.csv`
 

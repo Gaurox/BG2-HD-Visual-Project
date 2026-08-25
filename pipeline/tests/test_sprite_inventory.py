@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -87,6 +88,138 @@ class SpriteInventoryTests(unittest.TestCase):
         self.assertEqual(items["HELM01"]["animation_code"], "J6")
         self.assertEqual(items["SHLD13"]["animation_code"], "C1")
         self.assertEqual(items["AX1H13"]["animation_code"], "AX")
+
+    def test_manifest_records_registry_set_contract(self) -> None:
+        manifest = json.loads((INDEX / "manifest.json").read_text(encoding="utf-8"))
+        limits = manifest["limits"]
+        self.assertEqual(
+            limits["max_shards_per_registry_set"], inventory.MAX_REGISTRY_SET_SHARDS
+        )
+        self.assertEqual(
+            limits["max_resources_per_registry_set"],
+            inventory.MAX_REGISTRY_SET_RESOURCES,
+        )
+        self.assertEqual(
+            limits["max_frames_per_registry_set"],
+            inventory.MAX_REGISTRY_SET_FRAMES,
+        )
+        self.assertEqual(
+            limits["max_registry_set_bytes"], inventory.MAX_REGISTRY_SET_BYTES
+        )
+        self.assertEqual(
+            limits["max_lazy_frame_index_bytes"],
+            inventory.MAX_LAZY_FRAME_INDEX_BYTES,
+        )
+        self.assertEqual(
+            limits["xbr_output_batch_budget_bytes"],
+            inventory.XBR_OUTPUT_BATCH_BUDGET_BYTES,
+        )
+        self.assertEqual(
+            limits["max_registry_bytes_by_scale"],
+            {
+                str(scale): byte_limit
+                for scale, byte_limit in inventory.MAX_REGISTRY_BYTES_BY_SCALE.items()
+            },
+        )
+        registry_set = manifest["registry_contracts"]["registry_set"]
+        self.assertEqual(registry_set["magic"], "IEECSNS")
+        self.assertEqual(registry_set["member_magic"], "IEECSXN")
+        self.assertEqual(
+            registry_set["invalid_present_set_policy"],
+            "fail-closed-no-monolith-fallback",
+        )
+        self.assertIn("lazy", registry_set["payload_loading"])
+
+    def test_human_female_warrior_fits_x4_set_bounds(self) -> None:
+        selected = []
+        for resource in rows("sprite_resources.csv"):
+            animation_ids = set(filter(None, resource["animation_ids"].split(";")))
+            if (
+                "0x6110" in animation_ids
+                and resource["runtime_relevant"] == "yes"
+                and resource["override_collision"] == "no"
+                and resource["decode_status"] == "ok"
+            ):
+                selected.append(resource)
+
+        self.assertGreater(len(selected), inventory.MAX_RESOURCES)
+        self.assertLessEqual(len(selected), inventory.MAX_REGISTRY_SET_RESOURCES)
+        self.assertLessEqual(
+            sum(int(resource["frame_count"]) for resource in selected),
+            inventory.MAX_REGISTRY_SET_FRAMES,
+        )
+        projected_records = [
+            inventory.estimate_registry_resource_bytes(resource, 4)
+            for resource in selected
+        ]
+        self.assertGreater(max(projected_records), inventory.maximum_registry_bytes(2))
+        self.assertLessEqual(
+            max(projected_records), inventory.maximum_registry_bytes(4)
+        )
+        shards = inventory.partition_registry_resources(
+            [
+                {"resref": resource["bam_resref"], "bytes": record_bytes}
+                for resource, record_bytes in zip(selected, projected_records)
+            ],
+            maximum_bytes=inventory.maximum_registry_bytes(4),
+        )
+        self.assertLessEqual(len(shards), inventory.MAX_REGISTRY_SET_SHARDS)
+        projected_aggregate = sum(projected_records) + (
+            len(shards) * inventory.REGISTRY_HEADER_BYTES
+        )
+        self.assertGreater(projected_aggregate, inventory.maximum_registry_bytes(4))
+        self.assertLessEqual(projected_aggregate, inventory.MAX_REGISTRY_SET_BYTES)
+
+        manifest = json.loads((INDEX / "manifest.json").read_text(encoding="utf-8"))
+        projection = manifest["registry_set_projections"]["animations"]["0x6110"]
+        self.assertEqual(projection["resource_count"], len(selected))
+        self.assertEqual(
+            projection["frame_count"],
+            sum(int(resource["frame_count"]) for resource in selected),
+        )
+        self.assertTrue(projection["x4"]["fits_set"])
+        self.assertEqual(projection["x4"]["shard_count"], len(shards))
+        self.assertEqual(
+            projection["x4"]["total_registry_bytes"], projected_aggregate
+        )
+        self.assertEqual(
+            projection["x4"]["maximum_resource_bytes"], max(projected_records)
+        )
+        projected_frame_bytes = max(
+            int(resource["native_frame_pixel_count_max"]) * 4 * 4
+            for resource in selected
+        )
+        self.assertEqual(
+            projection["x4"]["maximum_frame_index_bytes"], projected_frame_bytes
+        )
+        self.assertLessEqual(
+            projected_frame_bytes, inventory.MAX_LAZY_FRAME_INDEX_BYTES
+        )
+
+    def test_registry_set_projection_rejects_frame_larger_than_lazy_cache(self) -> None:
+        native_frame_pixels = inventory.MAX_LAZY_FRAME_INDEX_BYTES // 16 + 1
+        projection = inventory.build_registry_set_projections(
+            [
+                {
+                    "bam_resref": "TOOBIG",
+                    "decode_status": "ok",
+                    "runtime_relevant": "yes",
+                    "override_collision": "no",
+                    "animation_ids": "0x6110",
+                    "frame_count": 1,
+                    "cycle_count": 1,
+                    "cycle_slot_count": 1,
+                    "native_pixel_count": native_frame_pixels,
+                    "native_frame_pixel_count_max": native_frame_pixels,
+                }
+            ]
+        )["animations"]["0x6110"]
+
+        self.assertTrue(projection["x2"]["fits_set"])
+        self.assertFalse(projection["x4"]["fits_set"])
+        self.assertEqual(
+            projection["x4"]["blocker"], "registry-set-frame-index-size-limit"
+        )
 
 
 if __name__ == "__main__":
