@@ -265,37 +265,41 @@ function Set-IniKey([string]$Text, [string]$Section, [string]$Key, [string]$Valu
     $newline = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
     $lines = [System.Collections.Generic.List[string]]::new()
     foreach ($line in [regex]::Split($Text, '\r?\n')) { [void]$lines.Add($line) }
-    $sectionStarts = @()
+    $sectionRanges = @()
+    $sectionStart = -1
+    $sectionMatches = $false
     for ($index = 0; $index -lt $lines.Count; $index++) {
-        if ($lines[$index] -match '^\s*\[([^\]]+)\]\s*$' -and
-            [string]::Equals($Matches[1].Trim(), $Section,
-                [System.StringComparison]::OrdinalIgnoreCase)) {
-            $sectionStarts += $index
+        if ($lines[$index] -match '^\s*\[([^\]]+)\]\s*$') {
+            if ($sectionMatches) {
+                $sectionRanges += [pscustomobject]@{ Start = $sectionStart; End = $index }
+            }
+            $sectionStart = $index
+            $sectionMatches = [string]::Equals($Matches[1].Trim(), $Section,
+                [System.StringComparison]::OrdinalIgnoreCase)
         }
     }
-    if ($sectionStarts.Count -gt 1) { throw "Section INI dupliquée : [$Section]" }
-    if ($sectionStarts.Count -eq 0) {
+    if ($sectionMatches) {
+        $sectionRanges += [pscustomobject]@{ Start = $sectionStart; End = $lines.Count }
+    }
+    if ($sectionRanges.Count -eq 0) {
         if ($lines.Count -gt 0 -and $lines[$lines.Count - 1] -ne '') { [void]$lines.Add('') }
         [void]$lines.Add("[$Section]")
         [void]$lines.Add("$Key = $Value")
         return [string]::Join($newline, $lines)
     }
-    $sectionStart = [int]$sectionStarts[0]
-    $sectionEnd = $lines.Count
-    for ($index = $sectionStart + 1; $index -lt $lines.Count; $index++) {
-        if ($lines[$index] -match '^\s*\[[^\]]+\]\s*$') { $sectionEnd = $index; break }
-    }
     $keyIndexes = @()
     $keyPattern = '^\s*' + [regex]::Escape($Key) + '\s*='
-    for ($index = $sectionStart + 1; $index -lt $sectionEnd; $index++) {
-        if ($lines[$index] -match $keyPattern) { $keyIndexes += $index }
+    foreach ($range in $sectionRanges) {
+        for ($index = [int]$range.Start + 1; $index -lt [int]$range.End; $index++) {
+            if ($lines[$index] -match $keyPattern) { $keyIndexes += $index }
+        }
     }
     if ($keyIndexes.Count -gt 1) { throw "Clé INI dupliquée dans [$Section] : $Key" }
     if ($keyIndexes.Count -eq 1) {
         $lines[[int]$keyIndexes[0]] = "$Key = $Value"
     }
     else {
-        $lines.Insert($sectionEnd, "$Key = $Value")
+        $lines.Insert([int]$sectionRanges[0].End, "$Key = $Value")
     }
     return [string]::Join($newline, $lines)
 }

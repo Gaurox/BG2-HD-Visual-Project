@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import inspect
 import json
+import re
 import shutil
 import struct
 import subprocess
@@ -1401,6 +1402,96 @@ function xbr4x(source, width, height) {
         self.assertEqual(info["animation_id"], "0x6110")
         self.assertEqual(info["index_bytes"], 16)
 
+    def test_creature_sprite_installers_accept_repeated_ini_sections(self) -> None:
+        powershell = shutil.which("pwsh") or shutil.which("powershell")
+        if powershell is None:
+            self.skipTest("PowerShell is required for the INI helper test")
+        quote = lambda value: str(value).replace("'", "''")
+        for script_name in (
+            "Install-CreatureSprite-X2-Test.ps1",
+            "Install-CreatureSprite-XN-Test.ps1",
+        ):
+            with self.subTest(script=script_name):
+                install_script = ROOT / "pipeline" / "scripts" / script_name
+                command = f"""
+$tokens = $null
+$errors = $null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+  '{quote(install_script)}', [ref]$tokens, [ref]$errors)
+foreach ($name in @('Set-IniKey','Get-IniKey')) {{
+  $fn = $ast.FindAll({{ param($node)
+    $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+    $node.Name -eq $name
+  }}, $true) | Select-Object -First 1
+  Invoke-Expression $fn.Extent.Text
+}}
+$fixture = [string]::Join("`r`n", @(
+  '; preserved preamble',
+  '[Shaders]',
+  'KeepFirst = one',
+  '[Rendering]',
+  'KeepRendering = yes',
+  '[shaders]',
+  'EnableCreatureSpriteUpscaleTest = false',
+  'KeepSecond = two',
+  ''
+))
+$updated = Set-IniKey $fixture 'Shaders' 'EnableCreatureSpriteUpscaleTest' 'true'
+$updated = Set-IniKey $updated 'Shaders' 'EnableCreatureSpriteX2Test' 'false'
+$duplicateRejected = $false
+try {{
+  [void](Set-IniKey ([string]::Join("`n", @(
+    '[Shaders]',
+    'EnableCreatureSpriteX2Test = true',
+    '[Shaders]',
+    'EnableCreatureSpriteX2Test = false'
+  ))) 'Shaders' 'EnableCreatureSpriteX2Test' 'false')
+}}
+catch {{
+  $duplicateRejected = $_.Exception.Message -like 'Clé INI dupliquée*'
+}}
+[pscustomobject]@{{
+  text = $updated
+  upscale = Get-IniKey $updated 'Shaders' 'EnableCreatureSpriteUpscaleTest'
+  alias = Get-IniKey $updated 'Shaders' 'EnableCreatureSpriteX2Test'
+  duplicate_rejected = $duplicateRejected
+}} | ConvertTo-Json -Compress
+"""
+                completed = subprocess.run(
+                    [powershell, "-NoProfile", "-Command", command],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                parsed = json.loads(completed.stdout)
+                updated = parsed["text"]
+                self.assertEqual(parsed["upscale"], "true")
+                self.assertEqual(parsed["alias"], "false")
+                self.assertTrue(parsed["duplicate_rejected"])
+                self.assertEqual(
+                    len(re.findall(r"(?im)^\s*\[shaders\]\s*$", updated)), 2
+                )
+                self.assertEqual(
+                    len(
+                        re.findall(
+                            r"(?im)^\s*EnableCreatureSpriteUpscaleTest\s*=", updated
+                        )
+                    ),
+                    1,
+                )
+                self.assertEqual(
+                    len(
+                        re.findall(
+                            r"(?im)^\s*EnableCreatureSpriteX2Test\s*=", updated
+                        )
+                    ),
+                    1,
+                )
+                self.assertIn("KeepFirst = one", updated)
+                self.assertIn("KeepRendering = yes", updated)
+                self.assertIn("KeepSecond = two", updated)
+                self.assertNotIn("\n", updated.replace("\r\n", ""))
+
     def test_xn_installer_scans_v3_payload_bytes(self) -> None:
         powershell = shutil.which("pwsh") or shutil.which("powershell")
         if powershell is None:
@@ -1729,10 +1820,12 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                 game / "InfinityEngine-Enhancer.dll": b"old-runtime",
                 game / "InfinityEngine-Enhancer.ini": (
                     b"[Shaders]\nEnableCreatureSpriteUpscaleTest = false\n"
-                    b"EnableCreatureSpriteX2Test = true\n[Rendering]\n"
+                    b"KeepFirstShaderSection = yes\n[Rendering]\n"
                     b"EnableAnisotropicFiltering = true\n"
                     b"EnableFullFrameFXAA = true\n"
-                    b"EnableFullFrameSSAA2x = true\n"
+                    b"EnableFullFrameSSAA2x = true\n[shaders]\n"
+                    b"EnableCreatureSpriteX2Test = true\n"
+                    b"KeepSecondShaderSection = yes\n"
                 ),
                 game_sprite_root / "CreatureSprites-XN.registry": b"old-monolith",
                 game_sprite_root / "CreatureSprites-X2.registry": b"old-x2-fallback",
@@ -1816,6 +1909,32 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                     index=index
                 )
                 self.assertEqual(pipeline.sha256_file(installed_shard), shard_info["sha256"])
+            installed_ini = (game / "InfinityEngine-Enhancer.ini").read_text(
+                encoding="utf-8"
+            )
+            self.assertEqual(
+                len(re.findall(r"(?im)^\s*\[shaders\]\s*$", installed_ini)), 2
+            )
+            self.assertEqual(
+                len(
+                    re.findall(
+                        r"(?im)^\s*EnableCreatureSpriteUpscaleTest\s*=\s*true\s*$",
+                        installed_ini,
+                    )
+                ),
+                1,
+            )
+            self.assertEqual(
+                len(
+                    re.findall(
+                        r"(?im)^\s*EnableCreatureSpriteX2Test\s*=\s*false\s*$",
+                        installed_ini,
+                    )
+                ),
+                1,
+            )
+            self.assertIn("KeepFirstShaderSection = yes", installed_ini)
+            self.assertIn("KeepSecondShaderSection = yes", installed_ini)
             self.assertFalse(list(run_root.rglob(".*.tmp")))
 
             installed_state["status"] = "restoring"

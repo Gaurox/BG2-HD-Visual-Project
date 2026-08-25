@@ -136,6 +136,34 @@ function Write-JsonAtomic($Value, [string]$Path, [int]$Depth = 8) {
     }
 }
 
+function Write-TextAtomic([string]$Text, [string]$Path) {
+    $parent = [System.IO.Path]::GetDirectoryName([System.IO.Path]::GetFullPath($Path))
+    if (-not (Test-Path -LiteralPath $parent -PathType Container)) {
+        throw "Dossier de destination absent : $parent"
+    }
+    $temporary = Join-Path $parent ('.' + [System.IO.Path]::GetFileName($Path) +
+        '.' + [Guid]::NewGuid().ToString('N') + '.tmp')
+    $replaceBackup = $temporary + '.replace-backup'
+    try {
+        [System.IO.File]::WriteAllText(
+            $temporary, $Text, (New-Object System.Text.UTF8Encoding($false)))
+        if (Test-Path -LiteralPath $Path -PathType Leaf) {
+            [System.IO.File]::Replace($temporary, $Path, $replaceBackup, $true)
+        }
+        else {
+            [System.IO.File]::Move($temporary, $Path)
+        }
+    }
+    finally {
+        if (Test-Path -LiteralPath $temporary -PathType Leaf) {
+            Remove-Item -LiteralPath $temporary -Force
+        }
+        if (Test-Path -LiteralPath $replaceBackup -PathType Leaf) {
+            Remove-Item -LiteralPath $replaceBackup -Force
+        }
+    }
+}
+
 function Enter-GameMutationMutex([string]$GameRoot) {
     $normalized = [System.IO.Path]::GetFullPath($GameRoot).TrimEnd('\').ToUpperInvariant()
     $sha = [System.Security.Cryptography.SHA256]::Create()
@@ -1042,37 +1070,44 @@ function Set-IniKey([string]$Text, [string]$Section, [string]$Key, [string]$Valu
     $newline = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
     $lines = [System.Collections.Generic.List[string]]::new()
     foreach ($line in [regex]::Split($Text, '\r?\n')) { [void]$lines.Add($line) }
-    $sectionStarts = @()
+    $sectionRanges = @()
+    $sectionStart = -1
+    $sectionMatches = $false
     for ($index = 0; $index -lt $lines.Count; $index++) {
-        if ($lines[$index] -match '^\s*\[([^\]]+)\]\s*$' -and
-            [string]::Equals($Matches[1].Trim(), $Section,
-                [System.StringComparison]::OrdinalIgnoreCase)) {
-            $sectionStarts += $index
+        if ($lines[$index] -match '^\s*\[([^\]]+)\]\s*$') {
+            if ($sectionMatches) {
+                $sectionRanges += [pscustomobject]@{ Start = $sectionStart; End = $index }
+            }
+            $sectionStart = $index
+            $sectionMatches = [string]::Equals($Matches[1].Trim(), $Section,
+                [System.StringComparison]::OrdinalIgnoreCase)
         }
     }
-    if ($sectionStarts.Count -gt 1) { throw "Section INI dupliquée : [$Section]" }
-    if ($sectionStarts.Count -eq 0) {
+    if ($sectionMatches) {
+        $sectionRanges += [pscustomobject]@{ Start = $sectionStart; End = $lines.Count }
+    }
+    if ($sectionRanges.Count -eq 0) {
         if ($lines.Count -gt 0 -and $lines[$lines.Count - 1] -ne '') { [void]$lines.Add('') }
         [void]$lines.Add("[$Section]")
         [void]$lines.Add("$Key = $Value")
         return [string]::Join($newline, $lines)
     }
-    $sectionStart = [int]$sectionStarts[0]
-    $sectionEnd = $lines.Count
-    for ($index = $sectionStart + 1; $index -lt $lines.Count; $index++) {
-        if ($lines[$index] -match '^\s*\[[^\]]+\]\s*$') { $sectionEnd = $index; break }
-    }
-    $keyIndexes = @()
     $keyPattern = '^\s*' + [regex]::Escape($Key) + '\s*='
-    for ($index = $sectionStart + 1; $index -lt $sectionEnd; $index++) {
-        if ($lines[$index] -match $keyPattern) { $keyIndexes += $index }
+    $keyIndexes = @()
+    foreach ($range in $sectionRanges) {
+        for ($index = [int]$range.Start + 1; $index -lt [int]$range.End; $index++) {
+            if ($lines[$index] -match $keyPattern) { $keyIndexes += $index }
+        }
     }
     if ($keyIndexes.Count -gt 1) { throw "Clé INI dupliquée dans [$Section] : $Key" }
     if ($keyIndexes.Count -eq 1) {
         $lines[[int]$keyIndexes[0]] = "$Key = $Value"
     }
     else {
-        $lines.Insert($sectionEnd, "$Key = $Value")
+        # Le parseur runtime conserve la valeur au fil des sections répétées.
+        # Une seule insertion dans la première occurrence est donc suffisante et
+        # préserve intégralement les autres blocs [Section].
+        $lines.Insert([int]$sectionRanges[0].End, "$Key = $Value")
     }
     return [string]::Join($newline, $lines)
 }
@@ -1159,7 +1194,7 @@ try {
         $iniText = Set-IniKey $iniText 'Rendering' 'EnableFullFrameFXAA' 'false'
         $iniText = Set-IniKey $iniText 'Rendering' 'EnableFullFrameSSAA2x' 'false'
     }
-    Set-Content -LiteralPath $iniTarget -Value $iniText -Encoding utf8 -NoNewline
+    Write-TextAtomic $iniText $iniTarget
 
     Assert-ExpectedHash $dllTarget $expectedDllSha256 'DLL installée'
     $installedPackSha256 = if ($registryLayout -eq 'set') {
