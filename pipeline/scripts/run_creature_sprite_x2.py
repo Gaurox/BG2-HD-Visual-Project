@@ -113,6 +113,12 @@ CHARACTER_BODY_SUFFIXES = (
     "SX",
 )
 CHARACTER_EQUIPMENT_SUFFIXES = CHARACTER_BODY_SUFFIXES
+CHARACTER_OFFHAND_WEAPON_SUFFIXES = ("OA7", "OA8", "OA9", "OG1")
+CHARACTER_EQUIPMENT_SUFFIXES_BY_LAYER = {
+    "helmet": CHARACTER_EQUIPMENT_SUFFIXES,
+    "shield": CHARACTER_EQUIPMENT_SUFFIXES,
+    "weapon": CHARACTER_EQUIPMENT_SUFFIXES + CHARACTER_OFFHAND_WEAPON_SUFFIXES,
+}
 CHARACTER_LAYER_KINDS = frozenset({"body", "helmet", "shield", "weapon"})
 CHARACTER_EQUIPMENT_ITEM_TYPES = {
     "helmet": frozenset({7}),
@@ -854,9 +860,10 @@ def character_equipment_spec(
         raise RuntimeError(f"equipment identity: derived BAM prefix is invalid: {prefix}")
 
     bam_map = index.resource_map(BAM_TYPE)
+    equipment_suffixes = CHARACTER_EQUIPMENT_SUFFIXES_BY_LAYER[kind]
     resources = [
         f"{prefix}{suffix}"
-        for suffix in CHARACTER_EQUIPMENT_SUFFIXES
+        for suffix in equipment_suffixes
         if f"{prefix}{suffix}" in bam_map
     ]
     if not resources:

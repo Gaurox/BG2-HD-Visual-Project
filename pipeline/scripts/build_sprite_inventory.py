@@ -39,6 +39,7 @@ from bam_export import decode_bam  # noqa: E402
 from run_creature_sprite_x2 import (  # noqa: E402
     BAM_TYPE,
     CHARACTER_BODY_SUFFIXES,
+    CHARACTER_EQUIPMENT_SUFFIXES_BY_LAYER,
     INI_TYPE,
     IDS_TYPE,
     ITM_TYPE,
@@ -71,7 +72,6 @@ DEFAULT_GAME_ROOT = Path(
     "G:/SteamLibrary/steamapps/common/Baldur's Gate II Enhanced Edition"
 )
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "sprite" / "index"
-EQUIPMENT_SUFFIXES = frozenset(CHARACTER_BODY_SUFFIXES)
 WEAPON_ITEM_TYPES = frozenset(range(15, 31))
 
 ANIMATION_FIELDS = (
@@ -803,10 +803,11 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
                 family["item_count"] = len(item_names)
                 family["item_resrefs"] = joined(item_names)
                 family["height_code"] = height
-                family["expected_suffixes"] = joined(CHARACTER_BODY_SUFFIXES)
+                equipment_suffixes = CHARACTER_EQUIPMENT_SUFFIXES_BY_LAYER[layer]
+                family["expected_suffixes"] = joined(equipment_suffixes)
                 family["_resource_names"] = [
                     f"{bam_prefix}{suffix}"
-                    for suffix in CHARACTER_BODY_SUFFIXES
+                    for suffix in equipment_suffixes
                     if f"{bam_prefix}{suffix}" in bam_map
                 ]
                 families.append(family)

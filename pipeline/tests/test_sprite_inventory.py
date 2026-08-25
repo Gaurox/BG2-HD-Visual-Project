@@ -80,7 +80,8 @@ class SpriteInventoryTests(unittest.TestCase):
         self.assertIn("duplicate-used-rgba-indices", selected["CDMF4"]["blocker"])
         self.assertEqual(selected["WQSJ6"]["pipeline_ready"], "yes")
         self.assertEqual(selected["WQSC1"]["pipeline_ready"], "yes")
-        self.assertEqual(selected["WQSAX"]["unexpected_suffixes"], "OA7;OA8;OA9;OG1")
+        self.assertEqual(selected["WQSAX"]["unexpected_suffixes"], "")
+        self.assertEqual(selected["WQSAX"]["pipeline_ready"], "yes")
 
     def test_known_items_resolve_from_stock_itm(self) -> None:
         items = {row["item_resref"]: row for row in rows("sprite_items.csv")}

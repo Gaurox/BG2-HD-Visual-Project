@@ -936,6 +936,7 @@ function xbr4x(source, width, height) {
             "J6": ("A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "CA", "G1", "SA", "SS", "SX"),
             "C0": ("A1", "A3", "A5", "G1", "SS"),
             "C4": ("A1", "A3", "A5", "G1", "SS"),
+            "AX": ("A1", "A3", "A5", "A7", "A8", "A9", "G1", "OA7", "OA8", "OA9", "OG1"),
         }[animation_code]
         equipment_resources = {
             f"WQN{animation_code}{suffix}": (
@@ -1008,6 +1009,20 @@ function xbr4x(source, width, height) {
                 self.assertEqual(result["bam_prefix"], f"WQN{animation_code}")
                 self.assertEqual(result["equipment_height_code"], "WQN")
                 self.assertEqual(result["resource_count"], 5)
+
+    def test_character_weapon_identity_includes_offhand_bams(self) -> None:
+        result = pipeline.character_equipment_spec(
+            self.equipment_index("AX1H01", 25, "AX"),
+            0x6110,
+            "weapon",
+            "AX1H01",
+        )
+        self.assertEqual(result["bam_prefix"], "WQNAX")
+        self.assertEqual(result["resource_count"], 11)
+        self.assertEqual(
+            result["resources"][-4:],
+            ["WQNAXOA7", "WQNAXOA8", "WQNAXOA9", "WQNAXOG1"],
+        )
 
     def test_character_equipment_rejects_wrong_item_category(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "is not a helmet"):

@@ -259,6 +259,10 @@ capture manquante, un encodage divergent, un dépassement de huit événements o
 différente impose le fallback natif du personnage entier. Une cellule candidate non rendue ne
 bloque pas la composition.
 
+Pour une arme, inclure aussi les BAM de main gauche `OA7`, `OA8`, `OA9` et `OG1` lorsqu'ils
+existent. Ils appartiennent au même préfixe d'animation ITM que les suffixes standards et sont
+obligatoires pour couvrir le dual-wield ; ne pas les classer comme ressources inattendues.
+
 Le runtime Character ne doit jamais modifier le backing GL du composite natif. Conserver seulement
 un cache CPU borné de 32 composites. Pour chaque dessin : mémoriser l’ID logique natif, créer un ID
 moteur privé avec `DrawGenTexture(NEAREST)`, le lier, matérialiser son backing logique, uploader les
