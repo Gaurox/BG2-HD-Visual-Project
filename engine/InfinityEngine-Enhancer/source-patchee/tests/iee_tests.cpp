@@ -623,23 +623,44 @@ void test_config_shader_override_defaults() {
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
+  expect_true(!cfg.enableCreatureSpriteUpscaleTest,
+              "creature-sprite xN test defaults off");
   expect_true(!cfg.enableCreatureSpriteX2Test, "creature-sprite x2 test defaults off");
+  expect_true(!cfg.creature_sprite_upscale_enabled(),
+              "creature-sprite upscale helper defaults off");
+  auto newKeyOnly = cfg;
+  newKeyOnly.enableCreatureSpriteUpscaleTest = true;
+  expect_true(newKeyOnly.creature_sprite_upscale_enabled(),
+              "the xN activation key should enable creature-sprite upscaling");
+  auto legacyKeyOnly = cfg;
+  legacyKeyOnly.enableCreatureSpriteX2Test = true;
+  expect_true(legacyKeyOnly.creature_sprite_upscale_enabled(),
+              "the legacy x2 activation key should remain an upscale alias");
   expect_true(!cfg.enableBigLogoX4Test, "BIGLOGO x4 test defaults off");
   expect_true(!cfg.enableMainMenuX4Test, "main-menu x4 test defaults off");
   expect_true(!cfg.enableMenuX2Test, "complete menu x2 test defaults off");
   expect_true(!cfg.enablePerformanceLogging, "performance logs default off");
 }
 
-void test_creature_sprite_x2_native_border_geometry() {
+void test_creature_sprite_xn_native_border_geometry() {
   using namespace iee::creature_sprite_x2;
+  expect_true(supported_physical_scale(2) && supported_physical_scale(4) &&
+                  !supported_physical_scale(1) && !supported_physical_scale(3),
+              "Creature packs should support exactly physical scales 2 and 4");
   expect_eq(logical_texture_extent(36), 38,
             "Creature texture should retain CVidCell's two-pixel logical padding");
-  expect_eq(physical_texture_extent(36), 76,
-            "Creature replacement should scale the complete bordered texture");
-  expect_eq(physical_texture_extent(37), 78,
-            "Creature replacement height should include both native borders");
-  expect_eq(physical_content_offset(), 2,
-            "xBR content should begin after one scaled native logical border");
+  expect_eq(physical_texture_extent(36, 2), std::int64_t{76},
+            "x2 replacement should scale the complete bordered texture");
+  expect_eq(physical_texture_extent(37, 2), std::int64_t{78},
+            "x2 replacement height should include both native borders");
+  expect_eq(physical_texture_extent(36, 4), std::int64_t{152},
+            "x4 replacement should scale the complete bordered texture");
+  expect_eq(physical_texture_extent(37, 4), std::int64_t{156},
+            "x4 replacement height should include both native borders");
+  expect_eq(physical_content_offset(2), std::int64_t{2},
+            "x2 content should begin after one scaled native logical border");
+  expect_eq(physical_content_offset(4), std::int64_t{4},
+            "x4 content should begin after one scaled native logical border");
   expect_eq(kMaximumCompositeLayers, std::size_t{8},
             "Character composition should retain repeated ordered layer events");
 
@@ -659,18 +680,30 @@ void test_creature_sprite_x2_native_border_geometry() {
             "Composite width should include both native transparent borders");
   expect_eq(bounds.logical_height(), 66,
             "Composite height should include both native transparent borders");
-  const auto destinationOffset = [&](const FrameGeometry& layer) {
-    return std::array<int, 2>{
-        ((-layer.centerX - bounds.left) + kNativeLogicalBorder) * kPhysicalScale,
-        ((-layer.centerY - bounds.top) + kNativeLogicalBorder) * kPhysicalScale,
+  const auto destinationOffset = [&](const FrameGeometry& layer, std::uint32_t scale) {
+    return std::array<std::int64_t, 2>{
+        physical_layer_offset(layer.centerX, bounds.left, scale),
+        physical_layer_offset(layer.centerY, bounds.top, scale),
     };
   };
-  expect_true(destinationOffset(layers[0]) == std::array<int, 2>{2, 4},
-              "Body placement should preserve its BAM center");
-  expect_true(destinationOffset(layers[1]) == std::array<int, 2>{18, 2},
-              "Helmet placement should preserve its BAM center");
-  expect_true(destinationOffset(layers[2]) == std::array<int, 2>{24, 42},
-              "Shield placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[0], 2) ==
+                  std::array<std::int64_t, 2>{2, 4},
+              "x2 body placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[1], 2) ==
+                  std::array<std::int64_t, 2>{18, 2},
+              "x2 helmet placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[2], 2) ==
+                  std::array<std::int64_t, 2>{24, 42},
+              "x2 shield placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[0], 4) ==
+                  std::array<std::int64_t, 2>{4, 8},
+              "x4 body placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[1], 4) ==
+                  std::array<std::int64_t, 2>{36, 4},
+              "x4 helmet placement should preserve its BAM center");
+  expect_true(destinationOffset(layers[2], 4) ==
+                  std::array<std::int64_t, 2>{48, 84},
+              "x4 shield placement should preserve its BAM center");
 
   expect_eq(overwrite_nontransparent_pixel(0xFF123456u, 0u), 0xFF123456u,
             "Transparent palette colors should leave the composite unchanged");
@@ -735,15 +768,23 @@ void test_creature_sprite_registry_formats() {
     output.write(reinterpret_cast<const char*>(bytes.data()),
                  static_cast<std::streamsize>(bytes.size()));
   };
-  constexpr std::array<char, 8> magic{{'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
+  constexpr std::array<char, 8> legacyMagic{
+      {'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
+  constexpr std::array<char, 8> xnMagic{
+      {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
   constexpr std::array<char, 8> target{{'T', 'E', 'S', 'T', '\0', '\0', '\0', '\0'}};
-  const auto make_registry = [&](std::uint32_t version, std::uint32_t metadata,
-                                 std::uint32_t resourceCount = 1) {
+  const auto make_registry = [&](const std::array<char, 8>& magic,
+                                 std::uint32_t version, std::uint32_t scale,
+                                 std::uint32_t metadata,
+                                 std::uint32_t resourceCount = 1,
+                                 std::uint32_t payloadScale = 0) {
     std::vector<std::byte> bytes;
     append_raw(bytes, magic.data(), magic.size());
-    for (const auto value : std::array<std::uint32_t, 4>{{version, 2, resourceCount, metadata}}) {
+    for (const auto value :
+         std::array<std::uint32_t, 4>{{version, scale, resourceCount, metadata}}) {
       append(bytes, value);
     }
+    if (payloadScale == 0) payloadScale = scale;
     for (std::uint32_t resourceIndex = 0; resourceIndex < resourceCount; ++resourceIndex) {
       auto resref = target;
       resref[4] = static_cast<char>(resourceIndex & 0xFFu);
@@ -757,7 +798,7 @@ void test_creature_sprite_registry_formats() {
       const std::int16_t center = 0;
       const std::uint8_t transparent = 0;
       const std::array<std::byte, 3> reserved{};
-      const std::uint32_t indexBytes = 4;
+      const std::uint32_t indexBytes = payloadScale * payloadScale;
       append(bytes, width);
       append(bytes, height);
       append(bytes, center);
@@ -769,7 +810,7 @@ void test_creature_sprite_registry_formats() {
       representatives.fill(0xFFFFu);
       representatives[1] = 0;
       append_raw(bytes, representatives.data(), sizeof(representatives));
-      const std::array<std::uint8_t, 4> indices{{1, 1, 1, 1}};
+      const std::vector<std::uint8_t> indices(indexBytes, 1);
       append_raw(bytes, indices.data(), indices.size());
       const std::uint32_t slotCount = 1;
       const std::uint32_t frameIndex = 0;
@@ -779,35 +820,81 @@ void test_creature_sprite_registry_formats() {
     return bytes;
   };
 
-  write_file(root / "CreatureSprites-X2.registry", make_registry(2, 0x6110));
+  const auto legacyPath = root / "CreatureSprites-X2.registry";
+  const auto xnPath = root / "CreatureSprites-XN.registry";
+  expect_eq(iee::creature_sprite_x2::kMaximumRegistryBytes,
+            std::uint64_t{128} * 1024u * 1024u,
+            "Creature xN registries should fail closed above the 128 MiB pilot budget");
+
+  write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0xE400));
+  write_file(xnPath, make_registry(xnMagic, 3, 4, 0x6110));
   expect_true(iee::creature_sprite_x2::prepare(root),
-              "The creature registry parser should accept a valid v2 pack");
+              "The creature registry parser should prefer a valid v3 xN pack");
   expect_true(iee::creature_sprite_x2::target_animation_id() == 0x6110 &&
+                  iee::creature_sprite_x2::loaded_scale() == 4 &&
                   iee::creature_sprite_x2::contains_resource(target),
-              "A v2 female-fighter pack should expose animation 0x6110 and registered "
-              "resrefs");
+              "A v3 x4 pack should expose its animation, scale, and registered resrefs");
   iee::creature_sprite_x2::FrameHandle handle{};
   expect_true(iee::creature_sprite_x2::resolve_frame(target, 0, 0, handle) &&
                   handle.resourceIndex == 0 && handle.frameIndex == 0,
-              "A v2 creature registry cycle should resolve its frame");
+              "A v3 creature registry cycle should resolve its frame");
   iee::creature_sprite_x2::release();
+  expect_true(iee::creature_sprite_x2::loaded_scale() == 0,
+              "Releasing a creature pack should clear its physical scale");
 
-  write_file(root / "CreatureSprites-X2.registry", make_registry(2, 0x6110, 92));
+  std::filesystem::remove(xnPath, ec);
   expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::target_animation_id() == 0xE400 &&
+                  iee::creature_sprite_x2::loaded_scale() == 2 &&
                   iee::creature_sprite_x2::contains_resource(target),
-              "The creature registry parser should accept a 92-resource Character armor set");
+              "The parser should fall back to the legacy x2 file only when xN is absent");
   iee::creature_sprite_x2::release();
 
-  write_file(root / "CreatureSprites-X2.registry", make_registry(1, 0));
+  write_file(xnPath, make_registry(xnMagic, 3, 2, 0x6110));
   expect_true(iee::creature_sprite_x2::prepare(root) &&
-                  iee::creature_sprite_x2::target_animation_id() == 0xE400,
+                  iee::creature_sprite_x2::loaded_scale() == 2,
+              "The v3 xN registry should support scale x2");
+  iee::creature_sprite_x2::release();
+
+  write_file(xnPath, make_registry(xnMagic, 3, 3, 0x6110));
+  expect_true(!iee::creature_sprite_x2::prepare(root) &&
+                  !iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 0,
+              "An existing xN file with an unsupported scale should fail closed instead of "
+              "falling back to legacy x2");
+
+  write_file(xnPath, make_registry(xnMagic, 3, 4, 0x6110, 1, 2));
+  expect_true(!iee::creature_sprite_x2::prepare(root) &&
+                  !iee::creature_sprite_x2::ready(),
+              "An x4 registry carrying an x2-sized frame payload should fail closed");
+
+  write_file(xnPath, make_registry(xnMagic, 2, 2, 0x6110));
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "The xN filename and magic should require registry version 3");
+
+  std::filesystem::remove(xnPath, ec);
+  write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0x6110, 92));
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::loaded_scale() == 2 &&
+                  iee::creature_sprite_x2::contains_resource(target),
+              "The legacy parser should retain the 92-resource Character armor-set path");
+  iee::creature_sprite_x2::release();
+
+  write_file(legacyPath, make_registry(legacyMagic, 1, 2, 0));
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::target_animation_id() == 0xE400 &&
+                  iee::creature_sprite_x2::loaded_scale() == 2,
               "A legacy v1 pack should remain scoped to MGO1 animation 0xE400");
   iee::creature_sprite_x2::release();
 
-  write_file(root / "CreatureSprites-X2.registry", make_registry(2, 0));
+  write_file(legacyPath, make_registry(legacyMagic, 2, 4, 0x6110));
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "The legacy filename and magic should reject scale x4");
+
+  write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0));
   expect_true(!iee::creature_sprite_x2::prepare(root) &&
                   !iee::creature_sprite_x2::ready(),
-              "A v2 pack without an animation id should fail closed");
+              "A legacy v2 pack without an animation id should fail closed");
   std::filesystem::remove_all(root, ec);
 #endif
 }
@@ -1157,6 +1244,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableWaterEffect = false;
     orig.enableBamUiTextureProbe = true;
     orig.enableAreaAnimationX4 = true;
+    orig.enableCreatureSpriteUpscaleTest = true;
     orig.enableCreatureSpriteX2Test = true;
     orig.enableBigLogoX4Test = true;
     orig.enableMainMenuX4Test = true;
@@ -1177,8 +1265,12 @@ void test_config_shader_override_roundtrip() {
               "enableBamUiTextureProbe should round-trip as true");
   expect_true(loaded.enableAreaAnimationX4,
               "enableAreaAnimationX4 should round-trip as true");
+  expect_true(loaded.enableCreatureSpriteUpscaleTest,
+              "enableCreatureSpriteUpscaleTest should round-trip as true");
   expect_true(loaded.enableCreatureSpriteX2Test,
               "enableCreatureSpriteX2Test should round-trip as true");
+  expect_true(loaded.creature_sprite_upscale_enabled(),
+              "saved xN and legacy activation keys should keep the helper enabled");
   expect_true(loaded.enableBigLogoX4Test, "enableBigLogoX4Test should round-trip as true");
   expect_true(loaded.enableMainMenuX4Test, "enableMainMenuX4Test should round-trip as true");
   expect_true(loaded.enableMenuX2Test, "enableMenuX2Test should round-trip as true");
@@ -2115,7 +2207,7 @@ void test_fpseam_override_asset_contract() {
 }
 
 int main() {
-  test_creature_sprite_x2_native_border_geometry();
+  test_creature_sprite_xn_native_border_geometry();
   test_creature_sprite_native_pixel_encodings();
   test_creature_sprite_transient_texture_lifecycle();
   test_creature_sprite_registry_formats();

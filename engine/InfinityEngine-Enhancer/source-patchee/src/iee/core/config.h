@@ -44,9 +44,16 @@ struct EngineConfig {
   // External multi-resource area-animation pack. Resrefs, BAM cycles and
   // native per-frame dimensions come from AreaAnimations-X4.registry.
   bool enableAreaAnimationX4 = false;
-  // Reversible creature-sprite x2 prototype. CVidPalette::Realize's synchronous
-  // output remaps an offline xBR2x index pack drawn at logical x1 size.
+  // Reversible creature-sprite xN prototype. The native geometry remains x1;
+  // the external registry supplies an x2 or x4 pixel backing.
+  bool enableCreatureSpriteUpscaleTest = false;
+  // Legacy activation key kept as an alias and regression surface for existing
+  // x2 installations. New installers write EnableCreatureSpriteUpscaleTest.
   bool enableCreatureSpriteX2Test = false;
+
+  [[nodiscard]] constexpr bool creature_sprite_upscale_enabled() const noexcept {
+    return enableCreatureSpriteUpscaleTest || enableCreatureSpriteX2Test;
+  }
   // AR1300 BRIDGE01 transition: the final primary/secondary WED tile selection
   // drives bidirectional playback; F9 remains an opening-only diagnostic.
   bool enableBridgeTransitionPreview = false;

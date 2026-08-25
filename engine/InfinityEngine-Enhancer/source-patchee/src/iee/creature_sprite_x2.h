@@ -2,14 +2,20 @@
 
 #include <array>
 #include <cstddef>
+#include <cstdint>
 #include <filesystem>
 
 #include "iee/area_animation_x4_registry.h"
 
 namespace iee::creature_sprite_x2 {
-inline constexpr int kPhysicalScale = 2;
 inline constexpr int kNativeLogicalBorder = 1;
 inline constexpr std::size_t kMaximumCompositeLayers = 8;
+inline constexpr std::uint64_t kMaximumRegistryBytes =
+    128ull * 1024ull * 1024ull;
+
+[[nodiscard]] constexpr bool supported_physical_scale(std::uint32_t scale) noexcept {
+  return scale == 2 || scale == 4;
+}
 
 // CVidCell allocates one transparent logical pixel on every side of a BAM
 // frame. The replacement backing scales that complete native texture, not
@@ -18,12 +24,21 @@ inline constexpr std::size_t kMaximumCompositeLayers = 8;
   return frameExtent + 2 * kNativeLogicalBorder;
 }
 
-[[nodiscard]] constexpr int physical_texture_extent(int frameExtent) noexcept {
-  return logical_texture_extent(frameExtent) * kPhysicalScale;
+[[nodiscard]] constexpr std::int64_t physical_texture_extent(
+    int frameExtent, std::uint32_t scale) noexcept {
+  return static_cast<std::int64_t>(logical_texture_extent(frameExtent)) * scale;
 }
 
-[[nodiscard]] constexpr int physical_content_offset() noexcept {
-  return kNativeLogicalBorder * kPhysicalScale;
+[[nodiscard]] constexpr std::int64_t physical_content_offset(
+    std::uint32_t scale) noexcept {
+  return static_cast<std::int64_t>(kNativeLogicalBorder) * scale;
+}
+
+[[nodiscard]] constexpr std::int64_t physical_layer_offset(
+    int frameCenter, int compositeOrigin, std::uint32_t scale) noexcept {
+  return (-static_cast<std::int64_t>(frameCenter) -
+          static_cast<std::int64_t>(compositeOrigin) + kNativeLogicalBorder) *
+         static_cast<std::int64_t>(scale);
 }
 
 struct FrameHandle {
@@ -93,20 +108,22 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
          (encoding.externalFormat == kBgra && encoding.type == kUnsignedInt8888Rev);
 }
 
-// Loads the xBR2x palette-index registry. No game or GL state is touched.
+// Prefers the version-3 xN palette-index registry when present and otherwise
+// loads the legacy x2 registry. No game or GL state is touched.
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;
 [[nodiscard]] std::uint16_t target_animation_id() noexcept;
+[[nodiscard]] std::uint32_t loaded_scale() noexcept;
 [[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;
 
 // Resolves CVidCell's current cycle slot through the original BAM lookup.
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    FrameHandle& out) noexcept;
 
-// Reuses the synchronous CVidPalette::Realize output, reconstructs the xBR2x
-// frame from its current palette colors, and binds a physical x2 backing while
-// retaining the engine's native bordered logical texture descriptor.
+// Reuses the synchronous CVidPalette::Realize output, reconstructs the upscaled
+// frame from its current palette colors, and binds a physical x2/x4 backing
+// while retaining the engine's native bordered logical texture descriptor.
 bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineTextureApi& api,
                               PaletteSnapshot& out) noexcept;
 bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,

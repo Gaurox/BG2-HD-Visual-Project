@@ -12,6 +12,7 @@
 #include <mutex>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -47,25 +48,31 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
 }
 
 namespace {
-constexpr std::array<char, 8> kRegistryMagic{{'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
+constexpr std::array<char, 8> kLegacyRegistryMagic{
+    {'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
+constexpr std::array<char, 8> kXnRegistryMagic{
+    {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
 constexpr std::uint32_t kLegacyRegistryVersion = 1;
-constexpr std::uint32_t kRegistryVersion = 2;
+constexpr std::uint32_t kLegacyCurrentRegistryVersion = 2;
+constexpr std::uint32_t kXnRegistryVersion = 3;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
+constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
+constexpr char kXnRegistryFilename[] = "CreatureSprites-XN.registry";
 // Four Character body armor codes require 92 split BAMs; the remaining room
 // carries the registered weapon/offhand/helmet overlays in the same pack.
 constexpr std::uint32_t kMaximumResources = 128;
 constexpr std::uint32_t kMaximumFramesPerResource = 4096;
 constexpr std::uint32_t kMaximumCyclesPerResource = 256;
 constexpr std::uint32_t kMaximumCycleSlots = 65536;
-constexpr std::uint64_t kMaximumRegistryBytes = 128ull * 1024ull * 1024ull;
-constexpr std::size_t kTextureCacheLimit = 128;
+constexpr std::size_t kTextureCacheEntryLimit = 128;
+constexpr std::uint64_t kTextureCacheBudgetBytes = 128ull * 1024ull * 1024ull;
 constexpr std::size_t kCompositePixelCacheLimit = 32;
 constexpr std::size_t kEngineTextureDescriptorCount = 512;
 constexpr std::size_t kEngineTextureDescriptorStride = 0x28;
 // Character replacements keep CPU pixels only. Bound the aggregate cache to
 // four MiB; each draw uses one dedicated engine texture marked delete-pending
 // immediately after its queued draw.
-constexpr std::size_t kCompositePixelCacheBudget = 1024ull * 1024ull;
+constexpr std::uint64_t kCompositePixelCacheBudgetBytes = 4ull * 1024ull * 1024ull;
 
 struct Frame {
   int logicalWidth{};
@@ -74,7 +81,7 @@ struct Frame {
   int centerY{};
   std::uint8_t transparent{};
   std::array<std::uint16_t, 256> representatives{};
-  std::vector<std::uint8_t> indicesX2;
+  std::vector<std::uint8_t> indices;
 };
 
 struct Resource {
@@ -89,6 +96,7 @@ struct TextureCacheEntry {
   FrameHandle handle{};
   std::uint64_t paletteFingerprint{};
   int textureId{};
+  std::uint64_t physicalBytes{};
   std::uint64_t lastUse{};
 };
 
@@ -104,6 +112,7 @@ struct CompositePixelCacheEntry {
   std::size_t layerCount{};
   int logicalWidth{};
   int logicalHeight{};
+  std::uint32_t physicalScale{};
   NativePixelEncoding encoding{};
   std::vector<std::uint32_t> pixels;
   std::uint64_t lastUse{};
@@ -132,7 +141,7 @@ class BinaryReader {
     return true;
   }
 
-  bool read_bytes(std::vector<std::uint8_t>& out, std::size_t byteCount) noexcept {
+  bool read_bytes(std::vector<std::uint8_t>& out, std::size_t byteCount) {
     if (offset_ > bytes_.size() || byteCount > bytes_.size() - offset_) return false;
     out.resize(byteCount);
     if (byteCount != 0) std::memcpy(out.data(), bytes_.data() + offset_, byteCount);
@@ -150,6 +159,7 @@ class BinaryReader {
 std::mutex g_mutex;
 std::atomic<bool> g_ready{false};
 std::atomic<std::uint16_t> g_targetAnimationId{0};
+std::atomic<std::uint32_t> g_loadedScale{0};
 std::vector<Resource> g_resources;
 std::vector<TextureCacheEntry> g_textureCache;
 std::vector<CompositePixelCacheEntry> g_compositePixelCache;
@@ -160,8 +170,8 @@ bool g_compositeDimensionMismatchLogged{};
 bool g_rendererFailureLogged{};
 bool g_contextFailureLogged{};
 bool g_sourceTextureFailureLogged{};
-bool g_paletteApiFailureLogged{};
-bool g_realizedPaletteLogged{};
+std::atomic<bool> g_paletteApiFailureLogged{false};
+std::atomic<bool> g_realizedPaletteLogged{false};
 bool g_compositeBackingFailureLogged{};
 #ifdef _WIN32
 HGLRC g_textureContext{};
@@ -174,8 +184,8 @@ void reset_diagnostics_locked() noexcept {
   g_rendererFailureLogged = false;
   g_contextFailureLogged = false;
   g_sourceTextureFailureLogged = false;
-  g_paletteApiFailureLogged = false;
-  g_realizedPaletteLogged = false;
+  g_paletteApiFailureLogged.store(false, std::memory_order_release);
+  g_realizedPaletteLogged.store(false, std::memory_order_release);
   g_compositeBackingFailureLogged = false;
 }
 
@@ -198,6 +208,59 @@ std::vector<std::byte> read_file(const std::filesystem::path& path) {
 std::string resref_name(const std::array<char, 8>& resref) {
   const auto end = std::find(resref.begin(), resref.end(), '\0');
   return std::string(resref.begin(), end);
+}
+
+bool checked_physical_metrics(int logicalWidth, int logicalHeight,
+                              std::uint32_t scale, int& physicalWidth,
+                              int& physicalHeight, std::uint64_t& pixelCount,
+                              std::uint64_t& rgbaBytes) noexcept {
+  physicalWidth = 0;
+  physicalHeight = 0;
+  pixelCount = 0;
+  rgbaBytes = 0;
+  if (logicalWidth <= 0 || logicalHeight <= 0 || !supported_physical_scale(scale)) {
+    return false;
+  }
+  const auto width64 = static_cast<std::uint64_t>(logicalWidth) * scale;
+  const auto height64 = static_cast<std::uint64_t>(logicalHeight) * scale;
+  if (width64 > static_cast<std::uint64_t>((std::numeric_limits<int>::max)()) ||
+      height64 > static_cast<std::uint64_t>((std::numeric_limits<int>::max)()) ||
+      width64 > (std::numeric_limits<std::uint64_t>::max)() / height64) {
+    return false;
+  }
+  const auto pixels = width64 * height64;
+  if (pixels == 0 || pixels > (std::numeric_limits<std::uint64_t>::max)() /
+                                  sizeof(std::uint32_t) ||
+      pixels > (std::numeric_limits<std::size_t>::max)()) {
+    return false;
+  }
+  physicalWidth = static_cast<int>(width64);
+  physicalHeight = static_cast<int>(height64);
+  pixelCount = pixels;
+  rgbaBytes = pixels * sizeof(std::uint32_t);
+  return true;
+}
+
+bool maximum_texture_size_allows(game::gl::OpenGLFunctions& gl, int physicalWidth,
+                                 int physicalHeight) noexcept {
+  if (!gl.glGetError) return false;
+  game::gl::discard_errors();
+  int maximumTextureSize = 0;
+  gl.glGetIntegerv(game::gl::MAX_TEXTURE_SIZE, &maximumTextureSize);
+  const auto error = gl.glGetError();
+  return error == game::gl::GL_NO_ERROR && maximumTextureSize > 0 &&
+         physicalWidth <= maximumTextureSize && physicalHeight <= maximumTextureSize;
+}
+
+std::uint64_t texture_cache_bytes_locked() noexcept {
+  std::uint64_t total = 0;
+  for (const auto& entry : g_textureCache) {
+    if (entry.physicalBytes > (std::numeric_limits<std::uint64_t>::max)() - total) {
+      return (std::numeric_limits<std::uint64_t>::max)();
+    }
+    total += entry.physicalBytes;
+  }
+  return total;
 }
 
 int logical_texture_id(const EngineTextureApi& api) noexcept {
@@ -342,27 +405,37 @@ void enforce_transparent_entry(const Frame& frame,
 }
 
 bool upload_frame_locked(const Frame& frame, const std::array<std::uint32_t, 256>& realized,
-                          NativePixelEncoding encoding, int textureId, int previousTextureId,
-                          const EngineTextureApi& api) noexcept {
+                         NativePixelEncoding encoding, std::uint32_t physicalScale,
+                         int textureId, int previousTextureId,
+                         const EngineTextureApi& api) {
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
       !gl.glGetError) {
     return false;
   }
-  const int contentPhysicalWidth = frame.logicalWidth * kPhysicalScale;
-  const int contentPhysicalHeight = frame.logicalHeight * kPhysicalScale;
   const int textureLogicalWidth = logical_texture_extent(frame.logicalWidth);
   const int textureLogicalHeight = logical_texture_extent(frame.logicalHeight);
-  const int physicalWidth = physical_texture_extent(frame.logicalWidth);
-  const int physicalHeight = physical_texture_extent(frame.logicalHeight);
-  const auto expectedContentPixels = static_cast<std::size_t>(contentPhysicalWidth) *
-                                     static_cast<std::size_t>(contentPhysicalHeight);
-  if (frame.indicesX2.size() != expectedContentPixels) return false;
-  const auto texturePixels = static_cast<std::size_t>(physicalWidth) *
-                             static_cast<std::size_t>(physicalHeight);
-  std::vector<std::uint32_t> replacement(texturePixels, 0);
-  const auto contentOffset = static_cast<std::size_t>(physical_content_offset());
+  int contentPhysicalWidth = 0;
+  int contentPhysicalHeight = 0;
+  std::uint64_t expectedContentPixels = 0;
+  std::uint64_t contentBytes = 0;
+  int physicalWidth = 0;
+  int physicalHeight = 0;
+  std::uint64_t texturePixels = 0;
+  std::uint64_t textureBytes = 0;
+  if (!checked_physical_metrics(frame.logicalWidth, frame.logicalHeight, physicalScale,
+                                contentPhysicalWidth, contentPhysicalHeight,
+                                expectedContentPixels, contentBytes) ||
+      !checked_physical_metrics(textureLogicalWidth, textureLogicalHeight, physicalScale,
+                                physicalWidth, physicalHeight, texturePixels,
+                                textureBytes) ||
+      frame.indices.size() != expectedContentPixels ||
+      !maximum_texture_size_allows(gl, physicalWidth, physicalHeight)) {
+    return false;
+  }
+  std::vector<std::uint32_t> replacement(static_cast<std::size_t>(texturePixels), 0);
+  const auto contentOffset = static_cast<std::size_t>(physical_content_offset(physicalScale));
   for (int y = 0; y < contentPhysicalHeight; ++y) {
     const auto sourceRow = static_cast<std::size_t>(y) * contentPhysicalWidth;
     const auto destinationRow = (static_cast<std::size_t>(y) + contentOffset) * physicalWidth +
@@ -370,7 +443,7 @@ bool upload_frame_locked(const Frame& frame, const std::array<std::uint32_t, 256
     for (int x = 0; x < contentPhysicalWidth; ++x) {
       const auto sourceIndex = sourceRow + static_cast<std::size_t>(x);
       replacement[destinationRow + static_cast<std::size_t>(x)] =
-          realized[frame.indicesX2[sourceIndex]];
+          realized[frame.indices[sourceIndex]];
     }
   }
 
@@ -430,30 +503,48 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
                                      std::size_t layerCount,
                                      const CompositeBounds& bounds,
                                      int logicalWidth, int logicalHeight,
+                                     std::uint32_t physicalScale,
                                      std::vector<std::uint32_t>& replacement) {
   if (!layers || layerCount == 0 || logicalWidth <= 0 || logicalHeight <= 0 ||
       logicalWidth > 512 || logicalHeight > 512) {
     return false;
   }
-  const int physicalWidth = logicalWidth * kPhysicalScale;
-  const int physicalHeight = logicalHeight * kPhysicalScale;
-  const auto texturePixels = static_cast<std::size_t>(physicalWidth) *
-                             static_cast<std::size_t>(physicalHeight);
-  if (texturePixels == 0 || texturePixels > kCompositePixelCacheBudget) return false;
-  replacement.assign(texturePixels, 0);
+  int physicalWidth = 0;
+  int physicalHeight = 0;
+  std::uint64_t texturePixels = 0;
+  std::uint64_t textureBytes = 0;
+  if (!checked_physical_metrics(logicalWidth, logicalHeight, physicalScale,
+                                physicalWidth, physicalHeight, texturePixels,
+                                textureBytes) ||
+      textureBytes > kCompositePixelCacheBudgetBytes) {
+    return false;
+  }
+  replacement.assign(static_cast<std::size_t>(texturePixels), 0);
 
   for (std::size_t layerIndex = 0; layerIndex < layerCount; ++layerIndex) {
     const auto& layer = layers[layerIndex];
     const auto& frame = g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
-    const int sourceWidth = frame.logicalWidth * kPhysicalScale;
-    const int sourceHeight = frame.logicalHeight * kPhysicalScale;
-    const auto expectedPixels = static_cast<std::size_t>(sourceWidth) *
-                                static_cast<std::size_t>(sourceHeight);
-    if (frame.indicesX2.size() != expectedPixels) return false;
-    const int destinationX =
-        ((-frame.centerX - bounds.left) + kNativeLogicalBorder) * kPhysicalScale;
-    const int destinationY =
-        ((-frame.centerY - bounds.top) + kNativeLogicalBorder) * kPhysicalScale;
+    int sourceWidth = 0;
+    int sourceHeight = 0;
+    std::uint64_t expectedPixels = 0;
+    std::uint64_t sourceBytes = 0;
+    if (!checked_physical_metrics(frame.logicalWidth, frame.logicalHeight, physicalScale,
+                                  sourceWidth, sourceHeight, expectedPixels,
+                                  sourceBytes) ||
+        frame.indices.size() != expectedPixels) {
+      return false;
+    }
+    const auto destinationX64 =
+        physical_layer_offset(frame.centerX, bounds.left, physicalScale);
+    const auto destinationY64 =
+        physical_layer_offset(frame.centerY, bounds.top, physicalScale);
+    if (destinationX64 < 0 || destinationY64 < 0 ||
+        destinationX64 > (std::numeric_limits<int>::max)() ||
+        destinationY64 > (std::numeric_limits<int>::max)()) {
+      return false;
+    }
+    const int destinationX = static_cast<int>(destinationX64);
+    const int destinationY = static_cast<int>(destinationY64);
     if (destinationX < 0 || destinationY < 0 ||
         sourceWidth > physicalWidth - destinationX ||
         sourceHeight > physicalHeight - destinationY) {
@@ -466,7 +557,7 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
       const auto destinationRow = static_cast<std::size_t>(destinationY + y) * physicalWidth +
                                   static_cast<std::size_t>(destinationX);
       for (int x = 0; x < sourceWidth; ++x) {
-        const auto pixel = realized[frame.indicesX2[sourceRow + static_cast<std::size_t>(x)]];
+        const auto pixel = realized[frame.indices[sourceRow + static_cast<std::size_t>(x)]];
         // Character's native CPU compositor overwrites with every non-zero
         // palette color. Alpha is retained for the single final GPU draw.
         auto& destination = replacement[destinationRow + static_cast<std::size_t>(x)];
@@ -479,7 +570,8 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
 
 bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replacement,
                                      int logicalWidth, int logicalHeight,
-                                     NativePixelEncoding encoding, int textureId,
+                                     NativePixelEncoding encoding,
+                                     std::uint32_t physicalScale, int textureId,
                                      int previousTextureId,
                                      const EngineTextureApi& api) noexcept {
   auto& gl = game::gl::get_gl_functions();
@@ -491,11 +583,18 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
       previousTextureId <= 0) {
     return false;
   }
-  const int physicalWidth = logicalWidth * kPhysicalScale;
-  const int physicalHeight = logicalHeight * kPhysicalScale;
-  const auto expectedPixels = static_cast<std::size_t>(physicalWidth) *
-                              static_cast<std::size_t>(physicalHeight);
-  if (replacement.size() != expectedPixels) return false;
+  int physicalWidth = 0;
+  int physicalHeight = 0;
+  std::uint64_t expectedPixels = 0;
+  std::uint64_t expectedBytes = 0;
+  if (!checked_physical_metrics(logicalWidth, logicalHeight, physicalScale,
+                                physicalWidth, physicalHeight, expectedPixels,
+                                expectedBytes) ||
+      expectedBytes > kCompositePixelCacheBudgetBytes ||
+      replacement.size() != expectedPixels ||
+      !maximum_texture_size_allows(gl, physicalWidth, physicalHeight)) {
+    return false;
+  }
 
   int unpackAlignment = 4;
   int unpackRowLength = 0;
@@ -602,9 +701,21 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
 
 bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 256>& realized,
                             NativePixelEncoding encoding, std::uint64_t fingerprint,
-                            int previousTextureId,
-                            const EngineTextureApi& api, int& textureId) noexcept {
+                            std::uint32_t physicalScale, int previousTextureId,
+                            const EngineTextureApi& api, int& textureId) {
   textureId = 0;
+  const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+  int physicalWidth = 0;
+  int physicalHeight = 0;
+  std::uint64_t physicalPixels = 0;
+  std::uint64_t physicalBytes = 0;
+  if (!checked_physical_metrics(logical_texture_extent(frame.logicalWidth),
+                                logical_texture_extent(frame.logicalHeight),
+                                physicalScale, physicalWidth, physicalHeight,
+                                physicalPixels, physicalBytes) ||
+      physicalBytes > kTextureCacheBudgetBytes) {
+    return false;
+  }
   auto existing = std::find_if(g_textureCache.begin(), g_textureCache.end(),
                                [&](const TextureCacheEntry& entry) {
                                  return entry.handle == handle &&
@@ -615,27 +726,61 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
     textureId = existing->textureId;
     return textureId > 0;
   }
-  const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+
+  auto cachedBytes = texture_cache_bytes_locked();
   std::size_t entryIndex = 0;
-  const bool newTexture = g_textureCache.size() < kTextureCacheLimit;
+  const bool newTexture =
+      g_textureCache.size() < kTextureCacheEntryLimit &&
+      cachedBytes <= kTextureCacheBudgetBytes &&
+      physicalBytes <= kTextureCacheBudgetBytes - cachedBytes;
   if (newTexture) {
     const int generated = api.DrawGenTexture(static_cast<int>(game::gl::NEAREST), 0, 0, 0);
     if (generated <= 0) return false;
-    g_textureCache.push_back(
-        {.handle = handle, .paletteFingerprint = fingerprint, .textureId = generated});
+    g_textureCache.push_back({.handle = handle,
+                              .paletteFingerprint = fingerprint,
+                              .textureId = generated,
+                              .physicalBytes = physicalBytes});
     entryIndex = g_textureCache.size() - 1;
   } else {
+    if (g_textureCache.empty()) return false;
     const auto lru = std::min_element(
         g_textureCache.begin(), g_textureCache.end(),
         [](const TextureCacheEntry& left, const TextureCacheEntry& right) {
           return left.lastUse < right.lastUse;
         });
     entryIndex = static_cast<std::size_t>(std::distance(g_textureCache.begin(), lru));
-    lru->handle = handle;
-    lru->paletteFingerprint = fingerprint;
+    const auto replacementFits = [&] {
+      const auto replacedBytes = g_textureCache[entryIndex].physicalBytes;
+      return cachedBytes >= replacedBytes &&
+             cachedBytes - replacedBytes <= kTextureCacheBudgetBytes &&
+             physicalBytes <=
+                 kTextureCacheBudgetBytes - (cachedBytes - replacedBytes);
+    };
+    while (!replacementFits() && g_textureCache.size() > 1) {
+      std::size_t victimIndex = g_textureCache.size();
+      for (std::size_t index = 0; index < g_textureCache.size(); ++index) {
+        if (index == entryIndex) continue;
+        if (victimIndex == g_textureCache.size() ||
+            g_textureCache[index].lastUse < g_textureCache[victimIndex].lastUse) {
+          victimIndex = index;
+        }
+      }
+      if (victimIndex == g_textureCache.size()) break;
+      const auto victimBytes = g_textureCache[victimIndex].physicalBytes;
+      if (cachedBytes < victimBytes) return false;
+      cachedBytes -= victimBytes;
+      delete_texture_entry_locked(api, victimIndex);
+      if (victimIndex < entryIndex) --entryIndex;
+    }
+    if (!replacementFits()) return false;
+    auto& replacement = g_textureCache[entryIndex];
+    replacement.handle = handle;
+    replacement.paletteFingerprint = fingerprint;
+    replacement.physicalBytes = physicalBytes;
   }
   auto& entry = g_textureCache[entryIndex];
-  if (!upload_frame_locked(frame, realized, encoding, entry.textureId, previousTextureId, api)) {
+  if (!upload_frame_locked(frame, realized, encoding, physicalScale, entry.textureId,
+                           previousTextureId, api)) {
     delete_texture_entry_locked(api, entryIndex);
     api.DrawBindTexture(previousTextureId);
     return false;
@@ -648,7 +793,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
 bool ensure_composite_pixels_locked(
     const CompositeLayer* layers, std::size_t layerCount,
     const CompositeBounds& bounds, int logicalWidth, int logicalHeight,
-    NativePixelEncoding encoding,
+    NativePixelEncoding encoding, std::uint32_t physicalScale,
     const std::array<CompositeLayerCacheKey, kMaximumCompositeLayers>& cacheLayers,
     const std::vector<std::uint32_t>*& pixels) {
   pixels = nullptr;
@@ -657,6 +802,7 @@ bool ensure_composite_pixels_locked(
       [&](const CompositePixelCacheEntry& entry) {
         return entry.layerCount == layerCount && entry.layers == cacheLayers &&
                entry.logicalWidth == logicalWidth && entry.logicalHeight == logicalHeight &&
+               entry.physicalScale == physicalScale &&
                entry.encoding.externalFormat == encoding.externalFormat &&
                entry.encoding.type == encoding.type;
       });
@@ -670,28 +816,43 @@ bool ensure_composite_pixels_locked(
       .layerCount = layerCount,
       .logicalWidth = logicalWidth,
       .logicalHeight = logicalHeight,
+      .physicalScale = physicalScale,
       .encoding = encoding,
   };
   if (!compose_composite_pixels_locked(layers, layerCount, bounds, logicalWidth,
-                                       logicalHeight, prepared.pixels)) {
+                                       logicalHeight, physicalScale, prepared.pixels)) {
     return false;
   }
   prepared.lastUse = ++g_textureUseCounter;
-  auto cachedPixels = [] {
-    std::size_t total = 0;
-    for (const auto& entry : g_compositePixelCache) total += entry.pixels.size();
+  const auto preparedBytes =
+      static_cast<std::uint64_t>(prepared.pixels.size()) * sizeof(std::uint32_t);
+  if (preparedBytes > kCompositePixelCacheBudgetBytes) return false;
+  auto cachedBytes = [] {
+    std::uint64_t total = 0;
+    for (const auto& entry : g_compositePixelCache) {
+      const auto entryBytes =
+          static_cast<std::uint64_t>(entry.pixels.size()) * sizeof(std::uint32_t);
+      if (entryBytes > (std::numeric_limits<std::uint64_t>::max)() - total) {
+        return (std::numeric_limits<std::uint64_t>::max)();
+      }
+      total += entryBytes;
+    }
     return total;
   }();
   while (!g_compositePixelCache.empty() &&
          (g_compositePixelCache.size() >= kCompositePixelCacheLimit ||
-          prepared.pixels.size() > kCompositePixelCacheBudget - cachedPixels)) {
+          cachedBytes > kCompositePixelCacheBudgetBytes ||
+          preparedBytes > kCompositePixelCacheBudgetBytes - cachedBytes)) {
     const auto lru = std::min_element(
         g_compositePixelCache.begin(), g_compositePixelCache.end(),
         [](const CompositePixelCacheEntry& left,
            const CompositePixelCacheEntry& right) {
           return left.lastUse < right.lastUse;
         });
-    cachedPixels -= lru->pixels.size();
+    const auto lruBytes =
+        static_cast<std::uint64_t>(lru->pixels.size()) * sizeof(std::uint32_t);
+    if (cachedBytes < lruBytes) return false;
+    cachedBytes -= lruBytes;
     g_compositePixelCache.erase(lru);
   }
   g_compositePixelCache.push_back(std::move(prepared));
@@ -702,21 +863,39 @@ bool ensure_composite_pixels_locked(
 
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   try {
-    BinaryReader reader(read_file(assetsDirectory / "CreatureSprites-X2.registry"));
+    const auto xnPath = assetsDirectory / kXnRegistryFilename;
+    const auto legacyPath = assetsDirectory / kLegacyRegistryFilename;
+    std::error_code pathError;
+    const bool xnExists = std::filesystem::exists(xnPath, pathError);
+    if (pathError) {
+      throw std::runtime_error("cannot inspect creature-sprite xN registry");
+    }
+    const bool xnFormat = xnExists;
+    const auto& registryPath = xnFormat ? xnPath : legacyPath;
+    BinaryReader reader(read_file(registryPath));
     std::array<char, 8> magic{};
     std::uint32_t version = 0;
     std::uint32_t scale = 0;
     std::uint32_t resourceCount = 0;
     std::uint32_t metadata = 0;
     if (!reader.read(magic) || !reader.read(version) || !reader.read(scale) ||
-        !reader.read(resourceCount) || !reader.read(metadata) || magic != kRegistryMagic ||
-        (version != kLegacyRegistryVersion && version != kRegistryVersion) ||
-        scale != static_cast<std::uint32_t>(kPhysicalScale) || resourceCount == 0 ||
-        resourceCount > kMaximumResources) {
-      throw std::runtime_error("invalid CreatureSprites-X2.registry header");
+        !reader.read(resourceCount) || !reader.read(metadata)) {
+      throw std::runtime_error("truncated creature-sprite registry header");
+    }
+    const bool formatHeaderValid =
+        xnFormat
+            ? magic == kXnRegistryMagic && version == kXnRegistryVersion &&
+                  supported_physical_scale(scale)
+            : magic == kLegacyRegistryMagic &&
+                  (version == kLegacyRegistryVersion ||
+                   version == kLegacyCurrentRegistryVersion) &&
+                  scale == 2;
+    if (!formatHeaderValid || resourceCount == 0 || resourceCount > kMaximumResources) {
+      throw std::runtime_error("invalid creature-sprite registry header: " +
+                               registryPath.filename().string());
     }
     std::uint16_t animationId = 0;
-    if (version == kLegacyRegistryVersion) {
+    if (!xnFormat && version == kLegacyRegistryVersion) {
       if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
       animationId = kLegacyMgo1AnimationId;
     } else {
@@ -759,14 +938,20 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
             frameReserved != std::array<std::byte, 3>{}) {
           throw std::runtime_error("invalid creature-sprite frame header");
         }
-        const auto expectedIndices = static_cast<std::uint64_t>(width) * height *
-                                     kPhysicalScale * kPhysicalScale;
-        if (expectedIndices != indexBytes || totalIndexBytes > kMaximumRegistryBytes - indexBytes ||
+        const auto nativePixels = static_cast<std::uint64_t>(width) * height;
+        const auto scaleSquared = static_cast<std::uint64_t>(scale) * scale;
+        if (nativePixels > (std::numeric_limits<std::uint64_t>::max)() / scaleSquared) {
+          throw std::runtime_error("creature-sprite frame payload overflows");
+        }
+        const auto expectedIndices = nativePixels * scaleSquared;
+        if (expectedIndices > (std::numeric_limits<std::uint32_t>::max)() ||
+            expectedIndices != indexBytes || indexBytes > kMaximumRegistryBytes ||
+            totalIndexBytes > kMaximumRegistryBytes - indexBytes ||
             !reader.read(frame.representatives) ||
-            !reader.read_bytes(frame.indicesX2, indexBytes)) {
+            !reader.read_bytes(frame.indices, indexBytes)) {
           throw std::runtime_error("invalid creature-sprite frame payload");
         }
-        for (const auto paletteIndex : frame.indicesX2) {
+        for (const auto paletteIndex : frame.indices) {
           if (frame.representatives[paletteIndex] == 0xFFFFu) {
             throw std::runtime_error("creature-sprite payload lacks a palette representative");
           }
@@ -803,12 +988,14 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
       clear_texture_cache_locked();
       reset_diagnostics_locked();
       g_targetAnimationId.store(animationId, std::memory_order_release);
+      g_loadedScale.store(scale, std::memory_order_release);
       g_ready.store(true, std::memory_order_release);
     }
     LOG_INFO(
-        "Creature sprite xBR2x pack ready: animation 0x{:04X}, {} resources, {} frames, {} "
-        "index bytes; filter=NEAREST",
-        animationId, resourceCount, totalFrames, totalIndexBytes);
+        "Creature sprite xBR2x pack ready: animation 0x{:04X}, scale=x{}, {} resources, {} "
+        "frames, {} index bytes; source={}; filter=NEAREST; registry budget={} MiB",
+        animationId, scale, resourceCount, totalFrames, totalIndexBytes,
+        registryPath.filename().string(), kMaximumRegistryBytes / (1024ull * 1024ull));
     return true;
   } catch (const std::exception& error) {
     LOG_WARN("Creature sprite xBR2x pack disabled: {}", error.what());
@@ -823,6 +1010,7 @@ void release() noexcept {
   std::lock_guard lock(g_mutex);
   g_ready.store(false, std::memory_order_release);
   g_targetAnimationId.store(0, std::memory_order_release);
+  g_loadedScale.store(0, std::memory_order_release);
   g_resources.clear();
   clear_texture_cache_locked();
   reset_diagnostics_locked();
@@ -835,6 +1023,10 @@ bool ready() noexcept { return g_ready.load(std::memory_order_acquire); }
 
 std::uint16_t target_animation_id() noexcept {
   return g_targetAnimationId.load(std::memory_order_acquire);
+}
+
+std::uint32_t loaded_scale() noexcept {
+  return g_loadedScale.load(std::memory_order_acquire);
 }
 
 bool contains_resource(const std::array<char, 8>& resref) noexcept {
@@ -856,8 +1048,7 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
   if (!realizedOutput || realizedOutput != api.realizedPalette || !api.nativePixelEncoding ||
       !core::safe_read(realizedOutput, snapshot.colors) ||
       !core::safe_read(api.nativePixelEncoding, snapshot.encoding)) {
-    if (!g_paletteApiFailureLogged) {
-      g_paletteApiFailureLogged = true;
+    if (!g_paletteApiFailureLogged.exchange(true, std::memory_order_acq_rel)) {
       LOG_WARN(
           "Creature sprite xBR2x owner palette or native pixel encoding is unavailable; "
           "native BAM rendering retained");
@@ -865,8 +1056,7 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
     return false;
   }
   if (!supported_native_pixel_encoding(snapshot.encoding)) {
-    if (!g_paletteApiFailureLogged) {
-      g_paletteApiFailureLogged = true;
+    if (!g_paletteApiFailureLogged.exchange(true, std::memory_order_acq_rel)) {
       LOG_WARN(
           "Creature sprite xBR2x native pixel encoding is invalid: format=0x{:X}, "
           "type=0x{:X}; native BAM rendering retained",
@@ -875,8 +1065,7 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
     return false;
   }
   out = snapshot;
-  if (!g_realizedPaletteLogged) {
-    g_realizedPaletteLogged = true;
+  if (!g_realizedPaletteLogged.exchange(true, std::memory_order_acq_rel)) {
     LOG_INFO(
         "Creature sprite xBR2x uses an owner-scoped CVidPalette::Realize snapshot at {}; "
         "native pixel encoding format=0x{:X}, type=0x{:X} is uploaded without repacking",
@@ -923,6 +1112,8 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
         handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
       return false;
     }
+    const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
+    if (!supported_physical_scale(physicalScale)) return false;
     const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
     const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth);
     const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight);
@@ -973,7 +1164,8 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     enforce_transparent_entry(frame, realized);
     const auto fingerprint = palette_fingerprint(frame, realized, palette.encoding);
     int replacementTexture = 0;
-    if (!ensure_texture_locked(handle, realized, palette.encoding, fingerprint, previousTextureId, api,
+    if (!ensure_texture_locked(handle, realized, palette.encoding, fingerprint,
+                               physicalScale, previousTextureId, api,
                                replacementTexture)) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
@@ -986,12 +1178,14 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     if (!resource.compositionLogged[handle.frameIndex]) {
       resource.compositionLogged[handle.frameIndex] = true;
       LOG_INFO(
-          "Composing creature sprite {} frame {:03}: BAM logical {}x{}, xBR content {}x{}, "
-          "bordered texture {}x{} (NEAREST)",
-          resref_name(resource.resref), handle.frameIndex, frame.logicalWidth,
-          frame.logicalHeight, frame.logicalWidth * kPhysicalScale,
-          frame.logicalHeight * kPhysicalScale, physical_texture_extent(frame.logicalWidth),
-          physical_texture_extent(frame.logicalHeight));
+          "Composing creature sprite {} frame {:03}: scale=x{}, BAM logical {}x{}, "
+          "upscaled content {}x{}, bordered texture {}x{} (NEAREST)",
+          resref_name(resource.resref), handle.frameIndex, physicalScale,
+          frame.logicalWidth, frame.logicalHeight,
+          static_cast<std::int64_t>(frame.logicalWidth) * physicalScale,
+          static_cast<std::int64_t>(frame.logicalHeight) * physicalScale,
+          physical_texture_extent(frame.logicalWidth, physicalScale),
+          physical_texture_extent(frame.logicalHeight, physicalScale));
     }
     return true;
   } catch (const std::exception& error) {
@@ -1018,6 +1212,8 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
   try {
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
+    const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
+    if (!supported_physical_scale(physicalScale)) return false;
     std::array<FrameGeometry, kMaximumCompositeLayers> geometries{};
     NativePixelEncoding encoding{};
     for (std::size_t index = 0; index < layerCount; ++index) {
@@ -1090,7 +1286,8 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     const auto cacheLayers = composite_cache_layers_locked(layers, layerCount);
     const std::vector<std::uint32_t>* pixels = nullptr;
     if (!ensure_composite_pixels_locked(layers, layerCount, bounds, logicalWidth,
-                                        logicalHeight, encoding, cacheLayers, pixels) ||
+                                        logicalHeight, encoding, physicalScale,
+                                        cacheLayers, pixels) ||
         !pixels) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
@@ -1103,8 +1300,10 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     transientTextureId =
         api.DrawGenTexture(static_cast<int>(game::gl::NEAREST), 0, 0, 0);
     if (transientTextureId <= 0 || transientTextureId == previousTextureId ||
-        !upload_composite_texture_locked(*pixels, logicalWidth, logicalHeight, encoding,
-                                         transientTextureId, previousTextureId, api)) {
+        !upload_composite_texture_locked(*pixels, logicalWidth, logicalHeight,
+                                         encoding, physicalScale,
+                                         transientTextureId, previousTextureId,
+                                         api)) {
       api.DrawBindTexture(previousTextureId);
       if (transientTextureId > 0 && transientTextureId != previousTextureId) {
         api.DrawDeleteTexture(transientTextureId);
@@ -1135,11 +1334,12 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       const auto& frame = resource.frames[layer.frame.frameIndex];
       LOG_INFO(
           "Composing creature sprite {} frame {:03} as Character composite layer "
-          "{}/{}: BAM logical {}x{}, final bordered texture {}x{} physical {}x{} "
+          "{}/{}: scale=x{}, BAM logical {}x{}, final bordered texture {}x{} physical {}x{} "
           "via transient replacement id {} (NEAREST, delete-pending after queued draw)",
           resref_name(resource.resref), layer.frame.frameIndex, index + 1, layerCount,
-          frame.logicalWidth, frame.logicalHeight, logicalWidth, logicalHeight,
-          logicalWidth * kPhysicalScale, logicalHeight * kPhysicalScale,
+          physicalScale, frame.logicalWidth, frame.logicalHeight, logicalWidth,
+          logicalHeight, static_cast<std::int64_t>(logicalWidth) * physicalScale,
+          static_cast<std::int64_t>(logicalHeight) * physicalScale,
           transientTextureId);
     }
     return true;

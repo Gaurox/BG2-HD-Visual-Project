@@ -1,5 +1,11 @@
 # Pipeline LLM — sprite de créature ou calque Character xBR2x x2
 
+Ce document est le contrat historique x2 pour les jobs sans bloc `upscale`. Les règles d'identité,
+d'inventaire et de QA restent applicables aux jobs explicites. Pour un bloc `upscale`, une cible x4,
+un registre `CreatureSprites-XN.registry` ou le flag `EnableCreatureSpriteUpscaleTest`, appliquer en
+plus [`SPRITE_UPSCALE_XN_FOUNDATION.md`](SPRITE_UPSCALE_XN_FOUNDATION.md), qui prévaut sur les
+constantes x2 de ce document.
+
 ## Contrat
 
 - Traiter une famille BAM V1 BG2EE.
@@ -267,7 +273,15 @@ provoque des réuploads en boucle, des textures UI noires et l'effondrement des 
 
 ### 3. Installation QA réversible
 
-Fermer `BaldurReal`, `Baldur` et `InfinityLoader`. Restaurer d’abord tout autre test sprite actif.
+Fermer `BaldurReal`, `Baldur` et `InfinityLoader`. Restaurer d'abord tout autre test sprite actif.
+
+Les commandes ci-dessous concernent le registre V2 historique et le flag alias
+`EnableCreatureSpriteX2Test`. Un job portant `upscale` doit utiliser les scripts xN et le registre V3
+décrits dans `SPRITE_UPSCALE_XN_FOUNDATION.md`.
+
+L'installateur historique refuse désormais tout `CreatureSprites-XN.registry` présent dans le jeu :
+le runtime donne priorité à XN et masquerait sinon le pack V2 soumis à la QA. Restaurer d'abord le
+test xN concerné.
 
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py install --job sprite/jobs/<job>.json

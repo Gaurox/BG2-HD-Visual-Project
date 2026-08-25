@@ -140,6 +140,13 @@ Assert-ExpectedHash $exePath $expectedExeSha256 'BaldurReal.exe'
 Assert-ExpectedHash $sourceDll $expectedDllSha256 'DLL construite et testée'
 Assert-ExpectedHash $sourcePack $expectedPackSha256 'Registre sprite x2'
 
+# Le runtime donne volontairement priorité au registre XN. Un test legacy ne
+# peut donc prouver son propre pack si un XN résiduel est présent.
+$xnRegistry = Assert-GameChildPath (Join-Path $gameFull 'iee-assets\creature-sprites\CreatureSprites-XN.registry')
+if (Test-Path -LiteralPath $xnRegistry -PathType Leaf) {
+    throw 'CreatureSprites-XN.registry est présent : restaure le test xN avant tout test legacy x2.'
+}
+
 $overridePath = Join-Path $gameFull 'override'
 $characterBodySuffixes = @(
     'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'CA',
@@ -221,11 +228,60 @@ $statePath = Join-Path $backupRoot 'install-state.json'
 $state | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $statePath -Encoding utf8
 
 function Set-IniKey([string]$Text, [string]$Section, [string]$Key, [string]$Value) {
-    $pattern = "(?mi)^\s*$([regex]::Escape($Key))\s*=.*$"
-    if ([regex]::IsMatch($Text, $pattern)) {
-        return [regex]::Replace($Text, $pattern, "$Key = $Value")
+    $newline = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $lines = [System.Collections.Generic.List[string]]::new()
+    foreach ($line in [regex]::Split($Text, '\r?\n')) { [void]$lines.Add($line) }
+    $sectionStarts = @()
+    for ($index = 0; $index -lt $lines.Count; $index++) {
+        if ($lines[$index] -match '^\s*\[([^\]]+)\]\s*$' -and
+            [string]::Equals($Matches[1].Trim(), $Section,
+                [System.StringComparison]::OrdinalIgnoreCase)) {
+            $sectionStarts += $index
+        }
     }
-    return $Text.TrimEnd("`r", "`n") + "`r`n`r`n[$Section]`r`n$Key = $Value`r`n"
+    if ($sectionStarts.Count -gt 1) { throw "Section INI dupliquée : [$Section]" }
+    if ($sectionStarts.Count -eq 0) {
+        if ($lines.Count -gt 0 -and $lines[$lines.Count - 1] -ne '') { [void]$lines.Add('') }
+        [void]$lines.Add("[$Section]")
+        [void]$lines.Add("$Key = $Value")
+        return [string]::Join($newline, $lines)
+    }
+    $sectionStart = [int]$sectionStarts[0]
+    $sectionEnd = $lines.Count
+    for ($index = $sectionStart + 1; $index -lt $lines.Count; $index++) {
+        if ($lines[$index] -match '^\s*\[[^\]]+\]\s*$') { $sectionEnd = $index; break }
+    }
+    $keyIndexes = @()
+    $keyPattern = '^\s*' + [regex]::Escape($Key) + '\s*='
+    for ($index = $sectionStart + 1; $index -lt $sectionEnd; $index++) {
+        if ($lines[$index] -match $keyPattern) { $keyIndexes += $index }
+    }
+    if ($keyIndexes.Count -gt 1) { throw "Clé INI dupliquée dans [$Section] : $Key" }
+    if ($keyIndexes.Count -eq 1) {
+        $lines[[int]$keyIndexes[0]] = "$Key = $Value"
+    }
+    else {
+        $lines.Insert($sectionEnd, "$Key = $Value")
+    }
+    return [string]::Join($newline, $lines)
+}
+
+function Get-IniKey([string]$Text, [string]$Section, [string]$Key) {
+    $currentSection = ''
+    $values = @()
+    foreach ($line in [regex]::Split($Text, '\r?\n')) {
+        if ($line -match '^\s*\[([^\]]+)\]\s*$') {
+            $currentSection = $Matches[1].Trim()
+            continue
+        }
+        if ([string]::Equals($currentSection, $Section,
+                [System.StringComparison]::OrdinalIgnoreCase) -and
+            $line -match ('^\s*' + [regex]::Escape($Key) + '\s*=\s*(.*?)\s*$')) {
+            $values += $Matches[1]
+        }
+    }
+    if ($values.Count -ne 1) { throw "Clé INI absente ou dupliquée dans [$Section] : $Key" }
+    return [string]$values[0]
 }
 
 try {
@@ -256,7 +312,7 @@ try {
     Assert-ExpectedHash $dllTarget $expectedDllSha256 'DLL installée'
     Assert-ExpectedHash $packTarget $expectedPackSha256 'Registre installé'
     $installedIni = Get-Content -LiteralPath $iniTarget -Raw
-    if (-not [regex]::IsMatch($installedIni, '(?mi)^\s*EnableCreatureSpriteX2Test\s*=\s*true\s*$')) {
+    if ((Get-IniKey $installedIni 'Shaders' 'EnableCreatureSpriteX2Test') -ne 'true') {
         throw "EnableCreatureSpriteX2Test n'est pas actif."
     }
 

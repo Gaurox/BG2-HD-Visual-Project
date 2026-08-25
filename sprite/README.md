@@ -1,6 +1,6 @@
 # Sprites de créature et calques Character — point d'entrée agent
 
-Utiliser ce document pour toute analyse, évolution de pipeline ou production x2 portant sur un
+Utiliser ce document pour toute analyse, évolution de pipeline ou production x2/x4 portant sur un
 sprite de créature, un corps Character ou un calque d'équipement Character. Ne pas utiliser les
 dossiers d'extraction historiques comme source d'identité.
 
@@ -13,8 +13,10 @@ dossiers d'extraction historiques comme source d'identité.
    [`index/sprite_families.csv`](index/sprite_families.csv).
 4. Auditer les BAM liés dans [`index/sprite_resources.csv`](index/sprite_resources.csv).
 5. Pour un équipement, résoudre l'ITM dans [`index/sprite_items.csv`](index/sprite_items.csv).
-6. Appliquer [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md) uniquement après cette
-   résolution. Appliquer le contrat image [`UPSCALE_XBR2X.md`](UPSCALE_XBR2X.md) aux frames.
+6. Lire [`SPRITE_UPSCALE_XN_FOUNDATION.md`](SPRITE_UPSCALE_XN_FOUNDATION.md) pour tout job portant
+   un bloc `upscale` explicite ou toute cible x4.
+7. Appliquer [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md) au workflow historique x2
+   sans bloc `upscale`. Appliquer [`UPSCALE_XBR2X.md`](UPSCALE_XBR2X.md) aux seules frames x2.
 
 ## Sources de vérité
 
@@ -26,6 +28,7 @@ dossiers d'extraction historiques comme source d'identité.
 | Type ITM, code d'animation et familles Character candidates | `sprite_items.csv` |
 | Installation analysée, hashes, limites et totaux | `manifest.json` |
 | Création, build, installation réversible et QA | `SPRITE_UPSCALE_PIPELINE.md` |
+| Échelle x2/x4 explicite, registre V3, activation, install/restore et blocages | `SPRITE_UPSCALE_XN_FOUNDATION.md` |
 
 Ne jamais déduire un préfixe BAM depuis le nom du personnage, son portrait, une apparence visuelle
 ou le nom d'un dossier historique. Priorité d'identité : ID lu dans CRE/sauvegarde, symbole

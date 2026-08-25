@@ -463,7 +463,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
   const auto& runtime = ctx.manifest->areaAnimations;
   if (!matches_pattern_at_rva(module, runtime.vidPaletteRealize, runtime.signatures[7])) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: CVidPalette::Realize signature differs at "
+        "Creature sprite xN hook skipped: CVidPalette::Realize signature differs at "
         "RVA 0x{:X}",
         runtime.vidPaletteRealize);
     return false;
@@ -471,7 +471,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
   if (!matches_pattern_at_rva(module, runtime.vidPaletteRealizeCallsite,
                               runtime.signatures[8])) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: owner palette callsite signature differs at "
+        "Creature sprite xN hook skipped: owner palette callsite signature differs at "
         "RVA 0x{:X}",
         runtime.vidPaletteRealizeCallsite);
     return false;
@@ -480,7 +480,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
     if (!matches_pattern_at_rva(module, runtime.glTextureTableReferences[index],
                                 runtime.signatures[10 + index])) {
       LOG_WARN(
-          "Creature sprite xBR2x hook skipped: engine texture-table reference {} "
+          "Creature sprite xN hook skipped: engine texture-table reference {} "
           "differs at RVA 0x{:X}",
           index, runtime.glTextureTableReferences[index]);
       return false;
@@ -489,7 +489,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
   if (!matches_pattern_at_rva(module, runtime.glTextureSecondarySelectorReference,
                               runtime.signatures[13])) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: engine secondary-texture selector "
+        "Creature sprite xN hook skipped: engine secondary-texture selector "
         "differs at RVA 0x{:X}",
         runtime.glTextureSecondarySelectorReference);
     return false;
@@ -499,7 +499,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
                        secondaryFieldOffset) ||
       secondaryFieldOffset != 0x24) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: engine secondary-texture selector no "
+        "Creature sprite xN hook skipped: engine secondary-texture selector no "
         "longer reads descriptor field +0x24");
     return false;
   }
@@ -518,7 +518,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
                                                    kPaletteBytes) ||
       !core::is_writable_non_executable_memory(paletteAddress, kPaletteBytes)) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: realized palette RVA 0x{:X} is not a "
+        "Creature sprite xN hook skipped: realized palette RVA 0x{:X} is not a "
         "writable non-executable data span",
         runtime.realizedPalette);
     return false;
@@ -527,7 +527,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
                                                    kEncodingBytes) ||
       !core::is_writable_non_executable_memory(encodingAddress, kEncodingBytes)) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: native pixel encoding globals are not a "
+        "Creature sprite xN hook skipped: native pixel encoding globals are not a "
         "writable non-executable data span");
     return false;
   }
@@ -536,7 +536,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
       !core::is_writable_non_executable_memory(textureTableAddress,
                                                kTextureTableBytes)) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: engine texture descriptor table is not a "
+        "Creature sprite xN hook skipped: engine texture descriptor table is not a "
         "writable non-executable data span");
     return false;
   }
@@ -550,7 +550,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
         instruction + 7 + displacement !=
             module.base + runtime.glTextureTable + kExpectedTableOffsets[index]) {
       LOG_WARN(
-          "Creature sprite xBR2x hook skipped: engine texture-table reference {} no "
+          "Creature sprite xN hook skipped: engine texture-table reference {} no "
           "longer resolves to the manifested descriptor field",
           index);
       return false;
@@ -565,7 +565,7 @@ bool validate_creature_sprite_palette_runtime(AppContext& ctx,
   if (callsitePalette != module.base + runtime.realizedPalette ||
       callTarget != module.base + runtime.vidPaletteRealize) {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: palette owner callsite no longer targets the "
+        "Creature sprite xN hook skipped: palette owner callsite no longer targets the "
         "manifest scratch/Realize pair");
     return false;
   }
@@ -605,8 +605,8 @@ bool prepare_area_animation_composition_hooks(AppContext& ctx) noexcept {
 bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   g_creatureSpriteOwner = CreatureSpriteOwner::None;
   g_creatureSpritePaletteReturn = 0;
-  if (!ctx.cfg.enableCreatureSpriteX2Test || !creature_sprite_x2::ready()) return false;
-  if (!validate_area_animation_runtime(ctx, "Creature sprite xBR2x")) return false;
+  if (!ctx.cfg.creature_sprite_upscale_enabled() || !creature_sprite_x2::ready()) return false;
+  if (!validate_area_animation_runtime(ctx, "Creature sprite xN")) return false;
   const auto module = core::get_module_span(nullptr);
   if (!module || !ctx.manifest) return false;
   const auto& runtime = ctx.manifest->areaAnimations;
@@ -627,13 +627,13 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
     ownerLabel = "CGameAnimationTypeCharacter::Render";
   } else {
     LOG_WARN(
-        "Creature sprite xBR2x hook skipped: animation 0x{:04X} has no validated owner "
+        "Creature sprite xN hook skipped: animation 0x{:04X} has no validated owner "
         "scope",
         creature_sprite_x2::target_animation_id());
     return false;
   }
   if (!matches_pattern_at_rva(*module, ownerRender, runtime.signatures[ownerSignature])) {
-    LOG_WARN("Creature sprite xBR2x hook skipped: {} signature differs at RVA 0x{:X}",
+    LOG_WARN("Creature sprite xN hook skipped: {} signature differs at RVA 0x{:X}",
              ownerLabel, ownerRender);
     g_creatureSpriteOwner = CreatureSpriteOwner::None;
     return false;
@@ -1351,7 +1351,7 @@ bool install_all(AppContext& ctx) {
                 reinterpret_cast<void*>(&detour_character_render));
             g_characterRenderHook.enable();
             LOG_INFO(
-                "Creature sprite xBR2x owner scope installed: Character::Render RVA "
+                "Creature sprite xN owner scope installed: Character::Render RVA "
                 "0x{:X}, body cell offset 0x{:X}, overlay cell offsets "
                 "[0x{:X},0x{:X},0x{:X}], CVidPalette::Realize RVA 0x{:X}",
                 runtime.characterRender, runtime.characterCurrentCell,
@@ -1364,7 +1364,7 @@ bool install_all(AppContext& ctx) {
                 reinterpret_cast<void*>(&detour_monster_icewind_render));
             g_monsterIcewindRenderHook.enable();
             LOG_INFO(
-                "Creature sprite xBR2x owner scope installed: MonsterIcewind::Render RVA "
+                "Creature sprite xN owner scope installed: MonsterIcewind::Render RVA "
                 "0x{:X}, CVidPalette::Realize RVA 0x{:X}",
                 runtime.monsterIcewindRender, runtime.vidPaletteRealize);
           }

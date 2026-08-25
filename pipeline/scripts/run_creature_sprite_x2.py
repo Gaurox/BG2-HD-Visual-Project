@@ -1,8 +1,10 @@
-"""Reproducible xBR2x x2 pipeline for BG2EE creature and player-character sprites.
+"""Reproducible xBR xN pipeline for BG2EE creature and Character sprites.
 
-The pipeline keeps BAM V1 metadata at x1, stores lossless x2 palette indices in
-an external registry, builds the shared runtime, and manages reversible QA
-installation. It never launches the game and never edits release manifests.
+The pipeline keeps BAM V1 metadata at x1, stores lossless x2 or x4 palette
+indices in an external registry, builds the shared runtime, and manages
+reversible QA installation. Jobs without an explicit ``upscale`` block retain
+the historical x2/V2 contract. The runner never launches the game and never
+edits release manifests.
 """
 
 from __future__ import annotations
@@ -32,6 +34,8 @@ PROJECT_ROOT = SCRIPT_DIR.parents[1]
 XBR_ADAPTER = SCRIPT_DIR / "xbr2x_batch.js"
 INSTALL_SCRIPT = SCRIPT_DIR / "Install-CreatureSprite-X2-Test.ps1"
 RESTORE_SCRIPT = SCRIPT_DIR / "Restore-CreatureSprite-X2-Test.ps1"
+XN_INSTALL_SCRIPT = SCRIPT_DIR / "Install-CreatureSprite-XN-Test.ps1"
+XN_RESTORE_SCRIPT = SCRIPT_DIR / "Restore-CreatureSprite-XN-Test.ps1"
 JOB_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-job-v1"
 ARMOR_SET_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-armor-set-v1"
 SOURCE_SCHEMA = "bg2-upscale-creature-sprite-source-v1"
@@ -41,14 +45,31 @@ RUNTIME_SCHEMA = "bg2-upscale-creature-sprite-runtime-v1"
 REGISTRY_MAGIC = b"IEECSX2\0"
 REGISTRY_VERSION = 2
 LEGACY_REGISTRY_VERSION = 1
-SCALE = 2
+XN_REGISTRY_MAGIC = b"IEECSXN\0"
+XN_REGISTRY_VERSION = 3
+LEGACY_SCALE = 2
+# Readability zoom for source-only QA sheets; it is not the upscale contract.
+SOURCE_PREVIEW_SCALE = 2
+REGISTRY_FILENAME = "CreatureSprites-X2.registry"
+XN_REGISTRY_FILENAME = "CreatureSprites-XN.registry"
+REGISTRY_HEADER_BYTES = 24
+REGISTRY_RESOURCE_HEADER_BYTES = 48
+REGISTRY_FRAME_HEADER_BYTES = 528
 BAM_TYPE = 0x03E8
 ITM_TYPE = 0x03ED
 IDS_TYPE = 0x03F0
 INI_TYPE = 0x0802
 MAX_RESOURCES = 128
 MAX_FRAMES_PER_RESOURCE = 4096
+MAX_CYCLES_PER_RESOURCE = 256
+MAX_CYCLE_SLOTS = 65536
 MAX_REGISTRY_BYTES = 128 * 1024 * 1024
+# The xN adapter retains the baseline adapter's legacy protocol and xBR2x call
+# path byte-for-byte. Accepting this audited hash keeps existing x2 builds
+# resumable without spending another full xBR pass.
+LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S = frozenset(
+    {"11FE3B2F1ACAAA0F141E282D86FFE28D7A8DB0B86AFFCEDB8A16741F141FC1D4"}
+)
 CHARACTER_BODY_SUFFIXES = (
     "A1",
     "A2",
@@ -106,6 +127,124 @@ class SourceFrame:
     indices: np.ndarray
     palette: np.ndarray
     rgba: bytes
+
+
+@dataclass(frozen=True)
+class UpscaleContract:
+    scale: int
+    algorithm: str
+    passes: int
+    antialias: bool
+    xbr_blend: bool
+    explicit: bool
+
+    @property
+    def registry_magic(self) -> bytes:
+        return XN_REGISTRY_MAGIC if self.explicit else REGISTRY_MAGIC
+
+    @property
+    def registry_version(self) -> int:
+        return XN_REGISTRY_VERSION if self.explicit else REGISTRY_VERSION
+
+    @property
+    def registry_filename(self) -> str:
+        return XN_REGISTRY_FILENAME if self.explicit else REGISTRY_FILENAME
+
+    @property
+    def adapter_mode(self) -> str:
+        return f"xbr{self.scale}x"
+
+    @property
+    def method(self) -> dict[str, Any]:
+        return {
+            "algorithm": self.algorithm,
+            "scale": self.scale,
+            "passes": self.passes,
+            "antialias": self.antialias,
+            "xbr_blend": self.xbr_blend,
+        }
+
+    @property
+    def identity(self) -> tuple[bytes, int, int]:
+        return (self.registry_magic, self.registry_version, self.scale)
+
+
+LEGACY_UPSCALE = UpscaleContract(
+    scale=LEGACY_SCALE,
+    algorithm="XBR/xbr2X",
+    passes=1,
+    antialias=False,
+    xbr_blend=False,
+    explicit=False,
+)
+
+
+def direct_upscale_contract(scale: int) -> UpscaleContract:
+    if isinstance(scale, bool) or not isinstance(scale, int) or scale not in {2, 4}:
+        raise RuntimeError("upscale scale must be 2 or 4")
+    return UpscaleContract(
+        scale=scale,
+        algorithm=f"XBR/xbr{scale}X",
+        passes=1,
+        antialias=False,
+        xbr_blend=False,
+        explicit=True,
+    )
+
+
+def upscale_contract(work_item: dict[str, Any]) -> UpscaleContract:
+    raw = work_item.get("upscale")
+    if raw is None:
+        return LEGACY_UPSCALE
+    if not isinstance(raw, dict):
+        raise RuntimeError("upscale must be an object")
+    required = {"scale", "algorithm", "passes", "antialias", "xbr_blend"}
+    missing = sorted(required - raw.keys())
+    unexpected = sorted(raw.keys() - required)
+    if missing or unexpected:
+        details = []
+        if missing:
+            details.append("missing " + ", ".join(missing))
+        if unexpected:
+            details.append("unexpected " + ", ".join(unexpected))
+        raise RuntimeError("invalid upscale contract: " + "; ".join(details))
+    scale = raw["scale"]
+    passes = raw["passes"]
+    antialias = raw["antialias"]
+    xbr_blend = raw["xbr_blend"]
+    if isinstance(scale, bool) or not isinstance(scale, int) or scale not in {2, 4}:
+        raise RuntimeError("upscale.scale must be 2 or 4")
+    if isinstance(passes, bool) or not isinstance(passes, int) or passes != 1:
+        raise RuntimeError("upscale.passes must be 1 for the direct xBR implementation")
+    if not isinstance(antialias, bool) or antialias:
+        raise RuntimeError("upscale.antialias must be false for palette-index output")
+    if not isinstance(xbr_blend, bool) or xbr_blend:
+        raise RuntimeError("upscale.xbr_blend must be false for palette-index output")
+    expected_algorithm = f"XBR/xbr{scale}X"
+    if raw["algorithm"] != expected_algorithm:
+        raise RuntimeError(
+            f"upscale.algorithm must be exactly {expected_algorithm} for scale {scale}"
+        )
+    return direct_upscale_contract(scale)
+
+
+def creation_upscale_contract(
+    template: dict[str, Any], requested_scale: int | None
+) -> UpscaleContract:
+    if requested_scale is None:
+        return upscale_contract(template)
+    return direct_upscale_contract(requested_scale)
+
+
+def upscale_method_description(contract: UpscaleContract) -> str:
+    return (
+        f"{contract.algorithm} x{contract.scale} one-pass antialias-off; "
+        "palette indices; x1 geometry; NEAREST"
+    )
+
+
+def effective_upscale_contract(work_item: dict[str, Any]) -> UpscaleContract:
+    return upscale_contract(work_item)
 
 
 def utc_now() -> str:
@@ -234,6 +373,9 @@ def load_job(job_file: Path) -> dict[str, Any]:
     expected_exe = str(compatibility.get("baldur_real_sha256", "")).upper()
     if not re.fullmatch(r"[0-9A-F]{64}", expected_exe):
         raise RuntimeError("compatibility.baldur_real_sha256 must be a SHA-256")
+    contract = upscale_contract(job)
+    if contract.explicit:
+        job["upscale"] = contract.method
     job["_job_file"] = str(job_file)
     job["animation"]["bam_prefix"] = prefix
     job["animation"]["id"] = animation_id.upper().replace("X", "x")
@@ -275,6 +417,9 @@ def load_armor_set(set_file: Path) -> dict[str, Any]:
     expected_exe = str(compatibility.get("baldur_real_sha256", "")).upper()
     if not re.fullmatch(r"[0-9A-F]{64}", expected_exe):
         raise RuntimeError("compatibility.baldur_real_sha256 must be a SHA-256")
+    set_contract = upscale_contract(armor_set)
+    if set_contract.explicit:
+        armor_set["upscale"] = set_contract.method
     member_jobs: list[dict[str, Any]] = []
     seen_files: set[Path] = set()
     seen_codes: set[int] = set()
@@ -308,6 +453,12 @@ def load_armor_set(set_file: Path) -> dict[str, Any]:
             seen_codes.add(code)
         seen_prefixes.add(prefix)
         member_jobs.append(member)
+    member_contracts = [upscale_contract(member) for member in member_jobs]
+    identities = {contract.identity for contract in member_contracts}
+    if len(identities) != 1:
+        raise RuntimeError("armor-set members mix registry magic/version/scale")
+    if set_contract.identity != member_contracts[0].identity:
+        raise RuntimeError("armor-set upscale contract differs from member registries")
     armor_set["_job_file"] = str(set_file)
     armor_set["_kind"] = "armor-set"
     armor_set["_members"] = member_jobs
@@ -784,6 +935,7 @@ def create_character_job(
     display_name: str | None,
     qa_areas: list[str],
     qa_creatures: list[str],
+    requested_scale: int | None,
     force: bool,
 ) -> dict[str, Any]:
     if template_file is None:
@@ -804,12 +956,18 @@ def create_character_job(
     job_id = target.stem
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,63}", job_id):
         raise RuntimeError("destination filename must be a valid lowercase job id")
-    if not job_id.endswith("-xbr2x"):
-        raise RuntimeError("character job filename must end with -xbr2x.json")
+    if not re.search(r"-xbr(?:2|4)x$", job_id):
+        raise RuntimeError("character job filename must end with -xbr2x.json or -xbr4x.json")
     if target.exists() and not force:
         raise RuntimeError(f"job already exists; use --force to replace exactly {target}")
 
     template = load_job(resolve_path(template_file))
+    contract = creation_upscale_contract(template, requested_scale)
+    job_suffix = f"-xbr{contract.scale}x"
+    if not job_id.endswith(job_suffix):
+        raise RuntimeError(
+            f"character job filename must end with {job_suffix}.json for the template"
+        )
     game_root = job_path(template, "game_root")
     exe = game_root / "BaldurReal.exe"
     expected_exe = template["compatibility"]["baldur_real_sha256"].upper()
@@ -835,10 +993,12 @@ def create_character_job(
     require_clean_character_identity_overrides(provisional, game_root)
     spec = character_animation_spec(index, resolved_animation_id, armor_code)
 
-    asset_id = job_id[: -len("-xbr2x")]
+    asset_id = job_id[: -len(job_suffix)]
     paths = dict(template["paths"])
     paths["source_dir"] = f"sprite/{asset_id}/source"
-    paths["run_dir"] = f"sprite/{asset_id}/runs/xbr2x-x2"
+    paths["run_dir"] = (
+        f"sprite/{asset_id}/runs/xbr{contract.scale}x-x{contract.scale}"
+    )
     runtime = dict(template.get("runtime", {}))
     runtime.setdefault("no_filter_comparison", True)
     job: dict[str, Any] = {
@@ -862,6 +1022,8 @@ def create_character_job(
     }
     if isinstance(template.get("tools"), dict):
         job["tools"] = dict(template["tools"])
+    if contract.explicit:
+        job["upscale"] = contract.method
     write_json(target, job)
     loaded = load_job(target)
     verified = verify_character_animation_identity(loaded, KeyIndex(game_root))
@@ -886,6 +1048,7 @@ def create_character_equipment_job(
     display_name: str | None,
     qa_areas: list[str],
     qa_creatures: list[str],
+    requested_scale: int | None,
     force: bool,
 ) -> dict[str, Any]:
     if template_file is None:
@@ -912,12 +1075,20 @@ def create_character_equipment_job(
     job_id = target.stem
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,63}", job_id):
         raise RuntimeError("destination filename must be a valid lowercase job id")
-    if not job_id.endswith("-xbr2x"):
-        raise RuntimeError("Character equipment job filename must end with -xbr2x.json")
+    if not re.search(r"-xbr(?:2|4)x$", job_id):
+        raise RuntimeError(
+            "Character equipment job filename must end with -xbr2x.json or -xbr4x.json"
+        )
     if target.exists() and not force:
         raise RuntimeError(f"job already exists; use --force to replace exactly {target}")
 
     template = load_job(resolve_path(template_file))
+    contract = creation_upscale_contract(template, requested_scale)
+    job_suffix = f"-xbr{contract.scale}x"
+    if not job_id.endswith(job_suffix):
+        raise RuntimeError(
+            f"Character equipment job filename must end with {job_suffix}.json for the template"
+        )
     game_root = job_path(template, "game_root")
     exe = game_root / "BaldurReal.exe"
     expected_exe = template["compatibility"]["baldur_real_sha256"].upper()
@@ -941,10 +1112,13 @@ def create_character_equipment_job(
     require_clean_character_identity_overrides(provisional, game_root)
     spec = character_equipment_spec(index, resolved_animation_id, layer_kind, item_resref)
 
-    asset_id = job_id[: -len("-xbr2x")]
+    asset_id = job_id[: -len(job_suffix)]
     paths = dict(template["paths"])
     paths["source_dir"] = f"sprite/{asset_id.replace('-', '_')}/source"
-    paths["run_dir"] = f"sprite/{asset_id.replace('-', '_')}/runs/xbr2x-x2"
+    paths["run_dir"] = (
+        f"sprite/{asset_id.replace('-', '_')}/runs/"
+        f"xbr{contract.scale}x-x{contract.scale}"
+    )
     runtime = dict(template.get("runtime", {}))
     runtime.setdefault("no_filter_comparison", True)
     job: dict[str, Any] = {
@@ -970,6 +1144,8 @@ def create_character_equipment_job(
     }
     if isinstance(template.get("tools"), dict):
         job["tools"] = dict(template["tools"])
+    if contract.explicit:
+        job["upscale"] = contract.method
     write_json(target, job)
     loaded = load_job(target)
     verified = verify_character_animation_identity(loaded, KeyIndex(game_root))
@@ -1014,7 +1190,19 @@ def make_source_sheet(frames: list[Image.Image], destination: Path) -> None:
     positions = sorted(
         {0, len(frames) // 4, len(frames) // 2, 3 * len(frames) // 4, len(frames) - 1}
     )
-    selected = [(index, frames[index].resize((frames[index].width * 2, frames[index].height * 2), Image.Resampling.NEAREST)) for index in positions]
+    selected = [
+        (
+            index,
+            frames[index].resize(
+                (
+                    frames[index].width * SOURCE_PREVIEW_SCALE,
+                    frames[index].height * SOURCE_PREVIEW_SCALE,
+                ),
+                Image.Resampling.NEAREST,
+            ),
+        )
+        for index in positions
+    ]
     cell_width = max(image.width for _, image in selected) + 16
     cell_height = max(image.height for _, image in selected) + 32
     canvas = Image.new("RGBA", (cell_width * len(selected), cell_height), (40, 40, 40, 255))
@@ -1285,37 +1473,81 @@ def load_source_frames(manifest_path: Path) -> tuple[list[SourceFrame], list[dic
     return all_frames, resources, manifest
 
 
-def run_xbr2x(frames: list[SourceFrame], scalepix: Path, node: str) -> list[tuple[int, int, bytes]]:
+def run_xbr(
+    frames: list[SourceFrame],
+    scalepix: Path,
+    node: str,
+    contract: UpscaleContract,
+) -> list[tuple[int, int, bytes]]:
     if not scalepix.is_file() or not XBR_ADAPTER.is_file():
         raise RuntimeError("scalepix or xBR batch adapter is missing")
-    payload = bytearray(b"XBR2BAT\0")
-    payload.extend(struct.pack("<I", len(frames)))
+    if contract.explicit:
+        payload = bytearray(b"XBRNBAT\0")
+        payload.extend(struct.pack("<II", contract.scale, len(frames)))
+        command = [
+            node,
+            str(XBR_ADAPTER),
+            str(scalepix),
+            contract.adapter_mode,
+        ]
+        expected_magic = b"XBRNOUT\0"
+        output_header_bytes = 16
+    else:
+        # Preserve the original adapter protocol and command line for jobs that
+        # predate the explicit xN contract.
+        payload = bytearray(b"XBR2BAT\0")
+        payload.extend(struct.pack("<I", len(frames)))
+        command = [node, str(XBR_ADAPTER), str(scalepix)]
+        expected_magic = b"XBR2OUT\0"
+        output_header_bytes = 12
     for frame in frames:
         payload.extend(struct.pack("<III", frame.width, frame.height, len(frame.rgba)))
         payload.extend(frame.rgba)
-    result = subprocess.run([node, str(XBR_ADAPTER), str(scalepix)], input=bytes(payload), stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+    result = subprocess.run(
+        command,
+        input=bytes(payload),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
     if result.returncode != 0:
-        raise RuntimeError("xBR2x batch failed:\n" + result.stderr.decode("utf-8", errors="replace"))
+        raise RuntimeError(
+            f"xBR{contract.scale}x batch failed:\n"
+            + result.stderr.decode("utf-8", errors="replace")
+        )
     raw = result.stdout
-    if len(raw) < 12 or raw[:8] != b"XBR2OUT\0":
-        raise RuntimeError("invalid xBR2x batch output")
-    count = struct.unpack_from("<I", raw, 8)[0]
+    if len(raw) < output_header_bytes or raw[:8] != expected_magic:
+        raise RuntimeError(f"invalid xBR{contract.scale}x batch output")
+    if contract.explicit:
+        output_scale, count = struct.unpack_from("<II", raw, 8)
+        if output_scale != contract.scale:
+            raise RuntimeError("xBR batch output scale differs from the job contract")
+    else:
+        count = struct.unpack_from("<I", raw, 8)[0]
     if count != len(frames):
-        raise RuntimeError(f"xBR2x returned {count} frames, expected {len(frames)}")
+        raise RuntimeError(
+            f"xBR{contract.scale}x returned {count} frames, expected {len(frames)}"
+        )
     outputs = []
-    offset = 12
+    offset = output_header_bytes
     for frame_index in range(count):
         if offset + 12 > len(raw):
-            raise RuntimeError("truncated xBR2x output")
+            raise RuntimeError(f"truncated xBR{contract.scale}x output")
         width, height, byte_count = struct.unpack_from("<III", raw, offset)
         offset += 12
         if byte_count != width * height * 4 or offset + byte_count > len(raw):
-            raise RuntimeError(f"invalid xBR2x output frame {frame_index}")
+            raise RuntimeError(f"invalid xBR{contract.scale}x output frame {frame_index}")
         outputs.append((width, height, raw[offset : offset + byte_count]))
         offset += byte_count
     if offset != len(raw):
-        raise RuntimeError("trailing xBR2x output bytes")
+        raise RuntimeError(f"trailing xBR{contract.scale}x output bytes")
     return outputs
+
+
+def run_xbr2x(
+    frames: list[SourceFrame], scalepix: Path, node: str
+) -> list[tuple[int, int, bytes]]:
+    return run_xbr(frames, scalepix, node, LEGACY_UPSCALE)
 
 
 def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.ndarray]:
@@ -1341,7 +1573,10 @@ def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.n
     for unique_index, color in enumerate(unique_colors.tolist()):
         palette_index = color_to_index.get(int(color))
         if palette_index is None:
-            raise RuntimeError(f"{frame.resref} frame {frame.index}: xBR2x introduced {int(color).to_bytes(4, 'little').hex()}")
+            raise RuntimeError(
+                f"{frame.resref} frame {frame.index}: xBR introduced "
+                f"{int(color).to_bytes(4, 'little').hex()}"
+            )
         mapped_unique[unique_index] = palette_index
     mapped = mapped_unique[inverse]
     if np.any(representatives[mapped] == 0xFFFF):
@@ -1349,20 +1584,28 @@ def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.n
     return mapped, representatives
 
 
-def make_comparison_sheet(frames: list[SourceFrame], outputs: list[tuple[int, int, bytes]], destination: Path) -> None:
+def make_comparison_sheet(
+    frames: list[SourceFrame],
+    outputs: list[tuple[int, int, bytes]],
+    destination: Path,
+    contract: UpscaleContract = LEGACY_UPSCALE,
+) -> None:
     positions = sorted({0, len(frames) // 4, len(frames) // 2, 3 * len(frames) // 4, len(frames) - 1})
     pairs = []
     for position in positions:
         frame = frames[position]
-        native = Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize((frame.width * 2, frame.height * 2), Image.Resampling.NEAREST)
+        native = Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize(
+            (frame.width * contract.scale, frame.height * contract.scale),
+            Image.Resampling.NEAREST,
+        )
         width, height, rgba = outputs[position]
         pairs.append((position, native, Image.frombytes("RGBA", (width, height), rgba)))
     cell_width = max(max(native.width, xbr.width) for _, native, xbr in pairs) + 16
     row_height = max(max(native.height, xbr.height) for _, native, xbr in pairs) + 28
     canvas = Image.new("RGBA", (cell_width * 2, row_height * len(pairs) + 20), (40, 40, 40, 255))
     draw = ImageDraw.Draw(canvas)
-    draw.text((4, 3), "NATIF x2 NEAREST", fill="white")
-    draw.text((cell_width + 4, 3), "xBR2x", fill="white")
+    draw.text((4, 3), f"NATIF x{contract.scale} NEAREST", fill="white")
+    draw.text((cell_width + 4, 3), f"xBR{contract.scale}x", fill="white")
     for row, (index, native, xbr) in enumerate(pairs):
         top = 20 + row * row_height
         for column, image in enumerate((native, xbr)):
@@ -1374,12 +1617,100 @@ def make_comparison_sheet(frames: list[SourceFrame], outputs: list[tuple[int, in
     canvas.save(destination)
 
 
+def preflight_registry_layout(
+    resources: list[dict[str, Any]],
+    scale: int,
+    maximum_bytes: int = MAX_REGISTRY_BYTES,
+) -> dict[str, int]:
+    if scale not in {2, 4}:
+        raise RuntimeError("registry preflight scale must be 2 or 4")
+    if not resources or len(resources) > MAX_RESOURCES:
+        raise RuntimeError("invalid source inventory")
+    registry_bytes = REGISTRY_HEADER_BYTES
+    index_bytes = 0
+    frame_count = 0
+    seen_resrefs: set[str] = set()
+    for resource in resources:
+        source = resource.get("source") or {}
+        resref = str(source.get("name", "")).upper()
+        if resref:
+            if not re.fullmatch(r"[A-Z0-9_]{1,8}", resref) or resref in seen_resrefs:
+                raise RuntimeError("invalid or duplicate resref in registry preflight")
+            seen_resrefs.add(resref)
+        frames = resource.get("frames") or []
+        cycles = resource.get("cycles") or []
+        if (
+            not frames
+            or len(frames) > MAX_FRAMES_PER_RESOURCE
+            or not cycles
+            or len(cycles) > MAX_CYCLES_PER_RESOURCE
+        ):
+            raise RuntimeError("invalid source inventory for registry preflight")
+        registry_bytes += REGISTRY_RESOURCE_HEADER_BYTES
+        for frame in frames:
+            if not (1 <= int(frame.width) <= 4096 and 1 <= int(frame.height) <= 4096):
+                raise RuntimeError("invalid frame dimensions in registry preflight")
+            payload_bytes = int(frame.width) * int(frame.height) * scale * scale
+            if payload_bytes <= 0 or payload_bytes > 0xFFFFFFFF:
+                raise RuntimeError("frame payload exceeds registry record capacity")
+            registry_bytes += REGISTRY_FRAME_HEADER_BYTES + payload_bytes
+            index_bytes += payload_bytes
+            frame_count += 1
+        for cycle in cycles:
+            slots = cycle.get("frame_indices") or []
+            if not slots or len(slots) > MAX_CYCLE_SLOTS:
+                raise RuntimeError("invalid cycle slot count in registry preflight")
+            if any(int(value) < 0 or int(value) >= len(frames) for value in slots):
+                raise RuntimeError("invalid cycle lookup in registry preflight")
+            registry_bytes += 4 + 4 * len(slots)
+    if registry_bytes > maximum_bytes:
+        raise RuntimeError(
+            f"registry preflight exceeds {maximum_bytes} bytes before xBR: "
+            f"{registry_bytes} bytes at x{scale}"
+        )
+    return {
+        "registry_bytes": registry_bytes,
+        "index_bytes": index_bytes,
+        "resource_count": len(resources),
+        "frame_count": frame_count,
+    }
+
+
+def registry_magic_name(magic: bytes) -> str:
+    return magic.rstrip(b"\0").decode("ascii", errors="strict")
+
+
+def require_compatible_registry_infos(
+    infos: list[dict[str, Any]],
+) -> tuple[str, int, int]:
+    if not infos:
+        raise RuntimeError("registry aggregation requires at least one member")
+    identities = {
+        (str(info.get("registry_magic", "")), int(info["version"]), int(info["scale"]))
+        for info in infos
+    }
+    if len(identities) != 1:
+        raise RuntimeError("registry aggregation refuses mixed magic/version/scale")
+    return next(iter(identities))
+
+
 def inspect_registry(path: Path) -> dict[str, Any]:
     raw = path.read_bytes()
-    if len(raw) > MAX_REGISTRY_BYTES or len(raw) < 24 or raw[:8] != REGISTRY_MAGIC:
+    if len(raw) > MAX_REGISTRY_BYTES or len(raw) < REGISTRY_HEADER_BYTES:
         raise RuntimeError("invalid creature registry header")
+    magic = raw[:8]
     version, scale, resource_count, metadata = struct.unpack_from("<IIII", raw, 8)
-    if version not in (LEGACY_REGISTRY_VERSION, REGISTRY_VERSION) or scale != SCALE or not (1 <= resource_count <= MAX_RESOURCES):
+    legacy_format = magic == REGISTRY_MAGIC and version in (
+        LEGACY_REGISTRY_VERSION,
+        REGISTRY_VERSION,
+    )
+    xn_format = magic == XN_REGISTRY_MAGIC and version == XN_REGISTRY_VERSION
+    if (
+        not (legacy_format or xn_format)
+        or (legacy_format and scale != LEGACY_SCALE)
+        or (xn_format and scale not in {2, 4})
+        or not (1 <= resource_count <= MAX_RESOURCES)
+    ):
         raise RuntimeError("unsupported creature registry header")
     if version == LEGACY_REGISTRY_VERSION:
         if metadata != 0:
@@ -1391,24 +1722,37 @@ def inspect_registry(path: Path) -> dict[str, Any]:
         animation_id = metadata
     offset = 24
     resources = []
+    seen_resrefs: set[str] = set()
     total_frames = 0
     total_indices = 0
     for _ in range(resource_count):
         if offset + 48 > len(raw):
             raise RuntimeError("truncated creature registry resource")
-        resref = raw[offset : offset + 8].split(b"\0", 1)[0].decode("ascii")
+        resref_bytes = raw[offset : offset + 8]
+        resref = resref_bytes.split(b"\0", 1)[0].decode("ascii")
+        if (
+            not re.fullmatch(r"[A-Z0-9_]{1,8}", resref)
+            or (b"\0" in resref_bytes and resref_bytes[len(resref) :] != b"\0" * (8 - len(resref)))
+            or resref in seen_resrefs
+        ):
+            raise RuntimeError("invalid or duplicate registry resref")
+        seen_resrefs.add(resref)
         frame_count, cycle_count = struct.unpack_from("<II", raw, offset + 40)
         offset += 48
-        if not (1 <= frame_count <= MAX_FRAMES_PER_RESOURCE) or not (1 <= cycle_count <= 256):
+        if not (1 <= frame_count <= MAX_FRAMES_PER_RESOURCE) or not (
+            1 <= cycle_count <= MAX_CYCLES_PER_RESOURCE
+        ):
             raise RuntimeError(f"invalid registry counts for {resref}")
         for _ in range(frame_count):
             if offset + 528 > len(raw):
                 raise RuntimeError("truncated creature registry frame")
             width, height, _, _, _, index_bytes = struct.unpack_from("<HHhhB3xI", raw, offset)
+            if width == 0 or height == 0 or raw[offset + 9 : offset + 12] != b"\0\0\0":
+                raise RuntimeError(f"invalid frame header for {resref}")
             representatives = np.frombuffer(raw, dtype="<u2", count=256, offset=offset + 16)
             offset += 528
-            if index_bytes != width * height * 4 or offset + index_bytes > len(raw):
-                raise RuntimeError(f"invalid x2 payload for {resref}")
+            if index_bytes != width * height * scale * scale or offset + index_bytes > len(raw):
+                raise RuntimeError(f"invalid x{scale} payload for {resref}")
             indices = np.frombuffer(raw, dtype=np.uint8, count=index_bytes, offset=offset)
             if np.any(representatives[indices] == 0xFFFF):
                 raise RuntimeError(f"missing representative in {resref}")
@@ -1419,6 +1763,8 @@ def inspect_registry(path: Path) -> dict[str, Any]:
                 raise RuntimeError("truncated registry cycle")
             slots = struct.unpack_from("<I", raw, offset)[0]
             offset += 4
+            if slots == 0 or slots > MAX_CYCLE_SLOTS:
+                raise RuntimeError(f"invalid cycle slot count in {resref}")
             if offset + slots * 4 > len(raw):
                 raise RuntimeError("truncated registry cycle lookup")
             values = np.frombuffer(raw, dtype="<u4", count=slots, offset=offset)
@@ -1429,18 +1775,51 @@ def inspect_registry(path: Path) -> dict[str, Any]:
         total_frames += frame_count
     if offset != len(raw):
         raise RuntimeError("trailing bytes in creature registry")
-    return {"version": version, "animation_id": f"0x{animation_id:04X}", "resources": resources, "resource_count": resource_count, "frame_count": total_frames, "index_bytes": total_indices, "registry_bytes": len(raw), "sha256": sha256_file(path)}
+    return {
+        "version": version,
+        "scale": scale,
+        "registry_magic": registry_magic_name(magic),
+        "animation_id": f"0x{animation_id:04X}",
+        "resources": resources,
+        "resource_count": resource_count,
+        "frame_count": total_frames,
+        "index_bytes": total_indices,
+        "registry_bytes": len(raw),
+        "sha256": sha256_file(path),
+    }
 
 
-def build_is_current(job: dict[str, Any]) -> bool:
+def build_is_current(job: dict[str, Any], keep_frames: bool = False) -> bool:
     report_path = build_dir(job) / "build-manifest.json"
     if not report_path.is_file():
         return False
     report = read_json(report_path)
     registry = build_dir(job) / str(report.get("registry", ""))
+    contract = upscale_contract(job)
     layer_matches = True
     if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0":
         layer_matches = report.get("layer", {"kind": "body"}) == character_layer_config(job)
+    if not registry.is_file():
+        return False
+    try:
+        registry_info = inspect_registry(registry)
+    except (OSError, RuntimeError, ValueError):
+        return False
+    format_matches = (
+        registry_info["version"] == contract.registry_version
+        and registry_info["scale"] == contract.scale
+        and registry_info["registry_magic"]
+        == registry_magic_name(contract.registry_magic)
+        and str(report.get("registry", "")).endswith(contract.registry_filename)
+    )
+    adapter_hash = str(report.get("xbr_adapter_sha256", "")).upper()
+    adapter_matches = adapter_hash == sha256_file(XBR_ADAPTER) or (
+        not contract.explicit
+        and adapter_hash in LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S
+    )
+    retention_matches = not keep_frames or report.get(
+        f"kept_individual_x{contract.scale}_frames"
+    ) is True
     return (
         report.get("schema") == BUILD_SCHEMA
         and report.get("job_id") == job["job_id"]
@@ -1448,9 +1827,13 @@ def build_is_current(job: dict[str, Any]) -> bool:
         and str(report.get("bam_prefix", "")).upper() == job["animation"]["bam_prefix"]
         and report.get("runtime_profile") == job["animation"].get("runtime_profile")
         and layer_matches
+        and report.get("method") == contract.method
+        and report.get("registry_version") == contract.registry_version
+        and format_matches
         and report.get("source_manifest_sha256") == sha256_file(source_manifest_path(job))
         and report.get("scalepix_sha256") == sha256_file(job_path(job, "scalepix"))
-        and registry.is_file()
+        and adapter_matches
+        and retention_matches
         and report.get("registry_sha256") == sha256_file(registry)
     )
 
@@ -1458,27 +1841,37 @@ def build_is_current(job: dict[str, Any]) -> bool:
 def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool) -> dict[str, Any]:
     verify_sources(job, compare_game=True)
     output = build_dir(job)
-    if resume and output.exists() and build_is_current(job):
+    if resume and output.exists() and build_is_current(job, keep_frames):
         report = read_json(output / "build-manifest.json")
         return {"status": "reused", **inspect_registry(output / report["registry"])}
-    if output.exists() and not force:
+    if output.exists() and not (force or resume):
         raise RuntimeError(f"build exists; use --resume or --force: {output}")
     assert_workspace_child(output, "build output")
     manifest_path = source_manifest_path(job)
     frames, resources, source_manifest = load_source_frames(manifest_path)
     if not frames or len(resources) > MAX_RESOURCES:
         raise RuntimeError("invalid source inventory")
+    contract = upscale_contract(job)
+    preflight = preflight_registry_layout(resources, contract.scale)
     scalepix = job_path(job, "scalepix")
     node = str(job.get("tools", {}).get("node", "node"))
-    xbr_outputs = run_xbr2x(frames, scalepix, node)
+    xbr_outputs = run_xbr(frames, scalepix, node, contract)
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix="build.tmp-", dir=output.parent))
     try:
-        registry = bytearray(REGISTRY_MAGIC)
-        registry.extend(struct.pack("<IIII", REGISTRY_VERSION, SCALE, len(resources), int(job["animation"]["id"], 16)))
+        registry = bytearray(contract.registry_magic)
+        registry.extend(
+            struct.pack(
+                "<IIII",
+                contract.registry_version,
+                contract.scale,
+                len(resources),
+                int(job["animation"]["id"], 16),
+            )
+        )
         cursor = 0
         report_resources = []
-        total_x2_pixels = 0
+        total_scaled_pixels = 0
         for resource in resources:
             source = resource["source"]
             resref = str(source["name"]).upper()
@@ -1491,19 +1884,34 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             registry.extend(struct.pack("<II", len(resource_frames), len(cycles)))
             local_outputs = xbr_outputs[cursor : cursor + len(resource_frames)]
             opaque_indices: set[int] = set()
-            for frame, (width_x2, height_x2, rgba_x2) in zip(resource_frames, local_outputs, strict=True):
-                if width_x2 != frame.width * 2 or height_x2 != frame.height * 2:
-                    raise RuntimeError(f"{resref} frame {frame.index}: output dimensions are not exact x2")
-                mapped, representatives = map_output(frame, rgba_x2)
+            for frame, (scaled_width, scaled_height, scaled_rgba) in zip(
+                resource_frames, local_outputs, strict=True
+            ):
+                if (
+                    scaled_width != frame.width * contract.scale
+                    or scaled_height != frame.height * contract.scale
+                ):
+                    raise RuntimeError(
+                        f"{resref} frame {frame.index}: output dimensions are not exact "
+                        f"x{contract.scale}"
+                    )
+                mapped, representatives = map_output(frame, scaled_rgba)
                 opaque_indices.update(int(value) for value in np.unique(mapped) if value != frame.transparent)
                 registry.extend(struct.pack("<HHhhB3xI", frame.width, frame.height, frame.center_x, frame.center_y, frame.transparent, mapped.size))
                 registry.extend(representatives.astype("<u2", copy=False).tobytes())
                 registry.extend(mapped.tobytes())
                 if keep_frames:
-                    frame_path = temporary / "x2" / resref / f"frame-{frame.index:04}.png"
+                    frame_path = (
+                        temporary
+                        / f"x{contract.scale}"
+                        / resref
+                        / f"frame-{frame.index:04}.png"
+                    )
                     frame_path.parent.mkdir(parents=True, exist_ok=True)
-                    Image.frombytes("RGBA", (width_x2, height_x2), rgba_x2).save(frame_path)
-                total_x2_pixels += mapped.size
+                    Image.frombytes(
+                        "RGBA", (scaled_width, scaled_height), scaled_rgba
+                    ).save(frame_path)
+                total_scaled_pixels += mapped.size
             for cycle in cycles:
                 lookup = [int(value) for value in cycle["frame_indices"]]
                 if any(value < 0 or value >= len(resource_frames) for value in lookup):
@@ -1511,14 +1919,35 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                 registry.extend(struct.pack("<I", len(lookup)))
                 if lookup:
                     registry.extend(struct.pack(f"<{len(lookup)}I", *lookup))
-            make_comparison_sheet(resource_frames, local_outputs, temporary / "qa" / f"{resref}-comparison.png")
+            make_comparison_sheet(
+                resource_frames,
+                local_outputs,
+                temporary / "qa" / f"{resref}-comparison.png",
+                contract,
+            )
             cursor += len(resource_frames)
-            report_resources.append({"resref": resref, "source": relative_project_path(resource["source_path"]), "source_sha256": sha256_file(resource["source_path"]), "frames": len(resource_frames), "cycles": len(cycles), "cycle_slots": sum(len(item["frame_indices"]) for item in cycles), "opaque_palette_indices_in_x2": len(opaque_indices), "qa_sheet": f"qa/{resref}-comparison.png"})
+            report_resources.append(
+                {
+                    "resref": resref,
+                    "source": relative_project_path(resource["source_path"]),
+                    "source_sha256": sha256_file(resource["source_path"]),
+                    "frames": len(resource_frames),
+                    "cycles": len(cycles),
+                    "cycle_slots": sum(len(item["frame_indices"]) for item in cycles),
+                    f"opaque_palette_indices_in_x{contract.scale}": len(opaque_indices),
+                    "qa_sheet": f"qa/{resref}-comparison.png",
+                }
+            )
         if cursor != len(xbr_outputs):
-            raise RuntimeError("unconsumed xBR2x frames")
+            raise RuntimeError(f"unconsumed xBR{contract.scale}x frames")
+        if len(registry) != preflight["registry_bytes"]:
+            raise RuntimeError(
+                "registry size differs from the pre-xBR projection: "
+                f"{len(registry)} != {preflight['registry_bytes']}"
+            )
         pack_dir = temporary / "iee-assets" / "creature-sprites"
         pack_dir.mkdir(parents=True, exist_ok=True)
-        registry_path = pack_dir / "CreatureSprites-X2.registry"
+        registry_path = pack_dir / contract.registry_filename
         registry_path.write_bytes(registry)
         registry_info = inspect_registry(registry_path)
         report = {
@@ -1529,8 +1958,8 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             "animation_id": job["animation"]["id"],
             "bam_prefix": job["animation"]["bam_prefix"],
             "runtime_profile": job["animation"].get("runtime_profile"),
-            "registry_version": REGISTRY_VERSION,
-            "method": {"algorithm": "XBR/xbr2X", "scale": 2, "passes": 1, "antialias": False, "xbr_blend": False},
+            "registry_version": contract.registry_version,
+            "method": contract.method,
             "source_manifest": relative_project_path(manifest_path),
             "source_manifest_sha256": sha256_file(manifest_path),
             "scalepix": str(scalepix),
@@ -1539,13 +1968,24 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
             "resources": report_resources,
             "resource_count": len(resources),
             "frame_count": len(frames),
-            "x2_pixel_count": total_x2_pixels,
-            "registry": "iee-assets/creature-sprites/CreatureSprites-X2.registry",
+            f"x{contract.scale}_pixel_count": total_scaled_pixels,
+            "registry": f"iee-assets/creature-sprites/{contract.registry_filename}",
             "registry_bytes": len(registry),
             "registry_sha256": registry_info["sha256"],
-            "kept_individual_x2_frames": keep_frames,
-            "validation": {"dimensions_exact_x2": len(frames), "frames_exactly_remapped_to_source_palette": len(frames), "partial_alpha_pixels": 0, "new_colors": 0},
+            f"kept_individual_x{contract.scale}_frames": keep_frames,
+            "validation": {
+                f"dimensions_exact_x{contract.scale}": len(frames),
+                "frames_exactly_remapped_to_source_palette": len(frames),
+                "partial_alpha_pixels": 0,
+                "new_colors": 0,
+            },
         }
+        if contract.explicit:
+            report["registry_magic"] = registry_info["registry_magic"]
+            report["registry_scale"] = registry_info["scale"]
+            report["validation"]["registry_bytes_preflight"] = preflight[
+                "registry_bytes"
+            ]
         if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0":
             report["layer"] = character_layer_config(job)
         write_json(temporary / "build-manifest.json", report)
@@ -1562,6 +2002,7 @@ def source_tree_hash(source_root: Path) -> str:
     relative_files = [
         "CMakeLists.txt",
         "src/iee/hooks.cpp",
+        "src/iee/dll_main.cpp",
         "src/iee/creature_sprite_x2.cpp",
         "src/iee/creature_sprite_x2.h",
         "src/iee/core/config.cpp",
@@ -1632,6 +2073,8 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
     manifest = read_json(manifest_path)
     if manifest.get("schema") != BUILD_SCHEMA:
         raise RuntimeError("unsupported build manifest")
+    if manifest.get("status") != "built-pending-ingame-qa":
+        raise RuntimeError("build manifest is not pending ingame QA")
     if manifest.get("job_id") != job["job_id"]:
         raise RuntimeError("build manifest job id differs from job")
     if str(manifest.get("animation_id", "")).upper() != job["animation"]["id"].upper():
@@ -1643,17 +2086,41 @@ def verify_build(job: dict[str, Any]) -> dict[str, Any]:
     if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0":
         if manifest.get("layer", {"kind": "body"}) != character_layer_config(job):
             raise RuntimeError("build manifest Character layer differs from job")
+    contract = upscale_contract(job)
+    if manifest.get("method") != contract.method:
+        raise RuntimeError("build manifest upscale method differs from job")
+    if manifest.get("registry_version") != contract.registry_version:
+        raise RuntimeError("build manifest registry version differs from job")
+    if contract.explicit and (
+        manifest.get("registry_magic") != registry_magic_name(contract.registry_magic)
+        or manifest.get("registry_scale") != contract.scale
+    ):
+        raise RuntimeError("build manifest registry magic/scale differs from job")
     registry = build_dir(job) / str(manifest["registry"])
     info = inspect_registry(registry)
     if info["sha256"] != manifest.get("registry_sha256"):
         raise RuntimeError("registry hash differs from build manifest")
     if info["animation_id"].upper() != job["animation"]["id"].upper():
         raise RuntimeError("registry animation id differs from job")
+    if (
+        info["version"] != contract.registry_version
+        or info["scale"] != contract.scale
+        or info["registry_magic"] != registry_magic_name(contract.registry_magic)
+        or registry.name != contract.registry_filename
+    ):
+        raise RuntimeError("registry magic/version/scale differs from job")
     prefix = job["animation"]["bam_prefix"]
     if any(not name.startswith(prefix) for name in info["resources"]):
         raise RuntimeError("registry contains an out-of-family resref")
     if info["frame_count"] != int(manifest["frame_count"]):
         raise RuntimeError("registry frame count differs from build manifest")
+    if info["index_bytes"] != int(
+        manifest.get(f"x{contract.scale}_pixel_count", -1)
+    ):
+        raise RuntimeError("registry index bytes differ from build manifest pixel count")
+    validation = manifest.get("validation") or {}
+    if validation.get(f"dimensions_exact_x{contract.scale}") != info["frame_count"]:
+        raise RuntimeError("build manifest exact-dimension count differs from registry")
     return info
 
 
@@ -1679,6 +2146,7 @@ def plan(job: dict[str, Any]) -> dict[str, Any]:
     runtime_manifest = runtime_dir(job) / "runtime-manifest.json"
     exe = game / "BaldurReal.exe"
     expected = job["compatibility"]["baldur_real_sha256"].upper()
+    contract = upscale_contract(job)
     identity = None
     identity_compatible = None
     identity_error = None
@@ -1692,7 +2160,7 @@ def plan(job: dict[str, Any]) -> dict[str, Any]:
             identity_error = str(error)
     return {
         "job_id": job["job_id"],
-        "method": "XBR/xbr2X x2 one-pass antialias-off; palette indices; x1 geometry; NEAREST",
+        "method": upscale_method_description(contract),
         "runtime_profile": job["animation"].get("runtime_profile"),
         "runtime_profile_supported": job["animation"].get("runtime_profile")
         in SUPPORTED_RUNTIME_PROFILES,
@@ -1814,6 +2282,8 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
     manifest = read_json(manifest_path)
     if manifest.get("schema") != ARMOR_SET_BUILD_SCHEMA:
         raise RuntimeError("unsupported armor-set build manifest")
+    if manifest.get("status") != "built-pending-ingame-qa":
+        raise RuntimeError("armor-set build is not pending ingame QA")
     if manifest.get("job_id") != armor_set["job_id"]:
         raise RuntimeError("armor-set build manifest job id differs from set")
     if str(manifest.get("animation_id", "")).upper() != armor_set["animation"]["id"].upper():
@@ -1831,18 +2301,41 @@ def verify_armor_set_build(armor_set: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("armor-set registry animation id differs from set")
     expected_resources: list[str] = []
     expected_frames = 0
+    member_infos: list[dict[str, Any]] = []
+    member_methods: list[dict[str, Any]] = []
     for member in armor_set["_members"]:
         member_manifest = read_json(build_dir(member) / "build-manifest.json")
         member_registry = build_dir(member) / str(member_manifest["registry"])
         member_info = inspect_registry(member_registry)
+        member_infos.append(member_info)
+        member_methods.append(member_manifest.get("method"))
         expected_resources.extend(member_info["resources"])
         expected_frames += member_info["frame_count"]
+    member_magic, member_version, member_scale = require_compatible_registry_infos(
+        member_infos
+    )
+    if (
+        info["registry_magic"] != member_magic
+        or info["version"] != member_version
+        or info["scale"] != member_scale
+        or any(method != member_methods[0] for method in member_methods[1:])
+        or manifest.get("method") != member_methods[0]
+    ):
+        raise RuntimeError("armor-set registry format differs from member registries")
     if len(expected_resources) != len(set(expected_resources)):
         raise RuntimeError("armor-set members contain duplicate BAM resources")
     if info["resources"] != expected_resources:
         raise RuntimeError("armor-set registry resources differ from member registries")
     if info["frame_count"] != expected_frames:
         raise RuntimeError("armor-set registry frame count differs from member registries")
+    if info["index_bytes"] != int(manifest.get(f"x{info['scale']}_index_bytes", -1)):
+        raise RuntimeError("armor-set index bytes differ from build manifest")
+    set_contract = upscale_contract(armor_set)
+    if set_contract.explicit and (
+        manifest.get("registry_magic") != info["registry_magic"]
+        or manifest.get("registry_scale") != info["scale"]
+    ):
+        raise RuntimeError("armor-set manifest registry magic/scale differs from set")
     return info
 
 
@@ -1863,40 +2356,85 @@ def armor_set_override_collisions(armor_set: dict[str, Any]) -> list[str]:
 
 
 def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dict[str, Any]:
-    del force, resume
-    members = armor_set_member_records(armor_set)
-    if sum(int(member["resource_count"]) for member in members) > MAX_RESOURCES:
-        raise RuntimeError(f"armor-set resources exceed registry limit {MAX_RESOURCES}")
     output = build_dir(armor_set)
+    if resume and output.exists():
+        try:
+            return {"status": "reused", **verify_armor_set_build(armor_set)}
+        except (OSError, RuntimeError, ValueError, KeyError, TypeError):
+            pass
+    if output.exists() and not (force or resume):
+        raise RuntimeError(f"armor-set build exists; use --resume or --force: {output}")
+    members = armor_set_member_records(armor_set)
+    total_resources = sum(int(member["resource_count"]) for member in members)
+    if total_resources > MAX_RESOURCES:
+        raise RuntimeError(f"armor-set resources exceed registry limit {MAX_RESOURCES}")
+    member_registries: list[dict[str, Any]] = []
+    member_methods: list[dict[str, Any]] = []
+    for member in armor_set["_members"]:
+        member_manifest = read_json(build_dir(member) / "build-manifest.json")
+        member_registry = build_dir(member) / str(member_manifest["registry"])
+        info = inspect_registry(member_registry)
+        if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
+            raise RuntimeError("armor-set member registry animation id differs from set")
+        member_registries.append(
+            {"path": member_registry, "info": info, "manifest": member_manifest}
+        )
+        member_methods.append(member_manifest.get("method"))
+    magic_name, registry_version, registry_scale = require_compatible_registry_infos(
+        [entry["info"] for entry in member_registries]
+    )
+    if any(method != member_methods[0] for method in member_methods[1:]):
+        raise RuntimeError("registry aggregation refuses mixed upscale methods")
+    set_contract = upscale_contract(armor_set)
+    if set_contract.explicit and (
+        magic_name != registry_magic_name(set_contract.registry_magic)
+        or registry_version != set_contract.registry_version
+        or registry_scale != set_contract.scale
+        or member_methods[0] != set_contract.method
+    ):
+        raise RuntimeError("armor-set upscale contract differs from member registries")
+    projected_registry_bytes = REGISTRY_HEADER_BYTES + sum(
+        int(entry["info"]["registry_bytes"]) - REGISTRY_HEADER_BYTES
+        for entry in member_registries
+    )
+    if projected_registry_bytes > MAX_REGISTRY_BYTES:
+        raise RuntimeError(
+            f"armor-set registry preflight exceeds {MAX_REGISTRY_BYTES} bytes: "
+            f"{projected_registry_bytes}"
+        )
+    if magic_name == registry_magic_name(REGISTRY_MAGIC):
+        registry_magic = REGISTRY_MAGIC
+        registry_filename = REGISTRY_FILENAME
+    elif magic_name == registry_magic_name(XN_REGISTRY_MAGIC):
+        registry_magic = XN_REGISTRY_MAGIC
+        registry_filename = XN_REGISTRY_FILENAME
+    else:
+        raise RuntimeError("unsupported registry magic for aggregation")
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix="armor-set-", dir=output.parent))
     try:
         pack_dir = temporary / "iee-assets" / "creature-sprites"
         pack_dir.mkdir(parents=True)
-        registry_path = pack_dir / "CreatureSprites-X2.registry"
-        total_resources = sum(int(member["resource_count"]) for member in members)
+        registry_path = pack_dir / registry_filename
         with registry_path.open("wb") as output_stream:
-            output_stream.write(REGISTRY_MAGIC)
+            output_stream.write(registry_magic)
             output_stream.write(
                 struct.pack(
                     "<IIII",
-                    REGISTRY_VERSION,
-                    SCALE,
+                    registry_version,
+                    registry_scale,
                     total_resources,
                     int(armor_set["animation"]["id"], 16),
                 )
             )
-            for member in armor_set["_members"]:
-                member_manifest = read_json(build_dir(member) / "build-manifest.json")
-                member_registry = build_dir(member) / str(member_manifest["registry"])
-                raw = member_registry.read_bytes()
-                info = inspect_registry(member_registry)
-                if info["animation_id"].upper() != armor_set["animation"]["id"].upper():
-                    raise RuntimeError("armor-set member registry animation id differs from set")
-                output_stream.write(raw[24:])
+            for entry in member_registries:
+                raw = entry["path"].read_bytes()
+                output_stream.write(raw[REGISTRY_HEADER_BYTES:])
         info = inspect_registry(registry_path)
         if info["resource_count"] != total_resources:
             raise RuntimeError("armor-set registry resource count differs from members")
+        if info["registry_bytes"] != projected_registry_bytes:
+            raise RuntimeError("armor-set registry size differs from preflight")
         report = {
             "schema": ARMOR_SET_BUILD_SCHEMA,
             "status": "built-pending-ingame-qa",
@@ -1908,15 +2446,21 @@ def build_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dic
             "armor_codes": armor_set_body_codes(armor_set),
             "bam_prefixes": [member["bam_prefix"] for member in members],
             "members": members,
-            "registry_version": REGISTRY_VERSION,
-            "method": {"algorithm": "XBR/xbr2X", "scale": 2, "passes": 1, "antialias": False, "xbr_blend": False},
+            "registry_version": registry_version,
+            "method": member_methods[0],
             "resource_count": info["resource_count"],
             "frame_count": info["frame_count"],
-            "x2_index_bytes": info["index_bytes"],
-            "registry": "iee-assets/creature-sprites/CreatureSprites-X2.registry",
+            f"x{registry_scale}_index_bytes": info["index_bytes"],
+            "registry": f"iee-assets/creature-sprites/{registry_filename}",
             "registry_bytes": info["registry_bytes"],
             "registry_sha256": info["sha256"],
         }
+        if registry_version == XN_REGISTRY_VERSION:
+            report["registry_magic"] = info["registry_magic"]
+            report["registry_scale"] = info["scale"]
+            report["validation"] = {
+                "registry_bytes_preflight": projected_registry_bytes
+            }
         equipment_layers = armor_set_equipment_layers(armor_set)
         if equipment_layers:
             report["equipment_layers"] = equipment_layers
@@ -1959,9 +2503,10 @@ def prepare_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> d
 def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     game = job_path(armor_set, "game_root")
     expected = armor_set["compatibility"]["baldur_real_sha256"].upper()
+    contract = effective_upscale_contract(armor_set)
     return {
         "job_id": armor_set["job_id"],
-        "method": "XBR/xbr2X x2 one-pass antialias-off; palette indices; x1 geometry; NEAREST",
+        "method": upscale_method_description(contract),
         "runtime_profile_supported": True,
         "animation_id": armor_set["animation"]["id"],
         "ids_symbol": armor_set["animation"]["ids_symbol"],
@@ -2054,12 +2599,64 @@ def runtime_session_health(
     }
 
 
+def installed_state_integrity(state: dict[str, Any]) -> dict[str, Any]:
+    errors: list[str] = []
+    targets = state.get("targets")
+    game_root_text = str(state.get("game_root", ""))
+    if not isinstance(targets, list) or not targets or not game_root_text:
+        return {
+            "installed_files_match": False,
+            "installed_targets_checked": 0,
+            "installed_integrity_errors": ["installation state is incomplete"],
+        }
+    game_root = Path(game_root_text).resolve()
+    checked = 0
+    for target_state in targets:
+        if not isinstance(target_state, dict):
+            errors.append("invalid target state")
+            continue
+        relative_text = str(target_state.get("relative_path", ""))
+        relative = Path(relative_text.replace("\\", "/"))
+        if not relative_text or relative.is_absolute():
+            errors.append(f"invalid installed target path: {relative_text!r}")
+            continue
+        target = (game_root / relative).resolve()
+        try:
+            target.relative_to(game_root)
+        except ValueError:
+            errors.append(f"installed target escapes game root: {relative_text}")
+            continue
+        expected_present = target_state.get("installed_present")
+        if not isinstance(expected_present, bool):
+            errors.append(f"installed presence is missing: {relative_text}")
+            continue
+        present = target.is_file()
+        if present != expected_present:
+            errors.append(f"installed presence changed: {relative_text}")
+            continue
+        if present:
+            expected_hash = str(target_state.get("installed_sha256", "")).upper()
+            if not re.fullmatch(r"[0-9A-F]{64}", expected_hash):
+                errors.append(f"installed hash is missing: {relative_text}")
+                continue
+            if sha256_file(target) != expected_hash:
+                errors.append(f"installed hash changed: {relative_text}")
+                continue
+        checked += 1
+    return {
+        "installed_files_match": not errors and checked == len(targets),
+        "installed_targets_checked": checked,
+        "installed_integrity_errors": errors,
+    }
+
+
 def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     log_path = job_path(job, "game_root") / "InfinityEngine-Enhancer.log"
     text = log_path.read_text(encoding="utf-8", errors="replace")
     state_path = active_state_path(job)
     state = read_json(state_path) if state_path.is_file() else {}
     animation_id = job["animation"]["id"]
+    contract = effective_upscale_contract(job)
     marker = f"Creature sprite xBR2x pack ready: animation {animation_id},"
     session = runtime_log_session_after_install(
         text, marker, str(state.get("installed_at_utc", ""))
@@ -2083,13 +2680,23 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     owner, render_owner = runtime_owner_labels(profile)
     owner_scope_marker = f"owner scope installed: {owner}".lower()
     reached_marker = f"Creature sprite animation {animation_id} reached {render_owner}".lower()
+    legacy_pack_ready = marker in session and "filter=NEAREST" in session
+    pack_ready = legacy_pack_ready
+    if contract.explicit:
+        pack_ready = any(
+            marker in line
+            and f"scale=x{contract.scale}," in line
+            and "source=CreatureSprites-XN.registry;" in line
+            and "filter=NEAREST" in line
+            for line in session.splitlines()
+        )
     report = {
         "schema": "bg2-upscale-creature-sprite-technical-qa-v1",
         "created_at_utc": utc_now(),
         "job_id": job["job_id"],
         "log": str(log_path),
         "session_after_install": bool(session),
-        "pack_ready": marker in session and "filter=NEAREST" in session,
+        "pack_ready": pack_ready,
         "owner_scope": owner_scope_marker in session_lower,
         "animation_reached": reached_marker in session_lower,
         "owner_palette_snapshot": "owner-scoped CVidPalette::Realize snapshot" in session,
@@ -2100,6 +2707,9 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
         "composition_count": len(composition_lines),
         "first_composition": composition_lines[0] if composition_lines else None,
     }
+    if contract.explicit:
+        report["registry_scale"] = contract.scale
+        report.update(installed_state_integrity(state))
     report.update(runtime_session_health(session, profile, composition_by_prefix))
     report["technical_pass"] = bool(
         report["session_after_install"]
@@ -2109,6 +2719,7 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
         and report["owner_palette_snapshot"]
         and all(composition_by_prefix.values())
         and report["runtime_health_pass"]
+        and (not contract.explicit or report["installed_files_match"])
     )
     if write_report:
         write_json(job_path(job, "run_dir") / "qa" / "technical-log.json", report)
@@ -2141,6 +2752,12 @@ def powershell_script(script: Path, job: dict[str, Any]) -> None:
     configured = job.get("tools", {}).get("powershell")
     powershell = str(configured or shutil.which("pwsh.exe") or "powershell.exe")
     run_checked([powershell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(script), "-JobFile", str(job["_job_file"])])
+
+
+def install_restore_script(job: dict[str, Any], restore: bool) -> Path:
+    if effective_upscale_contract(job).explicit:
+        return XN_RESTORE_SCRIPT if restore else XN_INSTALL_SCRIPT
+    return RESTORE_SCRIPT if restore else INSTALL_SCRIPT
 
 
 def status(job: dict[str, Any]) -> dict[str, Any]:
@@ -2189,9 +2806,21 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--name")
     parser.add_argument("--qa-area", action="append", default=[])
     parser.add_argument("--qa-creature", action="append", default=[])
+    parser.add_argument(
+        "--scale",
+        type=int,
+        choices=(2, 4),
+        help="create an explicit V3 xN job at the requested physical scale",
+    )
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--keep-x2-frames", action="store_true")
+    parser.add_argument(
+        "--keep-upscaled-frames",
+        "--keep-x2-frames",
+        dest="keep_upscaled_frames",
+        action="store_true",
+        help="retain individual upscaled frame PNGs; --keep-x2-frames is a legacy alias",
+    )
     parser.add_argument("--no-game-source-check", action="store_true")
     parser.add_argument("--write-report", action="store_true")
     parser.add_argument("--result", choices=("pass", "fail"))
@@ -2201,6 +2830,11 @@ def make_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = make_parser().parse_args()
+    if args.scale is not None and args.command not in {
+        "new-character-job",
+        "new-character-equipment-job",
+    }:
+        raise RuntimeError("--scale is only valid when creating a Character job")
     if args.command == "new-character-job":
         result = create_character_job(
             args.job,
@@ -2211,6 +2845,7 @@ def main() -> None:
             args.name,
             args.qa_area,
             args.qa_creature,
+            args.scale,
             args.force,
         )
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -2226,6 +2861,7 @@ def main() -> None:
             args.name,
             args.qa_area,
             args.qa_creature,
+            args.scale,
             args.force,
         )
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -2246,14 +2882,14 @@ def main() -> None:
         if armor_set:
             result = build_armor_set(job, args.force, args.resume)
         else:
-            result = build_pack(job, args.force, args.resume, args.keep_x2_frames)
+            result = build_pack(job, args.force, args.resume, args.keep_upscaled_frames)
     elif args.command == "build-runtime":
         result = build_runtime(job)
     elif args.command == "prepare":
         result = (
             prepare_armor_set(job, args.force, args.resume)
             if armor_set
-            else prepare(job, args.force, args.resume, args.keep_x2_frames)
+            else prepare(job, args.force, args.resume, args.keep_upscaled_frames)
         )
     elif args.command == "verify":
         result = verify_armor_set(job) if armor_set else verify_all(job, not args.no_game_source_check)
@@ -2262,10 +2898,10 @@ def main() -> None:
             verify_armor_set(job)
         else:
             verify_all(job, compare_game_sources=True)
-        powershell_script(INSTALL_SCRIPT, job)
+        powershell_script(install_restore_script(job, restore=False), job)
         result = status(job)
     elif args.command == "restore":
-        powershell_script(RESTORE_SCRIPT, job)
+        powershell_script(install_restore_script(job, restore=True), job)
         result = status(job)
     elif args.command == "status":
         result = status(job)
