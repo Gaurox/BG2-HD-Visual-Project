@@ -19,6 +19,21 @@ dossiers d'extraction historiques comme source d'identité.
    [`CHARACTER_COMPLETE_X2_RUNBOOK.md`](CHARACTER_COMPLETE_X2_RUNBOOK.md).
 8. Appliquer [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md) au workflow historique x2
    sans bloc `upscale`. Appliquer [`UPSCALE_XBR2X.md`](UPSCALE_XBR2X.md) aux seules frames x2.
+9. Pour créer, isoler, installer, comparer, restaurer et conserver plusieurs variantes d'un même
+   sprite, appliquer [`SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md`](SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md).
+10. Pour basculer temporairement l'affichage d'un pack xN entre `NEAREST` et `LINEAR`, appliquer
+   la section `Échantillonnage d'affichage : NEAREST / LINEAR` de
+   [`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md). Ce réglage ne remplace pas la QA
+   `NEAREST`.
+11. Pour le test isolé xBR2X `Antialias` du corps `CDMB1`, appliquer exclusivement
+    [`SPRITE_UPSCALE_XBR2X_AA_TEST.md`](SPRITE_UPSCALE_XBR2X_AA_TEST.md). Ne pas router ce job vers
+    le runner V2/V3.
+12. Pour le test isolé xBR4X direct, sans AA, du corps `CDMB1`, appliquer
+    [`SPRITE_UPSCALE_XBR4X_CDMB1_TEST.md`](SPRITE_UPSCALE_XBR4X_CDMB1_TEST.md). Conserver ses
+    sources, run, build moteur et transaction imbriquée séparés des variantes x2 et AA.
+13. Pour reprendre ou interpréter les essais du corps `CDMB1`, lire
+    [`CDMB1_UPSCALE_VARIANT_TRIALS.md`](CDMB1_UPSCALE_VARIANT_TRIALS.md). Lire les états live dans
+    les runs liés, pas dans le rapport comparatif.
 
 ## Sources de vérité
 
@@ -31,7 +46,12 @@ dossiers d'extraction historiques comme source d'identité.
 | Installation analysée, hashes, limites et totaux | `manifest.json` |
 | Exécution reproductible d'un Character complet x2 | `CHARACTER_COMPLETE_X2_RUNBOOK.md` |
 | Création, build, installation réversible et QA | `SPRITE_UPSCALE_PIPELINE.md` |
+| Essais x2/x4/AA/LINEAR, isolation des variantes, overlay imbriqué et restauration | `SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md` |
+| Bascule locale `NEAREST`/`LINEAR`, log attendu et retour à la QA | Section `Échantillonnage d'affichage : NEAREST / LINEAR` de `SPRITE_UPSCALE_PIPELINE.md` |
 | Échelle x2/x4 explicite, registres V3, registry-set, install/restore et gates | `SPRITE_UPSCALE_XN_FOUNDATION.md` |
+| Variante expérimentale xBR2X Antialias CDMB1, registre V4 et transaction imbriquée | `SPRITE_UPSCALE_XBR2X_AA_TEST.md` |
+| Variante expérimentale xBR4X directe CDMB1, registre V3 et transaction imbriquée | `SPRITE_UPSCALE_XBR4X_CDMB1_TEST.md` |
+| Résultats comparatifs et commandes de réactivation CDMB1 | `CDMB1_UPSCALE_VARIANT_TRIALS.md` |
 
 Ne jamais déduire un préfixe BAM depuis le nom du personnage, son portrait, une apparence visuelle
 ou le nom d'un dossier historique. Priorité d'identité : ID lu dans CRE/sauvegarde, symbole

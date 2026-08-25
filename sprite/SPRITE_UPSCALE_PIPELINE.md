@@ -23,6 +23,52 @@ la validation opérationnelle de référence et la séquence sans décision manu
   d’équipement résolue depuis un ITM stock. Un bundle Character agrège des jobs du même ID dans
   un registre unique pour couvrir les changements d’équipement ingame.
 
+## Échantillonnage d'affichage : NEAREST / LINEAR
+
+Portée : runtime de sprites xN uniquement. Le réglage modifie le filtre OpenGL du backing déjà
+construit. Il ne modifie ni PNG, ni BAM, ni registre, ni palette, ni géométrie, ni manifeste.
+Pour intégrer ce filtre dans un essai comparatif réversible avec d'autres variantes, appliquer
+[`SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md`](SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md).
+
+Préconditions :
+
+```text
+- InfinityLoader, Baldur et BaldurReal fermés.
+- InfinityEngine-Enhancer.dll compilée depuis une révision qui contient
+  EnableCreatureSpriteLinearFiltering.
+- Un seul test sprite xN actif.
+```
+
+Dans `<GameRoot>\InfinityEngine-Enhancer.ini`, sous `[Shaders]`, conserver une seule occurrence de
+la clé :
+
+```ini
+; Baseline et seule configuration éligible à la QA formelle.
+EnableCreatureSpriteLinearFiltering = false
+
+; Comparaison visuelle locale uniquement.
+; EnableCreatureSpriteLinearFiltering = true
+```
+
+| Valeur | Filtre | Usage | Éligible à `record-qa --result pass` |
+|---|---|---|---|
+| `false` | `NEAREST` | baseline, QA et release | oui |
+| `true` | `LINEAR` | comparaison visuelle locale | non |
+
+Après chaque changement, relancer le jeu via `<GameRoot>\InfinityLoader.exe`. Ne pas reconstruire
+les assets ni réinstaller le registre. Après une session, lire les dernières lignes de
+`<GameRoot>\InfinityEngine-Enhancer.log` et exiger :
+
+```text
+filter=NEAREST  # baseline / QA
+filter=LINEAR   # comparaison locale
+```
+
+Avant `qa-log` ou `record-qa`, remettre la valeur à `false`, relancer le jeu, couvrir tous les
+préfixes requis et obtenir les compositions `NEAREST` exigées par le job. Une session `LINEAR`, ou
+une DLL de comparaison non attendue par l'état d'installation, ne produit jamais
+`validated-installed`.
+
 CLI : `pipeline/scripts/run_creature_sprite_x2.py`  
 Jobs de référence : `sprite/jobs/goblin-mgo1-xbr2x.json`,
 `sprite/jobs/human-female-fighter-chfb1-xbr2x.json` et
@@ -302,8 +348,8 @@ obligatoires pour couvrir le dual-wield ; ne pas les classer comme ressources in
 
 Le runtime Character ne doit jamais modifier le backing GL du composite natif. Conserver seulement
 un cache CPU borné de 32 composites. Pour chaque dessin : mémoriser l’ID logique natif, créer un ID
-moteur privé avec `DrawGenTexture(NEAREST)`, le lier, matérialiser son backing logique, uploader les
-pixels x2, imposer `NEAREST`, `CLAMP_TO_EDGE` et niveau maximal zéro, appeler le rendu original,
+moteur privé avec `DrawGenTexture(sampler)`, le lier, matérialiser son backing logique, uploader les
+pixels x2, imposer `sampler`, `CLAMP_TO_EDGE` et niveau maximal zéro, appeler le rendu original,
 restaurer l’ID natif, puis appeler `DrawDeleteTexture` sur l’ID privé. Toute sortie postérieure à
 `DrawGenTexture` doit restaurer l’ID natif et marquer l’ID privé `delete-pending`. Ne conserver aucun
 ID Character entre deux dessins. Avant l’upload, valider l’ID `1..511` contre la table manifestée
@@ -317,6 +363,10 @@ fallback natif et la suppression de l’ID privé. Ne jamais hooker
 parfois plusieurs fois par frame ; il flush le batch puis libère uniquement les slots déjà marqués
 `delete-pending`. Oublier depuis ce point des IDs encore vivants épuise les 511 slots utilisables,
 provoque des réuploads en boucle, des textures UI noires et l'effondrement des FPS.
+
+`sampler=NEAREST` hors diagnostic. `sampler=LINEAR` seulement lorsque
+`EnableCreatureSpriteLinearFiltering=true`; appliquer alors les exclusions de QA de la section
+`Échantillonnage d'affichage : NEAREST / LINEAR`.
 
 ### 3. Installation QA réversible
 
@@ -399,7 +449,7 @@ Fermer le jeu avant restauration.
 - Refuser profil/animation incompatibles : Character=`0x5000|0x6000`, MonsterIcewind=`0xE000`.
 - Refuser source différente du KEY/BIF, inventaire incomplet, resref non corporel, cycle ou lookup
   invalide, géométrie modifiée, sortie non `2W×2H`, alpha partiel, nouvelle couleur ou palette
-  ambiguë.
+  dont la provenance d'indice ne restitue pas exactement le RGBA xBR.
 - Refuser un monolithe ou shard x2 >128 Mio, x4 >512 Mio, >128 ressources par registre,
   >4096 frames par resref,
   ou un registry-set dépassant 64 shards, 8192 ressources, 1 048 576 frames et 8 Gio cumulés.

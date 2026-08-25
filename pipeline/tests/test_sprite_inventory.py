@@ -69,15 +69,18 @@ class SpriteInventoryTests(unittest.TestCase):
         self.assertEqual(goblin["resource_count"], "20")
         self.assertEqual(goblin["pipeline_ready"], "yes")
 
-    def test_known_dwarf_character_anomalies(self) -> None:
+    def test_known_dwarf_character_duplicate_rgba_indices_are_supported(self) -> None:
         selected = {
             row["bam_prefix"]: row
             for row in rows("sprite_families.csv")
             if row["animation_id"] == "0x6102"
-            and row["bam_prefix"] in {"CDMF4", "WQSJ6", "WQSC1", "WQSAX"}
+            and row["bam_prefix"]
+            in {"CDMB1", "CDMB2", "CDMF4", "WQSJ6", "WQSC1", "WQSAX"}
         }
-        self.assertGreater(int(selected["CDMF4"]["duplicate_used_rgba_frames"]), 0)
-        self.assertIn("duplicate-used-rgba-indices", selected["CDMF4"]["blocker"])
+        for prefix in ("CDMB1", "CDMB2", "CDMF4"):
+            self.assertGreater(int(selected[prefix]["duplicate_used_rgba_frames"]), 0)
+            self.assertEqual(selected[prefix]["blocker"], "")
+            self.assertEqual(selected[prefix]["pipeline_ready"], "yes")
         self.assertEqual(selected["WQSJ6"]["pipeline_ready"], "yes")
         self.assertEqual(selected["WQSC1"]["pipeline_ready"], "yes")
         self.assertEqual(selected["WQSAX"]["unexpected_suffixes"], "")

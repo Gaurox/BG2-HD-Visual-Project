@@ -120,6 +120,41 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
   return source != 0 ? source : destination;
 }
 
+// Replays Scalepix pixelInterpolate exactly over the engine's packed palette
+// colors. RGB and BGR layouts are both safe because the three color bytes are
+// blended independently; every supported native format stores alpha in the
+// high byte of the host dword.
+[[nodiscard]] constexpr std::uint32_t xbr_blend_pixel(
+    std::uint32_t destination, std::uint32_t source,
+    std::uint8_t blendCode) noexcept {
+  constexpr std::array<std::array<std::uint8_t, 2>, 5> kWeights{{
+      {{7, 1}}, {{3, 1}}, {{1, 1}}, {{1, 3}}, {{1, 7}},
+  }};
+  if (blendCode >= kWeights.size()) return destination;
+  const auto q1 = kWeights[blendCode][0];
+  const auto q2 = kWeights[blendCode][1];
+  const auto alphaDestination = static_cast<std::uint8_t>(destination >> 24u);
+  const auto alphaSource = static_cast<std::uint8_t>(source >> 24u);
+  std::uint32_t result = 0;
+  for (unsigned shift = 0; shift < 24; shift += 8) {
+    const auto destinationChannel =
+        static_cast<std::uint8_t>(destination >> shift);
+    const auto sourceChannel = static_cast<std::uint8_t>(source >> shift);
+    const auto channel =
+        alphaDestination == 0
+            ? sourceChannel
+            : (alphaSource == 0
+                   ? destinationChannel
+                   : static_cast<std::uint8_t>(
+                         (q2 * sourceChannel + q1 * destinationChannel) /
+                         (q1 + q2)));
+    result |= static_cast<std::uint32_t>(channel) << shift;
+  }
+  const auto alpha = static_cast<std::uint8_t>(
+      (q2 * alphaSource + q1 * alphaDestination) / (q1 + q2));
+  return result | (static_cast<std::uint32_t>(alpha) << 24u);
+}
+
 [[nodiscard]] constexpr bool supported_native_pixel_encoding(
     NativePixelEncoding encoding) noexcept {
   constexpr std::uint32_t kRgba = 0x1908;
@@ -135,6 +170,7 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
 // registry, and finally the legacy x2 registry. A present but invalid higher
 // priority source fails closed without falling through. No game or GL state is
 // touched.
+void configure_linear_filtering(bool enabled) noexcept;
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;

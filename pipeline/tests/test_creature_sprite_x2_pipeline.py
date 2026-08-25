@@ -62,6 +62,42 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "partial alpha"):
             pipeline.map_output(frame, output.tobytes())
 
+    def test_duplicate_used_rgba_indices_preserve_source_index_provenance(self) -> None:
+        palette = np.zeros((256, 3), dtype=np.uint8)
+        palette[1] = [10, 20, 30]
+        palette[2] = [10, 20, 30]
+        indices = np.array([[1, 2]], dtype=np.uint8)
+        rgba = np.array(
+            [[[10, 20, 30, 255], [10, 20, 30, 255]]], dtype=np.uint8
+        )
+        frame = pipeline.SourceFrame(
+            "DUPL", 0, 2, 1, 0, 0, 0, indices, palette, rgba.tobytes()
+        )
+        self.assertTrue(pipeline.has_duplicate_used_rgba_indices(frame))
+        with self.assertRaisesRegex(RuntimeError, "duplicate used RGBA"):
+            pipeline.map_output(
+                frame,
+                np.repeat(np.repeat(rgba, 2, axis=0), 2, axis=1).tobytes(),
+            )
+
+        output_x2 = np.repeat(np.repeat(rgba, 2, axis=0), 2, axis=1)
+        provenance_x2 = pipeline.xbr_provenance_indices(frame, 2)
+        mapped_x2, representatives = pipeline.map_output(
+            frame, output_x2.tobytes(), provenance_x2
+        )
+        self.assertEqual(mapped_x2.tolist(), [1, 1, 2, 2, 1, 1, 2, 2])
+        self.assertEqual(int(representatives[1]), 0)
+        self.assertEqual(int(representatives[2]), 1)
+
+        output_x4 = np.repeat(np.repeat(rgba, 4, axis=0), 4, axis=1)
+        mapped_x4, _ = pipeline.map_output(
+            frame, output_x4.tobytes(), pipeline.xbr_provenance_indices(frame, 4)
+        )
+        self.assertEqual(
+            mapped_x4.tolist(),
+            [1, 1, 1, 1, 2, 2, 2, 2] * 4,
+        )
+
     def test_legacy_job_keeps_x2_v2_contract(self) -> None:
         contract = pipeline.upscale_contract({})
         self.assertFalse(contract.explicit)

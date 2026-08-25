@@ -1718,7 +1718,240 @@ def xbr_output_batch_ranges(
     return ranges
 
 
-def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.ndarray]:
+def has_duplicate_used_rgba_indices(frame: SourceFrame) -> bool:
+    """Return whether a frame needs index provenance after RGBA xBR.
+
+    BAM V1 stores palette indices while xBR receives RGBA pixels.  Distinct
+    indices may legitimately have the same RGBA in the source palette, and
+    those indices must remain distinct so later engine recolors still address
+    their original palette entries.
+    """
+
+    seen: set[int] = set()
+    for raw_index in np.unique(frame.indices).tolist():
+        palette_index = int(raw_index)
+        packed = (
+            int(frame.palette[palette_index, 0])
+            | (int(frame.palette[palette_index, 1]) << 8)
+            | (int(frame.palette[palette_index, 2]) << 16)
+            | (0 if palette_index == frame.transparent else 255) << 24
+        )
+        if packed in seen:
+            return True
+        seen.add(packed)
+    return False
+
+
+def xbr_provenance_indices(frame: SourceFrame, scale: int) -> np.ndarray:
+    """Reproduce xBR source selection as palette-index provenance.
+
+    ``xbr2x_batch.js`` uses the upstream xBR implementation with blending
+    disabled.  Every output pixel is therefore an unblended source pixel
+    selected by the xBR edge tests.  This routine performs those tests over
+    the original RGBA values, but writes the selected source *palette index*.
+    It is used only when RGBA alone is not injective over the used indices.
+
+    The rendered RGBA is still produced by Scalepix.  ``map_output`` verifies
+    the provenance against that output before a registry record is written,
+    so a future adapter change fails closed instead of silently changing an
+    index choice.  The xBR font inversion is channel-wise and preserves every
+    comparison made below; the final RGBA verification covers it as well.
+    """
+
+    if scale not in {2, 4}:
+        raise RuntimeError("palette-index provenance supports only x2 or x4")
+    source_colors = np.frombuffer(frame.rgba, dtype="<u4")
+    if source_colors.size != frame.width * frame.height:
+        raise RuntimeError(f"{frame.resref} frame {frame.index}: invalid RGBA source")
+    source_colors = source_colors.reshape(frame.height, frame.width)
+    source_indices = np.asarray(frame.indices, dtype=np.uint8)
+    if source_indices.shape != (frame.height, frame.width):
+        raise RuntimeError(f"{frame.resref} frame {frame.index}: invalid index source")
+
+    def yuv(value: int) -> tuple[float, float, float]:
+        red, green, blue = value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF
+        return (
+            red * 0.299 + green * 0.587 + blue * 0.114,
+            red * -0.168736 + green * -0.331264 + blue * 0.5,
+            red * 0.5 + green * -0.418688 + blue * -0.081312,
+        )
+
+    def difference(left: int, right: int) -> float:
+        alpha_left = (left >> 24) & 0xFF
+        alpha_right = (right >> 24) & 0xFF
+        if alpha_left == 0 and alpha_right == 0:
+            return 0.0
+        if alpha_left == 0 or alpha_right == 0:
+            return 1_000_000.0
+        y_left, u_left, v_left = yuv(left)
+        y_right, u_right, v_right = yuv(right)
+        return (
+            abs(y_left - y_right) * 48
+            + abs(u_left - u_right) * 7
+            + abs(v_left - v_right) * 6
+        )
+
+    def equal(left: int, right: int) -> bool:
+        alpha_left = (left >> 24) & 0xFF
+        alpha_right = (right >> 24) & 0xFF
+        if alpha_left == 0 and alpha_right == 0:
+            return True
+        if alpha_left == 0 or alpha_right == 0:
+            return False
+        y_left, u_left, v_left = yuv(left)
+        y_right, u_right, v_right = yuv(right)
+        return (
+            abs(y_left - y_right) <= 48
+            and abs(u_left - u_right) <= 7
+            and abs(v_left - v_right) <= 6
+        )
+
+    def related_points(x: int, y: int) -> tuple[list[int], list[int]]:
+        xm1, xm2 = max(0, x - 1), max(0, x - 2)
+        xp1, xp2 = min(frame.width - 1, x + 1), min(frame.width - 1, x + 2)
+        ym1, ym2 = max(0, y - 1), max(0, y - 2)
+        yp1, yp2 = min(frame.height - 1, y + 1), min(frame.height - 1, y + 2)
+        coordinates = (
+            (xm1, ym2), (x, ym2), (xp1, ym2),
+            (xm2, ym1), (xm1, ym1), (x, ym1), (xp1, ym1), (xp2, ym1),
+            (xm2, y), (xm1, y), (x, y), (xp1, y), (xp2, y),
+            (xm2, yp1), (xm1, yp1), (x, yp1), (xp1, yp1), (xp2, yp1),
+            (xm1, yp2), (x, yp2), (xp1, yp2),
+        )
+        return (
+            [int(source_colors[row, column]) for column, row in coordinates],
+            [int(source_indices[row, column]) for column, row in coordinates],
+        )
+
+    def kernel_2x(colors: list[int], labels: list[int], n1: int, n2: int, n3: int) -> tuple[int, int, int]:
+        pe, pi, ph, pf, pg, pc, pd, pb, f4, i4, h5, i5 = colors
+        _pe_label, _pi_label, ph_label, pf_label, _pg_label, _pc_label, _pd_label, _pb_label, _f4_label, _i4_label, _h5_label, _i5_label = labels
+        if pe == ph or pe == pf:
+            return n1, n2, n3
+        edge = (
+            difference(pe, pc) + difference(pe, pg) + difference(pi, h5)
+            + difference(pi, f4) + (int(difference(ph, pf)) << 2)
+        )
+        inverse = (
+            difference(ph, pd) + difference(ph, i5) + difference(pf, i4)
+            + difference(pf, pb) + (int(difference(pe, pi)) << 2)
+        )
+        pixel_label = pf_label if difference(pe, pf) <= difference(pe, ph) else ph_label
+        if edge < inverse and (
+            (not equal(pf, pb) and not equal(ph, pd))
+            or (equal(pe, pi) and (not equal(pf, i4) and not equal(ph, i5)))
+            or equal(pe, pg)
+            or equal(pe, pc)
+        ):
+            edge_left = difference(pf, pg)
+            edge_up = difference(ph, pc)
+            distinct_up = pe != pc and pb != pc
+            distinct_left = pe != pg and pd != pg
+            if ((int(edge_left) << 1) <= edge_up and distinct_left) or (
+                edge_left >= (int(edge_up) << 1) and distinct_up
+            ):
+                if (int(edge_left) << 1) <= edge_up and distinct_left:
+                    n3 = pixel_label
+                if edge_left >= (int(edge_up) << 1) and distinct_up:
+                    n3 = pixel_label
+        return n1, n2, n3
+
+    def kernel_4x(
+        colors: list[int], labels: list[int], n15: int, n14: int, n11: int,
+        n3: int, n7: int, n10: int, n13: int, n12: int,
+    ) -> tuple[int, int, int, int, int, int, int, int]:
+        pe, pi, ph, pf, pg, pc, pd, pb, f4, i4, h5, i5 = colors
+        _pe_label, _pi_label, ph_label, pf_label, _pg_label, _pc_label, _pd_label, _pb_label, _f4_label, _i4_label, _h5_label, _i5_label = labels
+        if pe == ph or pe == pf:
+            return n15, n14, n11, n3, n7, n10, n13, n12
+        edge = (
+            difference(pe, pc) + difference(pe, pg) + difference(pi, h5)
+            + difference(pi, f4) + (int(difference(ph, pf)) << 2)
+        )
+        inverse = (
+            difference(ph, pd) + difference(ph, i5) + difference(pf, i4)
+            + difference(pf, pb) + (int(difference(pe, pi)) << 2)
+        )
+        pixel_label = pf_label if difference(pe, pf) <= difference(pe, ph) else ph_label
+        if edge < inverse and (
+            (not equal(pf, pb) and not equal(ph, pd))
+            or (equal(pe, pi) and (not equal(pf, i4) and not equal(ph, i5)))
+            or equal(pe, pg)
+            or equal(pe, pc)
+        ):
+            edge_left = difference(pf, pg)
+            edge_up = difference(ph, pc)
+            distinct_up = pe != pc and pb != pc
+            distinct_left = pe != pg and pd != pg
+            left = (int(edge_left) << 1) <= edge_up and distinct_left
+            up = edge_left >= (int(edge_up) << 1) and distinct_up
+            if left or up:
+                if left:
+                    n15 = n14 = n11 = n13 = pixel_label
+                if up:
+                    n15 = n14 = n11 = n7 = pixel_label
+            else:
+                n15 = pixel_label
+        return n15, n14, n11, n3, n7, n10, n13, n12
+
+    output = np.empty((frame.height * scale, frame.width * scale), dtype=np.uint8)
+    rotations = (
+        (10, 16, 15, 11, 14, 6, 9, 5, 12, 17, 19, 20),
+        (10, 6, 11, 5, 16, 4, 15, 9, 1, 2, 12, 7),
+        (10, 4, 5, 9, 6, 14, 11, 15, 8, 3, 1, 0),
+        (10, 14, 9, 15, 4, 16, 5, 11, 19, 18, 8, 13),
+    )
+    for x in range(frame.width):
+        for y in range(frame.height):
+            colors, labels = related_points(x, y)
+            pe_label = labels[10]
+            if scale == 2:
+                e0 = e1 = e2 = e3 = pe_label
+                e1, e2, e3 = kernel_2x(
+                    [colors[index] for index in rotations[0]],
+                    [labels[index] for index in rotations[0]], e1, e2, e3,
+                )
+                e0, e3, e1 = kernel_2x(
+                    [colors[index] for index in rotations[1]],
+                    [labels[index] for index in rotations[1]], e0, e3, e1,
+                )
+                e2, e1, e0 = kernel_2x(
+                    [colors[index] for index in rotations[2]],
+                    [labels[index] for index in rotations[2]], e2, e1, e0,
+                )
+                e3, e0, e2 = kernel_2x(
+                    [colors[index] for index in rotations[3]],
+                    [labels[index] for index in rotations[3]], e3, e0, e2,
+                )
+                output[y * 2, x * 2 : x * 2 + 2] = (e0, e1)
+                output[y * 2 + 1, x * 2 : x * 2 + 2] = (e2, e3)
+            else:
+                e = [pe_label] * 16
+                e[15], e[14], e[11], e[3], e[7], e[10], e[13], e[12] = kernel_4x(
+                    [colors[index] for index in rotations[0]],
+                    [labels[index] for index in rotations[0]],
+                    e[15], e[14], e[11], e[3], e[7], e[10], e[13], e[12],
+                )
+                for order, targets in (
+                    (rotations[1], (3, 7, 2, 0, 1, 6, 11, 15)),
+                    (rotations[2], (0, 1, 4, 12, 8, 5, 2, 3)),
+                    (rotations[3], (12, 8, 13, 15, 14, 9, 4, 0)),
+                ):
+                    values = kernel_4x(
+                        [colors[index] for index in order], [labels[index] for index in order],
+                        *(e[index] for index in targets),
+                    )
+                    for target, value in zip(targets, values, strict=True):
+                        e[target] = value
+                output[y * 4 : y * 4 + 4, x * 4 : x * 4 + 4] = np.asarray(e, dtype=np.uint8).reshape(4, 4)
+    return output.reshape(-1)
+
+
+def map_output(
+    frame: SourceFrame,
+    output_rgba: bytes,
+    provenance_indices: np.ndarray | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
     source_flat = frame.indices.reshape(-1)
     representatives = np.full(256, 0xFFFF, dtype=np.uint16)
     for offset, value in enumerate(source_flat.tolist()):
@@ -1729,12 +1962,28 @@ def map_output(frame: SourceFrame, output_rgba: bytes) -> tuple[np.ndarray, np.n
         rgba = bytes([int(frame.palette[value, 0]), int(frame.palette[value, 1]), int(frame.palette[value, 2]), 0 if value == frame.transparent else 255])
         packed = int.from_bytes(rgba, "little")
         previous = color_to_index.get(packed)
-        if previous is not None and previous != value:
+        if previous is not None and previous != value and provenance_indices is None:
             raise RuntimeError(f"{frame.resref} frame {frame.index}: duplicate used RGBA indices {previous}/{value}")
         color_to_index[packed] = value
     pixels = np.frombuffer(output_rgba, dtype=np.uint8).reshape(-1, 4)
     if not np.all((pixels[:, 3] == 0) | (pixels[:, 3] == 255)):
         raise RuntimeError(f"{frame.resref} frame {frame.index}: partial alpha")
+    if provenance_indices is not None:
+        mapped = np.asarray(provenance_indices, dtype=np.uint8).reshape(-1)
+        if mapped.size != len(pixels):
+            raise RuntimeError(
+                f"{frame.resref} frame {frame.index}: provenance dimensions differ from xBR output"
+            )
+        if np.any(representatives[mapped] == 0xFFFF):
+            raise RuntimeError(f"{frame.resref} frame {frame.index}: missing palette representative")
+        expected = np.empty_like(pixels)
+        expected[:, :3] = frame.palette[mapped]
+        expected[:, 3] = np.where(mapped == frame.transparent, 0, 255)
+        if not np.array_equal(expected, pixels):
+            raise RuntimeError(
+                f"{frame.resref} frame {frame.index}: palette-index provenance differs from xBR output"
+            )
+        return mapped, representatives
     packed_pixels = pixels.copy().view("<u4").reshape(-1)
     unique_colors, inverse = np.unique(packed_pixels, return_inverse=True)
     mapped_unique = np.empty(len(unique_colors), dtype=np.uint8)
@@ -2584,7 +2833,14 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
                             f"{state['resref']} frame {frame.index}: output dimensions "
                             f"are not exact x{contract.scale}"
                         )
-                    mapped, representatives = map_output(frame, scaled_rgba)
+                    provenance = (
+                        xbr_provenance_indices(frame, contract.scale)
+                        if has_duplicate_used_rgba_indices(frame)
+                        else None
+                    )
+                    mapped, representatives = map_output(
+                        frame, scaled_rgba, provenance
+                    )
                     state["opaque_indices"].update(
                         int(value)
                         for value in np.unique(mapped)

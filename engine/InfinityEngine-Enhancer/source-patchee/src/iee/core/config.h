@@ -50,6 +50,10 @@ struct EngineConfig {
   // Legacy activation key kept as an alias and regression surface for existing
   // x2 installations. New installers write EnableCreatureSpriteUpscaleTest.
   bool enableCreatureSpriteX2Test = false;
+  // Explicit A/B diagnostic for creature-sprite xN backing textures. The
+  // default remains NEAREST so released/validated packs retain pixel-exact
+  // sampling; true selects OpenGL LINEAR for a reversible visual comparison.
+  bool enableCreatureSpriteLinearFiltering = false;
 
   [[nodiscard]] constexpr bool creature_sprite_upscale_enabled() const noexcept {
     return enableCreatureSpriteUpscaleTest || enableCreatureSpriteX2Test;

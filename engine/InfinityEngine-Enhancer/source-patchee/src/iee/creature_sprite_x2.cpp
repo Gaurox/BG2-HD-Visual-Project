@@ -63,6 +63,7 @@ constexpr std::array<char, 8> kRegistrySetMagic{
 constexpr std::uint32_t kLegacyRegistryVersion = 1;
 constexpr std::uint32_t kLegacyCurrentRegistryVersion = 2;
 constexpr std::uint32_t kXnRegistryVersion = 3;
+constexpr std::uint32_t kXnAntialiasRegistryVersion = 4;
 constexpr std::uint32_t kRegistrySetVersion = 1;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
 constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
@@ -96,6 +97,10 @@ struct Frame {
   std::uint8_t transparent{};
   std::array<std::uint16_t, 256> representatives{};
   std::vector<std::uint8_t> indices;
+  // V4 monoliths retain a compact ordered stream of xBR blend operations.
+  // V2/V3 frames leave this empty and keep their original index-only path.
+  std::vector<std::uint8_t> blendRecipes;
+  bool antialias{};
   std::uint32_t lazyShardIndex{kResidentFrameShard};
   std::uint64_t lazyIndexOffset{};
   std::uint32_t lazyIndexBytes{};
@@ -206,6 +211,7 @@ std::mutex g_mutex;
 std::atomic<bool> g_ready{false};
 std::atomic<std::uint16_t> g_targetAnimationId{0};
 std::atomic<std::uint32_t> g_loadedScale{0};
+std::atomic<bool> g_linearFiltering{false};
 std::vector<Resource> g_resources;
 std::vector<TextureCacheEntry> g_textureCache;
 std::vector<CompositePixelCacheEntry> g_compositePixelCache;
@@ -227,6 +233,16 @@ bool g_compositeBackingFailureLogged{};
 #ifdef _WIN32
 HGLRC g_textureContext{};
 #endif
+
+[[nodiscard]] int sampling_filter() noexcept {
+  return static_cast<int>(g_linearFiltering.load(std::memory_order_acquire)
+                              ? game::gl::LINEAR
+                              : game::gl::NEAREST);
+}
+
+[[nodiscard]] const char* sampling_filter_name() noexcept {
+  return g_linearFiltering.load(std::memory_order_acquire) ? "LINEAR" : "NEAREST";
+}
 
 void reset_diagnostics_locked() noexcept {
   g_creationFailureLogged = false;
@@ -769,6 +785,76 @@ void enforce_transparent_entry(const Frame& frame,
   realized[frame.transparent] = 0;
 }
 
+template <class Visitor>
+bool visit_blend_recipes(const Frame& frame, std::uint64_t expectedPixels,
+                         Visitor&& visitor) noexcept {
+  if (!frame.antialias) return frame.blendRecipes.empty();
+  const auto& bytes = frame.blendRecipes;
+  if (bytes.size() < sizeof(std::uint32_t)) return false;
+  std::size_t offset = 0;
+  const auto readU32 = [&](std::uint32_t& value) {
+    if (offset > bytes.size() || sizeof(value) > bytes.size() - offset) return false;
+    std::memcpy(&value, bytes.data() + offset, sizeof(value));
+    offset += sizeof(value);
+    return true;
+  };
+  std::uint32_t recipeCount = 0;
+  if (!readU32(recipeCount) || recipeCount > expectedPixels) return false;
+  std::uint64_t previousPixel = (std::numeric_limits<std::uint64_t>::max)();
+  for (std::uint32_t recipe = 0; recipe < recipeCount; ++recipe) {
+    std::uint32_t pixel = 0;
+    if (!readU32(pixel) || offset >= bytes.size()) return false;
+    const auto operationCount = bytes[offset++];
+    if (pixel >= expectedPixels || operationCount == 0 || operationCount > 8 ||
+        (recipe != 0 && pixel <= previousPixel) ||
+        static_cast<std::size_t>(operationCount) * 2 > bytes.size() - offset) {
+      return false;
+    }
+    for (std::uint8_t operation = 0; operation < operationCount; ++operation) {
+      const auto sourceIndex = bytes[offset++];
+      const auto blendCode = bytes[offset++];
+      if (blendCode >= 5 || frame.representatives[sourceIndex] == 0xFFFFu ||
+          !visitor(pixel, sourceIndex, blendCode)) {
+        return false;
+      }
+    }
+    previousPixel = pixel;
+  }
+  return offset == bytes.size();
+}
+
+bool apply_blend_recipes(const Frame& frame,
+                         const std::array<std::uint32_t, 256>& realized,
+                         std::vector<std::uint32_t>& destination,
+                         int destinationWidth, int destinationHeight,
+                         int sourceWidth, int sourceHeight,
+                         int destinationX, int destinationY) noexcept {
+  if (!frame.antialias) return frame.blendRecipes.empty();
+  if (destinationWidth <= 0 || destinationHeight <= 0 || sourceWidth <= 0 ||
+      sourceHeight <= 0 || destinationX < 0 || destinationY < 0 ||
+      sourceWidth > destinationWidth - destinationX ||
+      sourceHeight > destinationHeight - destinationY) {
+    return false;
+  }
+  const auto expectedPixels =
+      static_cast<std::uint64_t>(sourceWidth) * sourceHeight;
+  return visit_blend_recipes(
+      frame, expectedPixels,
+      [&](std::uint32_t pixel, std::uint8_t sourceIndex,
+          std::uint8_t blendCode) noexcept {
+        const auto sourceX = static_cast<int>(pixel % sourceWidth);
+        const auto sourceY = static_cast<int>(pixel / sourceWidth);
+        if (sourceY >= sourceHeight) return false;
+        const auto destinationIndex =
+            static_cast<std::size_t>(destinationY + sourceY) * destinationWidth +
+            static_cast<std::size_t>(destinationX + sourceX);
+        if (destinationIndex >= destination.size()) return false;
+        destination[destinationIndex] = xbr_blend_pixel(
+            destination[destinationIndex], realized[sourceIndex], blendCode);
+        return true;
+      });
+}
+
 bool upload_frame_locked(const Frame& frame,
                          const std::vector<std::uint8_t>& indices,
                          const std::array<std::uint32_t, 256>& realized,
@@ -813,6 +899,13 @@ bool upload_frame_locked(const Frame& frame,
           realized[indices[sourceIndex]];
     }
   }
+  if (!apply_blend_recipes(frame, realized, replacement, physicalWidth,
+                           physicalHeight, contentPhysicalWidth,
+                           contentPhysicalHeight,
+                           static_cast<int>(contentOffset),
+                           static_cast<int>(contentOffset))) {
+    return false;
+  }
 
   int unpackAlignment = 4;
   int unpackRowLength = 0;
@@ -852,9 +945,9 @@ bool upload_frame_locked(const Frame& frame,
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                     static_cast<int>(game::gl::NEAREST));
+                     sampling_filter());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                     static_cast<int>(game::gl::NEAREST));
+                     sampling_filter());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL, 0);
   int actualWidth = 0;
   int actualHeight = 0;
@@ -931,6 +1024,11 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
         auto& destination = replacement[destinationRow + static_cast<std::size_t>(x)];
         destination = overwrite_nontransparent_pixel(destination, pixel);
       }
+    }
+    if (!apply_blend_recipes(frame, realized, replacement, physicalWidth,
+                             physicalHeight, sourceWidth, sourceHeight,
+                             destinationX, destinationY)) {
+      return false;
     }
   }
   return true;
@@ -1052,9 +1150,9 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                     static_cast<int>(game::gl::NEAREST));
+                     sampling_filter());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                     static_cast<int>(game::gl::NEAREST));
+                     sampling_filter());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL, 0);
   int actualWidth = 0;
   int actualHeight = 0;
@@ -1105,7 +1203,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
       cachedBytes <= kTextureCacheBudgetBytes &&
       physicalBytes <= kTextureCacheBudgetBytes - cachedBytes;
   if (newTexture) {
-    const int generated = api.DrawGenTexture(static_cast<int>(game::gl::NEAREST), 0, 0, 0);
+    const int generated = api.DrawGenTexture(sampling_filter(), 0, 0, 0);
     if (generated <= 0) return false;
     g_textureCache.push_back({.handle = handle,
                               .paletteFingerprint = fingerprint,
@@ -1239,6 +1337,7 @@ namespace {
 enum class RegistryFormat { Legacy, Xn };
 
 struct ParsedRegistry {
+  std::uint32_t version{};
   std::uint32_t scale{};
   std::uint16_t animationId{};
   std::uint32_t resourceCount{};
@@ -1297,8 +1396,11 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
   if (!input || !input.read(magic.data(), static_cast<std::streamsize>(magic.size())) ||
       !input.read(reinterpret_cast<char*>(&version), sizeof(version)) ||
       !input.read(reinterpret_cast<char*>(&scale), sizeof(scale)) ||
-      magic != kXnRegistryMagic || version != kXnRegistryVersion ||
-      !supported_physical_scale(scale)) {
+      magic != kXnRegistryMagic ||
+      (version != kXnRegistryVersion &&
+       version != kXnAntialiasRegistryVersion) ||
+      !supported_physical_scale(scale) ||
+      (version == kXnAntialiasRegistryVersion && scale != 2)) {
     throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
                              path.filename().string());
   }
@@ -1318,20 +1420,24 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
   }
   BinaryReader reader(std::move(bytes));
   std::array<char, 8> magic{};
-  std::uint32_t version = 0;
   std::uint32_t metadata = 0;
-  if (!reader.read(magic) || !reader.read(version) || !reader.read(parsed.scale) ||
+  if (!reader.read(magic) || !reader.read(parsed.version) || !reader.read(parsed.scale) ||
       !reader.read(parsed.resourceCount) || !reader.read(metadata)) {
     throw std::runtime_error("truncated creature-sprite registry header");
   }
   const bool xnFormat = format == RegistryFormat::Xn;
   const bool formatHeaderValid =
       xnFormat
-          ? magic == kXnRegistryMagic && version == kXnRegistryVersion &&
-                supported_physical_scale(parsed.scale)
+          ? magic == kXnRegistryMagic &&
+                (parsed.version == kXnRegistryVersion ||
+                 parsed.version == kXnAntialiasRegistryVersion) &&
+                supported_physical_scale(parsed.scale) &&
+                (parsed.version != kXnAntialiasRegistryVersion ||
+                 parsed.scale == 2) &&
+                (!lazyPayloads || parsed.version == kXnRegistryVersion)
           : magic == kLegacyRegistryMagic &&
-                (version == kLegacyRegistryVersion ||
-                 version == kLegacyCurrentRegistryVersion) &&
+                (parsed.version == kLegacyRegistryVersion ||
+                 parsed.version == kLegacyCurrentRegistryVersion) &&
                 parsed.scale == 2;
   if (!formatHeaderValid || parsed.resourceCount == 0 ||
       parsed.resourceCount > kMaximumResources ||
@@ -1339,7 +1445,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
     throw std::runtime_error("invalid creature-sprite registry header: " +
                              path.filename().string());
   }
-  if (!xnFormat && version == kLegacyRegistryVersion) {
+  if (!xnFormat && parsed.version == kLegacyRegistryVersion) {
     if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
     parsed.animationId = kLegacyMgo1AnimationId;
   } else {
@@ -1415,6 +1521,20 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       } else {
         frame.indices.assign(reinterpret_cast<const std::uint8_t*>(indexData),
                              reinterpret_cast<const std::uint8_t*>(indexData) + indexBytes);
+      }
+      if (parsed.version == kXnAntialiasRegistryVersion) {
+        std::uint32_t recipeBytes = 0;
+        frame.antialias = true;
+        if (!reader.read(recipeBytes) || recipeBytes < sizeof(std::uint32_t) ||
+            recipeBytes > maximum_registry_bytes_for_scale(parsed.scale) ||
+            !reader.read_bytes(frame.blendRecipes, recipeBytes) ||
+            !visit_blend_recipes(
+                frame, expectedIndices,
+                [](std::uint32_t, std::uint8_t, std::uint8_t) noexcept {
+                  return true;
+                })) {
+          throw std::runtime_error("invalid creature-sprite antialias recipe payload");
+        }
       }
       frame.logicalWidth = width;
       frame.logicalHeight = height;
@@ -1537,7 +1657,8 @@ LoadedPack load_registry_set(const std::filesystem::path& assetsDirectory,
     const auto shardPath = assetsDirectory / registry_shard_filename(shardIndex);
     auto shard = parse_registry(shardPath, RegistryFormat::Xn, true, shardIndex, true);
     const auto& expected = set.entries[shardIndex];
-    if (shard.scale != set.scale || shard.animationId != set.animationId ||
+    if (shard.version != kXnRegistryVersion || shard.scale != set.scale ||
+        shard.animationId != set.animationId ||
         shard.resourceCount != expected.resourceCount ||
         shard.frameCount != expected.frameCount || shard.indexBytes != expected.indexBytes ||
         shard.registryBytes != expected.registryBytes ||
@@ -1571,7 +1692,24 @@ LoadedPack load_registry_set(const std::filesystem::path& assetsDirectory,
 
 LoadedPack load_monolithic_registry(const std::filesystem::path& path,
                                     RegistryFormat format) {
-  const bool lazyPayloads = format == RegistryFormat::Xn;
+  bool lazyPayloads = false;
+  if (format == RegistryFormat::Xn) {
+    std::ifstream input(path, std::ios::binary);
+    std::array<char, 8> magic{};
+    std::uint32_t version = 0;
+    if (!input ||
+        !input.read(magic.data(), static_cast<std::streamsize>(magic.size())) ||
+        !input.read(reinterpret_cast<char*>(&version), sizeof(version)) ||
+        magic != kXnRegistryMagic ||
+        (version != kXnRegistryVersion &&
+         version != kXnAntialiasRegistryVersion)) {
+      throw std::runtime_error("invalid creature-sprite xN monolith prefix");
+    }
+    // V3 remains lazy. The initial V4 AA experiment is monolithic and keeps
+    // its compact base indices plus recipes resident; registry-set support is
+    // deliberately not inferred from the V3 set contract.
+    lazyPayloads = version == kXnRegistryVersion;
+  }
   auto parsed = parse_registry(path, format, lazyPayloads);
   LoadedPack loaded{.scale = parsed.scale,
                     .animationId = parsed.animationId,
@@ -1616,10 +1754,10 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
       activate_loaded_pack(std::move(loaded));
       LOG_INFO(
           "Creature sprite xBR pack ready: animation 0x{:04X}, scale=x{}, {} resources, "
-          "{} frames, {} index bytes across {} lazy shards; source={}; filter=NEAREST; "
+          "{} frames, {} index bytes across {} lazy shards; source={}; filter={}; "
           "index cache budget={} MiB",
           animationId, scale, resourceCount, frameCount, indexBytes, shardCount,
-          kRegistrySetFilename,
+          kRegistrySetFilename, sampling_filter_name(),
           kLazyIndexCacheBudgetBytes / (1024ull * 1024ull));
       return true;
     }
@@ -1635,9 +1773,9 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
     activate_loaded_pack(std::move(loaded));
     LOG_INFO(
         "Creature sprite xBR pack ready: animation 0x{:04X}, scale=x{}, {} resources, {} "
-        "frames, {} index bytes; source={}; filter=NEAREST; registry budget={} MiB",
+        "frames, {} index bytes; source={}; filter={}; registry budget={} MiB",
         animationId, scale, resourceCount, frameCount, indexBytes,
-        registryPath.filename().string(),
+        registryPath.filename().string(), sampling_filter_name(),
         maximum_registry_bytes_for_scale(scale) / (1024ull * 1024ull));
     return true;
   } catch (const std::exception& error) {
@@ -1647,6 +1785,10 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   }
   release();
   return false;
+}
+
+void configure_linear_filtering(bool enabled) noexcept {
+  g_linearFiltering.store(enabled, std::memory_order_release);
 }
 
 void release() noexcept {
@@ -1864,13 +2006,13 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
       resource.compositionLogged[handle.frameIndex] = true;
       LOG_INFO(
           "Composing creature sprite {} frame {:03}: scale=x{}, BAM logical {}x{}, "
-          "upscaled content {}x{}, bordered texture {}x{} (NEAREST)",
+          "upscaled content {}x{}, bordered texture {}x{} ({})",
           resref_name(resource.resref), handle.frameIndex, physicalScale,
           frame.logicalWidth, frame.logicalHeight,
           static_cast<std::int64_t>(frame.logicalWidth) * physicalScale,
           static_cast<std::int64_t>(frame.logicalHeight) * physicalScale,
           physical_texture_extent(frame.logicalWidth, physicalScale),
-          physical_texture_extent(frame.logicalHeight, physicalScale));
+          physical_texture_extent(frame.logicalHeight, physicalScale), sampling_filter_name());
     }
     return true;
   } catch (const std::exception& error) {
@@ -1995,7 +2137,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       return false;
     }
     transientTextureId =
-        api.DrawGenTexture(static_cast<int>(game::gl::NEAREST), 0, 0, 0);
+        api.DrawGenTexture(sampling_filter(), 0, 0, 0);
     if (transientTextureId <= 0 || transientTextureId == previousTextureId ||
         !upload_composite_texture_locked(*pixels, logicalWidth, logicalHeight,
                                          encoding, physicalScale,
@@ -2032,12 +2174,12 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       LOG_INFO(
           "Composing creature sprite {} frame {:03} as Character composite layer "
           "{}/{}: scale=x{}, BAM logical {}x{}, final bordered texture {}x{} physical {}x{} "
-          "via transient replacement id {} (NEAREST, delete-pending after queued draw)",
+          "via transient replacement id {} ({}, delete-pending after queued draw)",
           resref_name(resource.resref), layer.frame.frameIndex, index + 1, layerCount,
           physicalScale, frame.logicalWidth, frame.logicalHeight, logicalWidth,
           logicalHeight, static_cast<std::int64_t>(logicalWidth) * physicalScale,
           static_cast<std::int64_t>(logicalHeight) * physicalScale,
-          transientTextureId);
+          transientTextureId, sampling_filter_name());
     }
     return true;
   } catch (const std::exception& error) {

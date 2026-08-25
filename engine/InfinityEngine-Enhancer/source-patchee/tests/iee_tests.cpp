@@ -725,6 +725,8 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableCreatureSpriteUpscaleTest,
               "creature-sprite xN test defaults off");
   expect_true(!cfg.enableCreatureSpriteX2Test, "creature-sprite x2 test defaults off");
+  expect_true(!cfg.enableCreatureSpriteLinearFiltering,
+              "creature-sprite linear filtering defaults off");
   expect_true(!cfg.creature_sprite_upscale_enabled(),
               "creature-sprite upscale helper defaults off");
   auto newKeyOnly = cfg;
@@ -810,6 +812,19 @@ void test_creature_sprite_xn_native_border_geometry() {
             "Opaque palette colors should replace the composite pixel");
   expect_eq(overwrite_nontransparent_pixel(0xFF000000u, 0x80FFFFFFu), 0x80FFFFFFu,
             "Partial alpha should be preserved for the native final GPU draw");
+  expect_eq(xbr_blend_pixel(0xFF000000u, 0xFFFFFFFFu, 1), 0xFF3F3F3Fu,
+            "xBR 64W should reproduce Scalepix's opaque integer floor");
+  expect_eq(xbr_blend_pixel(0x00010203u, 0xFFABCDEFu, 1), 0x3FABCDEFu,
+            "xBR should retain source RGB when the destination is transparent");
+  expect_eq(xbr_blend_pixel(0xFF123456u, 0x00000000u, 1), 0xBF123456u,
+            "xBR should retain destination RGB when the source is transparent");
+  expect_eq(xbr_blend_pixel(
+                xbr_blend_pixel(0xFF000000u, 0xFFFFFFFFu, 3),
+                0xFFFFFFFFu, 3),
+            0xFFEFEFEFu,
+            "Ordered xBR blends should preserve each intermediate floor");
+  expect_eq(xbr_blend_pixel(0xFF123456u, 0xFFFFFFFFu, 5), 0xFF123456u,
+            "An invalid xBR blend opcode should fail closed to the destination");
 }
 
 void test_creature_sprite_native_pixel_encodings() {
@@ -915,6 +930,22 @@ void test_creature_sprite_registry_formats() {
       append_raw(bytes, representatives.data(), sizeof(representatives));
       const std::vector<std::uint8_t> indices(indexBytes, 1);
       append_raw(bytes, indices.data(), indices.size());
+      if (magic == xnMagic && version == 4) {
+        std::vector<std::byte> recipes;
+        const std::uint32_t recipeCount = 1;
+        const std::uint32_t pixel = 0;
+        const std::uint8_t operationCount = 1;
+        const std::uint8_t sourceIndex = 1;
+        const std::uint8_t blendCode = 2;
+        append(recipes, recipeCount);
+        append(recipes, pixel);
+        append(recipes, operationCount);
+        append(recipes, sourceIndex);
+        append(recipes, blendCode);
+        const auto recipeBytes = static_cast<std::uint32_t>(recipes.size());
+        append(bytes, recipeBytes);
+        append_raw(bytes, recipes.data(), recipes.size());
+      }
       const std::uint32_t slotCount = 1;
       const std::uint32_t frameIndex = 0;
       append(bytes, slotCount);
@@ -1194,6 +1225,18 @@ void test_creature_sprite_registry_formats() {
               "The v3 xN registry should support scale x2");
   iee::creature_sprite_x2::release();
 
+  write_file(xnPath, make_registry(xnMagic, 4, 2, 0x6102));
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::target_animation_id() == 0x6102 &&
+                  iee::creature_sprite_x2::loaded_scale() == 2 &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 4,
+              "A V4 xBR Antialias monolith should retain its base indices resident");
+  iee::creature_sprite_x2::release();
+
+  write_file(xnPath, make_registry(xnMagic, 4, 4, 0x6102));
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "The initial V4 Antialias contract should reject unsupported x4 packs");
+
   write_file(xnPath, make_registry(xnMagic, 3, 3, 0x6110));
   expect_true(!iee::creature_sprite_x2::prepare(root) &&
                   !iee::creature_sprite_x2::ready() &&
@@ -1208,7 +1251,7 @@ void test_creature_sprite_registry_formats() {
 
   write_file(xnPath, make_registry(xnMagic, 2, 2, 0x6110));
   expect_true(!iee::creature_sprite_x2::prepare(root),
-              "The xN filename and magic should require registry version 3");
+              "The xN filename and magic should reject unsupported registry versions");
 
   std::filesystem::remove(xnPath, ec);
   write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0x6110, 92));
@@ -1584,6 +1627,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableAreaAnimationX4 = true;
     orig.enableCreatureSpriteUpscaleTest = true;
     orig.enableCreatureSpriteX2Test = true;
+    orig.enableCreatureSpriteLinearFiltering = true;
     orig.enableBigLogoX4Test = true;
     orig.enableMainMenuX4Test = true;
     orig.enableMenuX2Test = true;
@@ -1607,6 +1651,8 @@ void test_config_shader_override_roundtrip() {
               "enableCreatureSpriteUpscaleTest should round-trip as true");
   expect_true(loaded.enableCreatureSpriteX2Test,
               "enableCreatureSpriteX2Test should round-trip as true");
+  expect_true(loaded.enableCreatureSpriteLinearFiltering,
+              "enableCreatureSpriteLinearFiltering should round-trip as true");
   expect_true(loaded.creature_sprite_upscale_enabled(),
               "saved xN and legacy activation keys should keep the helper enabled");
   expect_true(loaded.enableBigLogoX4Test, "enableBigLogoX4Test should round-trip as true");

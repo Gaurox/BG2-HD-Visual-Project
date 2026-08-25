@@ -1,5 +1,9 @@
 # Fondation xN — sprites de créature et composites Character
 
+Pour comparer plusieurs méthodes x2/x4/AA/LINEAR sans écraser les runs ni l'installation ingame,
+appliquer en plus
+[`SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md`](SPRITE_UPSCALE_VARIANT_TEST_RUNBOOK.md).
+
 ## Statut et périmètre
 
 Cette fondation généralise le contrat d'échelle, ajoute le registry-set shardé et conserve les
@@ -80,8 +84,12 @@ Conserver en unités natives x1 pour chaque BAM et chaque frame :
 - cycles, lookups, cadence, ordre des directions et palette ;
 - arguments de dessin et rectangle logique fournis au moteur.
 
-Le backing physique vaut exactement `scale × largeur_x1` par `scale × hauteur_x1`. Utiliser
-`NEAREST`, `CLAMP_TO_EDGE`, aucun mipmap et niveau maximal zéro.
+Le backing physique vaut exactement `scale × largeur_x1` par `scale × hauteur_x1`. En baseline et
+en QA, utiliser `NEAREST`, `CLAMP_TO_EDGE`, aucun mipmap et niveau maximal zéro. `LINEAR` est une
+comparaison locale non QA, activée seulement par
+`EnableCreatureSpriteLinearFiltering=true` selon la procédure
+`Échantillonnage d'affichage : NEAREST / LINEAR` de
+[`SPRITE_UPSCALE_PIPELINE.md`](SPRITE_UPSCALE_PIPELINE.md).
 
 Avant toute allocation, le runtime exige une lecture GL valide et strictement positive de
 `GL_MAX_TEXTURE_SIZE`, puis vérifie les deux dimensions physiques. Une erreur GL, une capacité nulle
@@ -252,8 +260,8 @@ hors paperdoll dans `override`, aucun autre test sprite actif et aucun processus
 La validation QA explicite exige dans la même session de log la source exacte
 `CreatureSprites-XN.set` ou `CreatureSprites-XN.registry`, `scale=x{scale}` et
 `filter=NEAREST`. Elle recalcule aussi présence et hashes de toutes les cibles consignées par
-l'installation avant d'autoriser `validated-installed`. Un fallback de priorité inférieure, un
-shard absent ou un fichier remplacé après installation invalide la QA.
+l'installation avant d'autoriser `validated-installed`. `filter=LINEAR`, un fallback de priorité
+inférieure, un shard absent ou un fichier remplacé après installation invalide la QA.
 
 ## Installation et restauration réversibles
 

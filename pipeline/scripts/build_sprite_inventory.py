@@ -933,8 +933,9 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
             blockers.append("unexpected-character-suffixes")
         if any(item["decode_status"] != "ok" for item in decoded):
             blockers.append("bam-decode-error")
-        if duplicate_frames:
-            blockers.append("duplicate-used-rgba-indices")
+        # Distinct used indices with identical RGBA remain diagnostic data.
+        # The xBR runner now carries source-index provenance for those frames,
+        # so the engine can still apply independent dynamic palette entries.
         if not resource_limit:
             blockers.append("resource-limit")
         if not frame_limit:
@@ -1016,8 +1017,8 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
         blockers: list[str] = []
         if row["decode_status"] != "ok":
             blockers.append("bam-decode-error")
-        if int(row["duplicate_used_rgba_frames"] or 0):
-            blockers.append("duplicate-used-rgba-indices")
+        # See the family-level rule above: duplicate RGBA indices are
+        # preserved by source-index provenance and do not block the pipeline.
         if row["decode_status"] == "ok" and int(row["frame_count"]) > MAX_FRAMES_PER_RESOURCE:
             blockers.append("per-resource-frame-limit")
         if name in override_bams:

@@ -131,6 +131,8 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.enableCreatureSpriteUpscaleTest);
     else if (iequals(key, "EnableCreatureSpriteX2Test"))
       assign_bool(cfg.enableCreatureSpriteX2Test);
+    else if (iequals(key, "EnableCreatureSpriteLinearFiltering"))
+      assign_bool(cfg.enableCreatureSpriteLinearFiltering);
     else if (iequals(key, "EnableBridgeTransitionPreview"))
       assign_bool(cfg.enableBridgeTransitionPreview);
     else if (iequals(key, "EnableBigLogoX4Test"))
@@ -233,6 +235,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableAreaAnimationX4", cfg.enableAreaAnimationX4);
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);
   write_bool(f, "EnableCreatureSpriteX2Test", cfg.enableCreatureSpriteX2Test);
+  write_bool(f, "EnableCreatureSpriteLinearFiltering", cfg.enableCreatureSpriteLinearFiltering);
   write_bool(f, "EnableBridgeTransitionPreview", cfg.enableBridgeTransitionPreview);
   write_bool(f, "EnableBigLogoX4Test", cfg.enableBigLogoX4Test);
   write_bool(f, "EnableMainMenuX4Test", cfg.enableMainMenuX4Test);
