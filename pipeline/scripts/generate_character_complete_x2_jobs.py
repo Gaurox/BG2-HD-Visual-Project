@@ -1,8 +1,9 @@
 """Generate deterministic Character x2 member jobs and one complete aggregate.
 
-This command consumes the canonical ``sprite_families.csv`` inventory.  It
-only writes JSON job descriptions below ``sprite/jobs``: it never extracts a
-BAM, dispatches xBR, builds the runtime, installs files, or launches the game.
+This command consumes the canonical ``sprite_families.csv`` inventory and
+writes one descriptor in each current-layout Character sprite workspace plus
+one aggregate below ``family-runs``.  It never extracts a BAM, dispatches xBR,
+builds the runtime, installs files, or launches the game.
 
 One member job is sufficient for every equipment BAM prefix because every ITM
 sharing the same animation code resolves to the same stock BAM family.  An
@@ -37,6 +38,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     JOB_SCHEMA,
     character_layer_config,
     direct_upscale_contract,
+    character_workspace_paths,
     load_armor_set,
     load_job,
     maximum_registry_bytes,
@@ -44,7 +46,8 @@ from run_creature_sprite_x2 import (  # noqa: E402
 )
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
-DEFAULT_JOBS_DIR = PROJECT_ROOT / "sprite" / "jobs"
+CHARACTER_ROOT = PROJECT_ROOT / "sprite" / "families" / "playable-characters"
+VALIDATION_ROOT = PROJECT_ROOT / "sprite" / ".work" / "validation"
 
 DIRECT_X2_METHOD = direct_upscale_contract(2).method
 MONOLITH_X2_LIMIT = maximum_registry_bytes(2)
@@ -89,6 +92,7 @@ class PlannedWrite:
 @dataclass(frozen=True)
 class GenerationPlan:
     project_root: Path
+    character_root: Path
     writes: tuple[PlannedWrite, ...]
     aggregate_path: Path
     aggregate_payload: dict[str, Any]
@@ -161,6 +165,23 @@ def load_families(path: Path, animation_id: str) -> tuple[list[Family], list[dic
                 }
             )
             continue
+        runtime_profile = str(row.get("runtime_profile", ""))
+        runtime_supported = str(row.get("runtime_supported", "")).lower()
+        pipeline_ready = str(row.get("pipeline_ready", "")).lower()
+        override_collision = str(row.get("override_collision", ""))
+        if (
+            runtime_profile != "character-bg2ee-2.7.3.0"
+            or runtime_supported != "yes"
+            or pipeline_ready != "yes"
+            or override_collision
+        ):
+            raise RuntimeError(
+                f"inventory family {prefix} is not eligible: "
+                f"runtime_profile={runtime_profile!r}, "
+                f"runtime_supported={runtime_supported!r}, "
+                f"pipeline_ready={pipeline_ready!r}, "
+                f"override_collision={override_collision!r}"
+            )
         if blocker:
             raise RuntimeError(
                 f"inventory family {prefix} is not pipeline-ready: {blocker}"
@@ -183,7 +204,7 @@ def load_families(path: Path, animation_id: str) -> tuple[list[Family], list[dic
             Family(
                 animation_id=target_id,
                 ids_symbol=str(row.get("ids_symbol", "")).upper(),
-                runtime_profile=str(row.get("runtime_profile", "")),
+                runtime_profile=runtime_profile,
                 layer_kind=layer,
                 bam_prefix=prefix,
                 variant_value=variant,
@@ -219,9 +240,13 @@ def job_layer(job: dict[str, Any]) -> str:
     return character_layer_config(job)["kind"]
 
 
-def discover_existing_jobs(jobs_dir: Path, animation_id: str) -> dict[str, tuple[Path, dict[str, Any]]]:
+def discover_existing_jobs(
+    character_root: Path, animation_id: str
+) -> dict[str, tuple[Path, dict[str, Any]]]:
     discovered: dict[str, tuple[Path, dict[str, Any]]] = {}
-    for path in sorted(jobs_dir.glob("*.json"), key=lambda item: item.name.lower()):
+    for path in sorted(character_root.rglob("*.json"), key=lambda item: item.as_posix().lower()):
+        if path.parent.name != "jobs":
+            continue
         try:
             job = read_json(path)
         except (OSError, UnicodeError, json.JSONDecodeError, RuntimeError):
@@ -262,6 +287,17 @@ def relative_path(path: Path, project_root: Path) -> str:
         raise RuntimeError(f"generated job path is outside the project: {path}") from error
 
 
+def require_current_character_root(path: Path, animation_id: str) -> Path:
+    resolved = path.resolve()
+    expected_prefix = normalized_animation_id(animation_id)[2:].lower() + "-"
+    if resolved.parent != CHARACTER_ROOT or not resolved.name.startswith(expected_prefix):
+        raise RuntimeError(
+            "--character-root must be "
+            "sprite/families/playable-characters/<animation-id>-<character-type>"
+        )
+    return resolved
+
+
 def generated_job_id(job_stem: str, family: Family) -> str:
     if family.layer_kind == "body":
         value = f"{job_stem}-{family.bam_prefix.lower()}-xbr2x"
@@ -276,6 +312,19 @@ def generated_job_id(job_stem: str, family: Family) -> str:
     return value
 
 
+def member_workspace(character_root: Path, family: Family) -> Path:
+    if family.layer_kind == "body":
+        slug = f"body-{family.bam_prefix.lower()}"
+    else:
+        assert family.representative_item is not None
+        slug = f"{family.representative_item.lower()}-{family.bam_prefix.lower()}"
+    return character_root / slug
+
+
+def member_job_path(character_root: Path, family: Family, job_id: str) -> Path:
+    return member_workspace(character_root, family) / "jobs" / f"{job_id}.json"
+
+
 def inherited_qa(template: dict[str, Any]) -> tuple[list[str], list[str]]:
     qa = template.get("qa") if isinstance(template.get("qa"), dict) else {}
     areas = sorted(set(str(value).upper() for value in qa.get("areas", [])))
@@ -284,12 +333,19 @@ def inherited_qa(template: dict[str, Any]) -> tuple[list[str], list[str]]:
 
 
 def build_member_job(
-    template: dict[str, Any], family: Family, job_id: str
+    template: dict[str, Any],
+    family: Family,
+    job_id: str,
+    destination: Path,
+    project_root: Path,
 ) -> dict[str, Any]:
     paths = dict(template["paths"])
-    asset_id = job_id[: -len("-xbr2x")].replace("-", "_")
-    paths["source_dir"] = f"sprite/{asset_id}/source"
-    paths["run_dir"] = f"sprite/{asset_id}/runs/xbr2x-x2"
+    workspace = destination.parent.parent
+    paths.update(
+        character_workspace_paths(
+            workspace, job_id, 2, family.animation_id
+        )
+    )
     areas, creatures = inherited_qa(template)
     animation: dict[str, Any] = {
         "name": f"{family.ids_symbol.replace('_', ' ').title()} — {family.bam_prefix}",
@@ -346,7 +402,7 @@ def make_plan(
     *,
     project_root: Path,
     families_path: Path,
-    jobs_dir: Path,
+    character_root: Path,
     template_path: Path,
     aggregate_path: Path,
     animation_id: str,
@@ -354,16 +410,24 @@ def make_plan(
     force: bool,
 ) -> GenerationPlan:
     project_root = project_root.resolve()
-    jobs_dir = jobs_dir.resolve()
+    character_root = character_root.resolve()
     aggregate_path = aggregate_path.resolve()
     template_path = template_path.resolve()
     target_id = normalized_animation_id(animation_id)
     if not JOB_ID_RE.fullmatch(job_stem):
         raise RuntimeError("--job-stem must be a lowercase job-id prefix")
-    if aggregate_path.parent != jobs_dir or aggregate_path.suffix.lower() != ".json":
-        raise RuntimeError("--aggregate-job must be a JSON file directly below --jobs-dir")
-    if template_path.parent != jobs_dir or template_path.suffix.lower() != ".json":
-        raise RuntimeError("--template-job must be a JSON file directly below --jobs-dir")
+    expected_aggregate_root = character_root / "family-runs"
+    if (
+        aggregate_path.suffix.lower() != ".json"
+        or aggregate_path.parent.name != "jobs"
+        or aggregate_path.parent.parent.parent != expected_aggregate_root
+    ):
+        raise RuntimeError(
+            "--aggregate-job must be below "
+            "<character-root>/family-runs/<aggregate>/jobs/"
+        )
+    if character_root not in template_path.parents or template_path.parent.name != "jobs":
+        raise RuntimeError("--template-job must be a Character member below --character-root")
     aggregate_id = aggregate_path.stem
     if not JOB_ID_RE.fullmatch(aggregate_id) or not aggregate_id.endswith("-xbr2x"):
         raise RuntimeError("aggregate filename must be a valid job id ending in -xbr2x")
@@ -382,7 +446,7 @@ def make_plan(
     if template["animation"].get("runtime_profile") not in profiles:
         raise RuntimeError("template runtime profile differs from inventory")
 
-    existing = discover_existing_jobs(jobs_dir, target_id)
+    existing = discover_existing_jobs(character_root, target_id)
     reused: list[Path] = []
     generated: list[Path] = []
     member_paths: list[Path] = []
@@ -396,13 +460,15 @@ def make_plan(
             reused.append(member_path)
         else:
             job_id = generated_job_id(job_stem, family)
-            member_path = (jobs_dir / f"{job_id}.json").resolve()
+            member_path = member_job_path(character_root, family, job_id).resolve()
             if member_path.exists() and not force:
                 raise RuntimeError(f"member job already exists; use --force: {member_path}")
             writes.append(
                 PlannedWrite(
                     member_path,
-                    build_member_job(template, family, job_id),
+                    build_member_job(
+                        template, family, job_id, member_path, project_root
+                    ),
                 )
             )
             generated.append(member_path)
@@ -412,6 +478,21 @@ def make_plan(
 
     paths = template["paths"]
     areas, creatures = inherited_qa(template)
+    required_families = [family for family in families if family.layer_kind == "body"]
+    for layer in ("helmet", "shield", "weapon"):
+        representative = next(
+            (family for family in families if family.layer_kind == layer), None
+        )
+        if representative is not None:
+            required_families.append(representative)
+    required_prefixes = [family.bam_prefix for family in required_families]
+    required_items = sorted(
+        {
+            family.representative_item
+            for family in required_families
+            if family.representative_item is not None
+        }
+    )
     aggregate_payload: dict[str, Any] = {
         "schema": ARMOR_SET_SCHEMA,
         "job_id": aggregate_id,
@@ -424,9 +505,21 @@ def make_plan(
         "members": [relative_path(path, project_root) for path in member_paths],
         "paths": {
             "game_root": paths["game_root"],
-            "run_dir": f"sprite/{aggregate_id.replace('-', '_')}/runs/xbr2x-x2-xn",
+            "run_dir": relative_path(
+                aggregate_path.parent.parent / "runs" / "xbr2x-x2-xn",
+                project_root,
+            ),
             "engine_source": paths["engine_source"],
-            "engine_build": paths["engine_build"],
+            "engine_build": relative_path(
+                project_root
+                / "sprite"
+                / ".work"
+                / "cmake"
+                / "character"
+                / target_id[2:].lower()
+                / aggregate_id,
+                project_root,
+            ),
         },
         "compatibility": dict(template["compatibility"]),
         "runtime": dict(template.get("runtime", {})),
@@ -434,6 +527,8 @@ def make_plan(
             "areas": areas,
             "creatures": creatures,
             "items": sorted(set(representatives)),
+            "required_bam_prefixes": required_prefixes,
+            "required_items": required_items,
         },
         "upscale": dict(DIRECT_X2_METHOD),
         "inventory": {
@@ -450,6 +545,7 @@ def make_plan(
     writes.append(PlannedWrite(aggregate_path, aggregate_payload))
     return GenerationPlan(
         project_root=project_root,
+        character_root=character_root,
         writes=tuple(writes),
         aggregate_path=aggregate_path,
         aggregate_payload=aggregate_payload,
@@ -480,10 +576,9 @@ def write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
 def validate_plan(plan: GenerationPlan) -> None:
     """Validate generated descriptors with the canonical runner before publish."""
 
-    jobs_dir = plan.aggregate_path.parent
-    jobs_dir.mkdir(parents=True, exist_ok=True)
+    VALIDATION_ROOT.mkdir(parents=True, exist_ok=True)
     validation_root = Path(
-        tempfile.mkdtemp(prefix=".character-jobs-validation-", dir=jobs_dir)
+        tempfile.mkdtemp(prefix="character-jobs-", dir=VALIDATION_ROOT)
     )
     try:
         generated_mapping: dict[Path, Path] = {}
@@ -544,18 +639,21 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--template-job", type=Path, required=True)
     parser.add_argument("--job-stem", required=True)
     parser.add_argument("--aggregate-job", type=Path, required=True)
+    parser.add_argument("--character-root", type=Path, required=True)
     parser.add_argument("--families", type=Path, default=DEFAULT_FAMILIES)
-    parser.add_argument("--jobs-dir", type=Path, default=DEFAULT_JOBS_DIR)
     parser.add_argument("--force", action="store_true")
     return parser
 
 
 def main(argv: Iterable[str] | None = None) -> None:
     args = make_parser().parse_args(argv)
+    character_root = require_current_character_root(
+        args.character_root, args.animation_id
+    )
     plan = make_plan(
         project_root=PROJECT_ROOT,
         families_path=args.families,
-        jobs_dir=args.jobs_dir,
+        character_root=character_root,
         template_path=args.template_job,
         aggregate_path=args.aggregate_job,
         animation_id=args.animation_id,

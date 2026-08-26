@@ -23,7 +23,7 @@ import re
 import struct
 import sys
 import zlib
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -67,6 +67,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
 
 
 TDA_TYPE = 0x03F4
+CRE_TYPE = 0x03F1
 SCHEMA = "bg2-upscale-sprite-inventory-v1"
 DEFAULT_GAME_ROOT = Path(
     "G:/SteamLibrary/steamapps/common/Baldur's Gate II Enhanced Edition"
@@ -379,6 +380,152 @@ def current_runtime(
     if family == 0xE000 and animation_type == "E000":
         return "monster-icewind-bg2ee-2.7.3.0", section == "monster_icewind"
     return "", False
+
+
+def build_stock_cre_usage(
+    index: KeyIndex,
+    animations: list[dict[str, Any]],
+    families: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Count stock CRE animation use and join it to current pipeline eligibility."""
+
+    counts: Counter[int] = Counter()
+    versions: Counter[str] = Counter()
+    for name, entry in sorted(index.resource_map(CRE_TYPE).items()):
+        raw, _ = index.resolve(entry)
+        if len(raw) < 0x2A or raw[:4] != b"CRE ":
+            raise RuntimeError(f"unsupported stock CRE resource: {name}")
+        version = raw[:8].decode("ascii", errors="strict")
+        if version != "CRE V1.0":
+            raise RuntimeError(f"unsupported stock CRE version for {name}: {version}")
+        versions[version] += 1
+        counts[struct.unpack_from("<H", raw, 0x28)[0]] += 1
+
+    animation_by_id = {
+        int(animation["animation_id_decimal"]): animation for animation in animations
+    }
+    families_by_id: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for family in families:
+        families_by_id[int(family["animation_id"], 16)].append(family)
+
+    used_ids = set(counts)
+    unknown_ids = sorted(used_ids - set(animation_by_id))
+    if unknown_ids:
+        formatted = ", ".join(f"0x{animation_id:04X}" for animation_id in unknown_ids)
+        raise RuntimeError(f"stock CRE references unknown animation IDs: {formatted}")
+
+    fully_ready_ids: list[int] = []
+    with_bam_ids: list[int] = []
+    without_bam_ids: list[int] = []
+    runtime_supported_without_bam_ids: list[int] = []
+    runtime_supported_blocked_ids: list[int] = []
+    runtime_unsupported_ids: list[int] = []
+    for animation_id in sorted(used_ids):
+        animation = animation_by_id[animation_id]
+        nonempty = [
+            family
+            for family in families_by_id.get(animation_id, [])
+            if int(family["resource_count"] or 0) > 0
+        ]
+        if nonempty:
+            with_bam_ids.append(animation_id)
+        else:
+            without_bam_ids.append(animation_id)
+        if nonempty and all(
+            family["pipeline_ready"] == "yes"
+            and not family["blocker"]
+            and not family["override_collision"]
+            for family in nonempty
+        ):
+            fully_ready_ids.append(animation_id)
+        elif animation["runtime_supported"] == "yes" and not nonempty:
+            runtime_supported_without_bam_ids.append(animation_id)
+        elif animation["runtime_supported"] == "yes":
+            runtime_supported_blocked_ids.append(animation_id)
+        elif animation["runtime_supported"] == "no":
+            runtime_unsupported_ids.append(animation_id)
+
+    classified_ids = (
+        set(fully_ready_ids)
+        | set(runtime_supported_without_bam_ids)
+        | set(runtime_supported_blocked_ids)
+        | set(runtime_unsupported_ids)
+    )
+    if classified_ids != used_ids:
+        raise RuntimeError("stock CRE animation classification is not exhaustive")
+
+    ready_cre_resources = sum(counts[animation_id] for animation_id in fully_ready_ids)
+    total_cre_resources = sum(counts.values())
+    return {
+        "source": {
+            "resource_type": f"0x{CRE_TYPE:04X}",
+            "container": "stock KEY/BIF",
+            "animation_id_encoding": "u16-le",
+            "animation_id_offset": 0x28,
+        },
+        "cre_versions": dict(sorted(versions.items())),
+        "cre_resource_count": total_cre_resources,
+        "animation_id_count": len(used_ids),
+        "animation_ids": [f"0x{animation_id:04X}" for animation_id in sorted(used_ids)],
+        "zero_animation_id_cre_resource_count": counts.get(0, 0),
+        "nonzero_animation_id_count": len(used_ids - {0}),
+        "nonzero_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in sorted(used_ids - {0})
+        ],
+        "with_bam_animation_id_count": len(with_bam_ids),
+        "with_bam_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in with_bam_ids
+        ],
+        "without_bam_animation_id_count": len(without_bam_ids),
+        "without_bam_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in without_bam_ids
+        ],
+        "without_bam_nonzero_animation_id_count": len(
+            set(without_bam_ids) - {0}
+        ),
+        "without_bam_nonzero_animation_ids": [
+            f"0x{animation_id:04X}"
+            for animation_id in sorted(set(without_bam_ids) - {0})
+        ],
+        "cre_resources_by_animation_id": {
+            f"0x{animation_id:04X}": counts[animation_id]
+            for animation_id in sorted(used_ids)
+        },
+        "fully_pipeline_ready_animation_id_count": len(fully_ready_ids),
+        "fully_pipeline_ready_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in fully_ready_ids
+        ],
+        "fully_pipeline_ready_cre_resource_count": ready_cre_resources,
+        "fully_pipeline_ready_cre_coverage_percent": round(
+            100.0 * ready_cre_resources / total_cre_resources, 3
+        )
+        if total_cre_resources
+        else 0.0,
+        "runtime_supported_without_bam_animation_id_count": len(
+            runtime_supported_without_bam_ids
+        ),
+        "runtime_supported_without_bam_animation_ids": [
+            f"0x{animation_id:04X}"
+            for animation_id in runtime_supported_without_bam_ids
+        ],
+        "runtime_supported_blocked_animation_id_count": len(
+            runtime_supported_blocked_ids
+        ),
+        "runtime_supported_blocked_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in runtime_supported_blocked_ids
+        ],
+        "runtime_unsupported_animation_id_count": len(runtime_unsupported_ids),
+        "runtime_unsupported_animation_ids": [
+            f"0x{animation_id:04X}" for animation_id in runtime_unsupported_ids
+        ],
+        "runtime_unsupported_nonzero_animation_id_count": len(
+            set(runtime_unsupported_ids) - {0}
+        ),
+        "runtime_unsupported_nonzero_animation_ids": [
+            f"0x{animation_id:04X}"
+            for animation_id in sorted(set(runtime_unsupported_ids) - {0})
+        ],
+    }
 
 
 def override_resrefs(game_root: Path, suffix: str) -> set[str]:
@@ -1026,7 +1173,8 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
         row["blocker"] = joined(blockers)
         resources.append(row)
 
-    return animations, families, resources, items, index.resources
+    stock_cre_usage = build_stock_cre_usage(index, animations, families)
+    return animations, families, resources, items, index.resources, stock_cre_usage
 
 
 def verify_inventory(
@@ -1085,7 +1233,14 @@ def main() -> int:
     if output_dir == game_root or game_root in output_dir.parents:
         raise SystemExit("output directory must stay outside the game directory")
 
-    animations, families, resources, items, key_resources = build_inventory(game_root)
+    (
+        animations,
+        families,
+        resources,
+        items,
+        key_resources,
+        stock_cre_usage,
+    ) = build_inventory(game_root)
     verify_inventory(animations, families, resources, items)
     output_dir.mkdir(parents=True, exist_ok=True)
     outputs = {
@@ -1154,6 +1309,7 @@ def main() -> int:
             },
         },
         "registry_set_projections": build_registry_set_projections(resources),
+        "stock_cre_usage": stock_cre_usage,
         "counts": {
             "key_resources": len(key_resources),
             "animations": len(animations),

@@ -323,6 +323,10 @@ BOOL APIENTRY DllMain(HMODULE h, DWORD r, LPVOID reserved) {
       break;
 
     case DLL_PROCESS_DETACH:
+      // Never join workers, take locks, call Media Foundation, or uninstall
+      // hooks under the loader lock. The bridge worker uses a trivially
+      // destructible Win32 handle and retains this module while it can execute;
+      // normal ShutdownBindings performs the blocking cleanup beforehand.
       if (reserved == nullptr &&
           iee::g_lifecycle.load(std::memory_order_acquire) != iee::LifecycleState::Stopped) {
         OutputDebugStringA(

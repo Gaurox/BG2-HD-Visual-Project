@@ -1,0 +1,46 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-armor-set-v1",
+  "job_id": "human-female-fighter-character-set-xbr2x",
+  "animation": {
+    "name": "Humaine — guerrière, corps et équipement stock",
+    "id": "0x6110",
+    "ids_symbol": "FIGHTER_FEMALE_HUMAN",
+    "runtime_profile": "character-bg2ee-2.7.3.0"
+  },
+  "members": [
+    "sprite/families/playable-characters/6110-human-female-fighter/chfb1/jobs/human-female-fighter-chfb1-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/chfb2/jobs/human-female-fighter-chfb2-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/chfb3/jobs/human-female-fighter-chfb3-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/chff4/jobs/human-female-fighter-chff4-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/helm01-wqnj6/jobs/human-female-fighter-helm01-wqnj6-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/shld01-wqnc0/jobs/human-female-fighter-shld01-wqnc0-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/shld08-wqnc4/jobs/human-female-fighter-shld08-wqnc4-xbr2x.json"
+  ],
+  "paths": {
+    "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+    "run_dir": "sprite/families/playable-characters/6110-human-female-fighter/family-runs/character-set/runs/xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "engine/InfinityEngine-Enhancer/source-patchee/cmake-build-character-x2-vs2019"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "PLAYER1"
+    ],
+    "items": [
+      "HELM01",
+      "SHLD01",
+      "SHLD08"
+    ]
+  }
+}

@@ -45,6 +45,7 @@ using MonsterIcewindRenderFn = void (*)(void*, std::uintptr_t, std::uintptr_t,
                                         std::uintptr_t, std::uintptr_t, std::uintptr_t,
                                         std::uintptr_t, std::uintptr_t, std::uintptr_t,
                                         std::uintptr_t, std::uintptr_t);
+using MonsterRenderFn = MonsterIcewindRenderFn;
 using CharacterRenderFn = MonsterIcewindRenderFn;
 using GameAreaRenderFn = void (*)(void*, void*);
 using DrawFlushGlFn = void (*)();
@@ -59,6 +60,7 @@ static core::Hook<DrawColorToneFn> g_drawColorToneHook;
 static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
 static core::Hook<VidPaletteRealizeFn> g_vidPaletteRealizeHook;
+static core::Hook<MonsterRenderFn> g_monsterRenderHook;
 static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
 static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
@@ -75,6 +77,12 @@ thread_local area_animation_x4::FrameHandle g_areaAnimationFrame{};
 
 constexpr std::size_t kMaximumCreatureSpriteLayers = 4;
 constexpr std::size_t kNoCreatureSpriteLayer = kMaximumCreatureSpriteLayers;
+enum class CreatureSpriteOwner : std::uint8_t {
+  None,
+  Monster,
+  MonsterIcewind,
+  Character,
+};
 
 struct CreatureSpriteLayer {
   creature_sprite_x2::FrameHandle frame{};
@@ -98,6 +106,8 @@ struct CreatureSpriteScope {
   std::size_t unregisteredPaletteOwnerCount{};
   std::size_t pendingLayer{kNoCreatureSpriteLayer};
   std::uint64_t generation{};
+  std::uint16_t animationId{};
+  CreatureSpriteOwner owner{CreatureSpriteOwner::None};
   std::uint32_t targetRealizes{};
   std::uint32_t foreignRealizes{};
   std::uint32_t unregisteredLayerRealizes{};
@@ -109,10 +119,10 @@ struct CreatureSpriteScope {
 thread_local CreatureSpriteScope* g_creatureSpriteScope = nullptr;
 thread_local std::uint64_t g_creatureSpriteGeneration = 0;
 bool g_creatureSpriteHooksEnabled = false;
+bool g_creatureSpriteCharacterHookEnabled = false;
+bool g_creatureSpriteMonsterHookEnabled = false;
+bool g_creatureSpriteMonsterIcewindHookEnabled = false;
 std::uintptr_t g_creatureSpritePaletteReturn{};
-
-enum class CreatureSpriteOwner : std::uint8_t { None, MonsterIcewind, Character };
-CreatureSpriteOwner g_creatureSpriteOwner = CreatureSpriteOwner::None;
 
 // LoadArea can still resolve the outgoing area during a transition. The render
 // thread resolves the settled area a moment later and retries this CPU-only
@@ -197,22 +207,38 @@ struct ResolvedCreatureSpriteFrame {
   creature_sprite_x2::FrameHandle handle{};
   std::array<char, 8> resref{};
   void* cell{};
+  std::uint16_t animationId{};
   int sequence{-1};
   int slot{-1};
 };
 
-bool is_target_creature_animation(void* animation, std::uint16_t& animationId) noexcept {
+bool is_target_creature_animation(void* animation, CreatureSpriteOwner owner,
+                                  std::uint16_t& animationId) noexcept {
   animationId = 0;
   if (!animation || !g_ctx || !g_ctx->manifest || !creature_sprite_x2::ready()) return false;
   const auto& runtime = g_ctx->manifest->areaAnimations;
   if (!runtime.enabled) return false;
   const auto base = reinterpret_cast<std::uintptr_t>(animation);
-  return core::safe_read(reinterpret_cast<const void*>(base + runtime.monsterAnimationId),
-                         animationId) &&
-         animationId == creature_sprite_x2::target_animation_id();
+  if (!core::safe_read(
+          reinterpret_cast<const void*>(base + runtime.monsterAnimationId),
+          animationId) ||
+      !creature_sprite_x2::contains_animation(animationId)) {
+    return false;
+  }
+  switch (owner) {
+    case CreatureSpriteOwner::Character:
+      return creature_sprite_x2::animation_targets_character(animationId);
+    case CreatureSpriteOwner::Monster:
+      return creature_sprite_x2::animation_targets_monster(animationId);
+    case CreatureSpriteOwner::MonsterIcewind:
+      return creature_sprite_x2::animation_targets_monster_icewind(animationId);
+    default:
+      return false;
+  }
 }
 
-bool read_registered_creature_cell(void* cell, const char* ownerLabel,
+bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
+                                   const char* ownerLabel,
                                    ResolvedCreatureSpriteFrame& resolved) noexcept {
   if (!cell || !g_ctx || !g_ctx->manifest) return false;
   const auto& runtime = g_ctx->manifest->areaAnimations;
@@ -232,9 +258,8 @@ bool read_registered_creature_cell(void* cell, const char* ownerLabel,
     }
     return false;
   }
-  if (!creature_sprite_x2::contains_resource(resref)) return false;
-  if (!creature_sprite_x2::resolve_frame(resref, currentSequence, currentFrame,
-                                         resolved.handle)) {
+  if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
+                                         currentFrame, resolved.handle)) {
     static std::atomic<bool> unresolvedFrameLogged{false};
     if (!unresolvedFrameLogged.exchange(true, std::memory_order_relaxed)) {
       LOG_WARN("Registered creature CVidCell frame could not be resolved: sequence={}, slot={}; "
@@ -245,6 +270,7 @@ bool read_registered_creature_cell(void* cell, const char* ownerLabel,
   }
   resolved.resref = resref;
   resolved.cell = cell;
+  resolved.animationId = animationId;
   resolved.sequence = currentSequence;
   resolved.slot = currentFrame;
   return true;
@@ -257,12 +283,14 @@ bool read_creature_sprite_frame(void* animation, CreatureSpriteOwner owner,
   const auto base = reinterpret_cast<std::uintptr_t>(animation);
   std::uint16_t animationId = 0;
   void* cell = nullptr;
-  if (!is_target_creature_animation(animation, animationId)) return false;
+  if (!is_target_creature_animation(animation, owner, animationId)) return false;
   const auto currentCellOffset = owner == CreatureSpriteOwner::Character
                                      ? runtime.characterCurrentCell
                                      : runtime.monsterCurrentCell;
   const auto ownerLabel = owner == CreatureSpriteOwner::Character
                               ? "CGameAnimationTypeCharacter"
+                          : owner == CreatureSpriteOwner::Monster
+                              ? "CGameAnimationTypeMonster"
                               : "CGameAnimationTypeMonsterIcewind";
   if (!core::safe_read(reinterpret_cast<const void*>(base + currentCellOffset), cell) ||
       !cell) {
@@ -272,9 +300,12 @@ bool read_creature_sprite_frame(void* animation, CreatureSpriteOwner owner,
     }
     return false;
   }
-  if (!read_registered_creature_cell(cell, ownerLabel, resolved)) return false;
-  static std::atomic<bool> animationReachedLogged{false};
-  if (!animationReachedLogged.exchange(true, std::memory_order_relaxed)) {
+  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved)) {
+    return false;
+  }
+  static std::array<std::atomic<bool>, 65'536> animationReachedLogged{};
+  if (!animationReachedLogged[animationId].exchange(true,
+                                                     std::memory_order_relaxed)) {
     LOG_INFO("Creature sprite animation 0x{:04X} reached {}::Render with a registered "
              "body CVidCell",
              animationId, ownerLabel);
@@ -603,7 +634,9 @@ bool prepare_area_animation_composition_hooks(AppContext& ctx) noexcept {
 }
 
 bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
-  g_creatureSpriteOwner = CreatureSpriteOwner::None;
+  g_creatureSpriteCharacterHookEnabled = false;
+  g_creatureSpriteMonsterHookEnabled = false;
+  g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   if (!ctx.cfg.creature_sprite_upscale_enabled() || !creature_sprite_x2::ready()) return false;
   if (!validate_area_animation_runtime(ctx, "Creature sprite xN")) return false;
@@ -611,31 +644,39 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   if (!module || !ctx.manifest) return false;
   const auto& runtime = ctx.manifest->areaAnimations;
   if (!validate_creature_sprite_palette_runtime(ctx, *module)) return false;
-  const auto animationFamily = creature_sprite_x2::target_animation_id() & 0xF000u;
-  std::uintptr_t ownerRender = 0;
-  std::size_t ownerSignature = 0;
-  const char* ownerLabel = nullptr;
-  if (animationFamily == 0xE000u) {
-    g_creatureSpriteOwner = CreatureSpriteOwner::MonsterIcewind;
-    ownerRender = runtime.monsterIcewindRender;
-    ownerSignature = 6;
-    ownerLabel = "CGameAnimationTypeMonsterIcewind::Render";
-  } else if (animationFamily == 0x5000u || animationFamily == 0x6000u) {
-    g_creatureSpriteOwner = CreatureSpriteOwner::Character;
-    ownerRender = runtime.characterRender;
-    ownerSignature = 9;
-    ownerLabel = "CGameAnimationTypeCharacter::Render";
-  } else {
-    LOG_WARN(
-        "Creature sprite xN hook skipped: animation 0x{:04X} has no validated owner "
-        "scope",
-        creature_sprite_x2::target_animation_id());
+  const bool targetsCharacter = creature_sprite_x2::targets_character();
+  const bool targetsMonster = creature_sprite_x2::targets_monster();
+  const bool targetsMonsterIcewind =
+      creature_sprite_x2::targets_monster_icewind();
+  if (!targetsCharacter && !targetsMonster && !targetsMonsterIcewind) {
+    LOG_WARN("Creature sprite xN hook skipped: pack has no validated owner scope");
     return false;
   }
-  if (!matches_pattern_at_rva(*module, ownerRender, runtime.signatures[ownerSignature])) {
-    LOG_WARN("Creature sprite xN hook skipped: {} signature differs at RVA 0x{:X}",
-             ownerLabel, ownerRender);
-    g_creatureSpriteOwner = CreatureSpriteOwner::None;
+  if (targetsCharacter &&
+      !matches_pattern_at_rva(*module, runtime.characterRender,
+                              runtime.signatures[9])) {
+    LOG_WARN(
+        "Creature sprite xN hook skipped: CGameAnimationTypeCharacter::Render "
+        "signature differs at RVA 0x{:X}",
+        runtime.characterRender);
+    return false;
+  }
+  if (targetsMonsterIcewind &&
+      !matches_pattern_at_rva(*module, runtime.monsterIcewindRender,
+                              runtime.signatures[6])) {
+    LOG_WARN(
+        "Creature sprite xN hook skipped: CGameAnimationTypeMonsterIcewind::Render "
+        "signature differs at RVA 0x{:X}",
+        runtime.monsterIcewindRender);
+    return false;
+  }
+  if (targetsMonster &&
+      !matches_pattern_at_rva(*module, runtime.monsterRender,
+                              runtime.signatures[14])) {
+    LOG_WARN(
+        "Creature sprite xN hook skipped: CGameAnimationTypeMonster::Render "
+        "signature differs at RVA 0x{:X}",
+        runtime.monsterRender);
     return false;
   }
   const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
@@ -664,6 +705,11 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
           reinterpret_cast<const area_animation_x4::NativePixelEncoding*>(
               moduleBase + runtime.nativeTextureFormat),
   };
+  // Publish owner selection only after every required signature and shared
+  // palette/texture dependency has passed. A mixed catalog is all-or-nothing.
+  g_creatureSpriteCharacterHookEnabled = targetsCharacter;
+  g_creatureSpriteMonsterHookEnabled = targetsMonster;
+  g_creatureSpriteMonsterIcewindHookEnabled = targetsMonsterIcewind;
   return true;
 }
 
@@ -915,6 +961,42 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   }
 }
 
+static void detour_monster_render(
+    void* thisPtr, std::uintptr_t a2, std::uintptr_t a3, std::uintptr_t a4,
+    std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
+    std::uintptr_t a9, std::uintptr_t a10, std::uintptr_t a11, std::uintptr_t a12,
+    std::uintptr_t a13, std::uintptr_t a14) {
+  ResolvedCreatureSpriteFrame resolved{};
+  const bool target =
+      read_creature_sprite_frame(thisPtr, CreatureSpriteOwner::Monster, resolved);
+  CreatureSpriteScope scope{};
+  if (target) {
+    scope.generation = next_creature_sprite_generation();
+    scope.animationId = resolved.animationId;
+    scope.owner = CreatureSpriteOwner::Monster;
+    (void)append_creature_sprite_layer(scope, resolved);
+  }
+  // Every Monster invocation masks an outer creature scope. A nested
+  // non-target render must never inherit the outer sprite's palette/frame.
+  CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+
+  g_monsterRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
+                                 a11, a12, a13, a14);
+
+  if (target) {
+    static std::array<std::atomic<bool>, 65'536> noReplacementLogged{};
+    if (scope.replacements == 0 &&
+        !noReplacementLogged[scope.animationId].exchange(
+            true, std::memory_order_relaxed)) {
+      LOG_WARN(
+          "Registered creature animation 0x{:04X} reached no compatible "
+          "owner-scoped palette/texture (target Realize={}, foreign Realize={}); "
+          "native BAM rendering remains active",
+          scope.animationId, scope.targetRealizes, scope.foreignRealizes);
+    }
+  }
+}
+
 static void detour_monster_icewind_render(
     void* thisPtr, std::uintptr_t a2, std::uintptr_t a3, std::uintptr_t a4,
     std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
@@ -926,6 +1008,8 @@ static void detour_monster_icewind_render(
   CreatureSpriteScope scope{};
   if (target) {
     scope.generation = next_creature_sprite_generation();
+    scope.animationId = resolved.animationId;
+    scope.owner = CreatureSpriteOwner::MonsterIcewind;
     (void)append_creature_sprite_layer(scope, resolved);
   }
   // Every MonsterIcewind invocation masks an outer creature scope. A nested
@@ -936,13 +1020,15 @@ static void detour_monster_icewind_render(
                                         a11, a12, a13, a14);
 
   if (target) {
-    static std::atomic<bool> noReplacementLogged{false};
+    static std::array<std::atomic<bool>, 65'536> noReplacementLogged{};
     if (scope.replacements == 0 &&
-        !noReplacementLogged.exchange(true, std::memory_order_relaxed)) {
+        !noReplacementLogged[scope.animationId].exchange(
+            true, std::memory_order_relaxed)) {
       LOG_WARN(
-          "Registered creature render reached no compatible owner-scoped palette/texture "
-          "(target Realize={}, foreign Realize={}); native BAM rendering remains active",
-          scope.targetRealizes, scope.foreignRealizes);
+          "Registered creature animation 0x{:04X} reached no compatible "
+          "owner-scoped palette/texture (target Realize={}, foreign Realize={}); "
+          "native BAM rendering remains active",
+          scope.animationId, scope.targetRealizes, scope.foreignRealizes);
     }
   }
 }
@@ -958,6 +1044,8 @@ static void detour_character_render(
   CreatureSpriteScope scope{};
   if (target) {
     scope.generation = next_creature_sprite_generation();
+    scope.animationId = resolved.animationId;
+    scope.owner = CreatureSpriteOwner::Character;
     (void)append_creature_sprite_layer(scope, resolved);
     if (g_ctx && g_ctx->manifest) {
       const auto animationBase = reinterpret_cast<std::uintptr_t>(thisPtr);
@@ -979,7 +1067,8 @@ static void detour_character_render(
           continue;
         }
         ResolvedCreatureSpriteFrame overlay{};
-        if (read_registered_creature_cell(overlayCell, kOverlayLabels[index], overlay)) {
+        if (read_registered_creature_cell(scope.animationId, overlayCell,
+                                          kOverlayLabels[index], overlay)) {
           (void)append_creature_sprite_layer(scope, overlay);
         } else {
           (void)append_unregistered_palette_owner(scope, overlayCell);
@@ -995,15 +1084,18 @@ static void detour_character_render(
                                    a11, a12, a13, a14);
 
   if (target) {
-    static std::atomic<bool> noReplacementLogged{false};
+    static std::array<std::atomic<bool>, 65'536> noReplacementLogged{};
     if (scope.replacements == 0 &&
-        !noReplacementLogged.exchange(true, std::memory_order_relaxed)) {
+        !noReplacementLogged[scope.animationId].exchange(
+            true, std::memory_order_relaxed)) {
       LOG_WARN(
-          "Registered character render reached no compatible owner-scoped "
-          "composite (target Realize={}, captured layers={}, foreign Realize={}, "
-          "unregistered layers={}, incomplete={}); native BAM rendering remains active",
-          scope.targetRealizes, scope.compositionCount, scope.foreignRealizes,
-          scope.unregisteredLayerRealizes, scope.compositionIncomplete);
+          "Registered character animation 0x{:04X} reached no compatible "
+          "owner-scoped composite (target Realize={}, captured layers={}, foreign "
+          "Realize={}, unregistered layers={}, incomplete={}); native BAM rendering "
+          "remains active",
+          scope.animationId, scope.targetRealizes, scope.compositionCount,
+          scope.foreignRealizes, scope.unregisteredLayerRealizes,
+          scope.compositionIncomplete);
     }
   }
 }
@@ -1041,12 +1133,12 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
       ownerCandidate = core::safe_read(reinterpret_cast<const std::byte*>(paletteThis) + 0x20,
                                        paletteKind) &&
                        paletteKind <= 1;
-      if (!ownerCandidate && g_creatureSpriteOwner == CreatureSpriteOwner::Character) {
+      if (!ownerCandidate && scope->owner == CreatureSpriteOwner::Character) {
         scope->compositionIncomplete = true;
       }
     } else {
       ++scope->foreignRealizes;
-      if (g_creatureSpriteOwner == CreatureSpriteOwner::Character &&
+      if (scope->owner == CreatureSpriteOwner::Character &&
           (targetCallsite || ownerLayer != kNoCreatureSpriteLayer || unregisteredOwner)) {
         scope->compositionIncomplete = true;
         if (targetCallsite && unregisteredOwner) {
@@ -1067,16 +1159,16 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   creature_sprite_x2::PaletteSnapshot captured{};
   if (!creature_sprite_x2::capture_palette_snapshot(realizedOutput, g_creatureSpriteTextureApi,
                                                      captured)) {
-    if (g_creatureSpriteOwner == CreatureSpriteOwner::Character) {
+    if (scope->owner == CreatureSpriteOwner::Character) {
       scope->compositionIncomplete = true;
     }
     return;
   }
   auto& layer = scope->layers[ownerLayer];
-  if (g_creatureSpriteOwner == CreatureSpriteOwner::Character) {
+  if (scope->owner == CreatureSpriteOwner::Character) {
     ResolvedCreatureSpriteFrame current{};
-    if (!read_registered_creature_cell(layer.cell, "CGameAnimationTypeCharacter layer",
-                                       current) ||
+    if (!read_registered_creature_cell(scope->animationId, layer.cell,
+                                       "CGameAnimationTypeCharacter layer", current) ||
         scope->compositionCount >= scope->composition.size()) {
       scope->compositionIncomplete = true;
       return;
@@ -1108,7 +1200,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     // through to an unrelated area-animation substitution during creature rendering.
     const int logicalWidth = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
     const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
-    if (g_creatureSpriteOwner == CreatureSpriteOwner::Character) {
+    if (creatureScope->owner == CreatureSpriteOwner::Character) {
       if (!creatureScope->compositeReplacementDone &&
           !creatureScope->compositionIncomplete &&
           creatureScope->compositionCount > 0 &&
@@ -1345,7 +1437,7 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(moduleBase + runtime.vidPaletteRealize),
               reinterpret_cast<void*>(&detour_vid_palette_realize));
           g_vidPaletteRealizeHook.enable();
-          if (g_creatureSpriteOwner == CreatureSpriteOwner::Character) {
+          if (g_creatureSpriteCharacterHookEnabled) {
             g_characterRenderHook.create(
                 reinterpret_cast<void*>(moduleBase + runtime.characterRender),
                 reinterpret_cast<void*>(&detour_character_render));
@@ -1358,7 +1450,19 @@ bool install_all(AppContext& ctx) {
                 runtime.characterOverlayCells[0], runtime.characterOverlayCells[1],
                 runtime.characterOverlayCells[2],
                 runtime.vidPaletteRealize);
-          } else {
+          }
+          if (g_creatureSpriteMonsterHookEnabled) {
+            g_monsterRenderHook.create(
+                reinterpret_cast<void*>(moduleBase + runtime.monsterRender),
+                reinterpret_cast<void*>(&detour_monster_render));
+            g_monsterRenderHook.enable();
+            LOG_INFO(
+                "Creature sprite xN owner scope installed: Monster::Render RVA "
+                "0x{:X}, body cell offset 0x{:X}, CVidPalette::Realize RVA 0x{:X}",
+                runtime.monsterRender, runtime.monsterCurrentCell,
+                runtime.vidPaletteRealize);
+          }
+          if (g_creatureSpriteMonsterIcewindHookEnabled) {
             g_monsterIcewindRenderHook.create(
                 reinterpret_cast<void*>(moduleBase + runtime.monsterIcewindRender),
                 reinterpret_cast<void*>(&detour_monster_icewind_render));
@@ -1372,6 +1476,7 @@ bool install_all(AppContext& ctx) {
         LOG_INFO("CVidCell high-level composition dispatcher installed");
       } catch (const std::exception& error) {
         (void)g_characterRenderHook.remove();
+        (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
@@ -1380,13 +1485,16 @@ bool install_all(AppContext& ctx) {
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
-        g_creatureSpriteOwner = CreatureSpriteOwner::None;
+        g_creatureSpriteCharacterHookEnabled = false;
+        g_creatureSpriteMonsterHookEnabled = false;
+        g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         LOG_WARN("High-level composition hooks could not be installed: {}",
                  error.what());
       } catch (...) {
         (void)g_characterRenderHook.remove();
+        (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
@@ -1395,7 +1503,9 @@ bool install_all(AppContext& ctx) {
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
-        g_creatureSpriteOwner = CreatureSpriteOwner::None;
+        g_creatureSpriteCharacterHookEnabled = false;
+        g_creatureSpriteMonsterHookEnabled = false;
+        g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         LOG_WARN("High-level composition hooks could not be installed");
@@ -1492,6 +1602,7 @@ bool install_all(AppContext& ctx) {
     g_drawFlushGl = nullptr;
     (void)g_drawColorToneHook.remove();
     (void)g_characterRenderHook.remove();
+    (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -1503,7 +1614,9 @@ bool install_all(AppContext& ctx) {
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
-    g_creatureSpriteOwner = CreatureSpriteOwner::None;
+    g_creatureSpriteCharacterHookEnabled = false;
+    g_creatureSpriteMonsterHookEnabled = false;
+    g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -1515,6 +1628,7 @@ bool install_all(AppContext& ctx) {
     g_drawFlushGl = nullptr;
     (void)g_drawColorToneHook.remove();
     (void)g_characterRenderHook.remove();
+    (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -1526,7 +1640,9 @@ bool install_all(AppContext& ctx) {
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
-    g_creatureSpriteOwner = CreatureSpriteOwner::None;
+    g_creatureSpriteCharacterHookEnabled = false;
+    g_creatureSpriteMonsterHookEnabled = false;
+    g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -1545,6 +1661,7 @@ void uninstall_all() noexcept {
   g_drawFlushGl = nullptr;
   (void)g_drawColorToneHook.remove();
   (void)g_characterRenderHook.remove();
+  (void)g_monsterRenderHook.remove();
   (void)g_monsterIcewindRenderHook.remove();
   (void)g_gameStaticRenderBamHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
@@ -1559,7 +1676,9 @@ void uninstall_all() noexcept {
   g_am0205eTextureApi = {};
   g_creatureSpriteTextureApi = {};
   g_creatureSpriteHooksEnabled = false;
-  g_creatureSpriteOwner = CreatureSpriteOwner::None;
+  g_creatureSpriteCharacterHookEnabled = false;
+  g_creatureSpriteMonsterHookEnabled = false;
+  g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
 
@@ -1581,6 +1700,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_gameAreaRenderHook.disable();
   (void)g_drawColorToneHook.disable();
   (void)g_characterRenderHook.disable();
+  (void)g_monsterRenderHook.disable();
   (void)g_monsterIcewindRenderHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
   (void)g_vidPaletteRealizeHook.disable();

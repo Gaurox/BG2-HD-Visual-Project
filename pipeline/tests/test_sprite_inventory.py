@@ -26,8 +26,10 @@ class SpriteInventoryTests(unittest.TestCase):
             ROOT / "pipeline" / "README.md": ("../sprite/README.md",),
             ROOT / "HANDOVER.md": ("sprite/index/README.md", "build_sprite_inventory.py"),
             ROOT / "CHANTIERS_OUVERTS.md": ("sprite/index/sprite_families.csv", "blocker"),
-            ROOT / "sprite" / "SPRITE_UPSCALE_PIPELINE.md": ("Gate I0", "pipeline_ready=yes"),
-            ROOT / "sprite" / "UPSCALE_XBR2X.md": ("index/README.md", "family_id"),
+            ROOT
+            / "sprite"
+            / "FOLDER_LAYOUT.md": ("sprite-layout.json", "path-migrations.json"),
+            ROOT / "sprite" / "docs" / "README.md": ("Historical", "operations"),
             ROOT
             / "engine"
             / "InfinityEngine-Enhancer"
@@ -133,6 +135,72 @@ class SpriteInventoryTests(unittest.TestCase):
             "fail-closed-no-monolith-fallback",
         )
         self.assertIn("lazy", registry_set["payload_loading"])
+
+    def test_manifest_records_stock_cre_usage(self) -> None:
+        manifest = json.loads((INDEX / "manifest.json").read_text(encoding="utf-8"))
+        usage = manifest["stock_cre_usage"]
+        self.assertEqual(usage["source"]["resource_type"], "0x03F1")
+        self.assertEqual(usage["source"]["animation_id_offset"], 0x28)
+        self.assertEqual(usage["cre_versions"], {"CRE V1.0": 4735})
+        self.assertEqual(usage["cre_resource_count"], 4735)
+        self.assertEqual(usage["animation_id_count"], 279)
+        self.assertEqual(usage["zero_animation_id_cre_resource_count"], 2)
+        self.assertEqual(usage["nonzero_animation_id_count"], 278)
+        self.assertEqual(usage["with_bam_animation_id_count"], 273)
+        self.assertEqual(usage["without_bam_animation_id_count"], 6)
+        self.assertEqual(usage["without_bam_nonzero_animation_id_count"], 5)
+        self.assertEqual(
+            usage["without_bam_animation_ids"],
+            ["0x0000", "0x0100", "0x7F2B", "0x7F33", "0x7F34", "0xE520"],
+        )
+        self.assertEqual(usage["fully_pipeline_ready_animation_id_count"], 101)
+        self.assertEqual(usage["fully_pipeline_ready_cre_resource_count"], 2400)
+        self.assertAlmostEqual(
+            usage["fully_pipeline_ready_cre_coverage_percent"], 50.686, places=3
+        )
+        self.assertEqual(
+            usage["runtime_supported_without_bam_animation_ids"], ["0xE520"]
+        )
+        self.assertEqual(usage["runtime_supported_blocked_animation_id_count"], 0)
+        self.assertEqual(usage["runtime_unsupported_animation_id_count"], 177)
+        self.assertEqual(usage["runtime_unsupported_nonzero_animation_id_count"], 176)
+        self.assertIn("0x0000", usage["runtime_unsupported_animation_ids"])
+        self.assertNotIn("0x0000", usage["runtime_unsupported_nonzero_animation_ids"])
+        self.assertEqual(
+            usage["with_bam_animation_id_count"]
+            + usage["without_bam_animation_id_count"],
+            usage["animation_id_count"],
+        )
+        self.assertEqual(
+            set(usage["with_bam_animation_ids"])
+            | set(usage["without_bam_animation_ids"]),
+            set(usage["animation_ids"]),
+        )
+        self.assertFalse(
+            set(usage["with_bam_animation_ids"])
+            & set(usage["without_bam_animation_ids"])
+        )
+        self.assertEqual(
+            sum(usage["cre_resources_by_animation_id"].values()),
+            usage["cre_resource_count"],
+        )
+        self.assertEqual(
+            set(usage["cre_resources_by_animation_id"]), set(usage["animation_ids"])
+        )
+
+    def test_stock_cre_usage_rejects_unknown_cre_version(self) -> None:
+        class FakeIndex:
+            def resource_map(self, resource_type: int) -> dict[str, object]:
+                if resource_type != inventory.CRE_TYPE:
+                    raise AssertionError("unexpected resource type")
+                return {"BADCRE": object()}
+
+            @staticmethod
+            def resolve(_entry: object) -> tuple[bytes, None]:
+                return b"CRE V9.9" + b"\0" * 34, None
+
+        with self.assertRaisesRegex(RuntimeError, "unsupported stock CRE version"):
+            inventory.build_stock_cre_usage(FakeIndex(), [], [])
 
     def test_human_female_warrior_fits_x4_set_bounds(self) -> None:
         selected = []

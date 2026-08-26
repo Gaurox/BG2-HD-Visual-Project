@@ -71,13 +71,16 @@ function Get-EngineSourceContractSha256([string]$SourceRoot) {
         'CMakeLists.txt',
         'src/iee/hooks.cpp',
         'src/iee/dll_main.cpp',
+        'src/iee/bridge_transition.cpp',
+        'src/iee/bridge_transition.h',
         'src/iee/creature_sprite_x2.cpp',
         'src/iee/creature_sprite_x2.h',
         'src/iee/core/config.cpp',
         'src/iee/core/config.h',
         'src/iee/game/build_manifest.cpp',
         'src/iee/game/build_manifest.h',
-        'tests/iee_tests.cpp'
+        'tests/iee_tests.cpp',
+        'tests/bridge_worker_lifecycle_tests.cpp'
     )
     $sha = [System.Security.Cryptography.SHA256]::Create()
     try {
@@ -368,7 +371,7 @@ function Read-RegistryHeader([string]$Path) {
             for ($cycleIndex = 0; $cycleIndex -lt $cycleCount; $cycleIndex++) {
                 [byte[]]$cycleHeader = Read-ExactBytes $stream 4 'Cycle registre'
                 $slots = [System.BitConverter]::ToUInt32($cycleHeader, 0)
-                if ($slots -lt 1 -or $slots -gt 65536) { throw 'Cycle registre invalide.' }
+                if ($slots -gt 65536) { throw 'Cycle registre invalide.' }
                 Skip-RegistryBytes $stream ([uint64]$slots * 4) 'Lookup cycle registre'
             }
         }
@@ -660,6 +663,7 @@ else {
 Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'schema' 'runtime')) 'bg2-upscale-creature-sprite-runtime-v1' 'runtime.schema'
 Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'status' 'runtime')) 'built-tested' 'runtime.status'
 Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'tests_status' 'runtime')) 'passed' 'runtime.tests_status'
+Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'bridge_worker_tests_status' 'runtime')) 'passed' 'runtime.bridge_worker_tests_status'
 Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'job_id' 'runtime')) ([string]$job.job_id) 'runtime.job_id'
 Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeManifest 'runtime_profile' 'runtime')) $runtimeProfile 'runtime.runtime_profile'
 $engineSource = Resolve-JobPath ([string](Get-RequiredProperty $job.paths 'engine_source' 'job.paths'))

@@ -106,6 +106,48 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         self.assertEqual(contract.registry_version, 2)
         self.assertEqual(contract.registry_filename, "CreatureSprites-X2.registry")
 
+    def test_legacy_catalog_job_path_resolves_after_layout_migration(self) -> None:
+        legacy = (
+            ROOT
+            / "sprite"
+            / "jobs"
+            / "creature-sprites-progressive-xn-xbr2x-goblin-mgo1.json"
+        )
+        current = (
+            ROOT
+            / "sprite"
+            / "catalogs"
+            / "creature-x2-nearest"
+            / "jobs"
+            / legacy.name
+        )
+        self.assertFalse(legacy.exists())
+        self.assertTrue(current.is_file())
+        loaded = pipeline.load_work_item(legacy)
+        self.assertEqual(Path(loaded["_job_file"]), current.resolve())
+
+    def test_sealed_paths_and_armor_members_accept_only_audited_redirects(self) -> None:
+        legacy = "sprite/jobs/dwarf-male-fighter-cdmb1-xbr2x.json"
+        current = (
+            "sprite/families/playable-characters/6102-dwarf-male-fighter/"
+            "cdmb1/variants/xbr2x-legacy/jobs/"
+            "dwarf-male-fighter-cdmb1-xbr2x.json"
+        )
+        expected = pipeline.resolve_path(current)
+        self.assertTrue(pipeline.state_path_matches_exact_file(legacy, expected))
+        self.assertFalse(
+            pipeline.state_path_matches_exact_file(f"../{legacy}", expected)
+        )
+        recorded = [{"job_file": legacy, "job_id": "member"}]
+        current_records = [{"job_file": current, "job_id": "member"}]
+        self.assertTrue(
+            pipeline.armor_set_member_records_match(recorded, current_records)
+        )
+        recorded[0]["job_id"] = "changed"
+        self.assertFalse(
+            pipeline.armor_set_member_records_match(recorded, current_records)
+        )
+
     def test_explicit_x4_uses_direct_xbr4x_v3_contract(self) -> None:
         contract = pipeline.upscale_contract(
             {
@@ -719,6 +761,8 @@ function xbr4x(source, width, height) {
                 "CMakeLists.txt",
                 "src/iee/hooks.cpp",
                 "src/iee/dll_main.cpp",
+                "src/iee/bridge_transition.cpp",
+                "src/iee/bridge_transition.h",
                 "src/iee/creature_sprite_x2.cpp",
                 "src/iee/creature_sprite_x2.h",
                 "src/iee/core/config.cpp",
@@ -726,6 +770,7 @@ function xbr4x(source, width, height) {
                 "src/iee/game/build_manifest.cpp",
                 "src/iee/game/build_manifest.h",
                 "tests/iee_tests.cpp",
+                "tests/bridge_worker_lifecycle_tests.cpp",
             )
             for index, relative in enumerate(source_files):
                 path = source / relative
@@ -755,6 +800,7 @@ function xbr4x(source, width, height) {
                 "dll": dll.name,
                 "dll_sha256": pipeline.sha256_file(dll),
                 "tests_status": "passed",
+                "bridge_worker_tests_status": "passed",
             }
             pipeline.write_json(manifest_path, manifest)
             self.assertEqual(pipeline.verify_runtime(job)["tests_status"], "passed")
@@ -1365,6 +1411,188 @@ function xbr4x(source, width, height) {
             ("Character::Render", "CGameAnimationTypeCharacter::Render"),
         )
 
+    def test_runtime_health_fails_on_local_catalog_quarantine(self) -> None:
+        report = pipeline.runtime_session_health(
+            "Creature sprite catalog component 4 quarantined: bad shard; "
+            "other validated components remain available",
+            "monster-icewind-bg2ee-2.7.3.0",
+            {},
+        )
+        self.assertEqual(report["catalog_component_quarantine_count"], 1)
+        self.assertFalse(report["runtime_health_pass"])
+
+    def test_catalog_composition_marker_is_scoped_by_animation_and_prefix(self) -> None:
+        session = (
+            "Composing creature sprite TESTA1 animation=0x6110 frame 000 via "
+            "transient replacement id 42 (NEAREST, delete-pending after queued draw)"
+        )
+        self.assertEqual(
+            len(pipeline.animation_composition_lines(session, "0x6110", "TEST")),
+            1,
+        )
+        self.assertEqual(
+            pipeline.animation_composition_lines(session, "0xE400", "TEST"),
+            [],
+        )
+
+    def test_catalog_qa_shared_prefix_for_a_does_not_satisfy_b(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            game = root / "game"
+            run = root / "run"
+            game.mkdir()
+            state_path = run / "ingame-installation" / "active-test.json"
+            pipeline.write_json(
+                state_path,
+                {"installed_at_utc": "2000-01-01T00:00:00+00:00"},
+            )
+            (game / "InfinityEngine-Enhancer.log").write_text(
+                "\n".join(
+                    (
+                        "[2026-08-26 12:00:00.000] Creature sprite xBR catalog ready: "
+                        "scale=x2, 2 animations, source=CreatureSprites-XN.catalog; "
+                        "filter=NEAREST",
+                        "[2026-08-26 12:00:00.100] Creature sprite owner scope installed: "
+                        "Character::Render",
+                        "[2026-08-26 12:00:00.200] Creature sprite owner-scoped "
+                        "CVidPalette::Realize snapshot",
+                        "[2026-08-26 12:00:00.300] Creature sprite catalog shard 7 "
+                        "ready on demand for animation 0x6110, resref SAMEA1: "
+                        "1 resources, 1024 metadata bytes",
+                        "[2026-08-26 12:00:00.400] Creature sprite catalog animation "
+                        "0xE400 materialized:",
+                        "[2026-08-26 12:00:00.500] Creature sprite animation 0x6110 "
+                        "reached CGameAnimationTypeCharacter::Render",
+                        "[2026-08-26 12:00:00.600] Creature sprite animation 0xE400 "
+                        "reached CGameAnimationTypeCharacter::Render",
+                        "[2026-08-26 12:00:00.700] Composing creature sprite SAMEA1 "
+                        "animation=0x6110 frame 000 via transient replacement id 42 "
+                        "(NEAREST, delete-pending after queued draw)",
+                    )
+                ),
+                encoding="utf-8",
+            )
+            job = {
+                "_kind": "catalog",
+                "job_id": "shared-prefix-catalog",
+                "paths": {"game_root": str(game), "run_dir": str(run)},
+                "upscale": pipeline.direct_upscale_contract(2).method,
+                "qa": {"animations": []},
+            }
+            seal = {
+                "active_identity_matches_job": True,
+                "active_generation_is_sealed": True,
+                "active_generation_seal_errors": [],
+                "sealed_animation_qa_contract": [
+                    {
+                        "animation_id": "0x6110",
+                        "runtime_profile": "character-bg2ee-2.7.3.0",
+                        "bam_prefixes": ["SAME"],
+                    },
+                    {
+                        "animation_id": "0xE400",
+                        "runtime_profile": "character-bg2ee-2.7.3.0",
+                        "bam_prefixes": ["SAME"],
+                    },
+                ],
+            }
+            with (
+                mock.patch.object(
+                    pipeline,
+                    "sealed_catalog_generation_integrity",
+                    return_value=seal,
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "installed_state_integrity",
+                    return_value={
+                        "installed_files_match": True,
+                        "installed_targets_checked": 1,
+                        "installed_integrity_errors": [],
+                    },
+                ),
+            ):
+                report = pipeline.catalog_qa_log_report(job, write_report=False)
+        animations = {
+            entry["animation_id"]: entry for entry in report["animation_results"]
+        }
+        self.assertTrue(animations["0x6110"]["all_prefixes_composed"])
+        self.assertTrue(animations["0x6110"]["payload_ready"])
+        self.assertFalse(animations["0x6110"]["materialized"])
+        self.assertEqual(animations["0x6110"]["on_demand_resrefs"], ["SAMEA1"])
+        self.assertTrue(animations["0xE400"]["payload_ready"])
+        self.assertFalse(animations["0xE400"]["all_prefixes_composed"])
+        self.assertEqual(report["composition_count"], 1)
+        self.assertFalse(report["technical_pass"])
+
+    def test_catalog_qa_requires_declared_representatives_not_every_character_prefix(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            game = root / "game"
+            run = root / "run"
+            game.mkdir()
+            pipeline.write_json(
+                run / "ingame-installation" / "active-test.json",
+                {"installed_at_utc": "2000-01-01T00:00:00+00:00"},
+            )
+            (game / "InfinityEngine-Enhancer.log").write_text(
+                "\n".join(
+                    (
+                        "[2026-08-26 12:00:00.000] Creature sprite xBR catalog ready: "
+                        "scale=x2, 1 animations, source=CreatureSprites-XN.catalog; filter=NEAREST",
+                        "[2026-08-26 12:00:00.100] Creature sprite owner scope installed: Character::Render",
+                        "[2026-08-26 12:00:00.200] Creature sprite owner-scoped CVidPalette::Realize snapshot",
+                        "[2026-08-26 12:00:00.300] Creature sprite catalog shard 7 ready on demand "
+                        "for animation 0x6110, resref CHFB1G17: 1 resources, 1024 metadata bytes",
+                        "[2026-08-26 12:00:00.400] Creature sprite animation 0x6110 reached "
+                        "CGameAnimationTypeCharacter::Render",
+                        "[2026-08-26 12:00:00.500] Composing creature sprite CHFB1 animation=0x6110 "
+                        "frame 000 via transient replacement id 42 "
+                        "(NEAREST, delete-pending after queued draw)",
+                    )
+                ),
+                encoding="utf-8",
+            )
+            job = {
+                "_kind": "catalog",
+                "job_id": "representative-catalog",
+                "paths": {"game_root": str(game), "run_dir": str(run)},
+                "upscale": pipeline.direct_upscale_contract(2).method,
+                "qa": {"animations": []},
+            }
+            seal = {
+                "active_identity_matches_job": True,
+                "active_generation_is_sealed": True,
+                "active_generation_seal_errors": [],
+                "sealed_animation_qa_contract": [
+                    {
+                        "animation_id": "0x6110",
+                        "runtime_profile": "character-bg2ee-2.7.3.0",
+                        "bam_prefixes": ["CHFB1", "WQNJ6"],
+                        "required_bam_prefixes": ["CHFB1"],
+                    }
+                ],
+            }
+            with (
+                mock.patch.object(
+                    pipeline, "sealed_catalog_generation_integrity", return_value=seal
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "installed_state_integrity",
+                    return_value={
+                        "installed_files_match": True,
+                        "installed_targets_checked": 1,
+                        "installed_integrity_errors": [],
+                    },
+                ),
+            ):
+                report = pipeline.catalog_qa_log_report(job, write_report=False)
+        animation = report["animation_results"][0]
+        self.assertFalse(animation["all_prefixes_composed"])
+        self.assertTrue(animation["required_prefixes_composed"])
+        self.assertTrue(report["technical_pass"])
+
     def test_runtime_log_session_must_be_exact_and_post_install(self) -> None:
         text = "\n".join(
             (
@@ -1664,6 +1892,8 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                 "CMakeLists.txt",
                 "src/iee/hooks.cpp",
                 "src/iee/dll_main.cpp",
+                "src/iee/bridge_transition.cpp",
+                "src/iee/bridge_transition.h",
                 "src/iee/creature_sprite_x2.cpp",
                 "src/iee/creature_sprite_x2.h",
                 "src/iee/core/config.cpp",
@@ -1671,6 +1901,7 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                 "src/iee/game/build_manifest.cpp",
                 "src/iee/game/build_manifest.h",
                 "tests/iee_tests.cpp",
+                "tests/bridge_worker_lifecycle_tests.cpp",
             )
             for index, relative in enumerate(engine_files):
                 path = engine_source / relative
@@ -1836,6 +2067,7 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                     "schema": pipeline.RUNTIME_SCHEMA,
                     "status": "built-tested",
                     "tests_status": "passed",
+                    "bridge_worker_tests_status": "passed",
                     "job_id": job_id,
                     "runtime_profile": "character-bg2ee-2.7.3.0",
                     "engine_source": str(engine_source),
@@ -2142,7 +2374,15 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
 
     def test_explicit_x2_armor_set_loads_legacy_member_jobs_without_rebuild(self) -> None:
         template_path = (
-            ROOT / "sprite" / "jobs" / "human-female-fighter-character-set-xbr2x.json"
+            ROOT
+            / "sprite"
+            / "families"
+            / "playable-characters"
+            / "6110-human-female-fighter"
+            / "family-runs"
+            / "character-set"
+            / "jobs"
+            / "human-female-fighter-character-set-xbr2x.json"
         )
         promoted = pipeline.read_json(template_path)
         promoted["job_id"] = "test-promoted-character-set-x2"
@@ -2186,6 +2426,11 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
         source_template = (
             ROOT
             / "sprite"
+            / "families"
+            / "playable-characters"
+            / "6110-human-female-fighter"
+            / "family-runs"
+            / "character-set"
             / "jobs"
             / "human-female-fighter-character-set-xbr2x.json"
         )
@@ -2503,6 +2748,104 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
             self.assertTrue(pipeline.installed_state_integrity(state)["installed_files_match"])
             target.write_bytes(b"changed")
             self.assertFalse(pipeline.installed_state_integrity(state)["installed_files_match"])
+
+    def test_catalog_integrity_allows_unowned_ini_reordering_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            game = Path(temporary)
+            ini = game / "InfinityEngine-Enhancer.ini"
+            original = "\n".join(
+                (
+                    "[Shaders]",
+                    "EnableAreaAnimationX4 = true",
+                    "EnableCreatureSpriteUpscaleTest = true",
+                    "EnableCreatureSpriteX2Test = false",
+                    "EnableCreatureSpriteLinearFiltering = false",
+                    "",
+                )
+            )
+            ini.write_text(original, encoding="utf-8")
+            state = {
+                "schema": pipeline.XN_CATALOG_INSTALL_STATE_SCHEMA,
+                "game_root": str(game),
+                "targets": [
+                    {
+                        "relative_path": ini.name,
+                        "role": "runtime-ini",
+                        "installed_present": True,
+                        "installed_sha256": pipeline.sha256_file(ini),
+                    }
+                ],
+            }
+            ini.write_text(
+                original.replace(
+                    "EnableAreaAnimationX4 = true\n", ""
+                ).replace(
+                    "EnableCreatureSpriteLinearFiltering = false\n",
+                    "EnableCreatureSpriteLinearFiltering = false\nEnableAreaAnimationX4 = true\n",
+                ),
+                encoding="utf-8",
+            )
+            with mock.patch.object(
+                pipeline, "installed_catalog_state_contract_errors", return_value=[]
+            ):
+                integrity = pipeline.installed_state_integrity(state)
+            self.assertTrue(integrity["installed_files_match"])
+            self.assertEqual(
+                integrity["installed_shared_file_drift"], [ini.name]
+            )
+
+            ini.write_text(
+                ini.read_text(encoding="utf-8").replace(
+                    "EnableCreatureSpriteUpscaleTest = true",
+                    "EnableCreatureSpriteUpscaleTest = false",
+                ),
+                encoding="utf-8",
+            )
+            with mock.patch.object(
+                pipeline, "installed_catalog_state_contract_errors", return_value=[]
+            ):
+                changed = pipeline.installed_state_integrity(state)
+            self.assertFalse(changed["installed_files_match"])
+
+    def test_installed_state_integrity_rejects_reparse_before_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            game = root / "game"
+            outside = root / "outside"
+            game.mkdir()
+            outside.mkdir()
+            target = outside / "InfinityEngine-Enhancer.dll"
+            target.write_bytes(b"runtime")
+            link = game / "linked"
+            try:
+                link.symlink_to(outside, target_is_directory=True)
+            except OSError as error:
+                self.skipTest(f"directory symlinks are unavailable: {error}")
+            state = {
+                "game_root": str(game),
+                "targets": [
+                    {
+                        "relative_path": "linked/InfinityEngine-Enhancer.dll",
+                        "installed_present": True,
+                        "installed_sha256": pipeline.sha256_file(target),
+                    }
+                ],
+            }
+            with mock.patch.object(
+                pipeline,
+                "sha256_file",
+                wraps=pipeline.sha256_file,
+            ) as digest:
+                integrity = pipeline.installed_state_integrity(state)
+            self.assertFalse(integrity["installed_files_match"])
+            self.assertEqual(integrity["installed_targets_checked"], 0)
+            self.assertTrue(
+                any(
+                    "reparse point" in error
+                    for error in integrity["installed_integrity_errors"]
+                )
+            )
+            digest.assert_not_called()
 
 
 if __name__ == "__main__":

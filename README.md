@@ -25,7 +25,7 @@ directement plutôt que de chercher dans l'arborescence.
 | **Procédure d'upscale des menus** | [`interface/menus-options-bg2ee/docs/MENU_UPSCALE.md`](interface/menus-options-bg2ee/docs/MENU_UPSCALE.md) |
 | **Plan d'intégration du HUD** | [`interface/gameplay-hud-bg2ee/analysis/HUD_RESOURCE_INVENTORY.md`](interface/gameplay-hud-bg2ee/analysis/HUD_RESOURCE_INVENTORY.md) |
 | **Portraits** | [`portraits/README.md`](portraits/README.md) ; mod publié : [`portraits/mod-PPE/LISEZ-MOI.md`](portraits/mod-PPE/LISEZ-MOI.md) |
-| **Identifier, auditer ou upscaler un sprite de créature / Character** | [`sprite/README.md`](sprite/README.md) — point d'entrée agent et index normalisé ; Character complet x2 : [`sprite/CHARACTER_COMPLETE_X2_RUNBOOK.md`](sprite/CHARACTER_COMPLETE_X2_RUNBOOK.md) ; contrats : [`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md) et [`sprite/SPRITE_UPSCALE_XN_FOUNDATION.md`](sprite/SPRITE_UPSCALE_XN_FOUNDATION.md) |
+| **Identifier, auditer ou upscaler un sprite de créature / Character** | [`sprite/README.md`](sprite/README.md) — point d'entrée agent ; Character complet : [`sprite/docs/archive/CHARACTER_COMPLETE_X2_RUNBOOK.md`](sprite/docs/archive/CHARACTER_COMPLETE_X2_RUNBOOK.md) ; installation cumulative : [`sprite/docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md`](sprite/docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md) ; architecture V2/V5 : [`sprite/docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md`](sprite/docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md) |
 | **Animations de décor (BAM)** | [`pipeline/ANIMATION_UPSCALE_PIPELINE.md`](pipeline/ANIMATION_UPSCALE_PIPELINE.md) — x4 spatial V1 ; [`pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](pipeline/ANIMATION_UPSCALE_30FPS_V2.md) — x4 + 30 fps ; [`animations/UPSCALE_ANIMATIONS_ZONE.md`](animations/UPSCALE_ANIMATIONS_ZONE.md) — runtime |
 | **Découper et installer les animations par zone** (obligatoire dès qu'un pack global dépasserait 512 MiB) | [`pipeline/ANIMATION_PACKS_PAR_ZONE.md`](pipeline/ANIMATION_PACKS_PAR_ZONE.md) — découpage, préflight, installation réversible et QA |
 | **Ajouter une animation vidéo événementielle locale** (porte, pont, mécanisme sans animation native) | [`engine/InfinityEngine-Enhancer/source-patchee/docs/event-video-overlay-assets.md`](engine/InfinityEngine-Enhancer/source-patchee/docs/event-video-overlay-assets.md) — procédure LLM complète, de l'analyse WED à la QA carte/HUD |
@@ -72,7 +72,7 @@ Deux natures, deux règles — ne pas les confondre lors d'un rangement :
 - `interface/gameplay-hud-bg2ee/` : HUD de jeu.
 - `portraits/` : portraits de personnages et mod PPE.
 - `portraits-recrutables/` : un dossier par personnage recrutable (31 à ce jour).
-- `sprite/` : index normalisé des animations/familles/BAM/ITM, jobs x2 et essais historiques.
+- `sprite/` : index normalisé, jobs xN, catalogue cumulatif V2/V5 et essais historiques.
 - `engine/InfinityEngine-Enhancer/` : DLL, sources, patch et preuves BG2EE.
 - `video/<VIDEO>/<VIDEO>.wbm` : fichier vidéo original extrait du jeu, conservé intact.
 - `video/<VIDEO>/<VIDEO>.webm` : remux WebM sans réencodage de l'original.
@@ -109,13 +109,19 @@ avec autre chose.
 Utiliser [`sprite/README.md`](sprite/README.md) comme routeur du domaine. Les quatre CSV normalisent
 les relations `ANIMATE.IDS`/INI/BAM/ITM : animations, familles et variantes, ressources décodées,
 objets et équipements. `sprite/index/manifest.json` porte les hashes de l'installation analysée,
-les limites, les totaux et les projections x2/x4 de registry-set ; ne recopier ces valeurs dans
-aucun autre document.
+l'usage des IDs par les CRE stock, les limites, les totaux et les projections x2/x4. Lire ce
+manifeste pour toute décision courante.
 
 Une ligne `pipeline_ready=yes` signifie que les prérequis automatisables connus sont satisfaits.
 Elle ne vaut ni build, ni installation, ni validation ingame. Une tâche de production suit ensuite
-[`sprite/SPRITE_UPSCALE_PIPELINE.md`](sprite/SPRITE_UPSCALE_PIPELINE.md) pour le legacy x2 ou
-[`sprite/SPRITE_UPSCALE_XN_FOUNDATION.md`](sprite/SPRITE_UPSCALE_XN_FOUNDATION.md) pour un job xN.
+[`sprite/docs/archive/SPRITE_UPSCALE_PIPELINE.md`](sprite/docs/archive/SPRITE_UPSCALE_PIPELINE.md)
+pour le legacy x2 ou
+[`sprite/docs/archive/SPRITE_UPSCALE_XN_FOUNDATION.md`](sprite/docs/archive/SPRITE_UPSCALE_XN_FOUNDATION.md)
+pour un job xN.
+Pour une installation unique et progressive, appliquer
+[`sprite/docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md`](sprite/docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md)
+et
+[`sprite/docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md`](sprite/docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md).
 Une tâche d'évolution du pipeline sélectionne une famille bloquée, traite chaque code `blocker`,
 régénère l'index et exécute les tests avant tout job QA.
 

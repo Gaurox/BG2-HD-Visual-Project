@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
+#include <limits>
 
 #include "iee/area_animation_x4_registry.h"
 
@@ -29,6 +30,25 @@ inline constexpr std::uint64_t kMaximumRegistrySetBytes =
     8ull * 1024ull * 1024ull * 1024ull;
 inline constexpr std::uint64_t kLazyIndexCacheBudgetBytes =
     128ull * 1024ull * 1024ull;
+inline constexpr std::uint64_t kCatalogMetadataCacheBudgetBytes =
+    128ull * 1024ull * 1024ull;
+// Registry V5 stores each lazy frame independently. These values are part of
+// the on-disk format, not Windows Compression API algorithm identifiers.
+inline constexpr std::uint8_t kRegistryFrameCodecRaw = 0;
+inline constexpr std::uint8_t kRegistryFrameCodecXpressHuff = 1;
+inline constexpr std::uint32_t kMaximumCatalogDirectoryEntries = 1'048'576;
+// The catalog is a bounded, immutable map from animation ids to reusable V3 or
+// V5 components. Its limits are deliberately independent from the legacy
+// set-V1 limits: a catalog may grow incrementally without flattening every
+// animation into one registry-set.
+inline constexpr std::uint32_t kMaximumCatalogAnimations = 512;
+inline constexpr std::uint32_t kMaximumCatalogComponents = 16'384;
+inline constexpr std::uint32_t kMaximumCatalogMemberships = 262'144;
+inline constexpr std::uint32_t kMaximumCatalogShards = 16'384;
+inline constexpr std::uint32_t kMaximumCatalogResources = 32'768;
+inline constexpr std::uint64_t kMaximumCatalogFrames = 4'194'304;
+inline constexpr std::uint64_t kMaximumCatalogRegistryBytes =
+    128ull * 1024ull * 1024ull * 1024ull;
 
 [[nodiscard]] constexpr bool supported_physical_scale(std::uint32_t scale) noexcept {
   return scale == 2 || scale == 4;
@@ -67,6 +87,14 @@ inline constexpr std::uint64_t kLazyIndexCacheBudgetBytes =
 struct FrameHandle {
   std::size_t resourceIndex{};
   std::size_t frameIndex{};
+  // Resolution scope is part of the handle identity. Components may be shared
+  // and distinct animations may legally expose the same resref, so QA and
+  // composition diagnostics must never infer this id from the resource alone.
+  std::uint16_t animationId{};
+  // Catalog metadata is evictable. These fields make a handle fail closed if
+  // its owning shard was evicted and later reused between resolve and draw.
+  std::uint32_t catalogShardIndex{(std::numeric_limits<std::uint32_t>::max)()};
+  std::uint64_t catalogGeneration{};
 
   [[nodiscard]] constexpr bool operator==(const FrameHandle&) const noexcept = default;
 };
@@ -166,30 +194,52 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
          (encoding.externalFormat == kBgra && encoding.type == kUnsignedInt8888Rev);
 }
 
-// Prefers the xN registry-set when present, then the version-3 monolithic xN
-// registry, and finally the legacy x2 registry. A present but invalid higher
-// priority source fails closed without falling through. No game or GL state is
-// touched.
+// Prefers the multi-animation xN catalog when present, then the xN
+// registry-set, the version-3 monolithic xN registry, and finally the legacy
+// x2 registry. A present but invalid higher-priority source fails closed
+// without falling through. No game or GL state is touched.
 void configure_linear_filtering(bool enabled) noexcept;
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;
+// Compatibility surface for legacy single-animation packs. A catalog returns
+// its id only when it contains exactly one animation; multi-animation catalogs
+// return zero so callers cannot accidentally resolve an ambiguous resref.
 [[nodiscard]] std::uint16_t target_animation_id() noexcept;
 [[nodiscard]] std::uint32_t loaded_scale() noexcept;
+[[nodiscard]] bool contains_animation(std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_character(std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_monster(std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_monster_icewind(
+    std::uint16_t animationId) noexcept;
+[[nodiscard]] bool targets_character() noexcept;
+[[nodiscard]] bool targets_monster() noexcept;
+[[nodiscard]] bool targets_monster_icewind() noexcept;
+[[nodiscard]] bool contains_resource(std::uint16_t animationId,
+                                     const std::array<char, 8>& resref) noexcept;
 [[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;
 
 // Resolves CVidCell's current cycle slot through the original BAM lookup.
+bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
+                   int sequence, int currentFrame, FrameHandle& out) noexcept;
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    FrameHandle& out) noexcept;
 
 // Materializes a lazy xN frame in the bounded index cache. This is also a
 // read-only diagnostic surface for native tests; normal rendering calls it
 // implicitly before composing a frame. Any backing registry removal or
-// metadata change disables the whole pack so Character rendering falls back
+// metadata change disables the whole pack so creature rendering falls back
 // atomically. Retained handles do not extend source validity: every public
-// payload/bind call rechecks the owning file identity before using a cache.
+// payload/bind call rechecks the owning file identity before using a cache,
+// and each newly read lazy payload must match the SHA-256 captured while its
+// fully validated shard was parsed.
 bool ensure_frame_payload_available(FrameHandle handle) noexcept;
 [[nodiscard]] std::uint64_t resident_index_bytes() noexcept;
+[[nodiscard]] std::uint64_t resident_catalog_metadata_bytes() noexcept;
+[[nodiscard]] std::size_t pending_catalog_loads() noexcept;
+// Monotonic diagnostic used by native tests/QA to prove that cache-hit draws
+// do not reopen, stat, or reread catalog/shard files.
+[[nodiscard]] std::uint64_t filesystem_access_count() noexcept;
 
 // Reuses the synchronous CVidPalette::Realize output, reconstructs the upscaled
 // frame from its current palette colors, and binds a physical x2/x4 backing

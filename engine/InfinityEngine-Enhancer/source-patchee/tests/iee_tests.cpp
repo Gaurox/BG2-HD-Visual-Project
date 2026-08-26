@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <chrono>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -12,8 +13,14 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <utility>
 #include <vector>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <compressapi.h>
+#endif
 
 #include "iee/core/config.h"
 #include "iee/core/area_animation_clock_probe.h"
@@ -34,6 +41,7 @@
 #include "iee/game/tile_liquid.h"
 #include "iee/game/tis_palette.h"
 #include "iee/game/wed_runtime.h"
+
 
 namespace {
 int g_failures = 0;
@@ -390,6 +398,9 @@ void test_manifest_loading() {
               "BG2EE CGameStatic current-frame offset should match the validated prototype");
     expect_eq(bg2ee->get().areaAnimations.gameStaticCurrentSequence, std::uintptr_t{0x1CA},
               "BG2EE CGameStatic sequence offset should match the validated prototype");
+    expect_eq(bg2ee->get().areaAnimations.monsterRender, std::uintptr_t{0x32D770},
+              "BG2EE CGameAnimationTypeMonster::Render RVA should match the factory "
+              "vtable and offline scan");
     expect_eq(bg2ee->get().areaAnimations.monsterIcewindRender, std::uintptr_t{0x32E360},
               "BG2EE CGameAnimationTypeMonsterIcewind::Render RVA should match the factory "
               "and offline scan");
@@ -879,8 +890,19 @@ void test_creature_sprite_registry_formats() {
   const auto write_file = [](const std::filesystem::path& path,
                              const std::vector<std::byte>& bytes) {
     std::ofstream output(path, std::ios::binary);
+    if (!output) return false;
     output.write(reinterpret_cast<const char*>(bytes.data()),
                  static_cast<std::streamsize>(bytes.size()));
+    return static_cast<bool>(output);
+  };
+  const auto await = [](auto&& predicate) {
+    const auto deadline = std::chrono::steady_clock::now() +
+                          std::chrono::seconds(5);
+    do {
+      if (predicate()) return true;
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+    } while (std::chrono::steady_clock::now() < deadline);
+    return predicate();
   };
   constexpr std::array<char, 8> legacyMagic{
       {'I', 'E', 'E', 'C', 'S', 'X', '2', '\0'}};
@@ -888,6 +910,8 @@ void test_creature_sprite_registry_formats() {
       {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
   constexpr std::array<char, 8> setMagic{
       {'I', 'E', 'E', 'C', 'S', 'N', 'S', '\0'}};
+  constexpr std::array<char, 8> catalogMagic{
+      {'I', 'E', 'E', 'C', 'S', 'N', 'C', '\0'}};
   constexpr std::array<char, 8> target{{'T', 'E', 'S', 'T', '\0', '\0', '\0', '\0'}};
   const auto make_registry = [&](const std::array<char, 8>& magic,
                                  std::uint32_t version, std::uint32_t scale,
@@ -971,6 +995,87 @@ void test_creature_sprite_registry_formats() {
     std::uint64_t indexBytes{};
     std::array<std::byte, 32> sha256{};
   };
+  const auto compress_xpress_huff = [](const std::vector<std::uint8_t>& logical) {
+    std::vector<std::uint8_t> result;
+    COMPRESSOR_HANDLE compressor{};
+    if (logical.empty() ||
+        !CreateCompressor(COMPRESS_ALGORITHM_XPRESS_HUFF, nullptr,
+                          &compressor)) {
+      return result;
+    }
+    SIZE_T required = 0;
+    (void)Compress(compressor, logical.data(), logical.size(), nullptr, 0,
+                   &required);
+    if (required != 0) {
+      result.resize(required);
+      SIZE_T written = 0;
+      if (!Compress(compressor, logical.data(), logical.size(), result.data(),
+                    result.size(), &written) ||
+          written == 0 || written > result.size()) {
+        result.clear();
+      } else {
+        result.resize(written);
+      }
+    }
+    CloseCompressor(compressor);
+    return result;
+  };
+  const auto make_v5_shard = [&](std::uint32_t registryScale, char marker,
+                                  std::uint16_t width, std::uint16_t height,
+                                  std::uint8_t codec,
+                                  const std::vector<std::uint8_t>& stored,
+                                  std::uint32_t frameCount = 1,
+                                  std::optional<std::uint32_t> declaredStoredBytes =
+                                      std::nullopt,
+                                  std::array<std::byte, 2> reserved = {}) {
+    TestShard shard;
+    append_raw(shard.registry, xnMagic.data(), xnMagic.size());
+    for (const auto value : std::array<std::uint32_t, 4>{
+             {5, registryScale, 1, 0xFFFFu}}) {
+      append(shard.registry, value);
+    }
+    auto resref = target;
+    resref[0] = marker;
+    append_raw(shard.registry, resref.data(), resref.size());
+    const std::array<std::byte, 32> sourceHash{};
+    append_raw(shard.registry, sourceHash.data(), sourceHash.size());
+    append(shard.registry, frameCount);
+    const std::uint32_t cycleCount = 1;
+    append(shard.registry, cycleCount);
+    for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
+      const std::int16_t center = 0;
+      const std::uint8_t transparent = 0;
+      append(shard.registry, width);
+      append(shard.registry, height);
+      append(shard.registry, center);
+      append(shard.registry, center);
+      append(shard.registry, transparent);
+      append(shard.registry, codec);
+      append_raw(shard.registry, reserved.data(), reserved.size());
+      const auto payloadBytes = declaredStoredBytes.value_or(
+          static_cast<std::uint32_t>(stored.size()));
+      append(shard.registry, payloadBytes);
+      std::array<std::uint16_t, 256> representatives{};
+      representatives.fill(0xFFFFu);
+      representatives[1] = 0;
+      append_raw(shard.registry, representatives.data(),
+                 sizeof(representatives));
+      if (!stored.empty()) {
+        append_raw(shard.registry, stored.data(), stored.size());
+      }
+    }
+    append(shard.registry, frameCount);
+    for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
+      append(shard.registry, frameIndex);
+    }
+    shard.resourceCount = 1;
+    shard.frameCount = frameCount;
+    const auto logicalBytes = static_cast<std::uint64_t>(width) * height *
+                              registryScale * registryScale;
+    shard.indexBytes = logicalBytes * frameCount;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  };
   const auto make_shard = [&](std::uint32_t registryScale, char marker) {
     TestShard shard;
     shard.registry = make_registry(xnMagic, 3, registryScale, 0x6110, 1, 0, marker);
@@ -1015,6 +1120,215 @@ void test_creature_sprite_registry_formats() {
     }
     return bytes;
   };
+  const auto make_shard_entry = [&](const TestShard& shard) {
+    std::vector<std::byte> bytes;
+    append_raw(bytes, shard.sha256.data(), shard.sha256.size());
+    const auto checksum = test_crc32(shard.registry);
+    append(bytes, checksum);
+    append(bytes, shard.resourceCount);
+    append(bytes, shard.frameCount);
+    append(bytes, shard.indexBytes);
+    const auto registryBytes = static_cast<std::uint64_t>(shard.registry.size());
+    append(bytes, registryBytes);
+    return bytes;
+  };
+  const auto make_component_digest_from_entry = [&append, &append_raw](
+                                                    std::uint32_t scale,
+                                                    const std::byte* shardEntry,
+                                                    std::size_t shardEntryBytes) {
+    std::vector<std::byte> digestInput;
+    constexpr std::array<char, 21> domain{{
+        'I', 'E', 'E', 'C', 'S', 'N', 'C', '-', 'C', 'O', 'M', 'P', 'O',
+        'N', 'E', 'N', 'T', '-', 'V', '1', '\0',
+    }};
+    append_raw(digestInput, domain.data(), domain.size());
+    append(digestInput, scale);
+    append_raw(digestInput, shardEntry, shardEntryBytes);
+    return test_sha256(digestInput);
+  };
+  const auto make_component_digest = [&](std::uint32_t scale,
+                                         const TestShard& shard) {
+    const auto shardEntry = make_shard_entry(shard);
+    return make_component_digest_from_entry(scale, shardEntry.data(),
+                                            shardEntry.size());
+  };
+  struct TestCatalogAnimation {
+    std::uint32_t animationId{};
+    std::uint32_t owner{};
+    std::vector<std::uint32_t> componentIndices;
+  };
+  struct TestCatalogDirectoryEntry {
+    std::uint32_t animationId{};
+    std::array<char, 8> resref{};
+    std::uint32_t componentIndex{};
+    std::uint32_t shardIndex{};
+    std::uint32_t resourceOrdinal{};
+  };
+  const auto make_catalog = [&](std::uint32_t scale,
+                                 const std::vector<TestCatalogAnimation>& animations,
+                                 const std::vector<TestShard>& components) {
+    std::vector<std::byte> bytes;
+    std::uint32_t membershipCount = 0;
+    std::uint64_t totalResources = 0;
+    std::uint64_t totalFrames = 0;
+    std::uint64_t totalIndexBytes = 0;
+    std::uint64_t totalRegistryBytes = 0;
+    for (const auto& animation : animations) {
+      membershipCount += static_cast<std::uint32_t>(animation.componentIndices.size());
+    }
+    for (const auto& component : components) {
+      totalResources += component.resourceCount;
+      totalFrames += component.frameCount;
+      totalIndexBytes += component.indexBytes;
+      totalRegistryBytes += component.registry.size();
+    }
+
+    append_raw(bytes, catalogMagic.data(), catalogMagic.size());
+    for (const auto value :
+         std::array<std::uint32_t, 6>{{1, scale,
+                                      static_cast<std::uint32_t>(animations.size()),
+                                      static_cast<std::uint32_t>(components.size()),
+                                      membershipCount,
+                                      static_cast<std::uint32_t>(components.size())}}) {
+      append(bytes, value);
+    }
+    append(bytes, totalResources);
+    append(bytes, totalFrames);
+    append(bytes, totalIndexBytes);
+    append(bytes, totalRegistryBytes);
+
+    std::uint32_t membershipStart = 0;
+    for (const auto& animation : animations) {
+      append(bytes, animation.animationId);
+      append(bytes, animation.owner);
+      append(bytes, membershipStart);
+      const auto count = static_cast<std::uint32_t>(animation.componentIndices.size());
+      append(bytes, count);
+      membershipStart += count;
+    }
+    for (const auto& animation : animations) {
+      for (const auto componentIndex : animation.componentIndices) {
+        append(bytes, componentIndex);
+      }
+    }
+    for (std::uint32_t index = 0; index < components.size(); ++index) {
+      const auto& component = components[index];
+      const auto digest = make_component_digest(scale, component);
+      append_raw(bytes, digest.data(), digest.size());
+      append(bytes, index);
+      const std::uint32_t shardCount = 1;
+      append(bytes, shardCount);
+      append(bytes, component.resourceCount);
+      const std::uint32_t reserved = 0;
+      append(bytes, reserved);
+      append(bytes, component.frameCount);
+      append(bytes, component.indexBytes);
+      const auto registryBytes = static_cast<std::uint64_t>(component.registry.size());
+      append(bytes, registryBytes);
+    }
+    for (const auto& component : components) {
+      const auto shardEntry = make_shard_entry(component);
+      append_raw(bytes, shardEntry.data(), shardEntry.size());
+    }
+    return bytes;
+  };
+  const auto make_catalog_v2 = [&] (
+      std::uint32_t scale,
+      const std::vector<TestCatalogAnimation>& animations,
+      const std::vector<TestShard>& components,
+      const std::vector<TestCatalogDirectoryEntry>& directory) {
+    auto bytes = make_catalog(scale, animations, components);
+    const std::uint32_t version = 2;
+    std::memcpy(bytes.data() + 8, &version, sizeof(version));
+    std::vector<std::byte> encodedDirectory;
+    for (const auto& entry : directory) {
+      append(encodedDirectory, entry.animationId);
+      append_raw(encodedDirectory, entry.resref.data(), entry.resref.size());
+      append(encodedDirectory, entry.componentIndex);
+      append(encodedDirectory, entry.shardIndex);
+      append(encodedDirectory, entry.resourceOrdinal);
+    }
+    constexpr char domain[] = "IEECSNC-DIRECTORY-V2";
+    std::vector<std::byte> digestInput;
+    append_raw(digestInput, domain, sizeof(domain));
+    append(digestInput, scale);
+    append_raw(digestInput, encodedDirectory.data(), encodedDirectory.size());
+    const auto digest = test_sha256(digestInput);
+    std::vector<std::byte> extension;
+    const auto directoryCount =
+        static_cast<std::uint32_t>(directory.size());
+    const std::uint32_t directoryEntryBytes = 24;
+    append(extension, directoryCount);
+    append(extension, directoryEntryBytes);
+    append_raw(extension, digest.data(), digest.size());
+    bytes.insert(bytes.begin() + 64, extension.begin(), extension.end());
+    bytes.insert(bytes.end(), encodedDirectory.begin(), encodedDirectory.end());
+    return bytes;
+  };
+  const auto make_grouped_component_catalog = [&](std::uint32_t scale,
+                                                   std::uint32_t animationId,
+                                                   std::uint32_t owner,
+                                                   const std::vector<TestShard>& shards) {
+    std::vector<std::byte> bytes;
+    std::vector<std::byte> shardEntries;
+    std::uint64_t totalResources = 0;
+    std::uint64_t totalFrames = 0;
+    std::uint64_t totalIndexBytes = 0;
+    std::uint64_t totalRegistryBytes = 0;
+    for (const auto& shard : shards) {
+      const auto entry = make_shard_entry(shard);
+      append_raw(shardEntries, entry.data(), entry.size());
+      totalResources += shard.resourceCount;
+      totalFrames += shard.frameCount;
+      totalIndexBytes += shard.indexBytes;
+      totalRegistryBytes += shard.registry.size();
+    }
+    append_raw(bytes, catalogMagic.data(), catalogMagic.size());
+    for (const auto value : std::array<std::uint32_t, 6>{
+             {1, scale, 1, 1, 1, static_cast<std::uint32_t>(shards.size())}}) {
+      append(bytes, value);
+    }
+    append(bytes, totalResources);
+    append(bytes, totalFrames);
+    append(bytes, totalIndexBytes);
+    append(bytes, totalRegistryBytes);
+    append(bytes, animationId);
+    append(bytes, owner);
+    const std::uint32_t zero = 0;
+    const std::uint32_t one = 1;
+    append(bytes, zero);
+    append(bytes, one);
+    append(bytes, zero);
+    const auto componentDigest = make_component_digest_from_entry(
+        scale, shardEntries.data(), shardEntries.size());
+    append_raw(bytes, componentDigest.data(), componentDigest.size());
+    append(bytes, zero);
+    const auto shardCount = static_cast<std::uint32_t>(shards.size());
+    append(bytes, shardCount);
+    const auto resourceCount = static_cast<std::uint32_t>(totalResources);
+    append(bytes, resourceCount);
+    append(bytes, zero);
+    append(bytes, totalFrames);
+    append(bytes, totalIndexBytes);
+    append(bytes, totalRegistryBytes);
+    append_raw(bytes, shardEntries.data(), shardEntries.size());
+    return bytes;
+  };
+  const auto digest_filename = [](const std::array<std::byte, 32>& digest) {
+    constexpr std::array<char, 16> hex{{
+        '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+    }};
+    std::string filename = "CreatureSprites-XN-";
+    filename.reserve(filename.size() + digest.size() * 2 + 9);
+    for (const auto byte : digest) {
+      const auto value = std::to_integer<std::uint8_t>(byte);
+      filename.push_back(hex[value >> 4u]);
+      filename.push_back(hex[value & 0x0Fu]);
+    }
+    filename += ".registry";
+    return filename;
+  };
   const auto overwrite_u32 = [](std::vector<std::byte>& bytes, std::size_t offset,
                                 std::uint32_t value) {
     std::memcpy(bytes.data() + offset, &value, sizeof(value));
@@ -1029,10 +1343,20 @@ void test_creature_sprite_registry_formats() {
       write_file(root / filename, shards[index].registry);
     }
   };
+  const auto write_catalog_case = [&](
+      std::uint32_t scale, const std::vector<TestCatalogAnimation>& animations,
+      const std::vector<TestShard>& components) {
+    write_file(root / "CreatureSprites-XN.catalog",
+               make_catalog(scale, animations, components));
+    for (const auto& component : components) {
+      write_file(root / digest_filename(component.sha256), component.registry);
+    }
+  };
 
   const auto legacyPath = root / "CreatureSprites-X2.registry";
   const auto xnPath = root / "CreatureSprites-XN.registry";
   const auto setPath = root / "CreatureSprites-XN.set";
+  const auto catalogPath = root / "CreatureSprites-XN.catalog";
   expect_eq(iee::creature_sprite_x2::kMaximumRegistryBytes,
             std::uint64_t{128} * 1024u * 1024u,
             "Legacy and x2 registries should retain the 128 MiB byte bound");
@@ -1050,6 +1374,913 @@ void test_creature_sprite_registry_formats() {
   expect_eq(iee::creature_sprite_x2::kLazyIndexCacheBudgetBytes,
             std::uint64_t{128} * 1024u * 1024u,
             "Lazy frame indices should retain a 128 MiB resident budget");
+  expect_eq(iee::creature_sprite_x2::kCatalogMetadataCacheBudgetBytes,
+            std::uint64_t{128} * 1024u * 1024u,
+            "On-demand catalog metadata should have an independent 128 MiB LRU budget");
+  expect_true(iee::creature_sprite_x2::kRegistryFrameCodecRaw == 0 &&
+                  iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff == 1,
+              "Registry V5 frame codec ids should retain their format-level values");
+  expect_eq(iee::creature_sprite_x2::kMaximumCatalogDirectoryEntries,
+            std::uint32_t{1'048'576},
+            "Catalog V2 should bound its authenticated resref directory");
+  expect_true(
+      iee::creature_sprite_x2::kMaximumCatalogAnimations == 512 &&
+          iee::creature_sprite_x2::kMaximumCatalogComponents == 16'384 &&
+          iee::creature_sprite_x2::kMaximumCatalogMemberships == 262'144 &&
+          iee::creature_sprite_x2::kMaximumCatalogShards == 16'384 &&
+          iee::creature_sprite_x2::kMaximumCatalogResources == 32'768 &&
+          iee::creature_sprite_x2::kMaximumCatalogFrames == 4'194'304 &&
+          iee::creature_sprite_x2::kMaximumCatalogRegistryBytes ==
+              std::uint64_t{128} * 1024u * 1024u * 1024u,
+      "Catalog counts and aggregate bytes should retain their bounded V1 contract");
+
+  // A catalog owns its animation-to-component relations independently and has
+  // strict priority over valid registry-set and monolithic fallbacks.
+  write_file(legacyPath, make_registry(legacyMagic, 2, 2, 0xE400));
+  write_file(xnPath, make_registry(xnMagic, 3, 4, 0x6220));
+  const auto catalogCharacter = [&] {
+    TestShard shard;
+    shard.registry = make_registry(xnMagic, 3, 4, 0xFFFFu, 1, 0, 'C');
+    // Keep a second palette representative valid so the later 1 -> 2 payload
+    // substitution can only be rejected by the retained payload digest.
+    shard.registry[92] = std::byte{0};
+    shard.registry[93] = std::byte{0};
+    shard.resourceCount = 1;
+    shard.frameCount = 1;
+    shard.indexBytes = 16;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  }();
+  const auto catalogMonster = [&] {
+    TestShard shard;
+    shard.registry = make_registry(xnMagic, 3, 4, 0xFFFFu, 1, 0, 'M');
+    shard.resourceCount = 1;
+    shard.frameCount = 1;
+    shard.indexBytes = 16;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  }();
+  const std::vector<TestCatalogAnimation> catalogAnimations{
+      {0x6110, 1, {0}},
+      {0xE400, 2, {1}},
+  };
+  auto catalogCharacterResref = target;
+  catalogCharacterResref[0] = 'C';
+  auto catalogMonsterResref = target;
+  catalogMonsterResref[0] = 'M';
+
+  const auto prioritySetShard = make_shard(4, 'S');
+  write_set_case(4, {prioritySetShard});
+  write_catalog_case(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  expect_eq(make_catalog(4, catalogAnimations,
+                         {catalogCharacter, catalogMonster}).size(),
+            std::size_t{376},
+            "A two-animation catalog should retain its exact fixed-record layout");
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "A valid multi-animation catalog should load atomically");
+  expect_true(iee::creature_sprite_x2::loaded_scale() == 4 &&
+                  iee::creature_sprite_x2::target_animation_id() == 0 &&
+                  iee::creature_sprite_x2::contains_animation(0x6110) &&
+                  iee::creature_sprite_x2::contains_animation(0xE400) &&
+                  !iee::creature_sprite_x2::contains_animation(0x6220) &&
+                  iee::creature_sprite_x2::animation_targets_character(0x6110) &&
+                  !iee::creature_sprite_x2::animation_targets_monster(0x6110) &&
+                  !iee::creature_sprite_x2::animation_targets_monster_icewind(0x6110) &&
+                  iee::creature_sprite_x2::animation_targets_monster_icewind(0xE400) &&
+                  !iee::creature_sprite_x2::animation_targets_monster(0xE400) &&
+                  !iee::creature_sprite_x2::animation_targets_character(0xE400) &&
+                  iee::creature_sprite_x2::targets_character() &&
+                  !iee::creature_sprite_x2::targets_monster() &&
+                  iee::creature_sprite_x2::targets_monster_icewind(),
+              "A mixed-owner catalog should expose both owners and no ambiguous legacy id");
+  expect_true(
+      await([&] {
+        return iee::creature_sprite_x2::contains_resource(
+            0x6110, catalogCharacterResref);
+      }) &&
+          !iee::creature_sprite_x2::contains_resource(
+              0x6110, catalogMonsterResref) &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0xE400, catalogMonsterResref);
+          }) &&
+          !iee::creature_sprite_x2::contains_resource(
+              0xE400, catalogCharacterResref),
+      "Catalog membership should isolate each animation's resource mapping");
+  expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{0},
+            "Catalog prepare should leave every shard payload lazy");
+  iee::creature_sprite_x2::FrameHandle characterHandle{};
+  iee::creature_sprite_x2::FrameHandle monsterHandle{};
+  expect_true(
+      await([&] {
+        return iee::creature_sprite_x2::resolve_frame(
+            0x6110, catalogCharacterResref, 0, 0, characterHandle);
+      }) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0xE400, catalogMonsterResref, 0, 0, monsterHandle);
+          }) &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(characterHandle) &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(monsterHandle) &&
+          !iee::creature_sprite_x2::resolve_frame(
+              0x6110, catalogMonsterResref, 0, 0, monsterHandle),
+      "The multi-animation resolver should remain scoped to catalog membership");
+  expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{32},
+            "Resolving two x4 catalog shards should cache only their frame payloads");
+  auto setOnlyResref = target;
+  setOnlyResref[0] = 'S';
+  expect_true(!iee::creature_sprite_x2::contains_resource(0x6110, setOnlyResref),
+              "A valid catalog should take priority over a valid registry-set");
+
+  auto changedCatalog =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  changedCatalog.push_back(std::byte{0});
+  const auto changedCatalogWritten = write_file(catalogPath, changedCatalog);
+  expect_true(!changedCatalogWritten &&
+                  iee::creature_sprite_x2::contains_animation(0x6110) &&
+                  iee::creature_sprite_x2::ready(),
+              "The active catalog read lease should reject replacement and keep "
+              "validated mappings stable");
+  iee::creature_sprite_x2::release();
+
+  const std::vector<TestCatalogDirectoryEntry> catalogV2Directory{
+      {0x6110, catalogCharacterResref, 0, 0, 0},
+      {0xE400, catalogMonsterResref, 1, 1, 0},
+  };
+  const auto catalogV2 = make_catalog_v2(
+      4, catalogAnimations, {catalogCharacter, catalogMonster},
+      catalogV2Directory);
+  expect_eq(catalogV2.size(), std::size_t{464},
+            "Catalog V2 should add one authenticated 40-byte directory header "
+            "and two 24-byte entries");
+  write_file(catalogPath, catalogV2);
+  write_file(root / digest_filename(catalogMonster.sha256),
+             catalogMonster.registry);
+  std::filesystem::remove(root / digest_filename(catalogCharacter.sha256), ec);
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0,
+              "Catalog V2 startup should validate only its authenticated directory "
+              "and must not open every V3 shard");
+  bool absentBurstRejected = true;
+  constexpr std::array<char, 16> hexDigits{{
+      '0', '1', '2', '3', '4', '5', '6', '7',
+      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+  }};
+  for (std::uint32_t index = 0; index < 4096; ++index) {
+    auto absent = target;
+    absent[0] = 'N';
+    absent[1] = hexDigits[(index >> 8u) & 0xFu];
+    absent[2] = hexDigits[(index >> 4u) & 0xFu];
+    absent[3] = hexDigits[index & 0xFu];
+    iee::creature_sprite_x2::FrameHandle absentHandle{};
+    absentBurstRejected &=
+        !iee::creature_sprite_x2::contains_resource(0x6110, absent) &&
+        !iee::creature_sprite_x2::resolve_frame(
+            0x6110, absent, 0, 0, absentHandle);
+  }
+  expect_true(absentBurstRejected &&
+                  iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0 &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 0,
+              "Catalog V2 should reject an absent-resref burst with no queue, "
+              "negative cache, shard scan, or resident growth");
+  iee::creature_sprite_x2::FrameHandle v2MonsterHandle{};
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::resolve_frame(
+                    0xE400, catalogMonsterResref, 0, 0, v2MonsterHandle);
+              }) &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() > 0 &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() <=
+                      iee::creature_sprite_x2::kCatalogMetadataCacheBudgetBytes,
+              "Catalog V2 should resolve one resref by loading only its indexed shard");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref) &&
+                  iee::creature_sprite_x2::resolve_frame(
+                      0xE400, catalogMonsterResref, 0, 0, v2MonsterHandle) &&
+                  iee::creature_sprite_x2::ready(),
+              "A missing V2 component should be quarantined without disabling an "
+              "already validated animation");
+  iee::creature_sprite_x2::release();
+
+  auto invalidV2Digest = catalogV2;
+  invalidV2Digest[72] ^= std::byte{1};
+  write_file(catalogPath, invalidV2Digest);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Catalog V2 should reject a modified resource directory digest");
+  auto invalidV2RelationEntries = catalogV2Directory;
+  invalidV2RelationEntries[0].componentIndex = 1;
+  invalidV2RelationEntries[0].shardIndex = 1;
+  write_file(catalogPath,
+             make_catalog_v2(4, catalogAnimations,
+                             {catalogCharacter, catalogMonster},
+                             invalidV2RelationEntries));
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Catalog V2 should reject an authenticated directory target whose "
+              "component is not a member of the animation");
+  write_file(root / digest_filename(catalogCharacter.sha256),
+             catalogCharacter.registry);
+
+  // V5 keeps V3's metadata layout but stores each frame independently. The
+  // authenticated V2 directory routes directly to a shard, so startup and
+  // resolution never have to inflate the rest of an animation.
+  const auto write_v5_catalog_case = [&](std::uint32_t scale,
+                                          const TestShard& shard,
+                                          char marker) {
+    auto resref = target;
+    resref[0] = marker;
+    const std::vector<TestCatalogAnimation> animations{
+        {0x6110, 1, {0}},
+    };
+    const std::vector<TestCatalogDirectoryEntry> directory{
+        {0x6110, resref, 0, 0, 0},
+    };
+    write_file(catalogPath,
+               make_catalog_v2(scale, animations, {shard}, directory));
+    write_file(root / digest_filename(shard.sha256), shard.registry);
+    return resref;
+  };
+  const std::vector<std::uint8_t> v5LogicalX2(32u * 32u * 4u, 1);
+  const auto v5StoredX2 = compress_xpress_huff(v5LogicalX2);
+  expect_true(!v5StoredX2.empty() && v5StoredX2.size() < v5LogicalX2.size(),
+              "The V5 x2 test frame should have a canonical XPRESS_HUFF payload");
+  const auto v5X2 = make_v5_shard(
+      2, 'P', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      v5StoredX2, 2);
+  const auto v5X2Resref = write_v5_catalog_case(2, v5X2, 'P');
+  iee::creature_sprite_x2::FrameHandle v5X2First{};
+  iee::creature_sprite_x2::FrameHandle v5X2Second{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::loaded_scale() == 2 &&
+          iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, v5X2Resref, 0, 0, v5X2First);
+          }) &&
+          iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(v5X2First) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5LogicalX2.size() &&
+          iee::creature_sprite_x2::resolve_frame(
+              0x6110, v5X2Resref, 0, 1, v5X2Second) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5LogicalX2.size() &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(v5X2Second) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5LogicalX2.size() * 2 &&
+          iee::creature_sprite_x2::resident_index_bytes() <=
+              iee::creature_sprite_x2::kLazyIndexCacheBudgetBytes,
+      "V5 x2 should decompress exactly one requested frame into the bounded LRU");
+  const auto hotFilesystemAccesses =
+      iee::creature_sprite_x2::filesystem_access_count();
+  bool hotFrameStayedResident = true;
+  for (std::uint32_t iteration = 0; iteration < 512; ++iteration) {
+    iee::creature_sprite_x2::FrameHandle hotHandle{};
+    hotFrameStayedResident &=
+        iee::creature_sprite_x2::contains_resource(0x6110, v5X2Resref) &&
+        iee::creature_sprite_x2::resolve_frame(
+            0x6110, v5X2Resref, 0, 0, hotHandle) &&
+        iee::creature_sprite_x2::ensure_frame_payload_available(hotHandle);
+  }
+  expect_true(hotFrameStayedResident &&
+                  iee::creature_sprite_x2::filesystem_access_count() ==
+                      hotFilesystemAccesses,
+              "A hot V5 frame should perform zero catalog stat/open or shard reread");
+  iee::creature_sprite_x2::release();
+
+  const std::vector<std::uint8_t> v5LogicalX4(16u * 16u * 16u, 1);
+  const auto v5StoredX4 = compress_xpress_huff(v5LogicalX4);
+  expect_true(!v5StoredX4.empty() && v5StoredX4.size() < v5LogicalX4.size(),
+              "The V5 x4 test frame should have a canonical XPRESS_HUFF payload");
+  const auto v5X4 = make_v5_shard(
+      4, 'Q', 16, 16,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      v5StoredX4);
+  const auto v5X4Resref = write_v5_catalog_case(4, v5X4, 'Q');
+  iee::creature_sprite_x2::FrameHandle v5X4Handle{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::loaded_scale() == 4 &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, v5X4Resref, 0, 0, v5X4Handle);
+          }) &&
+          iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(v5X4Handle) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5LogicalX4.size(),
+      "V5 should support independently compressed x4 catalog frames");
+  iee::creature_sprite_x2::release();
+
+  const std::vector<std::uint8_t> v5RawIndices(16u * 16u * 4u, 1);
+  const auto v5Raw = make_v5_shard(
+      2, 'R', 16, 16,
+      iee::creature_sprite_x2::kRegistryFrameCodecRaw, v5RawIndices);
+  const auto v5RawResref = write_v5_catalog_case(2, v5Raw, 'R');
+  iee::creature_sprite_x2::FrameHandle v5RawHandle{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, v5RawResref, 0, 0, v5RawHandle);
+          }) &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(v5RawHandle) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5RawIndices.size(),
+      "V5 codec 0 should retain an exact raw-frame fallback");
+  iee::creature_sprite_x2::release();
+
+  // Digest verification is over stored bytes, before decompression, even when
+  // a same-size replacement preserves the weak file identity.
+  write_v5_catalog_case(4, v5X4, 'Q');
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "V5 should prepare before stored-block identity testing");
+  iee::creature_sprite_x2::FrameHandle changedV5Handle{};
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::resolve_frame(
+                    0x6110, v5X4Resref, 0, 0, changedV5Handle);
+              }),
+              "V5 metadata should resolve before its payload is materialized");
+  const auto v5X4Path = root / digest_filename(v5X4.sha256);
+  const auto v5X4Stamp = std::filesystem::last_write_time(v5X4Path);
+  auto changedV5Registry = v5X4.registry;
+  changedV5Registry[600] ^= std::byte{1};
+  const auto changedV5Written = write_file(v5X4Path, changedV5Registry);
+  std::filesystem::last_write_time(v5X4Path, v5X4Stamp);
+  expect_true(!changedV5Written &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(
+                      changedV5Handle) &&
+                  iee::creature_sprite_x2::ready(),
+              "A resident V5 shard lease should reject payload replacement and "
+              "retain its validated frame");
+  iee::creature_sprite_x2::release();
+  write_file(v5X4Path, v5X4.registry);
+
+  // A fully rehashed but malformed compressed stream reaches the decoder and
+  // must still fail closed; compressed palette representatives are checked on
+  // the exact decompressed output.
+  const std::vector<std::uint8_t> malformedV5Stored(v5StoredX4.size(), 0);
+  const auto malformedV5 = make_v5_shard(
+      4, 'U', 16, 16,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      malformedV5Stored);
+  auto malformedV5Resref = target;
+  malformedV5Resref[0] = 'U';
+  const std::vector<TestCatalogAnimation> isolatedV5Animation{
+      {0x6110, 1, {0, 1}},
+  };
+  const std::vector<TestCatalogDirectoryEntry> isolatedV5Directory{
+      {0x6110, v5X4Resref, 0, 0, 0},
+      {0x6110, malformedV5Resref, 1, 1, 0},
+  };
+  write_file(catalogPath,
+             make_catalog_v2(4, isolatedV5Animation,
+                             {v5X4, malformedV5}, isolatedV5Directory));
+  write_file(root / digest_filename(v5X4.sha256), v5X4.registry);
+  write_file(root / digest_filename(malformedV5.sha256),
+             malformedV5.registry);
+  iee::creature_sprite_x2::FrameHandle survivingV5Handle{};
+  iee::creature_sprite_x2::FrameHandle malformedV5Handle{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, v5X4Resref, 0, 0, survivingV5Handle);
+          }) &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(
+              survivingV5Handle) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, malformedV5Resref, 0, 0, malformedV5Handle);
+          }) &&
+          !iee::creature_sprite_x2::ensure_frame_payload_available(
+              malformedV5Handle) &&
+          iee::creature_sprite_x2::resident_index_bytes() ==
+              v5LogicalX4.size() &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(
+              survivingV5Handle) &&
+          iee::creature_sprite_x2::ready(),
+      "Malformed XPRESS_HUFF bytes should quarantine only their shard and "
+      "preserve an unrelated frame cache");
+  iee::creature_sprite_x2::release();
+
+  const std::vector<std::uint8_t> unrepresentedLogical(v5LogicalX2.size(), 2);
+  const auto unrepresentedStored = compress_xpress_huff(unrepresentedLogical);
+  const auto unrepresentedV5 = make_v5_shard(
+      2, 'V', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      unrepresentedStored);
+  const auto unrepresentedResref =
+      write_v5_catalog_case(2, unrepresentedV5, 'V');
+  iee::creature_sprite_x2::FrameHandle unrepresentedHandle{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, unrepresentedResref, 0, 0,
+                unrepresentedHandle);
+          }) &&
+          !iee::creature_sprite_x2::ensure_frame_payload_available(
+              unrepresentedHandle) &&
+          iee::creature_sprite_x2::ready(),
+      "V5 should validate palette representatives after decompression");
+  iee::creature_sprite_x2::release();
+
+  const auto expect_v5_metadata_quarantine = [&](const TestShard& shard,
+                                                  std::uint32_t scale,
+                                                  char marker) {
+    const auto resref = write_v5_catalog_case(scale, shard, marker);
+    if (!iee::creature_sprite_x2::prepare(root)) return false;
+    (void)iee::creature_sprite_x2::contains_resource(0x6110, resref);
+    const auto quarantined = await([&] {
+      return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+    }) && !iee::creature_sprite_x2::contains_resource(0x6110, resref) &&
+        iee::creature_sprite_x2::ready();
+    iee::creature_sprite_x2::release();
+    return quarantined;
+  };
+  const auto unknownCodecV5 = make_v5_shard(2, 'W', 32, 32, 2,
+                                             v5StoredX2);
+  expect_true(expect_v5_metadata_quarantine(unknownCodecV5, 2, 'W'),
+              "V5 should quarantine an unknown frame codec on demand");
+  const auto reservedV5 = make_v5_shard(
+      2, 'X', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      v5StoredX2, 1, std::nullopt,
+      {std::byte{1}, std::byte{0}});
+  expect_true(expect_v5_metadata_quarantine(reservedV5, 2, 'X'),
+              "V5 should reject nonzero reserved frame bytes");
+  const auto noncanonicalCompressedV5 = make_v5_shard(
+      2, 'Y', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      v5LogicalX2);
+  expect_true(expect_v5_metadata_quarantine(noncanonicalCompressedV5, 2, 'Y'),
+              "V5 XPRESS_HUFF storage must be smaller than its logical frame");
+  const auto shortRawV5 = make_v5_shard(
+      2, 'Z', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecRaw, v5StoredX2);
+  expect_true(expect_v5_metadata_quarantine(shortRawV5, 2, 'Z'),
+              "V5 raw storage must exactly match its logical frame size");
+  const auto truncatedV5 = make_v5_shard(
+      2, 'J', 32, 32,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      v5StoredX2, 1,
+      static_cast<std::uint32_t>(v5StoredX2.size() + 1024));
+  expect_true(expect_v5_metadata_quarantine(truncatedV5, 2, 'J'),
+              "V5 should quarantine a truncated stored frame range");
+  const std::vector<std::uint8_t> oneStoredByte{1};
+  const auto bombV5 = make_v5_shard(
+      4, 'K', 3000, 3000,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      oneStoredByte);
+  expect_true(expect_v5_metadata_quarantine(bombV5, 4, 'K'),
+              "V5 should reject a decompression bomb above the frame-cache bound "
+              "before allocation");
+  const auto oversizedV5 = make_v5_shard(
+      4, 'L', 65535, 65535,
+      iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff,
+      oneStoredByte);
+  write_v5_catalog_case(4, oversizedV5, 'L');
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "V5 logical byte totals above the scale-specific shard bound should "
+              "fail at catalog validation");
+
+  // V5 is intentionally unavailable through legacy monolith/set discovery;
+  // those paths keep their V3/V4 contracts and cannot bypass Catalog V2.
+  write_file(catalogPath,
+             make_catalog(2, {{0x6110, 1, {0}}}, {v5X2}));
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A Catalog V1 manifest must reject compressed logical/physical totals");
+  std::filesystem::remove(catalogPath, ec);
+  std::filesystem::remove(setPath, ec);
+  write_file(xnPath, v5Raw.registry);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A V5 registry must never activate as a monolith");
+  write_set_case(2, {v5Raw});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A V5 registry must never activate through a standard registry-set");
+  std::filesystem::remove(setPath, ec);
+
+  write_file(catalogPath,
+             make_grouped_component_catalog(
+                 4, 0x6110, 1, {catalogCharacter, catalogMonster}));
+  write_file(root / digest_filename(catalogCharacter.sha256),
+             catalogCharacter.registry);
+  write_file(root / digest_filename(catalogMonster.sha256),
+             catalogMonster.registry);
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::target_animation_id() == 0x6110 &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0x6110, catalogCharacterResref);
+          }) &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0x6110, catalogMonsterResref);
+          }),
+      "One catalog component should bind multiple ordered shards to one animation");
+  iee::creature_sprite_x2::release();
+
+  const auto catalogX2 = [&] {
+    TestShard shard;
+    shard.registry = make_registry(xnMagic, 3, 2, 0xFFFFu, 1, 0, 'X');
+    shard.resourceCount = 1;
+    shard.frameCount = 1;
+    shard.indexBytes = 4;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  }();
+  auto catalogX2Resref = target;
+  catalogX2Resref[0] = 'X';
+  write_file(catalogPath,
+             make_grouped_component_catalog(2, 0x6110, 1, {catalogX2}));
+  write_file(root / digest_filename(catalogX2.sha256), catalogX2.registry);
+  iee::creature_sprite_x2::FrameHandle catalogX2Handle{};
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::loaded_scale() == 2 &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0x6110, catalogX2Resref, 0, 0, catalogX2Handle);
+          }) &&
+          iee::creature_sprite_x2::ensure_frame_payload_available(
+              catalogX2Handle) &&
+          iee::creature_sprite_x2::resident_index_bytes() == 4,
+      "A single-animation x2 catalog should preserve compatibility and lazy payloads");
+  iee::creature_sprite_x2::release();
+
+  const std::vector<TestCatalogAnimation> sharedComponentAnimations{
+      {0x6110, 1, {0}},
+      {0xE400, 2, {0}},
+  };
+  write_catalog_case(4, sharedComponentAnimations, {catalogCharacter});
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0x6110, catalogCharacterResref);
+          }) &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0xE400, catalogCharacterResref);
+          }),
+      "Two animations should be allowed to share one immutable component");
+  iee::creature_sprite_x2::FrameHandle sharedCharacterHandle{};
+  iee::creature_sprite_x2::FrameHandle sharedMonsterHandle{};
+  expect_true(
+      await([&] {
+        return iee::creature_sprite_x2::resolve_frame(
+            0x6110, catalogCharacterResref, 0, 0, sharedCharacterHandle);
+      }) &&
+          await([&] {
+            return iee::creature_sprite_x2::resolve_frame(
+                0xE400, catalogCharacterResref, 0, 0,
+                sharedMonsterHandle);
+          }) &&
+          sharedCharacterHandle.animationId == 0x6110 &&
+          sharedMonsterHandle.animationId == 0xE400 &&
+          sharedCharacterHandle.resourceIndex ==
+              sharedMonsterHandle.resourceIndex &&
+          sharedCharacterHandle.frameIndex == sharedMonsterHandle.frameIndex &&
+          sharedCharacterHandle != sharedMonsterHandle,
+      "A shared resref/frame should retain distinct animation-scoped handles for QA");
+  iee::creature_sprite_x2::FrameHandle changedShardHandle{};
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::resolve_frame(
+                    0x6110, catalogCharacterResref, 0, 0,
+                    changedShardHandle);
+              }),
+              "A shared catalog component should resolve before identity testing");
+  const auto activeShardPath =
+      root / digest_filename(catalogCharacter.sha256);
+  const auto activeShardStamp = std::filesystem::last_write_time(activeShardPath);
+  auto changedActiveShard = catalogCharacter.registry;
+  changedActiveShard[changedActiveShard.size() - 9] = std::byte{2};
+  const auto changedActiveShardWritten =
+      write_file(activeShardPath, changedActiveShard);
+  std::filesystem::last_write_time(activeShardPath, activeShardStamp);
+  expect_true(
+      !changedActiveShardWritten &&
+          std::filesystem::file_size(activeShardPath) ==
+              catalogCharacter.registry.size() &&
+          std::filesystem::last_write_time(activeShardPath) == activeShardStamp,
+      "A resident catalog shard lease should reject same-identity replacement");
+  expect_true(iee::creature_sprite_x2::ensure_frame_payload_available(
+                  changedShardHandle) &&
+                   iee::creature_sprite_x2::ready(),
+               "A blocked shard replacement should preserve the validated lazy frame");
+  iee::creature_sprite_x2::release();
+  write_file(activeShardPath, catalogCharacter.registry);
+
+  // Component materialization rechecks the whole shard cryptographically,
+  // even when an attacker preserves the size/mtime identity used by polling.
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "The catalog should prepare before the materialization mutation test");
+  const auto materializationStamp =
+      std::filesystem::last_write_time(activeShardPath);
+  auto changedBeforeMaterialization = catalogCharacter.registry;
+  changedBeforeMaterialization[32] ^= std::byte{1};
+  write_file(activeShardPath, changedBeforeMaterialization);
+  std::filesystem::last_write_time(activeShardPath, materializationStamp);
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(
+      await([&] {
+        return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+      }) &&
+          std::filesystem::last_write_time(activeShardPath) ==
+              materializationStamp &&
+          !iee::creature_sprite_x2::contains_resource(
+              0x6110, catalogCharacterResref) &&
+          iee::creature_sprite_x2::ready(),
+      "A same-size, same-timestamp shard mutation should fail SHA-256/CRC-32 "
+      "revalidation before component materialization");
+  iee::creature_sprite_x2::release();
+  write_file(activeShardPath, catalogCharacter.registry);
+
+  const auto animationBytes = catalogAnimations.size() * 16;
+  const auto membershipBytes = std::size_t{2} * sizeof(std::uint32_t);
+  const auto componentTableOffset = std::size_t{64} + animationBytes + membershipBytes;
+  const auto shardTableOffset = componentTableOffset + std::size_t{2} * 72;
+
+  auto duplicateResrefShard = catalogCharacter;
+  duplicateResrefShard.registry[32] ^= std::byte{1};
+  duplicateResrefShard.sha256 = test_sha256(duplicateResrefShard.registry);
+  const std::vector<TestCatalogAnimation> duplicateResrefAnimation{
+      {0x6110, 1, {0, 1}},
+  };
+  write_catalog_case(4, duplicateResrefAnimation,
+                     {catalogCharacter, duplicateResrefShard});
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "A V1 catalog should activate without scanning duplicate shard content");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref) &&
+                  iee::creature_sprite_x2::ready(),
+              "A duplicate V1 resref should quarantine only its components on demand");
+  iee::creature_sprite_x2::release();
+
+  const auto catalogGenericMonster = [&] {
+    TestShard shard;
+    shard.registry = make_registry(xnMagic, 3, 4, 0xFFFFu, 1, 0, 'G');
+    shard.resourceCount = 1;
+    shard.frameCount = 1;
+    shard.indexBytes = 16;
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  }();
+  const std::vector<TestCatalogAnimation> genericMonsterAnimation{
+      {0x7F07, 3, {0}},
+  };
+  auto genericMonsterResref = target;
+  genericMonsterResref[0] = 'G';
+  write_catalog_case(4, genericMonsterAnimation, {catalogGenericMonster});
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::contains_animation(0x7F07) &&
+          iee::creature_sprite_x2::animation_targets_monster(0x7F07) &&
+          !iee::creature_sprite_x2::animation_targets_character(0x7F07) &&
+          !iee::creature_sprite_x2::animation_targets_monster_icewind(0x7F07) &&
+          iee::creature_sprite_x2::targets_monster() &&
+          !iee::creature_sprite_x2::targets_character() &&
+          !iee::creature_sprite_x2::targets_monster_icewind() &&
+          await([&] {
+            return iee::creature_sprite_x2::contains_resource(
+                0x7F07, genericMonsterResref);
+          }),
+      "A 0x7000 catalog should select only the generic Monster owner scope");
+  iee::creature_sprite_x2::release();
+  expect_true(!iee::creature_sprite_x2::targets_monster() &&
+                  !iee::creature_sprite_x2::animation_targets_monster(0x7F07),
+              "Releasing a generic Monster catalog should clear its owner scope");
+
+  auto invalidOwner =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(invalidOwner, 64 + sizeof(std::uint32_t), 4);
+  write_file(catalogPath, invalidOwner);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "An unknown catalog owner should fail closed");
+
+  auto wrongFamilyOwner =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(wrongFamilyOwner, 64 + sizeof(std::uint32_t), 2);
+  write_file(catalogPath, wrongFamilyOwner);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A MonsterIcewind owner on a Character animation family should fail "
+              "closed");
+
+  auto wrongGenericMonsterFamilyOwner =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(wrongGenericMonsterFamilyOwner,
+                64 + sizeof(std::uint32_t), 3);
+  write_file(catalogPath, wrongGenericMonsterFamilyOwner);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A generic Monster owner on a Character animation family should fail "
+              "closed");
+
+  const std::vector<TestCatalogAnimation> reversedAnimations{
+      {0xE400, 2, {1}},
+      {0x6110, 1, {0}},
+  };
+  write_catalog_case(4, reversedAnimations,
+                     {catalogCharacter, catalogMonster});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Catalog animation ids should be strictly increasing");
+
+  auto permutedMembershipRanges =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(permutedMembershipRanges, 64 + 8, 1);
+  overwrite_u32(permutedMembershipRanges, 64 + 16 + 8, 0);
+  write_file(catalogPath, permutedMembershipRanges);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Animation membership ranges should be one canonical ordered partition");
+
+  const std::vector<TestCatalogAnimation> permutedMemberships{
+      {0x6110, 1, {1, 0}},
+  };
+  write_catalog_case(4, permutedMemberships,
+                     {catalogCharacter, catalogMonster});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Component memberships should be sorted, unique, and canonical");
+
+  auto duplicateAnimationId =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(duplicateAnimationId, 64 + 16, 0x6110);
+  write_file(catalogPath, duplicateAnimationId);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A duplicate catalog animation id should fail closed");
+
+  auto permutedShardRanges =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(permutedShardRanges, componentTableOffset + 32, 1);
+  overwrite_u32(permutedShardRanges, componentTableOffset + 72 + 32, 0);
+  write_file(catalogPath, permutedShardRanges);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "Component shard ranges should form one canonical ordered partition");
+
+  auto invalidRelation =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(invalidRelation, 64 + animationBytes, 2);
+  write_file(catalogPath, invalidRelation);
+  expect_true(!iee::creature_sprite_x2::prepare(root) &&
+                  !iee::creature_sprite_x2::ready(),
+              "An out-of-range catalog membership should fail closed without using the set");
+
+  auto invalidComponentHash =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  invalidComponentHash[componentTableOffset] ^= std::byte{1};
+  write_file(catalogPath, invalidComponentHash);
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A catalog component digest mismatch should fail closed");
+
+  auto invalidCatalogCrc =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(invalidCatalogCrc, shardTableOffset + 32,
+                test_crc32(catalogCharacter.registry) ^ 1u);
+  const auto crcComponentDigest = make_component_digest_from_entry(
+      4, invalidCatalogCrc.data() + shardTableOffset, 64);
+  std::memcpy(invalidCatalogCrc.data() + componentTableOffset,
+              crcComponentDigest.data(), crcComponentDigest.size());
+  write_file(catalogPath, invalidCatalogCrc);
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog activation must not hash a shard with a stale CRC");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref) &&
+                  iee::creature_sprite_x2::ready(),
+              "A stale shard CRC should fail closed at component scope on demand");
+  iee::creature_sprite_x2::release();
+
+  auto changedCatalogShard = catalogCharacter.registry;
+  changedCatalogShard[32] ^= std::byte{1};
+  auto staleCatalogSha =
+      make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
+  overwrite_u32(staleCatalogSha, shardTableOffset + 32,
+                test_crc32(changedCatalogShard));
+  const auto staleShaComponentDigest = make_component_digest_from_entry(
+      4, staleCatalogSha.data() + shardTableOffset, 64);
+  std::memcpy(staleCatalogSha.data() + componentTableOffset,
+              staleShaComponentDigest.data(), staleShaComponentDigest.size());
+  write_file(catalogPath, staleCatalogSha);
+  write_file(root / digest_filename(catalogCharacter.sha256), changedCatalogShard);
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog activation must remain independent from stale shard SHA bytes");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref) &&
+                  iee::creature_sprite_x2::ready(),
+              "A stale shard SHA-256 should quarantine its component on demand");
+  iee::creature_sprite_x2::release();
+
+  auto noncanonicalResref = catalogCharacter;
+  noncanonicalResref.registry[24 + 5] = static_cast<std::byte>('Q');
+  noncanonicalResref.sha256 = test_sha256(noncanonicalResref.registry);
+  write_catalog_case(4, catalogAnimations,
+                     {noncanonicalResref, catalogMonster});
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog V1 activation should not scan resref padding");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref),
+              "Catalog resrefs should reject nonzero bytes after NUL padding on demand");
+  iee::creature_sprite_x2::release();
+
+  auto lowercaseResref = catalogCharacter;
+  lowercaseResref.registry[24] = static_cast<std::byte>('c');
+  lowercaseResref.sha256 = test_sha256(lowercaseResref.registry);
+  write_catalog_case(4, catalogAnimations,
+                     {lowercaseResref, catalogMonster});
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog V1 activation should defer resref character validation");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref),
+              "Catalog resrefs should use uppercase BAM characters on demand");
+  iee::creature_sprite_x2::release();
+
+  auto emptyCatalogCycle = catalogCharacter;
+  emptyCatalogCycle.registry.resize(emptyCatalogCycle.registry.size() -
+                                    sizeof(std::uint32_t));
+  overwrite_u32(emptyCatalogCycle.registry,
+                emptyCatalogCycle.registry.size() - sizeof(std::uint32_t), 0);
+  emptyCatalogCycle.sha256 = test_sha256(emptyCatalogCycle.registry);
+  write_catalog_case(4, catalogAnimations,
+                     {emptyCatalogCycle, catalogMonster});
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog V1 activation should defer cycle validation");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref),
+              "Catalog shards should preserve empty native animation cycles");
+  iee::creature_sprite_x2::release();
+
+  auto invalidSentinel = catalogCharacter;
+  invalidSentinel.registry = make_registry(xnMagic, 3, 4, 0x6110, 1, 0, 'C');
+  invalidSentinel.sha256 = test_sha256(invalidSentinel.registry);
+  write_catalog_case(4, catalogAnimations, {invalidSentinel, catalogMonster});
+  expect_true(iee::creature_sprite_x2::prepare(root),
+              "Catalog V1 activation should defer V3 sentinel validation");
+  (void)iee::creature_sprite_x2::contains_resource(
+      0x6110, catalogCharacterResref);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
+              }) &&
+                  !iee::creature_sprite_x2::contains_resource(
+                      0x6110, catalogCharacterResref),
+              "A V3 shard without sentinel 0xFFFF should fail closed on demand");
+  iee::creature_sprite_x2::release();
+  std::filesystem::remove(catalogPath, ec);
+
+  ec.clear();
+  std::filesystem::create_symlink(root / "missing-catalog-target", catalogPath,
+                                  ec);
+  if (!ec) {
+    expect_true(!iee::creature_sprite_x2::prepare(root),
+                "A dangling catalog symlink should remain present and block fallback");
+    iee::creature_sprite_x2::release();
+    std::filesystem::remove(catalogPath, ec);
+  } else {
+    // Windows may deny symlink creation outside Developer Mode. A directory at
+    // the same priority path exercises the same present-but-unopenable gate.
+    ec.clear();
+    std::filesystem::create_directory(catalogPath, ec);
+    expect_true(!ec && !iee::creature_sprite_x2::prepare(root),
+                "A present non-file catalog entry should block every fallback");
+    iee::creature_sprite_x2::release();
+    std::filesystem::remove(catalogPath, ec);
+  }
 
   // A valid set has strict priority over both monolithic formats and keeps
   // only metadata resident until a frame payload is requested.
@@ -1097,12 +2328,15 @@ void test_creature_sprite_registry_formats() {
               "A set frame should materialize lazily from its owning shard");
   expect_eq(iee::creature_sprite_x2::resident_index_bytes(), std::uint64_t{16},
             "One synthetic x4 frame should occupy only its 16-byte lazy payload");
-  std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
-  expect_true(!iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle) &&
-                  !iee::creature_sprite_x2::ready() &&
-                  iee::creature_sprite_x2::loaded_scale() == 0,
-              "The direct payload API should reject a retained cached handle after its "
-              "shard changes");
+  ec.clear();
+  const auto activeSetShardRemoved =
+      std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
+  expect_true(!activeSetShardRemoved && ec &&
+                  iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle) &&
+                  iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 4,
+              "A retained set-shard lease should block deletion and preserve its "
+              "cached frame");
   iee::creature_sprite_x2::release();
   expect_true(!iee::creature_sprite_x2::ready() &&
                   iee::creature_sprite_x2::loaded_scale() == 0 &&
@@ -1115,14 +2349,17 @@ void test_creature_sprite_registry_formats() {
                   iee::creature_sprite_x2::resolve_frame(targetA, 0, 0, lazyHandle) &&
                   iee::creature_sprite_x2::ensure_frame_payload_available(lazyHandle),
               "A resolution failure test should materialize a valid cached payload first");
-  std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
+  ec.clear();
+  const auto resolvedSetShardRemoved =
+      std::filesystem::remove(root / "CreatureSprites-XN-0000.registry", ec);
   iee::creature_sprite_x2::FrameHandle changedSourceHandle{};
-  expect_true(!iee::creature_sprite_x2::resolve_frame(
-                  targetA, 0, 0, changedSourceHandle) &&
-                  !iee::creature_sprite_x2::ready() &&
-                  iee::creature_sprite_x2::loaded_scale() == 0 &&
-                  changedSourceHandle == iee::creature_sprite_x2::FrameHandle{},
-              "A new resolution should disable a lazy pack whose cached shard changed");
+  expect_true(!resolvedSetShardRemoved && ec &&
+                  iee::creature_sprite_x2::resolve_frame(
+                      targetA, 0, 0, changedSourceHandle) &&
+                  iee::creature_sprite_x2::ready() &&
+                  iee::creature_sprite_x2::loaded_scale() == 4 &&
+                  changedSourceHandle != iee::creature_sprite_x2::FrameHandle{},
+              "A blocked set-shard deletion should keep new resolutions stable");
   iee::creature_sprite_x2::release();
 
   const auto x2ShardA = make_shard(2, 'A');

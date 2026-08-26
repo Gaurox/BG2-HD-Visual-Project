@@ -175,6 +175,7 @@ if(IEE_BUILD_WINDOWS_DLL)
             minhook
         psapi
         opengl32
+        Cabinet
         dbghelp
         winmm
         mfplat
@@ -250,10 +251,23 @@ if(BUILD_TESTING)
             src/iee/creature_sprite_x2.cpp
             src/iee/game/opengl_types.cpp
         )
-        target_link_libraries(iee_tests PRIVATE opengl32)
+        target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
     endif()
 
     target_link_libraries(iee_tests PRIVATE iee_common)
     iee_configure_target(iee_tests)
     add_test(NAME iee_tests COMMAND iee_tests WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+    if(WIN32)
+        # Isolated regression test for DLL worker ownership. It deliberately
+        # does not link the renderer or registry so lifecycle failures remain
+        # diagnosable even while those subsystems evolve.
+        add_executable(iee_bridge_worker_tests
+            tests/bridge_worker_lifecycle_tests.cpp
+        )
+        target_include_directories(iee_bridge_worker_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+        target_compile_features(iee_bridge_worker_tests PRIVATE cxx_std_20)
+        iee_configure_target(iee_bridge_worker_tests)
+        add_test(NAME iee_bridge_worker_tests COMMAND iee_bridge_worker_tests)
+    endif()
 endif()

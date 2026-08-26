@@ -5,6 +5,7 @@ import json
 import shutil
 import tempfile
 import unittest
+import uuid
 from pathlib import Path
 
 from pipeline.scripts import generate_character_complete_x2_jobs as generator
@@ -14,20 +15,32 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
     def setUp(self) -> None:
         tests_root = generator.PROJECT_ROOT / "pipeline" / "tests"
         self.root = Path(tempfile.mkdtemp(prefix="character-jobs-", dir=tests_root))
-        self.jobs = self.root / "jobs"
-        self.jobs.mkdir()
+        token = uuid.uuid4().hex[:10]
+        self.character_root = generator.CHARACTER_ROOT / f"6110-test-{token}"
+        self.template_workspace = self.character_root / "body-chfb1"
+        self.template_workspace.joinpath("jobs").mkdir(parents=True)
         self.families = self.root / "sprite_families.csv"
-        self.template = self.jobs / "hero-chfb1-xbr2x.json"
-        self.aggregate = self.jobs / "hero-complete-xbr2x.json"
+        self.template = self.template_workspace / "jobs" / "hero-chfb1-xbr2x.json"
+        self.aggregate = (
+            self.character_root
+            / "family-runs"
+            / "complete-x2-nearest"
+            / "jobs"
+            / "hero-complete-xbr2x.json"
+        )
         self._write_json(self.template, self._template_job())
 
     def tearDown(self) -> None:
         shutil.rmtree(self.root, ignore_errors=True)
+        shutil.rmtree(self.character_root, ignore_errors=True)
 
     def _relative(self, path: Path) -> str:
         return path.relative_to(generator.PROJECT_ROOT).as_posix()
 
     def _template_job(self) -> dict[str, object]:
+        workspace_paths = generator.character_workspace_paths(
+            self.template_workspace, "hero-chfb1-xbr2x", 2, "0x6110"
+        )
         return {
             "schema": generator.JOB_SCHEMA,
             "job_id": "hero-chfb1-xbr2x",
@@ -41,11 +54,9 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             },
             "paths": {
                 "game_root": "X:/Fake BG2",
-                "source_dir": f"{self._relative(self.root)}/template/source",
-                "run_dir": f"{self._relative(self.root)}/template/runs/xbr2x-x2",
                 "scalepix": "X:/Fake/scalepix.html",
                 "engine_source": f"{self._relative(self.root)}/engine/source",
-                "engine_build": f"{self._relative(self.root)}/engine/build",
+                **workspace_paths,
             },
             "compatibility": {"baldur_real_sha256": "A" * 64},
             "runtime": {
@@ -58,6 +69,7 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
 
     @staticmethod
     def _write_json(path: Path, payload: dict[str, object]) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
             json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
@@ -67,6 +79,9 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             "animation_id": "0x6110",
             "ids_symbol": "FIGHTER_FEMALE_HUMAN",
             "runtime_profile": "character-bg2ee-2.7.3.0",
+            "runtime_supported": "yes",
+            "pipeline_ready": "yes",
+            "override_collision": "",
             "blocker": "",
         }
         return [
@@ -125,6 +140,9 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             "animation_id",
             "ids_symbol",
             "runtime_profile",
+            "runtime_supported",
+            "pipeline_ready",
+            "override_collision",
             "layer_kind",
             "variant_value",
             "item_resrefs",
@@ -143,7 +161,7 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         return generator.make_plan(
             project_root=generator.PROJECT_ROOT,
             families_path=self.families,
-            jobs_dir=self.jobs,
+            character_root=self.character_root,
             template_path=self.template,
             aggregate_path=self.aggregate,
             animation_id="0x6110",
@@ -166,8 +184,18 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             plan.aggregate_payload["members"],
             [
                 self._relative(self.template),
-                self._relative(self.jobs / "hero-aahelm-wqnh0-xbr2x.json"),
-                self._relative(self.jobs / "hero-fblade-wqnfs-xbr2x.json"),
+                self._relative(
+                    self.character_root
+                    / "aahelm-wqnh0"
+                    / "jobs"
+                    / "hero-aahelm-wqnh0-xbr2x.json"
+                ),
+                self._relative(
+                    self.character_root
+                    / "fblade-wqnfs"
+                    / "jobs"
+                    / "hero-fblade-wqnfs-xbr2x.json"
+                ),
             ],
         )
         self.assertEqual(
@@ -177,6 +205,14 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         self.assertEqual(
             plan.aggregate_payload["inventory"]["member_registry_set_families"],
             ["WQNFS"],
+        )
+        self.assertEqual(
+            plan.aggregate_payload["qa"]["required_bam_prefixes"],
+            ["CHFB1", "WQNH0", "WQNFS"],
+        )
+        self.assertEqual(
+            plan.aggregate_payload["qa"]["required_items"],
+            ["AAHELM", "FBLADE"],
         )
         generated_by_prefix = {
             write.payload["animation"]["bam_prefix"]: write.payload
@@ -200,6 +236,10 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         aggregate = json.loads(self.aggregate.read_text(encoding="utf-8"))
         self.assertEqual(aggregate["upscale"], generator.DIRECT_X2_METHOD)
         self.assertEqual(len(aggregate["members"]), 3)
+        for member_text in aggregate["members"]:
+            member_path = generator.PROJECT_ROOT / member_text
+            self.assertEqual(member_path.parent.name, "jobs")
+            self.assertIn(self.character_root, member_path.parents)
         self.assertFalse((self.root / "template" / "source").exists())
 
     def test_existing_aggregate_blocks_all_publication_without_force(self) -> None:
@@ -211,8 +251,8 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             self._plan(force=False)
 
         self.assertEqual(json.loads(self.aggregate.read_text(encoding="utf-8")), sentinel)
-        self.assertFalse((self.jobs / "hero-aahelm-wqnh0-xbr2x.json").exists())
-        self.assertFalse((self.jobs / "hero-fblade-wqnfs-xbr2x.json").exists())
+        self.assertFalse((self.character_root / "aahelm-wqnh0").exists())
+        self.assertFalse((self.character_root / "fblade-wqnfs").exists())
 
     def test_force_replaces_aggregate_but_still_reuses_existing_prefix_job(self) -> None:
         self._write_families()
@@ -226,14 +266,33 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             "bam_prefix": "WQNH0",
             "runtime_profile": "character-bg2ee-2.7.3.0",
         }
-        existing_path = self.jobs / "custom-existing-helmet-xbr2x.json"
+        existing_path = (
+            self.character_root
+            / "zzhelm-wqnh0"
+            / "jobs"
+            / "custom-existing-helmet-xbr2x.json"
+        )
+        existing["paths"].update(
+            generator.character_workspace_paths(
+                existing_path.parent.parent,
+                "custom-existing-helmet-xbr2x",
+                2,
+                "0x6110",
+            )
+        )
         self._write_json(existing_path, existing)
         self._write_json(self.aggregate, {"stale": True})
 
         plan = self._plan(force=True)
 
         self.assertIn(existing_path.resolve(), plan.reused_jobs)
-        self.assertNotIn(self.jobs / "hero-aahelm-wqnh0-xbr2x.json", plan.generated_jobs)
+        self.assertNotIn(
+            self.character_root
+            / "aahelm-wqnh0"
+            / "jobs"
+            / "hero-aahelm-wqnh0-xbr2x.json",
+            plan.generated_jobs,
+        )
         generator.apply_plan(plan)
         self.assertEqual(
             json.loads(self.aggregate.read_text(encoding="utf-8"))["members"][1],
@@ -244,7 +303,11 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         self._write_families()
         duplicate = self._template_job()
         duplicate["job_id"] = "duplicate-body-xbr2x"
-        self._write_json(self.jobs / "duplicate-body-xbr2x.json", duplicate)
+        duplicate_path = (
+            self.character_root / "duplicate-body" / "jobs" / "duplicate-body-xbr2x.json"
+        )
+        duplicate_path.parent.mkdir(parents=True)
+        self._write_json(duplicate_path, duplicate)
 
         with self.assertRaisesRegex(RuntimeError, "multiple compatible x2 jobs use BAM prefix CHFB1"):
             self._plan()
@@ -286,7 +349,11 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             "bam_prefix": "WQNFS",
             "runtime_profile": "character-bg2ee-2.7.3.0",
         }
-        self._write_json(self.jobs / "legacy-wqnfs-xbr2x.json", legacy)
+        legacy_path = (
+            self.character_root / "legacy-wqnfs" / "jobs" / "legacy-wqnfs-xbr2x.json"
+        )
+        legacy_path.parent.mkdir(parents=True)
+        self._write_json(legacy_path, legacy)
 
         with self.assertRaisesRegex(RuntimeError, "WQNFS requires explicit xN"):
             self._plan()

@@ -4,6 +4,8 @@
 #include <array>
 #include <atomic>
 #include <cctype>
+#include <chrono>
+#include <condition_variable>
 #include <cstdint>
 #include <cstring>
 #include <exception>
@@ -11,16 +13,20 @@
 #include <iterator>
 #include <limits>
 #include <mutex>
+#include <deque>
 #include <set>
 #include <stdexcept>
 #include <string>
 #include <system_error>
+#include <thread>
+#include <tuple>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
 #ifdef _WIN32
 #include <windows.h>
+#include <compressapi.h>
 #endif
 
 #include "iee/core/logger.h"
@@ -60,17 +66,58 @@ constexpr std::array<char, 8> kXnRegistryMagic{
     {'I', 'E', 'E', 'C', 'S', 'X', 'N', '\0'}};
 constexpr std::array<char, 8> kRegistrySetMagic{
     {'I', 'E', 'E', 'C', 'S', 'N', 'S', '\0'}};
+constexpr std::array<char, 8> kRegistryCatalogMagic{
+    {'I', 'E', 'E', 'C', 'S', 'N', 'C', '\0'}};
 constexpr std::uint32_t kLegacyRegistryVersion = 1;
 constexpr std::uint32_t kLegacyCurrentRegistryVersion = 2;
 constexpr std::uint32_t kXnRegistryVersion = 3;
 constexpr std::uint32_t kXnAntialiasRegistryVersion = 4;
+constexpr std::uint32_t kXnCompressedRegistryVersion = 5;
 constexpr std::uint32_t kRegistrySetVersion = 1;
+constexpr std::uint32_t kRegistryCatalogVersion = 1;
+constexpr std::uint32_t kRegistryCatalogDirectoryVersion = 2;
+constexpr std::uint32_t kCatalogCharacterOwner = 1;
+constexpr std::uint32_t kCatalogMonsterIcewindOwner = 2;
+constexpr std::uint32_t kCatalogMonsterOwner = 3;
+constexpr std::uint16_t kCatalogShardAnimationSentinel = 0xFFFFu;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
 constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
 constexpr char kXnRegistryFilename[] = "CreatureSprites-XN.registry";
 constexpr char kRegistrySetFilename[] = "CreatureSprites-XN.set";
+constexpr char kRegistryCatalogFilename[] = "CreatureSprites-XN.catalog";
 constexpr std::size_t kRegistrySetHeaderBytes = 56;
 constexpr std::size_t kRegistrySetEntryBytes = 64;
+constexpr std::size_t kRegistryCatalogHeaderBytes = 64;
+constexpr std::size_t kRegistryCatalogDirectoryHeaderBytes = 104;
+constexpr std::size_t kRegistryCatalogAnimationBytes = 16;
+constexpr std::size_t kRegistryCatalogMembershipBytes = 4;
+constexpr std::size_t kRegistryCatalogComponentBytes = 72;
+constexpr std::size_t kRegistryCatalogShardBytes = 64;
+constexpr std::size_t kRegistryCatalogDirectoryEntryBytes = 24;
+constexpr std::size_t kMaximumRegistryCatalogBytes =
+    kRegistryCatalogHeaderBytes +
+    static_cast<std::size_t>(kMaximumCatalogAnimations) *
+        kRegistryCatalogAnimationBytes +
+    static_cast<std::size_t>(kMaximumCatalogMemberships) *
+        kRegistryCatalogMembershipBytes +
+    static_cast<std::size_t>(kMaximumCatalogComponents) *
+        kRegistryCatalogComponentBytes +
+    static_cast<std::size_t>(kMaximumCatalogShards) *
+        kRegistryCatalogShardBytes;
+static_assert(kMaximumRegistryCatalogBytes == 3'285'056);
+constexpr std::size_t kMaximumRegistryCatalogDirectoryBytes =
+    kRegistryCatalogDirectoryHeaderBytes +
+    static_cast<std::size_t>(kMaximumCatalogAnimations) *
+        kRegistryCatalogAnimationBytes +
+    static_cast<std::size_t>(kMaximumCatalogMemberships) *
+        kRegistryCatalogMembershipBytes +
+    static_cast<std::size_t>(kMaximumCatalogComponents) *
+        kRegistryCatalogComponentBytes +
+    static_cast<std::size_t>(kMaximumCatalogShards) *
+        kRegistryCatalogShardBytes +
+    static_cast<std::size_t>(kMaximumCatalogDirectoryEntries) *
+        kRegistryCatalogDirectoryEntryBytes;
+static_assert(kMaximumRegistryCatalogDirectoryBytes == 28'450'920);
 constexpr std::uint32_t kResidentFrameShard =
     (std::numeric_limits<std::uint32_t>::max)();
 // Four Character body armor codes require 92 split BAMs; the remaining room
@@ -103,7 +150,16 @@ struct Frame {
   bool antialias{};
   std::uint32_t lazyShardIndex{kResidentFrameShard};
   std::uint64_t lazyIndexOffset{};
+  // The cache and all aggregate index-byte accounting use the logical,
+  // decompressed length. Only the bounded read uses lazyStoredBytes.
   std::uint32_t lazyIndexBytes{};
+  std::uint32_t lazyStoredBytes{};
+  std::uint8_t lazyCompressionCodec{kRegistryFrameCodecRaw};
+  // The complete shard is SHA-256/CRC-32 validated before its metadata is
+  // accepted. Retain a per-frame digest so a later lazy read cannot substitute
+  // payload bytes while preserving the file's size and timestamp.
+  std::array<std::byte, 32> lazyIndexSha256{};
+  bool lazyIndexDigestValid{};
 };
 
 struct Resource {
@@ -111,7 +167,9 @@ struct Resource {
   std::array<std::byte, 32> sourceSha256{};
   std::vector<Frame> frames;
   std::vector<std::vector<std::uint32_t>> cycles;
-  std::vector<bool> compositionLogged;
+  // QA needs one proof per animation/resref, not one synchronous disk flush per
+  // frame. Keep this bounded to the animations sharing the resource.
+  std::set<std::uint16_t> compositionLogged;
 };
 
 struct TextureCacheEntry {
@@ -147,9 +205,122 @@ struct FileIdentity {
   [[nodiscard]] constexpr bool operator==(const FileIdentity&) const noexcept = default;
 };
 
+struct ReadLease {
+#ifdef _WIN32
+  HANDLE handle{INVALID_HANDLE_VALUE};
+
+  ReadLease() noexcept = default;
+  ReadLease(const ReadLease&) = delete;
+  ReadLease& operator=(const ReadLease&) = delete;
+  ReadLease(ReadLease&& other) noexcept
+      : handle(std::exchange(other.handle, INVALID_HANDLE_VALUE)) {}
+  ReadLease& operator=(ReadLease&& other) noexcept {
+    if (this != &other) {
+      reset();
+      handle = std::exchange(other.handle, INVALID_HANDLE_VALUE);
+    }
+    return *this;
+  }
+  ~ReadLease() noexcept { reset(); }
+
+  [[nodiscard]] bool valid() const noexcept {
+    return handle != nullptr && handle != INVALID_HANDLE_VALUE;
+  }
+  void reset() noexcept {
+    if (valid()) CloseHandle(handle);
+    handle = INVALID_HANDLE_VALUE;
+  }
+#else
+  [[nodiscard]] constexpr bool valid() const noexcept { return false; }
+  void reset() noexcept {}
+#endif
+};
+
+struct CatalogShardEntry {
+  std::array<std::byte, kRegistryCatalogShardBytes> encoded{};
+  std::array<std::byte, 32> sha256{};
+  std::uint32_t checksum{};
+  std::uint32_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+  std::filesystem::path path;
+  FileIdentity identity{};
+  std::uint32_t componentIndex{};
+  std::vector<std::array<char, 8>> directory;
+  std::vector<std::size_t> resourceIndices;
+  std::uint64_t residentMetadataBytes{};
+  std::uint64_t lastUse{};
+  std::uint64_t generation{};
+  enum class Status : std::uint8_t {
+    Unprobed,
+    DirectoryReady,
+    Loading,
+    Resident,
+    Quarantined,
+  } status{Status::Unprobed};
+  bool failureLogged{};
+};
+
+struct CatalogComponent {
+  std::array<std::byte, 32> digest{};
+  std::uint32_t shardStart{};
+  std::uint32_t shardCount{};
+  std::uint32_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+  bool quarantined{};
+  bool failureLogged{};
+};
+
+struct CatalogAnimation {
+  std::uint16_t animationId{};
+  std::uint32_t owner{};
+  std::uint32_t membershipStart{};
+  std::uint32_t membershipCount{};
+  std::vector<std::size_t> resourceIndices;
+  bool loaded{};
+};
+
+struct CatalogDirectoryEntry {
+  std::uint16_t animationId{};
+  std::array<char, 8> resref{};
+  std::uint32_t componentIndex{};
+  std::uint32_t shardIndex{};
+  std::uint32_t resourceOrdinal{};
+};
+
+struct CatalogState {
+  bool active{};
+  std::uint32_t version{};
+  std::filesystem::path path;
+  FileIdentity identity{};
+  ReadLease lease;
+  std::uint32_t scale{};
+  std::uint64_t resourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t indexBytes{};
+  std::uint64_t registryBytes{};
+  std::vector<CatalogAnimation> animations;
+  std::vector<std::uint32_t> memberships;
+  std::vector<CatalogComponent> components;
+  std::vector<CatalogShardEntry> shards;
+  std::vector<CatalogDirectoryEntry> directory;
+  std::uint64_t epoch{};
+};
+
+struct CatalogLoadRequest {
+  std::uint16_t animationId{};
+  std::array<char, 8> resref{};
+
+  [[nodiscard]] constexpr bool operator==(const CatalogLoadRequest&) const noexcept = default;
+};
+
 struct LazyShard {
   std::filesystem::path path;
   FileIdentity identity{};
+  ReadLease lease;
 };
 
 struct LazyIndexCacheEntry {
@@ -211,14 +382,21 @@ std::mutex g_mutex;
 std::atomic<bool> g_ready{false};
 std::atomic<std::uint16_t> g_targetAnimationId{0};
 std::atomic<std::uint32_t> g_loadedScale{0};
+std::atomic<bool> g_targetsCharacter{false};
+std::atomic<bool> g_targetsMonster{false};
+std::atomic<bool> g_targetsMonsterIcewind{false};
 std::atomic<bool> g_linearFiltering{false};
 std::vector<Resource> g_resources;
+std::vector<CatalogAnimation> g_packAnimations;
+CatalogState g_catalog;
 std::vector<TextureCacheEntry> g_textureCache;
 std::vector<CompositePixelCacheEntry> g_compositePixelCache;
 std::vector<LazyShard> g_lazyShards;
 std::vector<LazyIndexCacheEntry> g_lazyIndexCache;
 std::uint64_t g_textureUseCounter{};
 std::uint64_t g_lazyIndexUseCounter{};
+std::uint64_t g_catalogMetadataUseCounter{};
+std::uint64_t g_catalogEpochCounter{};
 bool g_lazyPackLoaded{};
 bool g_lazyPackFailureLogged{};
 bool g_creationFailureLogged{};
@@ -229,10 +407,20 @@ bool g_contextFailureLogged{};
 bool g_sourceTextureFailureLogged{};
 std::atomic<bool> g_paletteApiFailureLogged{false};
 std::atomic<bool> g_realizedPaletteLogged{false};
+std::atomic<std::uint64_t> g_filesystemAccessCounter{0};
 bool g_compositeBackingFailureLogged{};
 #ifdef _WIN32
 HGLRC g_textureContext{};
+DECOMPRESSOR_HANDLE g_xpressHuffDecompressor{};
 #endif
+std::deque<CatalogLoadRequest> g_catalogLoadQueue;
+std::set<std::pair<std::uint16_t, std::array<char, 8>>>
+    g_catalogPendingRequests;
+std::condition_variable_any g_catalogWorkChanged;
+std::jthread g_catalogWorker;
+
+void quarantine_catalog_component_locked(std::uint32_t componentIndex,
+                                         const char* reason) noexcept;
 
 [[nodiscard]] int sampling_filter() noexcept {
   return static_cast<int>(g_linearFiltering.load(std::memory_order_acquire)
@@ -259,6 +447,7 @@ void reset_diagnostics_locked() noexcept {
 bool query_file_identity(const std::filesystem::path& path,
                          FileIdentity& out) noexcept {
   out = {};
+  g_filesystemAccessCounter.fetch_add(1, std::memory_order_relaxed);
 #ifdef _WIN32
   WIN32_FILE_ATTRIBUTE_DATA attributes{};
   if (!GetFileAttributesExW(path.c_str(), GetFileExInfoStandard, &attributes) ||
@@ -283,9 +472,73 @@ bool query_file_identity(const std::filesystem::path& path,
 #endif
 }
 
+#ifdef _WIN32
+bool query_open_file_identity(HANDLE handle, FileIdentity& out) noexcept {
+  out = {};
+  BY_HANDLE_FILE_INFORMATION information{};
+  if (!handle || handle == INVALID_HANDLE_VALUE ||
+      !GetFileInformationByHandle(handle, &information) ||
+      (information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) {
+    return false;
+  }
+  out.bytes = (static_cast<std::uint64_t>(information.nFileSizeHigh) << 32u) |
+              information.nFileSizeLow;
+  out.writeStamp =
+      (static_cast<std::uint64_t>(information.ftLastWriteTime.dwHighDateTime)
+       << 32u) |
+      information.ftLastWriteTime.dwLowDateTime;
+  return true;
+}
+#endif
+
 std::vector<std::byte> read_file(const std::filesystem::path& path,
                                  std::uint64_t maximumBytes,
-                                 FileIdentity* identity = nullptr) {
+                                 FileIdentity* identity = nullptr,
+                                 ReadLease* retainedLease = nullptr) {
+#ifdef _WIN32
+  if (retainedLease) {
+    retainedLease->reset();
+    ReadLease opened;
+    g_filesystemAccessCounter.fetch_add(1, std::memory_order_relaxed);
+    opened.handle = CreateFileW(
+        path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
+        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
+    FileIdentity initialIdentity{};
+    if (!opened.valid() ||
+        !query_open_file_identity(opened.handle, initialIdentity) ||
+        initialIdentity.bytes == 0 || initialIdentity.bytes > maximumBytes ||
+        initialIdentity.bytes >
+            static_cast<std::uint64_t>((std::numeric_limits<std::size_t>::max)())) {
+      throw std::runtime_error("invalid creature-sprite registry size: " +
+                               path.string());
+    }
+    std::vector<std::byte> bytes(
+        static_cast<std::size_t>(initialIdentity.bytes));
+    std::size_t offset = 0;
+    while (offset < bytes.size()) {
+      const auto chunk = static_cast<DWORD>((std::min)(
+          bytes.size() - offset,
+          static_cast<std::size_t>((std::numeric_limits<DWORD>::max)())));
+      DWORD read = 0;
+      if (!ReadFile(opened.handle, bytes.data() + offset, chunk, &read,
+                    nullptr) ||
+          read != chunk) {
+        throw std::runtime_error("cannot read creature-sprite registry");
+      }
+      offset += read;
+    }
+    FileIdentity finalIdentity{};
+    if (!query_open_file_identity(opened.handle, finalIdentity) ||
+        finalIdentity != initialIdentity) {
+      throw std::runtime_error("creature-sprite registry changed while reading");
+    }
+    if (identity) *identity = finalIdentity;
+    *retainedLease = std::move(opened);
+    return bytes;
+  }
+#else
+  (void)retainedLease;
+#endif
   FileIdentity initialIdentity{};
   if (!query_file_identity(path, initialIdentity) || initialIdentity.bytes == 0 ||
       initialIdentity.bytes > maximumBytes) {
@@ -331,7 +584,8 @@ std::uint32_t crc32(const std::vector<std::byte>& bytes) noexcept {
   return value ^ 0xFFFFFFFFu;
 }
 
-std::array<std::byte, 32> sha256(const std::vector<std::byte>& bytes) noexcept {
+std::array<std::byte, 32> sha256_bytes(const std::byte* bytes,
+                                      std::size_t byteCount) noexcept {
   constexpr std::array<std::uint32_t, 64> constants{{
       0x428A2F98u, 0x71374491u, 0xB5C0FBCFu, 0xE9B5DBA5u, 0x3956C25Bu,
       0x59F111F1u, 0x923F82A4u, 0xAB1C5ED5u, 0xD807AA98u, 0x12835B01u,
@@ -406,18 +660,18 @@ std::array<std::byte, 32> sha256(const std::vector<std::byte>& bytes) noexcept {
     state[7] += h;
   };
 
-  const auto* data = reinterpret_cast<const std::uint8_t*>(bytes.data());
+  const auto* data = reinterpret_cast<const std::uint8_t*>(bytes);
   std::size_t offset = 0;
-  while (bytes.size() - offset >= 64) {
+  while (byteCount - offset >= 64) {
     transform(data + offset);
     offset += 64;
   }
   std::array<std::uint8_t, 128> tail{};
-  const auto remaining = bytes.size() - offset;
+  const auto remaining = byteCount - offset;
   if (remaining != 0) std::memcpy(tail.data(), data + offset, remaining);
   tail[remaining] = 0x80u;
   const std::size_t tailBytes = remaining < 56 ? 64 : 128;
-  const auto bitLength = static_cast<std::uint64_t>(bytes.size()) * 8u;
+  const auto bitLength = static_cast<std::uint64_t>(byteCount) * 8u;
   for (unsigned index = 0; index < 8; ++index) {
     tail[tailBytes - 1 - index] =
         static_cast<std::uint8_t>(bitLength >> (index * 8u));
@@ -434,6 +688,11 @@ std::array<std::byte, 32> sha256(const std::vector<std::byte>& bytes) noexcept {
   return digest;
 }
 
+std::array<std::byte, 32> sha256(
+    const std::vector<std::byte>& bytes) noexcept {
+  return sha256_bytes(bytes.data(), bytes.size());
+}
+
 bool checked_add(std::uint64_t& total, std::uint64_t value,
                  std::uint64_t maximum) noexcept {
   if (value > maximum || total > maximum - value) return false;
@@ -448,9 +707,104 @@ std::string registry_shard_filename(std::uint32_t index) {
          ".registry";
 }
 
+char uppercase_hex_digit(std::uint8_t value) noexcept {
+  return static_cast<char>(value < 10 ? '0' + value : 'A' + (value - 10));
+}
+
+std::string catalog_shard_filename(const std::array<std::byte, 32>& digest) {
+  std::string filename = "CreatureSprites-XN-";
+  filename.reserve(filename.size() + digest.size() * 2 + 9);
+  for (const auto value : digest) {
+    const auto byte = std::to_integer<std::uint8_t>(value);
+    filename.push_back(uppercase_hex_digit(static_cast<std::uint8_t>(byte >> 4u)));
+    filename.push_back(uppercase_hex_digit(static_cast<std::uint8_t>(byte & 0x0Fu)));
+  }
+  filename += ".registry";
+  return filename;
+}
+
+template <class T, std::size_t N>
+T encoded_field(const std::array<std::byte, N>& encoded,
+                std::size_t offset) noexcept {
+  static_assert(std::is_trivially_copyable_v<T>);
+  T value{};
+  if (offset <= encoded.size() && sizeof(T) <= encoded.size() - offset) {
+    std::memcpy(&value, encoded.data() + offset, sizeof(T));
+  }
+  return value;
+}
+
+std::array<std::byte, 32> catalog_component_digest(
+    std::uint32_t scale, const std::vector<CatalogShardEntry>& shards,
+    std::uint32_t shardStart, std::uint32_t shardCount) {
+  constexpr char kDomain[] = "IEECSNC-COMPONENT-V1";
+  std::vector<std::byte> bytes;
+  bytes.reserve(sizeof(kDomain) + sizeof(scale) +
+                static_cast<std::size_t>(shardCount) *
+                    kRegistryCatalogShardBytes);
+  for (const auto value : kDomain) {
+    bytes.push_back(static_cast<std::byte>(value));
+  }
+  for (unsigned shift = 0; shift < 32; shift += 8) {
+    bytes.push_back(static_cast<std::byte>(scale >> shift));
+  }
+  for (std::uint32_t index = 0; index < shardCount; ++index) {
+    const auto& encoded = shards[shardStart + index].encoded;
+    bytes.insert(bytes.end(), encoded.begin(), encoded.end());
+  }
+  return sha256(bytes);
+}
+
+std::array<std::byte, 32> catalog_directory_digest(
+    std::uint32_t scale, const std::byte* entries,
+    std::size_t entryBytes) {
+  constexpr char kDomain[] = "IEECSNC-DIRECTORY-V2";
+  std::vector<std::byte> bytes;
+  bytes.reserve(sizeof(kDomain) + sizeof(scale) + entryBytes);
+  for (const auto value : kDomain) {
+    bytes.push_back(static_cast<std::byte>(value));
+  }
+  for (unsigned shift = 0; shift < 32; shift += 8) {
+    bytes.push_back(static_cast<std::byte>(scale >> shift));
+  }
+  if (entryBytes != 0) bytes.insert(bytes.end(), entries, entries + entryBytes);
+  return sha256(bytes);
+}
+
 std::string resref_name(const std::array<char, 8>& resref) {
   const auto end = std::find(resref.begin(), resref.end(), '\0');
   return std::string(resref.begin(), end);
+}
+
+bool canonical_catalog_resref(const std::array<char, 8>& resref) noexcept {
+  bool hasCharacter = false;
+  bool terminated = false;
+  for (const auto raw : resref) {
+    const auto value = static_cast<unsigned char>(raw);
+    if (terminated) {
+      if (value != 0) return false;
+      continue;
+    }
+    if (value == 0) {
+      terminated = true;
+      continue;
+    }
+    if (!((value >= 'A' && value <= 'Z') ||
+          (value >= '0' && value <= '9') || value == '_')) {
+      return false;
+    }
+    hasCharacter = true;
+  }
+  return hasCharacter;
+}
+
+bool catalog_owner_matches_animation(std::uint32_t owner,
+                                     std::uint32_t animationId) noexcept {
+  const auto family = animationId & 0xF000u;
+  return (owner == kCatalogCharacterOwner &&
+          (family == 0x5000u || family == 0x6000u)) ||
+         (owner == kCatalogMonsterIcewindOwner && family == 0xE000u) ||
+         (owner == kCatalogMonsterOwner && family == 0x7000u);
 }
 
 bool checked_physical_metrics(int logicalWidth, int logicalHeight,
@@ -593,42 +947,194 @@ void clear_lazy_index_cache_locked() noexcept {
   g_lazyIndexUseCounter = 0;
 }
 
+bool decompress_xpress_huff_locked(
+    const std::vector<std::uint8_t>& stored,
+    std::vector<std::uint8_t>& logical) noexcept {
+#ifdef _WIN32
+  if (stored.empty() || logical.empty()) return false;
+  if (!g_xpressHuffDecompressor &&
+      !CreateDecompressor(COMPRESS_ALGORITHM_XPRESS_HUFF, nullptr,
+                          &g_xpressHuffDecompressor)) {
+    return false;
+  }
+  SIZE_T written = 0;
+  if (Decompress(g_xpressHuffDecompressor, stored.data(), stored.size(),
+                 logical.data(), logical.size(), &written) &&
+      written == logical.size()) {
+    return true;
+  }
+  // A malformed stream must not leave reusable codec state behind. The next
+  // independently authenticated component gets a fresh decoder.
+  CloseDecompressor(g_xpressHuffDecompressor);
+  g_xpressHuffDecompressor = nullptr;
+#else
+  (void)stored;
+  (void)logical;
+#endif
+  return false;
+}
+
+void close_frame_decompressor_locked() noexcept {
+#ifdef _WIN32
+  if (g_xpressHuffDecompressor) {
+    CloseDecompressor(g_xpressHuffDecompressor);
+    g_xpressHuffDecompressor = nullptr;
+  }
+#endif
+}
+
 void disable_lazy_pack_locked(const char* reason) noexcept {
   g_ready.store(false, std::memory_order_release);
   g_targetAnimationId.store(0, std::memory_order_release);
   g_loadedScale.store(0, std::memory_order_release);
+  g_targetsCharacter.store(false, std::memory_order_release);
+  g_targetsMonster.store(false, std::memory_order_release);
+  g_targetsMonsterIcewind.store(false, std::memory_order_release);
   clear_texture_cache_locked();
   clear_lazy_index_cache_locked();
+  close_frame_decompressor_locked();
+  g_catalog.lease.reset();
+  for (auto& shard : g_lazyShards) shard.lease.reset();
   if (!g_lazyPackFailureLogged) {
     g_lazyPackFailureLogged = true;
     LOG_WARN(
         "Creature sprite lazy pack disabled after payload failure: {}; native "
-        "Character rendering retained",
+        "creature rendering retained",
         reason ? reason : "unknown shard error");
   }
 }
 
 bool lazy_shard_identity_matches(const LazyShard& shard) noexcept {
+#ifdef _WIN32
+  // The validated shard is retained with FILE_SHARE_READ only. A successful
+  // lease therefore proves that no writer/delete/replace can enter the hot
+  // path, without a GetFileAttributesEx call on every draw.
+  return shard.lease.valid();
+#else
   FileIdentity current{};
   return query_file_identity(shard.path, current) && current == shard.identity;
+#endif
+}
+
+bool catalog_identity_matches_locked() noexcept {
+  if (!g_catalog.active) return true;
+#ifdef _WIN32
+  if (g_catalog.lease.valid()) return true;
+#else
+  FileIdentity current{};
+  if (query_file_identity(g_catalog.path, current) &&
+      current == g_catalog.identity) {
+    return true;
+  }
+#endif
+  disable_lazy_pack_locked("catalog was removed or changed after validation");
+  return false;
+}
+
+Resource* resource_for_handle_locked(FrameHandle handle) noexcept {
+  if (handle.resourceIndex >= g_resources.size()) return nullptr;
+  if (g_catalog.active) {
+    if (handle.catalogShardIndex == kResidentFrameShard ||
+        handle.catalogShardIndex >= g_catalog.shards.size()) {
+      return nullptr;
+    }
+    const auto& shard = g_catalog.shards[handle.catalogShardIndex];
+    if (shard.status != CatalogShardEntry::Status::Resident ||
+        shard.generation != handle.catalogGeneration ||
+        std::find(shard.resourceIndices.begin(), shard.resourceIndices.end(),
+                  handle.resourceIndex) == shard.resourceIndices.end()) {
+      return nullptr;
+    }
+  } else if (handle.catalogShardIndex != kResidentFrameShard ||
+             handle.catalogGeneration != 0) {
+    return nullptr;
+  }
+  return &g_resources[handle.resourceIndex];
 }
 
 bool validate_lazy_frame_source_locked(FrameHandle handle) noexcept {
-  if (handle.resourceIndex >= g_resources.size() ||
-      handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
+  if (!catalog_identity_matches_locked()) return false;
+  auto* resource = resource_for_handle_locked(handle);
+  if (!resource || handle.frameIndex >= resource->frames.size()) {
     return false;
   }
-  const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+  const auto& frame = resource->frames[handle.frameIndex];
   if (frame.lazyShardIndex == kResidentFrameShard) return true;
   if (!g_lazyPackLoaded || frame.lazyShardIndex >= g_lazyShards.size()) {
-    disable_lazy_pack_locked("invalid lazy frame source metadata");
+    if (g_catalog.active &&
+        handle.catalogShardIndex < g_catalog.shards.size()) {
+      quarantine_catalog_component_locked(
+          g_catalog.shards[handle.catalogShardIndex].componentIndex,
+          "invalid lazy frame source metadata");
+    } else {
+      disable_lazy_pack_locked("invalid lazy frame source metadata");
+    }
     return false;
   }
   if (!lazy_shard_identity_matches(g_lazyShards[frame.lazyShardIndex])) {
-    disable_lazy_pack_locked("registry file was removed or changed before frame resolution");
+    if (g_catalog.active &&
+        handle.catalogShardIndex < g_catalog.shards.size()) {
+      quarantine_catalog_component_locked(
+          g_catalog.shards[handle.catalogShardIndex].componentIndex,
+          "registry file was removed or changed before frame resolution");
+    } else {
+      disable_lazy_pack_locked(
+          "registry file was removed or changed before frame resolution");
+    }
     return false;
   }
   return true;
+}
+
+void fail_lazy_frame_locked(FrameHandle handle, const char* reason) noexcept {
+  if (g_catalog.active &&
+      handle.catalogShardIndex < g_catalog.shards.size()) {
+    quarantine_catalog_component_locked(
+        g_catalog.shards[handle.catalogShardIndex].componentIndex, reason);
+  } else {
+    disable_lazy_pack_locked(reason);
+  }
+}
+
+bool read_lazy_shard_range_locked(const LazyShard& shard,
+                                  std::uint64_t offset,
+                                  std::vector<std::uint8_t>& bytes) noexcept {
+  if (bytes.empty()) return false;
+  g_filesystemAccessCounter.fetch_add(1, std::memory_order_relaxed);
+#ifdef _WIN32
+  if (!shard.lease.valid() ||
+      offset > static_cast<std::uint64_t>(
+                   (std::numeric_limits<LONGLONG>::max)())) {
+    return false;
+  }
+  LARGE_INTEGER position{};
+  position.QuadPart = static_cast<LONGLONG>(offset);
+  if (!SetFilePointerEx(shard.lease.handle, position, nullptr, FILE_BEGIN)) {
+    return false;
+  }
+  std::size_t complete = 0;
+  while (complete < bytes.size()) {
+    const auto chunk = static_cast<DWORD>((std::min)(
+        bytes.size() - complete,
+        static_cast<std::size_t>((std::numeric_limits<DWORD>::max)())));
+    DWORD read = 0;
+    if (!ReadFile(shard.lease.handle, bytes.data() + complete, chunk, &read,
+                  nullptr) ||
+        read != chunk) {
+      return false;
+    }
+    complete += read;
+  }
+  return true;
+#else
+  std::ifstream input(shard.path, std::ios::binary);
+  return input &&
+         offset <= static_cast<std::uint64_t>(
+                       (std::numeric_limits<std::streamoff>::max)()) &&
+         input.seekg(static_cast<std::streamoff>(offset), std::ios::beg) &&
+         input.read(reinterpret_cast<char*>(bytes.data()),
+                    static_cast<std::streamsize>(bytes.size()));
+#endif
 }
 
 const std::vector<std::uint8_t>* frame_indices_locked(
@@ -637,16 +1143,23 @@ const std::vector<std::uint8_t>* frame_indices_locked(
     if (!sourceIdentityValidated && !validate_lazy_frame_source_locked(handle)) {
       return nullptr;
     }
-    if (handle.resourceIndex >= g_resources.size() ||
-        handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
+    auto* resource = resource_for_handle_locked(handle);
+    if (!resource || handle.frameIndex >= resource->frames.size()) {
       return nullptr;
     }
-    const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+    const auto& frame = resource->frames[handle.frameIndex];
     if (frame.lazyShardIndex == kResidentFrameShard) return &frame.indices;
     if (!g_lazyPackLoaded || frame.lazyShardIndex >= g_lazyShards.size() ||
         frame.lazyIndexBytes == 0 ||
-        frame.lazyIndexBytes > kLazyIndexCacheBudgetBytes) {
-      disable_lazy_pack_locked("invalid lazy frame metadata");
+        frame.lazyIndexBytes > kLazyIndexCacheBudgetBytes ||
+        frame.lazyStoredBytes == 0 ||
+        (frame.lazyCompressionCodec == kRegistryFrameCodecRaw &&
+         frame.lazyStoredBytes != frame.lazyIndexBytes) ||
+        (frame.lazyCompressionCodec == kRegistryFrameCodecXpressHuff &&
+         frame.lazyStoredBytes >= frame.lazyIndexBytes) ||
+        (frame.lazyCompressionCodec != kRegistryFrameCodecRaw &&
+         frame.lazyCompressionCodec != kRegistryFrameCodecXpressHuff)) {
+      fail_lazy_frame_locked(handle, "invalid lazy frame metadata");
       return nullptr;
     }
     auto cached = std::find_if(
@@ -658,29 +1171,50 @@ const std::vector<std::uint8_t>* frame_indices_locked(
     }
     const auto& shard = g_lazyShards[frame.lazyShardIndex];
     if (frame.lazyIndexOffset > shard.identity.bytes ||
-        frame.lazyIndexBytes > shard.identity.bytes - frame.lazyIndexOffset ||
+        frame.lazyStoredBytes > shard.identity.bytes - frame.lazyIndexOffset ||
         frame.lazyIndexOffset >
             static_cast<std::uint64_t>((std::numeric_limits<std::streamoff>::max)())) {
-      disable_lazy_pack_locked("lazy frame range is outside its registry");
+      fail_lazy_frame_locked(handle,
+                             "lazy frame range is outside its registry");
       return nullptr;
     }
     LazyIndexCacheEntry prepared{.handle = handle};
-    prepared.indices.resize(frame.lazyIndexBytes);
-    std::ifstream input(shard.path, std::ios::binary);
-    if (!input ||
-        !input.seekg(static_cast<std::streamoff>(frame.lazyIndexOffset), std::ios::beg) ||
-        !input.read(reinterpret_cast<char*>(prepared.indices.data()),
-                    static_cast<std::streamsize>(prepared.indices.size()))) {
-      disable_lazy_pack_locked("cannot read a lazy frame payload");
+    std::vector<std::uint8_t> compressed;
+    auto* stored = &prepared.indices;
+    if (frame.lazyCompressionCodec == kRegistryFrameCodecXpressHuff) {
+      stored = &compressed;
+    }
+    stored->resize(frame.lazyStoredBytes);
+    if (!read_lazy_shard_range_locked(shard, frame.lazyIndexOffset, *stored)) {
+      fail_lazy_frame_locked(handle, "cannot read a lazy frame payload");
       return nullptr;
     }
     if (!lazy_shard_identity_matches(shard)) {
-      disable_lazy_pack_locked("registry changed during a lazy frame read");
+      fail_lazy_frame_locked(handle,
+                             "registry changed during a lazy frame read");
       return nullptr;
+    }
+    if (!frame.lazyIndexDigestValid ||
+        sha256_bytes(
+            reinterpret_cast<const std::byte*>(stored->data()),
+            stored->size()) != frame.lazyIndexSha256) {
+      fail_lazy_frame_locked(
+          handle,
+          "lazy frame payload differs from its validated shard metadata");
+      return nullptr;
+    }
+    if (frame.lazyCompressionCodec == kRegistryFrameCodecXpressHuff) {
+      prepared.indices.resize(frame.lazyIndexBytes);
+      if (!decompress_xpress_huff_locked(compressed, prepared.indices)) {
+        fail_lazy_frame_locked(handle,
+                               "cannot decompress an XPRESS_HUFF frame exactly");
+        return nullptr;
+      }
     }
     for (const auto paletteIndex : prepared.indices) {
       if (frame.representatives[paletteIndex] == 0xFFFFu) {
-        disable_lazy_pack_locked("lazy payload lacks a palette representative");
+        fail_lazy_frame_locked(
+            handle, "lazy payload lacks a palette representative");
         return nullptr;
       }
     }
@@ -695,7 +1229,8 @@ const std::vector<std::uint8_t>* frame_indices_locked(
           });
       const auto victimBytes = static_cast<std::uint64_t>(victim->indices.size());
       if (cachedBytes < victimBytes) {
-        disable_lazy_pack_locked("lazy payload cache accounting failed");
+        fail_lazy_frame_locked(handle,
+                               "lazy payload cache accounting failed");
         return nullptr;
       }
       cachedBytes -= victimBytes;
@@ -703,14 +1238,16 @@ const std::vector<std::uint8_t>* frame_indices_locked(
     }
     if (cachedBytes > kLazyIndexCacheBudgetBytes ||
         prepared.indices.size() > kLazyIndexCacheBudgetBytes - cachedBytes) {
-      disable_lazy_pack_locked("lazy frame exceeds the payload cache budget");
+      fail_lazy_frame_locked(
+          handle, "lazy frame exceeds the payload cache budget");
       return nullptr;
     }
     prepared.lastUse = ++g_lazyIndexUseCounter;
     g_lazyIndexCache.push_back(std::move(prepared));
     return &g_lazyIndexCache.back().indices;
   } catch (...) {
-    disable_lazy_pack_locked("exception while loading a lazy frame payload");
+    fail_lazy_frame_locked(handle,
+                           "exception while loading a lazy frame payload");
     return nullptr;
   }
 }
@@ -766,7 +1303,9 @@ composite_cache_layers_locked(const CompositeLayer* layers,
   std::array<CompositeLayerCacheKey, kMaximumCompositeLayers> key{};
   for (std::size_t index = 0; index < layerCount; ++index) {
     const auto& layer = layers[index];
-    const auto& frame = g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
+    const auto* resource = resource_for_handle_locked(layer.frame);
+    if (!resource || layer.frame.frameIndex >= resource->frames.size()) return {};
+    const auto& frame = resource->frames[layer.frame.frameIndex];
     auto realized = layer.palette.colors;
     enforce_transparent_entry(frame, realized);
     key[index] = {
@@ -983,7 +1522,9 @@ bool compose_composite_pixels_locked(const CompositeLayer* layers,
 
   for (std::size_t layerIndex = 0; layerIndex < layerCount; ++layerIndex) {
     const auto& layer = layers[layerIndex];
-    const auto& frame = g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
+    const auto* resource = resource_for_handle_locked(layer.frame);
+    if (!resource || layer.frame.frameIndex >= resource->frames.size()) return false;
+    const auto& frame = resource->frames[layer.frame.frameIndex];
     const auto* indices = frame_indices_locked(layer.frame, true);
     int sourceWidth = 0;
     int sourceHeight = 0;
@@ -1171,7 +1712,9 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
                             const EngineTextureApi& api, int& textureId) {
   textureId = 0;
   if (!validate_lazy_frame_source_locked(handle)) return false;
-  const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+  const auto* resource = resource_for_handle_locked(handle);
+  if (!resource || handle.frameIndex >= resource->frames.size()) return false;
+  const auto& frame = resource->frames[handle.frameIndex];
   int physicalWidth = 0;
   int physicalHeight = 0;
   std::uint64_t physicalPixels = 0;
@@ -1347,6 +1890,7 @@ struct ParsedRegistry {
   std::uint32_t checksum{};
   std::array<std::byte, 32> sha256{};
   FileIdentity identity{};
+  ReadLease lease;
   std::vector<Resource> resources;
 };
 
@@ -1381,9 +1925,15 @@ struct LoadedPack {
 
 bool file_exists(const std::filesystem::path& path, const char* description) {
   std::error_code error;
-  const bool exists = std::filesystem::exists(path, error);
-  if (error) throw std::runtime_error(std::string("cannot inspect ") + description);
-  return exists;
+  // Inspect the directory entry rather than following it. A dangling symlink
+  // or reparse point at a higher-priority manifest path is still "present":
+  // opening it must fail closed instead of silently selecting an older pack.
+  const auto status = std::filesystem::symlink_status(path, error);
+  if (error) {
+    if (error == std::errc::no_such_file_or_directory) return false;
+    throw std::runtime_error(std::string("cannot inspect ") + description);
+  }
+  return status.type() != std::filesystem::file_type::not_found;
 }
 
 std::uint64_t registry_read_limit(const std::filesystem::path& path,
@@ -1398,7 +1948,8 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
       !input.read(reinterpret_cast<char*>(&scale), sizeof(scale)) ||
       magic != kXnRegistryMagic ||
       (version != kXnRegistryVersion &&
-       version != kXnAntialiasRegistryVersion) ||
+       version != kXnAntialiasRegistryVersion &&
+       version != kXnCompressedRegistryVersion) ||
       !supported_physical_scale(scale) ||
       (version == kXnAntialiasRegistryVersion && scale != 2)) {
     throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
@@ -1409,10 +1960,12 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
 
 ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat format,
                               bool lazyPayloads, std::uint32_t lazyShardIndex = 0,
-                              bool verifyDigests = false) {
+                              bool verifyDigests = false,
+                              bool catalogShard = false) {
   ParsedRegistry parsed;
   const auto maximumReadBytes = registry_read_limit(path, format);
-  auto bytes = read_file(path, maximumReadBytes, &parsed.identity);
+  auto bytes = read_file(path, maximumReadBytes, &parsed.identity,
+                         lazyPayloads ? &parsed.lease : nullptr);
   parsed.registryBytes = static_cast<std::uint64_t>(bytes.size());
   if (verifyDigests) {
     parsed.checksum = crc32(bytes);
@@ -1428,13 +1981,12 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
   const bool xnFormat = format == RegistryFormat::Xn;
   const bool formatHeaderValid =
       xnFormat
-          ? magic == kXnRegistryMagic &&
+          ? magic == kXnRegistryMagic && supported_physical_scale(parsed.scale) &&
                 (parsed.version == kXnRegistryVersion ||
-                 parsed.version == kXnAntialiasRegistryVersion) &&
-                supported_physical_scale(parsed.scale) &&
-                (parsed.version != kXnAntialiasRegistryVersion ||
-                 parsed.scale == 2) &&
-                (!lazyPayloads || parsed.version == kXnRegistryVersion)
+                 (parsed.version == kXnAntialiasRegistryVersion &&
+                  parsed.scale == 2 && !lazyPayloads && !catalogShard) ||
+                 (parsed.version == kXnCompressedRegistryVersion &&
+                  lazyPayloads && catalogShard))
           : magic == kLegacyRegistryMagic &&
                 (parsed.version == kLegacyRegistryVersion ||
                  parsed.version == kLegacyCurrentRegistryVersion) &&
@@ -1449,7 +2001,9 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
     if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
     parsed.animationId = kLegacyMgo1AnimationId;
   } else {
-    if (metadata == 0 || metadata > std::numeric_limits<std::uint16_t>::max()) {
+    if (metadata == 0 || metadata > std::numeric_limits<std::uint16_t>::max() ||
+        (catalogShard && metadata != kCatalogShardAnimationSentinel) ||
+        (!catalogShard && metadata == kCatalogShardAnimationSentinel)) {
       throw std::runtime_error("invalid creature-sprite animation id");
     }
     parsed.animationId = static_cast<std::uint16_t>(metadata);
@@ -1463,7 +2017,8 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
     if (!reader.read(resource.resref) || !reader.read(resource.sourceSha256) ||
         !reader.read(frameCount) || !reader.read(cycleCount) || frameCount == 0 ||
         frameCount > kMaximumFramesPerResource || cycleCount == 0 ||
-        cycleCount > kMaximumCyclesPerResource) {
+        cycleCount > kMaximumCyclesPerResource ||
+        (catalogShard && !canonical_catalog_resref(resource.resref))) {
       throw std::runtime_error("invalid creature-sprite resource header");
     }
     if (std::find_if(parsed.resources.begin(), parsed.resources.end(),
@@ -1480,11 +2035,23 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       std::int16_t centerX = 0;
       std::int16_t centerY = 0;
       std::array<std::byte, 3> frameReserved{};
-      std::uint32_t indexBytes = 0;
+      std::uint32_t storedBytes = 0;
       if (!reader.read(width) || !reader.read(height) || !reader.read(centerX) ||
           !reader.read(centerY) || !reader.read(frame.transparent) ||
-          !reader.read(frameReserved) || !reader.read(indexBytes) || width == 0 ||
-          height == 0 || frameReserved != std::array<std::byte, 3>{}) {
+          !reader.read(frameReserved) || !reader.read(storedBytes) || width == 0 ||
+          height == 0) {
+        throw std::runtime_error("invalid creature-sprite frame header");
+      }
+      const bool compressedRegistry =
+          parsed.version == kXnCompressedRegistryVersion;
+      const auto frameCodec = compressedRegistry
+                                  ? std::to_integer<std::uint8_t>(frameReserved[0])
+                                  : kRegistryFrameCodecRaw;
+      if ((!compressedRegistry &&
+           frameReserved != std::array<std::byte, 3>{}) ||
+          (compressedRegistry &&
+           (frameReserved[1] != std::byte{0} ||
+            frameReserved[2] != std::byte{0}))) {
         throw std::runtime_error("invalid creature-sprite frame header");
       }
       const auto nativePixels = static_cast<std::uint64_t>(width) * height;
@@ -1495,32 +2062,48 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       }
       const auto expectedIndices = nativePixels * scaleSquared;
       if (expectedIndices > (std::numeric_limits<std::uint32_t>::max)() ||
-          expectedIndices != indexBytes ||
-          indexBytes > maximum_registry_bytes_for_scale(parsed.scale) ||
-          (lazyPayloads && indexBytes > kLazyIndexCacheBudgetBytes) ||
-          !checked_add(parsed.indexBytes, indexBytes,
+          expectedIndices > maximum_registry_bytes_for_scale(parsed.scale) ||
+          (lazyPayloads && expectedIndices > kLazyIndexCacheBudgetBytes) ||
+          (!compressedRegistry && expectedIndices != storedBytes) ||
+          (compressedRegistry &&
+           ((frameCodec == kRegistryFrameCodecRaw &&
+             storedBytes != expectedIndices) ||
+            (frameCodec == kRegistryFrameCodecXpressHuff &&
+             (storedBytes == 0 || storedBytes >= expectedIndices)) ||
+            (frameCodec != kRegistryFrameCodecRaw &&
+             frameCodec != kRegistryFrameCodecXpressHuff))) ||
+          !checked_add(parsed.indexBytes, expectedIndices,
                        maximum_registry_bytes_for_scale(parsed.scale)) ||
           !reader.read(frame.representatives)) {
         throw std::runtime_error("invalid creature-sprite frame payload");
       }
       const auto indexOffset = reader.position();
       const std::byte* indexData = nullptr;
-      if (!reader.read_view(indexData, indexBytes)) {
+      if (!reader.read_view(indexData, storedBytes)) {
         throw std::runtime_error("truncated creature-sprite frame payload");
       }
-      for (std::uint32_t index = 0; index < indexBytes; ++index) {
-        const auto paletteIndex = std::to_integer<std::uint8_t>(indexData[index]);
-        if (frame.representatives[paletteIndex] == 0xFFFFu) {
-          throw std::runtime_error("creature-sprite payload lacks a palette representative");
+      if (frameCodec == kRegistryFrameCodecRaw) {
+        for (std::uint32_t index = 0; index < storedBytes; ++index) {
+          const auto paletteIndex =
+              std::to_integer<std::uint8_t>(indexData[index]);
+          if (frame.representatives[paletteIndex] == 0xFFFFu) {
+            throw std::runtime_error(
+                "creature-sprite payload lacks a palette representative");
+          }
         }
       }
       if (lazyPayloads) {
         frame.lazyShardIndex = lazyShardIndex;
         frame.lazyIndexOffset = indexOffset;
-        frame.lazyIndexBytes = indexBytes;
+        frame.lazyIndexBytes = static_cast<std::uint32_t>(expectedIndices);
+        frame.lazyStoredBytes = storedBytes;
+        frame.lazyCompressionCodec = frameCodec;
+        frame.lazyIndexSha256 = sha256_bytes(indexData, storedBytes);
+        frame.lazyIndexDigestValid = true;
       } else {
         frame.indices.assign(reinterpret_cast<const std::uint8_t*>(indexData),
-                             reinterpret_cast<const std::uint8_t*>(indexData) + indexBytes);
+                             reinterpret_cast<const std::uint8_t*>(indexData) +
+                                 storedBytes);
       }
       if (parsed.version == kXnAntialiasRegistryVersion) {
         std::uint32_t recipeBytes = 0;
@@ -1556,7 +2139,6 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         }
       }
     }
-    resource.compositionLogged.resize(frameCount, false);
     if (!checked_add(parsed.frameCount, frameCount,
                      static_cast<std::uint64_t>(kMaximumResources) *
                          kMaximumFramesPerResource)) {
@@ -1566,6 +2148,149 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
   }
   if (!reader.at_end()) throw std::runtime_error("trailing creature-sprite registry bytes");
   return parsed;
+}
+
+struct ProbedRegistryDirectory {
+  FileIdentity identity{};
+  std::vector<std::array<char, 8>> resrefs;
+};
+
+template <class T>
+bool read_stream_value(std::ifstream& input, std::uint64_t& position,
+                       std::uint64_t fileBytes, T& value) {
+  static_assert(std::is_trivially_copyable_v<T>);
+  if (position > fileBytes || sizeof(T) > fileBytes - position ||
+      !input.read(reinterpret_cast<char*>(&value), sizeof(T))) {
+    return false;
+  }
+  position += sizeof(T);
+  return true;
+}
+
+bool skip_stream_bytes(std::ifstream& input, std::uint64_t& position,
+                       std::uint64_t fileBytes, std::uint64_t byteCount) {
+  if (position > fileBytes || byteCount > fileBytes - position ||
+      byteCount > static_cast<std::uint64_t>(
+                      (std::numeric_limits<std::streamoff>::max)())) {
+    return false;
+  }
+  position += byteCount;
+  if (position > static_cast<std::uint64_t>(
+                     (std::numeric_limits<std::streamoff>::max)())) {
+    return false;
+  }
+  input.seekg(static_cast<std::streamoff>(position), std::ios::beg);
+  return static_cast<bool>(input);
+}
+
+ProbedRegistryDirectory probe_catalog_registry_directory(
+    const CatalogShardEntry& expected, std::uint32_t expectedScale) {
+  ProbedRegistryDirectory probed;
+  if (!query_file_identity(expected.path, probed.identity) ||
+      probed.identity.bytes != expected.registryBytes ||
+      probed.identity.bytes < 24) {
+    throw std::runtime_error("missing or resized catalog shard");
+  }
+  std::ifstream input(expected.path, std::ios::binary);
+  if (!input) throw std::runtime_error("cannot open catalog shard directory");
+  std::uint64_t position = 0;
+  std::array<char, 8> magic{};
+  std::uint32_t version = 0;
+  std::uint32_t scale = 0;
+  std::uint32_t resourceCount = 0;
+  std::uint32_t animationId = 0;
+  if (!read_stream_value(input, position, probed.identity.bytes, magic) ||
+      !read_stream_value(input, position, probed.identity.bytes, version) ||
+      !read_stream_value(input, position, probed.identity.bytes, scale) ||
+      !read_stream_value(input, position, probed.identity.bytes, resourceCount) ||
+      !read_stream_value(input, position, probed.identity.bytes, animationId) ||
+      magic != kXnRegistryMagic || version != kXnRegistryVersion ||
+      scale != expectedScale ||
+      animationId != kCatalogShardAnimationSentinel ||
+      resourceCount != expected.resourceCount) {
+    throw std::runtime_error("invalid catalog shard directory header");
+  }
+  probed.resrefs.reserve(resourceCount);
+  std::set<std::array<char, 8>> uniqueResrefs;
+  std::uint64_t frameCountSum = 0;
+  std::uint64_t indexBytesSum = 0;
+  for (std::uint32_t resourceIndex = 0; resourceIndex < resourceCount;
+       ++resourceIndex) {
+    std::array<char, 8> resref{};
+    std::array<std::byte, 32> sourceDigest{};
+    std::uint32_t frameCount = 0;
+    std::uint32_t cycleCount = 0;
+    if (!read_stream_value(input, position, probed.identity.bytes, resref) ||
+        !read_stream_value(input, position, probed.identity.bytes,
+                           sourceDigest) ||
+        !read_stream_value(input, position, probed.identity.bytes,
+                           frameCount) ||
+        !read_stream_value(input, position, probed.identity.bytes,
+                           cycleCount) ||
+        !canonical_catalog_resref(resref) ||
+        !uniqueResrefs.insert(resref).second || frameCount == 0 ||
+        frameCount > kMaximumFramesPerResource || cycleCount == 0 ||
+        cycleCount > kMaximumCyclesPerResource) {
+      throw std::runtime_error("invalid catalog shard resource directory");
+    }
+    for (std::uint32_t frameIndex = 0; frameIndex < frameCount;
+         ++frameIndex) {
+      std::uint16_t width = 0;
+      std::uint16_t height = 0;
+      std::int16_t centerX = 0;
+      std::int16_t centerY = 0;
+      std::uint8_t transparent = 0;
+      std::array<std::byte, 3> reserved{};
+      std::uint32_t indexBytes = 0;
+      if (!read_stream_value(input, position, probed.identity.bytes, width) ||
+          !read_stream_value(input, position, probed.identity.bytes, height) ||
+          !read_stream_value(input, position, probed.identity.bytes, centerX) ||
+          !read_stream_value(input, position, probed.identity.bytes, centerY) ||
+          !read_stream_value(input, position, probed.identity.bytes,
+                             transparent) ||
+          !read_stream_value(input, position, probed.identity.bytes, reserved) ||
+          !read_stream_value(input, position, probed.identity.bytes,
+                             indexBytes) ||
+          width == 0 || height == 0 || reserved != std::array<std::byte, 3>{}) {
+        throw std::runtime_error("invalid catalog shard frame directory");
+      }
+      const auto expectedIndices = static_cast<std::uint64_t>(width) * height *
+                                   scale * scale;
+      if (expectedIndices != indexBytes || indexBytes == 0 ||
+          indexBytes > kLazyIndexCacheBudgetBytes ||
+          !checked_add(indexBytesSum, indexBytes,
+                       maximum_registry_bytes_for_scale(scale)) ||
+          !skip_stream_bytes(input, position, probed.identity.bytes,
+                             sizeof(std::uint16_t) * 256ull + indexBytes)) {
+        throw std::runtime_error("invalid catalog shard frame range");
+      }
+    }
+    for (std::uint32_t cycleIndex = 0; cycleIndex < cycleCount;
+         ++cycleIndex) {
+      std::uint32_t slotCount = 0;
+      if (!read_stream_value(input, position, probed.identity.bytes,
+                             slotCount) ||
+          slotCount > kMaximumCycleSlots ||
+          !skip_stream_bytes(input, position, probed.identity.bytes,
+                             static_cast<std::uint64_t>(slotCount) *
+                                 sizeof(std::uint32_t))) {
+        throw std::runtime_error("invalid catalog shard cycle directory");
+      }
+    }
+    if (!checked_add(frameCountSum, frameCount, kMaximumCatalogFrames)) {
+      throw std::runtime_error("catalog shard directory frame overflow");
+    }
+    probed.resrefs.push_back(resref);
+  }
+  FileIdentity finalIdentity{};
+  if (position != probed.identity.bytes ||
+      frameCountSum != expected.frameCount ||
+      indexBytesSum != expected.indexBytes ||
+      !query_file_identity(expected.path, finalIdentity) ||
+      finalIdentity != probed.identity) {
+    throw std::runtime_error("catalog shard changed during directory probe");
+  }
+  return probed;
 }
 
 ParsedRegistrySet parse_registry_set(const std::filesystem::path& path) {
@@ -1638,6 +2363,409 @@ ParsedRegistrySet parse_registry_set(const std::filesystem::path& path) {
   return parsed;
 }
 
+CatalogState load_registry_catalog(const std::filesystem::path& assetsDirectory,
+                                   const std::filesystem::path& catalogPath) {
+  CatalogState catalog;
+  catalog.active = true;
+  catalog.path = catalogPath;
+  auto bytes = read_file(catalogPath, kMaximumRegistryCatalogDirectoryBytes,
+                         &catalog.identity, &catalog.lease);
+  BinaryReader reader(std::move(bytes));
+  std::array<char, 8> magic{};
+  std::uint32_t version = 0;
+  std::uint32_t animationCount = 0;
+  std::uint32_t componentCount = 0;
+  std::uint32_t membershipCount = 0;
+  std::uint32_t shardCount = 0;
+  std::uint32_t directoryCount = 0;
+  std::uint32_t directoryEntryBytes = 0;
+  std::array<std::byte, 32> expectedDirectoryDigest{};
+  if (!reader.read(magic) || !reader.read(version) ||
+      !reader.read(catalog.scale) || !reader.read(animationCount) ||
+      !reader.read(componentCount) || !reader.read(membershipCount) ||
+      !reader.read(shardCount) || !reader.read(catalog.resourceCount) ||
+      !reader.read(catalog.frameCount) || !reader.read(catalog.indexBytes) ||
+      !reader.read(catalog.registryBytes)) {
+    throw std::runtime_error("truncated creature-sprite registry catalog header");
+  }
+  catalog.version = version;
+  if (version == kRegistryCatalogDirectoryVersion &&
+      (!reader.read(directoryCount) || !reader.read(directoryEntryBytes) ||
+       !reader.read(expectedDirectoryDigest))) {
+    throw std::runtime_error(
+        "truncated creature-sprite registry catalog V2 header");
+  }
+  if (magic != kRegistryCatalogMagic ||
+      (version != kRegistryCatalogVersion &&
+       version != kRegistryCatalogDirectoryVersion) ||
+      (version == kRegistryCatalogVersion &&
+       catalog.identity.bytes > kMaximumRegistryCatalogBytes) ||
+      !supported_physical_scale(catalog.scale) || animationCount == 0 ||
+      animationCount > kMaximumCatalogAnimations || componentCount == 0 ||
+      componentCount > kMaximumCatalogComponents || membershipCount == 0 ||
+      membershipCount > kMaximumCatalogMemberships || shardCount == 0 ||
+      shardCount > kMaximumCatalogShards || componentCount > shardCount ||
+      animationCount > membershipCount || catalog.resourceCount == 0 ||
+      catalog.resourceCount > kMaximumCatalogResources ||
+      catalog.frameCount == 0 || catalog.frameCount > kMaximumCatalogFrames ||
+      catalog.indexBytes == 0 ||
+      catalog.indexBytes > kMaximumCatalogRegistryBytes ||
+      catalog.registryBytes == 0 ||
+      catalog.registryBytes > kMaximumCatalogRegistryBytes ||
+      (version == kRegistryCatalogVersion &&
+       catalog.indexBytes > catalog.registryBytes) ||
+      (version == kRegistryCatalogVersion && directoryCount != 0) ||
+      (version == kRegistryCatalogDirectoryVersion &&
+       (directoryCount == 0 ||
+        directoryCount > kMaximumCatalogDirectoryEntries ||
+        directoryEntryBytes != kRegistryCatalogDirectoryEntryBytes ||
+        !std::any_of(expectedDirectoryDigest.begin(),
+                     expectedDirectoryDigest.end(),
+                     [](std::byte value) { return value != std::byte{0}; })))) {
+    throw std::runtime_error("invalid creature-sprite registry catalog header");
+  }
+
+  catalog.animations.reserve(animationCount);
+  std::set<std::uint16_t> animationIds;
+  std::vector<bool> membershipCovered(membershipCount, false);
+  std::uint32_t previousAnimationId = 0;
+  std::uint32_t expectedMembershipStart = 0;
+  for (std::uint32_t index = 0; index < animationCount; ++index) {
+    std::uint32_t animationId = 0;
+    CatalogAnimation animation;
+    if (!reader.read(animationId) || !reader.read(animation.owner) ||
+        !reader.read(animation.membershipStart) ||
+        !reader.read(animation.membershipCount) || animationId == 0 ||
+        animationId >= kCatalogShardAnimationSentinel ||
+        animationId <= previousAnimationId ||
+        !catalog_owner_matches_animation(animation.owner, animationId) ||
+        animation.membershipCount == 0 ||
+        animation.membershipStart != expectedMembershipStart ||
+        animation.membershipStart > membershipCount ||
+        animation.membershipCount >
+            membershipCount - animation.membershipStart) {
+      throw std::runtime_error("invalid creature-sprite catalog animation entry");
+    }
+    animation.animationId = static_cast<std::uint16_t>(animationId);
+    if (!animationIds.insert(animation.animationId).second) {
+      throw std::runtime_error("duplicate creature-sprite catalog animation id");
+    }
+    for (std::uint32_t membership = animation.membershipStart;
+         membership < animation.membershipStart + animation.membershipCount;
+         ++membership) {
+      if (membershipCovered[membership]) {
+        throw std::runtime_error("overlapping creature-sprite catalog memberships");
+      }
+      membershipCovered[membership] = true;
+    }
+    previousAnimationId = animationId;
+    expectedMembershipStart =
+        animation.membershipStart + animation.membershipCount;
+    catalog.animations.push_back(std::move(animation));
+  }
+  if (expectedMembershipStart != membershipCount ||
+      std::find(membershipCovered.begin(), membershipCovered.end(), false) !=
+          membershipCovered.end()) {
+    throw std::runtime_error("incomplete creature-sprite catalog membership coverage");
+  }
+
+  catalog.memberships.resize(membershipCount);
+  for (auto& componentIndex : catalog.memberships) {
+    if (!reader.read(componentIndex) || componentIndex >= componentCount) {
+      throw std::runtime_error("invalid creature-sprite catalog component membership");
+    }
+  }
+
+  catalog.components.reserve(componentCount);
+  std::vector<bool> shardCovered(shardCount, false);
+  std::vector<std::uint32_t> componentReferences(componentCount, 0);
+  std::set<std::array<std::byte, 32>> componentDigests;
+  std::uint32_t expectedShardStart = 0;
+  for (std::uint32_t index = 0; index < componentCount; ++index) {
+    CatalogComponent component;
+    std::uint32_t reserved = 0;
+    if (!reader.read(component.digest) || !reader.read(component.shardStart) ||
+        !reader.read(component.shardCount) ||
+        !reader.read(component.resourceCount) || !reader.read(reserved) ||
+        !reader.read(component.frameCount) || !reader.read(component.indexBytes) ||
+        !reader.read(component.registryBytes)) {
+      throw std::runtime_error("truncated creature-sprite catalog component entry");
+    }
+    const bool nonzeroDigest = std::any_of(
+        component.digest.begin(), component.digest.end(),
+        [](std::byte value) { return value != std::byte{0}; });
+    if (!nonzeroDigest || !componentDigests.insert(component.digest).second ||
+        component.shardCount == 0 || component.shardStart > shardCount ||
+        component.shardStart != expectedShardStart ||
+        component.shardCount > shardCount - component.shardStart ||
+        component.resourceCount == 0 ||
+        component.resourceCount > kMaximumCatalogResources || reserved != 0 ||
+        component.frameCount == 0 ||
+        component.frameCount >
+            static_cast<std::uint64_t>(component.resourceCount) *
+                kMaximumFramesPerResource ||
+        component.indexBytes == 0 ||
+        component.indexBytes > kMaximumCatalogRegistryBytes ||
+        component.registryBytes == 0 ||
+        component.registryBytes > kMaximumCatalogRegistryBytes ||
+        (catalog.version == kRegistryCatalogVersion &&
+         component.indexBytes > component.registryBytes) ||
+        component.resourceCount > component.shardCount * kMaximumResources) {
+      throw std::runtime_error("invalid creature-sprite catalog component entry");
+    }
+    for (std::uint32_t shard = component.shardStart;
+         shard < component.shardStart + component.shardCount; ++shard) {
+      if (shardCovered[shard]) {
+        throw std::runtime_error("overlapping creature-sprite catalog shard ranges");
+      }
+      shardCovered[shard] = true;
+    }
+    expectedShardStart = component.shardStart + component.shardCount;
+    catalog.components.push_back(std::move(component));
+  }
+  if (expectedShardStart != shardCount ||
+      std::find(shardCovered.begin(), shardCovered.end(), false) !=
+          shardCovered.end()) {
+    throw std::runtime_error("incomplete creature-sprite catalog shard coverage");
+  }
+
+  catalog.shards.reserve(shardCount);
+  std::set<std::array<std::byte, 32>> shardDigests;
+  const auto maximumShardBytes = maximum_registry_bytes_for_scale(catalog.scale);
+  std::uint64_t resourceSum = 0;
+  std::uint64_t frameSum = 0;
+  std::uint64_t indexSum = 0;
+  std::uint64_t registrySum = 0;
+  for (std::uint32_t index = 0; index < shardCount; ++index) {
+    CatalogShardEntry shard;
+    if (!reader.read(shard.encoded)) {
+      throw std::runtime_error("truncated creature-sprite catalog shard entry");
+    }
+    std::copy_n(shard.encoded.begin(), shard.sha256.size(),
+                shard.sha256.begin());
+    shard.checksum = encoded_field<std::uint32_t>(shard.encoded, 32);
+    shard.resourceCount = encoded_field<std::uint32_t>(shard.encoded, 36);
+    shard.frameCount = encoded_field<std::uint64_t>(shard.encoded, 40);
+    shard.indexBytes = encoded_field<std::uint64_t>(shard.encoded, 48);
+    shard.registryBytes = encoded_field<std::uint64_t>(shard.encoded, 56);
+    const bool nonzeroHash = std::any_of(
+        shard.sha256.begin(), shard.sha256.end(),
+        [](std::byte value) { return value != std::byte{0}; });
+    if (!nonzeroHash || !shardDigests.insert(shard.sha256).second ||
+        shard.resourceCount == 0 || shard.resourceCount > kMaximumResources ||
+        shard.frameCount == 0 ||
+        shard.frameCount >
+            static_cast<std::uint64_t>(shard.resourceCount) *
+                kMaximumFramesPerResource ||
+        shard.indexBytes == 0 || shard.indexBytes > maximumShardBytes ||
+        shard.registryBytes < 24 || shard.registryBytes > maximumShardBytes ||
+        (catalog.version == kRegistryCatalogVersion &&
+         shard.indexBytes > shard.registryBytes) ||
+        !checked_add(resourceSum, shard.resourceCount,
+                     kMaximumCatalogResources) ||
+        !checked_add(frameSum, shard.frameCount, kMaximumCatalogFrames) ||
+        !checked_add(indexSum, shard.indexBytes,
+                     kMaximumCatalogRegistryBytes) ||
+        !checked_add(registrySum, shard.registryBytes,
+                     kMaximumCatalogRegistryBytes)) {
+      throw std::runtime_error("invalid creature-sprite catalog shard entry");
+    }
+    shard.path = assetsDirectory / catalog_shard_filename(shard.sha256);
+    catalog.shards.push_back(std::move(shard));
+  }
+  if (resourceSum != catalog.resourceCount ||
+      frameSum != catalog.frameCount || indexSum != catalog.indexBytes ||
+      registrySum != catalog.registryBytes) {
+    throw std::runtime_error("creature-sprite catalog totals mismatch");
+  }
+
+  // Activation authenticates the small catalog only. Shard bytes are never
+  // opened or hashed here; V3/V5 registries are validated by the background
+  // resolver only when one of their resrefs is requested.
+  for (std::uint32_t componentIndex = 0; componentIndex < componentCount;
+       ++componentIndex) {
+    const auto& component = catalog.components[componentIndex];
+    for (std::uint32_t offset = 0; offset < component.shardCount; ++offset) {
+      catalog.shards[component.shardStart + offset].componentIndex =
+          componentIndex;
+    }
+  }
+
+  resourceSum = 0;
+  frameSum = 0;
+  indexSum = 0;
+  registrySum = 0;
+  for (std::uint32_t componentIndex = 0; componentIndex < componentCount;
+       ++componentIndex) {
+    auto& component = catalog.components[componentIndex];
+    std::uint64_t componentResources = 0;
+    std::uint64_t componentFrames = 0;
+    std::uint64_t componentIndices = 0;
+    std::uint64_t componentRegistry = 0;
+    for (std::uint32_t offset = 0; offset < component.shardCount; ++offset) {
+      const auto& shard = catalog.shards[component.shardStart + offset];
+      if (!checked_add(componentResources, shard.resourceCount,
+                       kMaximumCatalogResources) ||
+          !checked_add(componentFrames, shard.frameCount,
+                       kMaximumCatalogFrames) ||
+          !checked_add(componentIndices, shard.indexBytes,
+                       kMaximumCatalogRegistryBytes) ||
+          !checked_add(componentRegistry, shard.registryBytes,
+                       kMaximumCatalogRegistryBytes)) {
+        throw std::runtime_error("creature-sprite catalog component overflow");
+      }
+    }
+    if (componentResources != component.resourceCount ||
+        componentFrames != component.frameCount ||
+        componentIndices != component.indexBytes ||
+        componentRegistry != component.registryBytes ||
+        catalog_component_digest(catalog.scale, catalog.shards,
+                                 component.shardStart,
+                                 component.shardCount) != component.digest ||
+        !checked_add(resourceSum, component.resourceCount,
+                     kMaximumCatalogResources) ||
+        !checked_add(frameSum, component.frameCount, kMaximumCatalogFrames) ||
+        !checked_add(indexSum, component.indexBytes,
+                     kMaximumCatalogRegistryBytes) ||
+        !checked_add(registrySum, component.registryBytes,
+                     kMaximumCatalogRegistryBytes)) {
+      throw std::runtime_error("creature-sprite catalog component mismatch");
+    }
+  }
+  if (resourceSum != catalog.resourceCount || frameSum != catalog.frameCount ||
+      indexSum != catalog.indexBytes || registrySum != catalog.registryBytes) {
+    throw std::runtime_error("creature-sprite catalog component totals mismatch");
+  }
+
+  std::vector<std::set<std::uint32_t>> animationComponents(
+      catalog.animations.size());
+  std::vector<std::uint32_t> expectedDirectoryCounts(
+      catalog.animations.size(), 0);
+  for (std::size_t animationIndex = 0;
+       animationIndex < catalog.animations.size(); ++animationIndex) {
+    const auto& animation = catalog.animations[animationIndex];
+    std::set<std::uint32_t> uniqueComponents;
+    std::uint32_t previousComponentIndex = 0;
+    for (std::uint32_t offset = 0; offset < animation.membershipCount; ++offset) {
+      const auto componentIndex =
+          catalog.memberships[animation.membershipStart + offset];
+      if ((offset != 0 && componentIndex <= previousComponentIndex) ||
+          !uniqueComponents.insert(componentIndex).second) {
+        throw std::runtime_error(
+            "non-canonical creature-sprite animation membership");
+      }
+      previousComponentIndex = componentIndex;
+      ++componentReferences[componentIndex];
+      animationComponents[animationIndex].insert(componentIndex);
+      const auto resources = catalog.components[componentIndex].resourceCount;
+      if (resources > kMaximumCatalogDirectoryEntries -
+                          expectedDirectoryCounts[animationIndex]) {
+        throw std::runtime_error(
+            "creature-sprite catalog animation directory overflow");
+      }
+      expectedDirectoryCounts[animationIndex] += resources;
+    }
+  }
+  if (std::find(componentReferences.begin(), componentReferences.end(), 0u) !=
+      componentReferences.end()) {
+    throw std::runtime_error("unreferenced creature-sprite catalog component");
+  }
+
+  if (catalog.version == kRegistryCatalogDirectoryVersion) {
+    catalog.directory.reserve(directoryCount);
+    std::vector<std::byte> rawDirectory;
+    rawDirectory.reserve(static_cast<std::size_t>(directoryCount) *
+                         kRegistryCatalogDirectoryEntryBytes);
+    std::set<std::tuple<std::uint16_t, std::uint32_t, std::uint32_t>>
+        occupiedOrdinals;
+    std::vector<std::uint32_t> actualDirectoryCounts(
+        catalog.animations.size(), 0);
+    CatalogDirectoryEntry previous{};
+    bool havePrevious = false;
+    for (std::uint32_t index = 0; index < directoryCount; ++index) {
+      std::array<std::byte, kRegistryCatalogDirectoryEntryBytes> encoded{};
+      if (!reader.read(encoded)) {
+        throw std::runtime_error(
+            "truncated creature-sprite catalog directory entry");
+      }
+      rawDirectory.insert(rawDirectory.end(), encoded.begin(), encoded.end());
+      const auto animationId = encoded_field<std::uint32_t>(encoded, 0);
+      CatalogDirectoryEntry entry;
+      if (animationId == 0 || animationId >= kCatalogShardAnimationSentinel) {
+        throw std::runtime_error(
+            "invalid creature-sprite catalog directory animation");
+      }
+      entry.animationId = static_cast<std::uint16_t>(animationId);
+      std::memcpy(entry.resref.data(), encoded.data() + 4,
+                  entry.resref.size());
+      entry.componentIndex = encoded_field<std::uint32_t>(encoded, 12);
+      entry.shardIndex = encoded_field<std::uint32_t>(encoded, 16);
+      entry.resourceOrdinal = encoded_field<std::uint32_t>(encoded, 20);
+      const auto animation = std::lower_bound(
+          catalog.animations.begin(), catalog.animations.end(),
+          entry.animationId,
+          [](const CatalogAnimation& item, std::uint16_t id) {
+            return item.animationId < id;
+          });
+      if (animation == catalog.animations.end() ||
+          animation->animationId != entry.animationId ||
+          !canonical_catalog_resref(entry.resref)) {
+        throw std::runtime_error(
+            "invalid creature-sprite catalog directory key");
+      }
+      const auto animationIndex = static_cast<std::size_t>(
+          std::distance(catalog.animations.begin(), animation));
+      if (entry.componentIndex >= catalog.components.size() ||
+          !animationComponents[animationIndex].contains(entry.componentIndex)) {
+        throw std::runtime_error(
+            "catalog directory references a non-member component");
+      }
+      const auto& component = catalog.components[entry.componentIndex];
+      if (entry.shardIndex < component.shardStart ||
+          entry.shardIndex >= component.shardStart + component.shardCount ||
+          entry.resourceOrdinal >=
+              catalog.shards[entry.shardIndex].resourceCount ||
+          !occupiedOrdinals
+               .insert({entry.animationId, entry.shardIndex,
+                        entry.resourceOrdinal})
+               .second) {
+        throw std::runtime_error(
+            "invalid creature-sprite catalog directory target");
+      }
+      if (havePrevious &&
+          !(std::tie(previous.animationId, previous.resref) <
+            std::tie(entry.animationId, entry.resref))) {
+        throw std::runtime_error(
+            "non-canonical creature-sprite catalog directory order");
+      }
+      previous = entry;
+      havePrevious = true;
+      ++actualDirectoryCounts[animationIndex];
+      catalog.directory.push_back(entry);
+    }
+    if (actualDirectoryCounts != expectedDirectoryCounts ||
+        catalog_directory_digest(catalog.scale, rawDirectory.data(),
+                                 rawDirectory.size()) !=
+            expectedDirectoryDigest) {
+      throw std::runtime_error(
+          "creature-sprite catalog directory digest/count mismatch");
+    }
+  }
+  if (!reader.at_end()) {
+    throw std::runtime_error("trailing creature-sprite catalog bytes");
+  }
+  FileIdentity finalCatalogIdentity{};
+#ifdef _WIN32
+  if (!query_open_file_identity(catalog.lease.handle, finalCatalogIdentity) ||
+#else
+  if (!query_file_identity(catalog.path, finalCatalogIdentity) ||
+#endif
+      finalCatalogIdentity != catalog.identity) {
+    throw std::runtime_error("creature-sprite catalog changed during validation");
+  }
+  return catalog;
+}
+
 LoadedPack load_registry_set(const std::filesystem::path& assetsDirectory,
                              const std::filesystem::path& setPath) {
   const auto set = parse_registry_set(setPath);
@@ -1677,7 +2805,9 @@ LoadedPack load_registry_set(const std::filesystem::path& assetsDirectory,
         !checked_add(registrySum, shard.registryBytes, kMaximumRegistrySetBytes)) {
       throw std::runtime_error("creature-sprite registry-set aggregate overflow");
     }
-    loaded.lazyShards.push_back({.path = shardPath, .identity = shard.identity});
+    loaded.lazyShards.push_back({.path = shardPath,
+                                 .identity = shard.identity,
+                                 .lease = std::move(shard.lease)});
     loaded.resources.insert(loaded.resources.end(),
                             std::make_move_iterator(shard.resources.begin()),
                             std::make_move_iterator(shard.resources.end()));
@@ -1718,31 +2848,728 @@ LoadedPack load_monolithic_registry(const std::filesystem::path& path,
                     .lazyPayloads = lazyPayloads,
                     .resources = std::move(parsed.resources)};
   if (lazyPayloads) {
-    loaded.lazyShards.push_back({.path = path, .identity = parsed.identity});
+    loaded.lazyShards.push_back({.path = path,
+                                 .identity = parsed.identity,
+                                 .lease = std::move(parsed.lease)});
   }
   return loaded;
 }
 
+std::uint32_t legacy_owner_for_animation(std::uint16_t animationId) noexcept {
+  const auto family = animationId & 0xF000u;
+  if (family == 0x5000u || family == 0x6000u) {
+    return kCatalogCharacterOwner;
+  }
+  if (family == 0xE000u) return kCatalogMonsterIcewindOwner;
+  if (family == 0x7000u) return kCatalogMonsterOwner;
+  return 0;
+}
+
+CatalogAnimation* find_catalog_animation_locked(
+    std::uint16_t animationId) noexcept {
+  const auto found = std::find_if(
+      g_catalog.animations.begin(), g_catalog.animations.end(),
+      [&](const CatalogAnimation& animation) {
+        return animation.animationId == animationId;
+      });
+  return found == g_catalog.animations.end() ? nullptr : &*found;
+}
+
+const CatalogAnimation* find_pack_animation_locked(
+    std::uint16_t animationId) noexcept {
+  const auto found = std::find_if(
+      g_packAnimations.begin(), g_packAnimations.end(),
+      [&](const CatalogAnimation& animation) {
+        return animation.animationId == animationId;
+      });
+  return found == g_packAnimations.end() ? nullptr : &*found;
+}
+
+std::uint64_t catalog_metadata_bytes_locked() noexcept {
+  std::uint64_t total = 0;
+  for (const auto& shard : g_catalog.shards) {
+    if (!checked_add(total, shard.residentMetadataBytes,
+                     kCatalogMetadataCacheBudgetBytes)) {
+      return (std::numeric_limits<std::uint64_t>::max)();
+    }
+  }
+  return total;
+}
+
+std::uint64_t resource_metadata_bytes(
+    const std::vector<Resource>& resources) noexcept {
+  std::uint64_t total = 0;
+  auto add = [&](std::uint64_t bytes) {
+    return checked_add(total, bytes, kCatalogMetadataCacheBudgetBytes);
+  };
+  if (!add(static_cast<std::uint64_t>(resources.size()) * sizeof(Resource))) {
+    return (std::numeric_limits<std::uint64_t>::max)();
+  }
+  for (const auto& resource : resources) {
+    if (!add(static_cast<std::uint64_t>(resource.frames.size()) *
+                 sizeof(Frame)) ||
+        !add(static_cast<std::uint64_t>(resource.cycles.size()) *
+             sizeof(std::vector<std::uint32_t>))) {
+      return (std::numeric_limits<std::uint64_t>::max)();
+    }
+    for (const auto& cycle : resource.cycles) {
+      if (!add(static_cast<std::uint64_t>(cycle.size()) *
+               sizeof(std::uint32_t))) {
+        return (std::numeric_limits<std::uint64_t>::max)();
+      }
+    }
+  }
+  return total;
+}
+
+void invalidate_catalog_shard_caches_locked(
+    std::uint32_t shardIndex) noexcept {
+  std::erase_if(g_lazyIndexCache, [&](const LazyIndexCacheEntry& entry) {
+    return entry.handle.catalogShardIndex == shardIndex;
+  });
+  std::erase_if(g_compositePixelCache,
+                [&](const CompositePixelCacheEntry& entry) {
+                  for (std::size_t layer = 0; layer < entry.layerCount;
+                       ++layer) {
+                    if (entry.layers[layer].frame.catalogShardIndex ==
+                        shardIndex) {
+                      return true;
+                    }
+                  }
+                  return false;
+                });
+  // Engine texture ids cannot be destroyed safely without the draw API. Their
+  // old generation makes them impossible cache hits; put only victim entries
+  // at the front of the reuse LRU and preserve every unrelated live entry.
+  for (auto& entry : g_textureCache) {
+    if (entry.handle.catalogShardIndex == shardIndex) entry.lastUse = 0;
+  }
+}
+
+void evict_catalog_shard_locked(std::uint32_t shardIndex) noexcept {
+  if (shardIndex >= g_catalog.shards.size()) return;
+  auto& shard = g_catalog.shards[shardIndex];
+  invalidate_catalog_shard_caches_locked(shardIndex);
+  for (const auto resourceIndex : shard.resourceIndices) {
+    if (resourceIndex < g_resources.size()) g_resources[resourceIndex] = {};
+  }
+  shard.residentMetadataBytes = 0;
+  ++shard.generation;
+  if (shard.status != CatalogShardEntry::Status::Quarantined) {
+    shard.status = shard.directory.empty()
+                       ? CatalogShardEntry::Status::Unprobed
+                       : CatalogShardEntry::Status::DirectoryReady;
+  }
+  if (shardIndex < g_lazyShards.size()) {
+    g_lazyShards[shardIndex].identity = {};
+    g_lazyShards[shardIndex].lease.reset();
+  }
+}
+
+void quarantine_catalog_component_locked(std::uint32_t componentIndex,
+                                         const char* reason) noexcept {
+  if (componentIndex >= g_catalog.components.size()) return;
+  auto& component = g_catalog.components[componentIndex];
+  component.quarantined = true;
+  for (std::uint32_t offset = 0; offset < component.shardCount; ++offset) {
+    const auto shardIndex = component.shardStart + offset;
+    if (shardIndex >= g_catalog.shards.size()) continue;
+    auto& shard = g_catalog.shards[shardIndex];
+    evict_catalog_shard_locked(shardIndex);
+    shard.status = CatalogShardEntry::Status::Quarantined;
+  }
+  if (!component.failureLogged) {
+    component.failureLogged = true;
+    LOG_WARN(
+        "Creature sprite catalog component {} quarantined: {}; other validated "
+        "components remain available and native rendering is retained",
+        componentIndex, reason ? reason : "unknown component failure");
+  }
+}
+
+bool make_catalog_metadata_room_locked(std::uint32_t incomingShard,
+                                       std::uint64_t incomingBytes) noexcept {
+  if (incomingBytes == 0 ||
+      incomingBytes > kCatalogMetadataCacheBudgetBytes) {
+    return false;
+  }
+  auto resident = catalog_metadata_bytes_locked();
+  while (resident > kCatalogMetadataCacheBudgetBytes ||
+         incomingBytes > kCatalogMetadataCacheBudgetBytes - resident) {
+    auto victim = g_catalog.shards.end();
+    for (auto candidate = g_catalog.shards.begin();
+         candidate != g_catalog.shards.end(); ++candidate) {
+      const auto index = static_cast<std::uint32_t>(
+          std::distance(g_catalog.shards.begin(), candidate));
+      if (index == incomingShard ||
+          candidate->status != CatalogShardEntry::Status::Resident) {
+        continue;
+      }
+      if (victim == g_catalog.shards.end() ||
+          candidate->lastUse < victim->lastUse) {
+        victim = candidate;
+      }
+    }
+    if (victim == g_catalog.shards.end()) return false;
+    const auto freed = victim->residentMetadataBytes;
+    const auto victimIndex = static_cast<std::uint32_t>(
+        std::distance(g_catalog.shards.begin(), victim));
+    evict_catalog_shard_locked(victimIndex);
+    if (freed > resident) return false;
+    resident -= freed;
+  }
+  return true;
+}
+
+const CatalogDirectoryEntry* find_catalog_directory_entry_locked(
+    std::uint16_t animationId, const std::array<char, 8>& resref) noexcept {
+  const auto found = std::lower_bound(
+      g_catalog.directory.begin(), g_catalog.directory.end(),
+      std::tie(animationId, resref),
+      [](const CatalogDirectoryEntry& entry, const auto& key) {
+        return std::tie(entry.animationId, entry.resref) < key;
+      });
+  return found != g_catalog.directory.end() &&
+                 found->animationId == animationId && found->resref == resref
+             ? &*found
+             : nullptr;
+}
+
+bool catalog_resident_resource_locked(
+    std::uint16_t animationId, const std::array<char, 8>& resref,
+    std::uint32_t& shardIndex, std::uint32_t& resourceOrdinal,
+    std::size_t& resourceIndex) noexcept {
+  const auto* animation = find_catalog_animation_locked(animationId);
+  if (!animation) return false;
+  if (g_catalog.version == kRegistryCatalogDirectoryVersion) {
+    const auto* entry =
+        find_catalog_directory_entry_locked(animationId, resref);
+    if (!entry || entry->shardIndex >= g_catalog.shards.size()) return false;
+    auto& shard = g_catalog.shards[entry->shardIndex];
+    if (shard.status != CatalogShardEntry::Status::Resident ||
+        entry->resourceOrdinal >= shard.resourceIndices.size()) {
+      return false;
+    }
+    shardIndex = entry->shardIndex;
+    resourceOrdinal = entry->resourceOrdinal;
+    resourceIndex = shard.resourceIndices[resourceOrdinal];
+    shard.lastUse = ++g_catalogMetadataUseCounter;
+    return resourceIndex < g_resources.size() &&
+           g_resources[resourceIndex].resref == resref;
+  }
+  for (std::uint32_t offset = 0; offset < animation->membershipCount;
+       ++offset) {
+    const auto componentIndex =
+        g_catalog.memberships[animation->membershipStart + offset];
+    if (componentIndex >= g_catalog.components.size() ||
+        g_catalog.components[componentIndex].quarantined) {
+      continue;
+    }
+    const auto& component = g_catalog.components[componentIndex];
+    for (std::uint32_t shardOffset = 0;
+         shardOffset < component.shardCount; ++shardOffset) {
+      const auto candidateIndex = component.shardStart + shardOffset;
+      auto& shard = g_catalog.shards[candidateIndex];
+      if (shard.status != CatalogShardEntry::Status::Resident) continue;
+      const auto found =
+          std::find(shard.directory.begin(), shard.directory.end(), resref);
+      if (found == shard.directory.end()) continue;
+      resourceOrdinal = static_cast<std::uint32_t>(
+          std::distance(shard.directory.begin(), found));
+      if (resourceOrdinal >= shard.resourceIndices.size()) return false;
+      shardIndex = candidateIndex;
+      resourceIndex = shard.resourceIndices[resourceOrdinal];
+      shard.lastUse = ++g_catalogMetadataUseCounter;
+      return resourceIndex < g_resources.size() &&
+             g_resources[resourceIndex].resref == resref;
+    }
+  }
+  return false;
+}
+
+void queue_catalog_load_locked(std::uint16_t animationId,
+                               const std::array<char, 8>& resref) {
+  constexpr std::size_t kMaximumPendingRequests = 256;
+  const auto* animation = find_catalog_animation_locked(animationId);
+  if (!g_catalog.active || !animation) return;
+  bool needsWorker = false;
+  if (g_catalog.version == kRegistryCatalogDirectoryVersion) {
+    const auto* entry = find_catalog_directory_entry_locked(animationId, resref);
+    needsWorker = entry && entry->componentIndex < g_catalog.components.size() &&
+                  !g_catalog.components[entry->componentIndex].quarantined;
+  } else {
+    // Once every V1 member shard has been probed, an absent resref is a cheap
+    // synchronous negative lookup. Do not retain an unbounded cache of native
+    // game resrefs that are intentionally outside this catalog.
+    for (std::uint32_t offset = 0;
+         !needsWorker && offset < animation->membershipCount; ++offset) {
+      const auto componentIndex =
+          g_catalog.memberships[animation->membershipStart + offset];
+      if (componentIndex >= g_catalog.components.size() ||
+          g_catalog.components[componentIndex].quarantined) {
+        continue;
+      }
+      const auto& component = g_catalog.components[componentIndex];
+      for (std::uint32_t shardOffset = 0;
+           shardOffset < component.shardCount; ++shardOffset) {
+        const auto& shard =
+            g_catalog.shards[component.shardStart + shardOffset];
+        if (shard.status == CatalogShardEntry::Status::Unprobed ||
+            shard.status == CatalogShardEntry::Status::Loading ||
+            std::find(shard.directory.begin(), shard.directory.end(), resref) !=
+                shard.directory.end()) {
+          needsWorker = true;
+          break;
+        }
+      }
+    }
+  }
+  if (!needsWorker) return;
+  const auto key = std::make_pair(animationId, resref);
+  if (g_catalogPendingRequests.contains(key) ||
+      g_catalogLoadQueue.size() >= kMaximumPendingRequests) {
+    return;
+  }
+  g_catalogPendingRequests.insert(key);
+  g_catalogLoadQueue.push_back({.animationId = animationId, .resref = resref});
+  g_catalogWorkChanged.notify_one();
+}
+
+bool catalog_shard_matches(const ParsedRegistry& parsed,
+                           const CatalogShardEntry& expected,
+                           std::uint32_t scale) noexcept {
+  const bool identityMatches =
+      expected.identity.bytes == 0 || parsed.identity == expected.identity;
+  return (parsed.version == kXnRegistryVersion ||
+          parsed.version == kXnCompressedRegistryVersion) &&
+         parsed.scale == scale &&
+         parsed.animationId == kCatalogShardAnimationSentinel &&
+         parsed.resourceCount == expected.resourceCount &&
+         parsed.frameCount == expected.frameCount &&
+         parsed.indexBytes == expected.indexBytes &&
+         parsed.registryBytes == expected.registryBytes &&
+         parsed.checksum == expected.checksum &&
+         parsed.sha256 == expected.sha256 && identityMatches;
+}
+
+bool load_catalog_shard_for_request(std::uint64_t epoch,
+                                    std::uint32_t shardIndex,
+                                    const CatalogLoadRequest& request,
+                                    std::uint32_t expectedOrdinal) {
+  CatalogShardEntry expected;
+  std::uint32_t scale = 0;
+  std::uint32_t catalogVersion = 0;
+  {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !g_catalog.active ||
+        g_catalog.epoch != epoch || shardIndex >= g_catalog.shards.size()) {
+      return false;
+    }
+    auto& shard = g_catalog.shards[shardIndex];
+    if (shard.status == CatalogShardEntry::Status::Resident) {
+      if (expectedOrdinal < shard.resourceIndices.size() &&
+          shard.resourceIndices[expectedOrdinal] < g_resources.size() &&
+          g_resources[shard.resourceIndices[expectedOrdinal]].resref ==
+              request.resref) {
+        return true;
+      }
+      quarantine_catalog_component_locked(
+          shard.componentIndex,
+          "resident shard differs from the catalog directory target");
+      return false;
+    }
+    if (shard.status == CatalogShardEntry::Status::Quarantined) return false;
+    shard.status = CatalogShardEntry::Status::Loading;
+    expected = shard;
+    scale = g_catalog.scale;
+    catalogVersion = g_catalog.version;
+  }
+  try {
+    auto parsed = parse_registry(expected.path, RegistryFormat::Xn, true,
+                                 shardIndex, true, true);
+    if ((parsed.version == kXnCompressedRegistryVersion &&
+         catalogVersion != kRegistryCatalogDirectoryVersion) ||
+        !catalog_shard_matches(parsed, expected, scale) ||
+        expectedOrdinal >= parsed.resources.size() ||
+        parsed.resources[expectedOrdinal].resref != request.resref) {
+      throw std::runtime_error(
+          "catalog directory target differs from its V3/V5 shard");
+    }
+    const auto metadataBytes = resource_metadata_bytes(parsed.resources);
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !g_catalog.active ||
+        g_catalog.epoch != epoch || shardIndex >= g_catalog.shards.size()) {
+      return false;
+    }
+    auto& shard = g_catalog.shards[shardIndex];
+    if (shard.status == CatalogShardEntry::Status::Quarantined) return false;
+    if (!catalog_identity_matches_locked()) return false;
+    if (!make_catalog_metadata_room_locked(shardIndex, metadataBytes)) {
+      quarantine_catalog_component_locked(
+          shard.componentIndex,
+          "one shard exceeds the bounded metadata cache");
+      return false;
+    }
+    if (!shard.directory.empty()) {
+      if (shard.directory.size() != parsed.resources.size()) {
+        quarantine_catalog_component_locked(
+            shard.componentIndex,
+            "catalog shard directory changed before validation");
+        return false;
+      }
+      for (std::size_t index = 0; index < shard.directory.size(); ++index) {
+        if (shard.directory[index] != parsed.resources[index].resref) {
+          quarantine_catalog_component_locked(
+              shard.componentIndex,
+              "catalog shard directory differs from validated resources");
+          return false;
+        }
+      }
+    } else {
+      shard.directory.reserve(parsed.resources.size());
+      for (const auto& resource : parsed.resources) {
+        shard.directory.push_back(resource.resref);
+      }
+    }
+    if (shard.resourceIndices.empty()) {
+      if (g_resources.size() > g_catalog.resourceCount ||
+          parsed.resources.size() >
+              g_catalog.resourceCount - g_resources.size()) {
+        quarantine_catalog_component_locked(
+            shard.componentIndex, "catalog resource slot bound exceeded");
+        return false;
+      }
+      shard.resourceIndices.reserve(parsed.resources.size());
+      for (std::size_t index = 0; index < parsed.resources.size(); ++index) {
+        shard.resourceIndices.push_back(g_resources.size());
+        g_resources.emplace_back();
+      }
+    }
+    if (shard.resourceIndices.size() != parsed.resources.size()) {
+      quarantine_catalog_component_locked(
+          shard.componentIndex, "catalog resource slot count changed");
+      return false;
+    }
+    for (std::size_t index = 0; index < parsed.resources.size(); ++index) {
+      g_resources[shard.resourceIndices[index]] =
+          std::move(parsed.resources[index]);
+    }
+    shard.identity = parsed.identity;
+    if (shardIndex < g_lazyShards.size()) {
+      g_lazyShards[shardIndex].identity = parsed.identity;
+      g_lazyShards[shardIndex].lease = std::move(parsed.lease);
+    }
+    shard.residentMetadataBytes = metadataBytes;
+    shard.lastUse = ++g_catalogMetadataUseCounter;
+    ++shard.generation;
+    shard.status = CatalogShardEntry::Status::Resident;
+    LOG_INFO(
+        "Creature sprite catalog shard {} ready on demand for animation "
+        "0x{:04X}, resref {}: {} resources, {} metadata bytes",
+        shardIndex, request.animationId, resref_name(request.resref),
+        shard.resourceCount, metadataBytes);
+    return true;
+  } catch (const std::exception& error) {
+    std::lock_guard lock(g_mutex);
+    if (g_catalog.active && g_catalog.epoch == epoch &&
+        shardIndex < g_catalog.shards.size()) {
+      quarantine_catalog_component_locked(
+          g_catalog.shards[shardIndex].componentIndex, error.what());
+    }
+  } catch (...) {
+    std::lock_guard lock(g_mutex);
+    if (g_catalog.active && g_catalog.epoch == epoch &&
+        shardIndex < g_catalog.shards.size()) {
+      quarantine_catalog_component_locked(
+          g_catalog.shards[shardIndex].componentIndex,
+          "unknown on-demand shard validation failure");
+    }
+  }
+  return false;
+}
+
+void process_catalog_load_request(std::uint64_t epoch,
+                                  const CatalogLoadRequest& request) {
+  std::vector<std::uint32_t> candidates;
+  bool directDirectory = false;
+  std::uint32_t directOrdinal = 0;
+  {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !g_catalog.active ||
+        g_catalog.epoch != epoch ||
+        !find_catalog_animation_locked(request.animationId)) {
+      return;
+    }
+    if (g_catalog.version == kRegistryCatalogDirectoryVersion) {
+      const auto* entry = find_catalog_directory_entry_locked(
+          request.animationId, request.resref);
+      if (!entry || entry->componentIndex >= g_catalog.components.size() ||
+          g_catalog.components[entry->componentIndex].quarantined) {
+        return;
+      }
+      candidates.push_back(entry->shardIndex);
+      directOrdinal = entry->resourceOrdinal;
+      directDirectory = true;
+    } else {
+      const auto* animation = find_catalog_animation_locked(request.animationId);
+      for (std::uint32_t offset = 0; offset < animation->membershipCount;
+           ++offset) {
+        const auto componentIndex =
+            g_catalog.memberships[animation->membershipStart + offset];
+        if (componentIndex >= g_catalog.components.size() ||
+            g_catalog.components[componentIndex].quarantined) {
+          continue;
+        }
+        const auto& component = g_catalog.components[componentIndex];
+        for (std::uint32_t shardOffset = 0;
+             shardOffset < component.shardCount; ++shardOffset) {
+          candidates.push_back(component.shardStart + shardOffset);
+        }
+      }
+    }
+  }
+  if (directDirectory) {
+    (void)load_catalog_shard_for_request(epoch, candidates.front(), request,
+                                         directOrdinal);
+    return;
+  }
+
+  std::vector<std::pair<std::uint32_t, std::uint32_t>> matches;
+  for (const auto shardIndex : candidates) {
+    bool mustProbe = false;
+    CatalogShardEntry expected;
+    std::uint32_t scale = 0;
+    {
+      std::lock_guard lock(g_mutex);
+      if (!g_catalog.active || g_catalog.epoch != epoch ||
+          shardIndex >= g_catalog.shards.size()) {
+        return;
+      }
+      auto& shard = g_catalog.shards[shardIndex];
+      if (shard.status == CatalogShardEntry::Status::Quarantined) continue;
+      if (shard.status == CatalogShardEntry::Status::Unprobed) {
+        shard.status = CatalogShardEntry::Status::Loading;
+        expected = shard;
+        scale = g_catalog.scale;
+        mustProbe = true;
+      }
+    }
+    if (mustProbe) {
+      try {
+        auto probed = probe_catalog_registry_directory(expected, scale);
+        std::lock_guard lock(g_mutex);
+        if (!g_catalog.active || g_catalog.epoch != epoch ||
+            shardIndex >= g_catalog.shards.size()) {
+          return;
+        }
+        auto& shard = g_catalog.shards[shardIndex];
+        if (shard.status != CatalogShardEntry::Status::Quarantined) {
+          shard.identity = probed.identity;
+          shard.directory = std::move(probed.resrefs);
+          shard.status = CatalogShardEntry::Status::DirectoryReady;
+        }
+      } catch (const std::exception& error) {
+        std::lock_guard lock(g_mutex);
+        if (g_catalog.active && g_catalog.epoch == epoch &&
+            shardIndex < g_catalog.shards.size()) {
+          quarantine_catalog_component_locked(
+              g_catalog.shards[shardIndex].componentIndex, error.what());
+        }
+        continue;
+      }
+    }
+    std::lock_guard lock(g_mutex);
+    if (!g_catalog.active || g_catalog.epoch != epoch ||
+        shardIndex >= g_catalog.shards.size()) {
+      return;
+    }
+    const auto& shard = g_catalog.shards[shardIndex];
+    if (shard.status == CatalogShardEntry::Status::Quarantined) continue;
+    const auto found =
+        std::find(shard.directory.begin(), shard.directory.end(), request.resref);
+    if (found != shard.directory.end()) {
+      matches.emplace_back(
+          shardIndex, static_cast<std::uint32_t>(
+                          std::distance(shard.directory.begin(), found)));
+    }
+  }
+  if (matches.size() == 1) {
+    (void)load_catalog_shard_for_request(epoch, matches.front().first, request,
+                                         matches.front().second);
+  } else if (matches.size() > 1) {
+    std::lock_guard lock(g_mutex);
+    for (const auto& match : matches) {
+      if (match.first < g_catalog.shards.size()) {
+        quarantine_catalog_component_locked(
+            g_catalog.shards[match.first].componentIndex,
+            "duplicate resref discovered in V1 animation mapping");
+      }
+    }
+  }
+}
+
+void catalog_worker_loop(std::stop_token stopToken) noexcept {
+  while (!stopToken.stop_requested()) {
+    CatalogLoadRequest request;
+    std::uint64_t epoch = 0;
+    {
+      std::unique_lock lock(g_mutex);
+      g_catalogWorkChanged.wait(lock, stopToken, [] {
+        return !g_catalogLoadQueue.empty();
+      });
+      if (stopToken.stop_requested()) break;
+      if (g_catalogLoadQueue.empty()) continue;
+      request = g_catalogLoadQueue.front();
+      g_catalogLoadQueue.pop_front();
+      epoch = g_catalog.epoch;
+    }
+    try {
+      process_catalog_load_request(epoch, request);
+    } catch (...) {
+      // All parser/commit failures are normally handled at component scope.
+      // The worker must never terminate the host process.
+    }
+    {
+      std::lock_guard lock(g_mutex);
+      const auto key = std::make_pair(request.animationId, request.resref);
+      g_catalogPendingRequests.erase(key);
+    }
+  }
+}
+
+void stop_catalog_worker() noexcept {
+  if (!g_catalogWorker.joinable()) return;
+  g_catalogWorker.request_stop();
+  g_catalogWorkChanged.notify_all();
+  g_catalogWorker.join();
+}
+
+void activate_registry_catalog(CatalogState&& catalog) {
+  stop_catalog_worker();
+  {
+    std::lock_guard lock(g_mutex);
+    g_resources.clear();
+    g_packAnimations.clear();
+    g_catalog = std::move(catalog);
+    g_catalog.epoch = ++g_catalogEpochCounter;
+    g_lazyShards.clear();
+    g_lazyShards.reserve(g_catalog.shards.size());
+    for (const auto& shard : g_catalog.shards) {
+      g_lazyShards.push_back({.path = shard.path, .identity = {}});
+    }
+    g_catalogLoadQueue.clear();
+    g_catalogPendingRequests.clear();
+    g_catalogMetadataUseCounter = 0;
+    g_lazyPackLoaded = true;
+    g_lazyPackFailureLogged = false;
+    clear_texture_cache_locked();
+    clear_lazy_index_cache_locked();
+    close_frame_decompressor_locked();
+    reset_diagnostics_locked();
+    const auto uniqueAnimationId =
+        g_catalog.animations.size() == 1
+            ? g_catalog.animations.front().animationId
+            : static_cast<std::uint16_t>(0);
+    const bool targetsCharacter = std::any_of(
+        g_catalog.animations.begin(), g_catalog.animations.end(),
+        [](const CatalogAnimation& animation) {
+          return animation.owner == kCatalogCharacterOwner;
+        });
+    const bool targetsMonsterIcewind = std::any_of(
+        g_catalog.animations.begin(), g_catalog.animations.end(),
+        [](const CatalogAnimation& animation) {
+          return animation.owner == kCatalogMonsterIcewindOwner;
+        });
+    const bool targetsMonster = std::any_of(
+        g_catalog.animations.begin(), g_catalog.animations.end(),
+        [](const CatalogAnimation& animation) {
+          return animation.owner == kCatalogMonsterOwner;
+        });
+    g_targetAnimationId.store(uniqueAnimationId, std::memory_order_release);
+    g_loadedScale.store(g_catalog.scale, std::memory_order_release);
+    g_targetsCharacter.store(targetsCharacter, std::memory_order_release);
+    g_targetsMonster.store(targetsMonster, std::memory_order_release);
+    g_targetsMonsterIcewind.store(targetsMonsterIcewind,
+                                  std::memory_order_release);
+    g_ready.store(true, std::memory_order_release);
+  }
+  g_catalogWorker = std::jthread(catalog_worker_loop);
+}
+
 void activate_loaded_pack(LoadedPack&& loaded) {
+  stop_catalog_worker();
   std::lock_guard lock(g_mutex);
+  g_catalog = {};
+  g_catalogLoadQueue.clear();
+  g_catalogPendingRequests.clear();
   g_resources = std::move(loaded.resources);
+  g_packAnimations.clear();
+  CatalogAnimation animation{
+      .animationId = loaded.animationId,
+      .owner = legacy_owner_for_animation(loaded.animationId),
+      .loaded = true,
+  };
+  animation.resourceIndices.reserve(g_resources.size());
+  for (std::size_t index = 0; index < g_resources.size(); ++index) {
+    animation.resourceIndices.push_back(index);
+  }
+  g_packAnimations.push_back(std::move(animation));
   g_lazyShards = std::move(loaded.lazyShards);
   g_lazyPackLoaded = loaded.lazyPayloads;
   g_lazyPackFailureLogged = false;
   clear_texture_cache_locked();
   clear_lazy_index_cache_locked();
+  close_frame_decompressor_locked();
   reset_diagnostics_locked();
   g_targetAnimationId.store(loaded.animationId, std::memory_order_release);
   g_loadedScale.store(loaded.scale, std::memory_order_release);
+  g_targetsCharacter.store(
+      legacy_owner_for_animation(loaded.animationId) == kCatalogCharacterOwner,
+      std::memory_order_release);
+  g_targetsMonster.store(
+      legacy_owner_for_animation(loaded.animationId) == kCatalogMonsterOwner,
+      std::memory_order_release);
+  g_targetsMonsterIcewind.store(
+      legacy_owner_for_animation(loaded.animationId) ==
+          kCatalogMonsterIcewindOwner,
+      std::memory_order_release);
   g_ready.store(true, std::memory_order_release);
 }
 }  // namespace
 
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   try {
+    const auto catalogPath = assetsDirectory / kRegistryCatalogFilename;
     const auto setPath = assetsDirectory / kRegistrySetFilename;
     const auto xnPath = assetsDirectory / kXnRegistryFilename;
     const auto legacyPath = assetsDirectory / kLegacyRegistryFilename;
+    if (file_exists(catalogPath, "creature-sprite registry catalog")) {
+      auto catalog = load_registry_catalog(assetsDirectory, catalogPath);
+      const auto scale = catalog.scale;
+      const auto catalogVersion = catalog.version;
+      const auto animationCount = catalog.animations.size();
+      const auto componentCount = catalog.components.size();
+      const auto resourceCount = catalog.resourceCount;
+      const auto frameCount = catalog.frameCount;
+      const auto indexBytes = catalog.indexBytes;
+      const auto shardCount = catalog.shards.size();
+      const auto directoryCount = catalog.directory.size();
+      activate_registry_catalog(std::move(catalog));
+      LOG_INFO(
+          "Creature sprite xBR catalog ready: scale=x{}, {} animations, {} "
+          "components, {} resources, {} frames, {} index bytes across {} lazy "
+          "content-addressed shards; catalog-version=V{}; {} authenticated directory "
+          "entries; source={}; "
+          "filter={}; index cache budget={} MiB; metadata cache budget={} MiB; "
+          "shard validation=background-on-demand",
+          scale, animationCount, componentCount, resourceCount,
+          frameCount, indexBytes, shardCount, catalogVersion, directoryCount,
+          kRegistryCatalogFilename,
+          sampling_filter_name(),
+          kLazyIndexCacheBudgetBytes / (1024ull * 1024ull),
+          kCatalogMetadataCacheBudgetBytes / (1024ull * 1024ull));
+      return true;
+    }
     if (file_exists(setPath, "creature-sprite registry-set")) {
       auto loaded = load_registry_set(assetsDirectory, setPath);
       const auto scale = loaded.scale;
@@ -1792,16 +3619,26 @@ void configure_linear_filtering(bool enabled) noexcept {
 }
 
 void release() noexcept {
+  stop_catalog_worker();
   std::lock_guard lock(g_mutex);
   g_ready.store(false, std::memory_order_release);
   g_targetAnimationId.store(0, std::memory_order_release);
   g_loadedScale.store(0, std::memory_order_release);
+  g_targetsCharacter.store(false, std::memory_order_release);
+  g_targetsMonster.store(false, std::memory_order_release);
+  g_targetsMonsterIcewind.store(false, std::memory_order_release);
   g_resources.clear();
+  g_packAnimations.clear();
+  g_catalog = {};
+  g_catalogLoadQueue.clear();
+  g_catalogPendingRequests.clear();
+  g_catalogMetadataUseCounter = 0;
   g_lazyShards.clear();
   g_lazyPackLoaded = false;
   g_lazyPackFailureLogged = false;
   clear_texture_cache_locked();
   clear_lazy_index_cache_locked();
+  close_frame_decompressor_locked();
   reset_diagnostics_locked();
 #ifdef _WIN32
   g_textureContext = nullptr;
@@ -1818,16 +3655,149 @@ std::uint32_t loaded_scale() noexcept {
   return g_loadedScale.load(std::memory_order_acquire);
 }
 
-bool contains_resource(const std::array<char, 8>& resref) noexcept {
-  if (!g_ready.load(std::memory_order_acquire)) return false;
+bool contains_animation(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
   try {
     std::lock_guard lock(g_mutex);
-    return std::find_if(g_resources.begin(), g_resources.end(), [&](const Resource& resource) {
-             return resource.resref == resref;
-           }) != g_resources.end();
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    if (g_catalog.active) return find_catalog_animation_locked(animationId) != nullptr;
+    return find_pack_animation_locked(animationId) != nullptr;
   } catch (...) {
     return false;
   }
+}
+
+bool animation_targets_character(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    const auto* animation = g_catalog.active
+                                ? find_catalog_animation_locked(animationId)
+                                : find_pack_animation_locked(animationId);
+    return animation && animation->owner == kCatalogCharacterOwner;
+  } catch (...) {
+    return false;
+  }
+}
+
+bool animation_targets_monster(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    const auto* animation = g_catalog.active
+                                ? find_catalog_animation_locked(animationId)
+                                : find_pack_animation_locked(animationId);
+    return animation && animation->owner == kCatalogMonsterOwner;
+  } catch (...) {
+    return false;
+  }
+}
+
+bool animation_targets_monster_icewind(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    const auto* animation = g_catalog.active
+                                ? find_catalog_animation_locked(animationId)
+                                : find_pack_animation_locked(animationId);
+    return animation && animation->owner == kCatalogMonsterIcewindOwner;
+  } catch (...) {
+    return false;
+  }
+}
+
+bool targets_character() noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           catalog_identity_matches_locked() &&
+           g_targetsCharacter.load(std::memory_order_acquire);
+  } catch (...) {
+    return false;
+  }
+}
+
+bool targets_monster() noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           catalog_identity_matches_locked() &&
+           g_targetsMonster.load(std::memory_order_acquire);
+  } catch (...) {
+    return false;
+  }
+}
+
+bool targets_monster_icewind() noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           catalog_identity_matches_locked() &&
+           g_targetsMonsterIcewind.load(std::memory_order_acquire);
+  } catch (...) {
+    return false;
+  }
+}
+
+bool contains_resource(std::uint16_t animationId,
+                       const std::array<char, 8>& resref) noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    if (g_catalog.active) {
+      if (!find_catalog_animation_locked(animationId)) return false;
+      std::uint32_t shardIndex = 0;
+      std::uint32_t resourceOrdinal = 0;
+      std::size_t resourceIndex = 0;
+      if (catalog_resident_resource_locked(animationId, resref, shardIndex,
+                                           resourceOrdinal, resourceIndex)) {
+        return true;
+      }
+      queue_catalog_load_locked(animationId, resref);
+      if (g_catalog.version != kRegistryCatalogDirectoryVersion) return false;
+      const auto* entry =
+          find_catalog_directory_entry_locked(animationId, resref);
+      return entry && entry->componentIndex < g_catalog.components.size() &&
+             !g_catalog.components[entry->componentIndex].quarantined;
+    }
+    const auto* animation = find_pack_animation_locked(animationId);
+    if (!animation) return false;
+    return std::find_if(
+               animation->resourceIndices.begin(),
+               animation->resourceIndices.end(), [&](std::size_t index) {
+                 return index < g_resources.size() &&
+                        g_resources[index].resref == resref;
+               }) != animation->resourceIndices.end();
+  } catch (...) {
+    return false;
+  }
+}
+
+bool contains_resource(const std::array<char, 8>& resref) noexcept {
+  const auto animationId = target_animation_id();
+  return animationId != 0 && contains_resource(animationId, resref);
 }
 
 bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineTextureApi& api,
@@ -1864,25 +3834,56 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
   return true;
 }
 
-bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
-                   FrameHandle& out) noexcept {
+bool resolve_frame(std::uint16_t animationId,
+                   const std::array<char, 8>& resref, int sequence,
+                   int currentFrame, FrameHandle& out) noexcept {
   out = {};
   if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || currentFrame < 0) return false;
   try {
     std::lock_guard lock(g_mutex);
-    const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
-                                       [&](const Resource& item) { return item.resref == resref; });
-    if (resource == g_resources.end() || static_cast<std::size_t>(sequence) >= resource->cycles.size()) {
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
       return false;
     }
-    const auto& cycle = resource->cycles[static_cast<std::size_t>(sequence)];
+    std::size_t resourceIndex = 0;
+    std::uint32_t catalogShardIndex = kResidentFrameShard;
+    std::uint32_t resourceOrdinal = 0;
+    std::uint64_t catalogGeneration = 0;
+    if (g_catalog.active) {
+      if (!find_catalog_animation_locked(animationId) ||
+          !catalog_resident_resource_locked(
+              animationId, resref, catalogShardIndex, resourceOrdinal,
+              resourceIndex)) {
+        queue_catalog_load_locked(animationId, resref);
+        return false;
+      }
+      catalogGeneration = g_catalog.shards[catalogShardIndex].generation;
+    } else {
+      const auto* animation = find_pack_animation_locked(animationId);
+      if (!animation) return false;
+      const auto mapped = std::find_if(
+          animation->resourceIndices.begin(), animation->resourceIndices.end(),
+          [&](std::size_t index) {
+            return index < g_resources.size() &&
+                   g_resources[index].resref == resref;
+          });
+      if (mapped == animation->resourceIndices.end()) return false;
+      resourceIndex = *mapped;
+    }
+    auto& resource = g_resources[resourceIndex];
+    if (static_cast<std::size_t>(sequence) >= resource.cycles.size()) {
+      return false;
+    }
+    const auto& cycle = resource.cycles[static_cast<std::size_t>(sequence)];
     if (static_cast<std::size_t>(currentFrame) >= cycle.size()) return false;
     const FrameHandle resolved{
-        .resourceIndex =
-            static_cast<std::size_t>(std::distance(g_resources.begin(), resource)),
+        .resourceIndex = resourceIndex,
         .frameIndex = cycle[static_cast<std::size_t>(currentFrame)],
+        .animationId = animationId,
+        .catalogShardIndex = catalogShardIndex,
+        .catalogGeneration = catalogGeneration,
     };
-    if (resolved.frameIndex >= resource->frames.size() ||
+    if (resolved.frameIndex >= resource.frames.size() ||
         !validate_lazy_frame_source_locked(resolved)) {
       return false;
     }
@@ -1891,6 +3892,16 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
   } catch (...) {
     return false;
   }
+}
+
+bool resolve_frame(const std::array<char, 8>& resref, int sequence,
+                   int currentFrame, FrameHandle& out) noexcept {
+  const auto animationId = target_animation_id();
+  if (animationId == 0) {
+    out = {};
+    return false;
+  }
+  return resolve_frame(animationId, resref, sequence, currentFrame, out);
 }
 
 bool ensure_frame_payload_available(FrameHandle handle) noexcept {
@@ -1923,6 +3934,28 @@ std::uint64_t resident_index_bytes() noexcept {
   }
 }
 
+std::uint64_t resident_catalog_metadata_bytes() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_catalog.active ? catalog_metadata_bytes_locked() : 0;
+  } catch (...) {
+    return (std::numeric_limits<std::uint64_t>::max)();
+  }
+}
+
+std::size_t pending_catalog_loads() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_catalogPendingRequests.size();
+  } catch (...) {
+    return (std::numeric_limits<std::size_t>::max)();
+  }
+}
+
+std::uint64_t filesystem_access_count() noexcept {
+  return g_filesystemAccessCounter.load(std::memory_order_relaxed);
+}
+
 bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
                         const PaletteSnapshot& palette, const EngineTextureApi& api,
                         int& previousTextureId) noexcept {
@@ -1935,13 +3968,14 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
   }
   try {
     std::lock_guard lock(g_mutex);
-    if (!g_ready.load(std::memory_order_acquire) || handle.resourceIndex >= g_resources.size() ||
-        handle.frameIndex >= g_resources[handle.resourceIndex].frames.size()) {
+    auto* resource = resource_for_handle_locked(handle);
+    if (!g_ready.load(std::memory_order_acquire) || !resource ||
+        handle.frameIndex >= resource->frames.size()) {
       return false;
     }
     const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
     if (!supported_physical_scale(physicalScale)) return false;
-    const auto& frame = g_resources[handle.resourceIndex].frames[handle.frameIndex];
+    const auto& frame = resource->frames[handle.frameIndex];
     const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth);
     const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight);
     if (logicalWidth != expectedLogicalWidth || logicalHeight != expectedLogicalHeight) {
@@ -1974,8 +4008,8 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     if (g_textureContext != context) {
       delete_owned_textures_locked(api);
       g_textureContext = context;
-      for (auto& resource : g_resources) {
-        std::fill(resource.compositionLogged.begin(), resource.compositionLogged.end(), false);
+      for (auto& cachedResource : g_resources) {
+        cachedResource.compositionLogged.clear();
       }
     }
 #endif
@@ -2001,13 +4035,13 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
       return false;
     }
     api.DrawBindTexture(replacementTexture);
-    auto& resource = g_resources[handle.resourceIndex];
-    if (!resource.compositionLogged[handle.frameIndex]) {
-      resource.compositionLogged[handle.frameIndex] = true;
+    if (resource->compositionLogged.insert(handle.animationId).second) {
       LOG_INFO(
-          "Composing creature sprite {} frame {:03}: scale=x{}, BAM logical {}x{}, "
+          "Composing creature sprite {} animation=0x{:04X} frame {:03}: scale=x{}, "
+          "BAM logical {}x{}, "
           "upscaled content {}x{}, bordered texture {}x{} ({})",
-          resref_name(resource.resref), handle.frameIndex, physicalScale,
+          resref_name(resource->resref), handle.animationId, handle.frameIndex,
+          physicalScale,
           frame.logicalWidth, frame.logicalHeight,
           static_cast<std::int64_t>(frame.logicalWidth) * physicalScale,
           static_cast<std::int64_t>(frame.logicalHeight) * physicalScale,
@@ -2042,12 +4076,14 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
     if (!supported_physical_scale(physicalScale)) return false;
     std::array<FrameGeometry, kMaximumCompositeLayers> geometries{};
-    std::array<bool, kMaximumRegistrySetShards> validatedSources{};
+    std::array<std::uint32_t, kMaximumCompositeLayers> validatedSources{};
+    validatedSources.fill(kResidentFrameShard);
+    std::size_t validatedSourceCount = 0;
     NativePixelEncoding encoding{};
     for (std::size_t index = 0; index < layerCount; ++index) {
       const auto& layer = layers[index];
-      if (layer.frame.resourceIndex >= g_resources.size() ||
-          layer.frame.frameIndex >= g_resources[layer.frame.resourceIndex].frames.size() ||
+      const auto* resource = resource_for_handle_locked(layer.frame);
+      if (!resource || layer.frame.frameIndex >= resource->frames.size() ||
           !supported_native_pixel_encoding(layer.palette.encoding)) {
         return false;
       }
@@ -2057,18 +4093,21 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
                  layer.palette.encoding.type != encoding.type) {
         return false;
       }
-      const auto& frame =
-          g_resources[layer.frame.resourceIndex].frames[layer.frame.frameIndex];
+      const auto& frame = resource->frames[layer.frame.frameIndex];
       if (frame.lazyShardIndex != kResidentFrameShard) {
-        if (frame.lazyShardIndex >= validatedSources.size()) {
-          (void)validate_lazy_frame_source_locked(layer.frame);
+        const bool alreadyValidated =
+            std::find(validatedSources.begin(),
+                      validatedSources.begin() +
+                          static_cast<std::ptrdiff_t>(validatedSourceCount),
+                      frame.lazyShardIndex) !=
+            validatedSources.begin() +
+                static_cast<std::ptrdiff_t>(validatedSourceCount);
+        if (!alreadyValidated && !validate_lazy_frame_source_locked(layer.frame)) {
           return false;
         }
-        if (!validatedSources[frame.lazyShardIndex] &&
-            !validate_lazy_frame_source_locked(layer.frame)) {
-          return false;
+        if (!alreadyValidated) {
+          validatedSources[validatedSourceCount++] = frame.lazyShardIndex;
         }
-        validatedSources[frame.lazyShardIndex] = true;
       }
       geometries[index] = {.logicalWidth = frame.logicalWidth,
                            .logicalHeight = frame.logicalHeight,
@@ -2108,7 +4147,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       delete_owned_textures_locked(api);
       g_textureContext = context;
       for (auto& resource : g_resources) {
-        std::fill(resource.compositionLogged.begin(), resource.compositionLogged.end(), false);
+        resource.compositionLogged.clear();
       }
     }
 #endif
@@ -2167,17 +4206,23 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     }
     for (std::size_t index = 0; index < layerCount; ++index) {
       const auto& layer = layers[index];
-      auto& resource = g_resources[layer.frame.resourceIndex];
-      if (resource.compositionLogged[layer.frame.frameIndex]) continue;
-      resource.compositionLogged[layer.frame.frameIndex] = true;
-      const auto& frame = resource.frames[layer.frame.frameIndex];
+      auto* resource = resource_for_handle_locked(layer.frame);
+      if (!resource || layer.frame.frameIndex >= resource->frames.size()) {
+        return false;
+      }
+      if (!resource->compositionLogged.insert(layer.frame.animationId).second) {
+        continue;
+      }
+      const auto& frame = resource->frames[layer.frame.frameIndex];
       LOG_INFO(
-          "Composing creature sprite {} frame {:03} as Character composite layer "
-          "{}/{}: scale=x{}, BAM logical {}x{}, final bordered texture {}x{} physical {}x{} "
-          "via transient replacement id {} ({}, delete-pending after queued draw)",
-          resref_name(resource.resref), layer.frame.frameIndex, index + 1, layerCount,
-          physicalScale, frame.logicalWidth, frame.logicalHeight, logicalWidth,
-          logicalHeight, static_cast<std::int64_t>(logicalWidth) * physicalScale,
+          "Composing creature sprite {} animation=0x{:04X} frame {:03} as "
+          "Character composite layer {}/{}: scale=x{}, BAM logical {}x{}, final "
+          "bordered texture {}x{} physical {}x{} via transient replacement id {} "
+          "({}, delete-pending after queued draw)",
+          resref_name(resource->resref), layer.frame.animationId,
+          layer.frame.frameIndex, index + 1, layerCount, physicalScale,
+          frame.logicalWidth, frame.logicalHeight, logicalWidth, logicalHeight,
+          static_cast<std::int64_t>(logicalWidth) * physicalScale,
           static_cast<std::int64_t>(logicalHeight) * physicalScale,
           transientTextureId, sampling_filter_name());
     }
@@ -2226,7 +4271,7 @@ void forget_engine_textures() noexcept {
   g_textureContext = nullptr;
 #endif
   for (auto& resource : g_resources) {
-    std::fill(resource.compositionLogged.begin(), resource.compositionLogged.end(), false);
+    resource.compositionLogged.clear();
   }
 }
 }  // namespace iee::creature_sprite_x2

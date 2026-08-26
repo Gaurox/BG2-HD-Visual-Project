@@ -1,0 +1,217 @@
+#pragma once
+
+#include <array>
+#include <cstddef>
+#include <cstdint>
+#include <functional>
+#include <optional>
+#include <string>
+#include <string_view>
+
+namespace iee::game {
+enum class BranchInstructionKind : std::uint8_t {
+  CallRel32,
+  JmpRel32,
+};
+
+struct BranchInstructionDesc {
+  const char* name{};
+  std::size_t offset{};
+  BranchInstructionKind kind{BranchInstructionKind::CallRel32};
+  std::uint8_t opcode{};
+  std::size_t displacementOffset{};
+  std::size_t instructionSize{};
+  bool required{true};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    return name != nullptr && name[0] != '\0' && instructionSize > displacementOffset;
+  }
+};
+
+struct PatternSet {
+  std::string_view loadArea{};
+  std::string_view renderTexture{};
+};
+
+struct ReferenceRvas {
+  std::uintptr_t loadArea{};
+  std::uintptr_t renderTexture{};
+};
+
+struct RuntimeOffsets {
+  std::uintptr_t vidTileResource{};
+  std::uintptr_t tisLinearTilesFlag{};
+  std::uintptr_t tisHeaderTileDimension{};
+  std::uintptr_t infGameVisibleArea{};
+  std::uintptr_t infGameAreas{};
+  std::uintptr_t infGameAreaMaster{};
+};
+
+// Optional high-level CGameStatic/CVidCell composition bridge used by external
+// area-animation runtime packs. Every RVA, object offset and signature is tied
+// to one positively identified executable manifest.
+struct AreaAnimationRuntime {
+  bool enabled{};
+  std::uintptr_t gameStaticRenderBam{};
+  std::uintptr_t vidCellRenderTexture{};
+  std::uintptr_t drawDeleteTexture{};
+  std::uintptr_t drawGenTexture{};
+  std::uintptr_t drawGetRenderer{};
+  std::uintptr_t texImage{};
+  std::uintptr_t glTextureState{};
+  std::uintptr_t glTextureTable{};
+  std::array<std::uintptr_t, 3> glTextureTableReferences{};
+  std::uintptr_t glTextureSecondarySelectorReference{};
+  std::uintptr_t realizedPalette{};
+  std::uintptr_t vidPaletteRealize{};
+  std::uintptr_t vidPaletteRealizeCallsite{};
+  std::uintptr_t nativeTextureFormat{};
+  std::uintptr_t nativeTextureType{};
+  std::uintptr_t gameStaticResref{};
+  std::uintptr_t gameStaticCurrentFrame{};
+  std::uintptr_t gameStaticCurrentSequence{};
+  // Optional generic-monster and Icewind-monster creature-sprite scopes for
+  // the same high-level CVidCell bridge. BG2EE animation families 0x7000 and
+  // 0xE000 use these distinct subclasses.
+  std::uintptr_t monsterRender{};
+  std::uintptr_t monsterIcewindRender{};
+  std::uintptr_t monsterAnimationId{};
+  std::uintptr_t monsterCurrentCell{};
+  // Optional layered-character scope. BG2EE animation families 0x5000/0x6000
+  // use this subclass. characterCurrentCell selects the body CVidCell;
+  // characterOverlayCells select weapon, offhand/shield, and helmet cells.
+  std::uintptr_t characterRender{};
+  std::uintptr_t characterCurrentCell{};
+  std::array<std::uintptr_t, 3> characterOverlayCells{};
+  std::uintptr_t vidCellPalette{};
+  std::uintptr_t vidCellResref{};
+  std::uintptr_t vidCellCurrentFrame{};
+  std::uintptr_t vidCellCurrentSequence{};
+  std::array<std::string_view, 15> signatures{};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    if (!enabled) return true;
+    if (!gameStaticRenderBam || !vidCellRenderTexture || !drawDeleteTexture ||
+        !drawGenTexture || !drawGetRenderer || !texImage || !glTextureState ||
+        !glTextureTable || !glTextureTableReferences[0] ||
+        !glTextureTableReferences[1] || !glTextureTableReferences[2] ||
+        !glTextureSecondarySelectorReference ||
+        !realizedPalette || !vidPaletteRealize || !vidPaletteRealizeCallsite ||
+        !nativeTextureFormat || nativeTextureType != nativeTextureFormat + sizeof(std::uint32_t) ||
+        !gameStaticResref || !gameStaticCurrentFrame || !gameStaticCurrentSequence ||
+        !monsterRender || !monsterIcewindRender || !monsterAnimationId ||
+        !monsterCurrentCell ||
+        !characterRender || !characterCurrentCell || !characterOverlayCells[0] ||
+        !characterOverlayCells[1] || !characterOverlayCells[2] || !vidCellPalette ||
+        !vidCellResref || !vidCellCurrentFrame || !vidCellCurrentSequence) {
+      return false;
+    }
+    for (const auto signature : signatures) {
+      if (signature.empty()) return false;
+    }
+    return true;
+  }
+};
+
+// Optional map-composition point used by area-specific overlays. The overlay
+// is drawn at the end of CGameArea::Render, while DrawBeginScaled's map
+// framebuffer is still bound. DrawEndScaled then resolves the map (including
+// the overlay) before any screen UI is composed.
+struct WorldOverlayRuntime {
+  bool enabled{};
+  std::uintptr_t gameAreaRender{};
+  std::string_view gameAreaRenderSignature{};
+  std::uintptr_t drawFlushGl{};
+  std::string_view drawFlushGlSignature{};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    return !enabled ||
+           (gameAreaRender != 0 && !gameAreaRenderSignature.empty() && drawFlushGl != 0 &&
+            !drawFlushGlSignature.empty());
+  }
+};
+
+struct ExecutableVersion {
+  static constexpr std::uint16_t kAnyRevision = 0xFFFF;
+
+  std::uint16_t major{};
+  std::uint16_t minor{};
+  std::uint16_t patch{};
+  std::uint16_t revision{};
+
+  [[nodiscard]] constexpr bool matches(std::uint16_t candidateMajor, std::uint16_t candidateMinor,
+                                       std::uint16_t candidatePatch,
+                                       std::uint16_t candidateRevision) const noexcept {
+    return major == candidateMajor && minor == candidateMinor && patch == candidatePatch &&
+           (revision == kAnyRevision || revision == candidateRevision);
+  }
+};
+
+struct BuildManifest {
+  std::string_view buildId{};
+  std::array<std::string_view, 2> supportedProductNames{};
+  ExecutableVersion executableVersion{};
+  PatternSet patterns{};
+  ReferenceRvas referenceRvas{};
+  RuntimeOffsets offsets{};
+  AreaAnimationRuntime areaAnimations{};
+  WorldOverlayRuntime worldOverlay{};
+  std::array<BranchInstructionDesc, 11> renderTextureCallsites{};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    if (buildId.empty() || supportedProductNames[0].empty() || executableVersion.major == 0 ||
+        patterns.loadArea.empty() || patterns.renderTexture.empty()) {
+      return false;
+    }
+    if (!referenceRvas.loadArea || !referenceRvas.renderTexture) {
+      return false;
+    }
+    if (!offsets.vidTileResource || !offsets.tisLinearTilesFlag ||
+        !offsets.tisHeaderTileDimension) {
+      return false;
+    }
+    if (!offsets.infGameVisibleArea || !offsets.infGameAreas || !offsets.infGameAreaMaster) {
+      return false;
+    }
+    if (!areaAnimations.validate()) return false;
+    if (!worldOverlay.validate()) return false;
+
+    for (const auto& callsite : renderTextureCallsites) {
+      if (!callsite.validate()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+};
+
+[[nodiscard]] const BuildManifest& current_manifest() noexcept;
+
+[[nodiscard]] std::optional<std::reference_wrapper<const BuildManifest>> find_manifest(
+    std::string_view buildId) noexcept;
+
+[[nodiscard]] std::optional<std::reference_wrapper<const BuildManifest>> find_manifest_for_version(
+    std::uint16_t major, std::uint16_t minor, std::uint16_t patch, std::uint16_t revision) noexcept;
+
+// Sibling Infinity Engine games ship the same unified engine image and thus the
+// same fixed file version; only the version resource distinguishes them. Select
+// on version *and* product name so a shared version cannot pick a sibling's
+// manifest.
+[[nodiscard]] std::optional<std::reference_wrapper<const BuildManifest>> find_manifest_for_identity(
+    std::uint16_t major, std::uint16_t minor, std::uint16_t patch, std::uint16_t revision,
+    std::string_view productName);
+
+// Product names are compared case-insensitively after removing ASCII
+// punctuation/spacing. This accepts harmless version-resource punctuation
+// differences while rejecting sibling Infinity Engine games.
+[[nodiscard]] bool supports_product_name(const BuildManifest& manifest,
+                                         std::string_view productName);
+
+// Selects a manifest from the main executable's fixed file version. Unknown
+// versions are deliberately unsupported and return nullptr before scanning
+// or installing any hooks.
+[[nodiscard]] const BuildManifest* detect_manifest(
+    ExecutableVersion* detectedVersion = nullptr,
+    std::string* detectedProductName = nullptr) noexcept;
+}  // namespace iee::game

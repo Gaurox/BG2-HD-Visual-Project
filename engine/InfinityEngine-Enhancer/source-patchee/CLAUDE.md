@@ -48,6 +48,9 @@ Operational instructions for AI coding agents working in this repository.
 
 - Read [`../../../sprite/README.md`](../../../sprite/README.md) before changing creature-sprite
   hooks, palette remapping, registry limits or Character layer composition.
+- For catalog V2, shard V5, lazy-cache, queue or shutdown changes, read
+  [`../../../sprite/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md`](../../../sprite/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md)
+  and preserve its fail-closed and restoration gates.
 - Treat `sprite/index/sprite_animations.csv`, `sprite_families.csv`, `sprite_resources.csv` and
   `sprite_items.csv` as the asset-coverage inputs. Do not derive BAM prefixes from creature names
   or historical extraction folders.
@@ -56,7 +59,8 @@ Operational instructions for AI coding agents working in this repository.
 - `pipeline_ready=yes` is an automated preflight result, not in-game validation. Preserve native
   fallback on every registry, palette, layer, renderer or texture-lifecycle inconsistency.
 - If a code change removes an inventory blocker or changes suffix/registry semantics, update
-  `build_sprite_inventory.py`, regenerate all four CSVs and run both sprite test suites.
+  `build_sprite_inventory.py`, regenerate all four CSVs plus `manifest.json`, and run both sprite
+  test suites.
 
 ## Runtime Facts — Hooking Safety
 
