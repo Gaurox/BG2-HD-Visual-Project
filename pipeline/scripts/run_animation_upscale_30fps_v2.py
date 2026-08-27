@@ -86,7 +86,8 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 def normalise_resref(value: str) -> str:
     result = value.strip().upper()
-    require(result.isascii() and result.isalnum() and 1 <= len(result) <= 8,
+    require(result.isascii() and 1 <= len(result) <= 8 and any(c.isalnum() for c in result)
+            and all(c.isalnum() or c == "_" for c in result),
             f"resref invalide : {value}")
     return result
 

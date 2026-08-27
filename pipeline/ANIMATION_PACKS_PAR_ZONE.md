@@ -77,6 +77,79 @@ Pour dériver un nouveau lot complet en remplaçant explicitement une zone déj�
 lot antérieur, utiliser `combine_area_pack_splits.py` avec l'ancien lot en premier, le nouveau en
 second et `--replace-area ARxxxx`. Sans cette option, toute collision de zone reste bloquante.
 
+## Étape 1b — zones en collision : fusionner avant de remplacer
+
+**`--replace-area` remplace la zone entière, pas seulement le resref ajouté.** Si la zone
+remplaçante ne contient pas les resrefs que la zone remplacée servait déjà, **ces resrefs
+disparaissent de la zone sans qu'aucune gate ne le signale** : `combine_area_pack_splits.py` ne
+compare pas les inventaires de la zone remplacée et de la remplaçante.
+
+Exemple du piège : le lot actif sert `FPIT1S` sur `AR0334`; un nouveau split y ajoute `FIRE_4`.
+Un `--replace-area AR0334` direct produit une `AR0334` qui ne contient plus que `FIRE_4`, et
+`FPIT1S` régresse en BAM vanilla dans cette zone.
+
+### 1. Énumérer les zones en collision
+
+```powershell
+python -c "import json; lot=json.load(open(r'<lot-actif>/manifest.json')); neuf=json.load(open(r'<split-neuf>/manifest.json')); a={x['area_id']:x['resrefs'] for x in lot['areas']}; b={x['area_id']:x['resrefs'] for x in neuf['areas']}; [print(z,'| actif',a[z],'-> neuf',b[z]) for z in sorted(set(a)&set(b))]"
+```
+
+Zones listées = zones à fusionner. Zones présentes uniquement dans le split neuf = ajout direct,
+sans fusion ni `--replace-area`.
+
+### 2. Fusionner chaque zone en collision
+
+Deux outils, selon le nombre de ressources déjà servies par la zone. Vérifier avant de choisir :
+`merge_area_pack_resources.py` **exige que chacun de ses packs d'entrée soit mono-ressource** et
+s'arrête sinon (`pack à ressource unique attendu, N trouvées`).
+
+**Cas mono-ressource des deux côtés** — permet de lier des variantes à une position monde :
+
+```powershell
+python pipeline/scripts/merge_area_pack_resources.py `
+  --area ARxxxx `
+  --pack <lot-actif>/ARxxxx `
+  --pack <split-neuf>/ARxxxx `
+  --output <lot-fusions>/ARxxxx
+```
+
+**Cas zone multi-ressources** — employer `merge_v2_base_pack.py`, qui étend un pack v2/v3
+existant avec les ressources d'un **pack V1** et reporte les ressources de base octet pour octet :
+
+```powershell
+python pipeline/scripts/merge_v2_base_pack.py `
+  --base-v2-pack <lot-actif>/ARxxxx `
+  --new-v1-pack <run-neuf>/03_runtime_pack `
+  --output <pack-fusionne>
+```
+
+La sortie est un **pack**, pas un split-root. Pour la ramener dans la chaîne par zone, la
+redécouper en restreignant l'index d'occurrences à la zone visée — le mapping zone → resref reste
+celui du catalogue, seules les autres zones sont écartées :
+
+```powershell
+# index restreint
+Get-Content animations/index/occurrences.csv -TotalCount 1 > <index-zone>.csv
+Select-String -Path animations/index/occurrences.csv -Pattern '^ARxxxx,' | ForEach-Object { $_.Line } >> <index-zone>.csv
+
+python pipeline/scripts/split_animation_pack_by_area.py `
+  --pack <pack-fusionne> `
+  --occurrences <index-zone>.csv `
+  --output <lot-fusions>
+```
+
+Contrôler dans les deux cas que la sortie porte bien **l'union** des resrefs des deux entrées, et
+que les ressources préexistantes ont des SHA-256 d'assets identiques à ceux du lot actif.
+
+### 3. Combiner avec les fusions, pas avec le split neuf
+
+Passer le lot actif, le split neuf **et** chaque zone fusionnée en `--input`, puis un
+`--replace-area` par zone fusionnée. Les zones fusionnées gagnent alors sur les deux autres
+entrées.
+
+Vérifier dans l'index combiné que chaque zone fusionnée liste l'union attendue, et que les zones
+non concernées ont un `registry_sha256` identique à celui du lot actif.
+
 ## Étape 2 — préflight d'installation
 
 Jeu et `InfinityLoader` fermés :

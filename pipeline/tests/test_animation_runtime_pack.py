@@ -164,6 +164,54 @@ class AnimationRuntimePackTests(unittest.TestCase):
                 "--resume",
             ])
 
+    def test_drops_trailing_empty_bam_cycles(self) -> None:
+        # Stock BAM V1 resources such as FIRE_1 declare padding cycles with an
+        # empty lookup after cycle 0. The engine registry parser rejects a
+        # zero-length cycle, so the builder must trim trailing empty cycles.
+        with tempfile.TemporaryDirectory() as temporary:
+            run = self.make_run(Path(temporary))
+            frame_manifest_path = (
+                run / "resources" / "TESTA" / "01_frames_x1" / "manifest.json"
+            )
+            frame_manifest = json.loads(frame_manifest_path.read_text(encoding="utf-8"))
+            frame_manifest["cycles"] = [
+                {"cycle": 0, "frame_indices": [0, 1, 0]},
+                {"cycle": 1, "frame_indices": []},
+                {"cycle": 2, "frame_indices": []},
+            ]
+            frame_manifest_path.write_text(json.dumps(frame_manifest), encoding="utf-8")
+
+            runtime_pack.main([str(run)])
+            output = run / "03_runtime_pack"
+            manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["resources"][0]["cycle_count"], 1)
+            self.assertEqual(
+                manifest["resources"][0]["cycles"], [{"cycle": 0, "frame_indices": [0, 1, 0]}]
+            )
+
+            registry = (output / runtime_pack.REGISTRY_NAME).read_bytes()
+            self.assertEqual(struct.unpack_from("<II", registry, 32), (2, 1))
+            self.assertEqual(struct.unpack_from("<I", registry, 56), (3,))
+
+            registry_hash = runtime_pack.sha256_file(output / runtime_pack.REGISTRY_NAME)
+            runtime_pack.main([str(run), "--resume"])
+            self.assertEqual(
+                registry_hash,
+                runtime_pack.sha256_file(output / runtime_pack.REGISTRY_NAME),
+            )
+
+    def test_rejects_resource_with_only_empty_cycles(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            run = self.make_run(Path(temporary))
+            frame_manifest_path = (
+                run / "resources" / "TESTA" / "01_frames_x1" / "manifest.json"
+            )
+            frame_manifest = json.loads(frame_manifest_path.read_text(encoding="utf-8"))
+            frame_manifest["cycles"] = [{"cycle": 0, "frame_indices": []}]
+            frame_manifest_path.write_text(json.dumps(frame_manifest), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "aucun cycle non vide"):
+                runtime_pack.main([str(run)])
+
 
 if __name__ == "__main__":
     unittest.main()

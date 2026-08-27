@@ -476,5 +476,19 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
                 pipeline.build_plan(None, promoted, ["TESTA"])
 
 
+class NormaliseResrefTests(unittest.TestCase):
+    def test_accepts_underscore_resref(self) -> None:
+        # Infinity Engine resrefs allow underscores (FIRE_1, FIRE_4, FIRE_4GS).
+        # The V1 pipeline and the runtime already handle them; only this
+        # normaliser used to reject them via str.isalnum().
+        self.assertEqual(pipeline.normalise_resref("fire_4"), "FIRE_4")
+        self.assertEqual(pipeline.normalise_resref("FIRE_4GS"), "FIRE_4GS")
+
+    def test_rejects_empty_overlong_and_path_characters(self) -> None:
+        for bad in ("", "   ", "____", "AM_07000X", "AM/0700", "AM.0700", "AM 0700"):
+            with self.assertRaises(RuntimeError):
+                pipeline.normalise_resref(bad)
+
+
 if __name__ == "__main__":
     unittest.main()

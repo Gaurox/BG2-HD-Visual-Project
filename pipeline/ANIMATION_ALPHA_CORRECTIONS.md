@@ -1,5 +1,16 @@
 # Corrections alpha post-upscale — animations BAM
 
+## Gate préalable — ressource `Blended`
+
+Ce document préserve le RGB octet pour octet. Il **ne couvre donc pas** les animations dont le
+flag ARE bit 1 (`0x0002`, « Blended ») est mis : sur ce chemin de rendu le RGB est additionné à
+la scène même sous `alpha == 0`, et aucune correction alpha ne peut retirer le défaut. Vérifier
+le flag et la couleur sous alpha nul **avant** de proposer un feather ou un masque ici, selon
+[`ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](ANIMATION_BLENDED_RGB_NEUTRALISATION.md).
+
+Symptôme typique de la mauvaise voie : des corrections alpha de plus en plus agressives ne
+changent rien en jeu.
+
 ## But et garde-fous
 
 Ce document ne remplace pas le pipeline standard. Il ne s'applique qu'après une

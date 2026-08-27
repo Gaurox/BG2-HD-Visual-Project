@@ -28,6 +28,10 @@ ne pas modifier le run canonique : créer un prototype alpha isolé suivant
 [`ANIMATION_ALPHA_CORRECTIONS.md`](ANIMATION_ALPHA_CORRECTIONS.md), puis l'installer de façon
 réversible pour la QA.
 
+Contrôler d'abord le flag ARE bit 1 (`0x0002`, « Blended ») de la ressource : s'il est mis, un
+fond ou un halo ne vient pas de l'alpha et aucune correction alpha ne le retirera. Suivre
+[`ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](ANIMATION_BLENDED_RGB_NEUTRALISATION.md).
+
 Si l'objectif est de remplacer les répétitions du cycle par de vraies images
 intermédiaires, suivre [`ANIMATION_INTERPOLATION_PIPELINE.md`](ANIMATION_INTERPOLATION_PIPELINE.md).
 L'agent doit proposer le nombre de frames, les FPS et la durée avant de demander l'export.

@@ -34,7 +34,9 @@ pas l'état courant.
 - TimedTimeline V2 : `run_animation_upscale_30fps_v2.py`,
   `build_manual_alpha_mask_30fps_v2.py`.
 - Packs par zone : `split_animation_pack_by_area.py`, `combine_area_pack_splits.py`,
-  `merge_area_pack_resources.py`.
+  `merge_area_pack_resources.py`, `merge_v2_base_pack.py`.
+- Correctifs alpha/RGB : `build_alpha_feather.py` (alpha seul, RGB préservé) ;
+  `build_blended_rgb_neutral_pack.py` (RGB nul sous alpha nul, ressources à flag `Blended`).
 - Registre : `sync_animation_upscale_registry.py`.
 - Installation/restauration : scripts `Install-AreaAnimations-*`, `Restore-AreaAnimations-*` et
   `Set-AreaAnimations-X4-State.ps1`.

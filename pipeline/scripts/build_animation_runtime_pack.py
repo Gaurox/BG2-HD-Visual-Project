@@ -54,6 +54,25 @@ def registry_header(resource_count: int) -> bytearray:
     return registry
 
 
+def drop_trailing_empty_cycles(
+    cycles: list[dict[str, Any]], resref: str
+) -> list[dict[str, Any]]:
+    """Stock BAM V1 resources carry padding cycles with an empty lookup table
+    (FIRE_1: cycle 0 is [0..14], cycles 1-4 are empty). The engine registry
+    parser rejects a zero-length cycle (``area_animation_x4_registry.cpp``), so
+    trailing empty cycles are dropped here. Every project occurrence of such a
+    resource uses ``sequence == 0``, so nothing references the dropped cycles; an
+    occurrence pointing past the trimmed list simply falls back to the native
+    render, matching vanilla where the empty cycle drew nothing. A non-trailing
+    empty cycle is left in place and rejected by the lookup check downstream."""
+    trimmed = list(cycles)
+    while trimmed and not (trimmed[-1].get("frame_indices") or []):
+        trimmed.pop()
+    if not trimmed:
+        raise RuntimeError(f"{resref}: aucun cycle non vide")
+    return trimmed
+
+
 def relative_from_run(run_dir: Path, value: str) -> Path:
     path = (run_dir / value).resolve()
     try:
@@ -97,6 +116,7 @@ def build_resource(
     binary = bytearray()
     binary.extend(encoded_resref.ljust(8, b"\0"))
     cycles = sorted(frame_manifest.get("cycles") or [], key=lambda item: int(item["cycle"]))
+    cycles = drop_trailing_empty_cycles(cycles, resref)
     if [int(item["cycle"]) for item in cycles] != list(range(len(cycles))):
         raise RuntimeError(f"{resref}: cycles non contigus")
     binary.extend(struct.pack("<II", frame_count, len(cycles)))
@@ -179,6 +199,7 @@ def resource_binary_from_manifest(resource: dict[str, Any]) -> bytes:
         raise RuntimeError(f"{resref}: nombre de frames runtime incoherent")
 
     cycles = sorted(resource.get("cycles") or [], key=lambda item: int(item.get("cycle", -1)))
+    cycles = drop_trailing_empty_cycles(cycles, resref)
     if int(resource.get("cycle_count", -1)) != len(cycles):
         raise RuntimeError(f"{resref}: nombre de cycles runtime incoherent")
     if [int(item.get("cycle", -1)) for item in cycles] != list(range(len(cycles))):

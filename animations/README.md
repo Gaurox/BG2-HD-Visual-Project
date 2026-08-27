@@ -25,6 +25,7 @@ courant.
 | Interpolation d'un cycle natif | [`../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md`](../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md) | `run_animation_interpolation.py` |
 | 15 → 30 fps pause-aware | [`../pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](../pipeline/ANIMATION_UPSCALE_30FPS_V2.md) | `run_animation_upscale_30fps_v2.py` |
 | Correctif alpha | [`../pipeline/ANIMATION_ALPHA_CORRECTIONS.md`](../pipeline/ANIMATION_ALPHA_CORRECTIONS.md) | builders alpha spécialisés |
+| Fond/halo sur une animation `Blended` | [`../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md) | `build_blended_rgb_neutral_pack.py` |
 | Packs par zone | [`../pipeline/ANIMATION_PACKS_PAR_ZONE.md`](../pipeline/ANIMATION_PACKS_PAR_ZONE.md) | `split_animation_pack_by_area.py` |
 | Masque différent par occurrence | [`../pipeline/ANIMATION_PER_OCCURRENCE_OCCLUSION.md`](../pipeline/ANIMATION_PER_OCCURRENCE_OCCLUSION.md) | registre v3 lié aux coordonnées ARE |
 | Contrat runtime complet | [`UPSCALE_ANIMATIONS_ZONE.md`](UPSCALE_ANIMATIONS_ZONE.md) | registre + DLL |
