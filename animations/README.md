@@ -55,6 +55,13 @@ hashes et son approbation.
 QA et intégration release restent deux décisions distinctes. Un run `pending-qa`, un prototype ou
 un pack présent dans l'override n'est pas éligible.
 
+Après une intégration explicitement approuvée, valider le seul pack concerné
+avec `Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx`. Cette gate génère un
+manifest et un staging temporaires limités à la zone ; ne pas lancer le
+staging global ni Phase 4 à chaque tâche. Ils restent obligatoires avant un
+package, ou après une modification du runtime, du générateur, du format de
+pack ou du Core.
+
 ## Tests légers
 
 ```powershell

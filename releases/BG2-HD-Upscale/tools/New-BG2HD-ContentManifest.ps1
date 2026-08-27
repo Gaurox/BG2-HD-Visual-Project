@@ -4,10 +4,23 @@ param(
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\manifests\content.json'),
     [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json'),
     [string]$OverlayPolicyPath = (Join-Path $PSScriptRoot '..\manifests\overlay-sources.json'),
-    [switch]$IncludePendingAnimationCandidates
+    [switch]$IncludePendingAnimationCandidates,
+    [string[]]$OnlyAnimationArea
 )
 
 $ErrorActionPreference = 'Stop'
+
+$selectedAnimationAreas = [System.Collections.Generic.List[string]]::new()
+foreach ($area in @($OnlyAnimationArea | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })) {
+    $normalized = ([string]$area).Trim().ToUpperInvariant()
+    if ($normalized -notmatch '^(AR|OH)[0-9]{4}$') {
+        throw "Zone animation delta invalide : $area"
+    }
+    if (-not $selectedAnimationAreas.Contains($normalized)) {
+        $selectedAnimationAreas.Add($normalized)
+    }
+}
+$isAnimationDelta = $selectedAnimationAreas.Count -gt 0
 
 function Require([bool]$Condition, [string]$Message) {
     if (-not $Condition) { throw $Message }
@@ -47,7 +60,8 @@ function Get-AnimationCandidateEntries {
     param(
         [string]$Workspace,
         [string]$CandidatesPath,
-        [bool]$IncludePending
+        [bool]$IncludePending,
+        [string[]]$OnlyAreas
     )
 
     if (-not (Test-Path -LiteralPath $CandidatesPath -PathType Leaf)) {
@@ -56,6 +70,13 @@ function Get-AnimationCandidateEntries {
     $releaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
     Require (Test-Json -Path $CandidatesPath -SchemaFile (Join-Path $releaseRoot 'schemas\animation-release-candidates.schema.json')) 'Schema du registre de candidats animation invalide.'
     $candidates = Read-Json $CandidatesPath
+    $requestedAreas = @($OnlyAreas | Sort-Object -Unique)
+    foreach ($area in $requestedAreas) {
+        $matches = @($candidates.candidates | Where-Object { [string]$_.area -eq $area })
+        Require ($matches.Count -eq 1) "Candidat animation delta absent ou duplique : $area"
+        $approved = ([string]$matches[0].approval_status -eq 'approved-for-release')
+        Require ($approved -or $IncludePending) "Candidat animation delta non approuve : $area"
+    }
     $animationIndex = @{}
     foreach ($row in Import-Csv -LiteralPath (Join-Path $Workspace 'animations\index\animation_upscale_registry.csv')) {
         $animationIndex[[string]$row.resref] = $row
@@ -63,6 +84,7 @@ function Get-AnimationCandidateEntries {
 
     $result = [System.Collections.Generic.List[object]]::new()
     foreach ($candidate in @($candidates.candidates | Sort-Object component_id)) {
+        if ($requestedAreas.Count -gt 0 -and [string]$candidate.area -notin $requestedAreas) { continue }
         $approved = ([string]$candidate.approval_status -eq 'approved-for-release')
         if (-not $approved -and -not $IncludePending) { continue }
 
@@ -434,42 +456,44 @@ $mapSpecs = @(
 # The CSV is the validation register.  Every validated day/night variant must
 # have one explicit, reviewed canonical source above; this keeps a new CSV
 # validation from silently disappearing from a package.
-$areasCsv = Join-Path $WorkspaceRoot 'areas.csv'
-if (-not (Test-Path -LiteralPath $areasCsv -PathType Leaf)) { throw "Registre des zones absent : $areasCsv" }
-$validatedAreas = Import-Csv -LiteralPath $areasCsv | Where-Object { $_.area_id -match '^(AR|OH)\d{4}$' }
-$areasById = @{}
-foreach ($area in $validatedAreas) { $areasById[[string]$area.area_id] = $area }
-$requiredVariants = [Collections.Generic.List[string]]::new()
-foreach ($area in $validatedAreas) {
-    if ($area.status -eq 'validated-installed') { $requiredVariants.Add([string]$area.area_id) }
-    if ($area.status_nuit -eq 'validated-installed') { $requiredVariants.Add(([string]$area.area_id) + 'N') }
-}
-$declaredVariants = @($mapSpecs | ForEach-Object { [string]$_.Area })
-$missingVariants = @($requiredVariants | Sort-Object -Unique | Where-Object { $_ -notin $declaredVariants })
-$extraVariants = @($declaredVariants | Sort-Object -Unique | Where-Object { $_ -notin $requiredVariants })
-if ($missingVariants.Count -gt 0 -or $extraVariants.Count -gt 0) {
-    throw "Couverture CSV/manifeste invalide. Manquantes: $($missingVariants -join ', '). En trop: $($extraVariants -join ', ')"
-}
+if (-not $isAnimationDelta) {
+    $areasCsv = Join-Path $WorkspaceRoot 'areas.csv'
+    if (-not (Test-Path -LiteralPath $areasCsv -PathType Leaf)) { throw "Registre des zones absent : $areasCsv" }
+    $validatedAreas = Import-Csv -LiteralPath $areasCsv | Where-Object { $_.area_id -match '^(AR|OH)\d{4}$' }
+    $areasById = @{}
+    foreach ($area in $validatedAreas) { $areasById[[string]$area.area_id] = $area }
+    $requiredVariants = [Collections.Generic.List[string]]::new()
+    foreach ($area in $validatedAreas) {
+        if ($area.status -eq 'validated-installed') { $requiredVariants.Add([string]$area.area_id) }
+        if ($area.status_nuit -eq 'validated-installed') { $requiredVariants.Add(([string]$area.area_id) + 'N') }
+    }
+    $declaredVariants = @($mapSpecs | ForEach-Object { [string]$_.Area })
+    $missingVariants = @($requiredVariants | Sort-Object -Unique | Where-Object { $_ -notin $declaredVariants })
+    $extraVariants = @($declaredVariants | Sort-Object -Unique | Where-Object { $_ -notin $requiredVariants })
+    if ($missingVariants.Count -gt 0 -or $extraVariants.Count -gt 0) {
+        throw "Couverture CSV/manifeste invalide. Manquantes: $($missingVariants -join ', '). En trop: $($extraVariants -join ', ')"
+    }
 
-# The release may select a reviewed sub-build below the current run, but it may
-# never silently package another run. This closes the previous state where the
-# CSV and the release covered the same areas while disagreeing on 37 run IDs.
-foreach ($spec in $mapSpecs) {
-    $variant = [string]$spec.Area
-    $isNight = $variant.EndsWith('N', [StringComparison]::Ordinal)
-    $areaId = if ($isNight) { $variant.Substring(0, $variant.Length - 1) } else { $variant }
-    Require ($areasById.ContainsKey($areaId)) "Zone de release absente de areas.csv : $variant"
-    $area = $areasById[$areaId]
-    $status = if ($isNight) { [string]$area.status_nuit } else { [string]$area.status }
-    $runText = if ($isNight) { [string]$area.runs_nuit } else { [string]$area.runs }
-    $catalogRuns = @($runText -split ';' | Where-Object { $_ })
-    $prefix = "maps/$areaId/runs/"
-    $path = ([string]$spec.Path).Replace('\', '/')
-    Require ($status -eq 'validated-installed') "Variante release non validee dans areas.csv : $variant"
-    Require ($path.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) "Source release hors run de zone : $variant / $path"
-    $runId = $path.Substring($prefix.Length).Split('/')[0]
-    Require ($runId -in $catalogRuns) "Run release different du catalogue : $variant / release=$runId / catalogue=$($catalogRuns -join ';')"
-    Require ([string]$spec.SourceRun -eq [string]$spec.Path) "SourceRun et Path divergent : $variant"
+    # The release may select a reviewed sub-build below the current run, but it may
+    # never silently package another run. This closes the previous state where the
+    # CSV and the release covered the same areas while disagreeing on 37 run IDs.
+    foreach ($spec in $mapSpecs) {
+        $variant = [string]$spec.Area
+        $isNight = $variant.EndsWith('N', [StringComparison]::Ordinal)
+        $areaId = if ($isNight) { $variant.Substring(0, $variant.Length - 1) } else { $variant }
+        Require ($areasById.ContainsKey($areaId)) "Zone de release absente de areas.csv : $variant"
+        $area = $areasById[$areaId]
+        $status = if ($isNight) { [string]$area.status_nuit } else { [string]$area.status }
+        $runText = if ($isNight) { [string]$area.runs_nuit } else { [string]$area.runs }
+        $catalogRuns = @($runText -split ';' | Where-Object { $_ })
+        $prefix = "maps/$areaId/runs/"
+        $path = ([string]$spec.Path).Replace('\', '/')
+        Require ($status -eq 'validated-installed') "Variante release non validee dans areas.csv : $variant"
+        Require ($path.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) "Source release hors run de zone : $variant / $path"
+        $runId = $path.Substring($prefix.Length).Split('/')[0]
+        Require ($runId -in $catalogRuns) "Run release different du catalogue : $variant / release=$runId / catalogue=$($catalogRuns -join ';')"
+        Require ([string]$spec.SourceRun -eq [string]$spec.Path) "SourceRun et Path divergent : $variant"
+    }
 }
 
 $uiSpecs = @(
@@ -480,59 +504,64 @@ $uiSpecs = @(
 # Les overlays partages sont gouvernes par un manifeste explicite. Une politique
 # `stock` interdit leur inclusion ; une politique `package` epingle inventaire,
 # taille et hash afin qu'un essai x4 ne puisse pas remplacer silencieusement x2.
-$releaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
-Require (Test-Path -LiteralPath $OverlayPolicyPath -PathType Leaf) "Politique overlays absente : $OverlayPolicyPath"
-Require (Test-Json -Path $OverlayPolicyPath -SchemaFile (Join-Path $releaseRoot 'schemas\overlay-sources.schema.json')) 'Schema de politique overlays invalide.'
-$overlayPolicy = Read-Json $OverlayPolicyPath
-$overlaySpecs = foreach ($policy in @($overlayPolicy.policies | Sort-Object component_id, resref)) {
-    if ([string]$policy.policy -eq 'stock') { continue }
-    Require ([string]$policy.validation_status -eq 'validated-installed') "Overlay non valide interdit en release : $($policy.resref)"
-    @{
-        ComponentId = [int]$policy.component_id
-        ComponentLabel = [string]$policy.component_label
-        PayloadGroup = [string]$policy.payload_group
-        Area = [string]$policy.component_area
-        SourceRun = [string]$policy.source_run
-        Path = [string]$policy.source_path
-        ExpectedFiles = @($policy.files)
-        InstallOrder = [int]$policy.component_id
-        ReplacesComponentOutput = $false
-        Scale = [int]$policy.scale
+$overlaySpecs = @()
+if (-not $isAnimationDelta) {
+    $releaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
+    Require (Test-Path -LiteralPath $OverlayPolicyPath -PathType Leaf) "Politique overlays absente : $OverlayPolicyPath"
+    Require (Test-Json -Path $OverlayPolicyPath -SchemaFile (Join-Path $releaseRoot 'schemas\overlay-sources.schema.json')) 'Schema de politique overlays invalide.'
+    $overlayPolicy = Read-Json $OverlayPolicyPath
+    $overlaySpecs = foreach ($policy in @($overlayPolicy.policies | Sort-Object component_id, resref)) {
+        if ([string]$policy.policy -eq 'stock') { continue }
+        Require ([string]$policy.validation_status -eq 'validated-installed') "Overlay non valide interdit en release : $($policy.resref)"
+        @{
+            ComponentId = [int]$policy.component_id
+            ComponentLabel = [string]$policy.component_label
+            PayloadGroup = [string]$policy.payload_group
+            Area = [string]$policy.component_area
+            SourceRun = [string]$policy.source_run
+            Path = [string]$policy.source_path
+            ExpectedFiles = @($policy.files)
+            InstallOrder = [int]$policy.component_id
+            ReplacesComponentOutput = $false
+            Scale = [int]$policy.scale
+        }
     }
 }
 
 $entries = [System.Collections.Generic.List[object]]::new()
-foreach ($spec in $mapSpecs) {
-    $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
-    if (-not (Test-Path -LiteralPath $sourceDirectory -PathType Container)) { throw "Source canonique absente : $sourceDirectory" }
-    $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB'; ReplacesComponentOutput = $false }
-    $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | Sort-Object Name
-    if ($files.Count -eq 0) { throw "Aucun TIS/PVRZ dans : $sourceDirectory" }
-    foreach ($file in $files) { $entries.Add((New-ContentEntry $normalized $file)) }
-}
-foreach ($spec in $uiSpecs) {
-    $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
-    $normalized = $spec + @{ Kind = 'ui'; DestinationRoot = 'iee-assets'; Model = 'Topaz-Gigapixel-Recovery-v2-D50' }
-    foreach ($name in $spec.Names) {
-        $file = Get-Item -LiteralPath (Join-Path $sourceDirectory $name) -ErrorAction Stop
-        $entries.Add((New-ContentEntry $normalized $file))
+if (-not $isAnimationDelta) {
+    foreach ($spec in $mapSpecs) {
+        $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
+        if (-not (Test-Path -LiteralPath $sourceDirectory -PathType Container)) { throw "Source canonique absente : $sourceDirectory" }
+        $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB'; ReplacesComponentOutput = $false }
+        $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | Sort-Object Name
+        if ($files.Count -eq 0) { throw "Aucun TIS/PVRZ dans : $sourceDirectory" }
+        foreach ($file in $files) { $entries.Add((New-ContentEntry $normalized $file)) }
+    }
+    foreach ($spec in $uiSpecs) {
+        $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
+        $normalized = $spec + @{ Kind = 'ui'; DestinationRoot = 'iee-assets'; Model = 'Topaz-Gigapixel-Recovery-v2-D50' }
+        foreach ($name in $spec.Names) {
+            $file = Get-Item -LiteralPath (Join-Path $sourceDirectory $name) -ErrorAction Stop
+            $entries.Add((New-ContentEntry $normalized $file))
+        }
+    }
+    foreach ($spec in $overlaySpecs) {
+        $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
+        Require (Test-Path -LiteralPath $sourceDirectory -PathType Container) "Source overlay absente : $sourceDirectory"
+        $normalized = $spec + @{ Kind = 'overlay'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB' }
+        $actualNames = @(Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | ForEach-Object Name | Sort-Object)
+        $expectedNames = @($spec.ExpectedFiles | ForEach-Object { [string]$_.name } | Sort-Object)
+        Require (-not (Compare-Object $expectedNames $actualNames)) "Inventaire overlay inattendu : $($spec.Area)"
+        foreach ($expected in $spec.ExpectedFiles) {
+            $file = Get-Item -LiteralPath (Join-Path $sourceDirectory ([string]$expected.name)) -ErrorAction Stop
+            Require ($file.Length -eq [int64]$expected.bytes) "Taille overlay invalide : $($file.Name)"
+            Require ((Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$expected.sha256) "Hash overlay invalide : $($file.Name)"
+            $entries.Add((New-ContentEntry $normalized $file))
+        }
     }
 }
-foreach ($spec in $overlaySpecs) {
-    $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
-    Require (Test-Path -LiteralPath $sourceDirectory -PathType Container) "Source overlay absente : $sourceDirectory"
-    $normalized = $spec + @{ Kind = 'overlay'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB' }
-    $actualNames = @(Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | ForEach-Object Name | Sort-Object)
-    $expectedNames = @($spec.ExpectedFiles | ForEach-Object { [string]$_.name } | Sort-Object)
-    Require (-not (Compare-Object $expectedNames $actualNames)) "Inventaire overlay inattendu : $($spec.Area)"
-    foreach ($expected in $spec.ExpectedFiles) {
-        $file = Get-Item -LiteralPath (Join-Path $sourceDirectory ([string]$expected.name)) -ErrorAction Stop
-        Require ($file.Length -eq [int64]$expected.bytes) "Taille overlay invalide : $($file.Name)"
-        Require ((Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$expected.sha256) "Hash overlay invalide : $($file.Name)"
-        $entries.Add((New-ContentEntry $normalized $file))
-    }
-}
-foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -IncludePending $IncludePendingAnimationCandidates)) {
+foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -IncludePending $IncludePendingAnimationCandidates -OnlyAreas @($selectedAnimationAreas))) {
     $entries.Add($entry)
 }
 

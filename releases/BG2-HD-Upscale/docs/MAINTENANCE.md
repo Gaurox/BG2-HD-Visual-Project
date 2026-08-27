@@ -17,22 +17,32 @@ maintenance and release gates.
    task report.
 3. After approval, add one explicit canonical source to the content-manifest register and keep
    the component ID/label stable. A previously published ID is never reused.
-4. Regenerate, stage and validate from the release root:
+4. For a manifest-only integration, regenerate and run the static gate from
+the release root. For an area animation, add its delta gate. This temporary
+check stages only the selected pack and must not rebuild the full payload:
 
 ```powershell
 & .\tools\New-BG2HD-ContentManifest.ps1
 & .\tools\New-BG2HD-ComponentManifest.ps1
 & .\tools\Sync-BG2HD-PackageMetadata.ps1
 & .\tools\Generate-BG2HD-Tp2.ps1
-& .\tools\Stage-BG2HDPayload.ps1
 & .\tools\Test-BG2HD-Phase2.ps1
-& .\tools\Test-BG2HD-Phase4.ps1
 ```
 
-5. Run the Phase 5A suite, then build and validate a fresh archive. Test the
+For an area animation, add:
+
+```powershell
+& .\tools\Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx
+```
+
+5. Only before an archive, or after a shared generator, runtime, format or
+Core change, rebuild the full payload and run the full gates. Test the
 resulting archive, not the source tree. Record its size and SHA-256.
 
 ```powershell
+& .\tools\Stage-BG2HDPayload.ps1
+& .\tools\Test-BG2HD-Phase4.ps1
+& .\tools\Test-BG2HD-AreaAnimationPilot.ps1
 & .\tools\Build-BG2HD-LocalReproducible.ps1 -WeiDUExecutable <path-to-Weidu.exe>
 & .\tools\Test-BG2HD-Phase6BPackage.ps1 -ArchivePath <path-to-release.zip>
 ```
@@ -46,9 +56,10 @@ Use the area-animation candidate register instead of adding runtime frames by
 hand. One `area-animation` component maps to one `iee-assets/areas/<AREA>`
 directory and depends on Core. A candidate must stay out of `content.json`
 until explicit user approval; validate it with
-`Test-BG2HD-AreaAnimationPilot.ps1` and a renderer built from the same source
-tree before promotion. The clean-game AR0602 -> no-pack-area fallback remains
-a required runtime gate.
+`Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx` before committing its
+manifest integration. The full `Test-BG2HD-AreaAnimationPilot.ps1` and a
+renderer built from the same source tree remain package-tier gates. The
+clean-game AR0602 -> no-pack-area fallback remains a required runtime gate.
 
 ## Core or compatibility changes
 

@@ -38,22 +38,34 @@ manifests are authoritative.
 4. For a UI component, declare the required renderer configuration and a
    dedicated state file in the TP2 generator. Do not share or overwrite the
    Core configuration backup. The selector depends on the main-menu component.
-5. Regenerate only from the release root:
+5. For a manifest integration that does not build an archive, regenerate only
+from the release root, then run the static gate. For an area-animation
+candidate, run its delta gate; it stages only that immutable area pack. Do not
+stage the full payload or run Phase 4 for this tier.
 
 ```powershell
 & .\tools\New-BG2HD-ContentManifest.ps1
 & .\tools\New-BG2HD-ComponentManifest.ps1
 & .\tools\Sync-BG2HD-PackageMetadata.ps1
 & .\tools\Generate-BG2HD-Tp2.ps1
-& .\tools\Stage-BG2HDPayload.ps1
 & .\tools\Test-BG2HD-Phase2.ps1
-& .\tools\Test-BG2HD-Phase4.ps1
 ```
 
-6. Increment `manifests/release.json` before a user-facing package update,
-   sync metadata again, regenerate TP2, then validate the update and archive:
+For an area-animation candidate, add:
 
 ```powershell
+& .\tools\Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx
+```
+
+6. Before a user-facing package update, or after a runtime, format,
+generator or Core change, increment `manifests/release.json`, sync metadata
+again, regenerate TP2, then rebuild the full payload and validate the update
+and archive:
+
+```powershell
+& .\tools\Stage-BG2HDPayload.ps1
+& .\tools\Test-BG2HD-Phase4.ps1
+& .\tools\Test-BG2HD-AreaAnimationPilot.ps1
 & .\tools\Test-BG2HD-Phase5A.ps1 -WeiDUExecutable <Weidu.exe> -ArchivePath <previous.zip>
 & .\tools\Build-BG2HD-LocalReproducible.ps1 -WeiDUExecutable <Weidu.exe> -OutputRoot <empty-output>
 & .\tools\Test-BG2HD-Phase6BPackage.ps1 -ArchivePath <new.zip>
@@ -84,10 +96,13 @@ frames declared for that area to `iee-assets/areas/<AREA>/`.
    and has passed the per-area registry-v2/v3 / TimedTimeline contract.
    After explicit approval, run `Promote-BG2HDAreaAnimationRenderer.ps1` before
    regenerating the release manifests and payload.
-5. Run `Test-BG2HD-AreaAnimationPilot.ps1`, the renderer host tests, then the
-   normal Phase 2/4/5A/6B gates. Runtime QA must enter the packaged area and a
-   following area without a pack; the latter must release the resident pack and
-   use the native BAM fallback.
+5. At task scope, run `Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx`;
+it checks only the newly approved pack. Run
+`Test-BG2HD-AreaAnimationPilot.ps1`, the renderer host tests and the normal
+Phase 2/4/5A/6B gates only at the package tier, or immediately after a shared
+runtime/format/generator/Core change. Runtime QA must enter the packaged area
+and a following area without a pack; the latter must release the resident pack
+and use the native BAM fallback.
 
 AR0602 (component 3000, v2) is the backward-compatibility pilot. AR0900 (component 3001, v3) is
 the per-occurrence pilot. Both use renderer `iee-0.1.0-alpha.5`; the clean-game and lifecycle

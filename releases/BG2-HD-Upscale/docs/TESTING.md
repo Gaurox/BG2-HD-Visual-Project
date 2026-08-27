@@ -3,6 +3,23 @@
 Use the [installer and upscale integration contract](INSTALLER_AND_UPSCALE_WORKFLOW.md)
 to determine the required regeneration path before applying these gates.
 
+## Validation tiers
+
+Use the smallest gate that proves the change, then retain the complete package
+gate before any distributable archive. A fast gate is not a release waiver.
+
+| Tier | Trigger | Required proof |
+|---|---|---|
+| Animation delta | Each approved area-animation candidate | `Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx`: candidate manifest/registry/index, exact frames and hashes, temporary per-area staging, generated component and TP2 entries |
+| Manifest integration | Each explicitly approved content integration | Regenerate manifests and TP2, then run Phase 2 static validation |
+| Package | Before building, updating or validating an archive; also after a shared generator, runtime, format or Core change | Full staging, Phase 4, animation compatibility pilots, Phase 5A and Phase 6B |
+
+The animation-delta gate creates its own temporary `content.json` and payload;
+it must never use or replace `bg2hd/payload-allvalidated`. It validates only
+the declared immutable area pack, so it replaces neither the full payload gate
+nor clean-game runtime QA. Run the package tier immediately when a shared
+contract changes or when preparing an archive.
+
 ## Required automated checks
 
 After payload or Core changes, run the manifest/TP2 checks, asset validator,

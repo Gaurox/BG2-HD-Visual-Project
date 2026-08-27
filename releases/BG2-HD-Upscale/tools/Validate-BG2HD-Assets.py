@@ -179,13 +179,15 @@ def validate_area_animations(entries: list[dict], root: Path) -> dict[str, int]:
         for name, frame in expected.items():
             entry = actual[name]
             path = root / entry["source"]
-            if path.stat().st_size != entry["bytes"] or sha256(path) != entry["sha256"].upper():
+            actual_size = path.stat().st_size
+            actual_sha256 = sha256(path)
+            if actual_size != entry["bytes"] or actual_sha256 != entry["sha256"].upper():
                 fail(f"Composant animation {component_id}: hash ou taille contenu invalide {name}")
             if name.startswith("AAX4-"):
                 width, height = frame["physical_size_x4"]
-                if path.stat().st_size != width * height * 4:
+                if actual_size != width * height * 4:
                     fail(f"Composant animation {component_id}: taille RGBA invalide {name}")
-                if sha256(path) != frame["sha256"].upper() or path.stat().st_size != frame["bytes"]:
+                if actual_sha256 != frame["sha256"].upper() or actual_size != frame["bytes"]:
                     fail(f"Composant animation {component_id}: hash de frame invalide {name}")
     return {"components": len(by_component), "frames": total_frames, "files": len(entries)}
 
@@ -194,12 +196,23 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", required=True, type=Path)
     parser.add_argument("--content", required=True, type=Path)
+    parser.add_argument(
+        "--area-animation-only",
+        action="store_true",
+        help="validate only a temporary manifest containing area-animation entries",
+    )
     args = parser.parse_args()
     root = args.workspace.resolve()
     entries = json.loads(args.content.read_text(encoding="utf-8"))["entries"]
     maps = [entry for entry in entries if entry["kind"] == "map"]
     ui = [entry for entry in entries if entry["kind"] == "ui"]
     animations = [entry for entry in entries if entry["kind"] == "area-animation"]
+    if args.area_animation_only:
+        if maps or ui or len(animations) != len(entries) or not animations:
+            fail("Le manifeste delta doit contenir uniquement des area-animation")
+        animation_summary = validate_area_animations(animations, root)
+        print(json.dumps({"area_animations": animation_summary}, sort_keys=True))
+        return 0
     map_tis = [entry for entry in maps if entry["source"].upper().endswith(".TIS")]
     expected_tis = len({entry["area"] for entry in maps})
     if len(map_tis) != expected_tis:

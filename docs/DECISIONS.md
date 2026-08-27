@@ -27,6 +27,7 @@ de production restent dans les catalogues et manifests. Un essai n'est rouvert q
 | Horloge runtime uniquement diagnostique | Supersédée par le prototype PORTL1A validé | TimedTimeline v2 reste compatible ; v3 ajoute le routage par occurrence, validé avec AR0900 et publié avec le renderer alpha.5 | Nouvelle version de registre ou régression du témoin AR0602 v2 |
 | Pack global supérieur à 512 Mio | Risque mémoire et registre non borné | Packs par zone avec installation/restauration | Nouveau runtime démontré borné |
 | AR0516 et AR0603 incomplets | Runs arrêtés avant authoring/QA, aucune référence externe | Frames brutes supprimées ; request et manifest conservés sous `archive/experiments/abandoned-animation-runs/` | Repartir des sources, jamais des frames partielles |
+| Validation release globale après chaque animation | Staging et hash de l'ensemble du payload, désormais plusieurs Gio, ralentissent la QA sans augmenter la preuve du pack modifié | Gate delta par zone : manifeste, registre, index, frames, staging temporaire et TP2 ; gates globales conservées avant archive | Changement runtime, générateur, format de pack ou Core ; ou préparation d'un package |
 
 ## Sprites
 
