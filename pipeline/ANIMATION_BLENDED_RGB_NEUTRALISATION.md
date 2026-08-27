@@ -201,6 +201,29 @@ Une ressource `écarté` pour « défaut natif » après des corrections **alpha
 toujours à réexaminer sous cet angle : la conclusion « natif au moteur » peut n'être qu'un
 symptôme de l'inefficacité structurelle de ces corrections sur le chemin blended.
 
+## Limite — plafond informationnel du sujet
+
+La neutralisation corrige le **fond**, pas la **résolution du sujet**. Sur un motif dont le rayon
+utile en x1 descend sous ~2 px, aucun upscale n'apporte de gain visible : la source ne porte que
+position, taille et luminosité, et tout détail xN est inventé.
+
+Mesurer avant d'engager un run sur un micro-effet :
+
+```powershell
+python -c "import numpy as np,glob; from PIL import Image; from scipy import ndimage; t=[]; [t.extend(int((l==i).sum()) for i in range(1,n+1)) for l,n in (ndimage.label(np.asarray(Image.open(f).convert('L'))>0) for f in sorted(glob.glob(r'<frames_x1>/alpha/*.png')))]; import statistics as s; print('motifs',len(t),'| surface mediane',s.median(t),'px -> rayon equivalent %.1f px'%( (s.median(t)/3.14159)**0.5 ))"
+```
+
+Rayon médian < 2 px ⇒ ne pas lancer d'upscale ; la ressource reste en x1 natif. Un gain ne serait
+atteignable que par re-création d'asset, ce qui sort du périmètre upscale.
+
+Contre-référence : `BUBBLES2` — 993 bulles, surface médiane 10 px x1, rayon équivalent 1,8 px,
+14 % des bulles entre 1 et 4 px. Le défaut Blended y était pourtant le plus fort du projet
+(contribution parasite 69,5/255, ramenée à 0) et l'escalier d'alpha a été corrigé par
+`--inner-feather-x4 2 --mode premultiply` : les deux correctifs sont mesurés, installés, et la QA
+en jeu les a refusés comme équivalents au vanilla. L'écart numérique atteignait pourtant
+MAE 37 à 45/255 — la différence existe, elle est simplement trop fine pour se lire.
+Ressource `écarté`.
+
 ## Références validées
 
 | Resref | Zone | Flags | Mode | Mesure avant → après | QA |
