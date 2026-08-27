@@ -89,8 +89,8 @@ Contrôles avant installation :
 ### Masque manuel sur un run `TimedTimeline` 30 fps
 
 Ne jamais modifier le run temporel accepté ni son pack. Construire une dérivée complète avec
-`build_manual_alpha_mask_30fps_v2.py`. Le run source doit couvrir exactement un resref et être
-basé sur le registre actuellement actif.
+`build_manual_alpha_mask_30fps_v2.py`. Le run source doit couvrir le ou les resrefs masqués et
+être basé sur le registre actuellement actif.
 
 ```powershell
 python pipeline/scripts/build_manual_alpha_mask_30fps_v2.py `
@@ -102,7 +102,9 @@ python pipeline/scripts/build_manual_alpha_mask_30fps_v2.py `
 
 Le masque doit être monochrome, même dimensions x4 que les frames. Blanc conserve l'alpha source,
 noir retire, gris multiplie l'alpha. Le RGB reste octet-identique. Ce mode répète le masque fourni
-sur les anchors et les phases interpolées ; l'employer seulement pour une géométrie uniforme.
+sur les anchors et les phases interpolées ; l'employer seulement pour une géométrie uniforme. Un
+run temporal groupé peut être dérivé avec plusieurs paires `--resref` / `--mask` : chaque masque
+reste limité à son resref et le pack conserve les autres ressources sans changement.
 
 Le pack dérivé classe les anchors modifiés comme `replacement_assets` et les phases interpolées
 comme `new_assets`. Après review et `approve`, installer avec

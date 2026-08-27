@@ -73,6 +73,10 @@ resrefs_without_area   = []           # sinon : ressource convertie que personne
 
 Rejouer la même commande avec `--resume` revalide sans réécrire.
 
+Pour dériver un nouveau lot complet en remplaçant explicitement une zone déjà présente dans un
+lot antérieur, utiliser `combine_area_pack_splits.py` avec l'ancien lot en premier, le nouveau en
+second et `--replace-area ARxxxx`. Sans cette option, toute collision de zone reste bloquante.
+
 ## Étape 2 — préflight d'installation
 
 Jeu et `InfinityLoader` fermés :

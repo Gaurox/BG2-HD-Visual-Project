@@ -32,9 +32,11 @@ import run_animation_upscale_30fps_v2 as v2  # noqa: E402
 import split_animation_pack_by_area as splitter  # noqa: E402
 
 
-def combine(inputs: list[Path], output: Path, resume: bool) -> dict[str, Any]:
+def combine(inputs: list[Path], output: Path, resume: bool,
+            replace_areas: set[str] | None = None) -> dict[str, Any]:
     output = output.resolve()
     inputs = [path.resolve() for path in inputs]
+    replace_areas = {area.upper() for area in replace_areas or set()}
     v2.require(len(inputs) >= 1, "au moins un split-root d'entrée est requis")
 
     by_area: dict[str, tuple[Path, dict[str, Any]]] = {}
@@ -52,7 +54,8 @@ def combine(inputs: list[Path], output: Path, resume: bool) -> dict[str, Any]:
             v2.require(manifest.get("area_id") == area_id, f"{area_id}: area_id incohérent")
             if area_id in by_area:
                 previous_root, _ = by_area[area_id]
-                v2.require(False, f"{area_id}: présent dans deux split-roots "
+                v2.require(area_id in replace_areas,
+                           f"{area_id}: présent dans deux split-roots "
                            f"({previous_root} et {split_root}) ; résoudre avant de combiner")
             by_area[area_id] = (area_dir, manifest)
 
@@ -93,6 +96,7 @@ def combine(inputs: list[Path], output: Path, resume: bool) -> dict[str, Any]:
         "status": "completed",
         "created_utc": v2.utc_now(),
         "combined_from": [path.as_posix() for path in inputs],
+        "replaced_areas": sorted(replace_areas),
         "runtime_budget_bytes": v2.MAX_RAW_BYTES,
         "area_count": len(entries),
         "largest_area_raw_bytes": max(item["raw_bytes"] for item in entries),
@@ -111,9 +115,11 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--input", type=Path, action="append", required=True, dest="inputs",
                         help="split-root déjà produit par split_animation_pack_by_area.py ; répétable")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--replace-area", action="append", default=[],
+                        help="zone dont une entrée ultérieure remplace explicitement le pack précédent")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args(argv)
-    index = combine(args.inputs, args.output, args.resume)
+    index = combine(args.inputs, args.output, args.resume, set(args.replace_area))
     summary = {key: value for key, value in index.items() if key != "areas"}
     summary["areas_list"] = [item["area_id"] for item in index["areas"]]
     print(json.dumps(summary, indent=2, ensure_ascii=False))

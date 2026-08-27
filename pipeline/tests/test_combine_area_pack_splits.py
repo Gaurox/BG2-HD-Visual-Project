@@ -95,6 +95,21 @@ class CombineAreaPackSplitsTests(unittest.TestCase):
                 combiner.combine([split_a, split_b], root / "combined", resume=False)
             self.assertIn("AR0001", str(failure.exception))
 
+    def test_replaces_explicit_area_collision(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            split_a = self.make_split(root, "batch-a", ("ALPHA",), "AR0001")
+            split_b = self.make_split(root, "batch-b", ("GAMMA",), "AR0001")
+
+            combined = root / "combined"
+            index = combiner.combine(
+                [split_a, split_b], combined, resume=False, replace_areas={"AR0001"},
+            )
+
+            self.assertEqual(index["replaced_areas"], ["AR0001"])
+            _manifest, resources = pipeline.validate_v2_pack(combined / "AR0001")
+            self.assertEqual([resource["resref"] for resource in resources], ["GAMMA"])
+
     def test_resume_revalidates(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

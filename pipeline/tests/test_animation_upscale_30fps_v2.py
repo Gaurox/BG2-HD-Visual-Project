@@ -353,7 +353,7 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
             self.assertEqual(set(pipeline.rgba_from_raw(
                 masked_run / "03_runtime_pack" / "AAX4-TESTA-frame000.rgba", [8, 4]
             ).getchannel("A").tobytes()), {0})
-            self.assertEqual(manifest["manual_alpha_patch"]["masked_frame_count"], 4)
+            self.assertEqual(manifest["manual_alpha_patch"]["targets"][0]["masked_frame_count"], 4)
 
             run_hash = sha(masked_run / "manifest.json")
             pipeline.approve_run(masked_run, run_hash, ["TESTA"])
