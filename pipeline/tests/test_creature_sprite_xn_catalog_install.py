@@ -16,6 +16,8 @@ RESTORE = ROOT / "pipeline/scripts/Restore-CreatureSprite-XN-Catalog-Test.ps1"
 SOURCE_FILES = (
     "CMakeLists.txt",
     "src/iee/hooks.cpp",
+    "src/iee/native_occlusion_bridge.cpp",
+    "src/iee/native_occlusion_bridge.h",
     "src/iee/dll_main.cpp",
     "src/iee/bridge_transition.cpp",
     "src/iee/bridge_transition.h",
@@ -23,6 +25,8 @@ SOURCE_FILES = (
     "src/iee/creature_sprite_x2.h",
     "src/iee/core/config.cpp",
     "src/iee/core/config.h",
+    "src/iee/core/native_occlusion_probe.cpp",
+    "src/iee/core/native_occlusion_probe.h",
     "src/iee/game/build_manifest.cpp",
     "src/iee/game/build_manifest.h",
     "tests/iee_tests.cpp",

@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <cstring>
 #include <exception>
+#include <limits>
+#include <optional>
 #include <stdexcept>
 #include <string_view>
 #include <vector>
@@ -31,6 +33,7 @@
 #include "iee/game/game_types.h"
 #include "iee/game/renderer.h"
 #include "iee/game/runtime_types_x64.h"
+#include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
 
 namespace iee::hooks {
@@ -74,14 +77,19 @@ static AppContext* g_ctx = nullptr;
 static am0205e_x4::EngineTextureApi g_am0205eTextureApi{};
 static area_animation_x4::EngineTextureApi g_areaAnimationTextureApi{};
 static creature_sprite_x2::EngineTextureApi g_creatureSpriteTextureApi{};
+static native_occlusion_bridge::EngineTextureApi g_nativeOcclusionTextureApi{};
+static const std::byte* g_nativeFxSurfacePools{};
 thread_local int g_am0205eRenderDepth = 0;
 thread_local int g_am0205eFrameIndex = -1;
 thread_local int g_areaAnimationRenderDepth = 0;
 thread_local area_animation_x4::FrameHandle g_areaAnimationFrame{};
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
+thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
 thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
 bool g_nativeOcclusionProbeHookEnabled = false;
+bool g_nativeOcclusionProbeLoggingEnabled = false;
+bool g_nativeOcclusionBridgeEnabled = false;
 
 constexpr std::size_t kMaximumCreatureSpriteLayers = 4;
 constexpr std::size_t kNoCreatureSpriteLayer = kMaximumCreatureSpriteLayers;
@@ -173,6 +181,23 @@ class NativeOcclusionCorrelationOverride {
   core::NativeOcclusionCorrelation* previous_{};
 };
 
+class NativeOcclusionMaskCaptureOverride {
+ public:
+  explicit NativeOcclusionMaskCaptureOverride(
+      core::NativeOcclusionMaskCapture* capture) noexcept
+      : previous_(g_nativeOcclusionMaskCapture) {
+    g_nativeOcclusionMaskCapture = capture;
+  }
+  ~NativeOcclusionMaskCaptureOverride() { g_nativeOcclusionMaskCapture = previous_; }
+
+  NativeOcclusionMaskCaptureOverride(const NativeOcclusionMaskCaptureOverride&) = delete;
+  NativeOcclusionMaskCaptureOverride& operator=(const NativeOcclusionMaskCaptureOverride&) =
+      delete;
+
+ private:
+  core::NativeOcclusionMaskCapture* previous_{};
+};
+
 std::uint64_t pack_probe_subject(const std::array<char, 8>& bytes) noexcept {
   std::uint64_t packed = 0;
   for (std::size_t index = 0; index < bytes.size(); ++index) {
@@ -220,11 +245,13 @@ void log_native_occlusion_sample(const core::NativeOcclusionSample& sample) noex
       const auto& clipping = sample.lastClippingCall;
       LOG_INFO(
           "Native occlusion phase0: owner={} instance=0x{:X} subject=0x{:X}, "
-          "clip_calls={}, native_clip=present infinity=0x{:X} at ({},{},z={}) "
+          "clip_calls={} successful_clip_calls={}, native_clip=present "
+          "infinity=0x{:X} at ({},{},z={}) "
           "fx_rect=0x{:X} clip_rect=0x{:X} dither={} clip_flags=0x{:X} result={}, "
           "final_draw=({},{}) logical={}x{} draw_flags=0x{:X} native_texture={} "
           "replacement={}",
           owner, sample.ownerKey, sample.subjectId, sample.clippingCallCount,
+          sample.successfulClippingCallCount,
           clipping.infinity, clipping.x, clipping.y, clipping.referenceZ, clipping.fxRect,
           clipping.clipRect,
           static_cast<unsigned>(clipping.dither), clipping.flags, clipping.result,
@@ -261,6 +288,182 @@ bool matches_pattern_at_rva(const core::ModuleSpan& module, std::uintptr_t rva,
   for (std::size_t index = 0; index < bytes.size(); ++index) {
     if (mask[index] && module.base[rva + index] != bytes[index]) return false;
   }
+  return true;
+}
+
+int current_engine_texture_id(const native_occlusion_bridge::EngineTextureApi& api) noexcept {
+  if (!api.glTextureState) return 0;
+  std::uint32_t state = 0;
+  if (!core::safe_read(api.glTextureState, state)) return 0;
+  return static_cast<int>((state >> 21u) & 0x1FFu);
+}
+
+bool validate_native_occlusion_bridge_runtime(AppContext& ctx) noexcept {
+  g_nativeOcclusionTextureApi = {};
+  g_nativeFxSurfacePools = nullptr;
+  if (!ctx.cfg.enableNativeOcclusionBridge) return false;
+  if (ctx.cfg.enableFullFrameSsaa2x) {
+    LOG_WARN(
+        "Native occlusion phase1 bridge disabled: diagnostic full-frame SSAA2x "
+        "owns glViewport during object-local FBO composition");
+    return false;
+  }
+  if (!ctx.manifest || !ctx.manifest->areaAnimations.enabled) return false;
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return false;
+  const auto& runtime = ctx.manifest->areaAnimations;
+  if (!runtime.fxSurfacePool || !runtime.fxSurfacePoolReference ||
+      runtime.fxSurfacePoolReferenceSignature.empty() ||
+      !matches_pattern_at_rva(*module, runtime.fxSurfacePoolReference,
+                              runtime.fxSurfacePoolReferenceSignature)) {
+    LOG_WARN("Native occlusion phase1 bridge disabled: FX surface-pool evidence is absent");
+    return false;
+  }
+
+  const auto* reference = module->base + runtime.fxSurfacePoolReference;
+  std::int32_t poolDisplacement = 0;
+  if (reference[0] != std::byte{0x48} || reference[1] != std::byte{0x8D} ||
+      reference[2] != std::byte{0x05} ||
+      !core::safe_read(reference + 3, poolDisplacement) ||
+      reference + 7 + poolDisplacement != module->base + runtime.fxSurfacePool) {
+    LOG_WARN(
+        "Native occlusion phase1 bridge disabled: manifested FX pool reference no "
+        "longer resolves to its data span");
+    return false;
+  }
+
+  constexpr std::size_t kFxPoolBytes = 0x60;
+  constexpr std::size_t kTextureDescriptorBytes = 0x28 * 512;
+  const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+  auto* textureTable = reinterpret_cast<std::byte*>(moduleBase + runtime.glTextureTable);
+  const auto* fxPools = module->base + runtime.fxSurfacePool;
+  if (!core::is_read_write_non_executable_section(*module, runtime.fxSurfacePool,
+                                                   kFxPoolBytes) ||
+      !core::is_writable_non_executable_memory(fxPools, kFxPoolBytes) ||
+      !core::is_read_write_non_executable_section(*module, runtime.glTextureTable,
+                                                   kTextureDescriptorBytes) ||
+      !core::is_writable_non_executable_memory(textureTable,
+                                                kTextureDescriptorBytes)) {
+    LOG_WARN(
+        "Native occlusion phase1 bridge disabled: FX pool or texture table is not "
+        "a writable non-executable data span");
+    return false;
+  }
+
+  constexpr std::array<std::uintptr_t, 3> kExpectedTableOffsets{{0x28, 0x00, 0x0D}};
+  for (std::size_t index = 0; index < runtime.glTextureTableReferences.size(); ++index) {
+    if (!matches_pattern_at_rva(*module, runtime.glTextureTableReferences[index],
+                                runtime.signatures[10 + index])) {
+      LOG_WARN(
+          "Native occlusion phase1 bridge disabled: texture-table reference {} "
+          "signature differs",
+          index);
+      return false;
+    }
+    const auto* instruction = module->base + runtime.glTextureTableReferences[index];
+    std::int32_t displacement = 0;
+    if (!core::safe_read(instruction + 3, displacement) ||
+        instruction + 7 + displacement !=
+            module->base + runtime.glTextureTable + kExpectedTableOffsets[index]) {
+      return false;
+    }
+  }
+  if (!matches_pattern_at_rva(*module, runtime.glTextureSecondarySelectorReference,
+                              runtime.signatures[13])) {
+    return false;
+  }
+  std::uint8_t secondaryOffset = 0;
+  if (!core::safe_read(module->base + runtime.glTextureSecondarySelectorReference + 5,
+                       secondaryOffset) ||
+      secondaryOffset != 0x24) {
+    return false;
+  }
+
+  g_nativeOcclusionTextureApi = {
+      .DrawGenTexture =
+          reinterpret_cast<native_occlusion_bridge::EngineTextureApi::DrawGenTextureFn>(
+              moduleBase + runtime.drawGenTexture),
+      .DrawBindTexture = ctx.draw.DrawBindTexture,
+      .DrawDeleteTexture =
+          reinterpret_cast<native_occlusion_bridge::EngineTextureApi::DrawDeleteTextureFn>(
+              moduleBase + runtime.drawDeleteTexture),
+      .TexImage = reinterpret_cast<native_occlusion_bridge::EngineTextureApi::TexImageFn>(
+          moduleBase + runtime.texImage),
+      .glTextureState =
+          reinterpret_cast<const std::uint32_t*>(moduleBase + runtime.glTextureState),
+      .glTextureTable = textureTable,
+  };
+  g_nativeFxSurfacePools = fxPools;
+  return true;
+}
+
+bool read_native_fx_surface(std::uint32_t flags, const void* clipRect,
+                            core::NativeFxSurfaceView& out) noexcept {
+  out = {};
+  if (!g_nativeOcclusionBridgeEnabled || !g_nativeFxSurfacePools || !clipRect ||
+      !g_nativeOcclusionTextureApi.glTextureTable) {
+    return false;
+  }
+  struct Rect {
+    std::int32_t left{};
+    std::int32_t top{};
+    std::int32_t right{};
+    std::int32_t bottom{};
+  } rect{};
+  if (!core::safe_read(clipRect, rect)) return false;
+  const auto width64 = static_cast<std::int64_t>(rect.right) - rect.left;
+  const auto height64 = static_cast<std::int64_t>(rect.bottom) - rect.top;
+  if (width64 <= 0 || height64 <= 0 ||
+      width64 > (std::numeric_limits<int>::max)() ||
+      height64 > (std::numeric_limits<int>::max)()) {
+    return false;
+  }
+
+  // FXRenderClippingPolys selects the second 0x30-byte allocator only for
+  // filter 0x2601: ((~(flags >> 27)) & 1) | 0x2600.
+  const bool linearPool = ((~(flags >> 27u)) & 1u) != 0;
+  const auto* pool = g_nativeFxSurfacePools + (linearPool ? 0x30 : 0x00);
+  std::int32_t pitchPixels = 0;
+  std::int32_t originX = 0;
+  std::int32_t originY = 0;
+  const std::byte* allocation = nullptr;
+  std::int32_t textureId = 0;
+  if (!core::safe_read(pool + 0x00, pitchPixels) ||
+      !core::safe_read(pool + 0x08, originX) ||
+      !core::safe_read(pool + 0x0C, originY) ||
+      !core::safe_read(pool + 0x20, allocation) ||
+      !core::safe_read(pool + 0x28, textureId) || pitchPixels <= 0 || originX < 0 ||
+      originY < 0 || !allocation || textureId <= 0 || textureId >= 512) {
+    return false;
+  }
+  const auto* descriptor =
+      g_nativeOcclusionTextureApi.glTextureTable +
+      static_cast<std::size_t>(textureId) * 0x28;
+  std::int32_t backingWidth = 0;
+  std::int32_t backingHeight = 0;
+  std::uint8_t deletePending = 0;
+  if (!core::safe_read(descriptor + 0x04, backingWidth) ||
+      !core::safe_read(descriptor + 0x08, backingHeight) ||
+      !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
+      backingWidth != pitchPixels || backingHeight <= 0) {
+    return false;
+  }
+  const auto width = static_cast<int>(width64);
+  const auto height = static_cast<int>(height64);
+  if (originX > backingWidth - width || originY > backingHeight - height ||
+      pitchPixels > (std::numeric_limits<int>::max)() / 4) {
+    return false;
+  }
+  const auto originPixels = static_cast<std::uint64_t>(originY) *
+                                static_cast<std::uint64_t>(pitchPixels) +
+                            static_cast<std::uint64_t>(originX);
+  if (originPixels > (std::numeric_limits<std::size_t>::max)() / 4u) return false;
+  out = {
+      .pixels = allocation + static_cast<std::size_t>(originPixels) * 4u,
+      .pitchBytes = pitchPixels * 4,
+      .width = width,
+      .height = height,
+  };
   return true;
 }
 
@@ -1048,7 +1251,18 @@ static int detour_infinity_fx_render_clipping_polys(
     void* thisPtr, int x, int y, int referenceZ, void* fxRect, void* clipRect,
     std::uint8_t dither, std::uint32_t flags) {
   const auto original = g_infinityFxRenderClippingPolysHook.original();
+  core::NativeFxSurfaceView fxSurface{};
+  auto* maskCapture = g_nativeOcclusionMaskCapture;
+  bool captureArmed = false;
+  if (maskCapture) {
+    if (read_native_fx_surface(flags, clipRect, fxSurface)) {
+      captureArmed = maskCapture->begin_call(fxSurface);
+    } else {
+      maskCapture->invalidate();
+    }
+  }
   const int result = original(thisPtr, x, y, referenceZ, fxRect, clipRect, dither, flags);
+  if (captureArmed) maskCapture->finish_call(fxSurface, result);
   if (auto* correlation = g_nativeOcclusionCorrelation) {
     correlation->record_clipping({
         .infinity = reinterpret_cast<std::uintptr_t>(thisPtr),
@@ -1101,6 +1315,9 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
       g_nativeOcclusionProbeHookEnabled && (areaTarget || am0205eTarget)
           ? &nativeOcclusion
           : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && areaTarget ? &nativeOcclusionMask : nullptr);
 
   g_gameStaticRenderBamHook.original()(thisPtr, gameArea, vidMode);
 
@@ -1137,6 +1354,9 @@ static void detour_monster_render(
       reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
   NativeOcclusionCorrelationOverride nativeOcclusionOverride(
       g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && target ? &nativeOcclusionMask : nullptr);
 
   g_monsterRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                  a11, a12, a13, a14);
@@ -1179,6 +1399,9 @@ static void detour_monster_icewind_render(
       reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
   NativeOcclusionCorrelationOverride nativeOcclusionOverride(
       g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && target ? &nativeOcclusionMask : nullptr);
 
   g_monsterIcewindRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                         a11, a12, a13, a14);
@@ -1248,6 +1471,9 @@ static void detour_character_render(
       reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
   NativeOcclusionCorrelationOverride nativeOcclusionOverride(
       g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && target ? &nativeOcclusionMask : nullptr);
 
   g_characterRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                    a11, a12, a13, a14);
@@ -1364,6 +1590,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
   int previousTextureId = 0;
   int transientCreatureTextureId = 0;
+  int transientOcclusionTextureId = 0;
   ReplacementKind replacement = ReplacementKind::None;
   auto* creatureScope = g_creatureSpriteScope;
   if (g_creatureSpriteHooksEnabled && creatureScope) {
@@ -1412,14 +1639,9 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       replacement = ReplacementKind::AM0205E;
     }
   }
+  std::optional<core::NativeOcclusionSample> nativeOcclusionSample;
   if (replacement != ReplacementKind::None && g_nativeOcclusionProbeHookEnabled &&
       g_nativeOcclusionCorrelation) {
-    const auto areaGeneration =
-        g_requestedAreaTimelineGeneration.load(std::memory_order_acquire);
-    if (areaGeneration != g_nativeOcclusionSampleGeneration) {
-      g_nativeOcclusionSampleGate.clear();
-      g_nativeOcclusionSampleGeneration = areaGeneration;
-    }
     auto probeReplacement = core::NativeOcclusionReplacement::AreaRegistry;
     switch (replacement) {
       case ReplacementKind::CreatureSprite:
@@ -1432,7 +1654,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       case ReplacementKind::None:
         break;
     }
-    const auto sample = g_nativeOcclusionCorrelation->correlate_draw({
+    nativeOcclusionSample = g_nativeOcclusionCorrelation->correlate_draw({
         .x = x,
         .y = y,
         .logicalWidth = logicalWidth,
@@ -1441,11 +1663,52 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         .nativeTextureId = previousTextureId,
         .replacement = probeReplacement,
     });
-    if (sample && g_nativeOcclusionSampleGate.accept(*sample)) {
-      log_native_occlusion_sample(*sample);
+    if (g_nativeOcclusionProbeLoggingEnabled && nativeOcclusionSample) {
+      const auto areaGeneration =
+          g_requestedAreaTimelineGeneration.load(std::memory_order_acquire);
+      if (areaGeneration != g_nativeOcclusionSampleGeneration) {
+        g_nativeOcclusionSampleGate.clear();
+        g_nativeOcclusionSampleGeneration = areaGeneration;
+      }
+      if (g_nativeOcclusionSampleGate.accept(*nativeOcclusionSample)) {
+        log_native_occlusion_sample(*nativeOcclusionSample);
+      }
+    }
+  }
+  const bool legacyBakedAreaOcclusion =
+      replacement == ReplacementKind::AreaRegistry &&
+      area_animation_x4::has_baked_occurrence_occlusion(g_areaAnimationFrame);
+  if (g_nativeOcclusionBridgeEnabled && nativeOcclusionSample &&
+      replacement != ReplacementKind::AM0205E && !legacyBakedAreaOcclusion &&
+      g_nativeOcclusionMaskCapture) {
+    std::vector<std::uint8_t> visibilityTransfer;
+    bool changed = false;
+    if (g_nativeOcclusionMaskCapture->build_transfer(
+            logicalWidth, logicalHeight, visibilityTransfer, changed) &&
+        changed) {
+      const int replacementTextureId =
+          current_engine_texture_id(g_nativeOcclusionTextureApi);
+      (void)native_occlusion_bridge::bind_masked_texture(
+          visibilityTransfer, logicalWidth, logicalHeight, replacementTextureId,
+          g_nativeOcclusionTextureApi, transientOcclusionTextureId);
+    } else if (g_nativeOcclusionMaskCapture->successful_call_count() > 0 &&
+               (g_nativeOcclusionMaskCapture->width() != logicalWidth ||
+                g_nativeOcclusionMaskCapture->height() != logicalHeight)) {
+      static std::atomic<bool> dimensionMismatchLogged{false};
+      if (!dimensionMismatchLogged.exchange(true, std::memory_order_relaxed)) {
+        LOG_WARN(
+            "Native occlusion phase1 bridge skipped: captured FX surface {}x{} "
+            "does not match final logical texture {}x{}; xN replacement retained",
+            g_nativeOcclusionMaskCapture->width(),
+            g_nativeOcclusionMaskCapture->height(), logicalWidth, logicalHeight);
+      }
     }
   }
   original(x, y, sourceRect, logicalSize, clipRect, flags);
+  if (transientOcclusionTextureId > 0) {
+    native_occlusion_bridge::finish_masked_texture(
+        g_nativeOcclusionTextureApi, previousTextureId, transientOcclusionTextureId);
+  }
   if (replacement == ReplacementKind::CreatureSprite) {
     if (transientCreatureTextureId > 0) {
       creature_sprite_x2::finish_composite_texture(
@@ -1609,12 +1872,32 @@ bool install_all(AppContext& ctx) {
 
     g_areaCompositionMode = AreaCompositionMode::None;
     g_nativeOcclusionProbeHookEnabled = false;
+    g_nativeOcclusionProbeLoggingEnabled = false;
+    g_nativeOcclusionBridgeEnabled = false;
+    g_nativeOcclusionTextureApi = {};
+    g_nativeFxSurfacePools = nullptr;
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::AM0205EPrototype;
     }
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
+    const bool hasBridgeTarget =
+        g_areaCompositionMode == AreaCompositionMode::Registry ||
+        g_creatureSpriteHooksEnabled;
+    if (ctx.cfg.enableNativeOcclusionBridge && hasBridgeTarget) {
+      g_nativeOcclusionBridgeEnabled = validate_native_occlusion_bridge_runtime(ctx);
+      if (g_nativeOcclusionBridgeEnabled) {
+        LOG_INFO(
+            "Native occlusion phase1 A/B bridge prepared: native FX alpha "
+            "capture plus transient GPU visibility composition; disabled packs and "
+            "non-xN draws remain native");
+      }
+    } else if (ctx.cfg.enableNativeOcclusionBridge) {
+      LOG_WARN(
+          "Native occlusion phase1 bridge not prepared: no registry-backed area "
+          "animation or creature xN path is active");
+    }
     if (g_areaCompositionMode != AreaCompositionMode::None || g_creatureSpriteHooksEnabled) {
       try {
         const auto module = core::get_module_span(nullptr);
@@ -1693,6 +1976,9 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
+        g_nativeOcclusionBridgeEnabled = false;
+        g_nativeOcclusionTextureApi = {};
+        g_nativeFxSurfacePools = nullptr;
         LOG_WARN("High-level composition hooks could not be installed: {}",
                  error.what());
       } catch (...) {
@@ -1711,11 +1997,14 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
+        g_nativeOcclusionBridgeEnabled = false;
+        g_nativeOcclusionTextureApi = {};
+        g_nativeFxSurfacePools = nullptr;
         LOG_WARN("High-level composition hooks could not be installed");
       }
     }
 
-    if (ctx.cfg.enableNativeOcclusionProbe) {
+    if (ctx.cfg.enableNativeOcclusionProbe || g_nativeOcclusionBridgeEnabled) {
       if (g_areaCompositionMode == AreaCompositionMode::None &&
           !g_creatureSpriteHooksEnabled) {
         LOG_WARN(
@@ -1743,19 +2032,36 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(&detour_infinity_fx_render_clipping_polys));
           g_infinityFxRenderClippingPolysHook.enable();
           g_nativeOcclusionProbeHookEnabled = true;
-          LOG_INFO(
-              "Native occlusion phase0 probe installed at "
-              "CInfinity::FXRenderClippingPolys RVA 0x{:X}; metadata only, no pixel or "
-              "render-state changes",
-              runtime.infinityFxRenderClippingPolys);
+          g_nativeOcclusionProbeLoggingEnabled = ctx.cfg.enableNativeOcclusionProbe;
+          if (g_nativeOcclusionBridgeEnabled) {
+            LOG_INFO(
+                "Native occlusion phase1 hook installed at "
+                "CInfinity::FXRenderClippingPolys RVA 0x{:X}; exact pre/post FX "
+                "visibility capture enabled",
+                runtime.infinityFxRenderClippingPolys);
+          } else {
+            LOG_INFO(
+                "Native occlusion phase0 probe installed at "
+                "CInfinity::FXRenderClippingPolys RVA 0x{:X}; metadata only, no "
+                "pixel or render-state changes",
+                runtime.infinityFxRenderClippingPolys);
+          }
         } catch (const std::exception& error) {
           (void)g_infinityFxRenderClippingPolysHook.remove();
           g_nativeOcclusionProbeHookEnabled = false;
-          LOG_ERROR("Native occlusion phase0 probe disabled: {}", error.what());
+          g_nativeOcclusionProbeLoggingEnabled = false;
+          g_nativeOcclusionBridgeEnabled = false;
+          g_nativeOcclusionTextureApi = {};
+          g_nativeFxSurfacePools = nullptr;
+          LOG_ERROR("Native occlusion hook disabled: {}", error.what());
         } catch (...) {
           (void)g_infinityFxRenderClippingPolysHook.remove();
           g_nativeOcclusionProbeHookEnabled = false;
-          LOG_ERROR("Native occlusion phase0 probe disabled: unknown installation error");
+          g_nativeOcclusionProbeLoggingEnabled = false;
+          g_nativeOcclusionBridgeEnabled = false;
+          g_nativeOcclusionTextureApi = {};
+          g_nativeFxSurfacePools = nullptr;
+          LOG_ERROR("Native occlusion hook disabled: unknown installation error");
         }
       }
     }
@@ -1860,6 +2166,10 @@ bool install_all(AppContext& ctx) {
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
     g_nativeOcclusionProbeHookEnabled = false;
+    g_nativeOcclusionProbeLoggingEnabled = false;
+    g_nativeOcclusionBridgeEnabled = false;
+    g_nativeOcclusionTextureApi = {};
+    g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
@@ -1888,6 +2198,10 @@ bool install_all(AppContext& ctx) {
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
     g_nativeOcclusionProbeHookEnabled = false;
+    g_nativeOcclusionProbeLoggingEnabled = false;
+    g_nativeOcclusionBridgeEnabled = false;
+    g_nativeOcclusionTextureApi = {};
+    g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
@@ -1922,6 +2236,7 @@ void uninstall_all() noexcept {
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
 
+  native_occlusion_bridge::shutdown();
   area_animation_x4::forget_engine_textures();
   creature_sprite_x2::forget_engine_textures();
   am0205e_x4::forget_engine_textures();
@@ -1935,6 +2250,10 @@ void uninstall_all() noexcept {
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
   g_nativeOcclusionProbeHookEnabled = false;
+  g_nativeOcclusionProbeLoggingEnabled = false;
+  g_nativeOcclusionBridgeEnabled = false;
+  g_nativeOcclusionTextureApi = {};
+  g_nativeFxSurfacePools = nullptr;
 
   g_ctx = nullptr;
   delete g_hookInit;

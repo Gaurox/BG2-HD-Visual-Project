@@ -418,10 +418,22 @@ void test_manifest_loading() {
     expect_true(
         !bg2ee->get().areaAnimations.infinityFxRenderClippingPolysSignature.empty(),
         "BG2EE FXRenderClippingPolys should carry a fail-closed signature");
+    expect_eq(bg2ee->get().areaAnimations.fxSurfacePool,
+              std::uintptr_t{0x2F74050},
+              "BG2EE phase1 should identify the OpenGL FX staging-pool data");
+    expect_eq(bg2ee->get().areaAnimations.fxSurfacePoolReference,
+              std::uintptr_t{0x42CB1B},
+              "BG2EE phase1 should identify the RIP-relative FX pool reference");
+    expect_true(!bg2ee->get().areaAnimations.fxSurfacePoolReferenceSignature.empty(),
+                "BG2EE FX pool reference should carry a fail-closed signature");
     auto incompleteProbe = bg2ee->get().areaAnimations;
     incompleteProbe.infinityFxRenderClippingPolysSignature = {};
     expect_true(!incompleteProbe.validate(),
                 "A clipping-probe RVA without its signature must fail validation");
+    auto incompleteFxPool = bg2ee->get().areaAnimations;
+    incompleteFxPool.fxSurfacePoolReference = 0;
+    expect_true(!incompleteFxPool.validate(),
+                "Partial phase1 FX surface evidence must fail validation");
     expect_eq(bg2ee->get().areaAnimations.monsterRender, std::uintptr_t{0x32D770},
               "BG2EE CGameAnimationTypeMonster::Render RVA should match the factory "
               "vtable and offline scan");
@@ -758,6 +770,7 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
   expect_true(!cfg.enableNativeOcclusionProbe, "native occlusion probe defaults off");
+  expect_true(!cfg.enableNativeOcclusionBridge, "native occlusion bridge defaults off");
   expect_true(!cfg.enableCreatureSpriteUpscaleTest,
               "creature-sprite xN test defaults off");
   expect_true(!cfg.enableCreatureSpriteX2Test, "creature-sprite x2 test defaults off");
@@ -836,6 +849,8 @@ void test_native_occlusion_probe_correlation() {
   if (sample) {
     expect_eq(sample->clippingCallCount, std::uint32_t{2},
               "The correlation should retain every native clipping call in the owner scope");
+    expect_eq(sample->successfulClippingCallCount, std::uint32_t{2},
+              "The correlation should distinguish successful native clipping calls");
     expect_eq(sample->lastClippingCall.x, 301,
               "The correlation should retain metadata from the last native clipping call");
     expect_eq(sample->draw.nativeTextureId, 17,
@@ -859,6 +874,66 @@ void test_native_occlusion_probe_correlation() {
     expect_eq(gate.size(), NativeOcclusionSampleGate::kCapacity,
               "The probe sample store must remain fixed at its documented cap");
   }
+}
+
+void test_native_occlusion_mask_capture() {
+  using iee::core::NativeFxSurfaceView;
+  using iee::core::NativeOcclusionMaskCapture;
+
+  // Two visible pixels per row plus one untouched pitch pixel.
+  std::array<std::uint32_t, 6> pixels{{
+      0xFF102030u, 0x80102030u, 0xAA000000u,
+      0x00102030u, 0x40102030u, 0xBB000000u,
+  }};
+  const NativeFxSurfaceView surface{
+      .pixels = reinterpret_cast<const std::byte*>(pixels.data()),
+      .pitchBytes = 12,
+      .width = 2,
+      .height = 2,
+  };
+  NativeOcclusionMaskCapture capture;
+  expect_true(capture.begin_call(surface),
+              "Phase1 should snapshot a bounded readable FX surface before clipping");
+  pixels[0] = 0x00000000u;
+  pixels[1] = 0x40102030u;
+  pixels[4] = 0x4F000000u;
+  capture.finish_call(surface, 1);
+
+  std::vector<std::uint8_t> transfer;
+  bool changed = false;
+  expect_true(capture.build_transfer(2, 2, transfer, changed) && changed,
+              "A successful native pixel change should produce a visibility transfer");
+  expect_eq(transfer.size(), std::size_t{16},
+            "The phase1 transfer should contain one RGBA texel per logical FX pixel");
+  if (transfer.size() == 16) {
+    expect_eq(transfer[0], std::uint8_t{0},
+              "The native complete-pixel clear should become zero visibility");
+    expect_eq(transfer[4], std::uint8_t{128},
+              "A native half-alpha dither should retain half visibility");
+    expect_eq(transfer[8], std::uint8_t{255},
+              "A transparent source pixel must not invent an occlusion factor");
+    expect_eq(transfer[13], std::uint8_t{0x4F},
+              "The native fixed-black dither kernel should retain its exact alpha");
+  }
+  expect_true(!capture.build_transfer(3, 2, transfer, changed),
+              "A final texture geometry mismatch must fail closed");
+
+  NativeOcclusionMaskCapture unsuccessful;
+  expect_true(unsuccessful.begin_call(surface),
+              "A second capture should start independently");
+  unsuccessful.finish_call(surface, 0);
+  expect_true(!unsuccessful.build_transfer(2, 2, transfer, changed),
+              "A native call reporting no processed polygon must not enable the bridge");
+
+  NativeOcclusionMaskCapture changedSurface;
+  expect_true(changedSurface.begin_call(surface),
+              "The surface-identity guard should arm on its first view");
+  auto shifted = surface;
+  shifted.pixels += 4;
+  changedSurface.finish_call(shifted, 1);
+  expect_true(!changedSurface.valid() &&
+                  !changedSurface.build_transfer(2, 2, transfer, changed),
+              "A changed FX allocation inside one owner scope must invalidate the bridge");
 }
 
 void test_creature_sprite_xn_native_border_geometry() {
@@ -2952,6 +3027,10 @@ void test_area_animation_registry_formats() {
               "Another occurrence should fall back to the unbound variant");
   expect_true(bound.nativeFrame.resourceIndex != unbound.nativeFrame.resourceIndex,
               "Bound and unbound variants must be distinct resources, not the same pixels");
+  expect_true(
+      iee::area_animation_x4::has_baked_occurrence_occlusion(bound.nativeFrame) &&
+          !iee::area_animation_x4::has_baked_occurrence_occlusion(unbound.nativeFrame),
+      "Phase1 should preserve bound v3 baked masks but structurally clip unbound packs");
   iee::area_animation_x4::FrameResolution unknown{};
   expect_true(iee::area_animation_x4::resolve_frame(
                   target, iee::area_animation_x4::kAnyWorldPosition,
@@ -3023,6 +3102,9 @@ void test_area_animation_registry_formats() {
                   iee::area_animation_x4::kAnyWorldPosition, 0, 0, resolution) &&
                   !resolution.timeline.enabled && resolution.nativeFrame.frameIndex == 0,
               "A legacy v1 resource should remain on native playback");
+  expect_true(!iee::area_animation_x4::has_baked_occurrence_occlusion(
+                  resolution.nativeFrame),
+              "Legacy v1 packs should remain eligible for structural native occlusion");
 
   // Production payloads are deliberately split by area so the complete x4
   // inventory is never resident at once.  Exercise the same AR0602-shaped
@@ -3070,6 +3152,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableBamUiTextureProbe = true;
     orig.enableAreaAnimationX4 = true;
     orig.enableNativeOcclusionProbe = true;
+    orig.enableNativeOcclusionBridge = true;
     orig.enableCreatureSpriteUpscaleTest = true;
     orig.enableCreatureSpriteX2Test = true;
     orig.enableCreatureSpriteLinearFiltering = true;
@@ -3094,6 +3177,8 @@ void test_config_shader_override_roundtrip() {
               "enableAreaAnimationX4 should round-trip as true");
   expect_true(loaded.enableNativeOcclusionProbe,
               "enableNativeOcclusionProbe should round-trip as true");
+  expect_true(loaded.enableNativeOcclusionBridge,
+              "enableNativeOcclusionBridge should round-trip as true");
   expect_true(loaded.enableCreatureSpriteUpscaleTest,
               "enableCreatureSpriteUpscaleTest should round-trip as true");
   expect_true(loaded.enableCreatureSpriteX2Test,
@@ -4080,6 +4165,7 @@ int main() {
   test_config_shader_override_defaults();
   test_config_shader_override_roundtrip();
   test_native_occlusion_probe_correlation();
+  test_native_occlusion_mask_capture();
   test_performance_sample_summary();
   test_area_animation_clock_probe();
   test_area_animation_timeline_clock();

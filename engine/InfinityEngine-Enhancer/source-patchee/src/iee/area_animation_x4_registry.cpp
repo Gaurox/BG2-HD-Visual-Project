@@ -656,6 +656,20 @@ bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
   return false;
 }
 
+bool has_baked_occurrence_occlusion(FrameHandle handle) noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           handle.resourceIndex < g_resources.size() &&
+           handle.frameIndex < g_resources[handle.resourceIndex].frames.size() &&
+           g_resources[handle.resourceIndex].positionBound;
+  } catch (...) {
+  }
+  // Unknown metadata must preserve existing pack pixels.
+  return true;
+}
+
 bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
                         int& previousTextureId) noexcept {
   previousTextureId = 0;

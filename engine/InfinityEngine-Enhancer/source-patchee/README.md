@@ -108,6 +108,8 @@ while keeping builds reproducibly pinned to full commit SHAs.
 - [docs/reverse-engineering.md](docs/reverse-engineering.md)
 - [docs/area-animation-clock-probe.md](docs/area-animation-clock-probe.md)
 - [docs/native-occlusion-phase0.md](docs/native-occlusion-phase0.md)
+- [docs/native-occlusion-phase1.md](docs/native-occlusion-phase1.md)
+- [docs/validation/native-occlusion-phase1-validation.md](docs/validation/native-occlusion-phase1-validation.md)
 - [docs/event-video-overlay-assets.md](docs/event-video-overlay-assets.md) — LLM procedure for adding a local event-driven video asset
 - [docs/build-manifests.md](docs/build-manifests.md)
 - [docs/new-build-validation.md](docs/new-build-validation.md)

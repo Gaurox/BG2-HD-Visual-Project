@@ -63,6 +63,10 @@ Build id: `BG2EE 2.7.3.x` (offline-validated; in-game gates pending — see
   `CInfinity::FXRenderClippingPolys = 0x29E4C0`, guarded by its exact prologue signature. The RVA
   and signature form an all-or-none pair and do not enable the probe by themselves; see
   [native-occlusion-phase0.md](native-occlusion-phase0.md).
+- Optional phase-1 FX surface evidence: staging-pool data `0x2F74050` and its RIP-relative
+  reference at `0x42CB1B`. The reference signature and decoded `LEA` must resolve to that exact
+  writable non-executable span; partial evidence invalidates the area-animation runtime manifest.
+  See [native-occlusion-phase1.md](native-occlusion-phase1.md).
 
 Because BGEE and BG2EE share fixed version `2.7.3`, identity selection matches
 on version **and** product name (`find_manifest_for_identity`). Selecting on

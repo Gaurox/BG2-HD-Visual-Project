@@ -101,6 +101,12 @@ bool resolve_frame(const std::array<char, 8>& resref, int worldX, int worldY, in
 bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
                             std::uint32_t phase, FrameHandle& out) noexcept;
 
+// Registry-v3 position-bound variants were introduced for legacy pixels with
+// occurrence-specific baked foreground masks. Phase 1 must leave those pixels
+// unchanged to avoid applying a partial native dither twice. V1/V2 and unbound
+// V3 resources return false and remain eligible for the structural bridge.
+[[nodiscard]] bool has_baked_occurrence_occlusion(FrameHandle handle) noexcept;
+
 // Lazily creates or reuses a bounded engine texture whose descriptor retains
 // native x1 dimensions while its OpenGL storage contains the x4 pixels.
 bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,

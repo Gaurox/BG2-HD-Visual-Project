@@ -31,3 +31,17 @@ dans `areas.csv`.
   `installed-pending-qa` après refus sur l'eau.
 - **Gate** : correction, vérification SHA de l'installation puis nouvelle QA utilisateur.
 - **Règle** : ne jamais transformer ce statut en `validated-installed` depuis un log de batch.
+
+## ENGINE-OCCLUSION-001 — validation ingame du bridge structurel xN
+
+- **Périmètre** : animations de zone v1/v2/v3 non masquées, Monster, MonsterIcewind et Character
+  remplacés ; premier plan WED, dither partiel, flag ARE `No Wall`, transitions et resize.
+- **État** : jalon Phase 1 validé ingame sur AR0516 pour une animation de zone `CGameStatic` x4
+  et une créature `Character` xN. Le bridge générique réapplique correctement l'occlusion WED au
+  backing xN, sans règle par map. Installation QA locale seulement ; promotion release interdite.
+- **Preuve** :
+  `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-phase1-validation.md`.
+- **Gate restante** : matrice A/B de
+  `engine/InfinityEngine-Enhancer/source-patchee/docs/native-occlusion-phase1.md`, stabilité GL et
+  mémoire, Monster/MonsterIcewind, effets/classes non modélisés, transitions et compatibilité packs
+  v1/v2/v3 sans modification de leurs hashes.

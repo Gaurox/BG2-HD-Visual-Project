@@ -1,6 +1,9 @@
 # Native occlusion — phase 0 read-only probe
 
-Status: implemented and host-validated on 2026-08-27; in-game validation pending.
+Status: implemented and host-validated on 2026-08-27. Probe neutrality and owner correlation are
+validated in game on AR0516 for `CGameStatic` x4 and `Character` xN; the complete representative
+matrix, including MonsterIcewind, remains pending. See the
+[Phase-1 validation record](validation/native-occlusion-phase1-validation.md).
 
 This phase does not fix occlusion. It establishes the runtime evidence needed before changing the
 composition path. It observes whether a registry-backed xN object reaches

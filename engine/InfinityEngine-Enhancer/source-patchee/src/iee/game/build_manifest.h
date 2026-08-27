@@ -123,6 +123,12 @@ struct AreaAnimationRuntime {
   // Kept as an appended pair because this aggregate uses positional initializers.
   std::uintptr_t infinityFxRenderClippingPolys{};
   std::string_view infinityFxRenderClippingPolysSignature{};
+  // Optional phase-1 bridge evidence. The OpenGL FX allocator keeps two
+  // 0x30-byte CPU staging-pool descriptors here; the manifested LEA reference
+  // must resolve to the exact data address before any alpha is observed.
+  std::uintptr_t fxSurfacePool{};
+  std::uintptr_t fxSurfacePoolReference{};
+  std::string_view fxSurfacePoolReferenceSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -152,6 +158,11 @@ struct AreaAnimationRuntime {
     const bool hasClippingProbeRva = infinityFxRenderClippingPolys != 0;
     const bool hasClippingProbeSignature = !infinityFxRenderClippingPolysSignature.empty();
     if (hasClippingProbeRva != hasClippingProbeSignature) return false;
+    const bool hasAnyFxSurfaceEvidence =
+        fxSurfacePool || fxSurfacePoolReference || !fxSurfacePoolReferenceSignature.empty();
+    const bool hasCompleteFxSurfaceEvidence =
+        fxSurfacePool && fxSurfacePoolReference && !fxSurfacePoolReferenceSignature.empty();
+    if (hasAnyFxSurfaceEvidence && !hasCompleteFxSurfaceEvidence) return false;
     return true;
   }
 };

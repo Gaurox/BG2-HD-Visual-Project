@@ -47,6 +47,10 @@ struct EngineConfig {
   // Read-only phase-0 diagnostic. Correlates the native WED clipping pass with
   // registry-backed xN draws; it never changes pixels or render state.
   bool enableNativeOcclusionProbe = false;
+  // Experimental phase-1 A/B bridge. Captures the object-local visibility
+  // transfer produced by the native WED clipping kernels and applies it to the
+  // external xN backing. Disabled until the phase-0 in-game gates pass.
+  bool enableNativeOcclusionBridge = false;
   // Reversible creature-sprite xN prototype. The native geometry remains x1;
   // the external registry supplies an x2 or x4 pixel backing.
   bool enableCreatureSpriteUpscaleTest = false;
