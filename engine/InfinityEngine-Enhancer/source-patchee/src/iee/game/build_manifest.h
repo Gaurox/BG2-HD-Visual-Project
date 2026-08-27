@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <functional>
+#include <limits>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -47,6 +48,18 @@ struct RuntimeOffsets {
   std::uintptr_t infGameAreaMaster{};
 };
 
+// CGameStatic stores its drawing Y, while registry-v3 occurrences use the raw ARE coordinate.
+// Widen the subtraction so a malformed object cannot trigger signed overflow in the render hook.
+[[nodiscard]] constexpr std::optional<std::int32_t> area_animation_are_y(
+    std::int32_t drawingY, std::int32_t height) noexcept {
+  const auto rawY = static_cast<std::int64_t>(drawingY) - static_cast<std::int64_t>(height);
+  if (rawY < (std::numeric_limits<std::int32_t>::min)() ||
+      rawY > (std::numeric_limits<std::int32_t>::max)()) {
+    return std::nullopt;
+  }
+  return static_cast<std::int32_t>(rawY);
+}
+
 // Optional high-level CGameStatic/CVidCell composition bridge used by external
 // area-animation runtime packs. Every RVA, object offset and signature is tied
 // to one positively identified executable manifest.
@@ -88,6 +101,23 @@ struct AreaAnimationRuntime {
   std::uintptr_t vidCellCurrentFrame{};
   std::uintptr_t vidCellCurrentSequence{};
   std::array<std::string_view, 15> signatures{};
+  // Position and height of the animated object, in pixels, inside CGameStatic.
+  //
+  // Found by static analysis of CGameStatic::RenderBam: its fog-of-war gate computes the
+  // visibility cell as (drawingY - height) / 64 * areaWidthInTiles + positionX / 64, bounded by
+  // the area's cell count. Runtime observation confirms that drawingY is ARE.y + ARE.height;
+  // the hook therefore subtracts height to recover the registry's raw ARE y coordinate.
+  //
+  // OPTIONAL by design: a build without them keeps the historical behaviour of matching a
+  // replacement texture on the resref alone, so a registry that binds a variant to a position
+  // simply finds no match and the engine renders its own BAM.
+  //
+  // Appended after `signatures` rather than grouped with the other CGameStatic offsets because
+  // this manifest is built from a positional initializer list: appending is the only edit that
+  // cannot silently shift the RVAs that follow it.
+  std::uintptr_t gameStaticPositionX{};
+  std::uintptr_t gameStaticPositionY{};
+  std::uintptr_t gameStaticHeight{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -109,6 +139,11 @@ struct AreaAnimationRuntime {
     for (const auto signature : signatures) {
       if (signature.empty()) return false;
     }
+    const bool hasAnyPositionOffset =
+        gameStaticPositionX || gameStaticPositionY || gameStaticHeight;
+    const bool hasCompletePositionOffsets =
+        gameStaticPositionX && gameStaticPositionY && gameStaticHeight;
+    if (hasAnyPositionOffset && !hasCompletePositionOffsets) return false;
     return true;
   }
 };

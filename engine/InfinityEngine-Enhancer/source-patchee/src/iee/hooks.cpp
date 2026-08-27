@@ -362,7 +362,30 @@ bool read_area_animation_frame(void* gameStatic, ResolvedAreaAnimationFrame& res
                        currentSequence)) {
     return false;
   }
-  if (!area_animation_x4::resolve_frame(resref, currentSequence, currentFrame,
+  // The raw ARE position distinguishes two occurrences of one resref, which is what lets each of
+  // them carry its own occlusion. CGameStatic stores drawingY = ARE.y + ARE.height, so subtract
+  // height before resolving the registry. The three offsets are optional on purpose: a build
+  // without them, or an object whose fields cannot be read safely, falls back to resref-only
+  // matching rather than failing the whole animation.
+  int worldX = area_animation_x4::kAnyWorldPosition;
+  int worldY = area_animation_x4::kAnyWorldPosition;
+  if (runtime.gameStaticPositionX && runtime.gameStaticPositionY && runtime.gameStaticHeight) {
+    std::int32_t positionX = 0;
+    std::int32_t drawingY = 0;
+    std::int32_t height = 0;
+    if (core::safe_read(reinterpret_cast<const void*>(base + runtime.gameStaticPositionX),
+                        positionX) &&
+        core::safe_read(reinterpret_cast<const void*>(base + runtime.gameStaticPositionY),
+                        drawingY) &&
+        core::safe_read(reinterpret_cast<const void*>(base + runtime.gameStaticHeight),
+                        height)) {
+      if (const auto rawY = game::area_animation_are_y(drawingY, height)) {
+        worldX = positionX;
+        worldY = *rawY;
+      }
+    }
+  }
+  if (!area_animation_x4::resolve_frame(resref, worldX, worldY, currentSequence, currentFrame,
                                         resolved.registry)) {
     return false;
   }

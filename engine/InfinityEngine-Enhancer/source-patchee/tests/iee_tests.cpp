@@ -310,6 +310,13 @@ void test_writable_non_executable_guards() {
 }
 
 void test_manifest_loading() {
+  expect_true(iee::game::area_animation_are_y(2174, -13) == 2187 &&
+                  iee::game::area_animation_are_y(2655, -7) == 2662,
+              "CGameStatic drawing Y should normalize to both observed AR0900 ARE positions");
+  expect_true(!iee::game::area_animation_are_y(
+                  (std::numeric_limits<std::int32_t>::max)(), -1),
+              "CGameStatic Y normalization should reject signed overflow");
+
   const auto& manifest = iee::game::current_manifest();
   expect_true(manifest.validate(), "Current build manifest should validate");
   expect_true(manifest.executableVersion.matches(2, 6, 6, 0),
@@ -398,6 +405,12 @@ void test_manifest_loading() {
               "BG2EE CGameStatic current-frame offset should match the validated prototype");
     expect_eq(bg2ee->get().areaAnimations.gameStaticCurrentSequence, std::uintptr_t{0x1CA},
               "BG2EE CGameStatic sequence offset should match the validated prototype");
+    expect_eq(bg2ee->get().areaAnimations.gameStaticPositionX, std::uintptr_t{0x0C},
+              "BG2EE CGameStatic world-X offset should match RenderBam's fog gate");
+    expect_eq(bg2ee->get().areaAnimations.gameStaticPositionY, std::uintptr_t{0x10},
+              "BG2EE CGameStatic drawing-Y offset should match RenderBam's fog gate");
+    expect_eq(bg2ee->get().areaAnimations.gameStaticHeight, std::uintptr_t{0x14},
+              "BG2EE CGameStatic height offset should normalize drawing Y to ARE Y");
     expect_eq(bg2ee->get().areaAnimations.monsterRender, std::uintptr_t{0x32D770},
               "BG2EE CGameAnimationTypeMonster::Render RVA should match the factory "
               "vtable and offline scan");
@@ -2796,7 +2809,9 @@ void test_area_animation_registry_formats() {
   expect_true(iee::area_animation_x4::prepare(root),
               "The production registry parser should accept a valid v2 TimedTimeline");
   iee::area_animation_x4::FrameResolution resolution{};
-  expect_true(iee::area_animation_x4::resolve_frame(target, 0, 0, resolution) &&
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0, resolution) &&
                   resolution.nativeFrame.frameIndex == 0 && resolution.timeline.enabled &&
                   resolution.timeline.phaseCount == 2,
               "A v2 native slot should expose its exact fallback and timeline timing");
@@ -2804,6 +2819,100 @@ void test_area_animation_registry_formats() {
   expect_true(iee::area_animation_x4::resolve_timeline_frame(resolution, 0, 1, phase) &&
                   phase.frameIndex == 1,
               "A v2 timeline phase should resolve its independent visual frame");
+  iee::area_animation_x4::release();
+
+  // v3: two variants of one resref, told apart by the world position of the occurrence they
+  // serve. This is what lets each occurrence carry its own baked occlusion.
+  const std::vector<std::byte> other(4 * 4 * 4, std::byte{0x21});
+  write_file(root / "AAX4-TESTA-v1-frame000.rgba", other);
+  write_file(root / "AAX4-TESTA-v1-frame001.rgba", other);
+
+  const auto append_resource = [&](std::vector<std::byte>& bytes, std::uint32_t positionMode,
+                                   std::int32_t worldX, std::int32_t worldY,
+                                   std::uint32_t variantIndex) {
+    append_raw(bytes, target.data(), target.size());
+    for (const auto value : std::array<std::uint32_t, 2>{{2, 1}}) append(bytes, value);
+    for (const auto value : std::array<std::uint32_t, 5>{{1, 15, 1, 30, 1}}) append(bytes, value);
+    append(bytes, positionMode);
+    append(bytes, worldX);
+    append(bytes, worldY);
+    append(bytes, variantIndex);
+    for (const auto value : std::array<std::uint32_t, 4>{{1, 1, 1, 1}}) append(bytes, value);
+    for (const auto value : std::array<std::uint32_t, 5>{{1, 0, 2, 0, 1}}) append(bytes, value);
+  };
+
+  auto v3 = make_header(3);
+  std::memcpy(v3.data() + 8 + sizeof(std::uint32_t) * 2, std::array<std::uint32_t, 1>{{2}}.data(),
+              sizeof(std::uint32_t));
+  append_resource(v3, 0, 0, 0, 0);
+  append_resource(v3, 1, 1689, 2662, 1);
+  write_file(root / "AreaAnimations-X4.registry", v3);
+
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A v3 registry should accept two variants of one resref");
+  iee::area_animation_x4::FrameResolution bound{};
+  expect_true(iee::area_animation_x4::resolve_frame(target, 1689, 2662, 0, 0, bound),
+              "A bound variant should resolve for the occurrence it names");
+  iee::area_animation_x4::FrameResolution unbound{};
+  expect_true(iee::area_animation_x4::resolve_frame(target, 2246, 2187, 0, 0, unbound),
+              "Another occurrence should fall back to the unbound variant");
+  expect_true(bound.nativeFrame.resourceIndex != unbound.nativeFrame.resourceIndex,
+              "Bound and unbound variants must be distinct resources, not the same pixels");
+  iee::area_animation_x4::FrameResolution unknown{};
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0, unknown) &&
+                  unknown.nativeFrame.resourceIndex == unbound.nativeFrame.resourceIndex,
+              "Without a position the match must degrade to the unbound variant, never guess");
+  iee::area_animation_x4::release();
+
+  // Two bound variants are the production AR0900 shape: both occurrences keep AM0900DM, but
+  // each exact ARE position selects pixels baked with its own foreground mask.
+  auto boundOnly = make_header(3);
+  std::memcpy(boundOnly.data() + 8 + sizeof(std::uint32_t) * 2,
+              std::array<std::uint32_t, 1>{{2}}.data(), sizeof(std::uint32_t));
+  append_resource(boundOnly, 1, 1689, 2662, 0);
+  append_resource(boundOnly, 1, 2246, 2187, 1);
+  write_file(root / "AreaAnimations-X4.registry", boundOnly);
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A v3 registry should accept two exact positions for one resref");
+  iee::area_animation_x4::FrameResolution south{};
+  iee::area_animation_x4::FrameResolution north{};
+  expect_true(iee::area_animation_x4::resolve_frame(target, 1689, 2662, 0, 0, south) &&
+                  iee::area_animation_x4::resolve_frame(target, 2246, 2187, 0, 0, north) &&
+                  south.nativeFrame.resourceIndex != north.nativeFrame.resourceIndex,
+              "Each exact occurrence position must resolve a distinct variant");
+  iee::area_animation_x4::FrameResolution noPositionOffsets{};
+  expect_true(!iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0, noPositionOffsets),
+              "A build without position offsets must not guess among bound variants");
+  iee::area_animation_x4::release();
+
+  // Two variants on the same spot would make resolution depend on load order: refuse the pack.
+  auto ambiguous = make_header(3);
+  std::memcpy(ambiguous.data() + 8 + sizeof(std::uint32_t) * 2,
+              std::array<std::uint32_t, 1>{{2}}.data(), sizeof(std::uint32_t));
+  append_resource(ambiguous, 1, 1689, 2662, 0);
+  append_resource(ambiguous, 1, 1689, 2662, 1);
+  write_file(root / "AreaAnimations-X4.registry", ambiguous);
+  expect_true(!iee::area_animation_x4::prepare(root),
+              "Two variants bound to one position must fail the pack closed");
+  iee::area_animation_x4::release();
+
+  // An unbound variant carrying a position would read as meaningful later on.
+  auto smuggled = make_header(3);
+  append_resource(smuggled, 0, 1689, 2662, 0);
+  write_file(root / "AreaAnimations-X4.registry", smuggled);
+  expect_true(!iee::area_animation_x4::prepare(root),
+              "An unbound variant must not smuggle a world position");
+  iee::area_animation_x4::release();
+
+  auto invalidPositionMode = make_header(3);
+  append_resource(invalidPositionMode, 2, 0, 0, 0);
+  write_file(root / "AreaAnimations-X4.registry", invalidPositionMode);
+  expect_true(!iee::area_animation_x4::prepare(root),
+              "An unknown v3 position mode must fail the pack closed");
   iee::area_animation_x4::release();
 
   auto v1 = make_header(1);
@@ -2815,7 +2924,9 @@ void test_area_animation_registry_formats() {
   expect_true(iee::area_animation_x4::prepare(root),
               "The registry-v2 runtime should remain backward-compatible with v1 packs");
   resolution = {};
-  expect_true(iee::area_animation_x4::resolve_frame(target, 0, 0, resolution) &&
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0, resolution) &&
                   !resolution.timeline.enabled && resolution.nativeFrame.frameIndex == 0,
               "A legacy v1 resource should remain on native playback");
 
@@ -2835,7 +2946,9 @@ void test_area_animation_registry_formats() {
   expect_true(iee::area_animation_x4::prepare_for_area("ar0602"),
               "A valid owned area pack should become resident on LoadArea");
   resolution = {};
-  expect_true(iee::area_animation_x4::resolve_frame(target, 0, 0, resolution) &&
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0, resolution) &&
                   resolution.timeline.enabled,
               "The resident per-area v2 pack should resolve TimedTimeline frames");
   expect_true(!iee::area_animation_x4::prepare_for_area("AR0000") &&
@@ -3386,6 +3499,29 @@ void test_tile_table_detection_ignores_garbage_steps() {
               "deterministic scale");
 }
 
+void test_tis_tile_identity_matching() {
+  using iee::game::matches_pvrz_page_identity;
+  using iee::game::matches_tis_tile_identity;
+  expect_true(matches_tis_tile_identity(5, "WTLAKE", 5, "WTLAKE"),
+              "A settled liquid wrapper should retain its requested tile and tileset identity");
+  expect_true(!matches_tis_tile_identity(4873, "AR0900", 5, "WTLAKE"),
+              "The observed AR0900 transition wrapper must not tint WTLAKE brown");
+  expect_true(!matches_tis_tile_identity(5, "AR0900", 5, "WTLAKE") &&
+                  !matches_tis_tile_identity(5, "WTLAKE", 4, "WTLAKE") &&
+                  !matches_tis_tile_identity(-1, "WTLAKE", 5, "WTLAKE"),
+              "Either a tileset, tile-index, or validity mismatch must fail closed");
+  expect_true(matches_pvrz_page_identity("WLAKE00", "WTLAKE", 0),
+              "WTLAKE page zero should map to WLAKE00");
+  expect_true(matches_pvrz_page_identity("A090021", "AR0900", 21) &&
+                  matches_pvrz_page_identity("A0900117", "AR0900", 117),
+              "PVRZ page matching should support two- and three-digit page numbers");
+  expect_true(!matches_pvrz_page_identity("A090021", "WTLAKE", 0),
+              "The observed recycled AR0900 page must not masquerade as WLAKE00");
+  expect_true(!matches_pvrz_page_identity("A0900N100", "AR0900N", 100) &&
+                  !matches_pvrz_page_identity("WLAKE00", "WTLAKE", -1),
+              "Unrepresentable or negative PVRZ pages must fail closed");
+}
+
 void test_tile_table_detection_uses_coordinate_deltas() {
   using namespace iee::game;
 
@@ -3863,6 +3999,7 @@ int main() {
   test_tileset_runtime_cache_is_bounded_and_resettable();
   test_scale_selection_precedence();
   test_tile_table_detection_ignores_garbage_steps();
+  test_tis_tile_identity_matching();
   test_tile_table_detection_uses_coordinate_deltas();
   test_manifest_infgame_offsets();
   test_shader_name_extraction();

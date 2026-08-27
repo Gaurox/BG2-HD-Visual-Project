@@ -1,0 +1,229 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Cache CMake FetchContent
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/fetchcontent
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+
+      - name: Configure host tests
+        run: >-
+          cmake -S . -B build
+          -DBUILD_TESTING=ON
+          -DIEE_WARNINGS_AS_ERRORS=ON
+          -DIEE_ENABLE_SANITIZERS=ON
+          -DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.cache/fetchcontent
+
+      - name: Build host tests
+        run: cmake --build build --target iee_tests --parallel
+
+      - name: Run host tests
+        run: ctest --test-dir build --output-on-failure
+
+  windows-build:
+    # Pinned: windows-latest rolled over to the VS2026 image, which no longer
+    # ships VS2022 — the validated toolchain for this project's generator.
+    runs-on: windows-2022
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Cache CMake FetchContent
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/fetchcontent
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+        with:
+          arch: x64
+
+      - name: Configure CMake
+        run: >-
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+          -DIEE_BUILD_WINDOWS_DLL=ON
+          -DBUILD_TESTING=ON
+          -DIEE_WARNINGS_AS_ERRORS=ON
+          -DFETCHCONTENT_BASE_DIR=${{ github.workspace }}/.cache/fetchcontent
+
+      - name: Build Release
+        run: cmake --build build --config Release --parallel
+
+      - name: Build release bundle
+        run: cmake --build build --config Release --target release_bundle
+
+      - name: Install release layout
+        run: cmake --install build --config Release --prefix build/install-tree
+
+      - name: Run native tests
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Verify generated version header
+        shell: pwsh
+        run: |
+          $content = Get-Content build/generated/iee/core/version.h -Raw
+          if ($content -match '@IEE_VERSION@') {
+            throw "Generated version header still contains the placeholder"
+          }
+
+      - name: Verify release bundle contents
+        shell: pwsh
+        run: |
+          $root = (Resolve-Path "build/release-bundle").Path
+          $expected = @(
+            "InfinityEngine-Enhancer.dll"
+            "InfinityEngine-Enhancer.sample.ini"
+            "override/M_IEEE.lua"
+            "override/fpSEAM.glsl"
+            "iee-textures/README.md"
+            "iee-textures/iee_water_dudv.rgba"
+            "iee-textures/iee_water_foam.rgba"
+            "iee-textures/iee_water_normal.rgba"
+          ) | Sort-Object
+          $actual = Get-ChildItem $root -File -Recurse | ForEach-Object {
+            [IO.Path]::GetRelativePath($root, $_.FullName).Replace('\', '/')
+          } | Sort-Object
+          $difference = Compare-Object $expected $actual
+          if ($difference) {
+            $difference | Format-Table | Out-String | Write-Error
+            throw "Release bundle content differs from the allow-list"
+          }
+          foreach ($path in $actual) {
+            if ((Get-Item (Join-Path $root $path)).Length -eq 0) {
+              throw "Release bundle contains an empty file: $path"
+            }
+          }
+          $installRoot = (Resolve-Path "build/install-tree").Path
+          $installed = Get-ChildItem $installRoot -File -Recurse | ForEach-Object {
+            [IO.Path]::GetRelativePath($installRoot, $_.FullName).Replace('\', '/')
+          } | Sort-Object
+          $installDifference = Compare-Object $actual $installed
+          if ($installDifference) {
+            $installDifference | Format-Table | Out-String | Write-Error
+            throw "CMake install layout differs from the release bundle"
+          }
+
+      - name: Archive release bundle
+        shell: pwsh
+        run: |
+          $archive = "build/InfinityEngine-Enhancer-bundle.zip"
+          Compress-Archive -Path build/release-bundle/* -DestinationPath $archive -Force
+          $hash = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  InfinityEngine-Enhancer-bundle.zip" | Set-Content build/SHA256SUMS -Encoding utf8NoBOM
+
+      - name: Upload release bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: InfinityEngine-Enhancer-bundle-${{ github.sha }}
+          path: |
+            build/InfinityEngine-Enhancer-bundle.zip
+            build/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload debug symbols
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: InfinityEngine-Enhancer-symbols-${{ github.sha }}
+          path: build/symbols/InfinityEngine-Enhancer.pdb
+          if-no-files-found: error
+          retention-days: 14
+
+  alpha-release:
+    if: github.ref == 'refs/heads/main'
+    needs: [host-tests, windows-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download release bundle
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: InfinityEngine-Enhancer-bundle-${{ github.sha }}
+          path: artifact
+
+      - name: Generate version label
+        id: version
+        run: echo "sha=${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+
+      - name: Delete existing alpha release
+        continue-on-error: true
+        run: gh release delete alpha --cleanup-tag --yes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Create alpha release
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
+        with:
+          tag_name: alpha
+          target_commitish: ${{ github.sha }}
+          name: "Alpha Build (${{ steps.version.outputs.sha }})"
+          files: |
+            artifact/InfinityEngine-Enhancer-bundle.zip
+            artifact/SHA256SUMS
+          fail_on_unmatched_files: true
+          body: |
+            Alpha build from commit ${{ github.sha }}
+
+            This rolling prerelease contains the DLL, EEex loader script,
+            configuration, shader overrides, and water texture assets.
+          prerelease: true
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [host-tests, windows-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download release bundle
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: InfinityEngine-Enhancer-bundle-${{ github.sha }}
+          path: artifact
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
+        with:
+          files: |
+            artifact/InfinityEngine-Enhancer-bundle.zip
+            artifact/SHA256SUMS
+          fail_on_unmatched_files: true
+          draft: true
