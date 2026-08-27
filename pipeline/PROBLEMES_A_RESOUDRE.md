@@ -31,11 +31,3 @@ dans `areas.csv`.
   `installed-pending-qa` après refus sur l'eau.
 - **Gate** : correction, vérification SHA de l'installation puis nouvelle QA utilisateur.
 - **Règle** : ne jamais transformer ce statut en `validated-installed` depuis un log de batch.
-
-## REPO-001 — checkout Git incomplet
-
-- **Symptôme** : une grande partie du plan de contrôle était non suivie avant l'assainissement.
-- **Gate** : depuis un clone propre, tous les imports locaux et chemins CMake existent, les liens
-  canoniques sont valides et les tests légers passent.
-- **Action restante** : sélectionner puis committer les sources, tests, catalogues, manifests et
-  documents canoniques ; ne pas ajouter les données ignorées.
