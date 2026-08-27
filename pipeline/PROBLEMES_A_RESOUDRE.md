@@ -38,9 +38,13 @@ dans `areas.csv`.
   remplacés ; premier plan WED, dither partiel, flag ARE `No Wall`, transitions et resize.
 - **État** : jalon Phase 1 validé ingame sur AR0516 pour une animation de zone `CGameStatic` x4
   et une créature `Character` xN. Le bridge générique réapplique correctement l'occlusion WED au
-  backing xN, sans règle par map. Installation QA locale seulement ; promotion release interdite.
+  backing xN, sans règle par map. Le défaut résiduel du `SPHINCT` inférieur d'AR0516 a été prouvé
+  indépendant du bridge : géométrie `Cover animations` absente du WED vanilla. Un polygone local
+  `0x09` a été validé ingame le 2026-08-27 ; cette exception n'élargit pas le périmètre moteur.
+  Installation QA locale seulement ; promotion release interdite.
 - **Preuve** :
-  `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-phase1-validation.md`.
+  `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-phase1-validation.md`
+  et `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-ar0516-wed-correction.md`.
 - **Gate restante** : matrice A/B de
   `engine/InfinityEngine-Enhancer/source-patchee/docs/native-occlusion-phase1.md`, stabilité GL et
   mémoire, Monster/MonsterIcewind, effets/classes non modélisés, transitions et compatibilité packs

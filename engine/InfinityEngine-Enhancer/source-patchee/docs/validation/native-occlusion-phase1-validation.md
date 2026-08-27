@@ -126,6 +126,12 @@ Le jalon valide le mécanisme commun, pas chaque contenu du jeu :
 - mémoire : bornes CPU/GPU vérifiées par le code et les tests, mais endurance et pic réel en zone
   chargée encore à mesurer ; la limite existante de pack de 512 Mio n'est pas modifiée.
 
+Le `SPHINCT` inférieur d'AR0516 a ensuite fourni le premier cas résiduel classé : bridge actif,
+mais polygone WED attendu absent. L'ajout local d'un polygone `Cover animations` dérivé d'un masque
+monde a été validé ingame. Cette exception confirme la frontière de responsabilité du bridge ;
+elle ne remet pas en cause son caractère global. Voir
+[`native-occlusion-ar0516-wed-correction.md`](native-occlusion-ar0516-wed-correction.md).
+
 ## Quand revalider globalement
 
 Une nouvelle matrice représentative est obligatoire après :

@@ -11,6 +11,12 @@ diagnostic ou des éléments `REVIEW`; rechercher leurs références avant emplo
 - Qualification : `validate_x1_masters.py`, `audit_area_preflight.py`, `audit_water_area.py`.
 - Upscale : `run_seedvr_comfyui.py`.
 - Reconstruction : `build_upscaled_area.py`, `verify_upscaled.py`.
+- Correction native ciblée des flags d'occlusion WED :
+  `build_wed_cover_animation_patch.py` (sortie `pending-ingame`, installation réversible avec les
+  scripts d'assets auxiliaires).
+- Correction locale d'une donnée d'occlusion WED absente à partir d'un masque monde xN :
+  `build_wed_mask_polygon_patch.py` (nouveau polygone natif strictement borné, sortie
+  `pending-ingame`, source KEY/BIF et rollback vérifiés).
 - Catalogue : `refresh_area_catalog.py`.
 - Installation réversible d'assets auxiliaires : `Install-AreaOverrideAssets.ps1` et
   `Restore-AreaOverrideAssets.ps1`.
