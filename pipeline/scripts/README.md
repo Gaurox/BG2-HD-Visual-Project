@@ -20,7 +20,8 @@ pas l'état courant.
 
 ## Animations de décor
 
-- Extraction : `extract_area_animations.py`, `export_bam_frames.py`.
+- Inventaire ARE typé et extraction BAM : `extract_area_animations.py` ; export ciblé :
+  `export_bam_frames.py`. L'inventaire distingue BAM/WBM/PVRZ et les palettes ARE externes.
 - Spatial V1 : `upscale_animation_frames.py`, `run_animation_upscale.py`,
   `build_animation_runtime_pack.py`.
 - Interpolation native : `run_animation_interpolation.py`.

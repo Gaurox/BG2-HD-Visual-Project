@@ -162,9 +162,10 @@ réécrire les manifests ni rappeler le GPU.
 
 ## Sélecteurs
 
-- `--resref <BAM>` : traite une ressource ; option répétable.
-- `--area <ARxxxx>` : développe toutes les ressources présentes dans
-  `animations/index/occurrences.csv` ; option répétable.
+- `--resref <BAM>` : traite une ressource BAM éligible ; option répétable.
+- `--area <ARxxxx>` : développe les occurrences BAM à palette intégrée présentes dans
+  `animations/index/occurrences.csv` ; option répétable. Les ressources WBM/PVRZ et les BAM à
+  palette ARE externe sont exclues du plan avec un motif explicite.
 - Les deux peuvent être combinés ; les doublons sont supprimés.
 - Le pack final contient l'union de cette sélection. Comme le runtime ne charge qu'un seul registre,
   sélectionner ensemble toutes les zones/resrefs qui doivent coexister dans une installation.
@@ -172,7 +173,8 @@ réécrire les manifests ni rappeler le GPU.
 - `--scale 4` est la valeur par défaut et la référence validée en jeu.
 - `--scale 2` utilise le même protocole, mais demande une validation runtime séparée.
 
-Toujours exécuter `--plan` avant une sélection par zone : une zone peut contenir plusieurs BAM.
+Toujours exécuter `--plan` avant une sélection par zone : une zone peut contenir plusieurs BAM et
+des occurrences non éligibles au pipeline BAM.
 
 ## Arborescence d'un run
 

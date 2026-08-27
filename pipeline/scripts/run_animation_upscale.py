@@ -40,6 +40,7 @@ FRAME_SCHEMA = "bg2-upscale-animation-frames-x1-v1"
 UPSCALE_SCHEMA = "bg2-upscale-animation-frames-v1"
 PACK_SCHEMA = "bg2-upscale-area-animation-runtime-pack-v1"
 RESREF_RE = re.compile(r"^[A-Z0-9_]{1,8}$")
+SUPPORTED_RESOURCE_KINDS = {"BAM", "WBM", "PVRZ"}
 
 
 def configure_utf8_console() -> None:
@@ -111,10 +112,33 @@ def normalise_area(value: str) -> str:
     return value
 
 
+def occurrence_resref(row: dict[str, str]) -> str:
+    """Read the canonical v2 field while accepting legacy occurrence fixtures."""
+    return normalise_resref(row.get("resource_resref") or row.get("bam_resref") or "")
+
+
+def occurrence_kind(row: dict[str, str]) -> str:
+    kind = (row.get("resource_kind") or "BAM").strip().upper()
+    if kind not in SUPPORTED_RESOURCE_KINDS:
+        raise RuntimeError(f"type de ressource ARE invalide : {kind!r}")
+    return kind
+
+
+def exclusion_reason(row: dict[str, str]) -> str | None:
+    kind = occurrence_kind(row)
+    if kind != "BAM":
+        return f"resource-kind-{kind.lower()}"
+    palette_mode = (row.get("palette_mode") or "embedded").strip().lower()
+    palette_resref = (row.get("palette_resref") or "").strip().upper()
+    if palette_mode == "external" or palette_resref:
+        return f"external-palette-{palette_resref or 'missing-resref'}"
+    return None
+
+
 def load_selection(
     requested_resrefs: list[str],
     requested_areas: list[str],
-) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+) -> tuple[list[dict[str, Any]], list[dict[str, str]], list[dict[str, str]]]:
     resources = read_csv(ANIMATIONS_DIR / "index" / "ressources.csv")
     occurrences = read_csv(ANIMATIONS_DIR / "index" / "occurrences.csv")
     resources_by_resref = {normalise_resref(row["bam_resref"]): row for row in resources}
@@ -123,18 +147,44 @@ def load_selection(
     for area in areas:
         if not any(row.get("area_id", "").upper() == area for row in occurrences):
             raise RuntimeError(f"zone absente de l'inventaire d'animations : {area}")
+
+    eligible = [row for row in occurrences if exclusion_reason(row) is None]
     expanded = {
-        normalise_resref(row["bam_resref"])
-        for row in occurrences
+        occurrence_resref(row)
+        for row in eligible
         if row.get("area_id", "").upper() in areas
     }
+    area_exclusions = [
+        row for row in occurrences
+        if row.get("area_id", "").upper() in areas and exclusion_reason(row) is not None
+    ]
+    for resref in explicit:
+        matching = [row for row in occurrences if occurrence_resref(row) == resref]
+        if matching and not any(exclusion_reason(row) is None for row in matching):
+            reasons = sorted({str(exclusion_reason(row)) for row in matching})
+            raise RuntimeError(
+                f"{resref}: aucune occurrence éligible au pipeline BAM ({', '.join(reasons)})"
+            )
+
     selected_resrefs = sorted(explicit | expanded)
+    if not selected_resrefs:
+        reasons = sorted({str(exclusion_reason(row)) for row in area_exclusions})
+        suffix = f"; exclusions : {', '.join(reasons)}" if reasons else ""
+        raise RuntimeError(f"aucun BAM éligible dans la sélection{suffix}")
     missing = [resref for resref in selected_resrefs if resref not in resources_by_resref]
     if missing:
         raise RuntimeError("BAM absent de l'inventaire extrait : " + ", ".join(missing))
 
     selected_occurrences = [
-        row for row in occurrences if normalise_resref(row["bam_resref"]) in selected_resrefs
+        row for row in eligible if occurrence_resref(row) in selected_resrefs
+    ]
+    excluded_occurrences = [
+        row for row in occurrences
+        if exclusion_reason(row) is not None
+        and (
+            occurrence_resref(row) in selected_resrefs
+            or row.get("area_id", "").upper() in areas
+        )
     ]
     selected: list[dict[str, Any]] = []
     for resref in selected_resrefs:
@@ -146,6 +196,10 @@ def load_selection(
         indexed_hash = row.get("sha256", "").lower()
         if indexed_hash and actual_hash != indexed_hash:
             raise RuntimeError(f"source {resref} modifiée depuis la génération de l'index")
+        eligible_for_resref = [
+            occurrence for occurrence in selected_occurrences
+            if occurrence_resref(occurrence) == resref
+        ]
         selected.append({
             "resref": resref,
             "source": source.resolve(),
@@ -154,11 +208,29 @@ def load_selection(
                 "frames": int(row.get("frames") or 0),
                 "max_frame_width": int(row.get("max_frame_width") or 0),
                 "max_frame_height": int(row.get("max_frame_height") or 0),
-                "occurrences": int(row.get("occurrences") or 0),
-                "areas": [value for value in row.get("area_ids", "").split(";") if value],
+                "occurrences": len(eligible_for_resref),
+                "areas": sorted({
+                    occurrence.get("area_id", "") for occurrence in eligible_for_resref
+                    if occurrence.get("area_id", "")
+                }),
             },
         })
-    return selected, selected_occurrences
+    return selected, selected_occurrences, excluded_occurrences
+
+
+def exclusion_summary(rows: list[dict[str, str]]) -> list[str]:
+    grouped: dict[tuple[str, str], set[str]] = {}
+    counts: dict[tuple[str, str], int] = {}
+    for row in rows:
+        reason = str(exclusion_reason(row))
+        key = (occurrence_resref(row), reason)
+        grouped.setdefault(key, set()).add(str(row.get("area_id", "")))
+        counts[key] = counts.get(key, 0) + 1
+    return [
+        f"{resref}: {reason}, {counts[(resref, reason)]} occurrence(s), "
+        f"zones={';'.join(sorted(grouped[(resref, reason)]))}"
+        for resref, reason in sorted(grouped)
+    ]
 
 
 def signature_for(request: dict[str, Any]) -> str:
@@ -166,7 +238,8 @@ def signature_for(request: dict[str, Any]) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def display_plan(selected: list[dict[str, Any]], areas: list[str], scale: int) -> None:
+def display_plan(selected: list[dict[str, Any]], areas: list[str], scale: int,
+                 excluded: list[dict[str, str]]) -> None:
     print(f"Sélection : {len(selected)} BAM, échelle x{scale}")
     if areas:
         print("Zones demandées : " + ", ".join(sorted(areas)))
@@ -178,6 +251,10 @@ def display_plan(selected: list[dict[str, Any]], areas: list[str], scale: int) -
             f"{item['resref']:<9} {inventory['frames']:>6} {maximum:>13} "
             f"{inventory['occurrences']:>6}  {';'.join(inventory['areas'])}"
         )
+    if excluded:
+        print("Occurrences exclues du pipeline BAM :")
+        for summary in exclusion_summary(excluded):
+            print(f"- {summary}")
 
 
 def copy_source(source: Path, destination: Path, expected_hash: str) -> None:
@@ -325,9 +402,9 @@ def build_runtime_pack(run_dir: Path, resume: bool) -> dict[str, Any]:
 
 def main() -> None:
     args = parse_args()
-    selected, occurrences = load_selection(args.resref, args.area)
+    selected, occurrences, excluded_occurrences = load_selection(args.resref, args.area)
     areas = sorted({normalise_area(value) for value in args.area})
-    display_plan(selected, areas, args.scale)
+    display_plan(selected, areas, args.scale, excluded_occurrences)
     if args.plan:
         return
 
@@ -363,8 +440,8 @@ def main() -> None:
             raise RuntimeError(f"run sans manifeste, reprise impossible : {run_dir}")
         run_dir.mkdir(parents=True, exist_ok=True)
         occurrence_fields = (
-            "area_id", "occurrence_index", "instance_name", "bam_resref", "x", "y",
-            "sequence", "initial_frame", "flags_hex",
+            "area_id", "occurrence_index", "instance_name", "x", "y",
+            "sequence", "initial_frame", "flags_hex", "palette_mode", "palette_resref",
         )
         manifest = {
             "schema": RUN_SCHEMA,
@@ -375,7 +452,11 @@ def main() -> None:
             "request_signature": signature,
             "request": request,
             "occurrences": [
-                {key: row.get(key) for key in occurrence_fields}
+                {
+                    **{key: row.get(key) for key in occurrence_fields},
+                    "bam_resref": occurrence_resref(row),
+                    "resource_kind": occurrence_kind(row),
+                }
                 for row in occurrences
             ],
             "resources": [

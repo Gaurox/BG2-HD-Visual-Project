@@ -39,17 +39,23 @@ DEFAULT_OCCURRENCES = Path("animations/index/occurrences.csv")
 
 
 def load_area_map(occurrences: Path) -> dict[str, set[str]]:
-    """area_id -> {resref}, read from the project's canonical occurrence index."""
+    """area_id -> eligible BAM resrefs from the canonical occurrence index."""
     v2.require(occurrences.is_file(), f"index d'occurrences absent : {occurrences}")
     mapping: dict[str, set[str]] = collections.defaultdict(set)
     with occurrences.open(encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
-        v2.require(reader.fieldnames is not None and
-                   {"area_id", "bam_resref"} <= set(reader.fieldnames),
-                   f"colonnes area_id/bam_resref absentes : {occurrences}")
+        fields = set(reader.fieldnames or [])
+        resref_field = "resource_resref" if "resource_resref" in fields else "bam_resref"
+        v2.require("area_id" in fields and resref_field in fields,
+                   f"colonnes area_id/resref absentes : {occurrences}")
         for row in reader:
+            resource_kind = str(row.get("resource_kind") or "BAM").strip().upper()
+            palette_mode = str(row.get("palette_mode") or "embedded").strip().lower()
+            palette_resref = str(row.get("palette_resref") or "").strip()
+            if resource_kind != "BAM" or palette_mode == "external" or palette_resref:
+                continue
             area = str(row["area_id"]).strip().upper()
-            resref = str(row["bam_resref"]).strip().upper()
+            resref = str(row[resref_field]).strip().upper()
             if not area or not resref:
                 continue
             mapping[area].add(resref)

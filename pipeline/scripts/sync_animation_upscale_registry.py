@@ -64,7 +64,13 @@ def build_rows(resources: Path, occurrences: Path, current: Path) -> list[dict[s
     resource_rows = read_rows(resources)
     occurrences_by_resref: dict[str, list[dict[str, str]]] = defaultdict(list)
     for occurrence in read_rows(occurrences):
-        resref = occurrence["bam_resref"].strip()
+        if (occurrence.get("resource_kind") or "BAM").strip().upper() != "BAM":
+            continue
+        resref = (
+            occurrence.get("resource_resref")
+            or occurrence.get("bam_resref")
+            or ""
+        ).strip()
         if resref:
             occurrences_by_resref[resref].append(occurrence)
 

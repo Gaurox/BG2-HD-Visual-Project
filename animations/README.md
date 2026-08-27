@@ -7,8 +7,8 @@ moteur charge des textures physiques x4 et, lorsque le registre le demande, une 
 ## Sources de vérité
 
 - `index/manifest.json` : snapshot de l'inventaire.
-- `index/occurrences.csv` : chaque occurrence ARE d'un BAM.
-- `index/ressources.csv` et `index/zones.csv` : ressources et zones dédupliquées.
+- `index/occurrences.csv` : chaque occurrence ARE, avec son type `BAM`/`WBM`/`PVRZ` et sa palette.
+- `index/ressources.csv` : les BAM extraits ; `index/zones.csv` : synthèse typée par zone.
 - `index/animation_upscale_registry.csv` : validation spatiale par resref.
 - `index/animation_alpha_corrections.csv` : correctifs alpha approuvés ou expérimentaux.
 - `qa-approval.json` du run : seule approbation temporelle.

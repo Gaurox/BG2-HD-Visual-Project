@@ -90,7 +90,8 @@ python pipeline/scripts/list_animations.py ARxxxx
 
 Relever au minimum :
 
-- resref BAM ;
+- resref et type de ressource ARE (`BAM`, `WBM` ou `PVRZ`) ;
+- mode de palette et resref de palette externe, le cas échéant ;
 - position monde ;
 - séquence et frame initiale ;
 - dimensions maximales ;
@@ -103,11 +104,14 @@ Sources canoniques :
 - `animations/index/ressources.csv` pour les ressources ;
 - `animations/ressources/<RESREF>/source.bam` pour le BAM extrait.
 
-Si la bibliothèque doit être régénérée :
+Pour régénérer seulement l'inventaire canonique sans réécrire les médias extraits :
 
 ```powershell
-python pipeline/scripts/extract_area_animations.py --keep-going
+python pipeline/scripts/extract_area_animations.py --index-only --keep-going
 ```
+
+Omettre `--index-only` seulement lorsqu'une nouvelle extraction des sources et aperçus BAM est
+réellement nécessaire.
 
 Avant tout traitement, fournir un aperçu et faire confirmer l'objet par l'utilisateur.
 
