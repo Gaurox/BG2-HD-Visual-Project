@@ -24,6 +24,12 @@ explicitement documentée.
 Les portraits, vidéos et outils de publication sont des domaines auxiliaires. Lire leur README
 local avant toute action ; ils ne font pas partie du pipeline maps par défaut.
 
+La base [`BG2EE_Documentation_Modders_FR`](BG2EE_Documentation_Modders_FR/README.md) fournit la
+référence technique générale BG2:EE/Infinity Engine. Elle se consulte ponctuellement depuis son
+[`INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md), selon la règle de lecture ciblée et l'ordre
+d'autorité définis dans [`AGENTS.md`](AGENTS.md) ; elle ne fait pas partie des lectures initiales
+systématiques.
+
 ## Architecture
 
 ```text

@@ -9,6 +9,20 @@
    [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) avant de proposer une
    nouvelle méthode.
 
+## Référence technique à la demande
+
+[`BG2EE_Documentation_Modders_FR/`](BG2EE_Documentation_Modders_FR/README.md) est la base de
+référence générale pour BG2:EE, l'Infinity Engine, les formats de ressources, les
+sprites/animations, BAM/PVRZ, les maps TIS/WED, WeiDU, les contraintes moteur et leur tooling.
+Ne pas la charger ni la parcourir intégralement par défaut : ouvrir d'abord son
+[`INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md), puis uniquement les fichiers nécessaires à
+la question ou à la modification en cours.
+
+Privilégier les sources officielles Beamdog recensées dans la base, puis les références
+communautaires techniques reconnues, en particulier IESDP et Near Infinity. Cette documentation
+apporte du contexte technique ; elle ne remplace jamais les sources de vérité, décisions,
+manifests, tests ni validations ingame propres au projet.
+
 ## Sources de vérité
 
 - Maps : `areas.csv`.
