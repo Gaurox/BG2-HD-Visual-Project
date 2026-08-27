@@ -1,76 +1,88 @@
-# Sprite workspace
+# Sprites complexes — point d'entrée
 
-Source of truth for a sprite location:
+Ce domaine couvre les créatures et Characters composés (corps, arme, bouclier/offhand, casque et
+palettes). Il ne dépend pas du pipeline maps.
 
-1. `index/manifest.json`: game and inventory snapshot.
-2. `index/sprite-layout.json`: current physical workspace and job locations.
-3. `index/path-migrations.json`: legacy-path redirects for immutable manifests only.
-4. `FOLDER_LAYOUT.md`: placement rules for a new asset.
+## Sources de vérité
+
+1. [`index/README.md`](index/README.md) : schema et requêtes.
+2. `index/manifest.json` : snapshot du jeu et de l'inventaire.
+3. `index/sprite-layout.json` : layout physique courant.
+4. `index/path-migrations.json` : anciens chemins d'artefacts immuables uniquement.
+5. Les quatre CSV d'`index/` : animations, familles, ressources et items.
+6. `current-generation.json` et `active-test.json` du catalogue cumulatif.
+
+`pipeline_ready=yes` prouve seulement les prérequis automatisés. Ce n'est ni un build, ni une
+installation, ni une validation ingame.
+
+## Méthode actuelle
+
+```text
+index normalisé
+  → sélectionner une famille pipeline_ready
+  → générer les jobs
+  → run_creature_sprite_x2.py
+  → vérifier le catalogue cumulatif
+  → installer/restaurer transactionnellement
+  → QA NEAREST
+```
+
+Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `blocker` vide et
+`override_collision` vide.
+
+- Runner : `pipeline/scripts/run_creature_sprite_x2.py`.
+- Inventaire : `pipeline/scripts/build_sprite_inventory.py`.
+- Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
+- Ajout de famille : [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
+- Contrat raster xBR2x : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md).
+- Règles de placement : [`FOLDER_LAYOUT.md`](FOLDER_LAYOUT.md).
+- Installation courante : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
+
+Le baseline QA utilise `NEAREST`. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
+preuve `validated-installed`. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
+plus partie du pipeline courant.
+
+## Organisation
 
 ```text
 sprite/
-  families/
-    monster-icewind/<code-family>/<animation-id>-<prefix>-<mob>/
-      research/ source/ runs/ jobs/
-    playable-characters/<animation-id>-<character-type>/<unique-sprite>/
-      source/ runs/ jobs/
+  index/                              # catalogues canoniques
+  families/<classe>/<famille>/
+    source/                           # extraction native, donnée ignorée
+    jobs/                             # entrées opérationnelles
+    runs/                             # artefacts immuables, ignorés
+    research/                         # expérimental
   catalogs/creature-x2-nearest/
-    jobs/ runs/
-  index/
-  .work/
-  docs/
+    jobs/                             # transactions/générations
+    runs/                             # payloads cumulés, ignorés
+  .work/                              # cache CMake reconstruisible, ignoré
 ```
 
-Rules:
+Les anciens runbooks sont sous `archive/legacy/sprite-docs/`, hors du routage opérationnel.
 
-- One physical workspace per unique sprite. Keep its native extraction in `source/`, test material in
-  `research/`, and every build/runtime/QA artifact in `runs/`.
-- Keep aggregate Character work in `family-runs/` below its Character family. Keep global catalog
-  runs under `catalogs/`.
-- Never edit a file inside an existing `runs/` directory. Historic paths inside sealed manifests are
-  resolved by `index/path-migrations.json`.
-- The currently installed catalog descriptor keeps its sealed legacy payload until that ingame
-  transaction is restored or replaced by a new catalog generation; its physical file is still in
-  `catalogs/creature-x2-nearest/jobs/`.
-- Create future family jobs through `pipeline/scripts/generate_sprite_family_append.py`; it creates
-  only `families/.../jobs/x2-nearest-vN.json` and `catalogs/.../jobs/append-...-vN.json`.
-- `.work/` is rebuildable tooling state, never a content source. `docs/archive/` is historical and
-  not an operational source of truth.
-- Do not create sprite assets under `maps/` or global `animations/` directories.
+Ne jamais modifier un fichier dans un run scellé. Les jobs mutables doivent utiliser le layout
+courant directement ; `path-migrations.json` n'est pas un substitut pour corriger un job actif.
+Ne pas supprimer une génération encore citée par `current-generation`, `active-test` ou un backup
+de restauration.
 
-## Operational routing
+## QA
 
-1. Read `index/README.md`, then verify `index/manifest.json` before selecting an animation.
-2. Resolve the animation, family, BAM resources and optional ITM through the CSV files in `index/`.
-3. Require `runtime_supported=yes`, `pipeline_ready=yes`, an empty `blocker`, and an empty
-   `override_collision` before a production build.
-4. Use `docs/archive/SPRITE_FAMILY_CATALOG_APPEND_PIPELINE.md` for every new family append. The
-   other archived runbooks describe retained contracts and historical procedures; resolve their
-   legacy paths through `index/path-migrations.json`.
-5. Regenerate and test the inventory after a change to the game snapshot, schema, classification,
-   runtime limits or palette mapping:
+Jeu et InfinityLoader fermés avant install/restore. Après installation autorisée, tester chaque
+animation et préfixe représentatif du contrat QA : composition, palettes, équipement, orientations
+et transitions. N'enregistrer un pass qu'après réussite des gates automatiques et acceptation
+explicite de l'utilisateur.
+
+## Tests légers
 
 ```powershell
-python pipeline/scripts/build_sprite_inventory.py
-python -m unittest pipeline.tests.test_sprite_inventory pipeline.tests.test_creature_sprite_x2_pipeline
+python -m unittest `
+  pipeline.tests.test_sprite_inventory `
+  pipeline.tests.test_creature_sprite_x2_pipeline `
+  pipeline.tests.test_creature_sprite_xn_catalog `
+  pipeline.tests.test_creature_sprite_xn_catalog_install `
+  pipeline.tests.test_generate_character_complete_x2_jobs `
+  pipeline.tests.test_generate_sprite_family_append
 ```
 
-`pipeline_ready=yes` proves only that known automated prerequisites pass. It is not a build,
-installation or ingame validation result.
-
-## Politique de QA ingame pilotée
-
-The runner and PowerShell transaction scripts never launch or close the game. Before any install,
-restore or sampling change, require the game and InfinityLoader processes to be stopped. Do not
-alter an active transaction while either process is running.
-
-After an authorized install, the operator launches the game, exercises every animation and every
-representative prefix in the sealed QA contract, checks composition, palette, equipment layers,
-orientations and transitions, then closes the game. Automated build gates still cover every catalog
-resource. The agent runs `qa-log` only against that completed post-install session. Record a pass
-with `record-qa` only when all automated gates pass and the user explicitly accepts the visual
-result. `LINEAR`, `pending-qa`, partial sessions, captures, saves, `override` files and temporary
-directories are never `validated-installed` evidence.
-
-QA validation does not authorize release integration. Updating the release manifest, staging,
-`content.json` or the archive requires a separate affirmative user decision.
+Régénérer l'inventaire seulement lorsqu'un snapshot du jeu, le schema, une classification, une
+limite runtime ou le mapping palette change.

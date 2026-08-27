@@ -1,0 +1,198 @@
+{
+  "$schema": "../schemas/overlay-sources.schema.json",
+  "schema_version": 1,
+  "generated_by": "manual reviewed overlay policy 2026-08-27",
+  "policies": [
+    {
+      "resref": "WTLAKE",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 was installed during the validated water-map QA; the later x4 transaction was not independently approved",
+      "component_id": 50,
+      "component_label": "overlay-wtlake",
+      "payload_group": "overlay-wtlake",
+      "component_area": "WTLAKE",
+      "source_run": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTLAKE.TIS", "bytes": 96, "sha256": "AAB8EEC55DCB08D742331A31D117544AF4085DF1CC5289D3B8FB0870BA992AED" },
+        { "name": "WLAKE00.PVRZ", "bytes": 43432, "sha256": "AB1E37D225BB8B22FE7CDC8E02D5115E53360308D643BC58724B7FEBB2DEA180" }
+      ]
+    },
+    {
+      "resref": "WTPOOL",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 was installed during the validated fountain-map QA; the later x4 transaction still has an unresolved frozen-cycle report",
+      "component_id": 60,
+      "component_label": "overlay-wtpool",
+      "payload_group": "overlay-wtpool",
+      "component_area": "WTPOOL",
+      "source_run": "maps/technical-overlays/WTPOOL/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTPOOL/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTPOOL.TIS", "bytes": 96, "sha256": "AAB8EEC55DCB08D742331A31D117544AF4085DF1CC5289D3B8FB0870BA992AED" },
+        { "name": "WPOOL00.PVRZ", "bytes": 31454, "sha256": "A15EE27AEA064AFF65BAED538338860C9AC527151A455A57AB91357204390143" }
+      ]
+    },
+    {
+      "resref": "WTLAKA",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 is the last scale covered by validated map QA",
+      "component_id": 70,
+      "component_label": "overlay-wtlaka",
+      "payload_group": "overlay-wtlaka",
+      "component_area": "WTLAKA",
+      "source_run": "maps/technical-overlays/WTLAKA/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTLAKA/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTLAKA.TIS", "bytes": 120, "sha256": "F3D0DB8722F47D6606E653BF79D135040ECD2513694D47778DA40EBAFA9C6787" },
+        { "name": "WLAKA00.PVRZ", "bytes": 68392, "sha256": "0511C53488C7EEFE2ECE77CD47B9723A013C823AAEA0FCDA699E76F7E9966DA1" }
+      ]
+    },
+    {
+      "resref": "WTLAKB",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 is the last scale covered by validated map QA",
+      "component_id": 80,
+      "component_label": "overlay-wtlakb",
+      "payload_group": "overlay-wtlakb",
+      "component_area": "WTLAKB",
+      "source_run": "maps/technical-overlays/WTLAKB/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTLAKB/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTLAKB.TIS", "bytes": 120, "sha256": "F3D0DB8722F47D6606E653BF79D135040ECD2513694D47778DA40EBAFA9C6787" },
+        { "name": "WLAKB00.PVRZ", "bytes": 74761, "sha256": "3DE05A0CD95E5BD41455CF9C7375175B42BBCCAB4F6772167528B62042350778" }
+      ]
+    },
+    {
+      "resref": "WTLAKC",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 is the last scale covered by validated map QA",
+      "component_id": 90,
+      "component_label": "overlay-wtlakc",
+      "payload_group": "overlay-wtlakc",
+      "component_area": "WTLAKC",
+      "source_run": "maps/technical-overlays/WTLAKC/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTLAKC/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTLAKC.TIS", "bytes": 120, "sha256": "F3D0DB8722F47D6606E653BF79D135040ECD2513694D47778DA40EBAFA9C6787" },
+        { "name": "WLAKC00.PVRZ", "bytes": 76554, "sha256": "2AEEFC56BAFCA925DD3E7F7AE414D403B893C8B04FE5F41C4A75AA3E829AB675" }
+      ]
+    },
+    {
+      "resref": "WTLAKD",
+      "policy": "package",
+      "scale": 2,
+      "validation_status": "validated-installed",
+      "reason": "x2 is the last scale covered by validated map QA",
+      "component_id": 95,
+      "component_label": "overlay-wtlakd",
+      "payload_group": "overlay-wtlakd",
+      "component_area": "WTLAKD",
+      "source_run": "maps/technical-overlays/WTLAKD/runs/seedvr2-7b-x2/03_build/x2",
+      "source_path": "maps/technical-overlays/WTLAKD/runs/seedvr2-7b-x2/03_build/x2",
+      "files": [
+        { "name": "WTLAKD.TIS", "bytes": 120, "sha256": "F3D0DB8722F47D6606E653BF79D135040ECD2513694D47778DA40EBAFA9C6787" },
+        { "name": "WLAKD00.PVRZ", "bytes": 69313, "sha256": "08E9DF02DB4A73C3AAC7ACD48F9B575CCB2006860439C069BC9F8122C7B42A73" }
+      ]
+    },
+    {
+      "resref": "WTSWAM",
+      "policy": "stock",
+      "scale": 1,
+      "validation_status": "validated-stock",
+      "reason": "validated map QA explicitly keeps the shared swamp overlay stock"
+    },
+    {
+      "resref": "WTSEW",
+      "policy": "stock",
+      "scale": 1,
+      "validation_status": "validated-stock",
+      "reason": "validated sewage rendering changes the runtime material profile, not the six stock frames"
+    },
+    {
+      "resref": "WTOIL",
+      "policy": "stock",
+      "scale": 1,
+      "validation_status": "validated-stock",
+      "reason": "replacing this generic TIS creates square repetitions in map and automap paths"
+    },
+    {
+      "resref": "WTLAVA",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the x4 lava-family comparison was accepted with the dedicated emissive runtime profile",
+      "component_id": 96,
+      "component_label": "overlay-wtlav-family",
+      "payload_group": "overlay-wtlav-family",
+      "component_area": "WTLAV",
+      "source_run": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVA/03_build_x4",
+      "source_path": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVA/03_build_x4",
+      "files": [
+        { "name": "WTLAVA.TIS", "bytes": 168, "sha256": "2E4747D68AB583A73DA5DA8B68A13325EE96386552758167E34F9650A53ACB0B" },
+        { "name": "WLAVA00.PVRZ", "bytes": 367980, "sha256": "AAA0021CE5A897A17CC0E4DEBD0CF50481A8CC98F480BFB26550C008882156D0" }
+      ]
+    },
+    {
+      "resref": "WTLAVB",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the x4 lava-family comparison was accepted with the dedicated emissive runtime profile",
+      "component_id": 96,
+      "component_label": "overlay-wtlav-family",
+      "payload_group": "overlay-wtlav-family",
+      "component_area": "WTLAV",
+      "source_run": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVB/03_build_x4",
+      "source_path": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVB/03_build_x4",
+      "files": [
+        { "name": "WTLAVB.TIS", "bytes": 168, "sha256": "2E4747D68AB583A73DA5DA8B68A13325EE96386552758167E34F9650A53ACB0B" },
+        { "name": "WLAVB00.PVRZ", "bytes": 373341, "sha256": "AC4C1677E0DF82F5F091EC121AC5B6213121427008640524138B64380BA4225D" }
+      ]
+    },
+    {
+      "resref": "WTLAVC",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the x4 lava-family comparison was accepted with the dedicated emissive runtime profile",
+      "component_id": 96,
+      "component_label": "overlay-wtlav-family",
+      "payload_group": "overlay-wtlav-family",
+      "component_area": "WTLAV",
+      "source_run": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVC/03_build_x4",
+      "source_path": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVC/03_build_x4",
+      "files": [
+        { "name": "WTLAVC.TIS", "bytes": 168, "sha256": "2E4747D68AB583A73DA5DA8B68A13325EE96386552758167E34F9650A53ACB0B" },
+        { "name": "WLAVC00.PVRZ", "bytes": 372475, "sha256": "BE6E39C8D468D7B1F2255D3652138DE433A6B42FCE58A174F396B3E9AB0F7F40" }
+      ]
+    },
+    {
+      "resref": "WTLAVD",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the x4 lava-family comparison was accepted with the dedicated emissive runtime profile",
+      "component_id": 96,
+      "component_label": "overlay-wtlav-family",
+      "payload_group": "overlay-wtlav-family",
+      "component_area": "WTLAV",
+      "source_run": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVD/03_build_x4",
+      "source_path": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/WTLAVD/03_build_x4",
+      "files": [
+        { "name": "WTLAVD.TIS", "bytes": 168, "sha256": "2E4747D68AB583A73DA5DA8B68A13325EE96386552758167E34F9650A53ACB0B" },
+        { "name": "WLAVD00.PVRZ", "bytes": 367472, "sha256": "712D11073C9604AAAF149F44A4F5611CBBBBA6260A0AC89FCFE2EB9682A6A19F" }
+      ]
+    }
+  ]
+}

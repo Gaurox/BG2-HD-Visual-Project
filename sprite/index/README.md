@@ -84,11 +84,9 @@ source selon les décisions xBR puis vérifie que cette provenance restitue exac
 Des indices distincts de même RGBA ne sont donc pas fusionnés et ne constituent plus un blocker.
 
 Ne jamais traduire `pipeline_ready=yes` en validation ingame. Cette valeur couvre uniquement les
-prérequis automatisables connus. Exiger ensuite un job, une installation réversible et une QA selon
-[`../docs/archive/SPRITE_UPSCALE_PIPELINE.md`](../docs/archive/SPRITE_UPSCALE_PIPELINE.md). Pour
-plusieurs animations dans une installation unique, appliquer
-[`../docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md`](../docs/archive/SPRITE_UPSCALE_CATALOG_RUNBOOK.md)
-et [`../docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md`](../docs/archive/SPRITE_UPSCALE_SCALABLE_ARCHITECTURE.md).
+prérequis automatisables connus. Exiger ensuite un job, une installation réversible et la QA décrite
+dans [`../README.md`](../README.md). Pour un ajout au catalogue cumulatif, appliquer exclusivement
+[`../FAMILY_APPEND.md`](../FAMILY_APPEND.md).
 
 ## Requêtes de décision
 

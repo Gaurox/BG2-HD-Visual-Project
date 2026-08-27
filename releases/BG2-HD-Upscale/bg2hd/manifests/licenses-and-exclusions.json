@@ -1,0 +1,67 @@
+{
+  "$schema": "../schemas/licenses-and-exclusions.schema.json",
+  "schema_version": 1,
+  "licenses": [
+    {
+      "component": "InfinityEngine-Enhancer",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 Gabriel",
+      "source": "engine/InfinityEngine-Enhancer/source-patchee/LICENSE",
+      "distribution_status": "allowed-after-renderer-freeze"
+    },
+    {
+      "component": "EEex and InfinityLoader",
+      "license": "external-prerequisite",
+      "distribution_status": "not-redistributed",
+      "source": "https://github.com/Bubb13/EEex"
+    },
+    {
+      "component": "BG2 HD maps and UI assets",
+      "license": "non-commercial-community-mod-policy",
+      "distribution_status": "permitted-for-free-alpha-subject-to-provenance-record",
+      "source": "project production runs and approved UI assets",
+      "provenance": "derived HD assets are listed file-by-file in content.json; no original game executable or raw game archive is distributed"
+    }
+  ],
+  "distribution_policy": {
+    "status": "adopted-for-future-free-alpha",
+    "model": "free non-commercial community WeiDU mod",
+    "requires": [
+      "a legitimate copy of the supported game",
+      "distribution of the archive intact with its notices, credits and checksums",
+      "clear provenance for each release asset",
+      "a public contact or issue channel before the first online release"
+    ],
+    "forbids": [
+      "commercial sale, paid access or commercial bundling",
+      "redistribution of game executables, Steam files, EEex or InfinityLoader",
+      "repackaging the mod or its HD assets in another mod without prior agreement",
+      "claiming official affiliation with Beamdog, Wizards of the Coast or Steam"
+    ],
+    "notice": "Unofficial community modification. Baldur's Gate and related marks remain the property of their respective owners. This policy is a community-distribution policy, not a warranty of third-party rights.",
+    "takedown_process": "Before public release, publish a contact route and promptly review good-faith removal or attribution requests."
+  },
+  "excluded_from_payload": [
+    "Baldur.exe",
+    "BaldurReal.exe",
+    "EEex.dll",
+    "InfinityLoader.exe",
+    "all Steam configuration and account files",
+    "development override",
+    "backups",
+    "archives",
+    "captures",
+    "previews",
+    "all x2 map builds",
+    "WTLAKE.TIS",
+    "WLAKE00.PVRZ",
+    "WTPOOL.TIS",
+    "WPOOL00.PVRZ",
+    "HUD assets",
+    "all installed-pending-qa areas"
+  ],
+  "technical_overlay_decision": {
+    "status": "excluded-from-alpha",
+    "reason": "WTLAKE and WTPOOL are SeedVR2 7B x2 resources; the agreed alpha scope is x4/7B zones only."
+  }
+}

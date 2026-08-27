@@ -1,0 +1,41 @@
+{
+  "$schema": "../schemas/animation-release-candidates.schema.json",
+  "schema_version": 1,
+  "generated_by": "manual canonical-pilot register; promotion requires explicit user approval",
+  "candidates": [
+    {
+      "area": "AR0602",
+      "component_id": 3000,
+      "component_label": "animation-ar0602",
+      "payload_group": "animation-ar0602",
+      "approval_status": "approved-for-release",
+      "source_pack": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha/AR0602",
+      "source_run": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "E18DD325D55AA91B13B114719DE6F0EC7562CA5425CFFAC40B9799461EAB382B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 2,
+      "registry_sha256": "41CA60C9542D2D2007EF4B8AB7EECF30915F247ADE50FE159B53741F592A74C7",
+      "registry_bytes": 2452,
+      "required_resrefs": ["AM0602AA", "AM0602AB", "AM0602AC", "AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "PORTL1A", "PORTL1B"],
+      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+    },
+    {
+      "area": "AR0900",
+      "component_id": 3001,
+      "component_label": "animation-ar0900",
+      "payload_group": "animation-ar0900",
+      "approval_status": "approved-for-release",
+      "source_pack": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3/AR0900",
+      "source_run": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "35221D602DF6A493DB71E130542E9E06A2B18E915D7433719624569B21970C93",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "10CE10476A79B728E42D0CB68F75EA631D3DDC2A4A81FFAA1FA1C01EA226B01C",
+      "registry_bytes": 1264,
+      "required_resrefs": ["AM0900DM"],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    }
+  ]
+}

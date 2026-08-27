@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_by", "policies"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": 1 },
+    "generated_by": { "type": "string", "minLength": 1 },
+    "policies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resref", "policy", "scale", "validation_status", "reason"],
+        "properties": {
+          "resref": { "type": "string", "pattern": "^[A-Z0-9]{1,8}$" },
+          "policy": { "enum": ["stock", "package"] },
+          "scale": { "enum": [1, 2, 4] },
+          "validation_status": { "enum": ["validated-stock", "validated-installed"] },
+          "reason": { "type": "string", "minLength": 1 },
+          "component_id": { "type": "integer", "minimum": 1 },
+          "component_label": { "type": "string", "pattern": "^overlay-[a-z0-9-]+$" },
+          "payload_group": { "type": "string", "pattern": "^overlay-[a-z0-9-]+$" },
+          "component_area": { "type": "string", "pattern": "^[A-Z0-9-]+$" },
+          "source_run": { "type": "string", "pattern": "^maps/technical-overlays/[A-Za-z0-9._/-]+$" },
+          "source_path": { "type": "string", "pattern": "^maps/technical-overlays/[A-Za-z0-9._/-]+$" },
+          "files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "bytes", "sha256"],
+              "properties": {
+                "name": { "type": "string", "pattern": "^[A-Z0-9]{1,8}\\.(TIS|PVRZ)$" },
+                "bytes": { "type": "integer", "minimum": 1 },
+                "sha256": { "type": "string", "pattern": "^[A-F0-9]{64}$" }
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "policy": { "const": "package" } } },
+            "then": {
+              "required": ["component_id", "component_label", "payload_group", "component_area", "source_run", "source_path", "files"],
+              "properties": {
+                "scale": { "enum": [2, 4] },
+                "validation_status": { "const": "validated-installed" }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "policy": { "const": "stock" } } },
+            "then": {
+              "properties": {
+                "scale": { "const": 1 },
+                "validation_status": { "const": "validated-stock" }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "../schemas/runtime-compatibility.schema.json",
+  "schema_version": 1,
+  "target_game": {
+    "store": "Steam",
+    "steam_app_id": 257350,
+    "executable": "Baldur.exe",
+    "product_name": "Baldur's Gate II: Enhanced Edition",
+    "file_version": "2.7.3.0",
+    "sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+    "bytes": 7202696
+  },
+  "eeex": {
+    "distribution": "external-prerequisite",
+    "version": "1.2.0",
+    "dependency_contract": "manifests/dependency-bootstrap.json",
+    "weidu_components": [
+      {"tp2": "EEEX/EEEX.TP2", "id": 0, "name": "Quick Menu Core"},
+      {"tp2": "EEEX/EEEX.TP2", "id": 1, "name": "EEex"}
+    ],
+    "files": [
+      {"path": "EEex.dll", "sha256": "ADC09B72951A28FED7B56CA1EBA530F54C90505A495432F97401EA3C9B19A4C9", "bytes": 1282048},
+      {"path": "InfinityLoader.exe", "sha256": "DF0D3604CB91C127643126B7960429194F3333BCE8BAC0E59AECB6A178AC84B9", "bytes": 41472}
+    ]
+  },
+  "steam_launch_contract": {
+    "steam_keeps_launching": "Baldur.exe",
+    "installed_steam_shim": "Baldur.exe becomes a verified copy of InfinityLoader.exe",
+    "preserved_original": "BaldurReal.exe",
+    "desktop_shortcut_target": "InfinityLoader.exe",
+    "launcher_ini_alias": "BaldurReal.exe:Baldur.exe",
+    "full_uninstall_result": "verified official Baldur.exe restored and BaldurReal.exe removed"
+  },
+  "save_compatibility_contract": {
+    "scope": "future-save-chains-from-vanilla-compatible-state",
+    "target": "BG2EE Steam 2.7.3.0 vanilla",
+    "eeex_extra_creature_marshalling": "disabled",
+    "guard_file": "bg2hd/renderer/override/M_IEEE.lua",
+    "forbidden_signature": "X-BIV1.0",
+    "legacy_save_policy": "detect-only-no-automatic-migration",
+    "validation_gate": "native-vanilla-load-save-reload-required"
+  },
+  "renderer": {
+    "distribution": "bundled-by-bg2hd-after-freeze",
+    "status": "integrated-in-place-awaiting-user-lifecycle-test",
+    "active_development_install": {
+      "path": "InfinityEngine-Enhancer.dll",
+      "sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E",
+      "bytes": 1278976
+    },
+    "reproducible_source_build": {
+      "source": "engine/InfinityEngine-Enhancer/source-patchee",
+      "output_sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E",
+      "output_bytes": 1278976,
+      "build_status": "integrated-as-iee-0.1.0-alpha.5; v2/v3 compatibility and AR0900 position routing validated; clean-install lifecycle pending",
+      "bundle_manifest": "manifests/renderer-bundle.json"
+    },
+    "publication_rule": "The frozen bundle is part of the local alpha payload with byte-verified rollback; it must not be publicly released before the in-place install, future-save and full-uninstall gates pass.",
+    "area_animation_runtime": {
+      "status": "integrated",
+      "payload_layout": "iee-assets/areas/<AREA>",
+      "registry_version": 3,
+      "supported_registry_versions": [1, 2, 3],
+      "timed_timeline": true,
+      "config_owner": "core-steam"
+    }
+  },
+  "owned_ini_keys": {
+    "core-steam": {
+      "Core": {
+        "VerboseLogs": "false",
+        "PerformanceLogs": "false",
+        "EnableAreaAnimationX4": "true"
+      },
+      "Shaders": {
+        "EnableWaterEffect": "true"
+      }
+    },
+    "ui-mainmenu-x4": {
+      "Shaders": {
+        "EnableBigLogoX4Test": "true",
+        "EnableMainMenuX4Test": "true",
+        "EnableMenuX2Test": "false"
+      }
+    }
+  }
+}

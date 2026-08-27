@@ -1,0 +1,108 @@
+{
+  "$schema": "../schemas/dependency-bootstrap.schema.json",
+  "schema_version": 1,
+  "scope": {
+    "platform": "windows-x64",
+    "store": "Steam",
+    "game": "bg2ee",
+    "game_version": "2.7.3.0"
+  },
+  "eeex": {
+    "ownership": "external-prerequisite-in-game-root",
+    "required_version": "1.2.0",
+    "official_release": {
+      "release_page": "https://github.com/Bubb13/EEex/releases/tag/v1.2.0",
+      "asset_url": "https://github.com/Bubb13/EEex/releases/download/v1.2.0/EEex-v1.2.0.exe",
+      "filename": "EEex-v1.2.0.exe",
+      "sha256": "52909E42A86ED0AB04A1F59956E8EADC1F4E0CFEE2C80CB29C7773FFF99B3DEA",
+      "bytes": 7862936
+    },
+    "installation": {
+      "method": "run-official-eeex-installer-before-bg2hd-weidu",
+      "required_weidu_components": [
+        {"tp2": "EEEX/EEEX.TP2", "id": 0, "name": "Quick Menu Core"},
+        {"tp2": "EEEX/EEEX.TP2", "id": 1, "name": "EEex"}
+      ],
+      "forbid_nested_weidu": true,
+      "normal_launch_executable": "InfinityLoader.exe"
+    },
+    "detection": {
+      "weidu_log": "WeiDU.log",
+      "inactive_residue_paths": [
+        "EEex/EEex.tp2",
+        "EEex/EEex.ini",
+        "EEex/loader",
+        "EEex/copy/EEex_scripts",
+        "EEex/copy/override",
+        "setup-EEex.exe"
+      ],
+      "required_paths": [
+        "EEex/EEex.tp2",
+        "EEex/EEex.ini",
+        "EEex/loader",
+        "EEex/copy/EEex_scripts",
+        "EEex/copy/override",
+        "InfinityLoader.ini"
+      ],
+      "mutable_runtime_files": [
+        "InfinityLoader.db"
+      ],
+      "exact_files": [
+        {"path": "EEex.dll", "sha256": "ADC09B72951A28FED7B56CA1EBA530F54C90505A495432F97401EA3C9B19A4C9", "bytes": 1282048},
+        {"path": "InfinityLoader.exe", "sha256": "DF0D3604CB91C127643126B7960429194F3333BCE8BAC0E59AECB6A178AC84B9", "bytes": 41472},
+        {"path": "InfinityLoaderCommon.dll", "sha256": "C930B359A3EAE87805995E073C551ADE5437C4300865E5F3074BBDC993337C9F", "bytes": 117248},
+        {"path": "InfinityLoaderDLL.dll", "sha256": "F5519CFFD3CA12FD09E6CA055D2441602097C7DD2155FD69FF9C1708598107DD", "bytes": 602624},
+        {"path": "InfinityLoaderUtil.dll", "sha256": "E00CC09C7B8434C9FB46E2C275746D43915D559ECE0999AAF2A951B9CB9C2601", "bytes": 59392},
+        {"path": "LuaBindings.dll", "sha256": "0C6A86DBB402AA5863286C4398CC9E691FA8A2CD7F83D517B29EDCAEAC51F1E9", "bytes": 6490624},
+        {"path": "LuaBindingsCore.dll", "sha256": "CD6993F12523012E83CF8A01A97913A47BD244FA8796D5DB0811CEED47D166CA", "bytes": 261632},
+        {"path": "LuaProvider.dll", "sha256": "61FF9F4FFD1D19DDF5060187F6A23C6CF77D68C0A9C3DECB9D12611CCBAC40CF", "bytes": 291328}
+      ]
+    },
+    "state_policy": {
+      "absent": "offer-official-eeex-install",
+      "inactive": "offer-official-eeex-install",
+      "compatible": "leave-untouched-and-continue",
+      "partial": "stop-with-official-eeex-repair-guidance",
+      "unknown_or_changed": "stop-without-writing",
+      "game_process_open": "stop-without-writing"
+    },
+    "update_policy": {
+      "compatible_install": "never-auto-upgrade",
+      "new_version": "requires-a-new-bg2hd-compatibility-record",
+      "uninstall_bg2hd": "standard-uninstall-keeps-eeex-and-steam-shim; explicit-confirmed-full-vanilla-restore-uses-official-eeex-uninstaller"
+    }
+  },
+  "visual_cxx": {
+    "ownership": "external-machine-prerequisite",
+    "architecture": "x64",
+    "detection": "check-before-eeex-install-or-launch",
+    "missing_action": "show-official-microsoft-download-guidance",
+    "official_url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+    "auto_install_in_phase_1": false
+  },
+  "renderer_delivery": {
+    "ownership": "bg2hd",
+    "current_phase": "implemented-phase-3-awaiting-clean-lifecycle-test",
+    "install_rule": "copy-only-the-frozen-bundle-after-eeex-is-compatible",
+    "uninstall_rule": "restore-bg2hd-recorded-preexisting-files-or-remove-bg2hd-files",
+    "conflict_rule": "preserve-a-file-changed-after-bg2hd-install-and-stop-for-user-review"
+  },
+  "bootstrap_protocol": {
+    "status": "implemented-windows-bootstrap-awaiting-clean-lifecycle-test",
+    "entrypoint": "Install-BG2HD.exe",
+    "order": [
+      "locate-and-verify-target-steam-game",
+      "verify-official-or-managed-executable-layout",
+      "verify-future-save-compatibility-guard",
+      "verify-game-processes-are-closed",
+      "verify-visual-cxx",
+      "classify-eeex",
+      "install-or-repair-eeex-outside-bg2hd-weidu-if-authorized",
+      "revalidate-eeex",
+      "launch-setup-bg2hd-in-place",
+      "verify-steam-shim-and-installed-save-compatibility-guard"
+    ],
+    "network": "explicit-user-consent-required; verify-exact-archive-sha256; fail-closed",
+    "offline": "accept-user-supplied-official-archive-only-after-exact-hash-verification"
+  }
+}

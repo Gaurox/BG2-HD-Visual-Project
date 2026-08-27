@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mod", "version", "target", "release_status", "payload_status", "blocking_conditions", "manifest_files", "content_scope"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "mod": {"type": "object", "additionalProperties": false, "required": ["public_name", "technical_name", "setup_executable", "release_repository"], "properties": {"public_name": {"type": "string", "minLength": 1}, "technical_name": {"const": "bg2hd"}, "setup_executable": {"const": "setup-bg2hd.exe"}, "release_repository": {"const": "BG2-HD-Upscale"}}},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"},
+    "target": {"type": "object"},
+    "release_status": {"enum": ["blocked", "candidate", "published"]},
+    "payload_status": {"enum": ["not-buildable", "buildable", "published"]},
+    "blocking_conditions": {"type": "array", "items": {"type": "string"}},
+    "manifest_files": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "content_scope": {"type": "object"}
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "transaction_id", "mod_version", "phase", "game_root", "launch_mode", "completed_steps", "files", "shortcut"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 2},
+    "transaction_id": {"type": "string", "minLength": 1},
+    "mod_version": {"type": "string", "minLength": 1},
+    "phase": {"enum": ["prepared", "installed", "eeex-retained", "failed", "vanilla-restored", "vanilla-removal-incomplete"]},
+    "game_root": {"type": "string", "minLength": 1},
+    "launch_mode": {"const": "steam-shim-in-place"},
+    "completed_steps": {"type": "array", "items": {"type": "string"}},
+    "files": {"type": "array"},
+    "shortcut": {
+      "type": ["object", "null"],
+      "required": ["path", "target", "working_directory", "icon_location", "arguments"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1},
+        "working_directory": {"type": "string", "minLength": 1},
+        "icon_location": {"type": "string", "minLength": 1},
+        "arguments": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "renderer_config_state": {"type": "string", "minLength": 1},
+    "renderer_files_state": {"type": "string", "minLength": 1},
+    "ini_backup": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}}},
+    "eeex_retained_at": {"type": "string", "minLength": 1},
+    "vanilla_restored_at": {"type": "string", "minLength": 1},
+    "vanilla_removal_failed_at": {"type": "string", "minLength": 1}
+  }
+}

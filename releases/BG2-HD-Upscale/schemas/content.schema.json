@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_by", "entries"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "generated_by": {"type": "string", "minLength": 1},
+    "entries": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["component_id", "component_label", "payload_group", "kind", "area", "source", "source_run", "destination", "bytes", "sha256", "qa_status", "scale", "model", "install_order"], "properties": {"component_id": {"type": "integer", "minimum": 0}, "component_label": {"type": "string", "pattern": "^[a-z0-9-]+$"}, "payload_group": {"type": "string", "pattern": "^[a-z0-9-]+$"}, "kind": {"enum": ["map", "ui", "overlay", "area-animation"]}, "area": {"type": "string", "pattern": "^((AR|OH)[0-9]{4}[N]?|UI|WT[A-Z0-9]{3,6})$"}, "source": {"type": "string", "pattern": "^(?!.*(?:^|/)(?:override|backups|archive|captures|temp)(?:/|$))[A-Za-z0-9._/-]+$"}, "source_run": {"type": "string", "minLength": 1}, "destination": {"type": "string", "pattern": "^(override|iee-assets)(/[A-Za-z0-9._-]+)+$"}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}, "qa_status": {"const": "validated"}, "scale": {"enum": [2, 4]}, "model": {"type": "string", "minLength": 1}, "install_order": {"type": "integer", "minimum": 1}, "replaces_component_output": {"type": "boolean"}}}}
+  }
+}

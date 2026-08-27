@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "encoding": "UTF-8 without BOM",
+  "weidu_default_language": "english",
+  "supported_game_languages": [
+    {"directory": "english", "steam_language": "English", "status": "reviewed"},
+    {"directory": "french", "steam_language": "French", "status": "reviewed"},
+    {"directory": "german", "steam_language": "German", "status": "needs-native-review"},
+    {"directory": "spanish", "steam_language": "Spanish - Spain", "status": "needs-native-review"},
+    {"directory": "italian", "steam_language": "Italian", "status": "needs-native-review"},
+    {"directory": "polish", "steam_language": "Polish", "status": "needs-native-review"},
+    {"directory": "russian", "steam_language": "Russian", "status": "needs-native-review"},
+    {"directory": "korean", "steam_language": "Korean", "status": "needs-native-review"},
+    {"directory": "chinese", "steam_language": "Simplified Chinese", "status": "needs-native-review"}
+  ],
+  "policy": "Every language contains all current TRA identifiers. English remains the fallback TRA loaded first by WeiDU. Native review is required before public release for languages marked needs-native-review."
+}

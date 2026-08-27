@@ -23,18 +23,28 @@ class SpriteInventoryTests(unittest.TestCase):
     def test_project_documentation_routes_agents_through_inventory(self) -> None:
         required = {
             ROOT / "README.md": ("sprite/README.md", "sprite/index/"),
-            ROOT / "pipeline" / "README.md": ("../sprite/README.md",),
-            ROOT / "HANDOVER.md": ("sprite/index/README.md", "build_sprite_inventory.py"),
-            ROOT / "CHANTIERS_OUVERTS.md": ("sprite/index/sprite_families.csv", "blocker"),
+            ROOT / "AGENTS.md": ("sprite/index/", "pipeline/tests"),
+            ROOT / "sprite" / "README.md": (
+                "index/manifest.json",
+                "FAMILY_APPEND.md",
+                "run_creature_sprite_x2.py",
+            ),
+            ROOT / "sprite" / "FAMILY_APPEND.md": (
+                "sprite_families.csv",
+                "generate_sprite_family_append.py",
+            ),
             ROOT
             / "sprite"
             / "FOLDER_LAYOUT.md": ("sprite-layout.json", "path-migrations.json"),
-            ROOT / "sprite" / "docs" / "README.md": ("Historical", "operations"),
+            ROOT / "sprite" / "XBR2X_RASTER_CONTRACT.md": (
+                "xbr2X",
+                "sans anti-alias",
+            ),
             ROOT
             / "engine"
             / "InfinityEngine-Enhancer"
             / "source-patchee"
-            / "CLAUDE.md": ("Runtime Facts — Creature Sprites", "sprite_families.csv"),
+            / "README.md": ("sprite/README.md", "NEAREST"),
         }
         for path, markers in required.items():
             content = path.read_text(encoding="utf-8-sig")
