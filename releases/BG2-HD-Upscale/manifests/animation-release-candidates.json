@@ -17,7 +17,19 @@
       "registry_version": 2,
       "registry_sha256": "41CA60C9542D2D2007EF4B8AB7EECF30915F247ADE50FE159B53741F592A74C7",
       "registry_bytes": 2452,
-      "required_resrefs": ["AM0602AA", "AM0602AB", "AM0602AC", "AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "PORTL1A", "PORTL1B"],
+      "required_resrefs": [
+        "AM0602AA",
+        "AM0602AB",
+        "AM0602AC",
+        "AM0602B",
+        "AM0602C",
+        "AM0602D",
+        "AM0602E",
+        "AM0602F",
+        "AM0602G",
+        "PORTL1A",
+        "PORTL1B"
+      ],
       "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
     },
     {
@@ -34,7 +46,9 @@
       "registry_version": 3,
       "registry_sha256": "10CE10476A79B728E42D0CB68F75EA631D3DDC2A4A81FFAA1FA1C01EA226B01C",
       "registry_bytes": 1264,
-      "required_resrefs": ["AM0900DM"],
+      "required_resrefs": [
+        "AM0900DM"
+      ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     },
     {
@@ -58,6 +72,30 @@
         "AM0516LD",
         "SPHINCT",
         "SPHINCT2"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0700",
+      "component_id": 3003,
+      "component_label": "animation-ar0700",
+      "payload_group": "animation-ar0700",
+      "approval_status": "approved-for-release",
+      "source_pack": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/AR0700",
+      "source_run": "animations/runs/ar0700-fountains-apo8-x4-30fps-v2 + animations/runs/ar0700-fire1-seedvr7b-lab-x4 + animations/runs/ar0700-fire4-seedvr7b-lab-x4",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "30D8B5C9461B9E7E2136F34788D254F85544629F5473FCA89D795926859BAA9A",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "CA2E6C5D797CD54A5FE81AB10BB059AFE39C74D19EDBD0CDB94A8CA8B63DCF14",
+      "registry_bytes": 1516,
+      "required_resrefs": [
+        "AM0700A",
+        "AM0700B",
+        "AM0700C",
+        "AM0700D",
+        "FIRE_1",
+        "FIRE_4"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }

@@ -27,7 +27,7 @@
           "registry_version": {"enum": [2, 3]},
           "registry_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
           "registry_bytes": {"type": "integer", "minimum": 1},
-          "required_resrefs": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[A-Z0-9]{1,8}$"}},
+          "required_resrefs": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"}},
           "renderer_contract": {"enum": ["area-animation-per-area-registry-v2-timed-timeline", "area-animation-per-area-registry-v3-position-timed-timeline"]}
         }
       }
