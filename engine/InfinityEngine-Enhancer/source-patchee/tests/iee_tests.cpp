@@ -27,6 +27,7 @@
 #include "iee/core/area_animation_timeline.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
+#include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/features/tile_render.h"
@@ -411,6 +412,16 @@ void test_manifest_loading() {
               "BG2EE CGameStatic drawing-Y offset should match RenderBam's fog gate");
     expect_eq(bg2ee->get().areaAnimations.gameStaticHeight, std::uintptr_t{0x14},
               "BG2EE CGameStatic height offset should normalize drawing Y to ARE Y");
+    expect_eq(bg2ee->get().areaAnimations.infinityFxRenderClippingPolys,
+              std::uintptr_t{0x29E4C0},
+              "BG2EE FXRenderClippingPolys RVA should match the offline call graph");
+    expect_true(
+        !bg2ee->get().areaAnimations.infinityFxRenderClippingPolysSignature.empty(),
+        "BG2EE FXRenderClippingPolys should carry a fail-closed signature");
+    auto incompleteProbe = bg2ee->get().areaAnimations;
+    incompleteProbe.infinityFxRenderClippingPolysSignature = {};
+    expect_true(!incompleteProbe.validate(),
+                "A clipping-probe RVA without its signature must fail validation");
     expect_eq(bg2ee->get().areaAnimations.monsterRender, std::uintptr_t{0x32D770},
               "BG2EE CGameAnimationTypeMonster::Render RVA should match the factory "
               "vtable and offline scan");
@@ -746,6 +757,7 @@ void test_config_shader_override_defaults() {
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
+  expect_true(!cfg.enableNativeOcclusionProbe, "native occlusion probe defaults off");
   expect_true(!cfg.enableCreatureSpriteUpscaleTest,
               "creature-sprite xN test defaults off");
   expect_true(!cfg.enableCreatureSpriteX2Test, "creature-sprite x2 test defaults off");
@@ -765,6 +777,88 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableMainMenuX4Test, "main-menu x4 test defaults off");
   expect_true(!cfg.enableMenuX2Test, "complete menu x2 test defaults off");
   expect_true(!cfg.enablePerformanceLogging, "performance logs default off");
+}
+
+void test_native_occlusion_probe_correlation() {
+  using iee::core::NativeOcclusionCall;
+  using iee::core::NativeOcclusionCorrelation;
+  using iee::core::NativeOcclusionDraw;
+  using iee::core::NativeOcclusionOwner;
+  using iee::core::NativeOcclusionReplacement;
+  using iee::core::NativeOcclusionSampleGate;
+
+  const NativeOcclusionDraw draw{
+      .x = 320,
+      .y = 240,
+      .logicalWidth = 160,
+      .logicalHeight = 120,
+      .flags = 0x20000,
+      .nativeTextureId = 17,
+      .replacement = NativeOcclusionReplacement::AreaRegistry,
+  };
+  NativeOcclusionCorrelation inactive{NativeOcclusionOwner::None, 0x1000, 0x414D30393030};
+  expect_true(!inactive.correlate_draw(draw).has_value(),
+              "An inactive owner must not emit an occlusion sample");
+
+  NativeOcclusionCorrelation noClipping{NativeOcclusionOwner::AreaAnimation, 0x1000,
+                                        0x414D30393030};
+  const auto absent = noClipping.correlate_draw(draw);
+  expect_true(absent.has_value() && !absent->clipping_seen(),
+              "A replaced draw without a native clipping call must be reported explicitly");
+
+  NativeOcclusionCorrelation correlated{NativeOcclusionOwner::AreaAnimation, 0x1000,
+                                        0x414D30393030};
+  correlated.record_clipping(NativeOcclusionCall{
+      .infinity = 0x1400,
+      .x = 300,
+      .y = 200,
+      .referenceZ = -32,
+      .fxRect = 0x2000,
+      .clipRect = 0x3000,
+      .dither = 1,
+      .flags = 0x20000,
+      .result = 1,
+  });
+  correlated.record_clipping(NativeOcclusionCall{
+      .infinity = 0x1400,
+      .x = 301,
+      .y = 201,
+      .referenceZ = -33,
+      .fxRect = 0x2008,
+      .clipRect = 0x3008,
+      .dither = 0,
+      .flags = 0x40000,
+      .result = 1,
+  });
+  const auto sample = correlated.correlate_draw(draw);
+  expect_true(sample.has_value() && sample->clipping_seen(),
+              "A native clipping call should correlate with the final replacement draw");
+  if (sample) {
+    expect_eq(sample->clippingCallCount, std::uint32_t{2},
+              "The correlation should retain every native clipping call in the owner scope");
+    expect_eq(sample->lastClippingCall.x, 301,
+              "The correlation should retain metadata from the last native clipping call");
+    expect_eq(sample->draw.nativeTextureId, 17,
+              "The probe should retain the native texture displaced by xN binding");
+
+    NativeOcclusionSampleGate gate;
+    expect_true(gate.accept(*sample), "The first equivalent probe sample should be logged");
+    expect_true(!gate.accept(*sample), "An equivalent repeated frame should be deduplicated");
+    expect_eq(gate.size(), std::size_t{1},
+              "Probe deduplication should retain one compact key per equivalent sample");
+    gate.clear();
+    expect_eq(gate.size(), std::size_t{0}, "Clearing the probe gate should release all keys");
+    for (std::size_t index = 0; index < NativeOcclusionSampleGate::kCapacity; ++index) {
+      auto unique = *sample;
+      unique.ownerKey = static_cast<std::uintptr_t>(index + 1);
+      expect_true(gate.accept(unique), "Each distinct sample should fit below the fixed cap");
+    }
+    auto overflow = *sample;
+    overflow.ownerKey = NativeOcclusionSampleGate::kCapacity + 1;
+    expect_true(!gate.accept(overflow), "The probe sample store must reject entries above its cap");
+    expect_eq(gate.size(), NativeOcclusionSampleGate::kCapacity,
+              "The probe sample store must remain fixed at its documented cap");
+  }
 }
 
 void test_creature_sprite_xn_native_border_geometry() {
@@ -2975,6 +3069,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableWaterEffect = false;
     orig.enableBamUiTextureProbe = true;
     orig.enableAreaAnimationX4 = true;
+    orig.enableNativeOcclusionProbe = true;
     orig.enableCreatureSpriteUpscaleTest = true;
     orig.enableCreatureSpriteX2Test = true;
     orig.enableCreatureSpriteLinearFiltering = true;
@@ -2997,6 +3092,8 @@ void test_config_shader_override_roundtrip() {
               "enableBamUiTextureProbe should round-trip as true");
   expect_true(loaded.enableAreaAnimationX4,
               "enableAreaAnimationX4 should round-trip as true");
+  expect_true(loaded.enableNativeOcclusionProbe,
+              "enableNativeOcclusionProbe should round-trip as true");
   expect_true(loaded.enableCreatureSpriteUpscaleTest,
               "enableCreatureSpriteUpscaleTest should round-trip as true");
   expect_true(loaded.enableCreatureSpriteX2Test,
@@ -3982,6 +4079,7 @@ int main() {
   test_config_reports_malformed_values();
   test_config_shader_override_defaults();
   test_config_shader_override_roundtrip();
+  test_native_occlusion_probe_correlation();
   test_performance_sample_summary();
   test_area_animation_clock_probe();
   test_area_animation_timeline_clock();

@@ -107,6 +107,7 @@ while keeping builds reproducibly pinned to full commit SHAs.
 - [docs/threading-model.md](docs/threading-model.md)
 - [docs/reverse-engineering.md](docs/reverse-engineering.md)
 - [docs/area-animation-clock-probe.md](docs/area-animation-clock-probe.md)
+- [docs/native-occlusion-phase0.md](docs/native-occlusion-phase0.md)
 - [docs/event-video-overlay-assets.md](docs/event-video-overlay-assets.md) — LLM procedure for adding a local event-driven video asset
 - [docs/build-manifests.md](docs/build-manifests.md)
 - [docs/new-build-validation.md](docs/new-build-validation.md)

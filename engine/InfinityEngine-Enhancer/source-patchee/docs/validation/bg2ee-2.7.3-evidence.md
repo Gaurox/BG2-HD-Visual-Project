@@ -79,6 +79,22 @@ addresses recorded for BGEE 2.7.3:
 - Final layout proof remains the in-game gate: the runtime probes every offset
   through fail-closed `safe_read` paths.
 
+## Native Occlusion Phase-0 Target
+
+Read-only inspection of the same official executable resolves
+`CInfinity::FXRenderClippingPolys` at RVA `0x29E4C0`. Its prologue is:
+
+```text
+40 57 41 55 48 81 EC 18 01 00 00 48 8B 05 06 65 3C 00 48 33 C4
+```
+
+The manifest wildcard covers only the RIP-relative displacement. Disassembly of callers,
+including `CGameStatic::RenderBam` at callsite `0x1F2EEF`, confirms the eight-argument x64 call
+shape recorded in [the phase-0 protocol](../native-occlusion-phase0.md). The wildcarded prologue
+occurs exactly once in the 7,202,696-byte executable (file offset `0x29D8C0`, which maps to RVA
+`0x29E4C0`). This evidence authorizes only an opt-in metadata probe; it does not validate a visual
+correction.
+
 ## Reproducing
 
 `tools/validate_build.py` reproduces every table above against an arbitrary

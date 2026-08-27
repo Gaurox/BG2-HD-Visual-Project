@@ -118,6 +118,11 @@ struct AreaAnimationRuntime {
   std::uintptr_t gameStaticPositionX{};
   std::uintptr_t gameStaticPositionY{};
   std::uintptr_t gameStaticHeight{};
+  // Optional phase-0 diagnostic hook. It observes the native WED clipping pass
+  // without altering its arguments, result, surface, or the subsequent draw.
+  // Kept as an appended pair because this aggregate uses positional initializers.
+  std::uintptr_t infinityFxRenderClippingPolys{};
+  std::string_view infinityFxRenderClippingPolysSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -144,6 +149,9 @@ struct AreaAnimationRuntime {
     const bool hasCompletePositionOffsets =
         gameStaticPositionX && gameStaticPositionY && gameStaticHeight;
     if (hasAnyPositionOffset && !hasCompletePositionOffsets) return false;
+    const bool hasClippingProbeRva = infinityFxRenderClippingPolys != 0;
+    const bool hasClippingProbeSignature = !infinityFxRenderClippingPolysSignature.empty();
+    if (hasClippingProbeRva != hasClippingProbeSignature) return false;
     return true;
   }
 };

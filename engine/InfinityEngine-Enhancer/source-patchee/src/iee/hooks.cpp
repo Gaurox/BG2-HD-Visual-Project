@@ -23,6 +23,7 @@
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/logger.h"
+#include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/features/tile_render.h"
@@ -38,6 +39,8 @@ using RenderTextureFn = void (*)(void*, int, void*, int, int, unsigned long);
 using DrawColorToneFn = void (*)(int);
 using GameStaticRenderBamFn = void (*)(void*, void*, void*);
 using VidCellRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, std::uint32_t);
+using InfinityFxRenderClippingPolysFn = int (*)(void*, int, int, int, void*, void*,
+                                                std::uint8_t, std::uint32_t);
 using VidPaletteRealizeFn = void (*)(void*, std::uint32_t*, std::uint32_t, void*, std::uint32_t,
                                     std::uint32_t);
 using MonsterIcewindRenderFn = void (*)(void*, std::uintptr_t, std::uintptr_t,
@@ -59,6 +62,7 @@ static core::Hook<RenderTextureFn> g_renderTextureHook;
 static core::Hook<DrawColorToneFn> g_drawColorToneHook;
 static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
+static core::Hook<InfinityFxRenderClippingPolysFn> g_infinityFxRenderClippingPolysHook;
 static core::Hook<VidPaletteRealizeFn> g_vidPaletteRealizeHook;
 static core::Hook<MonsterRenderFn> g_monsterRenderHook;
 static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
@@ -74,6 +78,10 @@ thread_local int g_am0205eRenderDepth = 0;
 thread_local int g_am0205eFrameIndex = -1;
 thread_local int g_areaAnimationRenderDepth = 0;
 thread_local area_animation_x4::FrameHandle g_areaAnimationFrame{};
+thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
+thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
+thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
+bool g_nativeOcclusionProbeHookEnabled = false;
 
 constexpr std::size_t kMaximumCreatureSpriteLayers = 4;
 constexpr std::size_t kNoCreatureSpriteLayer = kMaximumCreatureSpriteLayers;
@@ -147,6 +155,94 @@ class CreatureSpriteScopeOverride {
  private:
   CreatureSpriteScope* previous_{};
 };
+
+class NativeOcclusionCorrelationOverride {
+ public:
+  explicit NativeOcclusionCorrelationOverride(
+      core::NativeOcclusionCorrelation* correlation) noexcept
+      : previous_(g_nativeOcclusionCorrelation) {
+    g_nativeOcclusionCorrelation = correlation;
+  }
+  ~NativeOcclusionCorrelationOverride() { g_nativeOcclusionCorrelation = previous_; }
+
+  NativeOcclusionCorrelationOverride(const NativeOcclusionCorrelationOverride&) = delete;
+  NativeOcclusionCorrelationOverride& operator=(const NativeOcclusionCorrelationOverride&) =
+      delete;
+
+ private:
+  core::NativeOcclusionCorrelation* previous_{};
+};
+
+std::uint64_t pack_probe_subject(const std::array<char, 8>& bytes) noexcept {
+  std::uint64_t packed = 0;
+  for (std::size_t index = 0; index < bytes.size(); ++index) {
+    packed |= static_cast<std::uint64_t>(static_cast<unsigned char>(bytes[index])) <<
+              (index * 8u);
+  }
+  return packed;
+}
+
+std::string_view native_occlusion_owner_label(core::NativeOcclusionOwner owner) noexcept {
+  using Owner = core::NativeOcclusionOwner;
+  switch (owner) {
+    case Owner::AreaAnimation:
+      return "CGameStatic";
+    case Owner::Monster:
+      return "Monster";
+    case Owner::MonsterIcewind:
+      return "MonsterIcewind";
+    case Owner::Character:
+      return "Character";
+    default:
+      return "None";
+  }
+}
+
+std::string_view native_occlusion_replacement_label(
+    core::NativeOcclusionReplacement replacement) noexcept {
+  using Replacement = core::NativeOcclusionReplacement;
+  switch (replacement) {
+    case Replacement::AreaRegistry:
+      return "area-registry";
+    case Replacement::AreaPrototype:
+      return "area-prototype";
+    case Replacement::CreatureSprite:
+      return "creature-sprite";
+  }
+  return "unknown";
+}
+
+void log_native_occlusion_sample(const core::NativeOcclusionSample& sample) noexcept {
+  try {
+    const auto owner = native_occlusion_owner_label(sample.owner);
+    const auto replacement = native_occlusion_replacement_label(sample.draw.replacement);
+    if (sample.clipping_seen()) {
+      const auto& clipping = sample.lastClippingCall;
+      LOG_INFO(
+          "Native occlusion phase0: owner={} instance=0x{:X} subject=0x{:X}, "
+          "clip_calls={}, native_clip=present infinity=0x{:X} at ({},{},z={}) "
+          "fx_rect=0x{:X} clip_rect=0x{:X} dither={} clip_flags=0x{:X} result={}, "
+          "final_draw=({},{}) logical={}x{} draw_flags=0x{:X} native_texture={} "
+          "replacement={}",
+          owner, sample.ownerKey, sample.subjectId, sample.clippingCallCount,
+          clipping.infinity, clipping.x, clipping.y, clipping.referenceZ, clipping.fxRect,
+          clipping.clipRect,
+          static_cast<unsigned>(clipping.dither), clipping.flags, clipping.result,
+          sample.draw.x, sample.draw.y, sample.draw.logicalWidth, sample.draw.logicalHeight,
+          sample.draw.flags, sample.draw.nativeTextureId, replacement);
+    } else {
+      LOG_INFO(
+          "Native occlusion phase0: owner={} instance=0x{:X} subject=0x{:X}, "
+          "clip_calls=0 native_clip=absent, final_draw=({},{}) logical={}x{} "
+          "draw_flags=0x{:X} native_texture={} replacement={}",
+          owner, sample.ownerKey, sample.subjectId, sample.draw.x, sample.draw.y,
+          sample.draw.logicalWidth, sample.draw.logicalHeight, sample.draw.flags,
+          sample.draw.nativeTextureId, replacement);
+    }
+  } catch (...) {
+    // Diagnostics must never affect the engine render path.
+  }
+}
 
 std::uint64_t next_creature_sprite_generation() noexcept {
   ++g_creatureSpriteGeneration;
@@ -948,6 +1044,27 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
 }
 }  // namespace
 
+static int detour_infinity_fx_render_clipping_polys(
+    void* thisPtr, int x, int y, int referenceZ, void* fxRect, void* clipRect,
+    std::uint8_t dither, std::uint32_t flags) {
+  const auto original = g_infinityFxRenderClippingPolysHook.original();
+  const int result = original(thisPtr, x, y, referenceZ, fxRect, clipRect, dither, flags);
+  if (auto* correlation = g_nativeOcclusionCorrelation) {
+    correlation->record_clipping({
+        .infinity = reinterpret_cast<std::uintptr_t>(thisPtr),
+        .x = x,
+        .y = y,
+        .referenceZ = referenceZ,
+        .fxRect = reinterpret_cast<std::uintptr_t>(fxRect),
+        .clipRect = reinterpret_cast<std::uintptr_t>(clipRect),
+        .dither = dither,
+        .flags = flags,
+        .result = result,
+    });
+  }
+  return result;
+}
+
 static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* vidMode) {
   ResolvedAreaAnimationFrame resolvedAreaFrame{};
   int frameIndex = -1;
@@ -971,6 +1088,19 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
     ++g_am0205eRenderDepth;
     g_am0205eFrameIndex = frameIndex;
   }
+  constexpr std::array<char, 8> kAm0205e{{'A', 'M', '0', '2', '0', '5', 'E', '\0'}};
+  const auto subjectId =
+      areaTarget ? pack_probe_subject(resolvedAreaFrame.resref) : pack_probe_subject(kAm0205e);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      areaTarget || am0205eTarget ? core::NativeOcclusionOwner::AreaAnimation
+                                 : core::NativeOcclusionOwner::None,
+      reinterpret_cast<std::uintptr_t>(thisPtr), subjectId};
+  // Every CGameStatic invocation masks an outer probe scope. Calls made by an
+  // unrelated nested object must not be attributed to this replacement.
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && (areaTarget || am0205eTarget)
+          ? &nativeOcclusion
+          : nullptr);
 
   g_gameStaticRenderBamHook.original()(thisPtr, gameArea, vidMode);
 
@@ -1002,6 +1132,11 @@ static void detour_monster_render(
   // Every Monster invocation masks an outer creature scope. A nested
   // non-target render must never inherit the outer sprite's palette/frame.
   CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      target ? core::NativeOcclusionOwner::Monster : core::NativeOcclusionOwner::None,
+      reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
 
   g_monsterRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                  a11, a12, a13, a14);
@@ -1038,6 +1173,12 @@ static void detour_monster_icewind_render(
   // Every MonsterIcewind invocation masks an outer creature scope. A nested
   // non-target render must never inherit the outer sprite's palette/frame.
   CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      target ? core::NativeOcclusionOwner::MonsterIcewind
+             : core::NativeOcclusionOwner::None,
+      reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
 
   g_monsterIcewindRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                         a11, a12, a13, a14);
@@ -1102,6 +1243,11 @@ static void detour_character_render(
   // Character rendering is layered. Capture every registered native layer in
   // Realize order, then replace the engine's single final composite draw.
   CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      target ? core::NativeOcclusionOwner::Character : core::NativeOcclusionOwner::None,
+      reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
 
   g_characterRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9, a10,
                                    a11, a12, a13, a14);
@@ -1214,6 +1360,8 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                                            std::uint32_t flags) {
   const auto original = g_vidCellRenderTextureHook.original();
   enum class ReplacementKind : std::uint8_t { None, CreatureSprite, AreaRegistry, AM0205E };
+  const int logicalWidth = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
+  const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
   int previousTextureId = 0;
   int transientCreatureTextureId = 0;
   ReplacementKind replacement = ReplacementKind::None;
@@ -1221,8 +1369,6 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   if (g_creatureSpriteHooksEnabled && creatureScope) {
     // A creature scope owns this dispatch even when it fails closed. Never fall
     // through to an unrelated area-animation substitution during creature rendering.
-    const int logicalWidth = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
-    const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
     if (creatureScope->owner == CreatureSpriteOwner::Character) {
       if (!creatureScope->compositeReplacementDone &&
           !creatureScope->compositionIncomplete &&
@@ -1264,6 +1410,39 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     if (am0205e_x4::bind_frame_texture(g_am0205eFrameIndex, g_am0205eTextureApi,
                                       previousTextureId)) {
       replacement = ReplacementKind::AM0205E;
+    }
+  }
+  if (replacement != ReplacementKind::None && g_nativeOcclusionProbeHookEnabled &&
+      g_nativeOcclusionCorrelation) {
+    const auto areaGeneration =
+        g_requestedAreaTimelineGeneration.load(std::memory_order_acquire);
+    if (areaGeneration != g_nativeOcclusionSampleGeneration) {
+      g_nativeOcclusionSampleGate.clear();
+      g_nativeOcclusionSampleGeneration = areaGeneration;
+    }
+    auto probeReplacement = core::NativeOcclusionReplacement::AreaRegistry;
+    switch (replacement) {
+      case ReplacementKind::CreatureSprite:
+        probeReplacement = core::NativeOcclusionReplacement::CreatureSprite;
+        break;
+      case ReplacementKind::AM0205E:
+        probeReplacement = core::NativeOcclusionReplacement::AreaPrototype;
+        break;
+      case ReplacementKind::AreaRegistry:
+      case ReplacementKind::None:
+        break;
+    }
+    const auto sample = g_nativeOcclusionCorrelation->correlate_draw({
+        .x = x,
+        .y = y,
+        .logicalWidth = logicalWidth,
+        .logicalHeight = logicalHeight,
+        .flags = flags,
+        .nativeTextureId = previousTextureId,
+        .replacement = probeReplacement,
+    });
+    if (sample && g_nativeOcclusionSampleGate.accept(*sample)) {
+      log_native_occlusion_sample(*sample);
     }
   }
   original(x, y, sourceRect, logicalSize, clipRect, flags);
@@ -1429,6 +1608,7 @@ bool install_all(AppContext& ctx) {
     LOG_INFO("RenderTexture hook created");
 
     g_areaCompositionMode = AreaCompositionMode::None;
+    g_nativeOcclusionProbeHookEnabled = false;
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
@@ -1535,6 +1715,51 @@ bool install_all(AppContext& ctx) {
       }
     }
 
+    if (ctx.cfg.enableNativeOcclusionProbe) {
+      if (g_areaCompositionMode == AreaCompositionMode::None &&
+          !g_creatureSpriteHooksEnabled) {
+        LOG_WARN(
+            "Native occlusion phase0 probe not installed: no xN area-animation or "
+            "creature composition path is active");
+      } else {
+        try {
+          const auto module = core::get_module_span(nullptr);
+          if (!module || !module->base || !ctx.manifest) {
+            throw std::runtime_error("module or manifest unavailable");
+          }
+          const auto& runtime = ctx.manifest->areaAnimations;
+          if (!runtime.infinityFxRenderClippingPolys ||
+              runtime.infinityFxRenderClippingPolysSignature.empty()) {
+            throw std::runtime_error("manifest has no FXRenderClippingPolys evidence");
+          }
+          if (!matches_pattern_at_rva(
+                  *module, runtime.infinityFxRenderClippingPolys,
+                  runtime.infinityFxRenderClippingPolysSignature)) {
+            throw std::runtime_error("FXRenderClippingPolys signature mismatch");
+          }
+          const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+          g_infinityFxRenderClippingPolysHook.create(
+              reinterpret_cast<void*>(moduleBase + runtime.infinityFxRenderClippingPolys),
+              reinterpret_cast<void*>(&detour_infinity_fx_render_clipping_polys));
+          g_infinityFxRenderClippingPolysHook.enable();
+          g_nativeOcclusionProbeHookEnabled = true;
+          LOG_INFO(
+              "Native occlusion phase0 probe installed at "
+              "CInfinity::FXRenderClippingPolys RVA 0x{:X}; metadata only, no pixel or "
+              "render-state changes",
+              runtime.infinityFxRenderClippingPolys);
+        } catch (const std::exception& error) {
+          (void)g_infinityFxRenderClippingPolysHook.remove();
+          g_nativeOcclusionProbeHookEnabled = false;
+          LOG_ERROR("Native occlusion phase0 probe disabled: {}", error.what());
+        } catch (...) {
+          (void)g_infinityFxRenderClippingPolysHook.remove();
+          g_nativeOcclusionProbeHookEnabled = false;
+          LOG_ERROR("Native occlusion phase0 probe disabled: unknown installation error");
+        }
+      }
+    }
+
     if (ctx.manifest && ctx.manifest->worldOverlay.enabled) {
       try {
         const auto module = core::get_module_span(nullptr);
@@ -1628,11 +1853,13 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
+    (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
+    g_nativeOcclusionProbeHookEnabled = false;
     g_areaAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
@@ -1654,11 +1881,13 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
+    (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
+    g_nativeOcclusionProbeHookEnabled = false;
     g_areaAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
@@ -1687,6 +1916,7 @@ void uninstall_all() noexcept {
   (void)g_monsterRenderHook.remove();
   (void)g_monsterIcewindRenderHook.remove();
   (void)g_gameStaticRenderBamHook.remove();
+  (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
   (void)g_vidCellRenderTextureHook.remove();
   (void)g_renderTextureHook.remove();
@@ -1704,6 +1934,7 @@ void uninstall_all() noexcept {
   g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
+  g_nativeOcclusionProbeHookEnabled = false;
 
   g_ctx = nullptr;
   delete g_hookInit;
@@ -1726,6 +1957,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_monsterRenderHook.disable();
   (void)g_monsterIcewindRenderHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
+  (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();
   (void)g_vidCellRenderTextureHook.disable();
   (void)g_renderTextureHook.disable();

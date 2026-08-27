@@ -44,6 +44,9 @@ struct EngineConfig {
   // External multi-resource area-animation pack. Resrefs, BAM cycles and
   // native per-frame dimensions come from AreaAnimations-X4.registry.
   bool enableAreaAnimationX4 = false;
+  // Read-only phase-0 diagnostic. Correlates the native WED clipping pass with
+  // registry-backed xN draws; it never changes pixels or render state.
+  bool enableNativeOcclusionProbe = false;
   // Reversible creature-sprite xN prototype. The native geometry remains x1;
   // the external registry supplies an x2 or x4 pixel backing.
   bool enableCreatureSpriteUpscaleTest = false;

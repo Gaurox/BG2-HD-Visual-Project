@@ -260,6 +260,8 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x0C,
             0x10,
             0x14,
+            0x29E4C0,
+            "40 57 41 55 48 81 EC 18 01 00 00 48 8B 05 ? ? ? ? 48 33 C4",
         },
         {
             true,
@@ -298,6 +300,9 @@ static_assert(validate_pattern_format(kKnownBuilds[2].patterns.loadArea),
               "BG2EE 2.7.3 LoadArea pattern format is invalid");
 static_assert(validate_pattern_format(kKnownBuilds[2].patterns.renderTexture),
               "BG2EE 2.7.3 RenderTexture pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].areaAnimations.infinityFxRenderClippingPolysSignature),
+              "BG2EE 2.7.3 FXRenderClippingPolys pattern format is invalid");
 static_assert([] {
   for (const auto signature : kKnownBuilds[2].areaAnimations.signatures) {
     if (!validate_pattern_format(signature)) return false;

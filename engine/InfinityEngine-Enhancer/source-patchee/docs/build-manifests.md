@@ -59,6 +59,10 @@ Build id: `BG2EE 2.7.3.x` (offline-validated; in-game gates pending — see
   `drawingY = ARE.y + height`; the hook resolves registry-v3 variants with
   `ARE.y = drawingY - height`. The three position offsets are optional: a manifest that omits them
   cannot select bound variants and falls back to unbound resources or the native BAM.
+- Optional read-only native-occlusion probe target:
+  `CInfinity::FXRenderClippingPolys = 0x29E4C0`, guarded by its exact prologue signature. The RVA
+  and signature form an all-or-none pair and do not enable the probe by themselves; see
+  [native-occlusion-phase0.md](native-occlusion-phase0.md).
 
 Because BGEE and BG2EE share fixed version `2.7.3`, identity selection matches
 on version **and** product name (`find_manifest_for_identity`). Selecting on
