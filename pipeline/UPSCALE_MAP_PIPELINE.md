@@ -218,7 +218,7 @@ paramètres sont propres à la zone et ne doivent pas être repris d'un essai hi
 - Contrôle d'intégrité des sources : `pipeline/scripts/validate_x1_masters.py`.
 - Découpe à recouvrement : `run_seedvr_comfyui.py --split-grid 2 4` ou `2 5` pour toute grande
   zone x4, selon le palier prescrit par [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md).
-- Format de build : atlas 2 048 px, 225 tuiles/page, bordure répliquée 4 px. Le mode
+- Format de build : atlas 2 048 px, 49 tuiles/page (7×7), bordure répliquée 4 px. Le mode
   `--wed-regions-1024` est obsolète et ne doit pas être employé.
 - Paramètres Topaz CLI : `pipeline/TOPAZ_GIGAPIXEL_CLI_REFERENCE.md`.
 - Règles de formats, d'injection et de vérification : [`README.md`](README.md).
