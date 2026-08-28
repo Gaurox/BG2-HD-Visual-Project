@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 1,
-  "generated_by": "manual canonical-pilot register; promotion requires explicit user approval",
+  "generated_by": "manual canonical-pilot register; promotion requires explicit user approval; AR0602 repointed + AR0603 added 2026-08-28 (portal contour spline-fit1+feather8)",
   "candidates": [
     {
       "area": "AR0602",
@@ -9,14 +9,14 @@
       "component_label": "animation-ar0602",
       "payload_group": "animation-ar0602",
       "approval_status": "approved-for-release",
-      "source_pack": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha/AR0602",
-      "source_run": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha",
+      "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
+      "source_run": "animations/runs/ar0602-portl1b-apo8-x4-30fps-v2 + proto/ar0602-portals-spline-fit1 (spline-fit1 + inner-feather8 alpha on PORTL1A/PORTL1B)",
       "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "E18DD325D55AA91B13B114719DE6F0EC7562CA5425CFFAC40B9799461EAB382B",
+      "pack_manifest_sha256": "8BB95DEC9B3D5A2F8839BAA23EA1F5AD83E6FDDAE142500EA6C433981606F838",
       "registry": "AreaAnimations-X4.registry",
-      "registry_version": 2,
-      "registry_sha256": "41CA60C9542D2D2007EF4B8AB7EECF30915F247ADE50FE159B53741F592A74C7",
-      "registry_bytes": 2452,
+      "registry_version": 3,
+      "registry_sha256": "A1B41485D116D48429A4D63D1A9BF1DE6BFC6D559218C59158958A071A6F4D23",
+      "registry_bytes": 3036,
       "required_resrefs": [
         "AM0602AA",
         "AM0602AB",
@@ -27,10 +27,11 @@
         "AM0602E",
         "AM0602F",
         "AM0602G",
+        "FLAME2S",
         "PORTL1A",
         "PORTL1B"
       ],
-      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     },
     {
       "area": "AR0900",
@@ -98,6 +99,34 @@
         "FIRE_4"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0603",
+      "component_id": 3004,
+      "component_label": "animation-ar0603",
+      "payload_group": "animation-ar0603",
+      "approval_status": "approved-for-release",
+      "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0603",
+      "source_run": "animations/runs/ar0603-all-bam-apo8-x4-30fps-v2 + proto/ar0603-portal-spline-fit1 (spline-fit1 + inner-feather8 alpha on PORTL2A)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "E26DCF806E599F8F806C5FECCCA54C745D854708F55A0DA56E3B8879EC6B85BC",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 2,
+      "registry_sha256": "C399B0E0BBE3B0B3DA677010DB616F8BB0615450CEFA0221861FC53F863B34DD",
+      "registry_bytes": 3588,
+      "required_resrefs": [
+        "AM0603A",
+        "AM0603B",
+        "AM0603C1",
+        "AM0603C2",
+        "AM0603D1",
+        "AM0603D2",
+        "AM0603D3",
+        "AM0603H",
+        "AM0603I",
+        "PORTL2A"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
     }
   ]
 }

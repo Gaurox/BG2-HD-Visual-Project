@@ -48,10 +48,12 @@ global dépassant 512 Mio doit être découpé par zone.
 
 ## Promotion
 
-La release accepte les registres v2 et v3 avec le renderer `iee-0.1.0-alpha.5`. AR0602 v2 reste
-le témoin de rétrocompatibilité ; AR0900 v3 est le témoin du routage par occurrence. Toute autre
-zone doit être ajoutée explicitement à `animation-release-candidates.json` avec sa version, ses
-hashes et son approbation.
+La release accepte les registres v2 et v3 avec le renderer `iee-0.1.0-alpha.5`. Depuis le
+2026-08-28 AR0602 est passée en v3 (PORTL1B en 30 fps + FLAME2S) : le témoin de
+rétrocompatibilité v2 est désormais **AR0603** (registre v2, TimedTimeline sans routage par
+occurrence). AR0900 v3 reste le témoin du routage par occurrence. Toute autre zone doit être
+ajoutée explicitement à `animation-release-candidates.json` avec sa version, ses hashes et son
+approbation.
 
 QA et intégration release restent deux décisions distinctes. Un run `pending-qa`, un prototype ou
 un pack présent dans l'override n'est pas éligible.
