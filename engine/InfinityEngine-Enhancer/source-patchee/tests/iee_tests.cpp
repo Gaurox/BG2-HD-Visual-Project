@@ -701,6 +701,7 @@ void test_config_parsing() {
     out << "EnableAnisotropicFiltering = false\n";
     out << "MaxAnisotropy = 4.0\n";
     out << "LODBias = -0.5\n\n";
+    out << "EnableTilePageDiagnostics = true\n\n";
   }
 
   iee::core::EngineConfig cfg{};
@@ -710,6 +711,7 @@ void test_config_parsing() {
   expect_true(!cfg.enableAnisotropicFiltering, "Rendering bool should parse");
   expect_eq(cfg.maxAnisotropy, 4.0f, "Floating-point values should parse");
   expect_eq(cfg.lodBias, -0.5f, "Negative float values should parse");
+  expect_true(cfg.enableTilePageDiagnostics, "tile-page diagnostics flag should parse");
 
   std::error_code ec;
   std::filesystem::remove(tempPath, ec);
@@ -790,6 +792,16 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableMainMenuX4Test, "main-menu x4 test defaults off");
   expect_true(!cfg.enableMenuX2Test, "complete menu x2 test defaults off");
   expect_true(!cfg.enablePerformanceLogging, "performance logs default off");
+  expect_true(!cfg.enableTilePageDiagnostics, "tile-page diagnostics default off");
+  expect_true(!cfg.wtpool_page_check_enabled(), "WTPOOL page checks default off");
+  auto wtpoolTraceOnly = cfg;
+  wtpoolTraceOnly.enableWtpoolTileTrace = true;
+  expect_true(wtpoolTraceOnly.wtpool_page_check_enabled(),
+              "WTPOOL page checks should run for the trace diagnostic");
+  auto wtpoolBypassOnly = cfg;
+  wtpoolBypassOnly.bypassWtpoolTileRenderHook = true;
+  expect_true(wtpoolBypassOnly.wtpool_page_check_enabled(),
+              "WTPOOL page checks should run for the bypass diagnostic");
 }
 
 void test_native_occlusion_probe_correlation() {
@@ -3160,6 +3172,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableMainMenuX4Test = true;
     orig.enableMenuX2Test = true;
     orig.enablePerformanceLogging = true;
+    orig.enableTilePageDiagnostics = true;
 
     expect_true(iee::core::ConfigManager::save(tempPath, orig),
                 "ConfigManager::save should succeed");
@@ -3192,6 +3205,8 @@ void test_config_shader_override_roundtrip() {
   expect_true(loaded.enableMenuX2Test, "enableMenuX2Test should round-trip as true");
   expect_true(loaded.enablePerformanceLogging,
               "enablePerformanceLogging should round-trip as true");
+  expect_true(loaded.enableTilePageDiagnostics,
+              "enableTilePageDiagnostics should round-trip as true");
 
   std::error_code ec;
   std::filesystem::remove(tempPath, ec);

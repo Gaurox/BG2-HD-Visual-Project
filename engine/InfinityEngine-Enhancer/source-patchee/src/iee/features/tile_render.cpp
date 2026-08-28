@@ -104,7 +104,8 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
     return false;
   }
 
-  const bool isWtpool = is_wtpool_page(tileInfo);
+  const bool isWtpool =
+      ctx.cfg.wtpool_page_check_enabled() && is_wtpool_page(tileInfo);
   if (isWtpool && ctx.cfg.enableWtpoolTileTrace) {
     trace_wtpool_tile(state, vidTile, tileInfo.index);
   }
@@ -208,10 +209,11 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
   const int du = game::TileDimensions::STANDARD_SIZE * scaleFactor;
   const int dv = game::TileDimensions::STANDARD_SIZE * scaleFactor;
 
-  // AR0300 uses 88 x2 pages while the vanilla resource uses 30. Record the
-  // first draw for each atlas page so the map overview can expose resource
-  // eviction or a zero texture name without producing a per-frame log flood.
-  if (entry.page < state.pageDiagnosticSeen.size() && !state.pageDiagnosticSeen[entry.page]) {
+  // Explicit diagnostics only: capturing the first draw of each atlas page
+  // performs extra guarded reads and flushes an INFO record on the render
+  // thread. It must not run in production or ordinary performance telemetry.
+  if (ctx.cfg.enableTilePageDiagnostics && entry.page < state.pageDiagnosticSeen.size() &&
+      !state.pageDiagnosticSeen[entry.page]) {
     state.pageDiagnosticSeen[entry.page] = true;
     game::CResTile resourceSnapshot{};
     game::CResPVR pvrSnapshot{};

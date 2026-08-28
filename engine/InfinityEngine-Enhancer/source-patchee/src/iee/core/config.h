@@ -19,6 +19,14 @@ struct EngineConfig {
   // Temporary A/B switch: delegate the x2 WPOOL00 page to the native
   // RenderTexture implementation instead of the custom tile renderer.
   bool bypassWtpoolTileRenderHook = false;
+  // First-draw PVRZ-page diagnostics perform guarded engine-memory reads and
+  // emit an INFO record for every observed page. Keep them opt-in so normal
+  // rendering and performance telemetry do not pay that cost.
+  bool enableTilePageDiagnostics = false;
+
+  [[nodiscard]] constexpr bool wtpool_page_check_enabled() const noexcept {
+    return enableWtpoolTileTrace || bypassWtpoolTileRenderHook;
+  }
   // Diagnostic full-frame FXAA at the swap boundary. Until a world/UI render
   // bracket exists, this affects both the assembled world and the interface.
   bool enableFullFrameFxaa = false;

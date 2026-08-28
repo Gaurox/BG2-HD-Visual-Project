@@ -102,6 +102,8 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.enableWtpoolTileTrace);
     else if (iequals(key, "BypassWTPOOLTileRenderHook"))
       assign_bool(cfg.bypassWtpoolTileRenderHook);
+    else if (iequals(key, "EnableTilePageDiagnostics"))
+      assign_bool(cfg.enableTilePageDiagnostics);
     else if (iequals(key, "EnableFullFrameFXAA"))
       assign_bool(cfg.enableFullFrameFxaa);
     else if (iequals(key, "EnableFullFrameSSAA2x"))
@@ -225,6 +227,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "ForceTextureFilterEveryDraw", cfg.forceTextureFilterEveryDraw);
   write_bool(f, "EnableWTPOOLTileTrace", cfg.enableWtpoolTileTrace);
   write_bool(f, "BypassWTPOOLTileRenderHook", cfg.bypassWtpoolTileRenderHook);
+  write_bool(f, "EnableTilePageDiagnostics", cfg.enableTilePageDiagnostics);
   write_bool(f, "EnableFullFrameFXAA", cfg.enableFullFrameFxaa);
   write_bool(f, "EnableFullFrameSSAA2x", cfg.enableFullFrameSsaa2x);
 
