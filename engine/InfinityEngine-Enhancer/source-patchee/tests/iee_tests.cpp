@@ -3055,6 +3055,18 @@ void test_area_animation_registry_formats() {
             "Pack telemetry should identify TimedTimeline resources");
   expect_eq(preparationStats.frameCount, std::uint64_t{2},
             "Pack telemetry should preserve the validated frame count");
+  const auto initialTextureCacheStats =
+      iee::area_animation_x4::texture_cache_telemetry_snapshot();
+  expect_true(initialTextureCacheStats.active,
+              "GPU cache telemetry should identify a resident animation pack");
+  expect_eq(initialTextureCacheStats.capacity, std::uint64_t{64},
+            "GPU cache telemetry should expose the fixed LRU capacity");
+  expect_eq(initialTextureCacheStats.requests, std::uint64_t{0},
+            "Preparing a pack must not synthesize GPU cache requests");
+  expect_eq(initialTextureCacheStats.residentTextureNames, std::uint64_t{0},
+            "Preparing raw frames must not eagerly create GPU textures");
+  expect_eq(initialTextureCacheStats.residentBaseLevelBytes, std::uint64_t{0},
+            "Preparing raw frames must not report eager GPU residency");
   iee::area_animation_x4::FrameResolution resolution{};
   expect_true(iee::area_animation_x4::resolve_frame(
                   target, iee::area_animation_x4::kAnyWorldPosition,
@@ -3074,6 +3086,17 @@ void test_area_animation_registry_formats() {
   expect_eq(reloadStats.peakRawBytes,
             reloadStats.outgoingRawBytes + reloadStats.residentRawBytes,
             "Reload peak telemetry should include outgoing and incoming raw payloads");
+  expect_true(reloadStats.outgoingTextureCache.active &&
+                  reloadStats.outgoingTextureCache.capacity == 64 &&
+                  reloadStats.outgoingTextureCache.requests == 0 &&
+                  reloadStats.outgoingTextureCache.residentTextureNames == 0,
+              "Reload telemetry should preserve the outgoing empty GPU cache snapshot");
+  const auto reloadedTextureCacheStats =
+      iee::area_animation_x4::texture_cache_telemetry_snapshot();
+  expect_true(reloadedTextureCacheStats.active &&
+                  reloadedTextureCacheStats.capacity == 64 &&
+                  reloadedTextureCacheStats.requests == 0,
+              "A pack swap should reset cumulative GPU cache counters for the new area");
   iee::area_animation_x4::release();
 
   // v3: two variants of one resref, told apart by the world position of the occurrence they
@@ -3216,6 +3239,13 @@ void test_area_animation_registry_formats() {
   expect_true(!iee::area_animation_x4::prepare_for_area("AR0000") &&
                   !iee::area_animation_x4::ready(),
               "A zone without a pack must release the prior area and fall back to the BAM");
+  const auto releasedTextureCacheStats =
+      iee::area_animation_x4::texture_cache_telemetry_snapshot();
+  expect_true(!releasedTextureCacheStats.active &&
+                  releasedTextureCacheStats.capacity == 64 &&
+                  releasedTextureCacheStats.requests == 0 &&
+                  releasedTextureCacheStats.residentTextureNames == 0,
+              "Releasing an area pack should reset GPU cache telemetry and residency");
   iee::area_animation_x4::release();
 
   auto malformed = make_header(2);

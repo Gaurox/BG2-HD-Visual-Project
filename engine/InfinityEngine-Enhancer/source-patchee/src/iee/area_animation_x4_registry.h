@@ -36,6 +36,28 @@ struct NativePixelEncoding {
   [[nodiscard]] constexpr bool operator==(const NativePixelEncoding&) const noexcept = default;
 };
 
+// Cumulative per-area accounting for the bounded GPU cache. Byte counts describe the uploaded
+// RGBA8 base level owned by this runtime; driver allocation overhead is not observable here.
+struct TextureCacheTelemetryStats {
+  bool active{};
+  std::uint64_t capacity{};
+  std::uint64_t requests{};
+  std::uint64_t hits{};
+  std::uint64_t misses{};
+  std::uint64_t textureNameCreations{};
+  std::uint64_t textureNameCreationFailures{};
+  std::uint64_t uploadAttempts{};
+  std::uint64_t successfulUploads{};
+  std::uint64_t failedUploads{};
+  std::uint64_t lruEvictions{};
+  std::uint64_t failedUploadTextureDeletes{};
+  std::uint64_t contextInvalidatedTextureNames{};
+  std::uint64_t uploadedBaseLevelBytes{};
+  std::uint64_t residentTextureNames{};
+  std::uint64_t residentBaseLevelBytes{};
+  std::uint64_t peakResidentBaseLevelBytes{};
+};
+
 // Diagnostic-only accounting for one synchronous pack preparation. Byte counts cover the raw
 // RGBA frame payload owned by this runtime, not allocator overhead or process working set.
 struct PackPreparationStats {
@@ -50,6 +72,7 @@ struct PackPreparationStats {
   std::uint64_t frameCount{};
   std::uint64_t outgoingTextureNames{};
   std::uint64_t deferredTextureNames{};
+  TextureCacheTelemetryStats outgoingTextureCache{};
   double registryReadMilliseconds{};
   double frameReadMilliseconds{};
   double parseAndAllocateMilliseconds{};
@@ -133,8 +156,13 @@ bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
 // Lazily creates or reuses a bounded engine texture whose descriptor retains
 // native x1 dimensions while its OpenGL storage contains the x4 pixels.
 bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
-                        int& previousTextureId) noexcept;
+                        int& previousTextureId,
+                        bool enablePerformanceLogging = false) noexcept;
 void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcept;
+
+// Returns a coherent cumulative snapshot for the resident area. Counters remain zero when
+// PerformanceLogs is disabled; resident base-level size still reflects the actual bounded cache.
+[[nodiscard]] TextureCacheTelemetryStats texture_cache_telemetry_snapshot() noexcept;
 
 // Drops cached texture names WITHOUT returning them to the engine. Correct only when
 // the names are already invalid: a recreated WGL context, or hook teardown.

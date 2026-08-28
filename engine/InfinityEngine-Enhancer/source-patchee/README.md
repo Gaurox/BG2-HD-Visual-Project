@@ -34,6 +34,12 @@ world pass. These are runtime-owned payload counts, not allocator overhead, proc
 exact GPU bytes.
 Per-frame area-animation composition traces are DEBUG-only. Normal INFO logging therefore does not
 flush once for every frame first encountered after each area-pack swap.
+Area-animation GPU-cache telemetry is also gated by `PerformanceLogs`. Its cumulative per-area
+snapshots distinguish requests, hits, misses, engine texture-name creation, successful/failed
+uploads, LRU evictions and context invalidations. They report uploaded, resident and peak RGBA8
+base-level bytes every five seconds and once when the pack leaves residency. An LRU eviction
+reuses its engine texture name; it is therefore not reported as a GL deletion. Byte counts exclude
+driver allocation overhead.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.

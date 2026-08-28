@@ -1137,6 +1137,8 @@ void record_render_performance(const AppContext& ctx, bool handled,
     const auto textureStats = game::take_texture_configuration_stats();
     const auto tileStats = features::tile_render_telemetry_snapshot();
     const auto glStats = core::gl_texture_telemetry_snapshot();
+    const auto areaAnimationTextureStats =
+        area_animation_x4::texture_cache_telemetry_snapshot();
     const auto wed = ctx.wed.load(std::memory_order_acquire);
     const auto area = wed ? wed->areaResrefView() : std::string_view{"?"};
     LOG_INFO(
@@ -1167,6 +1169,29 @@ void record_render_performance(const AppContext& ctx, bool handled,
         glStats.compressedUploadBytes, glStats.compressedBaseLevelCalls,
         glStats.largeS3tcBaseLevelCalls, glStats.largeS3tcBaseLevelBytes,
         glStats.deleteCalls, glStats.deletedTextureNames);
+    if (areaAnimationTextureStats.active) {
+      LOG_INFO(
+          "Area-animation GPU cache telemetry: area={}, reason=periodic, capacity={}, "
+          "requests={}, hits={}, misses={}, textureNameCreations={}, "
+          "textureNameCreationFailures={}, uploadAttempts={}, successfulUploads={}, "
+          "failedUploads={}, lruEvictions={}, failedUploadTextureDeletes={}, "
+          "contextInvalidatedTextureNames={}, uploadedBaseLevelBytes={}, "
+          "residentTextureNames={}, residentBaseLevelBytes={}, peakResidentBaseLevelBytes={}",
+          area, areaAnimationTextureStats.capacity, areaAnimationTextureStats.requests,
+          areaAnimationTextureStats.hits, areaAnimationTextureStats.misses,
+          areaAnimationTextureStats.textureNameCreations,
+          areaAnimationTextureStats.textureNameCreationFailures,
+          areaAnimationTextureStats.uploadAttempts,
+          areaAnimationTextureStats.successfulUploads,
+          areaAnimationTextureStats.failedUploads,
+          areaAnimationTextureStats.lruEvictions,
+          areaAnimationTextureStats.failedUploadTextureDeletes,
+          areaAnimationTextureStats.contextInvalidatedTextureNames,
+          areaAnimationTextureStats.uploadedBaseLevelBytes,
+          areaAnimationTextureStats.residentTextureNames,
+          areaAnimationTextureStats.residentBaseLevelBytes,
+          areaAnimationTextureStats.peakResidentBaseLevelBytes);
+    }
     window.reset(now.QuadPart);
   } catch (...) {
     // Performance diagnostics must not affect rendering.
@@ -1661,8 +1686,9 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::Registry &&
       g_areaAnimationRenderDepth > 0) {
-    if (area_animation_x4::bind_frame_texture(g_areaAnimationFrame, g_areaAnimationTextureApi,
-                                              previousTextureId)) {
+    if (area_animation_x4::bind_frame_texture(
+            g_areaAnimationFrame, g_areaAnimationTextureApi, previousTextureId,
+            g_ctx && g_ctx->cfg.enablePerformanceLogging)) {
       replacement = ReplacementKind::AreaRegistry;
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::AM0205EPrototype &&

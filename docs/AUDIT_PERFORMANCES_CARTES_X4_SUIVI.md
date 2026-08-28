@@ -20,11 +20,14 @@ de zone. Il est compilé, installé et validé techniquement ingame sur AR0602, 
 Le retrait des traces INFO émises une fois par frame d’animation est également validé ingame sur
 ces trois zones.
 
+Le troisième petit lot P1 mesure le cache GPU borné des animations. Il est validé ingame sur
+AR0700, AR0516, AR0900 et AR0602 ; les trois dernières zones révèlent des évictions LRU répétées.
+
 Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/animation-composition-log-20260828T225306Z/`. Sa restauration revient
-au build de télémétrie des packs, dont les états précédents conservent la chaîne de retour jusqu’au
-build P0 de rotation des logs. Il n’est pas éligible à la release et aucun manifeste de release
-n’a été modifié.
+distinct sous `bg2hd/state/animation-gpu-cache-telemetry-20260828T231509Z/`. Sa restauration
+revient au build validé qui retire les logs INFO par frame, dont les états précédents conservent la
+chaîne de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la release et
+aucun manifeste de release n’a été modifié.
 
 ## Actions
 
@@ -38,6 +41,7 @@ n’a été modifié.
 | P1 | Premier lot : marqueurs carte et compteurs table PVR/GL | Validé ingame | Mesure `LoadArea`, les pages de table distinctes et textures sources observées, ainsi que les appels GL upload/delete. Aucun timing I/O/zlib ni calcul mémoire exact dans ce lot. |
 | P1 | Attribution précise I/O, zlib et mémoire | Premier sous-lot mesuré ingame | Les lectures synchrones des fichiers RGBA expliquent presque tout le temps ajouté sur AR0602 et AR0516 ; le pic brut mesuré atteint 600,99 Mio sur AR0516 → AR0900. La mémoire résidente du processus et le cache fichier restent à mesurer séparément. |
 | P1 | Supprimer les flush INFO une fois par frame d’animation | Validé ingame | `Composing area animation` passe en DEBUG : aucune occurrence INFO sur AR0602, AR0516 et AR0900, contre 427 écritures synchrones dans la session de référence. Aucun changement de rendu ou de cache. |
+| P1 | Mesurer le cache GPU des animations x4 | Validé ingame | Les invariants des compteurs sont cohérents et aucun échec GPU n’est observé. Le cache de 64 entrées évite toute éviction sur AR0700, mais provoque un churn important sur AR0516, AR0900 et AR0602. |
 | P1 | Animations x4 à la demande avec budget mémoire | Différé | Chantier moyen/élevé ; ne pas l’entreprendre sans attribution mémoire. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
@@ -183,11 +187,70 @@ Les temps de lecture plus faibles observés pendant cette session proviennent vr
 cache fichier Windows plus chaud. Ils ne sont donc pas attribués au retrait des logs et ne
 constituent pas une mesure de gain de performances.
 
+## Troisième petit lot expérimental P1
+
+Avec `PerformanceLogs=true`, le cache GPU de 64 textures d’animations publie désormais des
+compteurs cumulatifs pour la zone résidente :
+
+- requêtes, hits et misses ;
+- créations de noms de textures moteur et échecs de création ;
+- tentatives d’upload, succès, échecs et octets RGBA8 de niveau de base uploadés ;
+- évictions LRU, suppressions consécutives à un upload raté et noms invalidés avec le contexte ;
+- nombre de textures résidentes, octets de niveau de base résidents et pic correspondant.
+
+Un snapshot est produit toutes les cinq secondes, puis un dernier au changement de pack. Une
+éviction LRU réutilise le nom de texture moteur existant et n’est donc pas comptée comme une
+suppression OpenGL. Les octets décrivent le niveau de base RGBA8 demandé au pilote, sans prétendre
+mesurer son allocation interne. Les compteurs restent inactifs lorsque `PerformanceLogs=false` et
+ne changent ni la capacité, ni la sélection LRU, ni le rendu.
+
+Validation automatisée :
+
+- DLL Windows Release compilée ;
+- `ctest -C Release` : 2/2 tests C++ réussis ;
+- tests Python communs : 180/180 réussis ;
+- tests natifs du démarrage à vide, de la capacité fixe, du reset au changement de pack et de la
+  libération de zone.
+
+Installation réversible :
+
+- DLL active SHA-256
+  `7898B87F57D747E5CA7DC76E11AA66FC106CC1E45F71467D98AE1D476E12BA35` ;
+- les six autres fichiers renderer publiés restent bit-identiques au runtime précédent ;
+- la restauration remet la DLL SHA-256
+  `AACFBB8DC299DDAFC4DF76C093F5971B104D36CE23A6EA3E77806F1A0A36C201`.
+
+### Première session du troisième lot P1
+
+Session du 2026-08-29, parcours AR0700 → AR0516 → AR0900 → AR0602 :
+
+| Zone | Requêtes | Hits | Misses / uploads | Taux de hit | Évictions LRU | Uploads cumulés | Résident final | Pic résident |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| AR0700 | 7 822 | 7 768 | 54 | 99,31 % | 0 | 45,23 Mio | 45,23 Mio | 45,23 Mio |
+| AR0516 | 10 261 | 9 192 | 1 069 | 89,58 % | 1 005 | 1 697,52 Mio | 102,32 Mio | 113,08 Mio |
+| AR0900 | 2 320 | 1 922 | 398 | 82,84 % | 334 | 1 070,05 Mio | 172,01 Mio | 172,41 Mio |
+| AR0602, snapshot à 5 s | 4 318 | 3 903 | 415 | 90,39 % | 351 | 284,98 Mio | 44,08 Mio | 46,86 Mio |
+
+Les invariants attendus sont vérifiés sur chaque snapshot : `requests = hits + misses`, chaque
+miss aboutit à un upload réussi, puis `lruEvictions = successfulUploads -
+textureNameCreations` une fois les 64 noms créés. Aucun échec de création ou d’upload, aucune
+suppression consécutive à un échec et aucune invalidation de contexte n’ont été observés. Les trois
+transitions ont également supprimé correctement les 54, 64 puis 64 noms sortants différés.
+
+La session ne contient ni erreur, ni `TILE_PAGE_DIAG`, ni trace INFO par frame. Le seul
+avertissement est la récupération attendue du prologue `RenderTexture` détourné par EEex.
+
+Le cache de 64 entrées n’est donc pas seulement une borne mémoire : sur AR0516, AR0900 et AR0602,
+il force des réuploads répétés dont le cumul dépasse largement la résidence instantanée. Les
+octets publiés décrivent les niveaux de base RGBA8 envoyés au pilote, pas la VRAM réellement
+allouée.
+
 ## Prochaine étape
 
-Le P0, les deux petits lots de télémétrie P1 et le retrait des logs INFO par frame sont validés. Les
-mesures justifient le chargement à la demande des frames d’animations avec un budget en octets : il
-faut supprimer les lectures intégrales de 215 à 386 Mio sur le thread de chargement ou de rendu.
-Avant ce chantier moyen/élevé, le prochain petit lot prudent est d’instrumenter les hits, misses,
-évictions, uploads et octets du cache GPU existant. Une mesure externe du Working Set et du cache
-fichier restera nécessaire pour quantifier le gain processus complet.
+Le P0, les trois lots de télémétrie P1 et le retrait des logs INFO par frame sont validés. La
+prochaine gate prudente est une analyse en lecture seule d’un budget conjoint CPU/GPU pour les
+frames. Augmenter aveuglément la capacité à toutes les frames supprimerait le churn, mais pourrait
+conserver jusqu’à 385,89 Mio de niveaux RGBA8 sur AR0516 en plus du pack brut déjà résident. Le
+chargement à la demande doit donc définir ensemble la résidence CPU, la résidence GPU et la
+politique d’éviction, puis prévoir un A/B borné. Une mesure externe du Working Set, du cache fichier
+et idéalement de la VRAM restera nécessaire pour quantifier le gain processus complet.

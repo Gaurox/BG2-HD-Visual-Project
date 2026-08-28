@@ -78,6 +78,7 @@ struct TextureCacheEntry {
   FrameHandle handle{};
   int textureId{};
   std::uint64_t lastUse{};
+  std::uint64_t baseLevelBytes{};
 };
 
 struct PositionMiss {
@@ -122,6 +123,7 @@ std::vector<Resource> g_resources;
 std::vector<PositionMiss> g_positionMisses;
 std::vector<TextureCacheEntry> g_textureCache;
 std::uint64_t g_textureUseCounter{};
+TextureCacheTelemetryStats g_textureCacheTelemetry{.capacity = kTextureCacheLimit};
 bool g_creationFailureLogged = false;
 // Engine texture names whose owning context is still alive but which no longer back a
 // resident frame. Only the GL thread may delete them, so they wait here.
@@ -192,11 +194,39 @@ int logical_texture_id(const EngineTextureApi& api) noexcept {
   return static_cast<int>((state >> 21u) & 0x1FFu);
 }
 
+void refresh_texture_cache_residency_locked() noexcept {
+  std::uint64_t residentBytes = 0;
+  for (const TextureCacheEntry& entry : g_textureCache) {
+    residentBytes += entry.baseLevelBytes;
+  }
+  g_textureCacheTelemetry.residentTextureNames =
+      static_cast<std::uint64_t>(g_textureCache.size());
+  g_textureCacheTelemetry.residentBaseLevelBytes = residentBytes;
+  g_textureCacheTelemetry.peakResidentBaseLevelBytes =
+      (std::max)(g_textureCacheTelemetry.peakResidentBaseLevelBytes, residentBytes);
+}
+
+TextureCacheTelemetryStats texture_cache_telemetry_snapshot_locked() noexcept {
+  auto stats = g_textureCacheTelemetry;
+  stats.active = g_ready.load(std::memory_order_relaxed);
+  return stats;
+}
+
+void reset_texture_cache_telemetry_locked() noexcept {
+  g_textureCacheTelemetry = {.capacity = kTextureCacheLimit};
+  refresh_texture_cache_residency_locked();
+}
+
 // Abandons the cached names. Callers must be certain the names are already invalid
 // (context recreated, hooks torn down); otherwise use retire_texture_cache_locked().
-void clear_texture_cache_locked() noexcept {
+void clear_texture_cache_locked(bool recordTelemetry = false) noexcept {
+  if (recordTelemetry) {
+    g_textureCacheTelemetry.contextInvalidatedTextureNames +=
+        static_cast<std::uint64_t>(g_textureCache.size());
+  }
   g_textureCache.clear();
   g_textureUseCounter = 0;
+  refresh_texture_cache_residency_locked();
 }
 
 // Parks the cached names for deletion by the GL thread. Used when the pack is swapped
@@ -213,6 +243,7 @@ void retire_texture_cache_locked() noexcept {
   g_hasRetiredTextures.store(!g_retiredTextureIds.empty(), std::memory_order_release);
   g_textureCache.clear();
   g_textureUseCounter = 0;
+  refresh_texture_cache_residency_locked();
 }
 
 void drop_retired_textures_locked() noexcept {
@@ -224,15 +255,19 @@ void drop_retired_textures_locked() noexcept {
 }
 
 struct ReleaseSummary {
+  std::string outgoingArea;
   std::uint64_t outgoingRawBytes{};
   std::uint64_t outgoingTextureNames{};
   std::uint64_t deferredTextureNames{};
+  TextureCacheTelemetryStats outgoingTextureCache{};
 };
 
 ReleaseSummary release_locked() {
   ReleaseSummary summary{
+      .outgoingArea = g_residentArea,
       .outgoingRawBytes = g_residentRawBytes,
       .outgoingTextureNames = static_cast<std::uint64_t>(g_textureCache.size()),
+      .outgoingTextureCache = texture_cache_telemetry_snapshot_locked(),
   };
   g_ready.store(false, std::memory_order_release);
   retire_texture_cache_locked();
@@ -246,6 +281,7 @@ ReleaseSummary release_locked() {
   g_residentRawBytes = 0;
   g_creationFailureLogged = false;
   summary.deferredTextureNames = static_cast<std::uint64_t>(g_retiredTextureIds.size());
+  reset_texture_cache_telemetry_locked();
   return summary;
 }
 
@@ -254,6 +290,23 @@ using TelemetryClock = std::chrono::steady_clock;
 double elapsed_milliseconds(TelemetryClock::time_point start,
                             TelemetryClock::time_point end) noexcept {
   return std::chrono::duration<double, std::milli>(end - start).count();
+}
+
+void log_texture_cache_telemetry(std::string_view area, std::string_view reason,
+                                 const TextureCacheTelemetryStats& stats) {
+  LOG_INFO(
+      "Area-animation GPU cache telemetry: area={}, reason={}, capacity={}, requests={}, "
+      "hits={}, misses={}, textureNameCreations={}, textureNameCreationFailures={}, "
+      "uploadAttempts={}, successfulUploads={}, failedUploads={}, lruEvictions={}, "
+      "failedUploadTextureDeletes={}, contextInvalidatedTextureNames={}, "
+      "uploadedBaseLevelBytes={}, residentTextureNames={}, residentBaseLevelBytes={}, "
+      "peakResidentBaseLevelBytes={}",
+      area, reason, stats.capacity, stats.requests, stats.hits, stats.misses,
+      stats.textureNameCreations, stats.textureNameCreationFailures, stats.uploadAttempts,
+      stats.successfulUploads, stats.failedUploads, stats.lruEvictions,
+      stats.failedUploadTextureDeletes, stats.contextInvalidatedTextureNames,
+      stats.uploadedBaseLevelBytes, stats.residentTextureNames, stats.residentBaseLevelBytes,
+      stats.peakResidentBaseLevelBytes);
 }
 
 std::string normalised_area_name(std::string_view value) {
@@ -269,12 +322,16 @@ std::string normalised_area_name(std::string_view value) {
   return (result.empty() || result.size() > 8) ? std::string{} : result;
 }
 
-void delete_texture_entry_locked(const EngineTextureApi& api,
-                                 std::size_t entryIndex) noexcept {
+void delete_texture_entry_locked(const EngineTextureApi& api, std::size_t entryIndex,
+                                 bool recordTelemetry) noexcept {
   if (entryIndex >= g_textureCache.size()) return;
   const int textureId = g_textureCache[entryIndex].textureId;
-  if (textureId > 0 && api.DrawDeleteTexture) api.DrawDeleteTexture(textureId);
+  if (textureId > 0 && api.DrawDeleteTexture) {
+    api.DrawDeleteTexture(textureId);
+    if (recordTelemetry) ++g_textureCacheTelemetry.failedUploadTextureDeletes;
+  }
   g_textureCache.erase(g_textureCache.begin() + static_cast<std::ptrdiff_t>(entryIndex));
+  refresh_texture_cache_residency_locked();
 }
 
 bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureApi& api,
@@ -347,16 +404,20 @@ bool upload_frame_locked(const Frame& frame, int textureId, const EngineTextureA
 }
 
 bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
-                           int previousTextureId, int& textureId) noexcept {
+                           int previousTextureId, int& textureId,
+                           bool recordTelemetry) noexcept {
   textureId = 0;
+  if (recordTelemetry) ++g_textureCacheTelemetry.requests;
   const auto existing = std::find_if(
       g_textureCache.begin(), g_textureCache.end(),
       [&](const TextureCacheEntry& entry) { return entry.handle == handle; });
   if (existing != g_textureCache.end()) {
+    if (recordTelemetry) ++g_textureCacheTelemetry.hits;
     existing->lastUse = ++g_textureUseCounter;
     textureId = existing->textureId;
     return textureId > 0;
   }
+  if (recordTelemetry) ++g_textureCacheTelemetry.misses;
 
   const auto& resource = g_resources[handle.resourceIndex];
   const auto& frame = resource.frames[handle.frameIndex];
@@ -364,8 +425,13 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   bool newTexture = g_textureCache.size() < kTextureCacheLimit;
   if (newTexture) {
     const int generated = api.DrawGenTexture(static_cast<int>(game::gl::LINEAR), 0, 0, 0);
-    if (generated <= 0) return false;
-    g_textureCache.push_back({.handle = handle, .textureId = generated, .lastUse = 0});
+    if (generated <= 0) {
+      if (recordTelemetry) ++g_textureCacheTelemetry.textureNameCreationFailures;
+      return false;
+    }
+    if (recordTelemetry) ++g_textureCacheTelemetry.textureNameCreations;
+    g_textureCache.push_back(
+        {.handle = handle, .textureId = generated, .lastUse = 0, .baseLevelBytes = 0});
     entryIndex = g_textureCache.size() - 1;
   } else {
     const auto lru = std::min_element(
@@ -375,14 +441,23 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
         });
     entryIndex = static_cast<std::size_t>(std::distance(g_textureCache.begin(), lru));
     lru->handle = handle;
+    if (recordTelemetry) ++g_textureCacheTelemetry.lruEvictions;
   }
 
   auto& entry = g_textureCache[entryIndex];
+  if (recordTelemetry) ++g_textureCacheTelemetry.uploadAttempts;
   if (!upload_frame_locked(frame, entry.textureId, api, previousTextureId)) {
-    delete_texture_entry_locked(api, entryIndex);
+    if (recordTelemetry) ++g_textureCacheTelemetry.failedUploads;
+    delete_texture_entry_locked(api, entryIndex, recordTelemetry);
     api.DrawBindTexture(previousTextureId);
     return false;
   }
+  entry.baseLevelBytes = static_cast<std::uint64_t>(frame.replacement.size());
+  if (recordTelemetry) {
+    ++g_textureCacheTelemetry.successfulUploads;
+    g_textureCacheTelemetry.uploadedBaseLevelBytes += entry.baseLevelBytes;
+  }
+  refresh_texture_cache_residency_locked();
   entry.lastUse = ++g_textureUseCounter;
   textureId = entry.textureId;
   LOG_DEBUG("Area animation x4 texture {}: {} frame {:03}, logical {}x{}, physical {}x{}{}",
@@ -584,6 +659,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
         stats->frameCount = static_cast<std::uint64_t>(totalFrames);
         stats->outgoingTextureNames =
             static_cast<std::uint64_t>(g_textureCache.size());
+        stats->outgoingTextureCache = texture_cache_telemetry_snapshot_locked();
       }
       g_ready.store(false, std::memory_order_release);
       g_resources = std::move(loaded);
@@ -592,6 +668,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
       // parked for the GL thread rather than abandoned. At first load the cache is empty
       // and this is a no-op.
       retire_texture_cache_locked();
+      reset_texture_cache_telemetry_locked();
       g_residentRawBytes = totalRawBytes;
       if (stats) {
         stats->deferredTextureNames =
@@ -742,7 +819,7 @@ bool has_baked_occurrence_occlusion(FrameHandle handle) noexcept {
 }
 
 bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
-                        int& previousTextureId) noexcept {
+                        int& previousTextureId, bool enablePerformanceLogging) noexcept {
   previousTextureId = 0;
   if (!g_ready.load(std::memory_order_acquire) || !api.DrawGenTexture ||
       !api.DrawBindTexture || !api.DrawDeleteTexture || !api.TexImage ||
@@ -766,7 +843,7 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
     const auto context = game::gl::current_context();
     if (!context) return false;
     if (g_textureContext != context) {
-      clear_texture_cache_locked();
+      clear_texture_cache_locked(enablePerformanceLogging);
       g_textureContext = context;
       for (auto& resource : g_resources) {
         std::fill(resource.compositionLogged.begin(), resource.compositionLogged.end(), false);
@@ -776,7 +853,8 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
     previousTextureId = logical_texture_id(api);
     if (previousTextureId <= 0) return false;
     int replacementTexture = 0;
-    if (!ensure_texture_locked(handle, api, previousTextureId, replacementTexture)) {
+    if (!ensure_texture_locked(handle, api, previousTextureId, replacementTexture,
+                               enablePerformanceLogging)) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
         LOG_WARN("Area-animation x4 texture creation failed; delegating to original BAM");
@@ -803,6 +881,15 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
 
 void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcept {
   if (api.DrawBindTexture && previousTextureId > 0) api.DrawBindTexture(previousTextureId);
+}
+
+TextureCacheTelemetryStats texture_cache_telemetry_snapshot() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    return texture_cache_telemetry_snapshot_locked();
+  } catch (...) {
+    return {.capacity = kTextureCacheLimit};
+  }
 }
 
 void forget_engine_textures() noexcept {
@@ -882,6 +969,8 @@ bool per_area_packs_active() noexcept {
 
 bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging) noexcept {
   std::filesystem::path packDirectory;
+  std::string outgoingArea;
+  TextureCacheTelemetryStats outgoingTextureCache{};
   const auto area = normalised_area_name(areaResref);
   {
     std::lock_guard lock(g_mutex);
@@ -893,6 +982,8 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
     // Re-entering the same area (or a LoadArea that resolves to it) must not pay for a
     // reload, and must not retire textures that are about to be needed again.
     if (g_ready.load(std::memory_order_acquire) && g_residentArea == area) return true;
+    outgoingArea = g_residentArea;
+    outgoingTextureCache = texture_cache_telemetry_snapshot_locked();
     packDirectory = g_areaPacksRoot / area;
   }
 
@@ -906,6 +997,10 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
       releaseSummary = release_locked();
     }
     if (enablePerformanceLogging) {
+      if (!releaseSummary.outgoingArea.empty()) {
+        log_texture_cache_telemetry(releaseSummary.outgoingArea, "area-release",
+                                    releaseSummary.outgoingTextureCache);
+      }
       LOG_INFO(
           "Area-animation pack telemetry: area={}, outcome=native, outgoingRawBytes={}, "
           "residentRawBytes=0, outgoingTextureNames={}, deferredTextureNames={}, "
@@ -919,10 +1014,16 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
   }
   PackPreparationStats stats{};
   if (!prepare(packDirectory, enablePerformanceLogging ? &stats : nullptr)) {
+    if (enablePerformanceLogging && !outgoingArea.empty()) {
+      log_texture_cache_telemetry(outgoingArea, "pack-load-failure", outgoingTextureCache);
+    }
     LOG_WARN("Area-animation x4: pack for area {} refused; falling back to the engine BAM", area);
     return false;
   }
   if (enablePerformanceLogging) {
+    if (!outgoingArea.empty()) {
+      log_texture_cache_telemetry(outgoingArea, "pack-swap", stats.outgoingTextureCache);
+    }
     LOG_INFO(
         "Area-animation pack telemetry: area={}, outcome=loaded, registryBytes={}, "
         "frameFiles={}, frameBytes={}, outgoingRawBytes={}, residentRawBytes={}, "
