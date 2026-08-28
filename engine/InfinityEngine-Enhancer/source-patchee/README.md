@@ -32,6 +32,8 @@ parse/allocation work and the resident-pack swap. It reports exact raw RGBA byte
 and outgoing packs, their temporary coexistence peak, and texture names deferred to the next GL
 world pass. These are runtime-owned payload counts, not allocator overhead, process working set or
 exact GPU bytes.
+Per-frame area-animation composition traces are DEBUG-only. Normal INFO logging therefore does not
+flush once for every frame first encountered after each area-pack swap.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.

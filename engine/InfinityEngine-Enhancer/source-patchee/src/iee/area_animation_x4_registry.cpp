@@ -788,9 +788,9 @@ bool bind_frame_texture(FrameHandle handle, const EngineTextureApi& api,
     if (!resource.compositionLogged[handle.frameIndex]) {
       resource.compositionLogged[handle.frameIndex] = true;
       const auto& frame = resource.frames[handle.frameIndex];
-      LOG_INFO("Composing area animation {} frame {:03}: logical {}x{}, physical {}x{}",
-               resource.displayName, handle.frameIndex, frame.logicalWidth, frame.logicalHeight,
-               frame.logicalWidth * kScale, frame.logicalHeight * kScale);
+      LOG_DEBUG("Composing area animation {} frame {:03}: logical {}x{}, physical {}x{}",
+                resource.displayName, handle.frameIndex, frame.logicalWidth, frame.logicalHeight,
+                frame.logicalWidth * kScale, frame.logicalHeight * kScale);
     }
     return true;
   } catch (const std::exception& error) {

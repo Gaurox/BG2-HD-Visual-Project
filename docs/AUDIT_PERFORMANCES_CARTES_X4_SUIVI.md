@@ -17,10 +17,12 @@ correctif de précision a été revalidé ingame sans erreur. Il reste opt-in vi
 
 Le deuxième petit lot P1 instrumente maintenant la préparation synchrone des packs d’animations
 de zone. Il est compilé, installé et validé techniquement ingame sur AR0602, AR0516 et AR0900.
+Le retrait des traces INFO émises une fois par frame d’animation est également validé ingame sur
+ces trois zones.
 
 Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/animation-pack-telemetry-20260828T223420Z/`. Sa restauration revient au
-correctif du premier lot P1, dont les états précédents conservent la chaîne de retour jusqu’au
+distinct sous `bg2hd/state/animation-composition-log-20260828T225306Z/`. Sa restauration revient
+au build de télémétrie des packs, dont les états précédents conservent la chaîne de retour jusqu’au
 build P0 de rotation des logs. Il n’est pas éligible à la release et aucun manifeste de release
 n’a été modifié.
 
@@ -35,6 +37,7 @@ n’a été modifié.
 | P0 | Journal rotatif/borné | Validé ingame | Rotation à 16 Mio avec trois sauvegardes, soit environ 64 Mio de nouvelles sorties conservées. Le sink reste synchrone et `flush_on(info)` est préservé. |
 | P1 | Premier lot : marqueurs carte et compteurs table PVR/GL | Validé ingame | Mesure `LoadArea`, les pages de table distinctes et textures sources observées, ainsi que les appels GL upload/delete. Aucun timing I/O/zlib ni calcul mémoire exact dans ce lot. |
 | P1 | Attribution précise I/O, zlib et mémoire | Premier sous-lot mesuré ingame | Les lectures synchrones des fichiers RGBA expliquent presque tout le temps ajouté sur AR0602 et AR0516 ; le pic brut mesuré atteint 600,99 Mio sur AR0516 → AR0900. La mémoire résidente du processus et le cache fichier restent à mesurer séparément. |
+| P1 | Supprimer les flush INFO une fois par frame d’animation | Validé ingame | `Composing area animation` passe en DEBUG : aucune occurrence INFO sur AR0602, AR0516 et AR0900, contre 427 écritures synchrones dans la session de référence. Aucun changement de rendu ou de cache. |
 | P1 | Animations x4 à la demande avec budget mémoire | Différé | Chantier moyen/élevé ; ne pas l’entreprendre sans attribution mémoire. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
@@ -167,11 +170,24 @@ de parsing ou d’upload anticipé : la lecture des 80 fichiers RGBA en représe
 L’avertissement de récupération du prologue EEex attendu et le fallback de tint liquide WLAKE00
 sont les seuls avertissements de la session ; aucun `error` ou `critical` n’a été émis.
 
+### Validation du retrait des logs par frame
+
+Session du 2026-08-29 sur AR0602, AR0516 et AR0900 :
+
+- aucune occurrence INFO de `Composing area animation`, contre 427 dans la session de référence ;
+- les trois événements agrégés de télémétrie des packs sont toujours présents ;
+- aucune erreur et aucun `TILE_PAGE_DIAG` ;
+- rendu des animations et libération différée des textures sortantes fonctionnels ingame.
+
+Les temps de lecture plus faibles observés pendant cette session proviennent vraisemblablement du
+cache fichier Windows plus chaud. Ils ne sont donc pas attribués au retrait des logs et ne
+constituent pas une mesure de gain de performances.
+
 ## Prochaine étape
 
-Le P0 et les deux petits lots de télémétrie P1 sont validés. Les mesures justifient le chargement à
-la demande des frames d’animations avec un budget en octets : il faut supprimer les lectures
-intégrales de 215 à 386 Mio sur le thread de chargement ou de rendu. La prochaine gate prudente est
-une analyse en lecture seule de l’architecture de cache, du préchargement minimal et du
-comportement en cas de frame absente avant d’engager ce chantier moyen/élevé. Une mesure externe du
-Working Set et du cache fichier restera nécessaire pour quantifier le gain processus complet.
+Le P0, les deux petits lots de télémétrie P1 et le retrait des logs INFO par frame sont validés. Les
+mesures justifient le chargement à la demande des frames d’animations avec un budget en octets : il
+faut supprimer les lectures intégrales de 215 à 386 Mio sur le thread de chargement ou de rendu.
+Avant ce chantier moyen/élevé, le prochain petit lot prudent est d’instrumenter les hits, misses,
+évictions, uploads et octets du cache GPU existant. Une mesure externe du Working Set et du cache
+fichier restera nécessaire pour quantifier le gain processus complet.
