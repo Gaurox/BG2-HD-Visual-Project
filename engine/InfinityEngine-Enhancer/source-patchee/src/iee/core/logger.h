@@ -1,9 +1,25 @@
 #pragma once
+#include <spdlog/sinks/sink.h>
 #include <spdlog/spdlog.h>
 
+#include <cstddef>
+#include <memory>
 #include <string_view>
 
 namespace iee::core {
+inline constexpr std::size_t DEFAULT_LOG_MAX_FILE_SIZE_BYTES = 16u * 1024u * 1024u;
+inline constexpr std::size_t DEFAULT_LOG_BACKUP_FILE_COUNT = 3u;
+
+struct LoggerRotationPolicy {
+  std::size_t maxFileSizeBytes = DEFAULT_LOG_MAX_FILE_SIZE_BYTES;
+  std::size_t backupFileCount = DEFAULT_LOG_BACKUP_FILE_COUNT;
+};
+
+namespace detail {
+std::shared_ptr<spdlog::sinks::sink> make_rotating_file_sink(
+    std::string_view log_path_utf8, LoggerRotationPolicy policy = {});
+}
+
 void init_logger(std::string_view log_path_utf8, bool verbose = false);
 
 spdlog::logger* logger() noexcept;

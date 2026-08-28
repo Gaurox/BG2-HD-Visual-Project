@@ -27,6 +27,7 @@
 #include "iee/core/area_animation_timeline.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
+#include "iee/core/logger.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
@@ -762,6 +763,50 @@ void test_config_reports_malformed_values() {
 
   std::error_code error;
   std::filesystem::remove(tempPath, error);
+}
+
+void test_logger_rotation_is_bounded() {
+  namespace fs = std::filesystem;
+  constexpr std::size_t maxFileSize = 512;
+  constexpr std::size_t backupFileCount = 2;
+  const fs::path tempDirectory =
+      fs::current_path() / "InfinityEngine-Enhancer-log-rotation-test";
+  const fs::path logPath = tempDirectory / "rotation.log";
+  std::error_code error;
+  fs::remove_all(tempDirectory, error);
+  error.clear();
+  fs::create_directories(tempDirectory, error);
+  expect_true(!error, "Logger rotation fixture directory should be writable");
+  if (error) return;
+
+  {
+    auto sink = iee::core::detail::make_rotating_file_sink(
+        logPath.string(), {maxFileSize, backupFileCount});
+    spdlog::logger testLogger("iee-rotation-test", sink);
+    testLogger.set_pattern("%v");
+    for (std::size_t index = 0; index < 80; ++index) {
+      testLogger.info("rotation record {:03}: abcdefghijklmnopqrstuvwxyz0123456789", index);
+    }
+    testLogger.flush();
+  }
+
+  const std::array expectedFiles{
+      logPath, tempDirectory / "rotation.1.log", tempDirectory / "rotation.2.log"};
+  for (const auto& path : expectedFiles) {
+    error.clear();
+    const auto size = fs::file_size(path, error);
+    expect_true(!error, "Rotating logger should retain the active file and requested backups");
+    if (!error) {
+      expect_true(size > 0 && size <= maxFileSize,
+                  "Every retained log file should respect the configured byte limit");
+    }
+  }
+  expect_true(!fs::exists(tempDirectory / "rotation.3.log"),
+              "Rotating logger should discard files beyond the backup count");
+
+  error.clear();
+  fs::remove_all(tempDirectory, error);
+  expect_true(!error, "Logger rotation fixture should be removable after the sink closes");
 }
 
 void test_config_shader_override_defaults() {
@@ -4177,6 +4222,7 @@ int main() {
   test_config_parsing();
   test_config_numeric_bounds();
   test_config_reports_malformed_values();
+  test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
   test_config_shader_override_roundtrip();
   test_native_occlusion_probe_correlation();

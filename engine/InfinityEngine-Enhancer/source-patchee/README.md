@@ -74,7 +74,9 @@ sprite assets and a `LINEAR` session is not eligible for formal sprite QA. Apply
 4. Copy the contents of `override/` (the EEex loader script and shader) into the game's `override` directory.
 5. Optionally copy [InfinityEngine-Enhancer.sample.ini](tools/InfinityEngine-Enhancer.sample.ini) to the game root as `InfinityEngine-Enhancer.ini` and customize it.
 
-The runtime writes `InfinityEngine-Enhancer.ini` and `InfinityEngine-Enhancer.log` next to the game executable.
+The runtime writes `InfinityEngine-Enhancer.ini` and `InfinityEngine-Enhancer.log` next to the game
+executable. The synchronous log rotates at 16 MiB and retains three backups
+(`InfinityEngine-Enhancer.1.log` through `.3.log`), bounding new diagnostic output to about 64 MiB.
 Optional BC1, BC3, BC5, or BC7 DDS water-texture overrides can be placed in
 `iee-textures/`; supported layouts and format guidance are documented in
 [`assets/game-textures/README.md`](assets/game-textures/README.md).

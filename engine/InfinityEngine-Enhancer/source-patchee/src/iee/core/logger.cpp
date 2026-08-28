@@ -1,6 +1,6 @@
 #include "logger.h"
 
-#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/rotating_file_sink.h>
 
 #include <memory>
 #include <mutex>
@@ -9,10 +9,15 @@ namespace iee::core {
 static std::once_flag g_once;
 static std::shared_ptr<spdlog::logger> g_logger;
 
+std::shared_ptr<spdlog::sinks::sink> detail::make_rotating_file_sink(
+    std::string_view log_path_utf8, LoggerRotationPolicy policy) {
+  return std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+      std::string{log_path_utf8}, policy.maxFileSizeBytes, policy.backupFileCount, false);
+}
+
 void init_logger(std::string_view log_path_utf8, bool verbose) {
   std::call_once(g_once, [&] {
-    auto file_sink =
-        std::make_shared<spdlog::sinks::basic_file_sink_mt>(std::string{log_path_utf8}, false);
+    auto file_sink = detail::make_rotating_file_sink(log_path_utf8);
 
     g_logger = std::make_shared<spdlog::logger>("iee", file_sink);
     spdlog::register_logger(g_logger);
