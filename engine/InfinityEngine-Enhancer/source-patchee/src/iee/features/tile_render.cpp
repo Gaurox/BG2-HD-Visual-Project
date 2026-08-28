@@ -59,6 +59,10 @@ TileRenderState& tile_render_state() noexcept {
   return state;
 }
 
+TileRenderTelemetryStats tile_render_telemetry_snapshot() noexcept {
+  return tile_render_state().performance;
+}
+
 void request_tile_render_state_reset() noexcept {
   g_resetRenderStateRequest.store(true, std::memory_order_release);
 }
@@ -138,6 +142,11 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
           TileRenderState::kMaxTilesetsPerArea);
     }
     return false;
+  }
+  if (ctx.cfg.enablePerformanceLogging) {
+    // Uses values already decoded by get_tile_info: no diagnostic snapshot or
+    // extra guarded read is introduced on the tile hot path.
+    state.observe_performance_sample(*tilesetState, tileInfo.entry.page, texId);
   }
 
   // Detect scale independently for each observed tileset. Standard resources

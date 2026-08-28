@@ -25,6 +25,9 @@ struct AppContext {
   std::atomic<void*> infGame{nullptr};
   std::atomic<std::shared_ptr<const game::WedAreaInfo>> wed{};
   game::ResrefBuffer lastLoggedWedArea{};
+  // Monotonic session marker used only by opt-in performance telemetry.
+  std::atomic<std::uint64_t> performanceAreaGeneration{0};
+  std::atomic<std::uint64_t> performanceNoOpLoadAreaCalls{0};
 
   void reset_area_state() {
     activeArea.store(nullptr);

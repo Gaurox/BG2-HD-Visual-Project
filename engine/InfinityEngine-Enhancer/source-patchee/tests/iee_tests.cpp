@@ -28,6 +28,7 @@
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/logger.h"
+#include "iee/core/map_texture_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
@@ -3968,6 +3969,87 @@ void test_tileset_runtime_cache_is_bounded_and_resettable() {
               "A reset cache should accept tilesets from the next area");
 }
 
+void test_map_texture_telemetry_is_bounded_and_resettable() {
+  iee::features::TileRenderState state{};
+  const auto* firstTileset = reinterpret_cast<const iee::game::CResTileSet*>(1);
+  const auto* secondTileset = reinterpret_cast<const iee::game::CResTileSet*>(2);
+  auto* first = state.find_or_add(firstTileset);
+  auto* second = state.find_or_add(secondTileset);
+  expect_true(first != nullptr && second != nullptr,
+              "Telemetry fixtures should fit in the bounded tileset cache");
+  if (first && second) {
+    state.observe_performance_sample(*first, 7, 101);
+    state.observe_performance_sample(*first, 7, 101);
+    state.observe_performance_sample(*second, 7, 102);
+    state.observe_performance_sample(*first, 128, -1);
+    state.observe_performance_sample(*first, -1, -1);
+  }
+  expect_eq(state.performance.decodedTileDraws, std::uint64_t{5},
+            "Every decoded tile sample should be counted");
+  expect_eq(state.performance.distinctTablePagesObserved, std::uint64_t{2},
+            "Table pages should deduplicate within, but not across, tilesets");
+  expect_eq(state.performance.negativeTablePageSamples, std::uint64_t{1},
+            "Negative table-page samples should remain explicit");
+  expect_eq(state.performance.tablePageAboveCapacitySamples, std::uint64_t{1},
+            "High table pages should remain visible without unbounded storage");
+  expect_eq(state.performance.sourceTextureIdsObserved, std::uint64_t{2},
+            "Positive source texture names should be deduplicated");
+
+  state.reset();
+  auto* resetTileset = state.find_or_add(firstTileset);
+  expect_true(resetTileset != nullptr, "Area reset should accept telemetry samples again");
+  if (resetTileset) {
+    for (std::size_t index = 0;
+         index < iee::features::TileRenderState::kMaxObservedTextureIds; ++index) {
+      state.observe_performance_sample(*resetTileset, 0, static_cast<int>(index + 1));
+    }
+    state.observe_performance_sample(*resetTileset, 0, 1000);
+  }
+  expect_eq(state.performance.sourceTextureIdsObserved,
+            static_cast<std::uint64_t>(
+                iee::features::TileRenderState::kMaxObservedTextureIds),
+            "Observed texture names should stop at the fixed capacity");
+  expect_eq(state.performance.sourceTextureCapacityMisses, std::uint64_t{1},
+            "A full texture-name set should report overflow and fail closed");
+
+  iee::core::reset_gl_texture_telemetry();
+  iee::core::record_gl_uncompressed_upload(4096);
+  iee::core::record_gl_uncompressed_upload(0);
+  iee::core::record_gl_compressed_upload(0, 0x83F3, 2048, 2048, 4 * 1024 * 1024);
+  iee::core::record_gl_compressed_upload(1, 0x83F3, 1024, 1024, 1024 * 1024);
+  iee::core::record_gl_texture_delete(3);
+  const auto glStats = iee::core::gl_texture_telemetry_snapshot();
+  expect_eq(glStats.uncompressedUploadCalls, std::uint64_t{2},
+            "Uncompressed GL calls should be counted");
+  expect_eq(glStats.uncompressedKnownBytes, std::uint64_t{4096},
+            "Known uncompressed pixel bytes should accumulate");
+  expect_eq(glStats.uncompressedUnknownByteCalls, std::uint64_t{1},
+            "Unknown uncompressed byte sizes should remain explicit");
+  expect_eq(glStats.compressedUploadCalls, std::uint64_t{2},
+            "Compressed GL calls should include base and mip levels");
+  expect_eq(glStats.compressedUploadBytes, std::uint64_t{5 * 1024 * 1024},
+            "Compressed byte counts should use the exact imageSize argument");
+  expect_eq(glStats.largeS3tcBaseLevelCalls, std::uint64_t{1},
+            "Only large base-level S3TC calls should enter the correlation bucket");
+  expect_eq(glStats.deletedTextureNames, std::uint64_t{3},
+            "Deleted GL texture names should be accumulated");
+
+  iee::core::reset_gl_texture_telemetry();
+  expect_eq(iee::core::gl_texture_telemetry_snapshot().compressedUploadCalls,
+            std::uint64_t{0}, "An area reset should clear GL telemetry");
+
+  constexpr std::int64_t frequency = 10'000'000;
+  expect_true(iee::core::is_meaningful_load_area_call(true, true, 0, frequency),
+              "A changed area should always create a telemetry generation");
+  expect_true(!iee::core::is_meaningful_load_area_call(false, true, 0, frequency),
+              "A measured same-area zero-cost LoadArea call should be ignored");
+  expect_true(iee::core::is_meaningful_load_area_call(false, true, frequency / 1000,
+                                                       frequency),
+              "A measured same-area call lasting at least one millisecond should be retained");
+  expect_true(iee::core::is_meaningful_load_area_call(false, false, -1, 0),
+              "Missing timing should fail open instead of hiding a real load");
+}
+
 void test_scale_selection_precedence() {
   const auto& manifest = iee::game::current_manifest();
 
@@ -4242,6 +4324,7 @@ int main() {
   test_supported_tile_dimensions_are_inferred_dynamically();
   test_tis_table_entry_bounds();
   test_tileset_runtime_cache_is_bounded_and_resettable();
+  test_map_texture_telemetry_is_bounded_and_resettable();
   test_scale_selection_precedence();
   test_tile_table_detection_ignores_garbage_steps();
   test_tis_tile_identity_matching();

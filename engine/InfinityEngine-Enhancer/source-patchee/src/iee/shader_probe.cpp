@@ -24,6 +24,7 @@
 
 #include "iee/core/hooking.h"
 #include "iee/core/logger.h"
+#include "iee/core/map_texture_telemetry.h"
 #include "iee/am0205e_animation_x4_test.h"
 #include "iee/am0700a_animation_x4_test.h"
 #include "iee/am3000a_frame_x4_test.h"
@@ -1049,10 +1050,46 @@ static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures
     forget_promoted_bam_textures(count, textures);
     forwarded = true;
     g_glDeleteTexturesHook.original()(count, textures);
+    if (g_cfg.enablePerformanceLogging) core::record_gl_texture_delete(count);
     game::request_texture_configuration_cache_reset();
   } catch (...) {
     if (!forwarded) g_glDeleteTexturesHook.original()(count, textures);
   }
+}
+
+std::uint64_t known_uncompressed_pixel_bytes(int width, int height, unsigned format,
+                                             unsigned type) noexcept {
+  if (width <= 0 || height <= 0) return 0;
+
+  unsigned bytesPerPixel = 0;
+  if (type == game::gl::UNSIGNED_BYTE) {
+    switch (format) {
+      case game::gl::RGBA:
+      case game::gl::BGRA:
+        bytesPerPixel = 4;
+        break;
+      case game::gl::RGB:
+      case game::gl::BGR:
+        bytesPerPixel = 3;
+        break;
+      case game::gl::LUMINANCE_ALPHA:
+        bytesPerPixel = 2;
+        break;
+      case game::gl::RED:
+      case game::gl::ALPHA:
+      case game::gl::LUMINANCE:
+        bytesPerPixel = 1;
+        break;
+      default:
+        break;
+    }
+  } else if ((type == game::gl::UNSIGNED_INT_8_8_8_8 ||
+              type == game::gl::UNSIGNED_INT_8_8_8_8_REV) &&
+             (format == game::gl::RGBA || format == game::gl::BGRA)) {
+    bytesPerPixel = 4;
+  }
+  if (bytesPerPixel == 0) return 0;
+  return static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(height) * bytesPerPixel;
 }
 
 static void APIENTRY detour_glTexImage2D(unsigned target, int level, int internalFormat,
@@ -1061,25 +1098,29 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
   bool forwarded = false;
   try {
     BamAtlasKey reboundAtlas{};
-    if (level == 0 && current_bam_atlas_key(target, reboundAtlas)) {
+    if (g_cfg.enableAM0205EAnimationX4Test && level == 0 &&
+        current_bam_atlas_key(target, reboundAtlas)) {
       // A complete image upload invalidates any previous promotion associated
       // with this texture name. Our own promotion bypasses this detour.
       forget_promoted_bam_atlas(reboundAtlas);
     }
     const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
     am3000a_x4::ReplacementUpload replacement{};
-    const bool useAM3000AReplacement = am3000a_x4::try_replacement(
-        target, level, internalFormat, width, height, border, format, type, data, replacement);
+    const bool useAM3000AReplacement =
+        g_cfg.enableAM3000AFrameX4Test && am3000a_x4::try_replacement(
+                                               target, level, internalFormat, width, height, border,
+                                               format, type, data, replacement);
     am0700a_x4::ReplacementUpload fountainReplacement{};
     const bool useAM0700AReplacement =
-        !useAM3000AReplacement && am0700a_x4::try_replacement(
-                                    target, level, internalFormat, width, height, border, format,
+        !useAM3000AReplacement && g_cfg.enableAM0700AAnimationX4Test &&
+        am0700a_x4::try_replacement(target, level, internalFormat, width, height, border, format,
                                     type, data, fountainReplacement);
     am0205e_x4::ReplacementUpload orificeReplacement{};
     const bool useAM0205EReplacement =
-        !useAM3000AReplacement && !useAM0700AReplacement && am0205e_x4::try_replacement(
-            target, level, internalFormat, width, height, border, format, type, data,
-            orificeReplacement);
+        !useAM3000AReplacement && !useAM0700AReplacement &&
+        g_cfg.enableAM0205EAnimationX4Test && am0205e_x4::try_replacement(
+                                                    target, level, internalFormat, width, height,
+                                                    border, format, type, data, orificeReplacement);
     const bool useReplacement =
         useAM3000AReplacement || useAM0700AReplacement || useAM0205EReplacement;
     forwarded = true;
@@ -1121,6 +1162,10 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
             ? replacement.data
             : (useAM0700AReplacement ? fountainReplacement.data
                                       : (useAM0205EReplacement ? orificeReplacement.data : data));
+    if (g_cfg.enablePerformanceLogging) {
+      core::record_gl_uncompressed_upload(
+          known_uncompressed_pixel_bytes(loggedWidth, loggedHeight, loggedFormat, loggedType));
+    }
     const int byteCount =
         (loggedType == game::gl::UNSIGNED_BYTE && loggedWidth > 0 && loggedHeight > 0 &&
          loggedWidth <= 4096 && loggedHeight <= 4096)
@@ -1140,6 +1185,17 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
                                             const void* data) noexcept {
   bool forwarded = false;
   try {
+    if (!g_cfg.enableAM0205EAnimationX4Test) {
+      forwarded = true;
+      g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format, type,
+                                       data);
+      if (g_cfg.enablePerformanceLogging) {
+        core::record_gl_uncompressed_upload(
+            known_uncompressed_pixel_bytes(width, height, format, type));
+      }
+      return;
+    }
+
     BamAtlasKey atlasKey{};
     const bool hasAtlas = current_bam_atlas_key(target, atlasKey);
     const bool atlasPromoted = hasAtlas && is_promoted_bam_atlas(atlasKey);
@@ -1169,6 +1225,10 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
             target, level, xoffset * kBamAtlasScale, yoffset * kBamAtlasScale,
             replacement.width, replacement.height, game::gl::RGBA,
             game::gl::UNSIGNED_BYTE, replacement.data);
+        if (g_cfg.enablePerformanceLogging) {
+          core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
+              replacement.width, replacement.height, game::gl::RGBA, game::gl::UNSIGNED_BYTE));
+        }
         restore_unpack(unpackState);
         am0205e_x4::log_atlas_replacement(replacement.frameIndex, atlasKey.texture, xoffset,
                                           yoffset, false);
@@ -1189,6 +1249,10 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
                                        yoffset * kBamAtlasScale,
                                        width * kBamAtlasScale, height * kBamAtlasScale,
                                        format, type, scaled.data());
+      if (g_cfg.enablePerformanceLogging) {
+        core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
+            width * kBamAtlasScale, height * kBamAtlasScale, format, type));
+      }
       restore_unpack(unpackState);
       return;
     }
@@ -1200,6 +1264,10 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
       forwarded = true;
       if (promote_bound_bam_atlas(atlasKey, target, level, xoffset, yoffset, width, height,
                                   replacement, unpackState)) {
+        if (g_cfg.enablePerformanceLogging) {
+          core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
+              replacement.width, replacement.height, game::gl::RGBA, game::gl::UNSIGNED_BYTE));
+        }
         LOG_INFO("Promoted BAM streaming atlas texture {} from 1024x1024 to 4096x4096 for "
                  "AM0205E; logical UV geometry stays unchanged",
                  atlasKey.texture);
@@ -1215,12 +1283,20 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
       }
       g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format,
                                        type, data);
+      if (g_cfg.enablePerformanceLogging) {
+        core::record_gl_uncompressed_upload(
+            known_uncompressed_pixel_bytes(width, height, format, type));
+      }
       return;
     }
 
     forwarded = true;
     g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format, type,
                                      data);
+    if (g_cfg.enablePerformanceLogging) {
+      core::record_gl_uncompressed_upload(
+          known_uncompressed_pixel_bytes(width, height, format, type));
+    }
   } catch (...) {
     if (!forwarded) {
       g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format,
@@ -1236,19 +1312,30 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
   try {
     const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
     biglogo::ReplacementUpload replacement{};
-    const bool useReplacement = biglogo::try_replacement(
-        target, level, internalFormat, width, height, imageSize, data, replacement);
+    const bool logoReplacementEnabled = g_cfg.enableBigLogoX4Test ||
+                                        g_cfg.enableMainMenuX4Test || g_cfg.enableMenuX2Test;
+    const bool useReplacement =
+        logoReplacementEnabled && biglogo::try_replacement(
+                                      target, level, internalFormat, width, height, imageSize,
+                                      data, replacement);
     forwarded = true;
     if (useReplacement) {
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, replacement.width,
                                               replacement.height, border, replacement.byteCount,
                                               replacement.data);
+      if (g_cfg.enablePerformanceLogging) {
+        core::record_gl_compressed_upload(level, internalFormat, replacement.width,
+                                          replacement.height, replacement.byteCount);
+      }
       log_bam_ui_texture_upload(true, target, level, internalFormat, replacement.width,
                                 replacement.height, replacement.byteCount, replacement.data,
                                 caller);
     } else {
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, width, height, border,
                                               imageSize, data);
+      if (g_cfg.enablePerformanceLogging) {
+        core::record_gl_compressed_upload(level, internalFormat, width, height, imageSize);
+      }
       log_bam_ui_texture_upload(true, target, level, internalFormat, width, height, imageSize,
                                 data, caller);
     }
@@ -1421,22 +1508,24 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
                                       reinterpret_cast<void*>(&detour_glDeleteTextures));
         g_glDeleteTexturesHook.queue_enable();
       }
-      if ((cfg.enableBamUiTextureProbe || cfg.enableAM3000AFrameX4Test ||
+      if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
+           cfg.enableAM3000AFrameX4Test ||
            cfg.enableAM0700AAnimationX4Test || cfg.enableAM0205EAnimationX4Test) &&
           gl.glTexImage2D) {
         g_glTexImage2DHook.create(reinterpret_cast<void*>(gl.glTexImage2D),
                                   reinterpret_cast<void*>(&detour_glTexImage2D));
         g_glTexImage2DHook.queue_enable();
       }
-      if (cfg.enableAM0205EAnimationX4Test && gl.glTexSubImage2D) {
+      if ((cfg.enablePerformanceLogging || cfg.enableAM0205EAnimationX4Test) &&
+          gl.glTexSubImage2D) {
         g_glTexSubImage2DHook.create(reinterpret_cast<void*>(gl.glTexSubImage2D),
                                      reinterpret_cast<void*>(&detour_glTexSubImage2D));
         g_glTexSubImage2DHook.queue_enable();
       } else if (cfg.enableAM0205EAnimationX4Test) {
         LOG_WARN("AM0205E x4 atlas test cannot start: glTexSubImage2D is unavailable");
       }
-      if ((cfg.enableBamUiTextureProbe || cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test ||
-           cfg.enableMenuX2Test) &&
+      if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
+           cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test) &&
           gl.glCompressedTexImage2D) {
         g_glCompressedTexImage2DHook.create(reinterpret_cast<void*>(gl.glCompressedTexImage2D),
                                             reinterpret_cast<void*>(

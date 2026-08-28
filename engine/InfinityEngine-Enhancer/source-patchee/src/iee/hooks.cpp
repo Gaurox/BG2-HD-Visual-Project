@@ -25,6 +25,7 @@
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/logger.h"
+#include "iee/core/map_texture_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
@@ -1059,8 +1060,9 @@ bool prepare_am0205e_composition_hooks(AppContext& ctx) noexcept {
   return true;
 }
 
-void record_render_performance(bool enabled, bool handled, long long elapsedTicks) noexcept {
-  if (!enabled || elapsedTicks < 0) return;
+void record_render_performance(const AppContext& ctx, bool handled,
+                               long long elapsedTicks) noexcept {
+  if (!ctx.cfg.enablePerformanceLogging || elapsedTicks < 0) return;
 
   try {
     static const long long frequency = [] {
@@ -1077,6 +1079,7 @@ void record_render_performance(bool enabled, bool handled, long long elapsedTick
       unsigned long long handledCalls{};
       unsigned long long activeFrame{};
       long long activeFrameTicks{};
+      std::uint64_t areaGeneration{};
       core::PerformanceSamples<2048> frameCpuMs;
 
       void finish_frame(double ticksToMilliseconds) noexcept {
@@ -1092,6 +1095,8 @@ void record_render_performance(bool enabled, bool handled, long long elapsedTick
         maximumTicks = 0;
         calls = 0;
         handledCalls = 0;
+        activeFrame = 0;
+        activeFrameTicks = 0;
         frameCpuMs.reset();
       }
     };
@@ -1099,6 +1104,12 @@ void record_render_performance(bool enabled, bool handled, long long elapsedTick
 
     LARGE_INTEGER now{};
     if (!QueryPerformanceCounter(&now)) return;
+    const auto areaGeneration =
+        ctx.performanceAreaGeneration.load(std::memory_order_relaxed);
+    if (window.areaGeneration != areaGeneration) {
+      window.reset(now.QuadPart);
+      window.areaGeneration = areaGeneration;
+    }
     if (window.startedAt == 0) window.startedAt = now.QuadPart;
     window.totalTicks += elapsedTicks;
     window.maximumTicks = (std::max)(window.maximumTicks, elapsedTicks);
@@ -1124,6 +1135,10 @@ void record_render_performance(bool enabled, bool handled, long long elapsedTick
     const auto frameSummary = window.frameCpuMs.summarize();
     const auto readability = core::take_readability_stats();
     const auto textureStats = game::take_texture_configuration_stats();
+    const auto tileStats = features::tile_render_telemetry_snapshot();
+    const auto glStats = core::gl_texture_telemetry_snapshot();
+    const auto wed = ctx.wed.load(std::memory_order_acquire);
+    const auto area = wed ? wed->areaResrefView() : std::string_view{"?"};
     LOG_INFO(
         "RenderTexture enhancement perf: calls={}, handled={}, delegated={}, avg={:.2f}us, "
         "max={:.2f}us; per-frame CPU samples={}, avg={:.2f}ms, p95={:.2f}ms, max={:.2f}ms "
@@ -1134,6 +1149,24 @@ void record_render_performance(bool enabled, bool handled, long long elapsedTick
         frameSummary.maximum, kReportSeconds, readability.cacheHits, readability.virtualQueries,
         textureStats.calls, textureStats.cacheHits, textureStats.configured,
         textureStats.latchedFailures, textureStats.evictions);
+    LOG_INFO(
+        "Map texture telemetry (area total): generation={}, area={}, ignoredNoOpLoadAreaCalls={}, "
+        "decodedTileDraws={}, tablePagesObserved={}, negativeTablePageSamples={}, "
+        "tablePageAboveCapacitySamples={}, sourceTextureIdsObserved={}, "
+        "sourceTextureCapacityMisses={}; glUncompressedCalls={}, glUncompressedKnownBytes={}, "
+        "glUncompressedUnknownByteCalls={}; glCompressedCalls={}, glCompressedBytes={}, "
+        "glCompressedBaseLevelCalls={}, glLargeS3tcBaseLevelCalls={}, "
+        "glLargeS3tcBaseLevelBytes={}; glDeleteCalls={}, glDeletedTextureNames={}",
+        areaGeneration, area,
+        ctx.performanceNoOpLoadAreaCalls.load(std::memory_order_relaxed),
+        tileStats.decodedTileDraws, tileStats.distinctTablePagesObserved,
+        tileStats.negativeTablePageSamples, tileStats.tablePageAboveCapacitySamples,
+        tileStats.sourceTextureIdsObserved, tileStats.sourceTextureCapacityMisses,
+        glStats.uncompressedUploadCalls, glStats.uncompressedKnownBytes,
+        glStats.uncompressedUnknownByteCalls, glStats.compressedUploadCalls,
+        glStats.compressedUploadBytes, glStats.compressedBaseLevelCalls,
+        glStats.largeS3tcBaseLevelCalls, glStats.largeS3tcBaseLevelBytes,
+        glStats.deleteCalls, glStats.deletedTextureNames);
     window.reset(now.QuadPart);
   } catch (...) {
     // Performance diagnostics must not affect rendering.
@@ -1753,6 +1786,18 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
   }
 
   auto& ctx = *g_ctx;
+  game::ResrefBuffer previousPerformanceArea{};
+  bool hadPreviousPerformanceArea = false;
+  if (ctx.cfg.enablePerformanceLogging) {
+    const auto previousWed = ctx.wed.load(std::memory_order_acquire);
+    if (previousWed) {
+      previousPerformanceArea = previousWed->areaResref;
+      hadPreviousPerformanceArea = !game::resref_view(previousPerformanceArea).empty();
+    }
+  }
+  LARGE_INTEGER totalStart{};
+  const bool measurePerformance =
+      ctx.cfg.enablePerformanceLogging && QueryPerformanceCounter(&totalStart);
   try {
     area_animation_clock::request_area_generation();
     request_area_timeline_generation();
@@ -1771,7 +1816,11 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
     LOG_ERROR("LoadArea pre-dispatch failed; continuing with the engine path");
   }
 
+  LARGE_INTEGER engineStart{};
+  const bool measureEngine = measurePerformance && QueryPerformanceCounter(&engineStart);
   auto* result = original(thisPtr, pAreaNameString, a2, a3, a4);
+  LARGE_INTEGER engineEnd{};
+  const bool measuredEngine = measureEngine && QueryPerformanceCounter(&engineEnd);
   try {
     area::refresh_wed_cache(ctx, thisPtr);
     swap_area_animation_pack(ctx, thisPtr);
@@ -1784,6 +1833,58 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
   } catch (...) {
     LOG_ERROR("LoadArea post-dispatch failed; the feature remains disabled for this area");
     area::reset_gpu_area_state();
+  }
+  if (ctx.cfg.enablePerformanceLogging) {
+    LARGE_INTEGER totalEnd{};
+    LARGE_INTEGER frequency{};
+    const bool measuredTotal = measurePerformance && QueryPerformanceCounter(&totalEnd);
+    const bool haveFrequency = QueryPerformanceFrequency(&frequency) && frequency.QuadPart > 0;
+    const auto engineTicks =
+        measuredEngine ? engineEnd.QuadPart - engineStart.QuadPart : -1LL;
+    const auto currentWed = ctx.wed.load(std::memory_order_acquire);
+    const bool haveCurrentArea =
+        currentWed && !currentWed->areaResrefView().empty();
+    const bool areaChanged =
+        hadPreviousPerformanceArea != haveCurrentArea ||
+        (hadPreviousPerformanceArea && haveCurrentArea &&
+         game::resref_view(previousPerformanceArea) != currentWed->areaResrefView());
+    const bool meaningfulLoad = core::is_meaningful_load_area_call(
+        areaChanged, measuredEngine && haveFrequency, engineTicks,
+        haveFrequency ? frequency.QuadPart : 0);
+
+    const double ticksToMilliseconds =
+        haveFrequency ? 1000.0 / static_cast<double>(frequency.QuadPart) : 0.0;
+    const double engineMilliseconds =
+        measuredEngine && haveFrequency ? static_cast<double>(engineTicks) * ticksToMilliseconds
+                                        : -1.0;
+    const double totalMilliseconds =
+        measuredTotal && haveFrequency
+            ? static_cast<double>(totalEnd.QuadPart - totalStart.QuadPart) * ticksToMilliseconds
+            : -1.0;
+    const auto currentArea =
+        haveCurrentArea ? currentWed->areaResrefView() : std::string_view{"?"};
+
+    if (meaningfulLoad) {
+      const auto performanceGeneration =
+          ctx.performanceAreaGeneration.fetch_add(1, std::memory_order_relaxed) + 1;
+      ctx.performanceNoOpLoadAreaCalls.store(0, std::memory_order_relaxed);
+      // LoadArea and its post-dispatch preparation are CPU-only. Reset after
+      // classification so a same-area no-op cannot erase the real load window.
+      core::reset_gl_texture_telemetry();
+      LOG_INFO("Map telemetry marker: generation={}, area={}, overlays={}, base={}x{}",
+               performanceGeneration, currentArea,
+               currentWed ? currentWed->overlayCount : 0,
+               currentWed ? currentWed->baseWidth : 0,
+               currentWed ? currentWed->baseHeight : 0);
+      LOG_INFO(
+          "Map load telemetry: generation={}, area={}, engineLoad={:.2f}ms, "
+          "totalDetour={:.2f}ms",
+          performanceGeneration, currentArea, engineMilliseconds, totalMilliseconds);
+    } else {
+      ctx.performanceNoOpLoadAreaCalls.fetch_add(1, std::memory_order_relaxed);
+      LOG_DEBUG("Ignored same-area LoadArea telemetry no-op: area={}, engineLoad={:.3f}ms",
+                currentArea, engineMilliseconds);
+    }
   }
   return result;
 }
@@ -1837,7 +1938,8 @@ static void detour_render_texture(void* thisPtr, int texId, void* unused, int x,
   if (measurePerformance) {
     LARGE_INTEGER performanceEnd{};
     if (QueryPerformanceCounter(&performanceEnd)) {
-      record_render_performance(true, handled, performanceEnd.QuadPart - performanceStart.QuadPart);
+      record_render_performance(ctx, handled,
+                                performanceEnd.QuadPart - performanceStart.QuadPart);
     }
   }
   if (!handled) {

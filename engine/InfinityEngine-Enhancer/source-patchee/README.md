@@ -19,7 +19,14 @@ Runtime tileset decisions and configured GL textures are cached only for the
 current area, with fixed capacities, so visiting more maps does not accumulate
 cache state. Set `PerformanceLogs = true` in the `[Core]` section to emit
 five-second CPU timing windows (including per-frame p95), shader-feed work,
-safe-read cache, GL texture-configuration counters, and registry-backed area-animation timing.
+safe-read cache, GL texture-configuration counters, registry-backed area-animation timing, and
+per-area map telemetry. The latter records `LoadArea` duration, distinct PVR table pages and source
+texture names observed by the tile hook, plus global GL image/subimage/compressed-upload and delete
+counters. Compressed GL calls are correlation data rather than exact map-PVRZ attribution because
+the same resource path also serves BAM V2 and MOS V2 assets. Same-area `LoadArea` calls measured
+below one millisecond are folded into the active generation and reported as ignored no-ops; timing
+failures and actual area changes fail open. Negative PVR table-page samples and non-negative page
+numbers above the bounded observation capacity are reported separately.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.

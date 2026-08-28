@@ -95,6 +95,7 @@ add_library(iee_common STATIC
     src/iee/core/area_animation_timeline.cpp
     src/iee/core/config.cpp
     src/iee/core/logger.cpp
+    src/iee/core/map_texture_telemetry.cpp
     src/iee/core/native_occlusion_probe.cpp
     src/iee/core/pattern_scanner.cpp
     src/iee/game/area_texture.cpp
