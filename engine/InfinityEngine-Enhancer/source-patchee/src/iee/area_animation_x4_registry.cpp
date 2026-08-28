@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <atomic>
 #include <cctype>
+#include <chrono>
 #include <cstdio>
 #include <cstring>
 #include <exception>
@@ -129,6 +130,7 @@ std::atomic<bool> g_hasRetiredTextures{false};
 std::filesystem::path g_areaPacksRoot;
 bool g_perAreaPacks = false;
 std::string g_residentArea;
+std::uint64_t g_residentRawBytes{};
 #ifdef _WIN32
 HGLRC g_textureContext{};
 HGLRC g_retiredContext{};
@@ -219,6 +221,39 @@ void drop_retired_textures_locked() noexcept {
 #ifdef _WIN32
   g_retiredContext = nullptr;
 #endif
+}
+
+struct ReleaseSummary {
+  std::uint64_t outgoingRawBytes{};
+  std::uint64_t outgoingTextureNames{};
+  std::uint64_t deferredTextureNames{};
+};
+
+ReleaseSummary release_locked() {
+  ReleaseSummary summary{
+      .outgoingRawBytes = g_residentRawBytes,
+      .outgoingTextureNames = static_cast<std::uint64_t>(g_textureCache.size()),
+  };
+  g_ready.store(false, std::memory_order_release);
+  retire_texture_cache_locked();
+#ifdef _WIN32
+  g_textureContext = nullptr;
+#endif
+  g_resources.clear();
+  g_resources.shrink_to_fit();
+  g_positionMisses.clear();
+  g_residentArea.clear();
+  g_residentRawBytes = 0;
+  g_creationFailureLogged = false;
+  summary.deferredTextureNames = static_cast<std::uint64_t>(g_retiredTextureIds.size());
+  return summary;
+}
+
+using TelemetryClock = std::chrono::steady_clock;
+
+double elapsed_milliseconds(TelemetryClock::time_point start,
+                            TelemetryClock::time_point end) noexcept {
+  return std::chrono::duration<double, std::milli>(end - start).count();
 }
 
 std::string normalised_area_name(std::string_view value) {
@@ -358,9 +393,20 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
 }
 }  // namespace
 
-bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
+bool prepare(const std::filesystem::path& assetsDirectory,
+             PackPreparationStats* stats) noexcept {
+  if (stats) *stats = {};
+  const auto totalStarted = stats ? TelemetryClock::now() : TelemetryClock::time_point{};
   try {
-    BinaryReader reader(read_file(assetsDirectory / "AreaAnimations-X4.registry"));
+    const auto registryReadStarted =
+        stats ? TelemetryClock::now() : TelemetryClock::time_point{};
+    auto registryPayload = read_file(assetsDirectory / "AreaAnimations-X4.registry");
+    if (stats) {
+      stats->registryReadMilliseconds =
+          elapsed_milliseconds(registryReadStarted, TelemetryClock::now());
+      stats->registryBytes = static_cast<std::uint64_t>(registryPayload.size());
+    }
+    BinaryReader reader(std::move(registryPayload));
     std::array<char, 8> magic{};
     std::uint32_t version = 0;
     std::uint32_t scale = 0;
@@ -457,10 +503,18 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
         if (rawBytes > kMaxRawBytes || totalRawBytes > kMaxRawBytes - rawBytes) {
           throw std::runtime_error("area-animation runtime pack exceeds memory limit");
         }
+        const auto frameReadStarted =
+            stats ? TelemetryClock::now() : TelemetryClock::time_point{};
         auto pixels = read_file(
             assetsDirectory /
                 frame_asset_name(resource.displayName, frameIndex, resource.variantIndex),
             rawBytes);
+        if (stats) {
+          stats->frameReadMilliseconds +=
+              elapsed_milliseconds(frameReadStarted, TelemetryClock::now());
+          ++stats->frameFiles;
+          stats->frameBytes += rawBytes;
+        }
         totalRawBytes += rawBytes;
         resource.frames.push_back({.logicalWidth = static_cast<int>(logicalWidth),
                                    .logicalHeight = static_cast<int>(logicalHeight),
@@ -518,19 +572,45 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
     }
     if (!reader.at_end()) throw std::runtime_error("trailing bytes in area-animation registry");
 
-    std::lock_guard lock(g_mutex);
-    g_ready.store(false, std::memory_order_release);
-    g_resources = std::move(loaded);
-    g_positionMisses.clear();
-    // A reload happens while the render context is live, so the outgoing textures are
-    // parked for the GL thread rather than abandoned. At first load the cache is empty
-    // and this is a no-op.
-    retire_texture_cache_locked();
-    g_creationFailureLogged = false;
+    const auto swapStarted = stats ? TelemetryClock::now() : TelemetryClock::time_point{};
+    {
+      std::lock_guard lock(g_mutex);
+      if (stats) {
+        stats->outgoingRawBytes = g_residentRawBytes;
+        stats->residentRawBytes = totalRawBytes;
+        stats->peakRawBytes = g_residentRawBytes + totalRawBytes;
+        stats->resourceCount = static_cast<std::uint64_t>(resourceCount);
+        stats->timedResourceCount = static_cast<std::uint64_t>(timedResources);
+        stats->frameCount = static_cast<std::uint64_t>(totalFrames);
+        stats->outgoingTextureNames =
+            static_cast<std::uint64_t>(g_textureCache.size());
+      }
+      g_ready.store(false, std::memory_order_release);
+      g_resources = std::move(loaded);
+      g_positionMisses.clear();
+      // A reload happens while the render context is live, so the outgoing textures are
+      // parked for the GL thread rather than abandoned. At first load the cache is empty
+      // and this is a no-op.
+      retire_texture_cache_locked();
+      g_residentRawBytes = totalRawBytes;
+      if (stats) {
+        stats->deferredTextureNames =
+            static_cast<std::uint64_t>(g_retiredTextureIds.size());
+      }
+      g_creationFailureLogged = false;
 #ifdef _WIN32
-    g_textureContext = nullptr;
+      g_textureContext = nullptr;
 #endif
-    g_ready.store(true, std::memory_order_release);
+      g_ready.store(true, std::memory_order_release);
+    }
+    if (stats) {
+      const auto finished = TelemetryClock::now();
+      stats->swapMilliseconds = elapsed_milliseconds(swapStarted, finished);
+      stats->totalMilliseconds = elapsed_milliseconds(totalStarted, finished);
+      stats->parseAndAllocateMilliseconds =
+          std::max(0.0, stats->totalMilliseconds - stats->registryReadMilliseconds -
+                            stats->frameReadMilliseconds - stats->swapMilliseconds);
+    }
     LOG_INFO(
              "Prepared area-animation x4 runtime pack v{}: {} BAM, {} timed, {} frames, "
              "{:.2f} MiB raw",
@@ -550,16 +630,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
 
 void release() noexcept {
   std::lock_guard lock(g_mutex);
-  g_ready.store(false, std::memory_order_release);
-  retire_texture_cache_locked();
-#ifdef _WIN32
-  g_textureContext = nullptr;
-#endif
-  g_resources.clear();
-  g_resources.shrink_to_fit();
-  g_positionMisses.clear();
-  g_residentArea.clear();
-  g_creationFailureLogged = false;
+  (void)release_locked();
 }
 
 bool ready() noexcept { return g_ready.load(std::memory_order_acquire); }
@@ -751,7 +822,8 @@ bool has_retired_textures() noexcept {
   return g_hasRetiredTextures.load(std::memory_order_acquire);
 }
 
-void flush_retired_textures(const EngineTextureApi& api) noexcept {
+void flush_retired_textures(const EngineTextureApi& api,
+                            bool enablePerformanceLogging) noexcept {
   if (!g_hasRetiredTextures.load(std::memory_order_acquire) || !api.DrawDeleteTexture) return;
   try {
     std::lock_guard lock(g_mutex);
@@ -772,7 +844,11 @@ void flush_retired_textures(const EngineTextureApi& api) noexcept {
       if (textureId > 0) api.DrawDeleteTexture(textureId);
     }
     drop_retired_textures_locked();
-    LOG_DEBUG("Area animation x4: released {} engine texture(s) after a pack swap", count);
+    if (enablePerformanceLogging) {
+      LOG_INFO("Area-animation GPU retirement telemetry: deletedTextureNames={}", count);
+    } else {
+      LOG_DEBUG("Area animation x4: released {} engine texture(s) after a pack swap", count);
+    }
   } catch (...) {
     // Reclaiming names is best-effort; never let it disturb the render pass.
   }
@@ -804,7 +880,7 @@ bool per_area_packs_active() noexcept {
   return g_perAreaPacks;
 }
 
-bool prepare_for_area(std::string_view areaResref) noexcept {
+bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging) noexcept {
   std::filesystem::path packDirectory;
   const auto area = normalised_area_name(areaResref);
   {
@@ -822,13 +898,43 @@ bool prepare_for_area(std::string_view areaResref) noexcept {
 
   std::error_code error;
   if (!std::filesystem::is_directory(packDirectory, error) || error) {
-    release();
+    const auto releaseStarted = enablePerformanceLogging ? TelemetryClock::now()
+                                                         : TelemetryClock::time_point{};
+    ReleaseSummary releaseSummary{};
+    {
+      std::lock_guard lock(g_mutex);
+      releaseSummary = release_locked();
+    }
+    if (enablePerformanceLogging) {
+      LOG_INFO(
+          "Area-animation pack telemetry: area={}, outcome=native, outgoingRawBytes={}, "
+          "residentRawBytes=0, outgoingTextureNames={}, deferredTextureNames={}, "
+          "release={:.2f}ms",
+          area, releaseSummary.outgoingRawBytes, releaseSummary.outgoingTextureNames,
+          releaseSummary.deferredTextureNames,
+          elapsed_milliseconds(releaseStarted, TelemetryClock::now()));
+    }
     LOG_INFO("Area-animation x4: no pack for area {}; the engine renders its own BAM", area);
     return false;
   }
-  if (!prepare(packDirectory)) {
+  PackPreparationStats stats{};
+  if (!prepare(packDirectory, enablePerformanceLogging ? &stats : nullptr)) {
     LOG_WARN("Area-animation x4: pack for area {} refused; falling back to the engine BAM", area);
     return false;
+  }
+  if (enablePerformanceLogging) {
+    LOG_INFO(
+        "Area-animation pack telemetry: area={}, outcome=loaded, registryBytes={}, "
+        "frameFiles={}, frameBytes={}, outgoingRawBytes={}, residentRawBytes={}, "
+        "peakRawBytes={}, resources={}, timedResources={}, frames={}, "
+        "outgoingTextureNames={}, deferredTextureNames={}, registryRead={:.2f}ms, "
+        "frameRead={:.2f}ms, parseAllocate={:.2f}ms, swap={:.2f}ms, total={:.2f}ms",
+        area, stats.registryBytes, stats.frameFiles, stats.frameBytes,
+        stats.outgoingRawBytes, stats.residentRawBytes, stats.peakRawBytes,
+        stats.resourceCount, stats.timedResourceCount, stats.frameCount,
+        stats.outgoingTextureNames, stats.deferredTextureNames,
+        stats.registryReadMilliseconds, stats.frameReadMilliseconds,
+        stats.parseAndAllocateMilliseconds, stats.swapMilliseconds, stats.totalMilliseconds);
   }
   std::lock_guard lock(g_mutex);
   g_residentArea = area;

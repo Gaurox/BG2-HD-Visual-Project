@@ -1774,7 +1774,8 @@ static void swap_area_animation_pack(AppContext& ctx, void* infGame) noexcept {
   }
   game::ResrefBuffer areaResref{};
   if (!game::read_runtime_resref(runtimeAreaResref.m_resRef.data(), areaResref)) return;
-  (void)area_animation_x4::prepare_for_area(game::resref_view(areaResref));
+  (void)area_animation_x4::prepare_for_area(game::resref_view(areaResref),
+                                            ctx.cfg.enablePerformanceLogging);
 }
 
 // LoadArea hook - reset area-specific state for new area detection
@@ -1904,7 +1905,8 @@ static void detour_draw_color_tone(int mode) {
       // texture names parked by an area-pack swap are actually returned to the engine.
       if (g_areaCompositionMode == AreaCompositionMode::Registry &&
           area_animation_x4::has_retired_textures()) {
-        area_animation_x4::flush_retired_textures(g_areaAnimationTextureApi);
+        area_animation_x4::flush_retired_textures(g_areaAnimationTextureApi,
+                                                   g_ctx && g_ctx->cfg.enablePerformanceLogging);
       }
     }
   } catch (...) {

@@ -27,6 +27,11 @@ the same resource path also serves BAM V2 and MOS V2 assets. Same-area `LoadArea
 below one millisecond are folded into the active generation and reported as ignored no-ops; timing
 failures and actual area changes fail open. Negative PVR table-page samples and non-negative page
 numbers above the bounded observation capacity are reported separately.
+Per-area animation-pack telemetry additionally splits registry reads, raw-frame reads,
+parse/allocation work and the resident-pack swap. It reports exact raw RGBA bytes for the incoming
+and outgoing packs, their temporary coexistence peak, and texture names deferred to the next GL
+world pass. These are runtime-owned payload counts, not allocator overhead, process working set or
+exact GPU bytes.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.

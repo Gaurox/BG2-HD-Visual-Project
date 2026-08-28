@@ -15,10 +15,14 @@ Le premier petit lot P1 de télémétrie a produit une première session ingame 
 correctif de précision a été revalidé ingame sans erreur. Il reste opt-in via
 `PerformanceLogs=true`.
 
+Le deuxième petit lot P1 instrumente maintenant la préparation synchrone des packs d’animations
+de zone. Il est compilé, installé et validé techniquement ingame sur AR0602, AR0516 et AR0900.
+
 Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/map-telemetry-correction-20260828T220405Z/`. Sa restauration revient à
-la première DLL P1 testée, dont l’état séparé revient au build P0 de rotation des logs. Il n’est pas
-éligible à la release et aucun manifeste de release n’a été modifié.
+distinct sous `bg2hd/state/animation-pack-telemetry-20260828T223420Z/`. Sa restauration revient au
+correctif du premier lot P1, dont les états précédents conservent la chaîne de retour jusqu’au
+build P0 de rotation des logs. Il n’est pas éligible à la release et aucun manifeste de release
+n’a été modifié.
 
 ## Actions
 
@@ -30,7 +34,7 @@ la première DLL P1 testée, dont l’état séparé revient au build P0 de rota
 | P0 | Rendre `TILE_PAGE_DIAG` opt-in | Validé ingame | Nouveau réglage `[Rendering] EnableTilePageDiagnostics=false`. Il reste indépendant de `PerformanceLogs`, afin de pouvoir mesurer le hook sans réactiver un flush INFO par page. |
 | P0 | Journal rotatif/borné | Validé ingame | Rotation à 16 Mio avec trois sauvegardes, soit environ 64 Mio de nouvelles sorties conservées. Le sink reste synchrone et `flush_on(info)` est préservé. |
 | P1 | Premier lot : marqueurs carte et compteurs table PVR/GL | Validé ingame | Mesure `LoadArea`, les pages de table distinctes et textures sources observées, ainsi que les appels GL upload/delete. Aucun timing I/O/zlib ni calcul mémoire exact dans ce lot. |
-| P1 | Attribution précise I/O, zlib et mémoire | À analyser après mesures | Ne pas l’engager avant d’avoir exploité les premiers journaux sur plusieurs cartes. |
+| P1 | Attribution précise I/O, zlib et mémoire | Premier sous-lot mesuré ingame | Les lectures synchrones des fichiers RGBA expliquent presque tout le temps ajouté sur AR0602 et AR0516 ; le pic brut mesuré atteint 600,99 Mio sur AR0516 → AR0900. La mémoire résidente du processus et le cache fichier restent à mesurer séparément. |
 | P1 | Animations x4 à la demande avec budget mémoire | Différé | Chantier moyen/élevé ; ne pas l’entreprendre sans attribution mémoire. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
@@ -112,10 +116,62 @@ Session du 2026-08-29, sans erreur renderer et sans `TILE_PAGE_DIAG` :
 Les temps de chargement de cette session, vraisemblablement à cache chaud, ne sont pas comparés à
 la première session et ne constituent pas un benchmark A/B.
 
+## Deuxième petit lot expérimental P1
+
+Avec `PerformanceLogs=true`, la préparation d’un pack d’animations de zone publie désormais :
+
+- les octets du registre, le nombre de fichiers RGBA et leurs octets exacts ;
+- les durées séparées de lecture du registre, lecture des frames, validation/allocation et échange
+  du pack ;
+- les octets RGBA bruts du pack sortant, du pack entrant devenu résident et leur pic temporaire de
+  coexistence ;
+- le nombre de textures sortantes mises en attente, puis le nombre effectivement supprimé au
+  prochain passage OpenGL du monde.
+
+Les mesures sont prises uniquement lorsque `PerformanceLogs` est actif. Elles ne modifient ni le
+contenu chargé, ni le cache de 64 textures, ni la politique de remplacement. `peakRawBytes` compte
+uniquement les buffers RGBA appartenant au runtime : il n’inclut pas l’overhead de l’allocateur, le
+Working Set du processus, le cache fichier Windows ou des octets GPU estimés.
+
+Validation automatisée et contrôle d’installation :
+
+- DLL Windows Release compilée ;
+- `ctest -C Release` : 2/2 tests C++ réussis ;
+- tests Python communs : 180/180 réussis ;
+- nouveaux tests des octets de registre/frames, de la résidence brute et du pic sortant + entrant ;
+- DLL installée SHA-256
+  `770642CA1FD0DA5E8FC97046BE4D7D959AF7E3DD02D92E48E87AAF52F829A835`, les autres fichiers
+  renderer restant bit-identiques.
+
+### Première session du deuxième lot P1
+
+Session du 2026-08-29, sans erreur renderer et sans `TILE_PAGE_DIAG` :
+
+| Carte | Fichiers RGBA | Lecture frames | Pack total | RGBA sortant | RGBA résident | Pic RGBA brut | Hors moteur `LoadArea` |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| AR0602 | 178 | 70,89 ms | 71,05 ms | 0 Mio | 104,30 Mio | 104,30 Mio | 71,28 ms |
+| AR0516 | 212 | 1 470,28 ms | 1 479,39 ms | 104,30 Mio | 385,89 Mio | 490,19 Mio | 1 479,57 ms |
+| AR0900 | 80 | 704,57 ms | 725,46 ms | 385,89 Mio | 215,09 Mio | 600,99 Mio | hors détour mesurable |
+
+Sur AR0602 et AR0516, l’écart entre le temps hors moteur et le temps total du pack n’est que de
+0,23 ms puis 0,18 ms. La lecture synchrone des frames domine : le registre, la
+validation/allocation et l’échange du pack sont secondaires. Les 64 noms de textures sortants ont
+été mis en attente puis supprimés au passage OpenGL suivant.
+
+AR0900 a révélé le cas le plus important : le moteur a publié la nouvelle zone après le retour du
+détour `LoadArea`. La réconciliation depuis le thread de rendu a donc chargé le pack pendant le
+premier passage monde, causant 725,46 ms de travail synchrone ; la fenêtre de présentation a relevé
+un maximum de 1 027,10 ms et le hook `RenderTexture` un maximum de 726,50 ms. Ce n’est pas un coût
+de parsing ou d’upload anticipé : la lecture des 80 fichiers RGBA en représente 704,57 ms.
+
+L’avertissement de récupération du prologue EEex attendu et le fallback de tint liquide WLAKE00
+sont les seuls avertissements de la session ; aucun `error` ou `critical` n’a été émis.
+
 ## Prochaine étape
 
-Le P0 et le premier petit lot P1 sont validés. La prochaine étape d’étude est l’attribution du coût
-de la préparation synchrone des animations de zone et de sa mémoire résidente avant d’envisager un
-chargement à la demande. Des relevés complémentaires sur AR1200, AR1300 et AR0900 resteront utiles
-pour élargir l’échantillon. Les mesures A/B de frametime restent nécessaires avant toute
-affirmation de gain de performance.
+Le P0 et les deux petits lots de télémétrie P1 sont validés. Les mesures justifient le chargement à
+la demande des frames d’animations avec un budget en octets : il faut supprimer les lectures
+intégrales de 215 à 386 Mio sur le thread de chargement ou de rendu. La prochaine gate prudente est
+une analyse en lecture seule de l’architecture de cache, du préchargement minimal et du
+comportement en cas de frame absente avant d’engager ce chantier moyen/élevé. Une mesure externe du
+Working Set et du cache fichier restera nécessaire pour quantifier le gain processus complet.

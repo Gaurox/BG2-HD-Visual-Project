@@ -3033,8 +3033,28 @@ void test_area_animation_registry_formats() {
   for (const auto value : std::array<std::uint32_t, 5>{{1, 0, 2, 0, 1}}) append(v2, value);
   write_file(root / "AreaAnimations-X4.registry", v2);
 
-  expect_true(iee::area_animation_x4::prepare(root),
+  iee::area_animation_x4::PackPreparationStats preparationStats{};
+  expect_true(iee::area_animation_x4::prepare(root, &preparationStats),
               "The production registry parser should accept a valid v2 TimedTimeline");
+  expect_eq(preparationStats.registryBytes, static_cast<std::uint64_t>(v2.size()),
+            "Pack telemetry should report the exact registry byte count");
+  expect_eq(preparationStats.frameFiles, std::uint64_t{2},
+            "Pack telemetry should count every raw frame file");
+  expect_eq(preparationStats.frameBytes,
+            static_cast<std::uint64_t>(rgba.size() * 2),
+            "Pack telemetry should report the exact raw frame payload");
+  expect_eq(preparationStats.outgoingRawBytes, std::uint64_t{0},
+            "The first pack should have no outgoing raw payload");
+  expect_eq(preparationStats.residentRawBytes, preparationStats.frameBytes,
+            "The resident raw payload should equal the loaded frame bytes");
+  expect_eq(preparationStats.peakRawBytes, preparationStats.frameBytes,
+            "The first pack peak should contain only its incoming payload");
+  expect_eq(preparationStats.resourceCount, std::uint64_t{1},
+            "Pack telemetry should preserve the validated resource count");
+  expect_eq(preparationStats.timedResourceCount, std::uint64_t{1},
+            "Pack telemetry should identify TimedTimeline resources");
+  expect_eq(preparationStats.frameCount, std::uint64_t{2},
+            "Pack telemetry should preserve the validated frame count");
   iee::area_animation_x4::FrameResolution resolution{};
   expect_true(iee::area_animation_x4::resolve_frame(
                   target, iee::area_animation_x4::kAnyWorldPosition,
@@ -3046,6 +3066,14 @@ void test_area_animation_registry_formats() {
   expect_true(iee::area_animation_x4::resolve_timeline_frame(resolution, 0, 1, phase) &&
                   phase.frameIndex == 1,
               "A v2 timeline phase should resolve its independent visual frame");
+  iee::area_animation_x4::PackPreparationStats reloadStats{};
+  expect_true(iee::area_animation_x4::prepare(root, &reloadStats),
+              "Reloading the same valid pack should remain supported");
+  expect_eq(reloadStats.outgoingRawBytes, preparationStats.residentRawBytes,
+            "Reload telemetry should report the previous raw payload as outgoing");
+  expect_eq(reloadStats.peakRawBytes,
+            reloadStats.outgoingRawBytes + reloadStats.residentRawBytes,
+            "Reload peak telemetry should include outgoing and incoming raw payloads");
   iee::area_animation_x4::release();
 
   // v3: two variants of one resref, told apart by the world position of the occurrence they

@@ -36,6 +36,27 @@ struct NativePixelEncoding {
   [[nodiscard]] constexpr bool operator==(const NativePixelEncoding&) const noexcept = default;
 };
 
+// Diagnostic-only accounting for one synchronous pack preparation. Byte counts cover the raw
+// RGBA frame payload owned by this runtime, not allocator overhead or process working set.
+struct PackPreparationStats {
+  std::uint64_t registryBytes{};
+  std::uint64_t frameFiles{};
+  std::uint64_t frameBytes{};
+  std::uint64_t outgoingRawBytes{};
+  std::uint64_t residentRawBytes{};
+  std::uint64_t peakRawBytes{};
+  std::uint64_t resourceCount{};
+  std::uint64_t timedResourceCount{};
+  std::uint64_t frameCount{};
+  std::uint64_t outgoingTextureNames{};
+  std::uint64_t deferredTextureNames{};
+  double registryReadMilliseconds{};
+  double frameReadMilliseconds{};
+  double parseAndAllocateMilliseconds{};
+  double swapMilliseconds{};
+  double totalMilliseconds{};
+};
+
 struct EngineTextureApi {
   using DrawGenTextureFn = int (*)(int filter, unsigned char formatKind, int wrapMode,
                                    unsigned char secondaryTexture);
@@ -65,7 +86,8 @@ struct EngineTextureApi {
 
 // Loads AreaAnimations-X4.registry and every referenced raw RGBA frame before
 // hooks are installed. Any malformed/missing asset disables the whole pack.
-bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
+bool prepare(const std::filesystem::path& assetsDirectory,
+             PackPreparationStats* stats = nullptr) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;
 
@@ -80,7 +102,8 @@ void release() noexcept;
 // everything when the area has no pack, which fails closed to the engine's own BAM path.
 bool configure_area_packs(const std::filesystem::path& assetsDirectory) noexcept;
 [[nodiscard]] bool per_area_packs_active() noexcept;
-bool prepare_for_area(std::string_view areaResref) noexcept;
+bool prepare_for_area(std::string_view areaResref,
+                      bool enablePerformanceLogging = false) noexcept;
 
 // Resolves CGameStatic's current sequence slot through the original BAM cycle
 // lookup. Resrefs are the exact eight bytes embedded in CGameStatic.
@@ -121,6 +144,7 @@ void forget_engine_textures() noexcept;
 // thread, which an area transition is not, so names are parked here and reclaimed by
 // flush_retired_textures() on the next render pass. Without this an area swap would
 // abandon up to kTextureCacheLimit engine texture names per transition.
-void flush_retired_textures(const EngineTextureApi& api) noexcept;
+void flush_retired_textures(const EngineTextureApi& api,
+                            bool enablePerformanceLogging = false) noexcept;
 [[nodiscard]] bool has_retired_textures() noexcept;
 }  // namespace iee::area_animation_x4
