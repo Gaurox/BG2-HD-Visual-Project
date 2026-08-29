@@ -50,6 +50,14 @@ allocate a texture or change the production 64-entry cache. Their metadata is bo
 frames, discarded on an area swap, and their simulated GPU residency alone is cleared after a
 GL-context loss. Periodic and final summaries are diagnostic projections rather than hardware
 timings or exact process/driver memory measurements.
+Opt-in process-resource telemetry complements those modelled byte counts on Windows. Each
+area-animation pack load samples the process immediately before loading, while the outgoing and
+incoming packs coexist, and after the resident-pack swap. Five-second reports also publish current
+Working Set, peak Working Set and private commit, plus window deltas for page faults and process
+read/write operations and transfer bytes. The I/O counters cover all operations attributed to the
+process; they are not file-specific and do not distinguish file-cache service from physical disk
+activity. They also do not report
+driver VRAM allocation; unsupported counters fail closed with explicit availability flags.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.

@@ -99,6 +99,7 @@ add_library(iee_common STATIC
     src/iee/core/map_texture_telemetry.cpp
     src/iee/core/native_occlusion_probe.cpp
     src/iee/core/pattern_scanner.cpp
+    src/iee/core/process_resource_telemetry.cpp
     src/iee/game/area_texture.cpp
     src/iee/game/build_manifest.cpp
     src/iee/game/dds_texture.cpp
@@ -124,7 +125,7 @@ target_link_libraries(iee_common
 )
 
 if(WIN32)
-    target_link_libraries(iee_common PUBLIC version)
+    target_link_libraries(iee_common PUBLIC version psapi)
 endif()
 
 target_compile_features(iee_common PUBLIC cxx_std_20)

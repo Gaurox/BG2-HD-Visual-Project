@@ -33,6 +33,7 @@
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
+#include "iee/core/process_resource_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/build_manifest.h"
@@ -1042,6 +1043,39 @@ void test_hierarchical_cache_budget_simulator() {
   expect_true(countBounded.stats().evictions == 1 &&
                   countBounded.stats().residentEntries == 2,
               "The diagnostic model should retain a texture-name safety limit beside bytes");
+}
+
+void test_process_resource_telemetry() {
+  using iee::core::monotonic_resource_delta;
+  using iee::core::signed_resource_delta;
+
+  expect_eq(signed_resource_delta(100, 125), std::int64_t{25},
+            "Process memory gauges should report positive growth");
+  expect_eq(signed_resource_delta(125, 100), std::int64_t{-25},
+            "Process memory gauges should report released bytes");
+  expect_eq(signed_resource_delta(0, (std::numeric_limits<std::uint64_t>::max)()),
+            (std::numeric_limits<std::int64_t>::max)(),
+            "Positive process memory deltas should saturate safely");
+  expect_eq(signed_resource_delta((std::numeric_limits<std::uint64_t>::max)(), 0),
+            (std::numeric_limits<std::int64_t>::min)(),
+            "Negative process memory deltas should saturate safely");
+  expect_eq(monotonic_resource_delta(100, 125), std::uint64_t{25},
+            "Monotonic process counters should expose their delta");
+  expect_eq(monotonic_resource_delta(125, 100), std::uint64_t{0},
+            "Reset process counters should not underflow diagnostics");
+
+  const auto snapshot = iee::core::capture_process_resource_snapshot();
+#ifdef _WIN32
+  expect_true(snapshot.memoryAvailable && snapshot.workingSetBytes > 0 &&
+                  snapshot.privateBytes > 0 &&
+                  snapshot.peakWorkingSetBytes >= snapshot.workingSetBytes,
+              "Windows should expose coherent process memory gauges");
+  expect_true(snapshot.ioAvailable,
+              "Windows should expose cumulative process I/O counters");
+#else
+  expect_true(!snapshot.memoryAvailable && !snapshot.ioAvailable,
+              "Unsupported hosts should fail closed without synthetic process counters");
+#endif
 }
 
 void test_creature_sprite_xn_native_border_geometry() {
@@ -3105,6 +3139,16 @@ void test_area_animation_registry_formats() {
             "Pack telemetry should identify TimedTimeline resources");
   expect_eq(preparationStats.frameCount, std::uint64_t{2},
             "Pack telemetry should preserve the validated frame count");
+#ifdef _WIN32
+  expect_true(preparationStats.processBefore.memoryAvailable &&
+                  preparationStats.processAtCoexistence.memoryAvailable &&
+                  preparationStats.processAfterSwap.memoryAvailable,
+              "Pack telemetry should sample Windows process memory at all three gates");
+  expect_true(preparationStats.processBefore.ioAvailable &&
+                  preparationStats.processAtCoexistence.ioAvailable &&
+                  preparationStats.processAfterSwap.ioAvailable,
+              "Pack telemetry should sample Windows process I/O at all three gates");
+#endif
   const auto initialTextureCacheStats =
       iee::area_animation_x4::texture_cache_telemetry_snapshot();
   expect_true(initialTextureCacheStats.active,
@@ -4425,6 +4469,7 @@ int main() {
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
   test_hierarchical_cache_budget_simulator();
+  test_process_resource_telemetry();
   test_performance_sample_summary();
   test_area_animation_clock_probe();
   test_area_animation_timeline_clock();

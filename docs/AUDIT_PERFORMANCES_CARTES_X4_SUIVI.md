@@ -30,11 +30,16 @@ et le chargement intégral des packs restent inchangés. Une grille raffinée de
 compilée, testée et mesurée ingame. Elle retient 256 Mio / 192 textures comme borne GPU candidate
 et écarte le cache CPU de 192 Mio, sans encore modifier la politique réelle.
 
+Le deuxième sous-lot d’attribution mémoire instrumente le Working Set, les octets privés, les
+défauts de page et les compteurs d’I/O du processus. Il est compilé, testé, installé de manière
+réversible et mesuré ingame. Il ne mesure pas directement les lectures physiques ni l’allocation
+VRAM du pilote.
+
 Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/animation-cache-budget-profile-refinement-20260829T003323Z/`. Sa
-restauration revient au premier simulateur de budgets validé ingame, dont les états précédents
-conservent la chaîne de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la
-release et aucun manifeste de release n’a été modifié.
+distinct sous `bg2hd/state/process-resource-telemetry-20260829T005859Z/`. Sa restauration revient
+au raffinement des profils de budgets validé ingame, dont les états précédents conservent la chaîne
+de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la release et aucun
+manifeste de release n’a été modifié.
 
 ## Actions
 
@@ -46,7 +51,7 @@ release et aucun manifeste de release n’a été modifié.
 | P0 | Rendre `TILE_PAGE_DIAG` opt-in | Validé ingame | Nouveau réglage `[Rendering] EnableTilePageDiagnostics=false`. Il reste indépendant de `PerformanceLogs`, afin de pouvoir mesurer le hook sans réactiver un flush INFO par page. |
 | P0 | Journal rotatif/borné | Validé ingame | Rotation à 16 Mio avec trois sauvegardes, soit environ 64 Mio de nouvelles sorties conservées. Le sink reste synchrone et `flush_on(info)` est préservé. |
 | P1 | Premier lot : marqueurs carte et compteurs table PVR/GL | Validé ingame | Mesure `LoadArea`, les pages de table distinctes et textures sources observées, ainsi que les appels GL upload/delete. Aucun timing I/O/zlib ni calcul mémoire exact dans ce lot. |
-| P1 | Attribution précise I/O, zlib et mémoire | Premier sous-lot mesuré ingame | Les lectures synchrones des fichiers RGBA expliquent presque tout le temps ajouté sur AR0602 et AR0516 ; le pic brut mesuré atteint 600,99 Mio sur AR0516 → AR0900. La mémoire résidente du processus et le cache fichier restent à mesurer séparément. |
+| P1 | Attribution précise I/O, zlib et mémoire | Deuxième sous-lot mesuré ingame | Les octets lus correspondent exactement aux registres et frames RGBA. Le delta du Working Set suit le delta brut attendu à 2,4 Mio près au maximum ; le pic observé atteint 975,78 Mio pendant la coexistence AR0516 → AR0900. VRAM pilote et lectures physiques restent hors compteur interne. |
 | P1 | Supprimer les flush INFO une fois par frame d’animation | Validé ingame | `Composing area animation` passe en DEBUG : aucune occurrence INFO sur AR0602, AR0516 et AR0900, contre 427 écritures synchrones dans la session de référence. Aucun changement de rendu ou de cache. |
 | P1 | Mesurer le cache GPU des animations x4 | Validé ingame | Les invariants des compteurs sont cohérents et aucun échec GPU n’est observé. Le cache de 64 entrées évite toute éviction sur AR0700, mais provoque un churn important sur AR0516, AR0900 et AR0602. |
 | P1 | Simuler passivement différents budgets CPU/GPU | Raffinement mesuré ingame | 192 entrées éliminent le churn d’AR0602 ; 256 Mio GPU couvrent AR0700, AR0900 et AR0602, mais laissent 11 rechargements sur AR0516. Passer le cache CPU de 128 à 192 Mio n’apporte aucun gain sur la trace. |
@@ -348,7 +353,7 @@ Les deux profils 128/128 ne diffèrent que par leur limite GPU ; les deux profil
 AR0900 a déjà démontré avec seulement 80 frames que 192 Mio GPU restent sous son jeu actif de
 215,09 Mio.
 
-Validation avant installation :
+Validation et installation :
 
 - DLL Windows Release compilée ;
 - `ctest -C Release` : 2/2 tests C++ réussis dans les builds de test et DLL ;
@@ -405,12 +410,87 @@ les frames de toutes les zones. AR0516 dépasse encore cette borne : 171 frames 
 complet de 385,89 Mio poursuivrait le zéro-éviction au prix d’un réglage moins généraliste ; ce
 troisième raffinement n’est pas retenu sans mesure mémoire externe.
 
+## Cinquième petit lot expérimental P1
+
+Avec `PerformanceLogs=true`, le runtime capture désormais les compteurs Windows du processus sans
+modifier le contenu chargé ni le comportement du renderer :
+
+- `WorkingSetSize`, `PeakWorkingSetSize` et `PrivateUsage` via `GetProcessMemoryInfo` ;
+- défauts de page cumulés exposés par le même snapshot ;
+- opérations et octets de lecture/écriture cumulés via `GetProcessIoCounters`.
+
+La préparation de chaque pack prend trois snapshots : avant toute lecture, juste avant l’échange
+quand l’ancien et le nouveau pack coexistent, puis après l’échange et la destruction du pack
+sortant. Une ligne dédiée publie les trois valeurs de Working Set et de mémoire privée, ainsi que
+les deltas de défauts de page et d’I/O sur toute la préparation.
+
+Les rapports périodiques de cinq secondes publient la mémoire courante et les deltas depuis la
+fenêtre précédente. Les appels système ne sont donc pas ajoutés au hot path par frame. Les
+compteurs restent strictement derrière `PerformanceLogs=true` ; les plateformes non prises en
+charge publient des indicateurs de disponibilité faux au lieu de valeurs inventées.
+
+Limites d’interprétation :
+
+- `PrivateUsage` représente l’engagement privé du processus, pas uniquement les buffers x4 ;
+- le Working Set dépend des décisions de résidence de Windows et peut rester élevé après une
+  libération logique ;
+- `GetProcessIoCounters` agrège toutes les I/O attribuées au processus ; il n'est ni spécifique
+  aux fichiers, ni capable de distinguer cache fichier et lecture physique ;
+- le snapshot `PageFaultCount` ne sépare pas les différentes catégories de défauts de page ;
+- aucune API OpenGL portable disponible dans ce runtime ne fournit l’allocation VRAM réelle du
+  processus. Les octets de base GPU internes restent une estimation distincte.
+
+Validation avant installation :
+
+- DLL Windows Release compilée ;
+- `ctest -C Release` : 2/2 tests C++ réussis dans les builds de test et DLL ;
+- tests Python communs : 180/180 réussis ;
+- tests des snapshots Windows, des trois gates du pack, des deltas signés bornés et des compteurs
+  monotones ;
+- seul l’avertissement tiers `C4459` déjà connu dans `spdlog/fmt` est émis ;
+- DLL installée SHA-256
+  `81A3F41D59F2355732DBDC9D206ADA55F7661DBF29248B045E4BA26EA025FEC0` ;
+- rollback vérifié vers la DLL précédente SHA-256
+  `BD9B2AC1D95A055A687A1FD9168E64A1AA4DA1A62E10F0053A2F52B889F1C87F` ;
+- état réversible : `bg2hd/state/process-resource-telemetry-20260829T005859Z/`.
+
+Mesure ingame du 29 août 2026 :
+
+| Zone | Pack entrant | Pack sortant | Working Set avant | Coexistence | Après échange | Delta brut attendu | Delta WS observé | Chargement |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| AR0700 | 99,10 Mio | 0 Mio | 283,48 Mio | 381,58 Mio | 381,58 Mio | +99,10 Mio | +98,10 Mio | 588,33 ms |
+| AR0516 | 385,89 Mio | 99,10 Mio | 427,12 Mio | 813,66 Mio | 716,32 Mio | +286,80 Mio | +289,20 Mio | 2 335,12 ms |
+| AR0900 | 215,09 Mio | 385,89 Mio | 760,50 Mio | 975,78 Mio | 589,24 Mio | −170,80 Mio | −171,26 Mio | 1 214,78 ms |
+| AR0602 | 104,30 Mio | 215,09 Mio | 590,64 Mio | 694,21 Mio | 478,93 Mio | −110,80 Mio | −111,71 Mio | 4 649,99 ms |
+
+Les quatre mesures publient `memoryAvailable=true` et `ioAvailable=true`. Pour chaque zone,
+`readTransferBytesDelta` est exactement égal à `registryBytes + frameBytes`, ce qui attribue la
+lecture logique au chargement intégral du pack. L’écart maximal entre le delta brut attendu et le
+delta du Working Set n’est que de 2,40 Mio : les buffers RGBA expliquent donc directement la
+résidence RAM observée aux gates de chargement.
+
+Le pic périodique de mémoire privée atteint 1 879,73 Mio, nettement au-dessus du pic de Working Set
+de 975,78 Mio. Sa variation inclut le moteur, le pilote et les autres ressources ; elle ne doit pas
+servir seule à dimensionner le cache x4. Le delta privé d’AR0602 est notamment de −360,02 Mio pour
+un delta brut attendu de −110,80 Mio, preuve que d’autres libérations ont lieu pendant la
+transition.
+
+Cette session ne contient qu’un passage et n’est donc pas un A/B froid/chaud. Les durées de lecture
+ne permettent pas de distinguer cache fichier et disque physique ; elles ne doivent pas être
+interprétées comme une régression du diagnostic, dont le coût propre se limite à trois snapshots
+Windows par chargement et un snapshot toutes les cinq secondes. Zéro erreur, zéro compteur
+indisponible et zéro échec de chargement ou d’upload ont été relevés. L’unique avertissement est la
+récupération attendue du prologue `RenderTexture` déjà détourné par EEex.
+
 ## Prochaine étape
 
-Le P0, les trois premiers lots de télémétrie P1 et le retrait des logs INFO par frame sont validés.
-Les deux jeux de budgets sont maintenant mesurés. La prochaine gate prudente est de terminer le
-sous-lot d’attribution mémoire encore ouvert : Working Set et mémoire privée du processus, effet du
-cache fichier, et si possible allocation VRAM observée. Cette mesure doit valider les ordres de
-grandeur du modèle, pas transformer les valeurs de cette machine en constantes. Elle permettra
-ensuite de découper le chargement à la demande en un premier A/B réel, configurable et réversible,
-avec une borne GPU de 256 Mio / 192 textures et sans imposer 192 Mio de cache CPU.
+Le P0, les budgets simulés et l’attribution RAM/logique I/O sont mesurés. Le dernier sous-lot passif
+avant de modifier la stratégie de chargement est une corrélation externe courte : WPR/WPA pour les
+lectures et défauts de page, RAMMap pour l’état du cache fichier, et GPUView ou un compteur pilote
+pour la mémoire GPU locale/non locale. Ces mesures doivent seulement valider les ordres de grandeur
+du modèle, pas transformer les valeurs de cette machine en constantes.
+
+Une fois cette limite documentée, le chargement à la demande pourra être découpé en un premier A/B
+réel, configurable et réversible, avec une borne GPU de 256 Mio / 192 textures et un cache CPU de
+128 Mio. Le premier lot devra conserver le chargement actuel comme fallback et ne modifier ni les
+formats de packs ni les animations validées.

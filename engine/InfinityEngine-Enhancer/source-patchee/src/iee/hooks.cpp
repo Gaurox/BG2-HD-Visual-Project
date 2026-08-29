@@ -29,6 +29,7 @@
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
+#include "iee/core/process_resource_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/frame_hook.h"
 #include "iee/game/game_types.h"
@@ -1081,6 +1082,7 @@ void record_render_performance(const AppContext& ctx, bool handled,
       long long activeFrameTicks{};
       std::uint64_t areaGeneration{};
       core::PerformanceSamples<2048> frameCpuMs;
+      core::ProcessResourceSnapshot processResourceBaseline{};
 
       void finish_frame(double ticksToMilliseconds) noexcept {
         if (activeFrame != 0) {
@@ -1098,6 +1100,7 @@ void record_render_performance(const AppContext& ctx, bool handled,
         activeFrame = 0;
         activeFrameTicks = 0;
         frameCpuMs.reset();
+        processResourceBaseline = core::capture_process_resource_snapshot();
       }
     };
     static Window window;
@@ -1110,7 +1113,7 @@ void record_render_performance(const AppContext& ctx, bool handled,
       window.reset(now.QuadPart);
       window.areaGeneration = areaGeneration;
     }
-    if (window.startedAt == 0) window.startedAt = now.QuadPart;
+    if (window.startedAt == 0) window.reset(now.QuadPart);
     window.totalTicks += elapsedTicks;
     window.maximumTicks = (std::max)(window.maximumTicks, elapsedTicks);
     ++window.calls;
@@ -1141,6 +1144,7 @@ void record_render_performance(const AppContext& ctx, bool handled,
         area_animation_x4::texture_cache_telemetry_snapshot();
     const auto areaAnimationCacheBudgetSimulation =
         area_animation_x4::cache_budget_simulation_snapshot();
+    const auto processResources = core::capture_process_resource_snapshot();
     const auto wed = ctx.wed.load(std::memory_order_acquire);
     const auto area = wed ? wed->areaResrefView() : std::string_view{"?"};
     LOG_INFO(
@@ -1171,6 +1175,56 @@ void record_render_performance(const AppContext& ctx, bool handled,
         glStats.compressedUploadBytes, glStats.compressedBaseLevelCalls,
         glStats.largeS3tcBaseLevelCalls, glStats.largeS3tcBaseLevelBytes,
         glStats.deleteCalls, glStats.deletedTextureNames);
+    const bool processMemoryAvailable =
+        window.processResourceBaseline.memoryAvailable && processResources.memoryAvailable;
+    const bool processIoAvailable =
+        window.processResourceBaseline.ioAvailable && processResources.ioAvailable;
+    const auto workingSetWindowDelta =
+        processMemoryAvailable
+            ? core::signed_resource_delta(window.processResourceBaseline.workingSetBytes,
+                                          processResources.workingSetBytes)
+            : 0;
+    const auto privateWindowDelta =
+        processMemoryAvailable
+            ? core::signed_resource_delta(window.processResourceBaseline.privateBytes,
+                                          processResources.privateBytes)
+            : 0;
+    const auto pageFaultsWindowDelta =
+        processMemoryAvailable
+            ? core::monotonic_resource_delta(window.processResourceBaseline.pageFaults,
+                                             processResources.pageFaults)
+            : 0;
+    const auto readOperationsWindowDelta =
+        processIoAvailable
+            ? core::monotonic_resource_delta(window.processResourceBaseline.readOperations,
+                                             processResources.readOperations)
+            : 0;
+    const auto readTransferBytesWindowDelta =
+        processIoAvailable
+            ? core::monotonic_resource_delta(window.processResourceBaseline.readTransferBytes,
+                                             processResources.readTransferBytes)
+            : 0;
+    const auto writeOperationsWindowDelta =
+        processIoAvailable
+            ? core::monotonic_resource_delta(window.processResourceBaseline.writeOperations,
+                                             processResources.writeOperations)
+            : 0;
+    const auto writeTransferBytesWindowDelta =
+        processIoAvailable
+            ? core::monotonic_resource_delta(window.processResourceBaseline.writeTransferBytes,
+                                             processResources.writeTransferBytes)
+            : 0;
+    LOG_INFO(
+        "Process resource telemetry: area={}, reason=periodic, memoryAvailable={}, "
+        "workingSetBytes={}, workingSetWindowDeltaBytes={}, peakWorkingSetBytes={}, "
+        "privateBytes={}, privateWindowDeltaBytes={}, pageFaultsWindowDelta={}, "
+        "ioAvailable={}, readOperationsWindowDelta={}, readTransferBytesWindowDelta={}, "
+        "writeOperationsWindowDelta={}, writeTransferBytesWindowDelta={}",
+        area, processMemoryAvailable, processResources.workingSetBytes,
+        workingSetWindowDelta, processResources.peakWorkingSetBytes,
+        processResources.privateBytes, privateWindowDelta, pageFaultsWindowDelta,
+        processIoAvailable, readOperationsWindowDelta, readTransferBytesWindowDelta,
+        writeOperationsWindowDelta, writeTransferBytesWindowDelta);
     if (areaAnimationTextureStats.active) {
       LOG_INFO(
           "Area-animation GPU cache telemetry: area={}, reason=periodic, capacity={}, "

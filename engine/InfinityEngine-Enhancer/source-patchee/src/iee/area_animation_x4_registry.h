@@ -8,6 +8,7 @@
 #include <string_view>
 
 #include "iee/core/cache_budget_simulator.h"
+#include "iee/core/process_resource_telemetry.h"
 
 namespace iee::area_animation_x4 {
 struct FrameHandle {
@@ -89,6 +90,9 @@ struct PackPreparationStats {
   std::uint64_t deferredTextureNames{};
   TextureCacheTelemetryStats outgoingTextureCache{};
   CacheBudgetSimulationSnapshot outgoingCacheBudgetSimulation{};
+  core::ProcessResourceSnapshot processBefore{};
+  core::ProcessResourceSnapshot processAtCoexistence{};
+  core::ProcessResourceSnapshot processAfterSwap{};
   double registryReadMilliseconds{};
   double frameReadMilliseconds{};
   double parseAndAllocateMilliseconds{};

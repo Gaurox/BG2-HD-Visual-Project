@@ -448,6 +448,66 @@ void log_cache_budget_simulation(std::string_view area, std::string_view reason,
   }
 }
 
+void log_pack_process_resource_telemetry(std::string_view area,
+                                         const PackPreparationStats& stats) {
+  const bool memoryAvailable = stats.processBefore.memoryAvailable &&
+                               stats.processAtCoexistence.memoryAvailable &&
+                               stats.processAfterSwap.memoryAvailable;
+  const bool ioAvailable =
+      stats.processBefore.ioAvailable && stats.processAfterSwap.ioAvailable;
+  const auto workingSetDelta =
+      memoryAvailable
+          ? core::signed_resource_delta(stats.processBefore.workingSetBytes,
+                                        stats.processAfterSwap.workingSetBytes)
+          : 0;
+  const auto privateDelta =
+      memoryAvailable
+          ? core::signed_resource_delta(stats.processBefore.privateBytes,
+                                        stats.processAfterSwap.privateBytes)
+          : 0;
+  const auto pageFaultsDelta =
+      memoryAvailable
+          ? core::monotonic_resource_delta(stats.processBefore.pageFaults,
+                                           stats.processAfterSwap.pageFaults)
+          : 0;
+  const auto readOperationsDelta =
+      ioAvailable
+          ? core::monotonic_resource_delta(stats.processBefore.readOperations,
+                                           stats.processAfterSwap.readOperations)
+          : 0;
+  const auto readTransferBytesDelta =
+      ioAvailable
+          ? core::monotonic_resource_delta(stats.processBefore.readTransferBytes,
+                                           stats.processAfterSwap.readTransferBytes)
+          : 0;
+  const auto writeOperationsDelta =
+      ioAvailable
+          ? core::monotonic_resource_delta(stats.processBefore.writeOperations,
+                                           stats.processAfterSwap.writeOperations)
+          : 0;
+  const auto writeTransferBytesDelta =
+      ioAvailable
+          ? core::monotonic_resource_delta(stats.processBefore.writeTransferBytes,
+                                           stats.processAfterSwap.writeTransferBytes)
+          : 0;
+  LOG_INFO(
+      "Area-animation process resource telemetry: area={}, reason=pack-load, "
+      "memoryAvailable={}, workingSetBeforeBytes={}, workingSetAtCoexistenceBytes={}, "
+      "workingSetAfterSwapBytes={}, workingSetDeltaBytes={}, privateBeforeBytes={}, "
+      "privateAtCoexistenceBytes={}, privateAfterSwapBytes={}, privateDeltaBytes={}, "
+      "peakWorkingSetAfterBytes={}, pageFaultsDelta={}, ioAvailable={}, "
+      "readOperationsDelta={}, readTransferBytesDelta={}, writeOperationsDelta={}, "
+      "writeTransferBytesDelta={}",
+      area, memoryAvailable, stats.processBefore.workingSetBytes,
+      stats.processAtCoexistence.workingSetBytes,
+      stats.processAfterSwap.workingSetBytes, workingSetDelta,
+      stats.processBefore.privateBytes, stats.processAtCoexistence.privateBytes,
+      stats.processAfterSwap.privateBytes, privateDelta,
+      stats.processAfterSwap.peakWorkingSetBytes, pageFaultsDelta, ioAvailable,
+      readOperationsDelta, readTransferBytesDelta, writeOperationsDelta,
+      writeTransferBytesDelta);
+}
+
 std::string normalised_area_name(std::string_view value) {
   std::string result;
   for (const char character : value) {
@@ -613,7 +673,10 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
 
 bool prepare(const std::filesystem::path& assetsDirectory,
              PackPreparationStats* stats) noexcept {
-  if (stats) *stats = {};
+  if (stats) {
+    *stats = {};
+    stats->processBefore = core::capture_process_resource_snapshot();
+  }
   const auto totalStarted = stats ? TelemetryClock::now() : TelemetryClock::time_point{};
   try {
     const auto registryReadStarted =
@@ -791,6 +854,9 @@ bool prepare(const std::filesystem::path& assetsDirectory,
     }
     if (!reader.at_end()) throw std::runtime_error("trailing bytes in area-animation registry");
 
+    if (stats) {
+      stats->processAtCoexistence = core::capture_process_resource_snapshot();
+    }
     const auto swapStarted = stats ? TelemetryClock::now() : TelemetryClock::time_point{};
     {
       std::lock_guard lock(g_mutex);
@@ -828,6 +894,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
       g_ready.store(true, std::memory_order_release);
     }
     if (stats) {
+      stats->processAfterSwap = core::capture_process_resource_snapshot();
       const auto finished = TelemetryClock::now();
       stats->swapMilliseconds = elapsed_milliseconds(swapStarted, finished);
       stats->totalMilliseconds = elapsed_milliseconds(totalStarted, finished);
@@ -1200,6 +1267,7 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
         stats.outgoingTextureNames, stats.deferredTextureNames,
         stats.registryReadMilliseconds, stats.frameReadMilliseconds,
         stats.parseAndAllocateMilliseconds, stats.swapMilliseconds, stats.totalMilliseconds);
+    log_pack_process_resource_telemetry(area, stats);
   }
   std::lock_guard lock(g_mutex);
   g_residentArea = area;
