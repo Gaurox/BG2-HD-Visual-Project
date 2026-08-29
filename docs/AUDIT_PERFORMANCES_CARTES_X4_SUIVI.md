@@ -35,6 +35,12 @@ défauts de page et les compteurs d’I/O du processus. Il est compilé, testé,
 réversible et mesuré ingame. Il ne mesure pas directement les lectures physiques ni l’allocation
 VRAM du pilote.
 
+Le recoupement externe est également terminé sur deux passages consécutifs. Les compteurs du
+volume confirment une session servie presque entièrement par le cache fichier Windows ; les
+compteurs WDDM du processus et de l’adaptateur sont cohérents et ne montrent pas de migration
+persistante vers la mémoire GPU non locale. Ces résultats valident les ordres de grandeur sur la
+machine de test, pas un seuil matériel propre à tous les PC.
+
 Le runtime expérimental courant est installé localement de manière réversible avec son état
 distinct sous `bg2hd/state/process-resource-telemetry-20260829T005859Z/`. Sa restauration revient
 au raffinement des profils de budgets validé ingame, dont les états précédents conservent la chaîne
@@ -51,11 +57,11 @@ manifeste de release n’a été modifié.
 | P0 | Rendre `TILE_PAGE_DIAG` opt-in | Validé ingame | Nouveau réglage `[Rendering] EnableTilePageDiagnostics=false`. Il reste indépendant de `PerformanceLogs`, afin de pouvoir mesurer le hook sans réactiver un flush INFO par page. |
 | P0 | Journal rotatif/borné | Validé ingame | Rotation à 16 Mio avec trois sauvegardes, soit environ 64 Mio de nouvelles sorties conservées. Le sink reste synchrone et `flush_on(info)` est préservé. |
 | P1 | Premier lot : marqueurs carte et compteurs table PVR/GL | Validé ingame | Mesure `LoadArea`, les pages de table distinctes et textures sources observées, ainsi que les appels GL upload/delete. Aucun timing I/O/zlib ni calcul mémoire exact dans ce lot. |
-| P1 | Attribution précise I/O, zlib et mémoire | Deuxième sous-lot mesuré ingame | Les octets lus correspondent exactement aux registres et frames RGBA. Le delta du Working Set suit le delta brut attendu à 2,4 Mio près au maximum ; le pic observé atteint 975,78 Mio pendant la coexistence AR0516 → AR0900. VRAM pilote et lectures physiques restent hors compteur interne. |
+| P1 | Attribution précise I/O, zlib et mémoire | Mesuré ingame et recoupé | Les octets lus correspondent exactement aux registres et frames RGBA et le Working Set suit le delta brut attendu. Sur huit chargements, le volume ne lit que 0 à 1,32 Mio autour de packs logiques de 99,10 à 385,89 Mio : la session chaude est servie presque entièrement par le cache fichier. Le pic WDDM du jeu est de 868,35 Mio, sans pression non locale significative. |
 | P1 | Supprimer les flush INFO une fois par frame d’animation | Validé ingame | `Composing area animation` passe en DEBUG : aucune occurrence INFO sur AR0602, AR0516 et AR0900, contre 427 écritures synchrones dans la session de référence. Aucun changement de rendu ou de cache. |
 | P1 | Mesurer le cache GPU des animations x4 | Validé ingame | Les invariants des compteurs sont cohérents et aucun échec GPU n’est observé. Le cache de 64 entrées évite toute éviction sur AR0700, mais provoque un churn important sur AR0516, AR0900 et AR0602. |
 | P1 | Simuler passivement différents budgets CPU/GPU | Raffinement mesuré ingame | 192 entrées éliminent le churn d’AR0602 ; 256 Mio GPU couvrent AR0700, AR0900 et AR0602, mais laissent 11 rechargements sur AR0516. Passer le cache CPU de 128 à 192 Mio n’apporte aucun gain sur la trace. |
-| P1 | Animations x4 à la demande avec budget mémoire | Différé | Chantier moyen/élevé ; ne pas l’entreprendre sans attribution mémoire. |
+| P1 | Animations x4 à la demande avec budget mémoire | Prêt à découper | L’attribution mémoire préalable est terminée. Chantier moyen/élevé à commencer par un A/B configurable et réversible, avec le chargement intégral actuel comme fallback. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
 | P2 | Double `Demand` et invalidations GL | Différé | Durée de vie moteur sensible ; nécessite les compteurs P1. |
@@ -482,15 +488,88 @@ Windows par chargement et un snapshot toutes les cinq secondes. Zéro erreur, z�
 indisponible et zéro échec de chargement ou d’upload ont été relevés. L’unique avertissement est la
 récupération attendue du prologue `RenderTexture` déjà détourné par EEex.
 
+## Sixième petit lot passif P1
+
+L’inventaire local trouve `wpr.exe` avec les profils `FileIO`, `GPU` et `ResidentSet`, mais pas WPA,
+GPUView ni RAMMap. La session Codex n’est pas élevée ; une capture ETW formelle et l’installation du
+Windows Performance Toolkit demanderaient donc une intervention administrateur. Avant cette étape
+plus lourde, les compteurs de performances Windows déjà présents offrent un recoupement passif :
+
+- `GPU Process Memory` : dédié, partagé, local, non local et engagement total par PID ;
+- `GPU Adapter Memory` : usage dédié, partagé et engagement global ;
+- `LogicalDisk` : lectures et écritures du volume du jeu ;
+- `Memory` et `Cache` : cache système, listes standby, lectures de pages et taux de présence.
+
+Le nouveau script
+`engine/InfinityEngine-Enhancer/source-patchee/tools/Capture-BG2HD-ProcessResources.ps1` attend les
+processus `Baldur`/`BaldurReal` appartenant au dossier du jeu, échantillonne depuis un processus
+séparé, écrit CSV + métadonnées + statut, puis s’arrête après la fermeture du jeu. Il ne touche ni
+au runtime ni aux fichiers installés.
+
+Deux auto-tests de trois secondes réussissent. Le test avec un processus GPU réel publie des
+compteurs non nuls et cohérents ; le coût stabilisé du helper est de 10,7 à 14,3 ms par seconde,
+avec 56,9 ms au premier échantillon. Cette durée est mesurée dans le processus externe, pas dans le
+thread de rendu. Le CSV l’enregistre à chaque ligne afin d’écarter une session trop intrusive.
+
+Limite : Microsoft documente un ancien cas de surcomptage de `GPU Process Memory` sous Windows 10.
+La capture doit donc comparer tendances, deltas et télémétrie interne ; elle ne constitue pas à
+elle seule une preuve de fuite VRAM. WPR/WPA reste le recours si les compteurs se contredisent.
+
+### Capture ingame externe
+
+Capture du 29 août 2026, 156 échantillons à une seconde, avec ComfyUI laissé ouvert mais inactif
+comme pendant les sessions précédentes. Le parcours AR0700 → AR0516 → AR0900 → AR0602 a été joué
+deux fois dans le même processus. Le helper a consommé en moyenne 20,85 ms par échantillon, avec
+27,72 ms au percentile 95 et 59,29 ms au maximum ; ce coût reste dans un processus séparé du
+renderer.
+
+| Zone | Pack logique | Chargement passage 1 | Chargement passage 2 | Lecture du volume autour du chargement, P1 / P2 |
+|---|---:|---:|---:|---:|
+| AR0700 | 99,10 Mio | 65,00 ms | 68,81 ms | 0,18 / 1,32 Mio |
+| AR0516 | 385,89 Mio | 255,22 ms | 246,16 ms | 0 / 0,12 Mio |
+| AR0900 | 215,09 Mio | 147,71 ms | 146,81 ms | 0,13 / 0 Mio |
+| AR0602 | 104,30 Mio | 77,63 ms | 77,45 ms | 0 / 0 Mio |
+
+Les huit deltas `readTransferBytesDelta` du processus restent exactement égaux aux registres et
+frames des packs. En revanche, les fenêtres externes de trois à quatre secondes ne voient au plus
+que 1,32 Mio lu sur le volume `G:`. Les taux de présence du cache par copie sont compris entre
+81,43 et 100 %, avec 100 % sur cinq transitions. Le premier passage était donc déjà chaud ; le
+second n’est pas systématiquement plus rapide et ne change jamais une durée de plus de 9,06 ms.
+Cette session attribue solidement les temps observés à la copie/allocation de données mises en
+cache, mais ne remplace pas un futur essai réellement froid sur une autre machine.
+
+| Zone | WDDM dédié stable P1 | WDDM dédié stable P2 | Pic WDDM P1 / P2 | Pic interne animations P1 / P2 |
+|---|---:|---:|---:|---:|
+| AR0700 | 586,78 Mio | 591,34 Mio | 586,78 / 591,34 Mio | 50,48 / 50,48 Mio |
+| AR0516 | 309,75 Mio | 310,70 Mio | 565,06 / 633,27 Mio | 112,73 / 113,40 Mio |
+| AR0900 | 536,55 Mio | 648,36 Mio | 850,23 / 868,35 Mio | 172,93 / 172,71 Mio |
+| AR0602 | 252,61 Mio | 258,44 Mio | 374,99 / 382,01 Mio | 50,44 / 48,66 Mio |
+
+Le WDDM dédié mesure tout le processus BG2, alors que le compteur interne ne suit que les niveaux
+de base des textures d’animations : leurs valeurs absolues ne doivent pas être soustraites ni
+confondues. Le dédié et le local WDDM sont identiques pendant toute la capture ; le non-local et le
+partagé culminent à 38,26 Mio. L’usage dédié global de l’adaptateur varie de 7 869,60 à
+8 734,54 Mio, soit +864,94 Mio, à seulement 3,41 Mio du pic dédié attribué au jeu. Cela recoupe le
+compteur par processus malgré ComfyUI et les autres consommateurs présents.
+
+AR0900 termine 111,81 Mio plus haut au second passage, mais cet écart retombe à 5,83 Mio dès
+AR0602 ; il ne s’agit donc pas d’une croissance persistante sur le parcours. Aucun échec de
+chargement, création ou upload n’est relevé. Le seul avertissement de la session est la récupération
+attendue du prologue `RenderTexture` déjà détourné par EEex.
+
+Le recoupement n’apporte aucune contradiction nécessitant une capture ETW plus lourde. WPA,
+GPUView et RAMMap ne sont donc pas installés à ce stade. La borne candidate 256 Mio / 192 textures
+reste une limite explicite du futur cache d’animations, et non une valeur déduite des 32 Gio de la
+carte de test.
+
 ## Prochaine étape
 
-Le P0, les budgets simulés et l’attribution RAM/logique I/O sont mesurés. Le dernier sous-lot passif
-avant de modifier la stratégie de chargement est une corrélation externe courte : WPR/WPA pour les
-lectures et défauts de page, RAMMap pour l’état du cache fichier, et GPUView ou un compteur pilote
-pour la mémoire GPU locale/non locale. Ces mesures doivent seulement valider les ordres de grandeur
-du modèle, pas transformer les valeurs de cette machine en constantes.
+Le P0, les budgets simulés et l’attribution RAM, cache fichier et WDDM sont maintenant mesurés sans
+contradiction. La prochaine étape peut être le premier A/B réel du chargement des animations x4 à
+la demande. C’est un chantier de difficulté moyenne à élevée, à découper en lots réversibles.
 
-Une fois cette limite documentée, le chargement à la demande pourra être découpé en un premier A/B
-réel, configurable et réversible, avec une borne GPU de 256 Mio / 192 textures et un cache CPU de
-128 Mio. Le premier lot devra conserver le chargement actuel comme fallback et ne modifier ni les
-formats de packs ni les animations validées.
+Le premier lot doit rester configurable, conserver le chargement intégral actuel comme fallback et
+ne modifier ni les formats de packs ni les animations validées. Sa borne de départ sera de 256 Mio
+/ 192 textures côté GPU et 128 Mio côté CPU. Une configuration à budgets faibles devra être
+testable pour vérifier le comportement généraliste ; les valeurs de la RTX 5090 de mesure ne
+doivent entrer dans aucune constante de production.

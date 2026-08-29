@@ -58,6 +58,14 @@ read/write operations and transfer bytes. The I/O counters cover all operations 
 process; they are not file-specific and do not distinguish file-cache service from physical disk
 activity. They also do not report
 driver VRAM allocation; unsupported counters fail closed with explicit availability flags.
+For an external cross-check without modifying the render thread,
+[`tools/Capture-BG2HD-ProcessResources.ps1`](tools/Capture-BG2HD-ProcessResources.ps1) waits for a
+`Baldur` or `BaldurReal` process under the selected game root and samples persistent Windows
+performance counters from a separate process. Its CSV records WDDM process/adapter memory,
+logical-volume reads, system cache/standby state and the sampler's own duration, then closes after
+the game exits. Prefer an output path on another volume. GPU Process Memory counters are suitable
+for trends and internal-telemetry cross-checks, not formal leak certification; Microsoft documents
+[a legacy over-reporting limitation](https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/gpu-process-memory-counters-report-wrong-value).
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.
