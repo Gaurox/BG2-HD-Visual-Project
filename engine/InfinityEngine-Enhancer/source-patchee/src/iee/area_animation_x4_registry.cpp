@@ -33,6 +33,21 @@ constexpr std::uint32_t kMaxCyclesPerResource = 256;
 constexpr std::uint32_t kMaxCycleSlots = 65536;
 constexpr std::uint32_t kMaxRateComponent = 1000;
 constexpr std::uint64_t kMaxRawBytes = 512ull * 1024ull * 1024ull;
+constexpr std::size_t kCacheBudgetSimulationMaxFrames = 16384;
+constexpr std::size_t kCacheBudgetSimulationGpuEntryLimit = 128;
+constexpr std::uint64_t kMiB = 1024ull * 1024ull;
+struct CacheBudgetSimulationProfileConfig {
+  std::uint64_t cpuBudgetBytes{};
+  std::uint64_t gpuBudgetBytes{};
+};
+constexpr std::array<CacheBudgetSimulationProfileConfig,
+                     kCacheBudgetSimulationProfileCount>
+    kCacheBudgetSimulationProfiles{{
+        {.cpuBudgetBytes = 64ull * kMiB, .gpuBudgetBytes = 96ull * kMiB},
+        {.cpuBudgetBytes = 128ull * kMiB, .gpuBudgetBytes = 128ull * kMiB},
+        {.cpuBudgetBytes = 128ull * kMiB, .gpuBudgetBytes = 192ull * kMiB},
+        {.cpuBudgetBytes = 192ull * kMiB, .gpuBudgetBytes = 256ull * kMiB},
+    }};
 // v3 keeps every v2 field and appends the optional world position that binds a resource to one
 // occurrence. v1 and v2 stay loadable: packs already installed must not stop working.
 constexpr std::uint32_t kPositionRegistryVersion = 3;
@@ -63,6 +78,7 @@ struct Resource {
   // registry rather than inferred from load order, so a writer that emits them in another order
   // is caught instead of silently reading the wrong bytes.
   std::uint32_t variantIndex{};
+  std::size_t cacheBudgetSimulationFrameOffset{};
   std::string displayName;
   std::vector<Frame> frames;
   PlaybackMode playbackMode{PlaybackMode::Native};
@@ -85,6 +101,15 @@ struct PositionMiss {
   std::array<char, 8> resref{};
   int worldX{};
   int worldY{};
+};
+
+struct CacheBudgetSimulationState {
+  bool attempted{};
+  bool active{};
+  std::uint64_t frameCapacity{};
+  std::array<core::HierarchicalCacheBudgetSimulator,
+             kCacheBudgetSimulationProfileCount>
+      profiles;
 };
 
 class BinaryReader {
@@ -124,6 +149,7 @@ std::vector<PositionMiss> g_positionMisses;
 std::vector<TextureCacheEntry> g_textureCache;
 std::uint64_t g_textureUseCounter{};
 TextureCacheTelemetryStats g_textureCacheTelemetry{.capacity = kTextureCacheLimit};
+CacheBudgetSimulationState g_cacheBudgetSimulation;
 bool g_creationFailureLogged = false;
 // Engine texture names whose owning context is still alive but which no longer back a
 // resident frame. Only the GL thread may delete them, so they wait here.
@@ -217,6 +243,78 @@ void reset_texture_cache_telemetry_locked() noexcept {
   refresh_texture_cache_residency_locked();
 }
 
+void reset_cache_budget_simulation_locked() noexcept {
+  g_cacheBudgetSimulation = {};
+}
+
+CacheBudgetSimulationSnapshot cache_budget_simulation_snapshot_locked() noexcept {
+  CacheBudgetSimulationSnapshot snapshot{
+      .active = g_cacheBudgetSimulation.active,
+      .frameCapacity = g_cacheBudgetSimulation.frameCapacity,
+  };
+  if (!snapshot.active) return snapshot;
+  for (std::size_t index = 0; index < snapshot.profiles.size(); ++index) {
+    snapshot.profiles[index] = g_cacheBudgetSimulation.profiles[index].snapshot();
+  }
+  return snapshot;
+}
+
+bool initialise_cache_budget_simulation_locked() {
+  if (g_cacheBudgetSimulation.attempted) return g_cacheBudgetSimulation.active;
+  g_cacheBudgetSimulation.attempted = true;
+  std::size_t frameCount = 0;
+  for (const Resource& resource : g_resources) {
+    if (resource.frames.size() > kCacheBudgetSimulationMaxFrames - frameCount) {
+      LOG_WARN(
+          "Area-animation cache budget simulation skipped: frame count exceeds bounded "
+          "diagnostic capacity {}",
+          kCacheBudgetSimulationMaxFrames);
+      return false;
+    }
+    frameCount += resource.frames.size();
+  }
+  if (frameCount == 0) return false;
+
+  for (std::size_t index = 0; index < g_cacheBudgetSimulation.profiles.size(); ++index) {
+    const auto& config = kCacheBudgetSimulationProfiles[index];
+    g_cacheBudgetSimulation.profiles[index].reset(
+        frameCount, config.cpuBudgetBytes, config.gpuBudgetBytes,
+        kCacheBudgetSimulationGpuEntryLimit);
+  }
+  g_cacheBudgetSimulation.frameCapacity = static_cast<std::uint64_t>(frameCount);
+  g_cacheBudgetSimulation.active = true;
+  return true;
+}
+
+void record_cache_budget_simulation_locked(FrameHandle handle,
+                                           std::uint64_t frameBytes) noexcept {
+  try {
+    if (!initialise_cache_budget_simulation_locked() ||
+        handle.resourceIndex >= g_resources.size()) {
+      return;
+    }
+    const Resource& resource = g_resources[handle.resourceIndex];
+    if (handle.frameIndex >= resource.frames.size()) return;
+    const auto flatIndex = resource.cacheBudgetSimulationFrameOffset + handle.frameIndex;
+    for (auto& profile : g_cacheBudgetSimulation.profiles) {
+      profile.observe(flatIndex, frameBytes);
+    }
+  } catch (...) {
+    // Diagnostics must never turn an otherwise valid x4 frame into a native
+    // fallback. Disable only the shadow models for the resident area.
+    reset_cache_budget_simulation_locked();
+    g_cacheBudgetSimulation.attempted = true;
+    LOG_WARN("Area-animation cache budget simulation disabled after an internal failure");
+  }
+}
+
+void clear_cache_budget_simulation_gpu_locked() noexcept {
+  if (!g_cacheBudgetSimulation.active) return;
+  for (auto& profile : g_cacheBudgetSimulation.profiles) {
+    profile.clear_gpu_residency();
+  }
+}
+
 // Abandons the cached names. Callers must be certain the names are already invalid
 // (context recreated, hooks torn down); otherwise use retire_texture_cache_locked().
 void clear_texture_cache_locked(bool recordTelemetry = false) noexcept {
@@ -227,6 +325,7 @@ void clear_texture_cache_locked(bool recordTelemetry = false) noexcept {
   g_textureCache.clear();
   g_textureUseCounter = 0;
   refresh_texture_cache_residency_locked();
+  clear_cache_budget_simulation_gpu_locked();
 }
 
 // Parks the cached names for deletion by the GL thread. Used when the pack is swapped
@@ -260,6 +359,7 @@ struct ReleaseSummary {
   std::uint64_t outgoingTextureNames{};
   std::uint64_t deferredTextureNames{};
   TextureCacheTelemetryStats outgoingTextureCache{};
+  CacheBudgetSimulationSnapshot outgoingCacheBudgetSimulation{};
 };
 
 ReleaseSummary release_locked() {
@@ -268,6 +368,7 @@ ReleaseSummary release_locked() {
       .outgoingRawBytes = g_residentRawBytes,
       .outgoingTextureNames = static_cast<std::uint64_t>(g_textureCache.size()),
       .outgoingTextureCache = texture_cache_telemetry_snapshot_locked(),
+      .outgoingCacheBudgetSimulation = cache_budget_simulation_snapshot_locked(),
   };
   g_ready.store(false, std::memory_order_release);
   retire_texture_cache_locked();
@@ -282,6 +383,7 @@ ReleaseSummary release_locked() {
   g_creationFailureLogged = false;
   summary.deferredTextureNames = static_cast<std::uint64_t>(g_retiredTextureIds.size());
   reset_texture_cache_telemetry_locked();
+  reset_cache_budget_simulation_locked();
   return summary;
 }
 
@@ -307,6 +409,32 @@ void log_texture_cache_telemetry(std::string_view area, std::string_view reason,
       stats.failedUploadTextureDeletes, stats.contextInvalidatedTextureNames,
       stats.uploadedBaseLevelBytes, stats.residentTextureNames, stats.residentBaseLevelBytes,
       stats.peakResidentBaseLevelBytes);
+}
+
+void log_cache_budget_simulation(std::string_view area, std::string_view reason,
+                                 const CacheBudgetSimulationSnapshot& snapshot) {
+  if (!snapshot.active) return;
+  for (const auto& profile : snapshot.profiles) {
+    LOG_INFO(
+        "Area-animation cache budget simulation: area={}, reason={}, frameCapacity={}, "
+        "cpuBudgetBytes={}, gpuBudgetBytes={}, gpuEntryLimit={}, requests={}, "
+        "distinctFrames={}, predictedFrameReadBytes={}, predictedUploadBytes={}, "
+        "cpuRequests={}, cpuHits={}, cpuMisses={}, cpuEvictions={}, "
+        "cpuUncacheableRequests={}, cpuResidentEntries={}, cpuResidentBytes={}, "
+        "cpuPeakResidentBytes={}, gpuHits={}, gpuMisses={}, gpuEvictions={}, "
+        "gpuUncacheableRequests={}, gpuResidentEntries={}, gpuResidentBytes={}, "
+        "gpuPeakResidentBytes={}",
+        area, reason, snapshot.frameCapacity, profile.cpu.budgetBytes,
+        profile.gpu.budgetBytes, profile.gpu.entryLimit, profile.requests,
+        profile.distinctFrames, profile.predictedFrameReadBytes,
+        profile.predictedUploadBytes, profile.cpu.requests, profile.cpu.hits,
+        profile.cpu.misses, profile.cpu.evictions, profile.cpu.uncacheableRequests,
+        profile.cpu.residentEntries, profile.cpu.residentBytes,
+        profile.cpu.peakResidentBytes, profile.gpu.hits, profile.gpu.misses,
+        profile.gpu.evictions, profile.gpu.uncacheableRequests,
+        profile.gpu.residentEntries, profile.gpu.residentBytes,
+        profile.gpu.peakResidentBytes);
+  }
 }
 
 std::string normalised_area_name(std::string_view value) {
@@ -408,6 +536,12 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
                            bool recordTelemetry) noexcept {
   textureId = 0;
   if (recordTelemetry) ++g_textureCacheTelemetry.requests;
+  const auto& resource = g_resources[handle.resourceIndex];
+  const auto& frame = resource.frames[handle.frameIndex];
+  if (recordTelemetry) {
+    record_cache_budget_simulation_locked(
+        handle, static_cast<std::uint64_t>(frame.replacement.size()));
+  }
   const auto existing = std::find_if(
       g_textureCache.begin(), g_textureCache.end(),
       [&](const TextureCacheEntry& entry) { return entry.handle == handle; });
@@ -419,8 +553,6 @@ bool ensure_texture_locked(FrameHandle handle, const EngineTextureApi& api,
   }
   if (recordTelemetry) ++g_textureCacheTelemetry.misses;
 
-  const auto& resource = g_resources[handle.resourceIndex];
-  const auto& frame = resource.frames[handle.frameIndex];
   std::size_t entryIndex = 0;
   bool newTexture = g_textureCache.size() < kTextureCacheLimit;
   if (newTexture) {
@@ -564,6 +696,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
         throw std::runtime_error("empty or duplicate area-animation resref");
       }
 
+      resource.cacheBudgetSimulationFrameOffset = totalFrames;
       resource.frames.reserve(frameCount);
       for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
         std::uint32_t logicalWidth = 0;
@@ -660,6 +793,8 @@ bool prepare(const std::filesystem::path& assetsDirectory,
         stats->outgoingTextureNames =
             static_cast<std::uint64_t>(g_textureCache.size());
         stats->outgoingTextureCache = texture_cache_telemetry_snapshot_locked();
+        stats->outgoingCacheBudgetSimulation =
+            cache_budget_simulation_snapshot_locked();
       }
       g_ready.store(false, std::memory_order_release);
       g_resources = std::move(loaded);
@@ -669,6 +804,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
       // and this is a no-op.
       retire_texture_cache_locked();
       reset_texture_cache_telemetry_locked();
+      reset_cache_budget_simulation_locked();
       g_residentRawBytes = totalRawBytes;
       if (stats) {
         stats->deferredTextureNames =
@@ -892,6 +1028,15 @@ TextureCacheTelemetryStats texture_cache_telemetry_snapshot() noexcept {
   }
 }
 
+CacheBudgetSimulationSnapshot cache_budget_simulation_snapshot() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    return cache_budget_simulation_snapshot_locked();
+  } catch (...) {
+    return {};
+  }
+}
+
 void forget_engine_textures() noexcept {
   std::lock_guard lock(g_mutex);
   clear_texture_cache_locked();
@@ -971,6 +1116,7 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
   std::filesystem::path packDirectory;
   std::string outgoingArea;
   TextureCacheTelemetryStats outgoingTextureCache{};
+  CacheBudgetSimulationSnapshot outgoingCacheBudgetSimulation{};
   const auto area = normalised_area_name(areaResref);
   {
     std::lock_guard lock(g_mutex);
@@ -984,6 +1130,7 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
     if (g_ready.load(std::memory_order_acquire) && g_residentArea == area) return true;
     outgoingArea = g_residentArea;
     outgoingTextureCache = texture_cache_telemetry_snapshot_locked();
+    outgoingCacheBudgetSimulation = cache_budget_simulation_snapshot_locked();
     packDirectory = g_areaPacksRoot / area;
   }
 
@@ -1000,6 +1147,8 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
       if (!releaseSummary.outgoingArea.empty()) {
         log_texture_cache_telemetry(releaseSummary.outgoingArea, "area-release",
                                     releaseSummary.outgoingTextureCache);
+        log_cache_budget_simulation(releaseSummary.outgoingArea, "area-release",
+                                    releaseSummary.outgoingCacheBudgetSimulation);
       }
       LOG_INFO(
           "Area-animation pack telemetry: area={}, outcome=native, outgoingRawBytes={}, "
@@ -1016,6 +1165,8 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
   if (!prepare(packDirectory, enablePerformanceLogging ? &stats : nullptr)) {
     if (enablePerformanceLogging && !outgoingArea.empty()) {
       log_texture_cache_telemetry(outgoingArea, "pack-load-failure", outgoingTextureCache);
+      log_cache_budget_simulation(outgoingArea, "pack-load-failure",
+                                  outgoingCacheBudgetSimulation);
     }
     LOG_WARN("Area-animation x4: pack for area {} refused; falling back to the engine BAM", area);
     return false;
@@ -1023,6 +1174,8 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
   if (enablePerformanceLogging) {
     if (!outgoingArea.empty()) {
       log_texture_cache_telemetry(outgoingArea, "pack-swap", stats.outgoingTextureCache);
+      log_cache_budget_simulation(outgoingArea, "pack-swap",
+                                  stats.outgoingCacheBudgetSimulation);
     }
     LOG_INFO(
         "Area-animation pack telemetry: area={}, outcome=loaded, registryBytes={}, "

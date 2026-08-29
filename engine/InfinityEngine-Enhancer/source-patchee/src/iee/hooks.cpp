@@ -1139,6 +1139,8 @@ void record_render_performance(const AppContext& ctx, bool handled,
     const auto glStats = core::gl_texture_telemetry_snapshot();
     const auto areaAnimationTextureStats =
         area_animation_x4::texture_cache_telemetry_snapshot();
+    const auto areaAnimationCacheBudgetSimulation =
+        area_animation_x4::cache_budget_simulation_snapshot();
     const auto wed = ctx.wed.load(std::memory_order_acquire);
     const auto area = wed ? wed->areaResrefView() : std::string_view{"?"};
     LOG_INFO(
@@ -1191,6 +1193,29 @@ void record_render_performance(const AppContext& ctx, bool handled,
           areaAnimationTextureStats.residentTextureNames,
           areaAnimationTextureStats.residentBaseLevelBytes,
           areaAnimationTextureStats.peakResidentBaseLevelBytes);
+    }
+    if (areaAnimationCacheBudgetSimulation.active) {
+      for (const auto& profile : areaAnimationCacheBudgetSimulation.profiles) {
+        LOG_INFO(
+            "Area-animation cache budget simulation: area={}, reason=periodic, "
+            "frameCapacity={}, cpuBudgetBytes={}, gpuBudgetBytes={}, gpuEntryLimit={}, "
+            "requests={}, distinctFrames={}, predictedFrameReadBytes={}, "
+            "predictedUploadBytes={}, cpuRequests={}, cpuHits={}, cpuMisses={}, "
+            "cpuEvictions={}, cpuUncacheableRequests={}, cpuResidentEntries={}, "
+            "cpuResidentBytes={}, cpuPeakResidentBytes={}, gpuHits={}, gpuMisses={}, "
+            "gpuEvictions={}, gpuUncacheableRequests={}, gpuResidentEntries={}, "
+            "gpuResidentBytes={}, gpuPeakResidentBytes={}",
+            area, areaAnimationCacheBudgetSimulation.frameCapacity,
+            profile.cpu.budgetBytes, profile.gpu.budgetBytes, profile.gpu.entryLimit,
+            profile.requests, profile.distinctFrames, profile.predictedFrameReadBytes,
+            profile.predictedUploadBytes, profile.cpu.requests, profile.cpu.hits,
+            profile.cpu.misses, profile.cpu.evictions, profile.cpu.uncacheableRequests,
+            profile.cpu.residentEntries, profile.cpu.residentBytes,
+            profile.cpu.peakResidentBytes, profile.gpu.hits, profile.gpu.misses,
+            profile.gpu.evictions, profile.gpu.uncacheableRequests,
+            profile.gpu.residentEntries, profile.gpu.residentBytes,
+            profile.gpu.peakResidentBytes);
+      }
     }
     window.reset(now.QuadPart);
   } catch (...) {

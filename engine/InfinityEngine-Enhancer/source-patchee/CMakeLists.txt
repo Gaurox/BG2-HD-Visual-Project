@@ -93,6 +93,7 @@ configure_file(
 add_library(iee_common STATIC
     src/iee/core/area_animation_clock_probe.cpp
     src/iee/core/area_animation_timeline.cpp
+    src/iee/core/cache_budget_simulator.cpp
     src/iee/core/config.cpp
     src/iee/core/logger.cpp
     src/iee/core/map_texture_telemetry.cpp

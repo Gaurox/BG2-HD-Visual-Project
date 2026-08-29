@@ -23,11 +23,16 @@ ces trois zones.
 Le troisième petit lot P1 mesure le cache GPU borné des animations. Il est validé ingame sur
 AR0700, AR0516, AR0900 et AR0602 ; les trois dernières zones révèlent des évictions LRU répétées.
 
+Le quatrième petit lot P1 simule passivement quatre couples de budgets CPU/GPU sur la trace réelle
+des frames. La première session ingame est techniquement valide et montre que le budget en octets
+et la limite du nombre de textures doivent être étudiés séparément. Le cache réel de 64 textures
+et le chargement intégral des packs restent inchangés.
+
 Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/animation-gpu-cache-telemetry-20260828T231509Z/`. Sa restauration
-revient au build validé qui retire les logs INFO par frame, dont les états précédents conservent la
-chaîne de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la release et
-aucun manifeste de release n’a été modifié.
+distinct sous `bg2hd/state/animation-cache-budget-simulation-20260829T001508Z/`. Sa restauration
+revient au build validé de télémétrie du cache GPU, dont les états précédents conservent la chaîne
+de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la release et aucun
+manifeste de release n’a été modifié.
 
 ## Actions
 
@@ -42,6 +47,7 @@ aucun manifeste de release n’a été modifié.
 | P1 | Attribution précise I/O, zlib et mémoire | Premier sous-lot mesuré ingame | Les lectures synchrones des fichiers RGBA expliquent presque tout le temps ajouté sur AR0602 et AR0516 ; le pic brut mesuré atteint 600,99 Mio sur AR0516 → AR0900. La mémoire résidente du processus et le cache fichier restent à mesurer séparément. |
 | P1 | Supprimer les flush INFO une fois par frame d’animation | Validé ingame | `Composing area animation` passe en DEBUG : aucune occurrence INFO sur AR0602, AR0516 et AR0900, contre 427 écritures synchrones dans la session de référence. Aucun changement de rendu ou de cache. |
 | P1 | Mesurer le cache GPU des animations x4 | Validé ingame | Les invariants des compteurs sont cohérents et aucun échec GPU n’est observé. Le cache de 64 entrées évite toute éviction sur AR0700, mais provoque un churn important sur AR0516, AR0900 et AR0602. |
+| P1 | Simuler passivement différents budgets CPU/GPU | Premier jeu de profils mesuré ingame | Les quatre modèles sont cohérents et sans erreur. AR0900 exige plus de 215 Mio GPU pour éviter le churn observé, tandis qu’AR0602 bute sur la limite de 128 textures malgré seulement 104 Mio distincts. Raffiner les profils avant de choisir un budget. |
 | P1 | Animations x4 à la demande avec budget mémoire | Différé | Chantier moyen/élevé ; ne pas l’entreprendre sans attribution mémoire. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
@@ -245,12 +251,90 @@ il force des réuploads répétés dont le cumul dépasse largement la résidenc
 octets publiés décrivent les niveaux de base RGBA8 envoyés au pilote, pas la VRAM réellement
 allouée.
 
+## Quatrième petit lot expérimental P1
+
+Avec `PerformanceLogs=true`, chaque requête réelle de frame alimente désormais quatre simulations
+hiérarchiques qui commencent vides à l’entrée de zone :
+
+| Profil | Budget CPU | Budget GPU | Limite GPU |
+|---|---:|---:|---:|
+| faible | 64 Mio | 96 Mio | 128 textures |
+| compact | 128 Mio | 128 Mio | 128 textures |
+| équilibré | 128 Mio | 192 Mio | 128 textures |
+| élevé | 192 Mio | 256 Mio | 128 textures |
+
+Un hit GPU ne consulte pas le cache CPU simulé. Un miss GPU prédit un upload et consulte le cache
+CPU indépendant ; seul un miss CPU prédit une lecture du fichier RGBA. Les modèles publient les
+frames distinctes, hits, misses, évictions, frames trop grosses, octets prédits et résidences
+instantanées/de pointe. Une perte de contexte vide uniquement leur résidence GPU. Un changement de
+zone détruit tous les modèles.
+
+Ce lot n’effectue aucune lecture, aucun hash, aucun upload et aucune éviction réelle. Il ne modifie
+ni le chargement intégral des packs, ni le cache réel de 64 textures, ni le registre v1/v2/v3. Sa
+capacité de métadonnées est bornée à 16 384 frames ; un pack dépassant cette borne désactive la
+simulation sans désactiver le rendu x4.
+
+Validation automatisée avant installation :
+
+- DLL Windows Release compilée ;
+- `ctest -C Release` : 2/2 tests C++ réussis ;
+- tests Python communs : 180/180 réussis ;
+- tests des budgets en octets, évictions multiples, limite de noms GPU, frame non cachable,
+  indépendance CPU/GPU et perte de contexte ;
+- DLL candidate SHA-256
+  `D4542D29C59E2F51D87AED785676C6E35AAF4303862456FFA6FE3DD1E0406C86`.
+
+Installation réversible :
+
+- état :
+  `bg2hd/state/animation-cache-budget-simulation-20260829T001508Z/` ;
+- seule `InfinityEngine-Enhancer.dll` diffère du runtime précédent ;
+- DLL active SHA-256
+  `D4542D29C59E2F51D87AED785676C6E35AAF4303862456FFA6FE3DD1E0406C86` ;
+- restauration vers la DLL SHA-256
+  `7898B87F57D747E5CA7DC76E11AA66FC106CC1E45F71467D98AE1D476E12BA35` ;
+- `PerformanceLogs=true` et `EnableTilePageDiagnostics=false` restent actifs pour la mesure.
+
+### Première session du quatrième lot P1
+
+Session du 2026-08-29, parcours AR0700 → AR0516 → AR0900 → AR0602. Les valeurs ci-dessous sont
+les octets d’upload cumulés, réels pour le cache de 64 textures et prédits par chaque simulation :
+
+| Zone | Frames distinctes | Cache réel 64 | 64/96 | 128/128 | 128/192 | 192/256 | Facteur limitant observé |
+|---|---:|---:|---:|---:|---:|---:|---|
+| AR0700, final | 57 | 50,48 Mio | 50,48 Mio | 50,48 Mio | 50,48 Mio | 50,48 Mio | Aucun dans ce parcours |
+| AR0516, final | 137 | 361,62 Mio | 359,27 Mio | 328,81 Mio | 251,46 Mio | 233,71 Mio | Budget GPU ; limite de 128 atteinte |
+| AR0900, final | 80 | 2 264,41 Mio | 2 264,41 Mio | 2 264,41 Mio | 2 242,69 Mio | 215,09 Mio | Budget GPU supérieur au jeu actif de 215,09 Mio |
+| AR0602, snapshot à 10 s | 160 | 881,98 Mio | 438,36 Mio | 438,36 Mio | 438,36 Mio | 438,36 Mio | Limite de 128 textures, pas le budget en octets |
+
+Les 56 snapshots des modèles respectent les invariants attendus : les hits et misses GPU couvrent
+toutes les requêtes, chaque miss GPU consulte exactement une fois le modèle CPU et aucune frame
+n’est déclarée non cachable. Aucun échec de création ou d’upload réel n’est observé. La seule
+alerte de la session est la récupération attendue du prologue `RenderTexture` détourné par EEex.
+
+AR0900 met en évidence un seuil net : ses 80 frames distinctes occupent 215,09 Mio. Les budgets
+GPU de 96, 128 et 192 Mio renouvellent cycliquement presque tout le jeu actif, alors que 256 Mio
+permettent un seul upload par frame. Cette observation dépend de la trace des frames mais pas de la
+vitesse du disque ou du GPU de la machine de test.
+
+AR0602 met en évidence un autre seuil : ses 160 frames distinctes n’occupent que 104,14 Mio côté
+CPU simulé, mais les quatre profils restent limités à 128 noms GPU. Augmenter le seul budget en
+octets ne réduit donc pas leurs 671 uploads prédits sur ce snapshot. AR0516 dépasse également
+légèrement cette limite avec 137 frames distinctes.
+
+Ce premier jeu de profils ne permet donc pas encore de retenir une politique générale. Il faut
+d’abord isoler les variables avec au minimum un profil CPU 128 Mio / GPU 256 Mio / 192 textures,
+accompagné d’un profil à 128 Mio GPU / 192 textures pour mesurer séparément l’effet de la limite
+en nombre d’entrées. Le profil 192/256 actuel sert de contrôle haut, mais ne prouve pas que
+192 Mio de cache CPU soient nécessaires.
+
 ## Prochaine étape
 
-Le P0, les trois lots de télémétrie P1 et le retrait des logs INFO par frame sont validés. La
-prochaine gate prudente est une analyse en lecture seule d’un budget conjoint CPU/GPU pour les
-frames. Augmenter aveuglément la capacité à toutes les frames supprimerait le churn, mais pourrait
-conserver jusqu’à 385,89 Mio de niveaux RGBA8 sur AR0516 en plus du pack brut déjà résident. Le
-chargement à la demande doit donc définir ensemble la résidence CPU, la résidence GPU et la
-politique d’éviction, puis prévoir un A/B borné. Une mesure externe du Working Set, du cache fichier
-et idéalement de la VRAM restera nécessaire pour quantifier le gain processus complet.
+Le P0, les trois premiers lots de télémétrie P1 et le retrait des logs INFO par frame sont validés.
+Le premier jeu de budgets est mesuré ingame. La prochaine gate prudente est un raffinement limité
+du simulateur : relever la limite GPU à 192 textures sur des profils choisis et tester explicitement
+le couple CPU 128 Mio / GPU 256 Mio. Un second parcours identique permettra de vérifier si ce
+profil couvre les quatre zones sans surdimensionner le cache CPU. Aucune politique réelle de
+chargement à la demande ne doit être activée avant cette mesure. Une mesure externe du Working Set,
+du cache fichier et idéalement de la VRAM restera nécessaire avant l’A/B de l’implémentation réelle,
+sans transformer les timings de cette machine en constantes universelles.

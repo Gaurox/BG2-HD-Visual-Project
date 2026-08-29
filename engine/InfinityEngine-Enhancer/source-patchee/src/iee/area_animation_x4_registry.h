@@ -7,6 +7,8 @@
 #include <filesystem>
 #include <string_view>
 
+#include "iee/core/cache_budget_simulator.h"
+
 namespace iee::area_animation_x4 {
 struct FrameHandle {
   std::size_t resourceIndex{};
@@ -58,6 +60,19 @@ struct TextureCacheTelemetryStats {
   std::uint64_t peakResidentBaseLevelBytes{};
 };
 
+inline constexpr std::size_t kCacheBudgetSimulationProfileCount = 4;
+
+// Shadow models fed by the real frame-request stream. They predict a lazy CPU
+// cache followed by an independent GPU cache, but never alter runtime state,
+// perform I/O or issue OpenGL calls.
+struct CacheBudgetSimulationSnapshot {
+  bool active{};
+  std::uint64_t frameCapacity{};
+  std::array<core::HierarchicalCacheBudgetSimulationStats,
+             kCacheBudgetSimulationProfileCount>
+      profiles{};
+};
+
 // Diagnostic-only accounting for one synchronous pack preparation. Byte counts cover the raw
 // RGBA frame payload owned by this runtime, not allocator overhead or process working set.
 struct PackPreparationStats {
@@ -73,6 +88,7 @@ struct PackPreparationStats {
   std::uint64_t outgoingTextureNames{};
   std::uint64_t deferredTextureNames{};
   TextureCacheTelemetryStats outgoingTextureCache{};
+  CacheBudgetSimulationSnapshot outgoingCacheBudgetSimulation{};
   double registryReadMilliseconds{};
   double frameReadMilliseconds{};
   double parseAndAllocateMilliseconds{};
@@ -163,6 +179,11 @@ void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcep
 // Returns a coherent cumulative snapshot for the resident area. Counters remain zero when
 // PerformanceLogs is disabled; resident base-level size still reflects the actual bounded cache.
 [[nodiscard]] TextureCacheTelemetryStats texture_cache_telemetry_snapshot() noexcept;
+
+// Returns passive predictions for four bounded CPU/GPU profiles. The snapshot
+// stays inactive unless PerformanceLogs has observed at least one valid frame
+// request in the resident area.
+[[nodiscard]] CacheBudgetSimulationSnapshot cache_budget_simulation_snapshot() noexcept;
 
 // Drops cached texture names WITHOUT returning them to the engine. Correct only when
 // the names are already invalid: a recreated WGL context, or hook teardown.

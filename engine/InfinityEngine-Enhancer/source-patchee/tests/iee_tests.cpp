@@ -25,6 +25,7 @@
 #include "iee/core/config.h"
 #include "iee/core/area_animation_clock_probe.h"
 #include "iee/core/area_animation_timeline.h"
+#include "iee/core/cache_budget_simulator.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/logger.h"
@@ -992,6 +993,55 @@ void test_native_occlusion_mask_capture() {
   expect_true(!changedSurface.valid() &&
                   !changedSurface.build_transfer(2, 2, transfer, changed),
               "A changed FX allocation inside one owner scope must invalidate the bridge");
+}
+
+void test_hierarchical_cache_budget_simulator() {
+  iee::core::HierarchicalCacheBudgetSimulator simulation;
+  simulation.reset(3, 10, 6, 2);
+
+  simulation.observe(0, 4);
+  simulation.observe(1, 6);
+  simulation.observe(0, 4);
+  simulation.observe(2, 7);
+  simulation.observe(2, 7);
+  auto stats = simulation.snapshot();
+
+  expect_eq(stats.requests, std::uint64_t{5},
+            "The passive cache model should count every real frame request");
+  expect_eq(stats.distinctFrames, std::uint64_t{3},
+            "The passive cache model should retain bounded distinct-frame cardinality");
+  expect_eq(stats.predictedFrameReadBytes, std::uint64_t{17},
+            "Only simulated CPU misses should predict raw frame reads");
+  expect_eq(stats.predictedUploadBytes, std::uint64_t{28},
+            "Every simulated GPU miss should predict one base-level upload");
+  expect_true(stats.cpu.requests == 5 && stats.cpu.hits == 2 && stats.cpu.misses == 3 &&
+                  stats.cpu.evictions == 2 && stats.cpu.residentEntries == 1 &&
+                  stats.cpu.residentBytes == 7 && stats.cpu.peakResidentBytes == 10,
+              "The CPU byte-LRU should remain independent and reuse frames after GPU eviction");
+  expect_true(stats.gpu.hits == 0 && stats.gpu.misses == 5 && stats.gpu.evictions == 2 &&
+                  stats.gpu.uncacheableRequests == 2 && stats.gpu.residentEntries == 1 &&
+                  stats.gpu.residentBytes == 4 && stats.gpu.peakResidentBytes == 6,
+              "The GPU byte-LRU should enforce both its byte budget and uncacheable-frame path");
+
+  simulation.clear_gpu_residency();
+  stats = simulation.snapshot();
+  expect_true(stats.gpu.residentEntries == 0 && stats.gpu.residentBytes == 0 &&
+                  stats.cpu.residentEntries == 1 && stats.cpu.residentBytes == 7,
+              "A context loss should clear only simulated GPU residency");
+  simulation.observe(2, 7);
+  stats = simulation.snapshot();
+  expect_true(stats.predictedFrameReadBytes == 17 && stats.predictedUploadBytes == 35 &&
+                  stats.cpu.hits == 3 && stats.gpu.uncacheableRequests == 3,
+              "A GPU reset should preserve the simulated CPU cache and predict a fresh upload");
+
+  iee::core::ByteLruCacheSimulator countBounded;
+  countBounded.reset(3, 100, 2);
+  (void)countBounded.access(0, 1);
+  (void)countBounded.access(1, 1);
+  (void)countBounded.access(2, 1);
+  expect_true(countBounded.stats().evictions == 1 &&
+                  countBounded.stats().residentEntries == 2,
+              "The diagnostic model should retain a texture-name safety limit beside bytes");
 }
 
 void test_creature_sprite_xn_native_border_geometry() {
@@ -3067,6 +3117,11 @@ void test_area_animation_registry_formats() {
             "Preparing raw frames must not eagerly create GPU textures");
   expect_eq(initialTextureCacheStats.residentBaseLevelBytes, std::uint64_t{0},
             "Preparing raw frames must not report eager GPU residency");
+  const auto initialCacheBudgetSimulation =
+      iee::area_animation_x4::cache_budget_simulation_snapshot();
+  expect_true(!initialCacheBudgetSimulation.active &&
+                  initialCacheBudgetSimulation.frameCapacity == 0,
+              "Preparing a pack must not allocate passive cache models before a logged draw");
   iee::area_animation_x4::FrameResolution resolution{};
   expect_true(iee::area_animation_x4::resolve_frame(
                   target, iee::area_animation_x4::kAnyWorldPosition,
@@ -3246,6 +3301,8 @@ void test_area_animation_registry_formats() {
                   releasedTextureCacheStats.requests == 0 &&
                   releasedTextureCacheStats.residentTextureNames == 0,
               "Releasing an area pack should reset GPU cache telemetry and residency");
+  expect_true(!iee::area_animation_x4::cache_budget_simulation_snapshot().active,
+              "Releasing an area pack should discard every passive cache profile");
   iee::area_animation_x4::release();
 
   auto malformed = make_header(2);
@@ -4367,6 +4424,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
+  test_hierarchical_cache_budget_simulator();
   test_performance_sample_summary();
   test_area_animation_clock_probe();
   test_area_animation_timeline_clock();
