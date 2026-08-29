@@ -930,6 +930,48 @@ Ces chiffres décrivent une première session, pas un résultat validé :
 
 Ce lot n’est pas éligible à la release et aucun manifeste de release n’a été modifié.
 
+### Point d’arrêt du 2026-08-29 — mesure AR0900 bloquée
+
+La campagne ci-dessus n’a pas pu être lancée et la mesure manquante d’AR0900 n’a pas été prise.
+Le blocage est d’accès, pas technique : l’agent n’a pas obtenu le contrôle de la fenêtre de jeu
+(quatre demandes refusées, la réponse revenant immédiatement, ce qui évoque un refus mémorisé
+plutôt qu’une décision prise à chaque appel) et l’opérateur pilotait depuis un téléphone, sans
+possibilité de manipuler le jeu. Aucun contournement n’a été tenté.
+
+État de la machine au moment de l’arrêt, à conserver pour la reprise :
+
+- BG2EE tourne sans interruption depuis le 2026-08-29 09:43:06 (`BaldurReal`, `InfinityLoader`),
+  avec le build du mini-lot carte 3 installé à 09:42:20 ;
+- `EnableMapPagePrewarm = true` et `PerformanceLogs = true` dans l’INI du jeu, tel que laissé par
+  la session de mesure. L’INI a été basculé sur `false` puis **restauré à l’identique** ; il n’a
+  de toute façon aucun effet sur une session déjà lancée ;
+- repère dans le journal : 11 039 311 octets. Tout événement postérieur est nouveau. Ce repère
+  devient caduc si la rotation à 16 Mio se déclenche ; le critère robuste reste l’horodatage, toute
+  ouverture de carte AR0900 postérieure à 09:43 étant postérieure à l’installation du préchauffage.
+
+Manipulation minimale qui complète la matrice actuelle, sans rien réinstaller ni relancer :
+
+1. charger la sauvegarde dédiée `AR0900` ;
+2. **attendre environ trois secondes** avant toute action. Le préchauffage démarre 30 frames après
+   le chargement puis traite une page par frame ; dézoomer plus tôt mesurerait un état partiel ;
+3. dézoomer à fond, ce qui produit l’événement 1 ;
+4. rezoomer puis redézoomer à fond, ce qui produit l’événement 2, contrôle interne « carte déjà
+   chaude ».
+
+Cette manipulation ne remplace pas l’A/B en deux sessions décrit ci-dessus : elle complète la
+première session, avec les mêmes réserves de cache fichier non maîtrisé.
+
+Une inference circule et ne doit pas être confondue avec une mesure : le préchauffage d’AR0900 a
+matérialisé 19 pages sur 19 sans éviction, et les trois autres zones dans cet état ont donné 6,3 à
+7,6 ms au pic. AR0900 tomberait donc vraisemblablement dans cette plage, contre 303,7 à 414,8 ms
+avant. **Ce raisonnement n’est pas un résultat** : le tableau conserve son tiret tant que la frame
+n’a pas été observée.
+
+Enfin, un rappel pour la reprise : jeu ouvert, la suite Python commune rapporte 18 échecs qui sont
+tous environnementaux. Chacun de ces tests appelle un installateur qui refuse fail-closed sur un
+processus BG2EE vivant. Fermer le jeu avant d’exécuter la gate, sous peine de diagnostiquer un faux
+défaut.
+
 ## Prochaine étape
 
 La campagne suivante doit produire l’A/B contrôlé qui manque, en une seule session par état et sur
