@@ -34,19 +34,30 @@ constexpr std::uint32_t kMaxCycleSlots = 65536;
 constexpr std::uint32_t kMaxRateComponent = 1000;
 constexpr std::uint64_t kMaxRawBytes = 512ull * 1024ull * 1024ull;
 constexpr std::size_t kCacheBudgetSimulationMaxFrames = 16384;
-constexpr std::size_t kCacheBudgetSimulationGpuEntryLimit = 128;
 constexpr std::uint64_t kMiB = 1024ull * 1024ull;
 struct CacheBudgetSimulationProfileConfig {
   std::uint64_t cpuBudgetBytes{};
   std::uint64_t gpuBudgetBytes{};
+  std::size_t gpuEntryLimit{};
 };
 constexpr std::array<CacheBudgetSimulationProfileConfig,
                      kCacheBudgetSimulationProfileCount>
     kCacheBudgetSimulationProfiles{{
-        {.cpuBudgetBytes = 64ull * kMiB, .gpuBudgetBytes = 96ull * kMiB},
-        {.cpuBudgetBytes = 128ull * kMiB, .gpuBudgetBytes = 128ull * kMiB},
-        {.cpuBudgetBytes = 128ull * kMiB, .gpuBudgetBytes = 192ull * kMiB},
-        {.cpuBudgetBytes = 192ull * kMiB, .gpuBudgetBytes = 256ull * kMiB},
+        {.cpuBudgetBytes = 64ull * kMiB,
+         .gpuBudgetBytes = 96ull * kMiB,
+         .gpuEntryLimit = 128},
+        {.cpuBudgetBytes = 128ull * kMiB,
+         .gpuBudgetBytes = 128ull * kMiB,
+         .gpuEntryLimit = 128},
+        {.cpuBudgetBytes = 128ull * kMiB,
+         .gpuBudgetBytes = 128ull * kMiB,
+         .gpuEntryLimit = 192},
+        {.cpuBudgetBytes = 128ull * kMiB,
+         .gpuBudgetBytes = 256ull * kMiB,
+         .gpuEntryLimit = 192},
+        {.cpuBudgetBytes = 192ull * kMiB,
+         .gpuBudgetBytes = 256ull * kMiB,
+         .gpuEntryLimit = 192},
     }};
 // v3 keeps every v2 field and appends the optional world position that binds a resource to one
 // occurrence. v1 and v2 stay loadable: packs already installed must not stop working.
@@ -279,7 +290,7 @@ bool initialise_cache_budget_simulation_locked() {
     const auto& config = kCacheBudgetSimulationProfiles[index];
     g_cacheBudgetSimulation.profiles[index].reset(
         frameCount, config.cpuBudgetBytes, config.gpuBudgetBytes,
-        kCacheBudgetSimulationGpuEntryLimit);
+        config.gpuEntryLimit);
   }
   g_cacheBudgetSimulation.frameCapacity = static_cast<std::uint64_t>(frameCount);
   g_cacheBudgetSimulation.active = true;

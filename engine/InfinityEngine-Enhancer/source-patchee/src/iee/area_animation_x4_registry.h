@@ -60,7 +60,7 @@ struct TextureCacheTelemetryStats {
   std::uint64_t peakResidentBaseLevelBytes{};
 };
 
-inline constexpr std::size_t kCacheBudgetSimulationProfileCount = 4;
+inline constexpr std::size_t kCacheBudgetSimulationProfileCount = 5;
 
 // Shadow models fed by the real frame-request stream. They predict a lazy CPU
 // cache followed by an independent GPU cache, but never alter runtime state,
@@ -180,7 +180,7 @@ void restore_texture(const EngineTextureApi& api, int previousTextureId) noexcep
 // PerformanceLogs is disabled; resident base-level size still reflects the actual bounded cache.
 [[nodiscard]] TextureCacheTelemetryStats texture_cache_telemetry_snapshot() noexcept;
 
-// Returns passive predictions for four bounded CPU/GPU profiles. The snapshot
+// Returns passive predictions for five bounded CPU/GPU profiles. The snapshot
 // stays inactive unless PerformanceLogs has observed at least one valid frame
 // request in the resident area.
 [[nodiscard]] CacheBudgetSimulationSnapshot cache_budget_simulation_snapshot() noexcept;

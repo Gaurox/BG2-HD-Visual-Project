@@ -40,14 +40,16 @@ uploads, LRU evictions and context invalidations. They report uploaded, resident
 base-level bytes every five seconds and once when the pack leaves residency. An LRU eviction
 reuses its engine texture name; it is therefore not reported as a GL deletion. Byte counts exclude
 driver allocation overhead.
-The same real frame-request stream feeds four passive hierarchical cache models when
-`PerformanceLogs` is enabled: CPU/GPU byte budgets of 64/96, 128/128, 128/192 and 192/256 MiB.
-Every model starts empty for the area, retains an independent CPU byte-LRU, caps its GPU byte-LRU
-at 128 texture names, and predicts raw frame-read and base-level upload bytes. These models never
-read a file, allocate a texture or change the production 64-entry cache. Their metadata is bounded
-to 16,384 frames, discarded on an area swap, and their simulated GPU residency alone is cleared
-after a GL-context loss. Periodic and final summaries are diagnostic projections rather than
-hardware timings or exact process/driver memory measurements.
+The same real frame-request stream feeds five passive hierarchical cache models when
+`PerformanceLogs` is enabled. Their CPU/GPU MiB/texture-limit profiles are 64/96/128,
+128/128/128, 128/128/192, 128/256/192 and 192/256/192. The first two preserve the initial controls;
+the third isolates the texture-count limit, the fourth is the candidate balanced policy, and the
+last isolates the CPU budget. Every model starts empty for the area, retains an independent CPU
+byte-LRU, and predicts raw frame-read and base-level upload bytes. These models never read a file,
+allocate a texture or change the production 64-entry cache. Their metadata is bounded to 16,384
+frames, discarded on an area swap, and their simulated GPU residency alone is cleared after a
+GL-context loss. Periodic and final summaries are diagnostic projections rather than hardware
+timings or exact process/driver memory measurements.
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
 variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
 separate gate.
