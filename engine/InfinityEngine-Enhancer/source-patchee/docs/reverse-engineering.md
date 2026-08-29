@@ -47,6 +47,16 @@ Current build manifest values:
 - `TIS linear-tiles flag = 0x1DC`
 - `TIS header tile-dimension field = 0x14`
 
+## BGEE/BG2EE 2.7.3 PVR Demand Diagnostic
+
+The unified 2.7.3 executable resolves `CResPVR::Demand` at RVA `0x3F6DC0`. Its 25-byte manifested
+prologue occurs exactly once. The `CInfTileSet` rendering path calls it before reading
+`CResPVR::texture` and before calling `CVidTile::RenderTexture`. Static disassembly shows that the
+function performs the native texture-name creation, resource demand/preparation and compressed
+upload before returning. This evidence authorizes only an opt-in timing hook; it does not authorize
+changing native demand order or the engine's 128-entry PVR residency table. The 2.6.6 manifest has
+no corresponding evidence and therefore leaves this diagnostic disabled.
+
 ## Structure Provenance
 
 Authoritative from EEex docs where they line up with runtime behavior:

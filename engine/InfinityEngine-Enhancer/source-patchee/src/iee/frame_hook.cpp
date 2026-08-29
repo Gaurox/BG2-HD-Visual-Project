@@ -30,22 +30,25 @@ LARGE_INTEGER g_lastFrameTick{};
 LARGE_INTEGER g_performanceWindowStart{};
 core::PerformanceSamples<2048> g_frameIntervalsMs;
 
-void record_frame_interval() noexcept {
+double record_frame_interval() noexcept {
   try {
-    if (!g_performanceLogging || g_freq.QuadPart <= 0) return;
+    if (!g_performanceLogging || g_freq.QuadPart <= 0) return -1.0;
 
     LARGE_INTEGER now{};
-    if (!QueryPerformanceCounter(&now)) return;
+    if (!QueryPerformanceCounter(&now)) return -1.0;
     if (g_performanceWindowStart.QuadPart == 0) g_performanceWindowStart = now;
+    double latestIntervalMilliseconds = -1.0;
     if (g_lastFrameTick.QuadPart != 0 && now.QuadPart >= g_lastFrameTick.QuadPart) {
-      const double elapsedMs =
+      latestIntervalMilliseconds =
           static_cast<double>(now.QuadPart - g_lastFrameTick.QuadPart) * 1000.0 /
           static_cast<double>(g_freq.QuadPart);
-      g_frameIntervalsMs.add(elapsedMs);
+      g_frameIntervalsMs.add(latestIntervalMilliseconds);
     }
     g_lastFrameTick = now;
 
-    if (now.QuadPart - g_performanceWindowStart.QuadPart < g_freq.QuadPart * 5) return;
+    if (now.QuadPart - g_performanceWindowStart.QuadPart < g_freq.QuadPart * 5) {
+      return latestIntervalMilliseconds;
+    }
     const auto summary = g_frameIntervalsMs.summarize();
     const double fps = summary.average > 0.0 ? 1000.0 / summary.average : 0.0;
     LOG_INFO(
@@ -55,13 +58,17 @@ void record_frame_interval() noexcept {
         fps);
     g_frameIntervalsMs.reset();
     g_performanceWindowStart = now;
+    return latestIntervalMilliseconds;
   } catch (...) {
     // Diagnostics must never escape through the SDL/GDI swap ABI.
+    return -1.0;
   }
 }
 
 void frame_tick() {
-  record_frame_interval();
+  const double presentationIntervalMilliseconds = record_frame_interval();
+  hooks::on_frame_boundary(g_frames.load(std::memory_order_relaxed),
+                           presentationIntervalMilliseconds);
   core::advance_readability_cache_epoch();
   g_frames.fetch_add(1, std::memory_order_relaxed);
   hooks::retry_shader_probe_install();

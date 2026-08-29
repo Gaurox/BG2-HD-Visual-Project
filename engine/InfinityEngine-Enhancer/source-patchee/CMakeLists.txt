@@ -97,9 +97,11 @@ add_library(iee_common STATIC
     src/iee/core/config.cpp
     src/iee/core/logger.cpp
     src/iee/core/map_texture_telemetry.cpp
+    src/iee/core/map_view_burst_telemetry.cpp
     src/iee/core/native_occlusion_probe.cpp
     src/iee/core/pattern_scanner.cpp
     src/iee/core/process_resource_telemetry.cpp
+    src/iee/core/pvr_demand_telemetry.cpp
     src/iee/game/area_texture.cpp
     src/iee/game/build_manifest.cpp
     src/iee/game/dds_texture.cpp

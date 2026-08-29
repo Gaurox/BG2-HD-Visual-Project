@@ -37,6 +37,7 @@ first version match, which for 2.7.3 was always the BGEE entry.
 |---|---|---|---|---|---|
 | `CInfGame::LoadArea` | unchanged 2.6.6 pattern | exactly 1 | `0x27EBD0` | `0x27EBD0` | `+0x0` |
 | `CVidTile::RenderTexture` | unchanged 2.6.6 pattern | exactly 1 | `0x4257C0` | `0x4257C0` | `+0x0` |
+| `CResPVR::Demand` | diagnostic 25-byte prologue | exactly 1 | `0x3F6DC0` | `0x3F6DC0` | `+0x0` |
 
 Prologue dumps (24 bytes):
 
@@ -45,7 +46,14 @@ CInfGame::LoadArea      @ 0x27EBD0
   40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 48 FD FF FF 48 81 EC
 CVidTile::RenderTexture @ 0x4257C0
   48 8B C4 44 89 48 20 48 83 EC 48 48 89 58 08 8B DA 48 89 68 10 48 89 70
+CResPVR::Demand         @ 0x3F6DC0
+  48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 41 56 48 83 EC 30 83 79 58
 ```
+
+The `CInfTileSet` path calls this target at RVA `0x2A46C3`, then reads the resulting texture name
+from `CResPVR+0x58` before dispatching `CVidTile::RenderTexture`. Inside `CResPVR::Demand`, the
+2.7.3 call sequence creates/binds the engine texture, prepares the PVR payload and invokes the
+compressed upload. The diagnostic times those existing phases but does not alter them.
 
 ## Render Callsite Decode (all 11 descriptors)
 

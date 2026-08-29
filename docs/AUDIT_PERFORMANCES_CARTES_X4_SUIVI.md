@@ -41,11 +41,24 @@ compteurs WDDM du processus et de l’adaptateur sont cohérents et ne montrent 
 persistante vers la mémoire GPU non locale. Ces résultats valident les ordres de grandeur sur la
 machine de test, pas un seuil matériel propre à tous les PC.
 
-Le runtime expérimental courant est installé localement de manière réversible avec son état
-distinct sous `bg2hd/state/process-resource-telemetry-20260829T005859Z/`. Sa restauration revient
-au raffinement des profils de budgets validé ingame, dont les états précédents conservent la chaîne
-de retour jusqu’au build P0 de rotation des logs. Il n’est pas éligible à la release et aucun
-manifeste de release n’a été modifié.
+Le symptôme prioritaire a depuis été précisé : le pic survient principalement à l’ouverture de la
+carte ingame, lorsque le dezoom augmente brutalement la vue monde et demande les tuiles de carte.
+Le mini-lot carte 1 instrumente maintenant ce burst par frame. Il est compilé et couvert par les
+tests natifs, puis installé de manière réversible et mesuré sur AR0602, AR0700N, AR0516 et AR0900.
+Il confirme le burst synchrone PVRZ. Le raffinement 1c conserve l’historique fixe de seize frames
+du détecteur progressif et ajoute une barrière de réarmement liée à la contraction de la vue. Son
+retest sur deux ouvertures successives de chacune des quatre zones produit exactement deux
+captures par zone, sans redéclenchement pendant un même dezoom. Il ne change aucun chargement.
+
+Le mini-lot carte 2 instrumente maintenant le vrai `CResPVR::Demand` sur la cible 2.7.3 validée.
+Son retest ingame attribue 95 à 98 % des frames de pic à cette demande synchrone. Les appels GL de
+création et d’upload restent minoritaires ; l’essentiel demeure dans le résidu
+ressource/lecture/préparation moteur. Les secondes ouvertures ne matérialisent plus aucune PVR.
+
+Le runtime expérimental courant est ce mini-lot 2, installé localement avec son état distinct sous
+`bg2hd/state/map-pvr-demand-phase-telemetry-20260829T064935Z/`. Sa restauration revient au
+raffinement 1c, puis la chaîne des états précédents permet de revenir jusqu’au build P0 de rotation
+des logs. Il n’est pas éligible à la release et aucun manifeste de release n’a été modifié.
 
 ## Actions
 
@@ -63,7 +76,9 @@ manifeste de release n’a été modifié.
 | P1 | Simuler passivement différents budgets CPU/GPU | Raffinement mesuré ingame | 192 entrées éliminent le churn d’AR0602 ; 256 Mio GPU couvrent AR0700, AR0900 et AR0602, mais laissent 11 rechargements sur AR0516. Passer le cache CPU de 128 à 192 Mio n’apporte aucun gain sur la trace. |
 | P1 | Animations x4 à la demande avec budget mémoire | Prêt à découper | L’attribution mémoire préalable est terminée. Chantier moyen/élevé à commencer par un A/B configurable et réversible, avec le chargement intégral actuel comme fallback. |
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
-| P1 | Préchargement progressif des pages de carte | Différé | Chantier élevé ; ne pas déplacer le hitch sans budget mesuré. |
+| P1 | Attribuer par frame le burst d’ouverture de carte | Validé ingame | Deux ouvertures successives sur chacune des quatre cartes produisent exactement les événements 1 et 2. Aucun redéclenchement n’apparaît pendant le maintien de la carte ; la contraction réarme correctement le détecteur. |
+| P1 | Attribuer les phases de `CResPVR::Demand` | Validé ingame | La demande PVR porte 95 à 98 % des frames de pic ; `glGenTextures` et l’upload compressé sont minoritaires face au résidu ressource/lecture/préparation moteur. Aucun changement de politique. |
+| P1 | Préchargement progressif des pages de carte | Prêt pour prototype prudent | Prochain mini-lot : opt-in, limites pages/temps par frame configurables, annulation sûre et `Demand` natif immédiat en fallback. Vérifier d’abord qu’il ne chasse pas la vue monde du cache moteur de 128 pages. |
 | P2 | Double `Demand` et invalidations GL | Différé | Durée de vie moteur sensible ; nécessite les compteurs P1. |
 | P2/P3 | Repack 4096, profil faible mémoire ou x2 sélectif | Non engagé | Implique contenu, QA et manifests distincts ; hors optimisation runtime rapide. |
 
@@ -562,14 +577,292 @@ GPUView et RAMMap ne sont donc pas installés à ce stade. La borne candidate 25
 reste une limite explicite du futur cache d’animations, et non une valeur déduite des 32 Gio de la
 carte de test.
 
+## Mini-lot carte 1 — attribution du burst de dezoom
+
+Avec `PerformanceLogs=true`, le runtime observe une fois par frame les dimensions de la vue monde.
+Le build initial commence une capture si largeur et hauteur augmentent toutes deux d’au moins 25 %
+entre deux observations. Ce seuil sert à isoler une ouverture/dezoom de carte sans dépendre d’une
+résolution d’écran ou d’un modèle de GPU particulier.
+
+Le runtime conserve en mémoire la frame déclencheuse et les sept frames de présentation suivantes.
+Il n’écrit qu’une seule ligne INFO une fois la capture complète, sous le marqueur
+`Map wide-view burst telemetry`. Chaque échantillon contient :
+
+- l’index et le numéro de frame, les dimensions de vue, leur indicateur d’observation fraîche et
+  l’intervalle de présentation ;
+- le temps CPU cumulé dans `RenderTexture` pendant la frame ;
+- les deltas de dessins de tuiles et de nouvelles pages de table/textures sources observées ;
+- les appels et octets d’uploads compressés, le sous-ensemble des grandes bases S3TC, ainsi que les
+  appels de suppression et noms de textures supprimés.
+
+Les compteurs GL restent des données de corrélation : les chemins BAM V2 et MOS V2 peuvent produire
+les mêmes appels. Ce lot ne retarde, ne précharge et n’évince aucune tuile ; il ne modifie ni TIS,
+WED, PVRZ, packs, animations, budgets ni manifests. `PerformanceLogs=false` désactive entièrement
+la collecte. Un changement de zone réinitialise la baseline par une requête atomique consommée sur
+le thread de rendu.
+
+Validation automatisée du source :
+
+- build natif de `iee_tests` réussi ;
+- `ctest -C Debug` : 2/2 tests réussis ;
+- DLL Windows Release et bundle compilés ;
+- DLL candidate SHA-256
+  `7F41266DCF50C5253B65B7170EF31302E1C7D56F0540B6C601C494C4CFCD272E` ;
+- seul l’avertissement tiers `C4459` déjà documenté dans `spdlog/fmt` subsiste.
+
+Installation réversible :
+
+- état : `bg2hd/state/map-wide-view-telemetry-20260829T051717Z/` ;
+- seule `InfinityEngine-Enhancer.dll` diffère du runtime précédent ;
+- DLL active SHA-256
+  `7F41266DCF50C5253B65B7170EF31302E1C7D56F0540B6C601C494C4CFCD272E` ;
+- restauration vers la DLL SHA-256
+  `81A3F41D59F2355732DBDC9D206ADA55F7661DBF29248B045E4BA26EA025FEC0` ;
+- `PerformanceLogs=true` et `EnableTilePageDiagnostics=false` restent actifs.
+
+### Première session ingame
+
+Session du 29 août 2026, AR0602 → AR0700N → AR0516 → AR0900. L’utilisateur signale la saccade la
+plus forte sur AR0900. Les deltas ci-dessous sont ceux de la fenêtre où les pages supplémentaires
+de la vue carte apparaissent ; les maxima excluent le chargement initial de la zone.
+
+| Zone | Pages carte supplémentaires | Appels compressés supplémentaires | Upload compressé | Frame maximale | Capture détaillée |
+|---|---:|---:|---:|---:|---|
+| AR0602 | 34 | 37 | 68,50 Mio | 20,75 ms | Non |
+| AR0700N | 85 | 85 | 340,00 Mio | 404,68 ms | Oui |
+| AR0516 | 28 | 30 | 56,25 Mio | 14,35 ms | Non |
+| AR0900 | 20 | 21 | 320,25 Mio | 374,57 ms | Oui |
+
+La capture AR0700N attribue les trois frames lourdes à 84,01, 250,13 et 404,68 ms, avec 9, 27
+et 45 nouvelles pages et respectivement 36, 108 et 180 Mio d’uploads compressés. La capture AR0900
+mesure 150,60, 374,57 et 192,00 ms, avec 4, 10 et 5 nouvelles pages et 64, 160 et 80 Mio. AR0900
+utilise donc moins de pages, mais chaque base PVRZ 4096 DXT5 représente 16 Mio dans l’appel GL ;
+AR0700N répartit un volume total voisin sur davantage de pages 2048.
+
+Le temps CPU propre au détour `RenderTexture` ne dépasse que 3,02 ms sur les trois frames lourdes
+d’AR0700N et 5,33 ms sur celles d’AR0900. Il est très inférieur aux intervalles de présentation :
+le hook de tuiles n’est pas la source principale du gel. Le corrélat dominant est la matérialisation
+et l’upload compressé synchrones des pages demandées par le dezoom.
+
+AR0900 présente aussi un amplificateur secondaire dans la même fenêtre de cinq secondes : 135
+uploads de textures d’animations, 362,66 Mio de niveaux de base et 71 évictions LRU. AR0700N
+n’ajoute qu’environ 48,92 Mio et aucune éviction. Ces compteurs ne permettent pas encore une
+attribution par frame, mais ils sont cohérents avec le ressenti plus sévère sur AR0900 sans retirer
+le rôle principal du burst PVRZ.
+
+AR0602 et AR0516 sont visibles dans les deltas cumulatifs, mais ne produisent pas de ligne détaillée.
+Leur dezoom s’effectue par incréments dont chacun reste sous le seuil de 25 % entre deux frames.
+Le déclencheur doit donc comparer la vue à une baseline stable ou à une courte fenêtre, plutôt qu’à
+la seule frame précédente. Aucun échec moteur n’est relevé ; les deux avertissements sont la
+récupération attendue du prologue déjà détourné par EEex et le fallback de teinte WLAKE00 déjà connu.
+
+### Raffinement 1b — dezoom progressif
+
+Le déclencheur compare désormais la vue courante à l’observation qualifiante la plus récente parmi
+les seize dernières frames de présentation. L’historique est un tableau fixe, sans allocation, et
+les observations plus anciennes sont oubliées. Dès qu’une capture commence, la baseline antérieure
+est supprimée. Le buffer de sortie reste limité à huit frames et le seuil reste à 1,25. Le retest
+montre cependant que, si le dezoom continue après ces huit frames, les nouvelles vues peuvent
+former une autre baseline et déclencher une capture supplémentaire.
+
+Validation automatisée avant installation :
+
+- expansion directe et expansion cumulative en trois incréments couvertes ;
+- absence de redéclenchement lorsque la carte reste ouverte ;
+- rejet d’une baseline âgée de plus de seize frames ;
+- remise à zéro des compteurs sans sous-flux conservée ;
+- `ctest -C Debug` : 2/2 tests réussis ;
+- DLL Windows Release compilée, SHA-256
+  `8E15A17614B0F9C607036CA02972DE61C7A1658C93F934965C41D43C101334ED` ;
+- tests Python communs : 180/180 réussis après fermeture de BG2 et InfinityLoader ; leur premier
+  passage avait été correctement refusé par onze tests d’installation pendant que le jeu tournait.
+
+Installation réversible :
+
+- état : `bg2hd/state/map-wide-view-cumulative-telemetry-20260829T054633Z/` ;
+- seule `InfinityEngine-Enhancer.dll` diffère du runtime précédent ;
+- DLL active SHA-256
+  `8E15A17614B0F9C607036CA02972DE61C7A1658C93F934965C41D43C101334ED` ;
+- restauration vers la DLL SHA-256
+  `7F41266DCF50C5253B65B7170EF31302E1C7D56F0540B6C601C494C4CFCD272E` ;
+- `PerformanceLogs=true` et `EnableTilePageDiagnostics=false` restent actifs.
+
+### Retest ciblé du raffinement 1b
+
+Session du 29 août 2026, AR0602 puis AR0516. Les deux dezooms progressifs sont désormais détectés,
+mais chacun produit quatre événements pendant une seule ouverture :
+
+| Zone | Événements | Intervalle premier-dernier | Frames couvertes | Nouvelles pages cumulées | Frame maximale |
+|---|---:|---:|---:|---:|---:|
+| AR0602 | 4 | 237 ms | 5547–5578 | 32 | 21,01 ms |
+| AR0516 | 4 | 211 ms | 11810–11841 | 30 | 19,09 ms |
+
+Les dimensions augmentent continûment d’un événement au suivant. Les trois premières captures de
+chaque zone couvrent l’essentiel des nouvelles pages ; la quatrième n’en relève aucune sur AR0602
+et une seule sur AR0516. Il ne s’agit donc ni de quatre ouvertures distinctes ni d’un faux marqueur
+en vue monde stable : le détecteur se réarme implicitement lorsque son buffer de huit frames est
+terminé alors que l’animation de dezoom continue. Aucun autre marqueur n’apparaît dans la fin de la
+session. L’unique avertissement est la récupération attendue du prologue `RenderTexture` déjà
+détourné par EEex ; aucune erreur ou alerte critique n’est émise.
+
+Le raffinement 1b valide la fenêtre cumulative de seize frames pour la couverture, mais échoue la
+gate « une capture par ouverture ». Il ne doit pas être considéré comme terminé.
+
+### Raffinement 1c — verrou de réarmement
+
+Après un déclenchement, le détecteur mémorise la vue pré-dezoom et reste désarmé pendant toute
+l’expansion. Il ne reconstruit pas d’historique dans cet état. Le réarmement n’est autorisé que
+lorsque largeur et hauteur se sont toutes deux contractées sous la baseline pré-dezoom multipliée
+par le seuil existant de 1,25. Une seconde ouverture peut alors produire un nouvel événement.
+
+Validation automatisée avant installation :
+
+- un dezoom continu dépassant les huit frames du buffer ne produit qu’une capture ;
+- une contraction complète suivie d’une seconde ouverture produit l’événement 2 ;
+- les expansions directe et cumulative, la fenêtre fixe et les remises à zéro restent couvertes ;
+- `ctest -C Debug` et `ctest -C Release` : 2/2 tests réussis ;
+- tests Python communs : 180/180 réussis ;
+- seul l’avertissement tiers `C4459` déjà documenté dans `spdlog/fmt` subsiste ;
+- DLL Windows Release SHA-256
+  `BBE9E9BEBAB1ED22D1009FD2F14948566DBB617A1B0B1324456E224C0002D71B`.
+
+Installation réversible :
+
+- état : `bg2hd/state/map-wide-view-rearm-telemetry-20260829T060046Z/` ;
+- seule `InfinityEngine-Enhancer.dll` diffère du runtime précédent ;
+- restauration vers la DLL 1b SHA-256
+  `8E15A17614B0F9C607036CA02972DE61C7A1658C93F934965C41D43C101334ED` ;
+- `PerformanceLogs=true` et `EnableTilePageDiagnostics=false` restent actifs.
+
+### Retest ingame du raffinement 1c
+
+Session du 29 août 2026, lancée via `InfinityLoader.lnk`, dans l’ordre AR0700N → AR0516 → AR0602
+→ AR0900. Pour chaque sauvegarde : stabilisation de cinq secondes, ouverture de la carte pendant
+cinq secondes, fermeture et contraction pendant cinq secondes, puis seconde ouverture de cinq
+secondes et fermeture. Le jeu a ensuite été quitté sans écrire de sauvegarde.
+
+| Zone | Événements | Pic présentation ouverture 1 | Nouvelles pages ouverture 1 | Upload compressé ouverture 1 | Pic présentation ouverture 2 |
+|---|---:|---:|---:|---:|---:|
+| AR0700N | 1, 2 | 431,91 ms | 82 | 328,25 Mio | 6,20 ms |
+| AR0516 | 1, 2 | 15,11 ms | 9 | 18,00 Mio | 6,36 ms |
+| AR0602 | 1, 2 | 8,04 ms | 7 | 14,00 Mio | 6,60 ms |
+| AR0900 | 1, 2 | 303,69 ms | 18 | 288,00 Mio | 6,46 ms |
+
+Chaque zone produit exactement deux marqueurs pour deux ouvertures. Aucun événement supplémentaire
+n’apparaît pendant le maintien de la carte. Les quatre secondes ouvertures ne créent aucune page,
+aucune texture source et aucun upload compressé dans la fenêtre capturée : le pic mesuré est donc
+lié à la matérialisation initiale des pages demandées par le dezoom, tandis que leur réaffichage
+depuis la résidence existante reste proche de 6 ms sur cette session.
+
+Le classement des premières ouvertures n’est pas un benchmark froid : les zones ont été parcourues
+dans un même processus et le cache fichier Windows était déjà chaud. Il confirme néanmoins deux
+bursts lourds distincts, AR0700N à 431,91 ms et AR0900 à 303,69 ms. Le temps CPU maximal du détour
+`RenderTexture` reste limité à 3,57 ms sur AR0700N et 5,57 ms sur AR0900, très loin des pics de
+présentation.
+
+La session ne contient aucune erreur ni alerte critique. Son seul avertissement est la récupération
+attendue du prologue `RenderTexture` déjà détourné par EEex. Le correctif satisfait donc la gate
+« une capture par ouverture » sans modifier les formats, les packs, les animations, les tuiles ou
+les manifests.
+
+## Mini-lot carte 2 — phases de `CResPVR::Demand`
+
+Le binaire BG2EE 2.7.3 ciblé contient une implémentation unique de `CResPVR::Demand` à la RVA
+`0x3F6DC0`. Cette adresse et son prologue validé sont maintenant portés par le manifeste de build.
+Avec `PerformanceLogs=true`, et uniquement pour cette cible exacte, le runtime installe un détour
+d’observation qui mesure :
+
+- la durée totale de chaque demande PVR et si elle matérialise réellement une texture ;
+- les deltas d’opérations et d’octets de lecture du processus pendant cette matérialisation ;
+- les appels et durées imbriqués de génération de nom de texture puis d’upload compressé ;
+- le résidu après retrait de ces deux phases GL, ainsi que la resref matérialisée la plus lente de
+  chaque frame capturée.
+
+Le résidu n’est volontairement **pas** nommé « décompression » : il contient encore la recherche
+de ressource, le service des lectures, la préparation zlib/PVR et la comptabilité moteur. Les
+deltas I/O sont une corrélation au niveau du processus, pas un chronométrage du fichier individuel.
+La collecte utilise un scope local au thread et des buffers fixes. Un prologue, une version ou une
+preuve de manifeste non conformes omettent le diagnostic et laissent le rendu natif continuer.
+
+Ce mini-lot ne change ni l’ordre des demandes, ni le cache natif de 128 pages, ni les uploads, TIS,
+WED, PVRZ, packs, animations, budgets ou manifests de contenu. `PerformanceLogs=false` conserve le
+chemin intégral antérieur sans installer le détour.
+
+Validation avant installation :
+
+- validation hors ligne du binaire 2.7.3 et de la nouvelle signature réussie ;
+- builds Debug et Release réussis ;
+- `ctest -C Debug` puis `ctest -C Release`, exécutés séquentiellement : 2/2 tests réussis dans les
+  deux configurations ;
+- tests Python communs : 180/180 réussis ;
+- DLL Windows Release SHA-256
+  `E169E9B0D303C830314C0B0A88B3E67848AA68FB2287BAFF908F9C0A45D5A6AC`.
+
+Installation réversible :
+
+- état : `bg2hd/state/map-pvr-demand-phase-telemetry-20260829T064935Z/` ;
+- phase `installed`, avec sauvegarde de la DLL précédente ;
+- DLL active SHA-256
+  `E169E9B0D303C830314C0B0A88B3E67848AA68FB2287BAFF908F9C0A45D5A6AC` ;
+- restauration vers la DLL du raffinement 1c SHA-256
+  `BBE9E9BEBAB1ED22D1009FD2F14948566DBB617A1B0B1324456E224C0002D71B` ;
+- `PerformanceLogs=true` et `EnableTilePageDiagnostics=false` restent actifs.
+
+### Session ingame des phases PVR
+
+Session du 29 août 2026, lancée via `InfinityLoader.lnk`, dans le même ordre que le retest 1c :
+AR0700N → AR0516 → AR0602 → AR0900. Chaque zone suit le protocole cinq secondes stable, cinq
+secondes carte ouverte, cinq secondes fermée, puis une seconde ouverture et une seconde fermeture.
+Le jeu est quitté sans sauvegarder.
+
+| Zone | Pages carte ouverture 1 | Upload corrélé | Pic présentation | Matérialisations PVR | Lectures corrélées | `Demand` cumulé | Upload GL mesuré | Résidu cumulé | PVR la plus lente |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| AR0700N | 84 | 336,25 Mio | 839,29 ms | 85 | 111,57 Mio | 1 173,46 ms | 31,23 ms | 1 140,67 ms | `A0700N61`, 2048², 15,42 ms |
+| AR0516 | 30 | 60,00 Mio | 82,24 ms | 30 | 21,69 Mio | 296,96 ms | 7,19 ms | 289,18 ms | `A051635`, 2048², 11,66 ms |
+| AR0602 | 31 | 62,00 Mio | 102,26 ms | 31 | 25,31 Mio | 308,55 ms | 7,02 ms | 301,14 ms | `A060224`, 2048², 11,89 ms |
+| AR0900 | 18 | 288,00 Mio | 414,77 ms | 18 | 102,92 Mio | 740,04 ms | 18,84 ms | 720,85 ms | `A090014`, 4096², 45,63 ms |
+
+Le nombre de pages de carte et celui des matérialisations PVR ne sont pas des identités : les
+premiers proviennent du hook TIS/table, les secondes couvrent toute demande PVR dans la fenêtre.
+L’écart d’une unité sur AR0700N est donc conservé au lieu d’être artificiellement réattribué.
+
+Sur la frame la plus lourde de chaque première ouverture, `CResPVR::Demand` représente environ 95 à
+98 % du temps de présentation : 819,98/839,29 ms sur AR0700N, 78,14/82,24 ms sur AR0516,
+98,09/102,26 ms sur AR0602 et 404,01/414,77 ms sur AR0900. La génération de noms GL est inférieure
+à 1,2 ms par burst. L’upload compressé mesuré reste lui aussi minoritaire — 1,94 à 22,25 ms sur les
+frames de pic — tandis que le résidu de `Demand` en porte 75,99 à 796,54 ms. Le gel est donc dans la
+matérialisation synchrone en amont ou autour de l’upload, pas dans le hook de dessin et pas dans
+`glGenTextures`.
+
+AR0900 reste le cas structurel le plus coûteux par page : ses PVRZ 4096² demandent jusqu’à 45,63 ms
+chacune, contre 11,66 à 15,42 ms pour les pages 2048² des autres zones. AR0700N produit toutefois le
+plus gros pic agrégé de cette session, car il matérialise 85 PVR et passe en premier dans le
+processus. Ce parcours à cache fichier non contrôlé ne doit pas servir de classement froid entre
+zones ; il explique pourquoi le ressenti utilisateur sur AR0900 et le maximum agrégé d’AR0700N ne
+sont pas contradictoires.
+
+Les quatre secondes ouvertures ne matérialisent aucune PVR, ne lisent aucun octet corrélé et
+restent entre 6,26 et 6,44 ms au pic. Le problème concerne donc l’arrivée initiale des pages dans la
+résidence moteur, pas le simple affichage répété d’une carte déjà chaude.
+
+La session ne contient aucune erreur ni alerte critique. Son seul avertissement est la récupération
+attendue du prologue `RenderTexture` déjà détourné par EEex.
+
 ## Prochaine étape
 
-Le P0, les budgets simulés et l’attribution RAM, cache fichier et WDDM sont maintenant mesurés sans
-contradiction. La prochaine étape peut être le premier A/B réel du chargement des animations x4 à
-la demande. C’est un chantier de difficulté moyenne à élevée, à découper en lots réversibles.
+Le mini-lot carte 3 peut maintenant prototyper un préchauffage progressif **opt-in** des seules pages
+PVRZ de la carte courante, réparti sur plusieurs frames avant l’ouverture de la carte. Il devra être
+désactivé par défaut, disposer de limites configurables de pages et de temps par frame, s’annuler
+sur changement de zone ou de contexte GL et laisser toute page manquante suivre immédiatement le
+`Demand` natif synchrone. Le chargement intégral actuel restera ainsi le fallback fonctionnel ; le
+prototype ne modifiera aucun format ni contenu.
 
-Le premier lot doit rester configurable, conserver le chargement intégral actuel comme fallback et
-ne modifier ni les formats de packs ni les animations validées. Sa borne de départ sera de 256 Mio
-/ 192 textures côté GPU et 128 Mio côté CPU. Une configuration à budgets faibles devra être
-testable pour vérifier le comportement généraliste ; les valeurs de la RTX 5090 de mesure ne
-doivent entrer dans aucune constante de production.
+Avant d’activer ce comportement, il faudra confirmer dans le code moteur l’ordre sûr des demandes
+et éviter que le préchauffage chasse les pages nécessaires à la vue monde du cache natif de 128
+entrées. Le même protocole AR0700N/AR0516/AR0602/AR0900 permettra ensuite de comparer premières et
+secondes ouvertures, erreurs et évictions.
+
+Pour le futur lot animations, les contraintes restent inchangées : chargement intégral actuel en
+fallback, formats de packs et animations inchangés, budgets initiaux de 128 Mio CPU et 256 Mio /
+192 textures GPU configurables. Ces bornes expérimentales ne doivent pas devenir des constantes
+dépendantes de la RTX 5090 et ne sont pas transposées implicitement au cache de pages de carte.

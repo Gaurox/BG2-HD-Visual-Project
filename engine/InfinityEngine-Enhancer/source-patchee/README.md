@@ -27,6 +27,25 @@ the same resource path also serves BAM V2 and MOS V2 assets. Same-area `LoadArea
 below one millisecond are folded into the active generation and reported as ignored no-ops; timing
 failures and actual area changes fail open. Negative PVR table-page samples and non-negative page
 numbers above the bounded observation capacity are reported separately.
+The same opt-in mode detects an expansion of both world-view dimensions by at least 1.25x against
+the most recent qualifying observation in a fixed sixteen-presentation-frame history. This covers
+both abrupt and stepped in-game area-map dezooms without retaining an unbounded baseline. It
+buffers the trigger frame and the next seven presentation frames before emitting one INFO record
+containing per-frame presentation time, `RenderTexture` CPU time, tile draws, newly observed table
+pages/source texture names and compressed-upload/delete deltas. The pre-expansion history is
+discarded when capture begins, and the detector remains disarmed until both world-view dimensions
+contract below the same threshold relative to the pre-expansion view. A stepped dezoom therefore
+cannot retrigger after the eight-frame output window, while closing and reopening the map can start
+a new event. This diagnostic changes neither tile demand nor rendering, and the GL upload fields
+remain correlation signals rather than proof that every upload is a map page.
+On the positively identified unified 2.7.3 executable, the same opt-in mode also validates and
+hooks `CResPVR::Demand` at its manifested RVA. It records only timings and process I/O deltas: total
+demand duration, nested GL texture-name generation, nested compressed upload, and the remaining
+resource/read/zlib/engine residual. The residual is deliberately not labeled as pure decompression.
+The eight-frame map capture reports these phases per presentation frame and retains only the
+slowest materializing PVR resref in each of sixteen bounded frame slots. The native 128-page engine
+cache, demand order, formats and upload calls are unchanged. Builds without exact target evidence
+simply omit this diagnostic while keeping all rendering behavior.
 Per-area animation-pack telemetry additionally splits registry reads, raw-frame reads,
 parse/allocation work and the resident-pack swap. It reports exact raw RGBA bytes for the incoming
 and outgoing packs, their temporary coexistence peak, and texture names deferred to the next GL

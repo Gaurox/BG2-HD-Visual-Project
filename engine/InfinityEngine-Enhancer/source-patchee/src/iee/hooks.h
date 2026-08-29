@@ -15,5 +15,10 @@ void prepare_for_shutdown() noexcept;
 // not depend on successful tile decoding or a later RenderTexture call.
 void retry_shader_probe_install() noexcept;
 
+// Presentation-boundary publication for the buffered map wide-view burst
+// diagnostic. `frame` is the completed frame, before frame_count advances.
+void on_frame_boundary(unsigned long long frame,
+                       double presentationIntervalMilliseconds) noexcept;
+
 bool is_active();
 }  // namespace iee::hooks

@@ -9,7 +9,18 @@ shutdown are treated as separate producers so ownership remains clear.
   deletes OpenGL objects.
 - `DrawColorTone(Seam)` is the world-pass publication point. It resolves the active area, publishes
   the view transform once per frame, and flushes pending area textures while a GL context is current.
-- The swap hook advances the frame counter and refreshes time-dependent uniforms.
+- The swap hook finalizes the opt-in map wide-view telemetry sample, advances the frame counter and
+  refreshes time-dependent uniforms. The detector compares only a fixed history of sixteen render
+  observations. After one trigger it stays disarmed until both view dimensions contract below the
+  trigger threshold relative to the pre-expansion view. A completed eight-frame capture is
+  formatted and logged only at this boundary; `LoadArea` merely requests its reset through an
+  atomic flag.
+- The optional 2.7.3 `CResPVR::Demand` diagnostic runs on the calling engine/render thread and
+  wraps the native call exactly once. Thread-local scope state lets the already-installed GL hooks
+  charge texture-name generation and compressed upload time to that demand without cross-thread
+  attribution. Process I/O counters are sampled only for a likely first materialization; the
+  bounded per-frame slowest-call table is protected by its own mutex and is read at the swap
+  boundary. Disabling `PerformanceLogs` removes this engine hook entirely.
 - Safe-read region results are cached only for that frame epoch; `LoadArea`
   advances the epoch before touching a replacement object graph.
 - Readability is not object lifetime. Area refreshes copy palette bytes before

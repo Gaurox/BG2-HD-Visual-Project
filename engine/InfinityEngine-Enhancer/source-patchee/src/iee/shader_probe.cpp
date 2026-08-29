@@ -25,6 +25,7 @@
 #include "iee/core/hooking.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_texture_telemetry.h"
+#include "iee/core/pvr_demand_telemetry.h"
 #include "iee/am0205e_animation_x4_test.h"
 #include "iee/am0700a_animation_x4_test.h"
 #include "iee/am3000a_frame_x4_test.h"
@@ -73,6 +74,7 @@ using Fn_glLinkProgramARB = game::gl::PFN_glLinkProgramARB;
 using Fn_glUseProgramObjectARB = game::gl::PFN_glUseProgramObjectARB;
 using Fn_glDeleteObjectARB = game::gl::PFN_glDeleteObjectARB;
 using Fn_glBindFramebuffer = game::gl::PFN_glBindFramebuffer;
+using Fn_glGenTextures = game::gl::PFN_glGenTextures;
 using Fn_glDeleteTextures = game::gl::PFN_glDeleteTextures;
 using Fn_glTexImage2D = game::gl::PFN_glTexImage2D;
 using Fn_glTexSubImage2D = game::gl::PFN_glTexSubImage2D;
@@ -90,6 +92,7 @@ core::Hook<Fn_glLinkProgramARB> g_glLinkProgramARBHook;
 core::Hook<Fn_glUseProgramObjectARB> g_glUseProgramObjectARBHook;
 core::Hook<Fn_glDeleteObjectARB> g_glDeleteObjectARBHook;
 core::Hook<Fn_glBindFramebuffer> g_glBindFramebufferHook;
+core::Hook<Fn_glGenTextures> g_glGenTexturesHook;
 core::Hook<Fn_glDeleteTextures> g_glDeleteTexturesHook;
 core::Hook<Fn_glTexImage2D> g_glTexImage2DHook;
 core::Hook<Fn_glTexSubImage2D> g_glTexSubImage2DHook;
@@ -102,6 +105,7 @@ void finish_queued_probe_hooks() noexcept {
   g_glLinkProgramHook.finish_queued_enable();
   g_glUseProgramHook.finish_queued_enable();
   g_glDeleteProgramHook.finish_queued_enable();
+  g_glGenTexturesHook.finish_queued_enable();
   g_glDeleteTexturesHook.finish_queued_enable();
   g_glTexImage2DHook.finish_queued_enable();
   g_glTexSubImage2DHook.finish_queued_enable();
@@ -120,6 +124,7 @@ bool remove_probe_hooks() noexcept {
   removed = g_glTexSubImage2DHook.remove() && removed;
   removed = g_glTexImage2DHook.remove() && removed;
   removed = g_glDeleteTexturesHook.remove() && removed;
+  removed = g_glGenTexturesHook.remove() && removed;
   removed = g_glBindFramebufferHook.remove() && removed;
   removed = g_glDeleteObjectARBHook.remove() && removed;
   removed = g_glUseProgramObjectARBHook.remove() && removed;
@@ -133,6 +138,18 @@ bool remove_probe_hooks() noexcept {
   removed = g_glCompileShaderHook.remove() && removed;
   removed = g_glShaderSourceHook.remove() && removed;
   return removed;
+}
+
+std::uint64_t elapsed_nanoseconds(const LARGE_INTEGER& start,
+                                  const LARGE_INTEGER& end) noexcept {
+  static const std::int64_t frequency = [] {
+    LARGE_INTEGER value{};
+    return QueryPerformanceFrequency(&value) ? value.QuadPart : 0;
+  }();
+  if (frequency <= 0 || start.QuadPart <= 0 || end.QuadPart < start.QuadPart) return 0;
+  const auto ticks = static_cast<long double>(end.QuadPart - start.QuadPart);
+  return static_cast<std::uint64_t>(
+      ticks * 1'000'000'000.0L / static_cast<long double>(frequency));
 }
 
 std::mutex g_probeMutex;
@@ -1044,6 +1061,28 @@ static void APIENTRY detour_glDeleteProgram(unsigned program) noexcept {
   }
 }
 
+static void APIENTRY detour_glGenTextures(int count, unsigned* textures) noexcept {
+  bool forwarded = false;
+  try {
+    LARGE_INTEGER started{};
+    const bool measured =
+        g_cfg.enablePerformanceLogging && QueryPerformanceCounter(&started);
+    forwarded = true;
+    g_glGenTexturesHook.original()(count, textures);
+    if (g_cfg.enablePerformanceLogging) {
+      LARGE_INTEGER ended{};
+      const auto nanoseconds = measured && QueryPerformanceCounter(&ended)
+                                   ? elapsed_nanoseconds(started, ended)
+                                   : 0;
+      core::record_gl_texture_generation(count, nanoseconds);
+      core::record_pvr_scope_texture_generation(
+          count > 0 ? static_cast<std::uint64_t>(count) : 0, nanoseconds);
+    }
+  } catch (...) {
+    if (!forwarded) g_glGenTexturesHook.original()(count, textures);
+  }
+}
+
 static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures) noexcept {
   bool forwarded = false;
   try {
@@ -1318,14 +1357,23 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
         logoReplacementEnabled && biglogo::try_replacement(
                                       target, level, internalFormat, width, height, imageSize,
                                       data, replacement);
+    LARGE_INTEGER uploadStarted{};
+    const bool measured =
+        g_cfg.enablePerformanceLogging && QueryPerformanceCounter(&uploadStarted);
     forwarded = true;
     if (useReplacement) {
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, replacement.width,
                                               replacement.height, border, replacement.byteCount,
                                               replacement.data);
       if (g_cfg.enablePerformanceLogging) {
+        LARGE_INTEGER uploadEnded{};
+        const auto nanoseconds = measured && QueryPerformanceCounter(&uploadEnded)
+                                     ? elapsed_nanoseconds(uploadStarted, uploadEnded)
+                                     : 0;
         core::record_gl_compressed_upload(level, internalFormat, replacement.width,
-                                          replacement.height, replacement.byteCount);
+                                          replacement.height, replacement.byteCount,
+                                          nanoseconds);
+        core::record_pvr_scope_compressed_upload(nanoseconds);
       }
       log_bam_ui_texture_upload(true, target, level, internalFormat, replacement.width,
                                 replacement.height, replacement.byteCount, replacement.data,
@@ -1334,7 +1382,13 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, width, height, border,
                                               imageSize, data);
       if (g_cfg.enablePerformanceLogging) {
-        core::record_gl_compressed_upload(level, internalFormat, width, height, imageSize);
+        LARGE_INTEGER uploadEnded{};
+        const auto nanoseconds = measured && QueryPerformanceCounter(&uploadEnded)
+                                     ? elapsed_nanoseconds(uploadStarted, uploadEnded)
+                                     : 0;
+        core::record_gl_compressed_upload(level, internalFormat, width, height, imageSize,
+                                          nanoseconds);
+        core::record_pvr_scope_compressed_upload(nanoseconds);
       }
       log_bam_ui_texture_upload(true, target, level, internalFormat, width, height, imageSize,
                                 data, caller);
@@ -1502,6 +1556,11 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
         g_glDeleteProgramHook.create(reinterpret_cast<void*>(gl.glDeleteProgram),
                                      reinterpret_cast<void*>(&detour_glDeleteProgram));
         g_glDeleteProgramHook.queue_enable();
+      }
+      if (cfg.enablePerformanceLogging && gl.glGenTextures) {
+        g_glGenTexturesHook.create(reinterpret_cast<void*>(gl.glGenTextures),
+                                   reinterpret_cast<void*>(&detour_glGenTextures));
+        g_glGenTexturesHook.queue_enable();
       }
       if (gl.glDeleteTextures) {
         g_glDeleteTexturesHook.create(reinterpret_cast<void*>(gl.glDeleteTextures),

@@ -191,6 +191,8 @@ constexpr BuildManifest kKnownBuilds[] = {
             {"DrawEnd", 0x17A, BranchInstructionKind::CallRel32, 0xE8, 1, 5, true},
             {"DrawPopState", 0x1AD, BranchInstructionKind::JmpRel32, 0xE9, 1, 5, true},
         }},
+        {0x3F6DC0,
+         "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 41 56 48 83 EC 30 83 79 58 00"},
     },
     // Offline-validated 2026-08-13 (docs/validation/bg2ee-2.7.3-evidence.md):
     // BG2EE 2.7.3.0 ships the same unified engine image as BGEE 2.7.3 (the game
@@ -286,6 +288,8 @@ constexpr BuildManifest kKnownBuilds[] = {
             {"DrawEnd", 0x17A, BranchInstructionKind::CallRel32, 0xE8, 1, 5, true},
             {"DrawPopState", 0x1AD, BranchInstructionKind::JmpRel32, 0xE9, 1, 5, true},
         }},
+        {0x3F6DC0,
+         "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 41 56 48 83 EC 30 83 79 58 00"},
     },
 };
 
@@ -298,11 +302,15 @@ static_assert(validate_pattern_format(kKnownBuilds[1].patterns.loadArea),
               "2.7.3 LoadArea pattern format is invalid");
 static_assert(validate_pattern_format(kKnownBuilds[1].patterns.renderTexture),
               "2.7.3 RenderTexture pattern format is invalid");
+static_assert(validate_pattern_format(kKnownBuilds[1].pvrDemand.signature),
+              "2.7.3 CResPVR::Demand pattern format is invalid");
 static_assert(kKnownBuilds[1].validate(), "2.7.3 build manifest is invalid");
 static_assert(validate_pattern_format(kKnownBuilds[2].patterns.loadArea),
               "BG2EE 2.7.3 LoadArea pattern format is invalid");
 static_assert(validate_pattern_format(kKnownBuilds[2].patterns.renderTexture),
               "BG2EE 2.7.3 RenderTexture pattern format is invalid");
+static_assert(validate_pattern_format(kKnownBuilds[2].pvrDemand.signature),
+              "BG2EE 2.7.3 CResPVR::Demand pattern format is invalid");
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].areaAnimations.infinityFxRenderClippingPolysSignature),
               "BG2EE 2.7.3 FXRenderClippingPolys pattern format is invalid");

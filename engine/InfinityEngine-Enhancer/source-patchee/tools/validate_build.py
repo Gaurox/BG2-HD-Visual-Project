@@ -22,10 +22,21 @@ PATTERNS = {
     "CVidTile::RenderTexture": "48 8B C4 44 89 48 20 48 83 EC 48 48 89 58 08 8B DA 48 89 68 10",
 }
 
+# Diagnostic-only target currently evidenced on the unified 2.7.3 image. It
+# is intentionally not projected onto 2.6.6 without a matching binary audit.
+PVR_DEMAND_PATTERN = (
+    "48 89 5C 24 10 48 89 74 24 18 48 89 7C 24 20 41 56 "
+    "48 83 EC 30 83 79 58 00"
+)
+
 # Reference RVAs per known build, for shift reporting only.
 REFERENCE_RVAS = {
     "2.6.6": {"CInfGame::LoadArea": 0x27E710, "CVidTile::RenderTexture": 0x4247E0},
-    "2.7.3": {"CInfGame::LoadArea": 0x27EBD0, "CVidTile::RenderTexture": 0x4257C0},
+    "2.7.3": {
+        "CInfGame::LoadArea": 0x27EBD0,
+        "CVidTile::RenderTexture": 0x4257C0,
+        "CResPVR::Demand": 0x3F6DC0,
+    },
 }
 
 # name, intra-function offset from RenderTexture, expected opcode
@@ -159,7 +170,10 @@ def main(argv: list[str]) -> int:
     print("| Target | Matches | RVA | Reference | Shift |")
     print("|---|---|---|---|---|")
     located: dict[str, int] = {}
-    for label, pat_str in PATTERNS.items():
+    patterns = dict(PATTERNS)
+    if args.reference == "2.7.3":
+        patterns["CResPVR::Demand"] = PVR_DEMAND_PATTERN
+    for label, pat_str in patterns.items():
         pat = compile_pattern(pat_str)
         hits: list[int] = []
         for s in pe["sections"]:

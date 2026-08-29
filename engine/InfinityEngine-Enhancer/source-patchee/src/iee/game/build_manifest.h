@@ -39,6 +39,22 @@ struct ReferenceRvas {
   std::uintptr_t renderTexture{};
 };
 
+// Optional, diagnostics-only CResPVR::Demand target. It is installed only
+// while PerformanceLogs is enabled and only after the exact manifested bytes
+// are confirmed at the build-specific RVA.
+struct PvrDemandRuntime {
+  std::uintptr_t demand{};
+  std::string_view signature{};
+
+  [[nodiscard]] constexpr bool enabled() const noexcept {
+    return demand != 0 && !signature.empty();
+  }
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    return (demand == 0) == signature.empty();
+  }
+};
+
 struct RuntimeOffsets {
   std::uintptr_t vidTileResource{};
   std::uintptr_t tisLinearTilesFlag{};
@@ -211,6 +227,8 @@ struct BuildManifest {
   AreaAnimationRuntime areaAnimations{};
   WorldOverlayRuntime worldOverlay{};
   std::array<BranchInstructionDesc, 11> renderTextureCallsites{};
+  // Appended because this aggregate uses positional initializers.
+  PvrDemandRuntime pvrDemand{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (buildId.empty() || supportedProductNames[0].empty() || executableVersion.major == 0 ||
@@ -229,6 +247,7 @@ struct BuildManifest {
     }
     if (!areaAnimations.validate()) return false;
     if (!worldOverlay.validate()) return false;
+    if (!pvrDemand.validate()) return false;
 
     for (const auto& callsite : renderTextureCallsites) {
       if (!callsite.validate()) {

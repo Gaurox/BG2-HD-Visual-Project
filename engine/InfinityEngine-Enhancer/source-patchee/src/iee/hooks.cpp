@@ -9,9 +9,12 @@
 #include <cstdint>
 #include <cstring>
 #include <exception>
+#include <iomanip>
 #include <limits>
 #include <optional>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 #include <string_view>
 #include <vector>
 
@@ -26,14 +29,17 @@
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_texture_telemetry.h"
+#include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/core/process_resource_telemetry.h"
+#include "iee/core/pvr_demand_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/frame_hook.h"
 #include "iee/game/game_types.h"
 #include "iee/game/renderer.h"
+#include "iee/game/resref_runtime.h"
 #include "iee/game/runtime_types_x64.h"
 #include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
@@ -57,6 +63,7 @@ using MonsterRenderFn = MonsterIcewindRenderFn;
 using CharacterRenderFn = MonsterIcewindRenderFn;
 using GameAreaRenderFn = void (*)(void*, void*);
 using DrawFlushGlFn = void (*)();
+using CResPvrDemandFn = void* (*)(void*);
 
 // Hook management - initialize MinHook
 // Intentionally explicit lifetime: a static smart-pointer destructor would
@@ -73,6 +80,7 @@ static core::Hook<MonsterRenderFn> g_monsterRenderHook;
 static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
 static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
+static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
 static DrawFlushGlFn g_drawFlushGl{};
 
 static AppContext* g_ctx = nullptr;
@@ -92,6 +100,8 @@ thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
 bool g_nativeOcclusionProbeHookEnabled = false;
 bool g_nativeOcclusionProbeLoggingEnabled = false;
 bool g_nativeOcclusionBridgeEnabled = false;
+core::MapViewBurstTelemetry g_mapViewBurstTelemetry;
+std::atomic<bool> g_mapViewBurstTelemetryResetRequested{false};
 
 constexpr std::size_t kMaximumCreatureSpriteLayers = 4;
 constexpr std::size_t kNoCreatureSpriteLayer = kMaximumCreatureSpriteLayers;
@@ -1121,6 +1131,8 @@ void record_render_performance(const AppContext& ctx, bool handled,
 
     const auto frameNumber = frame::frame_count();
     const double ticksToMilliseconds = 1000.0 / static_cast<double>(frequency);
+    g_mapViewBurstTelemetry.record_render_texture_cpu(
+        frameNumber, static_cast<double>(elapsedTicks) * ticksToMilliseconds);
     if (frameNumber != 0 && frameNumber != window.activeFrame) {
       window.finish_frame(ticksToMilliseconds);
       window.activeFrame = frameNumber;
@@ -1140,6 +1152,7 @@ void record_render_performance(const AppContext& ctx, bool handled,
     const auto textureStats = game::take_texture_configuration_stats();
     const auto tileStats = features::tile_render_telemetry_snapshot();
     const auto glStats = core::gl_texture_telemetry_snapshot();
+    const auto pvrStats = core::pvr_demand_telemetry_snapshot();
     const auto areaAnimationTextureStats =
         area_animation_x4::texture_cache_telemetry_snapshot();
     const auto areaAnimationCacheBudgetSimulation =
@@ -1175,6 +1188,28 @@ void record_render_performance(const AppContext& ctx, bool handled,
         glStats.compressedUploadBytes, glStats.compressedBaseLevelCalls,
         glStats.largeS3tcBaseLevelCalls, glStats.largeS3tcBaseLevelBytes,
         glStats.deleteCalls, glStats.deletedTextureNames);
+    constexpr double kNanosecondsToMilliseconds = 1.0 / 1'000'000.0;
+    LOG_INFO(
+        "PVR demand phase telemetry (area total): generation={}, area={}, calls={}, "
+        "materializations={}, ioMeasuredMaterializations={}, textureCreations={}, "
+        "readOperations={}, readBytes={}, demandMs={:.3f}, textureGenerationCalls={}, "
+        "textureGenerationMs={:.3f}, compressedUploadCalls={}, compressedUploadMs={:.3f}, "
+        "residualMs={:.3f}; allGlTextureGenerationCalls={}, allGlGeneratedTextureNames={}, "
+        "allGlTextureGenerationMs={:.3f}, allGlCompressedUploadMs={:.3f}, "
+        "maximumGlCompressedUploadMs={:.3f}",
+        areaGeneration, area, pvrStats.calls, pvrStats.materializations,
+        pvrStats.ioMeasuredMaterializations, pvrStats.textureCreations,
+        pvrStats.readOperations, pvrStats.readBytes,
+        pvrStats.demandNanoseconds * kNanosecondsToMilliseconds,
+        pvrStats.textureGenerationCalls,
+        pvrStats.textureGenerationNanoseconds * kNanosecondsToMilliseconds,
+        pvrStats.compressedUploadCalls,
+        pvrStats.compressedUploadNanoseconds * kNanosecondsToMilliseconds,
+        pvrStats.residualNanoseconds * kNanosecondsToMilliseconds,
+        glStats.textureGenerationCalls, glStats.generatedTextureNames,
+        glStats.textureGenerationNanoseconds * kNanosecondsToMilliseconds,
+        glStats.compressedUploadNanoseconds * kNanosecondsToMilliseconds,
+        glStats.maximumCompressedUploadNanoseconds * kNanosecondsToMilliseconds);
     const bool processMemoryAvailable =
         window.processResourceBaseline.memoryAvailable && processResources.memoryAvailable;
     const bool processIoAvailable =
@@ -1277,6 +1312,72 @@ void record_render_performance(const AppContext& ctx, bool handled,
   }
 }
 
+std::string format_map_view_burst_samples(
+    const core::MapViewBurstCapture& capture) {
+  std::ostringstream output;
+  output << std::fixed << std::setprecision(2);
+  for (std::size_t index = 0; index < capture.frameCount; ++index) {
+    if (index != 0) output << ';';
+    const auto& sample = capture.frames[index];
+    output << index << ':' << sample.frame << ',' << sample.viewWorldWidth << 'x'
+           << sample.viewWorldHeight << ',' << (sample.viewObserved ? 1 : 0) << ','
+           << sample.presentationIntervalMilliseconds << ','
+           << sample.renderTextureCpuMilliseconds << ','
+           << sample.delta.tileDraws << ',' << sample.delta.tablePagesObserved << ','
+           << sample.delta.sourceTextureIdsObserved << ','
+           << sample.delta.compressedUploadCalls << ','
+           << sample.delta.compressedUploadBytes << ','
+           << sample.delta.largeS3tcBaseLevelCalls << ','
+           << sample.delta.largeS3tcBaseLevelBytes << ','
+           << sample.delta.deleteCalls << ','
+           << sample.delta.deletedTextureNames;
+  }
+  return output.str();
+}
+
+std::string format_map_pvr_phase_samples(
+    const core::MapViewBurstCapture& capture) {
+  constexpr double kNanosecondsToMilliseconds = 1.0 / 1'000'000.0;
+  std::ostringstream output;
+  output << std::fixed << std::setprecision(3);
+  for (std::size_t index = 0; index < capture.frameCount; ++index) {
+    if (index != 0) output << ';';
+    const auto& sample = capture.frames[index];
+    const auto detail =
+        core::pvr_demand_frame_detail_snapshot(sample.frame);
+    const auto detailName = detail.valid()
+                                ? std::string_view(detail.resref.data())
+                                : std::string_view{"-"};
+    output << index << ':' << sample.frame << ','
+           << sample.delta.pvrDemandCalls << ','
+           << sample.delta.pvrMaterializations << ','
+           << sample.delta.pvrIoMeasuredMaterializations << ','
+           << sample.delta.pvrTextureCreations << ','
+           << sample.delta.pvrReadOperations << ','
+           << sample.delta.pvrReadBytes << ','
+           << sample.delta.pvrDemandNanoseconds * kNanosecondsToMilliseconds << ','
+           << sample.delta.pvrTextureGenerationCalls << ','
+           << sample.delta.pvrTextureGenerationNanoseconds *
+                  kNanosecondsToMilliseconds
+           << ',' << sample.delta.pvrCompressedUploadCalls << ','
+           << sample.delta.pvrCompressedUploadNanoseconds *
+                  kNanosecondsToMilliseconds
+           << ',' << sample.delta.pvrResidualNanoseconds *
+                          kNanosecondsToMilliseconds
+           << ',' << sample.delta.compressedUploadNanoseconds *
+                          kNanosecondsToMilliseconds
+           << ',' << detailName << ',' << detail.width << 'x' << detail.height
+           << ',' << detail.demandNanoseconds * kNanosecondsToMilliseconds
+           << ',' << detail.textureGenerationNanoseconds *
+                          kNanosecondsToMilliseconds
+           << ',' << detail.compressedUploadNanoseconds *
+                          kNanosecondsToMilliseconds
+           << ',' << detail.residualNanoseconds * kNanosecondsToMilliseconds
+           << ',' << detail.readBytes << ',' << (detail.ioMeasured ? 1 : 0);
+  }
+  return output.str();
+}
+
 void install_shader_probes_once() {
   // Latch only on success: a transient first-frame failure (partial GL
   // table) must not permanently suppress the probes. Runs on the render
@@ -1377,12 +1478,89 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
   }
   area::ViewTransform view{};
   if (area::read_view_transform(resolved, view)) {
+    if (flushGpuUpload && g_ctx->cfg.enablePerformanceLogging &&
+        frame::boundary_available()) {
+      g_mapViewBurstTelemetry.observe_view(frameNumber, view.viewWorldW,
+                                           view.viewWorldH);
+    }
     const bool ar1300 = is_ar1300(resolved);
     probe::set_area_view(view.scrollX, view.scrollY, view.viewWorldW, view.viewWorldH);
     bridge::publish_view(view, ar1300);
   }
 }
 }  // namespace
+
+void on_frame_boundary(unsigned long long frame,
+                       double presentationIntervalMilliseconds) noexcept {
+  try {
+    auto* ctx = g_ctx;
+    if (!ctx || !ctx->cfg.enablePerformanceLogging ||
+        !frame::boundary_available()) {
+      return;
+    }
+    if (g_mapViewBurstTelemetryResetRequested.exchange(false,
+                                                       std::memory_order_acq_rel)) {
+      g_mapViewBurstTelemetry.reset();
+    }
+
+    const auto tile = features::tile_render_telemetry_snapshot();
+    const auto gl = core::gl_texture_telemetry_snapshot();
+    const auto pvr = core::pvr_demand_telemetry_snapshot();
+    const core::MapViewCumulativeCounters cumulative{
+        .tileDraws = tile.decodedTileDraws,
+        .tablePagesObserved = tile.distinctTablePagesObserved,
+        .sourceTextureIdsObserved = tile.sourceTextureIdsObserved,
+        .compressedUploadCalls = gl.compressedUploadCalls,
+        .compressedUploadBytes = gl.compressedUploadBytes,
+        .compressedUploadNanoseconds = gl.compressedUploadNanoseconds,
+        .largeS3tcBaseLevelCalls = gl.largeS3tcBaseLevelCalls,
+        .largeS3tcBaseLevelBytes = gl.largeS3tcBaseLevelBytes,
+        .deleteCalls = gl.deleteCalls,
+        .deletedTextureNames = gl.deletedTextureNames,
+        .pvrDemandCalls = pvr.calls,
+        .pvrMaterializations = pvr.materializations,
+        .pvrIoMeasuredMaterializations = pvr.ioMeasuredMaterializations,
+        .pvrTextureCreations = pvr.textureCreations,
+        .pvrReadOperations = pvr.readOperations,
+        .pvrReadBytes = pvr.readBytes,
+        .pvrDemandNanoseconds = pvr.demandNanoseconds,
+        .pvrTextureGenerationCalls = pvr.textureGenerationCalls,
+        .pvrTextureGenerationNanoseconds = pvr.textureGenerationNanoseconds,
+        .pvrCompressedUploadCalls = pvr.compressedUploadCalls,
+        .pvrCompressedUploadNanoseconds = pvr.compressedUploadNanoseconds,
+        .pvrResidualNanoseconds = pvr.residualNanoseconds,
+    };
+    const auto capture = g_mapViewBurstTelemetry.finish_frame(
+        frame, cumulative, presentationIntervalMilliseconds);
+    if (!capture) return;
+
+    const auto wed = ctx->wed.load(std::memory_order_acquire);
+    const auto area = wed ? wed->areaResrefView() : std::string_view{"?"};
+    LOG_INFO(
+        "Map wide-view burst telemetry: area={}, event={}, thresholdRatio={:.2f}, "
+        "expansionWindowFrames={}, "
+        "previousView={}x{}, triggerView={}x{}, frameCount={}, "
+        "sampleFields=offset:frame,view,viewFresh,presentationMs,renderTextureCpuMs,tileDraws,"
+        "newTablePages,newSourceTextures,compressedCalls,compressedBytes,"
+        "largeS3tcCalls,largeS3tcBytes,deleteCalls,deletedTextureNames; samples=[{}]",
+        area, capture->eventId, core::kMapViewBurstMinimumExpansionRatio,
+        core::kMapViewBurstExpansionWindowFrameCount,
+        capture->previousViewWorldWidth, capture->previousViewWorldHeight,
+        capture->triggerViewWorldWidth, capture->triggerViewWorldHeight,
+        capture->frameCount, format_map_view_burst_samples(*capture));
+    LOG_INFO(
+        "Map PVR demand phase telemetry: area={}, event={}, "
+        "sampleFields=offset:frame,demandCalls,materializations,ioMeasuredMaterializations,"
+        "textureCreations,readOperations,readBytes,demandMs,textureGenerationCalls,"
+        "textureGenerationMs,pvrCompressedUploadCalls,pvrCompressedUploadMs,residualMs,"
+        "allGlCompressedUploadMs,slowestResref,slowestDimensions,slowestDemandMs,"
+        "slowestTextureGenerationMs,slowestCompressedUploadMs,slowestResidualMs,"
+        "slowestReadBytes,slowestIoMeasured; samples=[{}]",
+        area, capture->eventId, format_map_pvr_phase_samples(*capture));
+  } catch (...) {
+    // Buffered performance diagnostics must never affect presentation.
+  }
+}
 
 static int detour_infinity_fx_render_clipping_polys(
     void* thisPtr, int x, int y, int referenceZ, void* fxRect, void* clipRect,
@@ -1916,6 +2094,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
     ctx.reset_area_state();
     features::request_tile_render_state_reset();
     game::request_texture_configuration_cache_reset();
+    g_mapViewBurstTelemetryResetRequested.store(true, std::memory_order_release);
   } catch (const std::exception& e) {
     LOG_ERROR("LoadArea pre-dispatch failed; continuing with the engine path: {}", e.what());
   } catch (...) {
@@ -1977,6 +2156,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
       // LoadArea and its post-dispatch preparation are CPU-only. Reset after
       // classification so a same-area no-op cannot erase the real load window.
       core::reset_gl_texture_telemetry();
+      core::reset_pvr_demand_telemetry();
       LOG_INFO("Map telemetry marker: generation={}, area={}, overlays={}, base={}x{}",
                performanceGeneration, currentArea,
                currentWed ? currentWed->overlayCount : 0,
@@ -2018,6 +2198,98 @@ static void detour_draw_color_tone(int mode) {
     // Rendering must never depend on IEE diagnostics or uniform state.
   }
   g_drawColorToneHook.original()(mode);
+}
+
+std::uint64_t performance_nanoseconds(const LARGE_INTEGER& start,
+                                      const LARGE_INTEGER& end) noexcept {
+  static const std::int64_t frequency = [] {
+    LARGE_INTEGER value{};
+    return QueryPerformanceFrequency(&value) ? value.QuadPart : 0;
+  }();
+  if (frequency <= 0 || start.QuadPart <= 0 || end.QuadPart < start.QuadPart) return 0;
+  const auto ticks = static_cast<long double>(end.QuadPart - start.QuadPart);
+  return static_cast<std::uint64_t>(
+      ticks * 1'000'000'000.0L / static_cast<long double>(frequency));
+}
+
+class PvrDemandScopeGuard {
+ public:
+  PvrDemandScopeGuard() noexcept { core::begin_pvr_demand_scope(); }
+  ~PvrDemandScopeGuard() {
+    if (!finished_) (void)core::end_pvr_demand_scope();
+  }
+
+  [[nodiscard]] core::PvrDemandNestedTimings finish() noexcept {
+    if (finished_) return {};
+    finished_ = true;
+    return core::end_pvr_demand_scope();
+  }
+
+ private:
+  bool finished_{};
+};
+
+// Exact 2.7.3 CResPVR::Demand wrapper. It observes the engine's existing
+// synchronous materialization and leaves the call, cache and texture policy
+// unchanged. Nested GL hooks provide creation/upload time; the remaining time
+// is intentionally reported as a combined resource/read/decode residual.
+static void* detour_pvr_demand(void* thisPtr) {
+  const auto original = g_pvrDemandHook.original();
+  auto* ctx = g_ctx;
+  if (!ctx || !ctx->cfg.enablePerformanceLogging || !thisPtr) {
+    return original(thisPtr);
+  }
+
+  game::CResPVR before{};
+  const bool haveBefore = core::safe_read(thisPtr, before);
+
+  const bool ioCandidate = haveBefore &&
+                           (before.texture <= 0 || !before.baseclass_0.bLoaded);
+  IO_COUNTERS ioBefore{};
+  const bool haveIoBefore =
+      ioCandidate && GetProcessIoCounters(GetCurrentProcess(), &ioBefore);
+
+  LARGE_INTEGER started{};
+  const bool measured = QueryPerformanceCounter(&started);
+  PvrDemandScopeGuard scope;
+  void* result = original(thisPtr);
+  const auto nested = scope.finish();
+  LARGE_INTEGER ended{};
+  const auto durationNanoseconds = measured && QueryPerformanceCounter(&ended)
+                                       ? performance_nanoseconds(started, ended)
+                                       : 0;
+
+  IO_COUNTERS ioAfter{};
+  const bool ioMeasured =
+      haveIoBefore && GetProcessIoCounters(GetCurrentProcess(), &ioAfter);
+  game::CResPVR after{};
+  const bool haveAfter = core::safe_read(thisPtr, after);
+  const bool textureCreated =
+      haveBefore && haveAfter && after.texture > 0 &&
+      after.texture != before.texture;
+  const bool materialized = textureCreated ||
+                            nested.textureGenerationCalls != 0 ||
+                            nested.compressedUploadCalls != 0;
+  game::ResrefBuffer resref{};
+  if (materialized &&
+      (!haveAfter ||
+       !game::read_runtime_resref(after.baseclass_0.resref, resref))) {
+    resref[0] = '?';
+  }
+  const auto readOperations =
+      ioMeasured && ioAfter.ReadOperationCount >= ioBefore.ReadOperationCount
+          ? ioAfter.ReadOperationCount - ioBefore.ReadOperationCount
+          : 0;
+  const auto readBytes =
+      ioMeasured && ioAfter.ReadTransferCount >= ioBefore.ReadTransferCount
+          ? ioAfter.ReadTransferCount - ioBefore.ReadTransferCount
+          : 0;
+  const auto name = materialized ? game::resref_view(resref) : std::string_view{};
+  core::record_pvr_demand(
+      frame::frame_count(), name, materialized, ioMeasured, textureCreated,
+      haveAfter ? after.size.cx : 0, haveAfter ? after.size.cy : 0,
+      durationNanoseconds, readOperations, readBytes, nested);
+  return result;
 }
 
 // RenderTexture hook - thin dispatch into the tile upscale feature
@@ -2078,6 +2350,37 @@ bool install_all(AppContext& ctx) {
     g_renderTextureHook.create(reinterpret_cast<void*>(ctx.addrs.RenderTexture),
                                reinterpret_cast<void*>(&detour_render_texture));
     LOG_INFO("RenderTexture hook created");
+
+    if (ctx.cfg.enablePerformanceLogging && ctx.manifest) {
+      try {
+        const auto module = core::get_module_span(nullptr);
+        const auto& runtime = ctx.manifest->pvrDemand;
+        if (!module || !module->base) {
+          throw std::runtime_error("module unavailable");
+        }
+        if (!runtime.enabled()) {
+          throw std::runtime_error("manifest has no CResPVR::Demand evidence");
+        }
+        if (!matches_pattern_at_rva(*module, runtime.demand, runtime.signature)) {
+          throw std::runtime_error("CResPVR::Demand signature mismatch");
+        }
+        const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+        g_pvrDemandHook.create(
+            reinterpret_cast<void*>(moduleBase + runtime.demand),
+            reinterpret_cast<void*>(&detour_pvr_demand));
+        g_pvrDemandHook.enable();
+        LOG_INFO(
+            "PVR demand telemetry hook installed at CResPVR::Demand RVA 0x{:X}; "
+            "observation only, native demand/cache/upload policy unchanged",
+            runtime.demand);
+      } catch (const std::exception& error) {
+        (void)g_pvrDemandHook.remove();
+        LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
+      } catch (...) {
+        (void)g_pvrDemandHook.remove();
+        LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
+      }
+    }
 
     g_areaCompositionMode = AreaCompositionMode::None;
     g_nativeOcclusionProbeHookEnabled = false;
@@ -2371,6 +2674,7 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_pvrDemandHook.remove();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -2403,6 +2707,7 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_pvrDemandHook.remove();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -2442,6 +2747,7 @@ void uninstall_all() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
   (void)g_vidCellRenderTextureHook.remove();
+  (void)g_pvrDemandHook.remove();
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
 
@@ -2488,6 +2794,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();
   (void)g_vidCellRenderTextureHook.disable();
+  (void)g_pvrDemandHook.disable();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
   g_ctx = nullptr;

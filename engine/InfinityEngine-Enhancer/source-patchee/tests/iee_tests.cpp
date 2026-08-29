@@ -30,10 +30,12 @@
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_texture_telemetry.h"
+#include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
 #include "iee/core/process_resource_telemetry.h"
+#include "iee/core/pvr_demand_telemetry.h"
 #include "iee/features/tile_render.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/build_manifest.h"
@@ -336,6 +338,8 @@ void test_manifest_loading() {
             "LoadArea reference RVA should match");
   expect_eq(manifest.referenceRvas.renderTexture, std::uintptr_t{0x4247E0},
             "RenderTexture reference RVA should match");
+  expect_true(!manifest.pvrDemand.enabled(),
+              "The unvalidated 2.6.6 PVR demand target must remain disabled");
 
   const auto found = iee::game::find_manifest("BGEE 2.6.6.x");
   expect_true(found.has_value(), "Known build manifest should be discoverable by id");
@@ -356,6 +360,10 @@ void test_manifest_loading() {
               "2.7.3 LoadArea reference RVA should match the offline scan");
     expect_eq(found273->get().referenceRvas.renderTexture, std::uintptr_t{0x4257C0},
               "2.7.3 RenderTexture reference RVA should match the offline scan");
+    expect_eq(found273->get().pvrDemand.demand, std::uintptr_t{0x3F6DC0},
+              "2.7.3 PVR demand RVA should match the offline call graph");
+    expect_true(!found273->get().pvrDemand.signature.empty(),
+                "2.7.3 PVR demand diagnostics should fail closed on a signature");
   }
   expect_true(iee::game::find_manifest_for_version(2, 7, 3, 0).has_value(),
               "BGEE 2.7.3.0 should resolve by executable version");
@@ -474,6 +482,12 @@ void test_manifest_loading() {
               "BG2EE shares the BGEE 2.7.3 LoadArea RVA (unified engine image)");
     expect_eq(bg2ee->get().referenceRvas.renderTexture, std::uintptr_t{0x4257C0},
               "BG2EE shares the BGEE 2.7.3 RenderTexture RVA (unified engine image)");
+    expect_eq(bg2ee->get().pvrDemand.demand, std::uintptr_t{0x3F6DC0},
+              "BG2EE PVR demand RVA should match the unified 2.7.3 image");
+    auto incompletePvrDemand = bg2ee->get();
+    incompletePvrDemand.pvrDemand.signature = {};
+    expect_true(!incompletePvrDemand.validate(),
+                "A PVR demand RVA without exact signature evidence must fail validation");
     expect_true(
         iee::game::supports_product_name(*bg2ee, "Baldur's Gate II: Enhanced Edition"),
         "BG2EE product name should match its own manifest");
@@ -4172,12 +4186,21 @@ void test_map_texture_telemetry_is_bounded_and_resettable() {
             "A full texture-name set should report overflow and fail closed");
 
   iee::core::reset_gl_texture_telemetry();
+  iee::core::record_gl_texture_generation(2, 125);
   iee::core::record_gl_uncompressed_upload(4096);
   iee::core::record_gl_uncompressed_upload(0);
-  iee::core::record_gl_compressed_upload(0, 0x83F3, 2048, 2048, 4 * 1024 * 1024);
-  iee::core::record_gl_compressed_upload(1, 0x83F3, 1024, 1024, 1024 * 1024);
+  iee::core::record_gl_compressed_upload(0, 0x83F3, 2048, 2048,
+                                         4 * 1024 * 1024, 750);
+  iee::core::record_gl_compressed_upload(1, 0x83F3, 1024, 1024,
+                                         1024 * 1024, 250);
   iee::core::record_gl_texture_delete(3);
   const auto glStats = iee::core::gl_texture_telemetry_snapshot();
+  expect_eq(glStats.textureGenerationCalls, std::uint64_t{1},
+            "Texture-name generation calls should be counted");
+  expect_eq(glStats.generatedTextureNames, std::uint64_t{2},
+            "Generated GL texture names should use the exact count argument");
+  expect_eq(glStats.textureGenerationNanoseconds, std::uint64_t{125},
+            "Texture-name generation duration should accumulate");
   expect_eq(glStats.uncompressedUploadCalls, std::uint64_t{2},
             "Uncompressed GL calls should be counted");
   expect_eq(glStats.uncompressedKnownBytes, std::uint64_t{4096},
@@ -4188,6 +4211,10 @@ void test_map_texture_telemetry_is_bounded_and_resettable() {
             "Compressed GL calls should include base and mip levels");
   expect_eq(glStats.compressedUploadBytes, std::uint64_t{5 * 1024 * 1024},
             "Compressed byte counts should use the exact imageSize argument");
+  expect_eq(glStats.compressedUploadNanoseconds, std::uint64_t{1000},
+            "Compressed upload duration should accumulate across mip levels");
+  expect_eq(glStats.maximumCompressedUploadNanoseconds, std::uint64_t{750},
+            "The slowest compressed upload call should remain visible");
   expect_eq(glStats.largeS3tcBaseLevelCalls, std::uint64_t{1},
             "Only large base-level S3TC calls should enter the correlation bucket");
   expect_eq(glStats.deletedTextureNames, std::uint64_t{3},
@@ -4207,6 +4234,309 @@ void test_map_texture_telemetry_is_bounded_and_resettable() {
               "A measured same-area call lasting at least one millisecond should be retained");
   expect_true(iee::core::is_meaningful_load_area_call(false, false, -1, 0),
               "Missing timing should fail open instead of hiding a real load");
+}
+
+void test_pvr_demand_telemetry_splits_nested_gl_phases() {
+  iee::core::reset_pvr_demand_telemetry();
+  iee::core::begin_pvr_demand_scope();
+  iee::core::record_pvr_scope_texture_generation(1, 100);
+  iee::core::record_pvr_scope_compressed_upload(300);
+  const auto nested = iee::core::end_pvr_demand_scope();
+  expect_eq(nested.textureGenerationCalls, std::uint64_t{1},
+            "A PVR scope should retain nested texture generation");
+  expect_eq(nested.compressedUploadCalls, std::uint64_t{1},
+            "A PVR scope should retain nested compressed uploads");
+
+  iee::core::record_pvr_demand(77, "AR090001", true, true, true,
+                               4096, 4096, 1000, 2, 4 * 1024 * 1024,
+                               nested);
+  iee::core::record_pvr_demand(78, "AR090001", false, false, false,
+                               4096, 4096, 50, 0, 0, {});
+  const auto stats = iee::core::pvr_demand_telemetry_snapshot();
+  expect_eq(stats.calls, std::uint64_t{2},
+            "Warm and materializing PVR demand calls should both be counted");
+  expect_eq(stats.materializations, std::uint64_t{1},
+            "Only a demand with creation/upload evidence should materialize");
+  expect_eq(stats.ioMeasuredMaterializations, std::uint64_t{1},
+            "I/O availability should remain explicit per materialization");
+  expect_eq(stats.textureCreations, std::uint64_t{1},
+            "A changed engine texture name should count as a creation");
+  expect_eq(stats.readOperations, std::uint64_t{2},
+            "Process read operations should accumulate exactly");
+  expect_eq(stats.readBytes, std::uint64_t{4 * 1024 * 1024},
+            "Process read bytes should accumulate exactly");
+  expect_eq(stats.demandNanoseconds, std::uint64_t{1000},
+            "Only materializing PVR demand duration should accumulate");
+  expect_eq(stats.textureGenerationNanoseconds, std::uint64_t{100},
+            "Nested GL generation time should remain separate");
+  expect_eq(stats.compressedUploadNanoseconds, std::uint64_t{300},
+            "Nested GL upload time should remain separate");
+  expect_eq(stats.residualNanoseconds, std::uint64_t{600},
+            "Demand residual should subtract measured nested GL phases");
+
+  const auto detail = iee::core::pvr_demand_frame_detail_snapshot(77);
+  expect_true(detail.valid(),
+              "The slowest materialization detail should be retained by frame");
+  expect_true(std::string_view(detail.resref.data()) == "AR090001",
+              "The retained frame detail should preserve the PVR resref");
+  expect_eq(detail.width, std::int32_t{4096},
+            "The retained frame detail should preserve texture dimensions");
+  expect_eq(detail.residualNanoseconds, std::uint64_t{600},
+            "The retained frame detail should expose its residual phase");
+
+  iee::core::reset_pvr_demand_telemetry();
+  expect_eq(iee::core::pvr_demand_telemetry_snapshot().calls,
+            std::uint64_t{0}, "An area reset should clear PVR demand totals");
+  expect_true(!iee::core::pvr_demand_frame_detail_snapshot(77).valid(),
+              "An area reset should clear buffered per-frame PVR detail");
+}
+
+void test_map_view_burst_telemetry_is_buffered_and_resettable() {
+  using iee::core::MapViewBurstTelemetry;
+  using iee::core::MapViewCumulativeCounters;
+
+  MapViewBurstTelemetry telemetry;
+  MapViewCumulativeCounters counters{
+      .tileDraws = 10,
+      .tablePagesObserved = 1,
+      .sourceTextureIdsObserved = 1,
+      .compressedUploadCalls = 1,
+      .compressedUploadBytes = 100,
+      .compressedUploadNanoseconds = 1000,
+      .largeS3tcBaseLevelCalls = 1,
+      .largeS3tcBaseLevelBytes = 100,
+      .pvrDemandCalls = 1,
+      .pvrMaterializations = 1,
+      .pvrDemandNanoseconds = 1000,
+      .pvrResidualNanoseconds = 600,
+  };
+  telemetry.observe_view(1, 1000.0f, 600.0f);
+  expect_true(!telemetry.finish_frame(1, counters, 16.0).has_value(),
+              "The first observed view should establish a baseline only");
+
+  counters = {
+      .tileDraws = 20,
+      .tablePagesObserved = 2,
+      .sourceTextureIdsObserved = 2,
+      .compressedUploadCalls = 2,
+      .compressedUploadBytes = 200,
+      .compressedUploadNanoseconds = 2000,
+      .largeS3tcBaseLevelCalls = 1,
+      .largeS3tcBaseLevelBytes = 100,
+      .pvrDemandCalls = 2,
+      .pvrMaterializations = 2,
+      .pvrDemandNanoseconds = 2000,
+      .pvrResidualNanoseconds = 1200,
+  };
+  telemetry.observe_view(2, 1100.0f, 650.0f);
+  expect_true(!telemetry.finish_frame(2, counters, 17.0).has_value(),
+              "A sub-threshold view change should not start a capture");
+
+  counters = {
+      .tileDraws = 45,
+      .tablePagesObserved = 5,
+      .sourceTextureIdsObserved = 4,
+      .compressedUploadCalls = 6,
+      .compressedUploadBytes = 600,
+      .compressedUploadNanoseconds = 7000,
+      .largeS3tcBaseLevelCalls = 4,
+      .largeS3tcBaseLevelBytes = 400,
+      .deleteCalls = 1,
+      .deletedTextureNames = 2,
+      .pvrDemandCalls = 7,
+      .pvrMaterializations = 6,
+      .pvrIoMeasuredMaterializations = 4,
+      .pvrTextureCreations = 4,
+      .pvrReadOperations = 8,
+      .pvrReadBytes = 400,
+      .pvrDemandNanoseconds = 9000,
+      .pvrTextureGenerationCalls = 4,
+      .pvrTextureGenerationNanoseconds = 1000,
+      .pvrCompressedUploadCalls = 4,
+      .pvrCompressedUploadNanoseconds = 3000,
+      .pvrResidualNanoseconds = 5000,
+  };
+  telemetry.observe_view(3, 1500.0f, 900.0f);
+  telemetry.record_render_texture_cpu(3, 0.25);
+  telemetry.record_render_texture_cpu(3, 0.75);
+  expect_true(!telemetry.finish_frame(3, counters, 42.5).has_value(),
+              "The trigger frame should be buffered instead of logged immediately");
+
+  std::optional<iee::core::MapViewBurstCapture> capture;
+  for (std::uint64_t frame = 4; frame <= 10; ++frame) {
+    ++counters.tileDraws;
+    telemetry.observe_view(frame, 1500.0f, 900.0f);
+    capture = telemetry.finish_frame(frame, counters, 16.0);
+    if (frame < 10) {
+      expect_true(!capture.has_value(),
+                  "A partial wide-view capture should remain buffered");
+    }
+  }
+
+  expect_true(capture.has_value(),
+              "Eight presentation-boundary samples should complete one capture");
+  if (capture) {
+    expect_eq(capture->eventId, std::uint64_t{1},
+              "The first completed capture should use event id one");
+    expect_eq(capture->previousViewWorldWidth, 1100.0f,
+              "The capture should retain the pre-expansion world-view width");
+    expect_eq(capture->previousViewWorldHeight, 650.0f,
+              "The capture should retain the pre-expansion world-view height");
+    expect_eq(capture->triggerViewWorldWidth, 1500.0f,
+              "The capture should retain the trigger world-view width");
+    expect_eq(capture->triggerViewWorldHeight, 900.0f,
+              "The capture should retain the trigger world-view height");
+    expect_eq(capture->frameCount, iee::core::kMapViewBurstCaptureFrameCount,
+              "A completed capture should have the fixed documented size");
+
+    const auto& trigger = capture->frames.front();
+    expect_eq(trigger.frame, std::uint64_t{3},
+              "The first sample should be the expansion trigger frame");
+    expect_true(trigger.viewObserved,
+                "The trigger sample should identify a fresh world-view observation");
+    expect_eq(trigger.presentationIntervalMilliseconds, 42.5,
+              "The trigger sample should retain its presentation interval");
+    expect_eq(trigger.renderTextureCpuMilliseconds, 1.0,
+              "RenderTexture CPU time should accumulate within the trigger frame");
+    expect_eq(trigger.delta.tileDraws, std::uint64_t{25},
+              "Tile-draw deltas should be computed at the frame boundary");
+    expect_eq(trigger.delta.tablePagesObserved, std::uint64_t{3},
+              "New table-page observations should be attributed to the trigger frame");
+    expect_eq(trigger.delta.sourceTextureIdsObserved, std::uint64_t{2},
+              "New source texture names should be attributed to the trigger frame");
+    expect_eq(trigger.delta.compressedUploadCalls, std::uint64_t{4},
+              "Compressed upload calls should be attributed to the trigger frame");
+    expect_eq(trigger.delta.compressedUploadBytes, std::uint64_t{400},
+              "Compressed upload bytes should be attributed to the trigger frame");
+    expect_eq(trigger.delta.compressedUploadNanoseconds, std::uint64_t{5000},
+              "GL upload duration should be attributed to the trigger frame");
+    expect_eq(trigger.delta.largeS3tcBaseLevelCalls, std::uint64_t{3},
+              "Large S3TC calls should be attributed to the trigger frame");
+    expect_eq(trigger.delta.deletedTextureNames, std::uint64_t{2},
+              "Texture deletions should be attributed to the trigger frame");
+    expect_eq(trigger.delta.pvrMaterializations, std::uint64_t{4},
+              "PVR materializations should be attributed to the trigger frame");
+    expect_eq(trigger.delta.pvrReadBytes, std::uint64_t{400},
+              "PVR process-read bytes should be attributed to the trigger frame");
+    expect_eq(trigger.delta.pvrDemandNanoseconds, std::uint64_t{7000},
+              "PVR total demand time should be attributed to the trigger frame");
+    expect_eq(trigger.delta.pvrTextureGenerationNanoseconds, std::uint64_t{1000},
+              "PVR texture generation should remain a separate phase");
+    expect_eq(trigger.delta.pvrCompressedUploadNanoseconds, std::uint64_t{3000},
+              "PVR compressed upload should remain a separate phase");
+    expect_eq(trigger.delta.pvrResidualNanoseconds, std::uint64_t{3800},
+              "PVR resource/read/decode residual should be attributed by frame");
+    expect_eq(capture->frames.back().frame, std::uint64_t{10},
+              "The final sample should be seven frames after the trigger");
+  }
+
+  for (std::uint64_t frame = 11; frame <= 18; ++frame) {
+    telemetry.observe_view(frame, 1500.0f, 900.0f);
+    expect_true(!telemetry.finish_frame(frame, counters, 16.0).has_value(),
+                "An expanded map view should not retrigger from its discarded baseline");
+  }
+
+  MapViewBurstTelemetry continuousTelemetry;
+  MapViewCumulativeCounters continuousCounters{};
+  continuousTelemetry.observe_view(100, 1000.0f, 600.0f);
+  expect_true(
+      !continuousTelemetry.finish_frame(100, continuousCounters, 16.0)
+           .has_value(),
+      "A continuous-expansion fixture should establish its initial baseline");
+
+  std::size_t continuousCaptureCount = 0;
+  std::optional<iee::core::MapViewBurstCapture> continuousCapture;
+  for (std::uint64_t frame = 101; frame <= 132; ++frame) {
+    const auto step = static_cast<float>(frame - 100);
+    continuousTelemetry.observe_view(frame, 1000.0f + step * 100.0f,
+                                     600.0f + step * 60.0f);
+    auto completed =
+        continuousTelemetry.finish_frame(frame, continuousCounters, 16.0);
+    if (completed) {
+      ++continuousCaptureCount;
+      continuousCapture = completed;
+    }
+  }
+  expect_eq(continuousCaptureCount, std::size_t{1},
+            "One continuous dezoom must produce exactly one capture even when it outlasts the output window");
+  if (continuousCapture) {
+    expect_eq(continuousCapture->eventId, std::uint64_t{1},
+              "The continuous dezoom should retain one diagnostic event id");
+  }
+
+  continuousTelemetry.observe_view(133, 1000.0f, 600.0f);
+  expect_true(
+      !continuousTelemetry.finish_frame(133, continuousCounters, 16.0)
+           .has_value(),
+      "Contracting to the pre-dezoom view should rearm without capturing");
+  continuousTelemetry.observe_view(134, 1500.0f, 900.0f);
+  expect_true(
+      !continuousTelemetry.finish_frame(134, continuousCounters, 16.0)
+           .has_value(),
+      "A second opening should trigger a newly buffered capture");
+  for (std::uint64_t frame = 135; frame <= 141; ++frame) {
+    continuousTelemetry.observe_view(frame, 1500.0f, 900.0f);
+    continuousCapture =
+        continuousTelemetry.finish_frame(frame, continuousCounters, 16.0);
+  }
+  expect_true(continuousCapture.has_value(),
+              "Closing and reopening the map should produce a second capture");
+  if (continuousCapture) {
+    expect_eq(continuousCapture->eventId, std::uint64_t{2},
+              "The rearmed opening should advance the diagnostic event id once");
+  }
+
+  telemetry.reset();
+  counters.tileDraws = 1000;
+  telemetry.observe_view(20, 800.0f, 500.0f);
+  expect_true(!telemetry.finish_frame(20, counters, 16.0).has_value(),
+              "Reset telemetry should establish a fresh counter baseline");
+
+  telemetry.observe_view(21, 860.0f, 540.0f);
+  expect_true(!telemetry.finish_frame(21, counters, 16.0).has_value(),
+              "The first gradual expansion step should remain below the threshold");
+  telemetry.observe_view(22, 920.0f, 575.0f);
+  expect_true(!telemetry.finish_frame(22, counters, 16.0).has_value(),
+              "The second gradual expansion step should remain below the threshold");
+
+  counters.tileDraws = 3;
+  telemetry.observe_view(23, 1000.0f, 625.0f);
+  expect_true(!telemetry.finish_frame(23, counters, 16.0).has_value(),
+              "A cumulative trigger should still wait for its full capture");
+  for (std::uint64_t frame = 24; frame <= 30; ++frame) {
+    telemetry.observe_view(frame, 1000.0f, 625.0f);
+    capture = telemetry.finish_frame(frame, counters, 16.0);
+  }
+  expect_true(capture.has_value(),
+              "A multi-frame cumulative expansion should produce a fresh capture");
+  if (capture) {
+    expect_eq(capture->eventId, std::uint64_t{1},
+              "Reset should restart the local diagnostic event sequence");
+    expect_eq(capture->previousViewWorldWidth, 800.0f,
+              "A gradual capture should retain the qualifying window baseline");
+    expect_eq(capture->previousViewWorldHeight, 500.0f,
+              "A gradual capture should retain both baseline dimensions");
+    expect_eq(capture->triggerViewWorldWidth, 1000.0f,
+              "A gradual capture should retain the cumulative trigger width");
+    expect_eq(capture->frames.front().frame, std::uint64_t{23},
+              "The cumulative threshold crossing should be the trigger sample");
+    expect_eq(capture->frames.front().delta.tileDraws, std::uint64_t{3},
+              "A cumulative-counter reset should not underflow frame deltas");
+  }
+
+  telemetry.reset();
+  counters = {};
+  telemetry.observe_view(40, 800.0f, 500.0f);
+  expect_true(!telemetry.finish_frame(40, counters, 16.0).has_value(),
+              "A stale-window fixture should establish its initial baseline");
+  for (std::uint64_t frame = 41; frame <= 57; ++frame) {
+    telemetry.observe_view(frame, 960.0f, 600.0f);
+    expect_true(!telemetry.finish_frame(frame, counters, 16.0).has_value(),
+                "A stable sub-threshold view should not start a capture");
+  }
+  telemetry.observe_view(58, 1000.0f, 625.0f);
+  expect_true(!telemetry.finish_frame(58, counters, 16.0).has_value(),
+              "A baseline older than the fixed window must not trigger a capture");
 }
 
 void test_scale_selection_precedence() {
@@ -4486,6 +4816,8 @@ int main() {
   test_tis_table_entry_bounds();
   test_tileset_runtime_cache_is_bounded_and_resettable();
   test_map_texture_telemetry_is_bounded_and_resettable();
+  test_pvr_demand_telemetry_splits_nested_gl_phases();
+  test_map_view_burst_telemetry_is_buffered_and_resettable();
   test_scale_selection_precedence();
   test_tile_table_detection_ignores_garbage_steps();
   test_tis_tile_identity_matching();
