@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+#include <cstdint>
 #include <filesystem>
 
 namespace iee::core {
@@ -23,6 +24,15 @@ struct EngineConfig {
   // emit an INFO record for every observed page. Keep them opt-in so normal
   // rendering and performance telemetry do not pay that cost.
   bool enableTilePageDiagnostics = false;
+  // Experimental map-only PVRZ prewarm. The engine's normal synchronous
+  // Demand path remains authoritative for pages that are not ready yet.
+  bool enableMapPagePrewarm = false;
+  std::uint32_t mapPagePrewarmPagesPerFrame = 1;
+  float mapPagePrewarmBudgetMs = 8.0f;
+  // Leave 32 of the engine's evidenced 128 PVR slots outside the plan. This
+  // is an engine-cache safety reserve, not a GPU-specific tuning value.
+  std::uint32_t mapPagePrewarmMaxPages = 96;
+  std::uint32_t mapPagePrewarmDelayFrames = 30;
 
   [[nodiscard]] constexpr bool wtpool_page_check_enabled() const noexcept {
     return enableWtpoolTileTrace || bypassWtpoolTileRenderHook;

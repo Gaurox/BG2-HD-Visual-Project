@@ -165,6 +165,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/features/tile_render.cpp
         src/iee/frame_hook.cpp
         src/iee/hooks.cpp
+        src/iee/map_page_prewarm.cpp
         src/iee/native_occlusion_bridge.cpp
         src/iee/post_process.cpp
         src/iee/shader_diagnostics.cpp

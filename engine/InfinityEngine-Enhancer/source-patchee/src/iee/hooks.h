@@ -20,5 +20,9 @@ void retry_shader_probe_install() noexcept;
 void on_frame_boundary(unsigned long long frame,
                        double presentationIntervalMilliseconds) noexcept;
 
+// Render-thread callback after presentation and post-process restoration.
+// Experimental page prewarm runs here so no mid-draw binding is disturbed.
+void on_post_swap() noexcept;
+
 bool is_active();
 }  // namespace iee::hooks

@@ -4,6 +4,7 @@
 #include <cctype>
 #include <cmath>
 #include <fstream>
+#include <limits>
 #include <optional>
 #include <stdexcept>
 
@@ -53,11 +54,34 @@ static std::optional<float> parse_float(const std::string& s) {
   }
 }
 
+static std::optional<std::uint32_t> parse_u32(const std::string& s) {
+  try {
+    std::size_t parsedBytes = 0;
+    const auto value = std::stoull(s, &parsedBytes, 10);
+    if (parsedBytes != s.size() || value > (std::numeric_limits<std::uint32_t>::max)()) {
+      return std::nullopt;
+    }
+    return static_cast<std::uint32_t>(value);
+  } catch (const std::invalid_argument&) {
+    return std::nullopt;
+  } catch (const std::out_of_range&) {
+    return std::nullopt;
+  }
+}
+
 static void normalize(EngineConfig& cfg) noexcept {
   if (!std::isfinite(cfg.maxAnisotropy)) cfg.maxAnisotropy = 8.0f;
   if (!std::isfinite(cfg.lodBias)) cfg.lodBias = -0.25f;
+  if (!std::isfinite(cfg.mapPagePrewarmBudgetMs)) cfg.mapPagePrewarmBudgetMs = 8.0f;
   cfg.maxAnisotropy = std::clamp(cfg.maxAnisotropy, 1.0f, 64.0f);
   cfg.lodBias = std::clamp(cfg.lodBias, -4.0f, 4.0f);
+  cfg.mapPagePrewarmPagesPerFrame =
+      std::clamp(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1}, std::uint32_t{8});
+  cfg.mapPagePrewarmBudgetMs = std::clamp(cfg.mapPagePrewarmBudgetMs, 0.25f, 50.0f);
+  cfg.mapPagePrewarmMaxPages =
+      std::clamp(cfg.mapPagePrewarmMaxPages, std::uint32_t{1}, std::uint32_t{96});
+  cfg.mapPagePrewarmDelayFrames =
+      std::clamp(cfg.mapPagePrewarmDelayFrames, std::uint32_t{0}, std::uint32_t{600});
 }
 
 static void apply_kv(EngineConfig& cfg, const std::string& section, const std::string& key,
@@ -71,6 +95,13 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
   };
   const auto assign_float = [&](float& target) {
     if (const auto parsed = parse_float(val)) {
+      target = *parsed;
+    } else if (diagnostics) {
+      ++diagnostics->invalidValues;
+    }
+  };
+  const auto assign_u32 = [&](std::uint32_t& target) {
+    if (const auto parsed = parse_u32(val)) {
       target = *parsed;
     } else if (diagnostics) {
       ++diagnostics->invalidValues;
@@ -104,6 +135,16 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.bypassWtpoolTileRenderHook);
     else if (iequals(key, "EnableTilePageDiagnostics"))
       assign_bool(cfg.enableTilePageDiagnostics);
+    else if (iequals(key, "EnableMapPagePrewarm"))
+      assign_bool(cfg.enableMapPagePrewarm);
+    else if (iequals(key, "MapPagePrewarmPagesPerFrame"))
+      assign_u32(cfg.mapPagePrewarmPagesPerFrame);
+    else if (iequals(key, "MapPagePrewarmBudgetMs"))
+      assign_float(cfg.mapPagePrewarmBudgetMs);
+    else if (iequals(key, "MapPagePrewarmMaxPages"))
+      assign_u32(cfg.mapPagePrewarmMaxPages);
+    else if (iequals(key, "MapPagePrewarmDelayFrames"))
+      assign_u32(cfg.mapPagePrewarmDelayFrames);
     else if (iequals(key, "EnableFullFrameFXAA"))
       assign_bool(cfg.enableFullFrameFxaa);
     else if (iequals(key, "EnableFullFrameSSAA2x"))
@@ -228,6 +269,11 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableWTPOOLTileTrace", cfg.enableWtpoolTileTrace);
   write_bool(f, "BypassWTPOOLTileRenderHook", cfg.bypassWtpoolTileRenderHook);
   write_bool(f, "EnableTilePageDiagnostics", cfg.enableTilePageDiagnostics);
+  write_bool(f, "EnableMapPagePrewarm", cfg.enableMapPagePrewarm);
+  f << "MapPagePrewarmPagesPerFrame = " << cfg.mapPagePrewarmPagesPerFrame << "\n";
+  f << "MapPagePrewarmBudgetMs = " << cfg.mapPagePrewarmBudgetMs << "\n";
+  f << "MapPagePrewarmMaxPages = " << cfg.mapPagePrewarmMaxPages << "\n";
+  f << "MapPagePrewarmDelayFrames = " << cfg.mapPagePrewarmDelayFrames << "\n";
   write_bool(f, "EnableFullFrameFXAA", cfg.enableFullFrameFxaa);
   write_bool(f, "EnableFullFrameSSAA2x", cfg.enableFullFrameSsaa2x);
 

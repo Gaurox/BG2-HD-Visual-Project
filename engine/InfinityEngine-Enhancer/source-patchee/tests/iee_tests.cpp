@@ -720,6 +720,11 @@ void test_config_parsing() {
     out << "MaxAnisotropy = 4.0\n";
     out << "LODBias = -0.5\n\n";
     out << "EnableTilePageDiagnostics = true\n\n";
+    out << "EnableMapPagePrewarm = true\n";
+    out << "MapPagePrewarmPagesPerFrame = 2\n";
+    out << "MapPagePrewarmBudgetMs = 6.5\n";
+    out << "MapPagePrewarmMaxPages = 80\n";
+    out << "MapPagePrewarmDelayFrames = 45\n";
   }
 
   iee::core::EngineConfig cfg{};
@@ -730,6 +735,14 @@ void test_config_parsing() {
   expect_eq(cfg.maxAnisotropy, 4.0f, "Floating-point values should parse");
   expect_eq(cfg.lodBias, -0.5f, "Negative float values should parse");
   expect_true(cfg.enableTilePageDiagnostics, "tile-page diagnostics flag should parse");
+  expect_true(cfg.enableMapPagePrewarm, "map-page prewarm flag should parse");
+  expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{2},
+            "map-page per-frame limit should parse");
+  expect_eq(cfg.mapPagePrewarmBudgetMs, 6.5f, "map-page time budget should parse");
+  expect_eq(cfg.mapPagePrewarmMaxPages, std::uint32_t{80},
+            "map-page plan cap should parse");
+  expect_eq(cfg.mapPagePrewarmDelayFrames, std::uint32_t{45},
+            "map-page delay should parse");
 
   std::error_code ec;
   std::filesystem::remove(tempPath, ec);
@@ -743,6 +756,10 @@ void test_config_numeric_bounds() {
     out << "MaxAnisotropy = 1000\n";
     out << "LODBias = nan\n";
     out << "LODBias = 0.5junk\n";
+    out << "MapPagePrewarmPagesPerFrame = 0\n";
+    out << "MapPagePrewarmBudgetMs = 1000\n";
+    out << "MapPagePrewarmMaxPages = 999\n";
+    out << "MapPagePrewarmDelayFrames = 9999\n";
   }
 
   iee::core::EngineConfig cfg{};
@@ -751,6 +768,14 @@ void test_config_numeric_bounds() {
               "ConfigManager::load should accept and normalize numeric input");
   expect_eq(cfg.maxAnisotropy, 64.0f, "Anisotropy should be clamped to a safe bound");
   expect_eq(cfg.lodBias, -0.25f, "Non-finite LOD bias should use the default");
+  expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1},
+            "Map prewarm page count should keep at least one page per step");
+  expect_eq(cfg.mapPagePrewarmBudgetMs, 50.0f,
+            "Map prewarm time budget should be clamped");
+  expect_eq(cfg.mapPagePrewarmMaxPages, std::uint32_t{96},
+            "Map prewarm plan should preserve the native-cache reserve");
+  expect_eq(cfg.mapPagePrewarmDelayFrames, std::uint32_t{600},
+            "Map prewarm delay should be bounded");
   expect_eq(diagnostics.invalidValues, std::size_t{2},
             "Invalid numeric values should be reported to the bootstrap logger");
 
@@ -855,6 +880,13 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableMenuX2Test, "complete menu x2 test defaults off");
   expect_true(!cfg.enablePerformanceLogging, "performance logs default off");
   expect_true(!cfg.enableTilePageDiagnostics, "tile-page diagnostics default off");
+  expect_true(!cfg.enableMapPagePrewarm, "map-page prewarm defaults off");
+  expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1},
+            "map-page prewarm defaults to one page per step");
+  expect_eq(cfg.mapPagePrewarmBudgetMs, 8.0f,
+            "map-page prewarm uses a hardware-neutral time budget");
+  expect_eq(cfg.mapPagePrewarmMaxPages, std::uint32_t{96},
+            "map-page prewarm keeps 32 native PVR slots in reserve");
   expect_true(!cfg.wtpool_page_check_enabled(), "WTPOOL page checks default off");
   auto wtpoolTraceOnly = cfg;
   wtpoolTraceOnly.enableWtpoolTileTrace = true;
@@ -3392,6 +3424,11 @@ void test_config_shader_override_roundtrip() {
     orig.enableMenuX2Test = true;
     orig.enablePerformanceLogging = true;
     orig.enableTilePageDiagnostics = true;
+    orig.enableMapPagePrewarm = true;
+    orig.mapPagePrewarmPagesPerFrame = 3;
+    orig.mapPagePrewarmBudgetMs = 5.5f;
+    orig.mapPagePrewarmMaxPages = 72;
+    orig.mapPagePrewarmDelayFrames = 12;
 
     expect_true(iee::core::ConfigManager::save(tempPath, orig),
                 "ConfigManager::save should succeed");
@@ -3426,6 +3463,16 @@ void test_config_shader_override_roundtrip() {
               "enablePerformanceLogging should round-trip as true");
   expect_true(loaded.enableTilePageDiagnostics,
               "enableTilePageDiagnostics should round-trip as true");
+  expect_true(loaded.enableMapPagePrewarm,
+              "enableMapPagePrewarm should round-trip as true");
+  expect_eq(loaded.mapPagePrewarmPagesPerFrame, std::uint32_t{3},
+            "map-page per-frame limit should round-trip");
+  expect_eq(loaded.mapPagePrewarmBudgetMs, 5.5f,
+            "map-page time budget should round-trip");
+  expect_eq(loaded.mapPagePrewarmMaxPages, std::uint32_t{72},
+            "map-page plan cap should round-trip");
+  expect_eq(loaded.mapPagePrewarmDelayFrames, std::uint32_t{12},
+            "map-page delay should round-trip");
 
   std::error_code ec;
   std::filesystem::remove(tempPath, ec);

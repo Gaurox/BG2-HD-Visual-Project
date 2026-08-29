@@ -41,6 +41,7 @@
 #include "iee/game/renderer.h"
 #include "iee/game/resref_runtime.h"
 #include "iee/game/runtime_types_x64.h"
+#include "iee/map_page_prewarm.h"
 #include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
 
@@ -2095,6 +2096,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
     features::request_tile_render_state_reset();
     game::request_texture_configuration_cache_reset();
     g_mapViewBurstTelemetryResetRequested.store(true, std::memory_order_release);
+    map_page_prewarm::request_area_reset();
   } catch (const std::exception& e) {
     LOG_ERROR("LoadArea pre-dispatch failed; continuing with the engine path: {}", e.what());
   } catch (...) {
@@ -2351,7 +2353,8 @@ bool install_all(AppContext& ctx) {
                                reinterpret_cast<void*>(&detour_render_texture));
     LOG_INFO("RenderTexture hook created");
 
-    if (ctx.cfg.enablePerformanceLogging && ctx.manifest) {
+    map_page_prewarm::configure(nullptr);
+    if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm) && ctx.manifest) {
       try {
         const auto module = core::get_module_span(nullptr);
         const auto& runtime = ctx.manifest->pvrDemand;
@@ -2365,19 +2368,37 @@ bool install_all(AppContext& ctx) {
           throw std::runtime_error("CResPVR::Demand signature mismatch");
         }
         const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
-        g_pvrDemandHook.create(
-            reinterpret_cast<void*>(moduleBase + runtime.demand),
-            reinterpret_cast<void*>(&detour_pvr_demand));
-        g_pvrDemandHook.enable();
-        LOG_INFO(
-            "PVR demand telemetry hook installed at CResPVR::Demand RVA 0x{:X}; "
-            "observation only, native demand/cache/upload policy unchanged",
-            runtime.demand);
+        const auto demandEntry = reinterpret_cast<CResPvrDemandFn>(moduleBase + runtime.demand);
+        map_page_prewarm::configure(demandEntry);
+        if (ctx.cfg.enablePerformanceLogging) {
+          g_pvrDemandHook.create(
+              reinterpret_cast<void*>(demandEntry),
+              reinterpret_cast<void*>(&detour_pvr_demand));
+          g_pvrDemandHook.enable();
+          LOG_INFO(
+              "PVR demand telemetry hook installed at CResPVR::Demand RVA 0x{:X}; "
+              "native calls remain authoritative",
+              runtime.demand);
+        }
+        if (ctx.cfg.enableMapPagePrewarm) {
+          if (ctx.cfg.enablePerformanceLogging) {
+            LOG_INFO(
+                "Map page prewarm prepared at manifested CResPVR::Demand RVA 0x{:X}; "
+                "opt-in post-swap scheduler with native synchronous fallback",
+                runtime.demand);
+          } else {
+            LOG_WARN(
+                "Map page prewarm is enabled but inactive because PerformanceLogs=false; "
+                "the first prototype requires deletion telemetry for its eviction guard");
+          }
+        }
       } catch (const std::exception& error) {
         (void)g_pvrDemandHook.remove();
+        map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
       } catch (...) {
         (void)g_pvrDemandHook.remove();
+        map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
       }
     }
@@ -2675,6 +2696,7 @@ bool install_all(AppContext& ctx) {
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrDemandHook.remove();
+    map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -2708,6 +2730,7 @@ bool install_all(AppContext& ctx) {
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrDemandHook.remove();
+    map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -2748,6 +2771,7 @@ void uninstall_all() noexcept {
   (void)g_vidPaletteRealizeHook.remove();
   (void)g_vidCellRenderTextureHook.remove();
   (void)g_pvrDemandHook.remove();
+  map_page_prewarm::shutdown();
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
 
@@ -2795,6 +2819,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_vidPaletteRealizeHook.disable();
   (void)g_vidCellRenderTextureHook.disable();
   (void)g_pvrDemandHook.disable();
+  map_page_prewarm::shutdown();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
   g_ctx = nullptr;
@@ -2811,6 +2836,14 @@ void retry_shader_probe_install() noexcept {
     if (g_ctx) install_shader_probes_once();
   } catch (...) {
     // A frame boundary must never depend on optional shader-probe setup.
+  }
+}
+
+void on_post_swap() noexcept {
+  try {
+    if (g_ctx) map_page_prewarm::on_post_swap(*g_ctx);
+  } catch (...) {
+    // Optional scheduling must never escape through the presentation ABI.
   }
 }
 }  // namespace iee::hooks

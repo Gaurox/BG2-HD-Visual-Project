@@ -55,6 +55,14 @@ Son retest ingame attribue 95 à 98 % des frames de pic à cette demande synchro
 création et d’upload restent minoritaires ; l’essentiel demeure dans le résidu
 ressource/lecture/préparation moteur. Les secondes ouvertures ne matérialisent plus aucune PVR.
 
+Le mini-lot carte 3 prototype maintenant le préchauffage progressif opt-in des pages PVRZ de la
+carte courante. Il est compilé, couvert par les tests natifs et mesuré ingame sur AR0700N, AR0516,
+AR0602 et AR0900 : aucune éviction du cache natif n’est observée, et le pic de première ouverture
+d’AR0700N tombe de 404,7–839,3 ms à 7,6 ms. Cette session n’est pas un A/B contrôlé : les mesures
+de référence proviennent de sessions antérieures dont le cache fichier n’était pas maîtrisé, et
+AR0900 n’a aucune ouverture de carte après préchauffage. Aucun chiffre de gain ne doit être publié
+avant la campagne décrite en fin de document.
+
 Le runtime expérimental courant est ce mini-lot 2, installé localement avec son état distinct sous
 `bg2hd/state/map-pvr-demand-phase-telemetry-20260829T064935Z/`. Sa restauration revient au
 raffinement 1c, puis la chaîne des états précédents permet de revenir jusqu’au build P0 de rotation
@@ -78,7 +86,7 @@ des logs. Il n’est pas éligible à la release et aucun manifeste de release n
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Attribuer par frame le burst d’ouverture de carte | Validé ingame | Deux ouvertures successives sur chacune des quatre cartes produisent exactement les événements 1 et 2. Aucun redéclenchement n’apparaît pendant le maintien de la carte ; la contraction réarme correctement le détecteur. |
 | P1 | Attribuer les phases de `CResPVR::Demand` | Validé ingame | La demande PVR porte 95 à 98 % des frames de pic ; `glGenTextures` et l’upload compressé sont minoritaires face au résidu ressource/lecture/préparation moteur. Aucun changement de politique. |
-| P1 | Préchargement progressif des pages de carte | Prêt pour prototype prudent | Prochain mini-lot : opt-in, limites pages/temps par frame configurables, annulation sûre et `Demand` natif immédiat en fallback. Vérifier d’abord qu’il ne chasse pas la vue monde du cache moteur de 128 pages. |
+| P1 | Préchargement progressif des pages de carte | Prototype mesuré ingame, incomplet | Mini-lot carte 3 implémenté et opt-in. Première session : zéro éviction sur les quatre zones ; le pic d’ouverture d’AR0700N passe de 404,7–839,3 ms à 7,6 ms. AR0900 n’a pas d’ouverture après préchauffage et les mesures « avant » ne sont pas toutes à froid : un A/B contrôlé en deux sessions reste requis avant toute conclusion. |
 | P2 | Double `Demand` et invalidations GL | Différé | Durée de vie moteur sensible ; nécessite les compteurs P1. |
 | P2/P3 | Repack 4096, profil faible mémoire ou x2 sélectif | Non engagé | Implique contenu, QA et manifests distincts ; hors optimisation runtime rapide. |
 
@@ -848,19 +856,103 @@ résidence moteur, pas le simple affichage répété d’une carte déjà chaude
 La session ne contient aucune erreur ni alerte critique. Son seul avertissement est la récupération
 attendue du prologue `RenderTexture` déjà détourné par EEex.
 
+## Mini-lot carte 3 — préchauffage progressif des pages de carte
+
+Ce lot répond directement à l’attribution du mini-lot 2 : si `CResPVR::Demand` porte 95 à 98 % des
+frames de pic, le levier n’est pas de rendre la demande plus rapide mais de ne plus la subir en
+bloc pendant la frame d’ouverture.
+
+Le module `src/iee/map_page_prewarm.cpp` planifie les pages PVRZ de la carte courante et les demande
+lui-même, quelques-unes par frame, **après** la présentation. Il ne change aucun format, aucun
+contenu, ni la politique de cache du moteur.
+
+Contrat retenu :
+
+- opt-in strict : `[Rendering] EnableMapPagePrewarm=false` par défaut ; le lot exige en plus
+  `PerformanceLogs=true`, car sa garde d’éviction s’appuie sur la télémétrie de suppression GL.
+  Sans elle le module refuse de s’armer et le journalise ;
+- exécution sur le thread de rendu après le swap, hors de tout dessin en cours ;
+- plan borné à 96 pages sur les 128 entrées PVR natives relevées, soit **32 entrées laissées en
+  réserve** au cache moteur. C’est la réponse à la réserve inscrite dans la version précédente de
+  ce document : ne pas chasser la vue monde du cache natif ;
+- `MapPagePrewarmDelayFrames=30`, `MapPagePrewarmPagesPerFrame=1`, `MapPagePrewarmBudgetMs=8.0`,
+  tous configurables et bornés à la lecture de l’INI ;
+- identité revalidée avant **et** après chaque `Demand` : wrapper de tuile, tileset, index de tuile
+  et resref de page. Toute divergence annule le plan ;
+- annulation sur changement de zone, de contexte GL, ou dès la **première éviction observée** ;
+- toute page non planifiée ou non matérialisée suit le `Demand` natif synchrone, inchangé.
+
+Validation automatisée : la DLL et la cible de test compilent ; `ctest -C Debug` passe 2/2. Les
+réglages sont couverts par quatre blocs de tests natifs — analyse INI, bornes, valeurs par défaut
+et aller-retour de sauvegarde.
+
+### Première session ingame
+
+Journal du 2026-08-29, DLL installée à 09:42:20, `EnableMapPagePrewarm=true`.
+
+| Zone | Pages découvertes | Planifiées | Écartées | Demandes | Matérialisations | Évictions | `totalDemandMs` | `maximumDemandMs` |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| AR0700N | 100 | 96 | 4 | 81 | 81 | **0** | 790,95 | 15,20 |
+| AR0516 | 44 | 44 | 0 | 32 | 32 | **0** | 181,65 | 11,01 |
+| AR0602 | 45 | 45 | 0 | 34 | 34 | **0** | 200,40 | 7,18 |
+| AR0900 | 26 | 26 | 0 | 19 | 19 | **0** | 745,80 | 43,77 |
+
+Aucun candidat invalide, aucune éviction, aucun plan annulé. La garde principale du lot n’a jamais
+eu à se déclencher sur ces quatre zones.
+
+Pic de présentation à la première ouverture de carte, événement 1 :
+
+| Zone | Avant, pics observés | Pages chargées pendant le pic | Après | Pages |
+|---|---|---:|---:|---:|
+| AR0700N | 404,7 / 431,9 / 839,3 ms | 81 / 82 / 84 | **7,6 ms** | 17 |
+| AR0516 | 19,1 / 15,1 / 82,2 ms | 9 / 9 / 30 | **6,3 ms** | 6 |
+| AR0602 | 6,9 / 8,0 / 102,3 ms | 6 / 7 / 31 | **6,7 ms** | 7 |
+| AR0900 | 374,6 / 369,9 / 303,7 / 414,8 ms | 19 / 18 / 18 / 18 | — | — |
+
+### Limites de cette session
+
+Ces chiffres décrivent une première session, pas un résultat validé :
+
+- **ce n’est pas un A/B contrôlé.** Les mesures « avant » viennent de sessions antérieures dont le
+  cache fichier Windows n’était pas maîtrisé. La dispersion le montre : AR0516 va de 15,1 à 82,2 ms
+  et AR0602 de 6,9 à 102,3 ms selon que 9 ou 30 pages restaient à matérialiser. Seul AR0700N offre
+  une comparaison froide non ambiguë, avec 81 à 84 pages avant contre 17 après ;
+- **AR0900 est incomplète.** Le préchauffage y a bien tourné, mais aucune ouverture de carte n’a été
+  capturée ensuite. C’est justement la zone la plus coûteuse par page ;
+- **le budget de 8 ms est contrôlé après le retour de `Demand`.** Une page lente traverse donc
+  encore la frame : `maximumDemandMs` atteint 43,77 ms sur AR0900, dont les PVRZ sont en 4096².
+  Le pic est déplacé et fortement réduit, il n’est pas supprimé ;
+- **le coût total n’est pas supprimé non plus**, il est étalé : les 790,95 ms de demande d’AR0700N
+  sont répartis sur environ 1,1 s de frames au lieu d’une seule frame bloquante ;
+- aucun instantané de restauration n’a été enregistré sous `bg2hd/state/` pour ce build, alors que
+  chaque runtime expérimental précédent en possède un. Le dernier état documenté reste
+  `map-pvr-demand-phase-telemetry-20260829T064935Z`, c’est-à-dire le build antérieur.
+
+Ce lot n’est pas éligible à la release et aucun manifeste de release n’a été modifié.
+
 ## Prochaine étape
 
-Le mini-lot carte 3 peut maintenant prototyper un préchauffage progressif **opt-in** des seules pages
-PVRZ de la carte courante, réparti sur plusieurs frames avant l’ouverture de la carte. Il devra être
-désactivé par défaut, disposer de limites configurables de pages et de temps par frame, s’annuler
-sur changement de zone ou de contexte GL et laisser toute page manquante suivre immédiatement le
-`Demand` natif synchrone. Le chargement intégral actuel restera ainsi le fallback fonctionnel ; le
-prototype ne modifiera aucun format ni contenu.
+La campagne suivante doit produire l’A/B contrôlé qui manque, en une seule session par état et sur
+la même machine, avec les quatre sauvegardes dédiées `AR0700N`, `AR0516`, `AR0602` et `AR0900` :
 
-Avant d’activer ce comportement, il faudra confirmer dans le code moteur l’ordre sûr des demandes
-et éviter que le préchauffage chasse les pages nécessaires à la vue monde du cache natif de 128
-entrées. Le même protocole AR0700N/AR0516/AR0602/AR0900 permettra ensuite de comparer premières et
-secondes ouvertures, erreurs et évictions.
+1. session de référence, `EnableMapPagePrewarm=false` : charger les quatre sauvegardes à la suite
+   et dézoomer complètement dans chacune, en relevant l’événement 1 et l’événement 2 ;
+2. session de mesure, `EnableMapPagePrewarm=true` : répéter exactement le même parcours, dans le
+   même ordre, sans redémarrer la machine entre les deux ;
+3. comparer par zone le pic de présentation, le nombre de pages matérialisées pendant le burst, les
+   évictions et le `maximumDemandMs` du préchauffage.
+
+L’ordre de passage doit être conservé entre les deux sessions : le cache fichier Windows favorise
+la zone traitée en second, et c’est précisément ce biais qui rend la session actuelle non
+concluante en dehors d’AR0700N.
+
+Deux points restent à traiter ensuite, indépendamment du résultat :
+
+- déplacer le contrôle du budget **avant** l’appel plutôt qu’après, ou borner le nombre de pages
+  par frame en fonction du coût observé de la page précédente, afin que le cas 4096² d’AR0900 ne
+  puisse plus produire une frame à 43,77 ms ;
+- enregistrer un instantané de restauration sous `bg2hd/state/` pour ce build, afin de rétablir la
+  chaîne d’états que le reste de ce document documente.
 
 Pour le futur lot animations, les contraintes restent inchangées : chargement intégral actuel en
 fallback, formats de packs et animations inchangés, budgets initiaux de 128 Mio CPU et 256 Mio /

@@ -81,6 +81,7 @@ void detour_sdl_swap(void* window) {
   post::apply_frame_fxaa();
   g_sdlSwapHook.original()(window);
   supersample::after_swap();
+  hooks::on_post_swap();
 }
 
 BOOL WINAPI detour_gdi_swap(HDC hdc) {
@@ -89,6 +90,7 @@ BOOL WINAPI detour_gdi_swap(HDC hdc) {
   post::apply_frame_fxaa();
   const BOOL result = g_gdiSwapHook.original()(hdc);
   supersample::after_swap();
+  hooks::on_post_swap();
   return result;
 }
 
