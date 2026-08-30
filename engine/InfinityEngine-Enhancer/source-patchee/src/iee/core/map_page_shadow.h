@@ -19,10 +19,10 @@ inline constexpr std::size_t kShadowMaximumDecodedBytes = 20u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumPendingPages = 96;
 inline constexpr std::size_t kShadowMaximumCompletedPages = 4;
 inline constexpr std::size_t kShadowMaximumCompletedBytes = 72u * 1024u * 1024u;
-// Phase 3e-B2d corrected discriminator: B2c proved that the first native
-// fallback after three claims raced an in-flight shadow file read. The queue
-// now acknowledges that reader's retirement before the same page opens.
-inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 3;
+// Phase 3e-B2e controlled extension: B2d qualified the in-flight reader
+// retirement handshake with three claims. This candidate tests exactly four
+// prepared claims before preserving native fallback for every later page.
+inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 4;
 
 enum class PvrzPrepareStatus : std::uint8_t {
   Ready,

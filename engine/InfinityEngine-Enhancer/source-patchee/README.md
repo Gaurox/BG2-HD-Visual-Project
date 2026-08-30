@@ -208,9 +208,13 @@ source limit first returned to the qualified two-claim control. Phase 3e-B2d the
 in-flight shadow-reader retirement and a deterministic concurrency test. Its three-claim AR0900
 gate exercised the race on `A090000`: the render thread waited 42.04 ms for the worker to close,
 the native file open succeeded, three prepared claims were consumed, all later native fallbacks
-succeeded and the complete map stayed stable before a clean exit. This remains default-off,
-AR0900-only and non-release-qualified work. See
-[`docs/validation/map-page-offframe-phase3b2d.md`](docs/validation/map-page-offframe-phase3b2d.md).
+succeeded and the complete map stayed stable before a clean exit. Phase 3e-B2e then raised only
+the bound to four claims with the handshake unchanged. Its AR0900 gate consumed `A090001`,
+`A090008`, `A090009` and `A090010`; two in-flight native fallbacks waited for reader retirement,
+every native demand succeeded, the full map stayed stable for more than 30 seconds and the game
+exited cleanly. The four-zone performance campaign is now reopened. This remains default-off and
+non-release-qualified work. See
+[`docs/validation/map-page-offframe-phase3b2e.md`](docs/validation/map-page-offframe-phase3b2e.md).
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

@@ -122,9 +122,12 @@ dans `areas.csv`.
   l'acquittement de fermeture avant le fallback natif visant cette même page. Couvrir cette
   concurrence par un test déterministe, puis repasser trois claims sur AR0900. Cette gate est
   maintenant passée : une attente réelle de 42,04 ms précède une ouverture native réussie et les
-  trois consommations terminent sans crash. La gate suivante est un candidat quatre claims AR0900
-  avec handshake inchangé ; ne pas rejouer les quatre zones avant cette preuve. Une éventuelle
-  campagne cache OS froid doit rester séparée.
+  trois consommations terminent sans crash. La gate quatre claims 3e-B2e passe à son tour avec le
+  handshake inchangé : `A090001`, `A090008`, `A090009` et `A090010` sont consommées, deux fallbacks
+  en vol attendent correctement leur acquittement, toutes les demandes natives réussissent et la
+  carte reste stable plus de 30 secondes. La campagne contrebalancée de performance et robustesse
+  sur AR0700N, AR0516, AR0602 et AR0900 est désormais rouverte. Une éventuelle campagne cache OS
+  froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

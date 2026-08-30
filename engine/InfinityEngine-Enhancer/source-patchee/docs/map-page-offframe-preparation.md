@@ -214,6 +214,11 @@ relinquishment handshake; see
 deterministic concurrency test passes, and the three-claim AR0900 gate exercises a 42.04 ms wait on
 `A090000` before the native file open succeeds. Three prepared claims and every later native
 fallback complete, the map stays stable for more than 30 seconds and the game exits cleanly. The
-next gate is a controlled four-claim AR0900 candidate with the unchanged handshake; the four-zone
-performance protocol remains blocked until that passes. A shadow result, a prepared or installed
-candidate, or a successful local test does not create a `validated-installed` release element.
+controlled four-claim Phase 3e-B2e gate now passes with the unchanged handshake; see
+[`validation/map-page-offframe-phase3b2e.md`](validation/map-page-offframe-phase3b2e.md).
+`A090001`, `A090008`, `A090009` and `A090010` are consumed, both not-ready in-flight fallbacks wait
+for retirement, every native demand succeeds, the complete map remains stable and the game exits
+cleanly. This reopens a counterbalanced performance and robustness campaign on AR0700N, AR0516,
+AR0602 and AR0900, while a separate OS-cold-cache campaign remains optional. A shadow result, a
+prepared or installed candidate, or a successful local test does not create a
+`validated-installed` release element.

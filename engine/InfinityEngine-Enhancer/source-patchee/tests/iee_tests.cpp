@@ -3825,8 +3825,8 @@ void test_map_page_consume_gate_contract() {
   using iee::core::PvrConsumeValidationStatus;
   using iee::core::validate_pvr_consume;
 
-  expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{3},
-            "Phase 3e-B2d corrected discriminator should permit exactly three claims");
+  expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{4},
+            "Phase 3e-B2e controlled extension should permit exactly four claims");
   MapPageConsumeGate gate;
   gate.reset(7);
   expect_true(!gate.exhausted(7), "a reset generation should begin below the consume limit");

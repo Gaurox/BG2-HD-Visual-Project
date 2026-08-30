@@ -1991,3 +1991,60 @@ Il doit prouver quatre consommations préparées, tous les fallbacks ultérieurs
 stable, une sortie propre et une restauration exacte. La campagne quatre zones reste bloquée
 jusqu'à cette preuve. Aucun élément `validated-installed`, `areas.csv` ou manifeste de release
 n'est modifié.
+
+## Étape 3e-B2e — gate quatre claims AR0900 — 2026-08-30
+
+B2e ne change que la borne compile-time de trois à quatre consommations préparées par génération.
+Le handshake B2d, les retours natifs, la propriété cache/ressource, les bornes mémoire et l'option
+default-off restent identiques. Le test de borne attend maintenant quatre claims et le test de
+concurrence déterministe du lecteur en vol reste actif.
+
+Toutes les gates hors ligne passent : CTest commun Debug 2/2, CTest commun Release 2/2, build DLL
+Windows x64 Release et son CTest 2/2, validateur exact du `BaldurReal.exe` 2.7.3, préflight
+transactionnel et 207/207 tests Python en 96,793 secondes.
+
+La gate ingame AR0900 passe. `A090000`, non prête et déjà détenue par le worker, attend 43,58 ms
+l'acquittement avant de réussir sa demande native. Les quatre consommations préparées sont :
+
+| Claim | Page | Décision |
+|---:|---|---|
+| 1/4 | `A090001` | `prepared-claim` |
+| 2/4 | `A090008` | `prepared-claim` |
+| 3/4 | `A090009` | `prepared-claim` |
+| 4/4 | `A090010` | `prepared-claim` |
+
+Après la limite, `A090011` exerce une seconde attente de lecteur en vol de 24,01 ms puis charge
+nativement. Tous les fallbacks suivants réussissent. La section de log compte 19/19 ouvertures
+fichier vraies, 51/51 retours `CRes::Demand` vrais, 19/19 retours `CResPVR::Demand` vrais et zéro
+ligne `error`/`critical`.
+
+Le résumé final compte 19 jobs soumis et démarrés, 17 préparés, deux résultats annulés/jetés,
+17 pages prêtes avant demande et deux non prêtes. Les quatre claims sont consommés
+(`consumeClaims=4`, `claimLimit=4`, `consumed=4`). Les deux attentes totalisent 67,59 ms, avec un
+maximum de 43,58 ms. La préparation représente 93,81 Mio compressés, 272,00 Mio décodés,
+655,05 ms au total et 45,06 ms au maximum. Le pic de résultats complétés est de quatre pages /
+64,00 Mio. Toutes les familles mismatch/erreur sont à zéro et il ne reste aucun état pending,
+in-flight, waiter ou completed.
+
+Le préchauffage natif découvre 26 pages, en trouve sept résidentes et en matérialise 19 en
+675,06 ms au total, maximum 84,80 ms. La carte complète est correcte, reste stable plus de
+30 secondes et le jeu sort proprement par son dialogue normal.
+
+Le candidat, le log et les reçus installé/restauré sont archivés sous :
+
+```text
+G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2e-20260830
+```
+
+Le détail complet et les hashes sont dans
+[`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2e.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2e.md).
+Après l'essai, aucun processus jeu/loader ne reste et la racine jeu retrouve exactement la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+La gate de correction quatre claims est close et la campagne quatre zones est rouverte. La suite
+est une campagne contrebalancée de performance et robustesse sur AR0700N, AR0516, AR0602 et
+AR0900, avec le même candidat transactionnel, le handshake inchangé et les métriques par zone de
+claims, fallbacks/attentes, préparation et ouverture de carte. Toute campagne cache OS froid reste
+séparée. Le prototype demeure non éligible à la release : aucun élément `validated-installed`,
+`areas.csv` ou manifeste de release n'est modifié.
