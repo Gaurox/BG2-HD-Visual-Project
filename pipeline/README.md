@@ -137,6 +137,25 @@ nouveau dossier, copie le TIS à l'identique, vérifie le SHA-256 de chaque PVR 
 `repack-manifest.json`. Son surcoût disque doit être mesuré ; son résultat reste `pending-ingame`
 et ne change ni `areas.csv` ni la méthode de build courante sans une décision ultérieure.
 
+Une repagination expérimentale peut aussi conserver exactement les blocs DXT de chaque tuile et
+leur padding répliqué, sans décodage ni réencodage de l'image :
+
+```powershell
+python pipeline/scripts/repage_pvrz_blocks.py `
+  <build-source> <nouveau-dossier-absent> `
+  --target-size 2112 --padding 4 --max-pages 96 --level 9
+
+python pipeline/scripts/benchmark_pvrz_decode.py `
+  source=<build-source> candidat=<nouveau-dossier> --iterations 7
+```
+
+La taille cible doit être un multiple exact de `tile_dimension + 2 * padding`. L'outil exige
+l'inventaire PVRZ source exact, vérifie les en-têtes TIS/PVR, recalcule les pages et coordonnées du
+TIS, puis relit la sortie pour prouver chaque cellule DXT octet pour octet. Il émet
+`repage-manifest.json` avec le statut `completed-pending-ingame`. Les dimensions PVR non puissance
+de deux restent une expérience à valider dans le moteur ; ce résultat ne change jamais
+`areas.csv`, le staging ou les manifests de release.
+
 ### 8. QA et promotion
 
 Une QA requiert une session ingame contrôlée et l'acceptation explicite de l'utilisateur. Une

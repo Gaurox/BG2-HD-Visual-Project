@@ -18,6 +18,13 @@ diagnostic ou des éléments `REVIEW`; rechercher leurs références avant emplo
 - Expérience de latence PVRZ : `repack_pvrz_compression.py` réécrit uniquement le flux Deflate
   dans un nouveau dossier, avec TIS et PVR décodés identiques. Le niveau doit être explicite ; la
   sortie reste `pending-ingame` et ne remplace jamais le build sélectionné par `areas.csv`.
+- Repagination DXT exacte : `repage_pvrz_blocks.py` recopie les cellules DXT avec leur padding
+  répliqué, réécrit uniquement les coordonnées/pages du TIS et refuse toute cellule divergente.
+  La taille cible, le plafond de pages et le niveau zlib sont explicites ; la sortie reste
+  `completed-pending-ingame` dans un nouveau dossier.
+- Benchmark PVRZ hors jeu : `benchmark_pvrz_decode.py` précharge les flux, effectue un warm-up puis
+  mesure plusieurs décompressions zlib en mémoire. Il sert à trier des candidats, jamais à
+  remplacer une mesure de `CResPVR::Demand` ingame.
 - Correction native ciblée des flags d'occlusion WED :
   `build_wed_cover_animation_patch.py` (sortie `pending-ingame`, installation réversible avec les
   scripts d'assets auxiliaires).

@@ -152,6 +152,7 @@ restée inchangée.
 | P1 | Attribuer par frame le burst d’ouverture de carte | Validé ingame | Deux ouvertures successives sur chacune des quatre cartes produisent exactement les événements 1 et 2. Aucun redéclenchement n’apparaît pendant le maintien de la carte ; la contraction réarme correctement le détecteur. |
 | P1 | Attribuer les phases de `CResPVR::Demand` | Validé ingame | La demande PVR porte 95 à 98 % des frames de pic ; `glGenTextures` et l’upload compressé sont minoritaires face au résidu ressource/lecture/préparation moteur. Aucun changement de politique. |
 | P1 | Préchargement progressif des pages de carte | A/B chaud validé ingame, non promu | Campagne A-B-B-A sur les quatre zones : aucune matérialisation PVR dans les bursts B1/B2 et zéro éviction du préchauffage. Médianes A/B : AR0700N 454,11/6,08 ms ; AR0516 16,21/6,25 ms ; AR0602 8,09/6,17 ms ; AR0900 299,62/6,90 ms. Restent le pic unitaire 4096² à ~44 ms et la restauration transactionnelle avant toute promotion. |
+| P2/P3 | Réduire l'unité PVRZ atomique d'AR0900 | Repagination 2112² mesurée puis rejetée | 90 pages block-exact sous le plafond de 96 ; `maximumDemandMs` 43,97 → 15,22 ms et ouvertures à 6,33/6,63 ms sans matérialisation. La gate 8 ms reste manquée et aucune page carrée uniforme plus petite ne tient sous le plafond. État antérieur restauré. |
 | P2 | Double `Demand` et invalidations GL | Différé | Durée de vie moteur sensible ; nécessite les compteurs P1. |
 | P2/P3 | Repack 4096, profil faible mémoire ou x2 sélectif | Non engagé | Implique contenu, QA et manifests distincts ; hors optimisation runtime rapide. |
 
@@ -1285,3 +1286,86 @@ quatre sauvegardes brutes du DLL moteur en reçus ; ce travail reste distinct av
 candidat moteur. La prochaine expérience de contenu peut maintenant construire puis prévalider un
 candidat AR0900 à pages plus petites ou hybrides, sous le plafond de 96 pages et les contraintes de
 resref nocturne, avant toute installation contrôlée.
+
+## Étape 3c — repagination DXT exacte 2112² d'AR0900 — 2026-08-30
+
+Le nouvel outil opt-in `pipeline/scripts/repage_pvrz_blocks.py` repagine un build TIS/PVRZ sans
+décoder ni réencoder son image. Pour chaque entrée TIS, il copie les blocs DXT de la tuile avec son
+padding répliqué de quatre pixels, puis réécrit uniquement le numéro de page et les coordonnées du
+TIS. La sortie est relue avant publication et chaque cellule est comparée octet pour octet à sa
+source. Le dossier source reste en lecture seule et la sortie doit être absente.
+
+AR0900 contient 5 752 tuiles de 256 px. Avec le padding, une cellule occupe 264 px ; une page de
+2 112 px contient donc 8 × 8 cellules, soit 64 tuiles, et la zone tient en 90 pages. Ce choix est le
+plus petit carré compatible avec le plafond actuel de 96 pages : 1 848 px ne contient que 7 × 7
+cellules et exigerait 118 pages. Les dimensions 2112² n'étant pas une puissance de deux, la
+compatibilité a été traitée comme une gate ingame obligatoire.
+
+### Qualification hors ligne
+
+Le candidat a été créé depuis le sous-build réellement installé
+`x4-water-alpha-antialias-page4096-spline-fit1.0`, pas depuis le chemin divergent encore déclaré
+par `areas.csv`. Il conserve :
+
+- les 5 752 cellules DXT, padding inclus, octet pour octet ; empreinte agrégée
+  `791C69E51FB469FF32C95D5430C432902FEFA4DBF1008A5B0F0043B7ED009E82` ;
+- 5 752 tuiles, zéro référence hors limites, un rendu de 20 480 × 15 360 et le PSNR de contrôle à
+  34,75 dB ;
+- un inventaire fermé de 90 pages 2112², sous le plafond de 96 et sous la capacité de nommage.
+
+Le payload PVRZ passe de 159 103 866 à 155 778 416 octets, soit 151,73 à 148,56 Mio (-2,09 %).
+Le benchmark Python zlib à cache mémoire chaud, sept itérations après warm-up, fait passer la
+médiane d'une page de 59,24 à 15,63 ms. Le maximum par itération est trop bruité pour servir de
+gate moteur, mais passe de 115,59 à 52,06 ms. Une dérivée zlib niveau 1 a été écartée hors jeu :
+165,21 Mio (+11,2 %) et une médiane par page d'environ 18,51 ms, contre 15,71 ms pour le niveau 9
+dans la même série.
+
+La prévalidation de l'installateur transactionnel a accepté les 91 fichiers du candidat sans
+écriture. Le manifeste exact est conservé sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-repage-2112-20260830T130630\candidate-ar0900-day\repage-manifest.json`,
+SHA-256 `3F895C65101EA0F5863C5A015C46C68EE781F84FFA2B9696F906B4C83821CF8A`.
+
+### Mesure ingame ciblée
+
+Jeu et InfinityLoader fermés, l'installation transactionnelle a sauvegardé les 27 fichiers actifs,
+installé 91 fichiers et vérifié l'état complet de l'`override`. La sauvegarde dédiée AR0900 a été
+chargée via InfinityLoader. Après la fin du préchauffage, la carte a été ouverte et refermée deux
+fois. Les pages non puissance de deux ont été acceptées par le moteur ; aucune couture, corruption
+ou anomalie de rendu évidente n'a été observée.
+
+| Mesure AR0900 | Référence 4096² | Candidat 2112² | Évolution |
+|---|---:|---:|---:|
+| Pages découvertes / planifiées | 26 / 26 | 90 / 90 | plafond 96 respecté |
+| Pages initialement résidentes | 7 | 18 | information de session |
+| Demandes / matérialisations du préchauffage | 19 / 19 | 72 / 72 | aucune éviction |
+| `totalDemandMs` | 746,05 ms | 864,56 ms | +15,89 % au total |
+| `maximumDemandMs` | 43,97 ms | 15,22 ms | -65,39 % |
+| Pic événement 1 | 6,90 ms | 6,33 ms | zéro matérialisation PVR |
+| Pic événement 2 | 6,02–8,92 ms | 6,63 ms | zéro matérialisation PVR |
+
+La session contient zéro erreur et un seul avertissement, la récupération déjà connue du prologue
+`RenderTexture` détourné par EEex. Le journal complet est archivé sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-repage-2112-20260830T130630\post-run\InfinityEngine-Enhancer.log`,
+borne de session `2026-08-30 13:16:58.763`, SHA-256
+`244540412F0C619BD929F2E141A2525AB354E98DEF648DF90ECF450D91B91857`.
+
+### Verdict et restauration
+
+L'essai valide la compatibilité ingame des pages 2112² et confirme que réduire l'unité atomique
+réduit fortement son coût. Il est néanmoins **rejeté comme solution finale** : 15,22 ms manque la
+gate de 8 ms de 7,22 ms, et la multiplication des pages augmente le coût cumulé du préchauffage.
+Une page carrée uniforme plus petite ne peut pas rester sous le plafond de 96 ; une disposition
+rectangulaire de 60 cellules ne réduirait l'unité que de 6,25 %, insuffisant au regard de la mesure.
+
+Après fermeture du jeu et d'InfinityLoader, la transaction
+`backups/maps/AR0900-20260830T111545270887Z-36dba8d0/` a été restaurée et revérifiée. Les 27
+fichiers actifs correspondent de nouveau, SHA-256 par SHA-256, au sous-build antérieur et aucune
+page `A090026` à `A090089` ne subsiste. Le candidat reste hors dépôt avec le statut
+`completed-pending-ingame` de son manifeste de génération ; il n'a produit aucun élément
+`validated-installed`. `areas.csv`, les manifests de release, le staging et les packages restent
+inchangés.
+
+La suite de la phase 3 doit désormais sortir de la seule repagination uniforme : préparer la
+lecture et la décompression hors de la frame, ou démontrer une politique de cache réversible au-delà
+de 96 pages, puis rendre le résultat au thread GL avec le `Demand` natif comme fallback. La
+transaction du DLL expérimental doit être formalisée avant toute nouvelle installation moteur.

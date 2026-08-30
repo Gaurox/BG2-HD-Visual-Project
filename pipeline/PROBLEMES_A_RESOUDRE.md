@@ -41,18 +41,24 @@ dans `areas.csv`.
   pour le seul jour). L’installation d’essai a été intégralement restaurée. L'installateur des
   builds maps est désormais transactionnel et fail-closed : reçu avant copie, inventaire fermé,
   retrait des pages obsolètes, écritures atomiques, rollback automatique et restauration reprenable.
-- **Risques ouverts** : une PVRZ 4096² canonique d’AR0900 bloque encore une frame de préchauffage à
-  43,97 ms en médiane maximale ; `Demand` est atomique, donc espacer une page par frame ne borne pas
-  ce coût. La transaction fail-closed des maps ne remplace pas encore les quatre instantanés moteur
+  Une repagination block-exact 2112² a ensuite réduit les 26 pages à 90 pages dans la limite de 96,
+  sans réencoder les cellules DXT ni augmenter le payload PVRZ. Ingame, le maximum tombe à 15,22 ms
+  et les deux ouvertures restent à 6,33 et 6,63 ms sans matérialisation, mais la gate de 8 ms est
+  encore manquée. L'installation d'essai a été restaurée et les 27 fichiers actifs sont de nouveau
+  identiques au sous-build antérieur.
+- **Risques ouverts** : `Demand` reste atomique. La page carrée 2112² est déjà la plus petite unité
+  uniforme permettant de placer les 5 752 tuiles sous le plafond de 96 pages : la suivante, 1848²,
+  exigerait 118 pages. Une repagination plus petite dépasserait donc le cache préchauffable actuel,
+  tandis qu'une page rectangulaire de 60 cellules ne réduirait l'unité que de 6,25 %. La transaction
+  fail-closed des maps ne remplace pas encore les quatre instantanés moteur
   intermédiaires, qui restent des sauvegardes brutes. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
   réellement installés correspondent au sous-build `page4096-spline-fit1.0`. La campagne validée
   mesure un cache OS chaud, pas un démarrage froid.
-- **Gate** : utiliser le reçu transactionnel maps pour produire un candidat qui réduit l’unité
-  atomique sous 8 ms — pagination plus petite ou hybride compatible avec les resrefs nuit, la
-  réserve de cache et le plafond de 96 pages, ou décompression préparée hors frame. Formaliser
-  séparément la transaction du DLL exact avant toute promotion moteur. Valider d’abord AR0900 ; ne
-  rejouer les quatre zones qu’après réussite. Une éventuelle campagne cache OS froid doit rester
-  séparée.
+- **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
+  réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
+  thread propriétaire avec le `Demand` natif synchrone en fallback. Formaliser séparément la
+  transaction du DLL exact avant toute promotion moteur. Valider d’abord AR0900 ; ne rejouer les
+  quatre zones qu’après réussite. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste
