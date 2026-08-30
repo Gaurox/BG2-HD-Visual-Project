@@ -61,8 +61,11 @@ dans `areas.csv`.
   (151,73 Mio comprimés, 416,00 Mio décodés, médiane 39,38 ms/page). La gate ingame AR0900 est
   validée : sur 19 pages absentes soumises, 16 (84,21 %) étaient prêtes avant `Demand` et 3 ne
   l'étaient pas, sans échec ni résultat périmé ; le pic terminé reste borné à 4 pages / 64 Mio et le
-  rendu est inchangé. Cette preuve reste une observation : aucun buffer n'est consommé par le
-  moteur et aucun temps de frame n'est encore évité.
+  rendu est inchangé. Le canari 3e-B1 a ensuite passé sa gate ingame AR0900 : une seule page
+  `A090001` a été revendiquée et consommée, avec zéro fallback ou mismatch, puis publication,
+  upload et libération natifs ; la carte complète est restée correcte et l'installation initiale a
+  été restaurée bit à bit. Cette preuve valide la frontière pour une page, pas encore le gain ni la
+  stabilité d'une consommation multi-page.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
   thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
@@ -74,10 +77,14 @@ dans `areas.csv`.
   3e-B0 a établi cette frontière sur le build manifesté : l'appel `uncompress` à
   `CResPVR::Demand+0x15F` peut recevoir le PVR déjà décodé dans la destination allouée par le moteur,
   tandis que chargement `CRes`, LRU native de 128 entrées, champs PVR, upload et libération restent
-  natifs. Les signatures et neuf callsites sont maintenant vérifiés hors ligne. La prochaine étape
-  est le canari 3e-B1, opt-in et limité à une page consommée par génération, avec CRC/taille/source
-  stricts et zlib original en fallback. Ne rejouer les quatre zones qu'après une consommation
-  render-thread sûre et réversible. Une éventuelle campagne cache OS froid doit rester séparée.
+  natifs. Les signatures et neuf callsites sont maintenant vérifiés hors ligne. Le canari 3e-B1 est
+  implémenté, opt-in et limité à une revendication par génération, avec CRC/taille/source stricts et
+  zlib original en fallback. Debug/Release, la DLL x64, 207 tests Python, le validateur du binaire et
+  la prévalidation transactionnelle sans écriture passent. Sa gate ingame AR0900 passe également :
+  `canaryClaims=1`, `consumed=1`, toutes les familles de fallback à zéro, rendu inchangé, sortie
+  stable et restauration exacte. La gate suivante est un candidat AR0900 multi-page séparé,
+  default-off et à limite fixe définie avant l'essai ; ne rejouer les quatre zones qu'après cette
+  preuve bornée. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

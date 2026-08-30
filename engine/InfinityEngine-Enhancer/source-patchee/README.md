@@ -183,8 +183,12 @@ one PVRZ without starting or changing the game:
 
 For the unified 2.7.3 executable, `tools/validate_build.py` also gates the Phase 3e-B0 decoded-PVR
 boundary: the unique zlib wrapper, all nine native `CResPVR::Demand` phase calls and the
-post-decode field/upload/release window. This is static evidence only; no decoded-buffer consumer is
-enabled by the manifest.
+post-decode field/upload/release window. Phase 3e-B1 can use that boundary only when both
+`PerformanceLogs=true` and the separate default-off `EnableMapPageOffframeConsume=true` option are
+set. It moves at most one prepared page per area generation into the native destination after exact
+return-address, resource, source, size and compressed-CRC checks; every failure calls the original
+zlib wrapper. Its one-page AR0900 gate passed ingame on 2026-08-30 with exact transactional
+restoration; it is still a default-off prototype, not release-qualified support.
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

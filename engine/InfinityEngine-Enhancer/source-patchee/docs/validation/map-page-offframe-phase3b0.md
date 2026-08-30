@@ -21,6 +21,11 @@ cache, texture creation/binding, PVR field publication, compressed upload, evict
 This result does not implement or validate the consumer. It makes Phase 3e-B1 eligible as a
 separate fail-closed experiment.
 
+Subsequent status: the B1 consumer was implemented and passed its offline gates later on
+2026-08-30. Its separate evidence and still-pending AR0900 ingame gate are recorded in
+[`map-page-offframe-phase3b1.md`](map-page-offframe-phase3b1.md). The statements below remain the
+historical B0 boundary result.
+
 ## Reproducible binary gate
 
 `tools/validate_build.py` now locates both the `CResPVR::Demand` and zlib-wrapper signatures exactly

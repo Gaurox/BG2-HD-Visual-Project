@@ -742,6 +742,7 @@ void test_config_parsing() {
     out << "EnableTilePageDiagnostics = true\n\n";
     out << "EnableMapPagePrewarm = true\n";
     out << "EnableMapPageOffframeProbe = true\n";
+    out << "EnableMapPageOffframeConsume = true\n";
     out << "MapPagePrewarmPagesPerFrame = 2\n";
     out << "MapPagePrewarmBudgetMs = 6.5\n";
     out << "MapPagePrewarmMaxPages = 80\n";
@@ -759,6 +760,8 @@ void test_config_parsing() {
   expect_true(cfg.enableMapPagePrewarm, "map-page prewarm flag should parse");
   expect_true(cfg.enableMapPageOffframeProbe,
               "map-page off-frame probe flag should parse");
+  expect_true(cfg.enableMapPageOffframeConsume,
+              "map-page off-frame consume flag should parse");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{2},
             "map-page per-frame limit should parse");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 6.5f, "map-page time budget should parse");
@@ -906,6 +909,8 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableMapPagePrewarm, "map-page prewarm defaults off");
   expect_true(!cfg.enableMapPageOffframeProbe,
               "map-page off-frame probe defaults off");
+  expect_true(!cfg.enableMapPageOffframeConsume,
+              "map-page off-frame consume canary defaults off");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1},
             "map-page prewarm defaults to one page per step");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 8.0f,
@@ -3451,6 +3456,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableTilePageDiagnostics = true;
     orig.enableMapPagePrewarm = true;
     orig.enableMapPageOffframeProbe = true;
+    orig.enableMapPageOffframeConsume = true;
     orig.mapPagePrewarmPagesPerFrame = 3;
     orig.mapPagePrewarmBudgetMs = 5.5f;
     orig.mapPagePrewarmMaxPages = 72;
@@ -3493,6 +3499,8 @@ void test_config_shader_override_roundtrip() {
               "enableMapPagePrewarm should round-trip as true");
   expect_true(loaded.enableMapPageOffframeProbe,
               "enableMapPageOffframeProbe should round-trip as true");
+  expect_true(loaded.enableMapPageOffframeConsume,
+              "enableMapPageOffframeConsume should round-trip as true");
   expect_eq(loaded.mapPagePrewarmPagesPerFrame, std::uint32_t{3},
             "map-page per-frame limit should round-trip");
   expect_eq(loaded.mapPagePrewarmBudgetMs, 5.5f,
@@ -3575,6 +3583,11 @@ void test_map_page_shadow_pvrz_validation() {
   expect_eq(prepared.pixelFormat, std::uint32_t{11}, "prepared PVR format should be DXT5");
   expect_eq(prepared.decodedBytes, std::uint64_t{116},
             "prepared PVR should retain the exact immutable byte count");
+  const auto expectedCrc = static_cast<std::uint32_t>(crc32(
+      crc32(0L, Z_NULL, 0), reinterpret_cast<const Bytef*>(valid.data() + 4),
+      static_cast<uInt>(valid.size() - 4)));
+  expect_eq(prepared.compressedCrc32, expectedCrc,
+            "prepared PVR should fingerprint the exact native zlib stream");
 
   const auto dxt1 = prepare_pvrz_bytes(make_test_pvrz(7));
   expect_true(dxt1.status == PvrzPrepareStatus::Ready,
@@ -3646,6 +3659,30 @@ void test_map_page_shadow_queue_bounds_and_generations() {
   expect_eq(observation.decodedBytes, std::uint64_t{128},
             "ready observation should preserve preparation metrics");
 
+  const auto claimIdentity = make_shadow_identity(generation, 10);
+  expect_true(queue.submit({claimIdentity, "A090010.PVRZ"}),
+              "claim fixture should enter the queue");
+  iee::core::ShadowPageJob claimJob;
+  expect_true(queue.wait_take(claimJob), "worker should receive the claim fixture");
+  iee::core::ShadowPreparedResult claimReady;
+  claimReady.identity = claimJob.identity;
+  claimReady.page.status = PvrzPrepareStatus::Ready;
+  claimReady.page.compressedBytes = 64;
+  claimReady.page.decodedBytes = 128;
+  claimReady.page.compressedCrc32 = 0x12345678u;
+  claimReady.page.decoded.resize(128, std::byte{0x5A});
+  expect_true(queue.publish(std::move(claimReady)),
+              "ready canary bytes should publish within the bound");
+  auto claim = queue.claim(claimIdentity);
+  expect_true(claim.status == ShadowObservationStatus::Ready,
+              "a ready canary should move out of the queue");
+  expect_eq(claim.page.decoded.size(), std::size_t{128},
+            "claim should retain the immutable decoded bytes without copying");
+  expect_eq(claim.page.compressedCrc32, std::uint32_t{0x12345678},
+            "claim should retain its compressed-stream identity");
+  expect_eq(queue.snapshot().completedBytes, std::size_t{0},
+            "claim should release queue memory accounting immediately");
+
   const auto second = make_shadow_identity(generation, 1);
   const auto third = make_shadow_identity(generation, 2);
   const auto fourth = make_shadow_identity(generation, 3);
@@ -3684,6 +3721,72 @@ void test_map_page_shadow_queue_bounds_and_generations() {
               "shutdown should wake and stop an idle worker");
   expect_eq(queue.snapshot().completedBytes, std::size_t{0},
             "shutdown should release every prepared CPU buffer");
+}
+
+void test_map_page_consume_canary_contract() {
+  using iee::core::MapPageConsumeCanary;
+  using iee::core::PvrConsumeEvidence;
+  using iee::core::PvrConsumeValidationStatus;
+  using iee::core::validate_pvr_consume;
+
+  MapPageConsumeCanary canary;
+  canary.reset(7);
+  expect_true(canary.try_claim(7), "first ready page should claim the area canary");
+  expect_true(!canary.try_claim(7), "a generation should never claim a second page");
+  expect_true(!canary.try_claim(8), "an unannounced generation should fail closed");
+  canary.reset(8);
+  expect_true(canary.try_claim(8), "an explicit area reset should rearm one canary");
+
+  PvrConsumeEvidence evidence{
+      .scopeActive = true,
+      .expectedReturnAddress = 0x1005,
+      .actualReturnAddress = 0x1005,
+      .expectedResource = 0x2000,
+      .activeResource = 0x2000,
+      .nativeData = 0x3000,
+      .source = 0x3004,
+      .nativeResourceBytes = 104,
+      .sourceBytes = 100,
+      .preparedCompressedBytes = 104,
+      .declaredDecodedBytes = 256,
+      .destinationCapacity = 256,
+      .preparedDecodedBytes = 256,
+      .expectedCompressedCrc32 = 0xAABBCCDD,
+      .actualCompressedCrc32 = 0xAABBCCDD,
+  };
+  expect_true(validate_pvr_consume(evidence) == PvrConsumeValidationStatus::Ready,
+              "exact source, size, owner, callsite and CRC evidence should permit one copy");
+
+  auto rejected = evidence;
+  rejected.scopeActive = false;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::InactiveScope,
+              "the global zlib hook should reject calls outside an active Demand scope");
+  rejected = evidence;
+  rejected.actualReturnAddress += 1;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::UnexpectedReturnAddress,
+              "any other zlib caller should retain the original wrapper");
+  rejected = evidence;
+  rejected.activeResource += 1;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::ResourceMismatch,
+              "a different CResPVR scope should retain native inflate");
+  rejected = evidence;
+  rejected.source += 1;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::SourceMismatch,
+              "source must be exactly native pData plus the PVRZ prefix");
+  rejected = evidence;
+  rejected.destinationCapacity -= 1;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::SizeMismatch,
+              "native destination capacity must equal the prepared decoded size");
+  rejected = evidence;
+  rejected.actualCompressedCrc32 ^= 1u;
+  expect_true(validate_pvr_consume(rejected) ==
+                  PvrConsumeValidationStatus::CrcMismatch,
+              "a different native compressed stream must retain native inflate");
 }
 
 std::vector<std::byte> make_legacy_dds(std::uint32_t formatCode, std::uint32_t width,
@@ -5031,6 +5134,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();
+  test_map_page_consume_canary_contract();
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
   test_hierarchical_cache_budget_simulator();

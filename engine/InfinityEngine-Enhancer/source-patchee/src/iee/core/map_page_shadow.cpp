@@ -112,10 +112,15 @@ PvrzPreparedPage prepare_pvrz_bytes(std::span<const std::byte> fileBytes,
       return result;
     }
 
+    const auto* compressed = reinterpret_cast<const Bytef*>(fileBytes.data() + 4);
+    const auto compressedSize = static_cast<uInt>(fileBytes.size() - 4);
+    result.compressedCrc32 = static_cast<std::uint32_t>(
+        crc32(crc32(0L, Z_NULL, 0), compressed, compressedSize));
+
     result.decoded.resize(declaredSize);
     uLongf decodedSize = static_cast<uLongf>(result.decoded.size());
     uLong sourceSize = static_cast<uLong>(fileBytes.size() - 4);
-    const auto* source = reinterpret_cast<const Bytef*>(fileBytes.data() + 4);
+    const auto* source = compressed;
     auto* destination = reinterpret_cast<Bytef*>(result.decoded.data());
     const int inflateResult =
         uncompress2(destination, &decodedSize, source, &sourceSize);
@@ -138,6 +143,51 @@ PvrzPreparedPage prepare_pvrz_bytes(std::span<const std::byte> fileBytes,
     result.status = PvrzPrepareStatus::IoError;
     return result;
   }
+}
+
+void MapPageConsumeCanary::reset(std::uint64_t generation) noexcept {
+  generation_ = generation;
+  claimed_ = false;
+}
+
+bool MapPageConsumeCanary::try_claim(std::uint64_t generation) noexcept {
+  if (generation == 0 || generation != generation_ || claimed_) return false;
+  claimed_ = true;
+  return true;
+}
+
+bool MapPageConsumeCanary::claimed(std::uint64_t generation) const noexcept {
+  return generation != 0 && generation == generation_ && claimed_;
+}
+
+PvrConsumeValidationStatus validate_pvr_consume(
+    const PvrConsumeEvidence& evidence) noexcept {
+  if (!evidence.scopeActive) return PvrConsumeValidationStatus::InactiveScope;
+  if (evidence.expectedReturnAddress == 0 ||
+      evidence.actualReturnAddress != evidence.expectedReturnAddress) {
+    return PvrConsumeValidationStatus::UnexpectedReturnAddress;
+  }
+  if (evidence.expectedResource == 0 ||
+      evidence.activeResource != evidence.expectedResource) {
+    return PvrConsumeValidationStatus::ResourceMismatch;
+  }
+  if (evidence.nativeData == 0 ||
+      evidence.nativeData > (std::numeric_limits<std::uintptr_t>::max)() - 4u ||
+      evidence.source != evidence.nativeData + 4u ||
+      evidence.nativeResourceBytes < 4u ||
+      evidence.sourceBytes != evidence.nativeResourceBytes - 4u) {
+    return PvrConsumeValidationStatus::SourceMismatch;
+  }
+  if (evidence.preparedCompressedBytes != evidence.nativeResourceBytes ||
+      evidence.preparedDecodedBytes == 0 ||
+      evidence.declaredDecodedBytes != evidence.preparedDecodedBytes ||
+      evidence.destinationCapacity != evidence.preparedDecodedBytes) {
+    return PvrConsumeValidationStatus::SizeMismatch;
+  }
+  if (evidence.actualCompressedCrc32 != evidence.expectedCompressedCrc32) {
+    return PvrConsumeValidationStatus::CrcMismatch;
+  }
+  return PvrConsumeValidationStatus::Ready;
 }
 
 PvrzPreparedPage prepare_pvrz_file(const std::filesystem::path& path,
@@ -377,6 +427,44 @@ ShadowObservation MapPageShadowQueue::observe(
       ++stats_.readyBeforeDemand;
       changed_.notify_all();
       return observation;
+    }
+    if (identity_known_locked(identity)) {
+      const auto pending = std::find_if(pending_.begin(), pending_.end(),
+                                        [&](const ShadowPageJob& value) {
+                                          return value.identity == identity;
+                                        });
+      if (pending != pending_.end()) pending_.erase(pending);
+      known_.erase(identity);
+      ++stats_.notReadyBeforeDemand;
+      changed_.notify_all();
+      return {.status = ShadowObservationStatus::NotReady};
+    }
+    ++stats_.unplannedDemands;
+    return {.status = ShadowObservationStatus::Unplanned};
+  } catch (...) {
+    return {.status = ShadowObservationStatus::Unplanned};
+  }
+}
+
+ShadowClaim MapPageShadowQueue::claim(
+    const ShadowPageIdentity& identity) noexcept {
+  try {
+    std::lock_guard lock(mutex_);
+    const auto ready = std::find_if(completed_.begin(), completed_.end(),
+                                    [&](const Completed& value) {
+                                      return value.identity == identity;
+                                    });
+    if (ready != completed_.end()) {
+      ShadowClaim claim{
+          .status = ShadowObservationStatus::Ready,
+          .page = std::move(ready->page),
+      };
+      completedBytes_ -= claim.page.decoded.size();
+      completed_.erase(ready);
+      known_.erase(identity);
+      ++stats_.readyBeforeDemand;
+      changed_.notify_all();
+      return claim;
     }
     if (identity_known_locked(identity)) {
       const auto pending = std::find_if(pending_.begin(), pending_.end(),

@@ -1596,3 +1596,94 @@ aucun consommateur et ne produit aucun gain ingame à elle seule. La prochaine �
 option séparée, `false` par défaut, limitée d'abord à une seule page consommée par génération AR0900,
 avec toutes les autres pages et tous les échecs sur `uncompress` natif. Aucun élément
 `validated-installed` ni changement de release n'est produit.
+
+## Étape 3e-B1 — canari d'une page consommée — 2026-08-30
+
+Le consommateur étroit défini en 3e-B0 est maintenant implémenté derrière
+`EnableMapPageOffframeConsume=false` par défaut. Il exige également `PerformanceLogs=true`. Le
+préparateur worker reste limité aux octets CPU d'override ; il calcule désormais le CRC32 du flux
+zlib exact et publie toujours au plus quatre buffers / 72 Mio.
+
+Pour chaque génération de zone, le hook extérieur `CResPVR::Demand` ne peut revendiquer qu'un seul
+résultat prêt. Cette revendication déplace le buffer hors de la file, sans seconde copie de 16 Mio.
+Un scope TLS associe ensuite ce buffer au `CResPVR*` exact pendant l'appel natif. Tout `Demand`
+imbriqué remplace ce scope, même sans candidat, et ne peut donc pas consommer la page de son appelant.
+
+Le hook global du wrapper zlib n'effectue la copie que si l'adresse de retour vaut exactement
+`moduleBase+0x3F6F24`, si le propriétaire natif et le scope sont identiques, si
+`source == pData+4`, si les tailles source/ressource/destination/préparée concordent, si les plages
+mémoire ont les protections attendues et si le CRC32 recalculé sur le thread de rendu est identique.
+Une seconde lecture de `pData/nSize` protège la fenêtre entre CRC et copie. En cas de réussite, les
+octets PVR validés sont copiés dans la destination déjà allouée par le moteur, la taille 32 bits est
+écrite et `Z_OK` est retourné. Le moteur reprend à `Demand+0x164` pour publier les champs, uploader
+le DXT et libérer sa destination. Aucun champ `CResPVR`, aucune LRU et aucun appel GL n'est possédé
+par le prototype.
+
+Tout manque, retard, résultat périmé, appel inattendu, imbrication, adresse, taille, source, CRC ou
+protection mémoire divergente rappelle le wrapper zlib original avec ses arguments d'origine. Une
+revendication rejetée ne peut pas être retentée dans la même génération. La télémétrie distingue
+revendiqué, consommé, chaque famille de fallback, temps CRC/copie et durée totale du `Demand` natif.
+Le teardown enlève d'abord le hook zlib, puis le hook `Demand`, puis l'état worker.
+
+Les gates hors ligne passent : CTest Debug 2/2, CTest Release 2/2, DLL Windows x64 Release,
+207/207 tests Python et validation exacte du `BaldurReal.exe` manifesté. Le candidat deux fichiers a
+passé `install_renderer_candidate.py install --verify-only` sans écriture dans le jeu :
+
+- dossier :
+  `G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b1-20260830\candidate-b1-offline-v1` ;
+- DLL : 1 508 352 octets, SHA-256
+  `DAE3173054F0A7BCBCD168B6361551EE96706A2CE61EBD3A36702F51797C1111` ;
+- INI : 2 450 octets, SHA-256
+  `8C20DF91B6A991F6716A92C42A6D439DCE74088EC351D65397BB89C4FB842B5A`.
+
+Le jeu restait sur la DLL `9FCE57D1...FCC98E` et l'INI `B7B39153...EDE8B5` après cette seule
+prévalidation. Le candidat était alors prêt pour sa gate ingame.
+
+### Gate ingame AR0900 — une page consommée
+
+Le candidat exact a ensuite été installé par la transaction
+`backups/renderer/20260830T140726573407Z-93391f5e/renderer-install-receipt.json`, jeu et
+InfinityLoader fermés. InfinityLoader a lancé BG2EE, puis la sauvegarde solo `AR0900` a été chargée.
+Après le délai de 30 frames, une et une seule page préparée a été consommée :
+
+```text
+area=AR0900, page=A090001, generation=3, outcome=consumed,
+compressedMiB=6.84, decodedMiB=16.00, crcMs=1.09, copyMs=2.12,
+nativeDemandMs=9.89; native cache/upload/free path retained
+```
+
+| Mesure canari AR0900 | Résultat |
+|---|---:|
+| pages du plan / déjà résidentes / soumises | 26 / 7 / 19 |
+| préparées avant `Demand` / non prêtes | 18 / 1 |
+| revendications / consommations | 1 / 1 |
+| fallbacks originaux et familles de mismatch/erreur | 0 |
+| préparation worker | 18 pages ; 99,90 Mio comprimés ; 288,00 Mio décodés |
+| temps CPU worker | 674,71 ms total ; 43,35 ms maximum |
+| pic de résultats terminés | 4 pages ; 64,00 Mio |
+| préchauffage natif | 19 matérialisations ; 709,90 ms total ; 43,69 ms maximum |
+
+Le premier relevé natif périodique suivant confirme 35 matérialisations, 35 créations de textures et
+35 uploads compressés pour l'aire ; la ligne canari confirme explicitement la poursuite du chemin
+cache/upload/libération natif après la substitution. La vue de jeu puis la carte d'AR0900 entièrement
+ouverte sont restées correctes, sans couture ou corruption visible, crash ni deadlock. La session
+bornée de 411 lignes ne contient aucune erreur et un seul avertissement, la récupération EEex du
+prologue `RenderTexture` déjà documentée.
+
+Le journal complet et le reçu copié sont conservés hors dépôt sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b1-20260830\ingame-ar0900-one-page`.
+Le log fait 15 602 022 octets, SHA-256
+`7CBB269CCFD2CB79B2D3DA1FC3B3733E5EE92A7F83EADB49F6F70AA133006C12` ; la copie du reçu fait
+1 899 octets, SHA-256 `26487BA801A065ECB1E41F8784BBBE8A7C02E05F260DDAB78CAFB5610D81330C`.
+
+Après sortie du jeu, aucun processus `Baldur`, `BaldurReal` ou `InfinityLoader` ne restait actif.
+La restauration et la vérification du reçu ont passé. Le jeu porte de nouveau exactement le DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+3e-B1 est donc **validée ingame pour une page**. La gate suivante est un candidat AR0900
+multi-page séparé, toujours désactivé par défaut et borné par une limite fixe annoncée avant
+l'essai, avec les mêmes contrôles stricts, fallback zlib natif, télémétrie, rendu complet, sortie
+stable et restauration exacte. La campagne des quatre zones reste ultérieure. Ce résultat ne
+produit aucun élément `validated-installed` et ne modifie ni `areas.csv` ni les manifests de
+release.

@@ -6,8 +6,11 @@ This note defines and records the reversible Phase 3e-A prototype for `MAP-PERF-
 shadow preparer was qualified offline and ingame on AR0900 on 2026-08-30. This is not evidence that
 asynchronous native PVR materialization is implemented: the prepared bytes are deliberately never
 consumed by the engine or OpenGL. The result establishes feasibility and readiness timing only.
-The subsequent Phase 3e-B0 static audit has identified and manifested a safe decoded-PVR handoff,
-but the Phase 3e-B1 consumer is not implemented or enabled yet.
+The subsequent Phase 3e-B0 static audit identified and manifested a safe decoded-PVR handoff.
+Phase 3e-B1 now implements that consumer as a separate default-off, one-page-per-generation canary
+and passed its offline and first AR0900 ingame gates on 2026-08-30. One prepared page was consumed,
+the native cache/upload/free continuation remained active, rendering stayed correct, and the exact
+pre-test renderer was restored.
 
 The measured bottleneck is the indivisible native `CResPVR::Demand` call. Repacking AR0900 with
 zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the PVRZ payload by
@@ -167,8 +170,12 @@ deadlock; its sole warning was the already documented EEex `RenderTexture` prolo
 
 The test transaction was restored after exit. Phase 3e-A is therefore ingame-qualified, but it did
 not optimize any frame: every CPU buffer was retired without native or GL consumption, and native
-`Demand` remained authoritative. Phase 3e-B0 has now proven the exact render-thread boundary listed
-above. The next implementation is the separate, default-off, one-page Phase 3e-B1 canary. The
-four-zone performance protocol is meaningful only after a consuming prototype exists. A shadow
-result, an installed candidate or a successful local test does not create a `validated-installed`
+`Demand` remained authoritative. Phase 3e-B0 proved the exact render-thread boundary listed above,
+and the separate default-off one-page Phase 3e-B1 consumer now implements and validates it.
+Debug/Release tests, the exact executable validator, the transaction preflight and the AR0900
+ingame gate pass; see
+[`validation/map-page-offframe-phase3b1.md`](validation/map-page-offframe-phase3b1.md). The next gate
+is a separately bounded multi-page AR0900 candidate preserving the same strict fallback and exact
+transactional restoration. The four-zone performance protocol remains later. A shadow result, a
+prepared or installed candidate, or a successful local test does not create a `validated-installed`
 release element.

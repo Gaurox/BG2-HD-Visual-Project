@@ -2,6 +2,7 @@
 
 #include <intrin.h>
 #include <windows.h>
+#include <zlib.h>
 
 #include <algorithm>
 #include <array>
@@ -67,6 +68,7 @@ using CharacterRenderFn = MonsterIcewindRenderFn;
 using GameAreaRenderFn = void (*)(void*, void*);
 using DrawFlushGlFn = void (*)();
 using CResPvrDemandFn = void* (*)(void*);
+using CResPvrUncompressFn = int (*)(void*, std::uint32_t*, const void*, std::uint32_t);
 
 // Hook management - initialize MinHook
 // Intentionally explicit lifetime: a static smart-pointer destructor would
@@ -84,6 +86,8 @@ static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
 static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
 static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
+static core::Hook<CResPvrUncompressFn> g_pvrUncompressHook;
+static std::uintptr_t g_pvrUncompressExpectedReturn{};
 static DrawFlushGlFn g_drawFlushGl{};
 
 static AppContext* g_ctx = nullptr;
@@ -100,6 +104,8 @@ thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nu
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
 thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
+thread_local map_page_prewarm::PvrConsumeAttempt* g_activePvrConsumeAttempt = nullptr;
+thread_local void* g_activePvrConsumeResource = nullptr;
 bool g_nativeOcclusionProbeHookEnabled = false;
 bool g_nativeOcclusionProbeLoggingEnabled = false;
 bool g_nativeOcclusionBridgeEnabled = false;
@@ -2233,6 +2239,153 @@ class PvrDemandScopeGuard {
   bool finished_{};
 };
 
+class PvrConsumeThreadScope {
+ public:
+  PvrConsumeThreadScope(void* resource,
+                        map_page_prewarm::PvrConsumeAttempt* attempt) noexcept
+      : previousAttempt_(g_activePvrConsumeAttempt),
+        previousResource_(g_activePvrConsumeResource) {
+    // Every nested Demand replaces the current scope, even when it has no
+    // candidate. It can therefore never consume an outer Demand's page.
+    g_activePvrConsumeAttempt = attempt;
+    g_activePvrConsumeResource = resource;
+  }
+
+  ~PvrConsumeThreadScope() {
+    g_activePvrConsumeAttempt = previousAttempt_;
+    g_activePvrConsumeResource = previousResource_;
+  }
+
+ private:
+  map_page_prewarm::PvrConsumeAttempt* previousAttempt_{};
+  void* previousResource_{};
+};
+
+map_page_prewarm::PvrConsumeOutcome consume_outcome(
+    core::PvrConsumeValidationStatus status) noexcept {
+  switch (status) {
+    case core::PvrConsumeValidationStatus::UnexpectedReturnAddress:
+      return map_page_prewarm::PvrConsumeOutcome::UnexpectedReturnAddress;
+    case core::PvrConsumeValidationStatus::ResourceMismatch:
+    case core::PvrConsumeValidationStatus::InactiveScope:
+      return map_page_prewarm::PvrConsumeOutcome::ResourceMismatch;
+    case core::PvrConsumeValidationStatus::SourceMismatch:
+      return map_page_prewarm::PvrConsumeOutcome::SourceMismatch;
+    case core::PvrConsumeValidationStatus::SizeMismatch:
+      return map_page_prewarm::PvrConsumeOutcome::SizeMismatch;
+    case core::PvrConsumeValidationStatus::CrcMismatch:
+      return map_page_prewarm::PvrConsumeOutcome::CrcMismatch;
+    case core::PvrConsumeValidationStatus::Ready:
+      return map_page_prewarm::PvrConsumeOutcome::NotReached;
+  }
+  return map_page_prewarm::PvrConsumeOutcome::InternalError;
+}
+
+// Global zlib wrapper detour, but substitution is legal only for the one
+// manifested CResPVR::Demand callsite and its exact active render-thread scope.
+// Every rejected condition delegates to the original embedded zlib wrapper.
+static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSize,
+                                 const void* source, std::uint32_t sourceSize) {
+  const auto original = g_pvrUncompressHook.original();
+  auto* attempt = g_activePvrConsumeAttempt;
+  const auto fallback = [&](map_page_prewarm::PvrConsumeOutcome outcome) {
+    if (attempt && attempt->outcome == map_page_prewarm::PvrConsumeOutcome::NotReached) {
+      attempt->outcome = outcome;
+    }
+    return original(destination, destinationSize, source, sourceSize);
+  };
+  if (!attempt) return original(destination, destinationSize, source, sourceSize);
+
+  try {
+    const auto actualReturn = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
+    if (actualReturn != g_pvrUncompressExpectedReturn) {
+      return fallback(map_page_prewarm::PvrConsumeOutcome::UnexpectedReturnAddress);
+    }
+    if (!destination || !destinationSize || !source || !attempt->resource ||
+        attempt->resource != g_activePvrConsumeResource ||
+        attempt->page.status != core::PvrzPrepareStatus::Ready ||
+        attempt->page.decoded.empty() ||
+        attempt->page.decoded.size() > core::kShadowMaximumDecodedBytes ||
+        attempt->page.compressedBytes > core::kShadowMaximumCompressedBytes) {
+      return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
+    }
+
+    game::CResPVR native{};
+    std::uint32_t declaredDecodedSize{};
+    std::uint32_t destinationCapacity{};
+    if (!core::safe_read(attempt->resource, native) || !native.baseclass_0.pData ||
+        native.baseclass_0.nSize < 4u ||
+        native.baseclass_0.nSize > core::kShadowMaximumCompressedBytes ||
+        !core::is_readable(native.baseclass_0.pData, native.baseclass_0.nSize) ||
+        !core::safe_read(native.baseclass_0.pData, declaredDecodedSize) ||
+        !core::safe_read(destinationSize, destinationCapacity) ||
+        !core::is_writable_non_executable_memory(destinationSize,
+                                                  sizeof(destinationCapacity)) ||
+        !core::is_writable_non_executable_memory(destination,
+                                                  attempt->page.decoded.size())) {
+      return fallback(map_page_prewarm::PvrConsumeOutcome::MemoryRejected);
+    }
+
+    core::PvrConsumeEvidence evidence{
+        .scopeActive = true,
+        .expectedReturnAddress = g_pvrUncompressExpectedReturn,
+        .actualReturnAddress = actualReturn,
+        .expectedResource = reinterpret_cast<std::uintptr_t>(attempt->resource),
+        .activeResource = reinterpret_cast<std::uintptr_t>(g_activePvrConsumeResource),
+        .nativeData = reinterpret_cast<std::uintptr_t>(native.baseclass_0.pData),
+        .source = reinterpret_cast<std::uintptr_t>(source),
+        .nativeResourceBytes = native.baseclass_0.nSize,
+        .sourceBytes = sourceSize,
+        .preparedCompressedBytes = static_cast<std::size_t>(attempt->page.compressedBytes),
+        .declaredDecodedBytes = declaredDecodedSize,
+        .destinationCapacity = destinationCapacity,
+        .preparedDecodedBytes = attempt->page.decoded.size(),
+        .expectedCompressedCrc32 = attempt->page.compressedCrc32,
+        .actualCompressedCrc32 = attempt->page.compressedCrc32,
+    };
+    auto validation = core::validate_pvr_consume(evidence);
+    if (validation != core::PvrConsumeValidationStatus::Ready) {
+      return fallback(consume_outcome(validation));
+    }
+
+    LARGE_INTEGER crcStarted{};
+    LARGE_INTEGER crcEnded{};
+    const bool crcMeasured = QueryPerformanceCounter(&crcStarted);
+    evidence.actualCompressedCrc32 = static_cast<std::uint32_t>(crc32(
+        crc32(0L, Z_NULL, 0), reinterpret_cast<const Bytef*>(source), sourceSize));
+    if (crcMeasured && QueryPerformanceCounter(&crcEnded)) {
+      attempt->crcNanoseconds = performance_nanoseconds(crcStarted, crcEnded);
+    }
+    validation = core::validate_pvr_consume(evidence);
+    if (validation != core::PvrConsumeValidationStatus::Ready) {
+      return fallback(consume_outcome(validation));
+    }
+
+    // Re-read the native owner after hashing the source. Any concurrent or
+    // re-entrant mutation invalidates the canary before bytes are published.
+    game::CResPVR stable{};
+    if (!core::safe_read(attempt->resource, stable) ||
+        stable.baseclass_0.pData != native.baseclass_0.pData ||
+        stable.baseclass_0.nSize != native.baseclass_0.nSize) {
+      return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
+    }
+
+    LARGE_INTEGER copyStarted{};
+    LARGE_INTEGER copyEnded{};
+    const bool copyMeasured = QueryPerformanceCounter(&copyStarted);
+    std::memcpy(destination, attempt->page.decoded.data(), attempt->page.decoded.size());
+    const auto produced = static_cast<std::uint32_t>(attempt->page.decoded.size());
+    std::memcpy(destinationSize, &produced, sizeof(produced));
+    if (copyMeasured && QueryPerformanceCounter(&copyEnded)) {
+      attempt->copyNanoseconds = performance_nanoseconds(copyStarted, copyEnded);
+    }
+    attempt->outcome = map_page_prewarm::PvrConsumeOutcome::Consumed;
+    return Z_OK;
+  } catch (...) {
+    return fallback(map_page_prewarm::PvrConsumeOutcome::InternalError);
+  }
+}
+
 // Exact 2.7.3 CResPVR::Demand wrapper. It observes the engine's existing
 // synchronous materialization and leaves the call, cache and texture policy
 // unchanged. Nested GL hooks provide creation/upload time; the remaining time
@@ -2249,7 +2402,8 @@ static void* detour_pvr_demand(void* thisPtr) {
 
   const bool ioCandidate = haveBefore &&
                            (before.texture <= 0 || !before.baseclass_0.bLoaded);
-  if (ioCandidate) map_page_prewarm::observe_native_demand(thisPtr);
+  auto consumeAttempt = ioCandidate ? map_page_prewarm::begin_native_demand(thisPtr)
+                                    : std::nullopt;
   IO_COUNTERS ioBefore{};
   const bool haveIoBefore =
       ioCandidate && GetProcessIoCounters(GetCurrentProcess(), &ioBefore);
@@ -2257,6 +2411,8 @@ static void* detour_pvr_demand(void* thisPtr) {
   LARGE_INTEGER started{};
   const bool measured = QueryPerformanceCounter(&started);
   PvrDemandScopeGuard scope;
+  PvrConsumeThreadScope consumeScope(
+      thisPtr, consumeAttempt ? &*consumeAttempt : nullptr);
   void* result = original(thisPtr);
   const auto nested = scope.finish();
   LARGE_INTEGER ended{};
@@ -2294,6 +2450,9 @@ static void* detour_pvr_demand(void* thisPtr) {
       frame::frame_count(), name, materialized, ioMeasured, textureCreated,
       haveAfter ? after.size.cx : 0, haveAfter ? after.size.cy : 0,
       durationNanoseconds, readOperations, readBytes, nested);
+  if (consumeAttempt) {
+    map_page_prewarm::record_consume_attempt(*consumeAttempt, durationNanoseconds);
+  }
   return result;
 }
 
@@ -2357,9 +2516,10 @@ bool install_all(AppContext& ctx) {
     LOG_INFO("RenderTexture hook created");
 
     map_page_prewarm::configure(nullptr);
-    (void)map_page_prewarm::configure_shadow(false, {});
+    (void)map_page_prewarm::configure_shadow(false, false, {});
     if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm ||
-         ctx.cfg.enableMapPageOffframeProbe) &&
+          ctx.cfg.enableMapPageOffframeProbe ||
+          ctx.cfg.enableMapPageOffframeConsume) &&
         ctx.manifest) {
       try {
         const auto module = core::get_module_span(nullptr);
@@ -2376,10 +2536,52 @@ bool install_all(AppContext& ctx) {
         const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
         const auto demandEntry = reinterpret_cast<CResPvrDemandFn>(moduleBase + runtime.demand);
         map_page_prewarm::configure(demandEntry);
-        if (ctx.cfg.enableMapPageOffframeProbe && ctx.cfg.enablePerformanceLogging) {
+        if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
+          const auto& boundary = runtime.decodeBoundary;
+          if (!boundary.enabled()) {
+            throw std::runtime_error("manifest has no decoded-PVR consume boundary");
+          }
+          if (!matches_pattern_at_rva(*module, boundary.uncompress,
+                                      boundary.uncompressSignature)) {
+            throw std::runtime_error("PVR uncompress wrapper signature mismatch");
+          }
+          if (!matches_pattern_at_rva(*module,
+                                      runtime.demand + boundary.consumeWindowOffset,
+                                      boundary.consumeWindowSignature)) {
+            throw std::runtime_error("PVR post-decode consume window mismatch");
+          }
+          const auto callAddress = moduleBase + runtime.demand +
+                                   boundary.uncompressCallOffset;
+          const auto decodedTarget = core::rel32_target_checked(
+              reinterpret_cast<const void*>(callAddress), 0xE8, 1, 5);
+          if (decodedTarget != reinterpret_cast<void*>(moduleBase + boundary.uncompress) ||
+              boundary.consumeWindowOffset != boundary.uncompressCallOffset + 5u) {
+            throw std::runtime_error("PVR uncompress call edge mismatch");
+          }
+          g_pvrUncompressExpectedReturn =
+              moduleBase + runtime.demand + boundary.consumeWindowOffset;
+        }
+        if ((ctx.cfg.enableMapPageOffframeProbe ||
+             ctx.cfg.enableMapPageOffframeConsume) &&
+            ctx.cfg.enablePerformanceLogging) {
           const auto resourceDirectory =
               core::ConfigManager::config_path().parent_path() / "override";
-          (void)map_page_prewarm::configure_shadow(true, resourceDirectory);
+          const bool shadowConfigured = map_page_prewarm::configure_shadow(
+              true, ctx.cfg.enableMapPageOffframeConsume, resourceDirectory);
+          if (ctx.cfg.enableMapPageOffframeConsume && !shadowConfigured) {
+            throw std::runtime_error("off-frame consume worker unavailable");
+          }
+        }
+        if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
+          const auto& boundary = runtime.decodeBoundary;
+          g_pvrUncompressHook.create(
+              reinterpret_cast<void*>(moduleBase + boundary.uncompress),
+              reinterpret_cast<void*>(&detour_pvr_uncompress));
+          g_pvrUncompressHook.enable();
+          LOG_INFO(
+              "Map page off-frame consume canary installed at zlib RVA 0x{:X}; "
+              "expected return RVA 0x{:X}, one claim per area generation, strict native fallback",
+              boundary.uncompress, runtime.demand + boundary.consumeWindowOffset);
         }
         if (ctx.cfg.enablePerformanceLogging) {
           g_pvrDemandHook.create(
@@ -2408,14 +2610,23 @@ bool install_all(AppContext& ctx) {
               "Map page shadow probe is enabled but inactive because PerformanceLogs=false; "
               "the probe requires demand correlation telemetry");
         }
+        if (ctx.cfg.enableMapPageOffframeConsume && !ctx.cfg.enablePerformanceLogging) {
+          LOG_WARN(
+              "Map page off-frame consume canary is enabled but inactive because "
+              "PerformanceLogs=false; strict demand correlation is required");
+        }
       } catch (const std::exception& error) {
+        (void)g_pvrUncompressHook.remove();
+        g_pvrUncompressExpectedReturn = 0;
         (void)g_pvrDemandHook.remove();
-        (void)map_page_prewarm::configure_shadow(false, {});
+        (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
       } catch (...) {
+        (void)g_pvrUncompressHook.remove();
+        g_pvrUncompressExpectedReturn = 0;
         (void)g_pvrDemandHook.remove();
-        (void)map_page_prewarm::configure_shadow(false, {});
+        (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
       }
@@ -2713,6 +2924,8 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_pvrUncompressHook.remove();
+    g_pvrUncompressExpectedReturn = 0;
     (void)g_pvrDemandHook.remove();
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
@@ -2747,6 +2960,8 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_pvrUncompressHook.remove();
+    g_pvrUncompressExpectedReturn = 0;
     (void)g_pvrDemandHook.remove();
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
@@ -2788,6 +3003,8 @@ void uninstall_all() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
   (void)g_vidCellRenderTextureHook.remove();
+  (void)g_pvrUncompressHook.remove();
+  g_pvrUncompressExpectedReturn = 0;
   (void)g_pvrDemandHook.remove();
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.remove();
@@ -2836,6 +3053,8 @@ void prepare_for_shutdown() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();
   (void)g_vidCellRenderTextureHook.disable();
+  (void)g_pvrUncompressHook.disable();
+  g_pvrUncompressExpectedReturn = 0;
   (void)g_pvrDemandHook.disable();
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.disable();

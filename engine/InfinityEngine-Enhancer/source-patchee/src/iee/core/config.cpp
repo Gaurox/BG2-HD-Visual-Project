@@ -139,6 +139,8 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.enableMapPagePrewarm);
     else if (iequals(key, "EnableMapPageOffframeProbe"))
       assign_bool(cfg.enableMapPageOffframeProbe);
+    else if (iequals(key, "EnableMapPageOffframeConsume"))
+      assign_bool(cfg.enableMapPageOffframeConsume);
     else if (iequals(key, "MapPagePrewarmPagesPerFrame"))
       assign_u32(cfg.mapPagePrewarmPagesPerFrame);
     else if (iequals(key, "MapPagePrewarmBudgetMs"))
@@ -273,6 +275,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableTilePageDiagnostics", cfg.enableTilePageDiagnostics);
   write_bool(f, "EnableMapPagePrewarm", cfg.enableMapPagePrewarm);
   write_bool(f, "EnableMapPageOffframeProbe", cfg.enableMapPageOffframeProbe);
+  write_bool(f, "EnableMapPageOffframeConsume", cfg.enableMapPageOffframeConsume);
   f << "MapPagePrewarmPagesPerFrame = " << cfg.mapPagePrewarmPagesPerFrame << "\n";
   f << "MapPagePrewarmBudgetMs = " << cfg.mapPagePrewarmBudgetMs << "\n";
   f << "MapPagePrewarmMaxPages = " << cfg.mapPagePrewarmMaxPages << "\n";

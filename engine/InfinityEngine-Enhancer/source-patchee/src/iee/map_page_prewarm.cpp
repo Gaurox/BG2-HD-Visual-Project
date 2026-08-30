@@ -78,6 +78,19 @@ struct RuntimeState {
   double maximumDemandMs{};
   std::uint64_t shadowGeneration{};
   bool shadowDemandSummaryLogged{};
+  std::uint64_t consumeClaims{};
+  std::uint64_t consumeConsumed{};
+  std::uint64_t consumeFallbacks{};
+  std::uint64_t consumeUnexpectedReturns{};
+  std::uint64_t consumeResourceMismatches{};
+  std::uint64_t consumeSourceMismatches{};
+  std::uint64_t consumeSizeMismatches{};
+  std::uint64_t consumeCrcMismatches{};
+  std::uint64_t consumeMemoryRejected{};
+  std::uint64_t consumeInternalErrors{};
+  std::uint64_t consumeNotReached{};
+  std::uint64_t consumeCrcNanoseconds{};
+  std::uint64_t consumeCopyNanoseconds{};
 };
 
 PvrDemandFn g_demand{};
@@ -87,6 +100,8 @@ core::MapPageShadowQueue g_shadowQueue{};
 core::ProcessLifetimeWorker g_shadowWorker{};
 std::filesystem::path g_shadowResourceDirectory{};
 bool g_shadowEnabled{};
+bool g_consumeEnabled{};
+core::MapPageConsumeCanary g_consumeCanary{};
 
 std::string_view area_name() noexcept;
 
@@ -101,9 +116,11 @@ void log_shadow_summary(std::string_view reason) noexcept {
         "invalid={}, discarded={}, readyBeforeDemand={}, notReadyBeforeDemand={}, "
         "unplannedDemands={}, compressedMiB={:.2f}, decodedMiB={:.2f}, totalPrepareMs={:.2f}, "
         "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, pending={}, "
-        "completed={}, completedMiB={:.2f}, "
-        "peakPending={}, peakCompleted={}, peakCompletedMiB={:.2f}; CPU buffers never reached "
-        "native resources or OpenGL",
+        "completed={}, completedMiB={:.2f}, peakPending={}, peakCompleted={}, "
+        "peakCompletedMiB={:.2f}, canaryClaims={}, consumed={}, originalFallbacks={}, "
+        "unexpectedReturn={}, resourceMismatch={}, sourceMismatch={}, sizeMismatch={}, "
+        "crcMismatch={}, memoryRejected={}, internalError={}, uncompressNotReached={}, "
+        "crcMs={:.2f}, copyMs={:.2f}; mode={}",
         area_name(), reason, stats.generation, stats.submitted, stats.coalesced,
         stats.queueRejected, stats.started, stats.prepared, stats.missing,
         stats.ioFailures, stats.invalid, stats.discarded, stats.readyBeforeDemand,
@@ -117,7 +134,15 @@ void log_shadow_summary(std::string_view reason) noexcept {
         stats.pendingPages, stats.completedPages,
         static_cast<double>(stats.completedBytes) / (1024.0 * 1024.0),
         stats.peakPendingPages, stats.peakCompletedPages,
-        static_cast<double>(stats.peakCompletedBytes) / (1024.0 * 1024.0));
+        static_cast<double>(stats.peakCompletedBytes) / (1024.0 * 1024.0),
+        g_state.consumeClaims, g_state.consumeConsumed, g_state.consumeFallbacks,
+        g_state.consumeUnexpectedReturns, g_state.consumeResourceMismatches,
+        g_state.consumeSourceMismatches, g_state.consumeSizeMismatches,
+        g_state.consumeCrcMismatches, g_state.consumeMemoryRejected,
+        g_state.consumeInternalErrors, g_state.consumeNotReached,
+        static_cast<double>(g_state.consumeCrcNanoseconds) / 1'000'000.0,
+        static_cast<double>(g_state.consumeCopyNanoseconds) / 1'000'000.0,
+        g_consumeEnabled ? "one-page-consume-canary" : "shadow-observation-only");
   } catch (...) {
   }
 }
@@ -137,6 +162,7 @@ unsigned __stdcall shadow_worker_entry(void*) noexcept {
 }
 
 void stop_shadow_worker() noexcept {
+  g_consumeEnabled = false;
   g_shadowEnabled = false;
   g_shadowQueue.request_stop();
   const auto join = g_shadowWorker.join();
@@ -175,6 +201,7 @@ void reset_state(std::uint64_t frame) {
   g_state = {};
   g_state.areaStartFrame = frame;
   g_state.shadowGeneration = shadowGeneration;
+  g_consumeCanary.reset(shadowGeneration);
 }
 
 std::string_view area_name() noexcept {
@@ -409,7 +436,7 @@ void configure(PvrDemandFn demand) noexcept {
   g_resetRequested.store(true, std::memory_order_release);
 }
 
-bool configure_shadow(bool enabled,
+bool configure_shadow(bool enabled, bool consumeEnabled,
                       const std::filesystem::path& resourceDirectory) noexcept {
   stop_shadow_worker();
   if (!enabled) return true;
@@ -435,15 +462,17 @@ bool configure_shadow(bool enabled,
       return false;
     }
     g_shadowEnabled = true;
+    g_consumeEnabled = consumeEnabled;
     g_resetRequested.store(true, std::memory_order_release);
     LOG_INFO(
         "Map page shadow probe prepared: resourceDirectory={}, pendingLimit={}, "
         "completedLimit={}, completedMiBLimit={:.2f}, decodedPageMiBLimit={:.2f}; "
-        "worker is CPU-only and native Demand remains authoritative",
+        "worker is CPU-only; consumeCanary={} and native Demand owns cache/upload/free",
         g_shadowResourceDirectory.string(), core::kShadowMaximumPendingPages,
         core::kShadowMaximumCompletedPages,
         static_cast<double>(core::kShadowMaximumCompletedBytes) / (1024.0 * 1024.0),
-        static_cast<double>(core::kShadowMaximumDecodedBytes) / (1024.0 * 1024.0));
+        static_cast<double>(core::kShadowMaximumDecodedBytes) / (1024.0 * 1024.0),
+        g_consumeEnabled);
     return true;
   } catch (...) {
     stop_shadow_worker();
@@ -457,7 +486,7 @@ void request_area_reset() noexcept {
 
 void on_post_swap(AppContext& ctx) noexcept {
   try {
-    const bool shadowActive = ctx.cfg.enableMapPageOffframeProbe && g_shadowEnabled;
+    const bool shadowActive = g_shadowEnabled;
     if ((!ctx.cfg.enableMapPagePrewarm && !shadowActive) ||
         !ctx.cfg.enablePerformanceLogging || !g_demand) {
       return;
@@ -562,14 +591,118 @@ void on_post_swap(AppContext& ctx) noexcept {
   }
 }
 
-void observe_native_demand(void* pvr) noexcept {
-  if (!g_shadowEnabled || !pvr || g_state.shadowGeneration == 0) return;
+std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
+  if (!g_shadowEnabled || !pvr || g_state.shadowGeneration == 0) return std::nullopt;
   try {
     const auto candidate = std::find_if(
         g_state.candidates.begin(), g_state.candidates.end(),
         [&](const PageCandidate& value) { return value.pvr == pvr; });
-    if (candidate == g_state.candidates.end()) return;
-    (void)g_shadowQueue.observe(shadow_identity(*candidate));
+    if (candidate == g_state.candidates.end()) return std::nullopt;
+    auto identity = shadow_identity(*candidate);
+    std::optional<PvrConsumeAttempt> attempt;
+    if (g_consumeEnabled && !g_consumeCanary.claimed(g_state.shadowGeneration)) {
+      auto claim = g_shadowQueue.claim(identity);
+      if (claim.status == core::ShadowObservationStatus::Ready &&
+          g_consumeCanary.try_claim(g_state.shadowGeneration)) {
+        ++g_state.consumeClaims;
+        attempt.emplace(PvrConsumeAttempt{
+            .resource = pvr,
+            .identity = std::move(identity),
+            .page = std::move(claim.page),
+        });
+      }
+    } else {
+      (void)g_shadowQueue.observe(identity);
+    }
+    if (!attempt && !g_state.shadowDemandSummaryLogged) {
+      const auto stats = g_shadowQueue.snapshot();
+      if (stats.submitted > 0 &&
+          stats.readyBeforeDemand + stats.notReadyBeforeDemand >= stats.submitted) {
+        g_state.shadowDemandSummaryLogged = true;
+        log_shadow_summary("all-planned-pages-observed");
+      }
+    }
+    return attempt;
+  } catch (...) {
+    return std::nullopt;
+  }
+}
+
+namespace {
+std::string_view consume_outcome_name(PvrConsumeOutcome outcome) noexcept {
+  switch (outcome) {
+    case PvrConsumeOutcome::Consumed:
+      return "consumed";
+    case PvrConsumeOutcome::UnexpectedReturnAddress:
+      return "unexpected-return-address";
+    case PvrConsumeOutcome::ResourceMismatch:
+      return "resource-mismatch";
+    case PvrConsumeOutcome::SourceMismatch:
+      return "source-mismatch";
+    case PvrConsumeOutcome::SizeMismatch:
+      return "size-mismatch";
+    case PvrConsumeOutcome::CrcMismatch:
+      return "crc-mismatch";
+    case PvrConsumeOutcome::MemoryRejected:
+      return "memory-rejected";
+    case PvrConsumeOutcome::InternalError:
+      return "internal-error";
+    case PvrConsumeOutcome::NotReached:
+      return "uncompress-not-reached";
+  }
+  return "unknown";
+}
+}  // namespace
+
+void record_consume_attempt(const PvrConsumeAttempt& attempt,
+                            std::uint64_t demandNanoseconds) noexcept {
+  try {
+    if (attempt.outcome == PvrConsumeOutcome::Consumed) {
+      ++g_state.consumeConsumed;
+    } else {
+      ++g_state.consumeFallbacks;
+      switch (attempt.outcome) {
+        case PvrConsumeOutcome::UnexpectedReturnAddress:
+          ++g_state.consumeUnexpectedReturns;
+          break;
+        case PvrConsumeOutcome::ResourceMismatch:
+          ++g_state.consumeResourceMismatches;
+          break;
+        case PvrConsumeOutcome::SourceMismatch:
+          ++g_state.consumeSourceMismatches;
+          break;
+        case PvrConsumeOutcome::SizeMismatch:
+          ++g_state.consumeSizeMismatches;
+          break;
+        case PvrConsumeOutcome::CrcMismatch:
+          ++g_state.consumeCrcMismatches;
+          break;
+        case PvrConsumeOutcome::MemoryRejected:
+          ++g_state.consumeMemoryRejected;
+          break;
+        case PvrConsumeOutcome::InternalError:
+          ++g_state.consumeInternalErrors;
+          break;
+        case PvrConsumeOutcome::NotReached:
+          ++g_state.consumeNotReached;
+          break;
+        case PvrConsumeOutcome::Consumed:
+          break;
+      }
+    }
+    g_state.consumeCrcNanoseconds += attempt.crcNanoseconds;
+    g_state.consumeCopyNanoseconds += attempt.copyNanoseconds;
+    LOG_INFO(
+        "Map page off-frame canary: area={}, page={}, generation={}, outcome={}, "
+        "compressedMiB={:.2f}, decodedMiB={:.2f}, crcMs={:.2f}, copyMs={:.2f}, "
+        "nativeDemandMs={:.2f}; native cache/upload/free path retained",
+        attempt.identity.areaResref, attempt.identity.pageResref,
+        attempt.identity.generation, consume_outcome_name(attempt.outcome),
+        static_cast<double>(attempt.page.compressedBytes) / (1024.0 * 1024.0),
+        static_cast<double>(attempt.page.decodedBytes) / (1024.0 * 1024.0),
+        static_cast<double>(attempt.crcNanoseconds) / 1'000'000.0,
+        static_cast<double>(attempt.copyNanoseconds) / 1'000'000.0,
+        static_cast<double>(demandNanoseconds) / 1'000'000.0);
     if (!g_state.shadowDemandSummaryLogged) {
       const auto stats = g_shadowQueue.snapshot();
       if (stats.submitted > 0 &&

@@ -40,6 +40,10 @@ struct PvrzPreparedPage {
   std::uint64_t compressedBytes{};
   std::uint64_t decodedBytes{};
   std::uint64_t prepareNanoseconds{};
+  // CRC32 of the zlib stream only (the bytes after the four-byte PVRZ size
+  // prefix). Phase 3e-B1 rechecks it against the native CRes buffer before a
+  // prepared page may replace the engine's uncompress call.
+  std::uint32_t compressedCrc32{};
   std::uint32_t width{};
   std::uint32_t height{};
   std::uint32_t pixelFormat{};
@@ -96,6 +100,58 @@ struct ShadowObservation {
   std::uint64_t prepareNanoseconds{};
 };
 
+struct ShadowClaim {
+  ShadowObservationStatus status{ShadowObservationStatus::Unplanned};
+  PvrzPreparedPage page{};
+};
+
+// One successful handoff claim is permitted per area generation. A ready page
+// consumes the gate even when the later render-thread validation falls back;
+// this keeps a malformed canary from cascading into additional attempts.
+class MapPageConsumeCanary {
+ public:
+  void reset(std::uint64_t generation) noexcept;
+  [[nodiscard]] bool try_claim(std::uint64_t generation) noexcept;
+  [[nodiscard]] bool claimed(std::uint64_t generation) const noexcept;
+
+ private:
+  std::uint64_t generation_{};
+  bool claimed_{};
+};
+
+enum class PvrConsumeValidationStatus : std::uint8_t {
+  Ready,
+  InactiveScope,
+  UnexpectedReturnAddress,
+  ResourceMismatch,
+  SourceMismatch,
+  SizeMismatch,
+  CrcMismatch,
+};
+
+// Host-testable portion of the B1 contract. Readability/writability is checked
+// by the Windows detour before constructing this evidence.
+struct PvrConsumeEvidence {
+  bool scopeActive{};
+  std::uintptr_t expectedReturnAddress{};
+  std::uintptr_t actualReturnAddress{};
+  std::uintptr_t expectedResource{};
+  std::uintptr_t activeResource{};
+  std::uintptr_t nativeData{};
+  std::uintptr_t source{};
+  std::size_t nativeResourceBytes{};
+  std::size_t sourceBytes{};
+  std::size_t preparedCompressedBytes{};
+  std::size_t declaredDecodedBytes{};
+  std::size_t destinationCapacity{};
+  std::size_t preparedDecodedBytes{};
+  std::uint32_t expectedCompressedCrc32{};
+  std::uint32_t actualCompressedCrc32{};
+};
+
+[[nodiscard]] PvrConsumeValidationStatus validate_pvr_consume(
+    const PvrConsumeEvidence& evidence) noexcept;
+
 struct ShadowQueueStats {
   std::uint64_t generation{};
   std::uint64_t submitted{};
@@ -140,6 +196,9 @@ class MapPageShadowQueue {
   [[nodiscard]] bool wait_take(ShadowPageJob& job) noexcept;
   [[nodiscard]] bool publish(ShadowPreparedResult result) noexcept;
   [[nodiscard]] ShadowObservation observe(const ShadowPageIdentity& identity) noexcept;
+  // Identical retirement semantics to observe(), but moves a ready immutable
+  // buffer to the render thread instead of destroying it under the queue lock.
+  [[nodiscard]] ShadowClaim claim(const ShadowPageIdentity& identity) noexcept;
   [[nodiscard]] ShadowQueueStats snapshot() const noexcept;
   void request_stop() noexcept;
 
