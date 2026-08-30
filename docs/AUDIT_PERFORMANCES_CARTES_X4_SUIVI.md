@@ -63,10 +63,67 @@ de référence proviennent de sessions antérieures dont le cache fichier n’é
 AR0900 n’a aucune ouverture de carte après préchauffage. Aucun chiffre de gain ne doit être publié
 avant la campagne décrite en fin de document.
 
-Le runtime expérimental courant est ce mini-lot 2, installé localement avec son état distinct sous
-`bg2hd/state/map-pvr-demand-phase-telemetry-20260829T064935Z/`. Sa restauration revient au
-raffinement 1c, puis la chaîne des états précédents permet de revenir jusqu’au build P0 de rotation
-des logs. Il n’est pas éligible à la release et aucun manifeste de release n’a été modifié.
+Le runtime expérimental courant est le mini-lot carte 3. Le DLL installé localement est le candidat
+ingame exact SHA-256
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E`, avec
+`PerformanceLogs=true`, `EnableTilePageDiagnostics=false` et `EnableMapPagePrewarm=true`. Son
+dernier instantané est
+`bg2hd/state/map-page-prewarm-wed-identity-20260829T094250Z/`. Il n’est pas éligible à la release
+et aucun manifeste de release n’a été modifié.
+
+## Gel technique du candidat — 2026-08-30
+
+La reprise de l’étape 1 a été effectuée jeu et InfinityLoader fermés, sur le commit dépôt
+`cffc1d129a99df7bf0100b01f97a5fd41ab9cb05`. Le sous-arbre moteur n’a pas changé depuis le commit
+qui a introduit le prototype,
+`dbc724b063825b309f784cc8a5acd19dcf3fe56b`. L’identité de référence pour le futur A/B est :
+
+- **binaire réellement mesuré et encore installé** : 1 434 112 octets, SHA-256
+  `9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E`, horodaté localement le
+  2026-08-29 à 09:42:20 ;
+- **configuration réellement mesurée** : 2 238 octets, SHA-256
+  `B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5` ;
+- **source moteur** : commit `dbc724b063825b309f784cc8a5acd19dcf3fe56b`, identique dans le
+  commit de reprise `cffc1d129a99df7bf0100b01f97a5fd41ab9cb05` ;
+- **reconstruction propre du 2026-08-30** : Visual Studio 2019 Build Tools, générateur CMake
+  `Visual Studio 16 2019`, plateforme x64, toolset v142, SDK `10.0.19041.0`, DLL Release de
+  1 434 112 octets, SHA-256
+  `25648942F6DBF0DF9CC52CDF7488DD2D026C417DF891E2B94C75A448A8580BD3`.
+
+Le SHA de la reconstruction propre diffère du DLL installé. Cette différence interdit de présenter
+la reconstruction comme le binaire exact de la première session : le candidat A/B reste donc gelé
+par le SHA `9FCE…`, tandis que `2564…` constitue uniquement la preuve qu’un build propre du même
+sous-arbre source réussit. Aucun DLL n’a été réinstallé pendant cette reprise.
+
+Gates rejouées sur la reconstruction propre :
+
+- builds Debug et Release réussis ;
+- `ctest -C Debug` et `ctest -C Release` : 2/2 tests réussis dans chaque configuration ;
+- tests Python communs : 180/180 réussis ;
+- validation hors ligne de `BaldurReal.exe` réussie : 7 202 696 octets, SHA-256
+  `b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57`, signatures, onze
+  callsites et offsets attendus conformes au manifeste moteur.
+
+### Chaîne de restauration vérifiée hors ligne
+
+Les hashes des fichiers actifs, des sauvegardes et du dernier état transactionnel donnent la chaîne
+LIFO suivante :
+
+| DLL à retirer | Instantané à appliquer | DLL restaurée |
+|---|---|---|
+| `9FCE57D1…` | `map-page-prewarm-wed-identity-20260829T094250Z` | `2F8A030F…` |
+| `2F8A030F…` | `map-page-prewarm-diagnostic-20260829T093741Z` | `AA2A09FB…` |
+| `AA2A09FB…` | `map-page-prewarm-rearm-20260829T093256Z` | `A9EC0998…` |
+| `A9EC0998…` | `map-page-prewarm-prototype-20260829T072353Z` | `E169E9B0…` |
+| `E169E9B0…` | état transactionnel `map-pvr-demand-phase-telemetry-20260829T064935Z` | `BBE9E9BE…` |
+
+Les quatre instantanés `map-page-prewarm-*` contiennent des copies brutes DLL/INI, sans
+`renderer-files.json`, phase transactionnelle ni outil de restauration dédié. Leur présence, leur
+intégrité et leur ordre sont vérifiés, mais une restauration réelle n’a volontairement pas été
+simulée dans le dossier du jeu : elle ne serait pas fail-closed comme l’état renderer précédent.
+Avant toute réinstallation du candidat, il faut donc créer un état transactionnel propre ou figer
+une procédure LIFO avec contrôles de SHA avant et après chaque copie. L’installation courante est
+restée inchangée.
 
 ## Actions
 
@@ -882,9 +939,11 @@ Contrat retenu :
 - annulation sur changement de zone, de contexte GL, ou dès la **première éviction observée** ;
 - toute page non planifiée ou non matérialisée suit le `Demand` natif synchrone, inchangé.
 
-Validation automatisée : la DLL et la cible de test compilent ; `ctest -C Debug` passe 2/2. Les
-réglages sont couverts par quatre blocs de tests natifs — analyse INI, bornes, valeurs par défaut
-et aller-retour de sauvegarde.
+Validation automatisée initiale : la DLL et la cible de test compilent ; `ctest -C Debug` passe
+2/2. Les réglages sont couverts par quatre blocs de tests natifs — analyse INI, bornes, valeurs par
+défaut et aller-retour de sauvegarde. La reprise du 2026-08-30 a ensuite rejoué avec succès les
+builds et les 2/2 tests en Debug puis en Release, ainsi que les 180 tests Python communs et la
+validation hors ligne du manifeste moteur.
 
 ### Première session ingame
 
@@ -902,12 +961,17 @@ eu à se déclencher sur ces quatre zones.
 
 Pic de présentation à la première ouverture de carte, événement 1 :
 
-| Zone | Avant, pics observés | Pages chargées pendant le pic | Après | Pages |
+| Zone | Références : pics observés | Références : nouvelles pages table | Session préchauffée : pic | Session préchauffée : nouvelles pages table |
 |---|---|---:|---:|---:|
 | AR0700N | 404,7 / 431,9 / 839,3 ms | 81 / 82 / 84 | **7,6 ms** | 17 |
 | AR0516 | 19,1 / 15,1 / 82,2 ms | 9 / 9 / 30 | **6,3 ms** | 6 |
 | AR0602 | 6,9 / 8,0 / 102,3 ms | 6 / 7 / 31 | **6,7 ms** | 7 |
 | AR0900 | 374,6 / 369,9 / 303,7 / 414,8 ms | 19 / 18 / 18 / 18 | — | — |
+
+Les deux colonnes « nouvelles pages table » reprennent `newTablePages` du détecteur de burst. Elles
+ne comptent ni des lectures disque, ni des uploads, ni des matérialisations PVR pendant la frame et
+ne doivent plus être nommées « pages chargées ». Les traces de phases PVR restent la source pour
+compter les matérialisations réelles.
 
 ### Limites de cette session
 
@@ -924,13 +988,16 @@ Ces chiffres décrivent une première session, pas un résultat validé :
   Le pic est déplacé et fortement réduit, il n’est pas supprimé ;
 - **le coût total n’est pas supprimé non plus**, il est étalé : les 790,95 ms de demande d’AR0700N
   sont répartis sur environ 1,1 s de frames au lieu d’une seule frame bloquante ;
-- aucun instantané de restauration n’a été enregistré sous `bg2hd/state/` pour ce build, alors que
-  chaque runtime expérimental précédent en possède un. Le dernier état documenté reste
-  `map-pvr-demand-phase-telemetry-20260829T064935Z`, c’est-à-dire le build antérieur.
+- un instantané existe finalement sous
+  `bg2hd/state/map-page-prewarm-wed-identity-20260829T094250Z/`. Il restaure le DLL
+  `2F8A030F…`, et trois instantanés bruts supplémentaires permettent de revenir au DLL
+  transactionnel `E169E9B0…`. Ces quatre états intermédiaires n’ont toutefois ni manifeste, ni
+  phase, ni restauration automatisée fail-closed ; leur chaîne est vérifiée par SHA mais reste à
+  formaliser avant une opération réelle.
 
 Ce lot n’est pas éligible à la release et aucun manifeste de release n’a été modifié.
 
-### Point d’arrêt du 2026-08-29 — mesure AR0900 bloquée
+### Point d’arrêt historique du 2026-08-29 — mesure AR0900 bloquée
 
 La campagne ci-dessus n’a pas pu être lancée et la mesure manquante d’AR0900 n’a pas été prise.
 Le blocage est d’accès, pas technique : l’agent n’a pas obtenu le contrôle de la fenêtre de jeu
@@ -972,29 +1039,45 @@ tous environnementaux. Chacun de ces tests appelle un installateur qui refuse fa
 processus BG2EE vivant. Fermer le jeu avant d’exécuter la gate, sous peine de diagnostiquer un faux
 défaut.
 
+### État revalidé le 2026-08-30
+
+- `Baldur`, `BaldurReal` et `InfinityLoader` sont fermés ; la session historique décrite ci-dessus
+  est donc terminée ;
+- le DLL `9FCE57D1…` et l’INI `B7B39153…` sont toujours installés sans modification ;
+- la mesure AR0900 reste absente. La manipulation « sans rien réinstaller ni relancer » n’est plus
+  applicable ; AR0900 doit désormais entrer dans la campagne A/B complète ;
+- les gates C++, Python et manifeste moteur passent jeu fermé ; les 18 échecs environnementaux ne
+  se reproduisent pas.
+
 ## Prochaine étape
 
-La campagne suivante doit produire l’A/B contrôlé qui manque, en une seule session par état et sur
-la même machine, avec les quatre sauvegardes dédiées `AR0700N`, `AR0516`, `AR0602` et `AR0900` :
+La campagne suivante doit produire l’A/B contrôlé qui manque sur la même machine, avec les quatre
+sauvegardes dédiées `AR0700N`, `AR0516`, `AR0602` et `AR0900`. Le DLL de référence doit rester le
+candidat installé `9FCE57D1…` ; seul `EnableMapPagePrewarm` change entre les états :
 
-1. session de référence, `EnableMapPagePrewarm=false` : charger les quatre sauvegardes à la suite
-   et dézoomer complètement dans chacune, en relevant l’événement 1 et l’événement 2 ;
-2. session de mesure, `EnableMapPagePrewarm=true` : répéter exactement le même parcours, dans le
-   même ordre, sans redémarrer la machine entre les deux ;
-3. comparer par zone le pic de présentation, le nombre de pages matérialisées pendant le burst, les
-   évictions et le `maximumDemandMs` du préchauffage.
+1. effectuer un passage de chauffe explicite des quatre zones, puis redémarrer le jeu afin que le
+   cache PVR du processus reparte vide tout en déclarant que le cache fichier Windows est chaud ;
+2. exécuter plusieurs parcours complets dans un ordre contrebalancé, par exemple A-B-B-A, avec
+   A = `EnableMapPagePrewarm=false` et B = `true`. Chaque parcours redémarre le jeu et conserve le
+   même ordre de zones, les mêmes attentes et les deux ouvertures de carte ;
+3. horodater chaque parcours, conserver séparément ses logs et relever pour chaque zone le pic de
+   présentation, les matérialisations PVR du burst, les évictions, `totalDemandMs` et
+   `maximumDemandMs` du préchauffage ;
+4. traiter AR0900 comme gate obligatoire, puis comparer les médianes et la dispersion A/B. Une
+   campagne réellement « cache OS froid » doit être distincte et contrebalancée sur plusieurs
+   redémarrages de la machine ; elle ne doit pas être mélangée avec cette campagne chaude.
 
-L’ordre de passage doit être conservé entre les deux sessions : le cache fichier Windows favorise
-la zone traitée en second, et c’est précisément ce biais qui rend la session actuelle non
-concluante en dehors d’AR0700N.
+L’ordre des zones doit rester identique dans chaque parcours. L’ordre des états A/B, lui, doit être
+contrebalancé : le cache fichier Windows favorise les parcours tardifs, et un simple A puis B
+attribuerait à tort une partie de cet échauffement au préchauffage.
 
 Deux points restent à traiter ensuite, indépendamment du résultat :
 
 - déplacer le contrôle du budget **avant** l’appel plutôt qu’après, ou borner le nombre de pages
   par frame en fonction du coût observé de la page précédente, afin que le cas 4096² d’AR0900 ne
   puisse plus produire une frame à 43,77 ms ;
-- enregistrer un instantané de restauration sous `bg2hd/state/` pour ce build, afin de rétablir la
-  chaîne d’états que le reste de ce document documente.
+- remplacer la suite d’instantanés bruts par un état de restauration transactionnel et fail-closed
+  pour le candidat exact, sans écraser l’état renderer historique.
 
 Pour le futur lot animations, les contraintes restent inchangées : chargement intégral actuel en
 fallback, formats de packs et animations inchangés, budgets initiaux de 128 Mio CPU et 256 Mio /

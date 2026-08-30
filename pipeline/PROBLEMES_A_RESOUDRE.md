@@ -25,6 +25,25 @@ dans `areas.csv`.
 - **Gate** : fixture alpha contenant lignes droites, courbes, coins et secondaire ; comparaison
   avant/après sans changement RGB.
 
+## MAP-PERF-001 — gel à la première ouverture de la carte x4
+
+- **Périmètre** : première ouverture/dezoom de la carte ingame sur AR0700N, AR0516, AR0602 et
+  AR0900 ; la seconde ouverture déjà chaude n’est pas le défaut principal.
+- **Cause mesurée** : 95 à 98 % des frames de pic sont portées par les matérialisations synchrones
+  de `CResPVR::Demand`. Les appels GL de création et d’upload restent minoritaires.
+- **État** : le mini-lot carte 3 préchauffe progressivement les pages en opt-in. Son candidat ingame
+  exact est gelé par le SHA `9FCE57D1…` et se reconstruit avec succès, mais la première session
+  n’est pas un A/B contrôlé et AR0900 n’a pas été ouverte après préchauffage.
+- **Risques ouverts** : une PVRZ 4096² d’AR0900 peut encore bloquer une frame jusqu’à 43,77 ms ; les
+  quatre instantanés intermédiaires sont des sauvegardes brutes sans transaction fail-closed.
+- **Gate** : campagne chaude contrebalancée A-B-B-A, processus redémarré entre parcours, même ordre
+  de zones, deux ouvertures par zone, AR0900 obligatoire ; comparer pics, matérialisations,
+  évictions et coût du préchauffage. Formaliser la restauration avant toute réinstallation.
+- **Preuve et protocole** :
+  [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
+- **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste
+  avant validation ingame concluante et accord explicite.
+
 ## MAP-QA-001 — zones installées non validées
 
 - **Périmètre actuel** : lire `areas.csv`; au moment de l'assainissement, AR1607 et AR1800 étaient
