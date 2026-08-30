@@ -35,13 +35,21 @@ dans `areas.csv`.
   exact est gelé par le SHA `9FCE57D1…` et se reconstruit avec succès. La campagne chaude A-B-B-A
   est validée sur les quatre zones : les médianes A/B passent à 454,11/6,08 ms sur AR0700N,
   16,21/6,25 ms sur AR0516, 8,09/6,17 ms sur AR0602 et 299,62/6,90 ms sur AR0900. Les parcours B
-  comptent zéro matérialisation PVR dans le burst d’ouverture et zéro éviction du préchauffage.
-- **Risques ouverts** : une PVRZ 4096² d’AR0900 bloque encore une frame de préchauffage à 43,97 ms
-  en médiane maximale ; les quatre instantanés intermédiaires restent des sauvegardes brutes sans
-  transaction fail-closed. La campagne validée mesure un cache OS chaud, pas un démarrage froid.
-- **Gate** : créer un nouveau candidat qui contrôle le budget avant la demande ou l’adapte au coût
-  observé de la page précédente, formaliser l’installation/restauration transactionnelle, puis
-  revalider AR0900 et les quatre zones. Une éventuelle campagne cache OS froid doit rester séparée.
+  comptent zéro matérialisation PVR dans le burst d’ouverture et zéro éviction du préchauffage. Un
+  repack zlib niveau 0 exact a ensuite réduit le maximum AR0900 de 43,97 à 12,77 ms et le total de
+  746,05 à 228,97 ms, mais il est rejeté : seuil de 8 ms manqué et poids PVRZ ×2,7419 (+264,30 Mio
+  pour le seul jour). L’installation d’essai a été intégralement restaurée.
+- **Risques ouverts** : une PVRZ 4096² canonique d’AR0900 bloque encore une frame de préchauffage à
+  43,97 ms en médiane maximale ; `Demand` est atomique, donc espacer une page par frame ne borne pas
+  ce coût. Les quatre instantanés moteur intermédiaires restent des sauvegardes brutes sans
+  transaction fail-closed. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
+  réellement installés correspondent au sous-build `page4096-spline-fit1.0`. La campagne validée
+  mesure un cache OS chaud, pas un démarrage froid.
+- **Gate** : formaliser l’installation/restauration transactionnelle, puis produire un candidat qui
+  réduit l’unité atomique sous 8 ms — pagination plus petite ou hybride compatible avec les resrefs
+  nuit, la réserve de cache et le plafond de 96 pages, ou décompression préparée hors frame. Valider
+  d’abord AR0900 ; ne rejouer les quatre zones qu’après réussite. Une éventuelle campagne cache OS
+  froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

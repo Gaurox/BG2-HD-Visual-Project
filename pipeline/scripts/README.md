@@ -11,6 +11,9 @@ diagnostic ou des éléments `REVIEW`; rechercher leurs références avant emplo
 - Qualification : `validate_x1_masters.py`, `audit_area_preflight.py`, `audit_water_area.py`.
 - Upscale : `run_seedvr_comfyui.py`.
 - Reconstruction : `build_upscaled_area.py`, `verify_upscaled.py`.
+- Expérience de latence PVRZ : `repack_pvrz_compression.py` réécrit uniquement le flux Deflate
+  dans un nouveau dossier, avec TIS et PVR décodés identiques. Le niveau doit être explicite ; la
+  sortie reste `pending-ingame` et ne remplace jamais le build sélectionné par `areas.csv`.
 - Correction native ciblée des flags d'occlusion WED :
   `build_wed_cover_animation_patch.py` (sortie `pending-ingame`, installation réversible avec les
   scripts d'assets auxiliaires).

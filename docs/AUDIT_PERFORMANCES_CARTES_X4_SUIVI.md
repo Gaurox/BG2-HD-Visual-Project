@@ -1152,3 +1152,97 @@ Pour le futur lot animations, les contraintes restent inchangées : chargement i
 fallback, formats de packs et animations inchangés, budgets initiaux de 128 Mio CPU et 256 Mio /
 192 textures GPU configurables. Ces bornes expérimentales ne doivent pas devenir des constantes
 dépendantes de la RTX 5090 et ne sont pas transposées implicitement au cache de pages de carte.
+
+## Étape 3 — repack Deflate stocké d’AR0900 — 2026-08-30
+
+L’analyse du candidat de préchauffage corrige d’abord l’hypothèse formulée à l’étape précédente.
+Avec `MapPagePrewarmPagesPerFrame=1`, l’ordonnanceur espace déjà les pages au maximum. Le budget est
+nécessairement constaté après le retour de `CResPVR::Demand`, qui reste un appel synchrone et
+atomique. Contrôler le budget avant la page suivante ou adapter le nombre de pages à partir de la
+précédente peut éviter d’enchaîner plusieurs demandes, mais ne peut pas borner la demande 4096²
+elle-même. Aucun faux correctif d’ordonnancement n’a donc été produit.
+
+L’essai a porté à la place sur l’encapsulation PVRZ. Le nouvel outil opt-in
+`pipeline/scripts/repack_pvrz_compression.py` copie le TIS à l’identique, décompresse chaque PVRZ,
+réécrit seulement son flux zlib au niveau demandé, puis refuse la sortie si le PVR décodé n’est pas
+strictement identique. La source n’est jamais modifiée et le dossier de sortie doit être absent.
+
+Une incohérence de source a été détectée avant l’installation. `areas.csv` désigne encore
+`05_build/x4-water-alpha-antialias-page4096/` comme build actif d’AR0900, mais les 27 fichiers de
+l’`override` correspondaient exactement, SHA-256 par SHA-256, au sous-build
+`05_build/x4-water-alpha-antialias-page4096-spline-fit1.0/`. Le premier candidat, créé depuis le
+chemin déclaré par le catalogue, a été rejeté sans installation. Le candidat mesuré a été recréé
+depuis le sous-build réellement installé. Le catalogue n’a pas été modifié pendant cet essai.
+
+### Qualification hors ligne
+
+Le candidat correct conserve :
+
+- `AR0900.TIS` octet pour octet, SHA-256
+  `4671AE969FDAC1AF919D1D4B887E8581BC4DC6513A727CD73775A1D1E14696F8` ;
+- les 26 PVR décodés octet pour octet ;
+- 5 752 tuiles, zéro référence hors limites, une image rendue de 20 480 × 15 360 et le PSNR de
+  contrôle à 34,75 dB.
+
+Le niveau zlib 0 remplace les blocs comprimés par des blocs stockés. Sur les 26 pages, il fait
+passer le payload PVRZ de 151,73 à 416,03 Mio, soit +264,30 Mio, ×2,7419 ou +174,19 %. Un benchmark
+séquentiel hors jeu, à cache fichier chaud, passe de 1 308,76 à 342,05 ms au total ; la médiane par
+page passe de 45,86 à 12,51 ms et le maximum de 83,75 à 18,93 ms. Ces valeurs orientent l’essai mais
+ne remplacent pas la mesure moteur.
+
+Le manifeste exact est conservé sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-prewarm-stored-deflate-20260830T121938\candidate-active-spline-fit1.0\repack-manifest.json`,
+SHA-256 `ECE44A20FA330BDBA08A78E0AFCD421A19B59455904ACB0BD385AD177E2C4382`.
+
+### Mesure ingame ciblée
+
+Jeu et InfinityLoader fermés, l’injection a sauvegardé les 27 fichiers actifs sous
+`G:\AI\BG2_Upscale\backups\maps\AR0900-20260830-122401\`, puis vérifié zéro divergence entre le
+candidat et l’`override`. La session a été lancée via InfinityLoader, la sauvegarde dédiée AR0900
+a été chargée, le préchauffage a été laissé finir, puis la carte entièrement dézoomée a été ouverte
+et refermée deux fois.
+
+| Mesure AR0900 | Référence B1/B2, médiane | Deflate stocké | Évolution |
+|---|---:|---:|---:|
+| `totalDemandMs`, 19 matérialisations | 746,05 ms | 228,97 ms | −69,31 % |
+| `maximumDemandMs` | 43,97 ms | 12,77 ms | −70,96 % |
+| Pic événement 1 | 6,90 ms | 6,10 ms | aucune matérialisation PVR |
+| Pic événement 2 | 6,02–8,92 ms dans la campagne | 6,33 ms | aucune matérialisation PVR |
+| Évictions du préchauffage | 0 | 0 | inchangé |
+
+Le log confirme 26 pages découvertes et planifiées, 7 déjà résidentes, 19 demandes et 19
+matérialisations, sans candidat invalide ni éviction. Les deux ouvertures comptent zéro lecture,
+zéro matérialisation PVR et zéro upload PVR compressé dans leur burst. Aucune anomalie graphique
+n’a été observée. La session contient zéro erreur et uniquement l’avertissement déjà connu de
+récupération du prologue `RenderTexture` détourné par EEex.
+
+Le journal complet est archivé sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-prewarm-stored-deflate-20260830T121938\post-run\InfinityEngine-Enhancer.log`,
+borne de session `2026-08-30 12:24:50.135`, SHA-256
+`D96AF8BD8A9AF0C43EB432B141D49869FD105E44B1F66A7DD12538497D4352F3`.
+
+### Verdict et restauration
+
+L’essai est **rejeté comme solution globale**. Il prouve que la décompression Deflate porte une
+part importante du résidu de la demande 4096², mais il manque encore la cible de 8 ms de 4,77 ms
+et son surcoût de 174,19 % ne concerne que la variante jour d’une seule zone. Une régression sur
+AR0700N, AR0516 et AR0602 n’aurait testé aucun octet différent : ni le moteur ni leurs fichiers
+n’ont changé. Elle n’a donc pas été lancée après l’échec de la gate AR0900.
+
+Après fermeture du jeu et d’InfinityLoader, les 27 fichiers de la sauvegarde ont été restaurés.
+Le contrôle final donne zéro divergence avec la sauvegarde et zéro divergence avec le sous-build
+actif antérieur ; le seul fichier encore identique au candidat est le TIS, volontairement inchangé
+par le repack. L’INI reste à son SHA-256 antérieur `B7B39153…`. Le candidat et ses preuves restent
+hors dépôt, sans statut `validated-installed`. Aucun manifeste de release, staging ou package n’a
+été modifié.
+
+Les suites utiles sont maintenant :
+
+1. formaliser l’installation/restauration transactionnelle et fail-closed des candidats moteur et
+   maps, y compris un reçu de hashes avant toute copie ;
+2. mesurer un candidat qui réduit réellement l’unité atomique sous 8 ms, par exemple une
+   pagination plus petite ou hybride compatible avec la limite de resref nocturne, la réserve de
+   32 entrées et le plafond actuel de 96 pages ;
+3. si le moteur doit dépasser cette voie de contenu, isoler puis déplacer la lecture/décompression
+   hors de la frame avant de réintégrer l’upload GL sur le thread propriétaire du contexte ;
+4. ne relancer la matrice des quatre zones qu’après réussite de la gate ciblée AR0900.

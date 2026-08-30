@@ -101,6 +101,19 @@ le reçu `install-backup.json`, puis comparer tous les SHA-256. Ne jamais copier
 
 Gate : inventaire attendu exact et zéro divergence build ↔ jeu.
 
+Un repack expérimental de l'encapsulation Deflate peut être produit sans reconstruire les images
+ni modifier le PVR/DXT décodé :
+
+```powershell
+python pipeline/scripts/repack_pvrz_compression.py `
+  <build-source> <nouveau-dossier-absent> --level 0
+```
+
+Cette branche sert uniquement à mesurer la latence atomique des grandes pages PVRZ. Elle exige un
+nouveau dossier, copie le TIS à l'identique, vérifie le SHA-256 de chaque PVR décodé et émet
+`repack-manifest.json`. Son surcoût disque doit être mesuré ; son résultat reste `pending-ingame`
+et ne change ni `areas.csv` ni la méthode de build courante sans une décision ultérieure.
+
 ### 8. QA et promotion
 
 Une QA requiert une session ingame contrôlée et l'acceptation explicite de l'utilisateur. Une

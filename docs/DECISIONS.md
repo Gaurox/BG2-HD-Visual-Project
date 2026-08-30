@@ -15,6 +15,7 @@ de production restent dans les catalogues et manifests. Un essai n'est rouvert q
 | Jour et nuit dans un même résultat | Risque de mélanger les WED et pages | Deux traitements indépendants, mêmes gates | Aucun |
 | Secondaires omises par défaut | Ne préserve pas correctement les variantes WED | Préflight puis traitement primaire/secondaire selon le WED | Cas explicitement prouvé équivalent au primaire |
 | Pagination PVRZ fixe 2048 | Dépassement du resref 8 caractères sur les variantes nuit volumineuses | Page 4096 lorsque nécessaire ; gate longueur de resref | Seulement si le moteur étend la limite CResRef |
+| Repack global des PVRZ en zlib niveau 0 pour supprimer le coût Deflate | AR0900 jour : `maximumDemandMs` 43,97 → 12,77 ms et total 746,05 → 228,97 ms, mais cible 8 ms manquée et payload 151,73 → 416,03 Mio (+174,19 %) | Conserver la compression canonique ; garder le repack exact uniquement comme outil de diagnostic hors release | Arbitrage explicite acceptant le surcoût, ou méthode sélective démontrée sous 8 ms sans inflation globale |
 | AR0602 hybride CGI `test-27` | Référence historique, plus canonique | Run x4 7B/LAB sans masque CGI désigné par `areas.csv` | Nouvelle QA comparée et décision catalogue |
 | Overlays liquides globaux | L'installation x4 tardive contredisait la QA maps x2 et WTPOOL x4 restait figé | `overlay-sources.json` : WTLAKE/POOL/LAKA-D x2, WTLAVA-D x4, WTSWAM/WTSEW/WTOIL stock ; chaque fichier publié est épinglé | Nouvelle QA comparative par resref et modification explicite du manifeste |
 
