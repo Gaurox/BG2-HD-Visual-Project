@@ -30,9 +30,9 @@ struct EngineConfig {
   // Phase 3e-A read/decode-only probe. It never publishes bytes to the engine
   // or calls OpenGL; native Demand remains authoritative.
   bool enableMapPageOffframeProbe = false;
-  // Phase 3e-B1 one-page-per-area canary. The render thread may copy one
-  // strictly matched prepared PVR into the destination allocated by native
-  // Demand; every mismatch calls the engine's original zlib wrapper.
+  // Phase 3e-B2 bounded diagnostics. The render thread may copy a fixed small
+  // number of strictly matched prepared PVRs into destinations allocated by
+  // native Demand per area generation; later pages use the native path.
   bool enableMapPageOffframeConsume = false;
   std::uint32_t mapPagePrewarmPagesPerFrame = 1;
   float mapPagePrewarmBudgetMs = 8.0f;

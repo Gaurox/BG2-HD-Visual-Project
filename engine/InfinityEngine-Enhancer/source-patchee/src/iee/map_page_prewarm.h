@@ -47,18 +47,20 @@ struct PvrConsumeAttempt {
   void* resource{};
   core::ShadowPageIdentity identity{};
   core::PvrzPreparedPage page{};
+  std::uint32_t claimOrdinal{};
+  std::uint32_t claimLimit{};
   PvrConsumeOutcome outcome{PvrConsumeOutcome::NotReached};
   std::uint64_t crcNanoseconds{};
   std::uint64_t copyNanoseconds{};
 };
 
 // Called immediately before an unloaded native PVR demand. Shadow-only mode
-// observes and retires the buffer. B1 mode may move one ready page out of the
-// queue for this exact Demand and area generation.
+// observes and retires the buffer. A bounded diagnostic may move a fixed small
+// number of ready pages out of the queue for their exact Demand and generation.
 [[nodiscard]] std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept;
 
-// Records the single canary result after native Demand has resumed through its
-// ordinary parse/publish/upload/free path.
+// Records one bounded-consume result after native Demand has resumed through
+// its ordinary parse/publish/upload/free path.
 void record_consume_attempt(const PvrConsumeAttempt& attempt,
                             std::uint64_t demandNanoseconds) noexcept;
 

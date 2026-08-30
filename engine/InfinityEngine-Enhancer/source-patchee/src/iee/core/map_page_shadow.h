@@ -18,6 +18,9 @@ inline constexpr std::size_t kShadowMaximumDecodedBytes = 20u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumPendingPages = 96;
 inline constexpr std::size_t kShadowMaximumCompletedPages = 4;
 inline constexpr std::size_t kShadowMaximumCompletedBytes = 72u * 1024u * 1024u;
+// Phase 3e-B2b2 discriminator: permit exactly two prepared-page claims after
+// the B2b1 one-claim control passed ingame. This is not a production limit.
+inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 2;
 
 enum class PvrzPrepareStatus : std::uint8_t {
   Ready,
@@ -41,8 +44,8 @@ struct PvrzPreparedPage {
   std::uint64_t decodedBytes{};
   std::uint64_t prepareNanoseconds{};
   // CRC32 of the zlib stream only (the bytes after the four-byte PVRZ size
-  // prefix). Phase 3e-B1 rechecks it against the native CRes buffer before a
-  // prepared page may replace the engine's uncompress call.
+  // prefix). The bounded consumer rechecks it against the native CRes buffer
+  // before a prepared page may replace the engine's uncompress call.
   std::uint32_t compressedCrc32{};
   std::uint32_t width{};
   std::uint32_t height{};
@@ -105,18 +108,20 @@ struct ShadowClaim {
   PvrzPreparedPage page{};
 };
 
-// One successful handoff claim is permitted per area generation. A ready page
-// consumes the gate even when the later render-thread validation falls back;
-// this keeps a malformed canary from cascading into additional attempts.
-class MapPageConsumeCanary {
+// A fixed diagnostic number of successful handoff claims is permitted per
+// area generation. Each ready page consumes one slot even when the later
+// render-thread validation falls back; malformed attempts cannot make the
+// experiment unbounded.
+class MapPageConsumeGate {
  public:
   void reset(std::uint64_t generation) noexcept;
   [[nodiscard]] bool try_claim(std::uint64_t generation) noexcept;
-  [[nodiscard]] bool claimed(std::uint64_t generation) const noexcept;
+  [[nodiscard]] bool exhausted(std::uint64_t generation) const noexcept;
+  [[nodiscard]] std::uint32_t claims(std::uint64_t generation) const noexcept;
 
  private:
   std::uint64_t generation_{};
-  bool claimed_{};
+  std::uint32_t claims_{};
 };
 
 enum class PvrConsumeValidationStatus : std::uint8_t {
@@ -129,8 +134,8 @@ enum class PvrConsumeValidationStatus : std::uint8_t {
   CrcMismatch,
 };
 
-// Host-testable portion of the B1 contract. Readability/writability is checked
-// by the Windows detour before constructing this evidence.
+// Host-testable portion of the consume contract. Readability/writability is
+// checked by the Windows detour before constructing this evidence.
 struct PvrConsumeEvidence {
   bool scopeActive{};
   std::uintptr_t expectedReturnAddress{};

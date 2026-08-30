@@ -101,7 +101,7 @@ core::ProcessLifetimeWorker g_shadowWorker{};
 std::filesystem::path g_shadowResourceDirectory{};
 bool g_shadowEnabled{};
 bool g_consumeEnabled{};
-core::MapPageConsumeCanary g_consumeCanary{};
+core::MapPageConsumeGate g_consumeGate{};
 
 std::string_view area_name() noexcept;
 
@@ -117,7 +117,8 @@ void log_shadow_summary(std::string_view reason) noexcept {
         "unplannedDemands={}, compressedMiB={:.2f}, decodedMiB={:.2f}, totalPrepareMs={:.2f}, "
         "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, pending={}, "
         "completed={}, completedMiB={:.2f}, peakPending={}, peakCompleted={}, "
-        "peakCompletedMiB={:.2f}, canaryClaims={}, consumed={}, originalFallbacks={}, "
+        "peakCompletedMiB={:.2f}, consumeClaims={}, claimLimit={}, consumed={}, "
+        "originalFallbacks={}, "
         "unexpectedReturn={}, resourceMismatch={}, sourceMismatch={}, sizeMismatch={}, "
         "crcMismatch={}, memoryRejected={}, internalError={}, uncompressNotReached={}, "
         "crcMs={:.2f}, copyMs={:.2f}; mode={}",
@@ -135,14 +136,15 @@ void log_shadow_summary(std::string_view reason) noexcept {
         static_cast<double>(stats.completedBytes) / (1024.0 * 1024.0),
         stats.peakPendingPages, stats.peakCompletedPages,
         static_cast<double>(stats.peakCompletedBytes) / (1024.0 * 1024.0),
-        g_state.consumeClaims, g_state.consumeConsumed, g_state.consumeFallbacks,
+        g_state.consumeClaims, core::kMapPageConsumeMaximumClaimsPerGeneration,
+        g_state.consumeConsumed, g_state.consumeFallbacks,
         g_state.consumeUnexpectedReturns, g_state.consumeResourceMismatches,
         g_state.consumeSourceMismatches, g_state.consumeSizeMismatches,
         g_state.consumeCrcMismatches, g_state.consumeMemoryRejected,
         g_state.consumeInternalErrors, g_state.consumeNotReached,
         static_cast<double>(g_state.consumeCrcNanoseconds) / 1'000'000.0,
         static_cast<double>(g_state.consumeCopyNanoseconds) / 1'000'000.0,
-        g_consumeEnabled ? "one-page-consume-canary" : "shadow-observation-only");
+        g_consumeEnabled ? "bounded-diagnostic-consume" : "shadow-observation-only");
   } catch (...) {
   }
 }
@@ -201,7 +203,7 @@ void reset_state(std::uint64_t frame) {
   g_state = {};
   g_state.areaStartFrame = frame;
   g_state.shadowGeneration = shadowGeneration;
-  g_consumeCanary.reset(shadowGeneration);
+  g_consumeGate.reset(shadowGeneration);
 }
 
 std::string_view area_name() noexcept {
@@ -467,12 +469,13 @@ bool configure_shadow(bool enabled, bool consumeEnabled,
     LOG_INFO(
         "Map page shadow probe prepared: resourceDirectory={}, pendingLimit={}, "
         "completedLimit={}, completedMiBLimit={:.2f}, decodedPageMiBLimit={:.2f}; "
-        "worker is CPU-only; consumeCanary={} and native Demand owns cache/upload/free",
+        "worker is CPU-only; diagnosticConsume={}, consumeLimit={} and native Demand owns "
+        "cache/upload/free",
         g_shadowResourceDirectory.string(), core::kShadowMaximumPendingPages,
         core::kShadowMaximumCompletedPages,
         static_cast<double>(core::kShadowMaximumCompletedBytes) / (1024.0 * 1024.0),
         static_cast<double>(core::kShadowMaximumDecodedBytes) / (1024.0 * 1024.0),
-        g_consumeEnabled);
+        g_consumeEnabled, core::kMapPageConsumeMaximumClaimsPerGeneration);
     return true;
   } catch (...) {
     stop_shadow_worker();
@@ -600,19 +603,50 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
     if (candidate == g_state.candidates.end()) return std::nullopt;
     auto identity = shadow_identity(*candidate);
     std::optional<PvrConsumeAttempt> attempt;
-    if (g_consumeEnabled && !g_consumeCanary.claimed(g_state.shadowGeneration)) {
+    core::ShadowObservationStatus queueStatus = core::ShadowObservationStatus::Unplanned;
+    std::string_view action = "shadow-only";
+    if (g_consumeEnabled && !g_consumeGate.exhausted(g_state.shadowGeneration)) {
       auto claim = g_shadowQueue.claim(identity);
+      queueStatus = claim.status;
       if (claim.status == core::ShadowObservationStatus::Ready &&
-          g_consumeCanary.try_claim(g_state.shadowGeneration)) {
+          g_consumeGate.try_claim(g_state.shadowGeneration)) {
         ++g_state.consumeClaims;
         attempt.emplace(PvrConsumeAttempt{
             .resource = pvr,
-            .identity = std::move(identity),
+            .identity = identity,
             .page = std::move(claim.page),
+            .claimOrdinal = g_consumeGate.claims(g_state.shadowGeneration),
+            .claimLimit = core::kMapPageConsumeMaximumClaimsPerGeneration,
         });
+        action = "prepared-claim";
+      } else {
+        action = claim.status == core::ShadowObservationStatus::NotReady
+                     ? "native-fallback-not-ready"
+                     : "native-fallback-unplanned";
       }
     } else {
-      (void)g_shadowQueue.observe(identity);
+      const auto observation = g_shadowQueue.observe(identity);
+      queueStatus = observation.status;
+      action = g_consumeEnabled ? "native-fallback-claim-limit" : "shadow-observation";
+    }
+    if (g_consumeEnabled) {
+      const auto queueStatusName = [&]() -> std::string_view {
+        switch (queueStatus) {
+          case core::ShadowObservationStatus::Ready:
+            return "ready";
+          case core::ShadowObservationStatus::NotReady:
+            return "not-ready";
+          case core::ShadowObservationStatus::Unplanned:
+            return "unplanned";
+        }
+        return "unknown";
+      }();
+      LOG_INFO(
+          "Map page off-frame decision: area={}, page={}, generation={}, queueStatus={}, "
+          "action={}, claims={}/{}",
+          identity.areaResref, identity.pageResref, identity.generation, queueStatusName,
+          action, g_consumeGate.claims(g_state.shadowGeneration),
+          core::kMapPageConsumeMaximumClaimsPerGeneration);
     }
     if (!attempt && !g_state.shadowDemandSummaryLogged) {
       const auto stats = g_shadowQueue.snapshot();
@@ -693,10 +727,11 @@ void record_consume_attempt(const PvrConsumeAttempt& attempt,
     g_state.consumeCrcNanoseconds += attempt.crcNanoseconds;
     g_state.consumeCopyNanoseconds += attempt.copyNanoseconds;
     LOG_INFO(
-        "Map page off-frame canary: area={}, page={}, generation={}, outcome={}, "
+        "Map page off-frame consume: claim={}/{}, area={}, page={}, generation={}, outcome={}, "
         "compressedMiB={:.2f}, decodedMiB={:.2f}, crcMs={:.2f}, copyMs={:.2f}, "
         "nativeDemandMs={:.2f}; native cache/upload/free path retained",
-        attempt.identity.areaResref, attempt.identity.pageResref,
+        attempt.claimOrdinal, attempt.claimLimit, attempt.identity.areaResref,
+        attempt.identity.pageResref,
         attempt.identity.generation, consume_outcome_name(attempt.outcome),
         static_cast<double>(attempt.page.compressedBytes) / (1024.0 * 1024.0),
         static_cast<double>(attempt.page.decodedBytes) / (1024.0 * 1024.0),

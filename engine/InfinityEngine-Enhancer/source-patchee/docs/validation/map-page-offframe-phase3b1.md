@@ -138,9 +138,11 @@ and receipt verification both passed. The game root returned exactly to DLL
 
 ## Next gate
 
-Phase 3e-B1 is complete. The next gate is a separate default-off, bounded multi-page AR0900
-candidate. It must preserve every strict identity/CRC/size/memory check and the original-zlib
-fallback, state its fixed claim limit before the run, compare consumed/fallback counts and frame
-telemetry against this one-page evidence, render the full map correctly, exit stably and restore
-transactionally. The four-zone performance protocol remains later. This prototype produced no
-`validated-installed` element and changed neither `areas.csv` nor a release manifest.
+Phase 3e-B1 is complete and remains the last ingame-proven consumption boundary. Phase 3e-B2
+subsequently implemented a separate default-off candidate with a fixed limit of four ready claims
+per area generation and passed its offline gates, but its AR0900 run crashed after three successful
+consumptions and before the fourth outcome; see
+[`map-page-offframe-phase3b2.md`](map-page-offframe-phase3b2.md). The four-zone performance protocol
+is blocked until a corrected bounded candidate passes AR0900 with a fully opened map and stable
+exit. These prototypes produced no `validated-installed` element and changed neither `areas.csv`
+nor a release manifest.

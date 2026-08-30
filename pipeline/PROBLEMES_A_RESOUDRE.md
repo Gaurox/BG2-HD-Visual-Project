@@ -64,8 +64,19 @@ dans `areas.csv`.
   rendu est inchangé. Le canari 3e-B1 a ensuite passé sa gate ingame AR0900 : une seule page
   `A090001` a été revendiquée et consommée, avec zéro fallback ou mismatch, puis publication,
   upload et libération natifs ; la carte complète est restée correcte et l'installation initiale a
-  été restaurée bit à bit. Cette preuve valide la frontière pour une page, pas encore le gain ni la
-  stabilité d'une consommation multi-page.
+  été restaurée bit à bit. Cette preuve valide la frontière pour une page. Le candidat 3e-B2 a
+  étendu hors ligne la même frontière à quatre revendications prêtes par génération, mais sa gate
+  AR0900 a crashé après trois consommations réussies : accès nul `0xC0000005` dans le natif
+  `CResPVR::Demand+0x13D` sur `A090010`, avant le quatrième résultat et avant le handoff zlib.
+  Le diagnostic 3e-B2a limite ensuite les revendications à trois et journalise l'appel natif
+  `CRes::Demand` exact. Il reproduit le crash, mais prouve que `A090010` est en fallback natif sans
+  revendication active et que `CRes::Demand` renvoie déjà `false`, `pData=null`, `nSize=0`. Le
+  quatrième buffer préparé n'est donc pas le mécanisme immédiat. Les discriminateurs 3e-B2b passent
+  ensuite AR0900 avec une puis exactement deux revendications : carte complète correcte, stabilité
+  supérieure à 22 secondes, sortie propre et restauration exacte. Avec deux claims, `A090009`,
+  `A090010` et les pages suivantes réussissent toutes leur fallback natif. L'échec est donc borné à
+  l'effet qui apparaît après la troisième substitution réussie. B2/B2a restent rejetés ; B2b2 est la
+  dernière frontière diagnostique prouvée ingame, toujours default-off et non éligible à la release.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
   thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
@@ -82,9 +93,25 @@ dans `areas.csv`.
   zlib original en fallback. Debug/Release, la DLL x64, 207 tests Python, le validateur du binaire et
   la prévalidation transactionnelle sans écriture passent. Sa gate ingame AR0900 passe également :
   `canaryClaims=1`, `consumed=1`, toutes les familles de fallback à zéro, rendu inchangé, sortie
-  stable et restauration exacte. La gate suivante est un candidat AR0900 multi-page séparé,
-  default-off et à limite fixe définie avant l'essai ; ne rejouer les quatre zones qu'après cette
-  preuve bornée. Une éventuelle campagne cache OS froid doit rester séparée.
+  stable et restauration exacte. Le candidat 3e-B2 est maintenant implémenté, toujours default-off,
+  avec une limite compile-time de quatre revendications prêtes par génération. Les gates
+  Debug/Release, la DLL x64, 207 tests Python, le validateur du binaire et la prévalidation
+  transactionnelle sans écriture passent, mais l'essai ingame AR0900 échoue : trois pages sont
+  consommées, puis `A090010` atteint `Demand+0x13D` avec `pData=null`, `nSize=0` et
+  `bLoaded=false`, avant l'allocation et `uncompress`. Le candidat a été restauré exactement et les
+  dumps sont archivés. 3e-B2a ajoute une décision par page, borne l'essai à trois revendications et
+  observe l'appel `CRes::Demand` à `Demand+0xDC`. Ses gates hors ligne passent, mais AR0900 crashe au
+  même endroit après que `A090010` a explicitement choisi le fallback natif, sans revendication
+  active ; `CRes::Demand` renvoie `false` et laisse la ressource nulle. La gate suivante était un
+  contrôle une revendication avec la même télémétrie, puis un discriminateur deux revendications.
+  Les deux passent ingame. La lecture `nCount` ajoutée n'est toutefois pas exploitable : B2b1
+  observe des entiers impossibles sur des chargements réussis, tandis que B2b2 observe zéro ; ne pas
+  l'interpréter ni l'écrire. La gate suivante est 3e-B2c : comparer deux claims stables à trois
+  claims en échec en traçant uniquement les frontières validées demande/libération, les identités
+  de pointeurs, les mouvements du cache PVR, la décision zlib, les textures et la mémoire bornée.
+  Corriger seulement la première divergence démontrée, puis repasser trois claims sur AR0900. Ne pas
+  rejouer les quatre zones avant cette preuve. Une éventuelle campagne cache OS froid doit rester
+  séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

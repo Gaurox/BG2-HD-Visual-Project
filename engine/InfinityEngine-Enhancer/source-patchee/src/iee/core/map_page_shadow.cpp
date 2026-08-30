@@ -145,19 +145,27 @@ PvrzPreparedPage prepare_pvrz_bytes(std::span<const std::byte> fileBytes,
   }
 }
 
-void MapPageConsumeCanary::reset(std::uint64_t generation) noexcept {
+void MapPageConsumeGate::reset(std::uint64_t generation) noexcept {
   generation_ = generation;
-  claimed_ = false;
+  claims_ = 0;
 }
 
-bool MapPageConsumeCanary::try_claim(std::uint64_t generation) noexcept {
-  if (generation == 0 || generation != generation_ || claimed_) return false;
-  claimed_ = true;
+bool MapPageConsumeGate::try_claim(std::uint64_t generation) noexcept {
+  if (generation == 0 || generation != generation_ ||
+      claims_ >= kMapPageConsumeMaximumClaimsPerGeneration) {
+    return false;
+  }
+  ++claims_;
   return true;
 }
 
-bool MapPageConsumeCanary::claimed(std::uint64_t generation) const noexcept {
-  return generation != 0 && generation == generation_ && claimed_;
+bool MapPageConsumeGate::exhausted(std::uint64_t generation) const noexcept {
+  return generation == 0 || generation != generation_ ||
+         claims_ >= kMapPageConsumeMaximumClaimsPerGeneration;
+}
+
+std::uint32_t MapPageConsumeGate::claims(std::uint64_t generation) const noexcept {
+  return generation != 0 && generation == generation_ ? claims_ : 0;
 }
 
 PvrConsumeValidationStatus validate_pvr_consume(

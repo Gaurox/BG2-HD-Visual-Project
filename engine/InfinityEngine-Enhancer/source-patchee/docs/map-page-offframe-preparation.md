@@ -7,10 +7,20 @@ shadow preparer was qualified offline and ingame on AR0900 on 2026-08-30. This i
 asynchronous native PVR materialization is implemented: the prepared bytes are deliberately never
 consumed by the engine or OpenGL. The result establishes feasibility and readiness timing only.
 The subsequent Phase 3e-B0 static audit identified and manifested a safe decoded-PVR handoff.
-Phase 3e-B1 now implements that consumer as a separate default-off, one-page-per-generation canary
-and passed its offline and first AR0900 ingame gates on 2026-08-30. One prepared page was consumed,
-the native cache/upload/free continuation remained active, rendering stayed correct, and the exact
-pre-test renderer was restored.
+Phase 3e-B1 implemented that consumer as a separate default-off, one-page-per-generation canary
+and passed its offline and AR0900 ingame gates on 2026-08-30. One prepared page was consumed, the
+native cache/upload/free continuation remained active, rendering stayed correct, and the exact
+pre-test renderer was restored. Phase 3e-B2 replaced that canary gate with a fixed maximum of four
+ready claims per area generation. Its offline gates and transaction preflight passed, but its
+AR0900 ingame gate crashed after three successful consumptions and before the fourth outcome. B1
+therefore remains the last ingame-proven boundary. Phase 3e-B2a then repeated AR0900 with exactly
+three possible claims and native `CRes::Demand` entry/return telemetry. `A090010` used native
+fallback with no active claim; native resource loading returned null/false before the same crash.
+Phase 3e-B2b then passed the same AR0900 gate with one and exactly two claims. After two prepared
+substitutions, `A090009`, `A090010` and every later page loaded natively; the complete map remained
+correct and stable and the game exited cleanly. The failure transition is therefore after the third
+successful substitution, before the following native load completes. The attempted `nCount`
+observation produced impossible values and is not a valid ownership signal.
 
 The measured bottleneck is the indivisible native `CResPVR::Demand` call. Repacking AR0900 with
 zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the PVRZ payload by
@@ -171,11 +181,23 @@ deadlock; its sole warning was the already documented EEex `RenderTexture` prolo
 The test transaction was restored after exit. Phase 3e-A is therefore ingame-qualified, but it did
 not optimize any frame: every CPU buffer was retired without native or GL consumption, and native
 `Demand` remained authoritative. Phase 3e-B0 proved the exact render-thread boundary listed above,
-and the separate default-off one-page Phase 3e-B1 consumer now implements and validates it.
-Debug/Release tests, the exact executable validator, the transaction preflight and the AR0900
-ingame gate pass; see
-[`validation/map-page-offframe-phase3b1.md`](validation/map-page-offframe-phase3b1.md). The next gate
-is a separately bounded multi-page AR0900 candidate preserving the same strict fallback and exact
-transactional restoration. The four-zone performance protocol remains later. A shadow result, a
-prepared or installed candidate, or a successful local test does not create a `validated-installed`
-release element.
+and the separate default-off Phase 3e-B1 consumer validated it for one page. Phase 3e-B2 preserved
+the same intended ownership boundary and raised only the generation gate to four ready claims. Its
+Debug/Release tests, DLL build, exact executable validator and transaction preflight passed, but
+its ingame run crashed in native `CResPVR::Demand+0x13D` on `A090010`, after three logged
+consumptions and before the fourth outcome; see
+[`validation/map-page-offframe-phase3b2.md`](validation/map-page-offframe-phase3b2.md). The next gate
+was Phase 3e-B2a, which fixed the claim limit at three and manifested/instrumented the exact nested
+`CRes::Demand` call. It reproduced the same crash after logging `A090010` as
+`native-fallback-claim-limit`, `activeClaim=false`, then a native null/false return; see
+[`validation/map-page-offframe-phase3b2a.md`](validation/map-page-offframe-phase3b2a.md). This
+eliminates a fourth prepared copy as the immediate mechanism, but not a cumulative earlier side
+effect. Phase 3e-B2b therefore ran a one-claim telemetry control followed by a two-claim
+discriminator with native resource count/ownership observations. Both runs passed; see
+[`validation/map-page-offframe-phase3b2b.md`](validation/map-page-offframe-phase3b2b.md). They prove
+one and two claims stable and isolate the failure onset to the first native load after the third
+successful claim. The modelled `nCount` values are not reliable and must not be interpreted or
+written. The next B2c gate compares two versus three claims using only manifested function
+boundaries, pointer identities, PVR-cache movements, paired release calls and bounded memory
+telemetry. The four-zone performance protocol is blocked. A shadow result, a prepared or installed
+candidate, or a successful local test does not create a `validated-installed` release element.

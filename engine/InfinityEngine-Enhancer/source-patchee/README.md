@@ -183,12 +183,25 @@ one PVRZ without starting or changing the game:
 
 For the unified 2.7.3 executable, `tools/validate_build.py` also gates the Phase 3e-B0 decoded-PVR
 boundary: the unique zlib wrapper, all nine native `CResPVR::Demand` phase calls and the
-post-decode field/upload/release window. Phase 3e-B1 can use that boundary only when both
-`PerformanceLogs=true` and the separate default-off `EnableMapPageOffframeConsume=true` option are
-set. It moves at most one prepared page per area generation into the native destination after exact
-return-address, resource, source, size and compressed-CRC checks; every failure calls the original
-zlib wrapper. Its one-page AR0900 gate passed ingame on 2026-08-30 with exact transactional
-restoration; it is still a default-off prototype, not release-qualified support.
+post-decode field/upload/release window. The consuming prototype requires both
+`PerformanceLogs=true` and the separate default-off `EnableMapPageOffframeConsume=true` option.
+Phase 3e-B1 proved one prepared page ingame on AR0900. Phase 3e-B2 raised the fixed limit
+to four claims per area generation after exact return-address, resource, source, size and
+compressed-CRC checks; every failure calls the original zlib wrapper and consumes one of the four
+bounded slots. Its offline gates and transactional candidate preflight passed on 2026-08-30, but
+the AR0900 ingame gate crashed in native `CResPVR::Demand+0x13D` on `A090010` after three logged
+consumptions and before the fourth outcome. Phase 3e-B2a then capped the same path at three claims
+and instrumented the exact nested `CRes::Demand`. It reproduced the crash after proving that
+`A090010` selected native fallback with no active prepared claim and that `CRes::Demand` itself
+returned null/false. Phase 3e-B2b then passed AR0900 with the same telemetry at one and exactly two
+claims. With two claims, `A090009`, `A090010` and all later pages returned successfully through the
+native path; the full map stayed correct and stable before a clean exit. The observed failure
+threshold therefore starts after the third successful substitution. The attempted `nCount`
+observation is not usable: successful resources exposed impossible values in the one-claim run and
+zero in the two-claim run, so neither it nor `bWasMalloced` may drive a fix. The next B2c gate is a
+field-free two-versus-three lifecycle trace across validated demand/release and PVR-cache
+boundaries. This remains default-off, AR0900-only and non-release-qualified work. See
+[`docs/validation/map-page-offframe-phase3b2b.md`](docs/validation/map-page-offframe-phase3b2b.md).
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

@@ -369,6 +369,12 @@ void test_manifest_loading() {
                 "2.7.3 PVR demand diagnostics should fail closed on a signature");
     expect_true(found273->get().pvrDemand.decodeBoundary.enabled(),
                 "2.7.3 PVR decoded handoff should carry exact static evidence");
+    expect_eq(found273->get().pvrDemand.decodeBoundary.resourceDemandCallOffset,
+              std::size_t{0xDC},
+              "2.7.3 CRes::Demand call should remain at PVR Demand+0xDC");
+    expect_eq(found273->get().pvrDemand.decodeBoundary.resourceDemand,
+              std::uintptr_t{0x402A00},
+              "2.7.3 CRes::Demand target should match the offline call graph");
     expect_eq(found273->get().pvrDemand.decodeBoundary.uncompressCallOffset,
               std::size_t{0x15F},
               "2.7.3 PVR uncompress call should remain at Demand+0x15F");
@@ -910,7 +916,7 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableMapPageOffframeProbe,
               "map-page off-frame probe defaults off");
   expect_true(!cfg.enableMapPageOffframeConsume,
-              "map-page off-frame consume canary defaults off");
+              "map-page off-frame bounded consume defaults off");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1},
             "map-page prewarm defaults to one page per step");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 8.0f,
@@ -3723,19 +3729,29 @@ void test_map_page_shadow_queue_bounds_and_generations() {
             "shutdown should release every prepared CPU buffer");
 }
 
-void test_map_page_consume_canary_contract() {
-  using iee::core::MapPageConsumeCanary;
+void test_map_page_consume_gate_contract() {
+  using iee::core::kMapPageConsumeMaximumClaimsPerGeneration;
+  using iee::core::MapPageConsumeGate;
   using iee::core::PvrConsumeEvidence;
   using iee::core::PvrConsumeValidationStatus;
   using iee::core::validate_pvr_consume;
 
-  MapPageConsumeCanary canary;
-  canary.reset(7);
-  expect_true(canary.try_claim(7), "first ready page should claim the area canary");
-  expect_true(!canary.try_claim(7), "a generation should never claim a second page");
-  expect_true(!canary.try_claim(8), "an unannounced generation should fail closed");
-  canary.reset(8);
-  expect_true(canary.try_claim(8), "an explicit area reset should rearm one canary");
+  expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{2},
+            "Phase 3e-B2b2 should permit exactly two diagnostic claims");
+  MapPageConsumeGate gate;
+  gate.reset(7);
+  expect_true(!gate.exhausted(7), "a reset generation should begin below the consume limit");
+  for (std::uint32_t claim = 1; claim <= kMapPageConsumeMaximumClaimsPerGeneration; ++claim) {
+    expect_true(gate.try_claim(7), "each claim through the fixed limit should succeed");
+    expect_eq(gate.claims(7), claim, "the consume gate should expose its current ordinal");
+  }
+  expect_true(gate.exhausted(7), "the fixed claim count should exhaust the diagnostic gate");
+  expect_true(!gate.try_claim(7), "a generation should never exceed its fixed claim limit");
+  expect_true(!gate.try_claim(8), "an unannounced generation should fail closed");
+  expect_eq(gate.claims(8), std::uint32_t{0},
+            "an unannounced generation should not inherit a claim count");
+  gate.reset(8);
+  expect_true(gate.try_claim(8), "an explicit area reset should rearm the bounded gate");
 
   PvrConsumeEvidence evidence{
       .scopeActive = true,
@@ -3755,7 +3771,7 @@ void test_map_page_consume_canary_contract() {
       .actualCompressedCrc32 = 0xAABBCCDD,
   };
   expect_true(validate_pvr_consume(evidence) == PvrConsumeValidationStatus::Ready,
-              "exact source, size, owner, callsite and CRC evidence should permit one copy");
+              "exact source, size, owner, callsite and CRC evidence should permit a copy");
 
   auto rejected = evidence;
   rejected.scopeActive = false;
@@ -5134,7 +5150,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();
-  test_map_page_consume_canary_contract();
+  test_map_page_consume_gate_contract();
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
   test_hierarchical_cache_budget_simulator();

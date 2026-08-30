@@ -44,6 +44,8 @@ struct ReferenceRvas {
 // both the unique uncompress wrapper and the native post-decode field/upload
 // window on the positively identified build.
 struct PvrDecodeBoundary {
+  std::size_t resourceDemandCallOffset{};
+  std::uintptr_t resourceDemand{};
   std::size_t uncompressCallOffset{};
   std::uintptr_t uncompress{};
   std::string_view uncompressSignature{};
@@ -51,13 +53,15 @@ struct PvrDecodeBoundary {
   std::string_view consumeWindowSignature{};
 
   [[nodiscard]] constexpr bool enabled() const noexcept {
-    return uncompressCallOffset != 0 && uncompress != 0 &&
+    return resourceDemandCallOffset != 0 && resourceDemand != 0 &&
+           uncompressCallOffset != 0 && uncompress != 0 &&
            !uncompressSignature.empty() && consumeWindowOffset != 0 &&
            !consumeWindowSignature.empty();
   }
 
   [[nodiscard]] constexpr bool validate() const noexcept {
-    const bool empty = uncompressCallOffset == 0 && uncompress == 0 &&
+    const bool empty = resourceDemandCallOffset == 0 && resourceDemand == 0 &&
+                       uncompressCallOffset == 0 && uncompress == 0 &&
                        uncompressSignature.empty() && consumeWindowOffset == 0 &&
                        consumeWindowSignature.empty();
     return empty || enabled();

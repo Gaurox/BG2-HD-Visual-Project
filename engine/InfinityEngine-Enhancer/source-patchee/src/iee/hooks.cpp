@@ -86,6 +86,7 @@ static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
 static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
 static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
+static core::Hook<CResPvrDemandFn> g_resDemandDiagnosticHook;
 static core::Hook<CResPvrUncompressFn> g_pvrUncompressHook;
 static std::uintptr_t g_pvrUncompressExpectedReturn{};
 static DrawFlushGlFn g_drawFlushGl{};
@@ -2362,7 +2363,7 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
     }
 
     // Re-read the native owner after hashing the source. Any concurrent or
-    // re-entrant mutation invalidates the canary before bytes are published.
+    // re-entrant mutation invalidates the attempt before bytes are published.
     game::CResPVR stable{};
     if (!core::safe_read(attempt->resource, stable) ||
         stable.baseclass_0.pData != native.baseclass_0.pData ||
@@ -2384,6 +2385,60 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
   } catch (...) {
     return fallback(map_page_prewarm::PvrConsumeOutcome::InternalError);
   }
+}
+
+// Phase 3e-B2a/B2b observes the exact native CRes::Demand call nested inside
+// the correlated CResPVR::Demand. It never substitutes a raw resource or
+// changes the return value. The count/ownership reads added for B2b are
+// diagnostic only; their runtime semantics are not trusted by the consumer.
+static void* detour_res_demand_diagnostic(void* thisPtr) {
+  const auto original = g_resDemandDiagnosticHook.original();
+  if (!thisPtr || thisPtr != g_activePvrConsumeResource) {
+    return original(thisPtr);
+  }
+
+  game::CResPVR before{};
+  const bool haveBefore = core::safe_read(thisPtr, before);
+  game::ResrefBuffer resref{};
+  if (!haveBefore ||
+      !game::read_runtime_resref(before.baseclass_0.resref, resref)) {
+    resref[0] = '?';
+  }
+  const auto* attempt = g_activePvrConsumeAttempt;
+  const auto claimOrdinal = attempt ? attempt->claimOrdinal : 0u;
+  const auto claimLimit = core::kMapPageConsumeMaximumClaimsPerGeneration;
+  try {
+    LOG_INFO(
+        "Map page off-frame CRes::Demand entry: page={}, activeClaim={}, claim={}/{}, "
+        "preData={}, preSize={}, preCount={}, preWasMalloced={}, preLoaded={}, preTexture={}",
+        game::resref_view(resref), attempt != nullptr, claimOrdinal, claimLimit,
+        haveBefore && before.baseclass_0.pData != nullptr,
+        haveBefore ? before.baseclass_0.nSize : 0u,
+        haveBefore ? before.baseclass_0.nCount : 0u,
+        haveBefore && before.baseclass_0.bWasMalloced,
+        haveBefore && before.baseclass_0.bLoaded,
+        haveBefore ? before.texture : 0);
+  } catch (...) {
+  }
+
+  void* result = original(thisPtr);
+  game::CResPVR after{};
+  const bool haveAfter = core::safe_read(thisPtr, after);
+  try {
+    LOG_INFO(
+        "Map page off-frame CRes::Demand return: page={}, activeClaim={}, claim={}/{}, "
+        "result={}, postData={}, postSize={}, postCount={}, postWasMalloced={}, postLoaded={}, "
+        "postTexture={}",
+        game::resref_view(resref), attempt != nullptr, claimOrdinal, claimLimit,
+        result != nullptr, haveAfter && after.baseclass_0.pData != nullptr,
+        haveAfter ? after.baseclass_0.nSize : 0u,
+        haveAfter ? after.baseclass_0.nCount : 0u,
+        haveAfter && after.baseclass_0.bWasMalloced,
+        haveAfter && after.baseclass_0.bLoaded,
+        haveAfter ? after.texture : 0);
+  } catch (...) {
+  }
+  return result;
 }
 
 // Exact 2.7.3 CResPVR::Demand wrapper. It observes the engine's existing
@@ -2425,6 +2480,27 @@ static void* detour_pvr_demand(void* thisPtr) {
       haveIoBefore && GetProcessIoCounters(GetCurrentProcess(), &ioAfter);
   game::CResPVR after{};
   const bool haveAfter = core::safe_read(thisPtr, after);
+  if (ctx->cfg.enableMapPageOffframeConsume && ioCandidate) {
+    game::ResrefBuffer diagnosticResref{};
+    if (!haveAfter ||
+        !game::read_runtime_resref(after.baseclass_0.resref, diagnosticResref)) {
+      diagnosticResref[0] = '?';
+    }
+    try {
+      LOG_INFO(
+          "Map page off-frame CResPVR::Demand return: page={}, activeClaim={}, claim={}/{}, "
+          "result={}, data={}, size={}, count={}, wasMalloced={}, loaded={}, texture={}",
+          game::resref_view(diagnosticResref), consumeAttempt.has_value(),
+          consumeAttempt ? consumeAttempt->claimOrdinal : 0u,
+          core::kMapPageConsumeMaximumClaimsPerGeneration, result != nullptr,
+          haveAfter && after.baseclass_0.pData != nullptr,
+          haveAfter ? after.baseclass_0.nSize : 0u,
+          haveAfter ? after.baseclass_0.nCount : 0u,
+          haveAfter && after.baseclass_0.bWasMalloced,
+          haveAfter && after.baseclass_0.bLoaded, haveAfter ? after.texture : 0);
+    } catch (...) {
+    }
+  }
   const bool textureCreated =
       haveBefore && haveAfter && after.texture > 0 &&
       after.texture != before.texture;
@@ -2536,6 +2612,7 @@ bool install_all(AppContext& ctx) {
         const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
         const auto demandEntry = reinterpret_cast<CResPvrDemandFn>(moduleBase + runtime.demand);
         map_page_prewarm::configure(demandEntry);
+        CResPvrDemandFn resourceDemandEntry = nullptr;
         if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
           const auto& boundary = runtime.decodeBoundary;
           if (!boundary.enabled()) {
@@ -2558,6 +2635,15 @@ bool install_all(AppContext& ctx) {
               boundary.consumeWindowOffset != boundary.uncompressCallOffset + 5u) {
             throw std::runtime_error("PVR uncompress call edge mismatch");
           }
+          const auto resourceCallAddress = moduleBase + runtime.demand +
+                                           boundary.resourceDemandCallOffset;
+          const auto decodedResourceTarget = core::rel32_target_checked(
+              reinterpret_cast<const void*>(resourceCallAddress), 0xE8, 1, 5);
+          if (decodedResourceTarget !=
+              reinterpret_cast<void*>(moduleBase + boundary.resourceDemand)) {
+            throw std::runtime_error("CRes::Demand diagnostic call edge mismatch");
+          }
+          resourceDemandEntry = reinterpret_cast<CResPvrDemandFn>(decodedResourceTarget);
           g_pvrUncompressExpectedReturn =
               moduleBase + runtime.demand + boundary.consumeWindowOffset;
         }
@@ -2579,9 +2665,19 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(&detour_pvr_uncompress));
           g_pvrUncompressHook.enable();
           LOG_INFO(
-              "Map page off-frame consume canary installed at zlib RVA 0x{:X}; "
-              "expected return RVA 0x{:X}, one claim per area generation, strict native fallback",
-              boundary.uncompress, runtime.demand + boundary.consumeWindowOffset);
+              "Map page off-frame diagnostic consume installed at zlib RVA 0x{:X}; "
+              "expected return RVA 0x{:X}, up to {} claims per area generation, strict native "
+              "fallback",
+              boundary.uncompress, runtime.demand + boundary.consumeWindowOffset,
+              core::kMapPageConsumeMaximumClaimsPerGeneration);
+          g_resDemandDiagnosticHook.create(
+              reinterpret_cast<void*>(resourceDemandEntry),
+              reinterpret_cast<void*>(&detour_res_demand_diagnostic));
+          g_resDemandDiagnosticHook.enable();
+          LOG_INFO(
+              "Map page off-frame CRes::Demand diagnostic installed at RVA 0x{:X}; native "
+              "return value and resource fields remain authoritative",
+              boundary.resourceDemand);
         }
         if (ctx.cfg.enablePerformanceLogging) {
           g_pvrDemandHook.create(
@@ -2612,12 +2708,13 @@ bool install_all(AppContext& ctx) {
         }
         if (ctx.cfg.enableMapPageOffframeConsume && !ctx.cfg.enablePerformanceLogging) {
           LOG_WARN(
-              "Map page off-frame consume canary is enabled but inactive because "
+              "Map page off-frame bounded consume is enabled but inactive because "
               "PerformanceLogs=false; strict demand correlation is required");
         }
       } catch (const std::exception& error) {
         (void)g_pvrUncompressHook.remove();
         g_pvrUncompressExpectedReturn = 0;
+        (void)g_resDemandDiagnosticHook.remove();
         (void)g_pvrDemandHook.remove();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
@@ -2625,6 +2722,7 @@ bool install_all(AppContext& ctx) {
       } catch (...) {
         (void)g_pvrUncompressHook.remove();
         g_pvrUncompressExpectedReturn = 0;
+        (void)g_resDemandDiagnosticHook.remove();
         (void)g_pvrDemandHook.remove();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
@@ -2926,6 +3024,7 @@ bool install_all(AppContext& ctx) {
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
+    (void)g_resDemandDiagnosticHook.remove();
     (void)g_pvrDemandHook.remove();
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
@@ -2962,6 +3061,7 @@ bool install_all(AppContext& ctx) {
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
+    (void)g_resDemandDiagnosticHook.remove();
     (void)g_pvrDemandHook.remove();
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
@@ -3005,6 +3105,7 @@ void uninstall_all() noexcept {
   (void)g_vidCellRenderTextureHook.remove();
   (void)g_pvrUncompressHook.remove();
   g_pvrUncompressExpectedReturn = 0;
+  (void)g_resDemandDiagnosticHook.remove();
   (void)g_pvrDemandHook.remove();
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.remove();
@@ -3055,6 +3156,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_vidCellRenderTextureHook.disable();
   (void)g_pvrUncompressHook.disable();
   g_pvrUncompressExpectedReturn = 0;
+  (void)g_resDemandDiagnosticHook.disable();
   (void)g_pvrDemandHook.disable();
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.disable();

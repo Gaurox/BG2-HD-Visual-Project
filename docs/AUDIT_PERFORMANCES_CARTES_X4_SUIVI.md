@@ -1687,3 +1687,202 @@ l'essai, avec les mêmes contrôles stricts, fallback zlib natif, télémétrie,
 stable et restauration exacte. La campagne des quatre zones reste ultérieure. Ce résultat ne
 produit aucun élément `validated-installed` et ne modifie ni `areas.csv` ni les manifests de
 release.
+
+## Étape 3e-B2 — consommation bornée à quatre pages — 2026-08-30
+
+Le verrou 3e-B1 d'une seule revendication par génération est remplacé par un compteur compile-time
+fixé à quatre. Seul un résultat déjà prêt consomme un slot. Une tentative revendiquée consomme son
+slot même si un contrôle ultérieur bascule vers le zlib original, ce qui interdit qu'une entrée
+malformée rende l'essai non borné. La cinquième revendication est refusée jusqu'au reset explicite
+de génération. Les pages tardives ou absentes restent sur le `Demand` natif synchrone.
+
+La frontière prouvée en B1 ne change pas : scope TLS sur le `CResPVR*` exact, adresse de retour,
+source, tailles, protections mémoire, CRC32 et seconde lecture propriétaire doivent tous concorder.
+Le moteur conserve l'allocation de destination, la LRU de 128 entrées, la publication des champs,
+l'upload GL et la libération. La file worker reste bornée à quatre résultats / 72 Mio et un seul
+buffer revendiqué peut être actif à la fois pendant le `Demand` synchrone.
+
+La télémétrie expose maintenant `claim=N/4`, `consumeClaims`, `claimLimit=4` et le mode
+`bounded-four-page-consume`. Le test natif impose explicitement la limite quatre, accepte les
+revendications 1 à 4, refuse la cinquième et les générations étrangères, puis vérifie le réarmement
+au changement de zone.
+
+Les gates hors ligne passent : CTest Debug 2/2, CTest Release 2/2, DLL Windows x64 Release,
+207/207 tests Python et validation exacte du `BaldurReal.exe` 2.7.3 manifesté. Le candidat fermé
+DLL+INI a passé `install_renderer_candidate.py install --verify-only` sans écriture dans le jeu :
+
+- dossier :
+  `G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2-20260830\candidate-b2-four-page-offline-v1` ;
+- DLL : 1 509 888 octets, SHA-256
+  `2030519385A9922E43A597CA290AE74FEE8533003BEA651FAB243ABF10AF8D89` ;
+- INI : 2 452 octets, SHA-256
+  `B1587B7B6164050577537A31517B88811F30DC53025CCE638C32A8D182D9C178`.
+
+La prévalidation seule a laissé le jeu exactement sur la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+3e-B2 est donc **qualifiée hors ligne**, mais cela ne préjuge pas de sa gate ingame.
+
+### Gate ingame AR0900 — échec après trois consommations
+
+Le candidat exact a été installé par transaction, puis la sauvegarde solo AR0900 a été chargée via
+InfinityLoader. Le plan a découvert et planifié 26 pages, dont sept déjà résidentes. Trois
+substitutions ont terminé le chemin natif cache/upload/libération : `A090001` en 10,17 ms
+(`crcMs=1,12`, `copyMs=2,18`), `A090008` en 9,64 ms (`1,05` / `2,30`) et `A090009` en 7,08 ms
+(`0,99` / `2,33`).
+
+Le processus a ensuite levé `0xC0000005` avant tout quatrième résultat et avant le résumé de zone.
+Le minidump situe l'accès nul dans `BaldurReal.exe` à la RVA `0x3F6EFD`, soit
+`CResPVR::Demand+0x13D`, instruction `mov ecx, dword ptr [rsi]` avec `rsi=0`. La ressource native
+active est `A090010`; son état capturé indique `pData=0`, `nSize=0`, `bLoaded=false`. Cette adresse
+se place après la création/bind de texture mais avant l'allocation du buffer décodé à `+0x143` et
+avant le handoff `uncompress` à `+0x15F`. Le dump ne permet donc pas d'affirmer qu'une quatrième
+substitution a été atteinte. La vue monde avait été affichée, mais la carte complète et la sortie
+stable n'ont pas pu être validées.
+
+Le journal, les dumps big/small, le log de crash et les reçus avant/après restauration sont archivés
+dans
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2-20260830\ingame-ar0900-four-page`.
+Le journal fait 15 625 331 octets, SHA-256
+`5CAFE3A853FD2741D00CBA803E042DE1BC9E48A71AB2DB36BA8D0A28455D833D`; le petit dump fait
+94 168 846 octets, SHA-256
+`AD41F082096C469C7DEF0F94CCDB0DA7A26646C30E19FF55B2D97E7958217822`; le grand dump fait
+1 541 952 903 octets, SHA-256
+`BB2F6C825F2758245D8371C64829D35EFD0F1D48F6263518C5677D9A5441D49A`.
+
+Après fermeture du dialogue de crash, aucun processus jeu/loader ne restait. La restauration et la
+vérification du reçu passent ; la racine jeu retrouve exactement la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+3e-B2 est donc **rejetée ingame dans cet état**. À ce stade, B1 reste la dernière frontière de consommation
+prouvée. La prochaine gate est un candidat diagnostic/correctif distinct qui explique ou élimine
+l'état natif nul avant `Demand+0x13D`, puis repasse AR0900 avec chaque tentative comptabilisée,
+carte complète correcte et sortie stable. La gate des 8 ms et la campagne des quatre zones restent
+bloquées. Aucun élément `validated-installed`, `areas.csv` ou manifeste de release n'est modifié.
+
+## Étape 3e-B2a — discrimination du quatrième claim — 2026-08-30
+
+3e-B2a fixe la limite compile-time à trois, soit exactement le nombre de consommations terminées en
+B2. Elle ajoute une décision explicite par page (`prepared-claim`, fallback non prêt ou fallback
+limite atteinte) et manifeste l'appel direct `CRes::Demand` à `CResPVR::Demand+0xDC`, cible RVA
+`0x402A00`. Un detour transparent journalise avant/après `pData`, `nSize`, `bLoaded`, la texture et
+la valeur de retour, sans modifier aucun champ ni résultat natif.
+
+Les gates hors ligne passent : CTest Debug 2/2, CTest Release 2/2, DLL Windows x64 Release,
+207/207 tests Python, validation exacte du binaire et prévalidation transactionnelle sans écriture.
+Le candidat fermé est conservé sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2a-20260830\candidate-b2a-three-claim-diagnostic-v1` :
+
+- DLL : 1 516 032 octets, SHA-256
+  `B720C6F3DC45C35ED85232CA6B1FB9AA6A5DCF2AB63CE6E123CC2876180090B2` ;
+- INI : 2 461 octets, SHA-256
+  `BB4EE37E468FC9E55B8CEC9799C9039CB29F69D24FEC97B0B1BA2DB41A2A1876`.
+
+### Gate ingame AR0900 — diagnostic concluant, validation échouée
+
+Le candidat a été installé par la transaction
+`backups/renderer/20260830T153716160757Z-2b5576dd/renderer-install-receipt.json`, puis la sauvegarde
+solo AR0900 a été chargée via InfinityLoader. Après un fallback natif réussi sur `A090000`, les
+trois slots ont consommé `A090001`, `A090008` et `A090009` :
+
+| Claim | Page | retour `CRes::Demand` / taille | CRC | copie | `CResPVR::Demand` |
+|---:|---|---:|---:|---:|---:|
+| 1/3 | `A090001` | vrai / 7 172 686 octets | 1,00 ms | 2,20 ms | 9,75 ms |
+| 2/3 | `A090008` | vrai / 6 874 805 octets | 0,96 ms | 2,35 ms | 10,37 ms |
+| 3/3 | `A090009` | vrai / 6 489 575 octets | 0,89 ms | 2,38 ms | 6,80 ms |
+
+La page suivante est tracée sans ambiguïté : `A090010`, `queueStatus=not-ready`,
+`action=native-fallback-claim-limit`, `claims=3/3`, puis `activeClaim=false`, `claim=0/3`.
+`CRes::Demand` entre avec la ressource vide et renvoie `false`, toujours avec `pData=null`,
+`nSize=0`, `bLoaded=false` et texture nulle. Le processus crashe immédiatement après.
+
+Le flux d'exception du petit dump confirme `0xC0000005`, lecture de l'adresse zéro, à
+`0x1403F6EFD`, donc RVA `0x3F6EFD` / `CResPVR::Demand+0x13D`. Le crash reste situé avant
+l'allocation décodée `+0x143` et le handoff zlib `+0x15F`.
+
+La conclusion diagnostique est acquise : **aucune quatrième substitution n'a été tentée**. Le
+chargement natif échoue après les trois consommations précédentes et le moteur déréférence ensuite
+le pointeur nul. B2a ne permet pas encore de séparer un effet cumulatif des substitutions, un effet
+de la télémétrie/timing ou une interaction de comptabilité ressource ; elle interdit en revanche
+d'attribuer le crash à la copie d'un quatrième buffer ou de corriger en écrivant les champs natifs.
+
+Les preuves sont archivées sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2a-20260830\ingame-ar0900-three-claim-diagnostic` :
+
+- journal : 15 662 426 octets, SHA-256
+  `2F6CBFE019F3907003239B41C2AF29D12AEF123E7A2D80F4CC1116D885C7C965` ;
+- petit dump : 94 164 875 octets, SHA-256
+  `4374C0A63ED9F6832A5DBF2A2F7094300160C43C0FF28E97F133D4516F8FFF0E` ;
+- grand dump : 1 487 612 074 octets, SHA-256
+  `DE8A668A109FC2A0745E3BBFAD74771C77562103E19157FC4A6951E282131671`.
+
+Après le crash, aucun processus jeu/loader ne restait. La restauration et la vérification passent ;
+la racine jeu retrouve exactement la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+La prochaine gate est d'abord un contrôle à une revendication avec cette même télémétrie, pour
+revalider B1 sans confondre un effet du nouveau detour. S'il passe, un candidat exactement deux
+revendications doit discriminer le seuil et ajouter `CRes::nCount`/`bWasMalloced` aux états
+entrée/retour. Aucun essai quatre zones avant ces deux preuves. B1 reste la dernière frontière
+ingame prouvée (frontière ensuite étendue à deux par B2b) ; aucun élément `validated-installed`, `areas.csv` ou manifeste de release n'est
+modifié.
+
+## Étape 3e-B2b — contrôle une revendication et seuil deux/trois — 2026-08-30
+
+Les deux discriminateurs prévus par B2a ont été construits, qualifiés hors ligne, installés par la
+transaction renderer, exécutés sur la sauvegarde solo AR0900 via InfinityLoader, puis restaurés
+exactement. CTest Debug/Release passent 2/2, la DLL Windows x64 Release est construite, les 207 tests
+Python passent, tout comme le validateur exact du binaire 2.7.3 et le préflight transactionnel.
+
+Le contrôle B2b1 limite le prototype à une revendication. `A090001` est consommée avec succès
+(`crcMs=0,98`, `copyMs=2,10`, `nativeDemandMs=9,69`), puis `A090008` et toutes les pages suivantes
+suivent le fallback natif avec `CRes::Demand=true`. La carte complète est correcte, reste stable
+plus de 22 secondes et la sortie est propre. Le nouveau detour de télémétrie est donc transparent à
+la frontière B1.
+
+Le discriminateur B2b2 limite ensuite le même code à exactement deux revendications :
+
+| Claim | Page | retour `CRes::Demand` / taille | CRC | copie | `CResPVR::Demand` |
+|---:|---|---:|---:|---:|---:|
+| 1/2 | `A090001` | vrai / 7 172 686 octets | 1,03 ms | 2,13 ms | 9,99 ms |
+| 2/2 | `A090008` | vrai / 6 874 805 octets | 1,08 ms | 2,08 ms | 9,68 ms |
+
+`A090009`, `A090010` et toutes les pages suivantes choisissent alors
+`native-fallback-claim-limit` et leurs deux appels natifs renvoient vrai. La carte complète reste
+correcte et stable plus de 22 secondes, puis le jeu quitte proprement. Le résumé confirme
+`consumeClaims=2`, `claimLimit=2`, `consumed=2` et zéro erreur/mismatch.
+
+La matrice contrôlée borne maintenant le seuil : une et deux substitutions sont stables ; avec
+trois substitutions, B2a consomme encore `A090009`, puis le premier chargement natif suivant
+(`A090010`) renvoie faux et crashe. **L'échec devient donc observable après la troisième
+substitution réussie**, et non pendant une quatrième copie. Cela ne prouve pas encore si la cause
+est une opération de cycle de vie manquante, la comptabilité/cache ou une allocation native.
+
+La lecture proposée de `nCount` n'est pas exploitable : B2b1 journalise, sur des chargements PVR
+pourtant réussis, des valeurs impossibles et persistantes telles que `538976288`, `1213408043`,
+`1717989152` et `1969448306`, alors que B2b2 obtient zéro sur la même famille. Ce champ modélisé ne
+doit ni servir de compteur de référence ni être écrit. `bWasMalloced` reste descriptif seulement,
+faute de validation indépendante de son layout et de sa durée de vie.
+
+Les candidats et preuves sont archivés sous :
+
+- `G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b1-20260830` ;
+- `G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2b2-20260830`.
+
+Le détail des hashes, reçus et sessions est dans
+[`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2b.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2b.md).
+Après chaque essai, aucun processus jeu/loader ne reste ; la racine jeu retrouve exactement la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+La prochaine gate est **3e-B2c** : comparaison A/B deux claims stables contre trois claims en échec,
+avec une télémétrie sans champs natifs devinés. Elle doit manifester les frontières exactes
+demande/libération et cache PVR, puis tracer les identités de pointeurs, décision
+zlib-original/substitution, mouvements des 128 slots, texture, libérations appariées, mémoire
+processus et mémoire des queues. Aucune valeur/retour natif ne doit être modifié. La première
+divergence avant l'échec de `A090010` définira l'unique invariant à corriger ; le candidat corrigé
+devra d'abord passer trois revendications sur AR0900. La campagne quatre zones reste bloquée.
+Aucun élément `validated-installed`, `areas.csv` ou manifeste de release n'est modifié.
