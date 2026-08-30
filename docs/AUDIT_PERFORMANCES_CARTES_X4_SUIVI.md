@@ -2048,3 +2048,55 @@ AR0900, avec le même candidat transactionnel, le handshake inchangé et les mé
 claims, fallbacks/attentes, préparation et ouverture de carte. Toute campagne cache OS froid reste
 séparée. Le prototype demeure non éligible à la release : aucun élément `validated-installed`,
 `areas.csv` ou manifeste de release n'est modifié.
+
+## Étape 3e-B2f — ordonnancement single-slot just-in-time — 2026-08-30
+
+La campagne B2e a montré que préparer toutes les pages en avance faisait travailler le worker en
+concurrence avec le préchauffage natif, alors que seulement quatre pages pouvaient être consommées.
+B2f conserve exactement le handoff et le handshake validés, mais ne soumet plus qu'une page utile à
+la fois. Le slot terminé passe de quatre pages / 72 Mio à une page / 20 Mio, le worker utilise une
+priorité inférieure à la normale et la première expansion de vue arrête les préparations restantes.
+Après quatre claims, toutes les autres pages restent entièrement natives.
+
+La campagne ingame charge AR0900, AR0602, AR0516 puis AR0700N par InfinityLoader. Les seize claims
+préparés réussissent, quatre par zone, sans fallback de claim, mismatch, erreur, crash ni deadlock.
+Les cartes complètes s'affichent correctement, les quatre premières expansions de vue sont
+capturées et le jeu sort proprement.
+
+| Zone | Baseline native A (ms) | B2e eager (ms) | B2f single-slot (ms) | B2f vs A | B2f vs B2e |
+|---|---:|---:|---:|---:|---:|
+| AR0900 | 732,45 | 655,40 | 586,94 | -19,9 % | -10,4 % |
+| AR0602 | 196,82 | 177,95 | 179,72 | -8,7 % | +1,0 % |
+| AR0516 | 187,26 | 173,39 | 178,38 | -4,7 % | +2,9 % |
+| AR0700N | 828,58 | 891,74 | 837,69 | +1,1 % | -6,1 % |
+| **Total** | **1 945,11** | **1 898,48** | **1 782,73** | **-8,3 %** | **-6,1 %** |
+
+Les valeurs négatives sont des gains. Une seule passe ne permet pas de séparer précisément les
+petites variations du bruit de mesure. La valeur baseline AR0700N provient de la campagne
+interactive antérieure mais sa ligne `prewarm complete` n'est pas présente dans l'archive A dédiée ;
+elle doit donc être remesurée avant toute conclusion statistique.
+
+Seulement 16 des 166 pages manquantes sont préparées, soit 9,64 %, mais le cumul gagne 8,3 % contre
+la baseline et 6,1 % contre B2e. Le gain est cohérent avec la suppression du travail shadow inutile.
+Sur la première expansion AR0700N, B2e mesurait 22,46 ms et deux décompressions / 8 Mio ; B2f mesure
+5,92 ms et zéro décompression. Les autres frames de déclenchement B2f sont comprises entre 5,97 et
+6,03 ms. En revanche, le pire `Demand` reste à 42,35 ms sur AR0900 : la cible historique de 8 ms par
+appel atomique n'est pas satisfaite.
+
+Le candidat ingame avait le SHA DLL
+`526A29106F98A6ADCD7BE9CD69FE3130AF033123C89D2F06CEDB93DC28203642`. Après l'essai, une anomalie
+de journalisation seulement a été corrigée : en mode JIT, le résumé ne doit pas conclure après le
+premier claim. Le binaire final issu de cette correction a le SHA
+`F4DAA8D945C436250588E118EEAA0B38DCFCA59D103E3C63949E5179769DA23C`; ses tests C++ sériels et le
+validateur du build exact passent, mais ce binaire précis n'a pas été rejoué ingame.
+
+Le rapport complet, les limites de cette passe et les chemins de preuve sont dans
+[`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2f.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2f.md).
+La transaction est restaurée et vérifiée bit à bit ; aucun processus jeu/loader ne restait à la fin
+de la session contrôlée. Aucun élément `validated-installed`, `areas.csv` ou manifeste de release
+n'est modifié.
+
+La prochaine gate est une campagne A/B répétée et contrebalancée sur les quatre sauvegardes avec la
+source finale, puis une campagne cache OS froid séparée. Si la régression AR0700N de 1,1 % contre la
+baseline se confirme hors variance, il faudra ajuster le choix de page ou la fenêtre d'inactivité
+avant d'augmenter la limite de quatre claims. B2f reste default-off et hors release.

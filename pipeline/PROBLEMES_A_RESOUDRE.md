@@ -83,13 +83,19 @@ dans `areas.csv`.
   (`ERROR_SHARING_VIOLATION`), puis `CRes::Demand=false` et le crash. Le cache est seulement à
   36/128, aucune éviction/libération ne survient et la mémoire n'est pas au pic : la collision du
   lecteur fichier est la première divergence prouvée. B2d ajoute alors l'identité en vol et son
-  acquittement avant fallback natif. Sa gate trois claims AR0900 passe : `A090000` attend 42,04 ms
-  la fermeture shadow puis charge nativement, les trois claims préparés et tous les fallbacks
-  suivants réussissent, la carte reste stable plus de 30 secondes et sort proprement.
-- **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
-  réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
-  thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
-  par la transaction DLL/INI exacte désormais disponible. Le premier jalon est le préparateur
+   acquittement avant fallback natif. Sa gate trois claims AR0900 passe : `A090000` attend 42,04 ms
+   la fermeture shadow puis charge nativement, les trois claims préparés et tous les fallbacks
+   suivants réussissent, la carte reste stable plus de 30 secondes et sort proprement. B2e passe
+   ensuite quatre claims avec ce handshake, mais sa campagne quatre zones révèle le coût du
+   scheduling eager : le worker prépare des dizaines de pages alors que quatre seulement sont
+   consommables. B2f passe à un slot JIT, priorité worker inférieure et arrêt à la première expansion.
+   Les 16 claims des quatre sauvegardes réussissent sans erreur ; le cumul `totalDemandMs` tombe de
+   1 898,48 à 1 782,73 ms contre B2e (-6,1 %) et de 1 945,11 à 1 782,73 ms contre les mesures natives
+   historiques (-8,3 %). AR0700N passe de 22,46 ms / deux décompressions sur la frame d'expansion B2e
+   à 5,92 ms / zéro décompression. La passe unique reste insuffisante pour une qualification release.
+- **Gate** : répéter une campagne A/B contrebalancée sur les quatre sauvegardes avec la source B2f
+  finale, puis mener séparément une campagne cache OS froid. Toute installation doit passer par la
+  transaction DLL/INI exacte désormais disponible. Le premier jalon est le préparateur
   *shadow* 3e-A décrit dans
   [`../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md) : aucune
   mutation moteur/GL sur le worker, données CPU immuables, queues et mémoire bornées, invalidation
@@ -125,9 +131,12 @@ dans `areas.csv`.
   trois consommations terminent sans crash. La gate quatre claims 3e-B2e passe à son tour avec le
   handshake inchangé : `A090001`, `A090008`, `A090009` et `A090010` sont consommées, deux fallbacks
   en vol attendent correctement leur acquittement, toutes les demandes natives réussissent et la
-  carte reste stable plus de 30 secondes. La campagne contrebalancée de performance et robustesse
-  sur AR0700N, AR0516, AR0602 et AR0900 est désormais rouverte. Une éventuelle campagne cache OS
-  froid doit rester séparée.
+  carte reste stable plus de 30 secondes. B2f remplace ensuite la soumission eager par un slot JIT.
+  Sa première campagne AR0900/AR0602/AR0516/AR0700N consomme 16/16 claims et améliore le cumul de
+  6,1 % contre B2e, sans erreur ni contention compressée sur la première expansion. La prochaine
+  gate est une campagne A/B répétée/contrebalancée avec le correctif final de résumé, puis une
+  campagne cache OS froid séparée. Si le +1,1 % AR0700N contre la baseline persiste, ajuster le choix
+  de page ou la fenêtre d'inactivité avant toute hausse de la limite de quatre claims.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

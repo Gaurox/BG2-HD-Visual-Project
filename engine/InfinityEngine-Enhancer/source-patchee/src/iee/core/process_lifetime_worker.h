@@ -71,6 +71,10 @@ class ProcessLifetimeWorker {
     return true;
   }
 
+  [[nodiscard]] bool set_priority(int priority) noexcept {
+    return thread_ && SetThreadPriority(thread_, priority) != FALSE;
+  }
+
   [[nodiscard]] bool active() const noexcept { return thread_ != nullptr; }
   [[nodiscard]] bool holds_module_reference() const noexcept {
     return moduleReference_ != nullptr;

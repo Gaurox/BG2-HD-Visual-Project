@@ -28,6 +28,11 @@ void configure(PvrDemandFn demand) noexcept;
 // reset; all wrapper traversal and PVR demands remain on the render thread.
 void request_area_reset() noexcept;
 
+// The first detected wide-view expansion ends background preparation for the
+// current area. Queued/ready work is released without blocking presentation;
+// an active file reader retains the existing native-fallback handshake.
+void notify_wide_view_expansion() noexcept;
+
 // Called after swap and post-processing state restoration, while the WGL
 // context still belongs to the engine render thread.
 void on_post_swap(AppContext& ctx) noexcept;

@@ -74,6 +74,11 @@ class MapViewBurstTelemetry {
       std::uint64_t frame, const MapViewCumulativeCounters& cumulative,
       double presentationIntervalMilliseconds) noexcept;
 
+  // Read only from the presentation thread immediately after finish_frame().
+  // It becomes true on the expansion-trigger frame, before the buffered
+  // eight-frame capture is complete.
+  [[nodiscard]] bool capture_active() const noexcept { return captureActive; }
+
  private:
   struct ViewState {
     float width{};

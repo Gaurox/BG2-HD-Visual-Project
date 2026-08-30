@@ -270,6 +270,7 @@ void MapPageShadowQueue::restart() noexcept {
   try {
     std::lock_guard lock(mutex_);
     stopping_ = false;
+    acceptingWork_ = true;
     clear_generation_locked();
     generation_ = generation_ == (std::numeric_limits<std::uint64_t>::max)()
                       ? 1
@@ -284,6 +285,7 @@ void MapPageShadowQueue::restart() noexcept {
 std::uint64_t MapPageShadowQueue::begin_generation() noexcept {
   try {
     std::lock_guard lock(mutex_);
+    acceptingWork_ = true;
     clear_generation_locked();
     generation_ = generation_ == (std::numeric_limits<std::uint64_t>::max)()
                       ? 1
@@ -344,7 +346,7 @@ std::uint64_t MapPageShadowQueue::retire_not_ready_locked(
 bool MapPageShadowQueue::submit(ShadowPageJob job) noexcept {
   try {
     std::lock_guard lock(mutex_);
-    if (stopping_ || job.identity.generation != generation_ ||
+    if (stopping_ || !acceptingWork_ || job.identity.generation != generation_ ||
         !valid_resref_component(job.identity.areaResref) ||
         !valid_resref_component(job.identity.tilesetResref) ||
         !valid_resref_component(job.identity.pageResref) ||
@@ -399,9 +401,10 @@ bool MapPageShadowQueue::publish(ShadowPreparedResult result) noexcept {
       inFlight_.reset();
       changed_.notify_all();
     }
-    if (stopping_ || result.identity.generation != generation_ ||
+    if (stopping_ || !acceptingWork_ || result.identity.generation != generation_ ||
         !identity_known_locked(result.identity)) {
       ++stats_.discarded;
+      known_.erase(result.identity);
       return false;
     }
     if (result.page.status != PvrzPrepareStatus::Ready) {
@@ -446,6 +449,22 @@ bool MapPageShadowQueue::publish(ShadowPreparedResult result) noexcept {
     return true;
   } catch (...) {
     return false;
+  }
+}
+
+ShadowObservationStatus MapPageShadowQueue::inspect(
+    const ShadowPageIdentity& identity) const noexcept {
+  try {
+    std::lock_guard lock(mutex_);
+    const auto ready = std::find_if(completed_.begin(), completed_.end(),
+                                    [&](const Completed& value) {
+                                      return value.identity == identity;
+                                    });
+    if (ready != completed_.end()) return ShadowObservationStatus::Ready;
+    return identity_known_locked(identity) ? ShadowObservationStatus::NotReady
+                                           : ShadowObservationStatus::Unplanned;
+  } catch (...) {
+    return ShadowObservationStatus::Unplanned;
   }
 }
 
@@ -530,10 +549,38 @@ ShadowQueueStats MapPageShadowQueue::snapshot() const noexcept {
   }
 }
 
+ShadowCancellation MapPageShadowQueue::cancel_remaining() noexcept {
+  try {
+    std::lock_guard lock(mutex_);
+    ShadowCancellation cancelled{
+        .pendingPages = pending_.size(),
+        .completedPages = completed_.size(),
+        .completedBytes = completedBytes_,
+        .inFlight = inFlight_.has_value(),
+    };
+    acceptingWork_ = false;
+    stats_.cancelledPendingPages += pending_.size();
+    stats_.cancelledCompletedPages += completed_.size();
+    pending_.clear();
+    completed_.clear();
+    completedBytes_ = 0;
+    known_.clear();
+    // Preserve only the active identity until publish() closes its file and
+    // wakes any native fallback waiter. The result itself will be discarded
+    // because acceptingWork_ is false.
+    if (inFlight_) known_.insert(*inFlight_);
+    changed_.notify_all();
+    return cancelled;
+  } catch (...) {
+    return {};
+  }
+}
+
 void MapPageShadowQueue::request_stop() noexcept {
   try {
     std::lock_guard lock(mutex_);
     stopping_ = true;
+    acceptingWork_ = false;
     clear_generation_locked();
     changed_.notify_all();
   } catch (...) {

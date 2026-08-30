@@ -78,6 +78,11 @@ struct RuntimeState {
   double maximumDemandMs{};
   std::uint64_t shadowGeneration{};
   bool shadowDemandSummaryLogged{};
+  std::optional<std::size_t> shadowScheduledCandidate{};
+  std::uint64_t shadowJustInTimeSubmissions{};
+  std::uint64_t shadowIdleWaitFrames{};
+  std::uint64_t shadowWideViewStops{};
+  bool wideViewObserved{};
   std::uint64_t consumeClaims{};
   std::uint64_t consumeConsumed{};
   std::uint64_t consumeFallbacks{};
@@ -117,6 +122,8 @@ void log_shadow_summary(std::string_view reason) noexcept {
         "unplannedDemands={}, compressedMiB={:.2f}, decodedMiB={:.2f}, totalPrepareMs={:.2f}, "
         "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, "
         "nativeFallbackWaits={}, totalFallbackWaitMs={:.2f}, maximumFallbackWaitMs={:.2f}, "
+        "cancelledPending={}, cancelledCompleted={}, justInTimeSubmissions={}, "
+        "idleWaitFrames={}, wideViewStops={}, "
         "pending={}, inFlight={}, fallbackWaiters={}, completed={}, completedMiB={:.2f}, "
         "peakPending={}, peakCompleted={}, "
         "peakCompletedMiB={:.2f}, consumeClaims={}, claimLimit={}, consumed={}, "
@@ -137,6 +144,9 @@ void log_shadow_summary(std::string_view reason) noexcept {
         stats.nativeFallbackWaits,
         static_cast<double>(stats.nativeFallbackWaitNanoseconds) / 1'000'000.0,
         static_cast<double>(stats.maximumNativeFallbackWaitNanoseconds) / 1'000'000.0,
+        stats.cancelledPendingPages, stats.cancelledCompletedPages,
+        g_state.shadowJustInTimeSubmissions, g_state.shadowIdleWaitFrames,
+        g_state.shadowWideViewStops,
         stats.pendingPages, stats.inFlightPages, stats.nativeFallbackWaiters,
         stats.completedPages,
         static_cast<double>(stats.completedBytes) / (1024.0 * 1024.0),
@@ -153,6 +163,27 @@ void log_shadow_summary(std::string_view reason) noexcept {
         g_consumeEnabled ? "bounded-diagnostic-consume" : "shadow-observation-only");
   } catch (...) {
   }
+}
+
+void maybe_log_completed_shadow_summary(std::string_view reason) noexcept {
+  if (g_state.shadowDemandSummaryLogged) return;
+
+  // In single-slot consume mode, each completed claim is followed by the
+  // submission of the next candidate. A momentarily empty queue therefore
+  // does not mean the diagnostic is complete. Wait for the four-claim gate or
+  // for the native prewarm plan to finish before publishing its summary.
+  if (g_consumeEnabled && g_state.state == PlanState::Running &&
+      !g_consumeGate.exhausted(g_state.shadowGeneration)) {
+    return;
+  }
+
+  const auto stats = g_shadowQueue.snapshot();
+  if (stats.submitted == 0 ||
+      stats.readyBeforeDemand + stats.notReadyBeforeDemand < stats.submitted) {
+    return;
+  }
+  g_state.shadowDemandSummaryLogged = true;
+  log_shadow_summary(reason);
 }
 
 unsigned __stdcall shadow_worker_entry(void*) noexcept {
@@ -200,6 +231,18 @@ core::ShadowPageIdentity shadow_identity(const PageCandidate& candidate) {
       .pageResref = std::string(game::resref_view(candidate.pageResref)),
       .pageNumber = candidate.page,
   };
+}
+
+bool submit_shadow_candidate(const PageCandidate& candidate) noexcept {
+  try {
+    auto identity = shadow_identity(candidate);
+    const auto filename = identity.pageResref + ".PVRZ";
+    return g_shadowQueue.submit(
+        {.identity = std::move(identity),
+         .path = g_shadowResourceDirectory / filename});
+  } catch (...) {
+    return false;
+  }
 }
 
 void reset_state(std::uint64_t frame) {
@@ -402,28 +445,26 @@ bool build_plan(AppContext& ctx) {
   }
 
   g_state = std::move(plan);
-  if (g_shadowEnabled) {
+  if (g_shadowEnabled && !g_consumeEnabled) {
     for (const auto& candidate : g_state.candidates) {
       // A page already backed by a native texture will not cross the unloaded
       // Demand boundary measured by this probe. Keeping its CPU copy would also
       // consume one of the four completed slots and could starve missing pages.
       if (candidate.initiallyResident) continue;
-      auto identity = shadow_identity(candidate);
-      const auto filename = identity.pageResref + ".PVRZ";
-      (void)g_shadowQueue.submit(
-          {.identity = std::move(identity),
-           .path = g_shadowResourceDirectory / filename});
+      (void)submit_shadow_candidate(candidate);
     }
   }
   LOG_INFO(
       "Map page prewarm plan: area={}, tileset={}, discoveredPages={}, plannedPages={}, "
       "cappedPages={}, initiallyResident={}, invalidCandidates={}, pagesPerFrame={}, "
-      "budgetMs={:.2f}, delayFrames={}, nativePoolEntries={}, reservedEntries={}",
+      "budgetMs={:.2f}, delayFrames={}, nativePoolEntries={}, reservedEntries={}, "
+      "shadowScheduling={}",
       area_name(), game::resref_view(g_state.tilesetResref), g_state.discoveredPages,
       g_state.candidates.size(), g_state.cappedPages, g_state.initiallyResident,
       g_state.invalidCandidates, ctx.cfg.mapPagePrewarmPagesPerFrame,
       ctx.cfg.mapPagePrewarmBudgetMs, ctx.cfg.mapPagePrewarmDelayFrames,
-      kNativePvrPoolEntries, kNativePvrReserveEntries);
+      kNativePvrPoolEntries, kNativePvrReserveEntries,
+      g_consumeEnabled ? "single-slot-just-in-time" : "probe-eager-bounded");
   if (g_state.candidates.empty()) {
     g_state.state = PlanState::Aborted;
     log_summary("aborted", "no-validated-native-page-wrapper");
@@ -469,19 +510,23 @@ bool configure_shadow(bool enabled, bool consumeEnabled,
       LOG_WARN("Map page shadow probe disabled: worker or DLL lifetime guard could not start");
       return false;
     }
+    const bool lowPriority =
+        g_shadowWorker.set_priority(THREAD_PRIORITY_BELOW_NORMAL);
     g_shadowEnabled = true;
     g_consumeEnabled = consumeEnabled;
     g_resetRequested.store(true, std::memory_order_release);
     LOG_INFO(
         "Map page shadow probe prepared: resourceDirectory={}, pendingLimit={}, "
         "completedLimit={}, completedMiBLimit={:.2f}, decodedPageMiBLimit={:.2f}; "
-        "worker is CPU-only; diagnosticConsume={}, consumeLimit={} and native Demand owns "
-        "cache/upload/free",
+        "worker is CPU-only; workerPriority={}, diagnosticConsume={}, consumeLimit={}, "
+        "consumeScheduling={} and native Demand owns cache/upload/free",
         g_shadowResourceDirectory.string(), core::kShadowMaximumPendingPages,
         core::kShadowMaximumCompletedPages,
         static_cast<double>(core::kShadowMaximumCompletedBytes) / (1024.0 * 1024.0),
         static_cast<double>(core::kShadowMaximumDecodedBytes) / (1024.0 * 1024.0),
-        g_consumeEnabled, core::kMapPageConsumeMaximumClaimsPerGeneration);
+        lowPriority ? "below-normal" : "unchanged",
+        g_consumeEnabled, core::kMapPageConsumeMaximumClaimsPerGeneration,
+        g_consumeEnabled ? "single-slot-just-in-time" : "probe-eager-bounded");
     return true;
   } catch (...) {
     stop_shadow_worker();
@@ -491,6 +536,27 @@ bool configure_shadow(bool enabled, bool consumeEnabled,
 
 void request_area_reset() noexcept {
   g_resetRequested.store(true, std::memory_order_release);
+}
+
+void notify_wide_view_expansion() noexcept {
+  try {
+    if (!g_shadowEnabled || g_state.shadowGeneration == 0 ||
+        g_state.wideViewObserved) {
+      return;
+    }
+    g_state.wideViewObserved = true;
+    ++g_state.shadowWideViewStops;
+    const auto cancelled = g_shadowQueue.cancel_remaining();
+    LOG_INFO(
+        "Map page off-frame preparation stopped at first wide-view expansion: "
+        "area={}, generation={}, cancelledPending={}, cancelledCompleted={}, "
+        "cancelledCompletedMiB={:.2f}, inFlightRetirementPending={}",
+        area_name(), g_state.shadowGeneration, cancelled.pendingPages,
+        cancelled.completedPages,
+        static_cast<double>(cancelled.completedBytes) / (1024.0 * 1024.0),
+        cancelled.inFlight);
+  } catch (...) {
+  }
 }
 
 void on_post_swap(AppContext& ctx) noexcept {
@@ -538,7 +604,8 @@ void on_post_swap(AppContext& ctx) noexcept {
     std::uint32_t processed = 0;
     while (g_state.nextCandidate < g_state.candidates.size() &&
            processed < ctx.cfg.mapPagePrewarmPagesPerFrame) {
-      const auto& candidate = g_state.candidates[g_state.nextCandidate++];
+      const auto candidateIndex = g_state.nextCandidate;
+      const auto& candidate = g_state.candidates[candidateIndex];
       game::CResPVR before{};
       if (!validate_candidate(candidate, before)) {
         ++g_state.invalidCandidates;
@@ -546,9 +613,33 @@ void on_post_swap(AppContext& ctx) noexcept {
         return;
       }
       if (before.texture > 0) {
+        ++g_state.nextCandidate;
+        if (g_state.shadowScheduledCandidate == candidateIndex) {
+          g_state.shadowScheduledCandidate.reset();
+        }
         ++g_state.alreadyResident;
         ++processed;
         continue;
+      }
+
+      const bool justInTimeShadow =
+          g_shadowEnabled && g_consumeEnabled && !g_state.wideViewObserved &&
+          !g_consumeGate.exhausted(g_state.shadowGeneration);
+      if (justInTimeShadow) {
+        const auto identity = shadow_identity(candidate);
+        auto readiness = g_shadowQueue.inspect(identity);
+        if (readiness == core::ShadowObservationStatus::Unplanned &&
+            g_state.shadowScheduledCandidate != candidateIndex) {
+          if (submit_shadow_candidate(candidate)) {
+            g_state.shadowScheduledCandidate = candidateIndex;
+            ++g_state.shadowJustInTimeSubmissions;
+            readiness = g_shadowQueue.inspect(identity);
+          }
+        }
+        if (readiness == core::ShadowObservationStatus::NotReady) {
+          ++g_state.shadowIdleWaitFrames;
+          break;
+        }
       }
 
       const auto glBefore = core::gl_texture_telemetry_snapshot();
@@ -557,6 +648,10 @@ void on_post_swap(AppContext& ctx) noexcept {
       QueryPerformanceCounter(&demandStart);
       (void)g_demand(candidate.pvr);
       QueryPerformanceCounter(&demandEnd);
+      ++g_state.nextCandidate;
+      if (g_state.shadowScheduledCandidate == candidateIndex) {
+        g_state.shadowScheduledCandidate.reset();
+      }
       const auto demandMs = elapsed_ms(demandStart, demandEnd, frequency);
       ++g_state.demandCalls;
       g_state.totalDemandMs += demandMs;
@@ -594,6 +689,7 @@ void on_post_swap(AppContext& ctx) noexcept {
     if (g_state.nextCandidate >= g_state.candidates.size()) {
       g_state.state = PlanState::Finished;
       log_summary("complete", "validated-pages-processed");
+      maybe_log_completed_shadow_summary("all-planned-pages-observed");
     }
   } catch (...) {
     abort_plan("unexpected-exception");
@@ -658,14 +754,7 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
           core::kMapPageConsumeMaximumClaimsPerGeneration,
           static_cast<double>(nativeFallbackWaitNanoseconds) / 1'000'000.0);
     }
-    if (!attempt && !g_state.shadowDemandSummaryLogged) {
-      const auto stats = g_shadowQueue.snapshot();
-      if (stats.submitted > 0 &&
-          stats.readyBeforeDemand + stats.notReadyBeforeDemand >= stats.submitted) {
-        g_state.shadowDemandSummaryLogged = true;
-        log_shadow_summary("all-planned-pages-observed");
-      }
-    }
+    if (!attempt) maybe_log_completed_shadow_summary("all-planned-pages-observed");
     return attempt;
   } catch (...) {
     return std::nullopt;
@@ -771,14 +860,7 @@ void record_consume_attempt(const PvrConsumeAttempt& attempt,
         static_cast<double>(attempt.crcNanoseconds) / 1'000'000.0,
         static_cast<double>(attempt.copyNanoseconds) / 1'000'000.0,
         static_cast<double>(demandNanoseconds) / 1'000'000.0);
-    if (!g_state.shadowDemandSummaryLogged) {
-      const auto stats = g_shadowQueue.snapshot();
-      if (stats.submitted > 0 &&
-          stats.readyBeforeDemand + stats.notReadyBeforeDemand >= stats.submitted) {
-        g_state.shadowDemandSummaryLogged = true;
-        log_shadow_summary("all-planned-pages-observed");
-      }
-    }
+    maybe_log_completed_shadow_summary("all-planned-pages-observed");
   } catch (...) {
   }
 }

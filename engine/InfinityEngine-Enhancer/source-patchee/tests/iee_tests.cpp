@@ -3673,6 +3673,8 @@ void test_map_page_shadow_queue_bounds_and_generations() {
               "first shadow page should enter the bounded queue");
   expect_true(queue.submit({first, "A090000.PVRZ"}),
               "duplicate shadow pages should coalesce");
+  expect_true(queue.inspect(first) == ShadowObservationStatus::NotReady,
+              "a queued just-in-time page should report not-ready without retiring");
 
   iee::core::ShadowPageJob active;
   expect_true(queue.wait_take(active), "worker should receive the queued page");
@@ -3685,11 +3687,15 @@ void test_map_page_shadow_queue_bounds_and_generations() {
   ready.page.decoded.resize(128);
   expect_true(queue.publish(std::move(ready)),
               "prepared immutable bytes should publish within the memory bound");
+  expect_true(queue.inspect(first) == ShadowObservationStatus::Ready,
+              "a completed just-in-time page should report ready without moving its buffer");
   const auto observation = queue.observe(first);
   expect_true(observation.status == ShadowObservationStatus::Ready,
               "native demand should observe and retire a ready shadow page");
   expect_eq(observation.decodedBytes, std::uint64_t{128},
             "ready observation should preserve preparation metrics");
+  expect_true(queue.inspect(first) == ShadowObservationStatus::Unplanned,
+              "retiring a ready page should remove it from readiness inspection");
 
   const auto claimIdentity = make_shadow_identity(generation, 10);
   expect_true(queue.submit({claimIdentity, "A090010.PVRZ"}),
@@ -3753,6 +3759,56 @@ void test_map_page_shadow_queue_bounds_and_generations() {
               "shutdown should wake and stop an idle worker");
   expect_eq(queue.snapshot().completedBytes, std::size_t{0},
             "shutdown should release every prepared CPU buffer");
+}
+
+void test_map_page_shadow_idle_cancellation() {
+  using iee::core::MapPageShadowQueue;
+  using iee::core::PvrzPrepareStatus;
+  using iee::core::ShadowObservationStatus;
+
+  MapPageShadowQueue queue({.maximumPendingPages = 2,
+                            .maximumCompletedPages = 1,
+                            .maximumCompletedBytes = 256});
+  queue.restart();
+  const auto generation = queue.generation();
+  const auto activeIdentity = make_shadow_identity(generation, 0);
+  const auto pendingIdentity = make_shadow_identity(generation, 1);
+  expect_true(queue.submit({activeIdentity, "A090000.PVRZ"}),
+              "the idle-cancellation fixture should accept its active page");
+  iee::core::ShadowPageJob active;
+  expect_true(queue.wait_take(active),
+              "the idle-cancellation worker should own one file identity");
+  expect_true(queue.submit({pendingIdentity, "A090001.PVRZ"}),
+              "the idle-cancellation fixture should retain one queued page");
+
+  const auto cancelled = queue.cancel_remaining();
+  expect_true(cancelled.inFlight && cancelled.pendingPages == 1 &&
+                  cancelled.completedPages == 0,
+              "wide-view cancellation should drop queued work but expose the active reader");
+  expect_true(queue.inspect(activeIdentity) == ShadowObservationStatus::NotReady,
+              "the active identity must remain known until its file handle is retired");
+  expect_true(queue.inspect(pendingIdentity) == ShadowObservationStatus::Unplanned,
+              "queued work should disappear immediately at the wide-view boundary");
+  expect_true(!queue.submit({pendingIdentity, "A090001.PVRZ"}),
+              "the cancelled area generation must reject new background work");
+
+  iee::core::ShadowPreparedResult retired;
+  retired.identity = active.identity;
+  retired.page.status = PvrzPrepareStatus::Ready;
+  retired.page.decodedBytes = 64;
+  retired.page.decoded.resize(64);
+  expect_true(!queue.publish(std::move(retired)),
+              "the active result should be discarded after wide-view cancellation");
+  expect_true(queue.inspect(activeIdentity) == ShadowObservationStatus::Unplanned,
+              "worker acknowledgement should retire the last cancelled identity");
+  const auto stats = queue.snapshot();
+  expect_eq(stats.cancelledPendingPages, std::uint64_t{1},
+            "wide-view cancellation should count its queued page");
+  expect_eq(stats.discarded, std::uint64_t{1},
+            "the post-cancellation active result should be counted as discarded");
+  expect_eq(stats.inFlightPages, std::size_t{0},
+            "worker acknowledgement should leave no active file reader");
+  queue.request_stop();
 }
 
 void test_map_page_shadow_inflight_fallback_handshake() {
@@ -3820,13 +3876,19 @@ void test_map_page_shadow_inflight_fallback_handshake() {
 
 void test_map_page_consume_gate_contract() {
   using iee::core::kMapPageConsumeMaximumClaimsPerGeneration;
+  using iee::core::kShadowMaximumCompletedBytes;
+  using iee::core::kShadowMaximumCompletedPages;
   using iee::core::MapPageConsumeGate;
   using iee::core::PvrConsumeEvidence;
   using iee::core::PvrConsumeValidationStatus;
   using iee::core::validate_pvr_consume;
 
   expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{4},
-            "Phase 3e-B2e controlled extension should permit exactly four claims");
+            "Phase 3e-B2f should retain exactly four sequential claims");
+  expect_eq(kShadowMaximumCompletedPages, std::size_t{1},
+            "Phase 3e-B2f should retain at most one ready page");
+  expect_eq(kShadowMaximumCompletedBytes, std::size_t{20u * 1024u * 1024u},
+            "the single ready slot should retain one maximum decoded page");
   MapPageConsumeGate gate;
   gate.reset(7);
   expect_true(!gate.exhausted(7), "a reset generation should begin below the consume limit");
@@ -4802,6 +4864,8 @@ void test_map_view_burst_telemetry_is_buffered_and_resettable() {
   telemetry.record_render_texture_cpu(3, 0.75);
   expect_true(!telemetry.finish_frame(3, counters, 42.5).has_value(),
               "The trigger frame should be buffered instead of logged immediately");
+  expect_true(telemetry.capture_active(),
+              "the expansion trigger should be observable before the buffered capture ends");
 
   std::optional<iee::core::MapViewBurstCapture> capture;
   for (std::uint64_t frame = 4; frame <= 10; ++frame) {
@@ -4816,6 +4880,8 @@ void test_map_view_burst_telemetry_is_buffered_and_resettable() {
 
   expect_true(capture.has_value(),
               "Eight presentation-boundary samples should complete one capture");
+  expect_true(!telemetry.capture_active(),
+              "the expansion signal should clear when its buffered capture completes");
   if (capture) {
     expect_eq(capture->eventId, std::uint64_t{1},
               "The first completed capture should use event id one");
@@ -5239,6 +5305,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();
+  test_map_page_shadow_idle_cancellation();
   test_map_page_shadow_inflight_fallback_handshake();
   test_map_page_consume_gate_contract();
   test_native_occlusion_probe_correlation();

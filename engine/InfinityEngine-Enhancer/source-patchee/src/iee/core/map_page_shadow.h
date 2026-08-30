@@ -17,11 +17,12 @@ namespace iee::core {
 inline constexpr std::size_t kShadowMaximumCompressedBytes = 32u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumDecodedBytes = 20u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumPendingPages = 96;
-inline constexpr std::size_t kShadowMaximumCompletedPages = 4;
-inline constexpr std::size_t kShadowMaximumCompletedBytes = 72u * 1024u * 1024u;
-// Phase 3e-B2e controlled extension: B2d qualified the in-flight reader
-// retirement handshake with three claims. This candidate tests exactly four
-// prepared claims before preserving native fallback for every later page.
+// Phase 3e-B2f keeps at most one decoded page ready. Four pages may still be
+// consumed sequentially, but the worker cannot build a multi-page backlog.
+inline constexpr std::size_t kShadowMaximumCompletedPages = 1;
+inline constexpr std::size_t kShadowMaximumCompletedBytes = 20u * 1024u * 1024u;
+// B2e qualified four sequential prepared claims. B2f retains that bounded
+// consumer gate while changing only how each page is scheduled.
 inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 4;
 
 enum class PvrzPrepareStatus : std::uint8_t {
@@ -184,6 +185,8 @@ struct ShadowQueueStats {
   std::uint64_t nativeFallbackWaits{};
   std::uint64_t nativeFallbackWaitNanoseconds{};
   std::uint64_t maximumNativeFallbackWaitNanoseconds{};
+  std::uint64_t cancelledPendingPages{};
+  std::uint64_t cancelledCompletedPages{};
   std::size_t pendingPages{};
   std::size_t inFlightPages{};
   std::size_t nativeFallbackWaiters{};
@@ -192,6 +195,13 @@ struct ShadowQueueStats {
   std::size_t peakPendingPages{};
   std::size_t peakCompletedPages{};
   std::size_t peakCompletedBytes{};
+};
+
+struct ShadowCancellation {
+  std::size_t pendingPages{};
+  std::size_t completedPages{};
+  std::size_t completedBytes{};
+  bool inFlight{};
 };
 
 // Thread-safe bounded handoff. The render thread submits/observes, while one
@@ -209,11 +219,19 @@ class MapPageShadowQueue {
   [[nodiscard]] bool submit(ShadowPageJob job) noexcept;
   [[nodiscard]] bool wait_take(ShadowPageJob& job) noexcept;
   [[nodiscard]] bool publish(ShadowPreparedResult result) noexcept;
+  // Non-retiring readiness check used by the render-thread scheduler. It does
+  // not wait for or take ownership from the worker.
+  [[nodiscard]] ShadowObservationStatus inspect(
+      const ShadowPageIdentity& identity) const noexcept;
   [[nodiscard]] ShadowObservation observe(const ShadowPageIdentity& identity) noexcept;
   // Identical retirement semantics to observe(), but moves a ready immutable
   // buffer to the render thread instead of destroying it under the queue lock.
   [[nodiscard]] ShadowClaim claim(const ShadowPageIdentity& identity) noexcept;
   [[nodiscard]] ShadowQueueStats snapshot() const noexcept;
+  // Rejects new work and releases queued/ready buffers. An active reader keeps
+  // its identity until publish() acknowledges file-handle retirement, so a
+  // concurrent native fallback cannot bypass the B2d safety handshake.
+  [[nodiscard]] ShadowCancellation cancel_remaining() noexcept;
   void request_stop() noexcept;
 
  private:
@@ -231,6 +249,7 @@ class MapPageShadowQueue {
   mutable std::mutex mutex_;
   std::condition_variable changed_;
   bool stopping_{true};
+  bool acceptingWork_{true};
   std::uint64_t generation_{};
   std::deque<ShadowPageJob> pending_;
   std::optional<ShadowPageIdentity> inFlight_;

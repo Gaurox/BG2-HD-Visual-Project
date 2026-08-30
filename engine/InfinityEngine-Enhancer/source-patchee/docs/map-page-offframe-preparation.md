@@ -25,7 +25,13 @@ Phase 3e-B2c replaced those guessed fields with exact cache/release/file-open bo
 two-claim control passed again. The three-claim replay proves that `A090010` fails first in the
 native file-open helper with `ERROR_SHARING_VIOLATION` while its shadow identity is known but not
 ready and the worker owns the in-flight job. Cache occupancy is only 36/128 and no cache release
-occurs. The source is returned to two claims pending an explicit in-flight retirement handshake.
+occurs. Phase 3e-B2d added an explicit in-flight retirement handshake and passed three claims;
+Phase 3e-B2e then passed four claims with every native fallback succeeding. Phase 3e-B2f retains
+that proven boundary but replaces eager all-page preparation in consume mode with one just-in-time
+slot, below-normal worker priority and cancellation at the first wide-view expansion. Its one-pass
+four-zone campaign consumed sixteen claims without error and reduced aggregate native prewarm time
+by 6.1% against B2e and 8.3% against the historical native measurements. This is promising evidence,
+not a repeated or cold-cache qualification.
 
 The measured bottleneck is the indivisible native `CResPVR::Demand` call. Repacking AR0900 with
 zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the PVRZ payload by
@@ -33,9 +39,9 @@ zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the 
 but the 8 ms gate still failed. A smaller uniform page cannot fit the 5,752 tiles in the existing
 96-page prewarm limit.
 
-The next experiment must therefore determine whether the read and zlib preparation can be
-completed before a page is needed by the render thread, without moving OpenGL or mutable engine
-state to a worker.
+The next gate is a repeated counterbalanced A/B campaign on AR0700N, AR0516, AR0602 and AR0900 with
+the telemetry-fixed B2f source, followed by a separate OS-cold-cache campaign. No OpenGL or mutable
+engine state may move to the worker, and the native path remains the mandatory fallback.
 
 ## Proven current boundary
 
@@ -218,7 +224,10 @@ controlled four-claim Phase 3e-B2e gate now passes with the unchanged handshake;
 [`validation/map-page-offframe-phase3b2e.md`](validation/map-page-offframe-phase3b2e.md).
 `A090001`, `A090008`, `A090009` and `A090010` are consumed, both not-ready in-flight fallbacks wait
 for retirement, every native demand succeeds, the complete map remains stable and the game exits
-cleanly. This reopens a counterbalanced performance and robustness campaign on AR0700N, AR0516,
-AR0602 and AR0900, while a separate OS-cold-cache campaign remains optional. A shadow result, a
-prepared or installed candidate, or a successful local test does not create a
+cleanly. Phase 3e-B2f then removes eager contention by preparing one useful page at a time; see
+[`validation/map-page-offframe-phase3b2f.md`](validation/map-page-offframe-phase3b2f.md). Its first
+four-zone pass consumes 4/4 prepared pages per area, has no mismatch/error, improves the aggregate
+native prewarm time by 6.1% against B2e and removes B2e's two compressed calls from the AR0700N
+wide-view trigger. Repeated counterbalanced and separate OS-cold-cache campaigns remain mandatory.
+A shadow result, a prepared or installed candidate, or a successful local test does not create a
 `validated-installed` release element.

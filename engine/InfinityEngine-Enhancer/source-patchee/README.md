@@ -212,9 +212,15 @@ succeeded and the complete map stayed stable before a clean exit. Phase 3e-B2e t
 the bound to four claims with the handshake unchanged. Its AR0900 gate consumed `A090001`,
 `A090008`, `A090009` and `A090010`; two in-flight native fallbacks waited for reader retirement,
 every native demand succeeded, the full map stayed stable for more than 30 seconds and the game
-exited cleanly. The four-zone performance campaign is now reopened. This remains default-off and
-non-release-qualified work. See
-[`docs/validation/map-page-offframe-phase3b2e.md`](docs/validation/map-page-offframe-phase3b2e.md).
+exited cleanly. Phase 3e-B2f then replaced eager all-page preparation in consume mode with a
+single-slot just-in-time scheduler, a below-normal worker priority and cancellation at the first
+wide-view expansion. Its one-pass four-zone campaign consumed all sixteen claims and rendered and
+exited cleanly. Aggregate native prewarm time was 1,782.73 ms, 6.1% below B2e and 8.3% below the
+historical native measurements, while the AR0700N wide-view trigger fell from B2e's 22.46 ms with
+two compressed calls to 5.92 ms with none. One pass is not a statistical qualification: repeated
+counterbalanced and separate cold-cache campaigns remain required. This work remains default-off
+and non-release-qualified. See
+[`docs/validation/map-page-offframe-phase3b2f.md`](docs/validation/map-page-offframe-phase3b2f.md).
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

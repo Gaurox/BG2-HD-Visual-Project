@@ -1547,6 +1547,9 @@ void on_frame_boundary(unsigned long long frame,
     };
     const auto capture = g_mapViewBurstTelemetry.finish_frame(
         frame, cumulative, presentationIntervalMilliseconds);
+    if (g_mapViewBurstTelemetry.capture_active()) {
+      map_page_prewarm::notify_wide_view_expansion();
+    }
     if (!capture) return;
 
     const auto wed = ctx->wed.load(std::memory_order_acquire);
