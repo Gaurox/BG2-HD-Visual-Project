@@ -204,10 +204,13 @@ manifested the 128-entry cache, its native release routine and the exact file-op
 `A090009` still completed successfully, but the immediately following not-ready `A090010` native
 fallback failed at file open with Win32 error 32 (`ERROR_SHARING_VIOLATION`) before
 `CRes::Demand=false` and the crash. Cache occupancy was only 36/128 and no release occurred. The
-source limit is therefore back to the qualified two-claim control while B2d adds explicit
-in-flight shadow-reader retirement before native fallback. This remains default-off, AR0900-only
-and non-release-qualified work. See
-[`docs/validation/map-page-offframe-phase3b2c.md`](docs/validation/map-page-offframe-phase3b2c.md).
+source limit first returned to the qualified two-claim control. Phase 3e-B2d then added explicit
+in-flight shadow-reader retirement and a deterministic concurrency test. Its three-claim AR0900
+gate exercised the race on `A090000`: the render thread waited 42.04 ms for the worker to close,
+the native file open succeeded, three prepared claims were consumed, all later native fallbacks
+succeeded and the complete map stayed stable before a clean exit. This remains default-off,
+AR0900-only and non-release-qualified work. See
+[`docs/validation/map-page-offframe-phase3b2d.md`](docs/validation/map-page-offframe-phase3b2d.md).
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

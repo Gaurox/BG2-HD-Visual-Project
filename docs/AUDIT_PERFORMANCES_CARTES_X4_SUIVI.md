@@ -1948,3 +1948,46 @@ avoir un test de concurrence déterministe, conserver tous les retours natifs au
 passer le test trois claims sur AR0900 avec carte complète, stabilité prolongée et sortie propre.
 La campagne quatre zones reste bloquée. Aucun élément `validated-installed`, `areas.csv` ou
 manifeste de release n'est modifié.
+
+## Étape 3e-B2d — acquittement du lecteur shadow en vol — 2026-08-30
+
+B2d corrige uniquement la collision de durée de vie démontrée par B2c. La queue expose maintenant
+l'identité détenue par le worker. Si le rendu demande cette même page avant sa publication, il
+retire l'identité, attend que le worker ferme le fichier et acquitte sa libération, puis seulement
+entre dans le fallback natif. Un job encore pending est retiré sans attente. Le worker signale la
+fin de possession avant publication et jette le résultat si l'identité a été annulée.
+
+Un test de concurrence déterministe bloque le worker sur `A090010`, lance l'observateur natif sur
+un second thread, vérifie qu'un waiter est présent, puis ne laisse le fallback continuer qu'après
+l'acquittement et la destruction du résultat annulé. Les métriques ajoutées comptent les identités
+en vol, waiters, attentes et durées totale/maximale.
+
+La gate trois claims AR0900 passe. La première page `A090000` exerce précisément le nouveau
+protocole : `not-ready`, attente de 42,04 ms, `queueInFlight=0`, puis ouverture native vraie avec
+`GetLastError=0`, `CRes::Demand=true` (7 015 358 octets) et `CResPVR::Demand=true` (texture 39).
+Les trois revendications préparées suivantes réussissent sur `A090001`, `A090008` et `A090009`.
+`A090010` et toutes les pages ultérieures passent par le fallback natif après limite sans échec.
+
+Le résumé final compte 19 jobs soumis, 18 préparés, un résultat en vol annulé/jeté, une attente
+native de 42,04 ms, trois consommations, zéro famille de mismatch/erreur et aucun état résiduel
+pending/in-flight/waiter/completed. Il n'existe aucun retour faux de l'ouverture fichier,
+`CRes::Demand` ou `CResPVR::Demand`. La carte complète reste correcte et stable plus de 30 secondes
+avant une sortie propre.
+
+Le candidat, le log et les reçus installé/restauré sont archivés sous :
+
+```text
+G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2d-20260830
+```
+
+Le détail complet et les hashes sont dans
+[`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2d.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2d.md).
+Après l'essai, aucun processus jeu/loader ne reste et la racine jeu retrouve exactement la DLL
+`9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+La prochaine gate est un candidat **quatre claims AR0900** conservant le handshake B2d inchangé.
+Il doit prouver quatre consommations préparées, tous les fallbacks ultérieurs, une carte complète
+stable, une sortie propre et une restauration exacte. La campagne quatre zones reste bloquée
+jusqu'à cette preuve. Aucun élément `validated-installed`, `areas.csv` ou manifeste de release
+n'est modifié.

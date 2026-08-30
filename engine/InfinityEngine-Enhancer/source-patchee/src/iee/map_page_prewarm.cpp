@@ -115,8 +115,10 @@ void log_shadow_summary(std::string_view reason) noexcept {
         "coalesced={}, rejected={}, started={}, prepared={}, missing={}, ioFailures={}, "
         "invalid={}, discarded={}, readyBeforeDemand={}, notReadyBeforeDemand={}, "
         "unplannedDemands={}, compressedMiB={:.2f}, decodedMiB={:.2f}, totalPrepareMs={:.2f}, "
-        "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, pending={}, "
-        "completed={}, completedMiB={:.2f}, peakPending={}, peakCompleted={}, "
+        "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, "
+        "nativeFallbackWaits={}, totalFallbackWaitMs={:.2f}, maximumFallbackWaitMs={:.2f}, "
+        "pending={}, inFlight={}, fallbackWaiters={}, completed={}, completedMiB={:.2f}, "
+        "peakPending={}, peakCompleted={}, "
         "peakCompletedMiB={:.2f}, consumeClaims={}, claimLimit={}, consumed={}, "
         "originalFallbacks={}, "
         "unexpectedReturn={}, resourceMismatch={}, sourceMismatch={}, sizeMismatch={}, "
@@ -132,7 +134,11 @@ void log_shadow_summary(std::string_view reason) noexcept {
         static_cast<double>(stats.maximumPrepareNanoseconds) / 1'000'000.0,
         static_cast<double>(stats.queueNanoseconds) / 1'000'000.0,
         static_cast<double>(stats.maximumQueueNanoseconds) / 1'000'000.0,
-        stats.pendingPages, stats.completedPages,
+        stats.nativeFallbackWaits,
+        static_cast<double>(stats.nativeFallbackWaitNanoseconds) / 1'000'000.0,
+        static_cast<double>(stats.maximumNativeFallbackWaitNanoseconds) / 1'000'000.0,
+        stats.pendingPages, stats.inFlightPages, stats.nativeFallbackWaiters,
+        stats.completedPages,
         static_cast<double>(stats.completedBytes) / (1024.0 * 1024.0),
         stats.peakPendingPages, stats.peakCompletedPages,
         static_cast<double>(stats.peakCompletedBytes) / (1024.0 * 1024.0),
@@ -604,10 +610,12 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
     auto identity = shadow_identity(*candidate);
     std::optional<PvrConsumeAttempt> attempt;
     core::ShadowObservationStatus queueStatus = core::ShadowObservationStatus::Unplanned;
+    std::uint64_t nativeFallbackWaitNanoseconds = 0;
     std::string_view action = "shadow-only";
     if (g_consumeEnabled && !g_consumeGate.exhausted(g_state.shadowGeneration)) {
       auto claim = g_shadowQueue.claim(identity);
       queueStatus = claim.status;
+      nativeFallbackWaitNanoseconds = claim.nativeFallbackWaitNanoseconds;
       if (claim.status == core::ShadowObservationStatus::Ready &&
           g_consumeGate.try_claim(g_state.shadowGeneration)) {
         ++g_state.consumeClaims;
@@ -627,6 +635,7 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
     } else {
       const auto observation = g_shadowQueue.observe(identity);
       queueStatus = observation.status;
+      nativeFallbackWaitNanoseconds = observation.nativeFallbackWaitNanoseconds;
       action = g_consumeEnabled ? "native-fallback-claim-limit" : "shadow-observation";
     }
     if (g_consumeEnabled) {
@@ -643,10 +652,11 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
       }();
       LOG_INFO(
           "Map page off-frame decision: area={}, page={}, generation={}, queueStatus={}, "
-          "action={}, claims={}/{}",
+          "action={}, claims={}/{}, fallbackWaitMs={:.2f}",
           identity.areaResref, identity.pageResref, identity.generation, queueStatusName,
           action, g_consumeGate.claims(g_state.shadowGeneration),
-          core::kMapPageConsumeMaximumClaimsPerGeneration);
+          core::kMapPageConsumeMaximumClaimsPerGeneration,
+          static_cast<double>(nativeFallbackWaitNanoseconds) / 1'000'000.0);
     }
     if (!attempt && !g_state.shadowDemandSummaryLogged) {
       const auto stats = g_shadowQueue.snapshot();
@@ -675,6 +685,8 @@ std::optional<PvrLifecycleSnapshot> lifecycle_snapshot(void* pvr) noexcept {
         .claims = g_consumeGate.claims(g_state.shadowGeneration),
         .claimLimit = core::kMapPageConsumeMaximumClaimsPerGeneration,
         .pendingPages = queue.pendingPages,
+        .inFlightPages = queue.inFlightPages,
+        .nativeFallbackWaits = queue.nativeFallbackWaits,
         .completedPages = queue.completedPages,
         .completedBytes = queue.completedBytes,
     };

@@ -208,7 +208,12 @@ telemetry. Phase 3e-B2c completed that comparison; see
 [`validation/map-page-offframe-phase3b2c.md`](validation/map-page-offframe-phase3b2c.md). It
 manifests the 128-entry cache and native release/file-open boundaries and isolates the first
 failure to `A090010` file open returning error 32 while the same not-ready identity is still owned
-by the shadow worker. B2d must add an explicit in-flight identity and wait for file-handle
-relinquishment before entering native fallback, then pass the three-claim AR0900 gate. The
-four-zone performance protocol is blocked. A shadow result, a prepared or installed candidate, or
-a successful local test does not create a `validated-installed` release element.
+by the shadow worker. Phase 3e-B2d implements the explicit in-flight identity and file-handle
+relinquishment handshake; see
+[`validation/map-page-offframe-phase3b2d.md`](validation/map-page-offframe-phase3b2d.md). Its
+deterministic concurrency test passes, and the three-claim AR0900 gate exercises a 42.04 ms wait on
+`A090000` before the native file open succeeds. Three prepared claims and every later native
+fallback complete, the map stays stable for more than 30 seconds and the game exits cleanly. The
+next gate is a controlled four-claim AR0900 candidate with the unchanged handshake; the four-zone
+performance protocol remains blocked until that passes. A shadow result, a prepared or installed
+candidate, or a successful local test does not create a `validated-installed` release element.

@@ -82,7 +82,10 @@ dans `areas.csv`.
   non prêt tandis que le worker possède le job en vol ; son ouverture native échoue avec erreur 32
   (`ERROR_SHARING_VIOLATION`), puis `CRes::Demand=false` et le crash. Le cache est seulement à
   36/128, aucune éviction/libération ne survient et la mémoire n'est pas au pic : la collision du
-  lecteur fichier est la première divergence prouvée. La source revient donc à deux claims.
+  lecteur fichier est la première divergence prouvée. B2d ajoute alors l'identité en vol et son
+  acquittement avant fallback natif. Sa gate trois claims AR0900 passe : `A090000` attend 42,04 ms
+  la fermeture shadow puis charge nativement, les trois claims préparés et tous les fallbacks
+  suivants réussissent, la carte reste stable plus de 30 secondes et sort proprement.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
   thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
@@ -117,8 +120,11 @@ dans `areas.csv`.
   `ERROR_SHARING_VIOLATION` alors que le job shadow est en vol. La gate suivante est 3e-B2d :
   suivre explicitement l'identité en vol, retirer/annuler la préparation et attendre
   l'acquittement de fermeture avant le fallback natif visant cette même page. Couvrir cette
-  concurrence par un test déterministe, puis repasser trois claims sur AR0900. Ne pas rejouer les
-  quatre zones avant cette preuve. Une éventuelle campagne cache OS froid doit rester séparée.
+  concurrence par un test déterministe, puis repasser trois claims sur AR0900. Cette gate est
+  maintenant passée : une attente réelle de 42,04 ms précède une ouverture native réussie et les
+  trois consommations terminent sans crash. La gate suivante est un candidat quatre claims AR0900
+  avec handshake inchangé ; ne pas rejouer les quatre zones avant cette preuve. Une éventuelle
+  campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

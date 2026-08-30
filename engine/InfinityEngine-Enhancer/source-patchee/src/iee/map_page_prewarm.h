@@ -63,6 +63,8 @@ struct PvrLifecycleSnapshot {
   std::uint32_t claims{};
   std::uint32_t claimLimit{};
   std::size_t pendingPages{};
+  std::size_t inFlightPages{};
+  std::uint64_t nativeFallbackWaits{};
   std::size_t completedPages{};
   std::size_t completedBytes{};
 };

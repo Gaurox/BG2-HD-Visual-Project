@@ -6,6 +6,7 @@
 #include <deque>
 #include <filesystem>
 #include <mutex>
+#include <optional>
 #include <span>
 #include <string>
 #include <unordered_set>
@@ -18,10 +19,10 @@ inline constexpr std::size_t kShadowMaximumDecodedBytes = 20u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumPendingPages = 96;
 inline constexpr std::size_t kShadowMaximumCompletedPages = 4;
 inline constexpr std::size_t kShadowMaximumCompletedBytes = 72u * 1024u * 1024u;
-// Phase 3e-B2c qualified control: two prepared claims are stable ingame. The
-// three-claim discriminator remains intentionally excluded because the next
-// native fallback can race an in-flight shadow read (ERROR_SHARING_VIOLATION).
-inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 2;
+// Phase 3e-B2d corrected discriminator: B2c proved that the first native
+// fallback after three claims raced an in-flight shadow file read. The queue
+// now acknowledges that reader's retirement before the same page opens.
+inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 3;
 
 enum class PvrzPrepareStatus : std::uint8_t {
   Ready,
@@ -102,11 +103,13 @@ struct ShadowObservation {
   std::uint64_t compressedBytes{};
   std::uint64_t decodedBytes{};
   std::uint64_t prepareNanoseconds{};
+  std::uint64_t nativeFallbackWaitNanoseconds{};
 };
 
 struct ShadowClaim {
   ShadowObservationStatus status{ShadowObservationStatus::Unplanned};
   PvrzPreparedPage page{};
+  std::uint64_t nativeFallbackWaitNanoseconds{};
 };
 
 // A fixed diagnostic number of successful handoff claims is permitted per
@@ -178,7 +181,12 @@ struct ShadowQueueStats {
   std::uint64_t maximumPrepareNanoseconds{};
   std::uint64_t queueNanoseconds{};
   std::uint64_t maximumQueueNanoseconds{};
+  std::uint64_t nativeFallbackWaits{};
+  std::uint64_t nativeFallbackWaitNanoseconds{};
+  std::uint64_t maximumNativeFallbackWaitNanoseconds{};
   std::size_t pendingPages{};
+  std::size_t inFlightPages{};
+  std::size_t nativeFallbackWaiters{};
   std::size_t completedPages{};
   std::size_t completedBytes{};
   std::size_t peakPendingPages{};
@@ -215,6 +223,8 @@ class MapPageShadowQueue {
   };
 
   [[nodiscard]] bool identity_known_locked(const ShadowPageIdentity& identity) const;
+  [[nodiscard]] std::uint64_t retire_not_ready_locked(
+      std::unique_lock<std::mutex>& lock, const ShadowPageIdentity& identity);
   void clear_generation_locked() noexcept;
 
   const ShadowQueueLimits limits_;
@@ -223,6 +233,8 @@ class MapPageShadowQueue {
   bool stopping_{true};
   std::uint64_t generation_{};
   std::deque<ShadowPageJob> pending_;
+  std::optional<ShadowPageIdentity> inFlight_;
+  std::size_t nativeFallbackWaiters_{};
   std::deque<Completed> completed_;
   std::unordered_set<ShadowPageIdentity, ShadowPageIdentityHash> known_;
   std::size_t completedBytes_{};

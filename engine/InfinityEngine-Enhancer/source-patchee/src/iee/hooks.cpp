@@ -2510,7 +2510,8 @@ static void* detour_res_demand_diagnostic(void* thisPtr) {
         "claim={}/{}, rawData=0x{:X}, rawSize={}, loaded={}, texture={}, prepared=0x{:X}, "
         "preparedBytes={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, "
         "cacheDuplicates={}, cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, "
-        "queuePending={}, queueCompleted={}, queueBytes={}, workingSetBytes={}, "
+        "queuePending={}, queueInFlight={}, nativeFallbackWaits={}, queueCompleted={}, "
+        "queueBytes={}, workingSetBytes={}, "
         "privateBytes={}, handles={}",
         game::resref_view(resref), reinterpret_cast<std::uintptr_t>(thisPtr),
         attempt != nullptr, claimOrdinal, claimLimit,
@@ -2523,6 +2524,8 @@ static void* detour_res_demand_diagnostic(void* thisPtr) {
         cacheBefore.readable, cacheBefore.occupied, cacheBefore.resourceIndex,
         cacheBefore.resourceDuplicates, cacheBefore.head, cacheBefore.tail,
         cacheBefore.fingerprint, lifecycle ? lifecycle->pendingPages : 0,
+        lifecycle ? lifecycle->inFlightPages : 0,
+        lifecycle ? lifecycle->nativeFallbackWaits : 0,
         lifecycle ? lifecycle->completedPages : 0,
         lifecycle ? lifecycle->completedBytes : 0,
         processBefore.memoryAvailable ? processBefore.workingSetBytes : 0,
@@ -2598,7 +2601,8 @@ static int detour_res_file_open_diagnostic(void* fileObject, const void* pathObj
         "pathObject=0x{:X}, mode=0x{:X}, errorInfo=0x{:X}, result={}, lastError={}, "
         "claim={}/{}, cacheBefore=0x{:X}, cacheAfter=0x{:X}, handlesBefore={}, "
         "handlesAfter={}, workingSetBefore={}, workingSetAfter={}, privateBefore={}, "
-        "privateAfter={}, readOperationsDelta={}, readBytesDelta={}",
+        "privateAfter={}, queueInFlight={}, nativeFallbackWaits={}, "
+        "readOperationsDelta={}, readBytesDelta={}",
         game::resref_view(resref),
         reinterpret_cast<std::uintptr_t>(g_activePvrConsumeResource),
         reinterpret_cast<std::uintptr_t>(fileObject),
@@ -2612,6 +2616,7 @@ static int detour_res_file_open_diagnostic(void* fileObject, const void* pathObj
         processAfter.memoryAvailable ? processAfter.workingSetBytes : 0,
         processBefore.memoryAvailable ? processBefore.privateBytes : 0,
         processAfter.memoryAvailable ? processAfter.privateBytes : 0,
+        lifecycle->inFlightPages, lifecycle->nativeFallbackWaits,
         processBefore.ioAvailable && processAfter.ioAvailable
             ? core::monotonic_resource_delta(processBefore.readOperations,
                                              processAfter.readOperations)
@@ -2700,7 +2705,8 @@ static void* detour_pvr_demand(void* thisPtr) {
           "claim={}/{}, rawData=0x{:X}, rawSize={}, loaded={}, texture={}, prepared=0x{:X}, "
           "preparedBytes={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, "
           "cacheDuplicates={}, cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, "
-          "queuePending={}, queueCompleted={}, queueBytes={}, workingSetBytes={}, "
+          "queuePending={}, queueInFlight={}, nativeFallbackWaits={}, queueCompleted={}, "
+          "queueBytes={}, workingSetBytes={}, "
           "privateBytes={}, handles={}",
           game::resref_view(lifecycleResref), reinterpret_cast<std::uintptr_t>(thisPtr),
           consumeAttempt.has_value(),
@@ -2717,6 +2723,7 @@ static void* detour_pvr_demand(void* thisPtr) {
           lifecycleCacheBefore.resourceIndex, lifecycleCacheBefore.resourceDuplicates,
           lifecycleCacheBefore.head, lifecycleCacheBefore.tail,
           lifecycleCacheBefore.fingerprint, lifecycle->pendingPages,
+          lifecycle->inFlightPages, lifecycle->nativeFallbackWaits,
           lifecycle->completedPages, lifecycle->completedBytes,
           lifecycleProcessBefore.memoryAvailable
               ? lifecycleProcessBefore.workingSetBytes

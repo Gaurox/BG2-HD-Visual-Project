@@ -311,6 +311,36 @@ bool MapPageShadowQueue::identity_known_locked(
   return known_.find(identity) != known_.end();
 }
 
+std::uint64_t MapPageShadowQueue::retire_not_ready_locked(
+    std::unique_lock<std::mutex>& lock,
+    const ShadowPageIdentity& identity) {
+  const auto pending = std::find_if(pending_.begin(), pending_.end(),
+                                    [&](const ShadowPageJob& value) {
+                                      return value.identity == identity;
+                                    });
+  if (pending != pending_.end()) pending_.erase(pending);
+  known_.erase(identity);
+  ++stats_.notReadyBeforeDemand;
+
+  if (!inFlight_ || *inFlight_ != identity) {
+    changed_.notify_all();
+    return 0;
+  }
+
+  ++stats_.nativeFallbackWaits;
+  ++nativeFallbackWaiters_;
+  changed_.notify_all();
+  const auto started = steady_nanoseconds();
+  changed_.wait(lock, [&] { return !inFlight_ || *inFlight_ != identity; });
+  const auto ended = steady_nanoseconds();
+  --nativeFallbackWaiters_;
+  const auto waited = ended >= started ? ended - started : 0;
+  stats_.nativeFallbackWaitNanoseconds += waited;
+  stats_.maximumNativeFallbackWaitNanoseconds =
+      (std::max)(stats_.maximumNativeFallbackWaitNanoseconds, waited);
+  return waited;
+}
+
 bool MapPageShadowQueue::submit(ShadowPageJob job) noexcept {
   try {
     std::lock_guard lock(mutex_);
@@ -349,6 +379,7 @@ bool MapPageShadowQueue::wait_take(ShadowPageJob& job) noexcept {
     if (stopping_) return false;
     job = std::move(pending_.front());
     pending_.pop_front();
+    inFlight_ = job.identity;
     ++stats_.started;
     const auto now = steady_nanoseconds();
     const auto queued = now >= job.submittedNanoseconds ? now - job.submittedNanoseconds : 0;
@@ -364,6 +395,10 @@ bool MapPageShadowQueue::wait_take(ShadowPageJob& job) noexcept {
 bool MapPageShadowQueue::publish(ShadowPreparedResult result) noexcept {
   try {
     std::unique_lock lock(mutex_);
+    if (inFlight_ && *inFlight_ == result.identity) {
+      inFlight_.reset();
+      changed_.notify_all();
+    }
     if (stopping_ || result.identity.generation != generation_ ||
         !identity_known_locked(result.identity)) {
       ++stats_.discarded;
@@ -417,7 +452,7 @@ bool MapPageShadowQueue::publish(ShadowPreparedResult result) noexcept {
 ShadowObservation MapPageShadowQueue::observe(
     const ShadowPageIdentity& identity) noexcept {
   try {
-    std::lock_guard lock(mutex_);
+    std::unique_lock lock(mutex_);
     const auto ready = std::find_if(completed_.begin(), completed_.end(),
                                     [&](const Completed& value) {
                                       return value.identity == identity;
@@ -437,15 +472,9 @@ ShadowObservation MapPageShadowQueue::observe(
       return observation;
     }
     if (identity_known_locked(identity)) {
-      const auto pending = std::find_if(pending_.begin(), pending_.end(),
-                                        [&](const ShadowPageJob& value) {
-                                          return value.identity == identity;
-                                        });
-      if (pending != pending_.end()) pending_.erase(pending);
-      known_.erase(identity);
-      ++stats_.notReadyBeforeDemand;
-      changed_.notify_all();
-      return {.status = ShadowObservationStatus::NotReady};
+      const auto waited = retire_not_ready_locked(lock, identity);
+      return {.status = ShadowObservationStatus::NotReady,
+              .nativeFallbackWaitNanoseconds = waited};
     }
     ++stats_.unplannedDemands;
     return {.status = ShadowObservationStatus::Unplanned};
@@ -457,7 +486,7 @@ ShadowObservation MapPageShadowQueue::observe(
 ShadowClaim MapPageShadowQueue::claim(
     const ShadowPageIdentity& identity) noexcept {
   try {
-    std::lock_guard lock(mutex_);
+    std::unique_lock lock(mutex_);
     const auto ready = std::find_if(completed_.begin(), completed_.end(),
                                     [&](const Completed& value) {
                                       return value.identity == identity;
@@ -475,15 +504,9 @@ ShadowClaim MapPageShadowQueue::claim(
       return claim;
     }
     if (identity_known_locked(identity)) {
-      const auto pending = std::find_if(pending_.begin(), pending_.end(),
-                                        [&](const ShadowPageJob& value) {
-                                          return value.identity == identity;
-                                        });
-      if (pending != pending_.end()) pending_.erase(pending);
-      known_.erase(identity);
-      ++stats_.notReadyBeforeDemand;
-      changed_.notify_all();
-      return {.status = ShadowObservationStatus::NotReady};
+      const auto waited = retire_not_ready_locked(lock, identity);
+      return {.status = ShadowObservationStatus::NotReady,
+              .nativeFallbackWaitNanoseconds = waited};
     }
     ++stats_.unplannedDemands;
     return {.status = ShadowObservationStatus::Unplanned};
@@ -497,6 +520,8 @@ ShadowQueueStats MapPageShadowQueue::snapshot() const noexcept {
     std::lock_guard lock(mutex_);
     auto snapshot = stats_;
     snapshot.pendingPages = pending_.size();
+    snapshot.inFlightPages = inFlight_ ? 1 : 0;
+    snapshot.nativeFallbackWaiters = nativeFallbackWaiters_;
     snapshot.completedPages = completed_.size();
     snapshot.completedBytes = completedBytes_;
     return snapshot;

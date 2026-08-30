@@ -3755,6 +3755,69 @@ void test_map_page_shadow_queue_bounds_and_generations() {
             "shutdown should release every prepared CPU buffer");
 }
 
+void test_map_page_shadow_inflight_fallback_handshake() {
+  using iee::core::MapPageShadowQueue;
+  using iee::core::PvrzPrepareStatus;
+  using iee::core::ShadowObservation;
+  using iee::core::ShadowObservationStatus;
+
+  MapPageShadowQueue queue;
+  queue.restart();
+  const auto identity = make_shadow_identity(queue.generation(), 10);
+  expect_true(queue.submit({identity, "A090010.PVRZ"}),
+              "the fallback-race fixture should enter the shadow queue");
+
+  iee::core::ShadowPageJob active;
+  expect_true(queue.wait_take(active),
+              "the worker should own the fallback-race fixture");
+  expect_eq(queue.snapshot().inFlightPages, std::size_t{1},
+            "a taken job should expose one explicit in-flight identity");
+
+  std::atomic<bool> nativeReturned{false};
+  ShadowObservation observation;
+  std::thread nativeFallback([&] {
+    observation = queue.observe(identity);
+    nativeReturned.store(true, std::memory_order_release);
+  });
+
+  bool waiterObserved = false;
+  for (int retry = 0; retry < 1'000; ++retry) {
+    if (queue.snapshot().nativeFallbackWaiters == 1) {
+      waiterObserved = true;
+      break;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
+  expect_true(waiterObserved,
+              "native fallback should wait while its shadow reader owns the file");
+  expect_true(!nativeReturned.load(std::memory_order_acquire),
+              "native fallback must not return before worker retirement");
+
+  iee::core::ShadowPreparedResult cancelled;
+  cancelled.identity = active.identity;
+  cancelled.page.status = PvrzPrepareStatus::Ready;
+  cancelled.page.decodedBytes = 64;
+  cancelled.page.decoded.resize(64);
+  expect_true(!queue.publish(std::move(cancelled)),
+              "a fallback-retired in-flight result should be discarded");
+  nativeFallback.join();
+
+  expect_true(observation.status == ShadowObservationStatus::NotReady,
+              "the acknowledged reader should retain native fallback");
+  expect_true(observation.nativeFallbackWaitNanoseconds > 0,
+              "the fallback observation should report its retirement wait");
+  const auto stats = queue.snapshot();
+  expect_eq(stats.nativeFallbackWaits, std::uint64_t{1},
+            "the in-flight collision should be counted exactly once");
+  expect_eq(stats.inFlightPages, std::size_t{0},
+            "worker publication should relinquish the in-flight identity");
+  expect_eq(stats.nativeFallbackWaiters, std::size_t{0},
+            "the render-side waiter should leave no residual wait state");
+  expect_eq(stats.discarded, std::uint64_t{1},
+            "the cancelled worker result should be retired without publication");
+  queue.request_stop();
+}
+
 void test_map_page_consume_gate_contract() {
   using iee::core::kMapPageConsumeMaximumClaimsPerGeneration;
   using iee::core::MapPageConsumeGate;
@@ -3762,8 +3825,8 @@ void test_map_page_consume_gate_contract() {
   using iee::core::PvrConsumeValidationStatus;
   using iee::core::validate_pvr_consume;
 
-  expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{2},
-            "Phase 3e-B2c qualified control should permit exactly two diagnostic claims");
+  expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{3},
+            "Phase 3e-B2d corrected discriminator should permit exactly three claims");
   MapPageConsumeGate gate;
   gate.reset(7);
   expect_true(!gate.exhausted(7), "a reset generation should begin below the consume limit");
@@ -5176,6 +5239,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();
+  test_map_page_shadow_inflight_fallback_handshake();
   test_map_page_consume_gate_contract();
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
