@@ -20,6 +20,7 @@ explicitement documentée.
 | Installer/release | [`releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md`](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) | manifests source → payload WeiDU → package, après autorisation explicite |
 | Suivi transversal | [`docs/GLOBAL_ASSET_REGISTRY.md`](docs/GLOBAL_ASSET_REGISTRY.md) | projection générée à cinq axes depuis les sources métier, sans registre concurrent |
 | Inventaire graphique complémentaire | [`docs/GRAPHICS_INVENTORY.md`](docs/GRAPHICS_INVENTORY.md) | KEY/BIF/WBM → autorités minimales → projection globale, sans upscale |
+| Intégrité physique | [`docs/WORKSPACE_INTEGRITY.md`](docs/WORKSPACE_INTEGRITY.md) | disque ↔ autorités ↔ registre ↔ runs, avec index généré non autoritatif |
 | Décisions et essais rejetés | [`docs/DECISIONS.md`](docs/DECISIONS.md) | mémoire technique concise |
 | Blocages actuels | [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) | uniquement les problèmes non résolus |
 
@@ -65,6 +66,7 @@ pas ces scripts sans migration explicite des imports, jobs JSON et installateurs
 | Contenu généré du paquet | `releases/BG2-HD-Upscale/manifests/content.json` — ne jamais éditer à la main |
 | Convention d'agrégation (non autoritative) | [`docs/ASSET_TRACKING_CONTRACT.md`](docs/ASSET_TRACKING_CONTRACT.md) |
 | Vue globale générée (non autoritative) | [`asset-tracking/registry.json`](asset-tracking/registry.json), [vue CSV](asset-tracking/registry.csv), [couverture](asset-tracking/coverage.json) et [anomalies](asset-tracking/anomalies.json) |
+| Vue physique générée (non autoritative) | [`asset-tracking/workspace-integrity.json`](asset-tracking/workspace-integrity.json), [index des runs](asset-tracking/runs.json) et [vue CSV](asset-tracking/runs.csv) |
 | Décisions et échecs connus | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 
 Ne jamais déduire un état courant depuis `override`, une capture, `runs/`, `proto/`, `backups/`,
@@ -75,7 +77,8 @@ Ne jamais déduire un état courant depuis `override`, une capture, `runs/`, `pr
 - **Actif** : points d'entrée ci-dessus, `pipeline/scripts`, `pipeline/tests`, index, catalogues,
   manifests, schemas et sources moteur.
 - **Expérimental** : `proto/`, dossiers `research/`, variantes nommées `test`, `trial` ou
-  `pending-qa`. Ils ne deviennent jamais une méthode courante sans gate et décision documentée.
+  `pending-qa`. Les travaux animation, même expérimentaux, vont sous `animations/runs/`; ils ne
+  deviennent jamais une méthode courante sans gate et décision documentée.
 - **Archive/legacy** : `archive/`, `docs/archive/` et dossiers `archive/`
   locaux. Ils sont exclus de la recherche initiale ; consulter d'abord `docs/DECISIONS.md`.
 - **Généré/temporaire** : `runs/`, `.work/`, builds CMake, `temp/`, `tmp/`, `outputs/`, payloads,

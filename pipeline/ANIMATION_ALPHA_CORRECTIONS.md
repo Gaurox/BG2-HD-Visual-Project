@@ -20,7 +20,7 @@ validés, mais où un contour ou la bordure du canvas reste visible.
 - ne modifier que l'alpha des PNG x4 et des buffers `.rgba` runtime ;
 - préserver les trois canaux RGB octet pour octet ;
 - ne jamais étendre le masque source : `alpha_final <= alpha_source` ;
-- générer une variante isolée dans `proto/<RESREF>-.../`, jamais dans le run
+- générer une variante dans un nouveau `animations/runs/<RESREF>-.../`, jamais dans le run
   canonique ou son `03_runtime_pack` ;
 - installer uniquement les assets concernés, jeu et `InfinityLoader` fermés ;
 - sauvegarder les assets actifs, vérifier les SHA-256, puis faire une QA en jeu ;
@@ -78,7 +78,7 @@ RGB, la cadence de 15 FPS et le registre runtime sont inchangés.
 Entrées : les `rgba/frame_XXX.png` x4 terminés. Sorties minimales :
 
 ```text
-proto/<RESREF>-<correctif>/
+animations/runs/<RESREF>-<correctif>/
   rgba/frame_XXX.png       # RGB inchangé + alpha corrigé
   alpha/frame_XXX.png
   raw_rgba/AAX4-<RESREF>-frameXXX.rgba
@@ -107,7 +107,7 @@ Ne jamais modifier le run temporel accepté ni son pack. Construire une dérivé
 python pipeline/scripts/build_manual_alpha_mask_30fps_v2.py `
   --temporal-run animations/runs/<run-30fps> `
   --resref <RESREF> `
-  --mask proto/<RESREF>-manual-mask-x4/masks/frame_000.png `
+  --mask animations/runs/<RESREF>-manual-mask-x4/masks/frame_000.png `
   --output animations/runs/<resref>-manual-mask-30fps-v2
 ```
 
@@ -133,7 +133,7 @@ main.
 | Correctif retenu | fondu silhouette `8 px x4` + fondu canvas `32 px x4` sur 4 côtés |
 | RGB | inchangé |
 | Validation | utilisateur, 2026-08-20 |
-| Prototype | `proto/AM0602F-lanterne-canvas-feather-x4/` |
+| Prototype | `animations/runs/AM0602F-lanterne-canvas-feather-x4/` |
 
 Ce correctif est une **recette de prototype validée**, pas une modification
 rétroactive du run canonique. Pour un autre BAM, repartir de ses frames x4 et
@@ -149,7 +149,7 @@ produire un nouveau prototype, puis ajouter une ligne au registre après QA.
 | Correctif retenu | Fondu canvas seul `32 px x4` sur 4 côtés |
 | RGB / registre | Inchangés |
 | Validation | utilisateur, 2026-08-21 |
-| Prototype | `proto/AM0205A-pod-canvas-feather-x4/` |
+| Prototype | `animations/runs/AM0205A-pod-canvas-feather-x4/` |
 
 ## Référence complémentaire : AM0205B
 
@@ -161,7 +161,7 @@ produire un nouveau prototype, puis ajouter une ligne au registre après QA.
 | Correctif retenu | Fondu canvas seul `32 px x4` sur 4 côtés |
 | RGB / registre | Inchangés |
 | Validation | utilisateur, 2026-08-21 |
-| Prototype | `proto/AM0205B-pod-canvas-feather-x4/` |
+| Prototype | `animations/runs/AM0205B-pod-canvas-feather-x4/` |
 
 ## Référence complémentaire : AM0205C
 
@@ -173,7 +173,7 @@ produire un nouveau prototype, puis ajouter une ligne au registre après QA.
 | Correctif retenu | Fondu canvas seul `32 px x4` sur 4 côtés |
 | RGB / registre | Inchangés |
 | Validation | utilisateur, 2026-08-21 |
-| Prototype | `proto/AM0205C-pod-canvas-feather-x4/` |
+| Prototype | `animations/runs/AM0205C-pod-canvas-feather-x4/` |
 | Particularité | Premier resref traité avec le pipeline `interpolate` automatisé (Topaz, boucle fermée) |
 
 ## Référence complémentaire : AM0205D
@@ -186,5 +186,5 @@ produire un nouveau prototype, puis ajouter une ligne au registre après QA.
 | Correctif retenu | Fondu canvas seul `32 px x4` sur 4 côtés |
 | RGB / registre | Inchangés |
 | Validation | utilisateur, 2026-08-21 |
-| Prototype | `proto/AM0205D-pod-canvas-feather-x4/` |
+| Prototype | `animations/runs/AM0205D-pod-canvas-feather-x4/` |
 | Particularité | Pipeline `interpolate` automatisé ; série AM0205 (A à E) complète |

@@ -1,0 +1,397 @@
+{
+  "domain_audits": {
+    "animations": {
+      "approved_candidate_count": 5,
+      "empty_run_count": 1,
+      "legacy_proto_directory_migration_count": 64,
+      "legacy_proto_embedded_reference_count": 153,
+      "legacy_proto_embedded_reference_file_count": 54,
+      "legacy_proto_loose_file_migration_count": 7,
+      "legacy_proto_migrated_bytes": 1320761527,
+      "legacy_proto_migrated_file_count": 3030,
+      "legacy_proto_run_count": 65,
+      "physical_run_count": 112,
+      "qa_attested_run_count": 19,
+      "release_referenced_run_count": 6,
+      "remaining_animation_proto_directory_count": 0,
+      "remaining_proto_directory_count": 4
+    },
+    "maps": {
+      "canonical_asset_rows": 369,
+      "descriptor_count": 291,
+      "extra_source_file_count": 9,
+      "extracted_source_count": 800,
+      "legacy_descriptor_count": 1,
+      "migrated_reference_count": 1366,
+      "physical_run_count": 292,
+      "selected_run_count": 292
+    },
+    "portraits": {
+      "authorities": [
+        {
+          "asset_count": 285,
+          "authority": "portraits/inventaire_portraits.csv",
+          "extra_file_count": 0,
+          "hash_mismatch_count": 0,
+          "missing_file_count": 0,
+          "occurrence_count": 285,
+          "physical_file_count": 285
+        },
+        {
+          "asset_count": 78,
+          "authority": "portraits-recrutables/inventaire.csv",
+          "extra_file_count": 0,
+          "hash_mismatch_count": 0,
+          "missing_file_count": 0,
+          "occurrence_count": 90,
+          "physical_file_count": 90
+        },
+        {
+          "asset_count": 64,
+          "authority": "portraits/pnj-rencontres/inventaire.csv",
+          "extra_file_count": 0,
+          "hash_mismatch_count": 0,
+          "missing_file_count": 0,
+          "occurrence_count": 64,
+          "physical_file_count": 64
+        },
+        {
+          "asset_count": 2894,
+          "authority": "portraits/mod-PPE/inventaire.csv",
+          "extra_file_count": 0,
+          "hash_mismatch_count": 0,
+          "missing_file_count": 0,
+          "occurrence_count": 2894,
+          "physical_file_count": 2894
+        }
+      ],
+      "logical_asset_count": 3321,
+      "physical_file_count": 3333
+    },
+    "sprites": {
+      "build_manifest_count": 143,
+      "canonical_active_test_count": 1,
+      "current_generation_count": 1,
+      "historical_active_test_count": 7,
+      "historical_pointer_resolved_count": 7,
+      "historical_pointer_unresolved_count": 0,
+      "immutable_job_snapshot_count": 0,
+      "migrated_build_recipe_count": 137
+    }
+  },
+  "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
+  "issues": [
+    {
+      "code": "animation-empty-run-skeleton",
+      "details": {
+        "policy": "conserver; candidat à suppression après confirmation"
+      },
+      "domain": "animations",
+      "message": "Ce squelette de run est vide et n'est référencé par aucune autorité.",
+      "path": "animations/runs/am0900dm-seedvr7b-lab-x4",
+      "run_id": "am0900dm-seedvr7b-lab-x4",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-referenced-files-missing",
+      "details": {
+        "examples": [
+          "maps/AR0016/runs/upscale-01/tuiles-principales/01_upscale/AR0016-tuiles-principales-x4-seedvr2-7b-int8-lab.png"
+        ],
+        "file_count": 1
+      },
+      "domain": "maps",
+      "message": "Des inputs/outputs intermédiaires scellés d'un run sélectionné sont absents, mais son build final existe.",
+      "path": "maps/AR0016/runs/upscale-01",
+      "run_id": "upscale-01",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-referenced-files-missing",
+      "details": {
+        "examples": [
+          "maps/AR0017/runs/upscale-01/tuiles-principales/01_upscale/AR0017-tuiles-principales-x4-seedvr2-7b-int8-lab.png"
+        ],
+        "file_count": 1
+      },
+      "domain": "maps",
+      "message": "Des inputs/outputs intermédiaires scellés d'un run sélectionné sont absents, mais son build final existe.",
+      "path": "maps/AR0017/runs/upscale-01",
+      "run_id": "upscale-01",
+      "severity": "warning"
+    },
+    {
+      "code": "map-source-root-experiment-files",
+      "details": {
+        "examples": [
+          "maps/AR0410/rendus-x1/tuiles-principales/seed-x4.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale/AR0410-tuiles-principales-x1.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale/seed-x4.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale/z-0.15.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale/z-0.25.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale/z-0.35.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/z-0.15.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/z-0.25.png",
+          "maps/AR0410/rendus-x1/tuiles-principales/z-0.35.png"
+        ],
+        "file_count": 9,
+        "policy": "conserver; candidat à archivage hors de rendus-x1 après revue"
+      },
+      "domain": "maps",
+      "message": "Des essais d'upscale sont mélangés aux maîtres x1 canoniques d'AR0410.",
+      "path": "maps/AR0410/rendus-x1/tuiles-principales",
+      "severity": "warning"
+    },
+    {
+      "code": "sprite-historical-live-job-diverged",
+      "details": {
+        "policy": "ne pas réécrire le build historique; les nouveaux builds scellent un snapshot"
+      },
+      "domain": "sprites",
+      "message": "Le job mutable a divergé du build historique, sans snapshot prévu par cet ancien contrat.",
+      "path": "sprite/catalogs/creature-x2-nearest/jobs/creature-sprites-progressive-xn-xbr2x-goblin-mgo1.json",
+      "run_id": "2D9ED4D3087CB651FAA4748ABDB043F54D64B0D483CDD018C2A2A9BD176806EC",
+      "severity": "warning"
+    },
+    {
+      "code": "sprite-historical-live-job-diverged",
+      "details": {
+        "policy": "ne pas réécrire le build historique; les nouveaux builds scellent un snapshot"
+      },
+      "domain": "sprites",
+      "message": "Le job mutable a divergé du build historique, sans snapshot prévu par cet ancien contrat.",
+      "path": "sprite/catalogs/creature-x2-nearest/jobs/creature-sprites-progressive-xn-xbr2x.json",
+      "run_id": "41EE22E9E2DC1F04F692EA6C0399FBD5B4EA902D2BCF12A905AB8B6DBC4C563F",
+      "severity": "warning"
+    },
+    {
+      "code": "sprite-historical-live-job-diverged",
+      "details": {
+        "policy": "ne pas réécrire le build historique; les nouveaux builds scellent un snapshot"
+      },
+      "domain": "sprites",
+      "message": "Le job mutable a divergé du build historique, sans snapshot prévu par cet ancien contrat.",
+      "path": "sprite/catalogs/creature-x2-nearest/jobs/creature-sprites-progressive-xn-xbr2x.json",
+      "run_id": "6AAFAD64E4A39207EE70B140DC2E061091C95D265DE50D688EF73D83EA0F1C33",
+      "severity": "warning"
+    },
+    {
+      "code": "sprite-historical-live-job-diverged",
+      "details": {
+        "policy": "ne pas réécrire le build historique; les nouveaux builds scellent un snapshot"
+      },
+      "domain": "sprites",
+      "message": "Le job mutable a divergé du build historique, sans snapshot prévu par cet ancien contrat.",
+      "path": "sprite/catalogs/creature-x2-nearest/jobs/creature-sprites-progressive-xn-xbr2x.json",
+      "run_id": "9AA530E6A1444884BE7F16E21DF249A5F17135A0C55F2DE5A22B8995952DA2E9",
+      "severity": "warning"
+    },
+    {
+      "code": "sprite-historical-live-job-diverged",
+      "details": {
+        "policy": "ne pas réécrire le build historique; les nouveaux builds scellent un snapshot"
+      },
+      "domain": "sprites",
+      "message": "Le job mutable a divergé du build historique, sans snapshot prévu par cet ancien contrat.",
+      "path": "sprite/catalogs/creature-x2-nearest/jobs/qa-refresh-current-catalog-v1.json",
+      "run_id": "29AC83DA2DB4E8BA24181E9EB24298F08AC147B4DCCECCBE9A8DD4CBE794C340",
+      "severity": "warning"
+    },
+    {
+      "code": "video-unindexed-work-products",
+      "details": {
+        "extensions": {
+          ".mp4": 7,
+          ".png": 270,
+          ".webm": 37
+        },
+        "file_count": 314,
+        "policy": "conserver; candidat à archivage après preuve de rattachement"
+      },
+      "domain": "videos",
+      "message": "Des conversions et rendus de travail historiques cohabitent avec les sources WBM.",
+      "path": "video/",
+      "severity": "warning"
+    },
+    {
+      "code": "workspace-temporary-files",
+      "details": {
+        "file_count": 122,
+        "policy": "candidat à revue puis suppression; aucune suppression automatique"
+      },
+      "domain": "global",
+      "message": "Des temporaires restent hors des zones canoniques et ne sont pas utilisés comme autorité.",
+      "path": "temp/",
+      "severity": "info"
+    },
+    {
+      "code": "map-historical-paths-adapted",
+      "details": {
+        "mappings": [
+          "maps/maps-principales/<AREA>/ -> maps/<AREA>/",
+          "maps/maps-secondaires/<AREA>/ -> maps/<AREA>/"
+        ],
+        "reference_count": 1366
+      },
+      "domain": "maps",
+      "message": "Les chemins pré-layout des runs historiques sont résolus sans modifier leurs manifests scellés.",
+      "path": "maps/",
+      "severity": "info"
+    },
+    {
+      "code": "map-legacy-run-without-json",
+      "domain": "maps",
+      "message": "Ce run historique reste traçable par son README et areas.csv, sans réécriture rétroactive.",
+      "path": "maps/AR0413/runs/wtoil-family-definitive",
+      "run_id": "wtoil-family-definitive",
+      "severity": "info"
+    },
+    {
+      "code": "sprite-historical-pointers-migrated",
+      "details": {
+        "noncanonical_installed_status_count": 2,
+        "pointer_count": 7,
+        "policy": "seul le pointeur catalogue courant décrit l'installation active"
+      },
+      "domain": "sprites",
+      "message": "Les pointeurs historiques restent en place et sont résolus par l'adaptateur de migration.",
+      "path": "sprite/index/path-migrations.json",
+      "severity": "info"
+    }
+  ],
+  "mode": "read-only audit; only this generated report and the generated run index are writable",
+  "registry_asset_count": 18353,
+  "registry_asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
+  "run_count": 547,
+  "run_records_sha256": "952722F3DDBFCFB3048E7D93B7336D4B9D3F3CB094FD567A7B8BD34DA4A27C4D",
+  "schema": "bg2-upscale-workspace-integrity-v1",
+  "source_audits": [
+    {
+      "authority": "animations/index/ressources.csv",
+      "domain": "animations",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 246,
+      "missing_file_count": 0,
+      "referenced_file_count": 246,
+      "registry_projection_count": 246
+    },
+    {
+      "authority": "cursors/index/resources.csv",
+      "domain": "cursors",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 1,
+      "missing_file_count": 0,
+      "referenced_file_count": 1,
+      "registry_projection_count": 1
+    },
+    {
+      "authority": "effects/index/resources.csv",
+      "domain": "effects",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 252,
+      "missing_file_count": 0,
+      "referenced_file_count": 252,
+      "registry_projection_count": 252
+    },
+    {
+      "authority": "icons/index/resources.csv",
+      "domain": "icons",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 2931,
+      "missing_file_count": 0,
+      "referenced_file_count": 2931,
+      "registry_projection_count": 2931
+    },
+    {
+      "authority": "graphics/index/supplemental-assets.csv",
+      "domain": "multiple",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 3758,
+      "missing_file_count": 0,
+      "referenced_file_count": 3758,
+      "registry_projection_count": 3758
+    },
+    {
+      "authority": "projectiles/index/resources.csv",
+      "domain": "projectiles",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 243,
+      "missing_file_count": 0,
+      "referenced_file_count": 243,
+      "registry_projection_count": 243
+    },
+    {
+      "authority": "interface/fonts/index/resources.csv",
+      "domain": "ui",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 20,
+      "missing_file_count": 0,
+      "referenced_file_count": 31,
+      "registry_projection_count": 20
+    },
+    {
+      "authority": "interface/gameplay-hud-bg2ee/index/resources.csv",
+      "domain": "ui",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 24,
+      "missing_file_count": 0,
+      "referenced_file_count": 24,
+      "registry_projection_count": 24
+    },
+    {
+      "authority": "interface/index/resources.csv",
+      "domain": "ui",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 1515,
+      "missing_file_count": 0,
+      "referenced_file_count": 1515,
+      "registry_projection_count": 1515
+    },
+    {
+      "authority": "video/index/resources.csv",
+      "domain": "videos",
+      "extra_file_count": 314,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 50,
+      "missing_file_count": 0,
+      "referenced_file_count": 50,
+      "registry_projection_count": 50
+    }
+  ],
+  "source_fingerprint_sha256": "729D8D0671640CF976ED62AF218667B4DE0C8C18E2E6C4EE33A802402FA70BFD",
+  "summary": {
+    "by_issue_code": {
+      "animation-empty-run-skeleton": 1,
+      "map-historical-paths-adapted": 1,
+      "map-legacy-run-without-json": 1,
+      "map-run-referenced-files-missing": 2,
+      "map-source-root-experiment-files": 1,
+      "sprite-historical-live-job-diverged": 5,
+      "sprite-historical-pointers-migrated": 1,
+      "video-unindexed-work-products": 1,
+      "workspace-temporary-files": 1
+    },
+    "by_severity": {
+      "error": 0,
+      "info": 4,
+      "warning": 10
+    },
+    "candidate_cleanup": {
+      "animation_empty_run_skeletons": 1,
+      "map_incomplete_intermediate_runs": 2,
+      "map_source_experiment_files": 9,
+      "sprite_historical_diverged_jobs": 5,
+      "temporary_files": 122,
+      "video_unindexed_work_products": 314
+    }
+  }
+}

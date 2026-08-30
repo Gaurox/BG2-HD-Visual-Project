@@ -13,6 +13,7 @@ moteur charge des textures physiques x4 et, lorsque le registre le demande, une 
 - `index/animation_alpha_corrections.csv` : correctifs alpha approuvés ou expérimentaux.
 - `qa-approval.json` du run : seule approbation temporelle.
 - `releases/BG2-HD-Upscale/manifests/animation-release-candidates.json` : candidats release.
+- `index/path-migrations.json` : résolution physique des anciens chemins `proto/`, sans statut.
 
 `runs/`, `packs-par-zone/`, `proto/`, backups et captures ne décrivent jamais à eux seuls l'état
 courant.
@@ -39,9 +40,17 @@ timeline et ajoute le routage par occurrence. Les prototypes d'horloge antérieu
 animations/
   index/                 # catalogues canoniques
   ressources/            # sources BAM et planches, données ignorées par Git
-  runs/                  # runs immuables, données ignorées
+  runs/                  # production, variantes et preuves historiques, données ignorées
   packs-par-zone/        # packs matérialisés et backups, données ignorées
 ```
+
+Depuis la migration physique de 2026-08-31, aucun travail animation ne doit être créé sous
+`proto/`. Les anciens prototypes ont conservé leur nom sous `animations/runs/`; leurs rôles
+(`canonical-prototype`, expérience rejetée, référence QA, etc.) sont décrits sans décision métier
+dans `index/path-migrations.json`. Les manifests scellés qui citent encore leur ancien chemin ne
+sont pas réécrits. Deux racines de sortie du workshop portails n'existaient déjà plus au moment du
+déplacement ; elles sont marquées `obsolete-unmaterialized` et ne doivent pas être recréées. Une
+reprise éventuelle utilise un nouvel identifiant sous `animations/runs/`.
 
 Traiter chaque frame RGB et alpha séparément. Ne jamais upscaler une planche concaténée. Un pack
 global dépassant 512 Mio doit être découpé par zone.

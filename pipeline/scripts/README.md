@@ -86,6 +86,11 @@ d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
   vidéos, HUD/UI, polices, icônes, curseurs, effets, projectiles et familles BAM complémentaires.
   Les granularités, autorités générées et lacunes conservatrices sont décrites dans
   `docs/GRAPHICS_INVENTORY.md`. Utiliser `--check` pour vérifier les sorties sans les modifier.
+- `audit_workspace_integrity.py` contrôle en lecture le disque, les autorités, le registre et les
+  runs, puis génère `asset-tracking/workspace-integrity.json` et `runs.{json,csv}`. Il adapte les
+  chemins historiques sans réécrire les artefacts scellés. La convention des nouveaux runs et les
+  limites sont décrites dans `docs/WORKSPACE_INTEGRITY.md`. Utiliser `--verify-determinism` pour
+  générer et `--check` pour un contrôle sans écriture.
 
 ## Tests
 

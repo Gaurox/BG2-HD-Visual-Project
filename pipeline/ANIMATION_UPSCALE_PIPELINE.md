@@ -99,7 +99,7 @@ python pipeline/scripts/build_animation_runtime_pack.py `
   animations/runs/ar0205-a-d-seedvr7b-lab-x4 `
   animations/runs/ar0205-a-d-seedvr7b-lab-x4/04_ingame_test/03_runtime_pack `
   --include-pack animations/runs/ar0602-all-bam-seedvr7b-lab-x4/03_runtime_pack `
-  --alpha-override-manifest proto/AM0602F-lanterne-canvas-feather-x4/manifest.json
+  --alpha-override-manifest animations/runs/AM0602F-lanterne-canvas-feather-x4/manifest.json
 ```
 
 `--alpha-override-manifest` accepte uniquement un manifeste de correction alpha validé : le resref,
@@ -116,13 +116,13 @@ SeedVR, puis l'ajouter à la composition :
 
 ```powershell
 python pipeline/scripts/migrate_legacy_animation_prototype.py `
-  proto/AM0205E-orifice/x4/manifest.json `
-  proto/AM0205E-orifice/02_frames_x1/manifest.json `
+  animations/runs/AM0205E-orifice/x4/manifest.json `
+  animations/runs/AM0205E-orifice/02_frames_x1/manifest.json `
   AM0205E
 ```
 
 Le migrateur vérifie les neuf buffers RGBA bruts, leurs dimensions x4, les centres BAM et les cycles
-x1, puis produit `proto/AM0205E-orifice/x4/03_runtime_pack`. Ce pack se passe ensuite dans
+x1, puis produit `animations/runs/AM0205E-orifice/x4/03_runtime_pack`. Ce pack se passe ensuite dans
 `--include-pack`. Il refuse toute géométrie, empreinte ou destination ambiguë.
 
 ## Installation réversible du pack composé

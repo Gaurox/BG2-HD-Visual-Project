@@ -25,8 +25,8 @@ RGB bytes are preserved exactly; the fade can only ever lower alpha, never
 raise it (`alpha_final <= alpha_source`).
 
 Reads a resource's ``02_upscale_x4`` stage from a completed animation run and
-writes a standalone correction under ``proto/<RESREF>-<label>/``. Never
-touches the source run or its runtime pack.
+writes a standalone correction into a new ``animations/runs/<RESREF>-<label>/``.
+Never touches the source run or its runtime pack.
 """
 
 from __future__ import annotations
@@ -152,7 +152,12 @@ def main() -> None:
     parser.add_argument("--resref", required=True)
     parser.add_argument("--run", required=True, help="nom du run sous animations/runs")
     parser.add_argument("--runs-root", type=Path, default=PROJECT_ROOT / "animations" / "runs")
-    parser.add_argument("--output", type=Path, required=True, help="dossier proto/<RESREF>-... de sortie")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        required=True,
+        help="nouveau dossier animations/runs/<RESREF>-... de sortie",
+    )
     parser.add_argument(
         "--inner-radius-x4", type=float, default=0.0,
         help="fondu de silhouette (contour du masque), 0 = desactive",

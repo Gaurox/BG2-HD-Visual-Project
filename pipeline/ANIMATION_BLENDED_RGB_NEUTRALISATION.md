@@ -175,12 +175,12 @@ le baker dans le RGB avec `premultiply`. C'est un choix esthétique, à faire va
 python pipeline/scripts/build_alpha_feather.py `
   --resref <RESREF> --run <run-x4> `
   --radial-outer-x-x4 <rx> --radial-outer-y-x4 <ry> --radial-inner-fraction <f> `
-  --output proto/<RESREF>-radial-<variante>
+  --output animations/runs/<RESREF>-radial-<variante>
 
 python pipeline/scripts/build_blended_rgb_neutral_pack.py `
   --split-root <split-source> --output <split-neutralise> `
   --resref <RESREF> --mode premultiply `
-  --feather-proto proto/<RESREF>-radial-<variante>
+  --feather-proto animations/runs/<RESREF>-radial-<variante>
 ```
 
 Dimensionner l'ellipse sur l'étendue réelle du cœur clair par rapport à l'ancre, pas sur le

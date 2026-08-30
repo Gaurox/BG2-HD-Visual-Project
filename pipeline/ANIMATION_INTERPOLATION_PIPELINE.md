@@ -317,7 +317,7 @@ couture) valident la **mécanique** de l'interpolation, pas la **qualité perçu
 sur un sujet qui change de forme — une QA visuelle en jeu reste nécessaire avant d'adopter
 `interpolate` sur un contenu similaire, même si toutes les métriques sont bonnes. La version
 manuelle d'`AM0205E` reste active ; voir
-`proto/AM0205E-orifice/interpolation-27f-15fps-x4-pipeline-v2/README.md` pour l'essai
+`animations/runs/AM0205E-orifice/interpolation-27f-15fps-x4-pipeline-v2/README.md` pour l'essai
 conservé comme trace.
 
 ## Pipeline automatisé v1
@@ -525,15 +525,15 @@ validation             2026-08-21
 ```
 
 Prototype :
-`proto/AM0205E-orifice/interpolation-27f-15fps-x4/`.
+`animations/runs/AM0205E-orifice/interpolation-27f-15fps-x4/`.
 
 Commandes AM0205E utilisées pour le test du pipeline :
 
 ```powershell
 python pipeline/scripts/run_animation_interpolation.py plan `
   --resref AM0205E `
-  --frames-manifest proto/AM0205E-orifice/02_frames_x1/manifest.json `
-  --upscale-manifest proto/AM0205E-orifice/x4/manifest.json `
+  --frames-manifest animations/runs/AM0205E-orifice/02_frames_x1/manifest.json `
+  --upscale-manifest animations/runs/AM0205E-orifice/x4/manifest.json `
   --base-pack animations/runs/ar0205-a-d-seedvr7b-lab-x4/04_ingame_test/03_runtime_pack-a-e `
   --slot-fps 15
 ```
@@ -548,7 +548,7 @@ confirmés identiques.
 27 frames / 15 FPS / 1,8 s a été construit au-dessus de l'interpolation active
 de `AM0205E`, sans la régresser. La validation en jeu est datée du 2026-08-21.
 Le fade de canvas retenu après QA appartient au prototype alpha séparé
-`proto/AM0205A-pod-canvas-feather-x4/`; voir
+`animations/runs/AM0205A-pod-canvas-feather-x4/`; voir
 `pipeline/ANIMATION_ALPHA_CORRECTIONS.md`.
 
 ## Référence validée complémentaire — AM0205B
@@ -560,7 +560,7 @@ dans l'archive locale externe
 `G:\AI\BG2_Upscale-data\archive-pre-cleanup-20260827\temp-snapshots\interpolation-am0205b-20260821\runtime-patch\` au-dessus de la
 chaîne `AM0205E` puis `AM0205A`, sans les régresser. Validation en jeu datée du
 2026-08-21. Le fade de canvas 32 px x4 retenu après QA appartient au prototype
-alpha séparé `proto/AM0205B-pod-canvas-feather-x4/`; voir
+alpha séparé `animations/runs/AM0205B-pod-canvas-feather-x4/`; voir
 `pipeline/ANIMATION_ALPHA_CORRECTIONS.md`.
 
 ## Référence validée complémentaire — AM0205C
@@ -575,7 +575,7 @@ phase alpha déterministe. Patch conservé dans l'archive locale externe
 `G:\AI\BG2_Upscale-data\archive-pre-cleanup-20260827\temp-snapshots\interpolation-am0205c-v2-20260821\runtime-patch\` au-dessus de la chaîne
 `AM0205E` → `AM0205A` → `AM0205B`, sans les régresser. Validation en jeu datée
 du 2026-08-21. Le fade de canvas 32 px x4 retenu après QA appartient au
-prototype alpha séparé `proto/AM0205C-pod-canvas-feather-x4/`; voir
+prototype alpha séparé `animations/runs/AM0205C-pod-canvas-feather-x4/`; voir
 `pipeline/ANIMATION_ALPHA_CORRECTIONS.md`.
 
 ## Référence validée complémentaire — AM0205D
@@ -587,7 +587,7 @@ internes, phase alpha déterministe. Patch conservé dans l'archive locale exter
 `G:\AI\BG2_Upscale-data\archive-pre-cleanup-20260827\temp-snapshots\interpolation-am0205d-v2-20260821\runtime-patch\` au-dessus de la chaîne
 `AM0205E` → `AM0205A` → `AM0205B` → `AM0205C`, sans les régresser. Validation
 en jeu datée du 2026-08-21. Le fade de canvas 32 px x4 retenu après QA
-appartient au prototype alpha séparé `proto/AM0205D-pod-canvas-feather-x4/`;
+appartient au prototype alpha séparé `animations/runs/AM0205D-pod-canvas-feather-x4/`;
 voir `pipeline/ANIMATION_ALPHA_CORRECTIONS.md`.
 
 ## Conditions d'arrêt

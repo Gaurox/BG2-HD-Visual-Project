@@ -117,8 +117,10 @@ Avant tout traitement, fournir un aperçu et faire confirmer l'objet par l'utili
 
 ### 2. Créer le prototype isolé
 
-Chemin de production automatisé : `animations/runs/<run>/resources/<RESREF>/`. Le dossier
-`proto/` est réservé aux recherches ponctuelles et aux preuves historiques.
+Tous les traitements animation, y compris essais isolés et preuves historiques, vivent sous
+`animations/runs/<run>/`. `proto/` n'est plus une destination admise pour ce domaine. Les anciens
+chemins qui y figurent encore dans des artefacts scellés sont résolus par
+`animations/index/path-migrations.json`.
 
 Pour un run x4 terminé, la sortie de production contient aussi :
 
@@ -132,7 +134,7 @@ animations/runs/<run>/03_runtime_pack/
 Arborescence attendue :
 
 ```text
-proto/<RESREF>-<description>/
+animations/runs/<RESREF>-<description>/
   01_source/
     <RESREF>.bam
     aperçu.gif ou planche.png
@@ -156,14 +158,14 @@ proto/<RESREF>-<description>/
     README.md
 ```
 
-Ne jamais écraser un prototype existant. Employer un nouveau dossier ou arrêter.
+Ne jamais écraser un run existant. Employer un nouvel identifiant de run ou arrêter.
 
 ### 3. Extraire les frames x1
 
 ```powershell
 python pipeline/scripts/export_bam_frames.py `
-  proto/<RESREF>-<description>/01_source/<RESREF>.bam `
-  proto/<RESREF>-<description>/02_frames_x1
+  animations/runs/<RESREF>-<description>/01_source/<RESREF>.bam `
+  animations/runs/<RESREF>-<description>/02_frames_x1
 ```
 
 Le manifeste doit conserver :
@@ -203,10 +205,10 @@ Le serveur ComfyUI/SeedVR doit déjà être lancé. Le dossier de sortie doit ê
 
 ```powershell
 python pipeline/scripts/upscale_animation_frames.py `
-  proto/<RESREF>-<description>/02_frames_x1/rgb `
-  proto/<RESREF>-<description>/02_frames_x1/alpha `
-  proto/<RESREF>-<description>/x4 `
-  --frame-manifest proto/<RESREF>-<description>/02_frames_x1/manifest.json `
+  animations/runs/<RESREF>-<description>/02_frames_x1/rgb `
+  animations/runs/<RESREF>-<description>/02_frames_x1/alpha `
+  animations/runs/<RESREF>-<description>/x4 `
+  --frame-manifest animations/runs/<RESREF>-<description>/02_frames_x1/manifest.json `
   --scale 4
 ```
 
@@ -533,7 +535,7 @@ plus lisible et évite de comparer une animation détaillée à un fond volontai
 
 ## Références
 
-- Preuve historique : `proto/AM0205E-orifice/`.
+- Preuve historique : `animations/runs/AM0205E-orifice/`.
 - Runtime générique validé :
   `engine/InfinityEngine-Enhancer/source-patchee/src/iee/area_animation_x4_registry.cpp`.
 - Hooks : `engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp`.
