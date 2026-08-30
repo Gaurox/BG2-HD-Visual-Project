@@ -31,8 +31,10 @@ and can also be started manually.
 - All public-facing mockup copy is in English.
 - The FR control is reserved but intentionally inactive until approved French copy exists.
 - Dashboard values are visual placeholders, not project status.
-- The featured map comparison uses a matched AR0700 x1/x4 pair. Other concept images remain
-  temporary and can be replaced without changing the layouts.
+- The home hero uses a real AR0700 vanilla-to-x4 render (`assets/images/hero-ar0700-vanilla-x4.*`,
+  full-resolution PNG kept as source next to a 2560px WebP delivery copy). The featured map
+  comparison uses a matched AR0700 x1/x4 pair. Other concept images remain temporary and can be
+  replaced without changing the layouts.
 - Comparison assets follow the convention documented in `assets/comparisons/README.md`.
 - Generated-image briefs are recorded in `ASSET_PROMPTS.md`.
 
