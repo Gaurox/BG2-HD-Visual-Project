@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d0e">
+    <meta name="description" content="Visual progress dashboard mockup for the BG2 HD Visual Project.">
+    <title>Project Progress — BG2 HD Visual Project</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/site.js" defer></script>
+  </head>
+  <body class="inner-page" data-page="progress">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header inner-header" data-header>
+      <a class="brand" href="index.html" aria-label="BG2 HD Visual Project — home"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav><a href="index.html">Overview</a><a class="is-active" href="progress.html">Progress</a><a href="gallery.html">Gallery</a></nav>
+      <button class="language-switch" type="button" aria-label="Language options" data-language-switch><span>EN</span><span class="language-divider">/</span><span class="language-muted">FR</span></button>
+    </header>
+
+    <main id="main-content">
+      <section class="page-hero progress-hero">
+        <div class="page-hero-media"><img src="assets/images/hero-map-transformation.png" alt=""></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-shell page-hero-content">
+          <p class="eyebrow"><span></span> Production overview</p>
+          <h1>Project <em>progress.</em></h1>
+          <p>A clear view of the work across visual production, quality review and engine performance.</p>
+        </div>
+      </section>
+
+      <section class="dashboard-section page-shell" aria-labelledby="dashboard-title">
+        <div class="dashboard-notice"><span>Mockup data</span><p>The values below are placeholders used to design the dashboard. They are not current project figures.</p></div>
+        <div class="dashboard-overview">
+          <div class="overview-copy">
+            <p class="eyebrow"><span></span> Overall project</p>
+            <h2 id="dashboard-title">One patch,<br><em>several production tracks.</em></h2>
+            <p>The final dashboard will consolidate structured production tracking with selected manual notes, while keeping each discipline readable on its own.</p>
+          </div>
+          <div class="overall-meter" style="--meter: 62" aria-label="Sample overall progress: 62 percent">
+            <div class="overall-meter-inner"><strong>62<sup>%</sup></strong><span>Sample progress</span></div>
+          </div>
+          <div class="overview-metrics">
+            <div><strong>5</strong><span>Core workstreams</span></div>
+            <div><strong>—</strong><span>Final figures pending</span></div>
+          </div>
+        </div>
+
+        <div class="progress-grid" aria-label="Project workstreams">
+          <article class="progress-card" style="--progress: 74%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">01</span><span class="progress-sample">Sample · 74%</span></div>
+            <h3>Environments &amp; Maps</h3>
+            <p>Source preparation, ×4 enhancement, tile reconstruction and in-game visual review.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Large environment backgrounds</li><li>Day and night variants</li><li>Water and overlay treatment</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 58%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">02</span><span class="progress-sample">Sample · 58%</span></div>
+            <h3>Animation &amp; Fluidity</h3>
+            <p>Frame restoration, alpha treatment and pause-aware interpolation toward 30 fps.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Spatial frame upscaling</li><li>Temporal interpolation</li><li>Area-specific runtime packs</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 46%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">03</span><span class="progress-sample">Sample · 46%</span></div>
+            <h3>Visual QA &amp; Corrections</h3>
+            <p>In-game review of seams, alpha, occlusion, water, color and isolated defects.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Scene-by-scene inspection</li><li>Foreground occlusion</li><li>Targeted correction passes</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 39%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">04</span><span class="progress-sample">Sample · 39%</span></div>
+            <h3>Map Loading Performance</h3>
+            <p>Investigation of asset demand, preparation timing, loading spikes and safe fallback paths.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Runtime measurement</li><li>Bounded preparation experiments</li><li>Cold and warm loading studies</li></ul>
+          </article>
+        </div>
+
+        <div class="roadmap-panel">
+          <div class="roadmap-title"><p class="eyebrow"><span></span> Delivery flow</p><h2>From source art to <em>playable result.</em></h2></div>
+          <ol class="roadmap-flow"><li><span>01</span><strong>Prepare</strong><small>Inventory and source checks</small></li><li><span>02</span><strong>Enhance</strong><small>Asset-specific production</small></li><li><span>03</span><strong>Rebuild</strong><small>Engine-ready resources</small></li><li><span>04</span><strong>Review</strong><small>In-game visual testing</small></li></ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="page-shell footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a></div><p>An unofficial, non-commercial fan project. Not affiliated with Beamdog or the rights holders of Baldur’s Gate.</p><nav aria-label="Footer navigation"><a href="index.html">Overview</a><a href="progress.html">Progress</a><a href="gallery.html">Gallery</a></nav></div><div class="page-shell footer-bottom"><span>© <span data-current-year></span> BG2 HD Visual Project</span><span>Designed for GitHub Pages</span></div></footer>
+    <div class="language-toast" role="status" aria-live="polite" data-language-toast>French translation is prepared for a later phase.</div>
+  </body>
+</html>

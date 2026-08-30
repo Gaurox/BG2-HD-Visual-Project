@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d0e">
+    <meta name="description" content="Visual gallery mockup for the BG2 HD Visual Project.">
+    <title>Visual Gallery — BG2 HD Visual Project</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/site.js" defer></script>
+  </head>
+  <body class="inner-page" data-page="gallery">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header inner-header" data-header>
+      <a class="brand" href="index.html" aria-label="BG2 HD Visual Project — home"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav><a href="index.html">Overview</a><a href="progress.html">Progress</a><a class="is-active" href="gallery.html">Gallery</a></nav>
+      <button class="language-switch" type="button" aria-label="Language options" data-language-switch><span>EN</span><span class="language-divider">/</span><span class="language-muted">FR</span></button>
+    </header>
+
+    <main id="main-content">
+      <section class="page-hero gallery-hero">
+        <div class="page-hero-media"><img src="assets/images/animation-portal.png" alt=""></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-shell page-hero-content"><p class="eyebrow"><span></span> Before &amp; after archive</p><h1>Visual <em>gallery.</em></h1><p>Large comparisons, grouped by discipline and designed to make every change easy to inspect.</p></div>
+      </section>
+
+      <section class="gallery-section page-shell" aria-labelledby="gallery-title">
+        <div class="gallery-toolbar">
+          <div><p class="eyebrow"><span></span> Explore the work</p><h2 id="gallery-title">Transformation studies</h2></div>
+          <div class="gallery-filters" role="group" aria-label="Filter gallery items">
+            <button class="is-active" type="button" data-gallery-filter="all">All</button>
+            <button type="button" data-gallery-filter="maps">Maps</button>
+            <button type="button" data-gallery-filter="animations">Animations</button>
+            <button type="button" data-gallery-filter="corrections">Visual fixes</button>
+            <button type="button" data-gallery-filter="sprites">Sprites</button>
+          </div>
+        </div>
+
+        <div class="gallery-feature" data-gallery-item data-category="maps">
+          <div class="compare-frame compare-frame-gallery" data-compare style="--compare-position: 52%; --compare-aspect: 569 / 353">
+            <img class="compare-after" src="assets/comparisons/maps/ar0700/day/crop-02/source/ar0700-day-crop-02-x4.png" width="2276" height="1412" loading="lazy" decoding="async" alt="AR0700 Waukeen's Promenade environment upscaled to four times the original resolution">
+            <div class="compare-before" aria-hidden="true"><img class="compare-before-image" src="assets/comparisons/maps/ar0700/day/crop-02/source/ar0700-day-crop-02-x1.png" width="569" height="353" loading="lazy" decoding="async" alt=""></div>
+            <div class="compare-line" aria-hidden="true"><span>↔</span></div>
+            <span class="compare-label compare-label-before">Vanilla ×1</span><span class="compare-label compare-label-after">Upscaled ×4</span>
+            <input class="compare-range" type="range" min="0" max="100" value="52" aria-label="Reveal map comparison">
+          </div>
+          <div class="gallery-feature-copy"><span>AR0700 · Day · Crop 02</span><h3>Waukeen’s Promenade — x1 / x4</h3><p>Matched project captures for inspecting masonry, market props, shadows and painted texture at the exact same framing.</p></div>
+        </div>
+
+        <div class="gallery-grid" data-gallery-grid>
+          <button class="gallery-card gallery-card-wide" type="button" data-gallery-item data-category="animations" data-gallery-open="assets/images/animation-portal.png" data-gallery-title="Animation restoration & interpolation">
+            <img src="assets/images/animation-portal.png" alt="Glowing fantasy portal and flowing animation trail"><span class="gallery-card-shade"></span><span class="gallery-card-copy"><small>Animations</small><strong>Motion restoration &amp; interpolation</strong><em>Open study ↗</em></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-item data-category="sprites" data-gallery-open="assets/images/sprite-study.png" data-gallery-title="Experimental creature sprite study">
+            <img src="assets/images/sprite-study.png" alt="Original fantasy sprite shown at increasing levels of detail"><span class="gallery-card-shade"></span><span class="gallery-card-copy"><small>Sprite research</small><strong>Creature detail study</strong><em>Open study ↗</em></span>
+          </button>
+          <button class="gallery-card" type="button" data-gallery-item data-category="maps corrections" data-gallery-open="assets/images/hero-map-transformation.png" data-gallery-title="Environment reconstruction study">
+            <img class="gallery-crop-right" src="assets/images/hero-map-transformation.png" alt="Detailed architecture in an isometric fantasy city"><span class="gallery-card-shade"></span><span class="gallery-card-copy"><small>Maps · Visual fixes</small><strong>Edges, seams &amp; scene detail</strong><em>Open study ↗</em></span>
+          </button>
+          <article class="gallery-placeholder" data-gallery-item data-category="corrections"><span class="placeholder-frame"><i></i></span><small>Future in-game capture</small><h3>Occlusion &amp; alpha corrections</h3><p>Reserved for verified comparison screenshots.</p></article>
+          <article class="gallery-placeholder" data-gallery-item data-category="maps"><span class="placeholder-frame"><i></i></span><small>Future in-game capture</small><h3>Day &amp; night environments</h3><p>Reserved for matched scene comparisons.</p></article>
+        </div>
+        <p class="prototype-caption">The featured AR0700 comparison uses matched project captures. The remaining concept cards still establish the future gallery layout.</p>
+      </section>
+    </main>
+
+    <dialog class="gallery-dialog" data-gallery-dialog>
+      <button class="dialog-close" type="button" aria-label="Close image" data-dialog-close>×</button>
+      <img src="" alt="" data-dialog-image>
+      <div><small>Visual study</small><h2 data-dialog-title></h2></div>
+    </dialog>
+    <footer class="site-footer"><div class="page-shell footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a></div><p>An unofficial, non-commercial fan project. Not affiliated with Beamdog or the rights holders of Baldur’s Gate.</p><nav aria-label="Footer navigation"><a href="index.html">Overview</a><a href="progress.html">Progress</a><a href="gallery.html">Gallery</a></nav></div><div class="page-shell footer-bottom"><span>© <span data-current-year></span> BG2 HD Visual Project</span><span>Designed for GitHub Pages</span></div></footer>
+    <div class="language-toast" role="status" aria-live="polite" data-language-toast>French translation is prepared for a later phase.</div>
+  </body>
+</html>
