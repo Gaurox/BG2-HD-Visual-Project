@@ -99,7 +99,30 @@ Jeu et InfinityLoader fermés. Utiliser les scripts transactionnels adaptés au 
 le reçu `install-backup.json`, puis comparer tous les SHA-256. Ne jamais copier un dossier de build
 à la main ni écraser un overlay partagé au passage.
 
-Gate : inventaire attendu exact et zéro divergence build ↔ jeu.
+Pour un build de map TIS/PVRZ, commencer par la prévalidation sans écriture, puis installer :
+
+```powershell
+python pipeline/scripts/inject_build.py install ARxxxx <build-dir> --verify-only
+python pipeline/scripts/inject_build.py install ARxxxx <build-dir>
+```
+
+La seconde commande affiche le chemin du reçu sous `backups/maps/`. Le reçu contient l'état initial
+et l'état installé de chaque fichier, y compris les anciennes pages du même namespace qui doivent
+disparaître. Il est autonome par rapport au dossier de build. Vérifier ou restaurer avec :
+
+```powershell
+python pipeline/scripts/inject_build.py verify <backup-dir>
+python pipeline/scripts/inject_build.py restore <backup-dir>
+```
+
+L'installation et la restauration refusent les processus actifs, les inventaires incomplets, les
+sauvegardes corrompues et toute divergence de l'`override`. Une opération interrompue conserve un
+état `prepared`, `restoring` ou `recovery-required` reprenable par `restore`; ne jamais corriger cet
+état par des copies manuelles.
+
+Gate : prévalidation réussie, reçu conservé, inventaire attendu exact et zéro divergence
+build ↔ jeu. L'ancien appel `inject_build.py ARxxxx <build-dir>` reste accepté, mais les commandes
+explicites ci-dessus sont la procédure courante.
 
 Un repack expérimental de l'encapsulation Deflate peut être produit sans reconstruire les images
 ni modifier le PVR/DXT décodé :

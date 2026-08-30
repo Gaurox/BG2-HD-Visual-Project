@@ -1246,3 +1246,42 @@ Les suites utiles sont maintenant :
 3. si le moteur doit dépasser cette voie de contenu, isoler puis déplacer la lecture/décompression
    hors de la frame avant de réintégrer l’upload GL sur le thread propriétaire du contexte ;
 4. ne relancer la matrice des quatre zones qu’après réussite de la gate ciblée AR0900.
+
+## Étape 3b — installation transactionnelle des builds maps — 2026-08-30
+
+La chaîne d'injection TIS/PVRZ a été remplacée par un installateur/restaurateur fail-closed dans
+`pipeline/scripts/inject_build.py`. Cette sous-étape est une modification de tooling testée sur des
+fixtures isolées : aucun fichier de l'installation réelle du jeu n'a été écrit et aucun candidat
+n'a reçu de statut de QA.
+
+Le nouveau contrat impose, avant toute copie :
+
+- jeu et InfinityLoader fermés ;
+- un TIS V1 au nom exact de la zone et l'ensemble exact des PVRZ qu'il référence ;
+- la validation des flux zlib et de leur taille PVR décodée ;
+- l'inventaire de toutes les pages déjà présentes dans le namespace de la zone, y compris celles
+  qui deviendront obsolètes.
+
+Un dossier unique sous `backups/maps/` contient `install-backup.json` et la copie vérifiée de chaque
+fichier initialement présent. Le reçu enregistre les SHA-256 individuels, les empreintes agrégées des
+états initial et installé, ainsi que les pages retirées. Il est publié avec le statut `prepared`
+avant la première mutation de l'`override`. Les copies passent par un fichier temporaire puis un
+remplacement atomique ; chaque cible est revérifiée juste avant sa mutation et l'inventaire complet
+est revérifié après installation.
+
+En cas d'échec, le rollback automatique remet l'état initial. Une interruption pendant
+l'installation ou la restauration laisse un statut reprenable (`prepared`, `restoring` ou
+`recovery-required`). La restauration refuse un reçu altéré, une sauvegarde corrompue, une autre
+racine de jeu ou une cible dont le hash n'est ni l'état initial ni l'état installé attendu. Elle ne
+dépend pas de la présence du build source.
+
+Neuf tests automatisés couvrent l'aller-retour exact avec retrait d'une page obsolète, l'inventaire
+source incomplet, la divergence de cible ou de namespace, le rollback après échec partiel, la reprise
+d'installation, la reprise de restauration, l'altération du reçu et le refus lorsque le jeu ou
+InfinityLoader est actif.
+
+Cette étape ferme le risque transactionnel pour les **builds maps**. Elle ne transforme pas les
+quatre sauvegardes brutes du DLL moteur en reçus ; ce travail reste distinct avant une promotion du
+candidat moteur. La prochaine expérience de contenu peut maintenant construire puis prévalider un
+candidat AR0900 à pages plus petites ou hybrides, sous le plafond de 96 pages et les contraintes de
+resref nocturne, avant toute installation contrôlée.

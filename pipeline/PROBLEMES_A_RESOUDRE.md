@@ -38,18 +38,21 @@ dans `areas.csv`.
   comptent zéro matérialisation PVR dans le burst d’ouverture et zéro éviction du préchauffage. Un
   repack zlib niveau 0 exact a ensuite réduit le maximum AR0900 de 43,97 à 12,77 ms et le total de
   746,05 à 228,97 ms, mais il est rejeté : seuil de 8 ms manqué et poids PVRZ ×2,7419 (+264,30 Mio
-  pour le seul jour). L’installation d’essai a été intégralement restaurée.
+  pour le seul jour). L’installation d’essai a été intégralement restaurée. L'installateur des
+  builds maps est désormais transactionnel et fail-closed : reçu avant copie, inventaire fermé,
+  retrait des pages obsolètes, écritures atomiques, rollback automatique et restauration reprenable.
 - **Risques ouverts** : une PVRZ 4096² canonique d’AR0900 bloque encore une frame de préchauffage à
   43,97 ms en médiane maximale ; `Demand` est atomique, donc espacer une page par frame ne borne pas
-  ce coût. Les quatre instantanés moteur intermédiaires restent des sauvegardes brutes sans
-  transaction fail-closed. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
+  ce coût. La transaction fail-closed des maps ne remplace pas encore les quatre instantanés moteur
+  intermédiaires, qui restent des sauvegardes brutes. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
   réellement installés correspondent au sous-build `page4096-spline-fit1.0`. La campagne validée
   mesure un cache OS chaud, pas un démarrage froid.
-- **Gate** : formaliser l’installation/restauration transactionnelle, puis produire un candidat qui
-  réduit l’unité atomique sous 8 ms — pagination plus petite ou hybride compatible avec les resrefs
-  nuit, la réserve de cache et le plafond de 96 pages, ou décompression préparée hors frame. Valider
-  d’abord AR0900 ; ne rejouer les quatre zones qu’après réussite. Une éventuelle campagne cache OS
-  froid doit rester séparée.
+- **Gate** : utiliser le reçu transactionnel maps pour produire un candidat qui réduit l’unité
+  atomique sous 8 ms — pagination plus petite ou hybride compatible avec les resrefs nuit, la
+  réserve de cache et le plafond de 96 pages, ou décompression préparée hors frame. Formaliser
+  séparément la transaction du DLL exact avant toute promotion moteur. Valider d’abord AR0900 ; ne
+  rejouer les quatre zones qu’après réussite. Une éventuelle campagne cache OS froid doit rester
+  séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

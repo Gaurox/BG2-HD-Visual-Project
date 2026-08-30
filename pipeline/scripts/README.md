@@ -11,6 +11,10 @@ diagnostic ou des éléments `REVIEW`; rechercher leurs références avant emplo
 - Qualification : `validate_x1_masters.py`, `audit_area_preflight.py`, `audit_water_area.py`.
 - Upscale : `run_seedvr_comfyui.py`.
 - Reconstruction : `build_upscaled_area.py`, `verify_upscaled.py`.
+- Installation/restauration des builds TIS/PVRZ : `inject_build.py` prévalide l'inventaire complet,
+  sauvegarde l'état initial dans un reçu hashé, installe atomiquement, retire les anciennes pages du
+  même namespace et restaure en mode fail-closed. Utiliser d'abord `install ... --verify-only`, puis
+  conserver le dossier `backups/maps/<transaction>/` jusqu'à la restauration vérifiée.
 - Expérience de latence PVRZ : `repack_pvrz_compression.py` réécrit uniquement le flux Deflate
   dans un nouveau dossier, avec TIS et PVR décodés identiques. Le niveau doit être explicite ; la
   sortie reste `pending-ingame` et ne remplace jamais le build sélectionné par `areas.csv`.
