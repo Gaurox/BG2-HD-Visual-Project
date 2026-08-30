@@ -59,6 +59,7 @@ de production restent dans les catalogues et manifests. Un essai n'est rouvert q
 | Anciens clones externes complets | Données reproductibles et non utilisées | Conserver URL+commit, supprimer le clone | Re-cloner au besoin : `Goddard/Project-IE-4k@c0f8180`, `dtiefling/dshaders@4722673` |
 | Packs/runs/builds data-plane supersédés | 149 groupes, 79,72 Gio, dont de nombreux packs combinés redondants, les anciens backups locaux, 8 builds CMake, 29 objets Git temporaires et un rollback xN dupliqué par l'historique Git | Archive externe `archive-post-release-20260827/MANIFEST.csv`; garder dans le workspace uniquement les sources release, runs catalogue/QA et pack installé courant | Restaurer seulement la ligne nécessaire du manifeste externe |
 | Checkout Git autonome | Clone propre validé sans donnée ignorée : 159 tests Python, Phase 2 et 2 tests C++ passent | Le plan de contrôle committé est la source de vérité ; les gros médias restent hors Git selon `.gitignore` | Réouvrir si un test exige une donnée locale absente du clone |
+| Copies brutes DLL/INI pour installer un candidat moteur local | Les quatre snapshots `map-page-prewarm-*` étaient hashés mais sans reçu, état intermédiaire ni reprise fail-closed | `tools/install_renderer_candidate.py` gère exactement DLL + INI, stage candidat et état antérieur avant copie, refuse toute divergence et restaure sans dépendre du build source | Jamais pour un nouvel essai ; le helper renderer de release reste distinct pour son bundle figé de huit fichiers |
 
 ## Règle de maintenance
 

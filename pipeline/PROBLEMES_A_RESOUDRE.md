@@ -50,14 +50,19 @@ dans `areas.csv`.
   uniforme permettant de placer les 5 752 tuiles sous le plafond de 96 pages : la suivante, 1848²,
   exigerait 118 pages. Une repagination plus petite dépasserait donc le cache préchauffable actuel,
   tandis qu'une page rectangulaire de 60 cellules ne réduirait l'unité que de 6,25 %. La transaction
-  fail-closed des maps ne remplace pas encore les quatre instantanés moteur
-  intermédiaires, qui restent des sauvegardes brutes. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
+  locale du renderer gère désormais exactement le DLL et l'INI candidats avec reçu, payload stagé,
+  rollback et reprise fail-closed ; les quatre anciens instantanés moteur restent des preuves brutes
+  à ne plus utiliser pour une installation. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
   réellement installés correspondent au sous-build `page4096-spline-fit1.0`. La campagne validée
   mesure un cache OS chaud, pas un démarrage froid.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
-  thread propriétaire avec le `Demand` natif synchrone en fallback. Formaliser séparément la
-  transaction du DLL exact avant toute promotion moteur. Valider d’abord AR0900 ; ne rejouer les
+  thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
+  par la transaction DLL/INI exacte désormais disponible. Le premier jalon est le préparateur
+  *shadow* 3e-A décrit dans
+  [`../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md) : aucune
+  mutation moteur/GL sur le worker, données CPU immuables, queues et mémoire bornées, invalidation
+  par génération et `Demand` natif inchangé. Valider d’abord AR0900 ; ne rejouer les
   quatre zones qu’après réussite. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).

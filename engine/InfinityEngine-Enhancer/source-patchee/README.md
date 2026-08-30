@@ -146,6 +146,25 @@ Optional BC1, BC3, BC5, or BC7 DDS water-texture overrides can be placed in
 `iee-textures/`; supported layouts and format guidance are documented in
 [`assets/game-textures/README.md`](assets/game-textures/README.md).
 
+### Experimental local candidates
+
+Do not copy a locally built DLL or its test INI into the game by hand. Prepare a new directory
+containing exactly `InfinityEngine-Enhancer.dll` and `InfinityEngine-Enhancer.ini`, then use the
+fail-closed transaction described in
+[`docs/renderer-candidate-transaction.md`](docs/renderer-candidate-transaction.md):
+
+```powershell
+python tools/install_renderer_candidate.py install <candidate-dir> --verify-only
+python tools/install_renderer_candidate.py install <candidate-dir>
+python tools/install_renderer_candidate.py verify <receipt-or-transaction-dir>
+python tools/install_renderer_candidate.py restore <receipt-or-transaction-dir>
+```
+
+The game and InfinityLoader must be closed for install and restore. The receipt stages immutable
+copies of both candidate files and every previous file, so recovery never depends on the original
+build directory. This tool is for local experiments only; it does not stage or promote the frozen
+eight-file release renderer bundle.
+
 ## Development
 
 Use WSL for analysis and host-side tests. The actual DLL build is Windows-only.
@@ -172,6 +191,8 @@ while keeping builds reproducibly pinned to full commit SHAs.
 
 - [docs/architecture.md](docs/architecture.md)
 - [docs/threading-model.md](docs/threading-model.md)
+- [docs/renderer-candidate-transaction.md](docs/renderer-candidate-transaction.md)
+- [docs/map-page-offframe-preparation.md](docs/map-page-offframe-preparation.md)
 - [docs/reverse-engineering.md](docs/reverse-engineering.md)
 - [docs/area-animation-clock-probe.md](docs/area-animation-clock-probe.md)
 - [docs/native-occlusion-phase0.md](docs/native-occlusion-phase0.md)

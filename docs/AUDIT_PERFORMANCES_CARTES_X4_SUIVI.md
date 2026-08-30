@@ -1369,3 +1369,75 @@ La suite de la phase 3 doit désormais sortir de la seule repagination uniforme 
 lecture et la décompression hors de la frame, ou démontrer une politique de cache réversible au-delà
 de 96 pages, puis rendre le résultat au thread GL avec le `Demand` natif comme fallback. La
 transaction du DLL expérimental doit être formalisée avant toute nouvelle installation moteur.
+
+## Étape 3d — transaction DLL/INI des candidats moteur — 2026-08-30
+
+Le prérequis de sécurité laissé ouvert par les quatre snapshots bruts `map-page-prewarm-*` est
+maintenant traité par
+`engine/InfinityEngine-Enhancer/source-patchee/tools/install_renderer_candidate.py`. Le helper de
+release existant n'a pas été réutilisé : il possède un bundle figé de huit fichiers et ne doit pas
+être détourné pour publier un candidat local limité au DLL et à sa configuration d'essai.
+
+Le nouvel outil possède exactement `InfinityEngine-Enhancer.dll` et
+`InfinityEngine-Enhancer.ini` à la racine du jeu. Son contrat impose :
+
+- jeu et InfinityLoader fermés avant installation ou restauration ;
+- dossier candidat fermé contenant uniquement les deux noms canoniques ;
+- DLL x64 PE32+ marquée DLL et INI UTF-8 non vide avec section ;
+- racine de jeu portant `BaldurReal.exe` ou `Baldur.exe`, sans cible liée ;
+- racine de sauvegarde hors de l'installation du jeu.
+
+Avant la première mutation, une transaction unique sous `backups/renderer/` stage une copie hashée
+des deux fichiers candidats et de chaque fichier antérieur présent, puis publie
+`renderer-install-receipt.json` avec le statut `prepared`. Les deux publications utilisent une
+copie temporaire vérifiée puis un remplacement atomique. La restauration ne dépend donc ni du
+dossier de build ni du dossier candidat d'origine.
+
+Le reçu suit les états `prepared`, `installing`, `installed`, `restoring`, `restored`,
+`rolled-back` et `recovery-required`. Une panne d'installation déclenche le rollback automatique ;
+une restauration interrompue peut être reprise avec le même reçu. Chaque cible doit correspondre
+soit à l'état initial, soit au candidat exact : toute troisième empreinte est laissée intacte et
+fait échouer l'opération. Un fichier initialement absent n'est supprimé que s'il porte encore le
+hash candidat attendu.
+
+Dix tests sur jeux factices couvrent l'aller-retour exact indépendant de la source, les fichiers
+initialement absents, `--verify-only` sans écriture, l'inventaire et le PE invalides, le refus des
+processus actifs, une divergence externe, le rollback après échec de copie, la reprise après
+restauration interrompue, l'altération du payload ou de la sauvegarde, l'altération du reçu et le
+refus d'une autre racine de jeu.
+
+La validation complète passe également : 207 tests Python, puis les deux tests natifs CTest en
+Debug et les deux mêmes tests en Release. La compilation des cibles `iee_tests` Debug et Release
+réussit avant leur exécution.
+
+Une prévalidation réelle en lecture seule a ensuite utilisé la DLL Release existante
+`cmake-build-test/Release/InfinityEngine-Enhancer.dll`, SHA-256
+`6FAB82316454C882329119419BEDF2CE9C72682ECB8CEAA74F3E90A9AD53D377`, et une copie de l'INI actif,
+SHA-256 `B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`. Le candidat de preuve est
+conservé sous
+`G:\AI\BG2_Upscale-data\performance-audit\renderer-transaction-preflight-20260830T134500\candidate\`.
+`install --verify-only` accepte les deux fichiers sans créer `backups/renderer/`. Les fichiers du
+jeu restent au DLL actif `9FCE57D1…` et à l'INI `B7B39153…` ; aucune installation n'a eu lieu.
+
+Cette sous-étape ne construit ni n'installe un nouveau DLL. L'installation réelle reste inchangée,
+aucun candidat ne reçoit de statut QA et aucun manifeste de release n'est modifié. La gate suivante
+est le prototype moteur de préparation lecture/décompression hors frame, à concevoir avec données
+CPU immuables, publication bornée et upload GL exclusivement sur le thread propriétaire.
+
+### Contrat de l'étape 3e
+
+La lecture du code courant confirme que `CResPVR::Demand` ne peut pas être déplacé tel quel sur un
+worker : il regroupe la préparation de ressource, la comptabilité native, la création de texture et
+l'upload GL, puis publie `CResPVR::texture`. Le contrat détaillé est conservé dans
+`engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md`.
+
+Le premier jalon 3e-A sera donc un préparateur *shadow* sans mutation moteur : le thread GL publie
+des identités copiées et versionnées ; un worker unique lit et décompresse un PVRZ borné vers un
+buffer CPU immuable ; le thread GL mesure si ce résultat était prêt avant le `Demand` natif, sans le
+consommer. Les changements de zone/contexte et l'arrêt invalident la génération. Le `Demand` natif
+reste le seul chemin de rendu et le fallback intégral.
+
+Cette étape doit d'abord démontrer l'adressage des ressources, le respect des limites mémoire, la
+bonne annulation et un taux de préparation anticipée suffisant sur AR0900. La consommation réelle
+3e-B reste bloquée tant que la frontière native entre zlib, ownership des buffers, cache PVR et
+upload GL n'est pas établie pour le build manifesté 2.7.3.
