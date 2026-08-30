@@ -32,13 +32,16 @@ dans `areas.csv`.
 - **Cause mesurée** : 95 à 98 % des frames de pic sont portées par les matérialisations synchrones
   de `CResPVR::Demand`. Les appels GL de création et d’upload restent minoritaires.
 - **État** : le mini-lot carte 3 préchauffe progressivement les pages en opt-in. Son candidat ingame
-  exact est gelé par le SHA `9FCE57D1…` et se reconstruit avec succès, mais la première session
-  n’est pas un A/B contrôlé et AR0900 n’a pas été ouverte après préchauffage.
-- **Risques ouverts** : une PVRZ 4096² d’AR0900 peut encore bloquer une frame jusqu’à 43,77 ms ; les
-  quatre instantanés intermédiaires sont des sauvegardes brutes sans transaction fail-closed.
-- **Gate** : campagne chaude contrebalancée A-B-B-A, processus redémarré entre parcours, même ordre
-  de zones, deux ouvertures par zone, AR0900 obligatoire ; comparer pics, matérialisations,
-  évictions et coût du préchauffage. Formaliser la restauration avant toute réinstallation.
+  exact est gelé par le SHA `9FCE57D1…` et se reconstruit avec succès. La campagne chaude A-B-B-A
+  est validée sur les quatre zones : les médianes A/B passent à 454,11/6,08 ms sur AR0700N,
+  16,21/6,25 ms sur AR0516, 8,09/6,17 ms sur AR0602 et 299,62/6,90 ms sur AR0900. Les parcours B
+  comptent zéro matérialisation PVR dans le burst d’ouverture et zéro éviction du préchauffage.
+- **Risques ouverts** : une PVRZ 4096² d’AR0900 bloque encore une frame de préchauffage à 43,97 ms
+  en médiane maximale ; les quatre instantanés intermédiaires restent des sauvegardes brutes sans
+  transaction fail-closed. La campagne validée mesure un cache OS chaud, pas un démarrage froid.
+- **Gate** : créer un nouveau candidat qui contrôle le budget avant la demande ou l’adapte au coût
+  observé de la page précédente, formaliser l’installation/restauration transactionnelle, puis
+  revalider AR0900 et les quatre zones. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

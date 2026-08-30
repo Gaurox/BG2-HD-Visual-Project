@@ -63,6 +63,14 @@ de référence proviennent de sessions antérieures dont le cache fichier n’é
 AR0900 n’a aucune ouverture de carte après préchauffage. Aucun chiffre de gain ne doit être publié
 avant la campagne décrite en fin de document.
 
+La campagne cache OS chaud contrebalancée A-B-B-A du 2026-08-30 est maintenant terminée sur les
+quatre zones. Elle confirme le levier : les médianes de première ouverture passent de 454,11 à
+6,08 ms sur AR0700N et de 299,62 à 6,90 ms sur AR0900 ; aucune matérialisation PVR n’apparaît dans
+les bursts B1/B2, contre 83 et 18 dans les bursts A1/A2 correspondants. Les deux parcours B ne
+produisent aucune éviction du préchauffage. Cette validation porte uniquement sur la campagne
+chaude de cette machine ; le candidat reste expérimental et non éligible à la release tant que le
+pic unitaire 4096² d’AR0900 et la restauration transactionnelle ne sont pas traités.
+
 Le runtime expérimental courant est le mini-lot carte 3. Le DLL installé localement est le candidat
 ingame exact SHA-256
 `9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E`, avec
@@ -143,7 +151,7 @@ restée inchangée.
 | P1 | Atlas UI chargés à la demande | Différé | Chantier moyen ; dépend d’une mesure du coût de première ouverture UI. |
 | P1 | Attribuer par frame le burst d’ouverture de carte | Validé ingame | Deux ouvertures successives sur chacune des quatre cartes produisent exactement les événements 1 et 2. Aucun redéclenchement n’apparaît pendant le maintien de la carte ; la contraction réarme correctement le détecteur. |
 | P1 | Attribuer les phases de `CResPVR::Demand` | Validé ingame | La demande PVR porte 95 à 98 % des frames de pic ; `glGenTextures` et l’upload compressé sont minoritaires face au résidu ressource/lecture/préparation moteur. Aucun changement de politique. |
-| P1 | Préchargement progressif des pages de carte | Prototype mesuré ingame, incomplet | Mini-lot carte 3 implémenté et opt-in. Première session : zéro éviction sur les quatre zones ; le pic d’ouverture d’AR0700N passe de 404,7–839,3 ms à 7,6 ms. AR0900 n’a pas d’ouverture après préchauffage et les mesures « avant » ne sont pas toutes à froid : un A/B contrôlé en deux sessions reste requis avant toute conclusion. |
+| P1 | Préchargement progressif des pages de carte | A/B chaud validé ingame, non promu | Campagne A-B-B-A sur les quatre zones : aucune matérialisation PVR dans les bursts B1/B2 et zéro éviction du préchauffage. Médianes A/B : AR0700N 454,11/6,08 ms ; AR0516 16,21/6,25 ms ; AR0602 8,09/6,17 ms ; AR0900 299,62/6,90 ms. Restent le pic unitaire 4096² à ~44 ms et la restauration transactionnelle avant toute promotion. |
 | P2 | Double `Demand` et invalidations GL | Différé | Durée de vie moteur sensible ; nécessite les compteurs P1. |
 | P2/P3 | Repack 4096, profil faible mémoire ou x2 sélectif | Non engagé | Implique contenu, QA et manifests distincts ; hors optimisation runtime rapide. |
 
@@ -1049,35 +1057,96 @@ défaut.
 - les gates C++, Python et manifeste moteur passent jeu fermé ; les 18 échecs environnementaux ne
   se reproduisent pas.
 
-## Prochaine étape
+## Campagne chaude contrebalancée A-B-B-A — 2026-08-30
 
-La campagne suivante doit produire l’A/B contrôlé qui manque sur la même machine, avec les quatre
-sauvegardes dédiées `AR0700N`, `AR0516`, `AR0602` et `AR0900`. Le DLL de référence doit rester le
-candidat installé `9FCE57D1…` ; seul `EnableMapPagePrewarm` change entre les états :
+La campagne demandée a été exécutée via `InfinityLoader.lnk` avec le DLL candidat inchangé,
+SHA-256 `9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E`.
+Un passage de chauffe explicite a précédé quatre nouveaux processus, dans l’ordre A-B-B-A, avec
+les zones toujours parcourues dans l’ordre AR0700N → AR0516 → AR0602 → AR0900. Chaque zone a été
+stabilisée, ouverte en carte dézoomée, refermée, puis ouverte et refermée une seconde fois.
 
-1. effectuer un passage de chauffe explicite des quatre zones, puis redémarrer le jeu afin que le
-   cache PVR du processus reparte vide tout en déclarant que le cache fichier Windows est chaud ;
-2. exécuter plusieurs parcours complets dans un ordre contrebalancé, par exemple A-B-B-A, avec
-   A = `EnableMapPagePrewarm=false` et B = `true`. Chaque parcours redémarre le jeu et conserve le
-   même ordre de zones, les mêmes attentes et les deux ouvertures de carte ;
-3. horodater chaque parcours, conserver séparément ses logs et relever pour chaque zone le pic de
-   présentation, les matérialisations PVR du burst, les évictions, `totalDemandMs` et
-   `maximumDemandMs` du préchauffage ;
-4. traiter AR0900 comme gate obligatoire, puis comparer les médianes et la dispersion A/B. Une
-   campagne réellement « cache OS froid » doit être distincte et contrebalancée sur plusieurs
-   redémarrages de la machine ; elle ne doit pas être mélangée avec cette campagne chaude.
+Les preuves brutes sont conservées hors dépôt sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-prewarm-abba-hot-cache-20260830T110700\`.
+Les journaux sont cumulatifs ; les bornes ci-dessous sont donc les débuts de session à utiliser,
+et non le début physique de chaque fichier :
 
-L’ordre des zones doit rester identique dans chaque parcours. L’ordre des états A/B, lui, doit être
-contrebalancé : le cache fichier Windows favorise les parcours tardifs, et un simple A puis B
-attribuerait à tort une partie de cet échauffement au préchauffage.
+| Parcours | Réglage | Borne de session | Fin observée | SHA-256 du journal | SHA-256 de l’INI |
+|---|---|---|---|---|---|
+| A1 | `false` | 11:07:37.929 | 11:19:59.229 | `47DB639C5900D122B3DD21E8E0F4CBB65046F88A3BD47F8D6EAA86B2055FC01F` | `77676158CD7B8F498F328EBB9A507F3A04EC6F479120B4B8D1F7BCFD7C028684` |
+| B1 | `true` | 11:20:52.255 | 11:31:48.310 | `04802F5E0E7384ED0BAF8779A6DB03BA9D0AF18A4E0AF689AF7DA8AD29476F93` | `B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5` |
+| B2 | `true` | 11:33:27.158 | 11:45:23.378 | `BB2F2B99D8D6CA2369F719160D078D2F1F9F1F3FC71E1A11BFFD2A6115E87084` | `B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5` |
+| A2 | `false` | 11:46:20.444 | 11:58:51.886 | `092FFF1CE800B61D6BCA20F079EED342810DB68EDFDFAA4E40D879D0C8555FC6` | `77676158CD7B8F498F328EBB9A507F3A04EC6F479120B4B8D1F7BCFD7C028684` |
 
-Deux points restent à traiter ensuite, indépendamment du résultat :
+Le passage de chauffe est lui aussi archivé : journal
+`51534E4F930A8AA0DE1E0E0132697520F7B023043C1AFBE74D80B8464FA6FFAA`, INI `true`
+`B7B39153…`. Après la campagne, le jeu et InfinityLoader sont fermés et l’INI actif est restauré
+à `EnableMapPagePrewarm=true`, SHA-256 `B7B39153…`.
 
-- déplacer le contrôle du budget **avant** l’appel plutôt qu’après, ou borner le nombre de pages
-  par frame en fonction du coût observé de la page précédente, afin que le cas 4096² d’AR0900 ne
-  puisse plus produire une frame à 43,77 ms ;
-- remplacer la suite d’instantanés bruts par un état de restauration transactionnel et fail-closed
-  pour le candidat exact, sans écraser l’état renderer historique.
+Deux déviations opératoires sont explicitement conservées. Au début d’A1, une sauvegarde rapide a
+été écrasée accidentellement ; les quatre sauvegardes dédiées AR0700N, AR0516, AR0602 et AR0900
+sont restées intactes et tous les chargements mesurés utilisent ces sauvegardes nommées. A2
+contient aussi un troisième événement chaud sur AR0602 après les deux ouvertures prévues. Cet
+événement 3, exclu des tableaux, culmine à 6,09 ms et compte zéro nouvelle page de table, zéro
+matérialisation PVR et zéro suppression de nom de texture. Les événements 1 et 2 d’AR0602 avaient
+déjà été capturés intégralement ; aucun autre parcours ni aucune autre zone ne présente
+d’événement supplémentaire.
+
+### Résultat sur la première ouverture
+
+Le pic est le maximum des huit frames du marqueur `Map wide-view burst telemetry`, et les
+matérialisations viennent du marqueur `Map PVR demand phase telemetry` correspondant. La réduction
+compare les médianes des deux A et des deux B ; avec deux échantillons, la « dispersion » indiquée
+est simplement l’écart absolu entre les deux parcours.
+
+| Zone | A1 | A2 | Médiane A | B1 | B2 | Médiane B | Réduction médiane | Matérialisations A1/A2 → B1/B2 | Dispersion A / B |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---:|
+| AR0700N | 433,46 ms | 474,75 ms | **454,11 ms** | 6,11 ms | 6,05 ms | **6,08 ms** | **98,66 %** | 83 / 83 → 0 / 0 | 41,29 / 0,06 ms |
+| AR0516 | 16,60 ms | 15,81 ms | **16,21 ms** | 6,08 ms | 6,41 ms | **6,25 ms** | **61,46 %** | 9 / 9 → 0 / 0 | 0,79 / 0,33 ms |
+| AR0602 | 8,19 ms | 7,99 ms | **8,09 ms** | 6,25 ms | 6,08 ms | **6,17 ms** | **23,79 %** | 7 / 7 → 0 / 0 | 0,20 / 0,17 ms |
+| AR0900 | 293,42 ms | 305,81 ms | **299,62 ms** | 6,02 ms | 7,78 ms | **6,90 ms** | **97,70 %** | 18 / 18 → 0 / 0 | 12,39 / 1,76 ms |
+
+Les secondes ouvertures de tous les parcours comptent zéro matérialisation PVR et zéro suppression
+de nom de texture. Leurs pics restent proches du plancher de présentation : 6,02 à 6,43 ms, sauf
+A2/AR0602 à 6,73 ms et A2/AR0900 à 8,92 ms. Le dernier écart ne contient toujours aucune
+matérialisation PVR ; il ne remet donc pas en cause l’attribution du gel initial.
+
+Les `newTablePages` de B restent non nuls — 16/17 sur AR0700N, 6/6 sur AR0516, 7/6 sur AR0602 et
+3/3 sur AR0900 — mais les marqueurs de phase prouvent qu’elles ne matérialisent aucune PVR et
+n’effectuent aucun upload compressé. Comme établi plus haut, ce compteur observe les nouvelles
+pages rencontrées par le hook TIS/table ; il ne mesure pas leur résidence.
+
+### Coût déplacé dans le préchauffage
+
+| Zone | Matérialisations B1/B2 | Évictions B1/B2 | `totalDemandMs` B1 / B2 | Médiane totale | `maximumDemandMs` B1 / B2 | Médiane maximale |
+|---|---:|---:|---:|---:|---:|---:|
+| AR0700N | 81 / 81 | **0 / 0** | 856,19 / 816,75 ms | 836,47 ms | 16,10 / 16,26 ms | 16,18 ms |
+| AR0516 | 32 / 32 | **0 / 0** | 188,14 / 185,58 ms | 186,86 ms | 10,69 / 10,63 ms | 10,66 ms |
+| AR0602 | 34 / 34 | **0 / 0** | 194,12 / 190,04 ms | 192,08 ms | 7,12 / 6,44 ms | 6,78 ms |
+| AR0900 | 19 / 19 | **0 / 0** | 745,41 / 746,69 ms | 746,05 ms | 43,85 / 44,09 ms | **43,97 ms** |
+
+Le coût PVR n’est donc pas supprimé : il est déplacé après le chargement de zone et étalé sur des
+frames successives. Aucun candidat invalide, aucune annulation de plan et aucune éviction du cache
+natif ne sont relevés. Chaque session contient zéro erreur et une seule alerte, identique et déjà
+attendue : récupération du prologue `RenderTexture` détourné par EEex.
+
+### Verdict et prochaines étapes
+
+La gate de performance cache OS chaud est **validée ingame**. Le préchauffage élimine de manière
+répétée le burst PVR de première ouverture, y compris sur AR0900, sans éviction observée. Le gain
+est structurel sur AR0700N et AR0900, significatif sur AR0516, et logiquement plus faible sur
+AR0602 dont la référence chaude était déjà proche du plancher de présentation.
+
+Ce verdict ne rend pas le prototype éligible à la release. Les prochaines étapes sont :
+
+1. créer un nouveau candidat qui contrôle le budget **avant** la demande suivante, ou adapte le
+   nombre de pages à partir du coût de la page précédente, afin de borner le cas 4096² d’AR0900 qui
+   atteint encore 43,97 ms en médiane maximale pendant le préchauffage ;
+2. remplacer la chaîne d’instantanés bruts par une installation/restauration transactionnelle et
+   fail-closed pour le DLL exact, sans écraser l’état renderer historique ;
+3. revalider le nouveau candidat au minimum sur AR0900, puis sur les quatre zones pour la
+   non-régression, avec le chargement natif synchrone conservé comme fallback ;
+4. si une preuve cache OS froid est requise, mener une campagne distincte et contrebalancée sur
+   plusieurs redémarrages de la machine, sans la mélanger aux résultats chauds ci-dessus.
 
 Pour le futur lot animations, les contraintes restent inchangées : chargement intégral actuel en
 fallback, formats de packs et animations inchangés, budgets initiaux de 128 Mio CPU et 256 Mio /
