@@ -13,6 +13,10 @@ Périmètre : les habillages, cadres et boutons entourant la zone de jeu. La sc�
 
 Les ressources et le plan d'intégration sont consignés dans [`analysis/HUD_RESOURCE_INVENTORY.md`](analysis/HUD_RESOURCE_INVENTORY.md). Les rendus de contrôle extraits depuis les BIF se trouvent dans `reference/`.
 
+L'identité source courante, les hashes et les dépendances PVRZ sont désormais suivis dans
+`index/manifest.json`, `index/resources.csv` et `index/dependencies.csv`. Cet inventaire ne modifie
+pas l'état de production historique et n'implique aucune QA.
+
 Arborescence prévue pour la production :
 
 - `source/` — export original par texture.

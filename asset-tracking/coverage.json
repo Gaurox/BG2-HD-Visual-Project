@@ -1,0 +1,888 @@
+{
+  "asset_records_sha256": "AD8FACDBC26472C47FA6910146124B69B72B109E2E289845EB4B7E22D29B6626",
+  "domains": [
+    {
+      "asset_count": 271,
+      "asset_types": {
+        "area-animation-bam": 246,
+        "area-animation-pack": 5,
+        "area-animation-wbm": 20
+      },
+      "authority": "animations/index/ et candidats release",
+      "axes": {
+        "installation": {
+          "applicable_count": 251,
+          "coverage_percent": 7.57,
+          "covered_count": 19,
+          "not_applicable_count": 20,
+          "state_counts": {
+            "installed": 19,
+            "not-applicable": 20,
+            "unknown": 232
+          },
+          "unresolved_count": 232
+        },
+        "production": {
+          "applicable_count": 271,
+          "coverage_percent": 100.0,
+          "covered_count": 271,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "blocked": 1,
+            "in-progress": 1,
+            "not-started": 208,
+            "rejected": 6,
+            "verified": 55
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 57,
+          "coverage_percent": 100.0,
+          "covered_count": 57,
+          "not_applicable_count": 214,
+          "state_counts": {
+            "complete": 11,
+            "not-applicable": 214,
+            "partial": 3,
+            "verified": 43
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 271,
+          "coverage_percent": 19.93,
+          "covered_count": 54,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 217,
+            "passed": 54
+          },
+          "unresolved_count": 217
+        },
+        "release": {
+          "applicable_count": 271,
+          "coverage_percent": 11.44,
+          "covered_count": 31,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "ineligible": 26,
+            "integrated": 5,
+            "not-evaluated": 240
+          },
+          "unresolved_count": 240
+        },
+        "source": {
+          "applicable_count": 271,
+          "coverage_percent": 100.0,
+          "covered_count": 271,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "available": 20,
+            "verified": 251
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "animations",
+      "note": "BAM inventoriés et packs release séparés ; QA temporelle seulement si attestée."
+    },
+    {
+      "asset_count": 1,
+      "asset_types": {
+        "cursor-set": 1
+      },
+      "authority": "cursors/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 1,
+          "state_counts": {
+            "not-applicable": 1
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 1,
+          "coverage_percent": 100.0,
+          "covered_count": 1,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 1
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 1,
+          "state_counts": {
+            "not-applicable": 1
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 1,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 1
+          },
+          "unresolved_count": 1
+        },
+        "release": {
+          "applicable_count": 1,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 1
+          },
+          "unresolved_count": 1
+        },
+        "source": {
+          "applicable_count": 1,
+          "coverage_percent": 100.0,
+          "covered_count": 1,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 1
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "cursors",
+      "note": "CURSORS.BAM est suivi comme un jeu moteur unique."
+    },
+    {
+      "asset_count": 467,
+      "asset_types": {
+        "effect-controller-vef": 2,
+        "effect-controller-vvc": 250,
+        "misc-animation-bam": 106,
+        "spell-animation-bam": 109
+      },
+      "authority": "effects/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 467,
+          "state_counts": {
+            "not-applicable": 467
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 467,
+          "coverage_percent": 100.0,
+          "covered_count": 467,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 467
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 467,
+          "state_counts": {
+            "not-applicable": 467
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 467,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 467
+          },
+          "unresolved_count": 467
+        },
+        "release": {
+          "applicable_count": 467,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 467
+          },
+          "unresolved_count": 467
+        },
+        "source": {
+          "applicable_count": 467,
+          "coverage_percent": 100.0,
+          "covered_count": 467,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 467
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "effects",
+      "note": "Une entrée par contrôleur VVC/VEF ; animations et palettes sont des dépendances."
+    },
+    {
+      "asset_count": 2931,
+      "asset_types": {
+        "icon-bam-set": 2931
+      },
+      "authority": "icons/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 2931,
+          "state_counts": {
+            "not-applicable": 2931
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 2931,
+          "coverage_percent": 100.0,
+          "covered_count": 2931,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 2931
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 2931,
+          "state_counts": {
+            "not-applicable": 2931
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 2931,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 2931
+          },
+          "unresolved_count": 2931
+        },
+        "release": {
+          "applicable_count": 2931,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 2931
+          },
+          "unresolved_count": 2931
+        },
+        "source": {
+          "applicable_count": 2931,
+          "coverage_percent": 100.0,
+          "covered_count": 2931,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 2931
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "icons",
+      "note": "Une entrée par jeu BAM référencé par ITM/SPL ; les usages restent des relations."
+    },
+    {
+      "asset_count": 400,
+      "asset_types": {
+        "area-map": 400
+      },
+      "authority": "areas.csv",
+      "axes": {
+        "installation": {
+          "applicable_count": 400,
+          "coverage_percent": 100.0,
+          "covered_count": 400,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "installed": 291,
+            "not-installed": 109
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 400,
+          "coverage_percent": 100.0,
+          "covered_count": 400,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 109,
+            "produced": 4,
+            "verified": 287
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 291,
+          "coverage_percent": 100.0,
+          "covered_count": 291,
+          "not_applicable_count": 109,
+          "state_counts": {
+            "complete": 4,
+            "not-applicable": 109,
+            "verified": 287
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 400,
+          "coverage_percent": 72.75,
+          "covered_count": 291,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 109,
+            "passed": 287,
+            "pending": 4
+          },
+          "unresolved_count": 109
+        },
+        "release": {
+          "applicable_count": 400,
+          "coverage_percent": 71.75,
+          "covered_count": 287,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "integrated": 287,
+            "not-evaluated": 113
+          },
+          "unresolved_count": 113
+        },
+        "source": {
+          "applicable_count": 400,
+          "coverage_percent": 100.0,
+          "covered_count": 400,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "extracted": 400
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "maps",
+      "note": "Une entrée par variante jour ou nuit connue."
+    },
+    {
+      "asset_count": 3321,
+      "asset_types": {
+        "portrait-image": 3321
+      },
+      "authority": "inventaires CSV existants",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 3321,
+          "state_counts": {
+            "not-applicable": 3321
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 3321,
+          "coverage_percent": 100.0,
+          "covered_count": 3321,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 3321
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 3321,
+          "state_counts": {
+            "not-applicable": 3321
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 3321,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 3321
+          },
+          "unresolved_count": 3321
+        },
+        "release": {
+          "applicable_count": 3321,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 3321
+          },
+          "unresolved_count": 3321
+        },
+        "source": {
+          "applicable_count": 3321,
+          "coverage_percent": 100.0,
+          "covered_count": 3321,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "extracted": 3036,
+            "verified": 285
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "partial",
+      "domain": "portraits",
+      "note": "Inventaires stock et auxiliaires lus ; empreintes tronquées signalées."
+    },
+    {
+      "asset_count": 243,
+      "asset_types": {
+        "projectile-controller": 243
+      },
+      "authority": "projectiles/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 243,
+          "state_counts": {
+            "not-applicable": 243
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 243,
+          "coverage_percent": 100.0,
+          "covered_count": 243,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 243
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 243,
+          "state_counts": {
+            "not-applicable": 243
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 243,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 243
+          },
+          "unresolved_count": 243
+        },
+        "release": {
+          "applicable_count": 243,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 243
+          },
+          "unresolved_count": 243
+        },
+        "source": {
+          "applicable_count": 243,
+          "coverage_percent": 100.0,
+          "covered_count": 243,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 243
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "projectiles",
+      "note": "Une entrée par contrôleur PRO ; animations, effets et palettes sont des dépendances."
+    },
+    {
+      "asset_count": 8997,
+      "asset_types": {
+        "character-animation-bam": 15,
+        "creature-animation-bam": 33,
+        "object-animation-bam": 1324,
+        "paperdoll-animation-bam": 2093,
+        "sprite-family": 5532
+      },
+      "authority": "sprite/index/ et état du catalogue cumulatif",
+      "axes": {
+        "installation": {
+          "applicable_count": 5532,
+          "coverage_percent": 100.0,
+          "covered_count": 5532,
+          "not_applicable_count": 3465,
+          "state_counts": {
+            "installed": 131,
+            "not-applicable": 3465,
+            "not-installed": 5401
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 8997,
+          "coverage_percent": 100.0,
+          "covered_count": 8997,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "blocked": 592,
+            "not-started": 3465,
+            "ready": 4809,
+            "verified": 131
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 131,
+          "coverage_percent": 100.0,
+          "covered_count": 131,
+          "not_applicable_count": 8866,
+          "state_counts": {
+            "not-applicable": 8866,
+            "verified": 131
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 8997,
+          "coverage_percent": 1.46,
+          "covered_count": 131,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 8866,
+            "pending": 131
+          },
+          "unresolved_count": 8866
+        },
+        "release": {
+          "applicable_count": 8997,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 8997
+          },
+          "unresolved_count": 8997
+        },
+        "source": {
+          "applicable_count": 8997,
+          "coverage_percent": 100.0,
+          "covered_count": 8997,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "unavailable": 376,
+            "verified": 8621
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "sprites",
+      "note": "Une entrée par famille ; état actif propagé par appartenance structurée."
+    },
+    {
+      "asset_count": 1672,
+      "asset_types": {
+        "ui-atlas-set": 2,
+        "ui-bam": 1417,
+        "ui-chu": 3,
+        "ui-font": 20,
+        "ui-hud-resource": 24,
+        "ui-mos": 206
+      },
+      "authority": "manifests UI existants, interface/index/, gameplay-hud et fonts/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 2,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 1670,
+          "state_counts": {
+            "not-applicable": 1670,
+            "unknown": 2
+          },
+          "unresolved_count": 2
+        },
+        "production": {
+          "applicable_count": 1672,
+          "coverage_percent": 98.03,
+          "covered_count": 1639,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 1637,
+            "unknown": 33,
+            "verified": 2
+          },
+          "unresolved_count": 33
+        },
+        "provenance": {
+          "applicable_count": 2,
+          "coverage_percent": 100.0,
+          "covered_count": 2,
+          "not_applicable_count": 1670,
+          "state_counts": {
+            "not-applicable": 1670,
+            "verified": 2
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 1672,
+          "coverage_percent": 0.12,
+          "covered_count": 2,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 1670,
+            "passed": 2
+          },
+          "unresolved_count": 1670
+        },
+        "release": {
+          "applicable_count": 1672,
+          "coverage_percent": 0.12,
+          "covered_count": 2,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "integrated": 2,
+            "not-evaluated": 1670
+          },
+          "unresolved_count": 1670
+        },
+        "source": {
+          "applicable_count": 1672,
+          "coverage_percent": 100.0,
+          "covered_count": 1672,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 1672
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "ui",
+      "note": "Compositions UI/HUD et polices projetées ; les pages PVRZ restent des dépendances."
+    },
+    {
+      "asset_count": 50,
+      "asset_types": {
+        "video-cinematic": 37,
+        "video-tutorial-clip": 13
+      },
+      "authority": "video/index/",
+      "axes": {
+        "installation": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 50,
+          "state_counts": {
+            "not-applicable": 50
+          },
+          "unresolved_count": 0
+        },
+        "production": {
+          "applicable_count": 50,
+          "coverage_percent": 100.0,
+          "covered_count": 50,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-started": 50
+          },
+          "unresolved_count": 0
+        },
+        "provenance": {
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 50,
+          "state_counts": {
+            "not-applicable": 50
+          },
+          "unresolved_count": 0
+        },
+        "qa": {
+          "applicable_count": 50,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-assessed": 50
+          },
+          "unresolved_count": 50
+        },
+        "release": {
+          "applicable_count": 50,
+          "coverage_percent": 0.0,
+          "covered_count": 0,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "not-evaluated": 50
+          },
+          "unresolved_count": 50
+        },
+        "source": {
+          "applicable_count": 50,
+          "coverage_percent": 100.0,
+          "covered_count": 50,
+          "not_applicable_count": 0,
+          "state_counts": {
+            "verified": 50
+          },
+          "unresolved_count": 0
+        }
+      },
+      "coverage_status": "projected",
+      "domain": "videos",
+      "note": "Une entrée par cinématique ou tutoriel WBM ; les WBM de zone restent dans animations."
+    }
+  ],
+  "generated_by": "pipeline/scripts/build_global_asset_registry.py",
+  "global_axes": {
+    "installation": {
+      "applicable_count": 6185,
+      "coverage_percent": 96.22,
+      "covered_count": 5951,
+      "not_applicable_count": 12168,
+      "state_counts": {
+        "installed": 441,
+        "not-applicable": 12168,
+        "not-installed": 5510,
+        "unknown": 234
+      },
+      "unresolved_count": 234
+    },
+    "production": {
+      "applicable_count": 18353,
+      "coverage_percent": 99.82,
+      "covered_count": 18320,
+      "not_applicable_count": 0,
+      "state_counts": {
+        "blocked": 593,
+        "in-progress": 1,
+        "not-started": 12432,
+        "produced": 4,
+        "ready": 4809,
+        "rejected": 6,
+        "unknown": 33,
+        "verified": 475
+      },
+      "unresolved_count": 33
+    },
+    "provenance": {
+      "applicable_count": 481,
+      "coverage_percent": 100.0,
+      "covered_count": 481,
+      "not_applicable_count": 17872,
+      "state_counts": {
+        "complete": 15,
+        "not-applicable": 17872,
+        "partial": 3,
+        "verified": 463
+      },
+      "unresolved_count": 0
+    },
+    "qa": {
+      "applicable_count": 18353,
+      "coverage_percent": 2.6,
+      "covered_count": 478,
+      "not_applicable_count": 0,
+      "state_counts": {
+        "not-assessed": 17875,
+        "passed": 343,
+        "pending": 135
+      },
+      "unresolved_count": 17875
+    },
+    "release": {
+      "applicable_count": 18353,
+      "coverage_percent": 1.74,
+      "covered_count": 320,
+      "not_applicable_count": 0,
+      "state_counts": {
+        "ineligible": 26,
+        "integrated": 294,
+        "not-evaluated": 18033
+      },
+      "unresolved_count": 18033
+    },
+    "source": {
+      "applicable_count": 18353,
+      "coverage_percent": 100.0,
+      "covered_count": 18353,
+      "not_applicable_count": 0,
+      "state_counts": {
+        "available": 20,
+        "extracted": 3436,
+        "unavailable": 376,
+        "verified": 14521
+      },
+      "unresolved_count": 0
+    }
+  },
+  "metrics": {
+    "installed": 441,
+    "known_assets": 18353,
+    "known_blocked_or_rejected": 599,
+    "known_unprocessed": 17241,
+    "produced": 479,
+    "provenance_available": 481,
+    "qa_passed": 343,
+    "release_eligible_or_beyond": 294,
+    "release_integrated_or_published": 294,
+    "source_available": 17977
+  },
+  "schema": "bg2-upscale-global-asset-coverage-v1",
+  "source_fingerprint_sha256": "19CF38694874A45C0B56BE87D648A39CAA3E69ABEF61721905CACC8DD0AC5068",
+  "source_snapshot_at_utc": "2026-08-30T20:45:45Z",
+  "uninventoried_scopes": [
+    {
+      "asset_count": null,
+      "coverage_status": "insufficient",
+      "domain": "other",
+      "format_counts": {
+        "BAM": 102
+      },
+      "reason": "ressources BAM présentes mais propriétaire logique non démontré ; elles ne sont pas inventées comme assets autonomes",
+      "resource_count": 102,
+      "scope": "unclassified-graphical-resources",
+      "source": "graphics/index/unclassified-resources.csv"
+    }
+  ]
+}

@@ -72,6 +72,21 @@ Les extracteurs de portraits restent ici pour préserver leurs imports, mais leu
 dans `portraits/README.md`. Les scripts d'analyse couleur, anciennes découpes et prototypes
 d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
 
+## Suivi transversal
+
+- `asset_tracking_contract.py` valide les projections jetables du contrat commun et sépare les
+  statuts historiques connus. Il n'écrit dans aucun manifeste métier et ne constitue pas un
+  registre d'assets.
+- `build_global_asset_registry.py` agrège en lecture seule les sources métier déjà fiables, valide
+  chaque entrée, puis génère `asset-tracking/registry.{json,csv}`, `coverage.json` et
+  `anomalies.json`. Utiliser
+  `--verify-determinism` pour régénérer et `--check` pour un contrôle strictement non destructif.
+  Le format et les limites sont décrits dans `docs/GLOBAL_ASSET_REGISTRY.md`.
+- `build_graphics_inventory.py` inventorie et, avec `--extract`, matérialise les sources stock des
+  vidéos, HUD/UI, polices, icônes, curseurs, effets, projectiles et familles BAM complémentaires.
+  Les granularités, autorités générées et lacunes conservatrices sont décrites dans
+  `docs/GRAPHICS_INVENTORY.md`. Utiliser `--check` pour vérifier les sorties sans les modifier.
+
 ## Tests
 
 ```powershell

@@ -18,6 +18,8 @@ explicitement documentée.
 | Interface/HUD | [`interface/README.md`](interface/README.md) | remplacement runtime d'atlas DXT5, Topaz Recovery v2 x4 validé pour les menus |
 | Moteur/DLL | [`engine/InfinityEngine-Enhancer/source-patchee/README.md`](engine/InfinityEngine-Enhancer/source-patchee/README.md) | manifests de build, hooks fail-closed et tests C++ |
 | Installer/release | [`releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md`](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) | manifests source → payload WeiDU → package, après autorisation explicite |
+| Suivi transversal | [`docs/GLOBAL_ASSET_REGISTRY.md`](docs/GLOBAL_ASSET_REGISTRY.md) | projection générée à cinq axes depuis les sources métier, sans registre concurrent |
+| Inventaire graphique complémentaire | [`docs/GRAPHICS_INVENTORY.md`](docs/GRAPHICS_INVENTORY.md) | KEY/BIF/WBM → autorités minimales → projection globale, sans upscale |
 | Décisions et essais rejetés | [`docs/DECISIONS.md`](docs/DECISIONS.md) | mémoire technique concise |
 | Blocages actuels | [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) | uniquement les problèmes non résolus |
 
@@ -57,9 +59,12 @@ pas ces scripts sans migration explicite des imports, jobs JSON et installateurs
 | Validation temporelle d'un run | son `qa-approval.json` immuable |
 | Éligibilité et layout sprites | `sprite/index/manifest.json`, `sprite-layout.json`, `path-migrations.json` et CSV |
 | Génération sprite courante | `current-generation.json` et `active-test.json` du catalogue |
+| Vidéos, HUD, UI complémentaire, polices, icônes, curseurs, effets et projectiles | index détaillés dans [`docs/GRAPHICS_INVENTORY.md`](docs/GRAPHICS_INVENTORY.md) |
 | Compatibilité moteur | `engine/.../src/iee/game/build_manifest.*` et `docs/validation/` |
 | État de la release | `releases/BG2-HD-Upscale/manifests/release.json` |
 | Contenu généré du paquet | `releases/BG2-HD-Upscale/manifests/content.json` — ne jamais éditer à la main |
+| Convention d'agrégation (non autoritative) | [`docs/ASSET_TRACKING_CONTRACT.md`](docs/ASSET_TRACKING_CONTRACT.md) |
+| Vue globale générée (non autoritative) | [`asset-tracking/registry.json`](asset-tracking/registry.json), [vue CSV](asset-tracking/registry.csv), [couverture](asset-tracking/coverage.json) et [anomalies](asset-tracking/anomalies.json) |
 | Décisions et échecs connus | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 
 Ne jamais déduire un état courant depuis `override`, une capture, `runs/`, `proto/`, `backups/`,
@@ -74,7 +79,8 @@ Ne jamais déduire un état courant depuis `override`, une capture, `runs/`, `pr
 - **Archive/legacy** : `archive/`, `docs/archive/` et dossiers `archive/`
   locaux. Ils sont exclus de la recherche initiale ; consulter d'abord `docs/DECISIONS.md`.
 - **Généré/temporaire** : `runs/`, `.work/`, builds CMake, `temp/`, `tmp/`, `outputs/`, payloads,
-  staging, ZIP et backups. Ces chemins sont ignorés par Git.
+  staging, ZIP et backups. Ces chemins sont ignorés par Git. Le registre `asset-tracking/` est une
+  exception versionnée : il reste entièrement régénérable et ne constitue jamais une autorité.
 
 Les snapshots d'installateur déplacés pendant l'assainissement sont conservés sous
 `G:/AI/BG2_Upscale-artifacts/pre-cleanup-20260827/`. Les sorties et aperçus historiques sont sous

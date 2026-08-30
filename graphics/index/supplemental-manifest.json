@@ -1,0 +1,69 @@
+{
+  "asset_count": 3758,
+  "asset_type_counts": {
+    "character-animation-bam": 15,
+    "creature-animation-bam": 33,
+    "misc-animation-bam": 106,
+    "object-animation-bam": 1324,
+    "paperdoll-animation-bam": 2093,
+    "spell-animation-bam": 109,
+    "ui-bam": 78
+  },
+  "chitin_key_sha256": "1818FFEBB2424992FB39FB13509E7F629AC819B08A553C2DD4AC25F2E40A979F",
+  "classification_rules": {
+    "25CREANI.BIF": {
+      "asset_type": "creature-animation-bam",
+      "domain": "sprites"
+    },
+    "25GUIBAM.BIF": {
+      "asset_type": "ui-bam",
+      "domain": "ui"
+    },
+    "25GUIDES.BIF": {
+      "asset_type": "ui-bam",
+      "domain": "ui"
+    },
+    "25MISCAN.BIF": {
+      "asset_type": "misc-animation-bam",
+      "domain": "effects"
+    },
+    "25SPELAN.BIF": {
+      "asset_type": "spell-animation-bam",
+      "domain": "effects"
+    },
+    "CHAANIM.BIF": {
+      "asset_type": "character-animation-bam",
+      "domain": "sprites"
+    },
+    "MISCANIM.BIF": {
+      "asset_type": "misc-animation-bam",
+      "domain": "effects"
+    },
+    "OBJANIM.BIF": {
+      "asset_type": "object-animation-bam",
+      "domain": "sprites"
+    },
+    "PAPERDOL.BIF": {
+      "asset_type": "paperdoll-animation-bam",
+      "domain": "sprites"
+    },
+    "SPELANIM.BIF": {
+      "asset_type": "spell-animation-bam",
+      "domain": "effects"
+    },
+    "SPELLS.BIF": {
+      "asset_type": "spell-animation-bam",
+      "domain": "effects"
+    }
+  },
+  "domain_counts": {
+    "effects": 215,
+    "sprites": 3465,
+    "ui": 78
+  },
+  "generated_by": "pipeline/scripts/build_graphics_inventory.py",
+  "granularity": "one engine BAM animation set; frames and cycles remain members; classification requires an unambiguous stock BIF family",
+  "resources_csv": "graphics/index/supplemental-assets.csv",
+  "schema": "bg2-upscale-supplemental-graphics-inventory-v1",
+  "source_policy": "stock BG2EE installation; KEY/BIF or loose movie files only"
+}

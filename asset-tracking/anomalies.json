@@ -1,0 +1,382 @@
+{
+  "anomalies": [
+    {
+      "anomaly_id": "ANOM-0001",
+      "code": "shared-raw-dependencies",
+      "details": {
+        "resource_count": 64
+      },
+      "domain": "other",
+      "message": "des ressources brutes sont partagées entre plusieurs domaines sans créer de doublon logique",
+      "severity": "info",
+      "source": "graphics/index/coverage.json"
+    },
+    {
+      "anomaly_id": "ANOM-0002",
+      "code": "cross-collection-portrait-identities",
+      "details": {
+        "affected_count": 3,
+        "examples": [
+          {
+            "collections": [
+              "encounters",
+              "ppe"
+            ],
+            "resource": "ABAZHALS"
+          },
+          {
+            "collections": [
+              "encounters",
+              "ppe"
+            ],
+            "resource": "KHALIDM"
+          },
+          {
+            "collections": [
+              "encounters",
+              "ppe"
+            ],
+            "resource": "QUAYLEM"
+          }
+        ]
+      },
+      "domain": "portraits",
+      "message": "des resrefs apparaissent dans plusieurs inventaires locaux",
+      "severity": "info"
+    },
+    {
+      "anomaly_id": "ANOM-0003",
+      "code": "sprite-families-without-resources",
+      "details": {
+        "affected_count": 376
+      },
+      "domain": "sprites",
+      "message": "familles connues sans ressource BAM dans l'inventaire courant",
+      "severity": "info",
+      "source": "sprite/index/sprite_families.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0004",
+      "code": "duplicate-source-content",
+      "details": {
+        "groups": [
+          [
+            "ui:source:STONEBIG.BAM",
+            "ui:source:STONESML.BAM"
+          ]
+        ]
+      },
+      "domain": "ui",
+      "message": "plusieurs identités UI partagent les mêmes octets source",
+      "severity": "info",
+      "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
+    },
+    {
+      "anomaly_id": "ANOM-0005",
+      "code": "ui-source-rows-reclassified",
+      "details": {
+        "hud_rows": 2,
+        "pvrz_dependency_rows": 22
+      },
+      "domain": "ui",
+      "message": "ressources brutes exclues de la projection historique car elles sont désormais des dépendances PVRZ ou des assets HUD canoniques",
+      "severity": "info",
+      "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
+    },
+    {
+      "anomaly_id": "ANOM-0006",
+      "asset_id": "animations:bam:AM0516LA",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0007",
+      "asset_id": "animations:bam:AM0516LB",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0008",
+      "asset_id": "animations:bam:AM0516LC",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0009",
+      "asset_id": "animations:bam:AM0602F",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/am0602f-lantern-apo8-x4-30fps-v2-active-rebase/qa-approval.json",
+          "animations/runs/am0602f-lantern-apo8-x4-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0010",
+      "asset_id": "animations:bam:AM0604A",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0604-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0604-manual-mask-30fps-v2/qa-approval.json",
+          "animations/runs/ar0604-silhouette-feather-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0604-silhouette-feather-r2-apo8-x4-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0011",
+      "asset_id": "animations:bam:SPHINCT",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0012",
+      "asset_id": "animations:bam:SPHINCT2",
+      "code": "duplicate-qa-evidence",
+      "details": {
+        "approval_paths": [
+          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs qa-approval acceptés couvrent le même resref",
+      "severity": "warning"
+    },
+    {
+      "anomaly_id": "ANOM-0013",
+      "asset_id": "animations:bam:SPHINCT",
+      "code": "multiple-scoped-corrections",
+      "details": {
+        "correction_ids": [
+          "ar0516-sphinct-sphinct2-geometric-sigma3-erode2-alpha-30fps-v2",
+          "ar0517-to-ar0521-sphinct-occlusion-masque-perso-20260827"
+        ]
+      },
+      "domain": "animations",
+      "message": "plusieurs corrections canoniques existent pour des portées de zones distinctes",
+      "severity": "warning",
+      "source": "animations/index/animation_alpha_corrections.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0014",
+      "code": "missing-resource-dependencies",
+      "details": {
+        "affected_count": 2
+      },
+      "domain": "effects",
+      "message": "des dépendances référencées par l'inventaire sont absentes du jeu stock",
+      "severity": "warning",
+      "source": "effects/index/dependencies.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0015",
+      "code": "referenced-icon-sources-missing",
+      "details": {
+        "affected_count": 48
+      },
+      "domain": "icons",
+      "message": "des resrefs d'icônes référencés par ITM/SPL sont absents du jeu stock",
+      "severity": "warning",
+      "source": "icons/index/manifest.json"
+    },
+    {
+      "anomaly_id": "ANOM-0016",
+      "code": "map-source-status-stale",
+      "details": {
+        "affected_count": 71,
+        "examples": [
+          "maps:AR3001:day",
+          "maps:AR3003:day",
+          "maps:AR3004:day",
+          "maps:AR3005:day",
+          "maps:AR3006:day",
+          "maps:AR3007:day",
+          "maps:AR3008:day",
+          "maps:AR3009:day",
+          "maps:AR3010:day",
+          "maps:AR3011:day",
+          "maps:AR3012:day",
+          "maps:AR3013:day",
+          "maps:AR3014:day",
+          "maps:AR3015:day",
+          "maps:AR3018:day",
+          "maps:AR3020:day",
+          "maps:AR3021:day",
+          "maps:AR3022:day",
+          "maps:AR3023:day",
+          "maps:AR3025:day"
+        ]
+      },
+      "domain": "maps",
+      "message": "des libellés source-pending historiques contredisent les colonnes x1 extraites ; les colonnes dédiées prévalent",
+      "severity": "warning",
+      "source": "areas.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0017",
+      "code": "unclassified-graphical-resources",
+      "details": {
+        "resource_count": 102
+      },
+      "domain": "other",
+      "message": "des ressources graphiques brutes ne peuvent pas encore être rattachées à un asset logique",
+      "severity": "warning",
+      "source": "graphics/index/coverage.json"
+    },
+    {
+      "anomaly_id": "ANOM-0018",
+      "code": "duplicate-portrait-rows",
+      "details": {
+        "affected_count": 12
+      },
+      "domain": "portraits",
+      "message": "lignes répétées fusionnées sur la même identité native",
+      "severity": "warning",
+      "source": "portraits-recrutables/inventaire.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0019",
+      "code": "truncated-portrait-hashes",
+      "details": {
+        "hash_lengths": [
+          16
+        ],
+        "row_count": 90
+      },
+      "domain": "portraits",
+      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
+      "severity": "warning",
+      "source": "portraits-recrutables/inventaire.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0020",
+      "code": "truncated-portrait-hashes",
+      "details": {
+        "hash_lengths": [
+          16
+        ],
+        "row_count": 2894
+      },
+      "domain": "portraits",
+      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
+      "severity": "warning",
+      "source": "portraits/mod-PPE/inventaire.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0021",
+      "code": "truncated-portrait-hashes",
+      "details": {
+        "hash_lengths": [
+          16
+        ],
+        "row_count": 64
+      },
+      "domain": "portraits",
+      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
+      "severity": "warning",
+      "source": "portraits/pnj-rencontres/inventaire.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0022",
+      "code": "missing-resource-dependencies",
+      "details": {
+        "affected_count": 1
+      },
+      "domain": "projectiles",
+      "message": "des dépendances référencées par l'inventaire sont absentes du jeu stock",
+      "severity": "warning",
+      "source": "projectiles/index/dependencies.csv"
+    },
+    {
+      "anomaly_id": "ANOM-0023",
+      "code": "hardcoded-source-path",
+      "details": {
+        "source_game": "E:\\Steam\\steamapps\\common\\Baldur's Gate II Enhanced Edition"
+      },
+      "domain": "ui",
+      "message": "le manifeste UI conserve un chemin absolu de jeu non portable",
+      "severity": "warning",
+      "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
+    },
+    {
+      "anomaly_id": "ANOM-0024",
+      "asset_id": "ui:component:main-menu-x4",
+      "code": "ui-mainmenu-output-manifest-missing",
+      "domain": "ui",
+      "message": "les huit atlas principaux n'ont pas de manifeste d'outputs métier dédié ; projection limitée à la recette et au content généré",
+      "severity": "warning",
+      "source": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json"
+    }
+  ],
+  "asset_records_sha256": "AD8FACDBC26472C47FA6910146124B69B72B109E2E289845EB4B7E22D29B6626",
+  "generated_by": "pipeline/scripts/build_global_asset_registry.py",
+  "schema": "bg2-upscale-global-asset-anomalies-v1",
+  "source_fingerprint_sha256": "19CF38694874A45C0B56BE87D648A39CAA3E69ABEF61721905CACC8DD0AC5068",
+  "source_snapshot_at_utc": "2026-08-30T20:45:45Z",
+  "summary": {
+    "by_code": {
+      "cross-collection-portrait-identities": 1,
+      "duplicate-portrait-rows": 1,
+      "duplicate-qa-evidence": 7,
+      "duplicate-source-content": 1,
+      "hardcoded-source-path": 1,
+      "map-source-status-stale": 1,
+      "missing-resource-dependencies": 2,
+      "multiple-scoped-corrections": 1,
+      "referenced-icon-sources-missing": 1,
+      "shared-raw-dependencies": 1,
+      "sprite-families-without-resources": 1,
+      "truncated-portrait-hashes": 3,
+      "ui-mainmenu-output-manifest-missing": 1,
+      "ui-source-rows-reclassified": 1,
+      "unclassified-graphical-resources": 1
+    },
+    "by_severity": {
+      "error": 0,
+      "info": 5,
+      "warning": 19
+    },
+    "total": 24
+  }
+}

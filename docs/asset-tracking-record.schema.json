@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asset-tracking-record.schema.json",
+  "title": "BG2 Upscale common asset tracking record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "asset_id",
+    "domain",
+    "asset_type",
+    "canonical_source",
+    "states",
+    "provenance",
+    "adapter",
+    "observed_at_utc"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "domain": {
+      "enum": ["maps", "animations", "sprites", "ui", "portraits", "videos", "icons", "cursors", "effects", "projectiles", "other"]
+    },
+    "asset_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "canonical_source": {"$ref": "#/$defs/reference"},
+    "states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "production", "qa", "installation", "release"],
+      "properties": {
+        "source": {
+          "enum": ["unknown", "unavailable", "available", "extracted", "verified", "not-applicable"]
+        },
+        "production": {
+          "enum": ["unknown", "not-started", "ready", "in-progress", "produced", "verified", "rejected", "blocked", "not-applicable"]
+        },
+        "qa": {
+          "enum": ["not-assessed", "pending", "passed", "failed", "blocked", "not-applicable"]
+        },
+        "installation": {
+          "enum": ["unknown", "not-installed", "staged", "installed", "drifted", "restored", "not-applicable"]
+        },
+        "release": {
+          "enum": ["not-evaluated", "ineligible", "eligible", "approved", "integrated", "published", "blocked", "not-applicable"]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "evidence"],
+      "properties": {
+        "state": {
+          "enum": ["missing", "partial", "complete", "verified", "not-applicable"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/reference"}
+        }
+      }
+    },
+    "selections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "id", "source"],
+        "properties": {
+          "role": {
+            "enum": ["run", "candidate", "generation", "build", "variant", "correction", "release-entry"]
+          },
+          "id": {"type": "string", "minLength": 1},
+          "source": {"$ref": "#/$defs/reference"}
+        }
+      }
+    },
+    "legacy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "value"],
+        "properties": {
+          "field": {"type": "string", "minLength": 1},
+          "value": {"type": "string", "minLength": 1},
+          "mapping": {"type": "string", "pattern": "^[a-z][a-z0-9.-]*[.]v[0-9]+$"}
+        }
+      }
+    },
+    "adapter": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]*[.]v[0-9]+$"
+    },
+    "observed_at_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:[.][0-9]+)?Z$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "states": {
+            "properties": {
+              "release": {"enum": ["eligible", "approved", "integrated", "published"]}
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["selections"],
+        "properties": {
+          "states": {"properties": {"qa": {"const": "passed"}}},
+          "provenance": {
+            "properties": {"state": {"enum": ["complete", "verified"]}}
+          },
+          "selections": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {"properties": {"state": {"const": "verified"}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "evidence": {
+                "minItems": 1,
+                "items": {
+                  "allOf": [
+                    {"$ref": "#/$defs/reference"},
+                    {"required": ["sha256"]}
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {"properties": {"state": {"const": "complete"}}}
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {"properties": {"evidence": {"minItems": 1}}}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {
+            "properties": {"state": {"enum": ["missing", "not-applicable"]}}
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {"properties": {"evidence": {"maxItems": 0}}}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {"properties": {"state": {"const": "not-applicable"}}}
+        }
+      },
+      "then": {"properties": {"selections": {"maxItems": 0}}}
+    }
+  ],
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "locator"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)[.][.](?:/|$)).+$"
+        },
+        "locator": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+      }
+    }
+  }
+}
