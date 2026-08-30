@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "ingame-bg2ee-default-capture-02",
+  "category": "ingame",
+  "scope": "bg2ee",
+  "variant": "default",
+  "comparisonId": "capture-02",
+  "comparisonType": "in-game-screenshot",
+  "capture": {
+    "platform": "Steam",
+    "viewport": {
+      "width": 2560,
+      "height": 1369
+    },
+    "notes": "Maps and animations are treated in this comparison. Creature sprites remain vanilla and are not part of the x4 treatment."
+  },
+  "assets": {
+    "vanilla": {
+      "source": "source/bg2ee-default-capture-02-vanilla.jpg",
+      "web": "web/bg2ee-default-capture-02-vanilla.webp",
+      "sourceSha256": "3c43847b732a12068703bd2b54195f9d77754d2f5b475a8ed48398dcf0c7a5da",
+      "webSha256": "c36b58d8face80289277e028d862f5c5560efd90690d3e248c4565f7182d82ed"
+    },
+    "x4": {
+      "source": "source/bg2ee-default-capture-02-x4.jpg",
+      "web": "web/bg2ee-default-capture-02-x4.webp",
+      "sourceSha256": "4e8257067cd0b40e009fcf4aaad14168f56c31b8c69cb6c3d2ca38a276bd38f9",
+      "webSha256": "b8b6b86605efd69482fdb0e1a444bd44a24039f13740faa0a963d56ad817039f"
+    }
+  }
+}

@@ -281,6 +281,18 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 .gallery-feature-copy span { color: var(--gold); font-size: .59rem; letter-spacing: .1em; text-transform: uppercase; }
 .gallery-feature-copy h3 { font-size: 1.35rem; }
 .gallery-feature-copy p { margin: 0; color: rgba(233,223,202,.5); font-size: .73rem; }
+.ingame-map-section { margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--line-soft); }
+.ingame-map-heading { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 3rem; align-items: end; margin-bottom: 1.5rem; }
+.ingame-map-heading h2 { font-size: clamp(2rem, 3.5vw, 3.5rem); }
+.ingame-map-heading > p { max-width: 33rem; margin: 0 0 .25rem; color: var(--parchment-muted); font-size: .82rem; }
+.ingame-comparison-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.ingame-comparison-card { overflow: hidden; border: 1px solid var(--line-soft); background: #101213; }
+.ingame-comparison-card .compare-frame { margin: 0; }
+.ingame-comparison-copy { padding: 1.35rem 1.5rem 1.5rem; }
+.ingame-comparison-copy > span { display: block; color: var(--gold); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
+.ingame-comparison-copy h3 { margin-top: .55rem; font-size: 1.3rem; }
+.ingame-comparison-copy > p { margin: .7rem 0 0; color: rgba(233,223,202,.52); font-size: .74rem; }
+.ingame-comparison-copy .comparison-note { padding: .65rem .75rem; border-left: 2px solid var(--gold-dark); background: rgba(202,164,91,.06); color: var(--gold-bright); font-size: .62rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
 .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 430px; gap: 1rem; margin-top: 1rem; }
 .gallery-card { position: relative; padding: 0; overflow: hidden; border: 1px solid var(--line-soft); background: #101213; text-align: left; cursor: zoom-in; }
 .gallery-card[hidden], .gallery-placeholder[hidden], .gallery-feature[hidden] { display: none; }
@@ -312,7 +324,7 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 [data-reveal].is-visible { opacity: 1; translate: 0 0; }
 
 @media (max-width: 900px) {
-  .section-heading-row, .engineering-section, .dashboard-overview, .roadmap-panel { grid-template-columns: 1fr; gap: 2rem; }
+  .section-heading-row, .engineering-section, .dashboard-overview, .roadmap-panel, .ingame-map-heading { grid-template-columns: 1fr; gap: 2rem; }
   .workstream-grid { grid-template-columns: 1fr; grid-template-rows: repeat(3, minmax(430px, 58vw)); }
   .workstream-card-large { grid-row: auto; }
   .engineering-visual { width: min(520px, 100%); margin-inline: auto; }
@@ -344,6 +356,7 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
   .roadmap-flow { grid-template-columns: 1fr 1fr; row-gap: 2rem; }
   .roadmap-flow li:nth-child(2)::after { display: none; }
   .gallery-section { padding-block: 3.5rem 5rem; }
+  .ingame-map-section { margin-top: 3.5rem; padding-top: 3.5rem; }
   .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 380px; }
   .gallery-card-wide { grid-column: auto; }
 }
