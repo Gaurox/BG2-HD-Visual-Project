@@ -65,6 +65,14 @@ courant directement ; `path-migrations.json` n'est pas un substitut pour corrige
 Ne pas supprimer une génération encore citée par `current-generation`, `active-test` ou un backup
 de restauration.
 
+Le job `qa-refresh-current-catalog-v1.json` est la recette historique exacte de la génération
+active : son hash doit rester celui enregistré dans `current-generation.json`. La variante v2 est
+le job mutable au layout courant pour les générations suivantes. Toute nouvelle génération de
+catalogue embarque en outre les octets exacts de son job dans `build/provenance/job.json` et en
+scelle le SHA-256 dans `build-manifest.json`; ce snapshot peut prouver la recette même si le job
+de travail évolue ensuite. Les générations historiques dépourvues de ce champ restent vérifiées
+selon leur contrat existant et ne doivent pas être réécrites pour l'ajouter.
+
 ## QA
 
 Jeu et InfinityLoader fermés avant install/restore. Après installation autorisée, tester chaque

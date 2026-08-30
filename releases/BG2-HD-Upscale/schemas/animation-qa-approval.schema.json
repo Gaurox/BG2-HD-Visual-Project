@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "area",
+    "status",
+    "decision_date",
+    "decision_origin",
+    "recorded_at_utc",
+    "source_pack",
+    "pack_manifest_sha256",
+    "registry",
+    "registry_version",
+    "registry_sha256",
+    "required_resrefs",
+    "evidence",
+    "decision"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "area": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
+    "status": {"const": "accepted"},
+    "decision_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "decision_origin": {"const": "preserved-existing-user-qa"},
+    "recorded_at_utc": {"type": "string", "minLength": 20},
+    "source_pack": {"type": "string", "pattern": "^(?!.*(?:^|/)(?:override|backups|archive|captures|temp)(?:/|$))[A-Za-z0-9._/-]+$"},
+    "pack_manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "registry": {"const": "AreaAnimations-X4.registry"},
+    "registry_version": {"enum": [2, 3]},
+    "registry_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "required_resrefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"}
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "path", "sha256", "accepted_resrefs"],
+        "properties": {
+          "kind": {"enum": ["run-qa-approval", "canonical-registry", "canonical-alpha-corrections"]},
+          "path": {"type": "string", "pattern": "^(?!.*(?:^|/)[.][.](/|$))[A-Za-z0-9._/-]+$"},
+          "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+          "accepted_resrefs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"}
+          }
+        }
+      }
+    },
+    "decision": {"type": "string", "minLength": 1}
+  }
+}

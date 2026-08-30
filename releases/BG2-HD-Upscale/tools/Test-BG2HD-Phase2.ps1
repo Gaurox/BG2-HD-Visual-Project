@@ -28,6 +28,24 @@ foreach ($pair in $schemas) {
     Require (Test-Json -Path $manifest -SchemaFile $schema) "Schema invalide : $($pair[0])"
 }
 
+$workspace = (Resolve-Path -LiteralPath (Join-Path $ReleaseRoot '..\..')).Path
+$animationQaSchema = Join-Path $ReleaseRoot 'schemas\animation-qa-approval.schema.json'
+$animationCandidates = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests\animation-release-candidates.json') -Raw -Encoding utf8 | ConvertFrom-Json
+foreach ($candidate in @($animationCandidates.candidates)) {
+    $qaPath = [IO.Path]::GetFullPath((Join-Path $workspace ([string]$candidate.qa_approval).Replace('/', '\')))
+    Require (Test-Path -LiteralPath $qaPath -PathType Leaf) "Approbation QA animation absente : $($candidate.area)"
+    Require (Test-Json -Path $qaPath -SchemaFile $animationQaSchema) "Schema approbation QA animation invalide : $($candidate.area)"
+    Require ((Get-FileHash -LiteralPath $qaPath -Algorithm SHA256).Hash -eq [string]$candidate.qa_approval_sha256) "Hash approbation QA animation invalide : $($candidate.area)"
+    $qaApproval = Get-Content -LiteralPath $qaPath -Raw -Encoding utf8 | ConvertFrom-Json
+    foreach ($evidence in @($qaApproval.evidence)) {
+        $evidencePath = [IO.Path]::GetFullPath((Join-Path $workspace ([string]$evidence.path).Replace('/', '\')))
+        $relativeEvidence = [IO.Path]::GetRelativePath($workspace, $evidencePath).Replace('\', '/')
+        Require ($relativeEvidence -notmatch '(^|/)\.\.(/|$)') "Preuve QA animation hors workspace : $($evidence.path)"
+        Require (Test-Path -LiteralPath $evidencePath -PathType Leaf) "Preuve QA animation absente : $relativeEvidence"
+        Require ((Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash -eq [string]$evidence.sha256) "Hash preuve QA animation invalide : $relativeEvidence"
+    }
+}
+
 & (Join-Path $ReleaseRoot 'tools/Test-BG2HD-DependencyContract.ps1') -ReleaseRoot $ReleaseRoot
 
 $languages = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/languages.json') -Raw | ConvertFrom-Json

@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0603",
+  "status": "accepted",
+  "decision_date": "2026-08-28",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-30T22:45:45+02:00",
+  "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0603",
+  "pack_manifest_sha256": "E26DCF806E599F8F806C5FECCCA54C745D854708F55A0DA56E3B8879EC6B85BC",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 2,
+  "registry_sha256": "C399B0E0BBE3B0B3DA677010DB616F8BB0615450CEFA0221861FC53F863B34DD",
+  "required_resrefs": ["AM0603A", "AM0603B", "AM0603C1", "AM0603C2", "AM0603D1", "AM0603D2", "AM0603D3", "AM0603H", "AM0603I", "PORTL2A"],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0603-all-bam-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "359FB8291CB41A8EC4F1A621DE19E926C897C253A11203F74A653F462D29826E",
+      "accepted_resrefs": ["AM0603A", "AM0603B", "AM0603C1", "AM0603C2", "AM0603D1", "AM0603D2", "AM0603D3", "AM0603H", "AM0603I", "PORTL2A"]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "accepted_resrefs": ["AM0603A", "AM0603B", "AM0603C1", "AM0603C2", "AM0603D1", "AM0603D2", "AM0603D3", "AM0603H", "AM0603I", "PORTL2A"]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "accepted_resrefs": ["PORTL2A"]
+    }
+  ],
+  "decision": "Migration de la décision QA utilisateur déjà enregistrée pour le pack final AR0603 v2 et le contour spline-feather8 de PORTL2A. Cette attestation ne constitue ni une nouvelle QA ni une nouvelle promotion release."
+}

@@ -6408,12 +6408,22 @@ def build_catalog(
         source_members = catalog_manifest_source_members(
             collection, source_indices
         )
+        job_file = Path(catalog["_job_file"])
+        job_sha256 = sha256_file(job_file)
+        job_snapshot_relative = "provenance/job.json"
+        job_snapshot_path = temporary / Path(job_snapshot_relative)
+        job_snapshot_path.parent.mkdir(parents=True)
+        shutil.copyfile(job_file, job_snapshot_path)
+        if sha256_file(job_snapshot_path) != job_sha256:
+            raise RuntimeError("catalog job snapshot differs from its source")
         report = {
             "schema": CATALOG_BUILD_SCHEMA,
             "status": "built-pending-ingame-qa",
             "created_at_utc": utc_now(),
             "job_file": relative_project_path(Path(catalog["_job_file"])),
-            "job_sha256": sha256_file(Path(catalog["_job_file"])),
+            "job_sha256": job_sha256,
+            "job_snapshot": job_snapshot_relative,
+            "job_snapshot_sha256": job_sha256,
             "job_id": catalog["job_id"],
             "generation_id": generation_id,
             "method": contract.method,
@@ -6502,14 +6512,35 @@ def verify_catalog_build(catalog: dict[str, Any]) -> dict[str, Any]:
     manifest_path = build_dir(catalog) / "build-manifest.json"
     manifest = read_json(manifest_path)
     contract = upscale_contract(catalog)
+    job_file = Path(catalog["_job_file"])
+    job_sha256 = sha256_file(job_file)
+    job_snapshot_relative = manifest.get("job_snapshot")
+    job_snapshot_sha256 = manifest.get("job_snapshot_sha256")
+    if job_snapshot_relative is not None or job_snapshot_sha256 is not None:
+        if (
+            job_snapshot_relative != "provenance/job.json"
+            or job_snapshot_sha256 != job_sha256
+        ):
+            raise RuntimeError("catalog job snapshot declaration is invalid")
+        job_snapshot_path = manifest_path.parent / Path(job_snapshot_relative)
+        if (
+            not job_snapshot_path.is_file()
+            or sha256_file(job_snapshot_path) != job_sha256
+        ):
+            raise RuntimeError("catalog job snapshot differs from the catalog job")
+        job_snapshot = read_json(job_snapshot_path)
+        if (
+            job_snapshot.get("schema") != CATALOG_JOB_SCHEMA
+            or job_snapshot.get("job_id") != catalog["job_id"]
+        ):
+            raise RuntimeError("catalog job snapshot identity is invalid")
     if (
         manifest.get("schema") != CATALOG_BUILD_SCHEMA
         or manifest.get("status") != "built-pending-ingame-qa"
         or manifest.get("job_id") != catalog["job_id"]
         or manifest.get("job_file")
         != relative_project_path(Path(catalog["_job_file"]))
-        or manifest.get("job_sha256")
-        != sha256_file(Path(catalog["_job_file"]))
+        or manifest.get("job_sha256") != job_sha256
         or manifest.get("generation_id") != generation_id
         or manifest.get("method") != contract.method
         or manifest.get("registry_layout") != "catalog"
@@ -7564,17 +7595,17 @@ def sealed_catalog_generation_integrity(
     }
     job_file = Path(str(catalog.get("_job_file", "")))
     current_job_sha256 = ""
+    current_job_hash_error: OSError | None = None
     try:
         current_job_sha256 = sha256_file(job_file)
     except OSError as error:
-        errors.append(f"current catalog job cannot be hashed: {error}")
-    active_identity_matches_job = bool(
+        current_job_hash_error = error
+    live_job_identity_matches = bool(
         current_job_sha256
         and state.get("job_id") == catalog.get("job_id")
         and str(state.get("job_sha256", "")).upper() == current_job_sha256
     )
-    if not active_identity_matches_job:
-        errors.append("active state job_id/job_sha256 differs from the catalog job")
+    active_identity_matches_job = live_job_identity_matches
     if state.get("schema") != XN_CATALOG_INSTALL_STATE_SCHEMA:
         errors.append("active catalog installation schema is invalid")
     if not state_path_matches_exact_file(state.get("job_file"), job_file):
@@ -7645,6 +7676,54 @@ def sealed_catalog_generation_integrity(
 
     build = manifests.get("build_manifest")
     runtime = manifests.get("runtime_manifest")
+    sealed_job_snapshot_matches = False
+    if build is not None and (
+        build.get("job_snapshot") is not None
+        or build.get("job_snapshot_sha256") is not None
+    ):
+        job_snapshot_relative = build.get("job_snapshot")
+        job_snapshot_sha256 = str(
+            build.get("job_snapshot_sha256", "")
+        ).upper()
+        job_snapshot_path = generation_root / "build" / Path(
+            str(job_snapshot_relative)
+        )
+        try:
+            if job_snapshot_relative != "provenance/job.json":
+                raise RuntimeError("path is not provenance/job.json")
+            relative = job_snapshot_path.relative_to(run_root)
+            reparse_component = first_installed_target_reparse_component(
+                run_root, relative
+            )
+            if reparse_component is not None:
+                raise RuntimeError(
+                    f"path crosses a reparse point: {reparse_component}"
+                )
+            snapshot_sha256 = sha256_file(job_snapshot_path)
+            snapshot = read_json(job_snapshot_path)
+            sealed_job_snapshot_matches = bool(
+                job_snapshot_sha256
+                and job_snapshot_sha256 == snapshot_sha256
+                and job_snapshot_sha256
+                == str(state.get("job_sha256", "")).upper()
+                and snapshot.get("schema") == CATALOG_JOB_SCHEMA
+                and snapshot.get("job_id") == state.get("job_id")
+            )
+            if not sealed_job_snapshot_matches:
+                raise RuntimeError("identity or SHA-256 differs from active state")
+        except (OSError, RuntimeError, ValueError) as error:
+            errors.append(f"sealed catalog job snapshot is invalid: {error}")
+    active_identity_matches_job = bool(
+        live_job_identity_matches or sealed_job_snapshot_matches
+    )
+    if not active_identity_matches_job:
+        if current_job_hash_error is not None:
+            errors.append(
+                f"current catalog job cannot be hashed: {current_job_hash_error}"
+            )
+        errors.append(
+            "active state job_id/job_sha256 differs from the live job and no sealed job snapshot proves it"
+        )
     state_method = state.get("method")
     build_method: dict[str, Any] | None = None
     if not isinstance(state_method, dict) or set(state_method) != {
@@ -8027,6 +8106,8 @@ def sealed_catalog_generation_integrity(
 
     return {
         "active_identity_matches_job": active_identity_matches_job,
+        "active_identity_matches_live_job": live_job_identity_matches,
+        "sealed_job_snapshot_matches": sealed_job_snapshot_matches,
         "active_generation_is_sealed": bool(
             active_identity_matches_job
             and build is not None

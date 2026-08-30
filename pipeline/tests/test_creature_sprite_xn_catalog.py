@@ -851,6 +851,49 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
         self.assertTrue(integrity["active_generation_is_sealed"])
         self.assertEqual(integrity["active_generation_seal_errors"], [])
 
+    def test_sealed_job_snapshot_preserves_recipe_after_live_job_evolves(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            job, state, _ = self.make_sealed_generation(Path(temporary))
+            generation = (
+                Path(job["paths"]["run_dir"])
+                / "generations"
+                / state["generation_id"].lower()
+            )
+            build_manifest_path = generation / "build" / "build-manifest.json"
+            build_manifest = pipeline.read_json(build_manifest_path)
+            snapshot_path = generation / "build" / "provenance" / "job.json"
+            snapshot_path.parent.mkdir(parents=True)
+            shutil.copyfile(Path(job["_job_file"]), snapshot_path)
+            build_manifest["job_snapshot"] = "provenance/job.json"
+            build_manifest["job_snapshot_sha256"] = state["job_sha256"]
+            pipeline.write_json(build_manifest_path, build_manifest)
+            state["build_manifest_sha256"] = pipeline.sha256_file(
+                build_manifest_path
+            )
+
+            live_job = pipeline.read_json(Path(job["_job_file"]))
+            live_job["layout_revision"] = 2
+            pipeline.write_json(Path(job["_job_file"]), live_job)
+            integrity = pipeline.sealed_catalog_generation_integrity(job, state)
+
+            self.assertFalse(integrity["active_identity_matches_live_job"])
+            self.assertTrue(integrity["sealed_job_snapshot_matches"])
+            self.assertTrue(integrity["active_identity_matches_job"])
+            self.assertTrue(integrity["active_generation_is_sealed"])
+
+            snapshot_path.write_text("{}\n", encoding="utf-8")
+            tampered = pipeline.sealed_catalog_generation_integrity(job, state)
+            self.assertFalse(tampered["sealed_job_snapshot_matches"])
+            self.assertFalse(tampered["active_generation_is_sealed"])
+            self.assertTrue(
+                any(
+                    "job snapshot" in error
+                    for error in tampered["active_generation_seal_errors"]
+                )
+            )
+
     def test_sealed_generation_rejects_changed_runtime_payload(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             job, state, runtime_dll = self.make_sealed_generation(Path(temporary))

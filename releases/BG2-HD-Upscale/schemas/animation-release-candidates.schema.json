@@ -5,20 +5,22 @@
   "required": ["schema_version", "generated_by", "candidates"],
   "properties": {
     "$schema": {"type": "string"},
-    "schema_version": {"const": 1},
+    "schema_version": {"const": 2},
     "generated_by": {"type": "string", "minLength": 1},
     "candidates": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["area", "component_id", "component_label", "payload_group", "approval_status", "source_pack", "source_run", "pack_manifest", "pack_manifest_sha256", "registry", "registry_version", "registry_sha256", "registry_bytes", "required_resrefs", "renderer_contract"],
+        "required": ["area", "component_id", "component_label", "payload_group", "approval_status", "qa_approval", "qa_approval_sha256", "source_pack", "source_run", "pack_manifest", "pack_manifest_sha256", "registry", "registry_version", "registry_sha256", "registry_bytes", "required_resrefs", "renderer_contract"],
         "properties": {
           "area": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
           "component_id": {"type": "integer", "minimum": 3000},
           "component_label": {"type": "string", "pattern": "^animation-(ar|oh)[0-9]{4}$"},
           "payload_group": {"type": "string", "pattern": "^animation-(ar|oh)[0-9]{4}$"},
           "approval_status": {"enum": ["validated-awaiting-manifest-approval", "approved-for-release"]},
+          "qa_approval": {"type": "string", "pattern": "^releases/BG2-HD-Upscale/manifests/animation-qa-approvals/(AR|OH)[0-9]{4}/qa-approval[.]json$"},
+          "qa_approval_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
           "source_pack": {"type": "string", "pattern": "^(?!.*(?:^|/)(?:override|backups|archive|captures|temp)(?:/|$))[A-Za-z0-9._/-]+$"},
           "source_run": {"type": "string", "minLength": 1},
           "pack_manifest": {"const": "manifest.json"},

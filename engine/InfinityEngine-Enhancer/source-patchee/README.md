@@ -86,8 +86,9 @@ the game exits. Prefer an output path on another volume. GPU Process Memory coun
 for trends and internal-telemetry cross-checks, not formal leak certification; Microsoft documents
 [a legacy over-reporting limitation](https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/gpu-process-memory-counters-report-wrong-value).
 TimedTimeline v2 drives the pause-aware visual frame selection; registry v3 additionally routes
-variants by exact ARE occurrence. The release currently accepts v2 only, so v3 promotion remains a
-separate gate.
+variants by exact ARE occurrence. The release accepts both v2 and v3: AR0603 remains the v2
+backward-compatibility witness, while AR0602 and AR0900 exercise v3. Each new pack still requires
+its own explicit content gate.
 
 The bundled `M_IEEE.lua` also disables EEex extended creature marshalling.
 This renderer is graphics-only and has no save payload; suppressing EEex's

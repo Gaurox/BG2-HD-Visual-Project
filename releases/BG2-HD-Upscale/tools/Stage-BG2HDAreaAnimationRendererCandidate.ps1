@@ -2,7 +2,8 @@
 param(
     [Parameter(Mandatory)] [string]$SourceBundle,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
-    [string]$BundleId = 'iee-0.1.0-alpha.5',
+    [string]$BundleId = 'iee-0.1.0-alpha.6',
+    [string]$SourceTree = 'engine/InfinityEngine-Enhancer/source-patchee',
     [string]$OutputManifestPath = (Join-Path $PSScriptRoot '..\manifests\renderer-animation-pilot.json')
 )
 
@@ -59,7 +60,7 @@ try {
         schema_version = 1
         bundle_id = $BundleId
         status = 'frozen-awaiting-clean-game-validation'
-        source_tree = 'engine/InfinityEngine-Enhancer/source-patchee'
+        source_tree = $SourceTree
         build_environment = [ordered]@{
             cmake = '4.0.2'
             generator = 'Visual Studio 16 2019, x64'
@@ -72,8 +73,8 @@ try {
             'host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing',
             'renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea',
             'clean BG2EE Steam 2.7.3.0 game-hash gate',
-            'EEex/InfinityLoader launch gate with AR0602 v2 and AR0900 v3 runtime packs',
-            'AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate',
+            'EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs',
+            'AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate',
             'in-place Steam shim lifecycle and verified full vanilla restoration'
         )
     }

@@ -42,7 +42,7 @@
   },
   "renderer": {
     "distribution": "bundled-by-bg2hd-after-freeze",
-    "status": "integrated-in-place-awaiting-user-lifecycle-test",
+    "status": "blocked-stale-alpha.5-awaiting-alpha.6-validation",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
       "sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E",
@@ -52,10 +52,10 @@
       "source": "engine/InfinityEngine-Enhancer/source-patchee",
       "output_sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E",
       "output_bytes": 1278976,
-      "build_status": "integrated-as-iee-0.1.0-alpha.5; v2/v3 compatibility and AR0900 position routing validated; clean-install lifecycle pending",
+      "build_status": "alpha.5 manifest rejected after four tracked release-input files diverged from its frozen inventory; alpha.6 exact-byte candidate pending clean-game and lifecycle validation",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "The frozen bundle is part of the local alpha payload with byte-verified rollback; it must not be publicly released before the in-place install, future-save and full-uninstall gates pass.",
+    "publication_rule": "The existing local payload is obsolete and must not be treated as a valid release. Promote alpha.6 only after the clean-game, in-place install, future-save and full-uninstall gates pass.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",

@@ -8,7 +8,7 @@
 | Loader | external EEex / InfinityLoader with the hashes in `runtime-compatibility.json` |
 | Launch | normal Steam Play and BG2HD desktop shortcut |
 | Future saves | HD -> confirmed full uninstall -> native vanilla load/save/reload; no `X-BIV1.0` |
-| Content | maps/UI de `content.json`, overlays de `overlay-sources.json`, animations AR0602 v2 et AR0900 v3 |
+| Content | maps/UI de `content.json`, overlays de `overlay-sources.json`, animations AR0603 v2, AR0602 v3 et AR0900 v3 |
 
 Not supported: Linux, macOS, Steam Deck, Proton, other stores, unknown game
 patches, missing/changed EEex, manual executable layouts, x2-only payloads,

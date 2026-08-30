@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0700",
+  "status": "accepted",
+  "decision_date": "2026-08-27",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-30T22:45:45+02:00",
+  "source_pack": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/AR0700",
+  "pack_manifest_sha256": "30D8B5C9461B9E7E2136F34788D254F85544629F5473FCA89D795926859BAA9A",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "CA2E6C5D797CD54A5FE81AB10BB059AFE39C74D19EDBD0CDB94A8CA8B63DCF14",
+  "required_resrefs": ["AM0700A", "AM0700B", "AM0700C", "AM0700D", "FIRE_1", "FIRE_4"],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0700-fountains-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "0A81DF536801FB66B870599C2A73C24B0F35B4A260328B00C687EF4609FAF559",
+      "accepted_resrefs": ["AM0700A", "AM0700B", "AM0700C", "AM0700D"]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "accepted_resrefs": ["AM0700A", "AM0700B", "AM0700C", "AM0700D", "FIRE_1", "FIRE_4"]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "accepted_resrefs": ["FIRE_1", "FIRE_4"]
+    }
+  ],
+  "decision": "Migration de la décision QA utilisateur déjà enregistrée pour les fontaines et les corrections Blended FIRE_1/FIRE_4 du pack final AR0700 v3. Cette attestation ne constitue ni une nouvelle QA ni une nouvelle promotion release."
+}

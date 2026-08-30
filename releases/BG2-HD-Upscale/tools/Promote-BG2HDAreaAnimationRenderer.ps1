@@ -19,7 +19,7 @@ $candidatePath = (Resolve-Path -LiteralPath $CandidateManifestPath).Path
 $schema = Join-Path $release 'schemas\renderer-bundle.schema.json'
 Require (Test-Json -Path $candidatePath -SchemaFile $schema) 'Schema du renderer candidat invalide.'
 $candidate = Get-Content -LiteralPath $candidatePath -Raw -Encoding utf8 | ConvertFrom-Json
-Require ($candidate.bundle_id -eq 'iee-0.1.0-alpha.5') 'Le renderer v2/v3 doit utiliser le bundle alpha.5 fige.'
+Require ($candidate.bundle_id -eq 'iee-0.1.0-alpha.6') 'Le renderer v2/v3 doit utiliser le bundle alpha.6 fige.'
 Require ($candidate.status -eq 'frozen-awaiting-clean-game-validation') 'Le renderer candidat doit etre fige avant promotion.'
 
 $sourceRoot = Join-Path $release (Join-Path 'release-inputs\renderer' $candidate.bundle_id)

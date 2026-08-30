@@ -104,9 +104,12 @@ runtime/format/generator/Core change. Runtime QA must enter the packaged area
 and a following area without a pack; the latter must release the resident pack
 and use the native BAM fallback.
 
-AR0602 (component 3000, v2) is the backward-compatibility pilot. AR0900 (component 3001, v3) is
-the per-occurrence pilot. Both use renderer `iee-0.1.0-alpha.5`; the clean-game and lifecycle
-gates remain required before any public release.
+AR0603 (component 3004, v2) is the backward-compatibility pilot. AR0602 (component 3000, v3)
+proves the v2-to-v3 transition, and AR0900 (component 3001, v3) remains the per-occurrence pilot.
+The previous `iee-0.1.0-alpha.5` manifest is rejected: four tracked auxiliary files no longer
+match its frozen inventory, so neither that bundle nor the existing local payload is a valid
+release source. The exact current bytes are preserved as the new `iee-0.1.0-alpha.6` candidate;
+its clean-game and lifecycle gates remain required before promotion or any public release.
 
 Build twice in separate output directories; SHA-256 must match. Promote only
 the verified archive to `BG2HD-Installer-Windows-Local-Test.zip`, with its

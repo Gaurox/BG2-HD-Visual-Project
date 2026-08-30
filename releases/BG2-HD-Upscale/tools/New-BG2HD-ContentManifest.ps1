@@ -94,6 +94,48 @@ function Get-AnimationCandidateEntries {
         Require ($relativeSource -notmatch '(^|/)(override|backups|archive|captures|temp)(/|$)') "Pack animation interdit : $relativeSource"
         Require (Test-Path -LiteralPath $sourceDirectory -PathType Container) "Pack animation absent : $sourceDirectory"
 
+        $qaApprovalPath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$candidate.qa_approval).Replace('/', '\')))
+        $relativeQaApproval = [IO.Path]::GetRelativePath($Workspace, $qaApprovalPath).Replace('\', '/')
+        Require ($relativeQaApproval -notmatch '(^|/)\.\.(/|$)') "Approbation QA animation hors workspace : $($candidate.qa_approval)"
+        Require ($relativeQaApproval -notmatch '(^|/)(override|backups|archive|captures|temp|proto)(/|$)') "Approbation QA animation interdite : $relativeQaApproval"
+        Require (Test-Path -LiteralPath $qaApprovalPath -PathType Leaf) "Approbation QA animation absente : $qaApprovalPath"
+        Require ((Get-FileHash -LiteralPath $qaApprovalPath -Algorithm SHA256).Hash -eq [string]$candidate.qa_approval_sha256) "Hash approbation QA animation invalide : $($candidate.area)"
+        Require (Test-Json -Path $qaApprovalPath -SchemaFile (Join-Path $releaseRoot 'schemas\animation-qa-approval.schema.json')) "Schema approbation QA animation invalide : $($candidate.area)"
+        $qaApproval = Read-Json $qaApprovalPath
+        Require ($qaApproval.status -eq 'accepted' -and $qaApproval.decision_origin -eq 'preserved-existing-user-qa') "Decision QA animation non acceptee : $($candidate.area)"
+        Require ($qaApproval.area -eq [string]$candidate.area) "Zone de l'approbation QA animation incoherente : $($candidate.area)"
+        Require ($qaApproval.source_pack -eq [string]$candidate.source_pack) "Pack de l'approbation QA animation incoherent : $($candidate.area)"
+        Require ($qaApproval.pack_manifest_sha256 -eq [string]$candidate.pack_manifest_sha256) "Manifest de pack non couvert par la QA : $($candidate.area)"
+        Require ($qaApproval.registry -eq [string]$candidate.registry -and [int]$qaApproval.registry_version -eq [int]$candidate.registry_version -and $qaApproval.registry_sha256 -eq [string]$candidate.registry_sha256) "Registre non couvert par la QA : $($candidate.area)"
+        $qaResrefs = @($qaApproval.required_resrefs | Sort-Object -Unique)
+        $candidateResrefs = @($candidate.required_resrefs | Sort-Object -Unique)
+        Require (-not (Compare-Object $candidateResrefs $qaResrefs)) "Resrefs non couverts exactement par la QA : $($candidate.area)"
+        $coveredQaResrefs = @()
+        foreach ($evidence in @($qaApproval.evidence)) {
+            $evidencePath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$evidence.path).Replace('/', '\')))
+            $relativeEvidence = [IO.Path]::GetRelativePath($Workspace, $evidencePath).Replace('\', '/')
+            Require ($relativeEvidence -notmatch '(^|/)\.\.(/|$)') "Preuve QA animation hors workspace : $($evidence.path)"
+            Require ($relativeEvidence -notmatch '(^|/)(override|backups|archive|captures|temp|proto)(/|$)') "Preuve QA animation interdite : $relativeEvidence"
+            Require (Test-Path -LiteralPath $evidencePath -PathType Leaf) "Preuve QA animation absente : $relativeEvidence"
+            Require ((Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash -eq [string]$evidence.sha256) "Hash preuve QA animation invalide : $relativeEvidence"
+            switch ([string]$evidence.kind) {
+                'run-qa-approval' {
+                    Require ($relativeEvidence -match '^animations/runs/[^/]+/qa-approval[.]json$') "Chemin de preuve run QA invalide : $relativeEvidence"
+                    $runApproval = Read-Json $evidencePath
+                    Require ($runApproval.status -eq 'accepted') "Preuve run QA non acceptee : $relativeEvidence"
+                }
+                'canonical-registry' {
+                    Require ($relativeEvidence -eq 'animations/index/animation_upscale_registry.csv') "Registre canonique QA inattendu : $relativeEvidence"
+                }
+                'canonical-alpha-corrections' {
+                    Require ($relativeEvidence -eq 'animations/index/animation_alpha_corrections.csv') "Registre alpha QA inattendu : $relativeEvidence"
+                }
+            }
+            $coveredQaResrefs += @($evidence.accepted_resrefs)
+        }
+        $coveredQaResrefs = @($coveredQaResrefs | Sort-Object -Unique)
+        Require (-not (Compare-Object $candidateResrefs $coveredQaResrefs)) "Preuves QA incompletes ou hors candidat : $($candidate.area)"
+
         $packManifestPath = Join-Path $sourceDirectory ([string]$candidate.pack_manifest)
         Require (Test-Path -LiteralPath $packManifestPath -PathType Leaf) "Manifest de pack animation absent : $packManifestPath"
         Require ((Get-FileHash -LiteralPath $packManifestPath -Algorithm SHA256).Hash -eq [string]$candidate.pack_manifest_sha256) "Hash manifeste animation invalide : $($candidate.area)"

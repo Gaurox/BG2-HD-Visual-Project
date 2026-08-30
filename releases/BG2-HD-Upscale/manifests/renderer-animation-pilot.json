@@ -1,9 +1,9 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.5",
+  "bundle_id": "iee-0.1.0-alpha.6",
   "status": "frozen-awaiting-clean-game-validation",
-  "source_tree": "engine/InfinityEngine-Enhancer/source-patchee",
+  "source_tree": "git:96c312b6b78ede75666a9c474cbd850821b7802c:releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.5",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
@@ -19,8 +19,8 @@
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
-      "bytes": 2571,
-      "sha256": "34E8D64FDC71C6BE9AD5F4589D0C6BD8F34C1319610D245D0A81D6C29A372E67"
+      "bytes": 2609,
+      "sha256": "13F286A8C736A7E626A9AE3C10C6E7EB15B66D22AD08473995A504293610CB57"
     },
     {
       "path": "iee-textures/iee_water_dudv.rgba",
@@ -39,26 +39,26 @@
     },
     {
       "path": "iee-textures/README.md",
-      "bytes": 3002,
-      "sha256": "4855884146FE6DB8ED47B8CD23C4418BCB45C10BD4C266E38A9D52B97A8D6B4E"
+      "bytes": 2936,
+      "sha256": "0E34BEBEB719825EB373E2D04CF8B8FE0C7CAA7679BBD85A724083AB07AC5FDE"
     },
     {
       "path": "override/fpSEAM.glsl",
-      "bytes": 15837,
-      "sha256": "606E26CD9993C9520B0E48725B6DF6AEA314A9CB1FC8DD4FCE90DD6594002B90"
+      "bytes": 15871,
+      "sha256": "FCA60B403AE41900B5A47E0249546760B2D14B5FAA3BE2329E9AA08ADF05ECAB"
     },
     {
       "path": "override/M_IEEE.lua",
-      "bytes": 380,
-      "sha256": "6FED5BAE7C6293B92AAC628325565578E4AB91210D59E19358C7F08DD72454E0"
+      "bytes": 388,
+      "sha256": "ADC3053C9A94587D393EC65F4E8EBA41198FC4C33B120132A55FF0AB78BE34CD"
     }
   ],
   "validation_required": [
     "host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing",
     "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea",
     "clean BG2EE Steam 2.7.3.0 game-hash gate",
-    "EEex/InfinityLoader launch gate with AR0602 v2 and AR0900 v3 runtime packs",
-    "AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
+    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs",
+    "AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
     "in-place Steam shim lifecycle and verified full vanilla restoration"
   ]
 }

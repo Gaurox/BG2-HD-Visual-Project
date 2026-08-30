@@ -129,8 +129,47 @@ class AreaAnimationDeltaTests(unittest.TestCase):
             (index / "animation_upscale_registry.csv").write_text(
                 "resref,status,areas\nFOO,validé-x4,AR1234\n", encoding="utf-8"
             )
+            registry_index = index / "animation_upscale_registry.csv"
+            qa_approval = (
+                workspace
+                / "releases"
+                / "BG2-HD-Upscale"
+                / "manifests"
+                / "animation-qa-approvals"
+                / "AR1234"
+                / "qa-approval.json"
+            )
+            qa_approval.parent.mkdir(parents=True)
+            qa_approval.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "area": "AR1234",
+                        "status": "accepted",
+                        "decision_date": "2026-08-30",
+                        "decision_origin": "preserved-existing-user-qa",
+                        "recorded_at_utc": "2026-08-30T00:00:00Z",
+                        "source_pack": "testpack",
+                        "pack_manifest_sha256": digest(pack_manifest),
+                        "registry": registry.name,
+                        "registry_version": 2,
+                        "registry_sha256": digest(registry),
+                        "required_resrefs": ["FOO"],
+                        "evidence": [
+                            {
+                                "kind": "canonical-registry",
+                                "path": "animations/index/animation_upscale_registry.csv",
+                                "sha256": digest(registry_index),
+                                "accepted_resrefs": ["FOO"],
+                            }
+                        ],
+                        "decision": "Existing test approval preserved for provenance validation.",
+                    }
+                ),
+                encoding="utf-8",
+            )
             candidates = {
-                "schema_version": 1,
+                "schema_version": 2,
                 "generated_by": "test",
                 "candidates": [
                     {
@@ -139,6 +178,8 @@ class AreaAnimationDeltaTests(unittest.TestCase):
                         "component_label": "animation-ar1234",
                         "payload_group": "animation-ar1234",
                         "approval_status": "approved-for-release",
+                        "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1234/qa-approval.json",
+                        "qa_approval_sha256": digest(qa_approval),
                         "source_pack": "testpack",
                         "source_run": "test-run",
                         "pack_manifest": "manifest.json",

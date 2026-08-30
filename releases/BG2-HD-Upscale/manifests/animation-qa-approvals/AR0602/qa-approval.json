@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0602",
+  "status": "accepted",
+  "decision_date": "2026-08-28",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-30T22:45:45+02:00",
+  "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
+  "pack_manifest_sha256": "8BB95DEC9B3D5A2F8839BAA23EA1F5AD83E6FDDAE142500EA6C433981606F838",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A1B41485D116D48429A4D63D1A9BF1DE6BFC6D559218C59158958A071A6F4D23",
+  "required_resrefs": ["AM0602AA", "AM0602AB", "AM0602AC", "AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "FLAME2S", "PORTL1A", "PORTL1B"],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am0602aa-ab-ac-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "1348F9BB7D327928AE53250DA3DF7915F17BEBA5082D2191ABCB29DF3521DCD5",
+      "accepted_resrefs": ["AM0602AA", "AM0602AB", "AM0602AC"]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am0602b-deheld-manual-floor-mask-30fps-v2/qa-approval.json",
+      "sha256": "5E20AE34986144CD8D68CADAC33B8FBB2201668C1CD994D0900FA1D629546CA5",
+      "accepted_resrefs": ["AM0602B"]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am0602f-lantern-apo8-x4-30fps-v2-active-rebase/qa-approval.json",
+      "sha256": "E00C0CCDF0A77AEB8DA91002AE2B0B7BA3AF3979CD54A75B56292AC0DDD5A66B",
+      "accepted_resrefs": ["AM0602F"]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0602-portl1b-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "1CEFF06F365B31CCA63C0D90651C77D0464F3330907B0A881DCAAED4E1746DA9",
+      "accepted_resrefs": ["PORTL1B"]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "accepted_resrefs": ["AM0602AA", "AM0602AB", "AM0602AC", "AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "FLAME2S", "PORTL1A", "PORTL1B"]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "accepted_resrefs": ["AM0602B", "AM0602C", "AM0602D", "AM0602E", "AM0602F", "AM0602G", "FLAME2S", "PORTL1A", "PORTL1B"]
+    }
+  ],
+  "decision": "Migration de la décision QA utilisateur déjà enregistrée pour le pack final AR0602 v3. Cette attestation ne constitue ni une nouvelle QA ni une nouvelle promotion release."
+}
