@@ -131,6 +131,21 @@ sprite assets and a `LINEAR` session is not eligible for formal sprite QA. Apply
 - EEex (`v1.1.5`+ for BG2EE `2.7`)
 - OpenGL-capable renderer
 
+### Known local EEex tooltip regression
+
+On the tested BG2EE 2.7.3 / EEex 1.2.0 setup, UI button tooltips open immediately and flicker when
+EEex presents at roughly 154-165 FPS. A controlled candidate that removed only the experimental
+post-swap map prewarm callback did not change the symptom. Restoring the prior renderer and limiting
+EEex presentation to 30 FPS fixed it. The local workaround is therefore to keep
+`Uncap FPS Limit Enabled=1` and `Uncap FPS Limit=30` in `Baldur.lua`; do not alter the normal
+`Tooltips=15` value.
+
+This limit is not required for x4 map rendering. It only changes the wall-clock cadence of the
+frame-driven prewarm scheduler: with `MapPagePrewarmDelayFrames=30`, startup is about 1 second at
+30 FPS instead of about 0.18 second at 165 FPS. Keep uncapped rendering disabled until EEex's
+`Override_uiDrawMenuStack` tooltip normalization has passed a dedicated A/B. See
+[`docs/validation/eeex-tooltip-uncapped-fps.md`](docs/validation/eeex-tooltip-uncapped-fps.md).
+
 ## Installation
 
 1. Install [EEex](https://github.com/Bubb13/EEex).
@@ -243,6 +258,7 @@ while keeping builds reproducibly pinned to full commit SHAs.
 - [docs/native-occlusion-phase0.md](docs/native-occlusion-phase0.md)
 - [docs/native-occlusion-phase1.md](docs/native-occlusion-phase1.md)
 - [docs/validation/native-occlusion-phase1-validation.md](docs/validation/native-occlusion-phase1-validation.md)
+- [docs/validation/eeex-tooltip-uncapped-fps.md](docs/validation/eeex-tooltip-uncapped-fps.md)
 - [docs/event-video-overlay-assets.md](docs/event-video-overlay-assets.md) — LLM procedure for adding a local event-driven video asset
 - [docs/build-manifests.md](docs/build-manifests.md)
 - [docs/new-build-validation.md](docs/new-build-validation.md)

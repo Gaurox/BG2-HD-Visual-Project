@@ -149,6 +149,25 @@ dans `areas.csv`.
 - **Gate** : correction, vérification SHA de l'installation puis nouvelle QA utilisateur.
 - **Règle** : ne jamais transformer ce statut en `validated-installed` depuis un log de batch.
 
+## ENGINE-UI-001 — tooltips UI instables avec les FPS EEex déplafonnés
+
+- **Périmètre** : BG2EE 2.7.3 avec EEex 1.2.0 et le renderer local ; les bulles contextuelles des
+  boutons apparaissent immédiatement et clignotent à chaque mouvement de souris lorsque la cadence
+  de présentation atteint environ 154 à 165 FPS.
+- **Preuve A/B** : `Tooltips=15` et `Maximum Frame Rate=30` sont restés inchangés. Déconnecter le
+  préchauffage PVR du callback post-`SwapBuffers` n'a produit aucun changement ingame ; ce candidat
+  a été restauré exactement. Avec le renderer antérieur restauré, les seuls réglages EEex
+  `Uncap FPS Limit Enabled=1` et `Uncap FPS Limit=30` suppriment le défaut.
+- **État** : contournement local conservé à 30 FPS. Le rendu des cartes x4 ne dépend pas du
+  déplafonnement. Le préchauffage reste fonctionnel, mais ses paramètres exprimés en frames
+  progressent plus lentement en temps réel : un délai de 30 frames vaut environ 1 s à 30 FPS contre
+  0,18 s à 165 FPS.
+- **Gate** : avant de rétablir le déplafonnement, vérifier le chemin EEex
+  `EEex::Override_uiDrawMenuStack`, puis mener un A/B à 30 FPS et à la fréquence de l'écran avec
+  délai et stabilité des tooltips. Ne pas compenser en modifiant `Tooltips=15`.
+- **Preuve détaillée** :
+  [`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/eeex-tooltip-uncapped-fps.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/eeex-tooltip-uncapped-fps.md).
+
 ## ENGINE-OCCLUSION-001 — validation ingame du bridge structurel xN
 
 - **Périmètre** : animations de zone v1/v2/v3 non masquées, Monster, MonsterIcewind et Character
