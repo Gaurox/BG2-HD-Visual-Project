@@ -29,6 +29,35 @@ PVR_DEMAND_PATTERN = (
     "48 83 EC 30 83 79 58 00"
 )
 
+# Phase 3e-B0 evidence on the unified 2.7.3 image. The wrapper adapts the
+# engine's 32-bit Windows zlib lengths before calling the embedded zlib 1.2.11
+# implementation. The consume window begins immediately after that call and
+# proves that native code retains PVR field publication, upload and release.
+PVR_UNCOMPRESS_PATTERN = (
+    "40 53 48 83 EC 20 8B 02 48 8B DA 48 8D 54 24 38 89 44 24 38 "
+    "E8 ? ? ? ? 8B 4C 24 38 89 0B 48 83 C4 20 5B C3"
+)
+PVR_CONSUME_WINDOW_OFFSET = 0x164
+PVR_CONSUME_WINDOW_PATTERN = (
+    "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 "
+    "44 89 43 5C 44 2B CA 8B 4F 1C 44 03 CF 89 4B 64 8B 47 18 "
+    "89 43 68 8B 4F 1C 48 89 54 24 20 8B 57 18 E8 ? ? ? ? "
+    "48 8B CF E8 ? ? ? ?"
+)
+
+# label, offset from CResPVR::Demand, exact target on the unified 2.7.3 image
+PVR_PHASE_CALLS = [
+    ("eviction texture delete", 0xA9, 0x413270),
+    ("128-entry cache shift", 0xC1, 0x4FA710),
+    ("CRes resource demand", 0xDC, 0x402A00),
+    ("texture creation", 0x12E, 0x413350),
+    ("texture bind", 0x138, 0x413140),
+    ("native decoded-buffer allocation", 0x143, 0x502678),
+    ("zlib uncompress handoff", 0x15F, 0x4000F0),
+    ("compressed texture upload", 0x198, 0x413240),
+    ("native decoded-buffer release", 0x1A0, 0x4FDAB8),
+]
+
 # Reference RVAs per known build, for shift reporting only.
 REFERENCE_RVAS = {
     "2.6.6": {"CInfGame::LoadArea": 0x27E710, "CVidTile::RenderTexture": 0x4247E0},
@@ -36,6 +65,7 @@ REFERENCE_RVAS = {
         "CInfGame::LoadArea": 0x27EBD0,
         "CVidTile::RenderTexture": 0x4257C0,
         "CResPVR::Demand": 0x3F6DC0,
+        "PVR zlib::uncompress wrapper": 0x4000F0,
     },
 }
 
@@ -173,6 +203,7 @@ def main(argv: list[str]) -> int:
     patterns = dict(PATTERNS)
     if args.reference == "2.7.3":
         patterns["CResPVR::Demand"] = PVR_DEMAND_PATTERN
+        patterns["PVR zlib::uncompress wrapper"] = PVR_UNCOMPRESS_PATTERN
     for label, pat_str in patterns.items():
         pat = compile_pattern(pat_str)
         hits: list[int] = []
@@ -212,6 +243,58 @@ def main(argv: list[str]) -> int:
         if sect is None:
             failures.append(f"{name}: target {target:#x} outside any executable section")
         print(f"| {name} | +{coff:#x} | `{op:#04x}` | `{target:#x}` | {sect or 'OUTSIDE'} |")
+
+    pvr_demand = located.get("CResPVR::Demand")
+    pvr_uncompress = located.get("PVR zlib::uncompress wrapper")
+    if args.reference == "2.7.3":
+        print("\n## PVR Decode Boundary (Phase 3e-B0)\n")
+        print("| Native phase | Demand offset | Opcode | Target RVA | Exact 2.7.3 target |")
+        print("|---|---|---|---|---|")
+        if pvr_demand is None or pvr_uncompress is None:
+            failures.append("PVR decode boundary cannot be checked without unique Demand and "
+                            "uncompress signatures")
+        else:
+            pvr_off = rva_to_off(pe, pvr_demand)
+            assert pvr_off is not None
+            for name, call_offset, expected_target in PVR_PHASE_CALLS:
+                call = pvr_off + call_offset
+                op = data[call]
+                disp = struct.unpack_from("<i", data, call + 1)[0]
+                target = pvr_demand + call_offset + 5 + disp
+                exact = op == 0xE8 and target == expected_target
+                if not exact:
+                    failures.append(
+                        f"PVR {name}: got opcode {op:#04x} target {target:#x}, expected "
+                        f"call {expected_target:#x}"
+                    )
+                print(f"| {name} | +{call_offset:#x} | `{op:#04x}` | `{target:#x}` | "
+                      f"{'yes' if exact else 'NO'} |")
+            handoff_target = next(
+                pvr_demand + offset + 5 + struct.unpack_from("<i", data, pvr_off + offset + 1)[0]
+                for name, offset, _ in PVR_PHASE_CALLS if name == "zlib uncompress handoff"
+            )
+            if handoff_target != pvr_uncompress:
+                failures.append(
+                    f"PVR handoff target {handoff_target:#x} differs from unique uncompress "
+                    f"signature {pvr_uncompress:#x}"
+                )
+
+            consume_pattern = compile_pattern(PVR_CONSUME_WINDOW_PATTERN)
+            consume_off = pvr_off + PVR_CONSUME_WINDOW_OFFSET
+            consume_match = find_pattern(
+                data, consume_off, len(consume_pattern), consume_pattern
+            ) == [consume_off]
+            if not consume_match:
+                failures.append(
+                    f"PVR native consume window mismatch at Demand+"
+                    f"{PVR_CONSUME_WINDOW_OFFSET:#x}"
+                )
+            print(f"\n- Native post-decode field/upload/release window at "
+                  f"`Demand+{PVR_CONSUME_WINDOW_OFFSET:#x}`: "
+                  f"{'exact' if consume_match else 'MISMATCH'}.")
+            print(f"- A consuming detour must fall back outside return RVA "
+                  f"`{pvr_demand + 0x164:#x}` and must never bypass native cache, "
+                  "allocation, upload or release.")
 
     print("\n## Runtime Offset Evidence\n")
     probe = data[rt_off + PRES_PROBE_OFFSET: rt_off + PRES_PROBE_OFFSET + len(PRES_PROBE_BYTES)]

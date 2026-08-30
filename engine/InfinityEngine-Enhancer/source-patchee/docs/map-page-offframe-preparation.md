@@ -2,8 +2,12 @@
 
 ## Status and purpose
 
-This note defines the next reversible prototype for `MAP-PERF-001`. It is a design and validation
-contract, not evidence that asynchronous PVR materialization is already implemented.
+This note defines and records the reversible Phase 3e-A prototype for `MAP-PERF-001`. The CPU-only
+shadow preparer was qualified offline and ingame on AR0900 on 2026-08-30. This is not evidence that
+asynchronous native PVR materialization is implemented: the prepared bytes are deliberately never
+consumed by the engine or OpenGL. The result establishes feasibility and readiness timing only.
+The subsequent Phase 3e-B0 static audit has identified and manifested a safe decoded-PVR handoff,
+but the Phase 3e-B1 consumer is not implemented or enabled yet.
 
 The measured bottleneck is the indivisible native `CResPVR::Demand` call. Repacking AR0900 with
 zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the PVRZ payload by
@@ -59,6 +63,29 @@ This shadow milestone cannot improve frame time by itself. Its purpose is to pro
 expensive CPU portion can be ready early enough, under a bounded memory and scheduling policy,
 before any native publication path is attempted.
 
+### Implemented boundary
+
+`EnableMapPageOffframeProbe=false` is the fail-closed default. The probe starts only when both this
+switch and `PerformanceLogs=true` are present. The existing render-thread plan submits copied
+identities for pages that were not already resident when the plan was built, after its configured
+delay; one process-lifetime Win32 worker reads only the matching `override/<page-resref>.PVRZ`
+regular file. A missing KEY/BIFF-only resource is a clean miss. Excluding initially resident pages
+prevents unobservable results from filling the completed handoff ahead of pages that can still
+cross native `Demand`.
+
+The production parser accepts the closed PVRZ representation used by the current maps: a declared
+decoded size followed by exactly one zlib stream and one PVR v3 DXT1 or DXT5 surface, with no mip
+chain. It validates the exact DXT block payload before publishing the immutable CPU buffer. zlib
+v1.3.2 is built statically from the full commit
+`da607da739fa6047df13e66a2af6b8bec7c2a498`.
+
+Immediately before an otherwise-required native `CResPVR::Demand`, the render thread records
+whether the matching shadow result is ready and retires it. It never passes the buffer to native
+code, never changes the native object and never issues a GL call. Pending or active work that loses
+the race is cancelled by identity; an area generation reset discards stale jobs and results. A
+one-shot summary is emitted when all submitted pages have crossed this observation boundary, so a
+normal process exit is not required to retain the evidence.
+
 ## Ownership and bounds
 
 The implementation must preserve these limits from its first commit:
@@ -77,10 +104,14 @@ configuration parser already provides the same fail-closed range validation used
 scheduler. Raising the native 128-entry pool or the current 96-page planning ceiling is outside
 Phase 3e-A.
 
+The implemented fixed limits are 32 MiB compressed and 20 MiB decoded per page, 96 pending jobs,
+four completed pages and 72 MiB of aggregate completed buffers. The worker blocks when the
+completed handoff is full. Stop and generation changes wake it and release all buffers.
+
 ## Required evidence before a consuming prototype
 
-Phase 3e-B may consume prepared bytes on the render thread only after all of the following are
-documented for the exact manifested BG2EE 2.7.3 build:
+Phase 3e-B0 required all of the following to be documented for the exact manifested BG2EE 2.7.3
+build before any consumer could be implemented:
 
 - the precise native boundary between zlib/PVR preparation and GL upload;
 - the allocator and owner of every buffer retained or released across that boundary;
@@ -93,6 +124,15 @@ If no safe supported boundary exists, the consuming prototype is rejected. A sec
 followed by ordinary `Demand` is valid only as shadow telemetry and must not be presented as an
 optimization.
 
+Phase 3e-B0 completed this audit on 2026-08-30. The exact evidence and the Phase 3e-B1 contract are
+recorded in
+[`validation/map-page-offframe-phase3b0.md`](validation/map-page-offframe-phase3b0.md). The selected
+boundary is the native zlib-wrapper call at `CResPVR::Demand+0x15F`: a render-thread detour may copy
+an exactly matching prepared decoded PVR into the destination already allocated by the engine,
+then resume native code at `Demand+0x164`. Native resource loading, the 128-entry cache, texture
+creation/binding, PVR field publication, compressed upload, eviction and release all remain
+unchanged. Every mismatch must call original zlib.
+
 ## Validation gates
 
 Phase 3e-A must pass unit tests for envelope/header validation, size and memory limits, queue
@@ -100,7 +140,15 @@ coalescing, generation cancellation, stale-result discard, clean shutdown and fa
 Debug and Release native suites must remain green. Installation must use a new
 `renderer-install-receipt.json` transaction.
 
-The first ingame gate is AR0900 only:
+Offline qualification on 2026-08-30 passed all of those unit cases, 2/2 CTest targets in Debug and
+Release, and 207/207 common Python tests. The build manifest validation passed against the installed
+BG2EE 2.7.3 `BaldurReal.exe` (`b51093a4...a14d57`). The Release preflight ran the production parser
+against all 26 AR0900 day pages: 26/26 ready, 151.73 MiB read and 416.00 MiB decoded, with 971.40 ms
+total preparation, 39.38 ms median, 18.05 ms minimum and 41.94 ms maximum per page. This sequential
+tool result validates parsing and sizing only; it does not predict readiness relative to native
+demands in the game.
+
+The first ingame gate was AR0900 only:
 
 - no error, crash, deadlock, GL call or native object write from the worker;
 - zero stale result accepted after area/context changes;
@@ -108,5 +156,19 @@ The first ingame gate is AR0900 only:
 - enough pages prepared before native materialization to justify Phase 3e-B;
 - unchanged visual output and unchanged synchronous fallback behavior.
 
-Only after that gate passes may the four-zone protocol be replayed. A shadow result, an installed
-candidate or a successful local test does not create a `validated-installed` release element.
+The corrected Release candidate passed this gate on 2026-08-30. The plan contained 26 pages, seven
+of which were already resident and therefore not submitted. Of the 19 submitted pages, 16 were
+ready before native materialization and three lost the race (`84.21%` versus `15.79%`). There were
+zero missing files, I/O failures, invalid results, rejections, stale accepted results and unplanned
+demands. The worker prepared 95.63 MiB compressed / 256.00 MiB decoded in 616.52 ms total, with a
+42.81 ms maximum preparation. Peak handoff occupancy was four results / 64.00 MiB, below the
+72 MiB bound. Visual output was unchanged and the bounded session contained no error, crash or
+deadlock; its sole warning was the already documented EEex `RenderTexture` prologue recovery.
+
+The test transaction was restored after exit. Phase 3e-A is therefore ingame-qualified, but it did
+not optimize any frame: every CPU buffer was retired without native or GL consumption, and native
+`Demand` remained authoritative. Phase 3e-B0 has now proven the exact render-thread boundary listed
+above. The next implementation is the separate, default-off, one-page Phase 3e-B1 canary. The
+four-zone performance protocol is meaningful only after a consuming prototype exists. A shadow
+result, an installed candidate or a successful local test does not create a `validated-installed`
+release element.

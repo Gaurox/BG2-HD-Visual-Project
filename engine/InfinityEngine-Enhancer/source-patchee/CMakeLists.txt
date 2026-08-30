@@ -66,6 +66,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdlog)
 
+set(ZLIB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_STATIC ON CACHE BOOL "" FORCE)
+set(ZLIB_INSTALL OFF CACHE BOOL "" FORCE)
+FetchContent_Declare(
+    zlib
+    GIT_REPOSITORY https://github.com/madler/zlib.git
+    # renovate: datasource=github-tags depName=madler/zlib versioning=semver
+    GIT_TAG da607da739fa6047df13e66a2af6b8bec7c2a498 # v1.3.2
+)
+FetchContent_MakeAvailable(zlib)
+
 set(IEE_VERSION "0.0.0-dev")
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
@@ -96,6 +108,7 @@ add_library(iee_common STATIC
     src/iee/core/cache_budget_simulator.cpp
     src/iee/core/config.cpp
     src/iee/core/logger.cpp
+    src/iee/core/map_page_shadow.cpp
     src/iee/core/map_texture_telemetry.cpp
     src/iee/core/map_view_burst_telemetry.cpp
     src/iee/core/native_occlusion_probe.cpp
@@ -124,6 +137,7 @@ target_include_directories(iee_common
 target_link_libraries(iee_common
     PUBLIC
         spdlog::spdlog
+        ZLIB::ZLIBSTATIC
 )
 
 if(WIN32)
@@ -247,6 +261,12 @@ else()
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iee_map_page_shadow_preflight
+        tools/map_page_shadow_preflight.cpp
+    )
+    target_link_libraries(iee_map_page_shadow_preflight PRIVATE iee_common)
+    iee_configure_target(iee_map_page_shadow_preflight)
+
     add_executable(iee_tests
         tests/iee_tests.cpp
     )

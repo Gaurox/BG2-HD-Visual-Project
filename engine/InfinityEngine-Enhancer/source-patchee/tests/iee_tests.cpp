@@ -17,6 +17,8 @@
 #include <utility>
 #include <vector>
 
+#include <zlib.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <compressapi.h>
@@ -29,6 +31,7 @@
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/logger.h"
+#include "iee/core/map_page_shadow.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
@@ -364,6 +367,14 @@ void test_manifest_loading() {
               "2.7.3 PVR demand RVA should match the offline call graph");
     expect_true(!found273->get().pvrDemand.signature.empty(),
                 "2.7.3 PVR demand diagnostics should fail closed on a signature");
+    expect_true(found273->get().pvrDemand.decodeBoundary.enabled(),
+                "2.7.3 PVR decoded handoff should carry exact static evidence");
+    expect_eq(found273->get().pvrDemand.decodeBoundary.uncompressCallOffset,
+              std::size_t{0x15F},
+              "2.7.3 PVR uncompress call should remain at Demand+0x15F");
+    expect_eq(found273->get().pvrDemand.decodeBoundary.uncompress,
+              std::uintptr_t{0x4000F0},
+              "2.7.3 PVR uncompress wrapper RVA should match the offline call graph");
   }
   expect_true(iee::game::find_manifest_for_version(2, 7, 3, 0).has_value(),
               "BGEE 2.7.3.0 should resolve by executable version");
@@ -484,10 +495,19 @@ void test_manifest_loading() {
               "BG2EE shares the BGEE 2.7.3 RenderTexture RVA (unified engine image)");
     expect_eq(bg2ee->get().pvrDemand.demand, std::uintptr_t{0x3F6DC0},
               "BG2EE PVR demand RVA should match the unified 2.7.3 image");
+    expect_true(bg2ee->get().pvrDemand.decodeBoundary.enabled(),
+                "BG2EE PVR decoded handoff should carry exact static evidence");
+    expect_eq(bg2ee->get().pvrDemand.decodeBoundary.consumeWindowOffset,
+              std::size_t{0x164},
+              "BG2EE native PVR field/upload window should start at Demand+0x164");
     auto incompletePvrDemand = bg2ee->get();
     incompletePvrDemand.pvrDemand.signature = {};
     expect_true(!incompletePvrDemand.validate(),
                 "A PVR demand RVA without exact signature evidence must fail validation");
+    auto incompletePvrBoundary = bg2ee->get();
+    incompletePvrBoundary.pvrDemand.decodeBoundary.uncompress = 0;
+    expect_true(!incompletePvrBoundary.validate(),
+                "Partial PVR decoded-handoff evidence must fail manifest validation");
     expect_true(
         iee::game::supports_product_name(*bg2ee, "Baldur's Gate II: Enhanced Edition"),
         "BG2EE product name should match its own manifest");
@@ -721,6 +741,7 @@ void test_config_parsing() {
     out << "LODBias = -0.5\n\n";
     out << "EnableTilePageDiagnostics = true\n\n";
     out << "EnableMapPagePrewarm = true\n";
+    out << "EnableMapPageOffframeProbe = true\n";
     out << "MapPagePrewarmPagesPerFrame = 2\n";
     out << "MapPagePrewarmBudgetMs = 6.5\n";
     out << "MapPagePrewarmMaxPages = 80\n";
@@ -736,6 +757,8 @@ void test_config_parsing() {
   expect_eq(cfg.lodBias, -0.5f, "Negative float values should parse");
   expect_true(cfg.enableTilePageDiagnostics, "tile-page diagnostics flag should parse");
   expect_true(cfg.enableMapPagePrewarm, "map-page prewarm flag should parse");
+  expect_true(cfg.enableMapPageOffframeProbe,
+              "map-page off-frame probe flag should parse");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{2},
             "map-page per-frame limit should parse");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 6.5f, "map-page time budget should parse");
@@ -881,6 +904,8 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enablePerformanceLogging, "performance logs default off");
   expect_true(!cfg.enableTilePageDiagnostics, "tile-page diagnostics default off");
   expect_true(!cfg.enableMapPagePrewarm, "map-page prewarm defaults off");
+  expect_true(!cfg.enableMapPageOffframeProbe,
+              "map-page off-frame probe defaults off");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{1},
             "map-page prewarm defaults to one page per step");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 8.0f,
@@ -3425,6 +3450,7 @@ void test_config_shader_override_roundtrip() {
     orig.enablePerformanceLogging = true;
     orig.enableTilePageDiagnostics = true;
     orig.enableMapPagePrewarm = true;
+    orig.enableMapPageOffframeProbe = true;
     orig.mapPagePrewarmPagesPerFrame = 3;
     orig.mapPagePrewarmBudgetMs = 5.5f;
     orig.mapPagePrewarmMaxPages = 72;
@@ -3465,6 +3491,8 @@ void test_config_shader_override_roundtrip() {
               "enableTilePageDiagnostics should round-trip as true");
   expect_true(loaded.enableMapPagePrewarm,
               "enableMapPagePrewarm should round-trip as true");
+  expect_true(loaded.enableMapPageOffframeProbe,
+              "enableMapPageOffframeProbe should round-trip as true");
   expect_eq(loaded.mapPagePrewarmPagesPerFrame, std::uint32_t{3},
             "map-page per-frame limit should round-trip");
   expect_eq(loaded.mapPagePrewarmBudgetMs, 5.5f,
@@ -3498,6 +3526,164 @@ void write_u32(std::vector<std::byte>& buffer, std::size_t offset, std::uint32_t
   for (std::size_t index = 0; index < sizeof(value); ++index) {
     buffer[offset + index] = static_cast<std::byte>((value >> (index * 8)) & 0xFF);
   }
+}
+
+std::vector<std::byte> make_test_pvrz(std::uint32_t format = 11,
+                                     std::uint32_t width = 8,
+                                     std::uint32_t height = 8) {
+  const std::size_t blockBytes = format == 7 ? 8 : 16;
+  const std::size_t payloadBytes = ((width + 3u) / 4u) * ((height + 3u) / 4u) * blockBytes;
+  iee::game::PVRTextureHeaderV3 header{};
+  header.u32Version = 0x03525650u;
+  header.u64PixelFormatlo = format;
+  header.u32Height = height;
+  header.u32Width = width;
+  header.u32Depth = 1;
+  header.u32NumSurfaces = 1;
+  header.u32NumFaces = 1;
+  header.u32MIPMapCount = 1;
+
+  std::vector<std::byte> decoded(sizeof(header) + payloadBytes);
+  std::memcpy(decoded.data(), &header, sizeof(header));
+  for (std::size_t index = sizeof(header); index < decoded.size(); ++index) {
+    decoded[index] = static_cast<std::byte>(index & 0xFFu);
+  }
+
+  uLongf compressedSize = compressBound(static_cast<uLong>(decoded.size()));
+  std::vector<std::byte> fileBytes(4 + compressedSize);
+  write_u32(fileBytes, 0, static_cast<std::uint32_t>(decoded.size()));
+  const int result = compress2(
+      reinterpret_cast<Bytef*>(fileBytes.data() + 4), &compressedSize,
+      reinterpret_cast<const Bytef*>(decoded.data()), static_cast<uLong>(decoded.size()),
+      Z_BEST_SPEED);
+  expect_eq(result, Z_OK, "zlib should build the PVRZ test fixture");
+  fileBytes.resize(4 + compressedSize);
+  return fileBytes;
+}
+
+void test_map_page_shadow_pvrz_validation() {
+  using iee::core::PvrzPrepareLimits;
+  using iee::core::PvrzPrepareStatus;
+  using iee::core::prepare_pvrz_bytes;
+
+  const auto valid = make_test_pvrz();
+  const auto prepared = prepare_pvrz_bytes(valid);
+  expect_true(prepared.status == PvrzPrepareStatus::Ready,
+              "valid DXT5 PVRZ should prepare off-frame");
+  expect_eq(prepared.width, std::uint32_t{8}, "prepared PVR width should match");
+  expect_eq(prepared.height, std::uint32_t{8}, "prepared PVR height should match");
+  expect_eq(prepared.pixelFormat, std::uint32_t{11}, "prepared PVR format should be DXT5");
+  expect_eq(prepared.decodedBytes, std::uint64_t{116},
+            "prepared PVR should retain the exact immutable byte count");
+
+  const auto dxt1 = prepare_pvrz_bytes(make_test_pvrz(7));
+  expect_true(dxt1.status == PvrzPrepareStatus::Ready,
+              "valid DXT1 PVRZ should prepare off-frame");
+
+  auto unsupported = make_test_pvrz(15);
+  expect_true(prepare_pvrz_bytes(unsupported).status == PvrzPrepareStatus::InvalidPvr,
+              "unsupported PVR formats should fail closed");
+
+  auto truncated = valid;
+  truncated.pop_back();
+  expect_true(prepare_pvrz_bytes(truncated).status == PvrzPrepareStatus::InflateError,
+              "truncated zlib streams should fail closed");
+
+  PvrzPrepareLimits decodedLimit{};
+  decodedLimit.maximumDecodedBytes = 100;
+  expect_true(prepare_pvrz_bytes(valid, decodedLimit).status ==
+                  PvrzPrepareStatus::InvalidEnvelope,
+              "declared PVR sizes above the bound should fail before allocation");
+
+  auto badEnvelope = valid;
+  write_u32(badEnvelope, 0, 0xFFFFFFFFu);
+  expect_true(prepare_pvrz_bytes(badEnvelope).status ==
+                  PvrzPrepareStatus::InvalidEnvelope,
+              "implausible decoded sizes should fail before inflate");
+}
+
+iee::core::ShadowPageIdentity make_shadow_identity(std::uint64_t generation,
+                                                    std::int32_t page) {
+  return {
+      .generation = generation,
+      .areaResref = "AR0900",
+      .tilesetResref = "AR0900",
+      .pageResref = "A0900" + std::to_string(page),
+      .pageNumber = page,
+  };
+}
+
+void test_map_page_shadow_queue_bounds_and_generations() {
+  using iee::core::MapPageShadowQueue;
+  using iee::core::PvrzPrepareStatus;
+  using iee::core::ShadowObservationStatus;
+
+  MapPageShadowQueue queue({.maximumPendingPages = 2,
+                            .maximumCompletedPages = 1,
+                            .maximumCompletedBytes = 256});
+  queue.restart();
+  const auto generation = queue.generation();
+  const auto first = make_shadow_identity(generation, 0);
+  expect_true(queue.submit({first, "A090000.PVRZ"}),
+              "first shadow page should enter the bounded queue");
+  expect_true(queue.submit({first, "A090000.PVRZ"}),
+              "duplicate shadow pages should coalesce");
+
+  iee::core::ShadowPageJob active;
+  expect_true(queue.wait_take(active), "worker should receive the queued page");
+  iee::core::ShadowPreparedResult ready;
+  ready.identity = active.identity;
+  ready.page.status = PvrzPrepareStatus::Ready;
+  ready.page.compressedBytes = 64;
+  ready.page.decodedBytes = 128;
+  ready.page.prepareNanoseconds = 500;
+  ready.page.decoded.resize(128);
+  expect_true(queue.publish(std::move(ready)),
+              "prepared immutable bytes should publish within the memory bound");
+  const auto observation = queue.observe(first);
+  expect_true(observation.status == ShadowObservationStatus::Ready,
+              "native demand should observe and retire a ready shadow page");
+  expect_eq(observation.decodedBytes, std::uint64_t{128},
+            "ready observation should preserve preparation metrics");
+
+  const auto second = make_shadow_identity(generation, 1);
+  const auto third = make_shadow_identity(generation, 2);
+  const auto fourth = make_shadow_identity(generation, 3);
+  expect_true(queue.submit({second, "A090001.PVRZ"}) &&
+                  queue.submit({third, "A090002.PVRZ"}),
+              "queue should accept its exact pending capacity");
+  expect_true(!queue.submit({fourth, "A090003.PVRZ"}),
+              "queue should reject work above its pending capacity");
+  expect_true(queue.observe(second).status == ShadowObservationStatus::NotReady,
+              "native demand should cancel queued work that was not ready");
+  expect_true(queue.observe(fourth).status == ShadowObservationStatus::Unplanned,
+              "unplanned native demand should remain an explicit miss");
+
+  iee::core::ShadowPageJob staleJob;
+  expect_true(queue.wait_take(staleJob), "remaining queued work should become active");
+  const auto nextGeneration = queue.begin_generation();
+  expect_true(nextGeneration != generation, "area reset should advance the generation");
+  iee::core::ShadowPreparedResult stale;
+  stale.identity = staleJob.identity;
+  stale.page.status = PvrzPrepareStatus::Ready;
+  stale.page.decodedBytes = 64;
+  stale.page.decoded.resize(64);
+  expect_true(!queue.publish(std::move(stale)),
+              "a result from the previous area generation should be discarded");
+  expect_eq(queue.snapshot().discarded, std::uint64_t{1},
+            "stale publication should be counted without retaining bytes");
+
+  std::atomic<bool> waitReturned{false};
+  std::thread waiter([&] {
+    iee::core::ShadowPageJob unused;
+    waitReturned.store(!queue.wait_take(unused), std::memory_order_release);
+  });
+  queue.request_stop();
+  waiter.join();
+  expect_true(waitReturned.load(std::memory_order_acquire),
+              "shutdown should wake and stop an idle worker");
+  expect_eq(queue.snapshot().completedBytes, std::size_t{0},
+            "shutdown should release every prepared CPU buffer");
 }
 
 std::vector<std::byte> make_legacy_dds(std::uint32_t formatCode, std::uint32_t width,
@@ -4843,6 +5029,8 @@ int main() {
   test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
   test_config_shader_override_roundtrip();
+  test_map_page_shadow_pvrz_validation();
+  test_map_page_shadow_queue_bounds_and_generations();
   test_native_occlusion_probe_correlation();
   test_native_occlusion_mask_capture();
   test_hierarchical_cache_budget_simulator();

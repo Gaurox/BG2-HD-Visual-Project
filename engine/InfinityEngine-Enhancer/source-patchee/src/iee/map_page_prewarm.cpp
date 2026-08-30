@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <filesystem>
 #include <string_view>
 #include <utility>
 #include <vector>
@@ -16,8 +17,10 @@
 #include "area_state.h"
 #include "frame_hook.h"
 #include "iee/core/logger.h"
+#include "iee/core/map_page_shadow.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/pattern_scanner.h"
+#include "iee/core/process_lifetime_worker.h"
 #include "iee/game/resref_runtime.h"
 #include "iee/game/runtime_types_x64.h"
 #include "iee/game/tis_runtime.h"
@@ -44,6 +47,7 @@ struct PageCandidate {
   std::int32_t page{};
   game::ResrefBuffer tilesetResref{};
   game::ResrefBuffer pageResref{};
+  bool initiallyResident{};
 };
 
 enum class PlanState : std::uint8_t { Waiting, Running, Finished, Aborted };
@@ -72,15 +76,105 @@ struct RuntimeState {
   std::uint64_t evictedTextureNames{};
   double totalDemandMs{};
   double maximumDemandMs{};
+  std::uint64_t shadowGeneration{};
+  bool shadowDemandSummaryLogged{};
 };
 
 PvrDemandFn g_demand{};
 std::atomic<bool> g_resetRequested{true};
 RuntimeState g_state{};
+core::MapPageShadowQueue g_shadowQueue{};
+core::ProcessLifetimeWorker g_shadowWorker{};
+std::filesystem::path g_shadowResourceDirectory{};
+bool g_shadowEnabled{};
+
+std::string_view area_name() noexcept;
+
+void log_shadow_summary(std::string_view reason) noexcept {
+  if (!g_shadowEnabled) return;
+  const auto stats = g_shadowQueue.snapshot();
+  if (stats.submitted == 0 && stats.started == 0 && stats.unplannedDemands == 0) return;
+  try {
+    LOG_INFO(
+        "Map page shadow summary: area={}, reason={}, generation={}, submitted={}, "
+        "coalesced={}, rejected={}, started={}, prepared={}, missing={}, ioFailures={}, "
+        "invalid={}, discarded={}, readyBeforeDemand={}, notReadyBeforeDemand={}, "
+        "unplannedDemands={}, compressedMiB={:.2f}, decodedMiB={:.2f}, totalPrepareMs={:.2f}, "
+        "maximumPrepareMs={:.2f}, totalQueueMs={:.2f}, maximumQueueMs={:.2f}, pending={}, "
+        "completed={}, completedMiB={:.2f}, "
+        "peakPending={}, peakCompleted={}, peakCompletedMiB={:.2f}; CPU buffers never reached "
+        "native resources or OpenGL",
+        area_name(), reason, stats.generation, stats.submitted, stats.coalesced,
+        stats.queueRejected, stats.started, stats.prepared, stats.missing,
+        stats.ioFailures, stats.invalid, stats.discarded, stats.readyBeforeDemand,
+        stats.notReadyBeforeDemand, stats.unplannedDemands,
+        static_cast<double>(stats.compressedBytes) / (1024.0 * 1024.0),
+        static_cast<double>(stats.decodedBytes) / (1024.0 * 1024.0),
+        static_cast<double>(stats.prepareNanoseconds) / 1'000'000.0,
+        static_cast<double>(stats.maximumPrepareNanoseconds) / 1'000'000.0,
+        static_cast<double>(stats.queueNanoseconds) / 1'000'000.0,
+        static_cast<double>(stats.maximumQueueNanoseconds) / 1'000'000.0,
+        stats.pendingPages, stats.completedPages,
+        static_cast<double>(stats.completedBytes) / (1024.0 * 1024.0),
+        stats.peakPendingPages, stats.peakCompletedPages,
+        static_cast<double>(stats.peakCompletedBytes) / (1024.0 * 1024.0));
+  } catch (...) {
+  }
+}
+
+unsigned __stdcall shadow_worker_entry(void*) noexcept {
+  try {
+    core::ShadowPageJob job;
+    while (g_shadowQueue.wait_take(job)) {
+      core::ShadowPreparedResult result;
+      result.identity = job.identity;
+      result.page = core::prepare_pvrz_file(job.path);
+      (void)g_shadowQueue.publish(std::move(result));
+    }
+  } catch (...) {
+  }
+  return 0;
+}
+
+void stop_shadow_worker() noexcept {
+  g_shadowEnabled = false;
+  g_shadowQueue.request_stop();
+  const auto join = g_shadowWorker.join();
+  if (join == core::ProcessLifetimeWorker::JoinResult::SelfJoinRejected) {
+    try {
+      LOG_ERROR("Map page shadow shutdown rejected a worker self-join; state retained");
+    } catch (...) {
+    }
+    return;
+  }
+  if (join == core::ProcessLifetimeWorker::JoinResult::WaitFailed) {
+    try {
+      LOG_ERROR("Map page shadow shutdown could not join the worker; state retained");
+    } catch (...) {
+    }
+    return;
+  }
+  g_shadowResourceDirectory.clear();
+  (void)g_shadowWorker.release_module_reference();
+}
+
+core::ShadowPageIdentity shadow_identity(const PageCandidate& candidate) {
+  return {
+      .generation = g_state.shadowGeneration,
+      .areaResref = std::string(area_name()),
+      .tilesetResref = std::string(game::resref_view(candidate.tilesetResref)),
+      .pageResref = std::string(game::resref_view(candidate.pageResref)),
+      .pageNumber = candidate.page,
+  };
+}
 
 void reset_state(std::uint64_t frame) {
+  log_shadow_summary("area-generation-reset");
+  const auto shadowGeneration =
+      g_shadowEnabled ? g_shadowQueue.begin_generation() : std::uint64_t{};
   g_state = {};
   g_state.areaStartFrame = frame;
+  g_state.shadowGeneration = shadowGeneration;
 }
 
 std::string_view area_name() noexcept {
@@ -243,6 +337,7 @@ bool build_plan(AppContext& ctx) {
   plan.areaResref = wed->areaResref;
   plan.tilesetResref = tisResref;
   plan.areaStartFrame = g_state.areaStartFrame;
+  plan.shadowGeneration = g_state.shadowGeneration;
   plan.discoveredPages = seeds.size();
   plan.cappedPages = seeds.size() > planLimit ? seeds.size() - planLimit : 0;
   plan.candidates.reserve((std::min)(static_cast<std::size_t>(planLimit), seeds.size()));
@@ -265,12 +360,26 @@ bool build_plan(AppContext& ctx) {
       ++plan.invalidCandidates;
       continue;
     }
-    if (pvr.texture > 0) ++plan.initiallyResident;
+    const bool initiallyResident = pvr.texture > 0;
+    if (initiallyResident) ++plan.initiallyResident;
     plan.candidates.push_back({wrapper, infTileset.tis[0], tile.pvr, seed.tileIndex,
-                               seed.page, tisResref, pageResref});
+                               seed.page, tisResref, pageResref, initiallyResident});
   }
 
   g_state = std::move(plan);
+  if (g_shadowEnabled) {
+    for (const auto& candidate : g_state.candidates) {
+      // A page already backed by a native texture will not cross the unloaded
+      // Demand boundary measured by this probe. Keeping its CPU copy would also
+      // consume one of the four completed slots and could starve missing pages.
+      if (candidate.initiallyResident) continue;
+      auto identity = shadow_identity(candidate);
+      const auto filename = identity.pageResref + ".PVRZ";
+      (void)g_shadowQueue.submit(
+          {.identity = std::move(identity),
+           .path = g_shadowResourceDirectory / filename});
+    }
+  }
   LOG_INFO(
       "Map page prewarm plan: area={}, tileset={}, discoveredPages={}, plannedPages={}, "
       "cappedPages={}, initiallyResident={}, invalidCandidates={}, pagesPerFrame={}, "
@@ -300,13 +409,59 @@ void configure(PvrDemandFn demand) noexcept {
   g_resetRequested.store(true, std::memory_order_release);
 }
 
+bool configure_shadow(bool enabled,
+                      const std::filesystem::path& resourceDirectory) noexcept {
+  stop_shadow_worker();
+  if (!enabled) return true;
+  try {
+    std::error_code error;
+    const auto status = std::filesystem::symlink_status(resourceDirectory, error);
+    if (error || std::filesystem::is_symlink(status) ||
+        !std::filesystem::is_directory(status)) {
+      LOG_WARN("Map page shadow probe disabled: override resource directory is unavailable");
+      return false;
+    }
+    g_shadowResourceDirectory = std::filesystem::weakly_canonical(resourceDirectory, error);
+    if (error || g_shadowResourceDirectory.empty()) {
+      LOG_WARN("Map page shadow probe disabled: override resource directory is unresolved");
+      g_shadowResourceDirectory.clear();
+      return false;
+    }
+    g_shadowQueue.restart();
+    if (!g_shadowWorker.start(&shadow_worker_entry, nullptr, &shadow_worker_entry)) {
+      g_shadowQueue.request_stop();
+      g_shadowResourceDirectory.clear();
+      LOG_WARN("Map page shadow probe disabled: worker or DLL lifetime guard could not start");
+      return false;
+    }
+    g_shadowEnabled = true;
+    g_resetRequested.store(true, std::memory_order_release);
+    LOG_INFO(
+        "Map page shadow probe prepared: resourceDirectory={}, pendingLimit={}, "
+        "completedLimit={}, completedMiBLimit={:.2f}, decodedPageMiBLimit={:.2f}; "
+        "worker is CPU-only and native Demand remains authoritative",
+        g_shadowResourceDirectory.string(), core::kShadowMaximumPendingPages,
+        core::kShadowMaximumCompletedPages,
+        static_cast<double>(core::kShadowMaximumCompletedBytes) / (1024.0 * 1024.0),
+        static_cast<double>(core::kShadowMaximumDecodedBytes) / (1024.0 * 1024.0));
+    return true;
+  } catch (...) {
+    stop_shadow_worker();
+    return false;
+  }
+}
+
 void request_area_reset() noexcept {
   g_resetRequested.store(true, std::memory_order_release);
 }
 
 void on_post_swap(AppContext& ctx) noexcept {
   try {
-    if (!ctx.cfg.enableMapPagePrewarm || !ctx.cfg.enablePerformanceLogging || !g_demand) return;
+    const bool shadowActive = ctx.cfg.enableMapPageOffframeProbe && g_shadowEnabled;
+    if ((!ctx.cfg.enableMapPagePrewarm && !shadowActive) ||
+        !ctx.cfg.enablePerformanceLogging || !g_demand) {
+      return;
+    }
 
     const auto frame = frame::frame_count();
     if (g_resetRequested.exchange(false, std::memory_order_acq_rel)) {
@@ -329,6 +484,7 @@ void on_post_swap(AppContext& ctx) noexcept {
       abort_plan("area-or-gl-context-changed");
       return;
     }
+    if (!ctx.cfg.enableMapPagePrewarm) return;
     if (g_state.cooldownFrames > 0) {
       --g_state.cooldownFrames;
       return;
@@ -406,7 +562,29 @@ void on_post_swap(AppContext& ctx) noexcept {
   }
 }
 
+void observe_native_demand(void* pvr) noexcept {
+  if (!g_shadowEnabled || !pvr || g_state.shadowGeneration == 0) return;
+  try {
+    const auto candidate = std::find_if(
+        g_state.candidates.begin(), g_state.candidates.end(),
+        [&](const PageCandidate& value) { return value.pvr == pvr; });
+    if (candidate == g_state.candidates.end()) return;
+    (void)g_shadowQueue.observe(shadow_identity(*candidate));
+    if (!g_state.shadowDemandSummaryLogged) {
+      const auto stats = g_shadowQueue.snapshot();
+      if (stats.submitted > 0 &&
+          stats.readyBeforeDemand + stats.notReadyBeforeDemand >= stats.submitted) {
+        g_state.shadowDemandSummaryLogged = true;
+        log_shadow_summary("all-planned-pages-observed");
+      }
+    }
+  } catch (...) {
+  }
+}
+
 void shutdown() noexcept {
+  log_shadow_summary("shutdown");
+  stop_shadow_worker();
   g_demand = nullptr;
   g_resetRequested.store(true, std::memory_order_release);
   g_state = {};

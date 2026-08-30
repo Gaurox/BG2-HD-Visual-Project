@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <cstring>
 #include <exception>
+#include <filesystem>
 #include <iomanip>
 #include <limits>
 #include <optional>
@@ -27,6 +28,7 @@
 #include "area_state.h"
 #include "iee/core/hooking.h"
 #include "iee/core/area_animation_timeline.h"
+#include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/map_view_burst_telemetry.h"
@@ -2247,6 +2249,7 @@ static void* detour_pvr_demand(void* thisPtr) {
 
   const bool ioCandidate = haveBefore &&
                            (before.texture <= 0 || !before.baseclass_0.bLoaded);
+  if (ioCandidate) map_page_prewarm::observe_native_demand(thisPtr);
   IO_COUNTERS ioBefore{};
   const bool haveIoBefore =
       ioCandidate && GetProcessIoCounters(GetCurrentProcess(), &ioBefore);
@@ -2354,7 +2357,10 @@ bool install_all(AppContext& ctx) {
     LOG_INFO("RenderTexture hook created");
 
     map_page_prewarm::configure(nullptr);
-    if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm) && ctx.manifest) {
+    (void)map_page_prewarm::configure_shadow(false, {});
+    if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm ||
+         ctx.cfg.enableMapPageOffframeProbe) &&
+        ctx.manifest) {
       try {
         const auto module = core::get_module_span(nullptr);
         const auto& runtime = ctx.manifest->pvrDemand;
@@ -2370,6 +2376,11 @@ bool install_all(AppContext& ctx) {
         const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
         const auto demandEntry = reinterpret_cast<CResPvrDemandFn>(moduleBase + runtime.demand);
         map_page_prewarm::configure(demandEntry);
+        if (ctx.cfg.enableMapPageOffframeProbe && ctx.cfg.enablePerformanceLogging) {
+          const auto resourceDirectory =
+              core::ConfigManager::config_path().parent_path() / "override";
+          (void)map_page_prewarm::configure_shadow(true, resourceDirectory);
+        }
         if (ctx.cfg.enablePerformanceLogging) {
           g_pvrDemandHook.create(
               reinterpret_cast<void*>(demandEntry),
@@ -2392,12 +2403,19 @@ bool install_all(AppContext& ctx) {
                 "the first prototype requires deletion telemetry for its eviction guard");
           }
         }
+        if (ctx.cfg.enableMapPageOffframeProbe && !ctx.cfg.enablePerformanceLogging) {
+          LOG_WARN(
+              "Map page shadow probe is enabled but inactive because PerformanceLogs=false; "
+              "the probe requires demand correlation telemetry");
+        }
       } catch (const std::exception& error) {
         (void)g_pvrDemandHook.remove();
+        (void)map_page_prewarm::configure_shadow(false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
       } catch (...) {
         (void)g_pvrDemandHook.remove();
+        (void)map_page_prewarm::configure_shadow(false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
       }

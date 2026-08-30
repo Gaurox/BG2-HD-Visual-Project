@@ -21,6 +21,15 @@ shutdown are treated as separate producers so ownership remains clear.
   attribution. Process I/O counters are sampled only for a likely first materialization; the
   bounded per-frame slowest-call table is protected by its own mutex and is read at the swap
   boundary. Disabling `PerformanceLogs` removes this engine hook entirely.
+- The optional Phase 3e-A map-page shadow preparer has one owned worker. The render thread gives it
+  only copied resrefs, a generation and an override path. The worker performs bounded file I/O,
+  zlib inflation and PVR/DXT validation into private immutable bytes; it never calls the engine,
+  native `Demand`, a logger callback, WGL or OpenGL. The render thread only observes and retires the
+  result immediately before the unchanged native demand. Generation changes cancel stale work.
+- The manifested Phase 3e-B0 boundary does not weaken that rule. A future decoded-PVR substitution
+  may run only in the zlib-wrapper detour nested synchronously inside the render thread's exact
+  `CResPVR::Demand` call. It may copy into the destination already allocated by native code, but the
+  worker never sees that pointer and all cache, field, upload and release operations remain native.
 - Safe-read region results are cached only for that frame epoch; `LoadArea`
   advances the epoch before touching a replacement object graph.
 - Readability is not object lifetime. Area refreshes copy palette bytes before
@@ -49,6 +58,11 @@ then removes frame and OpenGL probes, removes the engine hooks, and only then un
 and clears shared state. `DllMain` never performs MinHook, logger, or OpenGL teardown while the
 Windows loader lock is held.
 
+Long-lived DLL workers use the shared trivially destructible `ProcessLifetimeWorker`. It retains a
+module reference while worker code can execute. Normal shutdown first signals the feature queue,
+then joins the worker and finally releases that reference; no worker join or CRT thread destructor
+runs from `DllMain`.
+
 ## Runtime Invariants
 
 1. Only a thread with the owning WGL context may touch enhancer GL objects.
@@ -60,3 +74,7 @@ Windows loader lock is held.
    transition.
 5. If the frame hook is unavailable, view publication remains correct and is
    time-coalesced across Seam calls instead of using the frame epoch.
+6. A shadow page buffer is never a native resource: only the render-thread `CResPVR::Demand` may
+   materialize or publish the engine texture in Phase 3e-A.
+7. A Phase 3e-B consumer must use the exact manifested uncompress return address and a scoped
+   thread-local page identity; every mismatch invokes original zlib and publishes nothing itself.

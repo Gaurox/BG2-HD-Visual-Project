@@ -38,6 +38,7 @@ first version match, which for 2.7.3 was always the BGEE entry.
 | `CInfGame::LoadArea` | unchanged 2.6.6 pattern | exactly 1 | `0x27EBD0` | `0x27EBD0` | `+0x0` |
 | `CVidTile::RenderTexture` | unchanged 2.6.6 pattern | exactly 1 | `0x4257C0` | `0x4257C0` | `+0x0` |
 | `CResPVR::Demand` | diagnostic 25-byte prologue | exactly 1 | `0x3F6DC0` | `0x3F6DC0` | `+0x0` |
+| PVR zlib `uncompress` wrapper | Phase 3e-B0 37-byte pattern | exactly 1 | `0x4000F0` | `0x4000F0` | `+0x0` |
 
 Prologue dumps (24 bytes):
 
@@ -54,6 +55,16 @@ The `CInfTileSet` path calls this target at RVA `0x2A46C3`, then reads the resul
 from `CResPVR+0x58` before dispatching `CVidTile::RenderTexture`. Inside `CResPVR::Demand`, the
 2.7.3 call sequence creates/binds the engine texture, prepares the PVR payload and invokes the
 compressed upload. The diagnostic times those existing phases but does not alter them.
+
+### Phase 3e-B0 decoded-PVR boundary
+
+The 2026-08-30 static audit validated the complete native chain from resource demand through
+decoded-buffer release. `CResPVR::Demand+0x15F` calls the unique zlib wrapper at `0x4000F0`; the
+native post-decode window at `Demand+0x164` then publishes format/size, uploads the DXT payload and
+releases the engine-allocated destination. The C++ manifest carries both exact signatures and the
+offline validator decodes all nine phase calls. See
+[`map-page-offframe-phase3b0.md`](map-page-offframe-phase3b0.md) for ownership, cache and fallback
+evidence. No consuming hook is enabled by this manifest addition.
 
 ## Render Callsite Decode (all 11 descriptors)
 

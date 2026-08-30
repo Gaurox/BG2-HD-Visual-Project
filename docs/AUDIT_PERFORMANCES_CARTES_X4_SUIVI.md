@@ -1441,3 +1441,158 @@ Cette étape doit d'abord démontrer l'adressage des ressources, le respect des 
 bonne annulation et un taux de préparation anticipée suffisant sur AR0900. La consommation réelle
 3e-B reste bloquée tant que la frontière native entre zlib, ownership des buffers, cache PVR et
 upload GL n'est pas établie pour le build manifesté 2.7.3.
+
+## Étape 3e-A — préparateur PVRZ *shadow* hors frame — 2026-08-30
+
+Le premier jalon du contrat est maintenant implémenté derrière
+`EnableMapPageOffframeProbe=false`. Il exige également `PerformanceLogs=true`, réutilise le plan
+borné de la carte courante et ne change pas le chemin de rendu. Le thread GL publie uniquement une
+identité copiée et versionnée. Un worker unique lit un PVRZ explicite de l'`override`, décompresse
+son flux zlib et valide l'enveloppe PVR v3 ainsi que la taille exacte des blocs DXT1/DXT5 dans un
+buffer CPU privé. Une ressource disponible uniquement via KEY/BIFF est un *miss* propre.
+
+Le worker n'appelle ni le moteur, ni `CResPVR::Demand`, ni WGL/OpenGL, ni un callback de log. Juste
+avant une demande native nécessaire, le thread de rendu mesure si le buffer correspondant était
+prêt puis le détruit ; le `Demand` natif demeure intégralement autoritaire. Les changements de
+génération annulent les jobs, et l'arrêt réveille puis joint le worker avant de libérer la référence
+au DLL.
+
+Les bornes fixes sont de 32 Mio comprimés et 20 Mio décodés par page, 96 jobs en attente, quatre
+résultats terminés et 72 Mio de buffers terminés cumulés. Les doublons sont coalescés et le worker
+attend si le handoff terminé est plein. zlib 1.3.2 est lié statiquement depuis le commit complet
+`da607da739fa6047df13e66a2af6b8bec7c2a498`.
+
+### Qualification hors ligne
+
+- compilation DLL, tests et outil de préflight réussie en Debug et Release ;
+- `ctest` : 2/2 en Debug et 2/2 en Release ;
+- tests Python communs rejoués seuls : 207/207 ;
+- `BaldurReal.exe` 2.7.3 validé hors ligne, SHA-256
+  `b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57`, trois signatures et onze
+  callsites conformes ;
+- tests natifs du parseur et des queues : DXT1/DXT5 valides, enveloppe, format, flux tronqué et
+  tailles invalides rejetés, capacités/coalescence, résultat prêt, annulation, génération périmée,
+  réveil à l'arrêt et libération des buffers.
+
+Le préflight Release utilisant le parseur de production accepte les 26/26 pages jour d'AR0900.
+Elles représentent 151,73 Mio lus et 416,00 Mio décodés. L'exécution séquentielle totalise
+971,40 ms, avec 18,05 ms minimum, 39,38 ms de médiane et 41,94 ms maximum par page. Ce résultat
+prouve le support exact des fichiers installés et dimensionne le travail ; il ne prouve pas encore
+qu'un buffer sera prêt avant sa demande native.
+
+La gate suivante définie avant l'essai était une seule session AR0900 installée via la transaction
+DLL/INI : vérifier l'absence d'erreur, deadlock, mutation native/GL et résultat périmé accepté,
+relever les pics de queues/mémoire ainsi que `readyBeforeDemand` contre `notReadyBeforeDemand`, et
+confirmer le rendu inchangé.
+
+### Gate ingame AR0900
+
+Une première exécution a confirmé le rendu mais révélé deux défauts d'observabilité du prototype :
+le résumé n'était émis que lors d'un reset de zone ou du hook d'arrêt, non atteint par la fermeture
+normale observée, et les sept pages déjà résidentes étaient soumises au worker. Leurs quatre
+résultats terminés pouvaient remplir la queue sans jamais rencontrer de `Demand` natif, puis
+retarder les pages réellement absentes. Le journal de cette tentative est conservé hors dépôt sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-shadow-20260830T000000\post-run-incomplete-observability\InfinityEngine-Enhancer.log`,
+SHA-256 `8E9E67F22C5F8F4C7E354F6C4FF7C50ADC72CF282CD62C2A7F7F92763536850F`.
+
+La correction exclut désormais du *shadow* les pages résidentes lors de la construction du plan et
+émet une fois le résumé dès que toutes les demandes planifiées ont été observées. Les suites
+Debug/Release sont restées vertes. Le candidat corrigé avait les identités suivantes :
+
+- DLL Release : 1 494 528 octets, SHA-256
+  `F7A5600DC729B5A8804FBE37EC21AA0D40E55FAF6BB9F2CE0A7EC5E24CBDD334` ;
+- INI de test : SHA-256
+  `3EAAA2002BF3A0D6E4272BCFAE8B6143F9B9921472EFF05717A924E27573C746` ;
+- reçu transactionnel :
+  `backups/renderer/20260830T123341078087Z-2f0bdcb6/renderer-install-receipt.json`.
+
+La sauvegarde AR0900 a été chargée via InfinityLoader. Après le délai de 30 frames, la carte a été
+ouverte jusqu'à sa vue entièrement dézoomée. L'affichage est resté correct, sans couture,
+corruption, crash ni blocage. La session bornée ne contient aucune erreur ; son unique avertissement
+est la récupération déjà connue du prologue `RenderTexture` détourné par EEex.
+
+| Mesure *shadow* AR0900 | Résultat |
+|---|---:|
+| pages du plan | 26 |
+| pages déjà résidentes, non soumises | 7 |
+| pages soumises | 19 |
+| prêtes avant `Demand` natif | 16 (84,21 %) |
+| non prêtes avant `Demand` natif | 3 (15,79 %) |
+| manquantes / I/O en échec / invalides / rejetées / périmées | 0 / 0 / 0 / 0 / 0 |
+| préparation terminée | 16 pages, 95,63 Mio comprimés, 256,00 Mio décodés |
+| temps CPU de préparation | 616,52 ms total ; 42,81 ms maximum |
+| pic de queue en attente | 18 pages |
+| pic de résultats terminés | 4 pages, 64,00 Mio |
+
+Le pic de 64,00 Mio respecte la borne cumulée de 72 Mio. Le temps de queue élevé observé
+(`maximumQueueMs=14102,53`) correspond au lancement anticipé pendant l'attente avant l'ouverture de
+la carte ; il n'est pas un temps de blocage de la frame. Le résumé complet est archivé hors dépôt
+sous
+`G:\AI\BG2_Upscale-data\performance-audit\map-page-shadow-20260830T000000\post-run-v2\InfinityEngine-Enhancer.AR0900-shadow-v2.log`,
+SHA-256 `84C03761DD799EBAD1B2BDE3AD0D1C77C5BC172167377B739E3B5BD50B0B9DEE`.
+
+La gate 3e-A est donc **validée ingame** : la préparation CPU bornée est assez souvent disponible
+avant la demande native pour justifier l'étude d'un consommateur. Elle ne réduit encore aucun temps
+de frame, puisque les buffers CPU ont tous été observés puis détruits et que le `Demand` natif est
+resté intégralement inchangé.
+
+Après fermeture du jeu et d'InfinityLoader, la transaction a été restaurée. Le DLL actif est revenu
+au SHA-256 `9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E`
+et l'INI au SHA-256 `B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+3e-B reste bloquée tant que la frontière native de consommation n'est pas établie. Aucun élément
+`validated-installed` n'est produit et `areas.csv`, les manifests de release, le staging et les
+packages restent inchangés.
+
+## Étape 3e-B0 — frontière native de consommation — 2026-08-30
+
+L'analyse statique du `BaldurReal.exe` manifesté a été étendue au corps complet de
+`CResPVR::Demand`. Elle porte sur le fichier de 7 202 696 octets, SHA-256
+`b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57`. La fonction est délimitée
+par les données d'unwind à `RVA 0x3F6DC0..0x3F6F7F`.
+
+La fonction native gère successivement l'éviction de texture, la LRU de 128 `CResPVR*`, le
+chargement des octets PVRZ via `CRes`, la création et le binding de texture, l'allocation du buffer
+décodé, zlib, la publication des champs PVR, l'upload DXT puis la libération du buffer décodé. Une
+réimplémentation complète de `Demand`, une publication dans `CRes::pData` ou un saut au milieu de la
+fonction sont donc rejetés : chacun dupliquerait ou contournerait un propriétaire natif.
+
+Une frontière plus étroite est en revanche prouvée. À `Demand+0x15F` (`RVA 0x3F6F1F`), le moteur
+appelle son wrapper `uncompress` unique à `RVA 0x4000F0`. À cet instant :
+
+- les octets PVRZ bruts ont déjà été chargés par le `CRes` natif ;
+- la destination décodée a déjà été allouée par le moteur ;
+- aucun champ PVR ni upload n'a encore été publié ;
+- après le retour à `Demand+0x164`, le moteur parse le PVR, publie format/largeur/hauteur, appelle
+  l'upload compressé puis libère sa propre destination.
+
+Le futur consommateur 3e-B1 peut donc, sur le thread de rendu uniquement, copier le PVR déjà décodé
+dans cette destination, écrire la longueur produite et retourner `Z_OK`. Il ne doit jamais conserver
+le pointeur natif. La substitution exige l'adresse de retour exacte `RVA 0x3F6F24`, un scope
+`CResPVR::Demand` actif, l'identité/génération/resref de la page, `source == pData+4`,
+`sourceLength+4 == nSize`, la taille décodée exacte, les bornes 3e-A et un CRC32 du flux compressé
+identique. Tout écart appelle le zlib original.
+
+L'outil `validate_build.py` localise maintenant exactement une signature `Demand` et une signature
+du wrapper zlib, puis décode les neuf callsites natifs suivants :
+
+| Phase | Offset `Demand` | Cible RVA |
+|---|---:|---:|
+| suppression texture évincée | `+0xA9` | `0x413270` |
+| décalage LRU | `+0xC1` | `0x4FA710` |
+| chargement `CRes` | `+0xDC` | `0x402A00` |
+| création texture | `+0x12E` | `0x413350` |
+| binding texture | `+0x138` | `0x413140` |
+| allocation destination | `+0x143` | `0x502678` |
+| handoff `uncompress` | `+0x15F` | `0x4000F0` |
+| upload compressé | `+0x198` | `0x413240` |
+| libération destination | `+0x1A0` | `0x4FDAB8` |
+
+La fenêtre native post-décompression à `Demand+0x164` est également signée dans le manifeste C++.
+La validation hors ligne passe sur l'exécutable installé. La preuve détaillée est conservée dans
+`engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b0.md`.
+
+3e-B0 est **terminée** : une frontière respectant l'ownership natif existe. Elle n'active toutefois
+aucun consommateur et ne produit aucun gain ingame à elle seule. La prochaine étape est 3e-B1 : une
+option séparée, `false` par défaut, limitée d'abord à une seule page consommée par génération AR0900,
+avec toutes les autres pages et tous les échecs sur `uncompress` natif. Aucun élément
+`validated-installed` ni changement de release n'est produit.

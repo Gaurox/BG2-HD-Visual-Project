@@ -177,6 +177,15 @@ Use WSL for analysis and host-side tests. The actual DLL build is Windows-only.
   `cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON`
   `cmake --build build --config Release --target release_bundle`
 
+The build-only `iee_map_page_shadow_preflight` target applies the production Phase 3e-A parser to
+one PVRZ without starting or changing the game:
+`build\Release\iee_map_page_shadow_preflight.exe <override-page.PVRZ>`.
+
+For the unified 2.7.3 executable, `tools/validate_build.py` also gates the Phase 3e-B0 decoded-PVR
+boundary: the unique zlib wrapper, all nine native `CResPVR::Demand` phase calls and the
+post-decode field/upload/release window. This is static evidence only; no decoded-buffer consumer is
+enabled by the manifest.
+
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.
 

@@ -54,7 +54,15 @@ dans `areas.csv`.
   rollback et reprise fail-closed ; les quatre anciens instantanés moteur restent des preuves brutes
   à ne plus utiliser pour une installation. `areas.csv` désigne le sous-build `page4096`, alors que les 27 fichiers
   réellement installés correspondent au sous-build `page4096-spline-fit1.0`. La campagne validée
-  mesure un cache OS chaud, pas un démarrage froid.
+  mesure un cache OS chaud, pas un démarrage froid. Le préparateur *shadow* 3e-A est maintenant
+  implémenté : worker CPU unique, PVRZ d'override uniquement, décompression zlib et validation PVR
+  bornées, buffers immuables, invalidation par génération et `Demand` natif inchangé. Les suites
+  Debug/Release et 207 tests Python passent ; le préflight Release accepte 26/26 pages AR0900
+  (151,73 Mio comprimés, 416,00 Mio décodés, médiane 39,38 ms/page). La gate ingame AR0900 est
+  validée : sur 19 pages absentes soumises, 16 (84,21 %) étaient prêtes avant `Demand` et 3 ne
+  l'étaient pas, sans échec ni résultat périmé ; le pic terminé reste borné à 4 pages / 64 Mio et le
+  rendu est inchangé. Cette preuve reste une observation : aucun buffer n'est consommé par le
+  moteur et aucun temps de frame n'est encore évité.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
   thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
@@ -62,8 +70,14 @@ dans `areas.csv`.
   *shadow* 3e-A décrit dans
   [`../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/map-page-offframe-preparation.md) : aucune
   mutation moteur/GL sur le worker, données CPU immuables, queues et mémoire bornées, invalidation
-  par génération et `Demand` natif inchangé. Valider d’abord AR0900 ; ne rejouer les
-  quatre zones qu’après réussite. Une éventuelle campagne cache OS froid doit rester séparée.
+  par génération et `Demand` natif inchangé. Son implémentation et sa gate AR0900 sont terminées.
+  3e-B0 a établi cette frontière sur le build manifesté : l'appel `uncompress` à
+  `CResPVR::Demand+0x15F` peut recevoir le PVR déjà décodé dans la destination allouée par le moteur,
+  tandis que chargement `CRes`, LRU native de 128 entrées, champs PVR, upload et libération restent
+  natifs. Les signatures et neuf callsites sont maintenant vérifiés hors ligne. La prochaine étape
+  est le canari 3e-B1, opt-in et limité à une page consommée par génération, avec CRC/taille/source
+  stricts et zlib original en fallback. Ne rejouer les quatre zones qu'après une consommation
+  render-thread sûre et réversible. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

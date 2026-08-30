@@ -39,19 +39,45 @@ struct ReferenceRvas {
   std::uintptr_t renderTexture{};
 };
 
-// Optional, diagnostics-only CResPVR::Demand target. It is installed only
-// while PerformanceLogs is enabled and only after the exact manifested bytes
-// are confirmed at the build-specific RVA.
+// Optional, static evidence for the render-thread-only decoded-PVR handoff.
+// Nothing calls or patches this boundary until a consuming prototype validates
+// both the unique uncompress wrapper and the native post-decode field/upload
+// window on the positively identified build.
+struct PvrDecodeBoundary {
+  std::size_t uncompressCallOffset{};
+  std::uintptr_t uncompress{};
+  std::string_view uncompressSignature{};
+  std::size_t consumeWindowOffset{};
+  std::string_view consumeWindowSignature{};
+
+  [[nodiscard]] constexpr bool enabled() const noexcept {
+    return uncompressCallOffset != 0 && uncompress != 0 &&
+           !uncompressSignature.empty() && consumeWindowOffset != 0 &&
+           !consumeWindowSignature.empty();
+  }
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    const bool empty = uncompressCallOffset == 0 && uncompress == 0 &&
+                       uncompressSignature.empty() && consumeWindowOffset == 0 &&
+                       consumeWindowSignature.empty();
+    return empty || enabled();
+  }
+};
+
+// Optional CResPVR::Demand target. Diagnostics use the entry signature alone;
+// Phase 3e-B consumers additionally require the exact decoded-PVR boundary.
 struct PvrDemandRuntime {
   std::uintptr_t demand{};
   std::string_view signature{};
+  PvrDecodeBoundary decodeBoundary{};
 
   [[nodiscard]] constexpr bool enabled() const noexcept {
     return demand != 0 && !signature.empty();
   }
 
   [[nodiscard]] constexpr bool validate() const noexcept {
-    return (demand == 0) == signature.empty();
+    return (demand == 0) == signature.empty() && decodeBoundary.validate() &&
+           (!decodeBoundary.enabled() || enabled());
   }
 };
 

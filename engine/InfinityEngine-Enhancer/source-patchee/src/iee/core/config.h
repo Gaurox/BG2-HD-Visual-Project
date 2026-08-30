@@ -27,6 +27,9 @@ struct EngineConfig {
   // Experimental map-only PVRZ prewarm. The engine's normal synchronous
   // Demand path remains authoritative for pages that are not ready yet.
   bool enableMapPagePrewarm = false;
+  // Phase 3e-A read/decode-only probe. It never publishes bytes to the engine
+  // or calls OpenGL; native Demand remains authoritative.
+  bool enableMapPageOffframeProbe = false;
   std::uint32_t mapPagePrewarmPagesPerFrame = 1;
   float mapPagePrewarmBudgetMs = 8.0f;
   // Leave 32 of the engine's evidenced 128 PVR slots outside the plan. This
