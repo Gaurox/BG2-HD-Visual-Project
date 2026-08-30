@@ -68,12 +68,45 @@ struct PvrDecodeBoundary {
   }
 };
 
+// Optional Phase 3e-B2c evidence for observing the native PVR cache and the
+// file-open boundary nested in CRes::Demand. These RVAs are diagnostic only:
+// runtime code may read stable pointer identities and hook function entries,
+// but must never edit cache slots or native resource fields.
+struct PvrLifecycleBoundary {
+  std::size_t cacheReferenceOffset{};
+  std::uintptr_t cacheEntries{};
+  std::size_t cacheEntryCount{};
+  std::uintptr_t cacheRelease{};
+  std::string_view cacheReleaseSignature{};
+  std::size_t cacheReleaseReferenceOffset{};
+  std::size_t resourceFileOpenCallOffset{};
+  std::uintptr_t resourceFileOpen{};
+  std::string_view resourceFileOpenSignature{};
+
+  [[nodiscard]] constexpr bool enabled() const noexcept {
+    return cacheReferenceOffset != 0 && cacheEntries != 0 && cacheEntryCount != 0 &&
+           cacheRelease != 0 && !cacheReleaseSignature.empty() &&
+           cacheReleaseReferenceOffset != 0 && resourceFileOpenCallOffset != 0 &&
+           resourceFileOpen != 0 && !resourceFileOpenSignature.empty();
+  }
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    const bool empty = cacheReferenceOffset == 0 && cacheEntries == 0 &&
+                       cacheEntryCount == 0 && cacheRelease == 0 &&
+                       cacheReleaseSignature.empty() && cacheReleaseReferenceOffset == 0 &&
+                       resourceFileOpenCallOffset == 0 && resourceFileOpen == 0 &&
+                       resourceFileOpenSignature.empty();
+    return empty || (enabled() && cacheEntryCount == 128);
+  }
+};
+
 // Optional CResPVR::Demand target. Diagnostics use the entry signature alone;
 // Phase 3e-B consumers additionally require the exact decoded-PVR boundary.
 struct PvrDemandRuntime {
   std::uintptr_t demand{};
   std::string_view signature{};
   PvrDecodeBoundary decodeBoundary{};
+  PvrLifecycleBoundary lifecycleBoundary{};
 
   [[nodiscard]] constexpr bool enabled() const noexcept {
     return demand != 0 && !signature.empty();
@@ -81,7 +114,9 @@ struct PvrDemandRuntime {
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     return (demand == 0) == signature.empty() && decodeBoundary.validate() &&
-           (!decodeBoundary.enabled() || enabled());
+           lifecycleBoundary.validate() &&
+           (!decodeBoundary.enabled() || enabled()) &&
+           (!lifecycleBoundary.enabled() || (enabled() && decodeBoundary.enabled()));
   }
 };
 

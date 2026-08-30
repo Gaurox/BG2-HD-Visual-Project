@@ -1886,3 +1886,65 @@ processus et mémoire des queues. Aucune valeur/retour natif ne doit être modif
 divergence avant l'échec de `A090010` définira l'unique invariant à corriger ; le candidat corrigé
 devra d'abord passer trois revendications sur AR0900. La campagne quatre zones reste bloquée.
 Aucun élément `validated-installed`, `areas.csv` ou manifeste de release n'est modifié.
+
+## Étape 3e-B2c — cycle de vie cache/fichier et première divergence — 2026-08-30
+
+B2c remplace les champs natifs devinés par des frontières manifestées sur le
+`BaldurReal.exe` 2.7.3 exact : cache PVR de 128 pointeurs à la RVA `0x721B70`, référence depuis
+`CResPVR::Demand+0x19`, routine de libération à la RVA `0x3F70B0` et appel du helper d'ouverture
+fichier depuis `CRes::Demand+0xE2` vers la RVA `0x408430`. Le validateur hors ligne et
+l'installation runtime échouent fermés si une signature, un call edge ou une référence RIP ne
+correspond pas. La télémétrie ne lit que pointeurs, tailles et champs déjà validés ; elle n'écrit
+aucun slot, champ ou retour natif.
+
+Les gates hors ligne passent : CTest Debug 2/2, CTest Release 2/2, DLL Windows x64 Release et son
+CTest 2/2, 207 tests Python, validateur exact du binaire et préflight de transaction. Le contrôle
+AR0900 limité à deux claims repasse : `A090001` et `A090008` consomment les buffers préparés,
+`A090009`, `A090010` et les pages suivantes chargent nativement, la carte complète est correcte et
+reste stable plus de 25 secondes avant une sortie propre. Les 19 ouvertures PVR observées
+réussissent et aucune libération de cache n'est attendue sous le plafond de 128.
+
+Le discriminateur à trois claims reproduit ensuite le crash différé. Les trois substitutions
+elles-mêmes terminent normalement :
+
+| Claim | Page | ouverture | `CRes::Demand` | texture |
+|---:|---|---|---|---:|
+| 1/3 | `A090001` | vrai / erreur 0 | vrai / 7 172 686 octets | 40 |
+| 2/3 | `A090008` | vrai / erreur 0 | vrai / 6 874 805 octets | 41 |
+| 3/3 | `A090009` | vrai / erreur 0 | vrai / 6 489 575 octets | 42 |
+
+La page immédiatement suivante est la première divergence : `A090010` est connue par la queue
+mais `not-ready`, choisit `native-fallback-claim-limit`, puis son helper d'ouverture renvoie
+**`false`, `GetLastError=32` (`ERROR_SHARING_VIOLATION`)**. `CRes::Demand` propage `false` avec
+`pData=null`/`nSize=0`, aucun retour `CResPVR::Demand` n'est journalisé et InfinityLoader capture
+`0xC0000005`.
+
+Cette frontière exclut les hypothèses cache/mémoire : `A090010` vient d'être insérée une seule fois
+au slot 127, l'occupation n'est que de 36/128, aucune routine de libération n'a été appelée, le
+nombre de handles reste à 795 et la mémoire processus a déjà baissé par rapport au claim précédent.
+La queue montre simultanément 14 jobs en attente et l'identité `A090010` connue mais absente de la
+deque : le worker unique a donc pris ce job en vol. Le code retire l'identité et entre aussitôt dans
+le fallback natif, sans acquittement de fin du lecteur shadow. La collision de durée de vie du
+handle fichier est la première cause démontrée ; rien n'indique une corruption du buffer décodé,
+de la LRU ou de la texture.
+
+Les candidats, logs, reçu installé/restauré, crash log et petit dump sont archivés sous :
+
+```text
+G:\AI\BG2_Upscale-data\performance-audit\map-page-offframe-phase3b2c-20260830
+```
+
+Le détail complet et les hashes sont dans
+[`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2c.md`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/map-page-offframe-phase3b2c.md).
+Après les deux essais, aucun processus jeu/loader ne reste et la racine jeu retrouve exactement la
+DLL `9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E` et l'INI
+`B7B391539DA4A31DA71684D9809AD416E6BDFAEE21AAFE89A0482A7AC4EDE8B5`.
+
+La source est revenue à la frontière de contrôle de deux claims. La prochaine gate est
+**3e-B2d** : représenter explicitement l'identité détenue par le worker et obtenir son acquittement
+de fermeture avant qu'un fallback natif ouvre la même PVRZ. Un job encore en attente peut être
+retiré sans attente ; un job déjà en vol doit fermer puis signaler sa libération. Ce protocole doit
+avoir un test de concurrence déterministe, conserver tous les retours natifs autoritaires, puis
+passer le test trois claims sur AR0900 avec carte complète, stabilité prolongée et sortie propre.
+La campagne quatre zones reste bloquée. Aucun élément `validated-installed`, `areas.csv` ou
+manifeste de release n'est modifié.

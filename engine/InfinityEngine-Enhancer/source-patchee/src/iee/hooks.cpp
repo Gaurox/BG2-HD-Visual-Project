@@ -69,6 +69,8 @@ using GameAreaRenderFn = void (*)(void*, void*);
 using DrawFlushGlFn = void (*)();
 using CResPvrDemandFn = void* (*)(void*);
 using CResPvrUncompressFn = int (*)(void*, std::uint32_t*, const void*, std::uint32_t);
+using CResPvrReleaseFn = void (*)(void*);
+using CResFileOpenFn = int (*)(void*, const void*, std::uint32_t, void*);
 
 // Hook management - initialize MinHook
 // Intentionally explicit lifetime: a static smart-pointer destructor would
@@ -88,7 +90,10 @@ static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
 static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
 static core::Hook<CResPvrDemandFn> g_resDemandDiagnosticHook;
 static core::Hook<CResPvrUncompressFn> g_pvrUncompressHook;
+static core::Hook<CResPvrReleaseFn> g_pvrCacheReleaseHook;
+static core::Hook<CResFileOpenFn> g_resFileOpenDiagnosticHook;
 static std::uintptr_t g_pvrUncompressExpectedReturn{};
+static const void* g_pvrCacheEntries{};
 static DrawFlushGlFn g_drawFlushGl{};
 
 static AppContext* g_ctx = nullptr;
@@ -2223,6 +2228,77 @@ std::uint64_t performance_nanoseconds(const LARGE_INTEGER& start,
       ticks * 1'000'000'000.0L / static_cast<long double>(frequency));
 }
 
+constexpr std::size_t kPvrLifecycleCacheEntries = 128;
+
+struct PvrLifecycleCacheSnapshot {
+  bool readable{};
+  std::uint32_t occupied{};
+  std::int32_t resourceIndex{-1};
+  std::uint32_t resourceDuplicates{};
+  std::uintptr_t head{};
+  std::uintptr_t tail{};
+  std::uint64_t fingerprint{};
+};
+
+PvrLifecycleCacheSnapshot capture_pvr_lifecycle_cache(void* resource) noexcept {
+  PvrLifecycleCacheSnapshot snapshot{};
+  if (!g_pvrCacheEntries) return snapshot;
+  std::array<void*, kPvrLifecycleCacheEntries> entries{};
+  if (!core::safe_read(g_pvrCacheEntries, entries)) return snapshot;
+  snapshot.readable = true;
+  snapshot.fingerprint = 1469598103934665603ull;
+  for (std::size_t index = 0; index < entries.size(); ++index) {
+    const auto value = reinterpret_cast<std::uintptr_t>(entries[index]);
+    snapshot.fingerprint ^= value;
+    snapshot.fingerprint *= 1099511628211ull;
+    if (!entries[index]) continue;
+    if (snapshot.occupied == 0) snapshot.head = value;
+    snapshot.tail = value;
+    ++snapshot.occupied;
+    if (entries[index] == resource) {
+      snapshot.resourceIndex = static_cast<std::int32_t>(index);
+      ++snapshot.resourceDuplicates;
+    }
+  }
+  return snapshot;
+}
+
+game::ResrefBuffer diagnostic_pvr_resref(void* resource) noexcept {
+  game::ResrefBuffer resref{};
+  game::CResPVR snapshot{};
+  if (!resource || !core::safe_read(resource, snapshot) ||
+      !game::read_runtime_resref(snapshot.baseclass_0.resref, resref)) {
+    resref[0] = '?';
+  }
+  return resref;
+}
+
+std::string_view consume_outcome_diagnostic_name(
+    map_page_prewarm::PvrConsumeOutcome outcome) noexcept {
+  using map_page_prewarm::PvrConsumeOutcome;
+  switch (outcome) {
+    case PvrConsumeOutcome::NotReached:
+      return "not-reached";
+    case PvrConsumeOutcome::Consumed:
+      return "consumed";
+    case PvrConsumeOutcome::UnexpectedReturnAddress:
+      return "unexpected-return-address";
+    case PvrConsumeOutcome::ResourceMismatch:
+      return "resource-mismatch";
+    case PvrConsumeOutcome::SourceMismatch:
+      return "source-mismatch";
+    case PvrConsumeOutcome::SizeMismatch:
+      return "size-mismatch";
+    case PvrConsumeOutcome::CrcMismatch:
+      return "crc-mismatch";
+    case PvrConsumeOutcome::MemoryRejected:
+      return "memory-rejected";
+    case PvrConsumeOutcome::InternalError:
+      return "internal-error";
+  }
+  return "unknown";
+}
+
 class PvrDemandScopeGuard {
  public:
   PvrDemandScopeGuard() noexcept { core::begin_pvr_demand_scope(); }
@@ -2289,13 +2365,34 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
                                  const void* source, std::uint32_t sourceSize) {
   const auto original = g_pvrUncompressHook.original();
   auto* attempt = g_activePvrConsumeAttempt;
+  const auto logDecision = [&](std::string_view action, std::string_view reason) {
+    try {
+      const auto resref = diagnostic_pvr_resref(g_activePvrConsumeResource);
+      LOG_INFO(
+          "Map page B2c zlib decision: page={}, resource=0x{:X}, action={}, reason={}, "
+          "destination=0x{:X}, destinationSizePtr=0x{:X}, source=0x{:X}, sourceBytes={}, "
+          "prepared=0x{:X}, preparedBytes={}",
+          game::resref_view(resref),
+          reinterpret_cast<std::uintptr_t>(g_activePvrConsumeResource), action, reason,
+          reinterpret_cast<std::uintptr_t>(destination),
+          reinterpret_cast<std::uintptr_t>(destinationSize),
+          reinterpret_cast<std::uintptr_t>(source), sourceSize,
+          attempt ? reinterpret_cast<std::uintptr_t>(attempt->page.decoded.data()) : 0,
+          attempt ? attempt->page.decoded.size() : 0);
+    } catch (...) {
+    }
+  };
   const auto fallback = [&](map_page_prewarm::PvrConsumeOutcome outcome) {
     if (attempt && attempt->outcome == map_page_prewarm::PvrConsumeOutcome::NotReached) {
       attempt->outcome = outcome;
     }
+    logDecision("original-zlib", consume_outcome_diagnostic_name(outcome));
     return original(destination, destinationSize, source, sourceSize);
   };
-  if (!attempt) return original(destination, destinationSize, source, sourceSize);
+  if (!attempt) {
+    logDecision("original-zlib", "no-active-claim");
+    return original(destination, destinationSize, source, sourceSize);
+  }
 
   try {
     const auto actualReturn = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
@@ -2371,6 +2468,7 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
       return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
     }
 
+    logDecision("prepared-copy", "validated");
     LARGE_INTEGER copyStarted{};
     LARGE_INTEGER copyEnded{};
     const bool copyMeasured = QueryPerformanceCounter(&copyStarted);
@@ -2387,10 +2485,10 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
   }
 }
 
-// Phase 3e-B2a/B2b observes the exact native CRes::Demand call nested inside
-// the correlated CResPVR::Demand. It never substitutes a raw resource or
-// changes the return value. The count/ownership reads added for B2b are
-// diagnostic only; their runtime semantics are not trusted by the consumer.
+// Phase 3e-B2c observes the exact native CRes::Demand call nested inside the
+// correlated CResPVR::Demand. Only statically proven data/size/loaded/texture
+// fields and pointer/function boundaries are reported; no guessed count field
+// or native return value is read or changed.
 static void* detour_res_demand_diagnostic(void* thisPtr) {
   const auto original = g_resDemandDiagnosticHook.original();
   if (!thisPtr || thisPtr != g_activePvrConsumeResource) {
@@ -2399,46 +2497,177 @@ static void* detour_res_demand_diagnostic(void* thisPtr) {
 
   game::CResPVR before{};
   const bool haveBefore = core::safe_read(thisPtr, before);
-  game::ResrefBuffer resref{};
-  if (!haveBefore ||
-      !game::read_runtime_resref(before.baseclass_0.resref, resref)) {
-    resref[0] = '?';
-  }
+  const auto resref = diagnostic_pvr_resref(thisPtr);
   const auto* attempt = g_activePvrConsumeAttempt;
   const auto claimOrdinal = attempt ? attempt->claimOrdinal : 0u;
   const auto claimLimit = core::kMapPageConsumeMaximumClaimsPerGeneration;
+  const auto lifecycle = map_page_prewarm::lifecycle_snapshot(thisPtr);
+  const auto cacheBefore = capture_pvr_lifecycle_cache(thisPtr);
+  const auto processBefore = core::capture_process_resource_snapshot();
   try {
     LOG_INFO(
-        "Map page off-frame CRes::Demand entry: page={}, activeClaim={}, claim={}/{}, "
-        "preData={}, preSize={}, preCount={}, preWasMalloced={}, preLoaded={}, preTexture={}",
-        game::resref_view(resref), attempt != nullptr, claimOrdinal, claimLimit,
-        haveBefore && before.baseclass_0.pData != nullptr,
+        "Map page B2c CRes::Demand entry: page={}, resource=0x{:X}, activeClaim={}, "
+        "claim={}/{}, rawData=0x{:X}, rawSize={}, loaded={}, texture={}, prepared=0x{:X}, "
+        "preparedBytes={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, "
+        "cacheDuplicates={}, cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, "
+        "queuePending={}, queueCompleted={}, queueBytes={}, workingSetBytes={}, "
+        "privateBytes={}, handles={}",
+        game::resref_view(resref), reinterpret_cast<std::uintptr_t>(thisPtr),
+        attempt != nullptr, claimOrdinal, claimLimit,
+        haveBefore ? reinterpret_cast<std::uintptr_t>(before.baseclass_0.pData) : 0,
         haveBefore ? before.baseclass_0.nSize : 0u,
-        haveBefore ? before.baseclass_0.nCount : 0u,
-        haveBefore && before.baseclass_0.bWasMalloced,
         haveBefore && before.baseclass_0.bLoaded,
-        haveBefore ? before.texture : 0);
+        haveBefore ? before.texture : 0,
+        attempt ? reinterpret_cast<std::uintptr_t>(attempt->page.decoded.data()) : 0,
+        attempt ? attempt->page.decoded.size() : 0,
+        cacheBefore.readable, cacheBefore.occupied, cacheBefore.resourceIndex,
+        cacheBefore.resourceDuplicates, cacheBefore.head, cacheBefore.tail,
+        cacheBefore.fingerprint, lifecycle ? lifecycle->pendingPages : 0,
+        lifecycle ? lifecycle->completedPages : 0,
+        lifecycle ? lifecycle->completedBytes : 0,
+        processBefore.memoryAvailable ? processBefore.workingSetBytes : 0,
+        processBefore.memoryAvailable ? processBefore.privateBytes : 0,
+        processBefore.handlesAvailable ? processBefore.handleCount : 0);
   } catch (...) {
   }
 
   void* result = original(thisPtr);
+  const DWORD lastError = GetLastError();
   game::CResPVR after{};
   const bool haveAfter = core::safe_read(thisPtr, after);
+  const auto cacheAfter = capture_pvr_lifecycle_cache(thisPtr);
+  const auto processAfter = core::capture_process_resource_snapshot();
   try {
     LOG_INFO(
-        "Map page off-frame CRes::Demand return: page={}, activeClaim={}, claim={}/{}, "
-        "result={}, postData={}, postSize={}, postCount={}, postWasMalloced={}, postLoaded={}, "
-        "postTexture={}",
-        game::resref_view(resref), attempt != nullptr, claimOrdinal, claimLimit,
-        result != nullptr, haveAfter && after.baseclass_0.pData != nullptr,
+        "Map page B2c CRes::Demand return: page={}, resource=0x{:X}, activeClaim={}, "
+        "claim={}/{}, result={}, lastError={}, rawData=0x{:X}, rawSize={}, loaded={}, "
+        "texture={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, cacheDuplicates={}, "
+        "cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, workingSetBytes={}, "
+        "privateBytes={}, handles={}, readOperationsDelta={}, readBytesDelta={}",
+        game::resref_view(resref), reinterpret_cast<std::uintptr_t>(thisPtr),
+        attempt != nullptr, claimOrdinal, claimLimit, result != nullptr, lastError,
+        haveAfter ? reinterpret_cast<std::uintptr_t>(after.baseclass_0.pData) : 0,
         haveAfter ? after.baseclass_0.nSize : 0u,
-        haveAfter ? after.baseclass_0.nCount : 0u,
-        haveAfter && after.baseclass_0.bWasMalloced,
         haveAfter && after.baseclass_0.bLoaded,
-        haveAfter ? after.texture : 0);
+        haveAfter ? after.texture : 0,
+        cacheAfter.readable, cacheAfter.occupied, cacheAfter.resourceIndex,
+        cacheAfter.resourceDuplicates, cacheAfter.head, cacheAfter.tail,
+        cacheAfter.fingerprint,
+        processAfter.memoryAvailable ? processAfter.workingSetBytes : 0,
+        processAfter.memoryAvailable ? processAfter.privateBytes : 0,
+        processAfter.handlesAvailable ? processAfter.handleCount : 0,
+        processBefore.ioAvailable && processAfter.ioAvailable
+            ? core::monotonic_resource_delta(processBefore.readOperations,
+                                             processAfter.readOperations)
+            : 0,
+        processBefore.ioAvailable && processAfter.ioAvailable
+            ? core::monotonic_resource_delta(processBefore.readTransferBytes,
+                                             processAfter.readTransferBytes)
+            : 0);
   } catch (...) {
   }
+  SetLastError(lastError);
   return result;
+}
+
+// The exact file-open helper at CRes::Demand+0xE2. Capturing GetLastError
+// immediately after the native return distinguishes a path/open failure from
+// later allocation or zlib work without changing the native result.
+static int detour_res_file_open_diagnostic(void* fileObject, const void* pathObject,
+                                           std::uint32_t mode, void* errorInfo) {
+  const auto original = g_resFileOpenDiagnosticHook.original();
+  if (!g_activePvrConsumeResource) {
+    return original(fileObject, pathObject, mode, errorInfo);
+  }
+
+  const auto resref = diagnostic_pvr_resref(g_activePvrConsumeResource);
+  const auto lifecycle =
+      map_page_prewarm::lifecycle_snapshot(g_activePvrConsumeResource);
+  if (!lifecycle) {
+    return original(fileObject, pathObject, mode, errorInfo);
+  }
+  const auto cacheBefore = capture_pvr_lifecycle_cache(g_activePvrConsumeResource);
+  const auto processBefore = core::capture_process_resource_snapshot();
+  const int result = original(fileObject, pathObject, mode, errorInfo);
+  const DWORD lastError = GetLastError();
+  const auto cacheAfter = capture_pvr_lifecycle_cache(g_activePvrConsumeResource);
+  const auto processAfter = core::capture_process_resource_snapshot();
+  try {
+    LOG_INFO(
+        "Map page B2c CRes file open: page={}, resource=0x{:X}, fileObject=0x{:X}, "
+        "pathObject=0x{:X}, mode=0x{:X}, errorInfo=0x{:X}, result={}, lastError={}, "
+        "claim={}/{}, cacheBefore=0x{:X}, cacheAfter=0x{:X}, handlesBefore={}, "
+        "handlesAfter={}, workingSetBefore={}, workingSetAfter={}, privateBefore={}, "
+        "privateAfter={}, readOperationsDelta={}, readBytesDelta={}",
+        game::resref_view(resref),
+        reinterpret_cast<std::uintptr_t>(g_activePvrConsumeResource),
+        reinterpret_cast<std::uintptr_t>(fileObject),
+        reinterpret_cast<std::uintptr_t>(pathObject), mode,
+        reinterpret_cast<std::uintptr_t>(errorInfo), result != 0, lastError,
+        lifecycle->claims, lifecycle->claimLimit,
+        cacheBefore.fingerprint, cacheAfter.fingerprint,
+        processBefore.handlesAvailable ? processBefore.handleCount : 0,
+        processAfter.handlesAvailable ? processAfter.handleCount : 0,
+        processBefore.memoryAvailable ? processBefore.workingSetBytes : 0,
+        processAfter.memoryAvailable ? processAfter.workingSetBytes : 0,
+        processBefore.memoryAvailable ? processBefore.privateBytes : 0,
+        processAfter.memoryAvailable ? processAfter.privateBytes : 0,
+        processBefore.ioAvailable && processAfter.ioAvailable
+            ? core::monotonic_resource_delta(processBefore.readOperations,
+                                             processAfter.readOperations)
+            : 0,
+        processBefore.ioAvailable && processAfter.ioAvailable
+            ? core::monotonic_resource_delta(processBefore.readTransferBytes,
+                                             processAfter.readTransferBytes)
+            : 0);
+  } catch (...) {
+  }
+  SetLastError(lastError);
+  return result;
+}
+
+// Observes the manifested CResPVR cache-release function for planned pages.
+// The original call executes exactly once and owns every cache/texture change.
+static void detour_pvr_cache_release_diagnostic(void* thisPtr) {
+  const auto original = g_pvrCacheReleaseHook.original();
+  const auto lifecycle = map_page_prewarm::lifecycle_snapshot(thisPtr);
+  if (!lifecycle) {
+    original(thisPtr);
+    return;
+  }
+
+  const auto resref = diagnostic_pvr_resref(thisPtr);
+  const auto cacheBefore = capture_pvr_lifecycle_cache(thisPtr);
+  const auto processBefore = core::capture_process_resource_snapshot();
+  try {
+    LOG_INFO(
+        "Map page B2c cache release entry: page={}, resource=0x{:X}, claim={}/{}, "
+        "cacheOccupied={}, cacheIndex={}, cacheDuplicates={}, cacheHead=0x{:X}, "
+        "cacheTail=0x{:X}, cacheHash=0x{:X}, handles={}",
+        game::resref_view(resref), reinterpret_cast<std::uintptr_t>(thisPtr),
+        lifecycle->claims, lifecycle->claimLimit, cacheBefore.occupied,
+        cacheBefore.resourceIndex, cacheBefore.resourceDuplicates, cacheBefore.head,
+        cacheBefore.tail, cacheBefore.fingerprint,
+        processBefore.handlesAvailable ? processBefore.handleCount : 0);
+  } catch (...) {
+  }
+
+  original(thisPtr);
+  const DWORD lastError = GetLastError();
+  const auto cacheAfter = capture_pvr_lifecycle_cache(thisPtr);
+  const auto processAfter = core::capture_process_resource_snapshot();
+  try {
+    LOG_INFO(
+        "Map page B2c cache release return: page={}, resource=0x{:X}, lastError={}, "
+        "cacheOccupied={}, cacheIndex={}, cacheDuplicates={}, cacheHead=0x{:X}, "
+        "cacheTail=0x{:X}, cacheHash=0x{:X}, handles={}",
+        game::resref_view(resref), reinterpret_cast<std::uintptr_t>(thisPtr), lastError,
+        cacheAfter.occupied, cacheAfter.resourceIndex, cacheAfter.resourceDuplicates,
+        cacheAfter.head, cacheAfter.tail, cacheAfter.fingerprint,
+        processAfter.handlesAvailable ? processAfter.handleCount : 0);
+  } catch (...) {
+  }
+  SetLastError(lastError);
 }
 
 // Exact 2.7.3 CResPVR::Demand wrapper. It observes the engine's existing
@@ -2458,7 +2687,45 @@ static void* detour_pvr_demand(void* thisPtr) {
   const bool ioCandidate = haveBefore &&
                            (before.texture <= 0 || !before.baseclass_0.bLoaded);
   auto consumeAttempt = ioCandidate ? map_page_prewarm::begin_native_demand(thisPtr)
-                                    : std::nullopt;
+                                     : std::nullopt;
+  const auto lifecycle = ioCandidate ? map_page_prewarm::lifecycle_snapshot(thisPtr)
+                                     : std::nullopt;
+  const auto lifecycleResref = diagnostic_pvr_resref(thisPtr);
+  const auto lifecycleCacheBefore = capture_pvr_lifecycle_cache(thisPtr);
+  const auto lifecycleProcessBefore = core::capture_process_resource_snapshot();
+  if (ctx->cfg.enableMapPageOffframeConsume && lifecycle) {
+    try {
+      LOG_INFO(
+          "Map page B2c CResPVR::Demand entry: page={}, resource=0x{:X}, activeClaim={}, "
+          "claim={}/{}, rawData=0x{:X}, rawSize={}, loaded={}, texture={}, prepared=0x{:X}, "
+          "preparedBytes={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, "
+          "cacheDuplicates={}, cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, "
+          "queuePending={}, queueCompleted={}, queueBytes={}, workingSetBytes={}, "
+          "privateBytes={}, handles={}",
+          game::resref_view(lifecycleResref), reinterpret_cast<std::uintptr_t>(thisPtr),
+          consumeAttempt.has_value(),
+          consumeAttempt ? consumeAttempt->claimOrdinal : 0u,
+          core::kMapPageConsumeMaximumClaimsPerGeneration,
+          haveBefore ? reinterpret_cast<std::uintptr_t>(before.baseclass_0.pData) : 0,
+          haveBefore ? before.baseclass_0.nSize : 0u,
+          haveBefore && before.baseclass_0.bLoaded, haveBefore ? before.texture : 0,
+          consumeAttempt
+              ? reinterpret_cast<std::uintptr_t>(consumeAttempt->page.decoded.data())
+              : 0,
+          consumeAttempt ? consumeAttempt->page.decoded.size() : 0,
+          lifecycleCacheBefore.readable, lifecycleCacheBefore.occupied,
+          lifecycleCacheBefore.resourceIndex, lifecycleCacheBefore.resourceDuplicates,
+          lifecycleCacheBefore.head, lifecycleCacheBefore.tail,
+          lifecycleCacheBefore.fingerprint, lifecycle->pendingPages,
+          lifecycle->completedPages, lifecycle->completedBytes,
+          lifecycleProcessBefore.memoryAvailable
+              ? lifecycleProcessBefore.workingSetBytes
+              : 0,
+          lifecycleProcessBefore.memoryAvailable ? lifecycleProcessBefore.privateBytes : 0,
+          lifecycleProcessBefore.handlesAvailable ? lifecycleProcessBefore.handleCount : 0);
+    } catch (...) {
+    }
+  }
   IO_COUNTERS ioBefore{};
   const bool haveIoBefore =
       ioCandidate && GetProcessIoCounters(GetCurrentProcess(), &ioBefore);
@@ -2469,6 +2736,7 @@ static void* detour_pvr_demand(void* thisPtr) {
   PvrConsumeThreadScope consumeScope(
       thisPtr, consumeAttempt ? &*consumeAttempt : nullptr);
   void* result = original(thisPtr);
+  const DWORD lifecycleLastError = GetLastError();
   const auto nested = scope.finish();
   LARGE_INTEGER ended{};
   const auto durationNanoseconds = measured && QueryPerformanceCounter(&ended)
@@ -2480,24 +2748,33 @@ static void* detour_pvr_demand(void* thisPtr) {
       haveIoBefore && GetProcessIoCounters(GetCurrentProcess(), &ioAfter);
   game::CResPVR after{};
   const bool haveAfter = core::safe_read(thisPtr, after);
-  if (ctx->cfg.enableMapPageOffframeConsume && ioCandidate) {
-    game::ResrefBuffer diagnosticResref{};
-    if (!haveAfter ||
-        !game::read_runtime_resref(after.baseclass_0.resref, diagnosticResref)) {
-      diagnosticResref[0] = '?';
-    }
+  if (ctx->cfg.enableMapPageOffframeConsume && lifecycle) {
+    const auto lifecycleCacheAfter = capture_pvr_lifecycle_cache(thisPtr);
+    const auto lifecycleProcessAfter = core::capture_process_resource_snapshot();
     try {
       LOG_INFO(
-          "Map page off-frame CResPVR::Demand return: page={}, activeClaim={}, claim={}/{}, "
-          "result={}, data={}, size={}, count={}, wasMalloced={}, loaded={}, texture={}",
-          game::resref_view(diagnosticResref), consumeAttempt.has_value(),
+          "Map page B2c CResPVR::Demand return: page={}, resource=0x{:X}, activeClaim={}, "
+          "claim={}/{}, result={}, lastError={}, rawData=0x{:X}, rawSize={}, loaded={}, "
+          "texture={}, cacheReadable={}, cacheOccupied={}, cacheIndex={}, cacheDuplicates={}, "
+          "cacheHead=0x{:X}, cacheTail=0x{:X}, cacheHash=0x{:X}, workingSetBytes={}, "
+          "privateBytes={}, handles={}",
+          game::resref_view(lifecycleResref), reinterpret_cast<std::uintptr_t>(thisPtr),
+          consumeAttempt.has_value(),
           consumeAttempt ? consumeAttempt->claimOrdinal : 0u,
           core::kMapPageConsumeMaximumClaimsPerGeneration, result != nullptr,
-          haveAfter && after.baseclass_0.pData != nullptr,
+          lifecycleLastError,
+          haveAfter ? reinterpret_cast<std::uintptr_t>(after.baseclass_0.pData) : 0,
           haveAfter ? after.baseclass_0.nSize : 0u,
-          haveAfter ? after.baseclass_0.nCount : 0u,
-          haveAfter && after.baseclass_0.bWasMalloced,
-          haveAfter && after.baseclass_0.bLoaded, haveAfter ? after.texture : 0);
+          haveAfter && after.baseclass_0.bLoaded, haveAfter ? after.texture : 0,
+          lifecycleCacheAfter.readable, lifecycleCacheAfter.occupied,
+          lifecycleCacheAfter.resourceIndex, lifecycleCacheAfter.resourceDuplicates,
+          lifecycleCacheAfter.head, lifecycleCacheAfter.tail,
+          lifecycleCacheAfter.fingerprint,
+          lifecycleProcessAfter.memoryAvailable
+              ? lifecycleProcessAfter.workingSetBytes
+              : 0,
+          lifecycleProcessAfter.memoryAvailable ? lifecycleProcessAfter.privateBytes : 0,
+          lifecycleProcessAfter.handlesAvailable ? lifecycleProcessAfter.handleCount : 0);
     } catch (...) {
     }
   }
@@ -2529,6 +2806,7 @@ static void* detour_pvr_demand(void* thisPtr) {
   if (consumeAttempt) {
     map_page_prewarm::record_consume_attempt(*consumeAttempt, durationNanoseconds);
   }
+  SetLastError(lifecycleLastError);
   return result;
 }
 
@@ -2613,10 +2891,16 @@ bool install_all(AppContext& ctx) {
         const auto demandEntry = reinterpret_cast<CResPvrDemandFn>(moduleBase + runtime.demand);
         map_page_prewarm::configure(demandEntry);
         CResPvrDemandFn resourceDemandEntry = nullptr;
+        CResPvrReleaseFn cacheReleaseEntry = nullptr;
+        CResFileOpenFn resourceFileOpenEntry = nullptr;
         if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
           const auto& boundary = runtime.decodeBoundary;
+          const auto& lifecycle = runtime.lifecycleBoundary;
           if (!boundary.enabled()) {
             throw std::runtime_error("manifest has no decoded-PVR consume boundary");
+          }
+          if (!lifecycle.enabled()) {
+            throw std::runtime_error("manifest has no PVR lifecycle diagnostic boundary");
           }
           if (!matches_pattern_at_rva(*module, boundary.uncompress,
                                       boundary.uncompressSignature)) {
@@ -2643,7 +2927,63 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(moduleBase + boundary.resourceDemand)) {
             throw std::runtime_error("CRes::Demand diagnostic call edge mismatch");
           }
+          if (!matches_pattern_at_rva(*module, lifecycle.cacheRelease,
+                                      lifecycle.cacheReleaseSignature)) {
+            throw std::runtime_error("PVR cache-release signature mismatch");
+          }
+          if (!matches_pattern_at_rva(*module, lifecycle.resourceFileOpen,
+                                      lifecycle.resourceFileOpenSignature)) {
+            throw std::runtime_error("CRes file-open signature mismatch");
+          }
+          constexpr std::size_t kCacheEntryBytes =
+              kPvrLifecycleCacheEntries * sizeof(void*);
+          if (lifecycle.cacheEntryCount != kPvrLifecycleCacheEntries ||
+              !core::is_read_write_non_executable_section(
+                  *module, lifecycle.cacheEntries, kCacheEntryBytes) ||
+              !core::is_writable_non_executable_memory(
+                  reinterpret_cast<const void*>(moduleBase + lifecycle.cacheEntries),
+                  kCacheEntryBytes)) {
+            throw std::runtime_error("PVR cache table memory evidence mismatch");
+          }
+          const auto demandCacheReference = reinterpret_cast<const std::uint8_t*>(
+              moduleBase + runtime.demand + lifecycle.cacheReferenceOffset);
+          std::int32_t demandCacheDisplacement{};
+          if (demandCacheReference[0] != 0x4C || demandCacheReference[1] != 0x8D ||
+              demandCacheReference[2] != 0x35 ||
+              !core::safe_read(demandCacheReference + 3, demandCacheDisplacement) ||
+              reinterpret_cast<std::uintptr_t>(demandCacheReference + 7) +
+                      demandCacheDisplacement !=
+                  moduleBase + lifecycle.cacheEntries) {
+            throw std::runtime_error("CResPVR::Demand cache reference mismatch");
+          }
+          const auto releaseCacheReference = reinterpret_cast<const std::uint8_t*>(
+              moduleBase + lifecycle.cacheRelease +
+              lifecycle.cacheReleaseReferenceOffset);
+          std::int32_t releaseCacheDisplacement{};
+          if (releaseCacheReference[0] != 0x48 || releaseCacheReference[1] != 0x8D ||
+              releaseCacheReference[2] != 0x15 ||
+              !core::safe_read(releaseCacheReference + 3, releaseCacheDisplacement) ||
+              reinterpret_cast<std::uintptr_t>(releaseCacheReference + 7) +
+                      releaseCacheDisplacement !=
+                  moduleBase + lifecycle.cacheEntries) {
+            throw std::runtime_error("PVR cache-release table reference mismatch");
+          }
+          const auto fileOpenCallAddress =
+              moduleBase + boundary.resourceDemand +
+              lifecycle.resourceFileOpenCallOffset;
+          const auto decodedFileOpenTarget = core::rel32_target_checked(
+              reinterpret_cast<const void*>(fileOpenCallAddress), 0xE8, 1, 5);
+          if (decodedFileOpenTarget !=
+              reinterpret_cast<void*>(moduleBase + lifecycle.resourceFileOpen)) {
+            throw std::runtime_error("CRes file-open diagnostic call edge mismatch");
+          }
           resourceDemandEntry = reinterpret_cast<CResPvrDemandFn>(decodedResourceTarget);
+          cacheReleaseEntry = reinterpret_cast<CResPvrReleaseFn>(
+              moduleBase + lifecycle.cacheRelease);
+          resourceFileOpenEntry = reinterpret_cast<CResFileOpenFn>(
+              decodedFileOpenTarget);
+          g_pvrCacheEntries =
+              reinterpret_cast<const void*>(moduleBase + lifecycle.cacheEntries);
           g_pvrUncompressExpectedReturn =
               moduleBase + runtime.demand + boundary.consumeWindowOffset;
         }
@@ -2678,6 +3018,23 @@ bool install_all(AppContext& ctx) {
               "Map page off-frame CRes::Demand diagnostic installed at RVA 0x{:X}; native "
               "return value and resource fields remain authoritative",
               boundary.resourceDemand);
+          g_resFileOpenDiagnosticHook.create(
+              reinterpret_cast<void*>(resourceFileOpenEntry),
+              reinterpret_cast<void*>(&detour_res_file_open_diagnostic));
+          g_resFileOpenDiagnosticHook.enable();
+          LOG_INFO(
+              "Map page B2c file-open diagnostic installed at RVA 0x{:X}; return value "
+              "and GetLastError remain authoritative",
+              runtime.lifecycleBoundary.resourceFileOpen);
+          g_pvrCacheReleaseHook.create(
+              reinterpret_cast<void*>(cacheReleaseEntry),
+              reinterpret_cast<void*>(&detour_pvr_cache_release_diagnostic));
+          g_pvrCacheReleaseHook.enable();
+          LOG_INFO(
+              "Map page B2c cache-release diagnostic installed at RVA 0x{:X}; {} cache "
+              "entries are observed read-only",
+              runtime.lifecycleBoundary.cacheRelease,
+              runtime.lifecycleBoundary.cacheEntryCount);
         }
         if (ctx.cfg.enablePerformanceLogging) {
           g_pvrDemandHook.create(
@@ -2714,16 +3071,22 @@ bool install_all(AppContext& ctx) {
       } catch (const std::exception& error) {
         (void)g_pvrUncompressHook.remove();
         g_pvrUncompressExpectedReturn = 0;
+        (void)g_resFileOpenDiagnosticHook.remove();
         (void)g_resDemandDiagnosticHook.remove();
+        (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
+        g_pvrCacheEntries = nullptr;
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
       } catch (...) {
         (void)g_pvrUncompressHook.remove();
         g_pvrUncompressExpectedReturn = 0;
+        (void)g_resFileOpenDiagnosticHook.remove();
         (void)g_resDemandDiagnosticHook.remove();
+        (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
+        g_pvrCacheEntries = nullptr;
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
@@ -3024,8 +3387,11 @@ bool install_all(AppContext& ctx) {
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
+    (void)g_resFileOpenDiagnosticHook.remove();
     (void)g_resDemandDiagnosticHook.remove();
+    (void)g_pvrCacheReleaseHook.remove();
     (void)g_pvrDemandHook.remove();
+    g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
@@ -3061,8 +3427,11 @@ bool install_all(AppContext& ctx) {
     (void)g_vidCellRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
+    (void)g_resFileOpenDiagnosticHook.remove();
     (void)g_resDemandDiagnosticHook.remove();
+    (void)g_pvrCacheReleaseHook.remove();
     (void)g_pvrDemandHook.remove();
+    g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
@@ -3105,8 +3474,11 @@ void uninstall_all() noexcept {
   (void)g_vidCellRenderTextureHook.remove();
   (void)g_pvrUncompressHook.remove();
   g_pvrUncompressExpectedReturn = 0;
+  (void)g_resFileOpenDiagnosticHook.remove();
   (void)g_resDemandDiagnosticHook.remove();
+  (void)g_pvrCacheReleaseHook.remove();
   (void)g_pvrDemandHook.remove();
+  g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
@@ -3156,8 +3528,11 @@ void prepare_for_shutdown() noexcept {
   (void)g_vidCellRenderTextureHook.disable();
   (void)g_pvrUncompressHook.disable();
   g_pvrUncompressExpectedReturn = 0;
+  (void)g_resFileOpenDiagnosticHook.disable();
   (void)g_resDemandDiagnosticHook.disable();
+  (void)g_pvrCacheReleaseHook.disable();
   (void)g_pvrDemandHook.disable();
+  g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();

@@ -31,6 +31,12 @@ ProcessResourceSnapshot capture_process_resource_snapshot() noexcept {
     snapshot.writeOperations = io.WriteOperationCount;
     snapshot.writeTransferBytes = io.WriteTransferCount;
   }
+
+  DWORD handleCount = 0;
+  if (GetProcessHandleCount(process, &handleCount)) {
+    snapshot.handlesAvailable = true;
+    snapshot.handleCount = static_cast<std::uint64_t>(handleCount);
+  }
 #endif
   return snapshot;
 }

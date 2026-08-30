@@ -37,6 +37,14 @@ PVR_UNCOMPRESS_PATTERN = (
     "40 53 48 83 EC 20 8B 02 48 8B DA 48 8D 54 24 38 89 44 24 38 "
     "E8 ? ? ? ? 8B 4C 24 38 89 0B 48 83 C4 20 5B C3"
 )
+PVR_CACHE_RELEASE_PATTERN = (
+    "48 89 5C 24 08 57 48 83 EC 20 33 FF 48 8D 15 ? ? ? ? 48 8B D9 "
+    "39 79 58 0F 84 ? ? ? ?"
+)
+CRES_FILE_OPEN_PATTERN = (
+    "40 53 55 56 57 41 54 41 56 41 57 48 81 EC 80 02 00 00 "
+    "48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 70 02 00 00"
+)
 PVR_CONSUME_WINDOW_OFFSET = 0x164
 PVR_CONSUME_WINDOW_PATTERN = (
     "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 "
@@ -66,6 +74,8 @@ REFERENCE_RVAS = {
         "CVidTile::RenderTexture": 0x4257C0,
         "CResPVR::Demand": 0x3F6DC0,
         "PVR zlib::uncompress wrapper": 0x4000F0,
+        "CResPVR cache release": 0x3F70B0,
+        "CRes file open": 0x408430,
     },
 }
 
@@ -204,6 +214,8 @@ def main(argv: list[str]) -> int:
     if args.reference == "2.7.3":
         patterns["CResPVR::Demand"] = PVR_DEMAND_PATTERN
         patterns["PVR zlib::uncompress wrapper"] = PVR_UNCOMPRESS_PATTERN
+        patterns["CResPVR cache release"] = PVR_CACHE_RELEASE_PATTERN
+        patterns["CRes file open"] = CRES_FILE_OPEN_PATTERN
     for label, pat_str in patterns.items():
         pat = compile_pattern(pat_str)
         hits: list[int] = []
@@ -246,6 +258,8 @@ def main(argv: list[str]) -> int:
 
     pvr_demand = located.get("CResPVR::Demand")
     pvr_uncompress = located.get("PVR zlib::uncompress wrapper")
+    pvr_cache_release = located.get("CResPVR cache release")
+    cres_file_open = located.get("CRes file open")
     if args.reference == "2.7.3":
         print("\n## PVR Decode Boundary (Phase 3e-B0)\n")
         print("| Native phase | Demand offset | Opcode | Target RVA | Exact 2.7.3 target |")
@@ -295,6 +309,64 @@ def main(argv: list[str]) -> int:
             print(f"- A consuming detour must fall back outside return RVA "
                   f"`{pvr_demand + 0x164:#x}` and must never bypass native cache, "
                   "allocation, upload or release.")
+
+            print("\n## PVR Lifecycle Boundary (Phase 3e-B2c)\n")
+            lifecycle_ready = pvr_cache_release is not None and cres_file_open is not None
+            if not lifecycle_ready:
+                failures.append("PVR lifecycle boundary requires unique cache-release and "
+                                "CRes file-open signatures")
+            else:
+                cache_ref_offset = 0x19
+                cache_ref = pvr_off + cache_ref_offset
+                cache_ref_ok = data[cache_ref:cache_ref + 3] == bytes([0x4C, 0x8D, 0x35])
+                cache_disp = struct.unpack_from("<i", data, cache_ref + 3)[0]
+                cache_target = pvr_demand + cache_ref_offset + 7 + cache_disp
+                cache_exact = cache_ref_ok and cache_target == 0x721B70
+                if not cache_exact:
+                    failures.append(
+                        f"PVR cache reference: target {cache_target:#x}, expected 0x721b70"
+                    )
+
+                release_off = rva_to_off(pe, pvr_cache_release)
+                assert release_off is not None
+                release_ref_offset = 0x0C
+                release_ref = release_off + release_ref_offset
+                release_ref_ok = data[release_ref:release_ref + 3] == bytes([0x48, 0x8D, 0x15])
+                release_disp = struct.unpack_from("<i", data, release_ref + 3)[0]
+                release_target = pvr_cache_release + release_ref_offset + 7 + release_disp
+                release_exact = release_ref_ok and release_target == 0x721B70
+                if not release_exact:
+                    failures.append(
+                        f"PVR cache-release reference: target {release_target:#x}, "
+                        "expected 0x721b70"
+                    )
+
+                resource_demand = next(
+                    target for name, _, target in PVR_PHASE_CALLS
+                    if name == "CRes resource demand"
+                )
+                resource_off = rva_to_off(pe, resource_demand)
+                assert resource_off is not None
+                file_open_offset = 0xE2
+                file_open_call = resource_off + file_open_offset
+                file_open_op = data[file_open_call]
+                file_open_disp = struct.unpack_from("<i", data, file_open_call + 1)[0]
+                file_open_target = resource_demand + file_open_offset + 5 + file_open_disp
+                file_open_exact = file_open_op == 0xE8 and file_open_target == cres_file_open
+                if not file_open_exact:
+                    failures.append(
+                        f"CRes file-open edge: opcode {file_open_op:#04x}, "
+                        f"target {file_open_target:#x}, expected {cres_file_open:#x}"
+                    )
+
+                print("| Lifecycle edge | Reference | Target RVA | Exact |")
+                print("|---|---:|---:|---|")
+                print(f"| Demand cache array | `Demand+{cache_ref_offset:#x}` | "
+                      f"`{cache_target:#x}` | {'yes' if cache_exact else 'NO'} |")
+                print(f"| cache release array | `release+{release_ref_offset:#x}` | "
+                      f"`{release_target:#x}` | {'yes' if release_exact else 'NO'} |")
+                print(f"| CRes file open | `CRes::Demand+{file_open_offset:#x}` | "
+                      f"`{file_open_target:#x}` | {'yes' if file_open_exact else 'NO'} |")
 
     print("\n## Runtime Offset Evidence\n")
     probe = data[rt_off + PRES_PROBE_OFFSET: rt_off + PRES_PROBE_OFFSET + len(PRES_PROBE_BYTES)]

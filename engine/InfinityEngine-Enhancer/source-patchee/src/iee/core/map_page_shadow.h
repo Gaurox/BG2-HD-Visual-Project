@@ -18,8 +18,9 @@ inline constexpr std::size_t kShadowMaximumDecodedBytes = 20u * 1024u * 1024u;
 inline constexpr std::size_t kShadowMaximumPendingPages = 96;
 inline constexpr std::size_t kShadowMaximumCompletedPages = 4;
 inline constexpr std::size_t kShadowMaximumCompletedBytes = 72u * 1024u * 1024u;
-// Phase 3e-B2b2 discriminator: permit exactly two prepared-page claims after
-// the B2b1 one-claim control passed ingame. This is not a production limit.
+// Phase 3e-B2c qualified control: two prepared claims are stable ingame. The
+// three-claim discriminator remains intentionally excluded because the next
+// native fallback can race an in-flight shadow read (ERROR_SHARING_VIOLATION).
 inline constexpr std::uint32_t kMapPageConsumeMaximumClaimsPerGeneration = 2;
 
 enum class PvrzPrepareStatus : std::uint8_t {

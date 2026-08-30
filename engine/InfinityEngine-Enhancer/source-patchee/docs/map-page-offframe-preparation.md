@@ -21,6 +21,11 @@ substitutions, `A090009`, `A090010` and every later page loaded natively; the co
 correct and stable and the game exited cleanly. The failure transition is therefore after the third
 successful substitution, before the following native load completes. The attempted `nCount`
 observation produced impossible values and is not a valid ownership signal.
+Phase 3e-B2c replaced those guessed fields with exact cache/release/file-open boundaries. Its
+two-claim control passed again. The three-claim replay proves that `A090010` fails first in the
+native file-open helper with `ERROR_SHARING_VIOLATION` while its shadow identity is known but not
+ready and the worker owns the in-flight job. Cache occupancy is only 36/128 and no cache release
+occurs. The source is returned to two claims pending an explicit in-flight retirement handshake.
 
 The measured bottleneck is the indivisible native `CResPVR::Demand` call. Repacking AR0900 with
 zlib level 0 reduced its worst call from 43.97 ms to 12.77 ms but increased the PVRZ payload by
@@ -199,5 +204,11 @@ one and two claims stable and isolate the failure onset to the first native load
 successful claim. The modelled `nCount` values are not reliable and must not be interpreted or
 written. The next B2c gate compares two versus three claims using only manifested function
 boundaries, pointer identities, PVR-cache movements, paired release calls and bounded memory
-telemetry. The four-zone performance protocol is blocked. A shadow result, a prepared or installed
-candidate, or a successful local test does not create a `validated-installed` release element.
+telemetry. Phase 3e-B2c completed that comparison; see
+[`validation/map-page-offframe-phase3b2c.md`](validation/map-page-offframe-phase3b2c.md). It
+manifests the 128-entry cache and native release/file-open boundaries and isolates the first
+failure to `A090010` file open returning error 32 while the same not-ready identity is still owned
+by the shadow worker. B2d must add an explicit in-flight identity and wait for file-handle
+relinquishment before entering native fallback, then pass the three-claim AR0900 gate. The
+four-zone performance protocol is blocked. A shadow result, a prepared or installed candidate, or
+a successful local test does not create a `validated-installed` release element.

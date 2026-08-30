@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <filesystem>
 #include <optional>
@@ -54,10 +55,24 @@ struct PvrConsumeAttempt {
   std::uint64_t copyNanoseconds{};
 };
 
+// Read-only Phase 3e-B2c correlation for one planned PVR object. It exposes
+// only the project's own scheduler state; no native resource field is
+// interpreted or modified.
+struct PvrLifecycleSnapshot {
+  core::ShadowPageIdentity identity{};
+  std::uint32_t claims{};
+  std::uint32_t claimLimit{};
+  std::size_t pendingPages{};
+  std::size_t completedPages{};
+  std::size_t completedBytes{};
+};
+
 // Called immediately before an unloaded native PVR demand. Shadow-only mode
 // observes and retires the buffer. A bounded diagnostic may move a fixed small
 // number of ready pages out of the queue for their exact Demand and generation.
 [[nodiscard]] std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept;
+
+[[nodiscard]] std::optional<PvrLifecycleSnapshot> lifecycle_snapshot(void* pvr) noexcept;
 
 // Records one bounded-consume result after native Demand has resumed through
 // its ordinary parse/publish/upload/free path.

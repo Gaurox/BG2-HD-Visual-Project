@@ -198,10 +198,16 @@ claims. With two claims, `A090009`, `A090010` and all later pages returned succe
 native path; the full map stayed correct and stable before a clean exit. The observed failure
 threshold therefore starts after the third successful substitution. The attempted `nCount`
 observation is not usable: successful resources exposed impossible values in the one-claim run and
-zero in the two-claim run, so neither it nor `bWasMalloced` may drive a fix. The next B2c gate is a
-field-free two-versus-three lifecycle trace across validated demand/release and PVR-cache
-boundaries. This remains default-off, AR0900-only and non-release-qualified work. See
-[`docs/validation/map-page-offframe-phase3b2b.md`](docs/validation/map-page-offframe-phase3b2b.md).
+zero in the two-claim run, so neither it nor `bWasMalloced` may drive a fix. Phase 3e-B2c then
+manifested the 128-entry cache, its native release routine and the exact file-open helper nested in
+`CRes::Demand`. Its two-claim control rendered and exited cleanly. In the three-claim trace,
+`A090009` still completed successfully, but the immediately following not-ready `A090010` native
+fallback failed at file open with Win32 error 32 (`ERROR_SHARING_VIOLATION`) before
+`CRes::Demand=false` and the crash. Cache occupancy was only 36/128 and no release occurred. The
+source limit is therefore back to the qualified two-claim control while B2d adds explicit
+in-flight shadow-reader retirement before native fallback. This remains default-off, AR0900-only
+and non-release-qualified work. See
+[`docs/validation/map-page-offframe-phase3b2c.md`](docs/validation/map-page-offframe-phase3b2c.md).
 
 `cmake --install build --config Release --prefix <directory>` produces the
 same game-root layout as `release_bundle`.

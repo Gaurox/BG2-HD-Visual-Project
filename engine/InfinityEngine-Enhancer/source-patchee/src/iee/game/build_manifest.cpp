@@ -200,9 +200,20 @@ constexpr BuildManifest kKnownBuilds[] = {
           "40 53 48 83 EC 20 8B 02 48 8B DA 48 8D 54 24 38 89 44 24 38 E8 ? ? ? ? "
           "8B 4C 24 38 89 0B 48 83 C4 20 5B C3",
           0x164,
-          "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 44 89 43 5C "
-          "44 2B CA 8B 4F 1C 44 03 CF 89 4B 64 8B 47 18 89 43 68 8B 4F 1C 48 89 "
-          "54 24 20 8B 57 18 E8 ? ? ? ? 48 8B CF E8 ? ? ? ?"}},
+           "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 44 89 43 5C "
+           "44 2B CA 8B 4F 1C 44 03 CF 89 4B 64 8B 47 18 89 43 68 8B 4F 1C 48 89 "
+           "54 24 20 8B 57 18 E8 ? ? ? ? 48 8B CF E8 ? ? ? ?"},
+          {0x19,
+           0x721B70,
+           128,
+           0x3F70B0,
+           "48 89 5C 24 08 57 48 83 EC 20 33 FF 48 8D 15 ? ? ? ? 48 8B D9 39 79 58 "
+           "0F 84 ? ? ? ?",
+           0x0C,
+           0xE2,
+           0x408430,
+           "40 53 55 56 57 41 54 41 56 41 57 48 81 EC 80 02 00 00 48 8B 05 ? ? ? ? "
+           "48 33 C4 48 89 84 24 70 02 00 00"}},
     },
     // Offline-validated 2026-08-13 (docs/validation/bg2ee-2.7.3-evidence.md):
     // BG2EE 2.7.3.0 ships the same unified engine image as BGEE 2.7.3 (the game
@@ -307,9 +318,20 @@ constexpr BuildManifest kKnownBuilds[] = {
           "40 53 48 83 EC 20 8B 02 48 8B DA 48 8D 54 24 38 89 44 24 38 E8 ? ? ? ? "
           "8B 4C 24 38 89 0B 48 83 C4 20 5B C3",
           0x164,
-          "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 44 89 43 5C "
-          "44 2B CA 8B 4F 1C 44 03 CF 89 4B 64 8B 47 18 89 43 68 8B 4F 1C 48 89 "
-          "54 24 20 8B 57 18 E8 ? ? ? ? 48 8B CF E8 ? ? ? ?"}},
+           "8B 4F 30 48 8D 57 34 44 8B 47 08 48 03 D1 44 8B 4C 24 40 44 89 43 5C "
+           "44 2B CA 8B 4F 1C 44 03 CF 89 4B 64 8B 47 18 89 43 68 8B 4F 1C 48 89 "
+           "54 24 20 8B 57 18 E8 ? ? ? ? 48 8B CF E8 ? ? ? ?"},
+          {0x19,
+           0x721B70,
+           128,
+           0x3F70B0,
+           "48 89 5C 24 08 57 48 83 EC 20 33 FF 48 8D 15 ? ? ? ? 48 8B D9 39 79 58 "
+           "0F 84 ? ? ? ?",
+           0x0C,
+           0xE2,
+           0x408430,
+           "40 53 55 56 57 41 54 41 56 41 57 48 81 EC 80 02 00 00 48 8B 05 ? ? ? ? "
+           "48 33 C4 48 89 84 24 70 02 00 00"}},
     },
 };
 
@@ -330,6 +352,12 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[1].pvrDemand.decodeBoundary.consumeWindowSignature),
               "2.7.3 PVR consume-window pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[1].pvrDemand.lifecycleBoundary.cacheReleaseSignature),
+              "2.7.3 PVR cache-release pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[1].pvrDemand.lifecycleBoundary.resourceFileOpenSignature),
+              "2.7.3 CRes file-open pattern format is invalid");
 static_assert(kKnownBuilds[1].validate(), "2.7.3 build manifest is invalid");
 static_assert(validate_pattern_format(kKnownBuilds[2].patterns.loadArea),
               "BG2EE 2.7.3 LoadArea pattern format is invalid");
@@ -343,6 +371,12 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].pvrDemand.decodeBoundary.consumeWindowSignature),
               "BG2EE 2.7.3 PVR consume-window pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].pvrDemand.lifecycleBoundary.cacheReleaseSignature),
+              "BG2EE 2.7.3 PVR cache-release pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].pvrDemand.lifecycleBoundary.resourceFileOpenSignature),
+              "BG2EE 2.7.3 CRes file-open pattern format is invalid");
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].areaAnimations.infinityFxRenderClippingPolysSignature),
               "BG2EE 2.7.3 FXRenderClippingPolys pattern format is invalid");

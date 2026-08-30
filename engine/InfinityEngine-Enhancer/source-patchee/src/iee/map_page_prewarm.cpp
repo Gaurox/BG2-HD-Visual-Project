@@ -662,6 +662,27 @@ std::optional<PvrConsumeAttempt> begin_native_demand(void* pvr) noexcept {
   }
 }
 
+std::optional<PvrLifecycleSnapshot> lifecycle_snapshot(void* pvr) noexcept {
+  if (!g_shadowEnabled || !pvr || g_state.shadowGeneration == 0) return std::nullopt;
+  try {
+    const auto candidate = std::find_if(
+        g_state.candidates.begin(), g_state.candidates.end(),
+        [&](const PageCandidate& value) { return value.pvr == pvr; });
+    if (candidate == g_state.candidates.end()) return std::nullopt;
+    const auto queue = g_shadowQueue.snapshot();
+    return PvrLifecycleSnapshot{
+        .identity = shadow_identity(*candidate),
+        .claims = g_consumeGate.claims(g_state.shadowGeneration),
+        .claimLimit = core::kMapPageConsumeMaximumClaimsPerGeneration,
+        .pendingPages = queue.pendingPages,
+        .completedPages = queue.completedPages,
+        .completedBytes = queue.completedBytes,
+    };
+  } catch (...) {
+    return std::nullopt;
+  }
+}
+
 namespace {
 std::string_view consume_outcome_name(PvrConsumeOutcome outcome) noexcept {
   switch (outcome) {

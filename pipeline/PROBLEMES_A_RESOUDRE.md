@@ -77,6 +77,12 @@ dans `areas.csv`.
   `A090010` et les pages suivantes réussissent toutes leur fallback natif. L'échec est donc borné à
   l'effet qui apparaît après la troisième substitution réussie. B2/B2a restent rejetés ; B2b2 est la
   dernière frontière diagnostique prouvée ingame, toujours default-off et non éligible à la release.
+  La trace 3e-B2c manifeste ensuite la LRU de 128 pointeurs, sa libération et le helper d'ouverture
+  imbriqué. Son contrôle deux claims repasse. Après le troisième claim, `A090010` est connu mais
+  non prêt tandis que le worker possède le job en vol ; son ouverture native échoue avec erreur 32
+  (`ERROR_SHARING_VIOLATION`), puis `CRes::Demand=false` et le crash. Le cache est seulement à
+  36/128, aucune éviction/libération ne survient et la mémoire n'est pas au pic : la collision du
+  lecteur fichier est la première divergence prouvée. La source revient donc à deux claims.
 - **Gate** : préparer la lecture/décompression hors frame, ou démontrer une politique de cache
   réversible capable de conserver plus de 96 pages sans éviction, puis réintégrer l'upload GL sur le
   thread propriétaire avec le `Demand` natif synchrone en fallback. Toute installation doit passer
@@ -106,12 +112,13 @@ dans `areas.csv`.
   contrôle une revendication avec la même télémétrie, puis un discriminateur deux revendications.
   Les deux passent ingame. La lecture `nCount` ajoutée n'est toutefois pas exploitable : B2b1
   observe des entiers impossibles sur des chargements réussis, tandis que B2b2 observe zéro ; ne pas
-  l'interpréter ni l'écrire. La gate suivante est 3e-B2c : comparer deux claims stables à trois
-  claims en échec en traçant uniquement les frontières validées demande/libération, les identités
-  de pointeurs, les mouvements du cache PVR, la décision zlib, les textures et la mémoire bornée.
-  Corriger seulement la première divergence démontrée, puis repasser trois claims sur AR0900. Ne pas
-  rejouer les quatre zones avant cette preuve. Une éventuelle campagne cache OS froid doit rester
-  séparée.
+  l'interpréter ni l'écrire. 3e-B2c termine la comparaison sans champ deviné : le contrôle deux
+  claims passe, tandis que le test trois claims échoue sur l'ouverture native de `A090010` avec
+  `ERROR_SHARING_VIOLATION` alors que le job shadow est en vol. La gate suivante est 3e-B2d :
+  suivre explicitement l'identité en vol, retirer/annuler la préparation et attendre
+  l'acquittement de fermeture avant le fallback natif visant cette même page. Couvrir cette
+  concurrence par un test déterministe, puis repasser trois claims sur AR0900. Ne pas rejouer les
+  quatre zones avant cette preuve. Une éventuelle campagne cache OS froid doit rester séparée.
 - **Preuve et protocole** :
   [`../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md`](../docs/AUDIT_PERFORMANCES_CARTES_X4_SUIVI.md).
 - **Règle** : prototype non éligible à la release ; aucune promotion de contenu ou de manifeste

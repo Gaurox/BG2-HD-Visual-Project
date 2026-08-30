@@ -381,6 +381,17 @@ void test_manifest_loading() {
     expect_eq(found273->get().pvrDemand.decodeBoundary.uncompress,
               std::uintptr_t{0x4000F0},
               "2.7.3 PVR uncompress wrapper RVA should match the offline call graph");
+    expect_true(found273->get().pvrDemand.lifecycleBoundary.enabled(),
+                "2.7.3 PVR lifecycle diagnostics should carry exact static evidence");
+    expect_eq(found273->get().pvrDemand.lifecycleBoundary.cacheEntries,
+              std::uintptr_t{0x721B70},
+              "2.7.3 PVR cache array should match the offline call graph");
+    expect_eq(found273->get().pvrDemand.lifecycleBoundary.cacheRelease,
+              std::uintptr_t{0x3F70B0},
+              "2.7.3 PVR cache-release target should match the offline call graph");
+    expect_eq(found273->get().pvrDemand.lifecycleBoundary.resourceFileOpen,
+              std::uintptr_t{0x408430},
+              "2.7.3 CRes file-open target should match the offline call graph");
   }
   expect_true(iee::game::find_manifest_for_version(2, 7, 3, 0).has_value(),
               "BGEE 2.7.3.0 should resolve by executable version");
@@ -506,6 +517,14 @@ void test_manifest_loading() {
     expect_eq(bg2ee->get().pvrDemand.decodeBoundary.consumeWindowOffset,
               std::size_t{0x164},
               "BG2EE native PVR field/upload window should start at Demand+0x164");
+    expect_true(bg2ee->get().pvrDemand.lifecycleBoundary.enabled(),
+                "BG2EE PVR lifecycle diagnostics should carry exact static evidence");
+    expect_eq(bg2ee->get().pvrDemand.lifecycleBoundary.cacheEntryCount,
+              std::size_t{128},
+              "BG2EE PVR lifecycle boundary should cover the native 128-entry cache");
+    expect_eq(bg2ee->get().pvrDemand.lifecycleBoundary.resourceFileOpenCallOffset,
+              std::size_t{0xE2},
+              "BG2EE CRes file-open call should remain at CRes::Demand+0xE2");
     auto incompletePvrDemand = bg2ee->get();
     incompletePvrDemand.pvrDemand.signature = {};
     expect_true(!incompletePvrDemand.validate(),
@@ -514,6 +533,10 @@ void test_manifest_loading() {
     incompletePvrBoundary.pvrDemand.decodeBoundary.uncompress = 0;
     expect_true(!incompletePvrBoundary.validate(),
                 "Partial PVR decoded-handoff evidence must fail manifest validation");
+    auto incompletePvrLifecycle = bg2ee->get();
+    incompletePvrLifecycle.pvrDemand.lifecycleBoundary.cacheReleaseSignature = {};
+    expect_true(!incompletePvrLifecycle.validate(),
+                "Partial PVR lifecycle evidence must fail manifest validation");
     expect_true(
         iee::game::supports_product_name(*bg2ee, "Baldur's Gate II: Enhanced Edition"),
         "BG2EE product name should match its own manifest");
@@ -1153,10 +1176,13 @@ void test_process_resource_telemetry() {
                   snapshot.peakWorkingSetBytes >= snapshot.workingSetBytes,
               "Windows should expose coherent process memory gauges");
   expect_true(snapshot.ioAvailable,
-              "Windows should expose cumulative process I/O counters");
+               "Windows should expose cumulative process I/O counters");
+  expect_true(snapshot.handlesAvailable && snapshot.handleCount > 0,
+              "Windows should expose a nonzero process handle count");
 #else
-  expect_true(!snapshot.memoryAvailable && !snapshot.ioAvailable,
-              "Unsupported hosts should fail closed without synthetic process counters");
+  expect_true(!snapshot.memoryAvailable && !snapshot.ioAvailable &&
+                  !snapshot.handlesAvailable,
+               "Unsupported hosts should fail closed without synthetic process counters");
 #endif
 }
 
@@ -3737,7 +3763,7 @@ void test_map_page_consume_gate_contract() {
   using iee::core::validate_pvr_consume;
 
   expect_eq(kMapPageConsumeMaximumClaimsPerGeneration, std::uint32_t{2},
-            "Phase 3e-B2b2 should permit exactly two diagnostic claims");
+            "Phase 3e-B2c qualified control should permit exactly two diagnostic claims");
   MapPageConsumeGate gate;
   gate.reset(7);
   expect_true(!gate.exhausted(7), "a reset generation should begin below the consume limit");

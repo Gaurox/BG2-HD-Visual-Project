@@ -11,6 +11,7 @@ namespace iee::core {
 struct ProcessResourceSnapshot {
   bool memoryAvailable{};
   bool ioAvailable{};
+  bool handlesAvailable{};
   std::uint64_t workingSetBytes{};
   std::uint64_t peakWorkingSetBytes{};
   std::uint64_t privateBytes{};
@@ -19,6 +20,7 @@ struct ProcessResourceSnapshot {
   std::uint64_t readTransferBytes{};
   std::uint64_t writeOperations{};
   std::uint64_t writeTransferBytes{};
+  std::uint64_t handleCount{};
 };
 
 [[nodiscard]] ProcessResourceSnapshot capture_process_resource_snapshot() noexcept;
