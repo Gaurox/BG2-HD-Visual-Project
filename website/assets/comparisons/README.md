@@ -27,6 +27,13 @@ Rules:
   evidence.
 - `comparison.json` records dimensions, capture or crop metadata, hashes and relative asset paths.
 
+Page layout: a comparison frame steps outside the reading column and is sized by
+`max(--shell, min(--shell-wide, --compare-max-height * --compare-aspect))`, so it widens on a
+large screen but never gets taller than the viewport. Each `.compare-frame` declares
+`--compare-aspect` inline. When frames sit inside a wrapper that carries the width — the gallery
+feature block, the in-game grid — that wrapper declares the same `--compare-aspect`, which means
+frames grouped under one wrapper must share an aspect ratio.
+
 The website normally loads files from `web/`. A fidelity-critical comparison may reference the
 PNG files from `source/` directly when the exact original pixels must be preserved; neither form
 is treated as a project production source.
