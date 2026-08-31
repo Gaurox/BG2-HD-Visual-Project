@@ -1,0 +1,307 @@
+{
+  "anomaly_summary": {
+    "by_code": {
+      "cross-collection-portrait-identities": 1,
+      "duplicate-portrait-rows": 1,
+      "duplicate-qa-evidence": 7,
+      "duplicate-source-content": 1,
+      "hardcoded-source-path": 1,
+      "map-source-status-stale": 1,
+      "missing-resource-dependencies": 2,
+      "multiple-scoped-corrections": 1,
+      "referenced-icon-sources-missing": 1,
+      "shared-raw-dependencies": 1,
+      "sprite-families-without-resources": 1,
+      "truncated-portrait-hashes": 3,
+      "ui-mainmenu-output-manifest-missing": 1,
+      "ui-source-rows-reclassified": 1,
+      "unclassified-graphical-resources": 1
+    },
+    "by_severity": {
+      "error": 0,
+      "info": 5,
+      "warning": 19
+    },
+    "total": 24
+  },
+  "asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
+  "coverage_gaps": [
+    {
+      "asset_count": null,
+      "coverage_status": "insufficient",
+      "domain": "other",
+      "format_counts": {
+        "BAM": 102
+      },
+      "reason": "ressources BAM présentes mais propriétaire logique non démontré ; elles ne sont pas inventées comme assets autonomes",
+      "resource_count": 102,
+      "scope": "unclassified-graphical-resources",
+      "source": "graphics/index/unclassified-resources.csv"
+    }
+  ],
+  "definitions": {
+    "known_assets": {
+      "description": "Enregistrements du registre global, sans estimation des périmètres non inventoriés."
+    },
+    "produced": {
+      "axis": "production",
+      "denominatorExcludes": [
+        "not-applicable"
+      ],
+      "description": "Assets dont la production est produite ou vérifiée.",
+      "includedStates": [
+        "produced",
+        "verified"
+      ],
+      "percent": "produced / production_applicable; null si aucun asset applicable"
+    },
+    "production_applicable": {
+      "axis": "production",
+      "excluded_states": [
+        "not-applicable"
+      ]
+    },
+    "qa_applicable": {
+      "axis": "qa",
+      "excluded_states": [
+        "not-applicable"
+      ]
+    },
+    "qa_passed": {
+      "axis": "qa",
+      "denominatorExcludes": [
+        "not-applicable"
+      ],
+      "description": "Assets avec décision QA explicitement passée.",
+      "includedStates": [
+        "passed"
+      ],
+      "percent": "qa_passed / qa_applicable; null si aucun asset applicable"
+    },
+    "release_applicable": {
+      "axis": "release",
+      "excluded_states": [
+        "not-applicable"
+      ]
+    },
+    "release_eligible_or_beyond": {
+      "axis": "release",
+      "denominatorExcludes": [
+        "not-applicable"
+      ],
+      "description": "Assets éligibles, approuvés, intégrés ou publiés.",
+      "includedStates": [
+        "eligible",
+        "approved",
+        "integrated",
+        "published"
+      ],
+      "percent": "release_eligible_or_beyond / release_applicable; null si aucun asset applicable"
+    }
+  },
+  "domains": [
+    {
+      "authority": "areas.csv",
+      "coverageStatus": "projected",
+      "domain": "maps",
+      "knownAssets": 400,
+      "label": "Maps",
+      "note": "Une entrée par variante jour ou nuit connue.",
+      "produced": 291,
+      "producedPercent": 0.7275,
+      "productionApplicable": 400,
+      "qaApplicable": 400,
+      "qaPassed": 287,
+      "qaPassedPercent": 0.7175,
+      "releaseApplicable": 400,
+      "releaseEligibleOrBeyond": 287,
+      "releaseEligiblePercent": 0.7175,
+      "sheet": "Maps"
+    },
+    {
+      "authority": "animations/index/ et candidats release",
+      "coverageStatus": "projected",
+      "domain": "animations",
+      "knownAssets": 271,
+      "label": "Animations",
+      "note": "BAM inventoriés et packs release séparés ; QA temporelle seulement si attestée.",
+      "produced": 55,
+      "producedPercent": 0.2029520295202952,
+      "productionApplicable": 271,
+      "qaApplicable": 271,
+      "qaPassed": 54,
+      "qaPassedPercent": 0.1992619926199262,
+      "releaseApplicable": 271,
+      "releaseEligibleOrBeyond": 5,
+      "releaseEligiblePercent": 0.01845018450184502,
+      "sheet": "Animations"
+    },
+    {
+      "authority": "sprite/index/ et état du catalogue cumulatif",
+      "coverageStatus": "projected",
+      "domain": "sprites",
+      "knownAssets": 8997,
+      "label": "Sprites",
+      "note": "Une entrée par famille ; état actif propagé par appartenance structurée.",
+      "produced": 131,
+      "producedPercent": 0.014560409025230632,
+      "productionApplicable": 8997,
+      "qaApplicable": 8997,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 8997,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Sprites"
+    },
+    {
+      "authority": "manifests UI existants, interface/index/, gameplay-hud et fonts/index/",
+      "coverageStatus": "projected",
+      "domain": "ui",
+      "knownAssets": 1672,
+      "label": "UI / HUD / polices",
+      "note": "Compositions UI/HUD et polices projetées ; les pages PVRZ restent des dépendances.",
+      "produced": 2,
+      "producedPercent": 0.0011961722488038277,
+      "productionApplicable": 1672,
+      "qaApplicable": 1672,
+      "qaPassed": 2,
+      "qaPassedPercent": 0.0011961722488038277,
+      "releaseApplicable": 1672,
+      "releaseEligibleOrBeyond": 2,
+      "releaseEligiblePercent": 0.0011961722488038277,
+      "sheet": "UI-HUD-Polices"
+    },
+    {
+      "authority": "inventaires CSV existants",
+      "coverageStatus": "partial",
+      "domain": "portraits",
+      "knownAssets": 3321,
+      "label": "Portraits",
+      "note": "Inventaires stock et auxiliaires lus ; empreintes tronquées signalées.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 3321,
+      "qaApplicable": 3321,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 3321,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Portraits"
+    },
+    {
+      "authority": "video/index/",
+      "coverageStatus": "projected",
+      "domain": "videos",
+      "knownAssets": 50,
+      "label": "Vidéos",
+      "note": "Une entrée par cinématique ou tutoriel WBM ; les WBM de zone restent dans animations.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 50,
+      "qaApplicable": 50,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 50,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Videos"
+    },
+    {
+      "authority": "icons/index/",
+      "coverageStatus": "projected",
+      "domain": "icons",
+      "knownAssets": 2931,
+      "label": "Icônes",
+      "note": "Une entrée par jeu BAM référencé par ITM/SPL ; les usages restent des relations.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 2931,
+      "qaApplicable": 2931,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 2931,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Icones"
+    },
+    {
+      "authority": "effects/index/",
+      "coverageStatus": "projected",
+      "domain": "effects",
+      "knownAssets": 467,
+      "label": "Effets",
+      "note": "Une entrée par contrôleur VVC/VEF ; animations et palettes sont des dépendances.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 467,
+      "qaApplicable": 467,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 467,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Effets"
+    },
+    {
+      "authority": "projectiles/index/",
+      "coverageStatus": "projected",
+      "domain": "projectiles",
+      "knownAssets": 243,
+      "label": "Projectiles",
+      "note": "Une entrée par contrôleur PRO ; animations, effets et palettes sont des dépendances.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 243,
+      "qaApplicable": 243,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 243,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Projectiles"
+    },
+    {
+      "authority": "cursors/index/",
+      "coverageStatus": "projected",
+      "domain": "cursors",
+      "knownAssets": 1,
+      "label": "Curseurs",
+      "note": "CURSORS.BAM est suivi comme un jeu moteur unique.",
+      "produced": 0,
+      "producedPercent": 0,
+      "productionApplicable": 1,
+      "qaApplicable": 1,
+      "qaPassed": 0,
+      "qaPassedPercent": 0,
+      "releaseApplicable": 1,
+      "releaseEligibleOrBeyond": 0,
+      "releaseEligiblePercent": 0,
+      "sheet": "Curseurs"
+    }
+  ],
+  "generated_by": "pipeline/scripts/generate_human_tracking_xlsx.mjs",
+  "global": {
+    "knownAssets": 18353,
+    "produced": 479,
+    "producedPercent": 0.026099275322835503,
+    "productionApplicable": 18353,
+    "qaApplicable": 18353,
+    "qaPassed": 343,
+    "qaPassedPercent": 0.018689042663324797,
+    "releaseApplicable": 18353,
+    "releaseEligibleOrBeyond": 294,
+    "releaseEligiblePercent": 0.016019179425706968
+  },
+  "schema": "bg2-upscale-human-progress-v1",
+  "source_fingerprint_sha256": "CF624D28887AFDF06E4BD5AB47FBFAAED7F48CEF8ACE44CE0D9D76D8709B83A0",
+  "source_snapshot_at_utc": "2026-08-30T20:45:45Z",
+  "sources": {
+    "anomalies": "asset-tracking/anomalies.json",
+    "canonical_input_count": 72,
+    "contract": "docs/asset-tracking-record.schema.json",
+    "coverage": "asset-tracking/coverage.json",
+    "registry": "asset-tracking/registry.json"
+  }
+}

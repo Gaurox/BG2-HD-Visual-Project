@@ -32,6 +32,10 @@ quatre sorties. La seconde ne modifie rien et échoue si une sortie manque ou ne
 sources actuelles. Le dossier `asset-tracking/` peut être supprimé puis régénéré par la première
 commande.
 
+La projection humaine XLSX et les métriques structurées associées sont décrites dans
+[`HUMAN_PROJECT_TRACKING_XLSX.md`](HUMAN_PROJECT_TRACKING_XLSX.md). Elles lisent ces sorties après
+leur régénération et ne modifient aucune autorité.
+
 Le CSV contient les colonnes `asset_id`, `domain`, `asset_type`, les cinq états indépendants,
 `provenance_state`, la sélection éventuelle, le chemin et le locator de la source canonique, le
 nombre de preuves, l'adaptateur et l'instant d'observation. Il est strictement jetable : une
