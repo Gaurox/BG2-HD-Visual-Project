@@ -1,22 +1,14 @@
 (() => {
   const navToggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-nav]');
-  const languageSwitch = document.querySelector('[data-language-switch]');
-  const languageToast = document.querySelector('[data-language-toast]');
   const header = document.querySelector('[data-header]');
+  const isFr = document.documentElement.lang.toLowerCase().startsWith('fr');
+  const t = (en, fr) => (isFr ? fr : en);
 
   navToggle?.addEventListener('click', () => {
     const isOpen = nav?.classList.toggle('is-open') ?? false;
     navToggle.setAttribute('aria-expanded', String(isOpen));
-    navToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
-  });
-
-  languageSwitch?.addEventListener('click', () => {
-    languageToast?.classList.add('is-visible');
-    window.clearTimeout(window.languageToastTimer);
-    window.languageToastTimer = window.setTimeout(() => {
-      languageToast?.classList.remove('is-visible');
-    }, 2800);
+    navToggle.setAttribute('aria-label', isOpen ? t('Close navigation', 'Fermer la navigation') : t('Open navigation', 'Ouvrir la navigation'));
   });
 
   nav?.querySelectorAll('a').forEach((link) => {
@@ -63,7 +55,7 @@
     trigger.addEventListener('click', () => {
       if (!dialog || !dialogImage || !dialogTitle) return;
       dialogImage.src = trigger.dataset.galleryOpen || '';
-      dialogImage.alt = trigger.dataset.galleryTitle || 'Gallery study';
+      dialogImage.alt = trigger.dataset.galleryTitle || t('Gallery study', 'Étude visuelle');
       dialogTitle.textContent = trigger.dataset.galleryTitle || '';
       dialog.showModal();
     });

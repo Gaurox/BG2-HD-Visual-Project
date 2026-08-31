@@ -9,6 +9,10 @@ the production pipelines and contains no release manifest or real progress data.
 - `progress.html` — dashboard layout with clearly marked sample values
 - `gallery.html` — filterable gallery and interactive comparison layout
 
+Each page has a French counterpart under `fr/` with identical layout. The two
+language sets share `assets/`; the header `EN / FR` control links each page to
+its other-language pair. See `locales/README.md`.
+
 ## Local preview
 
 From the repository root:
@@ -28,8 +32,8 @@ and can also be started manually.
 
 ## Content status
 
-- All public-facing mockup copy is in English.
-- The FR control is reserved but intentionally inactive until approved French copy exists.
+- Public-facing copy exists in English (root) and French (`fr/`); the `EN / FR` control switches
+  between the two mirrored page sets.
 - Dashboard values are visual placeholders, not project status.
 - Several page images are real project material rather than concept art. Most keep a
   full-resolution source next to a lighter WebP delivery copy the pages load; the largest

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d0e">
+    <meta name="description" content="Maquette du tableau de bord d’avancement du BG2 HD Visual Project.">
+    <title>Avancement du projet — BG2 HD Visual Project</title>
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="alternate" hreflang="en" href="../progress.html">
+    <link rel="alternate" hreflang="fr" href="progress.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/site.js" defer></script>
+  </head>
+  <body class="inner-page" data-page="progress">
+    <a class="skip-link" href="#main-content">Aller au contenu</a>
+    <header class="site-header inner-header" data-header>
+      <a class="brand" href="index.html" aria-label="BG2 HD Visual Project — accueil"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a>
+      <button class="nav-toggle" type="button" aria-label="Ouvrir la navigation" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale" data-nav><a href="index.html">Aperçu</a><a class="is-active" href="progress.html">Avancement</a><a href="gallery.html">Galerie</a></nav>
+      <div class="language-switch" aria-label="Langue / Language">
+        <a class="language-muted" href="../progress.html" hreflang="en">EN</a><span class="language-divider" aria-hidden="true">/</span><a class="is-active" href="progress.html" aria-current="page" hreflang="fr">FR</a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="page-hero progress-hero">
+        <div class="page-hero-media"><img src="../assets/images/hero-city-rooftops.webp" alt=""></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-shell page-hero-content">
+          <p class="eyebrow"><span></span> Vue d’ensemble de la production</p>
+          <h1>Avancement du <em>projet.</em></h1>
+          <p>Une vue claire du travail, de la production visuelle au contrôle qualité en passant par les performances du moteur.</p>
+        </div>
+      </section>
+
+      <section class="dashboard-section page-shell" aria-labelledby="dashboard-title">
+        <div class="dashboard-notice"><span>Données fictives</span><p>Les valeurs ci-dessous sont des espaces réservés servant à concevoir le tableau de bord. Ce ne sont pas les chiffres actuels du projet.</p></div>
+        <div class="dashboard-overview">
+          <div class="overview-copy">
+            <p class="eyebrow"><span></span> Projet global</p>
+            <h2 id="dashboard-title">Un seul patch,<br><em>plusieurs chantiers de production.</em></h2>
+            <p>Le tableau de bord final réunira un suivi de production structuré et quelques notes manuelles choisies, tout en gardant chaque discipline lisible séparément.</p>
+          </div>
+          <div class="overall-meter" style="--meter: 62" aria-label="Avancement global indicatif&nbsp;: 62 pour cent">
+            <div class="overall-meter-inner"><strong>62<sup>%</sup></strong><span>Avancement indicatif</span></div>
+          </div>
+          <div class="overview-metrics">
+            <div><strong>5</strong><span>Chantiers principaux</span></div>
+            <div><strong>—</strong><span>Chiffres définitifs à venir</span></div>
+          </div>
+        </div>
+
+        <div class="progress-grid" aria-label="Chantiers du projet">
+          <article class="progress-card" style="--progress: 74%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">01</span><span class="progress-sample">Indicatif · 74%</span></div>
+            <h3>Décors &amp; cartes</h3>
+            <p>Préparation des sources, amélioration ×4, reconstruction des tuiles et revue visuelle en jeu.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Grands fonds de décor</li><li>Variantes jour et nuit</li><li>Traitement de l’eau et des surcouches</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 58%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">02</span><span class="progress-sample">Indicatif · 58%</span></div>
+            <h3>Animation &amp; fluidité</h3>
+            <p>Restauration des images, traitement de l’alpha et interpolation respectant les pauses, vers 30 fps.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Rehaussement spatial des images</li><li>Interpolation temporelle</li><li>Packs d’exécution par zone</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 46%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">03</span><span class="progress-sample">Indicatif · 46%</span></div>
+            <h3>QA visuelle &amp; corrections</h3>
+            <p>Revue en jeu des raccords, de l’alpha, de l’occlusion, de l’eau, des couleurs et des défauts isolés.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Inspection scène par scène</li><li>Occlusion des premiers plans</li><li>Passes de correction ciblées</li></ul>
+          </article>
+          <article class="progress-card" style="--progress: 39%" data-reveal>
+            <div class="progress-card-top"><span class="progress-index">04</span><span class="progress-sample">Indicatif · 39%</span></div>
+            <h3>Performances de chargement des cartes</h3>
+            <p>Étude de la charge en ressources, du temps de préparation, des pics de chargement et des solutions de repli sûres.</p>
+            <div class="progress-track" aria-hidden="true"><span></span></div>
+            <ul><li>Mesures à l’exécution</li><li>Essais de préparation bornée</li><li>Études de chargement à froid et à chaud</li></ul>
+          </article>
+        </div>
+
+        <div class="roadmap-panel">
+          <div class="roadmap-title"><p class="eyebrow"><span></span> Chaîne de livraison</p><h2>De l’œuvre source au <em>résultat jouable.</em></h2></div>
+          <ol class="roadmap-flow"><li><span>01</span><strong>Préparer</strong><small>Inventaire et vérification des sources</small></li><li><span>02</span><strong>Améliorer</strong><small>Production propre à chaque ressource</small></li><li><span>03</span><strong>Reconstruire</strong><small>Ressources prêtes pour le moteur</small></li><li><span>04</span><strong>Vérifier</strong><small>Tests visuels en jeu</small></li></ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="page-shell footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">II</span><span class="brand-copy"><strong>BG2 HD</strong><small>Visual Project</small></span></a></div><p>Projet de fans non officiel et non commercial. Sans affiliation avec Beamdog ni les ayants droit de Baldur’s Gate.</p><nav aria-label="Navigation du pied de page"><a href="index.html">Aperçu</a><a href="progress.html">Avancement</a><a href="gallery.html">Galerie</a></nav></div><div class="page-shell footer-bottom"><span>© <span data-current-year></span> BG2 HD Visual Project</span><span>Conçu pour GitHub Pages</span></div></footer>
+  </body>
+</html>
