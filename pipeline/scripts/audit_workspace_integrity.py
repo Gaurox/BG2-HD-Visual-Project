@@ -2579,12 +2579,168 @@ def audit_video_runs(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
 ) -> dict[str, int]:
     data = read_json(ROOT / CLEANUP_MANIFEST)
+    canonical_asset_ids = {
+        "videos:" + row["asset_key"].replace(":", "-").lower()
+        for row in read_csv(ROOT / "video/index/resources.csv")
+    }
     movie_asset_ids = [
         "videos:" + row["asset_key"].replace(":", "-").lower()
         for row in read_csv(ROOT / "video/index/resources.csv")
         if row["asset_key"].startswith("movie:")
     ]
     physical = 0
+
+    def evidence_state(
+        entries: list[dict[str, Any]], *, run_id: str, descriptor_path: str, label: str
+    ) -> str:
+        if not entries:
+            return "none"
+        state = "verified"
+        for entry in entries:
+            path_text = str(entry.get("path", ""))
+            expected_hash = str(entry.get("sha256", "")).upper()
+            expected_bytes = entry.get("bytes")
+            candidate = (ROOT / path_text).resolve()
+            portable = bool(path_text) and candidate.is_relative_to(ROOT.resolve())
+            if not portable or not candidate.is_file():
+                state = "missing"
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-evidence-missing",
+                    "videos",
+                    f"Preuve {label} absente dans un run vidéo.",
+                    path=path_text or descriptor_path,
+                    run_id=run_id,
+                )
+                continue
+            if candidate.stat().st_size != expected_bytes or sha256_file(candidate) != expected_hash:
+                state = "drifted"
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-evidence-drift",
+                    "videos",
+                    f"Preuve {label} différente du manifeste du run vidéo.",
+                    path=path_text,
+                    run_id=run_id,
+                )
+        return state
+
+    runs_root = ROOT / "video/runs"
+    if runs_root.is_dir():
+        for descriptor in sorted(runs_root.glob("*/run.json"), key=lambda path: path.as_posix().casefold()):
+            physical += 1
+            descriptor_path = repo_path(descriptor)
+            run_id = descriptor.parent.name
+            try:
+                current = read_json(descriptor)
+            except (OSError, json.JSONDecodeError) as exc:
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-descriptor-invalid",
+                    "videos",
+                    "Descripteur de run vidéo illisible.",
+                    path=descriptor_path,
+                    run_id=run_id,
+                    details={"error": str(exc)},
+                )
+                continue
+            asset_ids = current.get("asset_ids") or []
+            result = current.get("result") or {}
+            pipeline = current.get("pipeline") or {}
+            valid_header = (
+                current.get("$schema") == "docs/workspace-run.schema.json"
+                and current.get("schema_version") == 1
+                and current.get("domain") == "videos"
+                and current.get("run_id") == run_id
+                and asset_ids
+                and set(asset_ids).issubset(canonical_asset_ids)
+            )
+            if not valid_header:
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-descriptor-invalid",
+                    "videos",
+                    "En-tête ou asset_ids invalides dans un run vidéo.",
+                    path=descriptor_path,
+                    run_id=run_id,
+                )
+            recipe_path = str(pipeline.get("recipe_path", ""))
+            recipe_hash = str(pipeline.get("recipe_sha256", "")).upper()
+            recipe = ROOT / recipe_path
+            recipe_valid = bool(
+                recipe_path
+                and recipe.is_file()
+                and recipe_hash
+                and sha256_file(recipe) == recipe_hash
+            )
+            if not recipe_valid:
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-recipe-drift",
+                    "videos",
+                    "Recette absente ou différente du hash scellé dans le run vidéo.",
+                    path=recipe_path or descriptor_path,
+                    run_id=run_id,
+                )
+            inputs_state = evidence_state(
+                current.get("inputs") or [],
+                run_id=run_id,
+                descriptor_path=descriptor_path,
+                label="d'entrée",
+            )
+            outputs_state = evidence_state(
+                current.get("outputs") or [],
+                run_id=run_id,
+                descriptor_path=descriptor_path,
+                label="de sortie",
+            )
+            completed_without_outputs = result.get("status") == "completed" and outputs_state == "none"
+            if completed_without_outputs:
+                outputs_state = "missing"
+                add_issue(
+                    issues,
+                    "error",
+                    "video-run-output-missing",
+                    "videos",
+                    "Run vidéo terminé sans sortie déclarée.",
+                    path=descriptor_path,
+                    run_id=run_id,
+                )
+            provenance = "verified" if (
+                valid_header
+                and recipe_valid
+                and inputs_state == "verified"
+                and outputs_state in {"verified", "none"}
+                and result.get("sealed") is True
+            ) else "partial"
+            add_run(
+                runs,
+                default_run(
+                    run_key=f"videos:{run_id}",
+                    domain="videos",
+                    run_id=run_id,
+                    asset_ids=asset_ids,
+                    path=repo_path(descriptor.parent),
+                    run_kind=str(pipeline.get("id", "video-run")),
+                    descriptor_path=descriptor_path,
+                    recipe_path=recipe_path,
+                    result_state=str(result.get("status", "unknown")),
+                    qa_state="not-assessed",
+                    selection_state="unselected",
+                    selection_authority="",
+                    inputs_state=inputs_state,
+                    outputs_state=outputs_state,
+                    provenance_state=provenance,
+                    legacy=False,
+                    notes=str(result.get("notes", "")),
+                ),
+            )
+
     for operation in data.get("operations", []):
         if operation.get("domain") != "videos" or operation.get("action") != "move":
             continue

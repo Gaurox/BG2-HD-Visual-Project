@@ -16,11 +16,12 @@ les projections générées, les règles de provenance et les contrôles globaux
 | Animations BAM | [`animations/README.md`](animations/README.md) |
 | Sprites complexes (`sprite/index/` est l'autorité) | [`sprite/README.md`](sprite/README.md) |
 | Interface/HUD | [`interface/README.md`](interface/README.md) |
+| Vidéos WBM | [`video/README.md`](video/README.md) |
 | Moteur/DLL | [`engine/InfinityEngine-Enhancer/source-patchee/README.md`](engine/InfinityEngine-Enhancer/source-patchee/README.md) |
 | Installer/release | [`releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md`](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) |
 | Décisions | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 | Problèmes ouverts | [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) |
 
-Les portraits, vidéos et inventaires transversaux sont routés depuis `AGENTS.md`. La documentation des formats
+Les portraits et inventaires transversaux sont routés depuis `AGENTS.md`. La documentation des formats
 BG2EE se consulte à la demande depuis
 [`BG2EE_Documentation_Modders_FR/INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md).

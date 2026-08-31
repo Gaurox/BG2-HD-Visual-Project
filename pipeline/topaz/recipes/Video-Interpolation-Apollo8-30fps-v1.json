@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-video-interpolation-recipe-v1",
+  "id": "topaz-video-apollo8-30fps-v1",
+  "input": {
+    "role": "upscale-technical-video",
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": "15/1",
+    "progressive": true
+  },
+  "topaz": {
+    "model": "apo-8",
+    "target_fps": "30/1",
+    "slowmo": 1,
+    "replace_duplicate_threshold": -0.01,
+    "approximate_duplicate_detection": false,
+    "device": "0",
+    "instances": 0,
+    "vram": 0.9,
+    "download": false
+  },
+  "timeline": {
+    "cfr_filter": "setpts=N/(30*TB)",
+    "exact_duplicate_postpass": {
+      "enabled": true,
+      "comparison": "decoded-frame-md5",
+      "scope": "adjacent",
+      "action": "remove",
+      "retime": "setpts=N/(30*TB)"
+    },
+    "audio": "excluded"
+  },
+  "technical_output": {
+    "container": "mov",
+    "codec": "prores_ks",
+    "profile": 3,
+    "pixel_format": "yuv422p10le",
+    "color_primaries": "bt709",
+    "color_transfer": "iec61966-2-1",
+    "color_space": "bt709"
+  },
+  "excluded": [
+    "final-encoding",
+    "audio-mastering",
+    "ingame-integration",
+    "qa-approval",
+    "release-selection"
+  ]
+}

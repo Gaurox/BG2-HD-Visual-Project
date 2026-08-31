@@ -73,6 +73,8 @@ python pipeline/scripts/workspace.py check
 | Masques spline | [`SPLINE_ALPHA_MASK_PIPELINE.md`](SPLINE_ALPHA_MASK_PIPELINE.md) |
 | Référence Topaz | [`TOPAZ_GIGAPIXEL_CLI_REFERENCE.md`](TOPAZ_GIGAPIXEL_CLI_REFERENCE.md) |
 | Animations | [`ANIMATION_UPSCALE_PIPELINE.md`](ANIMATION_UPSCALE_PIPELINE.md) |
+| Vidéos | [`VIDEO_UPSCALE_PIPELINE.md`](VIDEO_UPSCALE_PIPELINE.md) |
+| Interpolation vidéo | [`VIDEO_INTERPOLATION_PIPELINE.md`](VIDEO_INTERPOLATION_PIPELINE.md) |
 | Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
 ## Tests légers

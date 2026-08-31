@@ -216,7 +216,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         )
         hygiene = self.report["domain_audits"]["workspace_hygiene"]
         self.assertEqual(hygiene["obsolete_p1_target_count"], 0)
-        self.assertEqual(self.run_index["run_count"], 556)
+        self.assertEqual(self.run_index["run_count"], 562)
 
     def test_animation_proto_paths_are_migrated_without_status_inference(self) -> None:
         migration_path = ROOT / "animations/index/path-migrations.json"

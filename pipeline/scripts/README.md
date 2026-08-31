@@ -13,6 +13,8 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Maîtres/préflight de carte | `validate_x1_masters.py`, `audit_area_preflight.py` |
 | Extraction | `batch_extract.py`, `batch_extract_secondary.py`, `render_secondary.py` |
 | Job SeedVR | `run_seedvr_comfyui.py` |
+| Upscale vidéo SeedVR2 LAB 1080p | `run_video_upscale.py` |
+| Interpolation vidéo Apollo 8 30 fps | `run_video_interpolation.py` |
 | Reconstruction/audit de carte | `build_upscaled_area.py`, `verify_upscaled.py` |
 | Eau et overlays | `audit_water_area.py`, `build_spline_map_alpha.py`, `render_liquid_overlay_mask.py`, `build_water_contour_feather.py` |
 | Installation/restauration | `inject_build.py` |

@@ -59,6 +59,21 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | `.work/` | cache supprimable, jamais source |
 | Ajout de famille | runbook actif [`../sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) |
 
+## Vidéos
+
+| Sujet | Décision retenue | Réouvrir seulement si… |
+|---|---|---|
+| Upscale spatial v2 | SeedVR2 3B INT8 ConvRot, LAB, 1280×720 → 1920×1080 | QA comparative explicite favorable à une autre recette |
+| VAE | tuiles 512, recouvrement 128, temporel 64/8 | défaut de couture ou contrainte mémoire démontrée |
+| Inférence | seed `959948902156062`, 1 pas Euler, CFG 1, simple, denoise 1, couleur `lab` | nouvelle recette validée |
+| Vidéo longue | latent temporel `auto`, recouvrement 0, fusion activée | couture temporelle mesurée |
+| Temporalité | cadence et nombre d'images source conservés ; aucune interpolation | étape d'interpolation validée séparément |
+| Périmètre v1 | cinématiques 1280×720 ; tutoriels 384×480 refusés | recette dédiée aux tutoriels |
+| Sortie | artefact technique d'upscale ; audio et encodage de livraison non autoritaires | définition des étapes suivantes |
+| Interpolation v1 | Topaz Apollo 8, 15→30 fps, `2N−1`, MOV ProRes 422 HQ technique | QA comparative explicite favorable à une autre recette |
+| Doublons vidéo | `rdt=-0.01` ; supprimer uniquement les répétitions adjacentes exactes par hash décodé | politique temporelle différente explicitement validée |
+| Audio après interpolation | exclu ; synchronisation et encodage définis dans une étape ultérieure | définition de l'encodage final |
+
 ## Release et workspace
 
 | Sujet | Décision retenue |

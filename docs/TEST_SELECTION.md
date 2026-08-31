@@ -23,6 +23,8 @@ compare aussi `ref...HEAD` pour la CI. `--list` n'exécute rien. `--json` fourni
 | `sprite-formats` | runner, registres et catalogues |
 | `sprite-installation` | installateur/restaurateur du catalogue cumulatif |
 | `graphics-inventory` | UI, portraits, vidéos, icônes, curseurs, effets, projectiles |
+| `video-upscale` | recette ComfyUI et runner d'upscale vidéo 1080p |
+| `video-interpolation` | recette Topaz Apollo 8 et runner vidéo 30 fps |
 | `registry`, `integrity` | contrat global, projections, runs, hashes, migrations |
 | `renderer-transaction` | candidat renderer transactionnel |
 | `release`, `engine` | Phase 2 release et CTest moteur |

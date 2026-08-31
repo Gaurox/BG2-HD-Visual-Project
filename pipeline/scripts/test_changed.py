@@ -101,6 +101,16 @@ GROUPS = {
         "python",
         ("pipeline.tests.test_graphics_inventory",),
     ),
+    "video-upscale": TestGroup(
+        "video-upscale",
+        "python",
+        ("pipeline.tests.test_video_upscale_pipeline",),
+    ),
+    "video-interpolation": TestGroup(
+        "video-interpolation",
+        "python",
+        ("pipeline.tests.test_video_interpolation_pipeline",),
+    ),
     "registry": TestGroup(
         "registry",
         "python",
@@ -229,6 +239,12 @@ GRAPHICS_SCRIPTS = {
     "organize_ppe_portraits.py",
     "survey_creature_portraits.py",
 }
+VIDEO_UPSCALE_SCRIPTS = {
+    "run_video_upscale.py",
+}
+VIDEO_INTERPOLATION_SCRIPTS = {
+    "run_video_interpolation.py",
+}
 TRANSVERSAL_PATHS = {
     ".gitignore",
     "requirements.txt",
@@ -327,6 +343,20 @@ def classify_path(path: str) -> Classification:
 
     if path.startswith("pipeline/scripts/") and name in GRAPHICS_SCRIPTS:
         return Classification(("graphics-inventory", "registry"))
+    if (
+        path.startswith("pipeline/scripts/") and name in VIDEO_UPSCALE_SCRIPTS
+    ) or _matches(
+        path,
+        "pipeline/comfyui/workflows/SeedVR-Video-*.api.json",
+    ):
+        return Classification(("video-upscale",))
+    if (
+        path.startswith("pipeline/scripts/") and name in VIDEO_INTERPOLATION_SCRIPTS
+    ) or _matches(
+        path,
+        "pipeline/topaz/recipes/Video-Interpolation-*.json",
+    ):
+        return Classification(("video-interpolation",))
     if _matches(
         path,
         "graphics/**",
