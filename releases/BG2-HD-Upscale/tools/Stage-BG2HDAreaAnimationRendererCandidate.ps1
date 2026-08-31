@@ -2,7 +2,7 @@
 param(
     [Parameter(Mandatory)] [string]$SourceBundle,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
-    [string]$BundleId = 'iee-0.1.0-alpha.6',
+    [string]$BundleId = 'iee-0.1.0-alpha.7',
     [string]$SourceTree = 'engine/InfinityEngine-Enhancer/source-patchee',
     [string]$OutputManifestPath = (Join-Path $PSScriptRoot '..\manifests\renderer-animation-pilot.json')
 )
@@ -36,7 +36,7 @@ if (Test-Path -LiteralPath $destination) { throw "Candidat renderer deja present
 
 $rendererDll = Get-BundleFile $source 'InfinityEngine-Enhancer.dll'
 $binaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDll.FullName))
-foreach ($marker in @('AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'LoadArea')) {
+foreach ($marker in @('AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
     Require ($binaryText.IndexOf($marker, [StringComparison]::Ordinal) -ge 0) "DLL renderer incompatible avec les animations de zone : marqueur absent $marker"
 }
 
@@ -71,9 +71,10 @@ try {
         files = @($files)
         validation_required = @(
             'host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing',
-            'renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea',
+            'renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4, EnableNativeOcclusionBridge, FXRenderClippingPolys and LoadArea',
             'clean BG2EE Steam 2.7.3.0 game-hash gate',
-            'EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs',
+            'EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, AR0900 v3 and AR0516 native WED occlusion',
+            'AR0516 SPHINCT/SPHINCT2 bridge-on gate with WED 8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A',
             'AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate',
             'in-place Steam shim lifecycle and verified full vanilla restoration'
         )

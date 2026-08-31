@@ -57,6 +57,9 @@ On an otherwise clean, supported Steam install with the external prerequisite:
   64x64 world geometry while sampling HD pages;
 - inspect water, masks, tint, scrolling/zoom, doors, transitions, resize/full
   screen, save/load and clean shutdown;
+- entrer dans AR0516 avec le bridge activé ; vérifier `SPHINCT`, `SPHINCT2` et le polygone WED
+  local du SPHINCT inférieur, puis exiger les traces `bridge prepared`, hook
+  `FXRenderClippingPolys` et `bridge active` ;
 - enter AR0413 and require the renderer log to classify its stock `WTOIL`
   overlay as `Oil`, with `liquidOverlayMask=0x02`; visually confirm animated
   oil on the 283 released base cells and no black gaps at the 12 corrected

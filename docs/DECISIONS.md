@@ -37,7 +37,7 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Pack > 512 Mio | pack d'auteur puis split par zone | runtime borné alternatif démontré |
 | Runs interrompus | conserver request/manifest, supprimer les frames partielles, repartir des sources | jamais depuis une sortie partielle |
 | Gate release | delta par zone pendant la tâche ; gates globales au niveau package | changement runtime/format/générateur/Core ou package |
-| Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
+| Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; le Core release possède son activation ; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
 | Polygone WED | prouver l'intersection avec l'alpha ; sinon créer un polygone local borné | WED source ou contour démontré différent |
 | Resref avec `_` | `[A-Z0-9_]{1,8}` avec au moins un alphanumérique | jamais |
 | Ressource `Blended` | neutraliser RGB sous alpha nul ; prémultiplier si alpha dégradé | jamais par correction alpha seule |

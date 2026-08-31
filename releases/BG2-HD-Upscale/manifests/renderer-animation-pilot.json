@@ -2,7 +2,7 @@
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
   "bundle_id": "iee-0.1.0-alpha.6",
-  "status": "frozen-awaiting-clean-game-validation",
+  "status": "rejected",
   "source_tree": "git:96c312b6b78ede75666a9c474cbd850821b7802c:releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.5",
   "build_environment": {
     "cmake": "4.0.2",
@@ -54,6 +54,7 @@
     }
   ],
   "validation_required": [
+    "OBSOLETE: alpha.6 predates EnableNativeOcclusionBridge and FXRenderClippingPolys integration; do not promote",
     "host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing",
     "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea",
     "clean BG2EE Steam 2.7.3.0 game-hash gate",

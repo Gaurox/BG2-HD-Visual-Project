@@ -2,7 +2,8 @@
 param(
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\manifests\components.json'),
-    [string]$ContentPath = (Join-Path $PSScriptRoot '..\manifests\content.json')
+    [string]$ContentPath = (Join-Path $PSScriptRoot '..\manifests\content.json'),
+    [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,6 +15,7 @@ function Read-Json([string]$Path) {
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
 $content = Read-Json $ContentPath
 $existing = Read-Json (Join-Path $release 'manifests\components.json')
+$animationCandidates = Read-Json $AnimationCandidatesPath
 
 # Core and UI remain explicitly maintained because they have special lifecycle
 # behavior. Every validated map component is then derived from content.json so
@@ -75,12 +77,18 @@ $animationComponents = foreach ($group in $animations) {
     if ($labels.Count -ne 1 -or $groups.Count -ne 1 -or $areas.Count -ne 1 -or $roots.Count -ne 1 -or $roots[0] -ne "iee-assets/areas/$($areas[0])") {
         throw "Composant animation de zone incoherent : $($group.Name)"
     }
+    $dependencies = @(0)
+    $candidate = @($animationCandidates.candidates | Where-Object { [string]$_.area -eq $areas[0] })
+    if ($candidate.Count -ne 1) { throw "Candidat animation absent ou duplique : $($areas[0])" }
+    if ($null -ne $candidate[0].occlusion_contract) {
+        $dependencies += [int]$candidate[0].occlusion_contract.map_component_id
+    }
     [ordered]@{
         id = [int]$group.Name
         label = $labels[0]
         name = "$($areas[0]) area animations (x4)"
         status = 'validated'
-        depends_on = @(0)
+        depends_on = @($dependencies | Sort-Object -Unique)
         payload_groups = @($groups[0])
     }
 }

@@ -175,7 +175,15 @@ comme exception locale documentée.
 - sauvegarde/rechargement, transitions de zones, pause, zoom, resize et plein écran ;
 - endurance en zone chargée, mesure des temps GPU et des pics mémoire processus/GPU ;
 - rollback puis réactivation sur redémarrage complet ;
-- approbation explicite avant toute intégration au manifeste de release.
+- bundle renderer alpha.7 figé avec les marqueurs d'occlusion et toutes les gates ci-dessus.
+
+## Réactivation AR0516 du 2026-08-31
+
+La combinaison DLL `9FCE57D1...FCC98`, registre AR0516 et WED corrigé a été réactivée
+transactionnellement avec `EnableNativeOcclusionBridge=true`, puis validée ingame par
+l'utilisateur sur `planar-test`. L'intégration manifeste du WED et l'exigence d'un nouveau bundle
+renderer compatible ont été approuvées. Voir
+[`native-occlusion-reactivation-20260831.md`](native-occlusion-reactivation-20260831.md).
 
 ## Rollback
 

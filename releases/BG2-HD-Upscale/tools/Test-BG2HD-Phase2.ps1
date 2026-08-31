@@ -86,6 +86,7 @@ try {
 $tp2 = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'bg2hd/bg2hd.tp2') -Raw
  $components = (Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/components.json') -Raw | ConvertFrom-Json).components
  $content = (Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/content.json') -Raw | ConvertFrom-Json).entries
+$runtimeCompatibility = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/runtime-compatibility.json') -Raw | ConvertFrom-Json
 Require (([regex]::Matches($tp2, '(?m)^LANGUAGE ')).Count -eq 9) 'Le TP2 doit declarer neuf langues.'
 Require (([regex]::Matches($tp2, '(?m)^BEGIN ')).Count -eq @($components).Count) 'Le TP2 ne couvre pas tous les composants declares.'
 Require (([regex]::Matches($tp2, '(?m)^  COPY_LARGE ')).Count -eq @($content).Count) 'Le TP2 ne couvre pas toutes les entrees du manifeste de contenu.'
@@ -100,6 +101,13 @@ Require ($tp2 -match '(?m)^  AT_NOW ui_config_result ') 'Activation UI x4 absent
 Require ($tp2 -match '(?m)^  MKDIR ~iee-assets~\r?$') 'Creation du dossier iee-assets absente.'
 $copySources = [regex]::Matches($tp2, '(?m)^  COPY_LARGE ~([^~]+)~') | ForEach-Object { $_.Groups[1].Value }
 Require (($copySources | Where-Object { $_ -match '(?i)(?:^|/)(?:override|backups|archive|captures|temp)(?:/|$)' }).Count -eq 0) 'Un chemin de source interdit apparait dans le TP2.'
+Require ($runtimeCompatibility.owned_ini_keys.'core-steam'.Shaders.EnableNativeOcclusionBridge -eq 'true') 'Activation Core du bridge d occlusion absente.'
+$ar0516Candidate = @($animationCandidates.candidates | Where-Object { $_.area -eq 'AR0516' })
+Require ($ar0516Candidate.Count -eq 1 -and $null -ne $ar0516Candidate[0].occlusion_contract) 'Contrat occlusion AR0516 absent.'
+$ar0516Wed = @($content | Where-Object { $_.destination -eq 'override/AR0516.WED' })
+Require ($ar0516Wed.Count -eq 1 -and $ar0516Wed[0].sha256 -eq '8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A' -and [int64]$ar0516Wed[0].bytes -eq 41502) 'Correction WED AR0516 absente ou invalide.'
+$ar0516AnimationComponent = @($components | Where-Object { [int]$_.id -eq 3002 })
+Require ($ar0516AnimationComponent.Count -eq 1 -and $ar0516AnimationComponent[0].depends_on -contains 1580) 'Le composant animation AR0516 ne depend pas de sa correction WED.'
 
 $workspaceRoot = (Resolve-Path -LiteralPath (Join-Path $ReleaseRoot '..\..')).Path
 $csv = Import-Csv -LiteralPath (Join-Path $workspaceRoot 'areas.csv') | Where-Object { $_.area_id -match '^(AR|OH)\d{4}$' }

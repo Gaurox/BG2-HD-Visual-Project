@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; promotion requires explicit user approval",
+  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration approved 2026-08-31",
   "candidates": [
     {
       "area": "AR0602",
@@ -80,7 +80,24 @@
         "SPHINCT",
         "SPHINCT2"
       ],
-      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "occlusion_contract": {
+        "mode": "native-wed-bridge-v1",
+        "map_component_id": 1580,
+        "map_component_label": "map-ar0516",
+        "map_payload_group": "map-ar0516",
+        "source_spec": "maps/wed-corrections/AR0516/lower-sphinct-cover.json",
+        "source": "maps/wed-corrections/AR0516/validated-output-v1/AR0516.WED",
+        "destination": "override/AR0516.WED",
+        "bytes": 41502,
+        "sha256": "8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A",
+        "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md",
+        "qa_evidence_sha256": "003B47EC8B83F3920B897A675BB1728E8DE653DC244F04C9D3BAF6160785F1CA",
+        "ini_owner": "core-steam",
+        "ini_section": "Shaders",
+        "ini_key": "EnableNativeOcclusionBridge",
+        "ini_value": "true"
+      }
     },
     {
       "area": "AR0700",

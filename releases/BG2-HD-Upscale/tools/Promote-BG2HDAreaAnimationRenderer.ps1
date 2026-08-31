@@ -19,13 +19,20 @@ $candidatePath = (Resolve-Path -LiteralPath $CandidateManifestPath).Path
 $schema = Join-Path $release 'schemas\renderer-bundle.schema.json'
 Require (Test-Json -Path $candidatePath -SchemaFile $schema) 'Schema du renderer candidat invalide.'
 $candidate = Get-Content -LiteralPath $candidatePath -Raw -Encoding utf8 | ConvertFrom-Json
-Require ($candidate.bundle_id -eq 'iee-0.1.0-alpha.6') 'Le renderer v2/v3 doit utiliser le bundle alpha.6 fige.'
+Require ($candidate.bundle_id -eq 'iee-0.1.0-alpha.7') 'Le renderer occlusion/v2/v3 doit utiliser le bundle alpha.7 fige.'
 Require ($candidate.status -eq 'frozen-awaiting-clean-game-validation') 'Le renderer candidat doit etre fige avant promotion.'
 
 $sourceRoot = Join-Path $release (Join-Path 'release-inputs\renderer' $candidate.bundle_id)
 $targetRoot = Join-Path $release 'bg2hd\renderer'
 Require (Test-Path -LiteralPath $sourceRoot -PathType Container) "Source renderer candidate absente : $sourceRoot"
 Require (Test-Path -LiteralPath $targetRoot -PathType Container) "Destination renderer absente : $targetRoot"
+
+$candidateDll = Join-Path $sourceRoot 'InfinityEngine-Enhancer.dll'
+Require (Test-Path -LiteralPath $candidateDll -PathType Leaf) 'DLL renderer candidate absente.'
+$candidateBinaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($candidateDll))
+foreach ($marker in @('AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
+    Require ($candidateBinaryText.IndexOf($marker, [StringComparison]::Ordinal) -ge 0) "Marqueur renderer alpha.7 absent : $marker"
+}
 
 $expected = @($candidate.files | ForEach-Object { [string]$_.path } | Sort-Object)
 $actual = @(Get-ChildItem -LiteralPath $targetRoot -File -Recurse | ForEach-Object { [IO.Path]::GetRelativePath($targetRoot, $_.FullName).Replace('\', '/') } | Sort-Object)

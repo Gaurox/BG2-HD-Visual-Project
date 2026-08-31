@@ -3,6 +3,7 @@ param(
     [string]$WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..\..')).Path,
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\manifests\content.json'),
     [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json'),
+    [string]$RuntimeCompatibilityPath = (Join-Path $PSScriptRoot '..\manifests\runtime-compatibility.json'),
     [string]$OverlayPolicyPath = (Join-Path $PSScriptRoot '..\manifests\overlay-sources.json'),
     [switch]$IncludePendingAnimationCandidates,
     [string[]]$OnlyAnimationArea
@@ -71,6 +72,7 @@ function Get-AnimationCandidateEntries {
     param(
         [string]$Workspace,
         [string]$CandidatesPath,
+        [string]$RuntimePath,
         [bool]$IncludePending,
         [string[]]$OnlyAreas
     )
@@ -159,6 +161,28 @@ function Get-AnimationCandidateEntries {
         Require ($pack.runtime_contract.feature -eq 'TimedTimeline' -and [int]$pack.runtime_contract.registry_version -eq $registryVersion) "Contrat runtime animation absent : $($candidate.area)"
         $expectedRendererContract = if ($registryVersion -eq 3) { 'area-animation-per-area-registry-v3-position-timed-timeline' } else { 'area-animation-per-area-registry-v2-timed-timeline' }
         Require ([string]$candidate.renderer_contract -eq $expectedRendererContract) "Contrat renderer animation incoherent : $($candidate.area)"
+
+        if ($null -ne $candidate.occlusion_contract) {
+            $occlusion = $candidate.occlusion_contract
+            Require ([string]$occlusion.mode -eq 'native-wed-bridge-v1') "Mode occlusion release invalide : $($candidate.area)"
+            Require ([string]$occlusion.destination -eq "override/$($candidate.area).WED") "Destination WED incoherente : $($candidate.area)"
+            $wedSpecPath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$occlusion.source_spec).Replace('/', '\')))
+            $wedSourcePath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$occlusion.source).Replace('/', '\')))
+            $occlusionEvidencePath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$occlusion.qa_evidence).Replace('/', '\')))
+            foreach ($path in @($wedSpecPath, $wedSourcePath, $occlusionEvidencePath)) {
+                Require ([IO.Path]::GetRelativePath($Workspace, $path) -notmatch '(^|[\\/])[.][.]([\\/]|$)') "Source occlusion hors workspace : $path"
+                Require (Test-Path -LiteralPath $path -PathType Leaf) "Source occlusion absente : $path"
+            }
+            $wedSpec = Read-Json $wedSpecPath
+            Require ($wedSpec.status -eq 'validated-installed' -and $wedSpec.qa.release_manifest -eq 'selected-pending-content-regeneration') "Correction WED non selectionnee : $($candidate.area)"
+            Require ([string]$wedSpec.validated_output.release_source -eq [string]$occlusion.source) "Source release WED incoherente : $($candidate.area)"
+            Require ((Get-Item -LiteralPath $wedSourcePath).Length -eq [int64]$occlusion.bytes) "Taille WED invalide : $($candidate.area)"
+            Require ((Get-FileHash -LiteralPath $wedSourcePath -Algorithm SHA256).Hash -eq [string]$occlusion.sha256) "Hash WED invalide : $($candidate.area)"
+            Require ((Get-FileHash -LiteralPath $occlusionEvidencePath -Algorithm SHA256).Hash -eq [string]$occlusion.qa_evidence_sha256) "Hash preuve occlusion invalide : $($candidate.area)"
+            $runtime = Read-Json $RuntimePath
+            Require ([string]$occlusion.ini_owner -eq 'core-steam' -and [string]$occlusion.ini_section -eq 'Shaders' -and [string]$occlusion.ini_key -eq 'EnableNativeOcclusionBridge' -and [string]$occlusion.ini_value -eq 'true') "Contrat INI occlusion invalide : $($candidate.area)"
+            Require ([string]$runtime.owned_ini_keys.'core-steam'.Shaders.EnableNativeOcclusionBridge -eq 'true') "Le Core release n'active pas le bridge d'occlusion : $($candidate.area)"
+        }
 
         $packResrefs = @($pack.resources | ForEach-Object { [string]$_.resref } | Sort-Object -Unique)
         $requiredResrefs = @($candidate.required_resrefs | Sort-Object -Unique)
@@ -581,6 +605,28 @@ if (-not $isAnimationDelta) {
     }
 }
 
+$wedCorrectionSpecs = @()
+if (-not $isAnimationDelta) {
+    $candidateRegister = Read-Json $AnimationCandidatesPath
+    foreach ($candidate in @($candidateRegister.candidates | Where-Object { $_.approval_status -eq 'approved-for-release' -and $null -ne $_.occlusion_contract })) {
+        $occlusion = $candidate.occlusion_contract
+        $sourcePath = [string]$occlusion.source
+        $wedCorrectionSpecs += @{
+            ComponentId = [int]$occlusion.map_component_id
+            ComponentLabel = [string]$occlusion.map_component_label
+            PayloadGroup = [string]$occlusion.map_payload_group
+            Area = [string]$candidate.area
+            SourceRun = [IO.Path]::GetDirectoryName($sourcePath).Replace('\', '/')
+            Path = $sourcePath
+            ExpectedDestination = [string]$occlusion.destination
+            ExpectedBytes = [int64]$occlusion.bytes
+            ExpectedSha256 = [string]$occlusion.sha256
+            InstallOrder = [int]$occlusion.map_component_id
+            ReplacesComponentOutput = $false
+        }
+    }
+}
+
 $entries = [System.Collections.Generic.List[object]]::new()
 if (-not $isAnimationDelta) {
     foreach ($spec in $mapSpecs) {
@@ -590,6 +636,15 @@ if (-not $isAnimationDelta) {
         $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | Sort-Object Name
         if ($files.Count -eq 0) { throw "Aucun TIS/PVRZ dans : $sourceDirectory" }
         foreach ($file in $files) { $entries.Add((New-ContentEntry $normalized $file)) }
+    }
+    foreach ($spec in $wedCorrectionSpecs) {
+        $file = Get-Item -LiteralPath (Join-Path $WorkspaceRoot $spec.Path) -ErrorAction Stop
+        Require ($file.Length -eq [int64]$spec.ExpectedBytes) "Taille correction WED invalide : $($spec.Area)"
+        Require ((Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$spec.ExpectedSha256) "Hash correction WED invalide : $($spec.Area)"
+        $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = 'WED-Native-Occlusion-v1'; Scale = 4 }
+        $entry = New-ContentEntry $normalized $file
+        Require ([string]$entry.destination -eq [string]$spec.ExpectedDestination) "Destination correction WED invalide : $($spec.Area)"
+        $entries.Add($entry)
     }
     foreach ($spec in $uiSpecs) {
         $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
@@ -614,7 +669,7 @@ if (-not $isAnimationDelta) {
         }
     }
 }
-foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -IncludePending $IncludePendingAnimationCandidates -OnlyAreas @($selectedAnimationAreas))) {
+foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -RuntimePath $RuntimeCompatibilityPath -IncludePending $IncludePendingAnimationCandidates -OnlyAreas @($selectedAnimationAreas))) {
     $entries.Add($entry)
 }
 

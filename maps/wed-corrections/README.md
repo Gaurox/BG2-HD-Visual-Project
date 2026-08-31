@@ -31,6 +31,10 @@ Le PNG peint sert à authorer la géométrie ; il n'est pas cuit dans le BAM et 
 runtime. La spécification validée conserve les sommets WED x1 définitifs, les hashes et le verdict
 QA afin que le correctif reste reproductible sans Photoshop.
 
+Pour une sélection release, conserver le WED validé dans un dossier versionné sous la correction,
+puis l'épingler depuis `animation-release-candidates.json` avec hash, destination, preuve QA, clé
+INI et composant map. Le générateur de contenu refuse toute divergence.
+
 ## Quand revalider
 
 Une QA locale doit être rejouée si le hash du WED source change, si un mod remplace la zone, si les

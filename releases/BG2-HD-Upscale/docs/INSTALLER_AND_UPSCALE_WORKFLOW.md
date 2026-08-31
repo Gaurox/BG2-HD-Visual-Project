@@ -64,6 +64,11 @@ One component owns one immutable per-area pack. Register its component, exact so
 `animation-release-candidates.json`. The `approval_status` field is authoritative; do not infer it
 from the pack or live game.
 
+Si le candidat déclare `occlusion_contract`, le générateur doit aussi sélectionner son WED exact,
+ajouter la dépendance map au composant animation et vérifier que le Core possède l'activation du
+bridge. Aucun bundle antérieur aux marqueurs `EnableNativeOcclusionBridge` et
+`FXRenderClippingPolys` n'est promouvable.
+
 After the test choice authorizes it, validate only the changed candidate:
 
 ```powershell

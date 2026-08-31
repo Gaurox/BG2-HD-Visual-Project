@@ -29,6 +29,15 @@ reviewed source run. It refuses both missing validated variants and stale
 manifest variants. `New-BG2HD-ComponentManifest.ps1` then derives the matching
 map components from the content manifest.
 
+Une animation dont `occlusion_contract.mode` vaut `native-wed-bridge-v1` impose simultanément :
+
+- le WED versionné et hashé sous `maps/wed-corrections/` dans le composant map déclaré ;
+- la dépendance du composant animation vers ce composant map ;
+- `Shaders.EnableNativeOcclusionBridge=true` possédé par `core-steam` ;
+- un bundle renderer contenant `EnableNativeOcclusionBridge` et `FXRenderClippingPolys`.
+
+AR0516 est le témoin initial. Alpha.5 et alpha.6 précèdent ce contrat et restent non promouvables.
+
 `New-BG2HD-ContentManifest.ps1` accepts the fixed x4 source register, plus only the overlays
 declared as `package` by `overlay-sources.json`; `stock` entries are forbidden from the payload.
 The current policy keeps the validated water set x2 and the lava family x4.

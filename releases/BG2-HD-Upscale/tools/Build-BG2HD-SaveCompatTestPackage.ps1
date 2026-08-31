@@ -129,7 +129,7 @@ foreach ($file in @($renderer.files)) {
 }
 $rendererDllPath = Join-Path $rendererPayloadRoot 'InfinityEngine-Enhancer.dll'
 $rendererBinaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDllPath))
-foreach ($marker in @('WTSEW', 'WTOIL', 'AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'LoadArea')) {
+foreach ($marker in @('WTSEW', 'WTOIL', 'AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
     Require ($rendererBinaryText.IndexOf($marker, [StringComparison]::Ordinal) -ge 0) "Classificateur liquide absent de la DLL renderer : $marker"
 }
 $guard = @($renderer.files | Where-Object { $_.path -eq 'override/M_IEEE.lua' })

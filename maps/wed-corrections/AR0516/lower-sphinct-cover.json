@@ -77,6 +77,7 @@
     "file": "AR0516.WED",
     "bytes": 41502,
     "sha256": "8a0aa3ca4c5d7a9bd42ddd0f55f6ca5ed57241a5f4b141c3cbe7d18d9aa2db1a",
+    "release_source": "maps/wed-corrections/AR0516/validated-output-v1/AR0516.WED",
     "vertex_table_offset_before": 28532,
     "vertex_table_offset_after": 28534,
     "lookup_entries_added": 1
@@ -88,7 +89,16 @@
     "validated_by": "user",
     "automated_tests": "176/176",
     "install_backup": "maps/AR0516/test-native-wed-occlusion-20260827-painted-mask-p49/install-backups/override-backup-20260827-170033",
-    "release_manifest": "not-integrated"
+    "release_manifest": "selected-pending-content-regeneration",
+    "revalidation": {
+      "date": "2026-08-31",
+      "save": "planar-test",
+      "verdict": "validated-installed",
+      "renderer_dll_sha256": "9fce57d11acf2dd6539b7a263b6de1a70c44f6f41981181793ca6aa785fcc98e",
+      "renderer_ini_sha256": "efc6b20059c917982b9f5e110721a19cc72f90567b73a0470f5c02c23d5d0614",
+      "registry_sha256": "801a3902c7a0a6437a893a79f4ddd5fd05e1810e0f2a1a9f0a319a8cbf01023e",
+      "evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md"
+    }
   },
   "compatibility": {
     "x1_maps": "coordonnées logiques WED natives; aucun TIS modifié",

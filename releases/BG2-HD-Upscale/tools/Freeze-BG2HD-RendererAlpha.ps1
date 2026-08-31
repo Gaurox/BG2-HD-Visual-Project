@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory)]
     [string]$SourceBundle,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
-    [string]$BundleId = 'iee-0.1.0-alpha.2'
+    [string]$BundleId = 'iee-0.1.0-alpha.7'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -38,7 +38,7 @@ if (Compare-Object -ReferenceObject ($expectedFiles | Sort-Object) -DifferenceOb
 # as a freeze-time contract so that source/binary drift cannot recur.
 $rendererDll = Get-BundleFile $sourceRoot 'InfinityEngine-Enhancer.dll'
 $rendererBinaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDll.FullName))
-foreach ($marker in @('WTSEW', 'WTOIL')) {
+foreach ($marker in @('WTSEW', 'WTOIL', 'AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
     if ($rendererBinaryText.IndexOf($marker, [StringComparison]::Ordinal) -lt 0) {
         throw "DLL renderer obsolete : classificateur liquide absent du binaire ($marker)."
     }
@@ -81,6 +81,7 @@ $record = [ordered]@{
         'clean BG2EE Steam 2.7.3.0 game-hash gate',
         'EEex/InfinityLoader launch gate',
         'x4 map and UI smoke gates',
+        'AR0516 SPHINCT/SPHINCT2 native WED occlusion gate with bridge enabled',
         'AR0413 WTOIL overlay classified as Oil with liquidOverlayMask 0x02',
         'In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3'
     )
