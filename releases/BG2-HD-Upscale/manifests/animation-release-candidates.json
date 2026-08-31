@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31",
+  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01",
   "candidates": [
     {
       "area": "AR0602",
@@ -206,6 +206,29 @@
         "AM307UR2",
         "AM307UR3",
         "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2100",
+      "component_id": 3007,
+      "component_label": "animation-ar2100",
+      "payload_group": "animation-ar2100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2100/qa-approval.json",
+      "qa_approval_sha256": "233B67667E585CAB8EE0EF91CC9CE5E40A09B97B6400E070C71331C1074599E7",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-30fps-v2/AR2100",
+      "source_run": "animations/runs/ar2100-portals-seedvr7b-lab-x4 + animations/runs/ar2100-portals-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "71BFCEE93A27A8BADA2D2F1769CFD7E83A59757F140B2E51C111B5FC803C460B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "577BFEBD66D2A4103969A4ED6DA35E84DCB5788F8FDD1504852302C70264B155",
+      "registry_bytes": 792,
+      "required_resrefs": [
+        "AM2100PA",
+        "AM2100PB",
+        "AM2100PC"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }
