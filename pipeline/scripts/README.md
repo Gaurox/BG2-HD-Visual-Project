@@ -68,9 +68,16 @@ plus partie des tests courants.
 
 ## Auxiliaires
 
-Les extracteurs de portraits restent ici pour préserver leurs imports, mais leur procédure est
-dans `portraits/README.md`. Les scripts d'analyse couleur, anciennes découpes et prototypes
+Les extracteurs de portraits restent ici pour préserver leurs imports. La procédure et les quatre
+inventaires produits sont routés depuis `portraits/README.md` : `extract_character_portraits.py`,
+`extract_joinable_portraits.py`, `extract_encountered_portraits.py`, `survey_creature_portraits.py`
+et `organize_ppe_portraits.py`. Les scripts d'analyse couleur, anciennes découpes et prototypes
 d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
+
+Les overlays TIS palette encore actifs utilisent `extract_legacy_tis_frames.py` puis
+`build_upscaled_legacy_tis.py`. `render_liquid_overlay_mask.py`, `render_tile_classes.py` et
+`build_water_contour_feather.py` sont les diagnostics/builders ciblés décrits dans
+`maps/technical-overlays/README.md`.
 
 ## Suivi transversal
 
@@ -85,6 +92,9 @@ d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
 - `asset_tracking_contract.py` valide les projections jetables du contrat commun et sépare les
   statuts historiques connus. Il n'écrit dans aucun manifeste métier et ne constitue pas un
   registre d'assets.
+- `verify_historical_git_evidence.py` vérifie les anciennes versions de catalogues citées par une
+  QA scellée contre le chemin, le SHA-256, le commit et le blob explicitement bornés dans
+  `animations/index/qa-evidence-migrations.json` ; il n'accorde aucun statut.
 - `build_global_asset_registry.py` agrège en lecture seule les sources métier déjà fiables, valide
   chaque entrée, puis génère `asset-tracking/registry.{json,csv}`, `coverage.json` et
   `anomalies.json`. Utiliser

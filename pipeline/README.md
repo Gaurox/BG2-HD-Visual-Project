@@ -177,6 +177,7 @@ affirmative ponctuelle.
 | Découpage | [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md) |
 | Jour/nuit | [`DAY_NIGHT_MAP_PIPELINE.md`](DAY_NIGHT_MAP_PIPELINE.md) |
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
+| Overlays TIS partagés | [`../maps/technical-overlays/README.md`](../maps/technical-overlays/README.md) |
 | Autres liquides | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
 | Secondaires | [`SECONDARY_TILE_PIPELINE.md`](SECONDARY_TILE_PIPELINE.md) |

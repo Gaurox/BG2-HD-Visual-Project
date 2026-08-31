@@ -3,6 +3,7 @@
     "animations": {
       "approved_candidate_count": 5,
       "empty_run_count": 0,
+      "historical_qa_evidence_adapted_count": 9,
       "legacy_proto_directory_migration_count": 64,
       "legacy_proto_embedded_reference_count": 153,
       "legacy_proto_embedded_reference_file_count": 54,
@@ -12,6 +13,7 @@
       "legacy_proto_run_count": 65,
       "physical_run_count": 111,
       "qa_attested_run_count": 19,
+      "release_pack_indexed_count": 5,
       "release_referenced_run_count": 6,
       "remaining_animation_proto_directory_count": 0,
       "remaining_proto_directory_count": 4
@@ -28,6 +30,7 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
+      "active_script_file_count": 150,
       "configured_path_count": 5,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 1,
@@ -107,6 +110,16 @@
       "preserved_file_count": 445,
       "removed_empty_directory_count": 1,
       "verified_operation_count": 7
+    },
+    "workspace_hygiene": {
+      "empty_map_animation_directory_count": 0,
+      "empty_map_run_directory_count": 0,
+      "empty_temp_directory_count": 0,
+      "obsolete_p1_target_count": 0,
+      "personal_shortcut_count": 0,
+      "retired_scan_script_present": 0,
+      "stale_alpha5_worktree_present": 0,
+      "temporary_file_count": 0
     }
   },
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
@@ -195,6 +208,72 @@
       "severity": "warning"
     },
     {
+      "code": "animation-historical-qa-evidence-adapted",
+      "details": {
+        "evidence_reference_count": 9,
+        "migrations": [
+          {
+            "area": "AR0602",
+            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
+          },
+          {
+            "area": "AR0602",
+            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
+          },
+          {
+            "area": "AR0900",
+            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
+          },
+          {
+            "area": "AR0516",
+            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
+          },
+          {
+            "area": "AR0516",
+            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
+          },
+          {
+            "area": "AR0700",
+            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
+          },
+          {
+            "area": "AR0700",
+            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
+          },
+          {
+            "area": "AR0603",
+            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
+          },
+          {
+            "area": "AR0603",
+            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
+          }
+        ]
+      },
+      "domain": "animations",
+      "message": "Les anciennes versions de catalogues citées par les QA scellées sont vérifiées contre leurs blobs Git exacts.",
+      "path": "animations/index/qa-evidence-migrations.json",
+      "severity": "info"
+    },
+    {
       "code": "historical-absolute-paths-adapted",
       "details": {
         "descriptor_file_count": 146,
@@ -246,8 +325,8 @@
   "mode": "read-only audit; only this generated report and the generated run index are writable",
   "registry_asset_count": 18353,
   "registry_asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
-  "run_count": 551,
-  "run_records_sha256": "877CF76F2AA9AF34C3B51C032C39F9EF86F160CDCF1208F685594B43C2029229",
+  "run_count": 556,
+  "run_records_sha256": "DCF722B16999FDC78472809D09A2BCF04181E1BA7B3A543BCBBF5B1EE8AF31BC",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -354,6 +433,7 @@
   "source_fingerprint_sha256": "729D8D0671640CF976ED62AF218667B4DE0C8C18E2E6C4EE33A802402FA70BFD",
   "summary": {
     "by_issue_code": {
+      "animation-historical-qa-evidence-adapted": 1,
       "historical-absolute-paths-adapted": 1,
       "map-historical-paths-adapted": 1,
       "map-legacy-run-without-json": 1,
@@ -363,7 +443,7 @@
     },
     "by_severity": {
       "error": 0,
-      "info": 4,
+      "info": 5,
       "warning": 7
     },
     "candidate_cleanup": {

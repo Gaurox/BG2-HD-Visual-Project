@@ -110,6 +110,18 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(animations["legacy_proto_run_count"], 65)
         self.assertEqual(animations["remaining_animation_proto_directory_count"], 0)
         self.assertEqual(animations["remaining_proto_directory_count"], 4)
+        self.assertEqual(animations["historical_qa_evidence_adapted_count"], 9)
+        self.assertEqual(animations["release_pack_indexed_count"], 5)
+        release_packs = [
+            run
+            for run in self.runs
+            if run["run_kind"] == "area-animation-release-pack"
+        ]
+        self.assertEqual(len(release_packs), 5)
+        self.assertTrue(
+            all(run["selection_state"] == "release-candidate" for run in release_packs)
+        )
+        self.assertTrue(all(run["provenance_state"] == "verified" for run in release_packs))
         sprites = self.report["domain_audits"]["sprites"]
         self.assertEqual(sprites["current_generation_count"], 1)
         self.assertEqual(sprites["historical_pointer_resolved_count"], 7)
@@ -134,7 +146,20 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(portability["active_absolute_path_violation_count"], 0)
         self.assertEqual(portability["new_historical_absolute_path_file_count"], 0)
         self.assertEqual(portability["historical_descriptor_file_count"], 146)
-        self.assertEqual(self.run_index["run_count"], 551)
+        self.assertGreater(portability["active_script_file_count"], 0)
+        self.assertTrue(
+            integrity.WINDOWS_ABSOLUTE_PATH_LITERAL.search(
+                r"C:\Users\Example\workspace\script.py"
+            )
+        )
+        self.assertTrue(
+            integrity.WINDOWS_ABSOLUTE_PATH_LITERAL.search(
+                r'"G:\\AI\\BG2_Upscale\\sprite"'
+            )
+        )
+        hygiene = self.report["domain_audits"]["workspace_hygiene"]
+        self.assertEqual(hygiene["obsolete_p1_target_count"], 0)
+        self.assertEqual(self.run_index["run_count"], 556)
 
     def test_animation_proto_paths_are_migrated_without_status_inference(self) -> None:
         migration_path = ROOT / "animations/index/path-migrations.json"

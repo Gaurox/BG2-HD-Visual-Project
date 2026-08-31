@@ -33,6 +33,10 @@ maps, les manifests et `qa-approval.json` décrivent toujours les animations, et
 L'index se contente de rendre ces relations filtrables et de distinguer les runs sélectionnés,
 approuvés, historiques ou incomplets.
 
+Chaque `source_pack` cité par le registre canonique des candidats animation produit aussi une
+entrée `area-animation-release-pack` dans l'index jetable. Elle relie le dossier matérialisé, son
+manifest, sa QA hashée et `animations:pack:<AREA>` sans transformer `runs.json` en autorité.
+
 ## Convention pour les nouveaux runs
 
 Les organisations solides conservent leur contrat natif :
@@ -63,6 +67,9 @@ outputs restent sous le run ; les backups et archives ne deviennent jamais une a
 - Les 64 anciens répertoires animation et sept fichiers d'atelier déplacés depuis `proto/` sont
   résolus par `animations/index/path-migrations.json`. Les contenus historiques restent inchangés,
   et leur rôle de migration ne leur confère aucun statut QA, installation ou release.
+- Les anciennes versions des deux catalogues canoniques citées par les QA animation scellées sont
+  vérifiées contre leurs blobs Git exacts via `animations/index/qa-evidence-migrations.json`. Le
+  catalogue courant reste l'autorité ; cet adaptateur prouve seulement les octets historiques.
 - `maps/AR0413/runs/wtoil-family-definitive` reste documenté par son README : lui ajouter
   rétroactivement un faux `run.json` détruirait la distinction entre preuve ancienne et contrat
   actuel.

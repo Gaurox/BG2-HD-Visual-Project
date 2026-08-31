@@ -3,12 +3,12 @@
 > **Séquence, mécanisme et critères de passage : [`../README.md`](../README.md).** Ce fichier ne
 > décrit que l'organisation des dossiers de variantes.
 
-Ce dossier centralise l'extraction des menus et les essais d'upscale réversibles.
+Ce dossier sépare la production courante, les sources et les comparaisons historiques.
 
-- `x2-7b/` et `x4-7b/` : variantes SeedVR2 7B validées, avec ressources, assets DXT5, scripts, sauvegardes et captures.
-- `x2-3b/` et `x4-3b/` : variantes SeedVR2 3B régénérées indépendamment, prêtes pour les tests réversibles.
-- `x2-3b-adain/` : variante complète SeedVR2 3B x2 avec correction couleur AdaIN, isolée pour comparaison en jeu.
-- `x4-3b-adain/` : variante complète SeedVR2 3B x4 avec correction couleur AdaIN, isolée pour comparaison en jeu.
+- `x4-topaz-recovery-v2-d50/` : seule variante de production active des menus.
 - `reference/` : extraction originale, non modifiée, des ressources de l'écran Options.
-- `archive/` : diagnostics et prototypes remplacés, conservés pour référence et restauration historique.
+- `archive/variants/` : anciennes variantes SeedVR 3B/7B, AdaIN et Topaz x2/x4 ; elles sont
+  conservées pour comparaison ou restauration historique, mais ne sont ni actives ni des sources
+  de statut ou de release.
+- `archive/` hors `variants/` : diagnostics et prototypes remplacés.
 - `docs/MENU_UPSCALE.md` : carte des ressources du menu principal et procédure complète de maintenance.

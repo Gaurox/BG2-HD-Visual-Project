@@ -25,6 +25,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import build_global_asset_registry as global_registry  # noqa: E402
+import verify_historical_git_evidence as historical_git_evidence  # noqa: E402
 import workspace_paths  # noqa: E402
 
 
@@ -36,6 +37,12 @@ JSON_OUTPUTS = ("workspace-integrity.json", "runs.json")
 RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
+ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
+WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
+    r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
+    r"[^\\/\r\n'\"`]+(?:\\\\|[\\/])",
+    re.IGNORECASE,
+)
 RUN_COLUMNS = (
     "run_key",
     "domain",
@@ -1274,11 +1281,14 @@ def audit_animations(
     candidate_data = read_json(candidate_path)
     candidates = candidate_data["candidates"]
     selected = referenced_animation_runs(candidates)
+    indexed_release_packs = 0
+    historical_evidence_adapted: list[dict[str, str]] = []
 
     for candidate in candidates:
         area = candidate["area"].upper()
         pack = ROOT / candidate["source_pack"]
         qa_path = ROOT / candidate["qa_approval"]
+        evidence_valid = True
         checks = (
             (pack / candidate["pack_manifest"], candidate["pack_manifest_sha256"], "pack manifest"),
             (pack / candidate["registry"], candidate["registry_sha256"], "registry"),
@@ -1286,6 +1296,7 @@ def audit_animations(
         )
         for path, expected, label in checks:
             if not path.is_file():
+                evidence_valid = False
                 add_issue(
                     issues,
                     "error",
@@ -1296,6 +1307,7 @@ def audit_animations(
                     asset_id=f"animations:pack:{area}",
                 )
             elif sha256_file(path) != expected.upper():
+                evidence_valid = False
                 add_issue(
                     issues,
                     "error",
@@ -1311,6 +1323,7 @@ def audit_animations(
         ):
             reference = reference.rstrip(".")
             if resolve_migrated_reference(reference, path_pairs) is None:
+                evidence_valid = False
                 add_issue(
                     issues,
                     "error",
@@ -1320,6 +1333,78 @@ def audit_animations(
                     path=reference,
                     asset_id=f"animations:pack:{area}",
                 )
+
+        if qa_path.is_file():
+            qa_approval = read_json(qa_path)
+            for evidence in qa_approval.get("evidence", []):
+                relative_evidence = str(evidence.get("path", "")).replace("\\", "/")
+                expected_hash = str(evidence.get("sha256", "")).upper()
+                evidence_path = ROOT / relative_evidence
+                if evidence_path.is_file() and sha256_file(evidence_path) == expected_hash:
+                    continue
+                migration = historical_git_evidence.verify_reference(
+                    relative_evidence,
+                    expected_hash,
+                )
+                if migration is not None:
+                    historical_evidence_adapted.append(
+                        {
+                            "area": area,
+                            "path": relative_evidence,
+                            "sha256": expected_hash,
+                            "git_commit": migration["git_commit"],
+                        }
+                    )
+                    continue
+                evidence_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "animation-qa-evidence-unresolved",
+                    "animations",
+                    "Une preuve citée par la QA scellée ne correspond ni au fichier courant ni à un blob Git borné.",
+                    path=relative_evidence,
+                    asset_id=f"animations:pack:{area}",
+                )
+
+        add_run(
+            runs,
+            default_run(
+                run_key=f"animations-pack:{area}",
+                domain="animations",
+                run_id=f"release-pack-{area.lower()}",
+                asset_ids=[f"animations:pack:{area}"],
+                path=repo_path(pack),
+                run_kind="area-animation-release-pack",
+                descriptor_path=repo_path(pack / candidate["pack_manifest"]),
+                result_state=str(candidate["approval_status"]),
+                qa_state="approved",
+                selection_state="release-candidate",
+                selection_authority=repo_path(candidate_path),
+                inputs_state="documented",
+                outputs_state="present" if pack.is_dir() else "missing",
+                provenance_state="verified" if evidence_valid else "incomplete",
+                notes=(
+                    f"registre v{candidate['registry_version']}; "
+                    f"QA: {candidate['qa_approval']}"
+                ),
+            ),
+        )
+        indexed_release_packs += 1
+
+    if historical_evidence_adapted:
+        add_issue(
+            issues,
+            "info",
+            "animation-historical-qa-evidence-adapted",
+            "animations",
+            "Les anciennes versions de catalogues citées par les QA scellées sont vérifiées contre leurs blobs Git exacts.",
+            path="animations/index/qa-evidence-migrations.json",
+            details={
+                "evidence_reference_count": len(historical_evidence_adapted),
+                "migrations": historical_evidence_adapted,
+            },
+        )
 
     physical = 0
     empty = 0
@@ -1483,6 +1568,8 @@ def audit_animations(
         "remaining_animation_proto_directory_count": len(unexpected_proto),
         "physical_run_count": physical,
         "qa_attested_run_count": qa_count,
+        "historical_qa_evidence_adapted_count": len(historical_evidence_adapted),
+        "release_pack_indexed_count": indexed_release_packs,
         "release_referenced_run_count": len(selected),
     }
 
@@ -1937,11 +2024,6 @@ def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
                         details={"marker": marker, "resolved_path": str(path)},
                     )
 
-    drive_literal = re.compile(
-        r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
-        r"(?:AI|Steam|SteamLibrary|Program Files|ProgramData)(?:\\\\|[\\/])",
-        re.IGNORECASE,
-    )
     active_roots = (
         ROOT / "pipeline/scripts",
         ROOT / "engine/InfinityEngine-Enhancer/source-patchee/tools",
@@ -1953,23 +2035,32 @@ def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
     historical_script_exceptions = {"pipeline/scripts/Invoke-SpriteLayoutMigration.ps1"}
     active_violations: list[str] = []
     retained_script_exceptions: list[str] = []
+    scanned_active_script_count = 0
+    active_script_paths: set[Path] = {
+        path
+        for path in ROOT.iterdir()
+        if path.is_file() and path.suffix.casefold() in ACTIVE_SCRIPT_SUFFIXES
+    }
     for root in active_roots:
         if not root.is_dir():
             continue
         for path in root.rglob("*"):
-            if not path.is_file() or path.suffix.casefold() not in {".py", ".ps1", ".js"}:
+            if not path.is_file() or path.suffix.casefold() not in ACTIVE_SCRIPT_SUFFIXES:
                 continue
-            relative_parts = {part.casefold() for part in path.relative_to(ROOT).parts}
-            if "archive" in relative_parts or "runs" in relative_parts:
-                continue
-            text = path.read_text(encoding="utf-8-sig", errors="ignore")
-            if not drive_literal.search(text):
-                continue
-            path_text = repo_path(path)
-            if path_text in historical_script_exceptions:
-                retained_script_exceptions.append(path_text)
-            else:
-                active_violations.append(path_text)
+            active_script_paths.add(path)
+    for path in sorted(active_script_paths, key=lambda item: repo_path(item).casefold()):
+        relative_parts = {part.casefold() for part in path.relative_to(ROOT).parts}
+        if "archive" in relative_parts or "runs" in relative_parts:
+            continue
+        scanned_active_script_count += 1
+        text = path.read_text(encoding="utf-8-sig", errors="ignore")
+        if not WINDOWS_ABSOLUTE_PATH_LITERAL.search(text):
+            continue
+        path_text = repo_path(path)
+        if path_text in historical_script_exceptions:
+            retained_script_exceptions.append(path_text)
+        else:
+            active_violations.append(path_text)
     if active_violations:
         add_issue(
             issues,
@@ -1988,7 +2079,9 @@ def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
         path_text = repo_path(path)
         if "jobs" not in {part.casefold() for part in path.parts} and path_text not in baseline:
             continue
-        if drive_literal.search(path.read_text(encoding="utf-8-sig", errors="ignore")):
+        if WINDOWS_ABSOLUTE_PATH_LITERAL.search(
+            path.read_text(encoding="utf-8-sig", errors="ignore")
+        ):
             current_historical.add(path_text)
     new_historical = sorted(current_historical - baseline, key=str.casefold)
     if new_historical:
@@ -2020,6 +2113,7 @@ def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
         "missing_path_count": missing,
         "unconfigured_path_count": unconfigured,
         "path_states": path_states,
+        "active_script_file_count": scanned_active_script_count,
         "active_absolute_path_violation_count": len(set(active_violations)),
         "historical_descriptor_file_count": len(current_historical),
         "historical_script_exception_count": len(retained_script_exceptions),
@@ -2043,7 +2137,66 @@ def workspace_hygiene(issues: list[dict[str, Any]]) -> dict[str, int]:
                 "policy": "candidat à revue puis suppression; aucune suppression automatique",
             },
         )
-    return {"temporary_file_count": len(temp_files)}
+    empty_map_animations = [
+        path
+        for path in (ROOT / "maps").glob("*/animations")
+        if path.is_dir() and not any(path.iterdir())
+    ]
+    empty_map_runs = [
+        path
+        for path in (ROOT / "maps").glob("*/runs")
+        if path.is_dir() and not any(path.iterdir())
+    ]
+    empty_temp_directories = (
+        [
+            path
+            for path in temp_root.rglob("*")
+            if path.is_dir() and not any(path.iterdir())
+        ]
+        if temp_root.is_dir()
+        else []
+    )
+    personal_shortcuts = list(ROOT.glob("*.lnk")) + list((ROOT / "maps").rglob("*.lnk"))
+    stale_alpha5 = (
+        ROOT
+        / "releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.5"
+    ).is_dir()
+    retired_scan_script = (ROOT / "pipeline/scripts/scan_mos_versions.py").is_file()
+    obsolete_count = (
+        len(empty_map_animations)
+        + len(empty_map_runs)
+        + len(empty_temp_directories)
+        + len(personal_shortcuts)
+        + int(stale_alpha5)
+        + int(retired_scan_script)
+    )
+    if obsolete_count:
+        add_issue(
+            issues,
+            "warning",
+            "workspace-safe-cleanup-targets-present",
+            "global",
+            "Des cibles P1 vides, personnelles ou remplacées sont revenues dans le workspace.",
+            path=".",
+            details={
+                "empty_map_animation_directories": len(empty_map_animations),
+                "empty_map_run_directories": len(empty_map_runs),
+                "empty_temp_directories": len(empty_temp_directories),
+                "personal_shortcuts": sorted(repo_path(path) for path in personal_shortcuts),
+                "retired_scan_script_present": retired_scan_script,
+                "stale_alpha5_worktree_present": stale_alpha5,
+            },
+        )
+    return {
+        "temporary_file_count": len(temp_files),
+        "empty_map_animation_directory_count": len(empty_map_animations),
+        "empty_map_run_directory_count": len(empty_map_runs),
+        "empty_temp_directory_count": len(empty_temp_directories),
+        "personal_shortcut_count": len(personal_shortcuts),
+        "obsolete_p1_target_count": obsolete_count,
+        "retired_scan_script_present": int(retired_scan_script),
+        "stale_alpha5_worktree_present": int(stale_alpha5),
+    }
 
 
 def runs_csv_bytes(records: Iterable[Mapping[str, Any]]) -> bytes:
@@ -2077,6 +2230,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
         "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)
+    domain_audits["workspace_hygiene"] = hygiene
 
     sorted_runs = sorted(runs.values(), key=lambda item: item["run_key"].casefold())
     sorted_issues = sorted(

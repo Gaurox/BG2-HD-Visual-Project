@@ -14,6 +14,8 @@ moteur charge des textures physiques x4 et, lorsque le registre le demande, une 
 - `qa-approval.json` du run : seule approbation temporelle.
 - `releases/BG2-HD-Upscale/manifests/animation-release-candidates.json` : candidats release.
 - `index/path-migrations.json` : résolution physique des anciens chemins `proto/`, sans statut.
+- `index/qa-evidence-migrations.json` : résolution bornée vers les blobs Git exacts lorsqu'une QA
+  scellée cite une ancienne version d'un catalogue canonique mutable ; sans nouveau statut.
 
 `runs/`, `packs-par-zone/`, `proto/`, backups et captures ne décrivent jamais à eux seuls l'état
 courant.
@@ -52,13 +54,20 @@ sont pas réécrits. Deux racines de sortie du workshop portails n'existaient d�
 déplacement ; elles sont marquées `obsolete-unmaterialized` et ne doivent pas être recréées. Une
 reprise éventuelle utilise un nouvel identifiant sous `animations/runs/`.
 
+Le script Potracer du workshop AM0604A reste un fichier historique inchangé. Sa dépendance
+`potracer==0.0.4` est déclarée dans `requirements.txt` : l'ancien ajout de chemin `.tools` incorporé
+au script n'est plus un prérequis de reproduction et ne doit pas être recréé sous `runs/`.
+
 Traiter chaque frame RGB et alpha séparément. Ne jamais upscaler une planche concaténée. Un pack
 global dépassant 512 Mio doit être découpé par zone.
 
 ## Promotion
 
-La release accepte les registres v2 et v3 avec le renderer `iee-0.1.0-alpha.5`. Depuis le
-2026-08-28 AR0602 est passée en v3 (PORTL1B en 30 fps + FLAME2S) : le témoin de
+Le contrat runtime accepte les registres v2 et v3 avec le candidat renderer
+`iee-0.1.0-alpha.6`, encore soumis aux gates clean-game et cycle de vie. Le manifeste `alpha.5`
+est rejeté et conservé uniquement comme preuve historique avec sa source Git ; il ne constitue
+plus un arbre de travail ni une source de release. Depuis le 2026-08-28 AR0602 est passée en v3
+(PORTL1B en 30 fps + FLAME2S) : le témoin de
 rétrocompatibilité v2 est désormais **AR0603** (registre v2, TimedTimeline sans routage par
 occurrence). AR0900 v3 reste le témoin du routage par occurrence. Toute autre zone doit être
 ajoutée explicitement à `animation-release-candidates.json` avec sa version, ses hashes et son

@@ -1,12 +1,12 @@
 [CmdletBinding()]
 param(
-    [Parameter()]
+    [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [string]$SourceRoot = 'C:\Users\Adrien\Desktop\BG2 Portraits',
+    [string]$SourceRoot,
 
-    [Parameter()]
+    [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [string]$OutputRoot = 'C:\Users\Adrien\Desktop\BGEE Portrait Pack - Beamdog'
+    [string]$OutputRoot
 )
 
 Set-StrictMode -Version Latest

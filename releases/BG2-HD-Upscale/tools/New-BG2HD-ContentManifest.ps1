@@ -26,6 +26,17 @@ function Require([bool]$Condition, [string]$Message) {
     if (-not $Condition) { throw $Message }
 }
 
+function Test-QAEvidenceHash([string]$Workspace, [string]$RelativePath, [string]$ExpectedHash) {
+    $current = Join-Path $Workspace ($RelativePath.Replace('/', '\'))
+    if ((Test-Path -LiteralPath $current -PathType Leaf) -and
+        (Get-FileHash -LiteralPath $current -Algorithm SHA256).Hash -eq $ExpectedHash) {
+        return $true
+    }
+    $adapter = Join-Path $Workspace 'pipeline\scripts\verify_historical_git_evidence.py'
+    & python $adapter --path $RelativePath --sha256 $ExpectedHash --quiet
+    return $LASTEXITCODE -eq 0
+}
+
 function Read-Json([string]$Path) {
     Get-Content -LiteralPath $Path -Raw -Encoding utf8 | ConvertFrom-Json
 }
@@ -117,7 +128,7 @@ function Get-AnimationCandidateEntries {
             Require ($relativeEvidence -notmatch '(^|/)\.\.(/|$)') "Preuve QA animation hors workspace : $($evidence.path)"
             Require ($relativeEvidence -notmatch '(^|/)(override|backups|archive|captures|temp|proto)(/|$)') "Preuve QA animation interdite : $relativeEvidence"
             Require (Test-Path -LiteralPath $evidencePath -PathType Leaf) "Preuve QA animation absente : $relativeEvidence"
-            Require ((Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash -eq [string]$evidence.sha256) "Hash preuve QA animation invalide : $relativeEvidence"
+            Require (Test-QAEvidenceHash $Workspace $relativeEvidence ([string]$evidence.sha256)) "Hash preuve QA animation invalide : $relativeEvidence"
             switch ([string]$evidence.kind) {
                 'run-qa-approval' {
                     Require ($relativeEvidence -match '^animations/runs/[^/]+/qa-approval[.]json$') "Chemin de preuve run QA invalide : $relativeEvidence"

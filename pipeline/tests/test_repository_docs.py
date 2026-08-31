@@ -22,7 +22,10 @@ CANONICAL_DOCS = (
     ROOT / "sprite" / "README.md",
     ROOT / "sprite" / "FAMILY_APPEND.md",
     ROOT / "interface" / "README.md",
+    ROOT / "interface" / "menus-options-bg2ee" / "README.md",
     ROOT / "interface" / "menus-options-bg2ee" / "docs" / "MENU_UPSCALE.md",
+    ROOT / "portraits" / "README.md",
+    ROOT / "maps" / "technical-overlays" / "README.md",
     ROOT
     / "engine"
     / "InfinityEngine-Enhancer"
@@ -150,6 +153,24 @@ class RepositoryDocumentationTests(unittest.TestCase):
             content = path.read_text(encoding="utf-8-sig")
             for marker in markers:
                 self.assertIn(marker, content, f"{path} must reference {marker}")
+
+    def test_specialized_active_domains_are_routed(self) -> None:
+        portraits = (ROOT / "portraits" / "README.md").read_text(encoding="utf-8-sig")
+        for marker in (
+            "inventaire_portraits.csv",
+            "extract_joinable_portraits.py",
+            "organize_ppe_portraits.py",
+        ):
+            self.assertIn(marker, portraits)
+        overlays = (ROOT / "maps" / "technical-overlays" / "README.md").read_text(
+            encoding="utf-8-sig"
+        )
+        for marker in (
+            "overlay-sources.json",
+            "extract_legacy_tis_frames.py",
+            "build_upscaled_legacy_tis.py",
+        ):
+            self.assertIn(marker, overlays)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,20 @@
+{
+  "schema": "bg2-upscale-animation-qa-evidence-migrations-v1",
+  "authority_policy": "Compatibility evidence only. This file never grants or changes QA, installation or release status.",
+  "migrations": [
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+      "git_blob": "bde07d0b658cdc9d462fb50db49c80fa69603c93",
+      "reason": "Preserve the exact canonical-registry bytes pinned by sealed animation QA before later catalogue updates."
+    },
+    {
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+      "git_blob": "439ffa60a0537240c82180dcc1a0d151e6c9c3a1",
+      "reason": "Preserve the exact alpha-correction catalogue bytes pinned by sealed animation QA before path migration."
+    }
+  ]
+}
