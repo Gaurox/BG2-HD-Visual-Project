@@ -39,6 +39,18 @@ installation ou release n'existe.
 
 ## Génération et contrôle
 
+Fermer le classeur dans Excel puis double-cliquer sur :
+
+```text
+outputs/bg2ee-hd-human-tracking/Mettre-a-jour-suivi.cmd
+```
+
+Le lanceur reconstruit d'abord `asset-tracking/registry.*`, `coverage.json` et `anomalies.json`
+depuis les autorités du workspace, puis régénère et contrôle le XLSX et
+`asset-tracking/dashboard-metrics.json`. Il ne reconstruit aucun asset graphique, pack ou archive.
+
+Équivalent en ligne de commande :
+
 Exécuter avec le runtime Node fourni par le workspace et ses modules `@oai/artifact-tool` et
 `jszip` disponibles :
 
