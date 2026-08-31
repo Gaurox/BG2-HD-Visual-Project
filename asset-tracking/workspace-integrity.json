@@ -16,7 +16,7 @@
       "release_pack_indexed_count": 5,
       "release_referenced_run_count": 6,
       "remaining_animation_proto_directory_count": 0,
-      "remaining_proto_directory_count": 4
+      "remaining_proto_directory_count": 1
     },
     "maps": {
       "canonical_asset_rows": 369,
@@ -30,10 +30,10 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 150,
+      "active_script_file_count": 145,
       "configured_path_count": 5,
       "historical_descriptor_file_count": 146,
-      "historical_script_exception_count": 1,
+      "historical_script_exception_count": 0,
       "missing_path_count": 0,
       "new_historical_absolute_path_file_count": 0,
       "path_states": {
@@ -101,6 +101,18 @@
       "canonical_source_count": 50,
       "physical_run_count": 4,
       "selected_run_count": 0
+    },
+    "workspace_archive_p2": {
+      "archived_bytes": 256200953,
+      "archived_file_count": 1771,
+      "exact_duplicate_group_count": 1,
+      "exact_duplicate_removed_bytes": 1404117,
+      "exact_duplicate_removed_file_count": 39,
+      "left_in_place_count": 8,
+      "manifest": "docs/workspace-archive-p2-manifest.json",
+      "operation_count": 15,
+      "verified_exact_duplicate_group_count": 1,
+      "verified_operation_count": 15
     },
     "workspace_cleanup": {
       "deferred_regeneration_count": 1,
@@ -278,9 +290,7 @@
       "details": {
         "descriptor_file_count": 146,
         "policy": "les runners résolvent config://; les artefacts historiques ne sont pas réécrits",
-        "script_exceptions": [
-          "pipeline/scripts/Invoke-SpriteLayoutMigration.ps1"
-        ]
+        "script_exceptions": []
       },
       "domain": "global",
       "message": "Les chemins absolus historiques restent inchangés et sont explicitement bornés.",

@@ -1,0 +1,476 @@
+{
+  "schema": "bg2-upscale-workspace-archive-p2-v1",
+  "date": "2026-08-31",
+  "authority_policy": "Migration evidence only. This file grants no production, QA, installation, selection or release status.",
+  "hash_method": "SHA-256 of sorted relative-path|bytes|file-sha256 records, with LF separators",
+  "operations": [
+    {
+      "id": "engine-tile-minification-aa-tests",
+      "action": "archive",
+      "domain": "engine",
+      "source": "engine/InfinityEngine-Enhancer/tests-runtime",
+      "target": "archive/legacy/workspace-p2-20260831/engine/tests-runtime",
+      "file_count": 17,
+      "bytes": 3451024,
+      "aggregate_sha256": "9D3D105AF55C5147900230F6CCF3496D26F3C386D21010E8B8F8412BD11E3B77",
+      "status": "rejected-runtime-experiments-restorable",
+      "notes": "Five rejected AA experiments with exact shaders, DLLs and restoration notes; no active workflow references the tests-runtime tree."
+    },
+    {
+      "id": "map-ar0300-diagnostics",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0300/diagnostics",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0300/diagnostics",
+      "file_count": 2,
+      "bytes": 2820270,
+      "aggregate_sha256": "4CA16571903006BC7C3ED5F4708EF1460EE1DD65FF553FAD25BF9F5A50646D16",
+      "status": "historical-diagnostics",
+      "notes": "Closed map diagnostics with no active reference; durable conclusions are already in project decisions."
+    },
+    {
+      "id": "map-ar0516-diagnostics",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0516/diagnostics",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0516/diagnostics",
+      "file_count": 6,
+      "bytes": 3323020,
+      "aggregate_sha256": "B7882C8AF1BE01BF4FD00487B77ABE7006AF70D7D86E51B844A26554D152D860",
+      "status": "historical-diagnostics",
+      "notes": "Authoring previews from the completed lower-SPHINCT WED correction; canonical spec and validation evidence remain active."
+    },
+    {
+      "id": "map-ar0516-rejected-poly65-test",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0516/test-native-wed-occlusion-20260827-poly65",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0516/test-native-wed-occlusion-20260827-poly65",
+      "file_count": 3,
+      "bytes": 43161,
+      "aggregate_sha256": "85077E65FC28C8D192FDE676D4B9A0D2607D129F2867BFE1DC4DD2FE120B187C",
+      "status": "rejected-test-restorable",
+      "notes": "Rejected zero-intersection polygon-65 test; its manifest and restoration receipt remain together."
+    },
+    {
+      "id": "map-ar0602-animation-unique-residuals",
+      "action": "archive-after-deduplication",
+      "domain": "animations",
+      "source": "maps/AR0602/animations",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0602/animations-unique",
+      "file_count": 9,
+      "bytes": 982257,
+      "aggregate_sha256": "597D1E9821902CDA925C09CF7445A8119141237264D8EA5C47859266EC25409D",
+      "status": "historical-unreferenced-animation-work-products",
+      "notes": "Eight unreferenced BAM work products and one diagnostic frame remain unique and are preserved; extracted previews duplicated canonical animation resources are removed separately."
+    },
+    {
+      "id": "map-ar0602-comparison-preparation",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0602/preparation-planche-comparative",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0602/preparation-planche-comparative",
+      "file_count": 66,
+      "bytes": 81639105,
+      "aggregate_sha256": "CB094CBA5DA1AB9E69C3BD260104EC6B07F1F3F396D8DE5BBB12741C3B374AC2",
+      "status": "historical-comparison-workspace",
+      "notes": "Inputs, proposals and previews for a completed model comparison; no current pipeline consumes them."
+    },
+    {
+      "id": "map-ar0602-diagnostics",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0602/diagnostics",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0602/diagnostics",
+      "file_count": 1,
+      "bytes": 14701,
+      "aggregate_sha256": "04D365C66A58C2E4304EA1377A6FBB99352CD084849BDAC688FDF6FE0757E7F5",
+      "status": "historical-diagnostics",
+      "notes": "Closed primary/secondary diagnostic with no active consumer."
+    },
+    {
+      "id": "map-ar0602-ingame-comparisons",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0602/comparatifs-en-jeu",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0602/comparatifs-en-jeu",
+      "file_count": 3,
+      "bytes": 82693163,
+      "aggregate_sha256": "284E3C8A85C95E19F2BD5AA90CD7F738E4E6AE5E662AE9C32C3197F70E7C414D",
+      "status": "historical-comparisons",
+      "notes": "Superseded model and hybrid comparison sheets; areas.csv points to the current x4 run."
+    },
+    {
+      "id": "map-ar0602-rejected-direct-vs-split-test",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0602/test-03-comparatif-3b-direct-vs-7b-vertical-sans-recouvrement-rejete",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0602/test-03-comparatif-3b-direct-vs-7b-vertical-sans-recouvrement-rejete",
+      "file_count": 1,
+      "bytes": 12646112,
+      "aggregate_sha256": "0AE93E964F71D99C34F855E55A7DFBB1FB23D19B16D1E1F6A5108E16E9C66181",
+      "status": "rejected-comparison",
+      "notes": "Rejected no-overlap comparison; the no-edge-to-edge-split decision is preserved in docs/DECISIONS.md."
+    },
+    {
+      "id": "map-ar0702-ingame-comparisons",
+      "action": "archive",
+      "domain": "maps",
+      "source": "maps/AR0702/comparatifs-en-jeu",
+      "target": "archive/legacy/workspace-p2-20260831/maps/AR0702/comparatifs-en-jeu",
+      "file_count": 2,
+      "bytes": 14270120,
+      "aggregate_sha256": "19615FFB683B0D3C7F0A6DE38449E4B231D3BFC47F7B447C0C499B96A179DE06",
+      "status": "historical-comparisons",
+      "notes": "Closed x1/x2/x4 visual comparisons with no active consumer."
+    },
+    {
+      "id": "one-shot-sprite-layout-migration",
+      "action": "archive",
+      "domain": "sprites",
+      "source": "pipeline/scripts/Invoke-SpriteLayoutMigration.ps1",
+      "target": "archive/legacy/pipeline-scripts/Invoke-SpriteLayoutMigration.ps1",
+      "file_count": 1,
+      "bytes": 30267,
+      "aggregate_sha256": "8444C9B83A80BC1A050BFA5D538247787E0C7B6E9978DFE2E453867BCFA9E630",
+      "status": "completed-one-shot-migration-tool",
+      "notes": "The standardized sprite layout and migration adapters are already materialized; the script is no longer an active entry point."
+    },
+    {
+      "id": "proto-character-x2-spline",
+      "action": "archive",
+      "domain": "sprites",
+      "source": "proto/sprite_character_x2_spline",
+      "target": "archive/legacy/workspace-p2-20260831/sprites/sprite_character_x2_spline",
+      "file_count": 19,
+      "bytes": 94766,
+      "aggregate_sha256": "431F1FE8CE66091BCD746964EC1A49849316366EA5B4890687BC1F7EAD3F5A4C",
+      "status": "historical-visual-experiment",
+      "notes": "Single-frame spline comparison; never installed and not consumed by the active sprite pipeline."
+    },
+    {
+      "id": "proto-character-x4-spline",
+      "action": "archive",
+      "domain": "sprites",
+      "source": "proto/sprite_character_x4_spline",
+      "target": "archive/legacy/workspace-p2-20260831/sprites/sprite_character_x4_spline",
+      "file_count": 8,
+      "bytes": 39066,
+      "aggregate_sha256": "40060B3399ED48CFCDAD1687BB0F765CBDA42B40C6FE7329FCB7DB03DFC5768F",
+      "status": "historical-visual-experiment",
+      "notes": "Single-frame spline comparison; never installed and not consumed by the active sprite pipeline."
+    },
+    {
+      "id": "proto-goblin-mgo1-xbr2x-x2-ingame",
+      "action": "archive",
+      "domain": "sprites",
+      "source": "proto/goblin-mgo1-xbr2x-x2-ingame",
+      "target": "archive/legacy/workspace-p2-20260831/sprites/goblin-mgo1-xbr2x-x2-ingame",
+      "file_count": 1597,
+      "bytes": 26538929,
+      "aggregate_sha256": "53A20CD74DFABADE4C6D1EE5B460EE82F01EFC7BE0EDA7342351FF909AA98171",
+      "status": "superseded-prototype-restorable",
+      "notes": "Prototype MGO1 superseded by the canonical sprite family and catalog pipeline; payload, test states and backups remain together."
+    },
+    {
+      "id": "ui-menu-legacy-exports",
+      "action": "archive",
+      "domain": "ui",
+      "source": "interface/menus-options-bg2ee/exports",
+      "target": "archive/legacy/workspace-p2-20260831/ui/menus-options-bg2ee/exports",
+      "file_count": 36,
+      "bytes": 27614992,
+      "aggregate_sha256": "7FEFF0A1A106ACB585FA7700B24CE32E29B0375822897D48661EC544BD17D171",
+      "status": "historical-comparison-exports",
+      "notes": "SeedVR, AdaIN and Topaz comparison exports superseded by the active x4 Topaz Recovery v2 production tree."
+    }
+  ],
+  "exact_duplicate_removals": [
+    {
+      "id": "map-ar0602-animation-extracted-copies",
+      "source_root": "maps/AR0602/animations",
+      "canonical_root": "animations/ressources",
+      "file_count": 39,
+      "bytes": 1404117,
+      "aggregate_sha256": "94DA71813DF75D97EAD23DE11ACD61291CE48250AA53EA9743ECB8FE60B39369",
+      "files": [
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AA.gif",
+          "canonical": "animations/ressources/AM0602AA/AM0602AA.gif",
+          "bytes": 45077,
+          "sha256": "BAC4D67DEED791834A237DFBE9D53E6F27EEC9FCAB2C75837E021790A5FCC663"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AA_alpha.png",
+          "canonical": "animations/ressources/AM0602AA/AM0602AA_alpha.png",
+          "bytes": 2262,
+          "sha256": "EADA9CBEC74ADE6CDB4486AE0EB24D81C247664103DBF8922F926F24D4B0F4AA"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AA_sheet.png",
+          "canonical": "animations/ressources/AM0602AA/AM0602AA_sheet.png",
+          "bytes": 116301,
+          "sha256": "4A72E48B739D74D40D80DA6200BC1BAE43CBD03726B60CE9DC9F427F1B4F202A"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AB.gif",
+          "canonical": "animations/ressources/AM0602AB/AM0602AB.gif",
+          "bytes": 39358,
+          "sha256": "0BB43C348C5A4DEFABA0AB4A07D86FDB38C96FA80C6D325D7401B6158BC42587"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AB_alpha.png",
+          "canonical": "animations/ressources/AM0602AB/AM0602AB_alpha.png",
+          "bytes": 2565,
+          "sha256": "B2013232F4451EFFF7139AD2A84D7CD58000FD07543B1B9C4F31C51491D3CE2F"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AB_sheet.png",
+          "canonical": "animations/ressources/AM0602AB/AM0602AB_sheet.png",
+          "bytes": 120834,
+          "sha256": "DF3472E7BD10C6B1188D974990761367BAB66200AA6E412E0435A558AD19AEB9"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AC.gif",
+          "canonical": "animations/ressources/AM0602AC/AM0602AC.gif",
+          "bytes": 10922,
+          "sha256": "2948E195135F5E127F615862C88D7E5D100F036ABA8A7D4396C9D795E256A2DC"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AC_alpha.png",
+          "canonical": "animations/ressources/AM0602AC/AM0602AC_alpha.png",
+          "bytes": 2403,
+          "sha256": "6926F880BAA93ED05BD1AF0175BE70A1F491AC2327A0C805A3EA0782BA6B0DC0"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602AC_sheet.png",
+          "canonical": "animations/ressources/AM0602AC/AM0602AC_sheet.png",
+          "bytes": 37138,
+          "sha256": "E2E9D525E517C5035936DE3B6C5B19E83A63EC5D982A0C0F6C923E01C39A31D1"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602B.gif",
+          "canonical": "animations/ressources/AM0602B/AM0602B.gif",
+          "bytes": 49980,
+          "sha256": "CEF77ADCDF185B670DB6C039B82B1354024FBF20FF5091EBD530BC30CBFF9A01"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602B_alpha.png",
+          "canonical": "animations/ressources/AM0602B/AM0602B_alpha.png",
+          "bytes": 347,
+          "sha256": "C4F5865DF1243C96CB28D062C8BB4626E2450BABF87A4577F3D17C7FEF8E5F17"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602B_sheet.png",
+          "canonical": "animations/ressources/AM0602B/AM0602B_sheet.png",
+          "bytes": 69957,
+          "sha256": "B263D1C6B5D52791A75F1596D3CCA5E4211FBDBFB448FB3BF791E1A34ED2E8A7"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602C.gif",
+          "canonical": "animations/ressources/AM0602C/AM0602C.gif",
+          "bytes": 37564,
+          "sha256": "CCF6AC6DE1AEE43BB02BE717FA2FEEA05BFC3B672DB09241646EDA64C5F620FD"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602C_alpha.png",
+          "canonical": "animations/ressources/AM0602C/AM0602C_alpha.png",
+          "bytes": 558,
+          "sha256": "7A44F1676090E8A84508FAB1430AC039A3BA34519533AE5762AAD368F6D334B3"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602C_sheet.png",
+          "canonical": "animations/ressources/AM0602C/AM0602C_sheet.png",
+          "bytes": 120565,
+          "sha256": "77C9C095624DA1204C2DB6214A1502F0E89CD453F4261E54E2763DFE174A3A44"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602D.gif",
+          "canonical": "animations/ressources/AM0602D/AM0602D.gif",
+          "bytes": 14349,
+          "sha256": "892D860010BAFF0228F65B7A7B9CED7059ECCE0FEB82DDB0184C6EF48E777599"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602D_alpha.png",
+          "canonical": "animations/ressources/AM0602D/AM0602D_alpha.png",
+          "bytes": 1317,
+          "sha256": "3B379117DF1C22233D97246564ADDED232359EC8AF4DEA744133C6D0F3113B29"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602D_sheet.png",
+          "canonical": "animations/ressources/AM0602D/AM0602D_sheet.png",
+          "bytes": 81169,
+          "sha256": "F143CDCD49466741271FBDE2381E7A4E1FC83E944FA8FC2049682CA3AF5C7FC7"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602E.gif",
+          "canonical": "animations/ressources/AM0602E/AM0602E.gif",
+          "bytes": 12601,
+          "sha256": "7DD91B7417CEE065B19BD572B6491F96F86ED8953A2C538B6FA07F7E783F35D7"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602E_alpha.png",
+          "canonical": "animations/ressources/AM0602E/AM0602E_alpha.png",
+          "bytes": 664,
+          "sha256": "FD80754F00755E128ECE2D238CEB2D4A0A304302EB2C7423B4B5D6603C575F39"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602E_sheet.png",
+          "canonical": "animations/ressources/AM0602E/AM0602E_sheet.png",
+          "bytes": 46760,
+          "sha256": "E293DDDBC1545BBB7A0D3D517C2F540ED8D003CFC2E266F474168B367E066092"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602F.gif",
+          "canonical": "animations/ressources/AM0602F/AM0602F.gif",
+          "bytes": 87856,
+          "sha256": "452692252399B8EBC2DBFE07A7E93A728D6807B693ED361A65B25EFC03EE0EDB"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602F_alpha.png",
+          "canonical": "animations/ressources/AM0602F/AM0602F_alpha.png",
+          "bytes": 1707,
+          "sha256": "F5235E3F4770EDF05EE2BF2685355C8A00669427A17E5339CA1806E143B4FC27"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602F_sheet.png",
+          "canonical": "animations/ressources/AM0602F/AM0602F_sheet.png",
+          "bytes": 202472,
+          "sha256": "B2E048E2F1FFEEF15000216B6D9D224EA34FB6995147E58C485FCFF103FEA640"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602G.gif",
+          "canonical": "animations/ressources/AM0602G/AM0602G.gif",
+          "bytes": 14171,
+          "sha256": "8EE6A8439A7968E5F9C30730F3006369704817B1D4D5F39BB36F49C725AEF74B"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602G_alpha.png",
+          "canonical": "animations/ressources/AM0602G/AM0602G_alpha.png",
+          "bytes": 910,
+          "sha256": "A649550B44EE21DC0309CA6F9F32730F2716A995F875508D1F72C27320E4F160"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/AM0602G_sheet.png",
+          "canonical": "animations/ressources/AM0602G/AM0602G_sheet.png",
+          "bytes": 56656,
+          "sha256": "92555F3975B5F18CB02F89C255D272096DEA75116FCFB07F7501A246919B8CB3"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/BUBBLES2.gif",
+          "canonical": "animations/ressources/BUBBLES2/BUBBLES2.gif",
+          "bytes": 36863,
+          "sha256": "70FDBE1AD5FA07BFD40689BE4B2F446805A656E802160A66369E8A6AFF80B36C"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/BUBBLES2_alpha.png",
+          "canonical": "animations/ressources/BUBBLES2/BUBBLES2_alpha.png",
+          "bytes": 6113,
+          "sha256": "65EDFB1E66735181032FE342197C019DBBF7AE853C305BB6EAFCC43A8BA1185A"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/BUBBLES2_sheet.png",
+          "canonical": "animations/ressources/BUBBLES2/BUBBLES2_sheet.png",
+          "bytes": 86498,
+          "sha256": "F97D0343E3F9A6BA84EE1294EB09587BAA3396E5A638747C0E119014CC7E9E0A"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/FLAME2S.gif",
+          "canonical": "animations/ressources/FLAME2S/FLAME2S.gif",
+          "bytes": 4566,
+          "sha256": "29E0B88935AD4BDFCB7F2924AAD8B0FB2AB7061AD5CFDD9A0CDD402400CAE9CF"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/FLAME2S_alpha.png",
+          "canonical": "animations/ressources/FLAME2S/FLAME2S_alpha.png",
+          "bytes": 141,
+          "sha256": "D67306501A77627586A4B5D26E14F0F08E6A2068B6B34E38E94202B967EDF789"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/FLAME2S_sheet.png",
+          "canonical": "animations/ressources/FLAME2S/FLAME2S_sheet.png",
+          "bytes": 1519,
+          "sha256": "FB096825D0DC6CB0B5AC3BC6188CD204FD5613DD1708CD0FDB10441DF8F10F00"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1A.gif",
+          "canonical": "animations/ressources/PORTL1A/PORTL1A.gif",
+          "bytes": 15530,
+          "sha256": "3A272E2ABB9EBE40E770F955E882DD41BBD1B4ADDAB66C825DD44B8BE67B8D25"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1A_alpha.png",
+          "canonical": "animations/ressources/PORTL1A/PORTL1A_alpha.png",
+          "bytes": 649,
+          "sha256": "2006D8012CA3F8DB3CFEDB20FF7F2D39C89906D5DEAE34EEE3F45180043C6AF4"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1A_sheet.png",
+          "canonical": "animations/ressources/PORTL1A/PORTL1A_sheet.png",
+          "bytes": 33310,
+          "sha256": "FFF4A34B2842B5296FB1AABBED832E8F0914E9AC57DC37E3BEA5386F0F311176"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1B.gif",
+          "canonical": "animations/ressources/PORTL1B/PORTL1B.gif",
+          "bytes": 10999,
+          "sha256": "23590647AC647991223FEA7EA72519B1A25B91B1B7BD6EC484D2E421E155B5C6"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1B_alpha.png",
+          "canonical": "animations/ressources/PORTL1B/PORTL1B_alpha.png",
+          "bytes": 678,
+          "sha256": "71FA33057822C952F7E72FB8A94A5662E156F861BE557B03E98A9D8F9F280BD6"
+        },
+        {
+          "source": "maps/AR0602/animations/extracted/PORTL1B_sheet.png",
+          "canonical": "animations/ressources/PORTL1B/PORTL1B_sheet.png",
+          "bytes": 30788,
+          "sha256": "CE4C05A63CE3D3FA7A6B0A811B1B0F3E35A8F2BE2ACFD71059E2999DA3E90487"
+        }
+      ],
+      "notes": "Every removed file was byte-identical to the listed immutable extracted resource before removal."
+    }
+  ],
+  "path_adapters": [
+    {
+      "historical_reference": "proto/goblin-mgo1-xbr2x-x2-ingame",
+      "resolved_by": "docs/workspace-archive-p2-manifest.json",
+      "target": "archive/legacy/workspace-p2-20260831/sprites/goblin-mgo1-xbr2x-x2-ingame"
+    }
+  ],
+  "left_in_place": [
+    {
+      "path": "proto/install-backups",
+      "reason": "UNCERTAIN restoration material; excluded from P2."
+    },
+    {
+      "path": "maps/AR0516/test-native-wed-occlusion-20260827-painted-mask-p49",
+      "reason": "Referenced by the validated canonical WED correction and its restoration chain."
+    },
+    {
+      "path": "maps/AR0900/diagnostics",
+      "reason": "MAP-WATER-001 remains open; diagnostics can still support the active investigation."
+    },
+    {
+      "path": "maps/AR1300/cadrages-pont-levis",
+      "reason": "Reproducible inputs for the still-pending SeedVR2 event-video media pass."
+    },
+    {
+      "path": "interface/gameplay-hud-bg2ee/captures",
+      "reason": "The HUD README names the capture as the active analysis reference."
+    },
+    {
+      "path": "interface/**/backups and active captures",
+      "reason": "Required for restoration or current QA evidence."
+    },
+    {
+      "path": "portraits/newPortraits and portraits/Ref",
+      "reason": "Explicitly excluded pending clarification."
+    },
+    {
+      "path": "animations/packs-par-zone",
+      "reason": "Explicitly excluded large follow-up project."
+    }
+  ]
+}

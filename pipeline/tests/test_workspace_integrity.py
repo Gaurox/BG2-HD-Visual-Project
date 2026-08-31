@@ -109,7 +109,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertGreater(animations["legacy_proto_embedded_reference_count"], 0)
         self.assertEqual(animations["legacy_proto_run_count"], 65)
         self.assertEqual(animations["remaining_animation_proto_directory_count"], 0)
-        self.assertEqual(animations["remaining_proto_directory_count"], 4)
+        self.assertEqual(animations["remaining_proto_directory_count"], 1)
         self.assertEqual(animations["historical_qa_evidence_adapted_count"], 9)
         self.assertEqual(animations["release_pack_indexed_count"], 5)
         release_packs = [
@@ -134,6 +134,26 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(cleanup["preserved_file_count"], 445)
         self.assertEqual(cleanup["preserved_bytes"], 857233386)
         self.assertEqual(cleanup["removed_empty_directory_count"], 1)
+        archive_p2 = self.report["domain_audits"]["workspace_archive_p2"]
+        self.assertEqual(archive_p2["operation_count"], 15)
+        self.assertEqual(archive_p2["verified_operation_count"], 15)
+        self.assertEqual(archive_p2["archived_file_count"], 1771)
+        self.assertEqual(archive_p2["archived_bytes"], 256200953)
+        self.assertEqual(archive_p2["exact_duplicate_group_count"], 1)
+        self.assertEqual(archive_p2["verified_exact_duplicate_group_count"], 1)
+        self.assertEqual(archive_p2["exact_duplicate_removed_file_count"], 39)
+        self.assertEqual(archive_p2["exact_duplicate_removed_bytes"], 1404117)
+        archive_manifest = json.loads(
+            (ROOT / integrity.ARCHIVE_P2_MANIFEST).read_text(encoding="utf-8")
+        )
+        self.assertIn(
+            {
+                "historical_reference": "proto/goblin-mgo1-xbr2x-x2-ingame",
+                "resolved_by": "docs/workspace-archive-p2-manifest.json",
+                "target": "archive/legacy/workspace-p2-20260831/sprites/goblin-mgo1-xbr2x-x2-ingame",
+            },
+            archive_manifest["path_adapters"],
+        )
         self.assertEqual(self.report["summary"]["candidate_cleanup"]["temporary_files"], 0)
         self.assertEqual(
             self.report["summary"]["candidate_cleanup"]["video_unindexed_work_products"],
@@ -144,6 +164,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(portability["configured_path_count"], 5)
         self.assertEqual(portability["missing_path_count"], 0)
         self.assertEqual(portability["active_absolute_path_violation_count"], 0)
+        self.assertEqual(portability["historical_script_exception_count"], 0)
         self.assertEqual(portability["new_historical_absolute_path_file_count"], 0)
         self.assertEqual(portability["historical_descriptor_file_count"], 146)
         self.assertGreater(portability["active_script_file_count"], 0)
@@ -180,6 +201,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         retained = set(migration["retained_proto_directories"])
         present = {path.name for path in (ROOT / "proto").iterdir() if path.is_dir()}
         self.assertEqual(present, retained)
+        self.assertEqual(retained, {"install-backups"})
         self.assertEqual([path for path in (ROOT / "proto").iterdir() if path.is_file()], [])
 
         migrated_runs = [run for run in self.runs if run["domain"] == "animations" and run["legacy"]]

@@ -37,6 +37,7 @@ JSON_OUTPUTS = ("workspace-integrity.json", "runs.json")
 RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
+ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
 ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
 WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
     r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
@@ -161,6 +162,32 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest().upper()
+
+
+def inventory_evidence(path: Path) -> tuple[int, int, str]:
+    """Return count, bytes and a path-sensitive aggregate hash for one file tree."""
+
+    if path.is_file():
+        root = path.parent
+        files = [path]
+    else:
+        root = path
+        files = [candidate for candidate in path.rglob("*") if candidate.is_file()]
+    records = [
+        (
+            candidate.relative_to(root).as_posix(),
+            candidate.stat().st_size,
+            sha256_file(candidate),
+        )
+        for candidate in files
+    ]
+    records.sort(key=lambda item: item[0].casefold())
+    payload = "".join(
+        f"{relative}|{size}|{digest}\n" for relative, size, digest in records
+    ).encode("utf-8")
+    return len(records), sum(size for _relative, size, _digest in records), hashlib.sha256(
+        payload
+    ).hexdigest().upper()
 
 
 def repo_path(path: Path) -> str:
@@ -1931,6 +1958,157 @@ def audit_workspace_cleanup(issues: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def audit_workspace_archive_p2(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify the targeted P2 archive and exact duplicate removals."""
+
+    data = read_json(ROOT / ARCHIVE_P2_MANIFEST)
+    verified_operations = 0
+    archived_files = 0
+    archived_bytes = 0
+    for operation in data.get("operations", []):
+        source_text = str(operation["source"])
+        target_text = str(operation["target"])
+        source = ROOT / source_text
+        target = ROOT / target_text
+        valid = True
+        if source.exists():
+            valid = False
+            add_issue(
+                issues,
+                "error",
+                "archive-p2-source-returned",
+                str(operation["domain"]),
+                "Un élément archivé en P2 est réapparu dans une zone active.",
+                path=source_text,
+            )
+        if not target.exists():
+            valid = False
+            add_issue(
+                issues,
+                "error",
+                "archive-p2-target-missing",
+                str(operation["domain"]),
+                "Une destination d'archive P2 est absente.",
+                path=target_text,
+            )
+        else:
+            actual_count, actual_bytes, actual_hash = inventory_evidence(target)
+            expected_count = int(operation["file_count"])
+            expected_bytes = int(operation["bytes"])
+            expected_hash = str(operation["aggregate_sha256"]).upper()
+            if (
+                actual_count != expected_count
+                or actual_bytes != expected_bytes
+                or actual_hash != expected_hash
+            ):
+                valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "archive-p2-target-evidence-mismatch",
+                    str(operation["domain"]),
+                    "Une archive P2 ne correspond plus à son inventaire hashé.",
+                    path=target_text,
+                    details={
+                        "actual_file_count": actual_count,
+                        "actual_bytes": actual_bytes,
+                        "actual_aggregate_sha256": actual_hash,
+                        "expected_file_count": expected_count,
+                        "expected_bytes": expected_bytes,
+                        "expected_aggregate_sha256": expected_hash,
+                    },
+                )
+        if valid:
+            verified_operations += 1
+            archived_files += int(operation["file_count"])
+            archived_bytes += int(operation["bytes"])
+
+    verified_duplicate_groups = 0
+    duplicate_files = 0
+    duplicate_bytes = 0
+    for group in data.get("exact_duplicate_removals", []):
+        valid = True
+        source_root = str(group["source_root"]).rstrip("/")
+        virtual_records: list[tuple[str, int, str]] = []
+        for item in group.get("files", []):
+            source_text = str(item["source"])
+            canonical_text = str(item["canonical"])
+            expected_bytes = int(item["bytes"])
+            expected_hash = str(item["sha256"]).upper()
+            if (ROOT / source_text).exists():
+                valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "archive-p2-exact-duplicate-returned",
+                    "animations",
+                    "Une copie AR0602 supprimée après preuve d'identité est réapparue.",
+                    path=source_text,
+                )
+            canonical = ROOT / canonical_text
+            if (
+                not canonical.is_file()
+                or canonical.stat().st_size != expected_bytes
+                or sha256_file(canonical) != expected_hash
+            ):
+                valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "archive-p2-canonical-duplicate-evidence-missing",
+                    "animations",
+                    "La copie canonique justifiant une déduplication AR0602 est absente ou divergente.",
+                    path=canonical_text,
+                )
+            prefix = source_root + "/"
+            if not source_text.startswith(prefix):
+                valid = False
+                relative = source_text
+            else:
+                relative = source_text[len(prefix) :]
+            virtual_records.append((relative, expected_bytes, expected_hash))
+
+        virtual_records.sort(key=lambda item: item[0].casefold())
+        payload = "".join(
+            f"{relative}|{size}|{digest}\n"
+            for relative, size, digest in virtual_records
+        ).encode("utf-8")
+        actual_group_hash = hashlib.sha256(payload).hexdigest().upper()
+        if (
+            len(virtual_records) != int(group["file_count"])
+            or sum(size for _relative, size, _digest in virtual_records)
+            != int(group["bytes"])
+            or actual_group_hash != str(group["aggregate_sha256"]).upper()
+        ):
+            valid = False
+            add_issue(
+                issues,
+                "error",
+                "archive-p2-duplicate-manifest-inconsistent",
+                "animations",
+                "La preuve de déduplication P2 est incohérente avec sa propre liste de fichiers.",
+                path=ARCHIVE_P2_MANIFEST,
+                details={"group": group.get("id", "")},
+            )
+        if valid:
+            verified_duplicate_groups += 1
+            duplicate_files += int(group["file_count"])
+            duplicate_bytes += int(group["bytes"])
+
+    return {
+        "manifest": ARCHIVE_P2_MANIFEST,
+        "operation_count": len(data.get("operations", [])),
+        "verified_operation_count": verified_operations,
+        "archived_file_count": archived_files,
+        "archived_bytes": archived_bytes,
+        "exact_duplicate_group_count": len(data.get("exact_duplicate_removals", [])),
+        "verified_exact_duplicate_group_count": verified_duplicate_groups,
+        "exact_duplicate_removed_file_count": duplicate_files,
+        "exact_duplicate_removed_bytes": duplicate_bytes,
+        "left_in_place_count": len(data.get("left_in_place", [])),
+    }
+
+
 def audit_video_runs(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
 ) -> dict[str, int]:
@@ -2032,7 +2210,7 @@ def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
         ROOT / "releases/BG2-HD-Upscale/tools",
         ROOT / "releases/BG2-HD-Upscale/tests",
     )
-    historical_script_exceptions = {"pipeline/scripts/Invoke-SpriteLayoutMigration.ps1"}
+    historical_script_exceptions: set[str] = set()
     active_violations: list[str] = []
     retained_script_exceptions: list[str] = []
     scanned_active_script_count = 0
@@ -2219,6 +2397,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
     registry, canonical_counts = audit_registry(issues)
     sources = audit_source_tables(issues, canonical_counts)
     cleanup = audit_workspace_cleanup(issues)
+    archive_p2 = audit_workspace_archive_p2(issues)
     portability = audit_path_portability(issues)
     domain_audits = {
         "maps": audit_maps(issues, runs),
@@ -2227,6 +2406,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
         "sprites": audit_sprites(issues, runs),
         "videos": audit_video_runs(issues, runs),
         "workspace_cleanup": cleanup,
+        "workspace_archive_p2": archive_p2,
         "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)

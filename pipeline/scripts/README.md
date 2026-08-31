@@ -72,7 +72,9 @@ Les extracteurs de portraits restent ici pour préserver leurs imports. La proc�
 inventaires produits sont routés depuis `portraits/README.md` : `extract_character_portraits.py`,
 `extract_joinable_portraits.py`, `extract_encountered_portraits.py`, `survey_creature_portraits.py`
 et `organize_ppe_portraits.py`. Les scripts d'analyse couleur, anciennes découpes et prototypes
-d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
+d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`. Le ponctuel
+`Invoke-SpriteLayoutMigration.ps1` y est également archivé depuis que le layout standard et ses
+adaptateurs sont entièrement matérialisés.
 
 Les overlays TIS palette encore actifs utilisent `extract_legacy_tis_frames.py` puis
 `build_upscaled_legacy_tis.py`. `render_liquid_overlay_mask.py`, `render_tile_classes.py` et

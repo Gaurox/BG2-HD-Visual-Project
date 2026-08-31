@@ -101,6 +101,22 @@ Le contrôle courant vérifie 445 fichiers préservés et l'absence de retour da
 Les deux outputs intermédiaires absents AR0016/AR0017 restent volontairement non régénérés : leurs
 builds sélectionnés existent et aucune validation actuelle ne nécessite ces intermédiaires.
 
+## Archivage ciblé P2 du 31 août 2026
+
+`docs/workspace-archive-p2-manifest.json` borne 15 déplacements hors des zones actives et en vérifie
+les anciens/nouveaux chemins, le nombre de fichiers, les octets et l'empreinte agrégée. Les 1 771
+fichiers archivés (256 200 953 octets) couvrent les comparatifs maps clos, trois prototypes sprite,
+les essais runtime AA rejetés, les exports UI de comparaison et le script ponctuel de migration du
+layout sprite.
+
+Dans `maps/AR0602/animations/`, 39 previews d'extraction (1 404 117 octets) ont été supprimées
+uniquement après égalité SHA-256 avec leurs copies canoniques sous `animations/ressources/`. Les
+neuf fichiers uniques ont été archivés. L'ancien chemin du prototype MGO1 est relié à sa destination
+uniquement par le manifeste P2 : il n'entre pas dans l'adaptateur opérationnel sprite, afin qu'aucun
+runner actif ne puisse écrire dans l'archive. Aucun job, manifeste historique ou reçu de
+restauration n'a été réécrit. Cette preuve de déplacement n'accorde aucun état de production, QA,
+installation ou release.
+
 ## Configuration portable
 
 Les clés machine sont déclarées dans `config/workspace-paths.json`. Copier

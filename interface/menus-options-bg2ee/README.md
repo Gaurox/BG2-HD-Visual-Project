@@ -11,4 +11,7 @@ Ce dossier sépare la production courante, les sources et les comparaisons histo
   conservées pour comparaison ou restauration historique, mais ne sont ni actives ni des sources
   de statut ou de release.
 - `archive/` hors `variants/` : diagnostics et prototypes remplacés.
+- Les anciens workspaces `exports/` SeedVR/AdaIN/Topaz sont conservés sous
+  `archive/legacy/workspace-p2-20260831/ui/menus-options-bg2ee/exports/`, hors de cette branche
+  active et sans valeur de statut.
 - `docs/MENU_UPSCALE.md` : carte des ressources du menu principal et procédure complète de maintenance.
