@@ -6,7 +6,7 @@ the production pipelines and contains no release manifest or real progress data.
 ## Pages
 
 - `index.html` — project presentation and visual direction
-- `progress.html` — dashboard layout with clearly marked sample values
+- `progress.html` — progress dashboard, seven asset domains, figures kept by hand
 - `gallery.html` — filterable gallery and interactive comparison layout
 
 Each page has a French counterpart under `fr/` with identical layout. The two
@@ -34,7 +34,12 @@ and can also be started manually.
 
 - Public-facing copy exists in English (root) and French (`fr/`); the `EN / FR` control switches
   between the two mirrored page sets.
-- Dashboard values are visual placeholders, not project status.
+- The progress dashboard shows real figures for seven asset domains (maps, animations, sprites,
+  effects, UI/HUD, videos, icons), transcribed by hand from the tracking workbook. Nothing is
+  fetched automatically. To refresh it, edit both language pages: for each domain update the raw
+  counts in the `style` attribute (`--total` / `--produced` / `--qa` / `--release`), the numbers in
+  the visible text and the headline percentage, then the snapshot date and the four totals. The
+  bars derive their widths from the raw counts, so they stay in sync on their own.
 - Several page images are real project material rather than concept art. Most keep a
   full-resolution source next to a lighter WebP delivery copy the pages load; the largest
   source stays outside the repo and only the WebP ships.

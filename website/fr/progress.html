@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0b0d0e">
-    <meta name="description" content="Maquette du tableau de bord d’avancement du BG2 HD Visual Project.">
+    <meta name="description" content="Avancement ressource par ressource du BG2 HD Visual Project, de la production à la revue en jeu.">
     <title>Avancement du projet — BG2 HD Visual Project</title>
     <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
     <link rel="alternate" hreflang="en" href="../progress.html">
@@ -33,55 +33,116 @@
         <div class="page-shell page-hero-content">
           <p class="eyebrow"><span></span> Vue d’ensemble de la production</p>
           <h1>Avancement du <em>projet.</em></h1>
-          <p>Une vue claire du travail, de la production visuelle au contrôle qualité en passant par les performances du moteur.</p>
+          <p>Où en est chaque famille de ressources du jeu, de la production à la revue en jeu.</p>
         </div>
       </section>
 
+      <!--
+        POINT DE MISE À JOUR MANUELLE
+        Les chiffres ci-dessous sont recopiés à la main depuis le tableau de bord
+        du fichier de suivi. Pour chaque domaine, mettre à jour les quatre valeurs
+        brutes de l’attribut style (--total / --produced / --qa / --release), les
+        nombres correspondants dans le texte et le pourcentage affiché. Puis
+        actualiser la date du relevé et les quatre totaux. Rien n’est récupéré
+        automatiquement.
+      -->
       <section class="dashboard-section page-shell" aria-labelledby="dashboard-title">
-        <div class="dashboard-notice"><span>Données fictives</span><p>Les valeurs ci-dessous sont des espaces réservés servant à concevoir le tableau de bord. Ce ne sont pas les chiffres actuels du projet.</p></div>
-        <div class="dashboard-overview">
-          <div class="overview-copy">
-            <p class="eyebrow"><span></span> Projet global</p>
-            <h2 id="dashboard-title">Un seul patch,<br><em>plusieurs chantiers de production.</em></h2>
-            <p>Le tableau de bord final réunira un suivi de production structuré et quelques notes manuelles choisies, tout en gardant chaque discipline lisible séparément.</p>
-          </div>
-          <div class="overall-meter" style="--meter: 62" aria-label="Avancement global indicatif&nbsp;: 62 pour cent">
-            <div class="overall-meter-inner"><strong>62<sup>%</sup></strong><span>Avancement indicatif</span></div>
-          </div>
-          <div class="overview-metrics">
-            <div><strong>5</strong><span>Chantiers principaux</span></div>
-            <div><strong>—</strong><span>Chiffres définitifs à venir</span></div>
-          </div>
+        <h2 class="visually-hidden" id="dashboard-title">Avancement par domaine de ressources</h2>
+
+        <div class="snapshot">
+          <span>Relevé</span>
+          <p>Chiffres relevés le 30 août 2026 et mis à jour à la main. Ils couvrent les sept domaines de ressources suivis ci-dessous.</p>
         </div>
 
-        <div class="progress-grid" aria-label="Chantiers du projet">
-          <article class="progress-card" style="--progress: 74%" data-reveal>
-            <div class="progress-card-top"><span class="progress-index">01</span><span class="progress-sample">Indicatif · 74%</span></div>
-            <h3>Décors &amp; cartes</h3>
-            <p>Préparation des sources, amélioration ×4, reconstruction des tuiles et revue visuelle en jeu.</p>
-            <div class="progress-track" aria-hidden="true"><span></span></div>
-            <ul><li>Grands fonds de décor</li><li>Variantes jour et nuit</li><li>Traitement de l’eau et des surcouches</li></ul>
+        <div class="totals">
+          <div><strong>14 788</strong><span>Ressources suivies</span></div>
+          <div><strong>479</strong><span>Produites</span><small>3,2 % des ressources suivies</small></div>
+          <div><strong>343</strong><span>QA validée</span><small>2,3 % des ressources suivies</small></div>
+          <div><strong>294</strong><span>Prêtes pour la release</span><small>2,0 % des ressources suivies</small></div>
+        </div>
+
+        <ul class="legend">
+          <li><i class="swatch-produced" aria-hidden="true"></i><span><b>Produites</b> — la ressource finale existe et a été contrôlée.</span></li>
+          <li><i class="swatch-qa" aria-hidden="true"></i><span><b>QA validée</b> — relue en jeu et acceptée.</span></li>
+          <li><i class="swatch-release" aria-hidden="true"></i><span><b>Prêtes pour la release</b> — validées pour intégration dans un patch.</span></li>
+        </ul>
+
+        <div class="track-list">
+          <article class="track" style="--total: 400; --produced: 291; --qa: 287; --release: 287" data-reveal>
+            <div class="track-id"><h3>Cartes</h3><span>400 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Cartes&nbsp;: 291 produites sur 400, 287 QA validée, 287 prêtes pour la release">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">73 %</span>
+            </div>
+            <ul class="track-stats"><li><b>291</b> produites</li><li><b>287</b> QA validée</li><li><b>287</b> prêtes</li></ul>
           </article>
-          <article class="progress-card" style="--progress: 58%" data-reveal>
-            <div class="progress-card-top"><span class="progress-index">02</span><span class="progress-sample">Indicatif · 58%</span></div>
-            <h3>Animation &amp; fluidité</h3>
-            <p>Restauration des images, traitement de l’alpha et interpolation respectant les pauses, vers 30 fps.</p>
-            <div class="progress-track" aria-hidden="true"><span></span></div>
-            <ul><li>Rehaussement spatial des images</li><li>Interpolation temporelle</li><li>Packs d’exécution par zone</li></ul>
+
+          <article class="track" style="--total: 271; --produced: 55; --qa: 54; --release: 5" data-reveal>
+            <div class="track-id"><h3>Animations</h3><span>271 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Animations&nbsp;: 55 produites sur 271, 54 QA validée, 5 prêtes pour la release">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">20 %</span>
+            </div>
+            <ul class="track-stats"><li><b>55</b> produites</li><li><b>54</b> QA validée</li><li><b>5</b> prêtes</li></ul>
           </article>
-          <article class="progress-card" style="--progress: 46%" data-reveal>
-            <div class="progress-card-top"><span class="progress-index">03</span><span class="progress-sample">Indicatif · 46%</span></div>
-            <h3>QA visuelle &amp; corrections</h3>
-            <p>Revue en jeu des raccords, de l’alpha, de l’occlusion, de l’eau, des couleurs et des défauts isolés.</p>
-            <div class="progress-track" aria-hidden="true"><span></span></div>
-            <ul><li>Inspection scène par scène</li><li>Occlusion des premiers plans</li><li>Passes de correction ciblées</li></ul>
+
+          <article class="track" style="--total: 8997; --produced: 131; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Sprites</h3><span>8 997 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Sprites&nbsp;: 131 produites sur 8 997, aucune QA validée, aucune prête pour la release">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">1,5 %</span>
+            </div>
+            <ul class="track-stats"><li><b>131</b> produites</li><li><b>0</b> QA validée</li><li><b>0</b> prêtes</li></ul>
           </article>
-          <article class="progress-card" style="--progress: 39%" data-reveal>
-            <div class="progress-card-top"><span class="progress-index">04</span><span class="progress-sample">Indicatif · 39%</span></div>
-            <h3>Performances de chargement des cartes</h3>
-            <p>Étude de la charge en ressources, du temps de préparation, des pics de chargement et des solutions de repli sûres.</p>
-            <div class="progress-track" aria-hidden="true"><span></span></div>
-            <ul><li>Mesures à l’exécution</li><li>Essais de préparation bornée</li><li>Études de chargement à froid et à chaud</li></ul>
+
+          <article class="track is-idle" style="--total: 467; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Effets</h3><span>467 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Effets&nbsp;: non commencé, 0 produite sur 467">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
+          </article>
+
+          <article class="track" style="--total: 1672; --produced: 2; --qa: 2; --release: 2" data-reveal>
+            <div class="track-id"><h3>Interface &amp; HUD</h3><span>1 672 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Interface et HUD&nbsp;: 2 produites sur 1 672, 2 QA validée, 2 prêtes pour la release">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0,1 %</span>
+            </div>
+            <ul class="track-stats"><li><b>2</b> produites</li><li><b>2</b> QA validée</li><li><b>2</b> prêtes</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 50; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Vidéos</h3><span>50 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Vidéos&nbsp;: non commencé, 0 produite sur 50">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 2931; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Icônes</h3><span>2 931 ressources</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Icônes&nbsp;: non commencé, 0 produite sur 2 931">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
           </article>
         </div>
 
