@@ -31,10 +31,17 @@ and can also be started manually.
 - All public-facing mockup copy is in English.
 - The FR control is reserved but intentionally inactive until approved French copy exists.
 - Dashboard values are visual placeholders, not project status.
-- The home hero uses a real AR0700 vanilla-to-x4 render (`assets/images/hero-ar0700-vanilla-x4.*`,
-  full-resolution PNG kept as source next to a 2560px WebP delivery copy). The featured map
-  comparison uses a matched AR0700 x1/x4 pair. Other concept images remain temporary and can be
-  replaced without changing the layouts.
+- Several page images are real project material rather than concept art. Most keep a
+  full-resolution source next to a lighter WebP delivery copy the pages load; the largest
+  source stays outside the repo and only the WebP ships.
+  - Home hero: AR0700 vanilla-to-x4 render (`assets/images/hero-ar0700-vanilla-x4.*`).
+  - Progress hero: an upscaled in-engine map render (`assets/images/hero-city-rooftops.*`).
+  - Home "Map upscaling" card: AR1600 (Trademeet) at x4, WebP only
+    (`assets/images/hero-ar1600-trademeet.webp`), downscaled from a ~12.7k-wide master.
+  - Home "Creature sprite studies" card: a goblin sprite frame through the local scalepix
+    x2 upscalers, as a plate (`assets/images/creature-sprite-studies.*`).
+  The featured map comparison uses a matched AR0700 x1/x4 pair. Remaining concept images are
+  temporary and can be replaced without changing the layouts.
 - Comparison assets follow the convention documented in `assets/comparisons/README.md`.
 - Generated-image briefs are recorded in `ASSET_PROMPTS.md`.
 
