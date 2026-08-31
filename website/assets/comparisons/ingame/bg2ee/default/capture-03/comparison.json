@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "ingame-bg2ee-default-capture-03",
+  "category": "ingame",
+  "scope": "bg2ee",
+  "variant": "default",
+  "comparisonId": "capture-03",
+  "comparisonType": "in-game-screenshot",
+  "capture": {
+    "platform": "Steam",
+    "viewport": {
+      "width": 2560,
+      "height": 1369
+    },
+    "beforeCapturedAt": "2026-08-31T23:44:46",
+    "afterCapturedAt": "2026-08-31T23:45:02",
+    "interface": "hidden",
+    "notes": "Maps and animations are treated in this comparison; the treated animations are the scroll racks and the red crystal. Creature sprites remain vanilla and are not part of the x4 treatment. Both captures share the same camera framing and the same animation phase, and the game interface is hidden on both sides."
+  },
+  "assets": {
+    "vanilla": {
+      "source": "source/bg2ee-default-capture-03-vanilla.jpg",
+      "web": "web/bg2ee-default-capture-03-vanilla.webp",
+      "sourceSha256": "5cabf8993b7d9a9bae4ef2d286a2e2b11a7b229ddedc84d14ffd87b593420acb",
+      "webSha256": "4a353ed0d6c54fb8a7508bd4f0ad8a7be47edc47b20f26facfcf10c5e5a8a48f"
+    },
+    "x4": {
+      "source": "source/bg2ee-default-capture-03-x4.jpg",
+      "web": "web/bg2ee-default-capture-03-x4.webp",
+      "sourceSha256": "a44c19feeb160dcecea16a55de8611532532e65712db874355d073182c51e96b",
+      "webSha256": "25318ba74e1a2eed54aea5efb68ec6a6abed14bf59eff4f7b3c82dad2809d8e6"
+    }
+  }
+}
