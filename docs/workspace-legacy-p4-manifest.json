@@ -1,0 +1,185 @@
+{
+  "schema": "bg2-upscale-workspace-legacy-p4-v1",
+  "date": "2026-08-31",
+  "authority_policy": "Technical cleanup receipt only. This file grants no production, QA, installation, selection or release status.",
+  "classifications": {
+    "KEEP_ACTIVE": [
+      {
+        "path": "pipeline/scripts/extract_legacy_tis_frames.py",
+        "reason": "Active palette-TIS overlay extraction routed by maps/technical-overlays/README.md."
+      },
+      {
+        "path": "pipeline/scripts/build_upscaled_legacy_tis.py",
+        "reason": "Active palette-TIS overlay reconstruction routed by maps/technical-overlays/README.md."
+      },
+      {
+        "path": "pipeline/scripts/bam_export.py",
+        "reason": "Shared BAM V1 decoder imported by animation inventory and active sprite tooling."
+      },
+      {
+        "path": "pipeline/scripts/extract_official_area_names.py",
+        "reason": "Read/verify helper for canonical areas.csv names from world-map resources."
+      },
+      {
+        "path": "pipeline/scripts/import_cheatarea_names.py",
+        "reason": "Conservative, dry-run-by-default metadata completion helper for canonical areas.csv."
+      },
+      {
+        "path": "pipeline/scripts/validate_bg2ee.py",
+        "reason": "Offline compatibility validator for the supported BG2EE executable."
+      },
+      {
+        "path": "pipeline/scripts/run_animation_upscale.py",
+        "reason": "Current spatial V1 animation entry point."
+      },
+      {
+        "path": "pipeline/scripts/run_animation_upscale_30fps_v2.py",
+        "reason": "Current TimedTimeline V2 producer and compatibility pack builder."
+      },
+      {
+        "path": "pipeline/scripts/Install-AreaAnimations-PerArea.ps1",
+        "reason": "Current per-area animation candidate installer."
+      },
+      {
+        "path": "pipeline/scripts/Restore-AreaAnimations-PerArea.ps1",
+        "reason": "Current per-area animation restoration helper."
+      },
+      {
+        "path": "pipeline/scripts/xbr2x_batch.js",
+        "reason": "Current exact Scalepix adapter used by sprite production."
+      }
+    ],
+    "KEEP_COMPAT": [
+      {
+        "path": "animations/index/path-migrations.json",
+        "reason": "Resolves sealed historical proto and pack paths after physical cleanup."
+      },
+      {
+        "path": "animations/index/qa-evidence-migrations.json",
+        "reason": "Pins historical catalogue bytes cited by sealed animation QA."
+      },
+      {
+        "path": "sprite/index/path-migrations.json",
+        "reason": "Resolves historical sprite layouts and restoration pointers."
+      },
+      {
+        "path": "config/historical-absolute-paths.json",
+        "reason": "Bounds absolute paths retained inside sealed historical descriptors."
+      },
+      {
+        "path": "pipeline/scripts/verify_historical_git_evidence.py",
+        "reason": "Verifies historical QA evidence against exact Git blobs."
+      },
+      {
+        "path": "pipeline/scripts/Install-AreaAnimations-X4-Pack.ps1",
+        "reason": "Required to operate or unwind historical V1 packs without rewriting them."
+      },
+      {
+        "path": "pipeline/scripts/Restore-AreaAnimations-X4-Pack.ps1",
+        "reason": "Required to restore historical V1 pack installations."
+      },
+      {
+        "path": "pipeline/scripts/Install-AreaAnimations-30fps-V2.ps1",
+        "reason": "Required to operate or unwind historical TimedTimeline V2 packs."
+      },
+      {
+        "path": "pipeline/scripts/Restore-AreaAnimations-30fps-V2.ps1",
+        "reason": "Required to restore historical TimedTimeline V2 installations."
+      },
+      {
+        "path": "pipeline/scripts/Install-AreaAnimation-Interpolation-Patch.ps1",
+        "reason": "Preserves installation compatibility for historical interpolation runs."
+      },
+      {
+        "path": "pipeline/scripts/Restore-AreaAnimation-Interpolation-Patch.ps1",
+        "reason": "Preserves restoration compatibility for historical interpolation runs."
+      },
+      {
+        "path": "pipeline/scripts/Install-CreatureSprite-X2-Test.ps1",
+        "reason": "Compatibility installer still exercised by the sprite runner tests."
+      },
+      {
+        "path": "pipeline/scripts/Restore-CreatureSprite-X2-Test.ps1",
+        "reason": "Compatibility restoration path still exercised by the sprite runner tests."
+      },
+      {
+        "path": "pipeline/scripts/Install-CreatureSprite-XN-Test.ps1",
+        "reason": "Pre-catalogue xN compatibility installer retained for historical generations."
+      },
+      {
+        "path": "pipeline/scripts/Restore-CreatureSprite-XN-Test.ps1",
+        "reason": "Pre-catalogue xN restoration helper retained for historical generations."
+      },
+      {
+        "path": "pipeline/scripts/build_area_lightmap_pack.py",
+        "reason": "Historical animation manifests still identify this exact recipe."
+      }
+    ],
+    "ARCHIVE": [
+      {
+        "source": "pipeline/scripts/migrate_legacy_animation_prototype.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/migrate_legacy_animation_prototype.py",
+        "bytes": 8646,
+        "sha256": "93AD50D0F74F19B15106B955AD7C276CDE682530F9C586CE8DFB68755DC0763E",
+        "reason": "One-shot AM0205E migration is already materialized. Its immutable output validates structurally; only its stored proto path differs and is resolved by animations/index/path-migrations.json."
+      },
+      {
+        "source": "pipeline/scripts/bam_strip_background.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/bam_strip_background.py",
+        "bytes": 7030,
+        "sha256": "0D6D62B5C0AA9616C7F05D8CB8B7186101DAB8F3835FF89EDE3DE7E7A9736532",
+        "reason": "Hardcoded AR0602 background-removal experiment with no active caller or canonical output."
+      },
+      {
+        "source": "pipeline/scripts/bam_vs_tiles.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/bam_vs_tiles.py",
+        "bytes": 2377,
+        "sha256": "1F0EFBC91A0715067D1D64C572FD3C1664C28B7FA32A2C5135FD916980953DDC",
+        "reason": "Hardcoded AR0602 diagnostic paired with the superseded BAM exporter."
+      },
+      {
+        "source": "pipeline/scripts/select_areas.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/select_areas.py",
+        "bytes": 1182,
+        "sha256": "00A6BC99CD3744A7C0F389B6E6C595D6C729BEFDC54003F04F77F4169B1BF032",
+        "reason": "Initial one-shot area selection replaced by canonical areas.csv and generated inventories."
+      },
+      {
+        "source": "pipeline/scripts/largest_area.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/largest_area.py",
+        "bytes": 2724,
+        "sha256": "D465E6F127B07EC77B3F444CB9E356DE72419FB3CB0588EA33CC289A5204A856",
+        "reason": "One-shot sizing diagnostic with no active caller or persisted authority."
+      },
+      {
+        "source": "pipeline/scripts/patch_liquid_sentinel_tis.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/patch_liquid_sentinel_tis.py",
+        "bytes": 7795,
+        "sha256": "07876AAB33D5E2902B698A803B5ACF80805964CCF2F89E41D05E6F5DDD549F41",
+        "reason": "Narrow experimental TIS patcher with no active caller, manifest or selected output."
+      },
+      {
+        "source": "pipeline/scripts/prepare_dxt1_chroma_safe.py",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/prepare_dxt1_chroma_safe.py",
+        "bytes": 3597,
+        "sha256": "1EC0B83FECB3FFDEF5B975450B4B92401C43B6EA1A24E1CD069E31250E715CA0",
+        "reason": "Unreferenced experimental BC1 prefilter; selected map builds do not depend on it."
+      },
+      {
+        "source": "pipeline/scripts/xbr2x_antialias_batch.js",
+        "target": "archive/legacy/pipeline-scripts/p4-20260831/xbr2x_antialias_batch.js",
+        "bytes": 3898,
+        "sha256": "2BEEC0EF86296D258A662819D75BD536BDE6F79EFBE87260FE6B417A04763A35",
+        "reason": "Adapter for the rejected AA sprite variants archived in P2; current production uses xbr2x_batch.js."
+      }
+    ],
+    "DELETE_SAFE": []
+  },
+  "summary": {
+    "keep_active_count": 11,
+    "keep_compat_count": 16,
+    "archive_count": 8,
+    "delete_safe_count": 0,
+    "archived_bytes": 37249
+  }
+}

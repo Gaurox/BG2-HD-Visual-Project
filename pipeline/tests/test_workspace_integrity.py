@@ -153,6 +153,15 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(archive_p3["original_file_count"], 152594)
         self.assertEqual(archive_p3["original_bytes"], 113882412618)
         self.assertEqual(archive_p3["reclaimed_bytes"], 85753026372)
+        legacy_p4 = self.report["domain_audits"]["workspace_legacy_p4"]
+        self.assertTrue(legacy_p4["verified"])
+        self.assertEqual(legacy_p4["keep_active_count"], 11)
+        self.assertEqual(legacy_p4["keep_compat_count"], 16)
+        self.assertEqual(legacy_p4["archive_count"], 8)
+        self.assertEqual(legacy_p4["verified_archive_count"], 8)
+        self.assertEqual(legacy_p4["delete_safe_count"], 0)
+        self.assertEqual(legacy_p4["archived_bytes"], 37249)
+        self.assertEqual(legacy_p4["verified_archived_bytes"], 37249)
         archive_manifest = json.loads(
             (ROOT / integrity.ARCHIVE_P2_MANIFEST).read_text(encoding="utf-8")
         )

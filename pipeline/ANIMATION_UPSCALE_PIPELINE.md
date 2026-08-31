@@ -108,22 +108,12 @@ de remplacer les buffers correspondants dans le nouveau pack. Le manifeste de co
 la provenance et les empreintes de chaque pack et correctif source. Rejouer la même commande avec
 `--resume` vérifie l'immuabilité sans réécrire le pack.
 
-### Importer un prototype x4 historique
+### Prototype x4 historique AM0205E
 
-Un prototype qui avait été validé avant l'introduction du registre global ne doit pas réactiver son
-ancien hook ciblé. Importer ses buffers déjà validés dans un pack runtime générique, sans relancer
-SeedVR, puis l'ajouter à la composition :
-
-```powershell
-python pipeline/scripts/migrate_legacy_animation_prototype.py `
-  animations/runs/AM0205E-orifice/x4/manifest.json `
-  animations/runs/AM0205E-orifice/02_frames_x1/manifest.json `
-  AM0205E
-```
-
-Le migrateur vérifie les neuf buffers RGBA bruts, leurs dimensions x4, les centres BAM et les cycles
-x1, puis produit `animations/runs/AM0205E-orifice/x4/03_runtime_pack`. Ce pack se passe ensuite dans
-`--include-pack`. Il refuse toute géométrie, empreinte ou destination ambiguë.
+La migration ponctuelle d'AM0205E est terminée : son pack runtime matérialisé reste dans le run
+historique et son ancien chemin `proto/` est résolu par `animations/index/path-migrations.json`.
+Le migrateur one-shot est archivé et ne doit plus servir de point d'entrée. Pour une nouvelle
+production, créer un nouveau run avec le pipeline V1 courant ; ne jamais réécrire ce pack ancien.
 
 ## Installation réversible du pack composé
 

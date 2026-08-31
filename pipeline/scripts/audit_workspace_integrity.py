@@ -40,6 +40,7 @@ ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
 ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
 ANIMATION_PACK_P3_MANIFEST = "docs/workspace-animation-packs-p3-manifest.json"
+LEGACY_P4_MANIFEST = "docs/workspace-legacy-p4-manifest.json"
 ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
 WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
     r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
@@ -2161,6 +2162,96 @@ def audit_animation_pack_archive_p3(issues: list[dict[str, Any]]) -> dict[str, A
     }
 
 
+def audit_workspace_legacy_p4(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify P4 technical classifications and archived script bytes."""
+
+    data = read_json(ROOT / LEGACY_P4_MANIFEST)
+    classifications = data.get("classifications", {})
+    valid = True
+    for classification in ("KEEP_ACTIVE", "KEEP_COMPAT"):
+        for entry in classifications.get(classification, []):
+            path_text = str(entry["path"])
+            if not (ROOT / path_text).is_file():
+                valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "legacy-p4-required-tool-missing",
+                    "workspace",
+                    "Un outil actif ou de compatibilité conservé en P4 est absent.",
+                    path=path_text,
+                    details={"classification": classification},
+                )
+
+    archived_bytes = 0
+    verified_archives = 0
+    for entry in classifications.get("ARCHIVE", []):
+        source_text = str(entry["source"])
+        target_text = str(entry["target"])
+        source = ROOT / source_text
+        target = ROOT / target_text
+        entry_valid = True
+        if source.exists():
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "legacy-p4-source-returned",
+                "workspace",
+                "Un outil technique archivé en P4 est réapparu dans la zone active.",
+                path=source_text,
+            )
+        expected_bytes = int(entry["bytes"])
+        expected_hash = str(entry["sha256"]).upper()
+        if (
+            not target.is_file()
+            or target.stat().st_size != expected_bytes
+            or sha256_file(target) != expected_hash
+        ):
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "legacy-p4-archive-evidence-mismatch",
+                "workspace",
+                "Un outil technique archivé en P4 est absent ou divergent.",
+                path=target_text,
+            )
+        if entry_valid:
+            verified_archives += 1
+            archived_bytes += expected_bytes
+        valid = valid and entry_valid
+
+    summary = data.get("summary", {})
+    actual_counts = {
+        "keep_active_count": len(classifications.get("KEEP_ACTIVE", [])),
+        "keep_compat_count": len(classifications.get("KEEP_COMPAT", [])),
+        "archive_count": len(classifications.get("ARCHIVE", [])),
+        "delete_safe_count": len(classifications.get("DELETE_SAFE", [])),
+        "archived_bytes": sum(
+            int(entry["bytes"]) for entry in classifications.get("ARCHIVE", [])
+        ),
+    }
+    if any(int(summary.get(key, -1)) != value for key, value in actual_counts.items()):
+        valid = False
+        add_issue(
+            issues,
+            "error",
+            "legacy-p4-manifest-summary-mismatch",
+            "workspace",
+            "Le résumé du manifeste de legacy technique P4 est incohérent.",
+            path=LEGACY_P4_MANIFEST,
+        )
+
+    return {
+        "manifest": LEGACY_P4_MANIFEST,
+        **actual_counts,
+        "verified_archive_count": verified_archives,
+        "verified_archived_bytes": archived_bytes,
+        "verified": valid,
+    }
+
+
 def audit_video_runs(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
 ) -> dict[str, int]:
@@ -2451,6 +2542,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
     cleanup = audit_workspace_cleanup(issues)
     archive_p2 = audit_workspace_archive_p2(issues)
     animation_packs_p3 = audit_animation_pack_archive_p3(issues)
+    legacy_p4 = audit_workspace_legacy_p4(issues)
     portability = audit_path_portability(issues)
     domain_audits = {
         "maps": audit_maps(issues, runs),
@@ -2461,6 +2553,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
         "workspace_cleanup": cleanup,
         "workspace_archive_p2": archive_p2,
         "animation_pack_archive_p3": animation_packs_p3,
+        "workspace_legacy_p4": legacy_p4,
         "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)

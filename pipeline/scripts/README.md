@@ -32,6 +32,9 @@ diagnostic ou des éléments `REVIEW`; rechercher leurs références avant emplo
   `build_wed_mask_polygon_patch.py` (nouveau polygone natif strictement borné, sortie
   `pending-ingame`, source KEY/BIF et rollback vérifiés).
 - Catalogue : `refresh_area_catalog.py`.
+- Métadonnées du catalogue : `extract_official_area_names.py` vérifie les noms issus des cartes du
+  monde ; `import_cheatarea_names.py` complète prudemment les libellés de développement et reste en
+  dry-run sans `--apply`.
 - Installation réversible d'assets auxiliaires : `Install-AreaOverrideAssets.ps1` et
   `Restore-AreaOverrideAssets.ps1`.
 
@@ -40,8 +43,9 @@ pas l'état courant.
 
 ## Animations de décor
 
-- Inventaire ARE typé et extraction BAM : `extract_area_animations.py` ; export ciblé :
-  `export_bam_frames.py`. L'inventaire distingue BAM/WBM/PVRZ et les palettes ARE externes.
+- Bibliothèque BAM V1 partagée : `bam_export.py`. Inventaire ARE typé et extraction BAM :
+  `extract_area_animations.py` ; export ciblé : `export_bam_frames.py`. L'inventaire distingue
+  BAM/WBM/PVRZ et les palettes ARE externes.
 - Spatial V1 : `upscale_animation_frames.py`, `run_animation_upscale.py`,
   `build_animation_runtime_pack.py`.
 - Interpolation native : `run_animation_interpolation.py`.
@@ -115,6 +119,14 @@ Les overlays TIS palette encore actifs utilisent `extract_legacy_tis_frames.py` 
   actives et les portions historiques archivées. Ajouter `--verify-p3-baseline` uniquement pour
   revalider les hashes candidats/QA/release/runs capturés pendant P3. `--capture` est réservé à la
   capture initiale déjà scellée et refuse de l'écraser.
+
+## Legacy technique P4
+
+`docs/workspace-legacy-p4-manifest.json` classe les outils historiques examinés. Les adaptateurs de
+chemins, preuves Git, installateurs/restaurateurs historiques et pipelines V1/V2 restent actifs ou
+compatibles. Huit outils ponctuels sans appel actif ont été déplacés sous
+`archive/legacy/pipeline-scripts/p4-20260831/`; ils ne sont plus des points d'entrée et ne doivent
+être restaurés qu'avec tests et documentation. Aucun outil n'a été supprimé en P4.
 
 ## Tests
 

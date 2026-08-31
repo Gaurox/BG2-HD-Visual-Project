@@ -132,6 +132,17 @@ Les anciens chemins encore cités par une note ou un manifeste scellé sont born
 `animations/index/path-migrations.json`. Une migration `descriptor-only` documente la provenance
 mais ne constitue jamais un pack installable.
 
+## Legacy technique P4 du 31 août 2026
+
+`docs/workspace-legacy-p4-manifest.json` classe 35 éléments techniques : 11 actifs, 16 conservés
+pour compatibilité, huit archivés et aucun supprimé. L'audit vérifie l'absence des huit sources dans
+`pipeline/scripts/`, leurs octets archivés et la présence de chaque adaptation conservée.
+
+Le migrateur ponctuel AM0205E est archivé : le pack produit reste scellé et structurellement valide,
+mais sa provenance conserve volontairement l'ancien chemin `proto/`, résolu par l'adaptateur
+animation. Les diagnostics BAM AR0602, les outils initiaux de sélection de cartes, deux correctifs
+expérimentaux non référencés et l'adaptateur AA rejeté sont également hors du routage actif.
+
 ## Configuration portable
 
 Les clés machine sont déclarées dans `config/workspace-paths.json`. Copier
