@@ -104,6 +104,10 @@ not requests for painted per-animation masks.
 
 The host suite verifies:
 
+Execution requires the explicit targeted/all/none choice from
+[`../../../../docs/TEST_SELECTION.md`](../../../../docs/TEST_SELECTION.md). The list below defines
+the evidence required to claim the host suite passed; it does not authorize automatic execution.
+
 1. the manifest rejects partial clipping or FX-pool evidence;
 2. the bridge and probe default off and round-trip independently;
 3. successful clipping calls are counted separately from calls returning zero;

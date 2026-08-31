@@ -4,6 +4,11 @@
 
 Operational reference for agents. Manifests are authoritative.
 
+No test or release gate runs automatically. Before executing one, ask the user to choose targeted
+tests, all tests, or no tests according to
+[`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Refusal leaves the
+corresponding validation unclaimed.
+
 ## Source of truth
 
 | State | Authority |
@@ -39,7 +44,8 @@ After approval:
    appropriate source manifest/generator.
 2. Maps must match `areas.csv` and be x4 `validated-installed`; UI must declare its renderer keys
    and independent rollback state; overlays follow only `overlay-sources.json`.
-3. Regenerate only the manifest tier and run its static gate:
+3. Regenerate only the manifest tier. Ask the test choice separately, then run its static gate only
+   if the corresponding test option was authorized:
 
 ```powershell
 & .\tools\New-BG2HD-ContentManifest.ps1
@@ -58,7 +64,7 @@ One component owns one immutable per-area pack. Register its component, exact so
 `animation-release-candidates.json`. The `approval_status` field is authoritative; do not infer it
 from the pack or live game.
 
-Validate only the changed candidate:
+After the test choice authorizes it, validate only the changed candidate:
 
 ```powershell
 & .\tools\Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx
@@ -70,7 +76,8 @@ a shared renderer/format/generator/Core change.
 
 ## Package tier
 
-Requires separate authorization because it rebuilds staging and archives. Increment
+Requires separate authorization because it rebuilds staging and archives, plus the separate test
+choice before its gates. Increment
 `release.json` when the user-facing package changes, sync metadata, then run:
 
 ```powershell

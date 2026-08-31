@@ -77,6 +77,63 @@ class ChangedTestSelectorTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertTrue(self.plan(path).full)
 
+    def test_strict_targeted_never_adds_smoke_or_becomes_full(self) -> None:
+        plan = selector.select_paths(
+            (selector.ChangedPath("M", "pipeline/README.md"),),
+            strict_targeted=True,
+        )
+        self.assertFalse(plan.full)
+        self.assertEqual(plan.selection_mode, "targeted")
+        self.assertEqual(plan.groups, ("documentation",))
+        self.assertEqual(
+            selector.python_modules_for(plan),
+            ("pipeline.tests.test_repository_docs",),
+        )
+
+    def test_strict_targeted_classifies_rename_without_full_fallback(self) -> None:
+        plan = selector.select_paths(
+            (selector.ChangedPath("R100", "maps/new.json", "maps/old.json"),),
+            strict_targeted=True,
+        )
+        self.assertFalse(plan.full)
+        self.assertEqual(plan.groups, ("maps",))
+
+    def test_strict_targeted_release_engine_and_test_file_are_scoped(self) -> None:
+        cases = (
+            ("releases/BG2-HD-Upscale/manifests/release.json", ("release",)),
+            (
+                "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp",
+                ("engine",),
+            ),
+        )
+        for path, groups in cases:
+            with self.subTest(path=path):
+                plan = selector.select_paths(
+                    (selector.ChangedPath("M", path),),
+                    strict_targeted=True,
+                )
+                self.assertFalse(plan.full)
+                self.assertEqual(plan.groups, groups)
+        test_plan = selector.select_paths(
+            (selector.ChangedPath("M", "pipeline/tests/test_map_build_transaction.py"),),
+            strict_targeted=True,
+        )
+        self.assertFalse(test_plan.full)
+        self.assertEqual(test_plan.groups, ())
+        self.assertEqual(
+            selector.python_modules_for(test_plan),
+            ("pipeline.tests.test_map_build_transaction",),
+        )
+
+    def test_strict_targeted_unknown_path_selects_nothing(self) -> None:
+        plan = selector.select_paths(
+            (selector.ChangedPath("M", "pipeline/scripts/new_unclassified_tool.mjs"),),
+            strict_targeted=True,
+        )
+        self.assertFalse(plan.full)
+        self.assertEqual(selector.commands_for(plan), ())
+        self.assertTrue(any("aucun test ciblé connu" in reason for reason in plan.reasons))
+
     def test_full_plan_keeps_all_scopes_and_uses_single_pass_workspace_check(self) -> None:
         plan = selector.full_plan("test")
         commands = selector.commands_for(plan)
@@ -88,12 +145,20 @@ class ChangedTestSelectorTests(unittest.TestCase):
             command for command in commands if command.label == "sorties workspace après tests complets"
         )
         self.assertIn("--after-full-tests", workspace.argv)
+        self.assertIn("--run", workspace.argv)
+        self.assertIn("all", workspace.argv)
         release = next(command for command in commands if command.label == "gate release Phase 2")
         self.assertIn("-ReleaseRoot", release.argv)
         engine = next(command for command in commands if command.label == "tests moteur")
         if selector.os.name == "nt":
             self.assertIn("-C", engine.argv)
             self.assertIn("Debug", engine.argv)
+
+    def test_cli_is_plan_only_unless_run_is_explicit(self) -> None:
+        self.assertFalse(selector.parse_args([]).run)
+        self.assertTrue(selector.parse_args(["--targeted", "--run"]).run)
+        with self.assertRaises(SystemExit):
+            selector.parse_args(["--run"])
 
 
 if __name__ == "__main__":

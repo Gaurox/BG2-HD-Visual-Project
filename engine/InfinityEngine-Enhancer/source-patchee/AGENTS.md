@@ -11,7 +11,9 @@
    coordinates or serialized game state.
 5. Do not use `cmake-build-*`, `build-filter-*`, DLLs, logs or runtime captures as source files.
 
-Host tests:
+Never run tests automatically. Ask the user to choose targeted tests, all tests, or no tests as
+defined in [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). For targeted host
+tests:
 
 ```powershell
 cmake -S . -B cmake-build-test -DBUILD_TESTING=ON

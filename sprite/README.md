@@ -85,9 +85,11 @@ explicite de l'utilisateur.
 ## Tests légers
 
 ```powershell
-python pipeline/scripts/test_changed.py --changed --list
-python pipeline/scripts/test_changed.py --changed
+python pipeline/scripts/test_changed.py --targeted
 ```
+
+La commande prépare la question obligatoire « ciblés / tous / aucun » et n'exécute rien sans
+`--run`. Voir [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 L'index et les générateurs sélectionnent `sprite-inventory`; le runner et les formats sélectionnent
 `sprite-formats`; seuls les scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`

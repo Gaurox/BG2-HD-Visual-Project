@@ -1,18 +1,40 @@
 # Intégrité du workspace
 
-## Commandes
+## Choix obligatoire
 
 ```powershell
-python pipeline/scripts/workspace.py check
-python pipeline/scripts/workspace.py refresh
-python pipeline/scripts/test_changed.py --changed
-python pipeline/scripts/test_changed.py --full
+python pipeline/scripts/workspace.py refresh --changed
 ```
 
-`check` est sans écriture. `refresh` régénère les inventaires complémentaires, le registre global,
-la couverture, les anomalies, l'index des runs et le rapport d'intégrité.
-Le sélecteur exécute `workspace.py check --after-full-tests` en mono-passe après la suite Python
-complète, car les tests ont déjà prouvé le déterminisme des trois générateurs.
+La commande affiche seulement les scopes affectés par les changements Git. Après la tâche, demander
+séparément :
+
+1. reconstructions ciblées proposées ;
+2. toutes les projections ;
+3. aucune reconstruction.
+
+Sans `--run`, `refresh` et `check` ne font qu'afficher le plan. Exécutions possibles après choix :
+
+```powershell
+# Exemple ciblé ; reprendre exactement les scopes proposés
+python pipeline/scripts/workspace.py refresh --scope registry --scope integrity --run
+
+# Toutes les projections
+python pipeline/scripts/workspace.py refresh --scope all --run
+```
+
+| Scope | Sorties |
+|---|---|
+| `graphics` | inventaires graphiques complémentaires |
+| `registry` | registre, CSV, couverture et anomalies |
+| `integrity` | index des runs et rapport d'intégrité physique |
+
+`refresh` écrit les projections ; `check` les compare sans écriture. Les stages sont mono-passe par
+défaut. `--verify-determinism` les exécute deux fois et exige un accord explicite ou une gate CI.
+Ne pas reconstruire après chaque tâche : regrouper les autorités ou attendre le livrable/gate.
+
+Les tests suivent le choix indépendant décrit dans [`TEST_SELECTION.md`](TEST_SELECTION.md). La
+suite complète appelle tous les scopes en `check` mono-passe après ses tests.
 
 ## Sorties générées
 

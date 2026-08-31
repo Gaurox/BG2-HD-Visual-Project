@@ -25,7 +25,9 @@ n'existe pas de version vanilla parallele dans cette variante de l'installeur.
 2. Charger `VANILLA-BASE`, changer de zone, combattre ou faire apparaitre
    plusieurs creatures, puis creer `HD-SAVECOMPAT-TEST`.
 3. Fermer completement le jeu.
-4. Dans PowerShell, depuis le dossier du jeu, executer :
+4. Demander le choix « tests ciblés / tous / aucun » défini dans
+   [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Si ce test ciblé est
+   autorisé, depuis le dossier du jeu, executer :
 
 ```powershell
 .\tools\Test-BG2HD-FutureSaveCompatibility.ps1 -ReleaseRoot . -SaveDirectory "C:\chemin\vers\HD-SAVECOMPAT-TEST"

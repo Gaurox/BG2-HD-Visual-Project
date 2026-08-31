@@ -3,9 +3,14 @@
 Use the [installer and upscale integration contract](INSTALLER_AND_UPSCALE_WORKFLOW.md)
 to determine the required regeneration path before applying these gates.
 
+Never execute a gate automatically. Ask the user to choose targeted tests, all tests, or no tests
+as defined in [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). “Required” below
+means required evidence for claiming the corresponding validation tier; if tests are declined, stop
+before that claim and report the missing evidence.
+
 ## Validation tiers
 
-Use the smallest gate that proves the change, then retain the complete package
+After authorization, use the smallest gate that proves the change, then retain the complete package
 gate before any distributable archive. A fast gate is not a release waiver.
 
 | Tier | Trigger | Required proof |

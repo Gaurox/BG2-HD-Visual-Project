@@ -42,6 +42,10 @@ instructions to produce exactly one executable-section match.
 
 ## Manifest And Tests
 
+Before executing any test command, ask the user to choose targeted tests, all tests, or no tests as
+defined in [`../../../../docs/TEST_SELECTION.md`](../../../../docs/TEST_SELECTION.md). If tests are
+declined, do not claim this build validation complete.
+
 1. Add a distinct `BuildManifest` entry with the exact fixed version.
 2. Add tests for manifest validation, lookup by id, selection by version, and
    rejection of adjacent unknown versions.

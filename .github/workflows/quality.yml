@@ -68,9 +68,9 @@ jobs:
           TEST_BASE: ${{ needs.select.outputs.base }}
         run: |
           $arguments = if ($env:TEST_MODE -eq 'full') {
-            @('--full', '--only', 'python')
+            @('--full', '--only', 'python', '--run')
           } else {
-            @('--changed', '--only', 'python')
+            @('--changed', '--only', 'python', '--run')
           }
           if ($env:TEST_MODE -ne 'full' -and $env:TEST_BASE) { $arguments += @('--base', $env:TEST_BASE) }
           python pipeline/scripts/test_changed.py @arguments
@@ -92,9 +92,9 @@ jobs:
           TEST_BASE: ${{ needs.select.outputs.base }}
         run: |
           $arguments = if ($env:TEST_MODE -eq 'full') {
-            @('--full', '--only', 'release')
+            @('--full', '--only', 'release', '--run')
           } else {
-            @('--changed', '--only', 'release')
+            @('--changed', '--only', 'release', '--run')
           }
           if ($env:TEST_MODE -ne 'full' -and $env:TEST_BASE) { $arguments += @('--base', $env:TEST_BASE) }
           python pipeline/scripts/test_changed.py @arguments
@@ -115,9 +115,9 @@ jobs:
           TEST_BASE: ${{ needs.select.outputs.base }}
         run: |
           if [ "$TEST_MODE" = full ]; then
-            python pipeline/scripts/test_changed.py --full --only engine
+            python pipeline/scripts/test_changed.py --full --only engine --run
           elif [ -n "$TEST_BASE" ]; then
-            python pipeline/scripts/test_changed.py --changed --only engine --base "$TEST_BASE"
+            python pipeline/scripts/test_changed.py --changed --only engine --base "$TEST_BASE" --run
           else
-            python pipeline/scripts/test_changed.py --changed --only engine
+            python pipeline/scripts/test_changed.py --changed --only engine --run
           fi

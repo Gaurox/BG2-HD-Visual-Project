@@ -15,6 +15,7 @@ CANONICAL_DOCS = (
     ROOT / "docs" / "GLOBAL_ASSET_REGISTRY.md",
     ROOT / "docs" / "GRAPHICS_INVENTORY.md",
     ROOT / "docs" / "WORKSPACE_INTEGRITY.md",
+    ROOT / "docs" / "WORKFLOW_PERFORMANCE_AUDIT.md",
     ROOT / "pipeline" / "README.md",
     ROOT / "pipeline" / "PROBLEMES_A_RESOUDRE.md",
     ROOT / "pipeline" / "scripts" / "README.md",
@@ -144,8 +145,9 @@ class RepositoryDocumentationTests(unittest.TestCase):
             "registry.json",
             "runs.json",
             "config://",
-            "workspace.py check",
-            "workspace.py refresh",
+            "test_changed.py --targeted",
+            "workspace.py refresh --changed",
+            "--run",
             "Ne jamais réécrire un run",
         ):
             self.assertIn(marker, agents)

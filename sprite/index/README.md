@@ -15,8 +15,11 @@ des suffixes acceptés, du remappage palette ou des limites runtime :
 
 ```powershell
 python pipeline/scripts/build_sprite_inventory.py
-python -m unittest pipeline.tests.test_sprite_inventory
 ```
+
+Après la génération, demander « tests ciblés / tous / aucun ». Le test ciblé, seulement après ce
+choix, est `python -m unittest pipeline.tests.test_sprite_inventory`. Voir
+[`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md).
 
 La provenance exacte de l'installation analysée, ses hashes, les limites appliquées, l'usage des
 animations par les CRE stock, les totaux et les projections déterministes de registry-set x2/x4 sont dans

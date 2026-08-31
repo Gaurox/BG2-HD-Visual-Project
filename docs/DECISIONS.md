@@ -85,6 +85,9 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Data-plane supersédé | archive externe indexée ; restaurer seulement l'entrée nécessaire |
 | Clone autonome | le plan de contrôle committé fait autorité ; médias ignorés seulement si déclarés |
 | Candidat renderer | transaction DLL+INI avec reçu, jamais copie brute |
+| Tests locaux | plan-only par défaut ; `--run` et choix utilisateur obligatoire entre ciblés, tous ou aucun |
+| Élargissement des tests | `--targeted` ne devient jamais une suite complète ; `--full --run` exige un accord distinct |
+| Projections globales | plan-only et mono-passe par défaut ; choix séparé scopes ciblés/toutes/aucune ; déterminisme doublé seulement sur accord/CI |
 
 ## Maintenance
 

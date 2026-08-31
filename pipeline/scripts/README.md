@@ -30,10 +30,14 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 
 ```powershell
 python pipeline/scripts/<script>.py --help
-python pipeline/scripts/test_changed.py --changed --list
-python pipeline/scripts/test_changed.py --changed
-python pipeline/scripts/test_changed.py --full
+python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/workspace.py refresh --changed
 ```
+
+Ces commandes ne lancent rien sans `--run`. Demander séparément tests ciblés/tous/aucun et
+reconstructions ciblées/toutes/aucune. Contrats :
+[`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md) et
+[`../../docs/WORKSPACE_INTEGRITY.md`](../../docs/WORKSPACE_INTEGRITY.md).
 
 Les chemins externes viennent de `config/workspace-paths.json` via `workspace_paths.py` ou
 `WorkspacePaths.ps1`. Aucun nouveau chemin machine ne doit être codé dans un script ou un guide.

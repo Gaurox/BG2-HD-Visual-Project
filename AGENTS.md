@@ -41,7 +41,8 @@ automatiquement le suivant.
 | `workspace-integrity.json` | audit disque ↔ autorités ↔ registre ↔ runs | masquer un avertissement par supposition |
 | `runs.json`, `runs.csv` | index jetable des runs physiques | sélectionner un run depuis cet index |
 
-Ces fichiers peuvent être supprimés et régénérés avec `workspace.py refresh`.
+Ces fichiers peuvent être supprimés et régénérés, après choix explicite, avec
+`workspace.py refresh --scope all --run`.
 
 ## Modifier correctement
 
@@ -55,35 +56,48 @@ Ces fichiers peuvent être supprimés et régénérés avec `workspace.py refres
 
 ## Contrôles
 
-Avant une intervention :
+Avant une intervention, contrôler seulement l'état Git :
 
 ```powershell
 git status --short
-python pipeline/scripts/test_changed.py --changed --list
 ```
 
-Après une intervention :
+Après l'intervention, ne lancer aucun test automatiquement. Demander explicitement à l'utilisateur
+de choisir une seule option :
+
+- tests ciblés pour la tâche réalisée ;
+- tous les tests ;
+- aucun test.
+
+Préparer la proposition sans exécution :
 
 ```powershell
-python pipeline/scripts/test_changed.py --changed
-git status --short
+python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/workspace.py refresh --changed
 ```
 
-Après une modification d'autorité ou d'inventaire, régénérer avant la sélection ciblée :
+Demander séparément le choix de reconstruction :
 
-```powershell
-python pipeline/scripts/workspace.py refresh
-python pipeline/scripts/test_changed.py --changed
-```
+- reconstructions ciblées proposées par le plan ;
+- toutes les projections ;
+- aucune reconstruction.
 
-Utiliser `python pipeline/scripts/test_changed.py --full` pour un changement transversal, inconnu,
-release/Core/runtime, tests/CI, rename/delete ou une demande explicite. La commande conserve le
-contrôle complet de `pipeline/tests` et l'équivalent de `workspace.py check` sans répéter ses passes
-de déterminisme. Voir
-[`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md).
+Les deux commandes sont plan-only par défaut. Toute exécution exige `--run`. Un choix ciblé utilise
+`test_changed.py --targeted --run` et les `workspace.py --scope ... --run` exacts ; il ne peut jamais
+devenir complet. `--verify-determinism` double les reconstructions et exige un accord explicite.
+Voir [`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md) et
+[`docs/WORKSPACE_INTEGRITY.md`](docs/WORKSPACE_INTEGRITY.md).
+
+Ne pas exécuter de `workspace.py ... --run` comme contrôle routinier. Régénérer
+les projections seulement si la tâche les livre, si un consommateur en a besoin, avant une gate
+release/CI, ou sur demande explicite. Les mises à jour peuvent être regroupées ; les autorités
+métier restent valides entre-temps.
 
 Ajouter les tests indiqués par le README du domaine. Pour une modification documentaire, ne pas
 lancer SeedVR, Topaz, un build de contenu ou un packaging.
+
+Audit et plan de réduction des délais :
+[`docs/WORKFLOW_PERFORMANCE_AUDIT.md`](docs/WORKFLOW_PERFORMANCE_AUDIT.md).
 
 ## Règles critiques
 

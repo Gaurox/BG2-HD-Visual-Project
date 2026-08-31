@@ -48,10 +48,12 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 
 ```powershell
 python pipeline/scripts/sync_animation_upscale_registry.py --check
-python pipeline/scripts/test_changed.py --changed
+python pipeline/scripts/test_changed.py --targeted
 ```
 
-Le groupe `animations` couvre inventaire, spatial, interpolation, 30 fps, runtime et packs. Il ne
-sélectionne aucun test maps ou sprites. Une modification release/runtime déclenche `--full`.
+Le premier contrôle ne concerne qu'une modification du registre. La seconde commande ne lance rien
+et prépare la question obligatoire « ciblés / tous / aucun ». Le groupe `animations` couvre inventaire,
+spatial, interpolation, 30 fps, runtime et packs, sans tests maps ou sprites. Ne jamais exécuter un
+autre groupe après un choix ciblé. Voir [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Une QA approuvée et une intégration release restent deux décisions distinctes.

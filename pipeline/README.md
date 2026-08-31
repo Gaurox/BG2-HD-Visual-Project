@@ -51,12 +51,14 @@ seconde procédure de copie manuelle dans la documentation.
 
 ## Mise à jour des projections
 
-Après une modification d'autorité :
+Préparer sans exécuter :
 
 ```powershell
-python pipeline/scripts/workspace.py refresh
-python pipeline/scripts/workspace.py check
+python pipeline/scripts/workspace.py refresh --changed
 ```
+
+Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seulement avec les `--scope`
+proposés et `--run`; voir [`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
 
 ## Guides spécialisés
 
@@ -80,12 +82,12 @@ python pipeline/scripts/workspace.py check
 ## Tests légers
 
 ```powershell
-python pipeline/scripts/test_changed.py --changed --list
-python pipeline/scripts/test_changed.py --changed
+python pipeline/scripts/test_changed.py --targeted
 ```
 
-Une modification maps sélectionne le smoke et les modules maps, jamais les tests sprites. Utiliser
-`--full` seulement pour les déclencheurs transversaux listés dans
+La commande planifie sans exécuter. Une modification maps cible les modules maps, jamais les tests
+sprites. Après le choix obligatoire « ciblés / tous / aucun », utiliser respectivement
+`--targeted --run`, `--full --run`, ou ne rien lancer. Voir
 [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Ne pas lancer SeedVR, Topaz, un build complet ou un packaging pour une modification documentaire.

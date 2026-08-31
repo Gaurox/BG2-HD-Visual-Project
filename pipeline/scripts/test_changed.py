@@ -1,4 +1,4 @@
-"""Select and run the smallest safe validation suite for changed repository paths."""
+"""Plan test impact by default; execute only after explicit ``--run`` consent."""
 
 from __future__ import annotations
 
@@ -42,6 +42,21 @@ GROUPS = {
         "documentation",
         "python",
         ("pipeline.tests.test_repository_docs",),
+    ),
+    "workspace-command": TestGroup(
+        "workspace-command",
+        "python",
+        ("pipeline.tests.test_workspace_command",),
+    ),
+    "workspace-paths": TestGroup(
+        "workspace-paths",
+        "python",
+        ("pipeline.tests.test_workspace_paths",),
+    ),
+    "test-selection": TestGroup(
+        "test-selection",
+        "python",
+        ("pipeline.tests.test_test_changed",),
     ),
     "maps": TestGroup(
         "maps",
@@ -150,6 +165,7 @@ class ChangedPath:
 class Classification:
     groups: tuple[str, ...]
     force_full_reason: str | None = None
+    modules: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -158,6 +174,8 @@ class SelectionPlan:
     groups: tuple[str, ...]
     changed_paths: tuple[ChangedPath, ...]
     reasons: tuple[str, ...]
+    extra_modules: tuple[str, ...] = ()
+    selection_mode: str = "changed"
 
 
 @dataclass(frozen=True)
@@ -245,23 +263,6 @@ VIDEO_UPSCALE_SCRIPTS = {
 VIDEO_INTERPOLATION_SCRIPTS = {
     "run_video_interpolation.py",
 }
-TRANSVERSAL_PATHS = {
-    ".gitignore",
-    "requirements.txt",
-    "pipeline/scripts/asset_tracking_contract.py",
-    "pipeline/scripts/audit_workspace_integrity.py",
-    "pipeline/scripts/bg2lib.py",
-    "pipeline/scripts/build_global_asset_registry.py",
-    "pipeline/scripts/build_graphics_inventory.py",
-    "pipeline/scripts/test_changed.py",
-    "pipeline/scripts/workspace.py",
-    "pipeline/scripts/workspace_paths.py",
-    "pipeline/scripts/WorkspacePaths.ps1",
-    "docs/asset-tracking-record.schema.json",
-    "docs/workspace-run.schema.json",
-}
-
-
 def _matches(path: str, *patterns: str) -> bool:
     return any(fnmatchcase(path, pattern) for pattern in patterns)
 
@@ -269,6 +270,13 @@ def _matches(path: str, *patterns: str) -> bool:
 def _is_documentation(path: str) -> bool:
     lowered = path.casefold()
     return lowered.endswith((".md", ".rst")) or path in {"AGENTS.md", "README.md"}
+
+
+def _test_module(path: str) -> str | None:
+    normalized = path.replace("\\", "/")
+    if _matches(normalized, "pipeline/tests/test_*.py"):
+        return normalized[:-3].replace("/", ".")
+    return None
 
 
 def classify_path(path: str) -> Classification:
@@ -279,16 +287,60 @@ def classify_path(path: str) -> Classification:
 
     if _is_documentation(path):
         return Classification(("documentation",))
-    if path in TRANSVERSAL_PATHS or _matches(
+    module = _test_module(path)
+    if module:
+        return Classification(
+            (),
+            f"infrastructure de tests: {path}",
+            (module,),
+        )
+    if path == "pipeline/scripts/test_changed.py" or _matches(path, ".github/workflows/**"):
+        return Classification(
+            ("test-selection",),
+            f"sélecteur ou CI: {path}",
+        )
+    if path == "pipeline/scripts/workspace.py":
+        return Classification(
+            ("workspace-command",),
+            f"orchestration workspace: {path}",
+        )
+    if path in {
+        "pipeline/scripts/workspace_paths.py",
+        "pipeline/scripts/WorkspacePaths.ps1",
+    } or path.startswith("config/"):
+        return Classification(
+            ("workspace-paths",),
+            f"configuration locale ou chemins: {path}",
+        )
+    if path in {
+        "pipeline/scripts/asset_tracking_contract.py",
+        "pipeline/scripts/build_global_asset_registry.py",
+        "docs/asset-tracking-record.schema.json",
+    }:
+        return Classification(
+            ("registry",),
+            f"contrat ou générateur transversal du registre: {path}",
+        )
+    if path in {
+        "pipeline/scripts/audit_workspace_integrity.py",
+        "docs/workspace-run.schema.json",
+    }:
+        return Classification(
+            ("integrity",),
+            f"contrat ou audit transversal d'intégrité: {path}",
+        )
+    if path == "pipeline/scripts/build_graphics_inventory.py":
+        return Classification(
+            ("graphics-inventory",),
+            f"générateur transversal d'inventaires graphiques: {path}",
+        )
+    if path in {".gitignore", "requirements.txt", "pipeline/scripts/bg2lib.py"} or _matches(
         path,
-        ".github/workflows/**",
-        "config/**",
-        "pipeline/tests/**",
         "pyproject.toml",
         "pytest.ini",
         "tox.ini",
     ):
-        return Classification((), f"changement transversal ou infrastructure de tests: {path}")
+        return Classification((), f"changement transversal sans cible unique: {path}")
     if path.startswith("releases/BG2-HD-Upscale/"):
         return Classification(("release",), f"release, Core ou packaging: {path}")
     if path == "engine/InfinityEngine-Enhancer/source-patchee/tools/install_renderer_candidate.py":
@@ -397,26 +449,59 @@ def full_plan(
         groups=GROUP_ORDER,
         changed_paths=tuple(changed_paths),
         reasons=(reason, *tuple(additional_reasons)),
+        selection_mode="full",
     )
 
 
-def select_paths(changed_paths: Iterable[ChangedPath]) -> SelectionPlan:
+def select_paths(
+    changed_paths: Iterable[ChangedPath],
+    *,
+    strict_targeted: bool = False,
+) -> SelectionPlan:
     changed = tuple(changed_paths)
     reasons: list[str] = []
-    selected = {"smoke"}
+    selected = set() if strict_targeted else {"smoke"}
+    extra_modules: list[str] = []
     for item in changed:
         status = item.status.upper()
-        if status.startswith(("R", "C", "D")):
+        if status.startswith(("R", "C", "D")) and not strict_targeted:
             reasons.append(f"{status} impose la suite complète: {item.previous_path or item.path} -> {item.path}")
             continue
-        classification = classify_path(item.path)
-        selected.update(classification.groups)
-        if classification.force_full_reason:
-            reasons.append(classification.force_full_reason)
-    if reasons:
+        paths = [item.path]
+        if strict_targeted and item.previous_path and item.previous_path not in paths:
+            paths.append(item.previous_path)
+        for path in paths:
+            classification = classify_path(path)
+            selected.update(classification.groups)
+            for module in classification.modules:
+                if module not in extra_modules:
+                    extra_modules.append(module)
+            if classification.force_full_reason:
+                if strict_targeted:
+                    reasons.append(
+                        "ciblage strict sans escalade: " + classification.force_full_reason
+                    )
+                else:
+                    reasons.append(classification.force_full_reason)
+    if reasons and not strict_targeted:
         return full_plan("fallback de sécurité", changed, reasons)
     ordered = tuple(name for name in GROUP_ORDER if name in selected)
-    return SelectionPlan(False, ordered, changed, ("sélection par fichiers modifiés",))
+    if not reasons:
+        reasons.append(
+            "sélection ciblée stricte par fichiers modifiés"
+            if strict_targeted
+            else "sélection par fichiers modifiés"
+        )
+    if strict_targeted and not ordered and not extra_modules:
+        reasons.append("aucun test ciblé connu; ne rien exécuter automatiquement")
+    return SelectionPlan(
+        False,
+        ordered,
+        changed,
+        tuple(reasons),
+        tuple(extra_modules),
+        "targeted" if strict_targeted else "changed",
+    )
 
 
 def parse_name_status(payload: str) -> tuple[ChangedPath, ...]:
@@ -469,6 +554,9 @@ def python_modules_for(plan: SelectionPlan) -> tuple[str, ...]:
         for module in GROUPS[name].modules:
             if module not in modules:
                 modules.append(module)
+    for module in plan.extra_modules:
+        if module not in modules:
+            modules.append(module)
     return tuple(modules)
 
 
@@ -504,17 +592,27 @@ def commands_for(plan: SelectionPlan, only: str = "all") -> tuple[Command, ...]:
                 Command(
                     "sorties workspace après tests complets",
                     "python",
-                    (sys.executable, "pipeline/scripts/workspace.py", "check", "--after-full-tests"),
+                    (
+                        sys.executable,
+                        "pipeline/scripts/workspace.py",
+                        "check",
+                        "--scope",
+                        "all",
+                        "--after-full-tests",
+                        "--run",
+                    ),
                 )
             )
         else:
-            commands.append(
-                Command(
-                    "tests Python ciblés",
-                    "python",
-                    (sys.executable, "-m", "unittest", *python_modules_for(plan)),
+            modules = python_modules_for(plan)
+            if modules:
+                commands.append(
+                    Command(
+                        "tests Python ciblés",
+                        "python",
+                        (sys.executable, "-m", "unittest", *modules),
+                    )
                 )
-            )
 
     if include_release and (plan.full or "release" in plan.groups):
         commands.append(
@@ -571,7 +669,7 @@ def commands_for(plan: SelectionPlan, only: str = "all") -> tuple[Command, ...]:
 def plan_payload(plan: SelectionPlan, only: str = "all") -> dict[str, object]:
     commands = commands_for(plan, only)
     return {
-        "mode": "full" if plan.full else "changed",
+        "mode": plan.selection_mode,
         "full": plan.full,
         "reasons": list(plan.reasons),
         "groups": list(plan.groups),
@@ -598,10 +696,10 @@ def print_plan(plan: SelectionPlan, *, as_json: bool = False, only: str = "all")
     if as_json:
         print(json.dumps(plan_payload(plan, only), ensure_ascii=False, indent=2))
         return
-    print(f"mode: {'full' if plan.full else 'changed'}")
+    print(f"mode: {plan.selection_mode}")
     for reason in plan.reasons:
         print(f"reason: {reason}")
-    print("groups: " + ", ".join(plan.groups))
+    print("groups: " + (", ".join(plan.groups) if plan.groups else "none"))
     if plan.changed_paths:
         print("paths:")
         for item in plan.changed_paths:
@@ -624,10 +722,28 @@ def execute_plan(plan: SelectionPlan, only: str = "all") -> int:
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group()
-    mode.add_argument("--changed", action="store_true", help="sélectionne selon Git (défaut)")
-    mode.add_argument("--full", action="store_true", help="exécute la validation exhaustive")
-    parser.add_argument("--list", action="store_true", help="affiche le plan sans l'exécuter")
-    parser.add_argument("--json", action="store_true", help="sortie JSON; implique --list")
+    mode.add_argument(
+        "--changed",
+        action="store_true",
+        help="plan sûr selon Git; peut recommander full (défaut)",
+    )
+    mode.add_argument(
+        "--targeted",
+        action="store_true",
+        help="plan strictement ciblé selon Git; ne devient jamais full",
+    )
+    mode.add_argument("--full", action="store_true", help="plan exhaustif explicite")
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="exécute le plan; sans ce drapeau la commande affiche seulement le plan",
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="alias de compatibilité; la planification seule est maintenant le défaut",
+    )
+    parser.add_argument("--json", action="store_true", help="sortie JSON du plan")
     parser.add_argument("--base", help="révision Git de base pour CI ou comparaison explicite")
     parser.add_argument(
         "--only",
@@ -635,7 +751,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default="all",
         help="limite l'exécution à un scope; utilisé notamment par la CI",
     )
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    if args.json and args.run:
+        parser.error("--json et --run sont incompatibles")
+    if args.list and args.run:
+        parser.error("--list et --run sont incompatibles")
+    if args.run and not (args.changed or args.targeted or args.full):
+        parser.error("--run exige un choix explicite: --changed, --targeted ou --full")
+    return args
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -644,11 +767,37 @@ def main(argv: Sequence[str] | None = None) -> int:
         plan = full_plan("demande explicite --full")
     else:
         try:
-            plan = select_paths(collect_changed_paths(args.base))
+            plan = select_paths(
+                collect_changed_paths(args.base),
+                strict_targeted=args.targeted,
+            )
         except (OSError, subprocess.CalledProcessError) as error:
-            plan = full_plan(f"lecture Git impossible: {error}")
-    if args.list or args.json:
+            if args.targeted:
+                plan = SelectionPlan(
+                    False,
+                    (),
+                    (),
+                    (
+                        f"lecture Git impossible: {error}",
+                        "aucun test ciblé connu; ne rien exécuter automatiquement",
+                    ),
+                    selection_mode="targeted",
+                )
+            else:
+                plan = full_plan(f"lecture Git impossible: {error}")
+    if not args.run:
         print_plan(plan, as_json=args.json, only=args.only)
+        return 0
+    if plan.full and not args.full:
+        print_plan(plan, only=args.only)
+        print(
+            "REFUSED: le plan Git recommande full; utiliser --full --run après accord explicite.",
+            file=sys.stderr,
+        )
+        return 2
+    if not commands_for(plan, args.only):
+        print_plan(plan, only=args.only)
+        print("Aucun test ciblé exécutable pour ce scope.")
         return 0
     return execute_plan(plan, args.only)
 

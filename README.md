@@ -25,3 +25,12 @@ les projections générées, les règles de provenance et les contrôles globaux
 Les portraits et inventaires transversaux sont routés depuis `AGENTS.md`. La documentation des formats
 BG2EE se consulte à la demande depuis
 [`BG2EE_Documentation_Modders_FR/INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md).
+
+## Workflow rapide
+
+- Tests : toujours demander « ciblés / tous / aucun » avant toute exécution ; voir
+  [`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md).
+- Projections : toujours demander « scopes ciblés / toutes / aucune » ; `workspace.py` planifie par
+  défaut et n'exécute qu'avec `--run`.
+- Diagnostic et plan de réduction ×10 :
+  [`docs/WORKFLOW_PERFORMANCE_AUDIT.md`](docs/WORKFLOW_PERFORMANCE_AUDIT.md).

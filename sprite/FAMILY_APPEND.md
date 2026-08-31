@@ -151,6 +151,9 @@ modifier la phase d'append.
 
 ## Test
 
+Ne pas l'exécuter automatiquement. Demander « tests ciblés / tous / aucun » conformément à
+[`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md). Si ciblés est choisi :
+
 ```powershell
 python -m unittest pipeline.tests.test_generate_sprite_family_append
 ```

@@ -34,7 +34,9 @@ La régression locale des tooltips à FPS EEex élevés et son contournement son
 
 ## Build et tests
 
-Tests hôte :
+Avant toute commande de test, demander « ciblés / tous / aucun » conformément à
+[`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Si les tests moteur ciblés
+sont choisis :
 
 ```powershell
 cmake -S . -B cmake-build-debug -DBUILD_TESTING=ON

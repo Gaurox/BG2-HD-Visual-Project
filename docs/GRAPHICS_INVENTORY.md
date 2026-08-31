@@ -24,11 +24,11 @@ L'état de release provient exclusivement des manifestes sous `releases/BG2-HD-U
 ## Régénération et lecture
 
 ```powershell
-python pipeline/scripts/build_graphics_inventory.py --check
-python pipeline/scripts/workspace.py refresh
-python pipeline/scripts/workspace.py check
+python pipeline/scripts/workspace.py refresh --changed
 ```
 
-Les inventaires sont déterministes et refusent les catégories inconnues. Leur régénération complète
-est orchestrée par `workspace.py refresh`. Les quantités courantes se
-lisent dans `asset-tracking/coverage.json` ; elles ne sont pas recopiées ici.
+La commande planifie sans écrire. Si `graphics` est proposé, demander le choix de reconstruction
+avant `workspace.py refresh --scope graphics --run`; ajouter `registry`/`integrity` seulement s'ils
+sont proposés ou demandés. Les inventaires sont déterministes et refusent les catégories inconnues.
+`--verify-determinism` double le coût et reste explicite. Les quantités courantes se lisent dans
+`asset-tracking/coverage.json` ; elles ne sont pas recopiées ici.
