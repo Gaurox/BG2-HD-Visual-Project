@@ -22,10 +22,13 @@ Rules:
 - Map pairs use modes `x1` and `x4`, must show the exact same framing, and the x4 source must have
   exactly four times the x1 width and height.
 - In-game pairs use modes `vanilla` and `x4` and must share the same capture viewport dimensions.
-- PNG files are preserved as source evidence. WebP files are delivery derivatives and may be
-  regenerated from those sources. Original JPEG screenshots are likewise preserved as source
-  evidence.
+- WebP files are delivery derivatives. The PNG or JPEG they were generated from is source
+  evidence and is kept next to them only while it is worth its weight: once the WebP is the file
+  the pages load, the heavy original may be dropped from the repository. It then stays recoverable
+  from Git history, and `comparison.json` records `sourceRetained: false` while keeping
+  `sourceSha256`, so the original a WebP derives from remains identifiable.
 - `comparison.json` records dimensions, capture or crop metadata, hashes and relative asset paths.
+  An asset entry omits its `source` path when the original is no longer retained.
 
 Page layout: a comparison frame steps outside the reading column and is sized by
 `max(--shell, min(--shell-wide, --compare-max-height * --compare-aspect))`, so it widens on a

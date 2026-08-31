@@ -40,15 +40,15 @@ and can also be started manually.
   counts in the `style` attribute (`--total` / `--produced` / `--qa` / `--release`), the numbers in
   the visible text and the headline percentage, then the snapshot date and the four totals. The
   bars derive their widths from the raw counts, so they stay in sync on their own.
-- Several page images are real project material rather than concept art. Most keep a
-  full-resolution source next to a lighter WebP delivery copy the pages load; the largest
-  source stays outside the repo and only the WebP ships.
-  - Home hero: AR0700 vanilla-to-x4 render (`assets/images/hero-ar0700-vanilla-x4.*`).
-  - Progress hero: an upscaled in-engine map render (`assets/images/hero-city-rooftops.*`).
-  - Home "Map upscaling" card: AR1600 (Trademeet) at x4, WebP only
+- Several page images are real project material rather than concept art. Each ships as the WebP
+  the pages load; the full-resolution master stays outside the repository, and any heavy source
+  that the site had stopped serving has been dropped and is recoverable from Git history.
+  - Home hero: AR0700 vanilla-to-x4 render (`assets/images/hero-ar0700-vanilla-x4.webp`).
+  - Progress hero: an upscaled in-engine map render (`assets/images/hero-city-rooftops.webp`).
+  - Home "Map upscaling" card: AR1600 (Trademeet) at x4
     (`assets/images/hero-ar1600-trademeet.webp`), downscaled from a ~12.7k-wide master.
   - Home "Creature sprite studies" card: a goblin sprite frame through the local scalepix
-    x2 upscalers, as a plate (`assets/images/creature-sprite-studies.*`).
+    x2 upscalers, as a plate (`assets/images/creature-sprite-studies.webp`).
   The featured map comparison uses a matched AR0700 x1/x4 pair. Remaining concept images are
   temporary and can be replaced without changing the layouts.
 - Comparison assets follow the convention documented in `assets/comparisons/README.md`.
