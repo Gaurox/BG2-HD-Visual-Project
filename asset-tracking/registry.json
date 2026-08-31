@@ -1,6 +1,6 @@
 {
   "asset_count": 15137,
-  "asset_records_sha256": "60E8299D758385ABD88EF613E6682FD3169B28569CC2F50D05C2025B4F34B44C",
+  "asset_records_sha256": "EA4983E2D8B3CC22368197CC0591C55A4A8004BB9FB6CE655DB5D25C77084739",
   "assets": [
     {
       "$schema": "docs/asset-tracking-record.schema.json",
@@ -420936,7 +420936,7 @@
     },
     {
       "$schema": "docs/asset-tracking-record.schema.json",
-      "adapter": "videos.inventory.v1",
+      "adapter": "videos.processing.v1",
       "asset_id": "videos:movie-default-flythr03",
       "asset_type": "video-cinematic",
       "canonical_source": {
@@ -420946,14 +420946,38 @@
       "domain": "videos",
       "observed_at_utc": "2026-08-30T20:45:45Z",
       "provenance": {
-        "evidence": [],
-        "state": "not-applicable"
+        "evidence": [
+          {
+            "locator": "csv:asset_key=movie:default:FLYTHR03",
+            "path": "video/index/processing.csv",
+            "sha256": "C1C7EE9312A69489DA56E2DA0E6C731B43E32C7FF9CC9C57252899566B92EE76"
+          }
+        ],
+        "state": "complete"
       },
       "schema_version": 1,
+      "selections": [
+        {
+          "id": "flythr03-upscale-seedvr2-lab-prototype-v1",
+          "role": "run",
+          "source": {
+            "locator": "csv:asset_key=movie:default:FLYTHR03",
+            "path": "video/index/processing.csv"
+          }
+        },
+        {
+          "id": "flythr03-lab-interpolation-apollo8-30fps-v1",
+          "role": "run",
+          "source": {
+            "locator": "csv:asset_key=movie:default:FLYTHR03",
+            "path": "video/index/processing.csv"
+          }
+        }
+      ],
       "states": {
-        "installation": "not-applicable",
-        "production": "not-started",
-        "qa": "not-assessed",
+        "installation": "not-installed",
+        "production": "verified",
+        "qa": "passed",
         "release": "not-evaluated",
         "source": "verified"
       }
@@ -422079,7 +422103,7 @@
     {
       "path": "pipeline/scripts/build_global_asset_registry.py",
       "role": "adapter",
-      "sha256": "A9EE1F85413467D8EB10CC6F4CEBF99A6B3339C8FF65F487DD4223CD32AE46F9"
+      "sha256": "252D55B5CB6F2041D0579461CDCC5020987C14DB277873E9F7943A5134A2E0FB"
     },
     {
       "path": "portraits/inventaire_portraits.csv",
@@ -422167,12 +422191,17 @@
       "sha256": "975EA8A52D333C22CCE1422197EC23DCB2139361E1648472306D4A2C220949E0"
     },
     {
+      "path": "video/index/processing.csv",
+      "role": "canonical-source",
+      "sha256": "C1C7EE9312A69489DA56E2DA0E6C731B43E32C7FF9CC9C57252899566B92EE76"
+    },
+    {
       "path": "video/index/resources.csv",
       "role": "canonical-source",
       "sha256": "96A3766FD717EDF87844D4E687F47028CD11C4E6C9A9DBD25D5E5E0D08A086B2"
     }
   ],
   "schema": "bg2-upscale-global-asset-registry-v1",
-  "source_fingerprint_sha256": "A59AE0FD574DF277DFF3D57202835DF3C480DEFFAE67771789315E9C55BA27D1",
+  "source_fingerprint_sha256": "00AE5CE49131170100A469091745455FEE6A7F8B0881DEB193DC400E071B8646",
   "source_snapshot_at_utc": "2026-08-30T20:45:45Z"
 }

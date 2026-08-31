@@ -93,8 +93,9 @@ les projections seulement si la tâche les livre, si un consommateur en a besoin
 release/CI, ou sur demande explicite. Les mises à jour peuvent être regroupées ; les autorités
 métier restent valides entre-temps.
 
-Ajouter les tests indiqués par le README du domaine. Pour une modification documentaire, ne pas
-lancer SeedVR, Topaz, un build de contenu ou un packaging.
+Ajouter les tests indiqués par le README du domaine dans [`pipeline/tests/`](pipeline/tests/).
+Pour une modification documentaire, ne pas lancer SeedVR, Topaz, un build de contenu ou un
+packaging.
 
 Audit et plan de réduction des délais :
 [`docs/WORKFLOW_PERFORMANCE_AUDIT.md`](docs/WORKFLOW_PERFORMANCE_AUDIT.md).

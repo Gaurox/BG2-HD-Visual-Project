@@ -73,6 +73,8 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Interpolation v1 | Topaz Apollo 8, 15→30 fps, `2N−1`, MOV ProRes 422 HQ technique | QA comparative explicite favorable à une autre recette |
 | Doublons vidéo | `rdt=-0.01` ; supprimer uniquement les répétitions adjacentes exactes par hash décodé | politique temporelle différente explicitement validée |
 | Audio après interpolation | exclu ; synchronisation et encodage définis dans une étape ultérieure | définition de l'encodage final |
+| Organisation des runs | `video/<asset>/runs/<run-id>` ; aucun nouveau run global | jamais |
+| Sélection | `video/index/processing.csv` sépare runs validés par étape et run du patch | changement explicite de sélection ou d'intégration |
 
 ## Release et workspace
 

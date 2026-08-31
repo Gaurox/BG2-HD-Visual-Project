@@ -104,7 +104,7 @@ DOMAIN_SCOPE = {
     "videos": {
         "coverage_status": "projected",
         "authority": "video/index/",
-        "note": "Une entrée par cinématique ou tutoriel WBM ; les WBM de zone restent dans animations.",
+        "note": "Une entrée par cinématique ou tutoriel WBM ; processing.csv porte production, QA et sélections.",
     },
     "icons": {
         "coverage_status": "projected",
@@ -1872,6 +1872,31 @@ PHASE4_INVENTORIES = (
 
 
 def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
+    video_processing_path = "video/index/processing.csv"
+    video_processing: dict[str, dict[str, str]] = {}
+    if builder.inputs.exists(video_processing_path):
+        for row in builder.inputs.read_csv(video_processing_path):
+            asset_key = row.get("asset_key", "")
+            if not asset_key:
+                builder.anomaly(
+                    "missing-identity",
+                    "error",
+                    "videos",
+                    "ligne de suivi vidéo sans asset_key",
+                    source=video_processing_path,
+                )
+            elif asset_key in video_processing:
+                builder.anomaly(
+                    "duplicate-source-row",
+                    "error",
+                    "videos",
+                    "asset_key dupliqué dans le suivi vidéo",
+                    source=video_processing_path,
+                    details={"asset_key": asset_key},
+                )
+            else:
+                video_processing[asset_key] = row
+
     for config in PHASE4_INVENTORIES:
         domain = str(config["domain"])
         manifest_path = str(config["manifest"])
@@ -1956,6 +1981,136 @@ def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
                 }
             )
             locator = f"csv:asset_key={asset_key}"
+            provenance_state = "not-applicable"
+            evidence: list[dict[str, str]] = []
+            selections: list[dict[str, Any]] = []
+            adapter = str(config["adapter"])
+            if domain == "videos" and asset_key in video_processing:
+                processing = video_processing[asset_key]
+                expected_directory = Path(row.get("extracted_path", "")).parent.as_posix()
+                invalid_fields = {
+                    "asset_id": (processing.get("asset_id", ""), asset_id),
+                    "asset_directory": (
+                        processing.get("asset_directory", ""),
+                        expected_directory,
+                    ),
+                }
+                differences = {
+                    field: {"actual": actual, "expected": expected}
+                    for field, (actual, expected) in invalid_fields.items()
+                    if actual != expected
+                }
+                if differences:
+                    builder.anomaly(
+                        "video-processing-identity-mismatch",
+                        "error",
+                        "videos",
+                        "le suivi vidéo ne correspond pas à l'identité de l'inventaire",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                        details=differences,
+                    )
+                upscale_state = processing.get("upscale_state", "")
+                interpolation_state = processing.get("interpolation_state", "")
+                if upscale_state not in {"", "validated"} or interpolation_state not in {
+                    "",
+                    "validated",
+                }:
+                    builder.anomaly(
+                        "unknown-status",
+                        "error",
+                        "videos",
+                        "état de traitement vidéo inconnu",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                    )
+                if interpolation_state == "validated" and upscale_state != "validated":
+                    builder.anomaly(
+                        "video-processing-stage-order-invalid",
+                        "error",
+                        "videos",
+                        "une interpolation validée exige un upscale validé",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                    )
+                for stage, state_field, run_field in (
+                    ("upscale", "upscale_state", "upscale_run"),
+                    ("interpolation", "interpolation_state", "interpolation_run"),
+                ):
+                    state = processing.get(state_field, "")
+                    run_id = processing.get(run_field, "")
+                    if state == "validated" and not run_id:
+                        builder.anomaly(
+                            "video-processing-run-missing",
+                            "error",
+                            "videos",
+                            f"run {stage} absent pour une étape validée",
+                            asset_id=asset_id,
+                            source=video_processing_path,
+                        )
+                    elif state == "validated":
+                        selections.append(
+                            {
+                                "role": "run",
+                                "id": run_id,
+                                "source": source_ref(video_processing_path, locator),
+                            }
+                        )
+                patch_state = processing.get("patch_state", "")
+                patch_run = processing.get("patch_run", "")
+                if patch_state not in {"not-integrated", "staged", "integrated"}:
+                    builder.anomaly(
+                        "unknown-status",
+                        "error",
+                        "videos",
+                        "état patch vidéo inconnu",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                    )
+                if patch_state == "not-integrated" and patch_run:
+                    builder.anomaly(
+                        "video-patch-selection-inconsistent",
+                        "error",
+                        "videos",
+                        "un run patch est renseigné alors que l'intégration est absente",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                    )
+                if patch_state in {"staged", "integrated"} and not patch_run:
+                    builder.anomaly(
+                        "video-patch-run-missing",
+                        "error",
+                        "videos",
+                        "un état patch actif exige un run patch",
+                        asset_id=asset_id,
+                        source=video_processing_path,
+                    )
+                if patch_run:
+                    selections.append(
+                        {
+                            "role": "run",
+                            "id": patch_run,
+                            "source": source_ref(video_processing_path, locator),
+                        }
+                    )
+                states["production"] = (
+                    "verified" if upscale_state == "validated" else "not-started"
+                )
+                states["qa"] = (
+                    "passed"
+                    if upscale_state == interpolation_state == "validated"
+                    else "not-assessed"
+                )
+                states["installation"] = {
+                    "not-integrated": "not-installed",
+                    "staged": "staged",
+                    "integrated": "installed",
+                }.get(patch_state, "unknown")
+                provenance_state = "complete"
+                evidence = [
+                    evidence_ref(builder.inputs, video_processing_path, locator)
+                ]
+                adapter = "videos.processing.v1"
             builder.add(
                 base_record(
                     asset_id=asset_id,
@@ -1964,7 +2119,10 @@ def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
                     canonical_path=resources_path,
                     locator=locator,
                     states=states,
-                    adapter=str(config["adapter"]),
+                    provenance_state=provenance_state,
+                    evidence=evidence,
+                    selections=selections,
+                    adapter=adapter,
                 )
             )
 

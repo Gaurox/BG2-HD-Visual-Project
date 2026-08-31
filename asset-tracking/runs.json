@@ -2,7 +2,7 @@
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
   "run_count": 562,
-  "run_records_sha256": "1092888F8263BB5D2A810E28D051CCE31E679DA52343326AF398449AEAA04E9E",
+  "run_records_sha256": "1EAFAD0951EBFF80A8EAE890805B77D9DCAB7B95AA4895F643C785B8DBD6C056",
   "runs": [
     {
       "asset_count": 1,
@@ -13338,13 +13338,13 @@
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-interpolation-apollo8-30fps-v1/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-interpolation-apollo8-30fps-v1/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "sortie interpolation invalide: topaz_exact_double_frame_count",
       "outputs_state": "none",
-      "path": "video/runs/flythr03-interpolation-apollo8-30fps-v1",
+      "path": "video/flythr03/runs/flythr03-interpolation-apollo8-30fps-v1",
       "provenance_state": "verified",
       "qa_state": "not-assessed",
       "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
@@ -13360,13 +13360,13 @@
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-interpolation-apollo8-30fps-v2/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-interpolation-apollo8-30fps-v2/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "interpolation Apollo 8 vérifiée; encodage final, audio, intégration, QA et release non évalués",
       "outputs_state": "verified",
-      "path": "video/runs/flythr03-interpolation-apollo8-30fps-v2",
+      "path": "video/flythr03/runs/flythr03-interpolation-apollo8-30fps-v2",
       "provenance_state": "verified",
       "qa_state": "not-assessed",
       "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
@@ -13382,13 +13382,13 @@
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-interpolation-comparison-20260831/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-interpolation-comparison-20260831/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "Comparison completed; Apollo 8 selected. Canonical recipe disables approximate duplicate detection. Asset QA, final encoding, audio, integration and release remain not assessed.",
       "outputs_state": "verified",
-      "path": "video/runs/flythr03-interpolation-comparison-20260831",
+      "path": "video/flythr03/runs/flythr03-interpolation-comparison-20260831",
       "provenance_state": "verified",
       "qa_state": "not-assessed",
       "recipe_path": "video/runs/flythr03-interpolation-comparison-20260831/run_trials.py",
@@ -13404,35 +13404,35 @@
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-lab-interpolation-apollo8-30fps-v1/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-lab-interpolation-apollo8-30fps-v1/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "interpolation Apollo 8 vérifiée; encodage final, audio, intégration, QA et release non évalués",
       "outputs_state": "verified",
-      "path": "video/runs/flythr03-lab-interpolation-apollo8-30fps-v1",
+      "path": "video/flythr03/runs/flythr03-lab-interpolation-apollo8-30fps-v1",
       "provenance_state": "verified",
-      "qa_state": "not-assessed",
+      "qa_state": "pipeline-method",
       "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
       "result_state": "completed",
       "run_id": "flythr03-lab-interpolation-apollo8-30fps-v1",
       "run_key": "videos:flythr03-lab-interpolation-apollo8-30fps-v1",
       "run_kind": "topaz-video-apollo8-30fps-v1",
-      "selection_authority": "",
-      "selection_state": "unselected"
+      "selection_authority": "video/index/processing.csv",
+      "selection_state": "validated-interpolation"
     },
     {
       "asset_count": 1,
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-method-prototype-20260831/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-method-prototype-20260831/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "Method validation only. Asset QA, interpolation, final encoding, audio mastering, in-game integration and release selection are not assessed.",
       "outputs_state": "verified",
-      "path": "video/runs/flythr03-method-prototype-20260831",
+      "path": "video/flythr03/runs/flythr03-method-prototype-20260831",
       "provenance_state": "verified",
       "qa_state": "not-assessed",
       "recipe_path": "pipeline/comfyui/workflows/SeedVR-Video-BG2-3B-INT8-1080p-v1.api.json",
@@ -13448,22 +13448,22 @@
       "asset_ids": [
         "videos:movie-default-flythr03"
       ],
-      "descriptor_path": "video/runs/flythr03-upscale-seedvr2-lab-prototype-v1/run.json",
+      "descriptor_path": "video/flythr03/runs/flythr03-upscale-seedvr2-lab-prototype-v1/run.json",
       "domain": "videos",
       "inputs_state": "verified",
       "legacy": false,
       "notes": "SeedVR LAB experiment verified; not selected as canonical recipe",
       "outputs_state": "verified",
-      "path": "video/runs/flythr03-upscale-seedvr2-lab-prototype-v1",
+      "path": "video/flythr03/runs/flythr03-upscale-seedvr2-lab-prototype-v1",
       "provenance_state": "verified",
-      "qa_state": "not-assessed",
+      "qa_state": "pipeline-method",
       "recipe_path": "video/runs/flythr03-upscale-seedvr2-lab-prototype-v1/workflow-lab.api.json",
       "result_state": "completed",
       "run_id": "flythr03-upscale-seedvr2-lab-prototype-v1",
       "run_key": "videos:flythr03-upscale-seedvr2-lab-prototype-v1",
       "run_kind": "seedvr2-video-3b-int8-1080p-lab-experiment-v1",
-      "selection_authority": "",
-      "selection_state": "unselected"
+      "selection_authority": "video/index/processing.csv",
+      "selection_state": "validated-upscale"
     },
     {
       "asset_count": 1,
@@ -13476,7 +13476,7 @@
       "legacy": true,
       "notes": "One MP4 experiment retained without QA inference.",
       "outputs_state": "present",
-      "path": "video/runs/daynite-comfyui-experiment-20260814",
+      "path": "video/daynite/runs/daynite-comfyui-experiment-20260814",
       "provenance_state": "verified-move",
       "qa_state": "not-assessed",
       "recipe_path": "",
@@ -13532,9 +13532,9 @@
       "domain": "videos",
       "inputs_state": "documented",
       "legacy": true,
-      "notes": "Systematic WebM derivatives retained as historical work products; canonical WBM sources remain unchanged.",
+      "notes": "Systematic WebM derivatives retained per movie asset; canonical WBM sources remain unchanged.",
       "outputs_state": "present",
-      "path": "video/runs/legacy-webm-conversions-20260814",
+      "path": "video/<movie-source-directory>/runs/legacy-webm-conversion-20260814",
       "provenance_state": "verified-move",
       "qa_state": "not-assessed",
       "recipe_path": "",
@@ -13556,7 +13556,7 @@
       "legacy": true,
       "notes": "Five MP4 experiments and three 90-frame review sequences retained without QA inference.",
       "outputs_state": "present",
-      "path": "video/runs/pocketzz-comfyui-experiments-20260814",
+      "path": "video/pocketzz/runs/pocketzz-comfyui-experiments-20260814",
       "provenance_state": "verified-move",
       "qa_state": "not-assessed",
       "recipe_path": "",
@@ -13578,7 +13578,7 @@
       "legacy": true,
       "notes": "One MP4 experiment retained without QA inference.",
       "outputs_state": "present",
-      "path": "video/runs/restdung-comfyui-experiment-20260814",
+      "path": "video/restdung/runs/restdung-comfyui-experiment-20260814",
       "provenance_state": "verified-move",
       "qa_state": "not-assessed",
       "recipe_path": "",
@@ -13592,7 +13592,7 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "6BF06D270086447ACC1FA547673015CC72BEEFEA70E9BEF85FE5F79425D9CCB5",
+  "source_fingerprint_sha256": "F2FF159AFEE71CEE847F173076E92C838025EF273300749B8A98571BB67FCB1F",
   "summary": {
     "by_domain": {
       "animations": 116,
@@ -13608,7 +13608,9 @@
       "qa-approved": 15,
       "release-candidate": 11,
       "selected": 292,
-      "unselected": 6
+      "unselected": 4,
+      "validated-interpolation": 1,
+      "validated-upscale": 1
     }
   }
 }

@@ -36,7 +36,7 @@ d'entrée et le préfixe de sortie.
 ## Run immuable
 
 ```text
-video/runs/<run-id>/
+video/<asset>/runs/<run-id>/
   request.json
   run.json
   upscale-report.json

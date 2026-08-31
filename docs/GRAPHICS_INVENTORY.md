@@ -4,7 +4,7 @@
 
 | Domaine | Index canonique |
 |---|---|
-| Vidéos | `video/index/manifest.json`, `resources.csv` |
+| Vidéos | `video/index/manifest.json`, `resources.csv`, `processing.csv` |
 | HUD | `interface/gameplay-hud-bg2ee/index/manifest.json`, `resources.csv`, `dependencies.csv` |
 | Polices | `interface/fonts/index/manifest.json`, `resources.csv` |
 | Interface transversale | `interface/index/manifest.json`, `resources.csv`, `dependencies.csv` |

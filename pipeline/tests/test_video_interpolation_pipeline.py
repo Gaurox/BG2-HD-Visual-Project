@@ -58,7 +58,7 @@ class VideoInterpolationPipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "video" / "source.mp4"
-            descriptor_path = root / "video" / "runs" / "upscale" / "run.json"
+            descriptor_path = root / "video" / "flythr03" / "runs" / "upscale" / "run.json"
             descriptor_path.parent.mkdir(parents=True)
             source.write_bytes(b"sealed-upscale")
             descriptor = {
@@ -68,7 +68,7 @@ class VideoInterpolationPipelineTests(unittest.TestCase):
                 "outputs": [
                     {
                         "role": "upscale-technical-video",
-                        "path": "video/source.mp4",
+                        "path": "video/runs/upscale/source.mp4",
                         "sha256": MODULE.sha256_file(source),
                         "bytes": source.stat().st_size,
                     }
@@ -80,8 +80,11 @@ class VideoInterpolationPipelineTests(unittest.TestCase):
             try:
                 MODULE.ROOT = root
                 MODULE.VIDEO_ROOT = root / "video"
+                migrated_source = descriptor_path.parent / "source.mp4"
+                source.replace(migrated_source)
                 loaded = MODULE.load_upscale_run("upscale")
-                self.assertEqual(loaded["source"], source)
+                self.assertEqual(loaded["source"], migrated_source)
+                self.assertEqual(loaded["asset_dir"], root / "video/flythr03")
                 descriptor["result"]["sealed"] = False
                 descriptor_path.write_text(json.dumps(descriptor), encoding="utf-8")
                 with self.assertRaisesRegex(RuntimeError, "non terminé"):

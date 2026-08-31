@@ -38,6 +38,7 @@ JSON_OUTPUTS = ("workspace-integrity.json", "runs.json")
 RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
+VIDEO_SELECTION = "video/index/processing.csv"
 ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
 ANIMATION_PACK_P3_MANIFEST = "docs/workspace-animation-packs-p3-manifest.json"
 LEGACY_P4_MANIFEST = "docs/workspace-legacy-p4-manifest.json"
@@ -456,7 +457,6 @@ def audit_source_tables(
             and not (
                 config["name"] == "videos"
                 and "runs" in path.relative_to(root).parts
-                and path.relative_to(root).parts[0].casefold() == "runs"
             )
         } if root.is_dir() else set()
         expected_folded = {path.casefold() for path in expected_paths}
@@ -472,7 +472,7 @@ def audit_source_tables(
             ),
             key=str.casefold,
         )
-        # Historical video derivatives belong in video/runs and are audited separately.
+        # Video derivatives belong in video/<asset>/runs and are audited separately.
         if config["name"] == "videos":
             if extra:
                 extension_counts = Counter(Path(path).suffix.lower() or "<none>" for path in extra)
@@ -486,7 +486,7 @@ def audit_source_tables(
                     details={
                         "file_count": len(extra),
                         "extensions": dict(sorted(extension_counts.items())),
-                        "policy": "ranger dans video/runs avec une preuve de rattachement",
+                        "policy": "ranger dans video/<asset>/runs avec une preuve de rattachement",
                     },
                 )
         elif extra:
@@ -1970,18 +1970,38 @@ def audit_workspace_cleanup(issues: list[dict[str, Any]]) -> dict[str, Any]:
                 verified += 1
                 removed_empty += 1
             continue
-        target = ROOT / target_text
-        if not target.is_dir():
+        if "<movie-source-directory>" in target_text:
+            target_texts = [
+                target_text.replace(
+                    "<movie-source-directory>",
+                    Path(row["extracted_path"]).parent.name,
+                )
+                for row in read_csv(ROOT / "video/index/resources.csv")
+                if row["asset_key"].startswith("movie:")
+            ]
+        else:
+            target_texts = [target_text]
+        targets = [ROOT / item for item in target_texts]
+        missing_targets = [
+            item for item, target in zip(target_texts, targets) if not target.is_dir()
+        ]
+        if missing_targets:
             add_issue(
                 issues,
                 "error",
                 "cleanup-target-missing",
                 operation["domain"],
                 "Une destination de nettoyage documentée est absente.",
-                path=target_text,
+                path=missing_targets[0],
+                details={"missing_target_count": len(missing_targets)},
             )
             continue
-        files = [path for path in target.rglob("*") if path.is_file()]
+        files = [
+            path
+            for target in targets
+            for path in target.rglob("*")
+            if path.is_file()
+        ]
         actual_bytes = sum(path.stat().st_size for path in files)
         expected_count = int(operation["file_count"])
         expected_bytes = int(operation["bytes"])
@@ -2589,6 +2609,22 @@ def audit_video_runs(
         if row["asset_key"].startswith("movie:")
     ]
     physical = 0
+    descriptors = sorted(
+        (ROOT / "video").glob("*/runs/*/run.json"),
+        key=lambda path: path.as_posix().casefold(),
+    )
+    run_directories: dict[str, list[Path]] = defaultdict(list)
+    for descriptor in descriptors:
+        run_directories[descriptor.parent.name].append(descriptor.parent)
+
+    def resolve_run_path(path_text: str) -> Path:
+        candidate = (ROOT / path_text).resolve()
+        if candidate.is_file():
+            return candidate
+        match = re.fullmatch(r"video/runs/([^/]+)/(.*)", path_text.replace("\\", "/"))
+        if match and len(run_directories.get(match.group(1), [])) == 1:
+            return (run_directories[match.group(1)][0] / match.group(2)).resolve()
+        return candidate
 
     def evidence_state(
         entries: list[dict[str, Any]], *, run_id: str, descriptor_path: str, label: str
@@ -2600,7 +2636,7 @@ def audit_video_runs(
             path_text = str(entry.get("path", ""))
             expected_hash = str(entry.get("sha256", "")).upper()
             expected_bytes = entry.get("bytes")
-            candidate = (ROOT / path_text).resolve()
+            candidate = resolve_run_path(path_text)
             portable = bool(path_text) and candidate.is_relative_to(ROOT.resolve())
             if not portable or not candidate.is_file():
                 state = "missing"
@@ -2627,9 +2663,18 @@ def audit_video_runs(
                 )
         return state
 
-    runs_root = ROOT / "video/runs"
-    if runs_root.is_dir():
-        for descriptor in sorted(runs_root.glob("*/run.json"), key=lambda path: path.as_posix().casefold()):
+    for run_id, locations in sorted(run_directories.items()):
+        if len(locations) > 1:
+            add_issue(
+                issues,
+                "error",
+                "video-run-id-duplicate",
+                "videos",
+                "Un identifiant de run vidéo existe sous plusieurs assets.",
+                run_id=run_id,
+                details={"paths": [repo_path(path) for path in locations]},
+            )
+    for descriptor in descriptors:
             physical += 1
             descriptor_path = repo_path(descriptor)
             run_id = descriptor.parent.name
@@ -2670,7 +2715,7 @@ def audit_video_runs(
                 )
             recipe_path = str(pipeline.get("recipe_path", ""))
             recipe_hash = str(pipeline.get("recipe_sha256", "")).upper()
-            recipe = ROOT / recipe_path
+            recipe = resolve_run_path(recipe_path)
             recipe_valid = bool(
                 recipe_path
                 and recipe.is_file()
@@ -2741,10 +2786,88 @@ def audit_video_runs(
                 ),
             )
 
+    selected_runs: set[str] = set()
+    patch_runs: set[str] = set()
+    selection_path = ROOT / VIDEO_SELECTION
+    if selection_path.is_file():
+        for asset in read_csv(selection_path):
+            asset_id = str(asset.get("asset_id", ""))
+            if asset_id not in canonical_asset_ids:
+                add_issue(
+                    issues,
+                    "error",
+                    "video-selection-asset-invalid",
+                    "videos",
+                    "Asset inconnu dans la sélection vidéo.",
+                    path=VIDEO_SELECTION,
+                    details={"asset_id": asset_id},
+                )
+            for stage_name, run_column, state_column in (
+                ("upscale", "upscale_run", "upscale_state"),
+                ("interpolation", "interpolation_run", "interpolation_state"),
+            ):
+                run_id = str(asset.get(run_column, ""))
+                state = str(asset.get(state_column, ""))
+                if state != "validated" or not run_id:
+                    continue
+                run_key = f"videos:{run_id}"
+                record = runs.get(run_key)
+                if (
+                    not record
+                    or asset_id not in record.get("asset_ids", [])
+                    or record.get("result_state") != "completed"
+                    or record.get("provenance_state") != "verified"
+                ):
+                    add_issue(
+                        issues,
+                        "error",
+                        "video-validated-run-invalid",
+                        "videos",
+                        "Run vidéo validé absent, incohérent ou non vérifié.",
+                        path=VIDEO_SELECTION,
+                        run_id=run_id,
+                    )
+                    continue
+                record["qa_state"] = str(asset.get("validation_scope", "pipeline-method"))
+                record["selection_state"] = f"validated-{stage_name}"
+                record["selection_authority"] = VIDEO_SELECTION
+                selected_runs.add(run_id)
+            patch_run_id = str(asset.get("patch_run", ""))
+            if patch_run_id:
+                run_id = str(patch_run_id)
+                run_key = f"videos:{run_id}"
+                record = runs.get(run_key)
+                if not record or asset_id not in record.get("asset_ids", []):
+                    add_issue(
+                        issues,
+                        "error",
+                        "video-patch-run-invalid",
+                        "videos",
+                        "Run vidéo sélectionné pour le patch absent ou incohérent.",
+                        path=VIDEO_SELECTION,
+                        run_id=run_id,
+                    )
+                else:
+                    record["selection_state"] = "patch-selected"
+                    record["selection_authority"] = VIDEO_SELECTION
+                    patch_runs.add(run_id)
+
     for operation in data.get("operations", []):
         if operation.get("domain") != "videos" or operation.get("action") != "move":
             continue
-        physical += 1
+        target_template = str(operation["target"])
+        if "<movie-source-directory>" in target_template:
+            targets = [
+                target_template.replace(
+                    "<movie-source-directory>",
+                    Path(row["extracted_path"]).parent.name,
+                )
+                for row in read_csv(ROOT / "video/index/resources.csv")
+                if row["asset_key"].startswith("movie:")
+            ]
+        else:
+            targets = [target_template]
+        physical += len(targets)
         path_text = str(operation["target"])
         asset_ids = operation.get("asset_ids") or movie_asset_ids
         add_run(
@@ -2762,7 +2885,11 @@ def audit_video_runs(
                 selection_state="historical-unselected",
                 selection_authority="",
                 inputs_state="documented",
-                outputs_state="present" if (ROOT / path_text).is_dir() else "missing",
+                outputs_state=(
+                    "present"
+                    if targets and all((ROOT / target).is_dir() for target in targets)
+                    else "missing"
+                ),
                 provenance_state="verified-move",
                 legacy=True,
                 notes=str(operation.get("notes", "")),
@@ -2770,7 +2897,9 @@ def audit_video_runs(
         )
     return {
         "physical_run_count": physical,
-        "selected_run_count": 0,
+        "selected_run_count": len(selected_runs | patch_runs),
+        "method_validated_run_count": len(selected_runs),
+        "patch_selected_run_count": len(patch_runs),
         "canonical_source_count": len(read_csv(ROOT / "video/index/resources.csv")),
     }
 

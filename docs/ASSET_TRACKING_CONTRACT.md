@@ -122,8 +122,10 @@ présence d'un candidat n'y suffit pas.
   des membres de cet asset. Les inventaires recrutables/rencontres décrivent des occurrences sans
   créer d'assets supplémentaires. PPE reste un corpus tiers non installé, hors registre du patch.
   Faute d'autorité métier, production, QA, installation et release valent `not-applicable`.
-- Vidéos : `video/index/` inventorie un asset par WBM cinématique ou tutoriel. Les WBM de zone
-  restent sous `animations/index/` ; les WebM de travail ne sont jamais une autorité.
+- Vidéos : `video/index/resources.csv` inventorie un asset par WBM cinématique ou tutoriel ;
+  `processing.csv` porte les runs validés par étape et la sélection patch. Upscale et interpolation
+  validés deviennent `production=verified`, `qa=passed`; `patch_state=not-integrated` devient
+  `installation=not-installed`. Les WBM de zone restent sous `animations/index/`.
 - Icônes : `icons/index/` inventorie un jeu BAM par resref partagé par les usages ITM/SPL. Les
   références manquantes restent des anomalies et ne créent pas de source fictive.
 - Curseurs : `cursors/index/` suit `CURSORS.BAM` comme un jeu unique, faute de noms sémantiques

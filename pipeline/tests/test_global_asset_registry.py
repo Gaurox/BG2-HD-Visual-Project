@@ -174,6 +174,29 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             self.by_id["animations:wbm:oh4200md"]["states"]["production"],
             "not-started",
         )
+        flythr03 = self.by_id["videos:movie-default-flythr03"]
+        self.assertEqual(
+            flythr03["states"],
+            {
+                "source": "verified",
+                "production": "verified",
+                "qa": "passed",
+                "installation": "not-installed",
+                "release": "not-evaluated",
+            },
+        )
+        self.assertEqual(flythr03["provenance"]["state"], "complete")
+        self.assertEqual(
+            [selection["id"] for selection in flythr03["selections"]],
+            [
+                "flythr03-upscale-seedvr2-lab-prototype-v1",
+                "flythr03-lab-interpolation-apollo8-30fps-v1",
+            ],
+        )
+        self.assertIn(
+            "video/index/processing.csv",
+            {item["path"] for item in self.outputs["registry"]["inputs"]},
+        )
         self.assertEqual(
             self.by_id["cursors:cursor-set-cursors"]["states"]["source"],
             "verified",

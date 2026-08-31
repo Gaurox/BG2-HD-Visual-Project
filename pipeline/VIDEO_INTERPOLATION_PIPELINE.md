@@ -30,7 +30,7 @@ Chemins Topaz : `config://topaz_video_ffmpeg`, `config://topaz_video_models`.
 ## Run immuable
 
 ```text
-video/runs/<run-id>/
+video/<asset>/runs/<run-id>/
   request.json
   run.json
   interpolation-report.json

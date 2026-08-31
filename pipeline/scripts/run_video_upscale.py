@@ -236,6 +236,14 @@ def stable_video_asset_id(asset_key: str) -> str:
     return f"videos:{token}"
 
 
+def asset_directory(asset: dict[str, str]) -> Path:
+    source = (ROOT / asset["extracted_path"]).resolve()
+    directory = source.parent
+    if directory.parent != VIDEO_ROOT.resolve():
+        raise RuntimeError("source vidéo hors d'un dossier asset direct de video/")
+    return directory
+
+
 def run_ffprobe(path: Path, executable: str) -> dict[str, Any]:
     command = [
         executable,
@@ -448,7 +456,9 @@ def run_descriptor(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--asset-key", required=True, help="clé exacte de video/index/resources.csv")
-    parser.add_argument("--run", required=True, help="nouvel identifiant sous video/runs/")
+    parser.add_argument(
+        "--run", required=True, help="nouvel identifiant sous video/<asset>/runs/"
+    )
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
     parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument("--ffprobe", default=shutil.which("ffprobe") or "ffprobe")
@@ -471,6 +481,7 @@ def main() -> int:
     prompt, summary = validate_workflow(workflow)
     asset = load_asset(args.asset_key)
     source = Path(asset["resolved_source"])
+    asset_dir = asset_directory(asset)
     source_probe = run_ffprobe(source, args.ffprobe)
     validate_source_probe(asset, source_probe)
     asset_id = stable_video_asset_id(args.asset_key)
@@ -495,7 +506,7 @@ def main() -> int:
         print(json.dumps(plan, ensure_ascii=False, indent=2))
         return 0
 
-    run_dir = VIDEO_ROOT / "runs" / args.run
+    run_dir = asset_dir / "runs" / args.run
     if run_dir.exists():
         raise RuntimeError(f"run déjà présent; créer une nouvelle version : {repo_path(run_dir)}")
     run_dir.mkdir(parents=True)

@@ -130,9 +130,11 @@ def file_evidence(role: str, path: Path) -> dict[str, Any]:
 
 
 def load_upscale_run(run_id: str) -> dict[str, Any]:
-    descriptor_path = VIDEO_ROOT / "runs" / run_id / "run.json"
-    if not descriptor_path.is_file():
-        raise RuntimeError(f"run d'upscale absent: {repo_path(descriptor_path)}")
+    matches = sorted(VIDEO_ROOT.glob(f"*/runs/{run_id}/run.json"))
+    if len(matches) != 1:
+        raise RuntimeError(f"run d'upscale absent ou ambigu: {run_id}")
+    descriptor_path = matches[0]
+    run_dir = descriptor_path.parent
     descriptor = json.loads(descriptor_path.read_text(encoding="utf-8"))
     result = descriptor.get("result") or {}
     if (
@@ -151,6 +153,11 @@ def load_upscale_run(run_id: str) -> dict[str, Any]:
         raise RuntimeError("une unique sortie upscale-technical-video est requise")
     evidence = outputs[0]
     source = (ROOT / str(evidence["path"])).resolve()
+    if not source.is_file():
+        legacy_prefix = f"video/runs/{run_id}/"
+        path_text = str(evidence["path"]).replace("\\", "/")
+        if path_text.startswith(legacy_prefix):
+            source = (run_dir / path_text[len(legacy_prefix):]).resolve()
     if not source.is_relative_to(ROOT.resolve()) or not source.is_file():
         raise RuntimeError("sortie du run d'upscale absente ou hors workspace")
     if (
@@ -168,6 +175,7 @@ def load_upscale_run(run_id: str) -> dict[str, Any]:
         "source": source,
         "source_evidence": evidence,
         "asset_id": asset_ids[0],
+        "asset_dir": run_dir.parent.parent,
     }
 
 
@@ -480,7 +488,7 @@ def main() -> int:
         print(json.dumps(plan, ensure_ascii=False, indent=2))
         return 0
 
-    run_dir = VIDEO_ROOT / "runs" / args.run
+    run_dir = parent["asset_dir"] / "runs" / args.run
     if run_dir.exists():
         raise RuntimeError(f"run déjà présent; créer une nouvelle version: {repo_path(run_dir)}")
     run_dir.mkdir(parents=True)

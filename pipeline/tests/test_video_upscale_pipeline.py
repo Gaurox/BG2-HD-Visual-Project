@@ -52,6 +52,7 @@ class VideoUpscalePipelineTests(unittest.TestCase):
         self.assertEqual(asset["role"], "cinematic")
         self.assertEqual(MODULE.stable_video_asset_id(asset["asset_key"]),
                          "videos:movie-default-flythr03")
+        self.assertEqual(MODULE.asset_directory(asset), ROOT / "video/flythr03")
         with self.assertRaisesRegex(RuntimeError, "cinématiques"):
             MODULE.load_asset("tutorial:engine:TUT01")
 
@@ -111,7 +112,7 @@ class VideoUpscalePipelineTests(unittest.TestCase):
             recipe.parent.mkdir()
             recipe.write_text("{}\n", encoding="utf-8")
             source = root / "video/source.wbm"
-            output = root / "video/runs/test/02_upscale/output.mp4"
+            output = root / "video/flythr03/runs/test/02_upscale/output.mp4"
             output.parent.mkdir(parents=True)
             source.write_bytes(b"source")
             output.write_bytes(b"output")
@@ -138,8 +139,16 @@ class VideoUpscalePipelineTests(unittest.TestCase):
                 "outputs": [evidence(output)],
                 "result": {"status": "completed", "sealed": True},
             }
-            (root / "video/runs/test/run.json").write_text(
+            (root / "video/flythr03/runs/test/run.json").write_text(
                 json.dumps(descriptor), encoding="utf-8"
+            )
+            (root / "video/index/processing.csv").write_text(
+                "asset_key,asset_id,asset_directory,upscale_run,upscale_state,"
+                "interpolation_run,interpolation_state,validation_scope,patch_run,"
+                "patch_output_role,patch_state,notes\n"
+                "movie:default:FLYTHR03,videos:movie-default-flythr03,video/flythr03,"
+                "test,validated,,,pipeline-method,,,not-integrated,test\n",
+                encoding="utf-8",
             )
             original_root = AUDIT.ROOT
             try:
@@ -152,7 +161,9 @@ class VideoUpscalePipelineTests(unittest.TestCase):
             self.assertEqual(issues, [])
             self.assertEqual(summary["physical_run_count"], 1)
             self.assertEqual(runs["videos:test"]["provenance_state"], "verified")
-            self.assertEqual(runs["videos:test"]["selection_state"], "unselected")
+            self.assertEqual(runs["videos:test"]["selection_state"], "validated-upscale")
+            self.assertEqual(summary["method_validated_run_count"], 1)
+            self.assertEqual(summary["patch_selected_run_count"], 0)
 
 
 if __name__ == "__main__":

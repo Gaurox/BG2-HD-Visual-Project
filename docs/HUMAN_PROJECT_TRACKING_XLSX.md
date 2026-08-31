@@ -12,6 +12,8 @@ métier et ne reçoivent aucune saisie manuelle.
 | `asset-tracking/anomalies.json` | synthèse des lacunes et incohérences |
 | `docs/asset-tracking-record.schema.json` | domaines et états autorisés |
 
+Pour les vidéos, le registre adapte `video/index/processing.csv` avant génération du classeur.
+
 Les sources canoniques exactes restent celles listées dans `registry.json.inputs` et dans
 `canonical_source` de chaque asset.
 
