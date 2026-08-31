@@ -109,7 +109,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertGreater(animations["legacy_proto_embedded_reference_count"], 0)
         self.assertEqual(animations["legacy_proto_run_count"], 65)
         self.assertEqual(animations["remaining_animation_proto_directory_count"], 0)
-        self.assertEqual(animations["remaining_proto_directory_count"], 1)
+        self.assertEqual(animations["remaining_proto_directory_count"], 0)
         self.assertEqual(animations["historical_qa_evidence_adapted_count"], 9)
         self.assertEqual(animations["release_pack_indexed_count"], 5)
         release_packs = [
@@ -162,6 +162,20 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(legacy_p4["delete_safe_count"], 0)
         self.assertEqual(legacy_p4["archived_bytes"], 37249)
         self.assertEqual(legacy_p4["verified_archived_bytes"], 37249)
+        backups_p5 = self.report["domain_audits"]["workspace_backups_p5"]
+        self.assertTrue(backups_p5["verified"])
+        self.assertEqual(backups_p5["keep_restore_count"], 8)
+        self.assertEqual(backups_p5["keep_historical_count"], 9)
+        self.assertEqual(backups_p5["archive_count"], 3)
+        self.assertEqual(backups_p5["verified_archive_count"], 3)
+        self.assertEqual(backups_p5["archived_file_count"], 27)
+        self.assertEqual(backups_p5["archived_bytes"], 36243135)
+        self.assertEqual(backups_p5["delete_safe_count"], 9)
+        self.assertEqual(backups_p5["verified_delete_safe_count"], 9)
+        self.assertEqual(backups_p5["deleted_duplicate_file_count"], 37)
+        self.assertEqual(backups_p5["reclaimed_bytes"], 161259074)
+        self.assertEqual(backups_p5["removed_empty_directory_count"], 7)
+        self.assertEqual(backups_p5["uncertain_count"], 0)
         archive_manifest = json.loads(
             (ROOT / integrity.ARCHIVE_P2_MANIFEST).read_text(encoding="utf-8")
         )
@@ -226,10 +240,14 @@ class WorkspaceIntegrityTests(unittest.TestCase):
                 self.assertTrue(target.is_dir(), item["to"])
 
         retained = set(migration["retained_proto_directories"])
-        present = {path.name for path in (ROOT / "proto").iterdir() if path.is_dir()}
+        proto_root = ROOT / "proto"
+        present = (
+            {path.name for path in proto_root.iterdir() if path.is_dir()}
+            if proto_root.is_dir()
+            else set()
+        )
         self.assertEqual(present, retained)
-        self.assertEqual(retained, {"install-backups"})
-        self.assertEqual([path for path in (ROOT / "proto").iterdir() if path.is_file()], [])
+        self.assertEqual(retained, set())
 
         migrated_runs = [run for run in self.runs if run["domain"] == "animations" and run["legacy"]]
         self.assertEqual(len(migrated_runs), 65)

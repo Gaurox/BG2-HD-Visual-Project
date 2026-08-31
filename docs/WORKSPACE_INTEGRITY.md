@@ -143,6 +143,33 @@ mais sa provenance conserve volontairement l'ancien chemin `proto/`, résolu par
 animation. Les diagnostics BAM AR0602, les outils initiaux de sélection de cartes, deux correctifs
 expérimentaux non référencés et l'adaptateur AA rejeté sont également hors du routage actif.
 
+## Backups et derniers éléments incertains P5 du 31 août 2026
+
+`docs/workspace-backups-p5-manifest.json` est le reçu non autoritatif et la politique de rétention :
+
+- `KEEP_RESTORE` reste auprès d'un propriétaire encore installable ou restaurable ;
+- `KEEP_HISTORICAL` reste à son chemin lorsqu'un run scellé, un reçu ou une validation le cite ;
+- `ARCHIVE` sort du routage actif avec inventaire et hash agrégé ;
+- `DELETE_SAFE` est réservé aux dossiers vides et doublons exacts dont le remplaçant est hashé.
+
+Les cinq arbres `install-backups` des packs animation actifs restent donc en place : leurs dix
+reçus constituent une chaîne de restauration et certains prennent le DLL d'un backup précédent
+comme input. Les transactions renderer restaurées, les backups internes aux runs historiques et
+les anciens tests sprite restent également à leurs chemins afin de ne pas réécrire leurs preuves.
+
+Les 22 snapshots uniques du prototype renderer, le snapshot de réglages tooltip/FPS et quatre
+candidats portraits haute résolution sans recette ni QA sont archivés sous
+`archive/legacy/workspace-p5-20260831/`. Les dix `portraits/Ref` ont été supprimés après identité
+SHA-256 avec leurs grands portraits canoniques. Le backup AR0900 brut a été supprimé après identité
+complète avec le `files/` de la transaction conservée. Sept dossiers vides sans données utiles ont
+été supprimés, dont les trois anciens dossiers de frames `video/pocketzz` et la dernière racine
+`proto/`. Les outils de test peuvent recréer `temp/` ou `sprite/.work/validation/` ; l'audit les
+tolère uniquement tant qu'ils restent vides.
+
+Un backup n'accorde jamais un état d'installation. Pour les sprites, seul l'`active-test.json`
+canonique de la génération courante fait foi ; pour les autres domaines, consulter leur autorité
+métier avant d'utiliser une restauration historique.
+
 ## Configuration portable
 
 Les clés machine sont déclarées dans `config/workspace-paths.json`. Copier

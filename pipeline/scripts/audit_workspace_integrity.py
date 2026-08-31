@@ -41,6 +41,7 @@ CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
 ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
 ANIMATION_PACK_P3_MANIFEST = "docs/workspace-animation-packs-p3-manifest.json"
 LEGACY_P4_MANIFEST = "docs/workspace-legacy-p4-manifest.json"
+BACKUPS_P5_MANIFEST = "docs/workspace-backups-p5-manifest.json"
 ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
 WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
     r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
@@ -1221,9 +1222,12 @@ def audit_animations(
         )
 
     retained_proto = set(migration_data.get("retained_proto_directories", []))
-    present_proto = {
-        path.name for path in (ROOT / "proto").iterdir() if path.is_dir()
-    }
+    proto_root = ROOT / "proto"
+    present_proto = (
+        {path.name for path in proto_root.iterdir() if path.is_dir()}
+        if proto_root.is_dir()
+        else set()
+    )
     unexpected_proto = sorted(present_proto - retained_proto, key=str.casefold)
     missing_retained_proto = sorted(retained_proto - present_proto, key=str.casefold)
     if unexpected_proto:
@@ -2252,6 +2256,274 @@ def audit_workspace_legacy_p4(issues: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def audit_workspace_backups_p5(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify the conservative P5 backup retention and cleanup receipt."""
+
+    data = read_json(ROOT / BACKUPS_P5_MANIFEST)
+    classifications = data.get("classifications", {})
+    valid = True
+
+    for classification in ("KEEP_RESTORE", "KEEP_HISTORICAL"):
+        for entry in classifications.get(classification, []):
+            path_text = str(entry["path"])
+            if not (ROOT / path_text).exists():
+                valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "backups-p5-retained-path-missing",
+                    "workspace",
+                    "Un élément conservé pour restauration ou historique en P5 est absent.",
+                    path=path_text,
+                    details={"classification": classification},
+                )
+            for required_text in entry.get("required_paths", []):
+                if not (ROOT / str(required_text)).exists():
+                    valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "backups-p5-required-child-missing",
+                        "workspace",
+                        "Un backup explicitement conservé en P5 est absent de son propriétaire.",
+                        path=str(required_text),
+                        details={"classification": classification},
+                    )
+
+    verified_archives = 0
+    archived_files = 0
+    archived_bytes = 0
+    for entry in classifications.get("ARCHIVE", []):
+        source_text = str(entry["source"])
+        target_text = str(entry["target"])
+        entry_valid = True
+        if (ROOT / source_text).exists():
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "backups-p5-archive-source-returned",
+                "workspace",
+                "Un élément archivé en P5 est réapparu dans une zone active.",
+                path=source_text,
+            )
+        target = ROOT / target_text
+        if not target.exists():
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "backups-p5-archive-target-missing",
+                "workspace",
+                "Une archive P5 est absente.",
+                path=target_text,
+            )
+        else:
+            actual_count, actual_bytes, actual_hash = inventory_evidence(target)
+            if (
+                actual_count != int(entry["file_count"])
+                or actual_bytes != int(entry["bytes"])
+                or actual_hash != str(entry["aggregate_sha256"]).upper()
+            ):
+                entry_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "backups-p5-archive-evidence-mismatch",
+                    "workspace",
+                    "Une archive P5 ne correspond plus à sa preuve hashée.",
+                    path=target_text,
+                )
+        if entry_valid:
+            verified_archives += 1
+            archived_files += int(entry["file_count"])
+            archived_bytes += int(entry["bytes"])
+        valid = valid and entry_valid
+
+    verified_deletions = 0
+    deleted_duplicate_files = 0
+    reclaimed_bytes = 0
+    removed_empty_directories = 0
+    for entry in classifications.get("DELETE_SAFE", []):
+        source_text = str(entry["source"])
+        kind = str(entry["kind"])
+        entry_valid = True
+        source = ROOT / source_text
+        if kind == "empty-directory" and source.exists():
+            if not source.is_dir() or any(source.iterdir()):
+                entry_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "backups-p5-empty-directory-not-empty",
+                    "workspace",
+                    "Un dossier supprimable/recréable vide en P5 contient désormais des éléments.",
+                    path=source_text,
+                )
+        elif kind != "empty-directory" and source.exists():
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "backups-p5-delete-safe-source-returned",
+                "workspace",
+                "Un doublon ou dossier vide supprimé en P5 est réapparu.",
+                path=source_text,
+            )
+
+        if kind == "empty-directory":
+            if entry_valid:
+                removed_empty_directories += 1
+        elif kind == "exact-duplicate-tree":
+            replacement_text = str(entry["replacement"])
+            replacement = ROOT / replacement_text
+            if not replacement.exists():
+                entry_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "backups-p5-duplicate-replacement-missing",
+                    "workspace",
+                    "Le remplaçant hashé d'un doublon supprimé en P5 est absent.",
+                    path=replacement_text,
+                )
+            else:
+                actual_count, actual_bytes, actual_hash = inventory_evidence(replacement)
+                if (
+                    actual_count != int(entry["file_count"])
+                    or actual_bytes != int(entry["bytes"])
+                    or actual_hash != str(entry["aggregate_sha256"]).upper()
+                ):
+                    entry_valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "backups-p5-duplicate-replacement-mismatch",
+                        "workspace",
+                        "Le remplaçant d'un doublon supprimé en P5 a divergé.",
+                        path=replacement_text,
+                    )
+        elif kind == "exact-duplicate-files":
+            source_root = source_text.rstrip("/")
+            virtual_records: list[tuple[str, int, str]] = []
+            for item in entry.get("files", []):
+                item_source = str(item["source"])
+                canonical_text = str(item["canonical"])
+                expected_bytes = int(item["bytes"])
+                expected_hash = str(item["sha256"]).upper()
+                canonical = ROOT / canonical_text
+                if (
+                    not canonical.is_file()
+                    or canonical.stat().st_size != expected_bytes
+                    or sha256_file(canonical) != expected_hash
+                ):
+                    entry_valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "backups-p5-canonical-duplicate-missing",
+                        "portraits",
+                        "Le portrait canonique justifiant une déduplication P5 est absent ou divergent.",
+                        path=canonical_text,
+                    )
+                prefix = source_root + "/"
+                relative = item_source[len(prefix) :] if item_source.startswith(prefix) else item_source
+                virtual_records.append((relative, expected_bytes, expected_hash))
+            virtual_records.sort(key=lambda item: item[0].casefold())
+            payload = "".join(
+                f"{relative}|{size}|{digest}\n"
+                for relative, size, digest in virtual_records
+            ).encode("utf-8")
+            virtual_hash = hashlib.sha256(payload).hexdigest().upper()
+            if (
+                len(virtual_records) != int(entry["file_count"])
+                or sum(size for _relative, size, _digest in virtual_records)
+                != int(entry["bytes"])
+                or virtual_hash != str(entry["aggregate_sha256"]).upper()
+            ):
+                entry_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "backups-p5-duplicate-manifest-inconsistent",
+                    "workspace",
+                    "La preuve interne d'une déduplication P5 est incohérente.",
+                    path=BACKUPS_P5_MANIFEST,
+                    details={"id": entry.get("id", "")},
+                )
+        else:
+            entry_valid = False
+            add_issue(
+                issues,
+                "error",
+                "backups-p5-delete-safe-kind-unknown",
+                "workspace",
+                "Le manifeste P5 contient un type de suppression inconnu.",
+                path=BACKUPS_P5_MANIFEST,
+                details={"kind": kind},
+            )
+
+        if entry_valid:
+            verified_deletions += 1
+            if kind.startswith("exact-duplicate"):
+                deleted_duplicate_files += int(entry["file_count"])
+                reclaimed_bytes += int(entry["bytes"])
+        valid = valid and entry_valid
+
+    summary = data.get("summary", {})
+    actual_counts = {
+        "keep_restore_count": len(classifications.get("KEEP_RESTORE", [])),
+        "keep_historical_count": len(classifications.get("KEEP_HISTORICAL", [])),
+        "archive_count": len(classifications.get("ARCHIVE", [])),
+        "delete_safe_count": len(classifications.get("DELETE_SAFE", [])),
+        "archived_file_count": sum(
+            int(entry["file_count"]) for entry in classifications.get("ARCHIVE", [])
+        ),
+        "archived_bytes": sum(
+            int(entry["bytes"]) for entry in classifications.get("ARCHIVE", [])
+        ),
+        "deleted_duplicate_file_count": sum(
+            int(entry.get("file_count", 0))
+            for entry in classifications.get("DELETE_SAFE", [])
+            if str(entry.get("kind", "")).startswith("exact-duplicate")
+        ),
+        "reclaimed_bytes": sum(
+            int(entry.get("bytes", 0))
+            for entry in classifications.get("DELETE_SAFE", [])
+            if str(entry.get("kind", "")).startswith("exact-duplicate")
+        ),
+        "removed_empty_directory_count": sum(
+            1
+            for entry in classifications.get("DELETE_SAFE", [])
+            if entry.get("kind") == "empty-directory"
+        ),
+        "uncertain_count": 0,
+    }
+    if any(int(summary.get(key, -1)) != value for key, value in actual_counts.items()):
+        valid = False
+        add_issue(
+            issues,
+            "error",
+            "backups-p5-manifest-summary-mismatch",
+            "workspace",
+            "Le résumé du manifeste P5 est incohérent.",
+            path=BACKUPS_P5_MANIFEST,
+        )
+
+    return {
+        "manifest": BACKUPS_P5_MANIFEST,
+        **actual_counts,
+        "verified_archive_count": verified_archives,
+        "verified_archived_file_count": archived_files,
+        "verified_archived_bytes": archived_bytes,
+        "verified_delete_safe_count": verified_deletions,
+        "verified_deleted_duplicate_file_count": deleted_duplicate_files,
+        "verified_reclaimed_bytes": reclaimed_bytes,
+        "verified_removed_empty_directory_count": removed_empty_directories,
+        "verified": valid,
+    }
+
+
 def audit_video_runs(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
 ) -> dict[str, int]:
@@ -2543,6 +2815,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
     archive_p2 = audit_workspace_archive_p2(issues)
     animation_packs_p3 = audit_animation_pack_archive_p3(issues)
     legacy_p4 = audit_workspace_legacy_p4(issues)
+    backups_p5 = audit_workspace_backups_p5(issues)
     portability = audit_path_portability(issues)
     domain_audits = {
         "maps": audit_maps(issues, runs),
@@ -2554,6 +2827,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
         "workspace_archive_p2": archive_p2,
         "animation_pack_archive_p3": animation_packs_p3,
         "workspace_legacy_p4": legacy_p4,
+        "workspace_backups_p5": backups_p5,
         "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)

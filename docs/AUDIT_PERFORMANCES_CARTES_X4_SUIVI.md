@@ -1197,9 +1197,13 @@ SHA-256 `ECE44A20FA330BDBA08A78E0AFCD421A19B59455904ACB0BD385AD177E2C4382`.
 
 ### Mesure ingame ciblée
 
-Jeu et InfinityLoader fermés, l’injection a sauvegardé les 27 fichiers actifs sous
-`G:\AI\BG2_Upscale\backups\maps\AR0900-20260830-122401\`, puis vérifié zéro divergence entre le
-candidat et l’`override`. La session a été lancée via InfinityLoader, la sauvegarde dédiée AR0900
+Jeu et InfinityLoader fermés, l’injection a sauvegardé les 27 fichiers actifs, puis vérifié zéro
+divergence entre le candidat et l’`override`. Leur copie brute historique sous
+`backups/maps/AR0900-20260830-122401/` a ensuite été dédupliquée en P5 : elle était identique par
+nom, taille et SHA-256 à la copie transactionnelle mieux documentée sous
+`backups/maps/AR0900-20260830T111545270887Z-36dba8d0/files/`. La preuve agrégée et l’adaptation de
+chemin sont conservées dans `docs/workspace-backups-p5-manifest.json`. La session a été lancée via
+InfinityLoader, la sauvegarde dédiée AR0900
 a été chargée, le préchauffage a été laissé finir, puis la carte entièrement dézoomée a été ouverte
 et refermée deux fois.
 
