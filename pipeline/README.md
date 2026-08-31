@@ -78,8 +78,12 @@ python pipeline/scripts/workspace.py check
 ## Tests légers
 
 ```powershell
-python -m unittest discover -s pipeline/tests -p "test_*.py"
-python pipeline/scripts/workspace.py check
+python pipeline/scripts/test_changed.py --changed --list
+python pipeline/scripts/test_changed.py --changed
 ```
+
+Une modification maps sélectionne le smoke et les modules maps, jamais les tests sprites. Utiliser
+`--full` seulement pour les déclencheurs transversaux listés dans
+[`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Ne pas lancer SeedVR, Topaz, un build complet ou un packaging pour une modification documentaire.

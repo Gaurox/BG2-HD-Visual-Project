@@ -8,6 +8,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Besoin | Script |
 |---|---|
 | Contrôle/régénération globale | `workspace.py` |
+| Sélection de tests Git | `test_changed.py` |
 | Inventaires graphiques | `build_graphics_inventory.py` |
 | Maîtres/préflight de carte | `validate_x1_masters.py`, `audit_area_preflight.py` |
 | Extraction | `batch_extract.py`, `batch_extract_secondary.py`, `render_secondary.py` |
@@ -27,8 +28,9 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 
 ```powershell
 python pipeline/scripts/<script>.py --help
-python pipeline/scripts/workspace.py check
-python -m unittest discover -s pipeline/tests -p "test_*.py"
+python pipeline/scripts/test_changed.py --changed --list
+python pipeline/scripts/test_changed.py --changed
+python pipeline/scripts/test_changed.py --full
 ```
 
 Les chemins externes viennent de `config/workspace-paths.json` via `workspace_paths.py` ou

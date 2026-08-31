@@ -85,14 +85,13 @@ explicite de l'utilisateur.
 ## Tests légers
 
 ```powershell
-python -m unittest `
-  pipeline.tests.test_sprite_inventory `
-  pipeline.tests.test_creature_sprite_x2_pipeline `
-  pipeline.tests.test_creature_sprite_xn_catalog `
-  pipeline.tests.test_creature_sprite_xn_catalog_install `
-  pipeline.tests.test_generate_character_complete_x2_jobs `
-  pipeline.tests.test_generate_sprite_family_append
+python pipeline/scripts/test_changed.py --changed --list
+python pipeline/scripts/test_changed.py --changed
 ```
+
+L'index et les générateurs sélectionnent `sprite-inventory`; le runner et les formats sélectionnent
+`sprite-formats`; seuls les scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`
+sélectionnent les transactions lentes `sprite-installation`.
 
 Régénérer l'inventaire seulement lorsqu'un snapshot du jeu, le schema, une classification, une
 limite runtime ou le mapping palette change.

@@ -55,19 +55,32 @@ Ces fichiers peuvent être supprimés et régénérés avec `workspace.py refres
 
 ## Contrôles
 
-Avant et après une intervention :
+Avant une intervention :
 
 ```powershell
 git status --short
-python pipeline/scripts/workspace.py check
+python pipeline/scripts/test_changed.py --changed --list
 ```
 
-Après une modification d'autorité ou d'inventaire :
+Après une intervention :
+
+```powershell
+python pipeline/scripts/test_changed.py --changed
+git status --short
+```
+
+Après une modification d'autorité ou d'inventaire, régénérer avant la sélection ciblée :
 
 ```powershell
 python pipeline/scripts/workspace.py refresh
-python -m unittest discover -s pipeline/tests -p "test_*.py"
+python pipeline/scripts/test_changed.py --changed
 ```
+
+Utiliser `python pipeline/scripts/test_changed.py --full` pour un changement transversal, inconnu,
+release/Core/runtime, tests/CI, rename/delete ou une demande explicite. La commande conserve le
+contrôle complet de `pipeline/tests` et l'équivalent de `workspace.py check` sans répéter ses passes
+de déterminisme. Voir
+[`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md).
 
 Ajouter les tests indiqués par le README du domaine. Pour une modification documentaire, ne pas
 lancer SeedVR, Topaz, un build de contenu ou un packaging.

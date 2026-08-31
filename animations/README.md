@@ -48,12 +48,10 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 
 ```powershell
 python pipeline/scripts/sync_animation_upscale_registry.py --check
-python -m unittest pipeline.tests.test_animation_upscale_pipeline `
-  pipeline.tests.test_animation_interpolation_pipeline `
-  pipeline.tests.test_animation_upscale_30fps_v2 `
-  pipeline.tests.test_animation_runtime_pack `
-  pipeline.tests.test_animation_pack_area_split `
-  pipeline.tests.test_combine_area_pack_splits
+python pipeline/scripts/test_changed.py --changed
 ```
+
+Le groupe `animations` couvre inventaire, spatial, interpolation, 30 fps, runtime et packs. Il ne
+sélectionne aucun test maps ou sprites. Une modification release/runtime déclenche `--full`.
 
 Une QA approuvée et une intégration release restent deux décisions distinctes.

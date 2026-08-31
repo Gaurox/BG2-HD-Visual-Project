@@ -5,11 +5,14 @@
 ```powershell
 python pipeline/scripts/workspace.py check
 python pipeline/scripts/workspace.py refresh
-python -m unittest discover -s pipeline/tests -p "test_*.py"
+python pipeline/scripts/test_changed.py --changed
+python pipeline/scripts/test_changed.py --full
 ```
 
 `check` est sans écriture. `refresh` régénère les inventaires complémentaires, le registre global,
 la couverture, les anomalies, l'index des runs et le rapport d'intégrité.
+Le sélecteur exécute `workspace.py check --after-full-tests` en mono-passe après la suite Python
+complète, car les tests ont déjà prouvé le déterminisme des trois générateurs.
 
 ## Sorties générées
 

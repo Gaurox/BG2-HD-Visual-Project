@@ -20,13 +20,21 @@ class Stage:
     command: tuple[str, ...]
 
 
-def stages(mode: str, python: str = sys.executable) -> tuple[Stage, ...]:
+def stages(
+    mode: str,
+    python: str = sys.executable,
+    *,
+    verify_determinism: bool = True,
+    include_documentation: bool = True,
+) -> tuple[Stage, ...]:
     if mode not in {"refresh", "check"}:
         raise ValueError(f"unsupported workspace mode: {mode}")
-    common = ("--verify-determinism",)
+    common: tuple[str, ...] = ()
+    if verify_determinism:
+        common += ("--verify-determinism",)
     if mode == "check":
         common += ("--check",)
-    return (
+    stages = [
         Stage(
             "inventaires graphiques complémentaires",
             (python, str(SCRIPT_DIR / "build_graphics_inventory.py"), *common),
@@ -39,15 +47,29 @@ def stages(mode: str, python: str = sys.executable) -> tuple[Stage, ...]:
             "intégrité physique et index des runs",
             (python, str(SCRIPT_DIR / "audit_workspace_integrity.py"), *common),
         ),
-        Stage(
-            "documentation canonique",
-            (python, "-m", "unittest", "pipeline.tests.test_repository_docs"),
-        ),
-    )
+    ]
+    if include_documentation:
+        stages.append(
+            Stage(
+                "documentation canonique",
+                (python, "-m", "unittest", "pipeline.tests.test_repository_docs"),
+            )
+        )
+    return tuple(stages)
 
 
-def run(mode: str, *, runner=subprocess.run) -> None:
-    for stage in stages(mode):
+def run(
+    mode: str,
+    *,
+    verify_determinism: bool = True,
+    include_documentation: bool = True,
+    runner=subprocess.run,
+) -> None:
+    for stage in stages(
+        mode,
+        verify_determinism=verify_determinism,
+        include_documentation=include_documentation,
+    ):
         print(f"== {stage.name} ==", flush=True)
         runner(stage.command, cwd=ROOT, check=True)
     print(f"workspace {mode}: OK")
@@ -60,13 +82,25 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         choices=("refresh", "check"),
         help="refresh régénère les projections; check ne modifie aucune source métier",
     )
-    return parser.parse_args(argv)
+    parser.add_argument(
+        "--after-full-tests",
+        action="store_true",
+        help="contrôle mono-passe des sorties; réservé au sélecteur après les tests complets",
+    )
+    args = parser.parse_args(argv)
+    if args.after_full_tests and args.mode != "check":
+        parser.error("--after-full-tests exige le mode check")
+    return args
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     try:
-        run(args.mode)
+        run(
+            args.mode,
+            verify_determinism=not args.after_full_tests,
+            include_documentation=not args.after_full_tests,
+        )
     except subprocess.CalledProcessError as error:
         return error.returncode or 1
     return 0

@@ -42,6 +42,19 @@ class WorkspaceCommandTests(unittest.TestCase):
             commands[3],
             ("python", "-m", "unittest", "pipeline.tests.test_repository_docs"),
         )
+        after_full = [
+            stage.command
+            for stage in workspace.stages(
+                "check",
+                "python",
+                verify_determinism=False,
+                include_documentation=False,
+            )
+        ]
+        self.assertEqual(len(after_full), 3)
+        for command in after_full:
+            self.assertIn("--check", command)
+            self.assertNotIn("--verify-determinism", command)
 
     def test_run_is_fail_fast_and_uses_workspace_root(self) -> None:
         runner = Mock(side_effect=[None, subprocess.CalledProcessError(9, "registry")])
