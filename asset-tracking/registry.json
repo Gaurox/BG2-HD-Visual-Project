@@ -1,6 +1,6 @@
 {
   "asset_count": 15137,
-  "asset_records_sha256": "EA4983E2D8B3CC22368197CC0591C55A4A8004BB9FB6CE655DB5D25C77084739",
+  "asset_records_sha256": "5DE136A16E5CC06AAFA60D1333CD7C34FCDD88BF7D6F63059D421D52ABCA1BCA",
   "assets": [
     {
       "$schema": "docs/asset-tracking-record.schema.json",
@@ -420768,7 +420768,7 @@
     },
     {
       "$schema": "docs/asset-tracking-record.schema.json",
-      "adapter": "videos.inventory.v1",
+      "adapter": "videos.processing.v1",
       "asset_id": "videos:movie-default-deathand",
       "asset_type": "video-cinematic",
       "canonical_source": {
@@ -420778,14 +420778,38 @@
       "domain": "videos",
       "observed_at_utc": "2026-08-30T20:45:45Z",
       "provenance": {
-        "evidence": [],
-        "state": "not-applicable"
+        "evidence": [
+          {
+            "locator": "csv:asset_key=movie:default:DEATHAND",
+            "path": "video/index/processing.csv",
+            "sha256": "7DA0D7E370129F9D49832E794DF9990A17F9F1262AC1F795D4EDDF7F10B325B5"
+          }
+        ],
+        "state": "complete"
       },
       "schema_version": 1,
+      "selections": [
+        {
+          "id": "deathand-upscale-seedvr2-lab-1080p-v1",
+          "role": "run",
+          "source": {
+            "locator": "csv:asset_key=movie:default:DEATHAND",
+            "path": "video/index/processing.csv"
+          }
+        },
+        {
+          "id": "deathand-interpolation-apollo8-30fps-v1",
+          "role": "run",
+          "source": {
+            "locator": "csv:asset_key=movie:default:DEATHAND",
+            "path": "video/index/processing.csv"
+          }
+        }
+      ],
       "states": {
-        "installation": "not-applicable",
-        "production": "not-started",
-        "qa": "not-assessed",
+        "installation": "not-installed",
+        "production": "verified",
+        "qa": "passed",
         "release": "not-evaluated",
         "source": "verified"
       }
@@ -420950,7 +420974,7 @@
           {
             "locator": "csv:asset_key=movie:default:FLYTHR03",
             "path": "video/index/processing.csv",
-            "sha256": "C1C7EE9312A69489DA56E2DA0E6C731B43E32C7FF9CC9C57252899566B92EE76"
+            "sha256": "7DA0D7E370129F9D49832E794DF9990A17F9F1262AC1F795D4EDDF7F10B325B5"
           }
         ],
         "state": "complete"
@@ -422193,7 +422217,7 @@
     {
       "path": "video/index/processing.csv",
       "role": "canonical-source",
-      "sha256": "C1C7EE9312A69489DA56E2DA0E6C731B43E32C7FF9CC9C57252899566B92EE76"
+      "sha256": "7DA0D7E370129F9D49832E794DF9990A17F9F1262AC1F795D4EDDF7F10B325B5"
     },
     {
       "path": "video/index/resources.csv",
@@ -422202,6 +422226,6 @@
     }
   ],
   "schema": "bg2-upscale-global-asset-registry-v1",
-  "source_fingerprint_sha256": "00AE5CE49131170100A469091745455FEE6A7F8B0881DEB193DC400E071B8646",
+  "source_fingerprint_sha256": "C779EE91D15F3A32E9EFF5E0F051B348348AAA8D8FA6A4FAA9293F7E19D41976",
   "source_snapshot_at_utc": "2026-08-30T20:45:45Z"
 }

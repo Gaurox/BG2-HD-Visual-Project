@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 562,
-  "run_records_sha256": "1EAFAD0951EBFF80A8EAE890805B77D9DCAB7B95AA4895F643C785B8DBD6C056",
+  "run_count": 564,
+  "run_records_sha256": "61476B04B22C29AE4298FB97D583BA0CCD57A1F2AC9E9B5A5CDF671493C13BD5",
   "runs": [
     {
       "asset_count": 1,
@@ -13336,6 +13336,50 @@
     {
       "asset_count": 1,
       "asset_ids": [
+        "videos:movie-default-deathand"
+      ],
+      "descriptor_path": "video/deathand/runs/deathand-interpolation-apollo8-30fps-v1/run.json",
+      "domain": "videos",
+      "inputs_state": "verified",
+      "legacy": false,
+      "notes": "interpolation Apollo 8 vérifiée; encodage final, audio, intégration, QA et release non évalués",
+      "outputs_state": "verified",
+      "path": "video/deathand/runs/deathand-interpolation-apollo8-30fps-v1",
+      "provenance_state": "verified",
+      "qa_state": "pipeline-method",
+      "recipe_path": "pipeline/topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json",
+      "result_state": "completed",
+      "run_id": "deathand-interpolation-apollo8-30fps-v1",
+      "run_key": "videos:deathand-interpolation-apollo8-30fps-v1",
+      "run_kind": "topaz-video-apollo8-30fps-v1",
+      "selection_authority": "video/index/processing.csv",
+      "selection_state": "validated-interpolation"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "videos:movie-default-deathand"
+      ],
+      "descriptor_path": "video/deathand/runs/deathand-upscale-seedvr2-lab-1080p-v1/run.json",
+      "domain": "videos",
+      "inputs_state": "verified",
+      "legacy": false,
+      "notes": "upscale vérifié; QA, interpolation, encodage final et intégration non évalués",
+      "outputs_state": "verified",
+      "path": "video/deathand/runs/deathand-upscale-seedvr2-lab-1080p-v1",
+      "provenance_state": "verified",
+      "qa_state": "pipeline-method",
+      "recipe_path": "pipeline/comfyui/workflows/SeedVR-Video-BG2-3B-INT8-1080p-LAB-v2.api.json",
+      "result_state": "completed",
+      "run_id": "deathand-upscale-seedvr2-lab-1080p-v1",
+      "run_key": "videos:deathand-upscale-seedvr2-lab-1080p-v1",
+      "run_kind": "seedvr2-video-3b-int8-1080p-lab-v2",
+      "selection_authority": "video/index/processing.csv",
+      "selection_state": "validated-upscale"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
         "videos:movie-default-flythr03"
       ],
       "descriptor_path": "video/flythr03/runs/flythr03-interpolation-apollo8-30fps-v1/run.json",
@@ -13592,13 +13636,13 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "F2FF159AFEE71CEE847F173076E92C838025EF273300749B8A98571BB67FCB1F",
+  "source_fingerprint_sha256": "72DE4542EFA601AFE21080C6E74D40FE3F2EBC14FD29DED22D88AB8EB4254C3D",
   "summary": {
     "by_domain": {
       "animations": 116,
       "maps": 293,
       "sprites": 143,
-      "videos": 10
+      "videos": 12
     },
     "by_selection_state": {
       "canonical-prototype": 17,
@@ -13609,8 +13653,8 @@
       "release-candidate": 11,
       "selected": 292,
       "unselected": 4,
-      "validated-interpolation": 1,
-      "validated-upscale": 1
+      "validated-interpolation": 2,
+      "validated-upscale": 2
     }
   }
 }
