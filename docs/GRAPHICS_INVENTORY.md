@@ -12,7 +12,8 @@ python pipeline/scripts/build_graphics_inventory.py --extract --verify-determini
 python pipeline/scripts/build_graphics_inventory.py --check
 ```
 
-`BG2EE_GAME_DIR` ou `--game-dir` sélectionne l'installation source. `--extract` matérialise des
+`BG2EE_GAME_ROOT`, le fichier local de `config/` ou `--game-dir` sélectionne l'installation source.
+`BG2EE_GAME_DIR` reste un alias historique. `--extract` matérialise des
 copies exactes dans les dossiers `source/` ignorés par Git. Une copie existante dont le SHA-256
 diverge provoque un échec : les sources extraites ne sont jamais réécrites silencieusement.
 

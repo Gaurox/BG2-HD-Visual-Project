@@ -12,6 +12,9 @@ une décision de sélection, de QA, d'installation ou de release.
 
 ## Contrôle
 
+Le point d'entrée global recommandé est `python pipeline/scripts/workspace.py check`. Pour ce seul
+audit :
+
 ```powershell
 python pipeline/scripts/audit_workspace_integrity.py --verify-determinism
 python pipeline/scripts/audit_workspace_integrity.py --check

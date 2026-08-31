@@ -74,6 +74,10 @@ d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
 
 ## Suivi transversal
 
+- `workspace.py check` contrôle sans écriture les inventaires complémentaires, le registre, le
+  disque, les runs, les chemins et les liens documentaires. `workspace.py refresh` régénère ces
+  inventaires et projections dans cet ordre ; il ne régénère pas `areas.csv` ni les autorités
+  animations/sprites.
 - `workspace_paths.py` et `WorkspacePaths.ps1` résolvent les chemins machine déclarés dans
   `config/workspace-paths.json`, le fichier local ignoré ou les variables d'environnement. Les
   nouveaux jobs sprite utilisent `config://bg2ee_game_root` et `config://mmpx_scalepix` ; ne pas

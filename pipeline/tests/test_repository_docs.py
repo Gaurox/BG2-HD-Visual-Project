@@ -11,6 +11,10 @@ CANONICAL_DOCS = (
     ROOT / "README.md",
     ROOT / "AGENTS.md",
     ROOT / "docs" / "DECISIONS.md",
+    ROOT / "docs" / "ASSET_TRACKING_CONTRACT.md",
+    ROOT / "docs" / "GLOBAL_ASSET_REGISTRY.md",
+    ROOT / "docs" / "GRAPHICS_INVENTORY.md",
+    ROOT / "docs" / "WORKSPACE_INTEGRITY.md",
     ROOT / "pipeline" / "README.md",
     ROOT / "pipeline" / "PROBLEMES_A_RESOUDRE.md",
     ROOT / "pipeline" / "scripts" / "README.md",
@@ -96,6 +100,25 @@ class RepositoryDocumentationTests(unittest.TestCase):
             "docs/DECISIONS.md",
         ):
             self.assertIn(marker, readme)
+
+    def test_agent_entrypoint_covers_workspace_contract(self) -> None:
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8-sig")
+        for marker in (
+            "## Sources de vérité",
+            "## Projections générées",
+            "source",
+            "production",
+            "QA",
+            "installation",
+            "release",
+            "registry.json",
+            "runs.json",
+            "config://",
+            "workspace.py check",
+            "workspace.py refresh",
+            "Ne jamais réécrire un run",
+        ):
+            self.assertIn(marker, agents)
 
     def test_three_new_agent_routes_are_explicit(self) -> None:
         scenarios = {

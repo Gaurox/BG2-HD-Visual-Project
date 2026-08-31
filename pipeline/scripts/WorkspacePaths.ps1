@@ -1,5 +1,3 @@
-Set-StrictMode -Version Latest
-
 $script:BG2WorkspaceRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $script:BG2WorkspacePathConfig = Get-Content -LiteralPath (Join-Path $script:BG2WorkspaceRoot 'config\workspace-paths.json') -Raw | ConvertFrom-Json
 $script:BG2WorkspaceLocalPath = Join-Path $script:BG2WorkspaceRoot $script:BG2WorkspacePathConfig.local_override
