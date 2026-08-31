@@ -79,7 +79,7 @@ def main() -> int:
             res_name = base + suffix
             if res_name not in bmp_index:
                 continue
-            data, _ = resolve_resource(bif, bmp_index[res_name][2])
+            data, bif_name = resolve_resource(bif, bmp_index[res_name][2])
             image = Image.open(io.BytesIO(data))
             image.load()
             image.convert("RGB").save(folder / f"{res_name}_{french}.png")
@@ -89,7 +89,7 @@ def main() -> int:
             rows.append({
                 "nom": label, "base": base, "taille": french, "ressource": res_name,
                 "largeur": image.width, "hauteur": image.height, "mode": image.mode,
-                "sha256": hashlib.sha256(data).hexdigest()[:16],
+                "bif_source": bif_name, "sha256": hashlib.sha256(data).hexdigest(),
                 "creatures": len(carriers[base]),
                 "autres_noms": " / ".join(others[:6]),
             })
@@ -98,7 +98,7 @@ def main() -> int:
 
     with (args.outdir / "inventaire.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         writer = csv.DictWriter(fh, fieldnames=["nom", "base", "taille", "ressource", "largeur",
-                                                "hauteur", "mode", "sha256", "creatures",
+                                                "hauteur", "mode", "bif_source", "sha256", "creatures",
                                                 "autres_noms"])
         writer.writeheader()
         writer.writerows(rows)

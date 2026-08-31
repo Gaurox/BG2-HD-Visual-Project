@@ -60,13 +60,14 @@
     "portraits": {
       "authorities": [
         {
-          "asset_count": 285,
+          "asset_count": 105,
           "authority": "portraits/inventaire_portraits.csv",
           "extra_file_count": 0,
           "hash_mismatch_count": 0,
           "missing_file_count": 0,
           "occurrence_count": 285,
-          "physical_file_count": 285
+          "physical_file_count": 285,
+          "role": "asset-authority"
         },
         {
           "asset_count": 78,
@@ -75,7 +76,8 @@
           "hash_mismatch_count": 0,
           "missing_file_count": 0,
           "occurrence_count": 90,
-          "physical_file_count": 90
+          "physical_file_count": 90,
+          "role": "usage-view"
         },
         {
           "asset_count": 64,
@@ -84,7 +86,8 @@
           "hash_mismatch_count": 0,
           "missing_file_count": 0,
           "occurrence_count": 64,
-          "physical_file_count": 64
+          "physical_file_count": 64,
+          "role": "usage-view"
         },
         {
           "asset_count": 2894,
@@ -93,11 +96,15 @@
           "hash_mismatch_count": 0,
           "missing_file_count": 0,
           "occurrence_count": 2894,
-          "physical_file_count": 2894
+          "physical_file_count": 2894,
+          "role": "external-reference"
         }
       ],
-      "logical_asset_count": 3321,
-      "physical_file_count": 3333
+      "external_reference_physical_file_count": 2894,
+      "logical_asset_count": 105,
+      "physical_file_count": 285,
+      "source_resource_count": 285,
+      "usage_view_physical_file_count": 154
     },
     "sprites": {
       "build_manifest_count": 143,
@@ -377,8 +384,8 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 18353,
-  "registry_asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
+  "registry_asset_count": 15137,
+  "registry_asset_records_sha256": "60E8299D758385ABD88EF613E6682FD3169B28569CC2F50D05C2025B4F34B44C",
   "run_count": 556,
   "run_records_sha256": "DCF722B16999FDC78472809D09A2BCF04181E1BA7B3A543BCBBF5B1EE8AF31BC",
   "schema": "bg2-upscale-workspace-integrity-v1",
@@ -484,7 +491,7 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "729D8D0671640CF976ED62AF218667B4DE0C8C18E2E6C4EE33A802402FA70BFD",
+  "source_fingerprint_sha256": "6BF06D270086447ACC1FA547673015CC72BEEFEA70E9BEF85FE5F79425D9CCB5",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

@@ -171,7 +171,7 @@ def main() -> int:
         details = []
         for sfx, fr in found:
             res_name = base + sfx
-            data, _ = resolve_resource(bif, bmp_index[res_name][2])
+            data, bif_name = resolve_resource(bif, bmp_index[res_name][2])
             image = Image.open(io.BytesIO(data))
             image.load()
             image.convert("RGB").save(folder / f"{res_name}_{fr}.png")
@@ -181,12 +181,13 @@ def main() -> int:
             rows.append({"pnj": npc, "nom": label, "base": base, "taille": fr,
                          "ressource": res_name, "largeur": image.width,
                          "hauteur": image.height, "mode": image.mode,
-                         "sha256": hashlib.sha256(data).hexdigest()[:16], "note": note})
+                         "bif_source": bif_name,
+                         "sha256": hashlib.sha256(data).hexdigest(), "note": note})
         print(f"  {npc:<9} {label:<22} {base:<9} {', '.join(details)}"
               + (f"   [{note}]" if note else ""))
 
     fields = ["pnj", "nom", "base", "taille", "ressource", "largeur", "hauteur",
-              "mode", "sha256", "note", "tailles"]
+              "mode", "bif_source", "sha256", "note", "tailles"]
     with (args.outdir / "inventaire.csv").open("w", newline="", encoding="utf-8-sig") as fh:
         writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()

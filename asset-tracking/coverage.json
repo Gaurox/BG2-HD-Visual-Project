@@ -1,5 +1,5 @@
 {
-  "asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
+  "asset_records_sha256": "60E8299D758385ABD88EF613E6682FD3169B28569CC2F50D05C2025B4F34B44C",
   "domains": [
     {
       "asset_count": 271,
@@ -388,77 +388,76 @@
       "note": "Une entrée par variante jour ou nuit connue."
     },
     {
-      "asset_count": 3321,
+      "asset_count": 105,
       "asset_types": {
-        "portrait-image": 3321
+        "portrait-set": 105
       },
-      "authority": "inventaires CSV existants",
+      "authority": "portraits/inventaire_portraits.csv",
       "axes": {
         "installation": {
           "applicable_count": 0,
           "coverage_percent": null,
           "covered_count": 0,
-          "not_applicable_count": 3321,
+          "not_applicable_count": 105,
           "state_counts": {
-            "not-applicable": 3321
+            "not-applicable": 105
           },
           "unresolved_count": 0
         },
         "production": {
-          "applicable_count": 3321,
-          "coverage_percent": 100.0,
-          "covered_count": 3321,
-          "not_applicable_count": 0,
+          "applicable_count": 0,
+          "coverage_percent": null,
+          "covered_count": 0,
+          "not_applicable_count": 105,
           "state_counts": {
-            "not-started": 3321
+            "not-applicable": 105
           },
           "unresolved_count": 0
         },
         "provenance": {
-          "applicable_count": 0,
-          "coverage_percent": null,
-          "covered_count": 0,
-          "not_applicable_count": 3321,
+          "applicable_count": 105,
+          "coverage_percent": 100.0,
+          "covered_count": 105,
+          "not_applicable_count": 0,
           "state_counts": {
-            "not-applicable": 3321
+            "verified": 105
           },
           "unresolved_count": 0
         },
         "qa": {
-          "applicable_count": 3321,
-          "coverage_percent": 0.0,
+          "applicable_count": 0,
+          "coverage_percent": null,
           "covered_count": 0,
-          "not_applicable_count": 0,
+          "not_applicable_count": 105,
           "state_counts": {
-            "not-assessed": 3321
+            "not-applicable": 105
           },
-          "unresolved_count": 3321
+          "unresolved_count": 0
         },
         "release": {
-          "applicable_count": 3321,
-          "coverage_percent": 0.0,
+          "applicable_count": 0,
+          "coverage_percent": null,
           "covered_count": 0,
-          "not_applicable_count": 0,
+          "not_applicable_count": 105,
           "state_counts": {
-            "not-evaluated": 3321
+            "not-applicable": 105
           },
-          "unresolved_count": 3321
+          "unresolved_count": 0
         },
         "source": {
-          "applicable_count": 3321,
+          "applicable_count": 105,
           "coverage_percent": 100.0,
-          "covered_count": 3321,
+          "covered_count": 105,
           "not_applicable_count": 0,
           "state_counts": {
-            "extracted": 3036,
-            "verified": 285
+            "verified": 105
           },
           "unresolved_count": 0
         }
       },
-      "coverage_status": "partial",
+      "coverage_status": "projected",
       "domain": "portraits",
-      "note": "Inventaires stock et auxiliaires lus ; empreintes tronquées signalées."
+      "note": "Une entrée par base déclarée dans BGEE.lua ou référencée par un CRE ; les tailles L/M/S sont des dépendances."
     },
     {
       "asset_count": 243,
@@ -779,24 +778,25 @@
       "applicable_count": 6185,
       "coverage_percent": 96.22,
       "covered_count": 5951,
-      "not_applicable_count": 12168,
+      "not_applicable_count": 8952,
       "state_counts": {
         "installed": 441,
-        "not-applicable": 12168,
+        "not-applicable": 8952,
         "not-installed": 5510,
         "unknown": 234
       },
       "unresolved_count": 234
     },
     "production": {
-      "applicable_count": 18353,
-      "coverage_percent": 99.82,
-      "covered_count": 18320,
-      "not_applicable_count": 0,
+      "applicable_count": 15032,
+      "coverage_percent": 99.78,
+      "covered_count": 14999,
+      "not_applicable_count": 105,
       "state_counts": {
         "blocked": 593,
         "in-progress": 1,
-        "not-started": 12432,
+        "not-applicable": 105,
+        "not-started": 9111,
         "produced": 4,
         "ready": 4809,
         "rejected": 6,
@@ -806,70 +806,72 @@
       "unresolved_count": 33
     },
     "provenance": {
-      "applicable_count": 481,
+      "applicable_count": 586,
       "coverage_percent": 100.0,
-      "covered_count": 481,
-      "not_applicable_count": 17872,
+      "covered_count": 586,
+      "not_applicable_count": 14551,
       "state_counts": {
         "complete": 15,
-        "not-applicable": 17872,
+        "not-applicable": 14551,
         "partial": 3,
-        "verified": 463
+        "verified": 568
       },
       "unresolved_count": 0
     },
     "qa": {
-      "applicable_count": 18353,
-      "coverage_percent": 2.6,
+      "applicable_count": 15032,
+      "coverage_percent": 3.18,
       "covered_count": 478,
-      "not_applicable_count": 0,
+      "not_applicable_count": 105,
       "state_counts": {
-        "not-assessed": 17875,
+        "not-applicable": 105,
+        "not-assessed": 14554,
         "passed": 343,
         "pending": 135
       },
-      "unresolved_count": 17875
+      "unresolved_count": 14554
     },
     "release": {
-      "applicable_count": 18353,
-      "coverage_percent": 1.74,
+      "applicable_count": 15032,
+      "coverage_percent": 2.13,
       "covered_count": 320,
-      "not_applicable_count": 0,
+      "not_applicable_count": 105,
       "state_counts": {
         "ineligible": 26,
         "integrated": 294,
-        "not-evaluated": 18033
+        "not-applicable": 105,
+        "not-evaluated": 14712
       },
-      "unresolved_count": 18033
+      "unresolved_count": 14712
     },
     "source": {
-      "applicable_count": 18353,
+      "applicable_count": 15137,
       "coverage_percent": 100.0,
-      "covered_count": 18353,
+      "covered_count": 15137,
       "not_applicable_count": 0,
       "state_counts": {
         "available": 20,
-        "extracted": 3436,
+        "extracted": 400,
         "unavailable": 376,
-        "verified": 14521
+        "verified": 14341
       },
       "unresolved_count": 0
     }
   },
   "metrics": {
     "installed": 441,
-    "known_assets": 18353,
+    "known_assets": 15137,
     "known_blocked_or_rejected": 599,
-    "known_unprocessed": 17241,
+    "known_unprocessed": 13920,
     "produced": 479,
-    "provenance_available": 481,
+    "provenance_available": 586,
     "qa_passed": 343,
     "release_eligible_or_beyond": 294,
     "release_integrated_or_published": 294,
-    "source_available": 17977
+    "source_available": 14761
   },
   "schema": "bg2-upscale-global-asset-coverage-v1",
-  "source_fingerprint_sha256": "CF624D28887AFDF06E4BD5AB47FBFAAED7F48CEF8ACE44CE0D9D76D8709B83A0",
+  "source_fingerprint_sha256": "A59AE0FD574DF277DFF3D57202835DF3C480DEFFAE67771789315E9C55BA27D1",
   "source_snapshot_at_utc": "2026-08-30T20:45:45Z",
   "uninventoried_scopes": [
     {

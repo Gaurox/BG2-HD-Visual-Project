@@ -94,9 +94,12 @@ DOMAIN_SCOPE = {
         "note": "Compositions UI/HUD et polices projetées ; les pages PVRZ restent des dépendances.",
     },
     "portraits": {
-        "coverage_status": "partial",
-        "authority": "inventaires CSV existants",
-        "note": "Inventaires stock et auxiliaires lus ; empreintes tronquées signalées.",
+        "coverage_status": "projected",
+        "authority": "portraits/inventaire_portraits.csv",
+        "note": (
+            "Une entrée par base déclarée dans BGEE.lua ou référencée par un CRE ; "
+            "les tailles L/M/S sont des dépendances."
+        ),
     },
     "videos": {
         "coverage_status": "projected",
@@ -2061,148 +2064,126 @@ def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
         )
 
 
-PORTRAIT_INVENTORIES = (
-    {
-        "collection": "stock",
-        "path": "portraits/inventaire_portraits.csv",
-        "key": lambda row: f"{row.get('portrait', '')}-{row.get('taille', '')}",
-        "resource": lambda row: row.get("fichier", ""),
-        "full_hash": True,
-    },
-    {
-        "collection": "recruitable",
-        "path": "portraits-recrutables/inventaire.csv",
-        "key": lambda row: row.get("ressource", ""),
-        "resource": lambda row: row.get("ressource", ""),
-        "full_hash": False,
-    },
-    {
-        "collection": "ppe",
-        "path": "portraits/mod-PPE/inventaire.csv",
-        "key": lambda row: row.get("ressource", ""),
-        "resource": lambda row: row.get("ressource", ""),
-        "full_hash": False,
-    },
-    {
-        "collection": "encounters",
-        "path": "portraits/pnj-rencontres/inventaire.csv",
-        "key": lambda row: row.get("ressource", ""),
-        "resource": lambda row: row.get("ressource", ""),
-        "full_hash": False,
-    },
-)
-
-
 def adapt_portraits(builder: RegistryBuilder) -> None:
-    cross_collection: dict[str, set[str]] = {}
-    for specification in PORTRAIT_INVENTORIES:
-        collection = specification["collection"]
-        path = specification["path"]
-        if not builder.inputs.exists(path):
+    path = "portraits/inventaire_portraits.csv"
+    if not builder.inputs.exists(path):
+        builder.anomaly(
+            "portrait-inventory-missing",
+            "error",
+            "portraits",
+            "inventaire logique des portraits absent",
+            source=path,
+        )
+        return
+
+    rows = builder.inputs.read_csv(path)
+    seen: set[str] = set()
+    for row_index, row in enumerate(rows, 2):
+        base = stable_token(row.get("portrait", "").upper())
+        asset_id = f"portraits:{base}"
+        if base == "unknown":
             builder.anomaly(
-                "portrait-inventory-missing",
-                "warning",
-                "portraits",
-                "inventaire portrait local absent",
-                source=path,
-            )
-            continue
-        rows = builder.inputs.read_csv(path)
-        seen: dict[str, dict[str, str]] = {}
-        duplicate_count = 0
-        conflict_count = 0
-        for row_index, row in enumerate(rows, 2):
-            key = stable_token(str(specification["key"](row)))
-            native_resource = stable_token(str(specification["resource"](row)))
-            asset_id = f"portraits:{collection}:{key}"
-            if key == "unknown":
-                builder.anomaly(
-                    "missing-identity",
-                    "error",
-                    "portraits",
-                    "ligne d'inventaire portrait sans identité exploitable",
-                    source=f"{path}:{row_index}",
-                )
-                continue
-            previous = seen.get(key)
-            if previous is not None:
-                comparable = ("sha256", "largeur", "hauteur", "largeur_px", "hauteur_px")
-                divergent = any(previous.get(field, "") != row.get(field, "") for field in comparable)
-                if divergent:
-                    conflict_count += 1
-                else:
-                    duplicate_count += 1
-                continue
-            seen[key] = row
-            cross_collection.setdefault(native_resource.upper(), set()).add(collection)
-            declared_hash = row.get("sha256", "")
-            full_hash = bool(re.fullmatch(r"[a-fA-F0-9]{64}", declared_hash))
-            states = default_states()
-            states.update(
-                {
-                    "source": "verified" if full_hash else "extracted",
-                    "production": "not-started",
-                    "installation": "not-applicable",
-                }
-            )
-            builder.add(
-                base_record(
-                    asset_id=asset_id,
-                    domain="portraits",
-                    asset_type="portrait-image",
-                    canonical_path=path,
-                    locator=f"csv:{'fichier' if collection == 'stock' else 'ressource'}={specification['resource'](row)}",
-                    states=states,
-                    adapter=f"portraits.{collection}.v1",
-                )
-            )
-        if duplicate_count:
-            builder.anomaly(
-                "duplicate-portrait-rows",
-                "warning",
-                "portraits",
-                "lignes répétées fusionnées sur la même identité native",
-                source=path,
-                details={"affected_count": duplicate_count},
-            )
-        if conflict_count:
-            builder.anomaly(
-                "conflicting-portrait-rows",
+                "missing-identity",
                 "error",
                 "portraits",
-                "lignes divergentes pour la même identité native",
-                source=path,
-                details={"affected_count": conflict_count},
+                "ligne d'inventaire portrait sans base exploitable",
+                source=f"{path}:{row_index}",
             )
-        if not specification["full_hash"]:
-            lengths = sorted({len(row.get("sha256", "")) for row in rows})
+            continue
+        if base in seen:
             builder.anomaly(
-                "truncated-portrait-hashes",
-                "warning",
+                "duplicate-portrait-rows",
+                "error",
                 "portraits",
-                "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
-                source=path,
-                details={"hash_lengths": lengths, "row_count": len(rows)},
+                "base de portrait répétée dans l'inventaire logique",
+                asset_id=asset_id,
+                source=f"{path}:{row_index}",
+            )
+            continue
+        seen.add(base)
+
+        declared_sizes = row.get("tailles", "").strip().upper()
+        actual_sizes = "".join(
+            suffix for suffix in "LMS" if row.get(f"ressource_{suffix.lower()}", "").strip()
+        )
+        if not actual_sizes or declared_sizes != actual_sizes:
+            builder.anomaly(
+                "portrait-member-mismatch",
+                "error",
+                "portraits",
+                "les tailles déclarées ne correspondent pas aux ressources membres",
+                asset_id=asset_id,
+                source=f"{path}:{row_index}",
+                details={"declared_sizes": declared_sizes, "actual_sizes": actual_sizes},
             )
 
-    shared = sorted(
-        (resource, sorted(collections))
-        for resource, collections in cross_collection.items()
-        if resource != "UNKNOWN" and len(collections) > 1
-    )
-    if shared:
-        builder.anomaly(
-            "cross-collection-portrait-identities",
-            "info",
-            "portraits",
-            "des resrefs apparaissent dans plusieurs inventaires locaux",
-            details={
-                "affected_count": len(shared),
-                "examples": [
-                    {"resource": resource, "collections": collections}
-                    for resource, collections in shared[:30]
+        evidence: list[dict[str, str]] = []
+        hashes_complete = True
+        for suffix in actual_sizes:
+            normalized = suffix.lower()
+            relative_file = row.get(f"fichier_{normalized}", "").strip()
+            declared_hash = row.get(f"sha256_{normalized}", "").strip().upper()
+            if not relative_file or not re.fullmatch(r"[A-F0-9]{64}", declared_hash):
+                hashes_complete = False
+                continue
+            evidence.append(
+                {
+                    "path": f"portraits/{relative_file}",
+                    "locator": f"portrait={base};taille={suffix}",
+                    "sha256": declared_hash,
+                }
+            )
+        if not hashes_complete:
+            builder.anomaly(
+                "incomplete-portrait-provenance",
+                "error",
+                "portraits",
+                "une ressource membre n'a pas de chemin ou SHA-256 complet",
+                asset_id=asset_id,
+                source=f"{path}:{row_index}",
+            )
+
+        usage = [
+            field
+            for field in ("selectable", "recrutable", "rencontre")
+            if row.get(field, "").strip().lower() == "yes"
+        ]
+        if not usage:
+            builder.anomaly(
+                "portrait-without-runtime-usage",
+                "error",
+                "portraits",
+                "portrait sans déclaration BGEE.lua ni porteur CRE",
+                asset_id=asset_id,
+                source=f"{path}:{row_index}",
+            )
+
+        states = default_states()
+        states.update(
+            {
+                "source": "verified" if hashes_complete else "extracted",
+                "production": "not-applicable",
+                "qa": "not-applicable",
+                "installation": "not-applicable",
+                "release": "not-applicable",
+            }
+        )
+        builder.add(
+            base_record(
+                asset_id=asset_id,
+                domain="portraits",
+                asset_type="portrait-set",
+                canonical_path=path,
+                locator=f"csv:portrait={base}",
+                states=states,
+                provenance_state="verified" if hashes_complete else "partial",
+                evidence=evidence,
+                legacy=[
+                    {"field": "usage", "value": ",".join(usage), "mapping": "portraits.logical.v2"},
+                    {"field": "tailles", "value": actual_sizes, "mapping": "portraits.logical.v2"},
                 ],
-            },
+                adapter="portraits.logical.v2",
+            )
         )
 
 

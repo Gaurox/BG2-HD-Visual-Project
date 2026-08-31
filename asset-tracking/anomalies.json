@@ -13,39 +13,6 @@
     },
     {
       "anomaly_id": "ANOM-0002",
-      "code": "cross-collection-portrait-identities",
-      "details": {
-        "affected_count": 3,
-        "examples": [
-          {
-            "collections": [
-              "encounters",
-              "ppe"
-            ],
-            "resource": "ABAZHALS"
-          },
-          {
-            "collections": [
-              "encounters",
-              "ppe"
-            ],
-            "resource": "KHALIDM"
-          },
-          {
-            "collections": [
-              "encounters",
-              "ppe"
-            ],
-            "resource": "QUAYLEM"
-          }
-        ]
-      },
-      "domain": "portraits",
-      "message": "des resrefs apparaissent dans plusieurs inventaires locaux",
-      "severity": "info"
-    },
-    {
-      "anomaly_id": "ANOM-0003",
       "code": "sprite-families-without-resources",
       "details": {
         "affected_count": 376
@@ -56,7 +23,7 @@
       "source": "sprite/index/sprite_families.csv"
     },
     {
-      "anomaly_id": "ANOM-0004",
+      "anomaly_id": "ANOM-0003",
       "code": "duplicate-source-content",
       "details": {
         "groups": [
@@ -72,7 +39,7 @@
       "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0005",
+      "anomaly_id": "ANOM-0004",
       "code": "ui-source-rows-reclassified",
       "details": {
         "hud_rows": 2,
@@ -84,7 +51,7 @@
       "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0006",
+      "anomaly_id": "ANOM-0005",
       "asset_id": "animations:bam:AM0516LA",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -98,7 +65,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0007",
+      "anomaly_id": "ANOM-0006",
       "asset_id": "animations:bam:AM0516LB",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -112,7 +79,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0008",
+      "anomaly_id": "ANOM-0007",
       "asset_id": "animations:bam:AM0516LC",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -126,7 +93,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0009",
+      "anomaly_id": "ANOM-0008",
       "asset_id": "animations:bam:AM0602F",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -140,7 +107,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0010",
+      "anomaly_id": "ANOM-0009",
       "asset_id": "animations:bam:AM0604A",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -156,7 +123,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0011",
+      "anomaly_id": "ANOM-0010",
       "asset_id": "animations:bam:SPHINCT",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -170,7 +137,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0012",
+      "anomaly_id": "ANOM-0011",
       "asset_id": "animations:bam:SPHINCT2",
       "code": "duplicate-qa-evidence",
       "details": {
@@ -184,7 +151,7 @@
       "severity": "warning"
     },
     {
-      "anomaly_id": "ANOM-0013",
+      "anomaly_id": "ANOM-0012",
       "asset_id": "animations:bam:SPHINCT",
       "code": "multiple-scoped-corrections",
       "details": {
@@ -199,7 +166,7 @@
       "source": "animations/index/animation_alpha_corrections.csv"
     },
     {
-      "anomaly_id": "ANOM-0014",
+      "anomaly_id": "ANOM-0013",
       "code": "missing-resource-dependencies",
       "details": {
         "affected_count": 2
@@ -210,7 +177,7 @@
       "source": "effects/index/dependencies.csv"
     },
     {
-      "anomaly_id": "ANOM-0015",
+      "anomaly_id": "ANOM-0014",
       "code": "referenced-icon-sources-missing",
       "details": {
         "affected_count": 48
@@ -221,7 +188,7 @@
       "source": "icons/index/manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0016",
+      "anomaly_id": "ANOM-0015",
       "code": "map-source-status-stale",
       "details": {
         "affected_count": 71,
@@ -254,7 +221,7 @@
       "source": "areas.csv"
     },
     {
-      "anomaly_id": "ANOM-0017",
+      "anomaly_id": "ANOM-0016",
       "code": "unclassified-graphical-resources",
       "details": {
         "resource_count": 102
@@ -265,60 +232,7 @@
       "source": "graphics/index/coverage.json"
     },
     {
-      "anomaly_id": "ANOM-0018",
-      "code": "duplicate-portrait-rows",
-      "details": {
-        "affected_count": 12
-      },
-      "domain": "portraits",
-      "message": "lignes répétées fusionnées sur la même identité native",
-      "severity": "warning",
-      "source": "portraits-recrutables/inventaire.csv"
-    },
-    {
-      "anomaly_id": "ANOM-0019",
-      "code": "truncated-portrait-hashes",
-      "details": {
-        "hash_lengths": [
-          16
-        ],
-        "row_count": 90
-      },
-      "domain": "portraits",
-      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
-      "severity": "warning",
-      "source": "portraits-recrutables/inventaire.csv"
-    },
-    {
-      "anomaly_id": "ANOM-0020",
-      "code": "truncated-portrait-hashes",
-      "details": {
-        "hash_lengths": [
-          16
-        ],
-        "row_count": 2894
-      },
-      "domain": "portraits",
-      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
-      "severity": "warning",
-      "source": "portraits/mod-PPE/inventaire.csv"
-    },
-    {
-      "anomaly_id": "ANOM-0021",
-      "code": "truncated-portrait-hashes",
-      "details": {
-        "hash_lengths": [
-          16
-        ],
-        "row_count": 64
-      },
-      "domain": "portraits",
-      "message": "l'inventaire ne conserve pas des SHA-256 complets ; vérification de source limitée",
-      "severity": "warning",
-      "source": "portraits/pnj-rencontres/inventaire.csv"
-    },
-    {
-      "anomaly_id": "ANOM-0022",
+      "anomaly_id": "ANOM-0017",
       "code": "missing-resource-dependencies",
       "details": {
         "affected_count": 1
@@ -329,7 +243,7 @@
       "source": "projectiles/index/dependencies.csv"
     },
     {
-      "anomaly_id": "ANOM-0023",
+      "anomaly_id": "ANOM-0018",
       "code": "hardcoded-source-path",
       "details": {
         "source_game": "E:\\Steam\\steamapps\\common\\Baldur's Gate II Enhanced Edition"
@@ -340,7 +254,7 @@
       "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0024",
+      "anomaly_id": "ANOM-0019",
       "asset_id": "ui:component:main-menu-x4",
       "code": "ui-mainmenu-output-manifest-missing",
       "domain": "ui",
@@ -349,15 +263,13 @@
       "source": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json"
     }
   ],
-  "asset_records_sha256": "371494E36DB55927C69FF5FBEF89148BA2B3D09AD5EA0A8011E21FE187CACAB5",
+  "asset_records_sha256": "60E8299D758385ABD88EF613E6682FD3169B28569CC2F50D05C2025B4F34B44C",
   "generated_by": "pipeline/scripts/build_global_asset_registry.py",
   "schema": "bg2-upscale-global-asset-anomalies-v1",
-  "source_fingerprint_sha256": "CF624D28887AFDF06E4BD5AB47FBFAAED7F48CEF8ACE44CE0D9D76D8709B83A0",
+  "source_fingerprint_sha256": "A59AE0FD574DF277DFF3D57202835DF3C480DEFFAE67771789315E9C55BA27D1",
   "source_snapshot_at_utc": "2026-08-30T20:45:45Z",
   "summary": {
     "by_code": {
-      "cross-collection-portrait-identities": 1,
-      "duplicate-portrait-rows": 1,
       "duplicate-qa-evidence": 7,
       "duplicate-source-content": 1,
       "hardcoded-source-path": 1,
@@ -367,16 +279,15 @@
       "referenced-icon-sources-missing": 1,
       "shared-raw-dependencies": 1,
       "sprite-families-without-resources": 1,
-      "truncated-portrait-hashes": 3,
       "ui-mainmenu-output-manifest-missing": 1,
       "ui-source-rows-reclassified": 1,
       "unclassified-graphical-resources": 1
     },
     "by_severity": {
       "error": 0,
-      "info": 5,
-      "warning": 19
+      "info": 4,
+      "warning": 15
     },
-    "total": 24
+    "total": 19
   }
 }

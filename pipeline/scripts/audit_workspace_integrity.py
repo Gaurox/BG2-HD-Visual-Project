@@ -670,38 +670,75 @@ def audit_source_tables(
 
 
 def audit_portraits(issues: list[dict[str, Any]]) -> dict[str, Any]:
-    """Verify immutable portrait BMPs while preserving occurrence-oriented layouts."""
+    """Vérifie l'autorité logique, les vues d'usage et le corpus PPE séparément."""
 
     audits: list[dict[str, Any]] = []
     stock_rows = read_csv(ROOT / "portraits/inventaire_portraits.csv")
     stock_expected: set[str] = set()
     stock_missing = 0
     stock_mismatch = 0
+    logical_ids: set[str] = set()
+    source_resource_count = 0
     for row in stock_rows:
-        path = ROOT / "portraits" / row["fichier"]
-        stock_expected.add(repo_path(path))
-        if not path.is_file():
-            stock_missing += 1
+        base = row["portrait"].upper()
+        asset_id = f"portraits:{base}"
+        if base in logical_ids:
             add_issue(
                 issues,
                 "error",
-                "portrait-source-missing",
+                "duplicate-portrait-asset",
                 "portraits",
-                "Un portrait stock inventorié est absent.",
-                path=(Path("portraits") / row["fichier"]).as_posix(),
-                asset_id=f"portraits:stock:{row['portrait']}-{row['taille']}",
+                "Une base est répétée dans l'inventaire logique.",
+                path="portraits/inventaire_portraits.csv",
+                asset_id=asset_id,
             )
-        elif sha256_file(path) != row["sha256"].upper():
-            stock_mismatch += 1
+            continue
+        logical_ids.add(base)
+        declared_sizes = row.get("tailles", "").upper()
+        actual_sizes = "".join(
+            suffix
+            for suffix in "LMS"
+            if row.get(f"fichier_{suffix.lower()}", "").strip()
+        )
+        if declared_sizes != actual_sizes or not actual_sizes:
             add_issue(
                 issues,
                 "error",
-                "portrait-source-hash-mismatch",
+                "portrait-member-mismatch",
                 "portraits",
-                "Un portrait stock ne correspond plus à son hash canonique.",
-                path=repo_path(path),
-                asset_id=f"portraits:stock:{row['portrait']}-{row['taille']}",
+                "Les tailles déclarées ne correspondent pas aux fichiers membres.",
+                path="portraits/inventaire_portraits.csv",
+                asset_id=asset_id,
+                details={"declared_sizes": declared_sizes, "actual_sizes": actual_sizes},
             )
+        for suffix in actual_sizes:
+            normalized = suffix.lower()
+            relative_file = row[f"fichier_{normalized}"]
+            path = ROOT / "portraits" / relative_file
+            stock_expected.add(repo_path(path))
+            source_resource_count += 1
+            if not path.is_file():
+                stock_missing += 1
+                add_issue(
+                    issues,
+                    "error",
+                    "portrait-source-missing",
+                    "portraits",
+                    "Une ressource membre du portrait est absente.",
+                    path=(Path("portraits") / relative_file).as_posix(),
+                    asset_id=asset_id,
+                )
+            elif sha256_file(path) != row[f"sha256_{normalized}"].upper():
+                stock_mismatch += 1
+                add_issue(
+                    issues,
+                    "error",
+                    "portrait-source-hash-mismatch",
+                    "portraits",
+                    "Une ressource membre ne correspond plus à son SHA-256 canonique.",
+                    path=repo_path(path),
+                    asset_id=asset_id,
+                )
     stock_present = {
         repo_path(path)
         for folder in ("grands", "moyens", "petits")
@@ -721,8 +758,9 @@ def audit_portraits(issues: list[dict[str, Any]]) -> dict[str, Any]:
     audits.append(
         {
             "authority": "portraits/inventaire_portraits.csv",
-            "asset_count": len(stock_rows),
-            "occurrence_count": len(stock_rows),
+            "role": "asset-authority",
+            "asset_count": len(logical_ids),
+            "occurrence_count": source_resource_count,
             "physical_file_count": len(stock_present),
             "missing_file_count": stock_missing,
             "hash_mismatch_count": stock_mismatch,
@@ -735,19 +773,22 @@ def audit_portraits(issues: list[dict[str, Any]]) -> dict[str, Any]:
             "portraits-recrutables/inventaire.csv",
             "portraits-recrutables",
             "portraits:recruitable",
+            "usage-view",
         ),
         (
             "portraits/pnj-rencontres/inventaire.csv",
             "portraits/pnj-rencontres",
             "portraits:encountered",
+            "usage-view",
         ),
         (
             "portraits/mod-PPE/inventaire.csv",
             "portraits/mod-PPE",
             "portraits:ppe",
+            "external-reference",
         ),
     )
-    for authority, root_text, asset_prefix in grouped_specs:
+    for authority, root_text, asset_prefix, role in grouped_specs:
         rows = read_csv(ROOT / authority)
         root = ROOT / root_text
         files = sorted(root.rglob("*.bmp"), key=lambda path: repo_path(path).casefold())
@@ -803,6 +844,7 @@ def audit_portraits(issues: list[dict[str, Any]]) -> dict[str, Any]:
         audits.append(
             {
                 "authority": authority,
+                "role": role,
                 "asset_count": len(expected_hashes),
                 "occurrence_count": len(rows),
                 "physical_file_count": len(files),
@@ -813,8 +855,17 @@ def audit_portraits(issues: list[dict[str, Any]]) -> dict[str, Any]:
         )
     return {
         "authorities": audits,
-        "logical_asset_count": sum(item["asset_count"] for item in audits),
-        "physical_file_count": sum(item["physical_file_count"] for item in audits),
+        "logical_asset_count": len(logical_ids),
+        "physical_file_count": len(stock_present),
+        "source_resource_count": source_resource_count,
+        "usage_view_physical_file_count": sum(
+            item["physical_file_count"] for item in audits if item["role"] == "usage-view"
+        ),
+        "external_reference_physical_file_count": sum(
+            item["physical_file_count"]
+            for item in audits
+            if item["role"] == "external-reference"
+        ),
     }
 
 

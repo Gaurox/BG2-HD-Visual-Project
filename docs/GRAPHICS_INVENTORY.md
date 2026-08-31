@@ -16,7 +16,7 @@
 | Effets | `effects/index/manifest.json`, `resources.csv`, `dependencies.csv` |
 | Projectiles | `projectiles/index/manifest.json`, `resources.csv`, `dependencies.csv` |
 | Compléments BAM | `graphics/index/supplemental-manifest.json`, `supplemental-assets.csv` |
-| Portraits | CSV d'inventaire dans chaque dossier `portraits*` |
+| Portraits | `portraits/inventaire_portraits.csv` ; une base logique, tailles L/M/S dépendantes |
 
 Animations, sprites et cartes conservent leurs autorités propres ; voir [`../AGENTS.md`](../AGENTS.md).
 L'état de release provient exclusivement des manifestes sous `releases/BG2-HD-Upscale/manifests/`.

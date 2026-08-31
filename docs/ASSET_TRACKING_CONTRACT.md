@@ -117,9 +117,11 @@ présence d'un candidat n'y suffit pas.
 - Interface : les manifests d'extraction, d'assets, de sprites et d'atlas existants, ainsi que les
   index HUD, UI complémentaire et polices, sont projetés à leur granularité propre. Les PVRZ sont
   des dépendances et ne sont pas des assets autonomes.
-- Portraits : `portraits/inventaire_portraits.csv` peut prouver `source=verified` pour les portraits
-  stock extraits. Il ne prouve ni production, ni QA, ni installation, ni release. Les inventaires
-  des sous-domaines restent des autorités locales distinctes.
+- Portraits : `portraits/inventaire_portraits.csv` suit une base logique déclarée dans la table
+  `portraits` de `BGEE.lua` ou référencée par un CRE. Les ressources L/M/S, leurs BIF et SHA-256 sont
+  des membres de cet asset. Les inventaires recrutables/rencontres décrivent des occurrences sans
+  créer d'assets supplémentaires. PPE reste un corpus tiers non installé, hors registre du patch.
+  Faute d'autorité métier, production, QA, installation et release valent `not-applicable`.
 - Vidéos : `video/index/` inventorie un asset par WBM cinématique ou tutoriel. Les WBM de zone
   restent sous `animations/index/` ; les WebM de travail ne sont jamais une autorité.
 - Icônes : `icons/index/` inventorie un jeu BAM par resref partagé par les usages ITM/SPL. Les
@@ -142,8 +144,8 @@ présence d'un candidat n'y suffit pas.
   par zone. Elles ne sont pas interchangeables.
 - Sprite distingue disponibilité technique d'une famille, build d'une génération, installation du
   catalogue et QA ingame. Les décisions ont des granularités différentes.
-- UI conserve plusieurs autorités locales ; portraits ne suit que la source. Le registre agrège
-  ces périmètres sans les fusionner ni inventer de décisions métier.
+- UI conserve plusieurs autorités locales ; portraits ne suit que la source native et fusionne ses
+  vues d'usage par base. Le registre n'invente aucune décision métier.
 - `release.json` décrit la release entière tandis que `content.json` et les registres de candidats
   décrivent la sélection. Un asset peut donc être `integrated` alors que la release globale reste
   `blocked`.

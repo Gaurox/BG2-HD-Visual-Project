@@ -1,14 +1,25 @@
 # Portraits BG2EE
 
-Les CSV ci-dessous sont les autorités d'inventaire. Les scripts les régénèrent depuis les sources ;
-les dossiers d'images et le registre global ne décrivent jamais seuls l'état.
+## Autorité d'assets
 
-| Périmètre | Inventaire canonique | Script de génération |
-|---|---|---|
-| Portraits stock L/M/S | `portraits/inventaire_portraits.csv` | `pipeline/scripts/extract_character_portraits.py` |
-| PNJ recrutables | `portraits-recrutables/inventaire.csv` | `pipeline/scripts/extract_joinable_portraits.py` |
-| PNJ rencontrés | `portraits/pnj-rencontres/inventaire.csv` | `pipeline/scripts/extract_encountered_portraits.py` ; diagnostic `survey_creature_portraits.py` |
-| Mod PPE | `portraits/mod-PPE/inventaire.csv` | `pipeline/scripts/organize_ppe_portraits.py` |
+[`inventaire_portraits.csv`](inventaire_portraits.csv) contient une ligne par base de portrait
+native réellement exposée par BG2EE : déclaration dans la table `portraits` de `BGEE.lua` ou
+référence portée par un CRE. Les BMP L/M/S sont des ressources membres avec BIF et SHA-256 complet,
+pas des assets supplémentaires.
 
-`grands/`, `moyens/` et `petits/` conservent les BMP stock sans conversion ni upscale. Toute
-nouvelle extraction doit préserver la provenance KEY/BIF et être suivie d'un `workspace.py refresh`.
+Génération depuis `config://bg2ee_game_root` :
+
+```powershell
+python pipeline/scripts/extract_character_portraits.py --output portraits --prune
+```
+
+## Vues d'usage et corpus externe
+
+| Périmètre | Inventaire | Rôle | Générateur |
+|---|---|---|---|
+| PNJ recrutables | `portraits-recrutables/inventaire.csv` | occurrences PDIALOG/CRE ; pas de nouveaux assets | `extract_joinable_portraits.py` |
+| PNJ rencontrés | `portraits/pnj-rencontres/inventaire.csv` | occurrences CRE hors recrutables ; pas de nouveaux assets | `extract_encountered_portraits.py` |
+| Mod PPE | `portraits/mod-PPE/inventaire.csv` | corpus tiers non installé ; exclu du registre du patch | `organize_ppe_portraits.py` |
+
+`grands/`, `moyens/` et `petits/` sont des données extraites reconstructibles. Après régénération,
+exécuter `python pipeline/scripts/workspace.py refresh`.

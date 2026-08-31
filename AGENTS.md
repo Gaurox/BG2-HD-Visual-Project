@@ -24,7 +24,7 @@ Point d'entrée opérationnel. Les fichiers générés décrivent l'état ; ils 
 | Sprites : inventaire et éligibilité | [`sprite/index/`](sprite/index/) |
 | Sprites : génération et test actifs | `current-generation.json` et `active-test.json` canoniques |
 | UI, vidéos et autres graphismes | index listés dans [`docs/GRAPHICS_INVENTORY.md`](docs/GRAPHICS_INVENTORY.md) |
-| Portraits | CSV d'inventaire de chaque sous-domaine |
+| Portraits | `portraits/inventaire_portraits.csv` ; vues d'usage recrutables/rencontres séparées |
 | Moteur | `src/iee/game/build_manifest.*` et `docs/validation/` sous [`engine/`](engine/InfinityEngine-Enhancer/source-patchee/) |
 | Release | [`release.json`](releases/BG2-HD-Upscale/manifests/release.json) ; `content.json` est généré |
 

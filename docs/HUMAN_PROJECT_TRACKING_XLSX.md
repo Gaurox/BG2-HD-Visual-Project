@@ -32,6 +32,8 @@ Les sources canoniques exactes restent celles listées dans `registry.json.input
 
 Un dénominateur nul produit `N/A`. Les états `ready`, `in-progress`, `pending`, `failed`, `blocked`,
 `ineligible`, `unknown`, `not-assessed` et `not-evaluated` restent distincts et ne sont pas promus.
+Pour les portraits, les axes hors source restent `N/A` tant qu'aucune autorité de production, QA,
+installation ou release n'existe.
 
 ## Génération et contrôle
 

@@ -164,9 +164,12 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             self.by_id["ui:component:main-menu-x4"]["states"]["release"],
             "integrated",
         )
-        portrait = self.by_id["portraits:stock:AJANTIS-L"]
+        portrait = self.by_id["portraits:AJANTIS"]
         self.assertEqual(portrait["states"]["source"], "verified")
-        self.assertEqual(portrait["states"]["production"], "not-started")
+        self.assertEqual(portrait["states"]["production"], "not-applicable")
+        self.assertEqual(portrait["states"]["qa"], "not-applicable")
+        self.assertEqual(portrait["states"]["release"], "not-applicable")
+        self.assertEqual(portrait["provenance"]["state"], "verified")
         self.assertEqual(
             self.by_id["animations:wbm:oh4200md"]["states"]["production"],
             "not-started",

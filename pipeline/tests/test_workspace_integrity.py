@@ -31,7 +31,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         )
 
     def test_generated_outputs_are_current_and_have_no_errors(self) -> None:
-        self.assertEqual(self.report["registry_asset_count"], 18353)
+        self.assertEqual(self.report["registry_asset_count"], 15137)
         self.assertEqual(self.report["summary"]["by_severity"]["error"], 0)
         self.assertEqual(integrity.check_outputs(self.outputs), [])
 
@@ -90,8 +90,11 @@ class WorkspaceIntegrityTests(unittest.TestCase):
 
     def test_portrait_occurrences_resolve_to_canonical_assets(self) -> None:
         portraits = self.report["domain_audits"]["portraits"]
-        self.assertEqual(portraits["logical_asset_count"], 3321)
-        self.assertEqual(portraits["physical_file_count"], 3333)
+        self.assertEqual(portraits["logical_asset_count"], 105)
+        self.assertEqual(portraits["physical_file_count"], 285)
+        self.assertEqual(portraits["source_resource_count"], 285)
+        self.assertEqual(portraits["usage_view_physical_file_count"], 154)
+        self.assertEqual(portraits["external_reference_physical_file_count"], 2894)
         for audit in portraits["authorities"]:
             self.assertEqual(audit["missing_file_count"], 0, audit["authority"])
             self.assertEqual(audit["hash_mismatch_count"], 0, audit["authority"])
