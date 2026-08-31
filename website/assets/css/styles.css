@@ -106,8 +106,6 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 .hero-facts li { display: grid; gap: .1rem; }
 .hero-facts strong { color: var(--gold-bright); font: 500 1.2rem var(--serif); }
 .hero-facts span { color: rgba(233,223,202,.48); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
-.hero-scroll { position: absolute; z-index: 2; right: max(24px, calc((100vw - 1180px) / 2)); bottom: 2rem; display: flex; align-items: center; gap: .7rem; color: rgba(233,223,202,.45); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; writing-mode: vertical-rl; }
-.hero-scroll span { display: block; width: 1px; height: 3rem; background: linear-gradient(var(--gold), transparent); }
 
 .intro-preview { padding-block: clamp(5rem, 10vw, 9rem); text-align: center; }
 .intro-preview .eyebrow { justify-content: center; }
@@ -133,7 +131,6 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
   .hero-content h1 em { white-space: normal; }
   .hero-facts { gap: 1.1rem; justify-content: space-between; }
   .hero-facts span { max-width: 7rem; }
-  .hero-scroll { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
