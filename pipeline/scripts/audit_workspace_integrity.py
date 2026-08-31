@@ -25,6 +25,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import build_global_asset_registry as global_registry  # noqa: E402
+import audit_animation_pack_cleanup as animation_pack_cleanup  # noqa: E402
 import verify_historical_git_evidence as historical_git_evidence  # noqa: E402
 import workspace_paths  # noqa: E402
 
@@ -38,6 +39,7 @@ RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
 ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
+ANIMATION_PACK_P3_MANIFEST = "docs/workspace-animation-packs-p3-manifest.json"
 ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
 WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
     r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
@@ -2109,6 +2111,56 @@ def audit_workspace_archive_p2(issues: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def audit_animation_pack_archive_p3(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Validate the P3 pack lifecycle without freezing future control-plane updates."""
+
+    manifest_path = ROOT / ANIMATION_PACK_P3_MANIFEST
+    if not manifest_path.is_file():
+        add_issue(
+            issues,
+            "error",
+            "animation-pack-p3-manifest-missing",
+            "animations",
+            "Le reçu de cycle de vie P3 des packs d'animations est absent.",
+            path=ANIMATION_PACK_P3_MANIFEST,
+        )
+        return {
+            "manifest": ANIMATION_PACK_P3_MANIFEST,
+            "pack_count": 0,
+            "keep_active_count": 0,
+            "archive_count": 0,
+            "delete_safe_count": 0,
+            "uncertain_count": 0,
+            "verified": False,
+        }
+
+    data = read_json(manifest_path)
+    errors = animation_pack_cleanup.check(verify_control_plane=False)
+    for message in errors:
+        add_issue(
+            issues,
+            "error",
+            "animation-pack-p3-drift",
+            "animations",
+            "Le rangement P3 des packs d'animations a dérivé.",
+            path="animations/packs-par-zone",
+            details={"error": message},
+        )
+    summary = data["summary"]
+    return {
+        "manifest": ANIMATION_PACK_P3_MANIFEST,
+        "pack_count": int(summary["pack_count"]),
+        "keep_active_count": int(summary["keep_active_count"]),
+        "archive_count": int(summary["archive_count"]),
+        "delete_safe_count": int(summary["delete_safe_count"]),
+        "uncertain_count": int(summary["uncertain_count"]),
+        "original_file_count": int(summary["original_file_count"]),
+        "original_bytes": int(summary["original_bytes"]),
+        "reclaimed_bytes": int(summary["expected_reclaimed_bytes"]),
+        "verified": not errors,
+    }
+
+
 def audit_video_runs(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
 ) -> dict[str, int]:
@@ -2398,6 +2450,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
     sources = audit_source_tables(issues, canonical_counts)
     cleanup = audit_workspace_cleanup(issues)
     archive_p2 = audit_workspace_archive_p2(issues)
+    animation_packs_p3 = audit_animation_pack_archive_p3(issues)
     portability = audit_path_portability(issues)
     domain_audits = {
         "maps": audit_maps(issues, runs),
@@ -2407,6 +2460,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
         "videos": audit_video_runs(issues, runs),
         "workspace_cleanup": cleanup,
         "workspace_archive_p2": archive_p2,
+        "animation_pack_archive_p3": animation_packs_p3,
         "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)

@@ -54,6 +54,15 @@ x4 natif : `OH8100` (dont `BDFORCEW`, 160 frames, fait à elle seule 370 des 375
   l'installateur refuse d'installer si cette liste n'est pas vide.
 - Le script ne modifie jamais le jeu, la DLL, l'INI, `override`, le pack source ni les catalogues.
 
+## Cycle de vie physique
+
+`animations/packs-par-zone/` ne conserve que les lots encore cités par une autorité, un candidat
+release ou l'installation validée courante. Le reçu
+`docs/workspace-animation-packs-p3-manifest.json` classe et résout les anciens lots ; leurs
+descripteurs exacts restent sous `archive/legacy/animation-packs-p3-20260831/` sans conserver les
+copies massives de payloads régénérables. Ne jamais réintroduire un ancien lot depuis son seul nom :
+repartir du run source et créer un nouvel identifiant.
+
 ## Étape 1 — découpage
 
 ```powershell

@@ -234,7 +234,9 @@ Ressource `écarté`.
 | `FLAME2S` | AR0602 | `0x1003` et variantes | `premultiply` + radial | coin `27,8 → 0,0`, cœur inchangé | 2026-08-27 |
 
 Lot `FIRE_1` + `FIRE_4` : `--mode zero`, 1 212 frames et 2 880 282 pixels modifiés sur 83 zones,
-alpha et RGB intra-masque inchangés, pack `combined-20260827-plus-ar0700-fire-rgb-neutral`.
+alpha et RGB intra-masque inchangés. Le split canonique conservé est
+`ar0700-fire-rgb-neutral-20260827`; l'ancien lot combiné
+`combined-20260827-plus-ar0700-fire-rgb-neutral` n'est plus qu'un descripteur P3.
 `FLAME2S` : `--mode premultiply` avec fondu radial, 27 frames et 53 236 pixels, pack
 `combined-20260827-plus-flame2s-ar0602-radialA` ; servi sur AR0602 seulement.
 

@@ -1,6 +1,6 @@
 {
   "schema": "bg2-upscale-animation-path-migrations-v1",
-  "purpose": "Resolve historical proto paths after moving animation work into animations/runs without rewriting sealed artefacts.",
+  "purpose": "Resolve historical proto and pack paths after physical cleanup without rewriting sealed artefacts.",
   "authority_policy": "This file maps physical paths only. It never grants production, QA, installation or release status.",
   "migration_verification": {
     "date": "2026-08-31",
@@ -22,6 +22,50 @@
       "from": "proto/ar0603-portal-spline-fit1",
       "status": "obsolete-unmaterialized",
       "replacement_policy": "create a new animations/runs/<run-id> if this rejected workshop recipe is ever replayed"
+    }
+  ],
+  "pack_migrations": [
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8/AR0602",
+      "to": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
+      "resolution": "exact-active-payload",
+      "manifest_sha256": "8BB95DEC9B3D5A2F8839BAA23EA1F5AD83E6FDDAE142500EA6C433981606F838",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8",
+      "to": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260828-ar0602-portals-30fps-spline-feather8/manifest.json",
+      "resolution": "descriptor-only",
+      "manifest_sha256": "2A9C075D38FA8FF72ED5E4340954E17FF97910582B0A8D8004C4C0D1A7332D32",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "B27C597AD356EDF9A0512DE6AD655B62D20D677C742F29948112977FE7F59C6D",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar1400-t005-nightlight",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar1400-t005-nightlight",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "BCC1BA97914F37588EEA6A564867C45B8E464BF274466A396203E0683454C43C",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha/AR0604",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260823-spline-fit1-alpha/AR0604",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "052B9C40528BC1DA22124D2CD7AB2C0095406F00DDA18D8B036FB8903715F73D",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-rgb-neutral",
+      "to": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-rgb-neutral/manifest.json",
+      "resolution": "descriptor-only",
+      "manifest_sha256": "CDD444F72DC90719A04E1BA8E3769F3EE959B8D8557B460D4202A38400E24D4F",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
     }
   ],
   "migrations": [

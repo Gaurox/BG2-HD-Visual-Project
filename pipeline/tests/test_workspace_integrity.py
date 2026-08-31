@@ -143,6 +143,16 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(archive_p2["verified_exact_duplicate_group_count"], 1)
         self.assertEqual(archive_p2["exact_duplicate_removed_file_count"], 39)
         self.assertEqual(archive_p2["exact_duplicate_removed_bytes"], 1404117)
+        archive_p3 = self.report["domain_audits"]["animation_pack_archive_p3"]
+        self.assertTrue(archive_p3["verified"])
+        self.assertEqual(archive_p3["pack_count"], 71)
+        self.assertEqual(archive_p3["keep_active_count"], 6)
+        self.assertEqual(archive_p3["archive_count"], 18)
+        self.assertEqual(archive_p3["delete_safe_count"], 47)
+        self.assertEqual(archive_p3["uncertain_count"], 0)
+        self.assertEqual(archive_p3["original_file_count"], 152594)
+        self.assertEqual(archive_p3["original_bytes"], 113882412618)
+        self.assertEqual(archive_p3["reclaimed_bytes"], 85753026372)
         archive_manifest = json.loads(
             (ROOT / integrity.ARCHIVE_P2_MANIFEST).read_text(encoding="utf-8")
         )
@@ -190,6 +200,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(len(migration["migrations"]), 64)
         self.assertEqual(len(migration["loose_file_migrations"]), 7)
         self.assertEqual(len(migration["deprecated_output_roots"]), 2)
+        self.assertEqual(len(migration["pack_migrations"]), 6)
 
         for item in migration["migrations"]:
             self.assertFalse((ROOT / item["from"]).exists(), item["from"])
@@ -197,6 +208,13 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         for item in migration["loose_file_migrations"]:
             self.assertFalse((ROOT / item["from"]).exists(), item["from"])
             self.assertTrue((ROOT / item["to"]).is_file(), item["to"])
+        for item in migration["pack_migrations"]:
+            self.assertFalse((ROOT / item["from"]).exists(), item["from"])
+            target = ROOT / item["to"]
+            if item["resolution"] == "descriptor-only":
+                self.assertTrue(target.is_file(), item["to"])
+            else:
+                self.assertTrue(target.is_dir(), item["to"])
 
         retained = set(migration["retained_proto_directories"])
         present = {path.name for path in (ROOT / "proto").iterdir() if path.is_dir()}

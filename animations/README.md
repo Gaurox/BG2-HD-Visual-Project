@@ -13,7 +13,8 @@ moteur charge des textures physiques x4 et, lorsque le registre le demande, une 
 - `index/animation_alpha_corrections.csv` : correctifs alpha approuvés ou expérimentaux.
 - `qa-approval.json` du run : seule approbation temporelle.
 - `releases/BG2-HD-Upscale/manifests/animation-release-candidates.json` : candidats release.
-- `index/path-migrations.json` : résolution physique des anciens chemins `proto/`, sans statut.
+- `index/path-migrations.json` : résolution physique des anciens chemins `proto/` et des packs
+  historiques déplacés, sans statut.
 - `index/qa-evidence-migrations.json` : résolution bornée vers les blobs Git exacts lorsqu'une QA
   scellée cite une ancienne version d'un catalogue canonique mutable ; sans nouveau statut.
 
@@ -43,8 +44,15 @@ animations/
   index/                 # catalogues canoniques
   ressources/            # sources BAM et planches, données ignorées par Git
   runs/                  # production, variantes et preuves historiques, données ignorées
-  packs-par-zone/        # packs matérialisés et backups, données ignorées
+  packs-par-zone/        # seuls packs actifs/indexés, données ignorées
 ```
+
+Le nettoyage P3 conserve six racines actives : les sources exactes des cinq candidats release, le
+dernier lot installé/validé incluant AR1400, et le split canonique FIRE_1/FIRE_4 (une même racine
+peut remplir plusieurs rôles). La classification des 71 racines antérieures, leurs manifests
+hashés et les chemins d'archive sont dans
+`docs/workspace-animation-packs-p3-manifest.json`. Ce reçu est physique uniquement : il ne remplace
+ni les catalogues, ni les QA, ni `animation-release-candidates.json`.
 
 Depuis la migration physique de 2026-08-31, aucun travail animation ne doit être créé sous
 `proto/`. Les anciens prototypes ont conservé leur nom sous `animations/runs/`; leurs rôles

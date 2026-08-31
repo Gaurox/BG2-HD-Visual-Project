@@ -117,6 +117,21 @@ runner actif ne puisse écrire dans l'archive. Aucun job, manifeste historique o
 restauration n'a été réécrit. Cette preuve de déplacement n'accorde aucun état de production, QA,
 installation ou release.
 
+## Packs d'animations P3 du 31 août 2026
+
+`docs/workspace-animation-packs-p3-manifest.json` classe les 71 anciennes racines physiques : six
+restent actives, 18 conservent leurs données historiques utiles dans l'archive et 47 sorties
+générées ne gardent que leur manifeste exact. Pour trois gros lots historiques, seules quatre zones
+uniques sont archivées ; les zones recopiées depuis d'autres lots ont été supprimées. Le contrôle
+`audit_animation_pack_cleanup.py --check` vérifie les archives, les descripteurs et les candidats.
+L'option ponctuelle `--verify-p3-baseline` vérifie en plus les hashes QA/release/runs figés pendant
+P3. L'audit global reste structurel afin de ne pas empêcher de futurs runs légitimes de faire
+évoluer les projections générées.
+
+Les anciens chemins encore cités par une note ou un manifeste scellé sont bornés dans
+`animations/index/path-migrations.json`. Une migration `descriptor-only` documente la provenance
+mais ne constitue jamais un pack installable.
+
 ## Configuration portable
 
 Les clés machine sont déclarées dans `config/workspace-paths.json`. Copier

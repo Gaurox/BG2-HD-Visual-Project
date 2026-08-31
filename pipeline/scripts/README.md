@@ -111,6 +111,10 @@ Les overlays TIS palette encore actifs utilisent `extract_legacy_tis_frames.py` 
   chemins historiques sans réécrire les artefacts scellés. La convention des nouveaux runs et les
   limites sont décrites dans `docs/WORKSPACE_INTEGRITY.md`. Utiliser `--verify-determinism` pour
   générer et `--check` pour un contrôle sans écriture.
+- `audit_animation_pack_cleanup.py --check` valide le reçu physique P3, les six racines de packs
+  actives et les portions historiques archivées. Ajouter `--verify-p3-baseline` uniquement pour
+  revalider les hashes candidats/QA/release/runs capturés pendant P3. `--capture` est réservé à la
+  capture initiale déjà scellée et refuse de l'écraser.
 
 ## Tests
 
