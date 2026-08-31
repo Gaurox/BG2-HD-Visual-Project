@@ -1,9 +1,53 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 564,
-  "run_records_sha256": "61476B04B22C29AE4298FB97D583BA0CCD57A1F2AC9E9B5A5CDF671493C13BD5",
+  "run_count": 568,
+  "run_records_sha256": "A2B6030EDD15AA995EF812B3FA348D0DAC8C454BB1E1EB22735A3C4B57160D05",
   "runs": [
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR0307"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0307/qa-approval.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar0307",
+      "run_key": "animations-pack:AR0307",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR0329"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0329/qa-approval.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar0329",
+      "run_key": "animations-pack:AR0329",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
     {
       "asset_count": 1,
       "asset_ids": [
@@ -909,6 +953,64 @@
       "run_kind": "animation-prototype",
       "selection_authority": "",
       "selection_state": "historical"
+    },
+    {
+      "asset_count": 8,
+      "asset_ids": [
+        "animations:bam:AM0307BH",
+        "animations:bam:AM307RED",
+        "animations:bam:AM307TT1",
+        "animations:bam:AM307UR1",
+        "animations:bam:AM307UR2",
+        "animations:bam:AM307UR3",
+        "animations:pack:AR0307",
+        "animations:pack:AR0329"
+      ],
+      "descriptor_path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "Candidat(s) de zone: AR0307;AR0329",
+      "outputs_state": "present",
+      "path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+      "provenance_state": "verified",
+      "qa_state": "accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+      "run_key": "animations:ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831",
+      "run_kind": "area-animation",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 8,
+      "asset_ids": [
+        "animations:bam:AM0307BH",
+        "animations:bam:AM307RED",
+        "animations:bam:AM307TT1",
+        "animations:bam:AM307UR1",
+        "animations:bam:AM307UR2",
+        "animations:bam:AM307UR3",
+        "animations:pack:AR0307",
+        "animations:pack:AR0329"
+      ],
+      "descriptor_path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "Candidat(s) de zone: AR0307;AR0329",
+      "outputs_state": "present",
+      "path": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+      "run_key": "animations:ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831",
+      "run_kind": "area-animation",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
     },
     {
       "asset_count": 5,
@@ -13636,10 +13738,10 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "72DE4542EFA601AFE21080C6E74D40FE3F2EBC14FD29DED22D88AB8EB4254C3D",
+  "source_fingerprint_sha256": "ED8C887FD1E7616E6341C64063E0AEE11995A638036879EBB5F8F40E1FF72E00",
   "summary": {
     "by_domain": {
-      "animations": 116,
+      "animations": 120,
       "maps": 293,
       "sprites": 143,
       "videos": 12
@@ -13650,7 +13752,7 @@
       "historical": 215,
       "historical-unselected": 5,
       "qa-approved": 15,
-      "release-candidate": 11,
+      "release-candidate": 15,
       "selected": 292,
       "unselected": 4,
       "validated-interpolation": 2,

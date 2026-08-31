@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0329",
+  "status": "accepted",
+  "decision_date": "2026-08-31",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-31T21:22:29.3048784Z",
+  "source_pack": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329",
+  "pack_manifest_sha256": "067EAA1FCF0760EBC6C14B7DF9B6E04F88DA312ACD4A9A5DC734DD77C9EBAAA4",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "61A97F5EA38F06E7B710908772B31ACB0120D8A233ACAC3029B0EDC86F7669D8",
+  "required_resrefs": [
+    "AM0307BH",
+    "AM307RED",
+    "AM307TT1",
+    "AM307UR1",
+    "AM307UR2",
+    "AM307UR3",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831/qa-approval.json",
+      "sha256": "854A3D243609EEB16DA47E5393FC7610314CF7607E06D0899C1D8AEFDDF2294E",
+      "accepted_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF",
+      "accepted_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3",
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570",
+      "accepted_resrefs": [
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-08-31 conservée : les six assets interpolés à 30 FPS et FIRE_4 inchangé du pack AR0329 sont acceptés pour l'intégration release."
+}

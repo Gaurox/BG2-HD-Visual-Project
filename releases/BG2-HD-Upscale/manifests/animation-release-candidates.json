@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration approved 2026-08-31",
+  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31",
   "candidates": [
     {
       "area": "AR0602",
@@ -154,6 +154,60 @@
         "PORTL2A"
       ],
       "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+    },
+    {
+      "area": "AR0307",
+      "component_id": 3005,
+      "component_label": "animation-ar0307",
+      "payload_group": "animation-ar0307",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0307/qa-approval.json",
+      "qa_approval_sha256": "EF45A2F59DB4B05EBCCC8D456A09460D933287C388D7767754BCD8AB03821875",
+      "source_pack": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307",
+      "source_run": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831 + animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 (V2 TimedTimeline 30 FPS apo-8; RGB=0 sous alpha nul réappliqué après interpolation)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9522050D6761C17823A0B2C4D8006547FE3930F61FD733818A037E318C04A7A1",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "61A97F5EA38F06E7B710908772B31ACB0120D8A233ACAC3029B0EDC86F7669D8",
+      "registry_bytes": 1732,
+      "required_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0329",
+      "component_id": 3006,
+      "component_label": "animation-ar0329",
+      "payload_group": "animation-ar0329",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0329/qa-approval.json",
+      "qa_approval_sha256": "2546698A24CFCDEF6EE99B7FE9F4A8010190261DD0C06F868D9D3F7CFDAFA384",
+      "source_pack": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329",
+      "source_run": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831 + animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 (V2 TimedTimeline 30 FPS apo-8; RGB=0 sous alpha nul réappliqué après interpolation)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "067EAA1FCF0760EBC6C14B7DF9B6E04F88DA312ACD4A9A5DC734DD77C9EBAAA4",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "61A97F5EA38F06E7B710908772B31ACB0120D8A233ACAC3029B0EDC86F7669D8",
+      "registry_bytes": 1732,
+      "required_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }
   ]
 }

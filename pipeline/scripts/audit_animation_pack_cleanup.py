@@ -39,6 +39,12 @@ KEEP_ACTIVE: dict[str, str] = {
     "combined-20260828-plus-ar1400-fountains-only": (
         "latest validated installed per-area lot, including AR1400 fountains"
     ),
+    "combined-20260831-ar0307-ar0329-six-bam-x4": (
+        "validated x4 spatial baseline retained with its reversible installation evidence"
+    ),
+    "combined-20260831-ar0307-ar0329-six-bam-30fps-v2": (
+        "approved release-candidate source for AR0307 and AR0329"
+    ),
 }
 
 ARCHIVE_FULL = {
@@ -133,6 +139,8 @@ ALL_PACKS = {
     "combined-20260828-ar1400-t005-nightlight",
     "combined-20260828-plus-ar1400-30fps",
     "combined-20260828-plus-ar1400-fountains-only",
+    "combined-20260831-ar0307-ar0329-six-bam-x4",
+    "combined-20260831-ar0307-ar0329-six-bam-30fps-v2",
     "flame2s-ar0602-radialA-20260827",
     "flame2s-ar0602-split-20260827",
     "flame2s-radialA-premult-20260827",

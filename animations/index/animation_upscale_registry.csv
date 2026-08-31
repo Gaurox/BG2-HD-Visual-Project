@@ -14,7 +14,7 @@ AM0205C,validé-x4,AR0205,1,9,155x130,BAM V1,am0205c-interpolation-27f-15fps-can
 AM0205D,validé-x4,AR0205,1,9,130x150,BAM V1,am0205d-interpolation-27f-15fps-canvas32,Pod ; interpolation x4 de 27 frames adressée sur les 27 positions du cycle BAM à 15 FPS et boucle de 1.8 s ; fade canvas 32 px x4 sur quatre bords ; validé en jeu le 2026-08-21 ; patchs réversibles.
 AM0205E,validé-x4,AR0205,1,9,165x130,BAM V1,am0205e-interpolation-27f-15fps,Version interpolée x4 de 27 frames adressée sur les 27 positions du cycle BAM; cadence native d'environ 15 FPS et boucle de 1.8 s; validée en jeu le 2026-08-21; patch réversible.
 AM0300A,non-traité,AR0300,1,6,210x220,BAM V1,,
-AM0307BH,non-traité,AR0307;AR0329,2,7,170x130,BAM V1,,
+AM0307BH,validé-x4,AR0307;AR0329,2,7,170x130,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Bain ; x4 SeedVR2 7B/LAB (run ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831), puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 7 frames natives -> 21 frames, 28 phases) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
 AM0308A,non-traité,AR0308,8,8,71x77,BAM V1,,
 AM0309A,non-traité,AR0309,1,9,155x165,BAM V1,,
 AM0322A,non-traité,AR0302;AR0322,2,9,164x138,BAM V1,,
@@ -131,11 +131,11 @@ AM3021D,non-traité,AR3021,1,10,90x51,BAM V1,,
 AM3021E,non-traité,AR3021,1,10,84x58,BAM V1,,
 AM3021F,non-traité,AR3021,1,10,82x54,BAM V1,,
 AM3022D,non-traité,AR3022,1,10,55x35,BAM V1,,
-AM307RED,non-traité,AR0307;AR0329,2,7,56x56,BAM V1,,
-AM307TT1,non-traité,AR0307;AR0329,2,4,78x81,BAM V1,,
-AM307UR1,non-traité,AR0307;AR0329,2,4,91x69,BAM V1,,
-AM307UR2,non-traité,AR0307;AR0329,2,4,207x158,BAM V1,,
-AM307UR3,non-traité,AR0307;AR0329,2,4,222x176,BAM V1,,
+AM307RED,validé-x4,AR0307;AR0329,2,7,56x56,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Effet rouge ; x4 SeedVR2 7B/LAB (run ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831), puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 7 frames natives -> 21 frames, 28 phases) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+AM307TT1,validé-x4,AR0307;AR0329,2,4,78x81,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Roue ; x4 SeedVR2 7B/LAB (run ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831), puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+AM307UR1,validé-x4,AR0307;AR0329,2,4,91x69,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Coffre ; x4 SeedVR2 7B/LAB, neutralisation RGB sous alpha nul, puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases ; neutralisation réappliquée après interpolation) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+AM307UR2,validé-x4,AR0307;AR0329,2,4,207x158,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Coffre ; x4 SeedVR2 7B/LAB, neutralisation RGB sous alpha nul, puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases ; neutralisation réappliquée après interpolation) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
+AM307UR3,validé-x4,AR0307;AR0329,2,4,222x176,BAM V1,ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831,"Coffre ; x4 SeedVR2 7B/LAB, neutralisation RGB sous alpha nul, puis V2 TimedTimeline 30 FPS apo-8 (run ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 ; 4 frames natives -> 8 frames, 8 phases ; neutralisation réappliquée après interpolation) ; livré par pack de zone combined-20260831-ar0307-ar0329-six-bam-30fps-v2 ; QA ingame utilisateur validée le 2026-08-31."
 AM4000Z,non-traité,AR4000,10,22,26x67,BAM V1,,
 AM411MAC,non-traité,AR0411,1,9,204x193,BAM V1,,
 AM414E11,non-traité,AR0414,3,8,150x131,BAM V1,,
