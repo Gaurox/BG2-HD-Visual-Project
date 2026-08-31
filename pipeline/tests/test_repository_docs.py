@@ -38,6 +38,22 @@ CANONICAL_DOCS = (
     / "AGENTS.md",
     ROOT / "releases" / "BG2-HD-Upscale" / "README.md",
 )
+AI_FIRST_DOCS = (
+    ROOT / "AGENTS.md",
+    ROOT / "README.md",
+    ROOT / "pipeline" / "README.md",
+    ROOT / "animations" / "README.md",
+    ROOT / "sprite" / "README.md",
+    ROOT / "interface" / "README.md",
+    ROOT / "engine" / "InfinityEngine-Enhancer" / "source-patchee" / "AGENTS.md",
+    ROOT / "engine" / "InfinityEngine-Enhancer" / "source-patchee" / "README.md",
+    ROOT / "releases" / "BG2-HD-Upscale" / "README.md",
+    ROOT
+    / "releases"
+    / "BG2-HD-Upscale"
+    / "docs"
+    / "INSTALLER_AND_UPSCALE_WORKFLOW.md",
+)
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 NON_OPERATIONAL_PARTS = {
     "archive",
@@ -74,6 +90,17 @@ class RepositoryDocumentationTests(unittest.TestCase):
                 if not target.exists():
                     failures.append(f"{path.relative_to(ROOT)} -> {raw_target}")
         self.assertEqual(failures, [], "broken canonical links:\n" + "\n".join(failures))
+
+    def test_ai_first_rule_is_visible_from_main_entry_points(self) -> None:
+        markers = (
+            "Règle documentaire : écrire pour des agents IA",
+            "Toute nouvelle documentation ou modification doit privilégier la densité d’information",
+            "Éviter la prose longue",
+        )
+        for path in AI_FIRST_DOCS:
+            content = path.read_text(encoding="utf-8-sig")
+            for marker in markers:
+                self.assertIn(marker, content, f"missing AI-first rule in {path}")
 
     def test_entry_points_do_not_route_operations_into_data_or_archives(self) -> None:
         failures: list[str] = []

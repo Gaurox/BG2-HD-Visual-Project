@@ -17,9 +17,8 @@
   EEex extended creature marshalling is disabled before renderer startup, so
   new save chains do not receive `X-BIV1.0` records.
 - Keeps legacy saves detect-only; no automatic migration is attempted.
-- Regenerates the map package from `areas.csv`: all 143 currently validated
-  day/night variants are represented, including the 21 previously omitted
-  maps (AR0600/01/04–07, AR0702/04/06–09/12, AR0901–07 and OH5000).
+- Regenerates the map package from `areas.csv`: every currently validated day/night variant is
+  represented. Exact scope is recorded in `manifests/content.json`.
 - Restores the complete validated AR0413 result: canonical 16-page map build,
   12-sentinel TIS contour delta and a rebuilt renderer that classifies the
   stock `WTOIL` overlay as `Oil`. Packaging now rejects stale renderer DLLs

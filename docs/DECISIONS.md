@@ -1,78 +1,77 @@
-# Décisions techniques et essais clos
+# Décisions techniques
 
-Ce fichier conserve uniquement les décisions qui évitent de répéter un essai invalidé. Les états
-de production restent dans les catalogues et manifests. Un essai n'est rouvert que si sa colonne
-« condition de réouverture » est satisfaite.
+Ce fichier conserve les choix réutilisables et les essais à ne pas répéter. Les états courants
+restent dans les catalogues/manifests ; les mesures détaillées restent dans les runs et preuves.
 
-## Maps
+## Cartes
 
-| Décision | Résultat observé | Solution retenue | Condition de réouverture |
-|---|---|---|---|
-| SeedVR2 3B comme modèle général | Détails et cohérence inférieurs aux références 7B/LAB | SeedVR2 7B INT8, LAB, x4 | Nouvelle comparaison contrôlée sur plusieurs zones et QA utilisateur |
-| Upscale global Topaz des cartes | Transforme le décor et la colorimétrie ; essais AR0602 refusés | SeedVR ; Topaz CGI neutre seulement sous masque local explicitement validé | Défaut local impossible à corriger autrement |
-| Découpe bord à bord | Coutures visibles et absence de contexte entre morceaux | `run_seedvr_comfyui.py --split-rows/--split-grid` avec recouvrement et fusion | Jamais sans nouvelle méthode de raccord mesurée |
-| Échelle maps x2 | Ancienne méthode, remplacée | x4 par défaut ; conserver x2 uniquement comme historique | Contrainte moteur ou mémoire démontrée sur un cas précis |
-| Jour et nuit dans un même résultat | Risque de mélanger les WED et pages | Deux traitements indépendants, mêmes gates | Aucun |
-| Secondaires omises par défaut | Ne préserve pas correctement les variantes WED | Préflight puis traitement primaire/secondaire selon le WED | Cas explicitement prouvé équivalent au primaire |
-| Pagination PVRZ fixe 2048 | Dépassement du resref 8 caractères sur les variantes nuit volumineuses | Page 4096 lorsque nécessaire ; gate longueur de resref | Seulement si le moteur étend la limite CResRef |
-| Repack global des PVRZ en zlib niveau 0 pour supprimer le coût Deflate | AR0900 jour : `maximumDemandMs` 43,97 → 12,77 ms et total 746,05 → 228,97 ms, mais cible 8 ms manquée et payload 151,73 → 416,03 Mio (+174,19 %) | Conserver la compression canonique ; garder le repack exact uniquement comme outil de diagnostic hors release | Arbitrage explicite acceptant le surcoût, ou méthode sélective démontrée sous 8 ms sans inflation globale |
-| Repagination uniforme 2112² d'AR0900 sous le plafond de 96 pages | Les 5 752 cellules DXT exactes tiennent en 90 pages et `maximumDemandMs` baisse de 43,97 à 15,22 ms, mais la cible 8 ms reste manquée ; 2112 est déjà la plus petite page carrée compatible avec 96 pages et des cellules de 264 px | Conserver la pagination canonique ; garder la repagination block-exact comme outil expérimental hors release | Nouvelle politique de cache démontrée au-delà de 96 pages, ou préparation lecture/décompression hors frame validée avec fallback natif |
-| Exécuter `CResPVR::Demand` ou publier ses champs depuis un worker | La fonction couple ressource, comptabilité/cache natifs, création de texture et upload GL ; les allocations et propriétaires intermédiaires ne sont pas établis | Phase 3e-A limitée à un *shadow* CPU : PVRZ d'override lu/décompressé dans un buffer privé borné, résultat observé puis jeté sur le thread de rendu, `Demand` natif inchangé | Interdit durablement côté worker ; 3e-B0 n'autorise que le handoff render-thread étroit décrit à la ligne suivante |
-| Remplacer tout `CResPVR::Demand` pour consommer le buffer 3e-A | L'audit 3e-B0 du build 2.7.3 montre une LRU native de 128 `CResPVR*`, le chargement `CRes`, l'allocation/libération moteur et les appels renderer dans la même fonction ; les reproduire créerait un second propriétaire | Intercepter uniquement l'appel `uncompress` à `Demand+0x15F` sur le thread de rendu : copier un PVR décodé strictement apparié dans la destination déjà allouée, puis laisser le natif publier/uploader/libérer ; tout écart rappelle zlib original | Nouveau build manifesté, divergence de la fenêtre post-décompression, ou échec du canari ingame 3e-B1 |
-| Étendre directement le canari 3e-B1 de une à quatre consommations par génération | AR0900 consomme correctement `A090001`, `A090008` et `A090009`, puis crashe sur `A090010` par lecture nulle à `CResPVR::Demand+0x13D`, avant allocation et avant le quatrième handoff `uncompress` ; la restauration exacte passe | Rejeter le candidat 3e-B2 quatre pages ; conserver B1 comme dernière frontière ingame prouvée et bloquer la campagne quatre zones | Candidat diagnostic distinct expliquant ou éliminant `pData=null`, `nSize=0`, `bLoaded=false` avant `Demand+0x13D`, puis gate AR0900 complète et stable |
-| Attribuer le crash 3e-B2 à une quatrième substitution préparée | 3e-B2a borne l'essai à trois revendications : après trois consommations, `A090010` choisit explicitement `native-fallback-claim-limit`, sans revendication active ; l'appel natif `CRes::Demand` renvoie `false` avec `pData=null`, puis le moteur crashe au même `Demand+0x13D`. B2b1 et B2b2 passent respectivement une et deux substitutions, y compris le chargement natif de `A090010` après deux claims | Éliminer la quatrième copie comme mécanisme immédiat ; le seuil d'échec apparaît après la troisième substitution réussie. Ne pas contourner le déréférencement natif ; comparer deux/trois claims avec une télémétrie de cycle de vie sans écriture | Trace B2c des frontières exactes demande/libération/cache identifiant une première divergence, puis candidat corrigé à trois claims, carte AR0900 complète et sortie stable |
-| Utiliser le `CRes::nCount` modélisé pour corriger la comptabilité du handoff 3e-B | B2b1 observe sur des chargements PVR réussis des valeurs impossibles et persistantes (`538976288`, `1213408043`, `1717989152`, `1969448306`), tandis que B2b2 observe zéro sur la même famille ; l'offset/sémantique/durée de vie ne sont donc pas établis | Ne pas interpréter ni écrire `nCount`; garder aussi `bWasMalloced` descriptif seulement. B2c doit tracer identités de pointeurs et frontières de fonctions validées | Layout et sémantique prouvés indépendamment sur le build exact, ou divergence de cycle de vie démontrée sans dépendre de ce champ |
-| Traiter l'échec natif de `A090010` comme une saturation du cache ou de la mémoire | B2c manifeste les frontières exactes : après le troisième claim, `A090010` est connu mais non prêt, le worker possède le job en vol, le helper d'ouverture natif renvoie `false`/erreur 32 (`ERROR_SHARING_VIOLATION`), puis `CRes::Demand=false`. Le cache ne contient que 36/128 entrées, aucune libération n'a lieu, les handles restent à 795 et la mémoire baisse avant l'échec | Retenir une collision de durée de vie du lecteur fichier comme première divergence. Revenir à deux claims et ajouter en B2d une identité *in-flight* avec acquittement de fermeture avant tout fallback natif sur la même page ; ne pas contourner le retour natif | Test de concurrence déterministe de l'acquittement, puis trois claims AR0900, carte complète stable et sortie propre |
-| Entrer en fallback natif pendant que le worker shadow lit la même PVRZ | B2d publie l'identité *in-flight*, annule puis attend son acquittement. AR0900 exerce ce chemin sur `A090000` : attente 42,04 ms, résultat shadow jeté, ouverture native vraie/erreur 0, trois claims préparés consommés, toutes les demandes suivantes vraies et carte stable plus de 30 s avant sortie propre | Conserver le handshake de retrait pour tout fallback visant l'identité en vol ; les jobs seulement pending restent annulables sans attente. Garder retours natifs, limites mémoire et installation transactionnelle autoritaires | Candidat quatre claims AR0900 avec handshake inchangé, quatre consommations, fallback natif complet, stabilité et restauration exacte |
-| Étendre le handshake B2d à quatre claims préparés | B2e consomme `A090001`, `A090008`, `A090009` et `A090010` sur AR0900. `A090000` et `A090011` attendent respectivement 43,58 et 24,01 ms la fermeture du lecteur shadow avant leur fallback natif ; toutes les ouvertures et demandes réussissent, aucun état queue ne reste, la carte est stable plus de 30 s et la restauration est exacte | Qualifier la frontière quatre claims pour la campagne de mesure, sans changer le handshake, les retours natifs, la borne mémoire ni l'opt-in. Conserver le prototype hors release jusqu'à la campagne multi-zone et une décision distincte d'intégration | Campagne contrebalancée de performance et robustesse sur AR0700N, AR0516, AR0602 et AR0900 ; cache OS froid séparé |
-| Préparer eager toutes les pages shadow alors que quatre claims seulement sont consommables | La campagne quatre zones B2e prépare jusqu'à 81 pages concurrentes ; AR0700N totalise 891,74 ms et sa première expansion atteint 22,46 ms avec deux décompressions. B2f soumet une page JIT à la fois : 16/16 claims réussissent, cumul 1 782,73 ms (-6,1 % contre B2e, -8,3 % contre l'historique natif) et expansion AR0700N à 5,92 ms sans décompression | Retenir pour la suite le slot terminé unique / 20 Mio, le worker à priorité inférieure à la normale, les quatre claims JIT et l'arrêt à la première expansion ; conserver le chemin natif et le handshake comme autorités. Prototype toujours default-off et hors release | Campagne A/B répétée et contrebalancée avec le binaire de télémétrie final, puis cache OS froid séparé ; si AR0700N reste au-dessus de sa baseline, raffiner la page choisie ou la fenêtre d'inactivité avant d'augmenter les claims |
-| Lier le rendu x4 des cartes au déplafonnement FPS d'EEex | À 154-165 FPS, les tooltips UI apparaissent immédiatement et clignotent ; désactiver uniquement le préchauffage post-`SwapBuffers` ne change rien, tandis qu'un plafond EEex à 30 FPS corrige le défaut avec la DLL antérieure restaurée | Conserver temporairement le plafond EEex à 30 FPS. Le rendu x4 est indépendant de cette cadence ; seul le préchauffage exprimé en frames progresse moins vite en temps réel. Ne pas modifier `Tooltips=15` | Réactiver les FPS déplafonnés seulement après correction et A/B du chemin EEex `Override_uiDrawMenuStack` ; voir `ENGINE-UI-001` |
-| AR0602 hybride CGI `test-27` | Référence historique, plus canonique | Run x4 7B/LAB sans masque CGI désigné par `areas.csv` | Nouvelle QA comparée et décision catalogue |
-| Overlays liquides globaux | L'installation x4 tardive contredisait la QA maps x2 et WTPOOL x4 restait figé | `overlay-sources.json` : WTLAKE/POOL/LAKA-D x2, WTLAVA-D x4, WTSWAM/WTSEW/WTOIL stock ; chaque fichier publié est épinglé | Nouvelle QA comparative par resref et modification explicite du manifeste |
+| Sujet | Décision retenue | Réouvrir seulement si… |
+|---|---|---|
+| Modèle général | SeedVR2 7B INT8, LAB, x4 | comparaison multi-zone + QA explicite favorable à une autre recette |
+| Topaz global | refusé ; CGI neutre seulement sous masque local | défaut local impossible à corriger autrement |
+| Découpe | orchestrateur à recouvrement, frontières 64 px ; jamais bord à bord | nouvelle méthode de raccord mesurée |
+| x2 maps | historique seulement ; x4 par défaut | contrainte moteur/mémoire démontrée |
+| Jour/nuit | runs, builds et QA indépendants | jamais par simple commodité |
+| Secondaires WED | traiter selon préflight, avec même échelle/découpe | équivalence au primaire prouvée |
+| Pages PVRZ | 2048, ou 4096 lorsque le namespace nuit l'exige | extension prouvée de la limite CResRef |
+| zlib niveau 0 | diagnostic seulement : latence réduite mais cible manquée et fort surcoût | méthode sélective sous la cible ou arbitrage disque explicite |
+| Repagination 2112 | diagnostic block-exact seulement : amélioration insuffisante | nouvelle politique de cache ou off-frame qualifié |
+| `CResPVR::Demand` sur worker | interdit : ressources, cache, GL et ownership sont couplés | aucune ; le worker reste CPU/IO privé |
+| Handoff hors frame | copie uniquement à la frontière zlib manifestée, sur thread de rendu ; fallback natif à tout écart | nouveau build/callsite ou preuve contradictoire |
+| Collision lecteur shadow/native | attendre le retirement du lecteur de la même page avant fallback natif | nouvelle preuve d'ownership plus stricte |
+| Prototype courant | B2f : un slot JIT, quatre claims, priorité basse, arrêt au premier wide-view ; default-off | campagne A/B répétée, contrebalancée et cache froid |
+| FPS EEex | plafond local 30 FPS tant que les tooltips clignotent en mode uncapped | correctif + A/B dédié `Override_uiDrawMenuStack` |
+| Overlays liquides | `overlay-sources.json` décide stock/x2/x4 | QA comparative et modification explicite du manifeste |
+
+Les phases B0→B2f et leurs échecs intermédiaires restent dans
+`engine/InfinityEngine-Enhancer/source-patchee/docs/validation/`. Ne pas réutiliser `nCount` ou
+`bWasMalloced` comme signaux d'ownership : leur offset/sémantique n'ont pas été établis.
 
 ## Animations
 
-| Décision | Résultat observé | Solution retenue | Condition de réouverture |
-|---|---|---|---|
-| Upscaler une planche concaténée | Fuites entre frames et alpha incorrect | Extraire et traiter chaque frame RGB/alpha séparément | Jamais |
-| Interpolation cyclique multi-contexte | Complexité et raccords non maîtrisés | TimedTimeline pause-aware pour le 15→30 fps | Nouvelle preuve ingame sans couture ni dérive |
-| Horloge runtime uniquement diagnostique | Supersédée par le prototype PORTL1A validé | TimedTimeline v2 reste compatible ; v3 ajoute le routage par occurrence, validé avec AR0900 et publié avec le renderer alpha.5 | Nouvelle version de registre ou régression du témoin de rétrocompatibilité v2 (AR0602 jusqu'au 2026-08-28, puis AR0603 : AR0602 est passée en v3 avec PORTL1B 30 fps + FLAME2S) |
-| Pack global supérieur à 512 Mio | Risque mémoire et registre non borné | Packs par zone avec installation/restauration | Nouveau runtime démontré borné |
-| Toute resref d'animation ARE interprétée comme un BAM | 20 faux « BAM manquants » étaient des occurrences `Use WBM resref`, et 6 occurrences à palette externe n'étaient pas signalées | Inventaire typé `BAM`/`WBM`/`PVRZ` avec `palette_mode`/`palette_resref` ; pipeline BAM limité aux BAM à palette intégrée | Ajouter un pipeline dédié et validé pour WBM, PVRZ ou palettes externes |
-| AR0516 et AR0603 incomplets | Runs arrêtés avant authoring/QA, aucune référence externe | Frames brutes supprimées ; request et manifest conservés sous `archive/experiments/abandoned-animation-runs/` | Repartir des sources, jamais des frames partielles |
-| Validation release globale après chaque animation | Staging et hash de l'ensemble du payload, désormais plusieurs Gio, ralentissent la QA sans augmenter la preuve du pack modifié | Gate delta par zone : manifeste, registre, index, frames, staging temporaire et TP2 ; gates globales conservées avant archive | Changement runtime, générateur, format de pack ou Core ; ou préparation d'un package |
-| Masques peints par occurrence comme correction générale de l'occlusion xN | Le runtime xN redessinait après l'occlusion WED ; AR0516 prouve que le moteur calcule déjà la bonne frontière pour `CGameStatic` et `Character` | Bridge moteur pre/post `FXRenderClippingPolys`, global pour les objets éligibles ; masque manuel réservé aux données WED absentes/fausses ou aux exceptions v3 documentées | Nouvelle famille de rendu, nouveau build moteur, régression WED ou échec du bridge correctement tracé |
-| Ajouter `Cover animations` au polygone WED voisin sans mesurer son intersection | Sur le `SPHINCT` inférieur d'AR0516, le polygone 65 avait zéro pixel d'intersection ; le passage `0x05 -> 0x0D` n'a produit aucun changement ingame | Prouver l'intersection alpha/polygone ; si la donnée manque, ajouter un polygone `0x09` local depuis un masque monde validé, sans cuire le masque dans l'animation | Nouveau WED source, contour réellement intersectant ou comportement vanilla différent démontré |
-| `normalise_resref` (pipeline 30 fps V2) rejetait l'underscore via `str.isalnum()` | `FIRE_1`/`FIRE_4`/`FIRE_4GS` bloqués sur tout l'outillage par zone (`split`, `combine`, `merge_v2_base_pack`, `merge_area_pack_resources`), alors que le pipeline V1 et le moteur (`CResRef`) les acceptent déjà | Validateur élargi à `[A-Z0-9_]{1,8}` avec au moins un alphanumérique ; test de régression ajouté ; 29 tests animation verts | Jamais — l'underscore est un caractère de resref Infinity Engine légitime |
-| Traiter un fond/halo d'animation `Blended` par une correction alpha | Sur `FIRE_1`/`FIRE_4` (AR0700), trois passes alpha de plus en plus agressives (feather 40-104, 64-144, coupe 90) n'ont produit aucun changement en jeu : le flag ARE bit 1 met le rendu sur un chemin additif où le RGB est ajouté à la scène même sous `alpha == 0` ; 100 % des texels transparents portaient de la couleur hallucinée par SeedVR jusqu'à la luminance 196 | Gate d'entrée à deux tests (flag bit 1 + couleur sous alpha nul) puis `build_blended_rgb_neutral_pack.py --mode zero` ; alpha et RGB intra-masque inchangés ; voir [`../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md) | Jamais — une correction alpha sur une ressource `Blended` est structurellement sans effet |
-| Upscaler un micro-effet dont le sujet fait moins de ~2 px de rayon en x1 | `BUBBLES2` : 993 bulles de 10 px de surface médiane (rayon 1,8 px), 14 % entre 1 et 4 px. Les deux causes de son rejet de 2026-08-23 ont été corrigées et mesurées — défaut Blended ramené de 69,5/255 à 0, escalier d'alpha corrigé par feather 2 px + premultiply — sans suffire : QA en jeu du 2026-08-27 juge le rendu équivalent au vanilla, alors que l'écart numérique atteint MAE 37-45/255 | Mesurer le rayon équivalent des motifs avant tout run ; sous ~2 px, laisser en x1 natif. La source ne porte que position, taille et luminosité : il n'y a pas de forme à reconstruire. Seuil et commande dans [`../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md) § « Limite » | Re-création d'asset assumée (synthèse procédurale), qui n'est plus de l'upscale et demande sa propre décision |
-| `build_animation_runtime_pack.py` (gate P4 V1) rejetait tout cycle à lookup vide | `FIRE_1` (BAM stock : cycle 0 = `[0..14]`, cycles 1-4 vides de padding) ne pouvait pas produire de pack ; le moteur (`area_animation_x4_registry.cpp`, `slotCount == 0` interdit) ne lit de toute façon pas un cycle vide | `drop_trailing_empty_cycles` : les cycles vides **en fin de liste** sont retirés (cycle 0 conservé) ; un cycle vide non terminal reste rejeté ; toutes les occurrences projet de ces resrefs sont `sequence == 0` donc rien ne pointe sur les cycles retirés ; 2 tests ajoutés | Nouveau format de registre moteur tolérant les cycles vides, ou occurrence `sequence > 0` sur un cycle vide démontrée |
-| Lisser un contour alpha 1 bit en escaliers x4 par une spline périodique seule | `PORTL1A`/`PORTL1B` (AR0602) : la spline `fit 1.0` re-trace le contour sur une courbe plus douce mais garde un bord net 0/255 (~590 px d'alpha intermédiaire/frame) ; escaliers toujours perçus, rejet en jeu 2026-08-28 | Spline périodique `fit 1.0` (+ padding transparent 32 px pour fermer un contour touchant le bord du canvas) **puis** fondu intérieur de silhouette `8 px x4` : le feather transforme le bord en dégradé (~6900 px intermédiaires/frame) et supprime les marches. Recette AM0033AB (feather 6) confirmée ; 8 px retenu pour de grands portails. `alpha_final = alpha_source * spline/255 * smoothstep`. Validé en jeu 2026-08-28 | Contour où seule la trajectoire dérive, sans marche visible : la spline seule peut suffire (cf. AR0604) |
+| Sujet | Décision retenue | Réouvrir seulement si… |
+|---|---|---|
+| Planche concaténée | refusée ; traiter chaque frame RGB/alpha séparément | jamais |
+| Ressource ARE | inventaire typé BAM/WBM/PVRZ ; pipeline BAM limité aux BAM compatibles | pipeline dédié validé pour un autre type/palette |
+| Interpolation | TimedTimeline v2 pause-aware ; v3 ajoute le routage par occurrence | nouvelle timeline sans couture ni dérive, validée ingame |
+| Pack > 512 Mio | pack d'auteur puis split par zone | runtime borné alternatif démontré |
+| Runs interrompus | conserver request/manifest, supprimer les frames partielles, repartir des sources | jamais depuis une sortie partielle |
+| Gate release | delta par zone pendant la tâche ; gates globales au niveau package | changement runtime/format/générateur/Core ou package |
+| Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
+| Polygone WED | prouver l'intersection avec l'alpha ; sinon créer un polygone local borné | WED source ou contour démontré différent |
+| Resref avec `_` | `[A-Z0-9_]{1,8}` avec au moins un alphanumérique | jamais |
+| Ressource `Blended` | neutraliser RGB sous alpha nul ; prémultiplier si alpha dégradé | jamais par correction alpha seule |
+| Micro-effet < ~2 px x1 | conserver le natif : pas assez d'information pour reconstruire une forme | recréation procédurale explicitement assumée |
+| Cycles vides | retirer seulement les cycles vides terminaux non référencés | registre tolérant ou occurrence les référençant |
+| Contour 1 bit crénelé | spline `fit 1.0`, puis feather intérieur si la marche reste visible | QA d'un contour où spline seule suffit |
+
+Le témoin de rétrocompatibilité TimedTimeline v2 est AR0603 ; les packs v3 prouvent le routage par
+occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
+`animation-release-candidates.json` et `renderer-bundle.json`.
 
 ## Sprites
 
-| Décision | Résultat observé | Solution retenue | Condition de réouverture |
-|---|---|---|---|
-| Choix à partir du nom des BAM | Ne couvre pas les relations ANIMATE/INI/ITM et les collisions | Inventaire normalisé `sprite/index/` | Jamais |
-| Filtrage LINEAR comme résultat QA | Lissage d'affichage seulement, non représentatif du baseline | `NEAREST` obligatoire pour QA | Nouvelle décision visuelle explicite |
-| Variantes AA et xBR4 direct CDMB1 | Essais de comparaison, non retenus comme catalogue courant | Pipeline xN cumulatif `run_creature_sprite_x2.py` | Nouvelle demande d'A/B ciblée |
-| `.work/` comme source | Cache CMake reconstruisible | Jobs/manifests sont les sources ; `.work/` est supprimable | Jamais |
-| Runbook d'ajout de famille dans `docs/archive` | Contradiction documentaire | [`sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) est le runbook actif | Lors d'un remplacement complet du pipeline |
+| Sujet | Décision retenue |
+|---|---|
+| Sélection | inventaire normalisé `sprite/index/`, jamais resref deviné |
+| Filtrage QA | `NEAREST`; `LINEAR` est seulement un A/B d'affichage |
+| Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
+| `.work/` | cache supprimable, jamais source |
+| Ajout de famille | runbook actif [`../sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) |
 
-## Installer et Git
+## Release et workspace
 
-| Décision | Résultat observé | Solution retenue | Condition de réouverture |
-|---|---|---|---|
-| Déduire la release du seul ensemble d'area IDs | Environ 37 sélections run/build divergent d'`areas.csv` | Gate exact `area + variante + run + build + hash` avant nouvelle release | Après automatisation de la sélection |
-| Conserver packages et ZIP dans le projet actif | Environ 25 Gio de copies générées et obsolètes | Artifacts externes avec checksum ; sources/manifests seulement dans le dépôt | Aucun |
-| Junctions `node_modules` dans le dépôt | Git et les agents parcourent le runtime externe | Dépendances installées hors dépôt, aucun reparse point | Jamais |
-| Anciens clones externes complets | Données reproductibles et non utilisées | Conserver URL+commit, supprimer le clone | Re-cloner au besoin : `Goddard/Project-IE-4k@c0f8180`, `dtiefling/dshaders@4722673` |
-| Packs/runs/builds data-plane supersédés | 149 groupes, 79,72 Gio, dont de nombreux packs combinés redondants, les anciens backups locaux, 8 builds CMake, 29 objets Git temporaires et un rollback xN dupliqué par l'historique Git | Archive externe `archive-post-release-20260827/MANIFEST.csv`; garder dans le workspace uniquement les sources release, runs catalogue/QA et pack installé courant | Restaurer seulement la ligne nécessaire du manifeste externe |
-| Checkout Git autonome | Clone propre validé sans donnée ignorée : 159 tests Python, Phase 2 et 2 tests C++ passent | Le plan de contrôle committé est la source de vérité ; les gros médias restent hors Git selon `.gitignore` | Réouvrir si un test exige une donnée locale absente du clone |
-| Copies brutes DLL/INI pour installer un candidat moteur local | Les quatre snapshots `map-page-prewarm-*` étaient hashés mais sans reçu, état intermédiaire ni reprise fail-closed | `tools/install_renderer_candidate.py` gère exactement DLL + INI, stage candidat et état antérieur avant copie, refuse toute divergence et restaure sans dépendre du build source | Jamais pour un nouvel essai ; le helper renderer de release reste distinct pour son bundle figé de huit fichiers |
+| Sujet | Décision retenue |
+|---|---|
+| Sélection release | tuple exact asset/variante/run/build/hash, jamais simple liste d'IDs |
+| Packages/ZIP | hors dépôt, reproductibles depuis sources et manifests |
+| Dépendances | hors dépôt, aucun junction `node_modules` |
+| Références externes | URL + commit suffisent ; re-cloner au besoin |
+| Data-plane supersédé | archive externe indexée ; restaurer seulement l'entrée nécessaire |
+| Clone autonome | le plan de contrôle committé fait autorité ; médias ignorés seulement si déclarés |
+| Candidat renderer | transaction DLL+INI avec reçu, jamais copie brute |
 
-## Règle de maintenance
+## Maintenance
 
-Ajouter une ligne seulement après une preuve ou une décision explicite. Ne pas recopier les
-statuts d'`areas.csv`, des index ou de `release.json`. Les rapports détaillés historiques vivent
-dans `docs/archive/` ou `archive/`, hors routage initial des agents.
+Ajouter une décision seulement après preuve ou arbitrage explicite. Ne recopier ici ni compteurs,
+ni statuts d'`areas.csv`, ni listes de release.

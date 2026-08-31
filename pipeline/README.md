@@ -1,205 +1,85 @@
-# Maps — pipeline de référence
+# Pipeline cartes
 
-Point d'entrée unique pour les décors TIS/PVRZ. L'état courant et le run sélectionné viennent
-exclusivement d'[`../areas.csv`](../areas.csv). Les scripts vivent dans `scripts/`; leur classement
-par domaine est dans [`scripts/README.md`](scripts/README.md).
+> **Règle documentaire : écrire pour des agents IA — concis, factuel, opérationnel, non narratif. Éviter la verbosité et les répétitions. Toute nouvelle documentation ou modification doit privilégier la densité d’information, les listes/tableaux, les chemins et commandes précises. Éviter la prose longue, le contexte narratif, les répétitions et les explications principalement destinées à un lecteur humain.**
 
-## Méthode actuelle
+`areas.csv` est l'autorité pour l'état d'une carte, le run et le build retenus. Les dossiers de run,
+captures et projections ne permettent aucune promotion implicite.
 
-```text
-rendus x1 vérifiés
-  → préflight automatique
-  → audit eau si routé
-  → SeedVR2 7B INT8 / LAB / x4
-  → build TIS/PVRZ
-  → vérification technique
-  → installation réversible
-  → QA utilisateur
-  → décision catalogue
-  → décision release séparée
-```
+## Parcours courant
 
-AR0602 utilise actuellement le run x4 7B/LAB sans masque CGI désigné par `areas.csv`. Les anciens
-essais hybrides ou x2 ne sont pas des références.
+| Étape | Commande ou autorité |
+|---|---|
+| Maître x1 | `python pipeline/scripts/validate_x1_masters.py --area ARxxxx` |
+| Préflight | `python pipeline/scripts/audit_area_preflight.py ARxxxx <rapport.json>` |
+| Audit eau | `python pipeline/scripts/audit_water_area.py ARxxxx <rapport.json>` |
+| Exécution SeedVR | `python pipeline/scripts/run_seedvr_comfyui.py ...` |
+| Reconstruction | `python pipeline/scripts/build_upscaled_area.py ARxxxx <principale-x4.png> <build-dir> [secondaire-x4.png]` |
+| Audit technique | `python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>` |
+| Installation/retour arrière | `python pipeline/scripts/inject_build.py ...` |
+| État métier | édition explicite de `areas.csv` après décision QA |
 
-## Procédure et gates
-
-### 1. Vérifier le maître x1
+Pour les entrées `argparse`, consulter l'aide avant un run :
 
 ```powershell
-python pipeline/scripts/validate_x1_masters.py --area ARxxxx
+python pipeline/scripts/run_seedvr_comfyui.py --help
 ```
 
-Gate : `OK` sur chaque variante requise. `--fix` modifie le maître ; ne l'utiliser qu'après avoir
-confirmé que la régénération depuis le jeu est souhaitée.
+Les anciens splitters manuels sont archivés ; ils ne doivent pas être réintroduits dans le parcours
+courant.
 
-### 2. Qualifier la zone
+## Contrats
 
-```powershell
-python pipeline/scripts/audit_area_preflight.py `
-  ARxxxx maps/ARxxxx/runs/<run>/00_preflight/ARxxxx-preflight.json
-```
+- La recette et les entrées d'un run sont figées avant exécution.
+- Les sorties techniques sont contrôlées avant toute installation.
+- Le jeu et InfinityLoader sont fermés avant `inject_build.py install` ou `restore`.
+- Une installation vérifiée ne vaut ni QA ni intégration release.
+- Les overlays de release suivent `overlay-sources.json`; voir l'ambiguïté WTLAVA-D dans
+  [`PROBLEMES_A_RESOUDRE.md`](PROBLEMES_A_RESOUDRE.md).
+- Les chemins machine sont résolus par `config://...` et `WorkspacePaths.ps1`/`workspace_paths.py`.
 
-Gate : `blockers: []`. Le rapport route vers eau, alpha, secondaires et jour/nuit. Lire
-[`AREA_PREFLIGHT.md`](AREA_PREFLIGHT.md) si une branche est requise.
-
-### 3. Auditer l'eau, si routée
-
-```powershell
-python pipeline/scripts/audit_water_area.py `
-  ARxxxx maps/ARxxxx/runs/<run>/00_water_audit/ARxxxx-water-audit.json
-```
-
-Appliquer ensuite [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md). La politique des overlays
-globaux est définie uniquement par `releases/BG2-HD-Upscale/manifests/overlay-sources.json`; ne
-jamais la déduire de l'installation.
-
-### 4. Produire les images x4
-
-Lire `split_seedvr` dans `areas.csv`, puis utiliser uniquement l'orchestrateur actuel :
-
-```powershell
-python pipeline/scripts/run_seedvr_comfyui.py `
-  --area ARxxxx --run <run> --preflight <preflight.json> `
-  --tile-kind tuiles-principales --split-grid 2 4 `
-  --scale 4 --expected-scale 4
-```
-
-Ajouter le secondaire avec `--append` lorsqu'il est requis. Adapter `--split-rows` ou
-`--split-grid C R` à la valeur du catalogue. Le découpage intégré conserve le recouvrement et
-l'alignement ; les anciens splitters manuels sont archivés et ne doivent pas être utilisés.
-
-Gate : dimensions assemblées exactement égales aux dimensions x1 multipliées par quatre.
-
-### 5. Construire
-
-```powershell
-python pipeline/scripts/build_upscaled_area.py `
-  ARxxxx <principale-x4.png> <build-dir> <secondaire-x4.png>
-```
-
-- DXT1 pour une zone totalement opaque ; DXT5 dès qu'un alpha est nécessaire.
-- `0 resampled` obligatoire.
-- Pages PVRZ 2048 par défaut, 4096 seulement pour respecter le resref de huit caractères.
-- Ne jamais forcer une taille de page pour « améliorer » l'image.
-- Appliquer les options eau indiquées par le rapport, pas à l'intuition.
-
-### 6. Vérifier
-
-```powershell
-python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>
-```
-
-Gates : dimensions de tuile x4, `out-of-bounds tiles: 0`, inventaire TIS/PVRZ fermé et noms de
-resref valides. Le PSNR est informatif pour l'eau et les zones transparentes.
-
-### 7. Installer et restaurer
-
-Jeu et InfinityLoader fermés. Utiliser les scripts transactionnels adaptés au type d'asset, garder
-le reçu `install-backup.json`, puis comparer tous les SHA-256. Ne jamais copier un dossier de build
-à la main ni écraser un overlay partagé au passage.
-
-Pour un build de map TIS/PVRZ, commencer par la prévalidation sans écriture, puis installer :
+## Installation transactionnelle
 
 ```powershell
 python pipeline/scripts/inject_build.py install ARxxxx <build-dir> --verify-only
 python pipeline/scripts/inject_build.py install ARxxxx <build-dir>
-```
-
-La seconde commande affiche le chemin du reçu sous `backups/maps/`. Le reçu contient l'état initial
-et l'état installé de chaque fichier, y compris les anciennes pages du même namespace qui doivent
-disparaître. Il est autonome par rapport au dossier de build. Vérifier ou restaurer avec :
-
-```powershell
 python pipeline/scripts/inject_build.py verify <backup-dir>
 python pipeline/scripts/inject_build.py restore <backup-dir>
 ```
 
-L'installation et la restauration refusent les processus actifs, les inventaires incomplets, les
-sauvegardes corrompues et toute divergence de l'`override`. Une opération interrompue conserve un
-état `prepared`, `restoring` ou `recovery-required` reprenable par `restore`; ne jamais corriger cet
-état par des copies manuelles.
+Le dossier exact de sauvegarde et les hashes sont produits par le script ; ne pas maintenir une
+seconde procédure de copie manuelle dans la documentation.
 
-Gate : prévalidation réussie, reçu conservé, inventaire attendu exact et zéro divergence
-build ↔ jeu. L'ancien appel `inject_build.py ARxxxx <build-dir>` reste accepté, mais les commandes
-explicites ci-dessus sont la procédure courante.
+## Mise à jour des projections
 
-Un repack expérimental de l'encapsulation Deflate peut être produit sans reconstruire les images
-ni modifier le PVR/DXT décodé :
+Après une modification d'autorité :
 
 ```powershell
-python pipeline/scripts/repack_pvrz_compression.py `
-  <build-source> <nouveau-dossier-absent> --level 0
+python pipeline/scripts/workspace.py refresh
+python pipeline/scripts/workspace.py check
 ```
 
-Cette branche sert uniquement à mesurer la latence atomique des grandes pages PVRZ. Elle exige un
-nouveau dossier, copie le TIS à l'identique, vérifie le SHA-256 de chaque PVR décodé et émet
-`repack-manifest.json`. Son surcoût disque doit être mesuré ; son résultat reste `pending-ingame`
-et ne change ni `areas.csv` ni la méthode de build courante sans une décision ultérieure.
-
-Une repagination expérimentale peut aussi conserver exactement les blocs DXT de chaque tuile et
-leur padding répliqué, sans décodage ni réencodage de l'image :
-
-```powershell
-python pipeline/scripts/repage_pvrz_blocks.py `
-  <build-source> <nouveau-dossier-absent> `
-  --target-size 2112 --padding 4 --max-pages 96 --level 9
-
-python pipeline/scripts/benchmark_pvrz_decode.py `
-  source=<build-source> candidat=<nouveau-dossier> --iterations 7
-```
-
-La taille cible doit être un multiple exact de `tile_dimension + 2 * padding`. L'outil exige
-l'inventaire PVRZ source exact, vérifie les en-têtes TIS/PVR, recalcule les pages et coordonnées du
-TIS, puis relit la sortie pour prouver chaque cellule DXT octet pour octet. Il émet
-`repage-manifest.json` avec le statut `completed-pending-ingame`. Les dimensions PVR non puissance
-de deux restent une expérience à valider dans le moteur ; ce résultat ne change jamais
-`areas.csv`, le staging ou les manifests de release.
-
-### 8. QA et promotion
-
-Une QA requiert une session ingame contrôlée et l'acceptation explicite de l'utilisateur. Une
-capture, un log, un fichier d'override ou `installed-pending-qa` n'est pas une validation.
-
-Après QA, demander séparément :
-
-1. la mise à jour d'`areas.csv` ;
-2. l'intégration au manifeste de release selon `AGENTS.md`.
-
-Ne jamais modifier `$mapSpecs`, `content.json`, le staging ou l'archive sans autorisation
-affirmative ponctuelle.
-
-## Branches spécialisées actives
+## Guides spécialisés
 
 | Besoin | Document |
 |---|---|
 | Qualification | [`AREA_PREFLIGHT.md`](AREA_PREFLIGHT.md) |
-| Découpage | [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md) |
-| Jour/nuit | [`DAY_NIGHT_MAP_PIPELINE.md`](DAY_NIGHT_MAP_PIPELINE.md) |
+| Variantes jour/nuit | [`DAY_NIGHT_MAP_PIPELINE.md`](DAY_NIGHT_MAP_PIPELINE.md) |
+| Découpe selon dimensions | [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md) |
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
-| Overlays TIS partagés | [`../maps/technical-overlays/README.md`](../maps/technical-overlays/README.md) |
-| Autres liquides | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
+| Liquides et overlays | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
-| Secondaires | [`SECONDARY_TILE_PIPELINE.md`](SECONDARY_TILE_PIPELINE.md) |
-| Nettoyage géométrique alpha | [`GEOMETRIC_ALPHA_MASK_CLEANUP.md`](GEOMETRIC_ALPHA_MASK_CLEANUP.md) |
-| Masque spline validé | [`SPLINE_ALPHA_MASK_PIPELINE.md`](SPLINE_ALPHA_MASK_PIPELINE.md) |
-| Correction Topaz locale | [`TOPAZ_GIGAPIXEL_CLI_REFERENCE.md`](TOPAZ_GIGAPIXEL_CLI_REFERENCE.md) |
-
-Les post-mortems AR0300, AR0413 et AR2903 sont archivés. Leurs conclusions réutilisables sont dans
-[`../docs/DECISIONS.md`](../docs/DECISIONS.md), pas dans la procédure courante.
+| Tuiles secondaires | [`SECONDARY_TILE_PIPELINE.md`](SECONDARY_TILE_PIPELINE.md) |
+| Masques polygonaux | [`GEOMETRIC_ALPHA_MASK_CLEANUP.md`](GEOMETRIC_ALPHA_MASK_CLEANUP.md) |
+| Masques spline | [`SPLINE_ALPHA_MASK_PIPELINE.md`](SPLINE_ALPHA_MASK_PIPELINE.md) |
+| Référence Topaz | [`TOPAZ_GIGAPIXEL_CLI_REFERENCE.md`](TOPAZ_GIGAPIXEL_CLI_REFERENCE.md) |
+| Animations | [`ANIMATION_UPSCALE_PIPELINE.md`](ANIMATION_UPSCALE_PIPELINE.md) |
+| Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
 ## Tests légers
 
-Le cœur maps manque encore de fixtures unitaires complètes. Pour une modification de structure ou
-documentation :
-
 ```powershell
-python -m unittest pipeline.tests.test_repository_docs
-python pipeline/scripts/audit_area_preflight.py --help
-python pipeline/scripts/validate_x1_masters.py --help
-python pipeline/scripts/audit_water_area.py --help
-python pipeline/scripts/run_seedvr_comfyui.py --help
+python -m unittest discover -s pipeline/tests -p "test_*.py"
+python pipeline/scripts/workspace.py check
 ```
 
-Pour une modification fonctionnelle, ajouter d'abord une fixture WED/TIS/PVRZ minimale au lieu de
-lancer une inférence lourde.
+Ne pas lancer SeedVR, Topaz, un build complet ou un packaging pour une modification documentaire.

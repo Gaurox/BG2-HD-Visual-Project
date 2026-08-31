@@ -1,5 +1,7 @@
 # Agent entry point — InfinityEngine-Enhancer
 
+> **Règle documentaire : écrire pour des agents IA — concis, factuel, opérationnel, non narratif. Éviter la verbosité et les répétitions. Toute nouvelle documentation ou modification doit privilégier la densité d’information, les listes/tableaux, les chemins et commandes précises. Éviter la prose longue, le contexte narratif, les répétitions et les explications principalement destinées à un lecteur humain.**
+
 1. Read [`README.md`](README.md), then only the document for the subsystem being changed.
 2. Build identities and offsets live in `src/iee/game/build_manifest.*`; never scatter offsets in
    hooks.

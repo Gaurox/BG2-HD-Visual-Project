@@ -1,46 +1,29 @@
-# BG2 HD Upscale — documentation de release
+# BG2 HD Upscale — release
 
-Ce dossier est la source de la release WeiDU `bg2hd` pour **Baldur's Gate II:
-Enhanced Edition Steam sous Windows x64**. Il ne doit pas etre confondu avec
-l'override de developpement ni avec les archives locales de test.
+> **Règle documentaire : écrire pour des agents IA — concis, factuel, opérationnel, non narratif. Éviter la verbosité et les répétitions. Toute nouvelle documentation ou modification doit privilégier la densité d’information, les listes/tableaux, les chemins et commandes précises. Éviter la prose longue, le contexte narratif, les répétitions et les explications principalement destinées à un lecteur humain.**
 
-## Etat de l'alpha de test
+Source de l'installeur WeiDU `bg2hd` pour BG2EE Steam 2.7.3.0, Windows x64. Ce dossier n'est ni
+l'`override` de développement ni un dépôt d'archives construites.
 
-Cette variante installe BG2HD directement dans le jeu Steam et remplace le
-chemin de lancement par le shim InfinityLoader controle. Elle conserve
-l'executable officiel sous `BaldurReal.exe` et propose un retour vanilla
-complet. Le garde save-neutral est inclus pour les futures sauvegardes ; son
-test natif HD -> desinstallation -> vanilla reste a effectuer par l'utilisateur.
-Le payload est genere depuis les selections explicites du generateur, controle exactement contre
-`areas.csv`, puis couvert par des composants derives. La Phase 2 statique est PASS avec 6 327
-entrees et 286 composants. La release reste non publiable uniquement tant que les gates de cycle
-de vie, restauration vanilla et provenance enumeres dans `manifests/release.json` ne sont pas
-franchis.
+[`manifests/release.json`](manifests/release.json) est l'autorité de version, de cible et de statut.
+La release courante reste `blocked` et son payload `not-buildable` tant que ses conditions ne sont
+pas levées. Les quantités de fichiers/composants se lisent dans `content.json` et `components.json`;
+elles ne sont pas recopiées ici.
 
-`manifests/release.json` reste la source de statut. Les payloads developpes,
-arbres installateur et ZIP sont des sorties regenerables et ne vivent plus dans
-ce dossier source ; les snapshots anterieurs au nettoyage sont conserves sous
-`G:/AI/BG2_Upscale-artifacts/pre-cleanup-20260827/` avec leurs checksums.
+## Lecture
 
-Commencer par le guide correspondant a votre langue :
+- Utilisateur : [`README_FR.md`](README_FR.md) ou [`README_EN.md`](README_EN.md).
+- Agent d'intégration :
+  [`docs/INSTALLER_AND_UPSCALE_WORKFLOW.md`](docs/INSTALLER_AND_UPSCALE_WORKFLOW.md).
+- Contrats : [`docs/MANIFESTS.md`](docs/MANIFESTS.md),
+  [`docs/TESTING.md`](docs/TESTING.md),
+  [`docs/DEPENDENCY_BOOTSTRAP.md`](docs/DEPENDENCY_BOOTSTRAP.md).
+- Exploitation : [`docs/STEAM_INTEGRATION.md`](docs/STEAM_INTEGRATION.md),
+  [`docs/RECOVERY.md`](docs/RECOVERY.md),
+  [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md).
+- Diffusion : [`docs/LICENCES.md`](docs/LICENCES.md),
+  [`docs/DISTRIBUTION_POLICY.md`](docs/DISTRIBUTION_POLICY.md).
+- Suivi : [`CHANGELOG.md`](CHANGELOG.md), [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md).
 
-- [Guide utilisateur francais](README_FR.md)
-- [English user guide](README_EN.md)
-
-## Documentation
-
-- [Architecture](docs/ARCHITECTURE.md) — chaine WeiDU, Steam, EEex et renderer.
-- [Dependances et bootstrap](docs/DEPENDENCY_BOOTSTRAP.md) — contrat EEex,
-  InfinityLoader, Visual C++ et futur installeur guide.
-- [Integration Steam](docs/STEAM_INTEGRATION.md) — lancement, Verify et Repair.
-- [Recuperation](docs/RECOVERY.md) — interruption, erreurs et rapport de bug.
-- [Compatibilite](docs/COMPATIBILITY.md) — perimetre supporte et exclusions.
-- [Licences et provenance](docs/LICENCES.md) — statut de redistribution.
-- [Politique de diffusion](docs/DISTRIBUTION_POLICY.md) — regles de l'alpha
-  gratuite future.
-- [Contrat installeur et integration des upscales](docs/INSTALLER_AND_UPSCALE_WORKFLOW.md)
-  — reference courte pour les agents qui maintiennent le package.
-- [Manifestes](docs/MANIFESTS.md), [maintenance](docs/MAINTENANCE.md),
-  [localisation](docs/LOCALIZATION.md) et [tests](docs/TESTING.md) — regles
-  detaillees pour mainteneurs.
-- [Changelog](CHANGELOG.md) et [problemes connus](KNOWN_ISSUES.md).
+Payload, staging, `content.json` et archive ne sont reconstruits qu'après accord explicite prévu
+par le workflow d'intégration.

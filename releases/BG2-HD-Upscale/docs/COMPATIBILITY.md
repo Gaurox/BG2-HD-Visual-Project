@@ -1,27 +1,24 @@
 # Compatibility
 
-| Item | Supported alpha scope |
+| Item | Supported scope |
 |---|---|
-| Game | Baldur's Gate II: Enhanced Edition Steam 2.7.3.0 |
+| Game | BG2EE Steam 2.7.3.0 |
 | Platform | Windows x64 |
-| Steam app ID | 257350 |
-| Loader | external EEex / InfinityLoader with the hashes in `runtime-compatibility.json` |
-| Launch | normal Steam Play and BG2HD desktop shortcut |
-| Future saves | HD -> confirmed full uninstall -> native vanilla load/save/reload; no `X-BIV1.0` |
-| Content | maps/UI de `content.json`, overlays de `overlay-sources.json`, animations AR0603 v2, AR0602 v3 et AR0900 v3 |
+| Steam app | 257350 |
+| Runtime | exact hashes in `runtime-compatibility.json` |
+| Launch | Steam Play or BG2HD shortcut |
+| Content | exact entries in `content.json`, overlays in `overlay-sources.json` |
+| Animations | approved entries in `animation-release-candidates.json` |
 
-Not supported: Linux, macOS, Steam Deck, Proton, other stores, unknown game
-patches, missing/changed EEex, manual executable layouts, x2-only payloads,
-HUD assets and maps marked pending QA.
+Unsupported: other stores/builds/platforms, manual executable layouts, missing/changed EEex,
+x2-only maps, HUD, pending-QA content and development payloads.
 
-Compatibility is exact, not best-effort. A Steam update must receive a new
-offline/runtime validation before its hash can be admitted.
+Compatibility is exact, not best-effort. A Steam update requires a new offline and runtime
+validation before its identity can enter the manifest.
 
-The map inclusion contract is exact: every validated day/night CSV row must resolve to the same
-reviewed run/build as the release generator, and every payload file is pinned by size and SHA-256.
-A new validated map therefore needs an explicit reviewed canonical source before it can be
-packaged.
+Map inclusion requires the exact `areas.csv` run/build selected by the generator. Animation
+inclusion requires the exact per-area pack, QA snapshot and renderer contract. No list is duplicated
+here.
 
-The future-save contract starts from a vanilla-compatible save chain after the
-save-neutral guard was installed. Existing saves already written with EEex
-extended marshalling are outside that contract and are not rewritten.
+The save-neutral contract applies to new save chains derived from a vanilla-compatible state after
+installation of the guard. Existing saves containing `X-BIV1.0` are detected but not rewritten.
