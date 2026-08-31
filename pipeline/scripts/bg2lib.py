@@ -1,6 +1,8 @@
 import struct, zlib, os
 
-GAME_DIR = r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition"
+from workspace_paths import get_path
+
+GAME_DIR = str(get_path("bg2ee_game_root"))
 KEY_PATH = os.path.join(GAME_DIR, "chitin.key")
 
 _bif_cache = {}

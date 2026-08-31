@@ -7,7 +7,9 @@ import hashlib
 import struct
 import sys
 
-EXE = r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition\Baldur.exe"
+from workspace_paths import get_path
+
+EXE = str(get_path("bg2ee_game_root") / "Baldur.exe")
 
 # Patterns from the BGEE 2.7.3.x manifest (identical to 2.6.6.x).
 PATTERNS = {

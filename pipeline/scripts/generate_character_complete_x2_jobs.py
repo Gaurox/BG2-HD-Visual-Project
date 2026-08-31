@@ -44,6 +44,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     maximum_registry_bytes,
     upscale_contract,
 )
+from workspace_paths import portable_path_reference  # noqa: E402
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
 CHARACTER_ROOT = PROJECT_ROOT / "sprite" / "families" / "playable-characters"
@@ -340,6 +341,8 @@ def build_member_job(
     project_root: Path,
 ) -> dict[str, Any]:
     paths = dict(template["paths"])
+    paths["game_root"] = portable_path_reference("bg2ee_game_root")
+    paths["scalepix"] = portable_path_reference("mmpx_scalepix")
     workspace = destination.parent.parent
     paths.update(
         character_workspace_paths(
@@ -504,7 +507,7 @@ def make_plan(
         },
         "members": [relative_path(path, project_root) for path in member_paths],
         "paths": {
-            "game_root": paths["game_root"],
+            "game_root": portable_path_reference("bg2ee_game_root"),
             "run_dir": relative_path(
                 aggregate_path.parent.parent / "runs" / "xbr2x-x2-xn",
                 project_root,

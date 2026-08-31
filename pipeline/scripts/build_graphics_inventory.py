@@ -14,7 +14,6 @@ from dataclasses import dataclass
 import hashlib
 import io
 import json
-import os
 from pathlib import Path
 import shutil
 import struct
@@ -22,14 +21,11 @@ import subprocess
 from typing import Any, Iterable, Mapping, Sequence
 import zlib
 
+from workspace_paths import get_path
+
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_GAME_DIR = Path(
-    os.environ.get(
-        "BG2EE_GAME_DIR",
-        r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition",
-    )
-)
+DEFAULT_GAME_DIR = get_path("bg2ee_game_root")
 GENERATOR = "pipeline/scripts/build_graphics_inventory.py"
 
 TYPE_BMP = 0x0001

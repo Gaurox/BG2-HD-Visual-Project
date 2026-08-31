@@ -24,6 +24,8 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+
+from workspace_paths import get_service
 import requests
 from PIL import Image
 
@@ -65,7 +67,7 @@ def parse_args() -> argparse.Namespace:
         help="rendu technique à traiter (défaut : tuiles principales)",
     )
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
-    parser.add_argument("--server", default="http://127.0.0.1:8188")
+    parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument(
         "--variant",
         default="seedvr2-7b-int8-lab",

@@ -23,10 +23,11 @@ from pathlib import Path
 from PIL import Image
 
 from bg2lib import load_key, resolve_resource
+from workspace_paths import get_path
 
 BMP, CRE, TDA = 0x0001, 0x03F1, 0x03F4
 SIZES = (("L", "grand"), ("M", "moyen"), ("S", "petit"))
-TLK = Path(r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition\lang\fr_FR\dialog.tlk")
+TLK = get_path("bg2ee_game_root") / "lang/fr_FR/dialog.tlk"
 
 # Entrées de PDIALOG.2DA qui ne sont pas des compagnons du jeu principal.
 SPECIAL = {

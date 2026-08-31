@@ -64,14 +64,13 @@ from run_creature_sprite_x2 import (  # noqa: E402
     parse_ids,
     partition_registry_resources,
 )
+from workspace_paths import get_path  # noqa: E402
 
 
 TDA_TYPE = 0x03F4
 CRE_TYPE = 0x03F1
 SCHEMA = "bg2-upscale-sprite-inventory-v1"
-DEFAULT_GAME_ROOT = Path(
-    "G:/SteamLibrary/steamapps/common/Baldur's Gate II Enhanced Edition"
-)
+DEFAULT_GAME_ROOT = get_path("bg2ee_game_root")
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "sprite" / "index"
 WEAPON_ITEM_TYPES = frozenset(range(15, 31))
 

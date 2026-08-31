@@ -8,7 +8,7 @@ ARE palettes are recorded per occurrence and summarised per BAM.
 Usage:
     python extract_area_animations.py [output_dir] [--dry-run|--index-only]
 
-The default output directory is ``G:\\AI\\BG2_Upscale\\animations``.
+The default output directory is the workspace-relative ``animations`` directory.
 """
 
 from __future__ import annotations

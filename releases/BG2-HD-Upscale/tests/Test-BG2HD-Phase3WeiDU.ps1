@@ -1,9 +1,19 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)] [string]$WeiDUExecutable,
-    [string]$GameRoot = 'E:\Steam\steamapps\common\Baldur''s Gate II Enhanced Edition',
+    [string]$GameRoot = $env:BG2EE_GAME_ROOT,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
 )
+
+$workspaceRoot = $PSScriptRoot
+while ($workspaceRoot -and -not (Test-Path -LiteralPath (Join-Path $workspaceRoot 'config\workspace-paths.json') -PathType Leaf)) {
+    $workspaceRoot = Split-Path -Parent $workspaceRoot
+}
+if ([string]::IsNullOrWhiteSpace($workspaceRoot)) { throw 'Racine du workspace BG2 Upscale introuvable.' }
+. (Join-Path $workspaceRoot 'pipeline\scripts\WorkspacePaths.ps1')
+if ((Get-Variable -Name GameRoot -ErrorAction SilentlyContinue) -and [string]::IsNullOrWhiteSpace($GameRoot)) {
+    $GameRoot = Resolve-BG2WorkspacePath -Key 'bg2ee_game_root' -RequireExisting
+}
 
 $ErrorActionPreference = 'Stop'
 function Require([bool]$Condition, [string]$Message) { if (-not $Condition) { throw $Message } }

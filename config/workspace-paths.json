@@ -1,0 +1,40 @@
+{
+  "schema": "bg2-upscale-workspace-paths-v1",
+  "local_override": "config/workspace-paths.local.json",
+  "authority_policy": "Machine-independent path keys only. Values belong in the ignored local override or matching environment variables.",
+  "paths": {
+    "bg2ee_game_root": {
+      "environment": "BG2EE_GAME_ROOT",
+      "legacy_environments": [
+        "BG2EE_GAME_DIR"
+      ],
+      "kind": "directory",
+      "markers": [
+        "chitin.key"
+      ]
+    },
+    "mmpx_scalepix": {
+      "environment": "BG2EE_MMPX_SCALEPIX",
+      "kind": "file"
+    },
+    "topaz_gigapixel_exe": {
+      "environment": "BG2EE_TOPAZ_EXE",
+      "kind": "file"
+    },
+    "topaz_video_ffmpeg": {
+      "environment": "BG2EE_TOPAZ_VIDEO_FFMPEG",
+      "kind": "file"
+    },
+    "topaz_video_models": {
+      "environment": "BG2EE_TOPAZ_VIDEO_MODELS",
+      "kind": "directory",
+      "markers": []
+    }
+  },
+  "services": {
+    "comfyui_url": {
+      "environment": "BG2EE_COMFYUI_URL",
+      "default": "http://127.0.0.1:8188"
+    }
+  }
+}

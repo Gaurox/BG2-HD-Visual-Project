@@ -20,8 +20,9 @@ python pipeline/scripts/audit_workspace_integrity.py --check
 Le générateur vérifie les 18 353 entrées du registre et ses inputs, les sources extraites des
 animations et des inventaires graphiques, les 3 321 portraits logiques, les maîtres x1 des maps,
 les runs sélectionnés, les preuves QA animation, les manifests de builds sprite et leurs chaînes
-de restauration. Le mode `--check` n'écrit rien et échoue si une projection manque, est périmée
-ou si une erreur d'intégrité est détectée.
+de restauration, les destinations du nettoyage contrôlé et les chemins machine actifs. Le mode
+`--check` n'écrit rien et échoue si une projection manque, est périmée ou si une erreur
+d'intégrité est détectée.
 
 L'index de runs ne change pas les autorités existantes : `areas.csv` sélectionne toujours les
 maps, les manifests et `qa-approval.json` décrivent toujours les animations, et
@@ -68,21 +69,40 @@ outputs restent sous le run ; les backups et archives ne deviennent jamais une a
 - Cinq anciens builds catalogue citent un job mutable qui a depuis évolué. Ils restent scellés et
   signalés. Les nouvelles générations ont l'obligation d'embarquer
   `build/provenance/job.json` avec son hash, déjà imposée par la pipeline sprite.
+- Les 146 jobs/manifests sprite historiques contenant des chemins machine restent inchangés et
+  bornés par `config/historical-absolute-paths.json`. Le runner accepte ces anciennes valeurs,
+  mais les générateurs produisent désormais des références `config://`.
 
-## Écarts non destructifs restant à traiter
+## Nettoyage contrôlé du 31 août 2026
 
-Le rapport généré est la liste exacte et à jour. À la création de ce contrôle, aucun fichier
-canonique ou build sélectionné n'est absent, mais les éléments suivants restent volontairement en
-place :
+La preuve non autoritative est `docs/workspace-cleanup-manifest.json`. Elle enregistre les nombres
+de fichiers, octets et empreintes agrégées vérifiés pendant le déplacement :
 
-- deux outputs intermédiaires absents dans les runs sélectionnés AR0016 et AR0017 ; leurs builds
-  finaux existent ; une régénération ciblée est préférable à toute reconstruction supposée ;
-- neuf images d'essai AR0410 mélangées aux maîtres x1, candidates à archivage ;
-- un squelette de run animation vide, candidat à suppression après confirmation ;
-- 314 rendus/conversions vidéo (`270 PNG`, `37 WebM`, `7 MP4`) non indexés, candidats à un
-  archivage par run après identification de leur recette ;
-- les cinq divergences historiques de job sprite décrites ci-dessus ;
-- les fichiers de `temp/`, candidats à une revue séparée.
+- les neuf essais AR0410 sont sous
+  `maps/AR0410/runs/legacy-upscale-tests-20260818/`, hors des maîtres x1 ;
+- les 314 dérivés vidéo sont répartis dans quatre runs sous `video/runs/` et reliés aux assets
+  concernés sans décision QA ;
+- les 122 fichiers de `temp/` sont conservés sous
+  `archive/workspace-cleanup-20260831/temp-20260827-20260828/` ;
+- `animations/runs/am0900dm-seedvr7b-lab-x4` a été supprimé après preuve qu'il ne contenait aucun
+  fichier et n'était référencé par aucune autorité.
 
-Aucun de ces éléments n'est supprimé, déplacé, promu en QA ou intégré à la release par cet audit.
-Le payload local et les archives ne sont pas reconstruits.
+Le contrôle courant vérifie 445 fichiers préservés et l'absence de retour dans les zones actives.
+Les deux outputs intermédiaires absents AR0016/AR0017 restent volontairement non régénérés : leurs
+builds sélectionnés existent et aucune validation actuelle ne nécessite ces intermédiaires.
+
+## Configuration portable
+
+Les clés machine sont déclarées dans `config/workspace-paths.json`. Copier
+`config/workspace-paths.example.json` vers le fichier ignoré
+`config/workspace-paths.local.json`, ou définir les variables d'environnement indiquées :
+
+- `BG2EE_GAME_ROOT` : installation BG2EE ;
+- `BG2EE_MMPX_SCALEPIX` : page `scalepix.html` de MMPX ;
+- `BG2EE_TOPAZ_EXE` : Gigapixel ;
+- `BG2EE_TOPAZ_VIDEO_FFMPEG` et `BG2EE_TOPAZ_VIDEO_MODELS` : Topaz Video AI ;
+- `BG2EE_COMFYUI_URL` : service ComfyUI, avec défaut local.
+
+`workspace_paths.py` résout la configuration pour Python et les références des nouveaux jobs ;
+`WorkspacePaths.ps1` fournit le même accès aux scripts PowerShell. Les scripts PowerShell
+historiques acceptent aussi les variables directement. Aucune valeur locale n'est versionnée.

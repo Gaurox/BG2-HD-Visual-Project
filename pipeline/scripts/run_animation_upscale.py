@@ -23,6 +23,8 @@ from typing import Any
 
 from PIL import Image
 
+from workspace_paths import get_service
+
 from run_seedvr_comfyui import APPROVED_3B_SHA256, APPROVED_7B_SHA256, sha256_file
 
 
@@ -62,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scale", type=int, choices=(2, 4), default=4)
     parser.add_argument("--pad", type=int, default=32)
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
-    parser.add_argument("--server", default="http://127.0.0.1:8188")
+    parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument("--poll-seconds", type=float, default=2.0)
     parser.add_argument("--timeout-seconds", type=float, default=900.0)
     parser.add_argument("--prepare-only", action="store_true", help="copie et extrait sans contacter ComfyUI")

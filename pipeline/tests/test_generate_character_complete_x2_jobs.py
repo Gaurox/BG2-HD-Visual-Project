@@ -53,8 +53,8 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
                 "runtime_profile": "character-bg2ee-2.7.3.0",
             },
             "paths": {
-                "game_root": "X:/Fake BG2",
-                "scalepix": "X:/Fake/scalepix.html",
+                "game_root": "config://bg2ee_game_root",
+                "scalepix": "config://mmpx_scalepix",
                 "engine_source": f"{self._relative(self.root)}/engine/source",
                 **workspace_paths,
             },
@@ -219,6 +219,18 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
             for write in plan.writes
             if write.path != self.aggregate
         }
+        self.assertEqual(
+            generated_by_prefix["WQNH0"]["paths"]["game_root"],
+            "config://bg2ee_game_root",
+        )
+        self.assertEqual(
+            generated_by_prefix["WQNH0"]["paths"]["scalepix"],
+            "config://mmpx_scalepix",
+        )
+        self.assertEqual(
+            plan.aggregate_payload["paths"]["game_root"],
+            "config://bg2ee_game_root",
+        )
         self.assertEqual(
             generated_by_prefix["WQNH0"]["animation"]["layer"]["item_resref"],
             "AAHELM",

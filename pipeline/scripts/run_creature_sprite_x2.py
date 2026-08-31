@@ -30,6 +30,8 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 
+from workspace_paths import resolve_path_reference
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parents[1]
@@ -421,6 +423,8 @@ def path_migrations() -> tuple[tuple[str, str], ...]:
 
 def resolve_path(value: str | Path) -> Path:
     expanded = os.path.expandvars(str(value))
+    if expanded.startswith("config://"):
+        return resolve_path_reference(expanded)
     path = Path(expanded)
     if path.is_absolute():
         candidate = path.resolve()

@@ -23,6 +23,7 @@ from typing import Any
 from PIL import Image, ImageChops, ImageStat
 
 import build_animation_runtime_pack as runtime_v1
+from workspace_paths import get_path
 
 
 RUN_SCHEMA = "bg2-upscale-area-animation-30fps-run-v2"
@@ -43,8 +44,8 @@ MAX_LOGICAL_DIMENSION = 8192
 MAX_RAW_BYTES = 512 * 1024 * 1024
 NATIVE_FPS = (15, 1)
 TARGET_FPS = (30, 1)
-DEFAULT_TVAI_FFMPEG = Path(r"C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe")
-DEFAULT_TVAI_MODEL_DIR = Path(r"C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models")
+DEFAULT_TVAI_FFMPEG = get_path("topaz_video_ffmpeg")
+DEFAULT_TVAI_MODEL_DIR = get_path("topaz_video_models")
 DEFAULT_MODEL = "apo-8"
 DEFAULT_DEVICE = "-2"
 

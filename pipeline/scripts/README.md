@@ -74,6 +74,10 @@ d'horloge sans appel entrant sont dans `archive/legacy/pipeline-scripts/`.
 
 ## Suivi transversal
 
+- `workspace_paths.py` et `WorkspacePaths.ps1` résolvent les chemins machine déclarés dans
+  `config/workspace-paths.json`, le fichier local ignoré ou les variables d'environnement. Les
+  nouveaux jobs sprite utilisent `config://bg2ee_game_root` et `config://mmpx_scalepix` ; ne pas
+  introduire de nouveau chemin absolu personnel.
 - `asset_tracking_contract.py` valide les projections jetables du contrat commun et sépare les
   statuts historiques connus. Il n'écrit dans aucun manifeste métier et ne constitue pas un
   registre d'assets.

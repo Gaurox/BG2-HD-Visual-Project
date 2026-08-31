@@ -25,6 +25,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import build_global_asset_registry as global_registry  # noqa: E402
+import workspace_paths  # noqa: E402
 
 
 GENERATOR = "pipeline/scripts/audit_workspace_integrity.py"
@@ -34,6 +35,7 @@ OUTPUT_DIR = ROOT / "asset-tracking"
 JSON_OUTPUTS = ("workspace-integrity.json", "runs.json")
 RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
+CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
 RUN_COLUMNS = (
     "run_key",
     "domain",
@@ -410,7 +412,14 @@ def audit_source_tables(
 
         root = ROOT / config["root"]
         present_files = {
-            repo_path(path) for path in root.rglob("*") if path.is_file()
+            repo_path(path)
+            for path in root.rglob("*")
+            if path.is_file()
+            and not (
+                config["name"] == "videos"
+                and "runs" in path.relative_to(root).parts
+                and path.relative_to(root).parts[0].casefold() == "runs"
+            )
         } if root.is_dir() else set()
         expected_folded = {path.casefold() for path in expected_paths}
         extra = sorted(
@@ -425,7 +434,7 @@ def audit_source_tables(
             ),
             key=str.casefold,
         )
-        # video/ deliberately contains historic conversions and review renders.
+        # Historical video derivatives belong in video/runs and are audited separately.
         if config["name"] == "videos":
             if extra:
                 extension_counts = Counter(Path(path).suffix.lower() or "<none>" for path in extra)
@@ -434,12 +443,12 @@ def audit_source_tables(
                     "warning",
                     "video-unindexed-work-products",
                     "videos",
-                    "Des conversions et rendus de travail historiques cohabitent avec les sources WBM.",
+                    "Des conversions ou rendus de travail cohabitent encore avec les sources WBM.",
                     path="video/",
                     details={
                         "file_count": len(extra),
                         "extensions": dict(sorted(extension_counts.items())),
-                        "policy": "conserver; candidat à archivage après preuve de rattachement",
+                        "policy": "ranger dans video/runs avec une preuve de rattachement",
                     },
                 )
         elif extra:
@@ -851,6 +860,7 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
             descriptor = ""
             notes = ""
             referenced_files_state = "unknown"
+            cleanup_legacy = path_text == "maps/AR0410/runs/legacy-upscale-tests-20260818"
             if run_json.is_file():
                 descriptor_count += 1
                 descriptor = repo_path(run_json)
@@ -950,6 +960,15 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
                     path=path_text,
                     run_id=run_dir.name,
                 )
+            elif cleanup_legacy:
+                legacy = True
+                legacy_count += 1
+                descriptor = CLEANUP_MANIFEST
+                result = "historical-experiment"
+                inputs = "documented"
+                provenance = "verified-move"
+                referenced_files_state = "present"
+                notes = "Essais AR0410 retirés des maîtres x1; aucune sélection ni QA inférée."
             else:
                 add_issue(
                     issues,
@@ -960,7 +979,7 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
                     path=path_text,
                     run_id=run_dir.name,
                 )
-            build_exists = (run_dir / "05_build").is_dir()
+            build_exists = (run_dir / "05_build").is_dir() or cleanup_legacy
             if path_text in selected and not build_exists:
                 add_issue(
                     issues,
@@ -971,7 +990,9 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
                     path=f"{path_text}/05_build",
                     run_id=run_dir.name,
                 )
-            selection = "selected" if path_text in selected else "unselected"
+            selection = "selected" if path_text in selected else (
+                "historical-unselected" if cleanup_legacy else "unselected"
+            )
             if selection == "unselected":
                 add_issue(
                     issues,
@@ -990,7 +1011,7 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
                     run_id=run_dir.name,
                     asset_ids=selected.get(path_text, {f"maps:{area_dir.name}:day"}),
                     path=path_text,
-                    run_kind="map-upscale",
+                    run_kind="legacy-map-experiment" if cleanup_legacy else "map-upscale",
                     descriptor_path=descriptor,
                     recipe_path=recipe,
                     result_state=result,
@@ -1750,6 +1771,262 @@ def audit_sprites(
     }
 
 
+def audit_workspace_cleanup(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verify Phase 6 destinations without treating the evidence as domain authority."""
+
+    manifest_path = ROOT / CLEANUP_MANIFEST
+    data = read_json(manifest_path)
+    verified = 0
+    moved_files = 0
+    moved_bytes = 0
+    removed_empty = 0
+    for operation in data.get("operations", []):
+        target_text = str(operation.get("target", ""))
+        action = operation["action"]
+        if action == "remove-empty-directory":
+            source = ROOT / operation["source_roots"][0]
+            if source.exists():
+                add_issue(
+                    issues,
+                    "error",
+                    "cleanup-empty-directory-returned",
+                    operation["domain"],
+                    "Le squelette de run prouvé vide est réapparu.",
+                    path=repo_path(source),
+                )
+            else:
+                verified += 1
+                removed_empty += 1
+            continue
+        target = ROOT / target_text
+        if not target.is_dir():
+            add_issue(
+                issues,
+                "error",
+                "cleanup-target-missing",
+                operation["domain"],
+                "Une destination de nettoyage documentée est absente.",
+                path=target_text,
+            )
+            continue
+        files = [path for path in target.rglob("*") if path.is_file()]
+        actual_bytes = sum(path.stat().st_size for path in files)
+        expected_count = int(operation["file_count"])
+        expected_bytes = int(operation["bytes"])
+        if len(files) != expected_count or actual_bytes != expected_bytes:
+            add_issue(
+                issues,
+                "error",
+                "cleanup-target-inventory-changed",
+                operation["domain"],
+                "Le contenu d'une destination de nettoyage ne correspond plus à la preuve de migration.",
+                path=target_text,
+                details={
+                    "actual_bytes": actual_bytes,
+                    "actual_file_count": len(files),
+                    "expected_bytes": expected_bytes,
+                    "expected_file_count": expected_count,
+                },
+            )
+            continue
+        verified += 1
+        moved_files += len(files)
+        moved_bytes += actual_bytes
+
+    return {
+        "manifest": CLEANUP_MANIFEST,
+        "operation_count": len(data.get("operations", [])),
+        "verified_operation_count": verified,
+        "preserved_file_count": moved_files,
+        "preserved_bytes": moved_bytes,
+        "removed_empty_directory_count": removed_empty,
+        "deferred_regeneration_count": len(data.get("deferred", [])),
+    }
+
+
+def audit_video_runs(
+    issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
+) -> dict[str, int]:
+    data = read_json(ROOT / CLEANUP_MANIFEST)
+    movie_asset_ids = [
+        "videos:" + row["asset_key"].replace(":", "-").lower()
+        for row in read_csv(ROOT / "video/index/resources.csv")
+        if row["asset_key"].startswith("movie:")
+    ]
+    physical = 0
+    for operation in data.get("operations", []):
+        if operation.get("domain") != "videos" or operation.get("action") != "move":
+            continue
+        physical += 1
+        path_text = str(operation["target"])
+        asset_ids = operation.get("asset_ids") or movie_asset_ids
+        add_run(
+            runs,
+            default_run(
+                run_key=f"videos:{operation['id']}",
+                domain="videos",
+                run_id=str(operation["id"]),
+                asset_ids=asset_ids,
+                path=path_text,
+                run_kind="historical-video-work-products",
+                descriptor_path=CLEANUP_MANIFEST,
+                result_state=str(operation["status"]),
+                qa_state="not-assessed",
+                selection_state="historical-unselected",
+                selection_authority="",
+                inputs_state="documented",
+                outputs_state="present" if (ROOT / path_text).is_dir() else "missing",
+                provenance_state="verified-move",
+                legacy=True,
+                notes=str(operation.get("notes", "")),
+            ),
+        )
+    return {
+        "physical_run_count": physical,
+        "selected_run_count": 0,
+        "canonical_source_count": len(read_csv(ROOT / "video/index/resources.csv")),
+    }
+
+
+def audit_path_portability(issues: list[dict[str, Any]]) -> dict[str, Any]:
+    """Check active code and grandfathered descriptors without rewriting history."""
+
+    config = read_json(ROOT / "config/workspace-paths.json")
+    configured = 0
+    missing = 0
+    unconfigured = 0
+    path_states: dict[str, str] = {}
+    for key in sorted(config["paths"]):
+        path = workspace_paths.get_path(key)
+        if ".unconfigured" in path.parts:
+            unconfigured += 1
+            path_states[key] = "unconfigured"
+            add_issue(
+                issues,
+                "warning",
+                "active-path-unconfigured",
+                "global",
+                "Un chemin machine actif n'est configuré ni localement ni par variable d'environnement.",
+                path=f"config://{key}",
+                details={"environment": config["paths"][key]["environment"]},
+            )
+        elif not path.exists():
+            missing += 1
+            path_states[key] = "missing"
+            add_issue(
+                issues,
+                "error",
+                "active-path-missing",
+                "global",
+                "Un chemin machine actif configuré n'existe pas.",
+                path=f"config://{key}",
+                details={"resolved_path": str(path)},
+            )
+        else:
+            configured += 1
+            path_states[key] = "available"
+            for marker in config["paths"][key].get("markers", []):
+                if not (path / marker).exists():
+                    add_issue(
+                        issues,
+                        "error",
+                        "active-path-marker-missing",
+                        "global",
+                        "Un répertoire machine configuré ne contient pas son marqueur attendu.",
+                        path=f"config://{key}",
+                        details={"marker": marker, "resolved_path": str(path)},
+                    )
+
+    drive_literal = re.compile(
+        r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
+        r"(?:AI|Steam|SteamLibrary|Program Files|ProgramData)(?:\\\\|[\\/])",
+        re.IGNORECASE,
+    )
+    active_roots = (
+        ROOT / "pipeline/scripts",
+        ROOT / "engine/InfinityEngine-Enhancer/source-patchee/tools",
+        ROOT / "interface",
+        ROOT / "maps/technical-overlays",
+        ROOT / "releases/BG2-HD-Upscale/tools",
+        ROOT / "releases/BG2-HD-Upscale/tests",
+    )
+    historical_script_exceptions = {"pipeline/scripts/Invoke-SpriteLayoutMigration.ps1"}
+    active_violations: list[str] = []
+    retained_script_exceptions: list[str] = []
+    for root in active_roots:
+        if not root.is_dir():
+            continue
+        for path in root.rglob("*"):
+            if not path.is_file() or path.suffix.casefold() not in {".py", ".ps1", ".js"}:
+                continue
+            relative_parts = {part.casefold() for part in path.relative_to(ROOT).parts}
+            if "archive" in relative_parts or "runs" in relative_parts:
+                continue
+            text = path.read_text(encoding="utf-8-sig", errors="ignore")
+            if not drive_literal.search(text):
+                continue
+            path_text = repo_path(path)
+            if path_text in historical_script_exceptions:
+                retained_script_exceptions.append(path_text)
+            else:
+                active_violations.append(path_text)
+    if active_violations:
+        add_issue(
+            issues,
+            "error",
+            "active-script-absolute-path",
+            "global",
+            "Un script actif contient un nouveau chemin machine absolu interdit.",
+            path="config/workspace-paths.json",
+            details={"files": sorted(set(active_violations), key=str.casefold)},
+        )
+
+    baseline_path = ROOT / "config/historical-absolute-paths.json"
+    baseline = set(read_json(baseline_path)["historical_files"])
+    current_historical: set[str] = set()
+    for path in (ROOT / "sprite").rglob("*.json"):
+        path_text = repo_path(path)
+        if "jobs" not in {part.casefold() for part in path.parts} and path_text not in baseline:
+            continue
+        if drive_literal.search(path.read_text(encoding="utf-8-sig", errors="ignore")):
+            current_historical.add(path_text)
+    new_historical = sorted(current_historical - baseline, key=str.casefold)
+    if new_historical:
+        add_issue(
+            issues,
+            "error",
+            "new-descriptor-absolute-path",
+            "sprites",
+            "Un nouveau descripteur contient un chemin machine absolu au lieu d'une référence config://.",
+            path="sprite/",
+            details={"files": new_historical},
+        )
+    if current_historical or retained_script_exceptions:
+        add_issue(
+            issues,
+            "info",
+            "historical-absolute-paths-adapted",
+            "global",
+            "Les chemins absolus historiques restent inchangés et sont explicitement bornés.",
+            path="config/historical-absolute-paths.json",
+            details={
+                "descriptor_file_count": len(current_historical),
+                "script_exceptions": sorted(retained_script_exceptions, key=str.casefold),
+                "policy": "les runners résolvent config://; les artefacts historiques ne sont pas réécrits",
+            },
+        )
+    return {
+        "configured_path_count": configured,
+        "missing_path_count": missing,
+        "unconfigured_path_count": unconfigured,
+        "path_states": path_states,
+        "active_absolute_path_violation_count": len(set(active_violations)),
+        "historical_descriptor_file_count": len(current_historical),
+        "historical_script_exception_count": len(retained_script_exceptions),
+        "new_historical_absolute_path_file_count": len(new_historical),
+    }
+
+
 def workspace_hygiene(issues: list[dict[str, Any]]) -> dict[str, int]:
     temp_root = ROOT / "temp"
     temp_files = [path for path in temp_root.rglob("*") if path.is_file()] if temp_root.is_dir() else []
@@ -1788,11 +2065,16 @@ def build_outputs(root: Path = ROOT) -> dict[str, Any]:
     runs: dict[str, dict[str, Any]] = {}
     registry, canonical_counts = audit_registry(issues)
     sources = audit_source_tables(issues, canonical_counts)
+    cleanup = audit_workspace_cleanup(issues)
+    portability = audit_path_portability(issues)
     domain_audits = {
         "maps": audit_maps(issues, runs),
         "animations": audit_animations(issues, runs),
         "portraits": audit_portraits(issues),
         "sprites": audit_sprites(issues, runs),
+        "videos": audit_video_runs(issues, runs),
+        "workspace_cleanup": cleanup,
+        "path_portability": portability,
     }
     hygiene = workspace_hygiene(issues)
 

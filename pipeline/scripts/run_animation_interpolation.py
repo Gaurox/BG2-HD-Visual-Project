@@ -25,6 +25,7 @@ from typing import Any
 from PIL import Image, ImageChops, ImageStat
 
 import build_animation_runtime_pack as runtime_pack
+from workspace_paths import get_path
 
 
 HANDOFF_SCHEMA = "bg2-upscale-area-animation-interpolation-handoff-v1"
@@ -33,8 +34,8 @@ INTERPOLATION_SCHEMA = "bg2-upscale-area-animation-interpolation-run-v1"
 PATCH_SCHEMA = "bg2-upscale-area-animation-frame-expansion-test-v1"
 SCALE = 4
 
-DEFAULT_TVAI_FFMPEG = Path(r"C:/Program Files/Topaz Labs LLC/Topaz Video AI/ffmpeg.exe")
-DEFAULT_TVAI_MODEL_DIR = Path(r"C:/ProgramData/Topaz Labs LLC/Topaz Video AI/models")
+DEFAULT_TVAI_FFMPEG = get_path("topaz_video_ffmpeg")
+DEFAULT_TVAI_MODEL_DIR = get_path("topaz_video_models")
 DEFAULT_FI_MODEL = "apo-8"
 # Topaz drops frames it judges duplicated as soon as rdt is positive, which would
 # silently break the exact frame-count contract. The filter clamps rdt to

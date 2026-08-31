@@ -56,6 +56,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     verify_all,
     verify_armor_set,
 )
+from workspace_paths import portable_path_reference  # noqa: E402
 
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
@@ -301,6 +302,8 @@ def member_payload(
     job_id = member_job_id(family, version)
     layout = member_layout(family, destination.name)
     paths = dict(template["paths"])
+    paths["game_root"] = portable_path_reference("bg2ee_game_root")
+    paths["scalepix"] = portable_path_reference("mmpx_scalepix")
     paths["source_dir"] = layout["source_dir"]
     paths["run_dir"] = layout["run_dir"]
     paths["engine_build"] = layout["engine_build"]
@@ -470,6 +473,9 @@ def refresh_catalog_qa_payload(
     # generated descriptors: Visual Studio 2019 FileTracker rejects it on the
     # canonical Windows workspace before CMake can configure the build.
     paths["engine_build"] = CATALOG_ENGINE_BUILD_ROOT
+    paths["game_root"] = portable_path_reference("bg2ee_game_root")
+    if "scalepix" in paths:
+        paths["scalepix"] = portable_path_reference("mmpx_scalepix")
     qa = payload.get("qa")
     scenarios = qa.get("animations") if isinstance(qa, dict) else None
     if not isinstance(scenarios, list) or not scenarios:

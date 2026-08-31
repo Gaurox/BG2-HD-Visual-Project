@@ -27,9 +27,10 @@ from typing import Callable, Iterable
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_GAME_ROOT = Path(
-    r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition"
-)
+sys.path.insert(0, str(PROJECT_ROOT / "pipeline" / "scripts"))
+from workspace_paths import get_path  # noqa: E402
+
+DEFAULT_GAME_ROOT = get_path("bg2ee_game_root")
 DEFAULT_BACKUP_ROOT = PROJECT_ROOT / "backups" / "renderer"
 RECEIPT_NAME = "renderer-install-receipt.json"
 RECEIPT_SCHEMA = "bg2-upscale-renderer-install-backup-v1"

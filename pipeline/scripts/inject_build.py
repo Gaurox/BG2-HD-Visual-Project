@@ -37,11 +37,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable
 
+from workspace_paths import get_path
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_GAME_ROOT = Path(
-    r"G:\SteamLibrary\steamapps\common\Baldur's Gate II Enhanced Edition"
-)
+DEFAULT_GAME_ROOT = get_path("bg2ee_game_root")
 DEFAULT_BACKUP_ROOT = PROJECT_ROOT / "backups" / "maps"
 RECEIPT_NAME = "install-backup.json"
 RECEIPT_SCHEMA = "bg2-upscale-map-install-backup-v1"

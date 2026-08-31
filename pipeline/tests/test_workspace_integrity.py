@@ -56,20 +56,20 @@ class WorkspaceIntegrityTests(unittest.TestCase):
             for asset_id in run["asset_ids"]:
                 self.assertIn(asset_id, asset_ids, run["run_key"])
         unattached = [run for run in self.runs if not run["asset_ids"]]
-        self.assertEqual(
-            [run["run_key"] for run in unattached],
-            ["animations:am0900dm-seedvr7b-lab-x4"],
-        )
+        self.assertEqual([run["run_key"] for run in unattached], [])
 
     def test_map_sources_and_selected_runs_are_locatable(self) -> None:
         maps = self.report["domain_audits"]["maps"]
         self.assertEqual(maps["extracted_source_count"], 800)
-        self.assertEqual(maps["physical_run_count"], 292)
+        self.assertEqual(maps["physical_run_count"], 293)
         self.assertEqual(maps["selected_run_count"], 292)
         self.assertEqual(maps["descriptor_count"], 291)
-        self.assertEqual(maps["legacy_descriptor_count"], 1)
+        self.assertEqual(maps["legacy_descriptor_count"], 2)
         map_runs = [run for run in self.runs if run["domain"] == "maps"]
-        self.assertTrue(all(run["selection_state"] == "selected" for run in map_runs))
+        self.assertEqual(
+            [run["run_key"] for run in map_runs if run["selection_state"] != "selected"],
+            ["maps:AR0410:legacy-upscale-tests-20260818"],
+        )
         self.assertTrue(all(run["outputs_state"] != "missing" for run in map_runs))
 
     def test_extracted_source_authorities_have_no_missing_or_changed_files(self) -> None:
@@ -86,7 +86,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
             for audit in self.report["source_audits"]
             if audit["authority"] == "video/index/resources.csv"
         )
-        self.assertEqual(video["extra_file_count"], 314)
+        self.assertEqual(video["extra_file_count"], 0)
 
     def test_portrait_occurrences_resolve_to_canonical_assets(self) -> None:
         portraits = self.report["domain_audits"]["portraits"]
@@ -101,7 +101,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         animations = self.report["domain_audits"]["animations"]
         self.assertEqual(animations["qa_attested_run_count"], 19)
         self.assertEqual(animations["approved_candidate_count"], 5)
-        self.assertEqual(animations["physical_run_count"], 112)
+        self.assertEqual(animations["physical_run_count"], 111)
         self.assertEqual(animations["legacy_proto_directory_migration_count"], 64)
         self.assertEqual(animations["legacy_proto_loose_file_migration_count"], 7)
         self.assertEqual(animations["legacy_proto_migrated_file_count"], 3030)
@@ -114,6 +114,27 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(sprites["current_generation_count"], 1)
         self.assertEqual(sprites["historical_pointer_resolved_count"], 7)
         self.assertEqual(sprites["historical_pointer_unresolved_count"], 0)
+
+    def test_controlled_cleanup_and_portability_are_verified(self) -> None:
+        cleanup = self.report["domain_audits"]["workspace_cleanup"]
+        self.assertEqual(cleanup["operation_count"], 7)
+        self.assertEqual(cleanup["verified_operation_count"], 7)
+        self.assertEqual(cleanup["preserved_file_count"], 445)
+        self.assertEqual(cleanup["preserved_bytes"], 857233386)
+        self.assertEqual(cleanup["removed_empty_directory_count"], 1)
+        self.assertEqual(self.report["summary"]["candidate_cleanup"]["temporary_files"], 0)
+        self.assertEqual(
+            self.report["summary"]["candidate_cleanup"]["video_unindexed_work_products"],
+            0,
+        )
+
+        portability = self.report["domain_audits"]["path_portability"]
+        self.assertEqual(portability["configured_path_count"], 5)
+        self.assertEqual(portability["missing_path_count"], 0)
+        self.assertEqual(portability["active_absolute_path_violation_count"], 0)
+        self.assertEqual(portability["new_historical_absolute_path_file_count"], 0)
+        self.assertEqual(portability["historical_descriptor_file_count"], 146)
+        self.assertEqual(self.run_index["run_count"], 551)
 
     def test_animation_proto_paths_are_migrated_without_status_inference(self) -> None:
         migration_path = ROOT / "animations/index/path-migrations.json"

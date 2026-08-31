@@ -72,10 +72,10 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
                 "runtime_profile": "monster-icewind-bg2ee-2.7.3.0",
             },
             "paths": {
-                "game_root": "X:/Fake BG2",
+                "game_root": "config://bg2ee_game_root",
                 "source_dir": f"pipeline/tests/{self.root.name}/{asset_id}/source",
                 "run_dir": f"pipeline/tests/{self.root.name}/{asset_id}/runs/xbr2x-x2",
-                "scalepix": "X:/Fake/scalepix.html",
+                "scalepix": "config://mmpx_scalepix",
                 "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
                 "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
             },
@@ -163,6 +163,8 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertEqual(member["animation"]["bam_prefix"], "MGO2")
         self.assertEqual(member["animation"]["runtime_profile"], "monster-icewind-bg2ee-2.7.3.0")
         self.assertEqual(member["upscale"], generator.DIRECT_X2_METHOD)
+        self.assertEqual(member["paths"]["game_root"], "config://bg2ee_game_root")
+        self.assertEqual(member["paths"]["scalepix"], "config://mmpx_scalepix")
         self.assertEqual(
             member["paths"]["source_dir"],
             "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow/source/stock",
@@ -235,7 +237,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             "name": "Catalogue test MGO1",
             "members": [self._relative(self.template)],
             "paths": {
-                "game_root": "X:/Fake BG2",
+                "game_root": "config://bg2ee_game_root",
                 "run_dir": f"pipeline/tests/{self.root.name}/catalog/runs/xbr2x-x2",
                 "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
                 "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
@@ -271,6 +273,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         appended = json.loads(self.append.read_text(encoding="utf-8"))
         self.assertEqual(appended["job_id"], base["job_id"])
         self.assertEqual(appended["paths"]["run_dir"], base["paths"]["run_dir"])
+        self.assertEqual(appended["paths"]["game_root"], "config://bg2ee_game_root")
         self.assertEqual(
             appended["paths"]["engine_build"],
             generator.CATALOG_ENGINE_BUILD_ROOT,
@@ -309,7 +312,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             },
             "members": [self._relative(leaf)],
             "paths": {
-                "game_root": "X:/Fake BG2",
+                "game_root": "config://bg2ee_game_root",
                 "run_dir": f"pipeline/tests/{self.root.name}/character-aggregate/run",
                 "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
                 "engine_build": f"pipeline/tests/{self.root.name}/engine/build-character",
@@ -339,7 +342,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             "name": "Catalogue test MGO1",
             "members": [self._relative(self.template)],
             "paths": {
-                "game_root": "X:/Fake BG2",
+                "game_root": "config://bg2ee_game_root",
                 "run_dir": f"pipeline/tests/{self.root.name}/catalog/runs/xbr2x-x2",
                 "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
                 "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
@@ -385,7 +388,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             "name": "Legacy QA catalog",
             "members": [self._relative(self.template)],
             "paths": {
-                "game_root": "X:/Fake BG2",
+                "game_root": "config://bg2ee_game_root",
                 "run_dir": f"pipeline/tests/{self.root.name}/catalog/runs/xbr2x-x2",
                 "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
                 "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
