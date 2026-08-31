@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01",
+  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01; BUTRFLY 30 FPS integration in 14 zones approved 2026-09-01",
   "candidates": [
     {
       "area": "AR0602",
@@ -229,6 +229,303 @@
         "AM2100PA",
         "AM2100PB",
         "AM2100PC"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0309",
+      "component_id": 3008,
+      "component_label": "animation-ar0309",
+      "payload_group": "animation-ar0309",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0309/qa-approval.json",
+      "qa_approval_sha256": "114E9A963483EDBF4C62AD86DF5614979DE858A06C1F6AE6BB7BBF0E34EA4397",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR0309",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "3A36C3D90B33E329E4548555A58FD578A74FAF25DBBEC7CE84900CD6C7CF60EB",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0800",
+      "component_id": 3009,
+      "component_label": "animation-ar0800",
+      "payload_group": "animation-ar0800",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0800/qa-approval.json",
+      "qa_approval_sha256": "17894D2A7A4A746B1A824089C5DEC3649777CA84C25D66F2D9286EBEF59C0D2D",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR0800",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "35D0B37CE127D9B63B750DC6C65D082DB89AD18DBFAF1DFEBCB25E6AF032DB00",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1100",
+      "component_id": 3011,
+      "component_label": "animation-ar1100",
+      "payload_group": "animation-ar1100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1100/qa-approval.json",
+      "qa_approval_sha256": "E512EE0360BF00455C348DF28BBAE8D22637832C2111C355B9571B9D99E027E0",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR1100",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9621E9326F960B049886F5AFDA879E9933C4DC3676E9B25FF3E626864E347D9F",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1200",
+      "component_id": 3012,
+      "component_label": "animation-ar1200",
+      "payload_group": "animation-ar1200",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1200/qa-approval.json",
+      "qa_approval_sha256": "29589F56572BE76F24B6C1AAE5957FAA2D669C3E7D4AD4D6B2A9153A2116A0AB",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR1200",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "F23CB0B98E7BBDAF63C40E9C85387A2B8382CC2E783F8513A0B6D0685CC45A91",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1700",
+      "component_id": 3013,
+      "component_label": "animation-ar1700",
+      "payload_group": "animation-ar1700",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1700/qa-approval.json",
+      "qa_approval_sha256": "A2ACB5FE223FBB7B9F30BE49EC5CF22F1A0531FF6BCEC6B885246BC684DD76B4",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR1700",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "18C790C3524246BCF82654F35E273C8EC86317967F640B481B4D194F19CFB882",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1800",
+      "component_id": 3014,
+      "component_label": "animation-ar1800",
+      "payload_group": "animation-ar1800",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1800/qa-approval.json",
+      "qa_approval_sha256": "6F43DC4F02ED2A89A03C500662BDC2A5F85DF2350AE5EF116745169A9E34AFD0",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR1800",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "C89208178CB4901570BB93521DDC05CDE412627AC09B5ADA4CE60591418D44A2",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2000",
+      "component_id": 3015,
+      "component_label": "animation-ar2000",
+      "payload_group": "animation-ar2000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2000/qa-approval.json",
+      "qa_approval_sha256": "5109067E9E769A0307E5B4D865555702698CEFE3A88C0394680633699317BE35",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR2000",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "997EB512A1DA50B93070D6A7FB0BD9E4DC45F9AD143AD64907C512507EA7F504",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR3000",
+      "component_id": 3016,
+      "component_label": "animation-ar3000",
+      "payload_group": "animation-ar3000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR3000/qa-approval.json",
+      "qa_approval_sha256": "0DA31137DFF68EFC3E4B9C6396270ABC09FC3081ACF7376FD7AF0E61CC693147",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR3000",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "A5AF952FABAE6975F181C715B6EFD3BD3F5F32B407E6A451DC3A488413E1FA5E",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR5500",
+      "component_id": 3017,
+      "component_label": "animation-ar5500",
+      "payload_group": "animation-ar5500",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR5500/qa-approval.json",
+      "qa_approval_sha256": "86F6DF106123B6727CBF5D289818A4D0D20059CC7DD9BA47ADD248F040DB715E",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR5500",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "7D60F0653C565CEA2F015D24480E03E6AC2404941FF2D7EA55C4F5871B44F723",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR6400",
+      "component_id": 3018,
+      "component_label": "animation-ar6400",
+      "payload_group": "animation-ar6400",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR6400/qa-approval.json",
+      "qa_approval_sha256": "2A670585F3681451E3AFADA529E1D22B527033D25679E0E46086531789D69D99",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR6400",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "0A62031B8DE373DA90FFE786CB46996A07B7862FD8E38E1E242A6B42B3DDEC06",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH4000",
+      "component_id": 3019,
+      "component_label": "animation-oh4000",
+      "payload_group": "animation-oh4000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH4000/qa-approval.json",
+      "qa_approval_sha256": "D29B93AD8EE1FBC30B06033E60A0866AB0BCA3F06B814723672DEE366E5DF481",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/OH4000",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "A1119C660819DD39CC8BCBD929849179276EE73F1174D61584643A5248602D84",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6000",
+      "component_id": 3021,
+      "component_label": "animation-oh6000",
+      "payload_group": "animation-oh6000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6000/qa-approval.json",
+      "qa_approval_sha256": "0AD10816A98A4A271E00FF4635C7A581A95DB390B9EBFD952A8AD80B760E752D",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/OH6000",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "BD9734B6745CDC6E98976354F1135DDBDA33506D5C2465C1F044A2A6A6A8F43B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6100",
+      "component_id": 3022,
+      "component_label": "animation-oh6100",
+      "payload_group": "animation-oh6100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6100/qa-approval.json",
+      "qa_approval_sha256": "88F6A2B54AA66A49F83AAA2722A3D130FF47DEA192ADC1F6EEB2873E4A17109F",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/OH6100",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "2600851AE7E2CD7CFE002374A236ED096F48C88BA850E969554F9A8EF9A99222",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6400",
+      "component_id": 3023,
+      "component_label": "animation-oh6400",
+      "payload_group": "animation-oh6400",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6400/qa-approval.json",
+      "qa_approval_sha256": "F6AF03EB536F22F61DFDF19C31B233C3C03B56716CEC999EE55A1803AF0B64EE",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/OH6400",
+      "source_run": "animations/runs/butrfly-seedvr7b-lab-x4 + animations/runs/butrfly-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "BFBE48F0BE4A7A4B0564959091A1436EDCC6467581CA36141B0F1A72678C971E",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }

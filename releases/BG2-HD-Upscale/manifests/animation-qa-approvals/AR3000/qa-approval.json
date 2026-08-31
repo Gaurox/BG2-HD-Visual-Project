@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR3000",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-31T22:54:58.9947279Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-and-butterfly-30fps-v2/AR3000",
+  "pack_manifest_sha256": "A5AF952FABAE6975F181C715B6EFD3BD3F5F32B407E6A451DC3A488413E1FA5E",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+  "required_resrefs": [
+    "BUTRFLY"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/butrfly-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "8528C249F5FF99899472D6C5C833E80A41F9F8A36A63B63B335BC0D7B0583380",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 conservée : BUTRFLY x4 interpolé à 30 FPS est accepté pour l'intégration release."
+}
