@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR2201",
+  "status": "accepted",
+  "decision_date": "2026-09-02",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-09-01T22:43:06.798016Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201",
+  "pack_manifest_sha256": "490EA2EF89ECAF857D1FCB00397A1F3132B4A33ECD722CC7CEE4F267724BFD41",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "422ADF03756F7BEBC74F188069081B6EE22E49D2C7F797912D6695F485B5D7D6",
+  "required_resrefs": [
+    "AM2201A",
+    "AM2201B"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am2201a-apo8-x4-30fps-v2-20260901/qa-approval.json",
+      "sha256": "03E1797179B6B6D6E00C897DA9233C1D9EA4F3828E417C3D16F59DCAB3E045D4",
+      "accepted_resrefs": [
+        "AM2201A"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather1-20260901/qa-approval.json",
+      "sha256": "BC2E33BE9ECFB1EAE32B50EF27AB1B7F6EFE9E92EF36FD2FCC29E4F4C8D36FC8",
+      "accepted_resrefs": [
+        "AM2201B"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "46C8E31C88FC8EF9FD9B49712CB6F2B3B286F4642C219DF6454C5010F5C1BB9D",
+      "accepted_resrefs": [
+        "AM2201A",
+        "AM2201B"
+      ]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "D8F81809E71A4FCAD956DFD875A625E970570A8D68A6C596B82E9EC8A97F406E",
+      "accepted_resrefs": [
+        "AM2201B"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-02 : AM2201A et AM2201B x4 interpolés à 30 FPS sont figés. AM2201B conserve spline Fit 1 multi-contour + feather intérieur 1 px x4 ; réserve mineure de contour consignée."
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
   "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01; BUTRFLY small-subject xBR2→nearest2 x4, Apollo 8 30 FPS and blend-safe RGB integration in 14 zones approved 2026-09-01; CHIMSMK + DSTDVL1A/B/C final pack and per-area QA integration approved 2026-09-01",
+  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01; BUTRFLY small-subject xBR2→nearest2 x4, Apollo 8 30 FPS and blend-safe RGB integration in 14 zones approved 2026-09-01; CHIMSMK + DSTDVL1A/B/C final pack and per-area QA integration approved 2026-09-01; AR2201 AM2201A/B QA pinned 2026-09-02, awaiting manifest approval",
   "candidates": [
     {
       "area": "AR0602",
@@ -723,6 +723,28 @@
         "DSTDVL1A",
         "DSTDVL1B",
         "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2201",
+      "component_id": 3032,
+      "component_label": "animation-ar2201",
+      "payload_group": "animation-ar2201",
+      "approval_status": "validated-awaiting-manifest-approval",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2201/qa-approval.json",
+      "qa_approval_sha256": "8CF16BA65F302D9CDE14EC52EC9C0EE7B3F457EE3F6B1BDBBB7C6F0F63C84C8B",
+      "source_pack": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201",
+      "source_run": "animations/runs/am2201a-seedvr7b-lab-x4-20260901 + animations/runs/am2201a-apo8-x4-30fps-v2-20260901 + animations/runs/am2201b-seedvr7b-lab-x4-20260901 + animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather1-20260901 (V2 TimedTimeline Apollo 8 15->30 FPS; AM2201B Blended, spline Fit 1 multi-contour + feather intérieur 1 px x4)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "490EA2EF89ECAF857D1FCB00397A1F3132B4A33ECD722CC7CEE4F267724BFD41",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "422ADF03756F7BEBC74F188069081B6EE22E49D2C7F797912D6695F485B5D7D6",
+      "registry_bytes": 536,
+      "required_resrefs": [
+        "AM2201A",
+        "AM2201B"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }
