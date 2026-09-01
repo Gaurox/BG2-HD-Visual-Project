@@ -87,8 +87,8 @@ présence d'un candidat n'y suffit pas.
 
 - Inventaire et source : `animations/index/manifest.json`, `ressources.csv`, `occurrences.csv` et
   `zones.csv`.
-- `animation_upscale_registry.csv` porte la validation spatiale : `validé-x4` devient uniquement
-  `production=verified`. La QA temporelle reste `not-assessed` tant qu'un `qa-approval.json`
+- `animation_upscale_registry.csv` porte la décision spatiale : `validé-x4` et `validé-natif`
+  deviennent uniquement `production=verified`. La QA temporelle reste `not-assessed` tant qu'un `qa-approval.json`
   correspondant ne fournit pas `status=accepted`.
 - `non-traité`, `à-compléter`, `à-corriger` et `écarté` deviennent respectivement
   `not-started`, `in-progress`, `blocked` et `rejected`; `écarté` est aussi `release=ineligible`.

@@ -112,6 +112,12 @@ class AssetTrackingContractTests(unittest.TestCase):
         )
         self.assertEqual(
             contract.map_legacy_status(
+                "animations.index.upscale-status.v1", "validé-natif"
+            ),
+            {"production": "verified"},
+        )
+        self.assertEqual(
+            contract.map_legacy_status(
                 "animations.qa-approval.status.v1", "accepted"
             ),
             {"qa": "passed"},

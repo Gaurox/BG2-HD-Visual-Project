@@ -11,6 +11,7 @@ les zones qui utilisent cet élément et `occurrences` en donne le nombre total.
 | Statut | Sens |
 |---|---|
 | `validé-x4` | Upscale x4 vu et validé en jeu par l'utilisateur. |
+| `validé-natif` | Décision explicite validée : BAM source conservé en l'état ; compte comme traité, sans produit x4. |
 | `à-valider` | Upscale x4 et pack runtime terminés ; validation visuelle en jeu requise. |
 | `à-corriger` | Un x4 existe mais une correction ciblée est requise avant validation. |
 | `à-arbitrer` | Une décision est requise : autre modèle, masque, désactivation ou abandon. |

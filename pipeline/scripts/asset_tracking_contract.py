@@ -111,6 +111,7 @@ LEGACY_STATUS_MAPPINGS: dict[str, dict[str, dict[str, str]]] = {
         "à-corriger": {"production": "blocked", "release": "ineligible"},
         "écarté": {"production": "rejected", "release": "ineligible"},
         "validé-x4": {"production": "verified"},
+        "validé-natif": {"production": "verified"},
     },
     "animations.index.alpha-status.v1": {
         "validated-prototype-installed": {
