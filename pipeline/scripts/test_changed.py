@@ -304,6 +304,11 @@ def classify_path(path: str) -> Classification:
             ("workspace-command",),
             f"orchestration workspace: {path}",
         )
+    if path == "pipeline/scripts/progress_ui.py":
+        return Classification(
+            (),
+            modules=("pipeline.tests.test_progress_ui",),
+        )
     if path in {
         "pipeline/scripts/workspace_paths.py",
         "pipeline/scripts/WorkspacePaths.ps1",

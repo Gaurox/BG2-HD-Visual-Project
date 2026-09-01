@@ -9,6 +9,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 |---|---|
 | Contrôle/régénération globale | `workspace.py` |
 | Sélection de tests Git | `test_changed.py` |
+| Suivi visuel tests/reconstructions | `progress_ui.py` |
 | Inventaires graphiques | `build_graphics_inventory.py` |
 | Maîtres/préflight de carte | `validate_x1_masters.py`, `audit_area_preflight.py` |
 | Extraction | `batch_extract.py`, `batch_extract_secondary.py`, `render_secondary.py` |
@@ -32,10 +33,12 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 python pipeline/scripts/<script>.py --help
 python pipeline/scripts/test_changed.py --targeted
 python pipeline/scripts/workspace.py refresh --changed
+python pipeline/scripts/progress_ui.py
 ```
 
-Ces commandes ne lancent rien sans `--run`. Demander séparément tests ciblés/tous/aucun et
-reconstructions ciblées/toutes/aucune. Contrats :
+Les deux commandes CLI planifient sans `--run`. L'interface planifie d'abord et exige le bouton
+`Démarrer` puis une confirmation. Demander séparément tests ciblés/tous/aucun et reconstructions
+ciblées/toutes/aucune. Contrats :
 [`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md) et
 [`../../docs/WORKSPACE_INTEGRITY.md`](../../docs/WORKSPACE_INTEGRITY.md).
 

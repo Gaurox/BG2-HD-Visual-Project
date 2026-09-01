@@ -150,6 +150,9 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             self.by_id["maps:AR0300:day"]["states"]["release"], "integrated"
         )
         self.assertEqual(
+            self.by_id["maps:AR0516:day"]["states"]["release"], "integrated"
+        )
+        self.assertEqual(
             self.by_id["animations:bam:AM0033AB"]["states"]["qa"], "passed"
         )
         self.assertEqual(

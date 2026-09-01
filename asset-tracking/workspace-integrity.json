@@ -13,9 +13,9 @@
       "verified": true
     },
     "animations": {
-      "approved_candidate_count": 7,
+      "approved_candidate_count": 22,
       "empty_run_count": 0,
-      "historical_qa_evidence_adapted_count": 9,
+      "historical_qa_evidence_adapted_count": 31,
       "legacy_proto_directory_migration_count": 64,
       "legacy_proto_embedded_reference_count": 153,
       "legacy_proto_embedded_reference_file_count": 54,
@@ -23,10 +23,10 @@
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
       "legacy_proto_run_count": 65,
-      "physical_run_count": 113,
-      "qa_attested_run_count": 20,
-      "release_pack_indexed_count": 7,
-      "release_referenced_run_count": 8,
+      "physical_run_count": 125,
+      "qa_attested_run_count": 26,
+      "release_pack_indexed_count": 22,
+      "release_referenced_run_count": 12,
       "remaining_animation_proto_directory_count": 0,
       "remaining_proto_directory_count": 0
     },
@@ -42,7 +42,7 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 141,
+      "active_script_file_count": 143,
       "configured_path_count": 5,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
@@ -275,7 +275,7 @@
     {
       "code": "animation-historical-qa-evidence-adapted",
       "details": {
-        "evidence_reference_count": 9,
+        "evidence_reference_count": 31,
         "migrations": [
           {
             "area": "AR0602",
@@ -330,6 +330,138 @@
             "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
+          },
+          {
+            "area": "AR0307",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF"
+          },
+          {
+            "area": "AR0307",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+          },
+          {
+            "area": "AR0329",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF"
+          },
+          {
+            "area": "AR0329",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+          },
+          {
+            "area": "AR2100",
+            "git_commit": "9ac2cef9c26a650330611c25f571581e94b755a3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "030D935FCDFE0CB397616435615D4A02F96F49A96459FA0BA7D0ED91F36CCF87"
+          },
+          {
+            "area": "AR0309",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR0309",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+          },
+          {
+            "area": "AR0800",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR0800",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+          },
+          {
+            "area": "AR1100",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR1200",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR1700",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR1800",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR2000",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR3000",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR5500",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "AR6400",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "OH4000",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "OH6000",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "OH6100",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+          },
+          {
+            "area": "OH6100",
+            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+          },
+          {
+            "area": "OH6400",
+            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
           }
         ]
       },
@@ -386,10 +518,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15139,
-  "registry_asset_records_sha256": "D86E28F38D158AA72AAFD562BECF99F8B79E834135C67E13C1021ECFEE5BF805",
-  "run_count": 568,
-  "run_records_sha256": "A2B6030EDD15AA995EF812B3FA348D0DAC8C454BB1E1EB22735A3C4B57160D05",
+  "registry_asset_count": 15154,
+  "registry_asset_records_sha256": "DECB5AA3DA9C69D4B5018550B155E1055936EEAA0888219E331EF08FE916EE2B",
+  "run_count": 595,
+  "run_records_sha256": "9A1B8FA2795DD9C58BCB176143E8DA32830152D4DA5E859C8BAA864E4B6235DC",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -493,7 +625,7 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "ED8C887FD1E7616E6341C64063E0AEE11995A638036879EBB5F8F40E1FF72E00",
+  "source_fingerprint_sha256": "BC1C632BB239306CFFEE12DED109A4F21721BB06AC87F599448ED611FCA4E8D8",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

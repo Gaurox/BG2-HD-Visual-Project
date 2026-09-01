@@ -134,6 +134,19 @@ class ChangedTestSelectorTests(unittest.TestCase):
         self.assertEqual(selector.commands_for(plan), ())
         self.assertTrue(any("aucun test ciblé connu" in reason for reason in plan.reasons))
 
+    def test_progress_ui_selects_its_own_module(self) -> None:
+        for strict_targeted in (False, True):
+            with self.subTest(strict_targeted=strict_targeted):
+                plan = selector.select_paths(
+                    (selector.ChangedPath("M", "pipeline/scripts/progress_ui.py"),),
+                    strict_targeted=strict_targeted,
+                )
+                self.assertFalse(plan.full)
+                self.assertIn(
+                    "pipeline.tests.test_progress_ui",
+                    selector.python_modules_for(plan),
+                )
+
     def test_full_plan_keeps_all_scopes_and_uses_single_pass_workspace_check(self) -> None:
         plan = selector.full_plan("test")
         commands = selector.commands_for(plan)

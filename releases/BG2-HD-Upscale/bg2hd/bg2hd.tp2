@@ -2218,6 +2218,7 @@ BEGIN ~AR0516 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar0516/A051642.PVRZ~ ~override/A051642.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar0516/A051643.PVRZ~ ~override/A051643.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar0516/AR0516.TIS~ ~override/AR0516.TIS~
+  COPY_LARGE ~bg2hd/payload/map-ar0516/AR0516.WED~ ~override/AR0516.WED~
 
 BEGIN ~AR0517 (x4)~
   DESIGNATED 1590
@@ -5910,6 +5911,7 @@ BEGIN ~AR0516 area animations (x4)~
   LABEL ~animation-ar0516~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
   REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~1580~ @15
   MKDIR ~iee-assets~
   MKDIR ~iee-assets/areas~
   MKDIR ~iee-assets/areas/AR0516~
@@ -6432,6 +6434,379 @@ BEGIN ~AR0603 area animations (x4)~
   COPY_LARGE ~bg2hd/payload/animation-ar0603/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0603/AreaAnimations-X4.registry~
   COPY_LARGE ~bg2hd/payload/animation-ar0603/manifest.json~ ~iee-assets/areas/AR0603/manifest.json~
 
+BEGIN ~AR0307 area animations (x4, 30 FPS)~
+  DESIGNATED 3005
+  LABEL ~animation-ar0307~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR0307~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame008.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame009.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame010.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame011.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame012.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame013.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame014.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame015.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame016.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame017.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame018.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame019.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM0307BH-frame020.rgba~ ~iee-assets/areas/AR0307/AAX4-AM0307BH-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame008.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame009.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame010.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame011.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame012.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame013.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame014.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame015.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame016.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame017.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame018.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame019.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307RED-frame020.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307RED-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307TT1-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307TT1-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR1-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR1-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR2-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR2-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-AM307UR3-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-AM307UR3-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame000.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame001.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame002.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame003.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame004.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame005.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame006.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame007.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame008.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame009.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame010.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame011.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame012.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AAX4-FIRE_4-frame013.rgba~ ~iee-assets/areas/AR0307/AAX4-FIRE_4-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0307/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar0307/manifest.json~ ~iee-assets/areas/AR0307/manifest.json~
+
+BEGIN ~AR0329 area animations (x4, 30 FPS)~
+  DESIGNATED 3006
+  LABEL ~animation-ar0329~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR0329~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame008.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame009.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame010.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame011.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame012.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame013.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame014.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame015.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame016.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame017.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame018.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame019.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM0307BH-frame020.rgba~ ~iee-assets/areas/AR0329/AAX4-AM0307BH-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame008.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame009.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame010.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame011.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame012.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame013.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame014.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame015.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame016.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame017.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame018.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame019.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307RED-frame020.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307RED-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307TT1-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307TT1-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR1-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR1-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR2-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR2-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-AM307UR3-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-AM307UR3-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame000.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame001.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame002.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame003.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame004.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame005.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame006.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame007.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame008.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame009.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame010.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame011.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame012.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AAX4-FIRE_4-frame013.rgba~ ~iee-assets/areas/AR0329/AAX4-FIRE_4-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0329/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar0329/manifest.json~ ~iee-assets/areas/AR0329/manifest.json~
+
+BEGIN ~AR2100 area animations (x4, 30 FPS)~
+  DESIGNATED 3007
+  LABEL ~animation-ar2100~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR2100~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame000.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame001.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame002.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame003.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame004.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame005.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame006.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame007.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame008.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame009.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame010.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame011.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame012.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PA-frame013.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PA-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame000.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame001.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame002.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame003.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame004.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame005.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame006.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame007.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame008.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame009.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame010.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame011.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame012.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PB-frame013.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PB-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame000.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame001.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame002.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame003.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame004.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame005.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame006.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame007.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame008.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame009.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame010.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame011.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame012.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AAX4-AM2100PC-frame013.rgba~ ~iee-assets/areas/AR2100/AAX4-AM2100PC-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/AreaAnimations-X4.registry~ ~iee-assets/areas/AR2100/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar2100/manifest.json~ ~iee-assets/areas/AR2100/manifest.json~
+
+BEGIN ~AR0309 area animations (x4, 30 FPS)~
+  DESIGNATED 3008
+  LABEL ~animation-ar0309~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR0309~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR0309/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame000.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame001.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame002.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame003.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame004.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame005.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame006.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame007.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame008.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame009.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame010.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame011.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame012.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AAX4-FIRE_4-frame013.rgba~ ~iee-assets/areas/AR0309/AAX4-FIRE_4-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0309/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar0309/manifest.json~ ~iee-assets/areas/AR0309/manifest.json~
+
+BEGIN ~AR0800 area animations (x4, 30 FPS)~
+  DESIGNATED 3009
+  LABEL ~animation-ar0800~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR0800~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR0800/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame000.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame001.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame002.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame003.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame004.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame005.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame006.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame007.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame008.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame009.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame010.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame011.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame012.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AAX4-FIRE_4-frame013.rgba~ ~iee-assets/areas/AR0800/AAX4-FIRE_4-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0800/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar0800/manifest.json~ ~iee-assets/areas/AR0800/manifest.json~
+
 BEGIN ~AR2002 (x4)~
   DESIGNATED 3010
   LABEL ~map-ar2002~
@@ -6443,6 +6818,429 @@ BEGIN ~AR2002 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2002/A200202.PVRZ~ ~override/A200202.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2002/AR2002.TIS~ ~override/AR2002.TIS~
 
+BEGIN ~AR1100 area animations (x4, 30 FPS)~
+  DESIGNATED 3011
+  LABEL ~animation-ar1100~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR1100~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR1100/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/AreaAnimations-X4.registry~ ~iee-assets/areas/AR1100/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar1100/manifest.json~ ~iee-assets/areas/AR1100/manifest.json~
+
+BEGIN ~AR1200 area animations (x4, 30 FPS)~
+  DESIGNATED 3012
+  LABEL ~animation-ar1200~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR1200~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR1200/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/AreaAnimations-X4.registry~ ~iee-assets/areas/AR1200/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar1200/manifest.json~ ~iee-assets/areas/AR1200/manifest.json~
+
+BEGIN ~AR1700 area animations (x4, 30 FPS)~
+  DESIGNATED 3013
+  LABEL ~animation-ar1700~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR1700~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR1700/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/AreaAnimations-X4.registry~ ~iee-assets/areas/AR1700/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar1700/manifest.json~ ~iee-assets/areas/AR1700/manifest.json~
+
+BEGIN ~AR1800 area animations (x4, 30 FPS)~
+  DESIGNATED 3014
+  LABEL ~animation-ar1800~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR1800~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR1800/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/AreaAnimations-X4.registry~ ~iee-assets/areas/AR1800/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar1800/manifest.json~ ~iee-assets/areas/AR1800/manifest.json~
+
+BEGIN ~AR2000 area animations (x4, 30 FPS)~
+  DESIGNATED 3015
+  LABEL ~animation-ar2000~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR2000~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR2000/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/AreaAnimations-X4.registry~ ~iee-assets/areas/AR2000/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar2000/manifest.json~ ~iee-assets/areas/AR2000/manifest.json~
+
+BEGIN ~AR3000 area animations (x4, 30 FPS)~
+  DESIGNATED 3016
+  LABEL ~animation-ar3000~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR3000~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR3000/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/AreaAnimations-X4.registry~ ~iee-assets/areas/AR3000/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar3000/manifest.json~ ~iee-assets/areas/AR3000/manifest.json~
+
+BEGIN ~AR5500 area animations (x4, 30 FPS)~
+  DESIGNATED 3017
+  LABEL ~animation-ar5500~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR5500~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR5500/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/AreaAnimations-X4.registry~ ~iee-assets/areas/AR5500/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar5500/manifest.json~ ~iee-assets/areas/AR5500/manifest.json~
+
+BEGIN ~AR6400 area animations (x4, 30 FPS)~
+  DESIGNATED 3018
+  LABEL ~animation-ar6400~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR6400~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/AR6400/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/AreaAnimations-X4.registry~ ~iee-assets/areas/AR6400/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar6400/manifest.json~ ~iee-assets/areas/AR6400/manifest.json~
+
+BEGIN ~OH4000 area animations (x4, 30 FPS)~
+  DESIGNATED 3019
+  LABEL ~animation-oh4000~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/OH4000~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/OH4000/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/AreaAnimations-X4.registry~ ~iee-assets/areas/OH4000/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-oh4000/manifest.json~ ~iee-assets/areas/OH4000/manifest.json~
+
 BEGIN ~AR2006 (x4)~
   DESIGNATED 3020
   LABEL ~map-ar2006~
@@ -6452,6 +7250,161 @@ BEGIN ~AR2006 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2006/A200600.PVRZ~ ~override/A200600.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2006/A200601.PVRZ~ ~override/A200601.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2006/AR2006.TIS~ ~override/AR2006.TIS~
+
+BEGIN ~OH6000 area animations (x4, 30 FPS)~
+  DESIGNATED 3021
+  LABEL ~animation-oh6000~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/OH6000~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/OH6000/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/AreaAnimations-X4.registry~ ~iee-assets/areas/OH6000/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-oh6000/manifest.json~ ~iee-assets/areas/OH6000/manifest.json~
+
+BEGIN ~OH6100 area animations (x4, 30 FPS)~
+  DESIGNATED 3022
+  LABEL ~animation-oh6100~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/OH6100~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/OH6100/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame000.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame001.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame002.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame003.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame004.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame005.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame006.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame007.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame008.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame009.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame010.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame011.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame012.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AAX4-FIRE_4-frame013.rgba~ ~iee-assets/areas/OH6100/AAX4-FIRE_4-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/AreaAnimations-X4.registry~ ~iee-assets/areas/OH6100/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-oh6100/manifest.json~ ~iee-assets/areas/OH6100/manifest.json~
+
+BEGIN ~OH6400 area animations (x4, 30 FPS)~
+  DESIGNATED 3023
+  LABEL ~animation-oh6400~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/OH6400~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame000.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame001.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame002.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame003.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame004.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame005.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame006.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame007.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame008.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame009.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame010.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame011.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame012.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame013.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame014.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame015.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame016.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame017.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame018.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame018.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame019.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame019.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame020.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame020.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame021.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame021.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame022.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame022.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame023.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame023.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame024.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame024.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame025.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame025.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame026.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame026.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame027.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame027.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame028.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame028.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame029.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame029.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame030.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame030.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame031.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame031.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame032.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame032.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame033.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame033.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame034.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame034.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AAX4-BUTRFLY-frame035.rgba~ ~iee-assets/areas/OH6400/AAX4-BUTRFLY-frame035.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/AreaAnimations-X4.registry~ ~iee-assets/areas/OH6400/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-oh6400/manifest.json~ ~iee-assets/areas/OH6400/manifest.json~
 
 BEGIN ~AR2007 (x4)~
   DESIGNATED 3030

@@ -582,7 +582,60 @@ def load_content_groups(inputs: InputCatalog) -> tuple[dict[str, list[dict[str, 
     return map_groups, animation_groups, ui_groups
 
 
-def adapt_maps(builder: RegistryBuilder, map_groups: Mapping[str, list[dict[str, Any]]]) -> None:
+def load_auxiliary_map_release_contracts(inputs: InputCatalog) -> dict[str, list[dict[str, Any]]]:
+    """Read approved animation contracts that deliberately add map payloads."""
+    path = "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
+    candidates = inputs.read_json(path).get("candidates", [])
+    contracts: dict[str, list[dict[str, Any]]] = {}
+    for candidate in candidates:
+        if candidate.get("approval_status") != "approved-for-release":
+            continue
+        contract = candidate.get("occlusion_contract")
+        if not isinstance(contract, dict):
+            continue
+        area = str(candidate.get("area", "")).strip().upper()
+        source = str(contract.get("source", "")).strip()
+        if not area or "/" not in source:
+            continue
+        contracts.setdefault(area, []).append(
+            {
+                "source": source,
+                "source_run": source.rsplit("/", 1)[0],
+                "destination": str(contract.get("destination", "")).strip(),
+                "bytes": contract.get("bytes"),
+                "sha256": str(contract.get("sha256", "")).strip(),
+                "component_id": contract.get("map_component_id"),
+                "component_label": str(contract.get("map_component_label", "")).strip(),
+                "payload_group": str(contract.get("map_payload_group", "")).strip(),
+            }
+        )
+    return contracts
+
+
+def entry_matches_auxiliary_map_contract(
+    entry: Mapping[str, Any], contracts: Iterable[Mapping[str, Any]]
+) -> bool:
+    """Require every release entry field declared by the occlusion contract."""
+    return any(
+        entry.get("kind") == "map"
+        and entry.get("qa_status") == "validated"
+        and entry.get("source") == contract["source"]
+        and entry.get("source_run") == contract["source_run"]
+        and entry.get("destination") == contract["destination"]
+        and entry.get("bytes") == contract["bytes"]
+        and entry.get("sha256") == contract["sha256"]
+        and entry.get("component_id") == contract["component_id"]
+        and entry.get("component_label") == contract["component_label"]
+        and entry.get("payload_group") == contract["payload_group"]
+        for contract in contracts
+    )
+
+
+def adapt_maps(
+    builder: RegistryBuilder,
+    map_groups: Mapping[str, list[dict[str, Any]]],
+    auxiliary_contracts: Mapping[str, list[dict[str, Any]]],
+) -> None:
     path = "areas.csv"
     content_path = "releases/BG2-HD-Upscale/manifests/content.json"
     rows = builder.inputs.read_csv(path)
@@ -723,12 +776,14 @@ def adapt_maps(builder: RegistryBuilder, map_groups: Mapping[str, list[dict[str,
                 content_valid = all(
                     entry.get("qa_status") == "validated" for entry in content_entries
                 )
+                area_contracts = auxiliary_contracts.get(variant["content_area"], [])
                 run_matches = bool(selected_runs) and all(
                     any(
-                        f"/runs/{selected_run}/" in f"/{value.strip('/')}"
+                        f"/runs/{selected_run}/" in f"/{str(entry.get('source_run', '')).strip('/')}"
                         for selected_run in selected_runs
                     )
-                    for value in content_runs
+                    or entry_matches_auxiliary_map_contract(entry, area_contracts)
+                    for entry in content_entries
                 )
                 if states["qa"] != "passed" or not content_valid or not run_matches:
                     states["release"] = "blocked"
@@ -2446,7 +2501,8 @@ def build_coverage(
 def build_outputs(root: Path = ROOT) -> dict[str, dict[str, Any]]:
     builder = RegistryBuilder(root)
     map_groups, animation_groups, ui_groups = load_content_groups(builder.inputs)
-    adapt_maps(builder, map_groups)
+    auxiliary_contracts = load_auxiliary_map_release_contracts(builder.inputs)
+    adapt_maps(builder, map_groups, auxiliary_contracts)
     animation_resrefs = adapt_animation_bams(builder)
     adapt_animation_wbms(builder)
     adapt_animation_candidates(builder, animation_resrefs, animation_groups)

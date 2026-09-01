@@ -31,7 +31,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         )
 
     def test_generated_outputs_are_current_and_have_no_errors(self) -> None:
-        self.assertEqual(self.report["registry_asset_count"], 15139)
+        self.assertEqual(self.report["registry_asset_count"], 15154)
         self.assertEqual(self.report["summary"]["by_severity"]["error"], 0)
         self.assertEqual(integrity.check_outputs(self.outputs), [])
 
@@ -102,9 +102,9 @@ class WorkspaceIntegrityTests(unittest.TestCase):
 
     def test_animation_qa_and_sprite_restore_chains_remain_resolved(self) -> None:
         animations = self.report["domain_audits"]["animations"]
-        self.assertEqual(animations["qa_attested_run_count"], 20)
-        self.assertEqual(animations["approved_candidate_count"], 7)
-        self.assertEqual(animations["physical_run_count"], 113)
+        self.assertEqual(animations["qa_attested_run_count"], 26)
+        self.assertEqual(animations["approved_candidate_count"], 22)
+        self.assertEqual(animations["physical_run_count"], 125)
         self.assertEqual(animations["legacy_proto_directory_migration_count"], 64)
         self.assertEqual(animations["legacy_proto_loose_file_migration_count"], 7)
         self.assertEqual(animations["legacy_proto_migrated_file_count"], 3030)
@@ -113,14 +113,14 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(animations["legacy_proto_run_count"], 65)
         self.assertEqual(animations["remaining_animation_proto_directory_count"], 0)
         self.assertEqual(animations["remaining_proto_directory_count"], 0)
-        self.assertEqual(animations["historical_qa_evidence_adapted_count"], 9)
-        self.assertEqual(animations["release_pack_indexed_count"], 7)
+        self.assertEqual(animations["historical_qa_evidence_adapted_count"], 31)
+        self.assertEqual(animations["release_pack_indexed_count"], 22)
         release_packs = [
             run
             for run in self.runs
             if run["run_kind"] == "area-animation-release-pack"
         ]
-        self.assertEqual(len(release_packs), 7)
+        self.assertEqual(len(release_packs), 22)
         self.assertTrue(
             all(run["selection_state"] == "release-candidate" for run in release_packs)
         )
@@ -216,7 +216,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         )
         hygiene = self.report["domain_audits"]["workspace_hygiene"]
         self.assertEqual(hygiene["obsolete_p1_target_count"], 0)
-        self.assertEqual(self.run_index["run_count"], 568)
+        self.assertEqual(self.run_index["run_count"], 595)
 
     def test_animation_proto_paths_are_migrated_without_status_inference(self) -> None:
         migration_path = ROOT / "animations/index/path-migrations.json"
