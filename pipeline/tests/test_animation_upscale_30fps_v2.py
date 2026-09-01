@@ -28,6 +28,15 @@ def sha(path: Path) -> str:
 
 
 class AnimationUpscale30FpsV2Tests(unittest.TestCase):
+    def test_nearest_opaque_dilate_replaces_hidden_chroma(self) -> None:
+        source = Image.new("RGBA", (3, 1), (0, 255, 0, 0))
+        source.putpixel((1, 0), (120, 70, 50, 255))
+
+        rgb, replaced = pipeline.nearest_opaque_dilate(source)
+
+        self.assertEqual(replaced, 2)
+        self.assertEqual(list(rgb.getdata()), [(120, 70, 50)] * 3)
+
     def make_fixture(self, root: Path, cycle: list[int] | None = None) -> tuple[Path, Path]:
         resref = "TESTA"
         cycle = cycle or [0, 1]

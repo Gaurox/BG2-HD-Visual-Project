@@ -14,7 +14,7 @@ import verify_historical_git_evidence as evidence  # noqa: E402
 class HistoricalGitEvidenceTests(unittest.TestCase):
     def test_every_declared_migration_matches_exact_git_bytes(self) -> None:
         migrations = evidence.read_migrations()
-        self.assertEqual(len(migrations), 2)
+        self.assertEqual(len(migrations), 6)
         for entry in migrations:
             self.assertEqual(
                 evidence.verify_reference(entry["path"], entry["sha256"]),

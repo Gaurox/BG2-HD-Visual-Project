@@ -42,8 +42,11 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Resref avec `_` | `[A-Z0-9_]{1,8}` avec au moins un alphanumérique | jamais |
 | Ressource `Blended` | neutraliser RGB sous alpha nul ; prémultiplier si alpha dégradé | jamais par correction alpha seule |
 | Micro-effet < ~2 px x1 | conserver le natif : pas assez d'information pour reconstruire une forme | recréation procédurale explicitement assumée |
+| Petit sujet pixelisé | `Small Subject xBR2 → Nearest2 x4 / Apollo30 RGB-Safe` (`small-subject-xbr2-nearest2-apollo30-rgb-safe`) : xBR2 sans blend/AA, nearest2 vers x4, Apollo 8 15→30 ; `nearest-opaque-dilate` si chroma caché ; neutralisation RGB finale si `Blended` | silhouette, alpha ou rendu ingame contradictoires |
 | Cycles vides | retirer seulement les cycles vides terminaux non référencés | registre tolérant ou occurrence les référençant |
 | Contour 1 bit crénelé | spline `fit 1.0`, puis feather intérieur si la marche reste visible | QA d'un contour où spline seule suffit |
+| Fumée : concavités internes rognées | `Spline Fit 1 Multi-Contour — Core Guard 16` (`spline-fit1-multicontour-core-guard16`) : restaurer l'alpha source à partir de 16 px x4 depuis le contour ; spline/feather limités à la bordure | épaisseur, famille ou défaut de contour différents |
+| Coupe de canvas visible | `Oval Edge Fade 20/6` (`oval-edge-fade20x6`) : fade elliptique 20 px x4 haut/bas, 6 px x4 côtés | forme, paramètres ou défaut de coupe différents |
 
 Le témoin de rétrocompatibilité TimedTimeline v2 est AR0603 ; les packs v3 prouvent le routage par
 occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans

@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0500",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-09-01T20:00:00.0000000Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0500",
+  "pack_manifest_sha256": "61AB4384C9F6A14AB9040235AF30F4F62504CD43232D22FCEAA05E670E4A3D20",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+  "required_resrefs": [
+    "CHIMSMK"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2/qa-approval.json",
+      "sha256": "76720453224E8E3734B6852A8970B9B19C354BC388B0AF773FFD42694E0DBD25",
+      "accepted_resrefs": [
+        "CHIMSMK"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D",
+      "accepted_resrefs": [
+        "CHIMSMK"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 : les ressources du pack final, incluant les assets approuvés présents dans cette zone, sont acceptées pour l’intégration release."
+}

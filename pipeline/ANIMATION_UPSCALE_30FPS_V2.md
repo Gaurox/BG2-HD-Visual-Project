@@ -37,6 +37,19 @@ interruption, relancer la même commande avec `--resume`. Toute autre recette re
 Pour un pack d'auteur destiné au split par zone, ajouter `--authoring-pack-for-area-split` au plan
 et au build. Il reste non installable avant découpage.
 
+## RGB transparent pour Topaz
+
+Si le RGB sous `alpha=0` est un chroma key et contamine les phases intermédiaires, ajouter aux deux
+commandes :
+
+```powershell
+--transparent-rgb-mode nearest-opaque-dilate
+```
+
+Le mode propage la couleur opaque la plus proche seulement dans les images RGB livrées à Topaz ;
+les ancres x4, alpha, géométrie et pack source restent inchangés. Le mode est hashé dans le plan et
+enregistré dans le run. QA visuelle obligatoire ; ne pas l'utiliser sans contamination constatée.
+
 ## QA et approbation
 
 Afficher chaque `review-30fps-loop-4s.mp4`, puis contrôler la review exacte pour la couture. Après

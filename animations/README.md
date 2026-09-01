@@ -26,10 +26,12 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 | Besoin | Guide |
 |---|---|
 | Upscale spatial | [`../pipeline/ANIMATION_UPSCALE_PIPELINE.md`](../pipeline/ANIMATION_UPSCALE_PIPELINE.md) |
+| Petits sujets pixelisés xBR2 / 30 fps | [`../pipeline/ANIMATION_SMALL_SUBJECT_XBR2_30FPS.md`](../pipeline/ANIMATION_SMALL_SUBJECT_XBR2_30FPS.md) |
 | Timeline 30 fps pause-aware | [`../pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](../pipeline/ANIMATION_UPSCALE_30FPS_V2.md) |
 | Interpolation mono-cycle | [`../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md`](../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md) |
 | Packs par zone | [`../pipeline/ANIMATION_PACKS_PAR_ZONE.md`](../pipeline/ANIMATION_PACKS_PAR_ZONE.md) |
 | Correctif alpha | [`../pipeline/ANIMATION_ALPHA_CORRECTIONS.md`](../pipeline/ANIMATION_ALPHA_CORRECTIONS.md) |
+| Lissage alpha par frame, Core Guard, fade ovale | [`../pipeline/ANIMATION_PER_FRAME_SPLINE_ALPHA_30FPS_V2.md`](../pipeline/ANIMATION_PER_FRAME_SPLINE_ALPHA_30FPS_V2.md) |
 | Ressource `Blended` | [`../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](../pipeline/ANIMATION_BLENDED_RGB_NEUTRALISATION.md) |
 | Masque par occurrence | [`../pipeline/ANIMATION_PER_OCCURRENCE_OCCLUSION.md`](../pipeline/ANIMATION_PER_OCCURRENCE_OCCLUSION.md) |
 | Contrat moteur | [`UPSCALE_ANIMATIONS_ZONE.md`](UPSCALE_ANIMATIONS_ZONE.md) |

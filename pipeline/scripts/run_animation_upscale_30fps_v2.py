@@ -16,6 +16,7 @@ import os
 import shutil
 import struct
 import subprocess
+from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -48,6 +49,10 @@ DEFAULT_TVAI_FFMPEG = get_path("topaz_video_ffmpeg")
 DEFAULT_TVAI_MODEL_DIR = get_path("topaz_video_models")
 DEFAULT_MODEL = "apo-8"
 DEFAULT_DEVICE = "-2"
+TRANSPARENT_RGB_MODES = (
+    "preserve-hidden-rgb",
+    "nearest-opaque-dilate",
+)
 
 
 def require(condition: bool, message: str) -> None:
@@ -618,12 +623,15 @@ def collapse_uniform_duplicate_hold_slots(lookup: list[int]) -> tuple[list[int],
 
 def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                model: str = DEFAULT_MODEL, collapse_uniform_duplicate_holds: bool = False,
-               authoring_for_area_split: bool = False) -> dict[str, Any]:
+               authoring_for_area_split: bool = False,
+               transparent_rgb_mode: str = "preserve-hidden-rgb") -> dict[str, Any]:
     if source_run is not None:
         source_run = source_run.resolve()
     base_pack = base_pack.resolve()
     selected = sorted({normalise_resref(value) for value in resrefs})
     require(selected, "sélection V2 vide")
+    require(transparent_rgb_mode in TRANSPARENT_RGB_MODES,
+            f"mode RGB transparent inconnu : {transparent_rgb_mode}")
     base_manifest, resources, _sources = load_base_pack(base_pack)
     by_resref = {normalise_resref(str(resource["resref"])): resource for resource in resources}
     targets = []
@@ -736,6 +744,7 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
         "native_fps": rate_record(NATIVE_FPS),
         "target_fps": rate_record(TARGET_FPS),
         "topaz": {"model": model, "replace_duplicate_threshold": -0.01,
+                  "transparent_rgb_mode": transparent_rgb_mode,
                   "loop_strategy": "append first source slot once; no cyclic-context extrapolation"},
         "alpha_policy": "hold exact alpha of the current native (left) slot",
         "geometry_policy": "crop the aligned interpolation with the current native slot geometry",
@@ -787,15 +796,52 @@ def aligned_runtime_preview(raw_path: Path, physical: list[int], crop: list[int]
     return Image.alpha_composite(background, canvas).convert("RGB")
 
 
+def nearest_opaque_dilate(image: Image.Image) -> tuple[Image.Image, int]:
+    """Replace hidden RGB with the nearest visible colour for alpha-blind interpolation."""
+    rgba = image.convert("RGBA")
+    width, height = rgba.size
+    pixels = bytearray(rgba.tobytes())
+    visible = bytearray(pixels[offset + 3] > 0 for offset in range(0, len(pixels), 4))
+    queue = deque(index for index, alpha in enumerate(visible) if alpha)
+    require(queue, "une frame entièrement transparente ne peut pas alimenter Topaz")
+    replaced = len(visible) - len(queue)
+    while queue:
+        current = queue.popleft()
+        x, y = current % width, current // width
+        for neighbour in (current - 1 if x else None,
+                          current + 1 if x + 1 < width else None,
+                          current - width if y else None,
+                          current + width if y + 1 < height else None):
+            if neighbour is None or visible[neighbour]:
+                continue
+            source = current * 4
+            target = neighbour * 4
+            pixels[target:target + 3] = pixels[source:source + 3]
+            visible[neighbour] = 1
+            queue.append(neighbour)
+    return Image.frombytes("RGBA", (width, height), bytes(pixels)).convert("RGB"), replaced
+
+
+def input_rgb(image: Image.Image, transparent_rgb_mode: str) -> tuple[Image.Image, int]:
+    require(transparent_rgb_mode in TRANSPARENT_RGB_MODES,
+            f"mode RGB transparent inconnu : {transparent_rgb_mode}")
+    if transparent_rgb_mode == "preserve-hidden-rgb":
+        return image.convert("RGB"), 0
+    return nearest_opaque_dilate(image)
+
+
 def save_input_rgb(base_pack: Path, context: dict[str, Any], frame_index: int,
-                   destination: Path) -> None:
+                   destination: Path, transparent_rgb_mode: str) -> int:
     frame = context["frames"][frame_index]
     if context["input_mode"] == "spatial-v1":
         with Image.open(frame["aligned_rgba"]) as aligned:
-            aligned.convert("RGB").save(destination)
-        return
-    raw = base_pack / str(frame["runtime_asset"])
-    rgba_from_raw(raw, frame["physical_size_x4"]).convert("RGB").save(destination)
+            rgb, replaced = input_rgb(aligned, transparent_rgb_mode)
+    else:
+        raw = base_pack / str(frame["runtime_asset"])
+        rgb, replaced = input_rgb(rgba_from_raw(raw, frame["physical_size_x4"]),
+                                  transparent_rgb_mode)
+    rgb.save(destination)
+    return replaced
 
 
 def validate_cycle_output(cycle_root: Path, expected_plan: dict[str, Any]) -> dict[str, Any]:
@@ -818,7 +864,7 @@ def validate_cycle_output(cycle_root: Path, expected_plan: dict[str, Any]) -> di
 def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: dict[str, Any],
                       cycle_plan: dict[str, Any], cycle_root: Path, tvai_ffmpeg: Path,
                       model_dir: Path, model: str, device: str, review_ffmpeg: str,
-                      resume: bool) -> dict[str, Any]:
+                      resume: bool, transparent_rgb_mode: str) -> dict[str, Any]:
     if (cycle_root.exists()):
         if resume and (cycle_root / "cycle.json").is_file():
             return validate_cycle_output(cycle_root, cycle_plan)
@@ -893,8 +939,11 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
     else:
         raise RuntimeError(f"{context['resref']} cycle {cycle_plan['cycle']}: stratégie temporelle inconnue")
 
+    input_hidden_rgb_replaced = []
     for position, frame_index in enumerate(input_lookup + [input_lookup[0]]):
-        save_input_rgb(base_pack, context, frame_index, input_dir / f"in_{position:04d}.png")
+        replaced = save_input_rgb(base_pack, context, frame_index,
+                                  input_dir / f"in_{position:04d}.png", transparent_rgb_mode)
+        input_hidden_rgb_replaced.append(replaced)
     filter_text = f"tvai_fi=model={model}:fps=30:rdt=-0.01:device={device}"
     environment = dict(os.environ)
     environment["TVAI_MODEL_DIR"] = str(model_dir)
@@ -993,6 +1042,8 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
         "topaz": {"model": model, "filter": filter_text, "raw_frame_count": len(raw),
                   "expected_raw_frame_count": expected_raw,
                   "input_framerate": input_framerate,
+                  "transparent_rgb_mode": transparent_rgb_mode,
+                  "input_hidden_rgb_replaced": input_hidden_rgb_replaced,
                   "raw_anchor_rgb_mae": [round(value, 6) for value in raw_anchor_mae]},
         "native_frame_indices": lookup,
         "timing_strategy": strategy,
@@ -1278,9 +1329,10 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
               approved_plan_sha256: str, tvai_ffmpeg: Path, model_dir: Path, model: str,
               device: str, review_ffmpeg: str, resume: bool,
               collapse_uniform_duplicate_holds: bool = False,
-              authoring_for_area_split: bool = False) -> dict[str, Any]:
+              authoring_for_area_split: bool = False,
+              transparent_rgb_mode: str = "preserve-hidden-rgb") -> dict[str, Any]:
     plan = build_plan(source_run, base_pack, resrefs, model, collapse_uniform_duplicate_holds,
-                      authoring_for_area_split)
+                      authoring_for_area_split, transparent_rgb_mode)
     require(plan["plan_sha256"] == approved_plan_sha256,
             "hash de plan non approuvé ou plan modifié depuis la proposition")
     output = output.resolve()
@@ -1315,7 +1367,7 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
             cycle_root = partial / "work" / resref / f"cycle_{cycle_index:03d}"
             report = interpolate_cycle(base_pack, by_resref[resref], context, cycle_plan,
                                        cycle_root, tvai_ffmpeg, model_dir, model, device,
-                                       review_ffmpeg, resume)
+                                       review_ffmpeg, resume, transparent_rgb_mode)
             cycle_reports[(resref, cycle_index)] = (cycle_root, report)
             for review in report["reviews"]:
                 path = cycle_root / str(review["file"])
@@ -1350,7 +1402,8 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
         "timed_resources": sorted(contexts),
         "topaz": {"ffmpeg": tvai_ffmpeg.resolve().as_posix(),
                   "model_dir": model_dir.resolve().as_posix(), "model": model,
-                  "device": device, "replace_duplicate_threshold": -0.01},
+                  "device": device, "replace_duplicate_threshold": -0.01,
+                  "transparent_rgb_mode": transparent_rgb_mode},
         "pack": "03_runtime_pack",
         "pack_manifest_sha256": sha256_file(pack_root / "manifest.json"),
         "registry_sha256": pack_manifest["registry_sha256"],
@@ -1407,6 +1460,9 @@ def add_common_source_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--resref", action="append", required=True,
                         help="BAM à temporiser ; répétable")
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--transparent-rgb-mode", choices=TRANSPARENT_RGB_MODES,
+                        default="preserve-hidden-rgb",
+                        help="RGB fourni à Topaz sous alpha nul")
     parser.add_argument("--collapse-uniform-duplicate-holds", action="store_true",
                         help="interpoler les poses uniques d'un cycle à maintiens uniformes")
     parser.add_argument("--authoring-pack-for-area-split", action="store_true",
@@ -1458,7 +1514,8 @@ def main(argv: list[str] | None = None) -> None:
         validate_input_mode(args, plan_parser)
         result = build_plan(args.source_run, args.base_pack, args.resref, args.model,
                             args.collapse_uniform_duplicate_holds,
-                            args.authoring_pack_for_area_split)
+                            args.authoring_pack_for_area_split,
+                            args.transparent_rgb_mode)
     elif args.command == "build":
         validate_input_mode(args, build_parser)
         result = build_run(args.source_run, args.base_pack, args.output, args.resref,
@@ -1466,7 +1523,8 @@ def main(argv: list[str] | None = None) -> None:
                            args.tvai_model_dir.resolve(), args.model, args.device,
                            args.review_ffmpeg, args.resume,
                            args.collapse_uniform_duplicate_holds,
-                           args.authoring_pack_for_area_split)
+                           args.authoring_pack_for_area_split,
+                           args.transparent_rgb_mode)
     elif args.command == "adopt-clock-patch":
         result = adopt_clock_patch(args.base_pack, args.clock_patch, args.output, args.resume)
     elif args.command == "validate":
