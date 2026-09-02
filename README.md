@@ -21,6 +21,7 @@ les projections générées, les règles de provenance et les contrôles globaux
 | Installer/release | [`releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md`](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) |
 | Décisions | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 | Problèmes ouverts | [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) |
+| Rangement et cycle de vie des assets | [`docs/ASSET_LIFECYCLE.md`](docs/ASSET_LIFECYCLE.md) |
 
 Les portraits et inventaires transversaux sont routés depuis `AGENTS.md`. La documentation des formats
 BG2EE se consulte à la demande depuis

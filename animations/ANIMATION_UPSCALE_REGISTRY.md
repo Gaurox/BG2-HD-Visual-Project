@@ -31,14 +31,18 @@ python pipeline/scripts/sync_animation_upscale_registry.py
 python pipeline/scripts/sync_animation_upscale_registry.py --check
 ```
 
-Le script régénère les colonnes techniques et les zones, mais conserve par
-`resref` les champs humains `status`, `correction_id` et `notes`. Corriger ces
-trois champs directement dans le CSV après la QA. Chaque correctif alpha retenu
-doit aussi être ajouté à
+Le script régénère les colonnes techniques et les zones, mais conserve par `resref` les champs de
+suivi. Il tient le verrou animation partagé et refuse toute transaction interrompue. Ne pas éditer
+séparément une QA acceptée : `animation_workflow.py finalize` met à jour en une
+transaction `status`, `selected_run`, `qa_decision`, `qa_date`, `correction_id`, `notes`, la décision
+immuable et la sélection courante. Chaque correctif alpha retenu doit aussi être ajouté à
 [`index/animation_alpha_corrections.csv`](index/animation_alpha_corrections.csv).
 
-Le statut décrit toujours la validation spatiale x4. Pour une ressource passée par le pipeline
+Le statut décrit la décision spatiale : résultat x4 ou conservation native. Pour une ressource passée par le pipeline
 temporel [`../pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](../pipeline/ANIMATION_UPSCALE_30FPS_V2.md),
-noter dans `notes` le run V2, `TimedTimeline 15->30`, puis l'état de la QA ingame. Ne pas inventer
-un nouveau statut CSV : l'approbation technique installable reste portée par le fichier immuable
-`qa-approval.json` du run V2.
+le `qa-approval.json` du run ne vaut que revue technique/vidéo. La QA ingame définitive exige une
+décision sous `index/qa-decisions/`, référencée par `index/selections/` et par les colonnes du CSV.
+
+`validé-natif` suit le même mécanisme sans run ni pack x4 : la décision et la sélection scellent le
+hash de `ressources/<RESREF>/source.bam` contre `index/ressources.csv`. La release animation x4 est
+alors `not-applicable` ; l'absence du resref dans le pack laisse le moteur charger le BAM vanilla.

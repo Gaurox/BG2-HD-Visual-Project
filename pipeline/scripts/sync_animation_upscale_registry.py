@@ -1,25 +1,32 @@
 """Synchronise le registre de suivi des animations avec les index extraits.
 
 Les colonnes techniques et la liste de zones sont régénérées depuis les index.
-Les colonnes de décision humaine (status, correction_id, notes) sont conservées
-par resref. Chaque BAM n'occupe donc qu'une seule ligne, quel que soit son
-nombre d'occurrences.
+Les colonnes de décision humaine (statut, sélection, QA, correction et notes)
+sont conservées par resref. Chaque BAM n'occupe donc qu'une seule ligne, quel
+que soit son nombre d'occurrences.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import importlib.util
 import io
 import os
 from collections import defaultdict
 from pathlib import Path
+import uuid
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_RESOURCES = PROJECT_ROOT / "animations" / "index" / "ressources.csv"
 DEFAULT_OCCURRENCES = PROJECT_ROOT / "animations" / "index" / "occurrences.csv"
 DEFAULT_OUTPUT = PROJECT_ROOT / "animations" / "index" / "animation_upscale_registry.csv"
+TRANSACTION_ROOT = PROJECT_ROOT / ".tmp" / "workflow-transactions"
+ACTIVE_JOURNALS = (
+    TRANSACTION_ROOT / "animation-authority-active.json",
+    TRANSACTION_ROOT / "animation-release-active.json",
+)
 FIELDS = (
     "resref",
     "status",
@@ -28,11 +35,34 @@ FIELDS = (
     "frames",
     "max_frame_size_x1",
     "format",
+    "selected_run",
+    "qa_decision",
+    "qa_date",
     "correction_id",
     "notes",
 )
-MANUAL_FIELDS = ("status", "correction_id", "notes")
+MANUAL_FIELDS = (
+    "status",
+    "selected_run",
+    "qa_decision",
+    "qa_date",
+    "correction_id",
+    "notes",
+)
 DEFAULT_STATUS = "non-traité"
+
+
+def _load_authority_lock_module():
+    module_path = Path(__file__).with_name("animation_authority_lock.py")
+    spec = importlib.util.spec_from_file_location("bg2_animation_registry_lock", module_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"module de verrou animation illisible: {module_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+ANIMATION_AUTHORITY_LOCK = _load_authority_lock_module()
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -98,6 +128,9 @@ def build_rows(resources: Path, occurrences: Path, current: Path) -> list[dict[s
                 "frames": resource["frames"].strip(),
                 "max_frame_size_x1": f"{resource['max_frame_width'].strip()}x{resource['max_frame_height'].strip()}",
                 "format": resource["format"].strip(),
+                "selected_run": manual_row.get("selected_run", ""),
+                "qa_decision": manual_row.get("qa_decision", ""),
+                "qa_date": manual_row.get("qa_date", ""),
                 "correction_id": manual_row.get("correction_id", ""),
                 "notes": manual_row.get("notes", ""),
             }
@@ -119,9 +152,20 @@ def render(rows: list[dict[str, str]]) -> str:
 
 def write_atomic(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".partial")
-    temporary.write_text(content, encoding="utf-8", newline="")
-    os.replace(temporary, path)
+    is_junction = getattr(path, "is_junction", lambda: False)
+    if path.is_symlink() or is_junction():
+        raise RuntimeError(f"cible registre lien/reparse interdite: {path}")
+    if path.exists() and not path.is_file():
+        raise RuntimeError(f"cible registre non fichier: {path}")
+    temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.partial")
+    try:
+        with temporary.open("w", encoding="utf-8", newline="") as stream:
+            stream.write(content)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def main() -> None:
@@ -139,15 +183,25 @@ def main() -> None:
         if not path.is_file():
             raise SystemExit(f"index requis absent: {path}")
 
-    content = render(build_rows(resources, occurrences, output))
-    previous = output.read_text(encoding="utf-8") if output.is_file() else ""
-    if args.check:
-        if previous != content:
-            raise SystemExit(f"registre des animations non synchronise: {output}")
-        print(f"OK: {output} ({content.count(chr(10)) - 1} elements)")
-        return
-    write_atomic(output, content)
-    print(f"registre synchronise: {output} ({content.count(chr(10)) - 1} elements)")
+    try:
+        with ANIMATION_AUTHORITY_LOCK.animation_authority_lock(PROJECT_ROOT):
+            active = [path for path in ACTIVE_JOURNALS if path.exists()]
+            if active:
+                raise RuntimeError(
+                    "transaction animation interrompue active: "
+                    + ", ".join(str(path) for path in active)
+                )
+            content = render(build_rows(resources, occurrences, output))
+            previous = output.read_text(encoding="utf-8") if output.is_file() else ""
+            if args.check:
+                if previous != content:
+                    raise SystemExit(f"registre des animations non synchronise: {output}")
+                print(f"OK: {output} ({content.count(chr(10)) - 1} elements)")
+                return
+            write_atomic(output, content)
+            print(f"registre synchronise: {output} ({content.count(chr(10)) - 1} elements)")
+    except ANIMATION_AUTHORITY_LOCK.AnimationAuthorityLockError as error:
+        raise SystemExit(str(error)) from error
 
 
 if __name__ == "__main__":

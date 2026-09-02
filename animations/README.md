@@ -15,9 +15,11 @@ x4 et, si le registre le demande, une timeline 30 fps.
 | Snapshot d'inventaire | `index/manifest.json` |
 | Validation spatiale par resref | [`ANIMATION_UPSCALE_REGISTRY.md`](ANIMATION_UPSCALE_REGISTRY.md) et `index/animation_upscale_registry.csv` |
 | Correctifs alpha | `index/animation_alpha_corrections.csv` |
-| QA temporelle d'un run | `qa-approval.json` immuable du run exact |
+| Revue technique/vidéo d'un run | `qa-approval.json` immuable du run exact ; jamais preuve suffisante de QA ingame |
+| QA ingame et run final | `index/qa-decisions/<RESREF>/*.json` immuable et `index/selections/<RESREF>.json` courant |
 | Candidats release | `../releases/BG2-HD-Upscale/manifests/animation-release-candidates.json` |
-| Résolution du legacy | `index/path-migrations.json`, `index/qa-evidence-migrations.json` |
+| Résolution du legacy | `index/path-migrations.json`, `index/qa-evidence-migrations.json` ; un snapshot d'un blob Git orphelin doit être versionné sous `index/qa-evidence-history/`, avec SHA-256 et id blob dans la migration |
+| Rétention physique post-P3 | `index/post-p3-pack-retention-20260902.json` ; inventaire hashé sans implication QA/release |
 
 Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut.
 
@@ -44,7 +46,60 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 - TimedTimeline v2 est la méthode temporelle courante ; le registre v3 ajoute le routage par
   coordonnées ARE sans réécrire l'ARE.
 - Découper par zone avant installation dès qu'un pack global dépasse le budget runtime de 512 Mio.
-- Créer tout nouveau travail sous `animations/runs/`; ne pas recréer les anciens chemins `proto/`.
+- Créer un nouveau run mono-asset sous `animations/ressources/<RESREF>/runs/<run-id>/`; utiliser
+  `animations/batches/<run-id>/` pour un lot. `animations/runs/` reste lisible en legacy.
+
+## Parcours courant
+
+```powershell
+python pipeline/scripts/animation_workflow.py list --limit 20
+python pipeline/scripts/animation_workflow.py status --resref <RESREF>
+python pipeline/scripts/animation_workflow.py new-run --resref <RESREF> --stage spatial --recipe <recette>
+```
+
+Sans `--run`, `new-run` est strictement en lecture seule. Avec `--run`, il réserve atomiquement
+l'identifiant sous `animations/ressources/<RESREF>/.<run-id>.reservation.json`, sans créer le dossier
+feuille. Le producteur écrit au chemin retourné ; `finalize --run` vérifie le marqueur et le supprime
+après validation du run terminé. Ne pas modifier ni supprimer ce marqueur pendant production/QA.
+
+Après validation ingame explicite d'un résultat x4, préparer puis appliquer une seule transaction.
+Répéter `--area` pour toutes les zones de l'inventaire du resref :
+
+```powershell
+python pipeline/scripts/animation_workflow.py finalize `
+  --resref <RESREF> --final-run <run-final> --qa-pack <pack-index> `
+  --area ARxxxx --decision-status accepted --qa-date YYYY-MM-DD `
+  --decision "<résultat ingame>"
+# Relire le plan, puis ajouter --run.
+```
+
+Pour un résultat conservé strictement natif, ne fournir ni run ni pack x4 :
+
+```powershell
+python pipeline/scripts/animation_workflow.py finalize `
+  --resref <RESREF> --registry-status validé-natif `
+  --area ARxxxx --decision-status accepted --qa-date YYYY-MM-DD `
+  --decision "<résultat ingame>"
+# Relire le plan, puis ajouter --run.
+```
+
+La branche native vérifie et scelle `animations/ressources/<RESREF>/source.bam` contre
+`index/ressources.csv`.
+
+La transaction crée la décision immuable, met à jour la sélection et le CSV, mais ne touche pas à
+la release. Les écritures `finalize --run` et `animation_release.py --run` partagent le verrou
+`.tmp/workflow-locks/animation-authority.lock`. Après interruption brutale, relancer `finalize --run` :
+le journal `.tmp/workflow-transactions/animation-authority-active.json` est restauré. Pour
+`animation-release-active.json`, relancer la même commande `animation_release.py --run`. Toute autre
+commande métier/release refuse ces journaux. `validé-natif` s'arrête ici et reste absent des packs x4. Pour `validé-x4`,
+après accord release distinct :
+
+```powershell
+python pipeline/scripts/animation_release.py --area ARxxxx --approve
+# Relire le plan, puis ajouter --run. Ajouter --test-delta seulement après choix des tests.
+```
+
+Contrat de rangement commun : [`../docs/ASSET_LIFECYCLE.md`](../docs/ASSET_LIFECYCLE.md).
 
 ## Contrôles
 

@@ -55,11 +55,11 @@
   ],
   "validation_required": [
     "OBSOLETE: the tracked alpha.5 release-inputs no longer match this frozen inventory (sample ini, texture README, fpSEAM.glsl and M_IEEE.lua); do not stage or release",
-    "replacement candidate is iee-0.1.0-alpha.6 and must pass its clean-game and lifecycle gates before promotion",
+    "replacement candidate must be iee-0.1.0-alpha.7 built from current source; alpha.6 predates the native-occlusion bridge and is not promotable",
     "host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing",
-    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea",
+    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4, EnableNativeOcclusionBridge, FXRenderClippingPolys and LoadArea",
     "clean BG2EE Steam 2.7.3.0 game-hash gate",
-    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs",
+    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, AR0900 v3 and AR0516 native WED occlusion",
     "AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
     "in-place Steam shim lifecycle and verified full vanilla restoration"
   ]

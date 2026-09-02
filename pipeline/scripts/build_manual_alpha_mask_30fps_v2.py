@@ -17,6 +17,7 @@ from typing import Any
 
 from PIL import Image, ImageChops
 
+import animation_paths
 import run_animation_upscale_30fps_v2 as temporal
 
 
@@ -155,6 +156,7 @@ def build(temporal_run: Path, resref: str | list[str], mask_path: Path | list[Pa
                 f"{target_resref}: masque répété exige une géométrie uniforme")
         target_specs[target_resref] = {
             "mask_path": target_mask_path,
+            "mask_sha256": sha256_file(target_mask_path),
             "mask": load_mask(target_mask_path, dimensions),
             "dimensions": dimensions,
             "anchor_count": anchor_count,
@@ -168,11 +170,19 @@ def build(temporal_run: Path, resref: str | list[str], mask_path: Path | list[Pa
     shutil.copytree(source_pack, pack_root, ignore=shutil.ignore_patterns("install-backups"))
     manual_masks = partial / "manual-mask"
     manual_masks.mkdir()
-    for target_resref, spec in target_specs.items():
+    for target_resref in sorted(target_specs):
+        spec = target_specs[target_resref]
         mask_root = manual_masks / target_resref
         mask_root.mkdir()
+        sealed_mask = mask_root / "source.png"
+        shutil.copyfile(spec["mask_path"], sealed_mask)
+        require(
+            sha256_file(sealed_mask) == spec["mask_sha256"],
+            f"{target_resref}: masque modifié pendant sa copie",
+        )
+        spec["sealed_mask"] = sealed_mask
         for index in range(int(spec["anchor_count"])):
-            shutil.copyfile(spec["mask_path"], mask_root / f"frame_{index:03d}.png")
+            shutil.copyfile(sealed_mask, mask_root / f"frame_{index:03d}.png")
 
     pack_manifest = copy.deepcopy(source_pack_manifest)
     resources = copy.deepcopy(source_resources)
@@ -223,16 +233,20 @@ def build(temporal_run: Path, resref: str | list[str], mask_path: Path | list[Pa
         for name in sorted(original_new_names)
     ]
     pack_manifest["replacement_assets"] = replacement_assets
-    patch_targets = [{
-        "resref": target_resref,
-        "mask_source": spec["mask_path"].as_posix(),
-        "mask_sha256": sha256_file(spec["mask_path"]),
-        "mask_size_x4": list(spec["dimensions"]),
-        "anchor_count": int(spec["anchor_count"]),
-        "masked_frame_count": int(spec["source_resource"]["frame_count"]),
-    } for target_resref, spec in target_specs.items()]
+    patch_targets = [
+        {
+            "resref": target_resref,
+            "mask_source": Path("manual-mask", target_resref, "source.png").as_posix(),
+            "mask_sha256": spec["mask_sha256"],
+            "mask_size_x4": list(spec["dimensions"]),
+            "anchor_count": int(spec["anchor_count"]),
+            "masked_frame_count": int(spec["source_resource"]["frame_count"]),
+        }
+        for target_resref, spec in sorted(target_specs.items())
+    ]
     pack_manifest["manual_alpha_patch"] = {
         "schema": MASK_SCHEMA,
+        "mask_storage": "run-relative-v1",
         "targets": patch_targets,
         "mask_assignment": "one mask per resref, replicated to every anchor and interpolation phase",
         "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
@@ -256,6 +270,7 @@ def build(temporal_run: Path, resref: str | list[str], mask_path: Path | list[Pa
     mask_record = {
         "schema": MASK_SCHEMA,
         "status": "completed",
+        "mask_storage": "run-relative-v1",
         "targets": patch_targets,
         "source_temporal_run": temporal_run.as_posix(),
         "source_temporal_run_manifest_sha256": sha256_file(temporal_run / "manifest.json"),
@@ -295,10 +310,25 @@ def main() -> None:
                         help="resref cible ; répéter avec un --mask correspondant")
     parser.add_argument("--mask", type=Path, action="append", required=True,
                         help="masque PNG correspondant au --resref de même position")
-    parser.add_argument("--output", type=Path, required=True)
+    output_group = parser.add_mutually_exclusive_group(required=True)
+    output_group.add_argument(
+        "--run",
+        help="identifiant du nouveau run; routage mono-resref ou batch automatique",
+    )
+    output_group.add_argument(
+        "--output",
+        type=Path,
+        help="chemin explicite, réservé à la reprise legacy",
+    )
     parser.add_argument("--review-ffmpeg", default="ffmpeg")
     args = parser.parse_args()
-    result = build(args.temporal_run, args.resref, args.mask, args.output, args.review_ffmpeg)
+    output = (
+        animation_paths.resolve_run_destination(args.run, args.resref)
+        if args.run
+        else args.output.resolve()
+    )
+    temporal_run = animation_paths.resolve_existing_run(args.temporal_run, args.resref)
+    result = build(temporal_run, args.resref, args.mask, output, args.review_ffmpeg)
     print(__import__("json").dumps(result, indent=2, ensure_ascii=False))
 
 

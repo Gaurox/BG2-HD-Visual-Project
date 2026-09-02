@@ -12,6 +12,9 @@ function Require([bool]$Condition, [string]$Message) {
 
 $workspace = (Resolve-Path -LiteralPath $WorkspaceRoot).Path
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $candidatePath = Join-Path $release 'manifests\animation-release-candidates.json'
 $candidateSchema = Join-Path $release 'schemas\animation-release-candidates.schema.json'
 Require (Test-Json -Path $candidatePath -SchemaFile $candidateSchema) 'Schema du registre de candidats animation invalide.'
@@ -134,4 +137,8 @@ try {
 }
 finally {
     if (Test-Path -LiteralPath $tempRoot) { Remove-Item -LiteralPath $tempRoot -Recurse -Force }
+}
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
 }

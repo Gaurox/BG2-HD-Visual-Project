@@ -29,7 +29,7 @@ python pipeline/scripts/build_spline_alpha_mask.py `
 
 python pipeline/scripts/build_manual_alpha_mask_30fps_v2.py `
   --temporal-run <run-30fps-source> --resref <RESREF> `
-  --mask <nouveau-masque.png> --output <nouveau-run>
+  --mask <nouveau-masque.png> --run <nouveau-run>
 ```
 
 Le premier script ajuste la plus grande silhouette fermée. Le second conserve RGB et timeline et

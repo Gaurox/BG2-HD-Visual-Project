@@ -4,6 +4,9 @@
 
 Operational reference for agents. Manifests are authoritative.
 
+Release authoring and gates require PowerShell 7 (`pwsh`); installer runtime helpers invoked by
+WeiDU remain compatible with Windows PowerShell.
+
 No test or release gate runs automatically. Before executing one, ask the user to choose targeted
 tests, all tests, or no tests according to
 [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Refusal leaves the
@@ -60,14 +63,41 @@ This tier must not build the full staging or archive.
 ## Area-animation candidate
 
 One component owns one immutable per-area pack. Register its component, exact source pack,
-`qa-approval.json`, manifest/registry hashes, resrefs and renderer contract in
-`animation-release-candidates.json`. The `approval_status` field is authoritative; do not infer it
-from the pack or live game.
+versioned area QA, manifest/registry hashes, direct final runs, carried byte-identical resources,
+resrefs and renderer contract in `animation-release-candidates.json` and its QA approval. The
+`approval_status` field is authoritative; do not infer it from the pack or live game.
 
-Si le candidat déclare `occlusion_contract`, le générateur doit aussi sélectionner son WED exact,
-ajouter la dépendance map au composant animation et vérifier que le Core possède l'activation du
-bridge. Aucun bundle antérieur aux marqueurs `EnableNativeOcclusionBridge` et
-`FXRenderClippingPolys` n'est promouvable.
+For new QA, do not hand-edit the candidate. Run `animation_workflow.py finalize` for every changed
+resref, then plan and apply the scoped transaction:
+
+```powershell
+python pipeline/scripts/animation_release.py --area ARxxxx --approve
+python pipeline/scripts/animation_release.py --area ARxxxx --approve --run
+```
+
+The command validates decision, selection, pack, registry and run hashes; before writing, it
+revalidates physically every candidate carried by the complete registry. It replaces only this
+area's entries in the full content manifest and regenerates components/package mirrors/TP2
+transactionally. It never stages or packages. `--test-delta` is allowed only after the separate
+targeted-test choice.
+Finalization and promotion share one advisory lock. A durable ignored journal restores every
+published manifest before a retry if the preceding process stopped mid-transaction.
+Manifest generators, validators, staging and package builders hold the same lock for their full
+execution and fail closed while either recovery journal exists. Phase 2 requires byte-identical
+package mirrors and an exact pack-to-`content.json` animation projection.
+An interrupted `Sync-BG2HD-PackageMetadata.ps1` keeps
+`bg2hd/manifests/.package-metadata-sync.partial`; rerun that script to replace and revalidate all
+mirrors. Every other release command refuses the marker.
+Unchanged resrefs may reuse the current approved area QA only when the old and new runtime resource
+groups and their physical assets are byte-identical under the same registry/runtime/renderer
+contract. The immutable QA v3 records that carry-forward explicitly; any mismatch requires a new
+ingame decision. Legacy candidates and approvals remain readable and are not rewritten.
+
+Si un candidat déclare `occlusion_contract`, la prépublication vérifie la spécification, le WED, la
+preuve QA, leurs hashes et leur rattachement à la zone. Le manifeste final doit sélectionner ce WED
+exact, exposer le composant map attendu et ajouter sa dépendance au composant animation. Le Core doit
+posséder l'activation du bridge ; aucun bundle antérieur aux marqueurs
+`EnableNativeOcclusionBridge` et `FXRenderClippingPolys` n'est promouvable.
 
 After the test choice authorizes it, validate only the changed candidate:
 

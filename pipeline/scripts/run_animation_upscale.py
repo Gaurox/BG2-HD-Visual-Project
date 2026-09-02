@@ -23,6 +23,7 @@ from typing import Any
 
 from PIL import Image
 
+import animation_paths
 from workspace_paths import get_service
 
 from run_seedvr_comfyui import APPROVED_3B_SHA256, APPROVED_7B_SHA256, sha256_file
@@ -30,7 +31,6 @@ from run_seedvr_comfyui import APPROVED_3B_SHA256, APPROVED_7B_SHA256, sha256_fi
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ANIMATIONS_DIR = PROJECT_ROOT / "animations"
-DEFAULT_RUNS_ROOT = ANIMATIONS_DIR / "runs"
 DEFAULT_WORKFLOW = (
     PROJECT_ROOT / "pipeline" / "comfyui" / "workflows" / "SeedVR-Image-BG2-Pipeline-7B.api.json"
 )
@@ -59,8 +59,18 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--resref", action="append", default=[], help="BAM à traiter; répétable")
     parser.add_argument("--area", action="append", default=[], help="zone dont tous les BAM seront traités; répétable")
-    parser.add_argument("--run", help="nom simple créé sous animations/runs")
-    parser.add_argument("--runs-root", type=Path, default=DEFAULT_RUNS_ROOT)
+    parser.add_argument(
+        "--run",
+        help=(
+            "identifiant simple; nouveau run mono-resref sous "
+            "animations/ressources/<RESREF>/runs, sinon sous animations/batches"
+        ),
+    )
+    parser.add_argument(
+        "--runs-root",
+        type=Path,
+        help="racine explicite; utiliser animations/runs seulement pour un chemin legacy",
+    )
     parser.add_argument("--scale", type=int, choices=(2, 4), default=4)
     parser.add_argument("--pad", type=int, default=32)
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
@@ -77,8 +87,11 @@ def parse_args() -> argparse.Namespace:
     if not args.plan:
         if not args.run:
             parser.error("--run est requis hors mode --plan")
-        if Path(args.run).name != args.run or args.run in {".", ".."}:
-            parser.error("--run doit être un nom de dossier simple")
+    if args.run:
+        try:
+            animation_paths.validate_run_id(args.run)
+        except RuntimeError as exc:
+            parser.error(str(exc))
     if args.pad < 0:
         parser.error("--pad doit être positif ou nul")
     if args.poll_seconds <= 0 or args.timeout_seconds <= 0:
@@ -241,7 +254,7 @@ def signature_for(request: dict[str, Any]) -> str:
 
 
 def display_plan(selected: list[dict[str, Any]], areas: list[str], scale: int,
-                 excluded: list[dict[str, str]]) -> None:
+                 excluded: list[dict[str, str]], proposed_location: Path) -> None:
     print(f"Sélection : {len(selected)} BAM, échelle x{scale}")
     if areas:
         print("Zones demandées : " + ", ".join(sorted(areas)))
@@ -257,6 +270,7 @@ def display_plan(selected: list[dict[str, Any]], areas: list[str], scale: int,
         print("Occurrences exclues du pipeline BAM :")
         for summary in exclusion_summary(excluded):
             print(f"- {summary}")
+    print("Emplacement de run proposé : " + animation_paths.display_path(proposed_location))
 
 
 def copy_source(source: Path, destination: Path, expected_hash: str) -> None:
@@ -406,7 +420,25 @@ def main() -> None:
     args = parse_args()
     selected, occurrences, excluded_occurrences = load_selection(args.resref, args.area)
     areas = sorted({normalise_area(value) for value in args.area})
-    display_plan(selected, areas, args.scale, excluded_occurrences)
+    selected_resrefs = [item["resref"] for item in selected]
+    run_dir = (
+        animation_paths.resolve_run_destination(
+            args.run,
+            selected_resrefs,
+            runs_root=args.runs_root,
+            animations_root=ANIMATIONS_DIR,
+        )
+        if args.run
+        else (
+            args.runs_root.resolve()
+            if args.runs_root is not None
+            else animation_paths.default_run_root(
+                selected_resrefs,
+                animations_root=ANIMATIONS_DIR,
+            )
+        )
+    )
+    display_plan(selected, areas, args.scale, excluded_occurrences, run_dir)
     if args.plan:
         return
 
@@ -427,8 +459,6 @@ def main() -> None:
         "workflow_sha256": workflow_hash,
     }
     signature = signature_for(request)
-    runs_root = args.runs_root.resolve()
-    run_dir = runs_root / args.run
     manifest_path = run_dir / "manifest.json"
 
     if run_dir.exists() and any(run_dir.iterdir()) and not args.resume:

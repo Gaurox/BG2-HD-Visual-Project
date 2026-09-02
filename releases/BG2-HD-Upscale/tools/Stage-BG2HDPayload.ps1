@@ -13,6 +13,9 @@ function RelativePath([string]$Base,[string]$Target) { [IO.Path]::GetRelativePat
 
 $workspace = (Resolve-Path -LiteralPath $WorkspaceRoot).Path
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $payload = [IO.Path]::GetFullPath($PayloadRoot)
 $contentPath = [IO.Path]::GetFullPath($ContentPath)
 $content = Get-Content -LiteralPath $contentPath -Raw -Encoding utf8 | ConvertFrom-Json
@@ -50,4 +53,8 @@ try {
 catch {
     if (Test-Path -LiteralPath $temporary) { Remove-Item -LiteralPath $temporary -Recurse -Force }
     throw
+}
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
 }

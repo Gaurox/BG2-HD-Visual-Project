@@ -26,6 +26,7 @@ from scipy import ndimage
 from scipy.interpolate import splprep, splev
 
 import run_animation_upscale_30fps_v2 as temporal
+import animation_paths
 
 
 SCHEMA = "bg2-upscale-area-animation-per-frame-spline-alpha-v1"
@@ -650,7 +651,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--temporal-run", type=Path, required=True)
     parser.add_argument("--resref", required=True)
-    parser.add_argument("--output", type=Path, required=True)
+    output_group = parser.add_mutually_exclusive_group(required=True)
+    output_group.add_argument(
+        "--run", help="identifiant du nouveau run mono-resref dans le layout courant"
+    )
+    output_group.add_argument(
+        "--output", type=Path, help="chemin explicite, réservé à la reprise legacy"
+    )
     parser.add_argument("--fit-error", type=float, default=1.0)
     parser.add_argument("--sample-spacing", type=float, default=1.5)
     parser.add_argument("--supersample", type=int, default=4)
@@ -670,8 +677,16 @@ def main() -> None:
     parser.add_argument("--threshold", type=int, default=127)
     parser.add_argument("--review-ffmpeg", default="ffmpeg")
     args = parser.parse_args()
+    output = (
+        animation_paths.resolve_run_destination(args.run, [args.resref])
+        if args.run
+        else args.output.resolve()
+    )
+    temporal_run = animation_paths.resolve_existing_run(
+        args.temporal_run, [args.resref]
+    )
     result = build(
-        args.temporal_run, args.resref, args.output, threshold=args.threshold,
+        temporal_run, args.resref, output, threshold=args.threshold,
         fit_error=args.fit_error, sample_spacing=args.sample_spacing,
         supersample=args.supersample, padding=args.padding_x4,
         inner_feather=args.inner_feather_x4,

@@ -363,6 +363,20 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
                 masked_run / "03_runtime_pack" / "AAX4-TESTA-frame000.rgba", [8, 4]
             ).getchannel("A").tobytes()), {0})
             self.assertEqual(manifest["manual_alpha_patch"]["targets"][0]["masked_frame_count"], 4)
+            mask_record = manifest["manual_alpha_patch"]
+            self.assertEqual(mask_record["mask_storage"], "run-relative-v1")
+            self.assertEqual(
+                mask_record["targets"][0]["mask_source"],
+                "manual-mask/TESTA/source.png",
+            )
+            sealed_mask = masked_run / "manual-mask" / "TESTA" / "source.png"
+            self.assertEqual(sha(sealed_mask), mask_record["targets"][0]["mask_sha256"])
+
+            sealed_bytes = sealed_mask.read_bytes()
+            sealed_mask.write_bytes(b"tampered")
+            with self.assertRaisesRegex(RuntimeError, "masque manuel modifié"):
+                pipeline.validate_run(masked_run)
+            sealed_mask.write_bytes(sealed_bytes)
 
             run_hash = sha(masked_run / "manifest.json")
             pipeline.approve_run(masked_run, run_hash, ["TESTA"])

@@ -43,6 +43,36 @@
       "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
       "git_blob": "d35520c89a945216ae40b44a60d34468a929672a",
       "reason": "Preserve the exact animation registry bytes pinned by the fourteen BUTRFLY sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38",
+      "git_commit": "a63c21b3b7e4af9dbd14a1b083d3299987938508",
+      "git_blob": "64dcdbf482c9f1b9d9f7c8c50e6e202a1fcd7129",
+      "reason": "Preserve the exact animation registry bytes pinned by the fourteen post-release sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "46C8E31C88FC8EF9FD9B49712CB6F2B3B286F4642C219DF6454C5010F5C1BB9D",
+      "git_commit": "fb9ce55f4c11dc4d3718d8ab9157000ce679e2fd",
+      "git_blob": "c34ff1d051bbe28035f1475e649d214aed52af67",
+      "reason": "Preserve the exact animation registry bytes pinned by the AR2201 sealed QA record."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D",
+      "snapshot_path": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv",
+      "git_blob": "1aff65f26837cd90cba0efc628af70abbf6ba08f",
+      "evidence_source": "recovered-unreachable-git-blob",
+      "reason": "Preserve the exact registry bytes pinned by the AR0300, AR0400, AR0500, AR0411, AR0414, AR1600, AR5200 and AR6300 sealed QA records; recovered from an unreachable local Git blob and materialized as a hash-locked compatibility snapshot."
+    },
+    {
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078",
+      "snapshot_path": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv",
+      "git_blob": "a620adce41a4755c17b02764d95b95675d96b71c",
+      "evidence_source": "reconstructed-from-recorded-precommit-csv-normalization",
+      "reason": "Preserve the exact 28-row alpha-correction catalogue pinned by the fourteen BUTRFLY QA records; reconstructed byte-for-byte from commit a63c21b plus the three quote-only CSV differences recorded immediately before commit, and hash-locked as a compatibility snapshot."
     }
   ]
 }

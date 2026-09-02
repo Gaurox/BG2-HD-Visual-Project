@@ -21,6 +21,9 @@ python pipeline/scripts/workspace.py refresh --scope registry --scope integrity 
 
 # Toutes les projections
 python pipeline/scripts/workspace.py refresh --scope all --run
+
+# Continuer les scopes indépendants et récapituler les échecs
+python pipeline/scripts/workspace.py refresh --scope all --run --keep-going
 ```
 
 | Scope | Sorties |
@@ -32,6 +35,8 @@ python pipeline/scripts/workspace.py refresh --scope all --run
 `refresh` écrit les projections ; `check` les compare sans écriture. Les stages sont mono-passe par
 défaut. `--verify-determinism` les exécute deux fois et exige un accord explicite ou une gate CI.
 Ne pas reconstruire après chaque tâche : regrouper les autorités ou attendre le livrable/gate.
+`--keep-going` poursuit les scopes indépendants, mais retourne toujours un code non nul si l'un
+d'eux échoue.
 
 Les tests suivent le choix indépendant décrit dans [`TEST_SELECTION.md`](TEST_SELECTION.md). La
 suite complète appelle tous les scopes en `check` mono-passe après ses tests.
@@ -75,5 +80,6 @@ Les compatibilités et déplacements historiques sont déclarés, non devinés :
 | Runs et preuves d'animation déplacés | `animations/index/path-migrations.json`, `qa-evidence-migrations.json` |
 | Runs sprite déplacés | `sprite/index/path-migrations.json` |
 | Nettoyages et archives physiques | `docs/workspace-cleanup-manifest*.json` et `docs/workspace-archive-manifest*.json` |
+| Retours post-nettoyage depuis une archive | `docs/workspace-restoration-manifest.json`, avec manifeste cible et hash exact |
 
 Ces manifestes sont des preuves de migration. Ils ne deviennent pas des autorités métier.

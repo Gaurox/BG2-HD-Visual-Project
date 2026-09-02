@@ -6,10 +6,15 @@ param(
     [string]$RuntimeCompatibilityPath = (Join-Path $PSScriptRoot '..\manifests\runtime-compatibility.json'),
     [string]$OverlayPolicyPath = (Join-Path $PSScriptRoot '..\manifests\overlay-sources.json'),
     [switch]$IncludePendingAnimationCandidates,
+    [string]$AnimationQaApprovalOverridePath,
     [string[]]$OnlyAnimationArea
 )
 
 $ErrorActionPreference = 'Stop'
+
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $WorkspaceRoot
+try {
 
 $selectedAnimationAreas = [System.Collections.Generic.List[string]]::new()
 foreach ($area in @($OnlyAnimationArea | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })) {
@@ -22,6 +27,9 @@ foreach ($area in @($OnlyAnimationArea | Where-Object { -not [string]::IsNullOrW
     }
 }
 $isAnimationDelta = $selectedAnimationAreas.Count -gt 0
+if (-not [string]::IsNullOrWhiteSpace($AnimationQaApprovalOverridePath) -and $selectedAnimationAreas.Count -ne 1) {
+    throw '-AnimationQaApprovalOverridePath exige exactement une zone via -OnlyAnimationArea.'
+}
 
 function Require([bool]$Condition, [string]$Message) {
     if (-not $Condition) { throw $Message }
@@ -40,6 +48,98 @@ function Test-QAEvidenceHash([string]$Workspace, [string]$RelativePath, [string]
 
 function Read-Json([string]$Path) {
     Get-Content -LiteralPath $Path -Raw -Encoding utf8 | ConvertFrom-Json
+}
+
+function Test-BG2HDRegularFilePath([string]$Path, [string]$Label) {
+    try {
+        $attributes = [IO.File]::GetAttributes($Path)
+    } catch {
+        $exception = $_.Exception
+        while ($null -ne $exception.InnerException) { $exception = $exception.InnerException }
+        if (
+            $exception -is [System.IO.FileNotFoundException] -or
+            $exception -is [System.IO.DirectoryNotFoundException]
+        ) {
+            return $false
+        }
+        throw
+    }
+    if (($attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) {
+        throw "$Label ReparsePoint interdit : $Path"
+    }
+    if (
+        ($attributes -band [IO.FileAttributes]::Directory) -ne 0 -or
+        ($attributes -band [IO.FileAttributes]::Device) -ne 0 -or
+        -not [IO.File]::Exists($Path)
+    ) {
+        throw "$Label non regulier : $Path"
+    }
+    return $true
+}
+
+function Write-BG2HDAtomicUtf8NoBomFile([string]$Path, [string]$Text) {
+    $fullPath = [IO.Path]::GetFullPath($Path)
+    $directory = [IO.Path]::GetDirectoryName($fullPath)
+    if ([string]::IsNullOrWhiteSpace($directory)) { throw "Dossier de sortie introuvable : $Path" }
+    [IO.Directory]::CreateDirectory($directory) | Out-Null
+    $temporaryPath = Join-Path $directory ('.' + [IO.Path]::GetFileName($fullPath) + '.' + [Guid]::NewGuid().ToString('N') + '.partial')
+    $backupPath = Join-Path $directory ('.' + [IO.Path]::GetFileName($fullPath) + '.' + [Guid]::NewGuid().ToString('N') + '.replace-backup.partial')
+    $stream = $null
+    try {
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes($Text)
+        $stream = [IO.FileStream]::new(
+            $temporaryPath,
+            [IO.FileMode]::CreateNew,
+            [IO.FileAccess]::Write,
+            [IO.FileShare]::None,
+            65536,
+            [IO.FileOptions]::WriteThrough
+        )
+        if ($bytes.Length -gt 0) { $stream.Write($bytes, 0, $bytes.Length) }
+        $stream.Flush($true)
+        $stream.Dispose()
+        $stream = $null
+        $targetExists = Test-BG2HDRegularFilePath -Path $fullPath -Label 'Cible de publication'
+        if ($targetExists) {
+            [IO.File]::Replace($temporaryPath, $fullPath, $backupPath, $true)
+        } else {
+            [IO.File]::Move($temporaryPath, $fullPath)
+        }
+    }
+    finally {
+        if ($null -ne $stream) { $stream.Dispose() }
+        if ([IO.File]::Exists($temporaryPath)) { [IO.File]::Delete($temporaryPath) }
+        if ([IO.File]::Exists($backupPath)) { [IO.File]::Delete($backupPath) }
+    }
+}
+
+function Get-AnimationManifestResrefs([object]$Manifest) {
+    $values = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+    foreach ($key in @('asset', 'resref', 'bam_resref')) {
+        $value = [string]$Manifest.$key
+        if ($value -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') { [void]$values.Add($value.ToUpperInvariant()) }
+    }
+    foreach ($key in @('resources', 'timed_resources', 'resrefs', 'targets', 'requested_resrefs', 'resolved_resrefs')) {
+        foreach ($item in @($Manifest.$key)) {
+            if ($item -is [string]) {
+                if ($item -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') { [void]$values.Add($item.ToUpperInvariant()) }
+                continue
+            }
+            foreach ($itemKey in @('asset', 'resref', 'bam_resref', 'resource_resref')) {
+                $itemValue = [string]$item.$itemKey
+                if ($itemValue -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') { [void]$values.Add($itemValue.ToUpperInvariant()) }
+            }
+        }
+    }
+    if ($null -ne $Manifest.request) {
+        foreach ($key in @('resref', 'resrefs', 'targets', 'requested_resrefs', 'resolved_resrefs')) {
+            foreach ($item in @($Manifest.request.$key)) {
+                $value = if ($item -is [string]) { $item } else { [string]$item.resref }
+                if ($value -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') { [void]$values.Add($value.ToUpperInvariant()) }
+            }
+        }
+    }
+    return @($values | Sort-Object)
 }
 
 function Get-RelativeUnixPath([string]$Base, [string]$Path) {
@@ -83,6 +183,10 @@ function Get-AnimationCandidateEntries {
     $releaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
     Require (Test-Json -Path $CandidatesPath -SchemaFile (Join-Path $releaseRoot 'schemas\animation-release-candidates.schema.json')) 'Schema du registre de candidats animation invalide.'
     $candidates = Read-Json $CandidatesPath
+    $candidateAreas = @($candidates.candidates | ForEach-Object { [string]$_.area })
+    $candidateComponentIds = @($candidates.candidates | ForEach-Object { [int]$_.component_id })
+    Require ($candidateAreas.Count -eq @($candidateAreas | Sort-Object -Unique).Count) 'Zones dupliquees dans le registre de candidats animation.'
+    Require ($candidateComponentIds.Count -eq @($candidateComponentIds | Sort-Object -Unique).Count) 'Component_id duplique dans le registre de candidats animation.'
     $requestedAreas = @($OnlyAreas | Sort-Object -Unique)
     foreach ($area in $requestedAreas) {
         $matches = @($candidates.candidates | Where-Object { [string]$_.area -eq $area })
@@ -90,11 +194,6 @@ function Get-AnimationCandidateEntries {
         $approved = ([string]$matches[0].approval_status -eq 'approved-for-release')
         Require ($approved -or $IncludePending) "Candidat animation delta non approuve : $area"
     }
-    $animationIndex = @{}
-    foreach ($row in Import-Csv -LiteralPath (Join-Path $Workspace 'animations\index\animation_upscale_registry.csv')) {
-        $animationIndex[[string]$row.resref] = $row
-    }
-
     $result = [System.Collections.Generic.List[object]]::new()
     foreach ($candidate in @($candidates.candidates | Sort-Object component_id)) {
         if ($requestedAreas.Count -gt 0 -and [string]$candidate.area -notin $requestedAreas) { continue }
@@ -104,18 +203,34 @@ function Get-AnimationCandidateEntries {
         $sourceDirectory = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$candidate.source_pack).Replace('/', '\')))
         $relativeSource = [IO.Path]::GetRelativePath($Workspace, $sourceDirectory).Replace('\', '/')
         Require ($relativeSource -notmatch '(^|/)\.\.(/|$)') "Pack animation hors workspace : $($candidate.source_pack)"
-        Require ($relativeSource -notmatch '(^|/)(override|backups|archive|captures|temp)(/|$)') "Pack animation interdit : $relativeSource"
+        Require ($relativeSource -notmatch '(^|/)(archive|archives|backup|backups|capture|captures|override|proto|staging|temp|tmp)(/|$)') "Pack animation interdit : $relativeSource"
+        Require ($relativeSource -ceq [string]$candidate.source_pack) "Chemin de pack animation non canonique : $($candidate.source_pack)"
+        Require ($relativeSource.EndsWith('/' + [string]$candidate.area, [StringComparison]::Ordinal)) "Pack animation range sous une autre zone : $relativeSource"
         Require (Test-Path -LiteralPath $sourceDirectory -PathType Container) "Pack animation absent : $sourceDirectory"
 
-        $qaApprovalPath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$candidate.qa_approval).Replace('/', '\')))
-        $relativeQaApproval = [IO.Path]::GetRelativePath($Workspace, $qaApprovalPath).Replace('\', '/')
+        $declaredQaApprovalPath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$candidate.qa_approval).Replace('/', '\')))
+        $relativeQaApproval = [IO.Path]::GetRelativePath($Workspace, $declaredQaApprovalPath).Replace('\', '/')
         Require ($relativeQaApproval -notmatch '(^|/)\.\.(/|$)') "Approbation QA animation hors workspace : $($candidate.qa_approval)"
-        Require ($relativeQaApproval -notmatch '(^|/)(override|backups|archive|captures|temp|proto)(/|$)') "Approbation QA animation interdite : $relativeQaApproval"
+        Require ($relativeQaApproval -notmatch '(^|/)(archive|archives|backup|backups|capture|captures|override|proto|staging|temp|tmp)(/|$)') "Approbation QA animation interdite : $relativeQaApproval"
+        Require ($relativeQaApproval -ceq [string]$candidate.qa_approval) "Chemin d'approbation QA animation non canonique : $($candidate.qa_approval)"
+        $qaApprovalPrefix = "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/$($candidate.area)/"
+        Require ($relativeQaApproval.StartsWith($qaApprovalPrefix, [StringComparison]::Ordinal)) "Approbation QA rangee sous une autre zone : $relativeQaApproval"
+        $qaApprovalPath = if (-not [string]::IsNullOrWhiteSpace($AnimationQaApprovalOverridePath) -and [string]$candidate.area -eq $selectedAnimationAreas[0]) {
+            [IO.Path]::GetFullPath($AnimationQaApprovalOverridePath)
+        } else {
+            $declaredQaApprovalPath
+        }
         Require (Test-Path -LiteralPath $qaApprovalPath -PathType Leaf) "Approbation QA animation absente : $qaApprovalPath"
         Require ((Get-FileHash -LiteralPath $qaApprovalPath -Algorithm SHA256).Hash -eq [string]$candidate.qa_approval_sha256) "Hash approbation QA animation invalide : $($candidate.area)"
         Require (Test-Json -Path $qaApprovalPath -SchemaFile (Join-Path $releaseRoot 'schemas\animation-qa-approval.schema.json')) "Schema approbation QA animation invalide : $($candidate.area)"
         $qaApproval = Read-Json $qaApprovalPath
-        Require ($qaApproval.status -eq 'accepted' -and $qaApproval.decision_origin -eq 'preserved-existing-user-qa') "Decision QA animation non acceptee : $($candidate.area)"
+        $qaSchemaVersion = [int]$qaApproval.schema_version
+        $acceptedOrigins = @{
+            1 = 'preserved-existing-user-qa'
+            2 = 'explicit-user-ingame-qa'
+            3 = 'explicit-user-ingame-qa-with-byte-identical-carry-forward'
+        }
+        Require ($qaApproval.status -eq 'accepted' -and $acceptedOrigins.ContainsKey($qaSchemaVersion) -and $qaApproval.decision_origin -eq $acceptedOrigins[$qaSchemaVersion]) "Decision QA animation non acceptee : $($candidate.area)"
         Require ($qaApproval.area -eq [string]$candidate.area) "Zone de l'approbation QA animation incoherente : $($candidate.area)"
         Require ($qaApproval.source_pack -eq [string]$candidate.source_pack) "Pack de l'approbation QA animation incoherent : $($candidate.area)"
         Require ($qaApproval.pack_manifest_sha256 -eq [string]$candidate.pack_manifest_sha256) "Manifest de pack non couvert par la QA : $($candidate.area)"
@@ -123,14 +238,42 @@ function Get-AnimationCandidateEntries {
         $qaResrefs = @($qaApproval.required_resrefs | Sort-Object -Unique)
         $candidateResrefs = @($candidate.required_resrefs | Sort-Object -Unique)
         Require (-not (Compare-Object $candidateResrefs $qaResrefs)) "Resrefs non couverts exactement par la QA : $($candidate.area)"
+        $releaseVerifier = Join-Path $Workspace 'pipeline\scripts\verify_animation_release_candidate.py'
+        Require (Test-Path -LiteralPath $releaseVerifier -PathType Leaf) 'Validateur de release animation absent.'
+        $releaseArguments = @(
+            $releaseVerifier,
+            '--workspace-root', $Workspace,
+            '--animation-candidates-path', $CandidatesPath,
+            '--area', [string]$candidate.area
+        )
+        if ($qaApprovalPath -ne $declaredQaApprovalPath) {
+            $releaseArguments += @('--animation-qa-approval-override-path', $qaApprovalPath)
+        }
+        if (-not $approved -and $IncludePending) {
+            $releaseArguments += '--allow-pending'
+        }
+        $releaseOutput = @(& python @releaseArguments 2>&1)
+        $releaseExitCode = $LASTEXITCODE
+        Require ($releaseExitCode -eq 0) (
+            "Release animation invalide : $($candidate.area)" +
+            $(if ($releaseOutput.Count -gt 0) { [Environment]::NewLine + ($releaseOutput -join [Environment]::NewLine) } else { '' })
+        )
         $coveredQaResrefs = @()
-        foreach ($evidence in @($qaApproval.evidence)) {
+        $qaDecisionFinalRuns = @{}
+        if ($qaSchemaVersion -eq 1) {
+            $coveredQaResrefs = $candidateResrefs
+        } else {
+          foreach ($evidence in @($qaApproval.evidence)) {
             $evidencePath = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$evidence.path).Replace('/', '\')))
             $relativeEvidence = [IO.Path]::GetRelativePath($Workspace, $evidencePath).Replace('\', '/')
             Require ($relativeEvidence -notmatch '(^|/)\.\.(/|$)') "Preuve QA animation hors workspace : $($evidence.path)"
-            Require ($relativeEvidence -notmatch '(^|/)(override|backups|archive|captures|temp|proto)(/|$)') "Preuve QA animation interdite : $relativeEvidence"
+            Require ($relativeEvidence -notmatch '(^|/)(archive|archives|backup|backups|capture|captures|override|proto|staging|temp|tmp)(/|$)') "Preuve QA animation interdite : $relativeEvidence"
             Require (Test-Path -LiteralPath $evidencePath -PathType Leaf) "Preuve QA animation absente : $relativeEvidence"
-            Require (Test-QAEvidenceHash $Workspace $relativeEvidence ([string]$evidence.sha256)) "Hash preuve QA animation invalide : $relativeEvidence"
+            if ($qaSchemaVersion -in @(2, 3)) {
+                Require ((Get-FileHash -LiteralPath $evidencePath -Algorithm SHA256).Hash -eq [string]$evidence.sha256) "Hash courant de preuve QA invalide : $relativeEvidence"
+            } else {
+                Require (Test-QAEvidenceHash $Workspace $relativeEvidence ([string]$evidence.sha256)) "Hash preuve QA animation invalide : $relativeEvidence"
+            }
             switch ([string]$evidence.kind) {
                 'run-qa-approval' {
                     Require ($relativeEvidence -match '^animations/runs/[^/]+/qa-approval[.]json$') "Chemin de preuve run QA invalide : $relativeEvidence"
@@ -143,11 +286,62 @@ function Get-AnimationCandidateEntries {
                 'canonical-alpha-corrections' {
                     Require ($relativeEvidence -eq 'animations/index/animation_alpha_corrections.csv') "Registre alpha QA inattendu : $relativeEvidence"
                 }
+                'ingame-qa-decision' {
+                    Require ($qaSchemaVersion -in @(2, 3)) "Decision ingame interdite dans une approbation QA legacy : $relativeEvidence"
+                    Require ($relativeEvidence -match '^animations/index/qa-decisions/[A-Z0-9_]{1,8}/[A-Za-z0-9._-]+[.]json$') "Chemin de decision ingame invalide : $relativeEvidence"
+                    $decisionSchema = Join-Path $Workspace 'animations\schemas\animation-qa-decision.schema.json'
+                    Require (Test-Json -Path $evidencePath -SchemaFile $decisionSchema) "Schema de decision ingame invalide : $relativeEvidence"
+                    $decision = Read-Json $evidencePath
+                    $evidenceResrefs = @($evidence.accepted_resrefs | Sort-Object -Unique)
+                    Require ($evidenceResrefs.Count -eq 1) "Une decision ingame doit couvrir un seul resref : $relativeEvidence"
+                    $decisionResref = ([string]$decision.resref).ToUpperInvariant()
+                    Require ($decision.result_kind -eq 'x4') "Decision ingame non x4 interdite en release : $relativeEvidence"
+                    Require ($decision.status -eq 'accepted' -and $decision.decision_origin -eq 'explicit-user-ingame-qa') "Decision ingame non acceptee : $relativeEvidence"
+                    Require ($decisionResref -eq $evidenceResrefs[0] -and [string]$decision.asset_id -eq "animations:bam:$decisionResref") "Resref de decision ingame incoherent : $relativeEvidence"
+                    $expectedDecisionPath = "animations/index/qa-decisions/$decisionResref/$($decision.decision_id).json"
+                    Require ($relativeEvidence -ceq $expectedDecisionPath) "Decision ingame rangee sous un autre asset ou identifiant : $relativeEvidence"
+                    Require (@($decision.tested_areas) -contains [string]$candidate.area) "Zone absente de la decision ingame : $relativeEvidence"
+                    $decisionArea = @($decision.source_pack.areas | Where-Object { [string]$_.area -eq [string]$candidate.area })
+                    Require ($decisionArea.Count -eq 1) "Pack de zone absent ou duplique dans la decision : $relativeEvidence"
+                    Require ([string]$decisionArea[0].path -eq [string]$candidate.source_pack) "Pack de decision different du candidat : $relativeEvidence"
+                    Require ([string]$decisionArea[0].manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$decisionArea[0].registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes du pack de decision differents du candidat : $relativeEvidence"
+
+                    $decisionRunDirectory = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$decision.final_run.path).Replace('/', '\')))
+                    $relativeDecisionRun = [IO.Path]::GetRelativePath($Workspace, $decisionRunDirectory).Replace('\', '/')
+                    Require ($relativeDecisionRun -notmatch '(^|/)\.\.(/|$)' -and $relativeDecisionRun -notmatch '(^|/)(archive|archives|backup|backups|capture|captures|override|proto|staging|temp|tmp)(/|$)') "Run final QA interdit : $relativeDecisionRun"
+                    Require ($relativeDecisionRun -ceq [string]$decision.final_run.path) "Chemin de run final QA non canonique : $($decision.final_run.path)"
+                    $decisionRunLayoutValid = (
+                        $relativeDecisionRun -match '^animations/(?:runs|batches)/[A-Za-z0-9][A-Za-z0-9._-]*$' -or
+                        $relativeDecisionRun -match "^animations/ressources/$([regex]::Escape($decisionResref))/runs/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                    ) -and $relativeDecisionRun -notmatch '[.]partial$'
+                    Require ($decisionRunLayoutValid) "Layout de run final QA invalide : $relativeDecisionRun"
+                    Require (Test-Path -LiteralPath $decisionRunDirectory -PathType Container) "Run final QA absent : $relativeDecisionRun"
+                    $decisionRunManifest = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$decision.final_run.manifest_path).Replace('/', '\')))
+                    $relativeDecisionRunManifest = [IO.Path]::GetRelativePath($Workspace, $decisionRunManifest).Replace('\', '/')
+                    Require ($relativeDecisionRunManifest -ceq [string]$decision.final_run.manifest_path) "Chemin de manifeste du run final QA non canonique : $($decision.final_run.manifest_path)"
+                    Require ($relativeDecisionRunManifest -ceq "$relativeDecisionRun/manifest.json") "Manifest hors run final QA ou non canonique : $relativeDecisionRunManifest"
+                    Require (Test-Path -LiteralPath $decisionRunManifest -PathType Leaf) "Manifest de run final QA absent : $relativeDecisionRunManifest"
+                    Require ((Get-FileHash -LiteralPath $decisionRunManifest -Algorithm SHA256).Hash -eq [string]$decision.final_run.manifest_sha256) "Hash du run final QA invalide : $relativeDecisionRun"
+                    $decisionFinalManifest = Read-Json $decisionRunManifest
+                    Require ([string]$decisionFinalManifest.schema -eq [string]$decision.final_run.schema -and [string]$decisionFinalManifest.status -eq [string]$decision.final_run.status) "Identite du run final QA incoherente : $relativeDecisionRun"
+                    Require ([string]$decisionFinalManifest.status -in @('completed', 'validated', 'validated-installed')) "Run final QA non termine : $relativeDecisionRun"
+                    Require (@(Get-AnimationManifestResrefs $decisionFinalManifest) -contains $decisionResref) "Run final QA ne declare pas $decisionResref : $relativeDecisionRun"
+                    Require (-not $qaDecisionFinalRuns.ContainsKey($decisionResref)) "Decision ingame dupliquee : $decisionResref"
+                    $qaDecisionFinalRuns[$decisionResref] = @{
+                        path = $relativeDecisionRun
+                        manifest_path = $relativeDecisionRunManifest
+                        manifest_sha256 = [string]$decision.final_run.manifest_sha256
+                    }
+                }
+                'byte-identical-release-continuity' {
+                    Require ($qaSchemaVersion -eq 3) "Preuve de continuite interdite hors QA v3 : $relativeEvidence"
+                }
             }
             $coveredQaResrefs += @($evidence.accepted_resrefs)
+          }
+          $coveredQaResrefs = @($coveredQaResrefs | Sort-Object -Unique)
+          Require (-not (Compare-Object $candidateResrefs $coveredQaResrefs)) "Preuves QA incompletes ou hors candidat : $($candidate.area)"
         }
-        $coveredQaResrefs = @($coveredQaResrefs | Sort-Object -Unique)
-        Require (-not (Compare-Object $candidateResrefs $coveredQaResrefs)) "Preuves QA incompletes ou hors candidat : $($candidate.area)"
 
         $packManifestPath = Join-Path $sourceDirectory ([string]$candidate.pack_manifest)
         Require (Test-Path -LiteralPath $packManifestPath -PathType Leaf) "Manifest de pack animation absent : $packManifestPath"
@@ -158,7 +352,12 @@ function Get-AnimationCandidateEntries {
         Require ($registryVersion -in @(2, 3)) "Version de registre animation non publiee : $($candidate.area)"
         Require ($pack.status -eq 'completed' -and [int]$pack.scale -eq 4 -and [int]$pack.registry_version -eq $registryVersion) "Pack animation non finalise, non x4 ou version incoherente : $($candidate.area)"
         Require ($pack.area_id -eq [string]$candidate.area) "Zone de pack animation incoherente : $($candidate.area)"
+        Require ([string]$pack.registry -eq [string]$candidate.registry) "Nom de registre du pack animation incoherent : $($candidate.area)"
         Require ($pack.runtime_contract.feature -eq 'TimedTimeline' -and [int]$pack.runtime_contract.registry_version -eq $registryVersion) "Contrat runtime animation absent : $($candidate.area)"
+        if ($qaSchemaVersion -in @(2, 3)) {
+            Require ($pack.runtime_budget_enforced -is [bool] -and [bool]$pack.runtime_budget_enforced) "Pack auteur ou budget runtime non confirme interdit en release : $($candidate.area)"
+            Require (-not ($pack.authoring_pack_for_area_split -is [bool] -and [bool]$pack.authoring_pack_for_area_split)) "Pack auteur non decoupe interdit en release : $($candidate.area)"
+        }
         $expectedRendererContract = if ($registryVersion -eq 3) { 'area-animation-per-area-registry-v3-position-timed-timeline' } else { 'area-animation-per-area-registry-v2-timed-timeline' }
         Require ([string]$candidate.renderer_contract -eq $expectedRendererContract) "Contrat renderer animation incoherent : $($candidate.area)"
 
@@ -188,13 +387,71 @@ function Get-AnimationCandidateEntries {
         $requiredResrefs = @($candidate.required_resrefs | Sort-Object -Unique)
         Require (-not (Compare-Object $requiredResrefs $packResrefs)) "Inventaire resref du pack animation incoherent : $($candidate.area)"
 
+        $sourceRunText = [string]$candidate.source_run
+        if ($qaSchemaVersion -in @(2, 3)) {
+            Require ($null -ne $candidate.PSObject.Properties['source_runs']) "Runs source structures absents du candidat QA v$qaSchemaVersion : $($candidate.area)"
+        }
+        if ($null -ne $candidate.PSObject.Properties['source_runs']) {
+            $sourceRunPaths = [System.Collections.Generic.List[string]]::new()
+            $sourceRunResrefs = [System.Collections.Generic.List[string]]::new()
+            $candidateSourceRunByResref = @{}
+            foreach ($sourceRun in @($candidate.source_runs)) {
+                $sourceRunDirectory = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$sourceRun.path).Replace('/', '\')))
+                $relativeSourceRun = [IO.Path]::GetRelativePath($Workspace, $sourceRunDirectory).Replace('\', '/')
+                Require ($relativeSourceRun -notmatch '(^|/)\.\.(/|$)') "Run source hors workspace : $($sourceRun.path)"
+                Require ($relativeSourceRun -notmatch '(^|/)(archive|archives|backup|backups|capture|captures|override|proto|staging|temp|tmp)(/|$)') "Run source interdit : $relativeSourceRun"
+                Require ($relativeSourceRun -ceq [string]$sourceRun.path) "Chemin de run source non canonique : $($sourceRun.path)"
+                Require ($relativeSourceRun -notmatch '[.]partial$') "Run source partiel interdit : $relativeSourceRun"
+                if ($qaSchemaVersion -in @(2, 3)) {
+                    Require ([string]$sourceRun.role -eq 'final') "Role de run source non final : $relativeSourceRun"
+                }
+                Require (Test-Path -LiteralPath $sourceRunDirectory -PathType Container) "Run source absent : $relativeSourceRun"
+                $sourceRunManifest = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$sourceRun.manifest_path).Replace('/', '\')))
+                $relativeSourceRunManifest = [IO.Path]::GetRelativePath($Workspace, $sourceRunManifest).Replace('\', '/')
+                Require ($relativeSourceRunManifest -ceq [string]$sourceRun.manifest_path) "Chemin de manifeste du run source non canonique : $($sourceRun.manifest_path)"
+                Require ($relativeSourceRunManifest -ceq "$relativeSourceRun/manifest.json") "Manifest hors run source ou non canonique : $relativeSourceRunManifest"
+                Require (Test-Path -LiteralPath $sourceRunManifest -PathType Leaf) "Manifest de run source absent : $relativeSourceRunManifest"
+                Require ((Get-FileHash -LiteralPath $sourceRunManifest -Algorithm SHA256).Hash -eq [string]$sourceRun.manifest_sha256) "Hash de run source invalide : $relativeSourceRun"
+                $sourceRunAssetIds = @($sourceRun.asset_ids)
+                if ($relativeSourceRun -match '^animations/ressources/([A-Z0-9_]{1,8})/runs/') {
+                    Require ($sourceRunAssetIds.Count -eq 1 -and ([string]$sourceRunAssetIds[0]).ToUpperInvariant() -eq $Matches[1]) "Run mono-resref affecte a un autre asset : $relativeSourceRun"
+                }
+                foreach ($assetId in $sourceRunAssetIds) {
+                    $normalizedAssetId = ([string]$assetId).ToUpperInvariant()
+                    Require ($normalizedAssetId -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') "Asset id invalide dans un run source : $assetId"
+                    Require (-not $candidateSourceRunByResref.ContainsKey($normalizedAssetId)) "Run source duplique pour $normalizedAssetId : $($candidate.area)"
+                    $sourceRunResrefs.Add($normalizedAssetId)
+                    $candidateSourceRunByResref[$normalizedAssetId] = @{
+                        path = $relativeSourceRun
+                        manifest_path = $relativeSourceRunManifest
+                        manifest_sha256 = [string]$sourceRun.manifest_sha256
+                    }
+                }
+                $sourceRunPaths.Add($relativeSourceRun)
+            }
+            Require ($sourceRunPaths.Count -eq @($sourceRunPaths | Sort-Object -Unique).Count) "Run source duplique : $($candidate.area)"
+            if ($qaSchemaVersion -ne 3) {
+                Require (-not (Compare-Object $requiredResrefs @($sourceRunResrefs | Sort-Object -Unique))) "Couverture des runs source incoherente : $($candidate.area)"
+            }
+            if ($qaSchemaVersion -eq 2) {
+                foreach ($resref in $requiredResrefs) {
+                    Require ($qaDecisionFinalRuns.ContainsKey($resref) -and $candidateSourceRunByResref.ContainsKey($resref)) "Decision/run final non couvert : $resref / $($candidate.area)"
+                    $decisionRun = $qaDecisionFinalRuns[$resref]
+                    $candidateRun = $candidateSourceRunByResref[$resref]
+                    Require ($decisionRun.path -eq $candidateRun.path -and $decisionRun.manifest_path -eq $candidateRun.manifest_path -and $decisionRun.manifest_sha256 -eq $candidateRun.manifest_sha256) "Run final du candidat different de la decision QA : $resref / $($candidate.area)"
+                }
+            }
+            $sourceRunText = (@($sourceRunPaths | Sort-Object -Unique) -join ';')
+        }
+        Require (-not [string]::IsNullOrWhiteSpace($sourceRunText)) "Provenance de run source absente : $($candidate.area)"
+
         $destinationRoot = "iee-assets/areas/$($candidate.area)"
         $baseSpec = @{
             ComponentId = [int]$candidate.component_id
             ComponentLabel = [string]$candidate.component_label
             PayloadGroup = [string]$candidate.payload_group
             Area = [string]$candidate.area
-            SourceRun = [string]$candidate.source_run
+            SourceRun = $sourceRunText
             Kind = 'area-animation'
             DestinationRoot = $destinationRoot
             Model = "AreaAnimationRuntimeV$registryVersion"
@@ -215,10 +472,6 @@ function Get-AnimationCandidateEntries {
 
         foreach ($resource in @($pack.resources | Sort-Object resref)) {
             $resref = [string]$resource.resref
-            Require ($animationIndex.ContainsKey($resref)) "Resref animation absent du registre global : $resref"
-            $row = $animationIndex[$resref]
-            Require ($row.status -eq 'validé-x4') "Resref animation non validee : $resref"
-            Require ((@([string]$row.areas -split ';') -contains [string]$candidate.area)) "Resref animation hors zone : $resref / $($candidate.area)"
             $frames = @($resource.frames | Sort-Object frame)
             Require ($frames.Count -eq [int]$resource.frame_count) "Nombre de frames incoherent : $resref"
             $variantIndex = if ($null -ne $resource.PSObject.Properties['variant_index']) { [int]$resource.variant_index } else { 0 }
@@ -672,6 +925,11 @@ if (-not $isAnimationDelta) {
 foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -RuntimePath $RuntimeCompatibilityPath -IncludePending $IncludePendingAnimationCandidates -OnlyAreas @($selectedAnimationAreas))) {
     $entries.Add($entry)
 }
+foreach ($entry in $entries) {
+    Require ($entry -is [System.Collections.IDictionary]) 'Sortie non structuree interdite dans content.json.'
+    Require (-not [string]::IsNullOrWhiteSpace([string]$entry.source)) 'Source vide interdite dans content.json.'
+    Require (-not [string]::IsNullOrWhiteSpace([string]$entry.destination)) 'Destination vide interdite dans content.json.'
+}
 
 $manifest = [ordered]@{
     '$schema' = '../schemas/content.schema.json'
@@ -680,7 +938,9 @@ $manifest = [ordered]@{
     entries = @($entries | Sort-Object component_id, install_order, destination, source)
 }
 
-$outputDirectory = Split-Path -Parent $OutputPath
-New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-$manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $OutputPath -Encoding utf8NoBOM
+Write-BG2HDAtomicUtf8NoBomFile -Path $OutputPath -Text (($manifest | ConvertTo-Json -Depth 8) + [Environment]::NewLine)
 Write-Output "Wrote $($entries.Count) entries to $OutputPath"
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
+}

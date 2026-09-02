@@ -38,11 +38,21 @@ JSON_OUTPUTS = ("workspace-integrity.json", "runs.json")
 RUN_CSV = "runs.csv"
 ANIMATION_PATH_MIGRATIONS = "animations/index/path-migrations.json"
 CLEANUP_MANIFEST = "docs/workspace-cleanup-manifest.json"
+RESTORATION_MANIFEST = "docs/workspace-restoration-manifest.json"
 VIDEO_SELECTION = "video/index/processing.csv"
 ARCHIVE_P2_MANIFEST = "docs/workspace-archive-p2-manifest.json"
 ANIMATION_PACK_P3_MANIFEST = "docs/workspace-animation-packs-p3-manifest.json"
 LEGACY_P4_MANIFEST = "docs/workspace-legacy-p4-manifest.json"
 BACKUPS_P5_MANIFEST = "docs/workspace-backups-p5-manifest.json"
+ANIMATION_RUN_REFERENCE_RE = re.compile(
+    r"animations/(?:"
+    r"ressources/[A-Z0-9_]{1,8}/runs/[A-Za-z0-9][A-Za-z0-9._-]*"
+    r"|batches/[A-Za-z0-9][A-Za-z0-9._-]*"
+    r"|runs/[A-Za-z0-9][A-Za-z0-9._-]*"
+    r")",
+    re.IGNORECASE,
+)
+ANIMATION_RESREF_RE = re.compile(r"^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$")
 ACTIVE_SCRIPT_SUFFIXES = {".bat", ".cmd", ".js", ".ps1", ".py"}
 WINDOWS_ABSOLUTE_PATH_LITERAL = re.compile(
     r"(?<![A-Za-z])[A-Za-z]:(?:\\\\|[\\/])"
@@ -1161,11 +1171,254 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
     }
 
 
+def animation_run_locations(root: Path = ROOT) -> list[dict[str, Any]]:
+    """Discover physical animation runs in every supported layout.
+
+    ``path`` is the stable identity.  A run id may legitimately be reused by
+    two mono-asset directories, so callers must never key new-layout runs by
+    their basename alone.
+    """
+
+    animations_root = root / "animations"
+    locations: list[dict[str, Any]] = []
+
+    for layout, runs_root in (
+        ("legacy", animations_root / "runs"),
+        ("batch", animations_root / "batches"),
+    ):
+        if not runs_root.is_dir():
+            continue
+        for path in runs_root.iterdir():
+            if path.is_dir():
+                locations.append(
+                    {"layout": layout, "owner_resref": "", "path": path}
+                )
+
+    resources_root = animations_root / "ressources"
+    if resources_root.is_dir():
+        for resource_root in resources_root.iterdir():
+            runs_root = resource_root / "runs"
+            if not resource_root.is_dir() or not runs_root.is_dir():
+                continue
+            for path in runs_root.iterdir():
+                if path.is_dir():
+                    locations.append(
+                        {
+                            "layout": "mono-asset",
+                            "owner_resref": resource_root.name.upper(),
+                            "path": path,
+                        }
+                    )
+
+    return sorted(
+        locations,
+        key=lambda item: item["path"].relative_to(root).as_posix().casefold(),
+    )
+
+
+def animation_run_key(location: Mapping[str, Any]) -> str:
+    """Build a collision-free key while retaining legacy run keys."""
+
+    run_dir = Path(location["path"])
+    layout = str(location["layout"])
+    if layout == "legacy":
+        return f"animations:{run_dir.name}"
+    if layout == "batch":
+        return f"animations:batch:{run_dir.name}"
+    return f"animations:{str(location['owner_resref']).upper()}:{run_dir.name}"
+
+
+def animation_manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
+    """Extract output resrefs using the run-manifest vocabulary in use."""
+
+    values: set[str] = set()
+
+    def add(value: Any) -> None:
+        if isinstance(value, str):
+            normalized = value.strip().upper()
+            if ANIMATION_RESREF_RE.fullmatch(normalized):
+                values.add(normalized)
+        elif isinstance(value, Mapping):
+            for key in ("asset", "resref", "bam_resref", "resource_resref"):
+                if key in value:
+                    add(value[key])
+
+    for key in ("asset", "resref", "bam_resref"):
+        add(manifest.get(key))
+    for key in (
+        "resources",
+        "timed_resources",
+        "resrefs",
+        "targets",
+        "requested_resrefs",
+        "resolved_resrefs",
+    ):
+        sequence = manifest.get(key)
+        if isinstance(sequence, list):
+            for item in sequence:
+                add(item)
+    request = manifest.get("request")
+    if isinstance(request, Mapping):
+        for key in (
+            "resref",
+            "resrefs",
+            "targets",
+            "requested_resrefs",
+            "resolved_resrefs",
+        ):
+            sequence = request.get(key)
+            if isinstance(sequence, list):
+                for item in sequence:
+                    add(item)
+            else:
+                add(sequence)
+    return values
+
+
+def validate_animation_run_selections(
+    issues: list[dict[str, Any]],
+    records: Iterable[dict[str, str]],
+    manifest_resrefs: set[str],
+    *,
+    owner_resref: str,
+    run_path: str,
+    run_id: str,
+) -> list[dict[str, str]]:
+    """Reject a QA selection not declared by its run or mono-asset owner."""
+
+    valid: list[dict[str, str]] = []
+    for record in records:
+        resref = record["resref"]
+        mismatches: list[str] = []
+        if resref not in manifest_resrefs:
+            mismatches.append("absent du manifeste final")
+        if owner_resref and resref != owner_resref:
+            mismatches.append(f"différent du propriétaire mono-asset {owner_resref}")
+        if mismatches:
+            add_issue(
+                issues,
+                "error",
+                "animation-selection-run-resref-mismatch",
+                "animations",
+                "La sélection QA en jeu ne correspond pas aux ressources déclarées par le run.",
+                path=record["selection"],
+                asset_id=record["asset_id"],
+                run_id=run_id,
+                details={
+                    "manifest_resrefs": sorted(manifest_resrefs),
+                    "reasons": mismatches,
+                    "run_path": run_path,
+                },
+            )
+            continue
+        valid.append(record)
+    return valid
+
+
+def animation_run_references(candidate: Mapping[str, Any]) -> list[str]:
+    """Return normalized run roots from structured or legacy candidate data."""
+
+    references: list[str] = []
+    structured = candidate.get("source_runs")
+    if isinstance(structured, list):
+        for item in structured:
+            if isinstance(item, Mapping) and isinstance(item.get("path"), str):
+                reference = str(item["path"]).replace("\\", "/").rstrip("/")
+                if ANIMATION_RUN_REFERENCE_RE.fullmatch(reference):
+                    references.append(reference)
+
+    source_run = candidate.get("source_run")
+    if isinstance(source_run, str):
+        references.extend(
+            match.group(0).rstrip(".")
+            for match in ANIMATION_RUN_REFERENCE_RE.finditer(source_run.replace("\\", "/"))
+        )
+
+    unique: dict[str, str] = {}
+    for reference in references:
+        unique.setdefault(reference.casefold(), reference)
+    return list(unique.values())
+
+
 def referenced_animation_runs(candidates: list[dict[str, Any]]) -> dict[str, list[str]]:
+    """Index release references by full path, never by ambiguous run id."""
+
     result: dict[str, list[str]] = defaultdict(list)
     for candidate in candidates:
-        for match in re.findall(r"animations/runs/([^\s+;,)]+)", candidate.get("source_run", "")):
-            result[match.rstrip(".")].append(candidate["area"].upper())
+        for reference in animation_run_references(candidate):
+            result[reference.casefold()].append(candidate["area"].upper())
+    return result
+
+
+def referenced_animation_run_assets(
+    candidates: list[dict[str, Any]],
+) -> dict[str, list[str]]:
+    """Index explicit per-run assets from schema-v3 candidate entries."""
+
+    result: dict[str, list[str]] = defaultdict(list)
+    for candidate in candidates:
+        structured = candidate.get("source_runs")
+        if not isinstance(structured, list):
+            continue
+        for source in structured:
+            if not isinstance(source, Mapping):
+                continue
+            reference = str(source.get("path", "")).replace("\\", "/").rstrip("/")
+            if not ANIMATION_RUN_REFERENCE_RE.fullmatch(reference):
+                continue
+            asset_resrefs = source.get("asset_ids")
+            if not isinstance(asset_resrefs, list):
+                continue
+            for resref in asset_resrefs:
+                result[reference.casefold()].append(
+                    f"animations:bam:{str(resref).upper()}"
+                )
+    return result
+
+
+def animation_ingame_selections(
+    issues: list[dict[str, Any]],
+) -> dict[str, list[dict[str, str]]]:
+    """Load valid current selections backed by explicit in-game QA decisions."""
+
+    result: dict[str, list[dict[str, str]]] = defaultdict(list)
+    builder = global_registry.RegistryBuilder(ROOT)
+    selections, _declared = global_registry.load_current_animation_qa(builder)
+    for anomaly in builder._anomalies:
+        add_issue(
+            issues,
+            str(anomaly["severity"]),
+            str(anomaly["code"]),
+            str(anomaly["domain"]),
+            str(anomaly["message"]),
+            path=str(anomaly.get("source", "")),
+            asset_id=str(anomaly.get("asset_id", "")),
+            details=anomaly.get("details"),
+        )
+
+    for resref, selection in selections.items():
+        if selection.get("result_kind") != "x4":
+            continue
+        run_reference = selection["final_run_path"].replace("\\", "/").rstrip("/")
+        if not ANIMATION_RUN_REFERENCE_RE.fullmatch(run_reference):
+            add_issue(
+                issues,
+                "error",
+                "animation-selection-run-layout-invalid",
+                "animations",
+                "Le run sélectionné n'appartient à aucun layout animation supporté.",
+                path=run_reference,
+                asset_id=f"animations:bam:{resref}",
+            )
+            continue
+        result[run_reference.casefold()].append(
+            {
+                "asset_id": f"animations:bam:{resref}",
+                "decision": selection["decision_path"],
+                "resref": resref,
+                "selection": selection["selection_path"],
+            }
+        )
     return result
 
 
@@ -1182,7 +1435,7 @@ def animation_migration_pairs(data: Mapping[str, Any]) -> list[tuple[str, str]]:
 
 def audit_animations(
     issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]
-) -> dict[str, int]:
+) -> dict[str, Any]:
     migration_path = ROOT / ANIMATION_PATH_MIGRATIONS
     migration_data = read_json(migration_path)
     migrations = migration_data.get("migrations", [])
@@ -1198,6 +1451,8 @@ def audit_animations(
         }
     )
     path_pairs = animation_migration_pairs(migration_data)
+    run_locations = animation_run_locations(ROOT)
+    run_layout_counts = Counter(str(item["layout"]) for item in run_locations)
 
     for item in migrations:
         source = ROOT / str(item["from"])
@@ -1331,26 +1586,27 @@ def audit_animations(
     embedded_reference_files: set[str] = set()
     unmapped_embedded_references: set[str] = set()
     text_suffixes = {".json", ".md", ".ps1", ".py", ".txt"}
-    for path in (ROOT / "animations/runs").rglob("*"):
-        if not path.is_file() or path.suffix.casefold() not in text_suffixes:
-            continue
-        text = path.read_text(encoding="utf-8-sig", errors="ignore").replace("\\", "/")
-        matched = 0
-        for source in known_legacy_sources:
-            matched += text.count(source)
-        if matched:
-            embedded_reference_count += matched
-            embedded_reference_files.add(repo_path(path))
-        for match in re.findall(r"proto/[A-Za-z0-9_.-]+", text):
-            if "..." in match:
+    for location in run_locations:
+        for path in Path(location["path"]).rglob("*"):
+            if not path.is_file() or path.suffix.casefold() not in text_suffixes:
                 continue
-            if not any(
-                match.casefold() == source.casefold()
-                or match.casefold().startswith((source + "/").casefold())
-                or source.casefold().startswith((match + "/").casefold())
-                for source in known_legacy_sources
-            ):
-                unmapped_embedded_references.add(match)
+            text = path.read_text(encoding="utf-8-sig", errors="ignore").replace("\\", "/")
+            matched = 0
+            for source in known_legacy_sources:
+                matched += text.count(source)
+            if matched:
+                embedded_reference_count += matched
+                embedded_reference_files.add(repo_path(path))
+            for match in re.findall(r"proto/[A-Za-z0-9_.-]+", text):
+                if "..." in match:
+                    continue
+                if not any(
+                    match.casefold() == source.casefold()
+                    or match.casefold().startswith((source + "/").casefold())
+                    or source.casefold().startswith((match + "/").casefold())
+                    for source in known_legacy_sources
+                ):
+                    unmapped_embedded_references.add(match)
     if unmapped_embedded_references:
         add_issue(
             issues,
@@ -1366,6 +1622,8 @@ def audit_animations(
     candidate_data = read_json(candidate_path)
     candidates = candidate_data["candidates"]
     selected = referenced_animation_runs(candidates)
+    selected_assets = referenced_animation_run_assets(candidates)
+    ingame_selections = animation_ingame_selections(issues)
     indexed_release_packs = 0
     historical_evidence_adapted: list[dict[str, str]] = []
 
@@ -1403,10 +1661,77 @@ def audit_animations(
                     asset_id=f"animations:pack:{area}",
                 )
 
-        for reference in re.findall(
-            r"(?:proto|animations/runs)/[^\s+;,)]+", candidate.get("source_run", "")
-        ):
-            reference = reference.rstrip(".")
+        structured_sources = candidate.get("source_runs")
+        if isinstance(structured_sources, list):
+            for source in structured_sources:
+                source_path = (
+                    str(source.get("path", "")).replace("\\", "/").rstrip("/")
+                    if isinstance(source, Mapping)
+                    else ""
+                )
+                if not ANIMATION_RUN_REFERENCE_RE.fullmatch(source_path):
+                    evidence_valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "animation-candidate-source-run-path-invalid",
+                        "animations",
+                        "Un source_runs structuré ne désigne pas une racine de run animation supportée.",
+                        path=source_path or repo_path(candidate_path),
+                        asset_id=f"animations:pack:{area}",
+                    )
+                    continue
+                manifest_reference = str(source.get("manifest_path", "")).replace("\\", "/")
+                expected_manifest_hash = str(source.get("manifest_sha256", "")).upper()
+                if not manifest_reference.startswith(source_path + "/"):
+                    evidence_valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "animation-candidate-source-manifest-outside-run",
+                        "animations",
+                        "Le manifeste d'un source_runs structuré est extérieur à sa racine de run.",
+                        path=manifest_reference or source_path,
+                        asset_id=f"animations:pack:{area}",
+                    )
+                else:
+                    manifest_source_path = ROOT / manifest_reference
+                    if not manifest_source_path.is_file():
+                        evidence_valid = False
+                        add_issue(
+                            issues,
+                            "error",
+                            "animation-candidate-source-manifest-missing",
+                            "animations",
+                            "Le manifeste d'un source_runs structuré est absent.",
+                            path=manifest_reference,
+                            asset_id=f"animations:pack:{area}",
+                        )
+                    elif (
+                        not expected_manifest_hash
+                        or sha256_file(manifest_source_path) != expected_manifest_hash
+                    ):
+                        evidence_valid = False
+                        add_issue(
+                            issues,
+                            "error",
+                            "animation-candidate-source-manifest-hash-mismatch",
+                            "animations",
+                            "Le manifeste d'un source_runs structuré ne correspond pas à son hash.",
+                            path=manifest_reference,
+                            asset_id=f"animations:pack:{area}",
+                        )
+
+        source_run_text = candidate.get("source_run", "")
+        legacy_proto_references = (
+            re.findall(r"proto/[^\s+;,)]+", source_run_text)
+            if isinstance(source_run_text, str)
+            else []
+        )
+        for reference in [
+            *animation_run_references(candidate),
+            *(item.rstrip(".") for item in legacy_proto_references),
+        ]:
             if resolve_migrated_reference(reference, path_pairs) is None:
                 evidence_valid = False
                 add_issue(
@@ -1437,7 +1762,7 @@ def audit_animations(
                             "area": area,
                             "path": relative_evidence,
                             "sha256": expected_hash,
-                            "git_commit": migration["git_commit"],
+                            "evidence_source": historical_git_evidence.reference_label(migration),
                         }
                     )
                     continue
@@ -1447,7 +1772,7 @@ def audit_animations(
                     "error",
                     "animation-qa-evidence-unresolved",
                     "animations",
-                    "Une preuve citée par la QA scellée ne correspond ni au fichier courant ni à un blob Git borné.",
+                    "Une preuve citée par la QA scellée ne correspond ni au fichier courant ni à une preuve historique bornée.",
                     path=relative_evidence,
                     asset_id=f"animations:pack:{area}",
                 )
@@ -1493,10 +1818,11 @@ def audit_animations(
 
     physical = 0
     empty = 0
-    qa_count = 0
-    for run_dir in sorted((ROOT / "animations/runs").iterdir(), key=lambda path: path.name):
-        if not run_dir.is_dir():
-            continue
+    preview_count = 0
+    for location in run_locations:
+        run_dir = Path(location["path"])
+        layout = str(location["layout"])
+        owner_resref = str(location["owner_resref"])
         physical += 1
         files = [path for path in run_dir.rglob("*") if path.is_file()]
         manifest_path = run_dir / "manifest.json"
@@ -1504,32 +1830,110 @@ def audit_animations(
         qa_path = run_dir / "qa-approval.json"
         manifest = read_json(manifest_path) if manifest_path.is_file() else {}
         request = read_json(request_path) if request_path.is_file() else {}
-        qa = read_json(qa_path) if qa_path.is_file() else {}
-        if qa:
-            qa_count += 1
+        qa_present = qa_path.is_file()
+        qa: Mapping[str, Any] = {}
+        preview_evidence_valid = True
+        if qa_present:
+            preview_count += 1
+            try:
+                qa_data = read_json(qa_path)
+            except (OSError, json.JSONDecodeError) as error:
+                preview_evidence_valid = False
+                add_issue(
+                    issues,
+                    "error",
+                    "animation-run-preview-record-invalid",
+                    "animations",
+                    "Le relevé de revue/preview du run n'est pas un JSON lisible.",
+                    path=repo_path(qa_path),
+                    run_id=run_dir.name,
+                    details={"error": str(error)},
+                )
+            else:
+                if isinstance(qa_data, Mapping):
+                    qa = qa_data
+                    if not qa.get("schema") or not qa.get("status"):
+                        preview_evidence_valid = False
+                        add_issue(
+                            issues,
+                            "error",
+                            "animation-run-preview-record-invalid",
+                            "animations",
+                            "Le relevé de revue/preview du run ne déclare pas schema/status.",
+                            path=repo_path(qa_path),
+                            run_id=run_dir.name,
+                        )
+                else:
+                    preview_evidence_valid = False
+                    add_issue(
+                        issues,
+                        "error",
+                        "animation-run-preview-record-invalid",
+                        "animations",
+                        "Le relevé de revue/preview du run doit être un objet JSON.",
+                        path=repo_path(qa_path),
+                        run_id=run_dir.name,
+                    )
         asset_ids: list[str] = []
         run_path = repo_path(run_dir)
         migration = migration_by_target.get(run_path, {})
         asset_ids.extend(str(asset_id) for asset_id in migration.get("asset_ids", []))
+        asset_ids.extend(selected_assets.get(run_path.casefold(), []))
         for resref in qa.get("accepted_resrefs", []):
             asset_ids.append(f"animations:bam:{str(resref).upper()}")
-        for resref in manifest.get("timed_resources", []):
-            asset_ids.append(f"animations:bam:{str(resref).upper()}")
-        manifest_request = manifest.get("request", {})
-        if isinstance(manifest_request, Mapping):
-            for resref in manifest_request.get("resolved_resrefs", []):
-                asset_ids.append(f"animations:bam:{str(resref).upper()}")
-        for resource in manifest.get("resources", []):
-            if isinstance(resource, Mapping) and resource.get("resref"):
-                asset_ids.append(f"animations:bam:{str(resource['resref']).upper()}")
-        targets = request.get("targets", [])
-        if isinstance(targets, list):
-            for target in targets:
-                if isinstance(target, str):
-                    asset_ids.append(f"animations:bam:{target.upper()}")
-                elif isinstance(target, Mapping) and target.get("resref"):
-                    asset_ids.append(f"animations:bam:{str(target['resref']).upper()}")
-        selected_areas = selected.get(run_dir.name, [])
+        manifest_resrefs = (
+            animation_manifest_resrefs(manifest) if isinstance(manifest, Mapping) else set()
+        )
+        request_resrefs = (
+            animation_manifest_resrefs(request) if isinstance(request, Mapping) else set()
+        )
+        asset_ids.extend(
+            f"animations:bam:{resref}"
+            for resref in sorted(manifest_resrefs | request_resrefs)
+        )
+        classified_resrefs = {
+            asset_id.removeprefix("animations:bam:")
+            for asset_id in asset_ids
+            if asset_id.startswith("animations:bam:")
+        }
+        if owner_resref:
+            unexpected_resrefs = sorted(classified_resrefs - {owner_resref})
+            if unexpected_resrefs:
+                add_issue(
+                    issues,
+                    "error",
+                    "animation-mono-run-owner-mismatch",
+                    "animations",
+                    "Un run mono-asset déclare des ressources différentes de son dossier propriétaire.",
+                    path=run_path,
+                    asset_id=f"animations:bam:{owner_resref}",
+                    run_id=run_dir.name,
+                    details={"declared_resrefs": sorted(classified_resrefs)},
+                )
+            asset_ids.append(f"animations:bam:{owner_resref}")
+        elif layout == "batch" and len(classified_resrefs) == 1:
+            add_issue(
+                issues,
+                "warning",
+                "animation-single-asset-run-in-batch-layout",
+                "animations",
+                "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+                path=run_path,
+                asset_id=f"animations:bam:{next(iter(classified_resrefs))}",
+                run_id=run_dir.name,
+            )
+        ingame_selection_records = validate_animation_run_selections(
+            issues,
+            ingame_selections.get(run_path.casefold(), []),
+            manifest_resrefs,
+            owner_resref=owner_resref,
+            run_path=run_path,
+            run_id=run_dir.name,
+        )
+        asset_ids.extend(
+            record["asset_id"] for record in ingame_selection_records
+        )
+        selected_areas = selected.get(run_path.casefold(), [])
         if selected_areas:
             asset_ids.extend(f"animations:pack:{area}" for area in selected_areas)
         if not files:
@@ -1544,7 +1948,7 @@ def audit_animations(
                 run_id=run_dir.name,
                 details={"policy": "conserver; candidat à suppression après confirmation"},
             )
-        if qa:
+        if qa_present:
             qa_checks = (
                 (manifest_path, qa.get("run_manifest_sha256"), "run manifest"),
                 (run_dir / "03_runtime_pack/manifest.json", qa.get("pack_manifest_sha256"), "pack manifest"),
@@ -1554,73 +1958,98 @@ def audit_animations(
                 if not expected_hash:
                     continue
                 if not evidence_path.is_file():
+                    preview_evidence_valid = False
                     add_issue(
                         issues,
                         "error",
-                        "animation-qa-evidence-missing",
+                        "animation-run-preview-evidence-missing",
                         "animations",
-                        f"La preuve QA ({label}) est absente.",
+                        f"La preuve de revue/preview ({label}) est absente.",
                         path=repo_path(evidence_path),
                         run_id=run_dir.name,
                     )
                 elif sha256_file(evidence_path) != str(expected_hash).upper():
+                    preview_evidence_valid = False
                     add_issue(
                         issues,
                         "error",
-                        "animation-qa-evidence-hash-mismatch",
+                        "animation-run-preview-evidence-hash-mismatch",
                         "animations",
-                        f"La preuve QA ({label}) ne correspond plus à l'approbation.",
+                        f"La preuve de revue/preview ({label}) ne correspond plus au relevé du run.",
                         path=repo_path(evidence_path),
                         run_id=run_dir.name,
                     )
             for review in qa.get("reviews", []):
                 review_path = run_dir / review["file"]
                 if not review_path.is_file():
+                    preview_evidence_valid = False
                     add_issue(
                         issues,
                         "error",
-                        "animation-qa-review-missing",
+                        "animation-run-preview-media-missing",
                         "animations",
-                        "Un média de revue cité par la QA est absent.",
+                        "Un média de revue/preview cité par le run est absent.",
                         path=repo_path(review_path),
                         run_id=run_dir.name,
                     )
                 elif sha256_file(review_path) != str(review["sha256"]).upper():
+                    preview_evidence_valid = False
                     add_issue(
                         issues,
                         "error",
-                        "animation-qa-review-hash-mismatch",
+                        "animation-run-preview-media-hash-mismatch",
                         "animations",
-                        "Un média de revue ne correspond plus à la preuve QA.",
+                        "Un média de revue/preview ne correspond plus au relevé du run.",
                         path=repo_path(review_path),
                         run_id=run_dir.name,
                     )
         canonical_prototypes = alpha_by_path.get(run_path, [])
         descriptor = manifest_path if manifest_path.is_file() else request_path
         result = str(manifest.get("status", "empty" if not files else "unknown"))
-        qa_state = str(qa.get("status", manifest.get("qa_status", "not-assessed")))
-        if canonical_prototypes and not qa:
-            qa_state = "validated"
+        qa_state = str(manifest.get("qa_status", "not-assessed"))
+        if ingame_selection_records:
+            selected_resrefs = {record["resref"] for record in ingame_selection_records}
+            qa_state = (
+                "ingame-accepted"
+                if manifest_resrefs <= selected_resrefs
+                else "ingame-partially-accepted"
+            )
+        elif qa_present:
+            qa_state = f"preview-{str(qa.get('status', 'recorded')).casefold()}"
         selection_state = "historical"
         selection_authority = ""
-        if selected_areas:
+        if ingame_selection_records:
+            selection_state = "selected"
+            selection_authority = ";".join(
+                sorted({record["selection"] for record in ingame_selection_records})
+            )
+        elif selected_areas:
             selection_state = "release-candidate"
             selection_authority = repo_path(candidate_path)
-        elif qa:
-            selection_state = "qa-approved"
-            selection_authority = repo_path(qa_path)
         elif canonical_prototypes:
             selection_state = "canonical-prototype"
             selection_authority = repo_path(alpha_authority)
         migration_role = str(migration.get("role", ""))
-        notes = f"Candidat(s) de zone: {';'.join(selected_areas)}" if selected_areas else ""
+        note_parts = [f"layout={layout}"]
+        if selected_areas:
+            note_parts.append(f"Candidat(s) de zone: {';'.join(selected_areas)}")
+        if ingame_selection_records:
+            note_parts.append(
+                "QA ingame explicite: "
+                + ";".join(
+                    sorted(record["decision"] for record in ingame_selection_records)
+                )
+            )
+        if qa_present:
+            note_parts.append(
+                "qa-approval.json = revue/preview du run; aucune preuve de QA ingame"
+            )
         if migration_role:
-            migration_note = f"Migré depuis proto; rôle historique: {migration_role}"
-            notes = f"{notes}; {migration_note}" if notes else migration_note
+            note_parts.append(f"Migré depuis proto; rôle historique: {migration_role}")
         add_run(
             runs,
             default_run(
-                run_key=f"animations:{run_dir.name}",
+                run_key=animation_run_key(location),
                 domain="animations",
                 run_id=run_dir.name,
                 asset_ids=asset_ids,
@@ -1634,9 +2063,17 @@ def audit_animations(
                 selection_authority=selection_authority,
                 inputs_state="documented" if request or manifest else "unknown",
                 outputs_state="present" if files else "missing",
-                provenance_state="verified" if qa else ("complete" if manifest and request else "partial"),
+                provenance_state=(
+                    "verified"
+                    if qa_present and preview_evidence_valid
+                    else "incomplete"
+                    if qa_present
+                    else "complete"
+                    if manifest and request
+                    else "partial"
+                ),
                 legacy=bool(migration),
-                notes=notes,
+                notes="; ".join(note_parts),
             ),
         )
     return {
@@ -1652,7 +2089,11 @@ def audit_animations(
         "remaining_proto_directory_count": len(present_proto),
         "remaining_animation_proto_directory_count": len(unexpected_proto),
         "physical_run_count": physical,
-        "qa_attested_run_count": qa_count,
+        "physical_run_count_by_layout": dict(sorted(run_layout_counts.items())),
+        "run_preview_record_count": preview_count,
+        "ingame_qa_selected_asset_count": sum(
+            len(records) for records in ingame_selections.values()
+        ),
         "historical_qa_evidence_adapted_count": len(historical_evidence_adapted),
         "release_pack_indexed_count": indexed_release_packs,
         "release_referenced_run_count": len(selected),
@@ -1948,24 +2389,44 @@ def audit_workspace_cleanup(issues: list[dict[str, Any]]) -> dict[str, Any]:
 
     manifest_path = ROOT / CLEANUP_MANIFEST
     data = read_json(manifest_path)
+    restoration_path = ROOT / RESTORATION_MANIFEST
+    restoration_data = read_json(restoration_path) if restoration_path.is_file() else {}
+    restorations = {
+        str(entry.get("target", "")): entry
+        for entry in restoration_data.get("restorations", [])
+    }
     verified = 0
     moved_files = 0
     moved_bytes = 0
     removed_empty = 0
+    restored_after_cleanup = 0
     for operation in data.get("operations", []):
         target_text = str(operation.get("target", ""))
         action = operation["action"]
         if action == "remove-empty-directory":
             source = ROOT / operation["source_roots"][0]
             if source.exists():
-                add_issue(
-                    issues,
-                    "error",
-                    "cleanup-empty-directory-returned",
-                    operation["domain"],
-                    "Le squelette de run prouvé vide est réapparu.",
-                    path=repo_path(source),
-                )
+                source_text = repo_path(source)
+                restoration = restorations.get(source_text)
+                restored_manifest = source / str((restoration or {}).get("manifest", ""))
+                expected_hash = str((restoration or {}).get("manifest_sha256", "")).upper()
+                if (
+                    restoration
+                    and restored_manifest.is_file()
+                    and expected_hash
+                    and sha256_file(restored_manifest) == expected_hash
+                ):
+                    verified += 1
+                    restored_after_cleanup += 1
+                else:
+                    add_issue(
+                        issues,
+                        "error",
+                        "cleanup-empty-directory-returned",
+                        operation["domain"],
+                        "Le chemin nettoyé est réapparu sans preuve de restauration valide.",
+                        path=source_text,
+                    )
             else:
                 verified += 1
                 removed_empty += 1
@@ -2032,6 +2493,8 @@ def audit_workspace_cleanup(issues: list[dict[str, Any]]) -> dict[str, Any]:
         "preserved_file_count": moved_files,
         "preserved_bytes": moved_bytes,
         "removed_empty_directory_count": removed_empty,
+        "restored_after_cleanup_count": restored_after_cleanup,
+        "restoration_manifest": RESTORATION_MANIFEST,
         "deferred_regeneration_count": len(data.get("deferred", [])),
     }
 

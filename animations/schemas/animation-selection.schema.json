@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "animation-selection.schema.json",
+  "title": "BG2 Upscale current animation selection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "asset_id", "resref", "result_kind", "updated_at_utc", "qa_decision", "tested_areas"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "asset_id": {"type": "string", "pattern": "^animations:bam:(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
+    "resref": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
+    "result_kind": {"enum": ["x4", "native"]},
+    "updated_at_utc": {"type": "string", "format": "date-time"},
+    "recipe_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"},
+    "correction_id": {"type": "string", "minLength": 1},
+    "selected_run": {"$ref": "animation-qa-decision.schema.json#/$defs/artifact"},
+    "native_source": {"$ref": "animation-qa-decision.schema.json#/$defs/nativeSource"},
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_runs", "source_packs"],
+      "properties": {
+        "source_runs": {"type": "array", "items": {"$ref": "animation-qa-decision.schema.json#/$defs/artifact"}},
+        "source_packs": {"type": "array", "items": {"$ref": "animation-qa-decision.schema.json#/$defs/artifact"}}
+      }
+    },
+    "qa_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "status", "decision_date"],
+      "properties": {
+        "path": {"$ref": "animation-qa-decision.schema.json#/$defs/relativePath"},
+        "sha256": {"$ref": "animation-qa-decision.schema.json#/$defs/sha256"},
+        "status": {"const": "accepted"},
+        "decision_date": {"type": "string", "format": "date"}
+      }
+    },
+    "source_pack": {"$ref": "animation-qa-decision.schema.json#/$defs/sourcePack"},
+    "tested_areas": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "animation-qa-decision.schema.json#/$defs/areaId"}}
+  },
+  "oneOf": [
+    {
+      "properties": {"result_kind": {"const": "x4"}},
+      "required": ["selected_run", "lineage", "source_pack"],
+      "not": {"required": ["native_source"]}
+    },
+    {
+      "properties": {"result_kind": {"const": "native"}},
+      "required": ["native_source"],
+      "not": {"anyOf": [{"required": ["correction_id"]}, {"required": ["selected_run"]}, {"required": ["lineage"]}, {"required": ["source_pack"]}]}
+    }
+  ]
+}

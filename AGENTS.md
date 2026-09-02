@@ -19,7 +19,7 @@ Point d'entrée opérationnel. Les fichiers générés décrivent l'état ; ils 
 | Périmètre | Autorité canonique |
 |---|---|
 | Cartes : état, run et build retenus | [`areas.csv`](areas.csv) |
-| Animations : inventaire et QA | [`animations/index/`](animations/index/) et `qa-approval.json` immuable du run exact |
+| Animations : inventaire et QA ingame | [`animations/index/`](animations/index/), `qa-decisions/` immuable et `selections/` courant |
 | Animations : sélection release | [`animation-release-candidates.json`](releases/BG2-HD-Upscale/manifests/animation-release-candidates.json) |
 | Sprites : inventaire et éligibilité | [`sprite/index/`](sprite/index/) |
 | Sprites : génération et test actifs | `current-generation.json` et `active-test.json` canoniques |
@@ -50,6 +50,9 @@ Ces fichiers peuvent être supprimés et régénérés, après choix explicite, 
 - Conserver asset ids, recette, entrées, sorties, provenance, résultat et hashes utiles.
 - Ne jamais réécrire un run, build, approbation ou artefact scellé : créer une version.
 - Garder toute sélection courante hors du run ; adapter le legacy sans le réécrire.
+- Après « validé ingame », utiliser `animation_workflow.py finalize`; ne pas éditer séparément le CSV,
+  la sélection et la preuve. Un `qa-approval.json` dans un run reste une revue technique, pas la
+  décision ingame courante.
 - Utiliser les clés `config://...` de [`config/workspace-paths.json`](config/workspace-paths.json),
   jamais un nouveau chemin absolu personnel.
 - Préserver les changements utilisateur hors périmètre.
@@ -85,6 +88,8 @@ Demander séparément le choix de reconstruction :
 Les deux commandes sont plan-only par défaut. Toute exécution exige `--run`. Un choix ciblé utilise
 `test_changed.py --targeted --run` et les `workspace.py --scope ... --run` exacts ; il ne peut jamais
 devenir complet. `--verify-determinism` double les reconstructions et exige un accord explicite.
+Quand l'utilisateur demande d'aller au bout malgré les erreurs, ajouter `--keep-going`; le code final
+reste non nul et toutes les erreurs sont récapitulées.
 Voir [`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md) et
 [`docs/WORKSPACE_INTEGRITY.md`](docs/WORKSPACE_INTEGRITY.md).
 

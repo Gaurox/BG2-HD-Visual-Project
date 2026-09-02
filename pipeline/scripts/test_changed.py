@@ -8,6 +8,7 @@ from fnmatch import fnmatchcase
 import json
 import os
 from pathlib import Path
+import re
 import shlex
 import shutil
 import subprocess
@@ -20,6 +21,13 @@ ENGINE_ROOT = ROOT / "engine" / "InfinityEngine-Enhancer" / "source-patchee"
 ENGINE_BUILD = ROOT / "build" / "iee"
 RELEASE_ROOT = ROOT / "releases" / "BG2-HD-Upscale"
 RELEASE_PHASE2 = RELEASE_ROOT / "tools" / "Test-BG2HD-Phase2.ps1"
+RELEASE_AREA_ANIMATION = RELEASE_ROOT / "tools" / "Test-BG2HDAreaAnimationCandidate.ps1"
+ANIMATION_CANDIDATES_PATH = (
+    "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
+)
+ANIMATION_QA_PREFIX = (
+    "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/"
+)
 
 
 @dataclass(frozen=True)
@@ -81,6 +89,10 @@ GROUPS = {
         "python",
         (
             "pipeline.tests.test_animation_inventory",
+            "pipeline.tests.test_animation_paths",
+            "pipeline.tests.test_animation_release",
+            "pipeline.tests.test_release_animation_delta",
+            "pipeline.tests.test_animation_workflow",
             "pipeline.tests.test_animation_upscale_pipeline",
             "pipeline.tests.test_animation_interpolation_pipeline",
             "pipeline.tests.test_animation_upscale_30fps_v2",
@@ -89,6 +101,8 @@ GROUPS = {
             "pipeline.tests.test_combine_area_pack_splits",
         ),
     ),
+    # The commands are generated per area from SelectionPlan.animation_areas.
+    "animation-release": TestGroup("animation-release", "release"),
     "sprite-inventory": TestGroup(
         "sprite-inventory",
         "python",
@@ -176,6 +190,14 @@ class SelectionPlan:
     reasons: tuple[str, ...]
     extra_modules: tuple[str, ...] = ()
     selection_mode: str = "changed"
+    animation_areas: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class CandidateAreaChanges:
+    changed: tuple[str, ...]
+    removed: tuple[str, ...]
+    shared_changed: bool = False
 
 
 @dataclass(frozen=True)
@@ -215,11 +237,16 @@ MAP_DIAGNOSTIC_SCRIPTS = {
     "repage_pvrz_blocks.py",
 }
 ANIMATION_SCRIPTS = {
+    "animation_authority_lock.py",
+    "animation_paths.py",
+    "animation_release.py",
+    "animation_workflow.py",
     "bam_export.py",
     "build_alpha_feather.py",
     "build_animation_runtime_pack.py",
     "build_blended_rgb_neutral_pack.py",
     "build_manual_alpha_mask_30fps_v2.py",
+    "build_per_frame_spline_alpha_30fps_v2.py",
     "combine_area_pack_splits.py",
     "export_bam_frames.py",
     "extract_area_animations.py",
@@ -232,6 +259,7 @@ ANIMATION_SCRIPTS = {
     "split_animation_pack_by_area.py",
     "sync_animation_upscale_registry.py",
     "upscale_animation_frames.py",
+    "verify_animation_release_candidate.py",
 }
 SPRITE_INVENTORY_SCRIPTS = {
     "build_sprite_inventory.py",
@@ -263,6 +291,9 @@ VIDEO_UPSCALE_SCRIPTS = {
 VIDEO_INTERPOLATION_SCRIPTS = {
     "run_video_interpolation.py",
 }
+AREA_ID_PATTERN = re.compile(r"^(?:AR|OH)[0-9]{4}$")
+
+
 def _matches(path: str, *patterns: str) -> bool:
     return any(fnmatchcase(path, pattern) for pattern in patterns)
 
@@ -277,6 +308,69 @@ def _test_module(path: str) -> str | None:
     if _matches(normalized, "pipeline/tests/test_*.py"):
         return normalized[:-3].replace("/", ".")
     return None
+
+
+def _qa_area(path: str) -> str | None:
+    normalized = path.replace("\\", "/")
+    if not normalized.startswith(ANIMATION_QA_PREFIX):
+        return None
+    relative = normalized[len(ANIMATION_QA_PREFIX) :]
+    parts = relative.split("/")
+    if (
+        len(parts) == 2
+        and parts[1].endswith(".json")
+        and AREA_ID_PATTERN.fullmatch(parts[0])
+    ):
+        return parts[0]
+    return None
+
+
+def _candidate_document(payload: object) -> tuple[dict[str, object], dict[str, object]]:
+    if not isinstance(payload, dict) or not isinstance(payload.get("candidates"), list):
+        raise ValueError("registre de candidats animation invalide")
+    candidates: dict[str, object] = {}
+    for candidate in payload["candidates"]:
+        if not isinstance(candidate, dict):
+            raise ValueError("entrée de candidat animation invalide")
+        area = candidate.get("area")
+        if not isinstance(area, str) or not AREA_ID_PATTERN.fullmatch(area):
+            raise ValueError("zone de candidat animation invalide")
+        if area in candidates:
+            raise ValueError(f"zone de candidat animation dupliquée: {area}")
+        candidates[area] = candidate
+    shared = {
+        key: value
+        for key, value in payload.items()
+        if key not in {"candidates", "generated_by"}
+    }
+    return candidates, shared
+
+
+def candidate_area_changes(before: object, after: object) -> CandidateAreaChanges:
+    before_candidates, before_shared = _candidate_document(before)
+    after_candidates, after_shared = _candidate_document(after)
+    changed = tuple(
+        sorted(
+            area
+            for area, candidate in after_candidates.items()
+            if before_candidates.get(area) != candidate
+        )
+    )
+    removed = tuple(sorted(set(before_candidates) - set(after_candidates)))
+    return CandidateAreaChanges(changed, removed, before_shared != after_shared)
+
+
+def resolve_candidate_area_changes(base_revision: str | None = None) -> CandidateAreaChanges | None:
+    """Compare the canonical register with Git; ``None`` requests the safe global gate."""
+
+    try:
+        current = json.loads((ROOT / ANIMATION_CANDIDATES_PATH).read_text(encoding="utf-8"))
+        previous = json.loads(
+            _run_git(("show", f"{base_revision or 'HEAD'}:{ANIMATION_CANDIDATES_PATH}"))
+        )
+        return candidate_area_changes(previous, current)
+    except (OSError, ValueError, json.JSONDecodeError, subprocess.CalledProcessError):
+        return None
 
 
 def classify_path(path: str) -> Classification:
@@ -346,6 +440,10 @@ def classify_path(path: str) -> Classification:
         "tox.ini",
     ):
         return Classification((), f"changement transversal sans cible unique: {path}")
+    if path == ANIMATION_CANDIDATES_PATH or _qa_area(path):
+        return Classification(("animations", "animation-release", "registry", "integrity"))
+    if path == "pipeline/scripts/animation_release.py":
+        return Classification(("animations", "animation-release", "registry", "integrity"))
     if path.startswith("releases/BG2-HD-Upscale/"):
         return Classification(("release",), f"release, Core ou packaging: {path}")
     if path == "engine/InfinityEngine-Enhancer/source-patchee/tools/install_renderer_candidate.py":
@@ -367,6 +465,12 @@ def classify_path(path: str) -> Classification:
         "animations/index/path-migrations.json",
         "animations/index/qa-evidence-migrations.json",
         "animations/**/qa-approval.json",
+    ):
+        return Classification(("animations", "registry", "integrity"))
+    if _matches(
+        path,
+        "animations/index/qa-decisions/**/*.json",
+        "animations/index/selections/*.json",
     ):
         return Classification(("animations", "registry", "integrity"))
     if path.startswith("animations/index/"):
@@ -462,20 +566,31 @@ def select_paths(
     changed_paths: Iterable[ChangedPath],
     *,
     strict_targeted: bool = False,
+    candidate_changes: CandidateAreaChanges | None = None,
 ) -> SelectionPlan:
     changed = tuple(changed_paths)
     reasons: list[str] = []
     selected = set() if strict_targeted else {"smoke"}
     extra_modules: list[str] = []
+    animation_areas: set[str] = set()
+    candidate_manifest_changed = False
+    force_full = False
     for item in changed:
         status = item.status.upper()
         if status.startswith(("R", "C", "D")) and not strict_targeted:
             reasons.append(f"{status} impose la suite complète: {item.previous_path or item.path} -> {item.path}")
+            force_full = True
             continue
         paths = [item.path]
         if strict_targeted and item.previous_path and item.previous_path not in paths:
             paths.append(item.previous_path)
         for path in paths:
+            normalized_path = path.replace("\\", "/")
+            area = _qa_area(normalized_path)
+            if area:
+                animation_areas.add(area)
+            if normalized_path == ANIMATION_CANDIDATES_PATH:
+                candidate_manifest_changed = True
             classification = classify_path(path)
             selected.update(classification.groups)
             for module in classification.modules:
@@ -488,7 +603,20 @@ def select_paths(
                     )
                 else:
                     reasons.append(classification.force_full_reason)
-    if reasons and not strict_targeted:
+                    force_full = True
+    if candidate_manifest_changed:
+        if candidate_changes is None:
+            selected.add("release")
+            reasons.append(
+                "diff du registre de candidats animation indéterminable: gate release globale"
+            )
+        else:
+            animation_areas.update(candidate_changes.changed)
+            if candidate_changes.removed or candidate_changes.shared_changed:
+                selected.add("release")
+                detail = "suppression de zone" if candidate_changes.removed else "métadonnées partagées"
+                reasons.append(f"registre de candidats animation ({detail}): gate release globale")
+    if force_full and not strict_targeted:
         return full_plan("fallback de sécurité", changed, reasons)
     ordered = tuple(name for name in GROUP_ORDER if name in selected)
     if not reasons:
@@ -506,6 +634,7 @@ def select_paths(
         tuple(reasons),
         tuple(extra_modules),
         "targeted" if strict_targeted else "changed",
+        tuple(sorted(animation_areas)),
     )
 
 
@@ -619,23 +748,46 @@ def commands_for(plan: SelectionPlan, only: str = "all") -> tuple[Command, ...]:
                     )
                 )
 
-    if include_release and (plan.full or "release" in plan.groups):
-        commands.append(
-            Command(
-                "gate release Phase 2",
-                "release",
-                (
-                    _powershell(),
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-File",
-                    str(RELEASE_PHASE2),
-                    "-ReleaseRoot",
-                    str(RELEASE_ROOT),
-                ),
+    if include_release:
+        if plan.full or "release" in plan.groups:
+            commands.append(
+                Command(
+                    "gate release Phase 2",
+                    "release",
+                    (
+                        _powershell(),
+                        "-NoProfile",
+                        "-ExecutionPolicy",
+                        "Bypass",
+                        "-File",
+                        str(RELEASE_PHASE2),
+                        "-ReleaseRoot",
+                        str(RELEASE_ROOT),
+                    ),
+                )
             )
-        )
+        else:
+            for area in plan.animation_areas:
+                commands.append(
+                    Command(
+                        f"gate release animation {area}",
+                        "release",
+                        (
+                            _powershell(),
+                            "-NoProfile",
+                            "-ExecutionPolicy",
+                            "Bypass",
+                            "-File",
+                            str(RELEASE_AREA_ANIMATION),
+                            "-Area",
+                            area,
+                            "-WorkspaceRoot",
+                            str(ROOT),
+                            "-ReleaseRoot",
+                            str(RELEASE_ROOT),
+                        ),
+                    )
+                )
 
     if include_engine and (plan.full or "engine" in plan.groups):
         ctest_arguments = ["ctest", "--test-dir", str(ENGINE_BUILD)]
@@ -678,6 +830,7 @@ def plan_payload(plan: SelectionPlan, only: str = "all") -> dict[str, object]:
         "full": plan.full,
         "reasons": list(plan.reasons),
         "groups": list(plan.groups),
+        "animation_areas": list(plan.animation_areas),
         "changed_paths": [
             {"status": item.status, "path": item.path, "previous_path": item.previous_path}
             for item in plan.changed_paths
@@ -705,6 +858,8 @@ def print_plan(plan: SelectionPlan, *, as_json: bool = False, only: str = "all")
     for reason in plan.reasons:
         print(f"reason: {reason}")
     print("groups: " + (", ".join(plan.groups) if plan.groups else "none"))
+    if plan.animation_areas:
+        print("animation areas: " + ", ".join(plan.animation_areas))
     if plan.changed_paths:
         print("paths:")
         for item in plan.changed_paths:
@@ -715,12 +870,37 @@ def print_plan(plan: SelectionPlan, *, as_json: bool = False, only: str = "all")
         print(f"  [{command.scope}] {command.label}: {_format_command(command.argv)}")
 
 
-def execute_plan(plan: SelectionPlan, only: str = "all") -> int:
+def execute_plan(
+    plan: SelectionPlan,
+    only: str = "all",
+    *,
+    keep_going: bool = False,
+    runner: object = subprocess.run,
+) -> int:
+    failures: list[tuple[str, int, str]] = []
     for command in commands_for(plan, only):
         print(f"== {command.label} ==", flush=True)
-        completed = subprocess.run(command.argv, cwd=ROOT, check=False)
-        if completed.returncode:
-            return completed.returncode
+        try:
+            completed = runner(command.argv, cwd=ROOT, check=False)  # type: ignore[operator]
+            code = int(completed.returncode)
+            detail = f"code {code}"
+        except OSError as error:
+            code = 1
+            detail = str(error) or type(error).__name__
+        if code:
+            failures.append((command.label, code, detail))
+            print(
+                f"FAILED [{command.scope}] {command.label}: {detail}",
+                file=sys.stderr,
+                flush=True,
+            )
+            if not keep_going:
+                return code
+    if failures:
+        print("Failures:", file=sys.stderr)
+        for label, _code, detail in failures:
+            print(f"  - {label}: {detail}", file=sys.stderr)
+        return failures[0][1]
     return 0
 
 
@@ -744,6 +924,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="exécute le plan; sans ce drapeau la commande affiche seulement le plan",
     )
     parser.add_argument(
+        "--keep-going",
+        action="store_true",
+        help="continue les étapes indépendantes et récapitule tous les échecs",
+    )
+    parser.add_argument(
         "--list",
         action="store_true",
         help="alias de compatibilité; la planification seule est maintenant le défaut",
@@ -761,6 +946,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         parser.error("--json et --run sont incompatibles")
     if args.list and args.run:
         parser.error("--list et --run sont incompatibles")
+    if args.keep_going and not args.run:
+        parser.error("--keep-going exige --run")
     if args.run and not (args.changed or args.targeted or args.full):
         parser.error("--run exige un choix explicite: --changed, --targeted ou --full")
     return args
@@ -772,9 +959,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         plan = full_plan("demande explicite --full")
     else:
         try:
+            changed_paths = collect_changed_paths(args.base)
+            candidate_touched = any(
+                item.path.replace("\\", "/") == ANIMATION_CANDIDATES_PATH
+                or (item.previous_path or "").replace("\\", "/")
+                == ANIMATION_CANDIDATES_PATH
+                for item in changed_paths
+            )
             plan = select_paths(
-                collect_changed_paths(args.base),
+                changed_paths,
                 strict_targeted=args.targeted,
+                candidate_changes=(
+                    resolve_candidate_area_changes(args.base) if candidate_touched else None
+                ),
             )
         except (OSError, subprocess.CalledProcessError) as error:
             if args.targeted:
@@ -804,7 +1001,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print_plan(plan, only=args.only)
         print("Aucun test ciblé exécutable pour ce scope.")
         return 0
-    return execute_plan(plan, args.only)
+    return execute_plan(plan, args.only, keep_going=args.keep_going)
 
 
 if __name__ == "__main__":

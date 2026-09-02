@@ -23,16 +23,18 @@ Ne cumuler que des corrections justifiées par une comparaison ciblée.
 
 ```powershell
 python pipeline/scripts/build_alpha_feather.py `
-  --resref <RESREF> --run <run-source> --output <nouveau-run> `
+  --resref <RESREF> --run <run-source> --output-run <nouveau-run> `
   --inner-radius-x4 <rayon>
 
 python pipeline/scripts/build_manual_alpha_mask_30fps_v2.py `
   --temporal-run <run-30fps> --resref <RESREF> `
-  --mask <masque.png> --output <nouveau-run>
+  --mask <masque.png> --run <nouveau-run>
 ```
 
-Le builder refuse d'écraser la sortie. Conserver source, paramètres, images avant/après, hashes et
-manifest de correction.
+Les identifiants de sortie sont routés sous
+`animations/ressources/<RESREF>/runs/<run-id>/`; plusieurs resrefs utilisent
+`animations/batches/<run-id>/`. `--output` et `--runs-root` restent des échappatoires de reprise
+legacy. Le builder refuse d'écraser la sortie.
 
 ## Gates
 

@@ -63,6 +63,41 @@ ne sont pas réconciliés par une décision explicite.
 - Contrôler les bords prémultipliés, les pixels RGB cachés et le filtrage de redimensionnement.
 - Une correction globale exige une preuve sur plusieurs familles d'assets.
 
+## ANIMATION-QA-001 — Catalogue alpha historique introuvable
+
+- Preuve requise : `animations/index/animation_alpha_corrections.csv`, SHA-256
+  `71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078`.
+- Recherche négative au 2026-09-02 : branches et objets Git, six racines BG2 sous `G:/AI`,
+  2 078 fichiers plausibles et cinq archives ZIP.
+- Zones bloquées : `AR0309`, `AR0800`, `AR1100`, `AR1200`, `AR1700`, `AR1800`, `AR2000`,
+  `AR3000`, `AR5500`, `AR6400`, `OH4000`, `OH6000`, `OH6100`, `OH6400`.
+- Résolution : retrouver les octets exacts ou créer de nouvelles approbations QA pour les runs
+  courants après contrôle ingame explicite. Ne jamais modifier les approbations scellées existantes.
+
+## ANIMATION-LEGACY-001 — Sources proto de tests AR0602 absentes
+
+- Six références historiques restent sans source : `AM0602C/D/E/G-eau-canvas-feather-x4`,
+  `FLAME2S-flamme-luminance-fade-x4`, `FLAME2S-flamme-radial-fade-x4`.
+- Elles sont citées uniquement par quatre packs d'essai du run `ar0602-eau-seedvr3b-lab-x4`.
+- Ne pas les rediriger vers les prototypes alpha/radial actuels sans preuve d'identité.
+
+## MAP-PROVENANCE-001 — Intermédiaires AR0016/AR0017 absents
+
+- Sorties SeedVR x4 scellées manquantes : SHA-256 `DAA4CD48…` pour `AR0016` et `15CD116C…`
+  pour `AR0017`; builds finaux présents.
+- Aucune copie retrouvée sous les six racines BG2 ou dans les cinq ZIP inspectés au 2026-09-02.
+- Résolution : retrouver les fichiers exacts ou produire de nouveaux runs/builds sans réécrire
+  `upscale-01`.
+
+## SPRITE-PROVENANCE-001 — Recettes historiques non snapshotées
+
+- Cinq builds anciens citent des versions disparues de trois jobs mutables ; les générations
+  courantes restent séparées et valides.
+- Aucune copie correspondant aux cinq SHA-256 n'a été retrouvée dans les copies BG2 ni dans les
+  objets Git au 2026-09-02.
+- Résolution : retrouver les JSON exacts et les archiver comme snapshots de compatibilité ; ne pas
+  modifier les builds historiques.
+
 ## ENGINE-UI-001 — États UI personnalisés
 
 Valider séparément survol, clic, disabled, clavier et résolutions prises en charge. Une capture du

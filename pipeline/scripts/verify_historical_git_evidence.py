@@ -21,6 +21,13 @@ def read_migrations(path: Path = MIGRATIONS) -> list[dict[str, str]]:
     return list(data.get("migrations", []))
 
 
+def reference_label(entry: dict[str, str]) -> str:
+    """Return the immutable source label recorded for a compatibility entry."""
+    if "snapshot_path" in entry:
+        return f"{entry['snapshot_path']} (recovered Git blob {entry['git_blob']})"
+    return f"{entry['git_commit']}:{entry['path']}"
+
+
 def verify_reference(
     relative_path: str,
     expected_sha256: str,
@@ -39,24 +46,40 @@ def verify_reference(
     if len(matches) != 1:
         return None
     entry = matches[0]
-    revision = f"{entry['git_commit']}:{entry['path']}"
+    snapshot_path = entry.get("snapshot_path")
     try:
-        blob = subprocess.run(
-            ["git", "rev-parse", revision],
-            cwd=root,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        ).stdout.strip()
-        content = subprocess.run(
-            ["git", "show", revision],
-            cwd=root,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        ).stdout
-    except subprocess.CalledProcessError:
+        if snapshot_path:
+            snapshot = (root / snapshot_path).resolve()
+            snapshot.relative_to(root.resolve())
+            if not snapshot.is_file():
+                return None
+            content = snapshot.read_bytes()
+            blob = subprocess.run(
+                ["git", "hash-object", "--stdin"],
+                cwd=root,
+                check=True,
+                input=content,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            ).stdout.decode("ascii").strip()
+        else:
+            revision = f"{entry['git_commit']}:{entry['path']}"
+            blob = subprocess.run(
+                ["git", "rev-parse", revision],
+                cwd=root,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            ).stdout.strip()
+            content = subprocess.run(
+                ["git", "show", revision],
+                cwd=root,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            ).stdout
+    except (OSError, ValueError, subprocess.CalledProcessError):
         return None
     if blob != entry["git_blob"]:
         return None
@@ -75,7 +98,7 @@ def main() -> int:
     if entry is None:
         return 1
     if not args.quiet:
-        print(f"verified historical Git evidence: {entry['git_commit']}:{entry['path']}")
+        print(f"verified historical Git evidence: {reference_label(entry)}")
     return 0
 
 

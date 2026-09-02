@@ -33,16 +33,17 @@
 
 ```powershell
 python pipeline/scripts/run_animation_upscale_30fps_v2.py plan `
-  --source-run animations/runs/<run-spatial> `
+  --source-run <run-spatial> `
   --base-pack <pack-x4-complet> --resref <RESREF> `
+  --run <run-30fps> --model apo-8 `
   --transparent-rgb-mode <preserve-hidden-rgb|nearest-opaque-dilate> > <plan.json>
 
 python pipeline/scripts/run_animation_upscale_30fps_v2.py build `
-  --source-run animations/runs/<run-spatial> `
+  --source-run <run-spatial> `
   --base-pack <pack-x4-complet> --resref <RESREF> `
-  --output animations/runs/<run-30fps> `
+  --run <run-30fps> --approve-plan-sha256 <sha256-plan> `
   --transparent-rgb-mode <preserve-hidden-rgb|nearest-opaque-dilate> `
-  --topaz-model apo-8 --topaz-scale 1
+  --model apo-8
 ```
 
 4. Split par zone, fusionner dans un split-root complet, puis neutraliser les ressources `Blended` :

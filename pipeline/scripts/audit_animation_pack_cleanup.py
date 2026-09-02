@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PACK_ROOT = ROOT / "animations/packs-par-zone"
 ARCHIVE_ROOT = ROOT / "archive/legacy/animation-packs-p3-20260831"
 RECEIPT = ROOT / "docs/workspace-animation-packs-p3-manifest.json"
+POST_P3_RETENTION = ROOT / "animations/index/post-p3-pack-retention-20260902.json"
 
 KEEP_ACTIVE: dict[str, str] = {
     "ar0700-fire-rgb-neutral-20260827": (
@@ -459,8 +460,27 @@ def check(*, verify_control_plane: bool = True) -> list[str]:
     if not RECEIPT.is_file():
         return [f"missing receipt: {repo_path(RECEIPT)}"]
     receipt = read_json(RECEIPT)
+    declared_post_p3: dict[str, dict[str, Any]] = {}
+    if not POST_P3_RETENTION.is_file():
+        errors.append(f"missing post-P3 retention manifest: {repo_path(POST_P3_RETENTION)}")
+    else:
+        retention = read_json(POST_P3_RETENTION)
+        if retention.get("schema") != "bg2-upscale-animation-post-p3-pack-retention-v1":
+            errors.append(f"unsupported post-P3 retention manifest: {repo_path(POST_P3_RETENTION)}")
+        for entry in retention.get("packs", []):
+            name = str(entry.get("name", ""))
+            if not name or name in declared_post_p3:
+                errors.append(f"invalid or duplicate post-P3 retained pack: {name!r}")
+                continue
+            declared_post_p3[name] = entry
+            manifest = PACK_ROOT / name / "manifest.json"
+            expected_hash = str(entry.get("manifest_sha256", "")).upper()
+            if not manifest.is_file():
+                errors.append(f"missing post-P3 retained pack manifest: {name}")
+            elif not expected_hash or sha256_file(manifest) != expected_hash:
+                errors.append(f"post-P3 retained pack manifest diverged: {name}")
     current = {path.name for path in PACK_ROOT.iterdir() if path.is_dir()}
-    expected_active = set(KEEP_ACTIVE) | set(POST_P3_RETAINED)
+    expected_active = set(KEEP_ACTIVE) | set(POST_P3_RETAINED) | set(declared_post_p3)
     if current != expected_active:
         errors.append(
             f"active pack roots differ: missing={sorted(expected_active-current)}, extra={sorted(current-expected_active)}"

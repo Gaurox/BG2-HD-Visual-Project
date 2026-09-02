@@ -3,10 +3,12 @@ from __future__ import annotations
 import csv
 import hashlib
 import io
+import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -14,6 +16,11 @@ sys.path.insert(0, str(ROOT / "pipeline" / "scripts"))
 
 import asset_tracking_contract as contract  # noqa: E402
 import build_global_asset_registry as registry  # noqa: E402
+
+
+def write_json(path: Path, value: dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
 
 
 class GlobalAssetRegistryTests(unittest.TestCase):
@@ -152,8 +159,23 @@ class GlobalAssetRegistryTests(unittest.TestCase):
         self.assertEqual(
             self.by_id["maps:AR0516:day"]["states"]["release"], "integrated"
         )
-        self.assertEqual(
-            self.by_id["animations:bam:AM0033AB"]["states"]["qa"], "passed"
+        am0033ab = self.by_id["animations:bam:AM0033AB"]
+        self.assertEqual(am0033ab["states"]["qa"], "not-assessed")
+        self.assertFalse(
+            any(
+                item["path"].startswith("animations/runs/")
+                and item["path"].endswith("/qa-approval.json")
+                for item in am0033ab["provenance"]["evidence"]
+            )
+        )
+        legacy_release = self.by_id["animations:bam:AM0602AA"]
+        self.assertEqual(legacy_release["states"]["qa"], "passed")
+        self.assertTrue(
+            any(
+                item["path"]
+                == "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
+                for item in legacy_release["provenance"]["evidence"]
+            )
         )
         self.assertEqual(
             self.by_id["animations:pack:AR0602"]["states"]["release"],
@@ -213,6 +235,110 @@ class GlobalAssetRegistryTests(unittest.TestCase):
         scopes = self.outputs["coverage"]["uninventoried_scopes"]
         self.assertGreater(len(scopes), 0)
         self.assertTrue(all(scope["asset_count"] is None for scope in scopes))
+
+    def test_current_animation_qa_requires_hashed_selection_decision_and_final_run(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            run_path = root / "animations/ressources/AMTEST/runs/final-v1"
+            manifest_path = run_path / "manifest.json"
+            write_json(manifest_path, {"schema": "run-v1", "status": "completed"})
+            manifest_hash = registry.sha256_file(manifest_path)
+            artifact = {
+                "path": "animations/ressources/AMTEST/runs/final-v1",
+                "manifest_path": "animations/ressources/AMTEST/runs/final-v1/manifest.json",
+                "manifest_sha256": manifest_hash,
+                "schema": "run-v1",
+                "status": "completed",
+            }
+            lineage = {"source_runs": [], "source_packs": []}
+            source_pack = {
+                "path": "animations/packs-par-zone/amtest",
+                "manifest_path": "animations/packs-par-zone/amtest/manifest.json",
+                "manifest_sha256": "A" * 64,
+                "schema": "pack-v1",
+                "status": "completed",
+                "areas": [
+                    {
+                        "area": "AR0001",
+                        "path": "animations/packs-par-zone/amtest/AR0001",
+                        "manifest_path": "animations/packs-par-zone/amtest/AR0001/manifest.json",
+                        "manifest_sha256": "B" * 64,
+                        "registry_sha256": "C" * 64,
+                        "resource_entries": 1,
+                    }
+                ],
+            }
+            decision_path = root / "animations/index/qa-decisions/AMTEST/accepted.json"
+            decision = {
+                "schema_version": 1,
+                "decision_id": "accepted",
+                "asset_id": "animations:bam:AMTEST",
+                "resref": "AMTEST",
+                "status": "accepted",
+                "decision_origin": "explicit-user-ingame-qa",
+                "decision_date": "2026-09-02",
+                "recorded_at_utc": "2026-09-02T12:00:00Z",
+                "decision": "QA ingame explicite",
+                "result_kind": "x4",
+                "final_run": artifact,
+                "lineage": lineage,
+                "source_pack": source_pack,
+                "tested_areas": ["AR0001"],
+            }
+            write_json(decision_path, decision)
+            decision_hash = registry.sha256_file(decision_path)
+            selection_path = root / "animations/index/selections/AMTEST.json"
+            write_json(
+                selection_path,
+                {
+                    "schema_version": 1,
+                    "asset_id": "animations:bam:AMTEST",
+                    "resref": "AMTEST",
+                    "updated_at_utc": "2026-09-02T12:00:00Z",
+                    "result_kind": "x4",
+                    "selected_run": artifact,
+                    "lineage": lineage,
+                    "qa_decision": {
+                        "path": "animations/index/qa-decisions/AMTEST/accepted.json",
+                        "sha256": decision_hash,
+                        "status": "accepted",
+                        "decision_date": "2026-09-02",
+                    },
+                    "source_pack": source_pack,
+                    "tested_areas": ["AR0001"],
+                },
+            )
+
+            builder = registry.RegistryBuilder(root)
+            with mock.patch.object(
+                registry,
+                "check_animation_workspace",
+                return_value={"ok": True, "errors": []},
+            ):
+                selected, declared = registry.load_current_animation_qa(builder)
+            self.assertEqual(declared, {"AMTEST"})
+            self.assertEqual(selected["AMTEST"]["selection_path"], "animations/index/selections/AMTEST.json")
+            self.assertEqual(
+                selected["AMTEST"]["decision_path"],
+                "animations/index/qa-decisions/AMTEST/accepted.json",
+            )
+            self.assertEqual(
+                selected["AMTEST"]["final_manifest_path"],
+                "animations/ressources/AMTEST/runs/final-v1/manifest.json",
+            )
+            self.assertEqual(builder._anomalies, [])
+
+            selection = json.loads(selection_path.read_text(encoding="utf-8"))
+            selection["qa_decision"]["sha256"] = "0" * 64
+            write_json(selection_path, selection)
+            invalid_builder = registry.RegistryBuilder(root)
+            invalid, still_declared = registry.load_current_animation_qa(invalid_builder)
+            self.assertEqual(invalid, {})
+            self.assertEqual(still_declared, {"AMTEST"})
+            self.assertEqual(
+                [item["code"] for item in invalid_builder._anomalies],
+                ["invalid-animation-selection"],
+            )
 
     def test_generated_files_can_be_recreated_and_checked(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

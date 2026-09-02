@@ -49,6 +49,10 @@ function New-DeterministicZip([string]$Source, [string]$Archive) {
 }
 
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+$workspace = (Resolve-Path -LiteralPath (Join-Path $release '..\..')).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $weidu = (Resolve-Path -LiteralPath $WeiDUExecutable).Path
 $stagedPayload = (Resolve-Path -LiteralPath $PayloadRoot -ErrorAction Stop).Path
 $outputParent = $release
@@ -197,3 +201,7 @@ Write-Utf8NoBom $sidecar @("$(Get-Hash $archive)  $([IO.Path]::GetFileName($arch
     content_entries = @($content.entries).Count
     status = 'LOCAL_TEST_READY'
 } | ConvertTo-Json
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
+}

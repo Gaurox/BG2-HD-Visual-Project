@@ -98,6 +98,18 @@ class WorkspaceCommandTests(unittest.TestCase):
         for call in runner.call_args_list:
             self.assertEqual(call.kwargs, {"cwd": workspace.ROOT, "check": True})
 
+    def test_keep_going_runs_every_scope_and_returns_first_failure(self) -> None:
+        runner = Mock(
+            side_effect=[
+                subprocess.CalledProcessError(7, "graphics"),
+                None,
+                subprocess.CalledProcessError(9, "integrity"),
+            ]
+        )
+        code = workspace.run("check", keep_going=True, runner=runner)
+        self.assertEqual(code, 7)
+        self.assertEqual(runner.call_count, 3)
+
     def test_cli_is_plan_only_unless_run_is_explicit(self) -> None:
         args = workspace.parse_args(["refresh", "--changed"])
         self.assertFalse(args.run)
@@ -106,6 +118,13 @@ class WorkspaceCommandTests(unittest.TestCase):
             ["refresh", "--scope", "registry", "--run"]
         )
         self.assertTrue(explicit.run)
+        self.assertTrue(
+            workspace.parse_args(
+                ["refresh", "--scope", "registry", "--run", "--keep-going"]
+            ).keep_going
+        )
+        with self.assertRaises(SystemExit):
+            workspace.parse_args(["refresh", "--scope", "registry", "--keep-going"])
         with self.assertRaises(SystemExit):
             workspace.parse_args(["refresh", "--run"])
 

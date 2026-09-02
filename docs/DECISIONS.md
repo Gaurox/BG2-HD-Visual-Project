@@ -36,6 +36,11 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Interpolation | TimedTimeline v2 pause-aware ; v3 ajoute le routage par occurrence | nouvelle timeline sans couture ni dérive, validée ingame |
 | Pack > 512 Mio | pack d'auteur puis split par zone | runtime borné alternatif démontré |
 | Runs interrompus | conserver request/manifest, supprimer les frames partielles, repartir des sources | jamais depuis une sortie partielle |
+| Rangement des nouveaux runs | mono-resref sous `animations/ressources/<RESREF>/runs/`; lots sous `animations/batches/`; legacy lu sans déplacement | déplacement explicitement planifié avec réécriture contrôlée de toutes les références |
+| Réservation d'un run | `animation_workflow.py new-run --run` crée un marqueur exclusif hors feuille ; `finalize --run` le consomme après validation du run | annulation explicite après contrôle d'absence du run et du `.partial` |
+| QA d'un run | `qa-approval.json` = revue technique/vidéo ; décision ingame immuable sous `animations/index/qa-decisions/`, sélection courante séparée | migration versionnée du contrat |
+| Finalisation QA | transaction `animation_workflow.py finalize` : décision + sélection + CSV ; essais refusés conservés | jamais par éditions partielles |
+| Promotion release | transaction ciblée `animation_release.py`, accord release distinct, aucun staging/package | changement partagé de renderer/format/Core ou package |
 | Gate release | delta par zone pendant la tâche ; gates globales au niveau package | changement runtime/format/générateur/Core ou package |
 | Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; le Core release possède son activation ; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
 | Polygone WED | prouver l'intersection avec l'alpha ; sinon créer un polygone local borné | WED source ou contour démontré différent |

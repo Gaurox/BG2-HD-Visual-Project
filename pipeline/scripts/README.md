@@ -21,9 +21,11 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Installation/restauration | `inject_build.py` |
 | Inventaire animations | `extract_area_animations.py`, `list_animations.py` |
 | Upscale animations | `run_animation_upscale.py`, `run_animation_upscale_30fps_v2.py` |
+| Suivi animation, QA et sélection | `animation_workflow.py` |
+| Promotion animation ciblée vers la release | `animation_release.py` |
 | Interpolation | `run_animation_interpolation.py` |
 | Packs par zone/occurrence | `split_animation_pack_by_area.py`, `combine_area_pack_splits.py`, `merge_area_pack_resources.py` |
-| Correctifs alpha/RGB | `build_alpha_feather.py`, `build_blended_rgb_neutral_pack.py` |
+| Correctifs alpha/RGB | `build_alpha_feather.py`, `build_manual_alpha_mask_30fps_v2.py`, `build_per_frame_spline_alpha_30fps_v2.py`, `build_blended_rgb_neutral_pack.py` |
 | Sprites | `run_creature_sprite_x2.py`, `build_sprite_inventory.py`, `xbr2x_batch.js` |
 | Release | `releases/BG2-HD-Upscale/tools/*.ps1` |
 

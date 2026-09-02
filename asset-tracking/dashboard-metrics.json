@@ -1,13 +1,14 @@
 {
   "anomaly_summary": {
     "by_code": {
-      "duplicate-qa-evidence": 7,
+      "duplicate-qa-evidence": 13,
       "duplicate-source-content": 1,
       "hardcoded-source-path": 1,
       "map-source-status-stale": 1,
       "missing-resource-dependencies": 2,
       "multiple-scoped-corrections": 1,
       "referenced-icon-sources-missing": 1,
+      "release-content-mismatch": 14,
       "shared-raw-dependencies": 1,
       "sprite-families-without-resources": 1,
       "ui-mainmenu-output-manifest-missing": 1,
@@ -15,13 +16,13 @@
       "unclassified-graphical-resources": 1
     },
     "by_severity": {
-      "error": 0,
+      "error": 14,
       "info": 4,
-      "warning": 15
+      "warning": 21
     },
-    "total": 19
+    "total": 39
   },
-  "asset_records_sha256": "A22F2F3542A7C5E1730E274CFC820FACCBE14518C6B5B321BDCC4B1E536D7239",
+  "asset_records_sha256": "3CA7601BD7ED04DFD990D4C2561A810257569B9FE7157A6DCDFB0F45AA2A4A1A",
   "coverage_gaps": [
     {
       "asset_count": null,
@@ -119,18 +120,18 @@
       "authority": "animations/index/ et candidats release",
       "coverageStatus": "projected",
       "domain": "animations",
-      "knownAssets": 274,
+      "knownAssets": 297,
       "label": "Animations",
       "note": "BAM inventoriés et packs release séparés ; QA temporelle seulement si attestée.",
-      "produced": 68,
-      "producedPercent": 0.24817518248175183,
-      "productionApplicable": 274,
-      "qaApplicable": 274,
-      "qaPassed": 67,
-      "qaPassedPercent": 0.24452554744525548,
-      "releaseApplicable": 274,
-      "releaseEligibleOrBeyond": 8,
-      "releaseEligiblePercent": 0.029197080291970802,
+      "produced": 98,
+      "producedPercent": 0.32996632996632996,
+      "productionApplicable": 297,
+      "qaApplicable": 297,
+      "qaPassed": 96,
+      "qaPassedPercent": 0.32323232323232326,
+      "releaseApplicable": 297,
+      "releaseEligibleOrBeyond": 17,
+      "releaseEligiblePercent": 0.05723905723905724,
       "sheet": "Animations"
     },
     {
@@ -280,23 +281,23 @@
   ],
   "generated_by": "pipeline/scripts/generate_human_tracking_xlsx.mjs",
   "global": {
-    "knownAssets": 15140,
-    "produced": 494,
-    "producedPercent": 0.03285666777519122,
-    "productionApplicable": 15035,
-    "qaApplicable": 15035,
-    "qaPassed": 358,
-    "qaPassedPercent": 0.023811107416029265,
-    "releaseApplicable": 15035,
-    "releaseEligibleOrBeyond": 297,
-    "releaseEligiblePercent": 0.01975390754905221
+    "knownAssets": 15163,
+    "produced": 524,
+    "producedPercent": 0.03479877805817506,
+    "productionApplicable": 15058,
+    "qaApplicable": 15058,
+    "qaPassed": 387,
+    "qaPassedPercent": 0.02570062425288883,
+    "releaseApplicable": 15058,
+    "releaseEligibleOrBeyond": 306,
+    "releaseEligiblePercent": 0.020321423827865587
   },
   "schema": "bg2-upscale-human-progress-v1",
-  "source_fingerprint_sha256": "118B094C0B222CA45AFA083CC10E0BF99AA8EA30986AD9E4558F8E07F7F819E3",
-  "source_snapshot_at_utc": "2026-08-31T22:47:26.231887Z",
+  "source_fingerprint_sha256": "21BED3996252343DB78EA150C2FACAD46C3BA32CC50AD5DFE2B9D27C27614B89",
+  "source_snapshot_at_utc": "2026-09-01T22:43:06.798016Z",
   "sources": {
     "anomalies": "asset-tracking/anomalies.json",
-    "canonical_input_count": 76,
+    "canonical_input_count": 112,
     "contract": "docs/asset-tracking-record.schema.json",
     "coverage": "asset-tracking/coverage.json",
     "registry": "asset-tracking/registry.json"

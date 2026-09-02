@@ -7,8 +7,8 @@ La QA vidéo et la QA ingame sont obligatoires.
 
 ```powershell
 python pipeline/scripts/run_animation_upscale_30fps_v2.py plan `
-  --source-run animations/runs/<run-spatial> `
-  --base-pack <pack-complet> --resref <RESREF> > <plan.json>
+  --source-run <id-ou-chemin-run-spatial> `
+  --base-pack <pack-complet> --resref <RESREF> --run <nouveau-run> > <plan.json>
 ```
 
 Pour un asset x4/15 fps déjà présent avec ancres homogènes, remplacer `--source-run` par
@@ -24,9 +24,9 @@ pack partiel ou une cible déjà TimedTimeline est bloquant.
 ```powershell
 $plan = Get-Content <plan.json> -Raw | ConvertFrom-Json
 python pipeline/scripts/run_animation_upscale_30fps_v2.py build `
-  --source-run animations/runs/<run-spatial> `
+  --source-run <id-ou-chemin-run-spatial> `
   --base-pack <pack-complet> --resref <RESREF> `
-  --output animations/runs/<nouveau-run> `
+  --run <nouveau-run> `
   --approve-plan-sha256 $plan.plan_sha256
 ```
 
@@ -56,15 +56,18 @@ Afficher chaque `review-30fps-loop-4s.mp4`, puis contrôler la review exacte pou
 acceptation explicite de tous les cycles :
 
 ```powershell
-$run = 'animations/runs/<nouveau-run>'
+$run = 'animations/ressources/<RESREF>/runs/<nouveau-run>'
 $hash = (Get-FileHash -Algorithm SHA256 "$run/manifest.json").Hash.ToLowerInvariant()
 python pipeline/scripts/run_animation_upscale_30fps_v2.py approve `
   --output $run --approve-run-manifest-sha256 $hash --resref <RESREF>
 python pipeline/scripts/run_animation_upscale_30fps_v2.py validate --output $run
 ```
 
-`qa-approval.json` doit couvrir exactement les resrefs approuvés. Un refus conserve le run, sans
-approbation ni installation.
+Pour un build multi-resrefs, utiliser à la place `animations/batches/<nouveau-run>`.
+
+`qa-approval.json` doit couvrir exactement les resrefs approuvés. Il scelle la revue technique et
+vidéo du run ; il ne vaut pas décision QA ingame. Un refus conserve le run, sans approbation ni
+installation.
 
 ## Installation réversible
 
@@ -81,4 +84,6 @@ Jeu et InfinityLoader fermés, et seulement si l'installation est autorisée :
 ```
 
 La QA ingame couvre vitesse, couture, pause/reprise, entrée/sortie du champ, changement de zone,
-géométrie, alpha et occlusion. Elle ne modifie pas automatiquement le registre ni la release.
+géométrie, alpha et occlusion. Après décision explicite, utiliser `animation_workflow.py finalize`
+pour mettre à jour atomiquement la preuve ingame, la sélection et le registre. La release reste une
+décision séparée.

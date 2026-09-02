@@ -21,11 +21,14 @@ Pour chaque frame non vide : padding transparent, extraction de chaque composant
 
 ```powershell
 python pipeline/scripts/build_per_frame_spline_alpha_30fps_v2.py `
-  --temporal-run animations/runs/<run-v2> --resref <RESREF> `
-  --output animations/runs/<nouveau-run> `
+  --temporal-run <id-ou-chemin-run-v2> --resref <RESREF> `
+  --run <nouveau-run> `
   --fit-error 1.0 --sample-spacing 1.5 --supersample 4 `
   --padding-x4 32 --inner-feather-x4 4
 ```
+
+La sortie courante est `animations/ressources/<RESREF>/runs/<nouveau-run>/`. `--output` reste
+réservé à une reprise legacy explicite.
 
 ### Variante validée : Oval Edge Fade 20/6
 

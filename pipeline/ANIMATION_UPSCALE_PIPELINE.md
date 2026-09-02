@@ -33,8 +33,11 @@ canvas forcé commun.
 
 ```powershell
 python pipeline/scripts/build_animation_runtime_pack.py `
-  animations/runs/<run> [<nouveau-pack>]
+  animations/ressources/<RESREF>/runs/<run-id> [<nouveau-pack>]
 ```
+
+Pour un lot, utiliser `animations/batches/<run-id>`. Un chemin sous `animations/runs/` n'est fourni
+que pour reprendre explicitement un run legacy existant.
 
 `--include-pack` compose des packs v1 terminés ; `--alpha-override-manifest` conserve un correctif
 alpha approuvé ; `--resume` revalide sans écrire. Un pack au-delà de 512 Mio doit être produit en

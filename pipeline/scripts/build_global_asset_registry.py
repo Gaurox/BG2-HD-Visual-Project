@@ -23,6 +23,7 @@ from asset_tracking_contract import (
     map_legacy_status,
     validate_record,
 )
+from animation_workflow import check_workspace as check_animation_workspace
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,6 +63,21 @@ SOURCE_AVAILABLE = {"available", "extracted", "verified"}
 PRODUCED = {"produced", "verified"}
 RELEASE_ELIGIBLE = {"eligible", "approved", "integrated", "published"}
 PROVENANCE_AVAILABLE = {"partial", "complete", "verified"}
+ANIMATION_SELECTIONS_ROOT = "animations/index/selections"
+ANIMATION_DECISIONS_ROOT = "animations/index/qa-decisions"
+ANIMATION_RESOURCES_PATH = "animations/index/ressources.csv"
+ANIMATION_CANDIDATES_PATH = (
+    "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
+)
+ANIMATION_RESREF_RE = re.compile(r"^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$")
+SHA256_RE = re.compile(r"^[A-F0-9]{64}$")
+
+
+def canonical_row_sha256(row: Mapping[str, str]) -> str:
+    payload = json.dumps(
+        dict(row), ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest().upper()
 
 UNRESOLVED_STATES = {
     "source": {"unknown"},
@@ -81,7 +97,10 @@ DOMAIN_SCOPE = {
     "animations": {
         "coverage_status": "projected",
         "authority": "animations/index/ et candidats release",
-        "note": "BAM inventoriés et packs release séparés ; QA temporelle seulement si attestée.",
+        "note": (
+            "BAM inventoriés et packs release séparés ; QA courante issue de "
+            "selections/<RESREF>.json et de sa décision ingame hashée."
+        ),
     },
     "sprites": {
         "coverage_status": "projected",
@@ -197,6 +216,15 @@ def repo_path(root: Path, path: Path) -> str:
 def stable_token(value: str) -> str:
     token = re.sub(r"[^A-Za-z0-9._/-]+", "-", value.strip())
     return token.strip("-") or "unknown"
+
+
+def canonical_relative_path(value: str) -> bool:
+    return bool(value) and not (
+        value.startswith("/")
+        or re.match(r"^[A-Za-z]:", value)
+        or "\\" in value
+        or ".." in value.split("/")
+    )
 
 
 def utc_text(value: datetime) -> str:
@@ -841,48 +869,327 @@ def adapt_maps(
         )
 
 
-def load_animation_qa(builder: RegistryBuilder) -> dict[str, list[dict[str, str]]]:
-    approvals: dict[str, list[dict[str, str]]] = {}
-    run_root = builder.root / "animations" / "runs"
-    if not run_root.is_dir():
-        builder.anomaly(
-            "qa-authority-unavailable",
-            "warning",
-            "animations",
-            "animations/runs absent : QA temporelle non projetable hors attestations release",
-            source="animations/runs",
+def _current_animation_selection(
+    builder: RegistryBuilder,
+    selection_path: str,
+    expected_resref: str,
+) -> tuple[dict[str, str] | None, list[str]]:
+    """Resolve and verify one mutable selection and its immutable QA decision."""
+
+    errors: list[str] = []
+    try:
+        selection = builder.inputs.read_json(selection_path)
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as error:
+        return None, [f"sélection illisible: {error}"]
+    if not isinstance(selection, Mapping):
+        return None, ["objet JSON de sélection attendu"]
+
+    resref = str(selection.get("resref", "")).upper()
+    if resref != expected_resref:
+        errors.append("resref incohérent avec le nom du fichier")
+    if selection.get("schema_version") != 1:
+        errors.append("schema_version de sélection invalide")
+    if selection.get("asset_id") != f"animations:bam:{expected_resref}":
+        errors.append("asset_id de sélection incohérent")
+    if parse_timestamp(str(selection.get("updated_at_utc", ""))) is None:
+        errors.append("updated_at_utc de sélection invalide")
+
+    decision_ref = selection.get("qa_decision")
+    if not isinstance(decision_ref, Mapping):
+        errors.append("référence qa_decision absente ou invalide")
+        return None, errors
+    decision_path = str(decision_ref.get("path", ""))
+    decision_hash = str(decision_ref.get("sha256", ""))
+    expected_prefix = f"{ANIMATION_DECISIONS_ROOT}/{expected_resref}/"
+    if (
+        not canonical_relative_path(decision_path)
+        or not decision_path.startswith(expected_prefix)
+        or not decision_path.endswith(".json")
+    ):
+        errors.append("chemin de décision hors autorité canonique")
+    if decision_ref.get("status") != "accepted":
+        errors.append("statut de décision sélectionnée non accepté")
+    if not SHA256_RE.fullmatch(decision_hash):
+        errors.append("hash de décision invalide")
+
+    decision: Mapping[str, Any] | None = None
+    actual_decision_hash = ""
+    if decision_path and not errors:
+        try:
+            decision_value = builder.inputs.read_json(decision_path)
+            actual_decision_hash = builder.inputs.digest(decision_path)
+            if isinstance(decision_value, Mapping):
+                decision = decision_value
+            else:
+                errors.append("objet JSON de décision attendu")
+        except (FileNotFoundError, json.JSONDecodeError, ValueError) as error:
+            errors.append(f"décision illisible: {error}")
+    if actual_decision_hash and actual_decision_hash != decision_hash:
+        errors.append("hash de décision différent de la sélection")
+    if decision is None:
+        return None, errors
+
+    if decision.get("schema_version") != 1:
+        errors.append("schema_version de décision invalide")
+    decision_id = str(decision.get("decision_id", ""))
+    if not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,127}", decision_id):
+        errors.append("decision_id invalide")
+    if str(decision.get("resref", "")).upper() != expected_resref:
+        errors.append("resref de décision incohérent")
+    if decision.get("asset_id") != f"animations:bam:{expected_resref}":
+        errors.append("asset_id de décision incohérent")
+    if decision.get("status") != "accepted":
+        errors.append("décision QA non acceptée")
+    if decision.get("decision_origin") != "explicit-user-ingame-qa":
+        errors.append("origine de décision QA non explicite")
+    if not str(decision.get("decision", "")).strip():
+        errors.append("texte de décision QA absent")
+    if parse_timestamp(str(decision.get("recorded_at_utc", ""))) is None:
+        errors.append("recorded_at_utc de décision invalide")
+    if not re.fullmatch(
+        r"[0-9]{4}-[0-9]{2}-[0-9]{2}", str(decision.get("decision_date", ""))
+    ):
+        errors.append("decision_date invalide")
+    if decision_ref.get("decision_date") != decision.get("decision_date"):
+        errors.append("date de décision incohérente")
+    result_kind = str(decision.get("result_kind", ""))
+    if result_kind not in {"x4", "native"}:
+        errors.append("result_kind de décision invalide")
+    if selection.get("result_kind") != result_kind:
+        errors.append("result_kind diffère entre sélection et décision")
+    for key in ("tested_areas",):
+        if selection.get(key) != decision.get(key):
+            errors.append(f"{key} diffère entre sélection et décision")
+    tested_areas = decision.get("tested_areas")
+    if not isinstance(tested_areas, list) or not tested_areas or any(
+        not re.fullmatch(r"(?:AR|OH)[0-9]{4}", str(area)) for area in tested_areas
+    ):
+        errors.append("tested_areas invalide")
+
+    resolved: dict[str, str] = {
+        "selection_path": selection_path,
+        "selection_sha256": builder.inputs.digest(selection_path),
+        "decision_path": decision_path,
+        "decision_sha256": actual_decision_hash,
+        "decision_id": decision_id,
+        "decision_date": str(decision.get("decision_date", "")),
+        "result_kind": result_kind,
+    }
+    if result_kind == "x4":
+        for key in ("lineage", "source_pack"):
+            if selection.get(key) != decision.get(key):
+                errors.append(f"{key} diffère entre sélection et décision")
+        if selection.get("selected_run") != decision.get("final_run"):
+            errors.append("selected_run diffère du run final de la décision")
+        if "native_source" in selection or "native_source" in decision:
+            errors.append("native_source interdit pour un résultat x4")
+        final_run = decision.get("final_run")
+        if not isinstance(final_run, Mapping):
+            errors.append("run final absent de la décision")
+            return None, errors
+        final_run_path = str(final_run.get("path", ""))
+        final_manifest_path = str(final_run.get("manifest_path", ""))
+        final_manifest_hash = str(final_run.get("manifest_sha256", ""))
+        if not canonical_relative_path(final_run_path) or not canonical_relative_path(
+            final_manifest_path
+        ):
+            errors.append("chemin du run final non canonique")
+        if not SHA256_RE.fullmatch(final_manifest_hash):
+            errors.append("hash de manifeste du run final invalide")
+        try:
+            run_directory = builder.inputs.absolute(final_run_path)
+            manifest_file = builder.inputs.absolute(final_manifest_path)
+            if not run_directory.is_dir():
+                errors.append("répertoire du run final absent")
+            if manifest_file != run_directory / "manifest.json":
+                errors.append("manifeste du run final hors de son emplacement canonique")
+            if not manifest_file.is_file():
+                errors.append("manifeste du run final absent")
+            else:
+                final_manifest = builder.inputs.read_json(final_manifest_path)
+                actual_manifest_hash = builder.inputs.digest(final_manifest_path)
+                if actual_manifest_hash != final_manifest_hash:
+                    errors.append("hash du manifeste du run final incohérent")
+                if not isinstance(final_manifest, Mapping):
+                    errors.append("objet JSON attendu pour le manifeste du run final")
+                elif (
+                    final_manifest.get("schema") != final_run.get("schema")
+                    or final_manifest.get("status") != final_run.get("status")
+                ):
+                    errors.append("identité du manifeste du run final incohérente")
+        except (FileNotFoundError, ValueError) as error:
+            errors.append(f"chemin du run final invalide: {error}")
+        resolved.update(
+            {
+                "selected_artifact_path": final_manifest_path,
+                "selected_artifact_sha256": final_manifest_hash,
+                "selection_id": final_run_path,
+                "final_run_path": final_run_path,
+                "final_manifest_path": final_manifest_path,
+                "final_manifest_sha256": final_manifest_hash,
+            }
         )
-        return approvals
-    for approval_path in sorted(run_root.rglob("qa-approval.json")):
-        relative = repo_path(builder.root, approval_path)
-        approval = builder.inputs.read_json(relative)
-        status = str(approval.get("status", ""))
-        if status != "accepted":
-            builder.anomaly(
-                "unknown-qa-status",
-                "error",
-                "animations",
-                f"qa-approval non interprétable: {status!r}",
-                source=relative,
-            )
-            continue
-        accepted = approval.get("accepted_resrefs")
-        if not isinstance(accepted, list) or not accepted:
-            builder.anomaly(
-                "invalid-qa-approval",
-                "error",
-                "animations",
-                "qa-approval accepté sans accepted_resrefs",
-                source=relative,
-            )
-            continue
-        for resref in accepted:
-            normalized = str(resref).upper()
-            approvals.setdefault(normalized, []).append(
+    elif result_kind == "native":
+        forbidden = {"selected_run", "lineage", "source_pack"}
+        if forbidden & set(selection) or {"final_run", "lineage", "source_pack"} & set(decision):
+            errors.append("champs x4 interdits pour un résultat natif")
+        native_source = decision.get("native_source")
+        if selection.get("native_source") != native_source or not isinstance(native_source, Mapping):
+            errors.append("native_source absent ou différent entre sélection et décision")
+        else:
+            native_path = str(native_source.get("path", ""))
+            native_hash = str(native_source.get("sha256", ""))
+            expected_path = f"animations/ressources/{expected_resref}/source.bam"
+            if native_path != expected_path or not SHA256_RE.fullmatch(native_hash):
+                errors.append("chemin/hash de source native invalide")
+            try:
+                source_file = builder.inputs.absolute(native_path)
+                if not source_file.is_file():
+                    errors.append("source BAM native absente")
+                elif builder.inputs.digest(native_path) != native_hash:
+                    errors.append("hash de source BAM native incohérent")
+                if source_file.is_file() and source_file.stat().st_size != int(native_source.get("bytes", -1)):
+                    errors.append("taille de source BAM native incohérente")
+                inventory_rows = builder.inputs.read_csv(ANIMATION_RESOURCES_PATH)
+                matching_rows = [
+                    row
+                    for row in inventory_rows
+                    if str(row.get("bam_resref", "")).upper() == expected_resref
+                ]
+                if len(matching_rows) != 1:
+                    errors.append("ligne native unique absente de ressources.csv")
+                else:
+                    inventory_row = matching_rows[0]
+                    if canonical_row_sha256(inventory_row) != native_source.get("inventory_row_sha256"):
+                        errors.append("empreinte de ligne native incohérente")
+                    if str(inventory_row.get("sha256", "")).upper() != native_hash:
+                        errors.append("hash natif différent de ressources.csv")
+            except (FileNotFoundError, ValueError, TypeError) as error:
+                errors.append(f"source native invalide: {error}")
+            resolved.update(
                 {
-                    "path": relative,
-                    "sha256": builder.inputs.digest(relative),
+                    "selected_artifact_path": native_path,
+                    "selected_artifact_sha256": native_hash,
+                    "selection_id": native_path,
+                    "native_source_path": native_path,
+                    "native_source_sha256": native_hash,
                 }
+            )
+
+    if not errors:
+        try:
+            workflow_result = check_animation_workspace(builder.root, expected_resref)
+        except (KeyError, OSError, TypeError, ValueError, RuntimeError) as error:
+            errors.append(f"validation workflow impossible: {error}")
+        else:
+            if not workflow_result.get("ok"):
+                errors.extend(
+                    f"workflow: {message}"
+                    for message in workflow_result.get("errors", ["erreur non détaillée"])
+                )
+    if errors:
+        return None, errors
+    return resolved, []
+
+
+def load_current_animation_qa(
+    builder: RegistryBuilder,
+) -> tuple[dict[str, dict[str, str]], set[str]]:
+    """Return valid current QA chains and every resref declaring a selection."""
+
+    selected: dict[str, dict[str, str]] = {}
+    declared: set[str] = set()
+    root = builder.root / ANIMATION_SELECTIONS_ROOT
+    if not root.is_dir():
+        return selected, declared
+    for path in sorted(root.glob("*.json"), key=lambda item: item.name.casefold()):
+        expected_resref = path.stem.upper()
+        relative = repo_path(builder.root, path)
+        if path.stem != expected_resref or not ANIMATION_RESREF_RE.fullmatch(expected_resref):
+            builder.anomaly(
+                "invalid-animation-selection",
+                "error",
+                "animations",
+                "nom de fichier de sélection animation invalide",
+                source=relative,
+            )
+            continue
+        declared.add(expected_resref)
+        resolved, errors = _current_animation_selection(builder, relative, expected_resref)
+        if errors:
+            builder.anomaly(
+                "invalid-animation-selection",
+                "error",
+                "animations",
+                "la sélection animation courante ne forme pas une chaîne QA vérifiable",
+                asset_id=f"animations:bam:{expected_resref}",
+                source=relative,
+                details={"errors": errors},
+            )
+            continue
+        if resolved is not None:
+            selected[expected_resref] = resolved
+    return selected, declared
+
+
+def load_legacy_release_animation_qa(
+    builder: RegistryBuilder,
+) -> dict[str, list[dict[str, str]]]:
+    """Keep only pre-contract QA pinned by the canonical release candidate register."""
+
+    approvals: dict[str, list[dict[str, str]]] = {}
+    document = builder.inputs.read_json(ANIMATION_CANDIDATES_PATH)
+    for candidate in document.get("candidates", []):
+        if candidate.get("approval_status") not in {
+            "approved-for-release",
+            "validated-awaiting-manifest-approval",
+        }:
+            continue
+        area = str(candidate.get("area", "")).upper()
+        required_resrefs = {
+            str(value).upper() for value in candidate.get("required_resrefs", [])
+        }
+        qa_path = str(candidate.get("qa_approval", ""))
+        declared_hash = str(candidate.get("qa_approval_sha256", ""))
+        if (
+            not required_resrefs
+            or not qa_path.startswith(
+                "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/"
+            )
+            or not SHA256_RE.fullmatch(declared_hash)
+            or not builder.inputs.exists(qa_path)
+        ):
+            continue
+        approval = builder.inputs.read_json(qa_path)
+        actual_hash = builder.inputs.digest(qa_path)
+        approval_resrefs = {
+            str(value).upper() for value in approval.get("required_resrefs", [])
+        }
+        if not (
+            approval.get("status") == "accepted"
+            and approval.get("decision_origin") == "preserved-existing-user-qa"
+            and str(approval.get("area", "")).upper() == area
+            and approval_resrefs == required_resrefs
+            and actual_hash == declared_hash
+        ):
+            continue
+        locator = f"json:candidates[area={area}]"
+        for resref in required_resrefs:
+            if not ANIMATION_RESREF_RE.fullmatch(resref):
+                continue
+            approvals.setdefault(resref, []).extend(
+                (
+                    {
+                        "path": ANIMATION_CANDIDATES_PATH,
+                        "locator": locator,
+                        "sha256": builder.inputs.digest(ANIMATION_CANDIDATES_PATH),
+                    },
+                    {
+                        "path": qa_path,
+                        "locator": f"json:required_resrefs[{resref}]",
+                        "sha256": actual_hash,
+                    },
+                )
             )
     return approvals
 
@@ -896,7 +1203,8 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
     resource_rows = builder.inputs.read_csv(resources_path)
     alpha_rows = builder.inputs.read_csv(alpha_path)
     manifest = builder.inputs.read_json(manifest_path)
-    qa_by_resref = load_animation_qa(builder)
+    current_qa_by_resref, declared_selections = load_current_animation_qa(builder)
+    legacy_qa_by_resref = load_legacy_release_animation_qa(builder)
 
     resources: dict[str, dict[str, str]] = {}
     for row in resource_rows:
@@ -990,6 +1298,14 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
                 source=alpha_path,
             )
             if correction_fragment is not None:
+                # Historical correction statuses still describe production and
+                # installation, but current in-game QA only comes from the
+                # selected decision chain resolved below.
+                correction_fragment = {
+                    axis: value
+                    for axis, value in correction_fragment.items()
+                    if axis != "qa"
+                }
                 apply_fragment(
                     builder,
                     states,
@@ -1046,26 +1362,76 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
                 }
             )
 
-        approvals = qa_by_resref.get(resref, [])
-        if approvals:
-            states["qa"] = "passed"
-            for approval in approvals:
-                evidence.append(
-                    {
-                        "path": approval["path"],
-                        "locator": f"json:accepted_resrefs[{resref}]",
-                        "sha256": approval["sha256"],
-                    }
+        states["qa"] = "not-assessed"
+        current_qa = current_qa_by_resref.get(resref)
+        if current_qa:
+            expected_current = {
+                "status": (
+                    "validé-x4"
+                    if current_qa["result_kind"] == "x4"
+                    else "validé-natif"
+                ),
+                "selected_run": current_qa.get("final_run_path", ""),
+                "qa_decision": current_qa["decision_path"],
+                "qa_date": current_qa["decision_date"],
+            }
+            mismatches = {
+                field: {"expected": expected, "actual": row.get(field, "")}
+                for field, expected in expected_current.items()
+                if row.get(field, "") != expected
+            }
+            if mismatches:
+                builder.anomaly(
+                    "animation-selection-registry-mismatch",
+                    "error",
+                    "animations",
+                    "le registre CSV ne reflète pas la sélection animation courante",
+                    asset_id=asset_id,
+                    source=registry_path,
+                    details={"fields": mismatches},
                 )
-        if len(approvals) > 1:
-            builder.anomaly(
-                "duplicate-qa-evidence",
-                "warning",
-                "animations",
-                "plusieurs qa-approval acceptés couvrent le même resref",
-                asset_id=asset_id,
-                details={"approval_paths": sorted(item["path"] for item in approvals)},
+                current_qa = None
+        legacy_approvals = (
+            [] if resref in declared_selections else legacy_qa_by_resref.get(resref, [])
+        )
+        if current_qa:
+            states["qa"] = "passed"
+            evidence.extend(
+                (
+                    {
+                        "path": current_qa["selection_path"],
+                        "locator": "json:root",
+                        "sha256": current_qa["selection_sha256"],
+                    },
+                    {
+                        "path": current_qa["decision_path"],
+                        "locator": "json:root",
+                        "sha256": current_qa["decision_sha256"],
+                    },
+                    {
+                        "path": current_qa["selected_artifact_path"],
+                        "locator": "json:root" if current_qa["result_kind"] == "x4" else "file:sha256",
+                        "sha256": current_qa["selected_artifact_sha256"],
+                    },
+                )
             )
+            selections.append(
+                {
+                    "role": "run" if current_qa["result_kind"] == "x4" else "native-source",
+                    "id": current_qa["selection_id"],
+                    "source": source_ref(
+                        current_qa["selection_path"],
+                        "json:selected_run"
+                        if current_qa["result_kind"] == "x4"
+                        else "json:native_source",
+                    ),
+                }
+            )
+        elif resref in declared_selections:
+            states["qa"] = "blocked"
+        elif legacy_approvals:
+            states["qa"] = "passed"
+            evidence.extend(legacy_approvals)
 
         if resource is None:
             builder.anomaly(
@@ -1094,9 +1460,11 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
             provenance_state = "partial"
         else:
             provenance_state = "not-applicable"
-        if approvals and selections:
+        if current_qa:
             provenance_state = "verified"
-        elif approvals and provenance_state == "not-applicable":
+        elif legacy_approvals and selections:
+            provenance_state = "verified"
+        elif legacy_approvals and provenance_state == "not-applicable":
             provenance_state = "partial"
 
         builder.add(
@@ -1111,7 +1479,7 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
                 evidence=evidence,
                 selections=selections,
                 legacy=legacy,
-                adapter="animations.index.v1",
+                adapter="animations.index.v2",
             )
         )
 
@@ -1145,9 +1513,7 @@ def adapt_animation_candidates(
     registry_resrefs: set[str],
     animation_groups: Mapping[str, list[dict[str, Any]]],
 ) -> None:
-    candidate_path = (
-        "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json"
-    )
+    candidate_path = ANIMATION_CANDIDATES_PATH
     content_path = "releases/BG2-HD-Upscale/manifests/content.json"
     document = builder.inputs.read_json(candidate_path)
     seen_areas: set[str] = set()

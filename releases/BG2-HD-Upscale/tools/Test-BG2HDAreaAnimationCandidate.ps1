@@ -4,7 +4,9 @@ param(
     [ValidatePattern('^(AR|OH)[0-9]{4}$')]
     [string]$Area,
     [string]$WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..\..')).Path,
-    [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
+    [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
+    [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json'),
+    [string]$AnimationQaApprovalOverridePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -15,8 +17,11 @@ function Require([bool]$Condition, [string]$Message) {
 
 $workspace = (Resolve-Path -LiteralPath $WorkspaceRoot).Path
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $areaId = $Area.ToUpperInvariant()
-$candidatePath = Join-Path $release 'manifests\animation-release-candidates.json'
+$candidatePath = [IO.Path]::GetFullPath($AnimationCandidatesPath)
 $candidateSchema = Join-Path $release 'schemas\animation-release-candidates.schema.json'
 Require (Test-Json -Path $candidatePath -SchemaFile $candidateSchema) 'Schema du registre de candidats animation invalide.'
 $candidates = Get-Content -LiteralPath $candidatePath -Raw -Encoding utf8 | ConvertFrom-Json
@@ -32,10 +37,16 @@ try {
     $tp2 = Join-Path $tempRoot 'bg2hd.tp2'
     $payload = Join-Path $tempRoot 'payload'
 
-    & (Join-Path $release 'tools\New-BG2HD-ContentManifest.ps1') `
-        -WorkspaceRoot $workspace `
-        -OutputPath $content `
-        -OnlyAnimationArea $areaId | Out-Null
+    $contentArguments = @{
+        WorkspaceRoot = $workspace
+        AnimationCandidatesPath = $candidatePath
+        OutputPath = $content
+        OnlyAnimationArea = $areaId
+    }
+    if (-not [string]::IsNullOrWhiteSpace($AnimationQaApprovalOverridePath)) {
+        $contentArguments.AnimationQaApprovalOverridePath = $AnimationQaApprovalOverridePath
+    }
+    & (Join-Path $release 'tools\New-BG2HD-ContentManifest.ps1') @contentArguments | Out-Null
     Require (Test-Json -Path $content -SchemaFile (Join-Path $release 'schemas\content.schema.json')) "Schema du contenu delta invalide : $areaId"
     $contentObject = Get-Content -LiteralPath $content -Raw -Encoding utf8 | ConvertFrom-Json
     $entries = @($contentObject.entries)
@@ -61,6 +72,7 @@ try {
 
     & (Join-Path $release 'tools\New-BG2HD-ComponentManifest.ps1') `
         -ReleaseRoot $release `
+        -AnimationCandidatesPath $candidatePath `
         -ContentPath $content `
         -OutputPath $components | Out-Null
     $componentId = [int]$candidate[0].component_id
@@ -85,4 +97,8 @@ try {
 }
 finally {
     if (Test-Path -LiteralPath $tempRoot) { Remove-Item -LiteralPath $tempRoot -Recurse -Force }
+}
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
 }

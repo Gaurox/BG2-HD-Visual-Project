@@ -41,6 +41,10 @@ $expected = [ordered]@{
 }
 
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+$workspace = (Resolve-Path -LiteralPath (Join-Path $release '..\..')).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 if (-not $ManifestPath) {
     $rootManifest = Join-Path $release 'manifests\content.json'
     $ManifestPath = if (Test-Path -LiteralPath $rootManifest) { $rootManifest } else { Join-Path $release 'bg2hd\manifests\content.json' }
@@ -86,3 +90,7 @@ $rendererText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($Render
 Require ($rendererText.IndexOf('WTOIL', [StringComparison]::Ordinal) -ge 0) 'La DLL renderer ne contient pas le classificateur WTOIL requis par AR0413.'
 
 Write-Output 'AR0413_CANONICAL_CONTRACT=PASSED'
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
+}

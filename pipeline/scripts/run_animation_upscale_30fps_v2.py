@@ -16,6 +16,7 @@ import os
 import shutil
 import struct
 import subprocess
+import sys
 from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +24,7 @@ from typing import Any
 
 from PIL import Image, ImageChops, ImageStat
 
+import animation_paths
 import build_animation_runtime_pack as runtime_v1
 from workspace_paths import get_path
 
@@ -1322,6 +1324,24 @@ def validate_run(output: Path, expected_plan_sha256: str | None = None) -> dict[
         path = safe_relative(output, str(review["file"]))
         require(path.is_file() and sha256_file(path) == str(review["sha256"]),
                 f"review run V2 modifiée : {path}")
+    manual_patch = manifest.get("manual_alpha_patch")
+    if isinstance(manual_patch, dict) and manual_patch.get("mask_storage") == "run-relative-v1":
+        descriptor = load_json(output / "manual-mask.json")
+        require(descriptor == manual_patch, "descripteur de masque manuel différent du run")
+        targets = manual_patch.get("targets")
+        require(isinstance(targets, list) and targets, "masques manuels absents du run")
+        seen: set[str] = set()
+        for target in targets:
+            require(isinstance(target, dict), "entrée de masque manuel invalide")
+            resref = normalise_resref(str(target.get("resref", "")))
+            require(resref not in seen, f"masque manuel dupliqué : {resref}")
+            seen.add(resref)
+            expected_source = f"manual-mask/{resref}/source.png"
+            require(target.get("mask_source") == expected_source,
+                    f"source de masque non canonique : {resref}")
+            mask = safe_relative(output, expected_source)
+            require(mask.is_file() and sha256_file(mask) == str(target.get("mask_sha256", "")),
+                    f"masque manuel modifié : {mask}")
     return manifest
 
 
@@ -1452,7 +1472,7 @@ def approve_run(output: Path, approved_run_manifest_sha256: str,
 
 def add_common_source_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--source-run", type=Path,
-                        help="run spatial V1 x4 terminé")
+                        help="chemin ou identifiant d'un run spatial V1 x4 terminé")
     parser.add_argument("--base-runtime-only", action="store_true",
                         help="utiliser les ancres 15 fps uniformes du pack de base")
     parser.add_argument("--base-pack", type=Path, required=True,
@@ -1476,15 +1496,51 @@ def validate_input_mode(args: argparse.Namespace, parser: argparse.ArgumentParse
         parser.error("fournir exactement un --source-run ou --base-runtime-only")
 
 
+def add_run_destination_arguments(parser: argparse.ArgumentParser) -> None:
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--run",
+        help=(
+            "identifiant simple; nouveau run mono-resref sous "
+            "animations/ressources/<RESREF>/runs, sinon sous animations/batches"
+        ),
+    )
+    group.add_argument(
+        "--output",
+        type=Path,
+        help="chemin explicite, notamment pour reprendre un run legacy",
+    )
+
+
+def resolve_source_run(value: Path | None, resrefs: list[str]) -> Path | None:
+    if value is None:
+        return None
+    return animation_paths.resolve_existing_run(value, resrefs)
+
+
+def resolve_run_destination(args: argparse.Namespace) -> Path:
+    if args.output is not None:
+        output = args.output.resolve()
+        partial = output.with_name(output.name + ".partial")
+        if not output.exists() and not partial.exists():
+            animation_paths.validate_run_location(output, args.resref)
+        return output
+    return animation_paths.resolve_run_destination(args.run, args.resref)
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
     plan_parser = subparsers.add_parser("plan", help="audit en lecture seule et proposition")
     add_common_source_arguments(plan_parser)
+    plan_parser.add_argument(
+        "--run",
+        help="identifiant simple dont l'emplacement canonique sera proposé sans être créé",
+    )
 
     build_parser = subparsers.add_parser("build", help="interpolation et pack V2 immuable")
     add_common_source_arguments(build_parser)
-    build_parser.add_argument("--output", type=Path, required=True)
+    add_run_destination_arguments(build_parser)
     build_parser.add_argument("--approve-plan-sha256", required=True)
     build_parser.add_argument("--tvai-ffmpeg", type=Path, default=DEFAULT_TVAI_FFMPEG)
     build_parser.add_argument("--tvai-model-dir", type=Path, default=DEFAULT_TVAI_MODEL_DIR)
@@ -1512,13 +1568,25 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     if args.command == "plan":
         validate_input_mode(args, plan_parser)
-        result = build_plan(args.source_run, args.base_pack, args.resref, args.model,
+        source_run = resolve_source_run(args.source_run, args.resref)
+        proposed = (
+            animation_paths.resolve_run_destination(args.run, args.resref)
+            if args.run
+            else animation_paths.default_run_root(args.resref)
+        )
+        print(
+            "Emplacement de run proposé : " + animation_paths.display_path(proposed),
+            file=sys.stderr,
+        )
+        result = build_plan(source_run, args.base_pack, args.resref, args.model,
                             args.collapse_uniform_duplicate_holds,
                             args.authoring_pack_for_area_split,
                             args.transparent_rgb_mode)
     elif args.command == "build":
         validate_input_mode(args, build_parser)
-        result = build_run(args.source_run, args.base_pack, args.output, args.resref,
+        source_run = resolve_source_run(args.source_run, args.resref)
+        output = resolve_run_destination(args)
+        result = build_run(source_run, args.base_pack, output, args.resref,
                            args.approve_plan_sha256.lower(), args.tvai_ffmpeg.resolve(),
                            args.tvai_model_dir.resolve(), args.model, args.device,
                            args.review_ffmpeg, args.resume,

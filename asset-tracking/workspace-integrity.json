@@ -13,22 +13,26 @@
       "verified": true
     },
     "animations": {
-      "approved_candidate_count": 22,
+      "approved_candidate_count": 31,
       "empty_run_count": 0,
-      "historical_qa_evidence_adapted_count": 31,
+      "historical_qa_evidence_adapted_count": 51,
+      "ingame_qa_selected_asset_count": 0,
       "legacy_proto_directory_migration_count": 64,
-      "legacy_proto_embedded_reference_count": 153,
-      "legacy_proto_embedded_reference_file_count": 54,
+      "legacy_proto_embedded_reference_count": 204,
+      "legacy_proto_embedded_reference_file_count": 68,
       "legacy_proto_loose_file_migration_count": 7,
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
       "legacy_proto_run_count": 65,
-      "physical_run_count": 125,
-      "qa_attested_run_count": 26,
-      "release_pack_indexed_count": 22,
-      "release_referenced_run_count": 12,
+      "physical_run_count": 161,
+      "physical_run_count_by_layout": {
+        "legacy": 161
+      },
+      "release_pack_indexed_count": 31,
+      "release_referenced_run_count": 20,
       "remaining_animation_proto_directory_count": 0,
-      "remaining_proto_directory_count": 0
+      "remaining_proto_directory_count": 0,
+      "run_preview_record_count": 35
     },
     "maps": {
       "canonical_asset_rows": 369,
@@ -42,7 +46,7 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 143,
+      "active_script_file_count": 151,
       "configured_path_count": 5,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
@@ -162,7 +166,9 @@
       "operation_count": 7,
       "preserved_bytes": 857233386,
       "preserved_file_count": 445,
-      "removed_empty_directory_count": 1,
+      "removed_empty_directory_count": 0,
+      "restoration_manifest": "docs/workspace-restoration-manifest.json",
+      "restored_after_cleanup_count": 1,
       "verified_operation_count": 7
     },
     "workspace_hygiene": {
@@ -275,193 +281,313 @@
     {
       "code": "animation-historical-qa-evidence-adapted",
       "details": {
-        "evidence_reference_count": 31,
+        "evidence_reference_count": 51,
         "migrations": [
           {
             "area": "AR0602",
-            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
           },
           {
             "area": "AR0602",
-            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "evidence_source": "326658ae1d47f277308c2db41976c101fceb5ffd:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
           },
           {
             "area": "AR0900",
-            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
           },
           {
             "area": "AR0516",
-            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
           },
           {
             "area": "AR0516",
-            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "evidence_source": "326658ae1d47f277308c2db41976c101fceb5ffd:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
           },
           {
             "area": "AR0700",
-            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
           },
           {
             "area": "AR0700",
-            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "evidence_source": "326658ae1d47f277308c2db41976c101fceb5ffd:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
           },
           {
             "area": "AR0603",
-            "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
           },
           {
             "area": "AR0603",
-            "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+            "evidence_source": "326658ae1d47f277308c2db41976c101fceb5ffd:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
           },
           {
             "area": "AR0307",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF"
           },
           {
             "area": "AR0307",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
           },
           {
             "area": "AR0329",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF"
           },
           {
             "area": "AR0329",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9:animations/index/animation_alpha_corrections.csv",
             "path": "animations/index/animation_alpha_corrections.csv",
             "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
           },
           {
             "area": "AR2100",
-            "git_commit": "9ac2cef9c26a650330611c25f571581e94b755a3",
+            "evidence_source": "9ac2cef9c26a650330611c25f571581e94b755a3:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "030D935FCDFE0CB397616435615D4A02F96F49A96459FA0BA7D0ED91F36CCF87"
           },
           {
             "area": "AR0309",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
           },
           {
             "area": "AR0309",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
             "path": "animations/index/animation_alpha_corrections.csv",
-            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR0800",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
           },
           {
             "area": "AR0800",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
             "path": "animations/index/animation_alpha_corrections.csv",
-            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR1100",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR1100",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR1200",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR1200",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR1700",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR1700",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR1800",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR1800",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR2000",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR2000",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR3000",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR3000",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR5500",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR5500",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "AR6400",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "AR6400",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "OH4000",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "OH4000",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "OH6000",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
           },
           {
-            "area": "OH6100",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
-            "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
-          },
-          {
-            "area": "OH6100",
-            "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+            "area": "OH6000",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
             "path": "animations/index/animation_alpha_corrections.csv",
-            "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570"
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
+          },
+          {
+            "area": "OH6100",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "OH6100",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
           },
           {
             "area": "OH6400",
-            "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+            "evidence_source": "a63c21b3b7e4af9dbd14a1b083d3299987938508:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC"
+            "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38"
+          },
+          {
+            "area": "OH6400",
+            "evidence_source": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv (recovered Git blob a620adce41a4755c17b02764d95b95675d96b71c)",
+            "path": "animations/index/animation_alpha_corrections.csv",
+            "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078"
+          },
+          {
+            "area": "AR0300",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR0400",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR0500",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR0411",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR0414",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR1600",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR5200",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR6300",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
+          },
+          {
+            "area": "AR2201",
+            "evidence_source": "fb9ce55f4c11dc4d3718d8ab9157000ce679e2fd:animations/index/animation_upscale_registry.csv",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "46C8E31C88FC8EF9FD9B49712CB6F2B3B286F4642C219DF6454C5010F5C1BB9D"
           }
         ]
       },
@@ -518,10 +644,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15154,
-  "registry_asset_records_sha256": "DECB5AA3DA9C69D4B5018550B155E1055936EEAA0888219E331EF08FE916EE2B",
-  "run_count": 595,
-  "run_records_sha256": "9A1B8FA2795DD9C58BCB176143E8DA32830152D4DA5E859C8BAA864E4B6235DC",
+  "registry_asset_count": 15163,
+  "registry_asset_records_sha256": "F80C71C45B624EAC0C0A13C6D7CF51FCB213ADDC4774CEB55A91936ABBE2888A",
+  "run_count": 640,
+  "run_records_sha256": "E010EE4F7E2AAA22695671EB80B2BB29C6E18CFBDD5D5F90978EBCBAB412D9ED",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -625,7 +751,7 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "BC1C632BB239306CFFEE12DED109A4F21721BB06AC87F599448ED611FCA4E8D8",
+  "source_fingerprint_sha256": "4E9F144B1B0E049837A27DCF5EBA2AFBE8E34F9B160D4D221E7887C55562E295",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

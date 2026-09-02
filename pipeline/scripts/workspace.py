@@ -276,16 +276,39 @@ def run(
     *,
     scopes: Iterable[str] = ("all",),
     verify_determinism: bool = False,
+    keep_going: bool = False,
     runner=subprocess.run,
-) -> None:
+) -> int:
+    failures: list[tuple[Stage, int]] = []
     for stage in stages(
         mode,
         scopes=scopes,
         verify_determinism=verify_determinism,
     ):
         print(f"== {stage.name} ==", flush=True)
-        runner(stage.command, cwd=ROOT, check=True)
+        try:
+            runner(stage.command, cwd=ROOT, check=True)
+        except (OSError, subprocess.CalledProcessError) as error:
+            if not keep_going:
+                raise
+            code = (
+                error.returncode or 1
+                if isinstance(error, subprocess.CalledProcessError)
+                else 1
+            )
+            failures.append((stage, code))
+            print(
+                f"FAILED [{stage.scope}] {stage.name}: {error}",
+                file=sys.stderr,
+                flush=True,
+            )
+    if failures:
+        print("Failures:", file=sys.stderr)
+        for stage, code in failures:
+            print(f"  - {stage.name}: code {code}", file=sys.stderr)
+        return failures[0][1]
     print(f"workspace {mode}: OK")
+    return 0
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
@@ -323,10 +346,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="exécute; sans ce drapeau la commande affiche seulement le plan",
     )
+    parser.add_argument(
+        "--keep-going",
+        action="store_true",
+        help="continue les scopes indépendants et récapitule tous les échecs",
+    )
     parser.add_argument("--json", action="store_true", help="sortie JSON du plan")
     args = parser.parse_args(argv)
     if args.json and args.run:
         parser.error("--json et --run sont incompatibles")
+    if args.keep_going and not args.run:
+        parser.error("--keep-going exige --run")
     if args.base and not args.changed:
         parser.error("--base exige --changed")
     if args.after_full_tests and args.mode != "check":
@@ -364,14 +394,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         print("Aucune reconstruction sélectionnée.")
         return 0
     try:
-        run(
+        return run(
             args.mode,
             scopes=plan.scopes,
             verify_determinism=args.verify_determinism,
+            keep_going=args.keep_going,
         )
     except subprocess.CalledProcessError as error:
         return error.returncode or 1
-    return 0
+    except OSError as error:
+        print(f"workspace {args.mode}: {error}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

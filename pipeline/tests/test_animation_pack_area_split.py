@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import numpy as np
+from PIL import Image
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
@@ -284,9 +284,12 @@ class AreaSplitTests(unittest.TestCase):
             anchor = (1689, 2662)
             # The fixture frames are 8x8 x4 and centred at (1,2) x1.
             mask_origin = ((anchor[0] - 1) * 4, (anchor[1] - 2) * 4)
+            mask_source = root / "occlusion-mask.png"
+            Image.new("RGBA", (8, 8), (255, 255, 255, 255)).save(mask_source)
+            mask = blend_builder.load_occlusion_mask(mask_source)
             blend_builder.build(split_root, output, {"TESTA"}, False, "premultiply", None,
-                                mask=np.zeros((8, 8), dtype=np.float32),
-                                mask_origin_x4=mask_origin, mask_anchor_x1=anchor)
+                                mask=mask, mask_origin_x4=mask_origin,
+                                mask_anchor_x1=anchor, mask_source=mask_source)
 
             manifest, resources = pipeline.validate_v2_pack(output / "AR0900")
             self.assertEqual(manifest["registry_version"], 3)
@@ -294,6 +297,73 @@ class AreaSplitTests(unittest.TestCase):
             self.assertEqual(resources[0]["variant_index"], 0)
             self.assertEqual(manifest["rgb_neutralisation"]["occurrence_position"],
                              [1689, 2662])
+            sealed = output / blend_builder.OCCLUSION_MASK_ROOT_PATH
+            digest = pipeline.sha256_file(sealed)
+            self.assertEqual(sealed.read_bytes(), mask_source.read_bytes())
+            area_mask = manifest["rgb_neutralisation"]["occlusion_mask"]
+            self.assertEqual(area_mask["storage"], blend_builder.OCCLUSION_MASK_STORAGE)
+            self.assertEqual(area_mask["source"], blend_builder.OCCLUSION_MASK_AREA_PATH)
+            self.assertEqual(area_mask["sha256"], digest)
+            root_manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+            root_mask = root_manifest["rgb_neutralisation"]["occlusion_mask"]
+            self.assertEqual(root_mask["source"], blend_builder.OCCLUSION_MASK_ROOT_PATH)
+            self.assertEqual(root_mask["sha256"], digest)
+
+            # Resume depends on the embedded bytes, not on the mutable authoring source.
+            mask_source.unlink()
+            resumed = blend_builder.build(
+                split_root, output, {"TESTA"}, True, "premultiply", None,
+                mask=mask, mask_origin_x4=mask_origin, mask_anchor_x1=anchor,
+                mask_source=mask_source)
+            self.assertEqual(resumed["rgb_neutralisation"]["occlusion_mask"]["sha256"], digest)
+
+            sealed.write_bytes(b"tampered")
+            with self.assertRaisesRegex(RuntimeError, "hash du masque"):
+                blend_builder.build(
+                    split_root, output, {"TESTA"}, True, "premultiply", None,
+                    mask=mask, mask_origin_x4=mask_origin, mask_anchor_x1=anchor,
+                    mask_source=mask_source)
+
+    def test_mask_resume_keeps_unversioned_legacy_provenance_readable(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            pack = self.make_v1_pack(root, ("TESTA",))
+            occurrences = root / "occurrences.csv"
+            self.write_occurrences(occurrences, [("AR0900", "TESTA")])
+            split_root = root / "split"
+            splitter.split(pack, split_root, occurrences, resume=False)
+
+            mask_source = root / "legacy-mask.png"
+            Image.new("RGBA", (8, 8), (255, 255, 255, 255)).save(mask_source)
+            mask = blend_builder.load_occlusion_mask(mask_source)
+            output = root / "masked-legacy"
+            blend_builder.build(
+                split_root, output, {"TESTA"}, False, "premultiply", None,
+                mask=mask, mask_source=mask_source)
+
+            area_manifest_path = output / "AR0900" / "manifest.json"
+            area_manifest = json.loads(area_manifest_path.read_text(encoding="utf-8"))
+            area_record = area_manifest["rgb_neutralisation"]["occlusion_mask"]
+            area_record.pop("storage")
+            area_record["source"] = mask_source.resolve().as_posix()
+            pipeline.write_json(area_manifest_path, area_manifest)
+
+            root_manifest_path = output / "manifest.json"
+            root_manifest = json.loads(root_manifest_path.read_text(encoding="utf-8"))
+            root_record = root_manifest["rgb_neutralisation"]["occlusion_mask"]
+            root_record.pop("storage")
+            root_record["source"] = mask_source.resolve().as_posix()
+            root_manifest["areas"][0]["manifest_sha256"] = pipeline.sha256_file(
+                area_manifest_path)
+            pipeline.write_json(root_manifest_path, root_manifest)
+            (output / blend_builder.OCCLUSION_MASK_ROOT_PATH).unlink()
+
+            resumed = blend_builder.build(
+                split_root, output, {"TESTA"}, True, "premultiply", None,
+                mask=mask, mask_source=mask_source)
+            self.assertEqual(
+                resumed["rgb_neutralisation"]["occlusion_mask"]["source"],
+                mask_source.resolve().as_posix())
 
 
 if __name__ == "__main__":

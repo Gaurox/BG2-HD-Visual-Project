@@ -9,6 +9,10 @@ function Get-Hash([string]$Path) { $sha=[Security.Cryptography.SHA256]::Create()
 function Require([bool]$Condition,[string]$Message) { if(-not $Condition){throw $Message} }
 
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+$workspace = (Resolve-Path -LiteralPath (Join-Path $release '..\..')).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $payload = (Resolve-Path -LiteralPath $PayloadRoot).Path
 $contentPath = Join-Path $release 'manifests/content.json'
 Require (Test-Json -Path $contentPath -SchemaFile (Join-Path $release 'schemas/content.schema.json')) 'Schema content.json invalide.'
@@ -65,3 +69,7 @@ Require ($coreHelper -match 'Move-Item\s+-LiteralPath\s+\$baldur') 'Le Core ne p
 & (Join-Path $release 'tools/Test-BG2HD-FutureSaveCompatibility.ps1') -ReleaseRoot $release
 & (Join-Path $release 'tools/Test-BG2HD-AR0413Contract.ps1') -ReleaseRoot $release -PayloadRoot $payload
 Write-Output "Phase 4 payload validation passed: $($expected.Count) declared x4 files verified."
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
+}

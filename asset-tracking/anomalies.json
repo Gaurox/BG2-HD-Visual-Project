@@ -52,106 +52,6 @@
     },
     {
       "anomaly_id": "ANOM-0005",
-      "asset_id": "animations:bam:AM0516LA",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0006",
-      "asset_id": "animations:bam:AM0516LB",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0007",
-      "asset_id": "animations:bam:AM0516LC",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0008",
-      "asset_id": "animations:bam:AM0602F",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/am0602f-lantern-apo8-x4-30fps-v2-active-rebase/qa-approval.json",
-          "animations/runs/am0602f-lantern-apo8-x4-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0009",
-      "asset_id": "animations:bam:AM0604A",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0604-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0604-manual-mask-30fps-v2/qa-approval.json",
-          "animations/runs/ar0604-silhouette-feather-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0604-silhouette-feather-r2-apo8-x4-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0010",
-      "asset_id": "animations:bam:SPHINCT",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0011",
-      "asset_id": "animations:bam:SPHINCT2",
-      "code": "duplicate-qa-evidence",
-      "details": {
-        "approval_paths": [
-          "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
-          "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json"
-        ]
-      },
-      "domain": "animations",
-      "message": "plusieurs qa-approval acceptés couvrent le même resref",
-      "severity": "warning"
-    },
-    {
-      "anomaly_id": "ANOM-0012",
       "asset_id": "animations:bam:SPHINCT",
       "code": "multiple-scoped-corrections",
       "details": {
@@ -166,7 +66,7 @@
       "source": "animations/index/animation_alpha_corrections.csv"
     },
     {
-      "anomaly_id": "ANOM-0013",
+      "anomaly_id": "ANOM-0006",
       "code": "missing-resource-dependencies",
       "details": {
         "affected_count": 2
@@ -177,7 +77,7 @@
       "source": "effects/index/dependencies.csv"
     },
     {
-      "anomaly_id": "ANOM-0014",
+      "anomaly_id": "ANOM-0007",
       "code": "referenced-icon-sources-missing",
       "details": {
         "affected_count": 48
@@ -188,7 +88,7 @@
       "source": "icons/index/manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0015",
+      "anomaly_id": "ANOM-0008",
       "code": "map-source-status-stale",
       "details": {
         "affected_count": 71,
@@ -221,7 +121,7 @@
       "source": "areas.csv"
     },
     {
-      "anomaly_id": "ANOM-0016",
+      "anomaly_id": "ANOM-0009",
       "code": "unclassified-graphical-resources",
       "details": {
         "resource_count": 102
@@ -232,7 +132,7 @@
       "source": "graphics/index/coverage.json"
     },
     {
-      "anomaly_id": "ANOM-0017",
+      "anomaly_id": "ANOM-0010",
       "code": "missing-resource-dependencies",
       "details": {
         "affected_count": 1
@@ -243,7 +143,7 @@
       "source": "projectiles/index/dependencies.csv"
     },
     {
-      "anomaly_id": "ANOM-0018",
+      "anomaly_id": "ANOM-0011",
       "code": "hardcoded-source-path",
       "details": {
         "source_game": "E:\\Steam\\steamapps\\common\\Baldur's Gate II Enhanced Edition"
@@ -254,7 +154,7 @@
       "source": "interface/menus-options-bg2ee/reference/extraction-manifest.json"
     },
     {
-      "anomaly_id": "ANOM-0019",
+      "anomaly_id": "ANOM-0012",
       "asset_id": "ui:component:main-menu-x4",
       "code": "ui-mainmenu-output-manifest-missing",
       "domain": "ui",
@@ -263,14 +163,13 @@
       "source": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json"
     }
   ],
-  "asset_records_sha256": "DECB5AA3DA9C69D4B5018550B155E1055936EEAA0888219E331EF08FE916EE2B",
+  "asset_records_sha256": "F80C71C45B624EAC0C0A13C6D7CF51FCB213ADDC4774CEB55A91936ABBE2888A",
   "generated_by": "pipeline/scripts/build_global_asset_registry.py",
   "schema": "bg2-upscale-global-asset-anomalies-v1",
-  "source_fingerprint_sha256": "ED7E05E38FB8350DD2625F6FA8B532BED006F8A426A3A373D8A2971491E9ECD2",
-  "source_snapshot_at_utc": "2026-09-01T06:44:21.127126Z",
+  "source_fingerprint_sha256": "A897CB5ADD9F6894FEAF2F93A9D3DCE96A87246EA22C32F0968D9ED40157323D",
+  "source_snapshot_at_utc": "2026-09-01T22:43:06.798016Z",
   "summary": {
     "by_code": {
-      "duplicate-qa-evidence": 7,
       "duplicate-source-content": 1,
       "hardcoded-source-path": 1,
       "map-source-status-stale": 1,
@@ -286,8 +185,8 @@
     "by_severity": {
       "error": 0,
       "info": 4,
-      "warning": 15
+      "warning": 8
     },
-    "total": 19
+    "total": 12
   }
 }

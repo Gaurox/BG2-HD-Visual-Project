@@ -33,6 +33,10 @@ function New-DeterministicZip([string]$Source, [string]$Archive) {
 }
 
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
+$workspace = (Resolve-Path -LiteralPath (Join-Path $release '..\..')).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $weidu = (Resolve-Path -LiteralPath $WeiDUExecutable).Path
 $stagedPayload = (Resolve-Path -LiteralPath $PayloadRoot -ErrorAction Stop).Path
 $output = [IO.Path]::GetFullPath($OutputRoot)
@@ -121,4 +125,8 @@ try {
 } catch {
     if (Test-Path -LiteralPath $temporary) { Remove-Item -LiteralPath $temporary -Recurse -Force }
     throw
+}
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
 }

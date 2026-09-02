@@ -39,6 +39,9 @@ python pipeline/scripts/test_changed.py --targeted --run
 
 # Tous, seulement après choix explicite
 python pipeline/scripts/test_changed.py --full --run
+
+# Continuer les étapes indépendantes, puis retourner un échec agrégé
+python pipeline/scripts/test_changed.py --targeted --run --keep-going
 ```
 
 « Aucun test » signifie : ne lancer aucune des deux commandes et l'indiquer dans le compte rendu.
@@ -55,6 +58,7 @@ ne sont pas des tests. Les reconstructions suivent un choix séparé dans
 | `workspace-command`, `workspace-paths`, `test-selection` | orchestration, chemins et sélecteur |
 | `maps`, `map-diagnostics` | cartes, WED, injection, PVRZ diagnostique |
 | `animations` | inventaire, upscale, timeline, packs et transactions animation |
+| `animation-release` | gate temporaire du seul candidat animation de zone modifié |
 | `sprite-inventory` | index et générateurs de jobs/familles |
 | `sprite-formats` | runner, registres et catalogues |
 | `sprite-installation` | installateur/restaurateur du catalogue cumulatif |
@@ -68,3 +72,6 @@ Le sélecteur travaille au niveau module. La suite complète ajoute tous les tes
 `workspace.py check --after-full-tests`, la gate release Phase 2, puis configuration/build/CTest
 moteur. Elle reste utile avant intégration sensible ou sur demande, pas comme contrôle local par
 défaut.
+
+`--keep-going` ne transforme jamais un échec en succès : toutes les étapes indépendantes restantes
+sont exécutées, les erreurs sont récapitulées et le code final reste non nul.

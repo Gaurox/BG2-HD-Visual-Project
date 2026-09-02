@@ -13,6 +13,73 @@ function Get-Json([string]$Path) {
     return Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json
 }
 
+function Test-BG2HDRegularFilePath([string]$Path, [string]$Label) {
+    try {
+        $attributes = [IO.File]::GetAttributes($Path)
+    } catch {
+        $exception = $_.Exception
+        while ($null -ne $exception.InnerException) { $exception = $exception.InnerException }
+        if (
+            $exception -is [System.IO.FileNotFoundException] -or
+            $exception -is [System.IO.DirectoryNotFoundException]
+        ) {
+            return $false
+        }
+        throw
+    }
+    if (($attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) {
+        throw "$Label ReparsePoint interdit : $Path"
+    }
+    if (
+        ($attributes -band [IO.FileAttributes]::Directory) -ne 0 -or
+        ($attributes -band [IO.FileAttributes]::Device) -ne 0 -or
+        -not [IO.File]::Exists($Path)
+    ) {
+        throw "$Label non regulier : $Path"
+    }
+    return $true
+}
+
+function Write-BG2HDAtomicUtf8NoBomFile([string]$Path, [string]$Text) {
+    $fullPath = [IO.Path]::GetFullPath($Path)
+    $directory = [IO.Path]::GetDirectoryName($fullPath)
+    if ([string]::IsNullOrWhiteSpace($directory)) { throw "Dossier de sortie introuvable : $Path" }
+    [IO.Directory]::CreateDirectory($directory) | Out-Null
+    $temporaryPath = Join-Path $directory ('.' + [IO.Path]::GetFileName($fullPath) + '.' + [Guid]::NewGuid().ToString('N') + '.partial')
+    $backupPath = Join-Path $directory ('.' + [IO.Path]::GetFileName($fullPath) + '.' + [Guid]::NewGuid().ToString('N') + '.replace-backup.partial')
+    $stream = $null
+    try {
+        $bytes = [Text.UTF8Encoding]::new($false).GetBytes($Text)
+        $stream = [IO.FileStream]::new(
+            $temporaryPath,
+            [IO.FileMode]::CreateNew,
+            [IO.FileAccess]::Write,
+            [IO.FileShare]::None,
+            65536,
+            [IO.FileOptions]::WriteThrough
+        )
+        if ($bytes.Length -gt 0) { $stream.Write($bytes, 0, $bytes.Length) }
+        $stream.Flush($true)
+        $stream.Dispose()
+        $stream = $null
+        $targetExists = Test-BG2HDRegularFilePath -Path $fullPath -Label 'Cible de publication'
+        if ($targetExists) {
+            [IO.File]::Replace($temporaryPath, $fullPath, $backupPath, $true)
+        } else {
+            [IO.File]::Move($temporaryPath, $fullPath)
+        }
+    }
+    finally {
+        if ($null -ne $stream) { $stream.Dispose() }
+        if ([IO.File]::Exists($temporaryPath)) { [IO.File]::Delete($temporaryPath) }
+        if ([IO.File]::Exists($backupPath)) { [IO.File]::Delete($backupPath) }
+    }
+}
+
+$workspace = (Resolve-Path -LiteralPath (Join-Path $ReleaseRoot '..\..')).Path
+. (Join-Path $PSScriptRoot 'Assert-BG2HD-NoActiveAnimationTransaction.ps1')
+$animationAuthorityLease = Enter-BG2HDAnimationAuthorityLock -WorkspaceRoot $workspace
+try {
 $components = (Get-Json $ComponentsPath).components | Sort-Object id
 $content = (Get-Json $ContentPath).entries
 $release = Get-Json (Join-Path $ReleaseRoot 'manifests/release.json')
@@ -102,7 +169,9 @@ foreach ($component in $components) {
 
 $lastIndex = $lines.Count - 1
 if ($lastIndex -ge 0 -and $lines[$lastIndex] -eq '') { $lines.RemoveAt($lastIndex) }
-$outputDirectory = Split-Path -Parent $OutputPath
-New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-[IO.File]::WriteAllLines($OutputPath, $lines, [Text.UTF8Encoding]::new($false))
+Write-BG2HDAtomicUtf8NoBomFile -Path $OutputPath -Text (($lines -join [Environment]::NewLine) + [Environment]::NewLine)
 Write-Output "Generated $OutputPath with $($components.Count) components and $($content.Count) COPY_LARGE operations."
+}
+finally {
+    Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease
+}

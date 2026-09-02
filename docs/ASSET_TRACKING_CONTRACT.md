@@ -88,8 +88,12 @@ présence d'un candidat n'y suffit pas.
 - Inventaire et source : `animations/index/manifest.json`, `ressources.csv`, `occurrences.csv` et
   `zones.csv`.
 - `animation_upscale_registry.csv` porte la décision spatiale : `validé-x4` et `validé-natif`
-  deviennent uniquement `production=verified`. La QA temporelle reste `not-assessed` tant qu'un `qa-approval.json`
-  correspondant ne fournit pas `status=accepted`.
+  deviennent uniquement `production=verified`. Un `qa-approval.json` interne à un run prouve une
+  revue technique/vidéo, jamais la QA ingame définitive.
+- `index/qa-decisions/<RESREF>/*.json` porte la décision ingame immuable ;
+  `index/selections/<RESREF>.json` sélectionne soit le run x4 final, soit la source BAM native,
+  avec sa référence par hash. Ce couple exact est requis pour `qa=passed`. Les approbations release
+  v1 déjà suivies restent un fallback legacy.
 - `non-traité`, `à-compléter`, `à-corriger` et `écarté` deviennent respectivement
   `not-started`, `in-progress`, `blocked` et `rejected`; `écarté` est aussi `release=ineligible`.
 - `animation_alpha_corrections.csv` conserve le statut historique

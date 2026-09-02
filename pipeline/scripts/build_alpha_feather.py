@@ -25,7 +25,8 @@ RGB bytes are preserved exactly; the fade can only ever lower alpha, never
 raise it (`alpha_final <= alpha_source`).
 
 Reads a resource's ``02_upscale_x4`` stage from a completed animation run and
-writes a standalone correction into a new ``animations/runs/<RESREF>-<label>/``.
+writes a standalone correction into
+``animations/ressources/<RESREF>/runs/<run-id>/`` (or an explicit legacy path).
 Never touches the source run or its runtime pack.
 """
 
@@ -41,6 +42,8 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 from scipy.ndimage import distance_transform_edt
+
+import animation_paths
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 UPSCALE_SCHEMA = "bg2-upscale-animation-frames-v1"
@@ -150,13 +153,17 @@ def require(condition: bool, message: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--resref", required=True)
-    parser.add_argument("--run", required=True, help="nom du run sous animations/runs")
-    parser.add_argument("--runs-root", type=Path, default=PROJECT_ROOT / "animations" / "runs")
-    parser.add_argument(
+    parser.add_argument("--run", required=True, help="identifiant ou chemin du run source")
+    parser.add_argument("--runs-root", type=Path, help="racine explicite pour une reprise legacy")
+    output_group = parser.add_mutually_exclusive_group(required=True)
+    output_group.add_argument(
+        "--output-run",
+        help="identifiant du nouveau run mono-resref dans le layout courant",
+    )
+    output_group.add_argument(
         "--output",
         type=Path,
-        required=True,
-        help="nouveau dossier animations/runs/<RESREF>-... de sortie",
+        help="chemin explicite, réservé à la reprise legacy",
     )
     parser.add_argument(
         "--inner-radius-x4", type=float, default=0.0,
@@ -189,8 +196,17 @@ def main() -> None:
     args = parser.parse_args()
 
     resref = args.resref.upper()
-    source_root = (args.runs_root / args.run / "resources" / resref / "02_upscale_x4").resolve()
-    output = args.output.resolve()
+    source_run = (
+        (args.runs_root / args.run).resolve()
+        if args.runs_root is not None
+        else animation_paths.resolve_existing_run(args.run, [resref])
+    )
+    source_root = source_run / "resources" / resref / "02_upscale_x4"
+    output = (
+        animation_paths.resolve_run_destination(args.output_run, [resref])
+        if args.output_run
+        else args.output.resolve()
+    )
     require(args.inner_radius_x4 >= 0, "Le rayon interieur ne peut pas etre negatif.")
     require(args.canvas_radius_x4 >= 0, "Le rayon de canvas ne peut pas etre negatif.")
     use_luminance = args.luminance_low is not None or args.luminance_high is not None

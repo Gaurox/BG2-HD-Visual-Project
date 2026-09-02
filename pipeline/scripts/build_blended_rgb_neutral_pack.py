@@ -48,6 +48,8 @@ onto this pack unnoticed.
 from __future__ import annotations
 
 import argparse
+import hashlib
+import io
 import json
 import shutil
 import sys
@@ -65,6 +67,9 @@ from build_alpha_feather import inner_feather_ramp  # noqa: E402
 
 RULES = {"zero": "rgb=0 where alpha==0", "premultiply": "rgb=rgb*alpha/255"}
 FEATHER_SCHEMA = "bg2-upscale-animation-alpha-feather-test-v1"
+OCCLUSION_MASK_STORAGE = "split-root-relative-v1"
+OCCLUSION_MASK_ROOT_PATH = "provenance/occlusion-mask.png"
+OCCLUSION_MASK_AREA_PATH = "../provenance/occlusion-mask.png"
 
 
 def load_feather_proto(proto_dir: Path, resref: str) -> dict[int, dict[str, Any]]:
@@ -99,19 +104,83 @@ def read_feather_buffer(proto_dir: Path, frame: dict[str, Any], source_digest: s
     return path.read_bytes()
 
 
-def load_occlusion_mask(path: Path) -> np.ndarray:
-    """Read a hand-painted foreground mask as occlusion coverage in [0,1].
+def decode_occlusion_mask(data: bytes, source: object) -> np.ndarray:
+    """Decode a hand-painted PNG as occlusion coverage in [0,1].
 
     Project convention (`ANIMATION_ALPHA_CORRECTIONS.md`): white keeps, black removes, grey
     is a transition. The signal is therefore the luminance, and the file must be flattened —
     a mask whose shape lives in its alpha channel is refused rather than silently inverted,
     because the two encodings mean the exact opposite of one another.
     """
-    pixels = np.asarray(Image.open(path).convert("RGBA"), dtype=np.float32)
+    with Image.open(io.BytesIO(data)) as image:
+        v2.require(image.format == "PNG", f"masque d'occlusion non PNG : {source}")
+        pixels = np.asarray(image.convert("RGBA"), dtype=np.float32)
     v2.require(bool((pixels[..., 3] == 255).all()),
                f"masque non aplati : le tracé doit être en niveaux de gris opaques, "
-               f"blanc = conserver, noir = retirer ({path})")
+               f"blanc = conserver, noir = retirer ({source})")
     return 1.0 - pixels[..., :3].mean(axis=2) / 255.0
+
+
+def load_occlusion_mask(path: Path) -> np.ndarray:
+    """Read a hand-painted foreground mask as occlusion coverage in [0,1]."""
+    return decode_occlusion_mask(path.read_bytes(), path)
+
+
+def occlusion_mask_record(source: str, digest: str, mask_origin_x4: tuple[int, int],
+                          mask_anchor_x1: tuple[int, int]) -> dict[str, Any]:
+    """Return the portable provenance record used by new split-root outputs."""
+    return {
+        "storage": OCCLUSION_MASK_STORAGE,
+        "source": source,
+        "sha256": digest,
+        "origin_x4": [int(mask_origin_x4[0]), int(mask_origin_x4[1])],
+        "anchor_x1": [int(mask_anchor_x1[0]), int(mask_anchor_x1[1])],
+        "semantics": "flattened grayscale; white keeps, black removes",
+    }
+
+
+def validate_sealed_occlusion_mask(record: object, manifest_dir: Path, split_root: Path,
+                                   expected_source: str) -> str | None:
+    """Validate new embedded-mask records; leave unversioned legacy records readable."""
+    if not isinstance(record, dict) or "storage" not in record:
+        return None
+    v2.require(record.get("storage") == OCCLUSION_MASK_STORAGE,
+               f"stockage de masque d'occlusion inconnu : {record.get('storage')}")
+    source = str(record.get("source", ""))
+    v2.require(source == expected_source,
+               f"chemin de masque d'occlusion non canonique : {source}")
+    source_path = (manifest_dir / source).resolve()
+    try:
+        source_path.relative_to(split_root.resolve())
+    except ValueError as exc:
+        raise RuntimeError(f"masque d'occlusion hors split-root : {source}") from exc
+    v2.require(source_path.is_file(), f"masque d'occlusion scellé absent : {source_path}")
+    digest = v2.sha256_file(source_path)
+    v2.require(str(record.get("sha256", "")).lower() == digest,
+               f"hash du masque d'occlusion incohérent : {source_path}")
+    return digest
+
+
+def validate_embedded_mask_provenance(split_root: Path, index: dict[str, Any]) -> None:
+    """Validate every versioned mask link while accepting legacy absolute-source records."""
+    root_record = (index.get("rgb_neutralisation") or {}).get("occlusion_mask")
+    root_digest = validate_sealed_occlusion_mask(
+        root_record, split_root, split_root, OCCLUSION_MASK_ROOT_PATH)
+    area_digests: list[str] = []
+    for entry in index.get("areas") or []:
+        area_dir = split_root / str(entry["directory"])
+        manifest, _resources = v2.validate_v2_pack(area_dir)
+        area_record = (manifest.get("rgb_neutralisation") or {}).get("occlusion_mask")
+        digest = validate_sealed_occlusion_mask(
+            area_record, area_dir, split_root, OCCLUSION_MASK_AREA_PATH)
+        if digest is not None:
+            area_digests.append(digest)
+    if root_digest is None:
+        v2.require(not area_digests,
+                   "provenance de masque scellée présente dans une zone mais absente de l'index")
+    else:
+        v2.require(bool(area_digests) and all(digest == root_digest for digest in area_digests),
+                   "provenance de masque scellée incohérente entre index et zones")
 
 
 def frame_occlusion(mask: np.ndarray, mask_origin_x4: tuple[int, int],
@@ -263,11 +332,30 @@ def build(split_root: Path, output: Path, resrefs: set[str], resume: bool,
     if output.exists():
         v2.require(resume, f"sortie déjà présente sans --resume : {output}")
         existing = v2.load_json(output / "manifest.json")
-        for entry in existing.get("areas") or []:
-            v2.validate_v2_pack(output / str(entry["directory"]))
+        validate_embedded_mask_provenance(output, existing)
         return existing
 
+    mask_bytes: bytes | None = None
+    mask_digest: str | None = None
+    if mask is not None:
+        v2.require(mask_source is not None, "un masque d'occlusion exige sa source à sceller")
+        source_path = mask_source.resolve()
+        v2.require(source_path.is_file(), f"masque d'occlusion source absent : {source_path}")
+        mask_bytes = source_path.read_bytes()
+        source_mask = decode_occlusion_mask(mask_bytes, source_path)
+        v2.require(mask.shape == source_mask.shape and np.array_equal(mask, source_mask),
+                   "le masque appliqué ne correspond pas à la source à sceller")
+        mask_digest = hashlib.sha256(mask_bytes).hexdigest()
+    else:
+        v2.require(mask_source is None, "source de masque fournie sans masque d'occlusion")
+
     shutil.copytree(split_root, output, ignore=shutil.ignore_patterns("install-backups"))
+    if mask_bytes is not None and mask_digest is not None:
+        embedded_mask = output / OCCLUSION_MASK_ROOT_PATH
+        embedded_mask.parent.mkdir(parents=True, exist_ok=True)
+        embedded_mask.write_bytes(mask_bytes)
+        v2.require(v2.sha256_file(embedded_mask) == mask_digest,
+                   f"copie scellée du masque incohérente : {embedded_mask}")
 
     entries = []
     total_frames = 0
@@ -294,14 +382,9 @@ def build(split_root: Path, output: Path, resrefs: set[str], resume: bool,
             if mask is not None:
                 manifest["rgb_neutralisation"]["occurrence_position"] = [
                     int(mask_anchor_x1[0]), int(mask_anchor_x1[1])]
-                if mask_source is not None:
-                    manifest["rgb_neutralisation"]["occlusion_mask"] = {
-                        "source": mask_source.resolve().as_posix(),
-                        "sha256": v2.sha256_file(mask_source.resolve()),
-                        "origin_x4": [int(mask_origin_x4[0]), int(mask_origin_x4[1])],
-                        "anchor_x1": [int(mask_anchor_x1[0]), int(mask_anchor_x1[1])],
-                        "semantics": "flattened grayscale; white keeps, black removes",
-                    }
+                if mask_digest is not None:
+                    manifest["rgb_neutralisation"]["occlusion_mask"] = occlusion_mask_record(
+                        OCCLUSION_MASK_AREA_PATH, mask_digest, mask_origin_x4, mask_anchor_x1)
                 manifest["registry_version"] = v2.REGISTRY_VERSION
                 manifest["runtime_contract"]["registry_version"] = v2.REGISTRY_VERSION
                 registry = v2.registry_v2_from_resources(manifest["resources"])
@@ -332,14 +415,11 @@ def build(split_root: Path, output: Path, resrefs: set[str], resume: bool,
         "pixels_changed": total_pixels,
         "source_split_root": split_root.as_posix(),
     }
-    if mask is not None and mask_source is not None:
-        new_index["rgb_neutralisation"]["occlusion_mask"] = {
-            "source": mask_source.resolve().as_posix(),
-            "sha256": v2.sha256_file(mask_source.resolve()),
-            "origin_x4": [int(mask_origin_x4[0]), int(mask_origin_x4[1])],
-            "anchor_x1": [int(mask_anchor_x1[0]), int(mask_anchor_x1[1])],
-        }
+    if mask_digest is not None:
+        new_index["rgb_neutralisation"]["occlusion_mask"] = occlusion_mask_record(
+            OCCLUSION_MASK_ROOT_PATH, mask_digest, mask_origin_x4, mask_anchor_x1)
     v2.write_json(output / "manifest.json", new_index)
+    validate_embedded_mask_provenance(output, new_index)
     return new_index
 
 

@@ -147,6 +147,49 @@ def load_plan(
     return tuple(steps), tuple(summaries)
 
 
+def run_execution_steps(
+    steps: Iterable[ExecutionStep],
+    events: queue.Queue[tuple[object, ...]],
+    *,
+    keep_going: bool = False,
+    popen_factory: object = subprocess.Popen,
+) -> None:
+    """Run a fixed plan and optionally aggregate failures across its steps."""
+
+    failures: list[tuple[int, str, str]] = []
+    for index, step in enumerate(steps):
+        events.put(("started", index, step.label))
+        try:
+            process = popen_factory(  # type: ignore[operator]
+                step.argv,
+                cwd=ROOT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                env=process_environment(),
+            )
+            if process.stdout:
+                for line in process.stdout:
+                    events.put(("log", line))
+            code = process.wait()
+            detail = f"code de sortie {code}" if code else ""
+        except Exception as error:
+            detail = str(error) or type(error).__name__
+        if detail:
+            failures.append((index, step.label, detail))
+            events.put(("failed", index, detail, keep_going))
+            if not keep_going:
+                return
+        else:
+            events.put(("done", index))
+    if failures:
+        events.put(("finished-with-failures", tuple(failures)))
+    else:
+        events.put(("finished",))
+
+
 class ProgressApplication:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
@@ -160,11 +203,16 @@ class ProgressApplication:
         self.test_choice = tk.StringVar(value="Ciblés")
         self.reconstruction_choice = tk.StringVar(value="Aucune")
         self.determinism = tk.BooleanVar(value=False)
+        self.keep_going = tk.BooleanVar(value=False)
         self.status = tk.StringVar(value="Choisissez un plan, puis cliquez sur Planifier.")
         self.elapsed = tk.StringVar(value="Temps : 00:00")
         self.current = tk.StringVar(value="Aucune étape active")
         self._build()
-        for variable in (self.test_choice, self.reconstruction_choice, self.determinism):
+        for variable in (
+            self.test_choice,
+            self.reconstruction_choice,
+            self.determinism,
+        ):
             variable.trace_add("write", self._invalidate)
         self._invalidate()
         self.status.set("Choisissez un plan, puis cliquez sur Planifier.")
@@ -178,7 +226,7 @@ class ProgressApplication:
         main = ttk.Frame(self.root, padding=12)
         main.pack(fill="both", expand=True)
         main.columnconfigure(1, weight=1)
-        main.rowconfigure(8, weight=1)
+        main.rowconfigure(9, weight=1)
         ttk.Label(main, text="Tests").grid(row=0, column=0, sticky="w", pady=3)
         self.test_box = ttk.Combobox(
             main, textvariable=self.test_choice, values=tuple(TEST_LABELS), state="readonly"
@@ -196,31 +244,37 @@ class ProgressApplication:
             main, text="Déterminisme (double les reconstructions)", variable=self.determinism
         )
         self.determinism_box.grid(row=2, column=1, sticky="w")
+        self.keep_going_box = ttk.Checkbutton(
+            main,
+            text="Continuer après erreur (récapitulatif final)",
+            variable=self.keep_going,
+        )
+        self.keep_going_box.grid(row=3, column=1, sticky="w")
         buttons = ttk.Frame(main)
-        buttons.grid(row=3, column=0, columnspan=2, sticky="ew", pady=8)
+        buttons.grid(row=4, column=0, columnspan=2, sticky="ew", pady=8)
         self.plan_button = ttk.Button(buttons, text="Planifier", command=self._plan)
         self.plan_button.pack(side="left")
         self.start_button = ttk.Button(buttons, text="Démarrer", command=self._start)
         self.start_button.pack(side="left", padx=8)
         ttk.Label(buttons, textvariable=self.elapsed).pack(side="right")
         ttk.Label(main, textvariable=self.status, wraplength=720).grid(
-            row=4, column=0, columnspan=2, sticky="w"
+            row=5, column=0, columnspan=2, sticky="w"
         )
-        ttk.Label(main, text="Ensemble").grid(row=5, column=0, sticky="w", pady=(8, 0))
+        ttk.Label(main, text="Ensemble").grid(row=6, column=0, sticky="w", pady=(8, 0))
         self.overall = ttk.Progressbar(main, mode="determinate", maximum=1)
-        self.overall.grid(row=5, column=1, sticky="ew", pady=(8, 0))
-        ttk.Label(main, text="Étape active").grid(row=6, column=0, sticky="w", pady=(6, 0))
+        self.overall.grid(row=6, column=1, sticky="ew", pady=(8, 0))
+        ttk.Label(main, text="Étape active").grid(row=7, column=0, sticky="w", pady=(6, 0))
         self.active = ttk.Progressbar(main, mode="indeterminate")
-        self.active.grid(row=6, column=1, sticky="ew", pady=(6, 0))
+        self.active.grid(row=7, column=1, sticky="ew", pady=(6, 0))
         ttk.Label(main, textvariable=self.current).grid(
-            row=7, column=0, columnspan=2, sticky="w", pady=4
+            row=8, column=0, columnspan=2, sticky="w", pady=4
         )
         self.listbox = tk.Listbox(main, height=8)
-        self.listbox.grid(row=8, column=0, columnspan=2, sticky="nsew", pady=(4, 8))
+        self.listbox.grid(row=9, column=0, columnspan=2, sticky="nsew", pady=(4, 8))
         self.log = scrolledtext.ScrolledText(
             main, height=9, state="disabled", font=("Consolas", 9)
         )
-        self.log.grid(row=9, column=0, columnspan=2, sticky="nsew")
+        self.log.grid(row=10, column=0, columnspan=2, sticky="nsew")
         self.start_button.configure(state="disabled")
 
     def _selection(self) -> tuple[str, str, bool]:
@@ -254,6 +308,7 @@ class ProgressApplication:
         self.determinism_box.configure(
             state=state if enabled and reconstruction != "none" else "disabled"
         )
+        self.keep_going_box.configure(state=state)
 
     def _plan(self) -> None:
         selection = self._selection()
@@ -287,40 +342,22 @@ class ProgressApplication:
         message = f"Exécuter les {len(self.steps)} étape(s) affichées ?"
         if writes:
             message += "\n\nLes projections générées seront mises à jour."
+        if self.keep_going.get():
+            message += "\n\nLes étapes suivantes continueront après un échec."
         if not messagebox.askyesno("Confirmer l’exécution", message):
             return
         self.running = True
         self.started_at = time.monotonic()
         self._reset_view()
         self._controls(False)
-        threading.Thread(target=self._run_worker, daemon=True).start()
+        threading.Thread(
+            target=self._run_worker,
+            args=(self.keep_going.get(),),
+            daemon=True,
+        ).start()
 
-    def _run_worker(self) -> None:
-        for index, step in enumerate(self.steps):
-            self.events.put(("started", index, step.label))
-            try:
-                process = subprocess.Popen(
-                    step.argv,
-                    cwd=ROOT,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                    text=True,
-                    encoding="utf-8",
-                    errors="replace",
-                    env=process_environment(),
-                )
-                if process.stdout:
-                    for line in process.stdout:
-                        self.events.put(("log", line))
-                code = process.wait()
-            except Exception as error:
-                self.events.put(("failed", index, str(error)))
-                return
-            if code:
-                self.events.put(("failed", index, f"code de sortie {code}"))
-                return
-            self.events.put(("done", index))
-        self.events.put(("finished",))
+    def _run_worker(self, keep_going: bool) -> None:
+        run_execution_steps(self.steps, self.events, keep_going=keep_going)
 
     def _poll(self) -> None:
         try:
@@ -348,13 +385,26 @@ class ProgressApplication:
                     self.overall.configure(value=index + 1)
                     self.active.stop()
                 elif kind == "failed":
-                    index, detail = int(event[1]), str(event[2])
+                    index, detail, continuing = int(event[1]), str(event[2]), bool(event[3])
                     self._set_line(index, "✗", self._step_time())
-                    self._finish(f"Échec à l’étape {index + 1} : {detail}")
-                    messagebox.showerror("Exécution interrompue", self.status.get())
+                    self.overall.configure(value=index + 1)
+                    self.active.stop()
+                    if not continuing:
+                        self._finish(f"Échec à l’étape {index + 1} : {detail}")
+                        messagebox.showerror("Exécution interrompue", self.status.get())
                 elif kind == "finished":
                     self._finish("Plan terminé avec succès.")
                     self.current.set("Toutes les étapes sont terminées")
+                elif kind == "finished-with-failures":
+                    failures = event[1]
+                    count = len(failures) if isinstance(failures, tuple) else 0
+                    detail = "\n".join(
+                        f"Étape {int(item[0]) + 1} — {item[1]} : {item[2]}"
+                        for item in failures
+                    )
+                    self._finish(f"Plan terminé avec {count} échec(s).")
+                    self.current.set("Toutes les étapes ont été tentées")
+                    messagebox.showerror("Exécution terminée avec erreurs", detail)
                 elif kind == "error":
                     self._finish(str(event[2]))
                     messagebox.showerror(str(event[1]), str(event[2]))
