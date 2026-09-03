@@ -1,12 +1,21 @@
 # Re-applique 'Debug Mode'=1 dans Baldur.lua (BG2EE), que le jeu reecrit a chaque fermeture.
 # Le mode debug active la console (Ctrl+Espace) et les commandes C:/CLUAConsole:.
+#
+# -Profile vise un dossier de profil autre que celui par defaut : chaque installation a son
+# propre Baldur.lua sous Documents, et le mode debug de l'un ne vaut pas pour l'autre.
+#   .\Enable-BG2Debug.ps1
+#   .\Enable-BG2Debug.ps1 -Profile "Baldur's Gate II - Enhanced Edition - VANILLA"
+param(
+    [string]$Profile = "Baldur's Gate II - Enhanced Edition",
+    [switch]$NoPause
+)
 $ErrorActionPreference = 'Stop'
 
-$luaPath = Join-Path $env:USERPROFILE "Documents\Baldur's Gate II - Enhanced Edition\Baldur.lua"
+$luaPath = Join-Path $env:USERPROFILE (Join-Path "Documents" (Join-Path $Profile "Baldur.lua"))
 
 if (-not (Test-Path -LiteralPath $luaPath)) {
     Write-Host "Introuvable : $luaPath" -ForegroundColor Red
-    Read-Host "Appuie sur Entree pour fermer"
+    if (-not $NoPause) { Read-Host "Appuie sur Entree pour fermer" }
     exit 1
 }
 
@@ -37,9 +46,9 @@ if ($content -match $debugLinePattern) {
 Set-Content -LiteralPath $luaPath -Value $content -NoNewline
 
 Write-Host ""
-Write-Host "Mode debug BG2EE actif au prochain lancement via InfinityLoader." -ForegroundColor Green
+Write-Host "Mode debug actif au prochain lancement pour le profil : $Profile" -ForegroundColor Green
 Write-Host "Console en jeu   : Ctrl+Espace"
 Write-Host "Teleport groupe  : C:MoveToArea(""ARxxxx"")"
 Write-Host "Reveler la zone  : C:ExploreArea()"
 Write-Host ""
-Read-Host "Appuie sur Entree pour fermer"
+if (-not $NoPause) { Read-Host "Appuie sur Entree pour fermer" }
