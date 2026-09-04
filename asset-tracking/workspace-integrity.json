@@ -10,13 +10,13 @@
       "pack_count": 71,
       "reclaimed_bytes": 85753026372,
       "uncertain_count": 0,
-      "verified": true
+      "verified": false
     },
     "animations": {
-      "approved_candidate_count": 31,
+      "approved_candidate_count": 36,
       "empty_run_count": 0,
       "historical_qa_evidence_adapted_count": 51,
-      "ingame_qa_selected_asset_count": 0,
+      "ingame_qa_selected_asset_count": 1,
       "legacy_proto_directory_migration_count": 64,
       "legacy_proto_embedded_reference_count": 204,
       "legacy_proto_embedded_reference_file_count": 68,
@@ -24,12 +24,13 @@
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
       "legacy_proto_run_count": 65,
-      "physical_run_count": 161,
+      "physical_run_count": 168,
       "physical_run_count_by_layout": {
-        "legacy": 161
+        "legacy": 162,
+        "mono-asset": 6
       },
-      "release_pack_indexed_count": 31,
-      "release_referenced_run_count": 20,
+      "release_pack_indexed_count": 36,
+      "release_referenced_run_count": 21,
       "remaining_animation_proto_directory_count": 0,
       "remaining_proto_directory_count": 0,
       "run_preview_record_count": 35
@@ -46,7 +47,7 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 151,
+      "active_script_file_count": 153,
       "configured_path_count": 5,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
@@ -195,6 +196,36 @@
   },
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
   "issues": [
+    {
+      "asset_id": "animations:bam:FPIT1S",
+      "code": "animation-mono-run-owner-mismatch",
+      "details": {
+        "declared_resrefs": [
+          "AM0602J",
+          "AM0602K1",
+          "AM0602K2",
+          "AM0602L1",
+          "AM0602L2",
+          "AM0602M",
+          "FPIT1S"
+        ]
+      },
+      "domain": "animations",
+      "message": "Un run mono-asset déclare des ressources différentes de son dossier propriétaire.",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-spline-fit1-feather2-20260902",
+      "run_id": "fpit1s-spline-fit1-feather2-20260902",
+      "severity": "error"
+    },
+    {
+      "code": "animation-pack-p3-drift",
+      "details": {
+        "error": "active pack roots differ: missing=[], extra=['combined-20260902-active-feather1-fpit1s-rgb-neutral', 'combined-20260903-active-plus-fpit1s-xbr2x', 'combined-20260903-active-plus-fpit1s-xbr2x2', 'combined-20260903-fpit1s-alpha-xbr', 'combined-20260903-fpit1s-aura-masque-ar0406', 'combined-20260903-fpit1s-aura25', 'combined-20260903-fpit1s-auraD-masques', 'combined-20260903-fpit1s-contour-fondu-E', 'combined-20260903-fpit1s-contour-fondu-J', 'combined-20260903-fpit1s-masques-occlusion', 'combined-20260903-fpit1s-xbr2x-rgb-neutral', 'combined-20260903-fpit1s-xbr2x2-rgb-neutral', 'combined-20260904-fpit1s-contour-fondu-J', 'fpit1s-ar0406-aura-masque', 'fpit1s-ar0406-base', 'fpit1s-auraD-toutes-zones', 'fpit1s-auraE-toutes-zones', 'fpit1s-auraJ-toutes-zones', 'fpit1s-premultiply-feather2-20260902', 'fpit1s-premultiply-feather4-20260902', 'fpit1s-premultiply-feather6-20260902', 'fpit1s-xbr2x-nearest2-30fps-split-20260903', 'fpit1s-xbr2x-nearest2-30fps-split-v3only-20260903', 'fpit1s-xbr2x-replacements-20260903', 'fpit1s-xbr2x2-30fps-split-20260903', 'fpit1s-xbr2x2-replacements-20260903', 'fpit1s-xbr2x2-split-v3only-20260903']"
+      },
+      "domain": "animations",
+      "message": "Le rangement P3 des packs d'animations a dérivé.",
+      "path": "animations/packs-par-zone",
+      "severity": "error"
+    },
     {
       "code": "map-run-referenced-files-missing",
       "details": {
@@ -572,12 +603,6 @@
             "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
           },
           {
-            "area": "AR5200",
-            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
-            "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
-          },
-          {
             "area": "AR6300",
             "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
             "path": "animations/index/animation_upscale_registry.csv",
@@ -588,6 +613,12 @@
             "evidence_source": "fb9ce55f4c11dc4d3718d8ab9157000ce679e2fd:animations/index/animation_upscale_registry.csv",
             "path": "animations/index/animation_upscale_registry.csv",
             "sha256": "46C8E31C88FC8EF9FD9B49712CB6F2B3B286F4642C219DF6454C5010F5C1BB9D"
+          },
+          {
+            "area": "AR5200",
+            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
+            "path": "animations/index/animation_upscale_registry.csv",
+            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
           }
         ]
       },
@@ -644,10 +675,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15163,
-  "registry_asset_records_sha256": "F80C71C45B624EAC0C0A13C6D7CF51FCB213ADDC4774CEB55A91936ABBE2888A",
-  "run_count": 640,
-  "run_records_sha256": "E010EE4F7E2AAA22695671EB80B2BB29C6E18CFBDD5D5F90978EBCBAB412D9ED",
+  "registry_asset_count": 15168,
+  "registry_asset_records_sha256": "8CEBA345DFC399FF9BFE7D7ED89338B83182A757D8B9618B40051C4B8216E6F2",
+  "run_count": 652,
+  "run_records_sha256": "99B33EC4D15BDBD303AB40877766B9C0BB0CD323AC23FA0C4F8870B2B16F4DFD",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -751,10 +782,12 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "4E9F144B1B0E049837A27DCF5EBA2AFBE8E34F9B160D4D221E7887C55562E295",
+  "source_fingerprint_sha256": "3C8B3F0F0BBF5430B9B4ECF12E42D6C26EDE8B5C99A299E5867AE770023E9D46",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,
+      "animation-mono-run-owner-mismatch": 1,
+      "animation-pack-p3-drift": 1,
       "historical-absolute-paths-adapted": 1,
       "map-historical-paths-adapted": 1,
       "map-legacy-run-without-json": 1,
@@ -763,7 +796,7 @@
       "sprite-historical-pointers-migrated": 1
     },
     "by_severity": {
-      "error": 0,
+      "error": 2,
       "info": 5,
       "warning": 7
     },

@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 640,
-  "run_records_sha256": "E010EE4F7E2AAA22695671EB80B2BB29C6E18CFBDD5D5F90978EBCBAB412D9ED",
+  "run_count": 652,
+  "run_records_sha256": "99B33EC4D15BDBD303AB40877766B9C0BB0CD323AC23FA0C4F8870B2B16F4DFD",
   "runs": [
     {
       "asset_count": 1,
@@ -447,6 +447,94 @@
     {
       "asset_count": 1,
       "asset_ids": [
+        "animations:pack:AR2014"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2014/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2014/qa-v2-6d4ab2b15ad353bc.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2014",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar2014",
+      "run_key": "animations-pack:AR2014",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR2016"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2016/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2016/qa-v2-ef799a88b49d89ec.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2016",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar2016",
+      "run_key": "animations-pack:AR2016",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR2017"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2017/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2017/qa-v2-16a37cd3925dc6af.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2017",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar2017",
+      "run_key": "animations-pack:AR2017",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR2018"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2018/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2018/qa-v2-29de920a5b0ed718.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2018",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar2018",
+      "run_key": "animations-pack:AR2018",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
         "animations:pack:AR2100"
       ],
       "descriptor_path": "animations/packs-par-zone/combined-20260901-ar2100-portals-30fps-v2/AR2100/manifest.json",
@@ -682,6 +770,28 @@
       "result_state": "approved-for-release",
       "run_id": "release-pack-oh6400",
       "run_key": "animations-pack:OH6400",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:OH7300"
+      ],
+      "descriptor_path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v2; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH7300/qa-v2-76e823565f124dc4.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-oh7300",
+      "run_key": "animations-pack:OH7300",
       "run_kind": "area-animation-release-pack",
       "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
       "selection_state": "release-candidate"
@@ -3258,7 +3368,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR5200;AR6300; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -3400,7 +3510,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR5200;AR6300; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -3542,7 +3652,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR5200;AR6300; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -4282,6 +4392,26 @@
       "selection_state": "historical"
     },
     {
+      "asset_count": 0,
+      "asset_ids": [],
+      "descriptor_path": "",
+      "domain": "animations",
+      "inputs_state": "unknown",
+      "legacy": false,
+      "notes": "layout=legacy",
+      "outputs_state": "present",
+      "path": "animations/runs/FPIT1S-occlusion-masks-20260903",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "unknown",
+      "run_id": "FPIT1S-occlusion-masks-20260903",
+      "run_key": "animations:FPIT1S-occlusion-masks-20260903",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
       "asset_count": 1,
       "asset_ids": [
         "animations:bam:FPIT1S"
@@ -4299,6 +4429,149 @@
       "result_state": "completed",
       "run_id": "fpit1s-rgb-neutral-zero-20260902",
       "run_key": "animations:fpit1s-rgb-neutral-zero-20260902",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 6,
+      "asset_ids": [
+        "animations:bam:FPIT1S",
+        "animations:pack:AR2014",
+        "animations:pack:AR2016",
+        "animations:pack:AR2017",
+        "animations:pack:AR2018",
+        "animations:pack:OH7300"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; Candidat(s) de zone: AR2014;AR2016;AR2017;AR2018;OH7300; QA ingame explicite: animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+      "provenance_state": "complete",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "fpit1s-contour-fondu-J-masques-20260904",
+      "run_key": "animations:FPIT1S:fpit1s-contour-fondu-J-masques-20260904",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/FPIT1S.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 7,
+      "asset_ids": [
+        "animations:bam:AM0602J",
+        "animations:bam:AM0602K1",
+        "animations:bam:AM0602K2",
+        "animations:bam:AM0602L1",
+        "animations:bam:AM0602L2",
+        "animations:bam:AM0602M",
+        "animations:bam:FPIT1S"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-spline-fit1-feather2-20260902/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-spline-fit1-feather2-20260902",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "fpit1s-spline-fit1-feather2-20260902",
+      "run_key": "animations:FPIT1S:fpit1s-spline-fit1-feather2-20260902",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:FPIT1S"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-20260903",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "fpit1s-xbr2x-nearest2-x4-20260903",
+      "run_key": "animations:FPIT1S:fpit1s-xbr2x-nearest2-x4-20260903",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:FPIT1S"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-30fps-v2-opaque-dilate-20260903/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-nearest2-x4-30fps-v2-opaque-dilate-20260903",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "fpit1s-xbr2x-nearest2-x4-30fps-v2-opaque-dilate-20260903",
+      "run_key": "animations:FPIT1S:fpit1s-xbr2x-nearest2-x4-30fps-v2-opaque-dilate-20260903",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:FPIT1S"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-20260903/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-20260903",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "fpit1s-xbr2x-xbr2x-x4-20260903",
+      "run_key": "animations:FPIT1S:fpit1s-xbr2x-xbr2x-x4-20260903",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:FPIT1S"
+      ],
+      "descriptor_path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260903/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/FPIT1S/runs/fpit1s-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260903",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "fpit1s-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260903",
+      "run_key": "animations:FPIT1S:fpit1s-xbr2x-xbr2x-x4-30fps-v2-opaque-dilate-20260903",
       "run_kind": "area-animation",
       "selection_authority": "",
       "selection_state": "historical"
@@ -15428,10 +15701,10 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "4E9F144B1B0E049837A27DCF5EBA2AFBE8E34F9B160D4D221E7887C55562E295",
+  "source_fingerprint_sha256": "3C8B3F0F0BBF5430B9B4ECF12E42D6C26EDE8B5C99A299E5867AE770023E9D46",
   "summary": {
     "by_domain": {
-      "animations": 192,
+      "animations": 204,
       "maps": 293,
       "sprites": 143,
       "videos": 12
@@ -15439,10 +15712,10 @@
     "by_selection_state": {
       "canonical-prototype": 17,
       "current-generation": 1,
-      "historical": 266,
+      "historical": 272,
       "historical-unselected": 5,
-      "release-candidate": 51,
-      "selected": 292,
+      "release-candidate": 56,
+      "selected": 293,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2
