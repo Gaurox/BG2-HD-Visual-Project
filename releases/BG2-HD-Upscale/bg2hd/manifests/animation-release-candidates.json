@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/animation-release-candidates.schema.json",
-  "schema_version": 2,
-  "generated_by": "manual canonical candidate register; final-pack QA attestations pinned 2026-08-30; AR0516 native occlusion integration and AR0307/AR0329 30 FPS integration approved 2026-08-31; AR2100 30 FPS integration approved 2026-09-01; BUTRFLY small-subject xBR2→nearest2 x4, Apollo 8 30 FPS and blend-safe RGB integration in 14 zones approved 2026-09-01; CHIMSMK + DSTDVL1A/B/C final pack and per-area QA integration approved 2026-09-01; AR2201 AM2201A/B QA pinned 2026-09-02, awaiting manifest approval",
+  "schema_version": 3,
+  "generated_by": "pipeline/scripts/animation_release.py",
   "candidates": [
     {
       "area": "AR0602",
@@ -681,29 +681,6 @@
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     },
     {
-      "area": "AR5200",
-      "component_id": 3033,
-      "component_label": "animation-ar5200",
-      "payload_group": "animation-ar5200",
-      "approval_status": "approved-for-release",
-      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR5200/qa-approval.json",
-      "qa_approval_sha256": "F579A90892A15725630F853BDCFA17897B022F483B2DB7F33DBFF864BD52A6B7",
-      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR5200",
-      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
-      "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "CC53EAC7BFE93A43D41C8FDC0B6EC232167C8DD24AD8FF6C509FFE2CB7F71614",
-      "registry": "AreaAnimations-X4.registry",
-      "registry_version": 3,
-      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
-      "registry_bytes": 7392,
-      "required_resrefs": [
-        "DSTDVL1A",
-        "DSTDVL1B",
-        "DSTDVL1C"
-      ],
-      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
-    },
-    {
       "area": "AR6300",
       "component_id": 3031,
       "component_label": "animation-ar6300",
@@ -747,6 +724,184 @@
         "AM2201B"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR5200",
+      "component_id": 3033,
+      "component_label": "animation-ar5200",
+      "payload_group": "animation-ar5200",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR5200/qa-approval.json",
+      "qa_approval_sha256": "F579A90892A15725630F853BDCFA17897B022F483B2DB7F33DBFF864BD52A6B7",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR5200",
+      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "CC53EAC7BFE93A43D41C8FDC0B6EC232167C8DD24AD8FF6C509FFE2CB7F71614",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+      "registry_bytes": 7392,
+      "required_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2014",
+      "component_id": 3034,
+      "component_label": "animation-ar2014",
+      "payload_group": "animation-ar2014",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2014/qa-v2-6d4ab2b15ad353bc.json",
+      "qa_approval_sha256": "EF5D7AF3783429875B3615C63BAD8EB7422F2293A162F7AF65D3C1FC6E48EF1D",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2014",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "21943638B5C47C897E1349DE2667A63136645E7F9498A917EA8288AED724C76C",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2016",
+      "component_id": 3035,
+      "component_label": "animation-ar2016",
+      "payload_group": "animation-ar2016",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2016/qa-v2-ef799a88b49d89ec.json",
+      "qa_approval_sha256": "C8F3AED62E1A2F38A94172E5B2381B799F189B834677219665863BB7D2F90EC3",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2016",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "261D57EE1797EC0CE1C942BF51580E4B332DD62FD845D9BD91BE76A30C3AA5C3",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2017",
+      "component_id": 3036,
+      "component_label": "animation-ar2017",
+      "payload_group": "animation-ar2017",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2017/qa-v2-16a37cd3925dc6af.json",
+      "qa_approval_sha256": "3C0CBCD64357257B42F006AE1E0B526D5F9898AC89F203C18870999C12E1964B",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2017",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "CB119E502582C29DE5FFDF3D2D293CB5C2D84123FFA2D80016CD1919F8CCEA12",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2018",
+      "component_id": 3037,
+      "component_label": "animation-ar2018",
+      "payload_group": "animation-ar2018",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2018/qa-v2-29de920a5b0ed718.json",
+      "qa_approval_sha256": "F7737486104B9948C4ADC60B033905E14AD67ED222C962ABA7E8C640DDBC782F",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2018",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9E08F8D885F3C7ED19C7909E8508961C4DB2D6172F430B781867C51F5779FA65",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH7300",
+      "component_id": 3038,
+      "component_label": "animation-oh7300",
+      "payload_group": "animation-oh7300",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH7300/qa-v2-76e823565f124dc4.json",
+      "qa_approval_sha256": "D96937E2C00C91F1CB3B75AF33197A99D7BEC7CE67E17012AF9D9E69A048CB10",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "A32ED675641E6556A801D893AA2AC27CBD7D34A7CD60ECADE018A87BC665B382",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 2,
+      "registry_sha256": "71CE8757AB123D90B083B8364E6EC7D5EAF3D1A1B0B858B775FD95937C72ED32",
+      "registry_bytes": 236,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
     }
   ]
 }

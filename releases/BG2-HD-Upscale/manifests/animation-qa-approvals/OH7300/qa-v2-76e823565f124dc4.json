@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH7300",
+  "status": "accepted",
+  "decision_date": "2026-09-04",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-04T05:37:01Z",
+  "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300",
+  "pack_manifest_sha256": "A32ED675641E6556A801D893AA2AC27CBD7D34A7CD60ECADE018A87BC665B382",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 2,
+  "registry_sha256": "71CE8757AB123D90B083B8364E6EC7D5EAF3D1A1B0B858B775FD95937C72ED32",
+  "required_resrefs": [
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "FPIT1S valide en jeu le 2026-09-04 ; pack de zone ne contenant que cette ressource."
+}
