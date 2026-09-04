@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 651,
-  "run_records_sha256": "1C8732424F25D0ABF1AE39CDF52F81F0E9D5D0E25B564E2E6D53A73A865033D7",
+  "run_count": 653,
+  "run_records_sha256": "CE17A7805278C73A4AC085EA8C92EC9B2E05BE90735491C3560464A7EF60CAF8",
   "runs": [
     {
       "asset_count": 1,
@@ -10716,6 +10716,28 @@
     {
       "asset_count": 1,
       "asset_ids": [
+        "maps:AR5202:day"
+      ],
+      "descriptor_path": "maps/AR5202/runs/seedvr2-7b-int8-lab-grid-2x2-x4/run.json",
+      "domain": "maps",
+      "inputs_state": "verified",
+      "legacy": false,
+      "notes": "",
+      "outputs_state": "present",
+      "path": "maps/AR5202/runs/seedvr2-7b-int8-lab-grid-2x2-x4",
+      "provenance_state": "verified",
+      "qa_state": "from-areas-csv",
+      "recipe_path": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+      "result_state": "completed",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x2-x4",
+      "run_key": "maps:AR5202:seedvr2-7b-int8-lab-grid-2x2-x4",
+      "run_kind": "map-upscale",
+      "selection_authority": "areas.csv",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
         "maps:OH4000:day"
       ],
       "descriptor_path": "maps/OH4000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/run.json",
@@ -11171,6 +11193,28 @@
       "result_state": "completed",
       "run_id": "seedvr2-7b-int8-lab-grid-2x2-x4",
       "run_key": "maps:OH7200:seedvr2-7b-int8-lab-grid-2x2-x4",
+      "run_kind": "map-upscale",
+      "selection_authority": "areas.csv",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "maps:OH7300:day"
+      ],
+      "descriptor_path": "maps/OH7300/runs/seedvr2-7b-int8-lab-grid-2x5-x4/run.json",
+      "domain": "maps",
+      "inputs_state": "verified",
+      "legacy": false,
+      "notes": "",
+      "outputs_state": "present",
+      "path": "maps/OH7300/runs/seedvr2-7b-int8-lab-grid-2x5-x4",
+      "provenance_state": "verified",
+      "qa_state": "from-areas-csv",
+      "recipe_path": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+      "result_state": "completed",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4",
+      "run_key": "maps:OH7300:seedvr2-7b-int8-lab-grid-2x5-x4",
       "run_kind": "map-upscale",
       "selection_authority": "areas.csv",
       "selection_state": "selected"
@@ -15673,11 +15717,11 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "1C60575CFEF593ED5B50AC1167F284E5AB3879E45265E7188954C7C64FAF5EB8",
+  "source_fingerprint_sha256": "CF49B36DEE43350B0914644113CEF1DE8BA9606C4EC5DC372E16988A63D7D86E",
   "summary": {
     "by_domain": {
       "animations": 203,
-      "maps": 293,
+      "maps": 295,
       "sprites": 143,
       "videos": 12
     },
@@ -15687,7 +15731,7 @@
       "historical": 271,
       "historical-unselected": 5,
       "release-candidate": 56,
-      "selected": 293,
+      "selected": 295,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2
