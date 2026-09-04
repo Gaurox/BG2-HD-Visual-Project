@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 653,
-  "run_records_sha256": "CE17A7805278C73A4AC085EA8C92EC9B2E05BE90735491C3560464A7EF60CAF8",
+  "run_count": 654,
+  "run_records_sha256": "FF57A666811B702AA37CEE6A8BB07B45AD4D1204BF5F57825F26AC5AAC40251D",
   "runs": [
     {
       "asset_count": 1,
@@ -11220,6 +11220,28 @@
       "selection_state": "selected"
     },
     {
+      "asset_count": 1,
+      "asset_ids": [
+        "maps:OH8100:day"
+      ],
+      "descriptor_path": "maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4/run.json",
+      "domain": "maps",
+      "inputs_state": "verified",
+      "legacy": false,
+      "notes": "",
+      "outputs_state": "present",
+      "path": "maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4",
+      "provenance_state": "verified",
+      "qa_state": "from-areas-csv",
+      "recipe_path": "pipeline/comfyui/workflows/SeedVR-Image-BG2-Pipeline-7B.api.json",
+      "result_state": "completed",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4",
+      "run_key": "maps:OH8100:seedvr2-7b-int8-lab-grid-2x5-x4",
+      "run_kind": "map-upscale",
+      "selection_authority": "areas.csv",
+      "selection_state": "selected"
+    },
+    {
       "asset_count": 133,
       "asset_ids": [
         "sprites:family:0x6102:body:armor-code:1:CDMB1",
@@ -15717,11 +15739,11 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "CF49B36DEE43350B0914644113CEF1DE8BA9606C4EC5DC372E16988A63D7D86E",
+  "source_fingerprint_sha256": "73161B6D8A251DC25D14A799D80F8C7338D5642937413E333B8FDD450A2FD4B1",
   "summary": {
     "by_domain": {
       "animations": 203,
-      "maps": 295,
+      "maps": 296,
       "sprites": 143,
       "videos": 12
     },
@@ -15731,7 +15753,7 @@
       "historical": 271,
       "historical-unselected": 5,
       "release-candidate": 56,
-      "selected": 295,
+      "selected": 296,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2
