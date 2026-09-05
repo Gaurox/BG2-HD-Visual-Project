@@ -35,9 +35,9 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 *Sprite work is assessed separately; research output is not promoted without in-game QA.*
 
-![AR0700 — fountain alpha-contour reconstruction](docs/images/readme/ar0700-fountain-alpha-correction.png)
+![AR0700 fountain — vanilla and x4 animation study](docs/images/readme/ar0700-fountain-vanilla-vs-x4.gif)
 
-*Manual alpha-contour reconstruction after upscale.*
+*AR0700 fountain: native and x4 motion study with a refined alpha contour.*
 
 ## Status
 
