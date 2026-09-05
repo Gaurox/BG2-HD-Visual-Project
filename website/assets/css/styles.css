@@ -109,6 +109,7 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 .hero-facts li { display: grid; gap: .1rem; }
 .hero-facts strong { color: var(--gold-bright); font: 500 1.2rem var(--serif); }
 .hero-facts span { color: rgba(233,223,202,.48); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+.hero-release-note { margin: 1rem 0 0; color: rgba(233,223,202,.58); font-size: .74rem; }
 
 .intro-preview { padding-block: clamp(5rem, 10vw, 9rem); text-align: center; }
 .intro-preview .eyebrow { justify-content: center; }
@@ -132,7 +133,8 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
   .hero-content { padding-top: 6rem; }
   h1 { font-size: clamp(3rem, 14vw, 4.7rem); }
   .hero-content h1 em { white-space: normal; }
-  .hero-facts { gap: 1.1rem; justify-content: space-between; }
+  .hero-facts { flex-wrap: wrap; gap: 1.1rem 1.5rem; justify-content: start; }
+  .hero-facts li { flex: 0 1 calc(50% - .75rem); }
   .hero-facts span { max-width: 7rem; }
 }
 
