@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scope", "eeex", "visual_cxx", "renderer_delivery", "bootstrap_protocol"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "scope": {"type": "object", "additionalProperties": false, "required": ["platform", "store", "game", "game_version"], "properties": {"platform": {"const": "windows-x64"}, "store": {"const": "Steam"}, "game": {"const": "bg2ee"}, "game_version": {"const": "2.7.3.0"}}},
+    "eeex": {"type": "object", "additionalProperties": false, "required": ["ownership", "required_version", "official_release", "installation", "detection", "state_policy", "update_policy"], "properties": {
+      "ownership": {"const": "external-prerequisite-in-game-root"},
+      "required_version": {"type": "string", "minLength": 1},
+      "official_release": {"type": "object", "additionalProperties": false, "required": ["release_page", "asset_url", "filename", "sha256", "bytes"], "properties": {"release_page": {"type": "string", "format": "uri"}, "asset_url": {"type": "string", "format": "uri"}, "filename": {"type": "string", "pattern": "^[^\\\\/]+\\.exe$"}, "sha256": {"$ref": "#/$defs/hash"}, "bytes": {"$ref": "#/$defs/bytes"}}},
+      "installation": {"type": "object", "additionalProperties": false, "required": ["method", "required_weidu_components", "forbid_nested_weidu", "normal_launch_executable"], "properties": {"method": {"const": "run-official-eeex-installer-before-bg2hd-weidu"}, "required_weidu_components": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/weidu_component"}}, "forbid_nested_weidu": {"const": true}, "normal_launch_executable": {"const": "InfinityLoader.exe"}}},
+      "detection": {"type": "object", "additionalProperties": false, "required": ["weidu_log", "inactive_residue_paths", "required_paths", "mutable_runtime_files", "exact_files"], "properties": {"weidu_log": {"const": "WeiDU.log"}, "inactive_residue_paths": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "required_paths": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "mutable_runtime_files": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "exact_files": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/file"}}}},
+      "state_policy": {"type": "object", "additionalProperties": false, "required": ["absent", "inactive", "compatible", "partial", "unknown_or_changed", "game_process_open"], "properties": {"absent": {"const": "offer-official-eeex-install"}, "inactive": {"const": "offer-official-eeex-install"}, "compatible": {"const": "leave-untouched-and-continue"}, "partial": {"const": "stop-with-official-eeex-repair-guidance"}, "unknown_or_changed": {"const": "stop-without-writing"}, "game_process_open": {"const": "stop-without-writing"}}},
+      "update_policy": {"type": "object", "additionalProperties": false, "required": ["compatible_install", "new_version", "uninstall_bg2hd"], "properties": {"compatible_install": {"const": "never-auto-upgrade"}, "new_version": {"const": "requires-a-new-bg2hd-compatibility-record"}, "uninstall_bg2hd": {"const": "standard-uninstall-keeps-eeex-and-steam-shim; explicit-confirmed-full-vanilla-restore-uses-official-eeex-uninstaller"}}}
+    }},
+    "visual_cxx": {"type": "object", "additionalProperties": false, "required": ["ownership", "architecture", "detection", "missing_action", "official_url", "auto_install_in_phase_1"], "properties": {"ownership": {"const": "external-machine-prerequisite"}, "architecture": {"const": "x64"}, "detection": {"const": "check-before-eeex-install-or-launch"}, "missing_action": {"const": "show-official-microsoft-download-guidance"}, "official_url": {"type": "string", "format": "uri"}, "auto_install_in_phase_1": {"const": false}}},
+    "renderer_delivery": {"type": "object", "additionalProperties": false, "required": ["ownership", "current_phase", "install_rule", "uninstall_rule", "conflict_rule"], "properties": {"ownership": {"const": "bg2hd"}, "current_phase": {"const": "implemented-phase-3-awaiting-clean-lifecycle-test"}, "install_rule": {"type": "string", "minLength": 1}, "uninstall_rule": {"type": "string", "minLength": 1}, "conflict_rule": {"type": "string", "minLength": 1}}},
+    "bootstrap_protocol": {"type": "object", "additionalProperties": false, "required": ["status", "entrypoint", "order", "network", "offline"], "properties": {"status": {"const": "implemented-windows-bootstrap-awaiting-clean-lifecycle-test"}, "entrypoint": {"const": "Install-BG2HD.exe"}, "order": {"type": "array", "minItems": 10, "items": {"type": "string", "minLength": 1}}, "network": {"const": "explicit-user-consent-required; verify-exact-archive-sha256; fail-closed"}, "offline": {"const": "accept-user-supplied-official-archive-only-after-exact-hash-verification"}}}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "bytes": {"type": "integer", "minimum": 1},
+    "file": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "bytes"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}, "bytes": {"$ref": "#/$defs/bytes"}}},
+    "weidu_component": {"type": "object", "additionalProperties": false, "required": ["tp2", "id", "name"], "properties": {"tp2": {"type": "string", "minLength": 1}, "id": {"type": "integer", "minimum": 0}, "name": {"type": "string", "minLength": 1}}}
+  }
+}

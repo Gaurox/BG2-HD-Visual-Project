@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "dwarf-male-fighter-cdmb1-xbr4x",
+  "animation": {
+    "name": "Personnage joueur — guerrier nain sans armure x4",
+    "id": "0x6102",
+    "ids_symbol": "FIGHTER_MALE_DWARF",
+    "armor_code": 1,
+    "bam_prefix": "CDMB1",
+    "runtime_profile": "character-bg2ee-2.7.3.0"
+  },
+  "paths": {
+    "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+    "source_dir": "sprite/families/playable-characters/6102-dwarf-male-fighter/cdmb1/variants/xbr4-direct/source",
+    "run_dir": "sprite/families/playable-characters/6102-dwarf-male-fighter/cdmb1/variants/xbr4-direct/runs/xbr4x-x4",
+    "scalepix": "G:\\AI\\MMPX\\web\\scalepix.html",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "engine/InfinityEngine-Enhancer/source-patchee/cmake-build-character-x4-cdmb1-vs2019"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0411"
+    ],
+    "creatures": [
+      "PLAYER1"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr4X",
+    "scale": 4,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}

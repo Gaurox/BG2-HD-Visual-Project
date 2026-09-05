@@ -1,0 +1,596 @@
+{
+  "chitin_key_sha256": "1818FFEBB2424992FB39FB13509E7F629AC819B08A553C2DD4AC25F2E40A979F",
+  "dependency_only_resource_count": 6570,
+  "generated_by": "pipeline/scripts/build_graphics_inventory.py",
+  "key_resource_count": 62575,
+  "limitations": [
+    "BMP, PLT et PVRZ sont des membres dépendants et ne sont pas comptés comme assets autonomes",
+    "les BAM restants ne sont pas projetés tant que leur propriétaire logique n'est pas démontré"
+  ],
+  "owned_format_counts": {
+    "BAM": 17086,
+    "BMP": 10,
+    "FNT": 13,
+    "MOS": 617,
+    "PRO": 243,
+    "PVRZ": 217,
+    "TTF": 18,
+    "VEF": 2,
+    "VVC": 250,
+    "WBM": 33
+  },
+  "owned_raw_resource_count": 18489,
+  "raw_cross_domain_overlap_count": 64,
+  "raw_cross_domain_overlap_policy": "reported raw dependency reuse; logical registry assets remain unique",
+  "raw_cross_domain_overlaps": [
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "BDETHREA"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "existing-domains"
+      ],
+      "resref": "BDFORCEW"
+    },
+    {
+      "format": "VEF",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "FDAWNX"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "existing-domains",
+        "hud"
+      ],
+      "resref": "GUICTRL"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "existing-domains",
+        "hud"
+      ],
+      "resref": "GUILS10"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "ICSPAIN"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0017"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0018"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0105"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0108"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0109"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0112"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0113"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0116"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0117"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0131"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0138"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0139"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0140"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "hud"
+      ],
+      "resref": "MOS0141"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0145"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0152"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0153"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0157"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0169"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0172"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0173"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0174"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "hud",
+        "ui-supplement"
+      ],
+      "resref": "MOS0176"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0256"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0257"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0261"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0262"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0263"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0264"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0265"
+    },
+    {
+      "format": "PVRZ",
+      "owners": [
+        "existing-domains",
+        "ui-supplement"
+      ],
+      "resref": "MOS0266"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "existing-domains"
+      ],
+      "resref": "OHDLPORT"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "existing-domains"
+      ],
+      "resref": "OHHNECR"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "existing-domains"
+      ],
+      "resref": "OHRSGATE"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SHAREAB"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SHAREAW"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPATTCK2"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPBEHBLA"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCHLGT1"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCHLGT2"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCHLGT3"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCL239X"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCLOUD3"
+    },
+    {
+      "format": "VEF",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCOMEX"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPCOMTRV"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "existing-domains"
+      ],
+      "resref": "SPDIMNDR"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPFIREPI"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPFLAMES"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPGREORB"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPGRWHRL"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPHOLY"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPIPLARI"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPSETSCD"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPSETTID"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPSETTIH"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPSPAINI"
+    },
+    {
+      "format": "BAM",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPSTRMVA"
+    },
+    {
+      "format": "VVC",
+      "owners": [
+        "effects",
+        "projectiles"
+      ],
+      "resref": "SPUNHOLY"
+    }
+  ],
+  "raw_format_counts": {
+    "BAM": 17188,
+    "BMP": 2694,
+    "FNT": 13,
+    "MOS": 617,
+    "PLT": 196,
+    "PRO": 243,
+    "PVRZ": 3680,
+    "TTF": 18,
+    "VEF": 2,
+    "VVC": 250,
+    "WBM": 33
+  },
+  "raw_graphical_resource_count": 24934,
+  "schema": "bg2-upscale-graphics-inventory-coverage-v1",
+  "top_unclassified_source_bifs": [
+    {
+      "resource_count": 41,
+      "source_bif": "data/Patch2.bif"
+    },
+    {
+      "resource_count": 15,
+      "source_bif": "data/ee.bif"
+    },
+    {
+      "resource_count": 14,
+      "source_bif": "data/bgee.bif"
+    },
+    {
+      "resource_count": 13,
+      "source_bif": "data/patch13.bif"
+    },
+    {
+      "resource_count": 9,
+      "source_bif": "data/PATCH26.BIF"
+    },
+    {
+      "resource_count": 8,
+      "source_bif": "data/Patch25.bif"
+    },
+    {
+      "resource_count": 1,
+      "source_bif": "data/Default.bif"
+    },
+    {
+      "resource_count": 1,
+      "source_bif": "data/BlackPits.bif"
+    }
+  ],
+  "unclassified_csv": "graphics/index/unclassified-resources.csv",
+  "unclassified_format_counts": {
+    "BAM": 102
+  },
+  "unclassified_resource_count": 102
+}

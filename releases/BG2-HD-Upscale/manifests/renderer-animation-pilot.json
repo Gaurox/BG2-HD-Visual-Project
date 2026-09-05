@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/renderer-bundle.schema.json",
+  "schema_version": 1,
+  "bundle_id": "iee-0.1.0-alpha.6",
+  "status": "rejected",
+  "source_tree": "git:96c312b6b78ede75666a9c474cbd850821b7802c:releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.5",
+  "build_environment": {
+    "cmake": "4.0.2",
+    "generator": "Visual Studio 16 2019, x64",
+    "compiler": "MSVC 19.29.30133 (v142)",
+    "build_type": "Release",
+    "command": "cmake -S engine/InfinityEngine-Enhancer/source-patchee -B <build-dir> -G \"Visual Studio 16 2019\" -A x64 -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON; cmake --build <build-dir> --config Release --target release_bundle; ctest --test-dir <build-dir> -C Release --output-on-failure"
+  },
+  "files": [
+    {
+      "path": "InfinityEngine-Enhancer.dll",
+      "bytes": 1278976,
+      "sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E"
+    },
+    {
+      "path": "InfinityEngine-Enhancer.sample.ini",
+      "bytes": 2609,
+      "sha256": "13F286A8C736A7E626A9AE3C10C6E7EB15B66D22AD08473995A504293610CB57"
+    },
+    {
+      "path": "iee-textures/iee_water_dudv.rgba",
+      "bytes": 1048588,
+      "sha256": "3F9FBF6E982CBECEBE70386F2DF8152A85D61651FD2965D9C17CC70807BBD83E"
+    },
+    {
+      "path": "iee-textures/iee_water_foam.rgba",
+      "bytes": 4194316,
+      "sha256": "F9FB4383F83BEDD94A187EC2118FFE91879AEE911C0E96E05CC3C882B309DFF6"
+    },
+    {
+      "path": "iee-textures/iee_water_normal.rgba",
+      "bytes": 1048588,
+      "sha256": "BBEBC635D68084D757176F5522161310AE7C1DDCA330438EB1743D96D8EFE551"
+    },
+    {
+      "path": "iee-textures/README.md",
+      "bytes": 2936,
+      "sha256": "0E34BEBEB719825EB373E2D04CF8B8FE0C7CAA7679BBD85A724083AB07AC5FDE"
+    },
+    {
+      "path": "override/fpSEAM.glsl",
+      "bytes": 15871,
+      "sha256": "FCA60B403AE41900B5A47E0249546760B2D14B5FAA3BE2329E9AA08ADF05ECAB"
+    },
+    {
+      "path": "override/M_IEEE.lua",
+      "bytes": 388,
+      "sha256": "ADC3053C9A94587D393EC65F4E8EBA41198FC4C33B120132A55FF0AB78BE34CD"
+    }
+  ],
+  "validation_required": [
+    "OBSOLETE: alpha.6 predates EnableNativeOcclusionBridge and FXRenderClippingPolys integration; do not promote",
+    "host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing",
+    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea",
+    "clean BG2EE Steam 2.7.3.0 game-hash gate",
+    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs",
+    "AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
+    "in-place Steam shim lifecycle and verified full vanilla restoration"
+  ]
+}

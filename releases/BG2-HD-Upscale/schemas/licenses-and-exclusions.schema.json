@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "licenses", "distribution_policy", "excluded_from_payload", "technical_overlay_decision"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "licenses": {"type": "array", "minItems": 1},
+    "distribution_policy": {"type": "object", "additionalProperties": false, "required": ["status", "model", "requires", "forbids", "notice", "takedown_process"], "properties": {"status": {"type": "string"}, "model": {"type": "string"}, "requires": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "forbids": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "notice": {"type": "string"}, "takedown_process": {"type": "string"}}},
+    "excluded_from_payload": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "technical_overlay_decision": {"type": "object", "required": ["status", "reason"]}
+  }
+}

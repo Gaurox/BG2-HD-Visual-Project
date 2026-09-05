@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "target_game", "eeex", "steam_launch_contract", "save_compatibility_contract", "renderer", "owned_ini_keys"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "target_game": {"$ref": "#/$defs/file"},
+    "eeex": {"type": "object", "required": ["distribution", "version", "dependency_contract", "weidu_components", "files"], "properties": {"dependency_contract": {"const": "manifests/dependency-bootstrap.json"}}},
+    "steam_launch_contract": {"type": "object", "additionalProperties": false, "required": ["steam_keeps_launching", "installed_steam_shim", "preserved_original", "desktop_shortcut_target", "launcher_ini_alias", "full_uninstall_result"], "properties": {"steam_keeps_launching": {"const": "Baldur.exe"}, "installed_steam_shim": {"const": "Baldur.exe becomes a verified copy of InfinityLoader.exe"}, "preserved_original": {"const": "BaldurReal.exe"}, "desktop_shortcut_target": {"const": "InfinityLoader.exe"}, "launcher_ini_alias": {"const": "BaldurReal.exe:Baldur.exe"}, "full_uninstall_result": {"type": "string", "minLength": 1}}},
+    "save_compatibility_contract": {"type": "object", "additionalProperties": false, "required": ["scope", "target", "eeex_extra_creature_marshalling", "guard_file", "forbidden_signature", "legacy_save_policy", "validation_gate"], "properties": {"scope": {"const": "future-save-chains-from-vanilla-compatible-state"}, "target": {"const": "BG2EE Steam 2.7.3.0 vanilla"}, "eeex_extra_creature_marshalling": {"const": "disabled"}, "guard_file": {"const": "bg2hd/renderer/override/M_IEEE.lua"}, "forbidden_signature": {"const": "X-BIV1.0"}, "legacy_save_policy": {"const": "detect-only-no-automatic-migration"}, "validation_gate": {"const": "native-vanilla-load-save-reload-required"}}},
+    "renderer": {"type": "object", "required": ["distribution", "status", "active_development_install", "reproducible_source_build", "publication_rule", "area_animation_runtime"], "properties": {"area_animation_runtime": {"type": "object", "additionalProperties": false, "required": ["status", "payload_layout", "registry_version", "supported_registry_versions", "timed_timeline", "config_owner"], "properties": {"status": {"enum": ["candidate-awaiting-renderer-freeze", "integrated"]}, "payload_layout": {"const": "iee-assets/areas/<AREA>"}, "registry_version": {"const": 3}, "supported_registry_versions": {"type": "array", "const": [1, 2, 3]}, "timed_timeline": {"const": true}, "config_owner": {"const": "core-steam"}, "native_occlusion_bridge": {"type": "object", "additionalProperties": false, "required": ["required", "release_status", "ini_section", "ini_key", "qa_evidence", "wed_correction"], "properties": {"required": {"const": true}, "release_status": {"type": "string", "minLength": 1}, "ini_section": {"const": "Shaders"}, "ini_key": {"const": "EnableNativeOcclusionBridge"}, "qa_evidence": {"type": "string", "minLength": 1}, "wed_correction": {"type": "string", "minLength": 1}}}}}}},
+    "owned_ini_keys": {"type": "object"}
+  },
+  "$defs": {"file": {"type": "object", "required": ["sha256", "bytes"], "properties": {"sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}, "bytes": {"type": "integer", "minimum": 1}}}}
+}

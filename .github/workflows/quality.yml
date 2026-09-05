@@ -1,0 +1,123 @@
+name: quality
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 0"
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.impact.outputs.mode }}
+      base: ${{ steps.impact.outputs.base }}
+      python: ${{ steps.impact.outputs.python }}
+      release: ${{ steps.impact.outputs.release }}
+      engine: ${{ steps.impact.outputs.engine }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: impact
+        shell: pwsh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          $base = [string]$env:EVENT_BASE
+          if ($base -match '^0+$') { $base = '' }
+          $forceFull = -not $base -or $env:EVENT_NAME -in @('schedule', 'workflow_dispatch') -or $env:GITHUB_REF -like 'refs/tags/*'
+          $arguments = if ($forceFull) {
+            @('--full', '--list', '--json')
+          } else {
+            @('--changed', '--list', '--json')
+          }
+          if (-not $forceFull -and $base) { $arguments += @('--base', $base) }
+          $json = & python pipeline/scripts/test_changed.py @arguments
+          if ($LASTEXITCODE -ne 0) { throw 'La sélection des tests a échoué.' }
+          $jsonText = $json -join [Environment]::NewLine
+          $plan = $jsonText | ConvertFrom-Json
+          "mode=$($plan.mode)" >> $env:GITHUB_OUTPUT
+          "base=$base" >> $env:GITHUB_OUTPUT
+          "python=$($plan.run_python.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "release=$($plan.run_release.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "engine=$($plan.run_engine.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          $jsonText
+
+  python-tests:
+    needs: select
+    if: needs.select.outputs.python == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - shell: pwsh
+        env:
+          TEST_MODE: ${{ needs.select.outputs.mode }}
+          TEST_BASE: ${{ needs.select.outputs.base }}
+        run: |
+          $arguments = if ($env:TEST_MODE -eq 'full') {
+            @('--full', '--only', 'python', '--run')
+          } else {
+            @('--changed', '--only', 'python', '--run')
+          }
+          if ($env:TEST_MODE -ne 'full' -and $env:TEST_BASE) { $arguments += @('--base', $env:TEST_BASE) }
+          python pipeline/scripts/test_changed.py @arguments
+
+  release-manifests:
+    needs: select
+    if: needs.select.outputs.release == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - shell: pwsh
+        env:
+          TEST_MODE: ${{ needs.select.outputs.mode }}
+          TEST_BASE: ${{ needs.select.outputs.base }}
+        run: |
+          $arguments = if ($env:TEST_MODE -eq 'full') {
+            @('--full', '--only', 'release', '--run')
+          } else {
+            @('--changed', '--only', 'release', '--run')
+          }
+          if ($env:TEST_MODE -ne 'full' -and $env:TEST_BASE) { $arguments += @('--base', $env:TEST_BASE) }
+          python pipeline/scripts/test_changed.py @arguments
+
+  native-tests:
+    needs: select
+    if: needs.select.outputs.engine == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - env:
+          TEST_MODE: ${{ needs.select.outputs.mode }}
+          TEST_BASE: ${{ needs.select.outputs.base }}
+        run: |
+          if [ "$TEST_MODE" = full ]; then
+            python pipeline/scripts/test_changed.py --full --only engine --run
+          elif [ -n "$TEST_BASE" ]; then
+            python pipeline/scripts/test_changed.py --changed --only engine --base "$TEST_BASE" --run
+          else
+            python pipeline/scripts/test_changed.py --changed --only engine --run
+          fi

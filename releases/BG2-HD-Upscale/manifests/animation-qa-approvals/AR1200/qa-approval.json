@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR1200",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-09-01T20:52:51.565181Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR1200",
+  "pack_manifest_sha256": "D04C3F7B9F3314EE378769F54759B0C397417E933A35E0DA6BF1CCF3B9CDD755",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "3D881DD1B1A9D35FBB75F2CF1BD44B03EE95BEFF5D7FE2AD032A717ACB2E52AE",
+  "required_resrefs": [
+    "BUTRFLY",
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate/qa-approval.json",
+      "sha256": "03D840461E59FA18C58FB5957E275EEE458C0EF199DECAF9BD668E59C37C2F8B",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "938B16672FF721EE4C3DF6DD90D738569DEBB83446A950C2B9AF0CE68C9565DD",
+      "accepted_resrefs": [
+        "DSTDVL1A"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "BBC8F59FFE2C43BEE2DB2797B93D64A73436ED11935446479ECED06364BB565F",
+      "accepted_resrefs": [
+        "DSTDVL1B"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "057376593E3445870E02D0337D05D27F85EEC30E54FBB5F455410424F1B9F083",
+      "accepted_resrefs": [
+        "DSTDVL1C"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38",
+      "accepted_resrefs": [
+        "BUTRFLY",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 conservée : BUTRFLY xBR2 sans blend ni AA, nearest2 vers x4, interpolation Apollo 8 15→30 FPS et RGB=0 sous alpha nul est accepté pour l’intégration release ; les autres ressources présentes gardent leurs QA acceptées."
+}

@@ -1,0 +1,301 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(InfinityEngine-Enhancer LANGUAGES C CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(MSVC)
+    # v143 is the native toolset for VS 2022.  Do not force it when a
+    # supported older Visual Studio generator is selected for a local build.
+    if(CMAKE_GENERATOR MATCHES "Visual Studio 17 2022")
+        set(CMAKE_GENERATOR_TOOLSET "v143")
+    endif()
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
+
+option(IEE_BUILD_WINDOWS_DLL "Build the EEex DLL target" ${WIN32})
+option(IEE_WARNINGS_AS_ERRORS "Treat project warnings as errors" OFF)
+option(IEE_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+
+if(IEE_BUILD_WINDOWS_DLL AND NOT WIN32)
+    message(FATAL_ERROR "IEE_BUILD_WINDOWS_DLL requires a Windows toolchain")
+endif()
+
+include(CTest)
+include(FetchContent)
+
+function(iee_configure_target target)
+    if(WIN32)
+        # windows.h min/max macros break std::min/std::max/numeric_limits.
+        target_compile_definitions(${target} PRIVATE NOMINMAX)
+    endif()
+    if(MSVC)
+        target_compile_options(${target} PRIVATE /W4 /permissive-)
+        if(IEE_WARNINGS_AS_ERRORS)
+            target_compile_options(${target} PRIVATE /WX)
+        endif()
+    else()
+        target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic)
+        if(IEE_WARNINGS_AS_ERRORS)
+            target_compile_options(${target} PRIVATE -Werror)
+        endif()
+    endif()
+
+    if(IEE_ENABLE_SANITIZERS)
+        if(WIN32 OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+            message(FATAL_ERROR "IEE_ENABLE_SANITIZERS requires Clang or GCC on a non-Windows host")
+        endif()
+        target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+        target_link_options(${target} PRIVATE -fsanitize=address,undefined)
+    endif()
+endfunction()
+
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON CACHE BOOL "Disable FetchContent updates after the initial clone" FORCE)
+set(SPDLOG_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
+set(SPDLOG_BUILD_EXAMPLE_HO OFF CACHE BOOL "" FORCE)
+set(SPDLOG_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(SPDLOG_BUILD_BENCH OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    # renovate: datasource=github-tags depName=gabime/spdlog versioning=semver
+    GIT_TAG 6fa36017cfd5731d617e1a934f0e5ea9c4445b13 # v1.15.3
+)
+FetchContent_MakeAvailable(spdlog)
+
+set(ZLIB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(ZLIB_BUILD_STATIC ON CACHE BOOL "" FORCE)
+set(ZLIB_INSTALL OFF CACHE BOOL "" FORCE)
+FetchContent_Declare(
+    zlib
+    GIT_REPOSITORY https://github.com/madler/zlib.git
+    # renovate: datasource=github-tags depName=madler/zlib versioning=semver
+    GIT_TAG da607da739fa6047df13e66a2af6b8bec7c2a498 # v1.3.2
+)
+FetchContent_MakeAvailable(zlib)
+
+set(IEE_VERSION "0.0.0-dev")
+find_package(Git QUIET)
+if(GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    execute_process(
+        COMMAND "${GIT_EXECUTABLE}" describe --tags --always --dirty
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        OUTPUT_VARIABLE IEE_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+endif()
+if(IEE_VERSION STREQUAL "")
+    set(IEE_VERSION "0.0.0-dev")
+endif()
+
+message(STATUS "InfinityEngine-Enhancer version: ${IEE_VERSION}")
+
+set(IEE_GENERATED_DIR "${CMAKE_BINARY_DIR}/generated")
+configure_file(
+    "${CMAKE_SOURCE_DIR}/src/iee/core/version.h.in"
+    "${IEE_GENERATED_DIR}/iee/core/version.h"
+    @ONLY
+)
+
+add_library(iee_common STATIC
+    src/iee/core/area_animation_clock_probe.cpp
+    src/iee/core/area_animation_timeline.cpp
+    src/iee/core/cache_budget_simulator.cpp
+    src/iee/core/config.cpp
+    src/iee/core/logger.cpp
+    src/iee/core/map_page_shadow.cpp
+    src/iee/core/map_texture_telemetry.cpp
+    src/iee/core/map_view_burst_telemetry.cpp
+    src/iee/core/native_occlusion_probe.cpp
+    src/iee/core/pattern_scanner.cpp
+    src/iee/core/process_resource_telemetry.cpp
+    src/iee/core/pvr_demand_telemetry.cpp
+    src/iee/game/area_texture.cpp
+    src/iee/game/build_manifest.cpp
+    src/iee/game/dds_texture.cpp
+    src/iee/game/game_addrs.cpp
+    src/iee/game/resref_runtime.cpp
+    src/iee/game/shader_override.cpp
+    src/iee/game/tile_liquid.cpp
+    src/iee/game/tile_upscale.cpp
+    src/iee/game/tis_palette.cpp
+    src/iee/game/tis_runtime.cpp
+    src/iee/game/wed_runtime.cpp
+)
+
+target_include_directories(iee_common
+    PUBLIC
+        "${CMAKE_SOURCE_DIR}/src"
+        "${IEE_GENERATED_DIR}"
+)
+
+target_link_libraries(iee_common
+    PUBLIC
+        spdlog::spdlog
+        ZLIB::ZLIBSTATIC
+)
+
+if(WIN32)
+    target_link_libraries(iee_common PUBLIC version psapi)
+endif()
+
+target_compile_features(iee_common PUBLIC cxx_std_20)
+iee_configure_target(iee_common)
+
+if(IEE_BUILD_WINDOWS_DLL)
+    if(CMAKE_VERSION VERSION_LESS 3.28)
+        # EXCLUDE_FROM_ALL below keeps MinHook's unconditional install() rules
+        # out of `cmake --install` (the CI layout check compares the install
+        # tree against the release bundle).
+        message(FATAL_ERROR "IEE_BUILD_WINDOWS_DLL requires CMake 3.28 or newer")
+    endif()
+    FetchContent_Declare(
+        minhook
+        GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
+        # renovate: datasource=github-tags depName=TsudaKageyu/minhook versioning=semver
+        GIT_TAG c3fcafdc10146beb5919319d0683e44e3c30d537 # v1.3.4
+        EXCLUDE_FROM_ALL
+    )
+    FetchContent_MakeAvailable(minhook)
+
+    add_library(InfinityEngine-Enhancer SHARED
+        src/iee/am0205e_animation_x4_test.cpp
+        src/iee/am0700a_animation_x4_test.cpp
+        src/iee/am3000a_frame_x4_test.cpp
+        src/iee/area_animation_clock_diagnostics.cpp
+        src/iee/area_animation_x4_registry.cpp
+        src/iee/area_state.cpp
+        src/iee/biglogo_ui_upscale.cpp
+        src/iee/bridge_transition.cpp
+        src/iee/creature_sprite_x2.cpp
+        src/iee/diagnostics.cpp
+        src/iee/dll_main.cpp
+        src/iee/exports.cpp
+        src/iee/features/tile_render.cpp
+        src/iee/frame_hook.cpp
+        src/iee/hooks.cpp
+        src/iee/map_page_prewarm.cpp
+        src/iee/native_occlusion_bridge.cpp
+        src/iee/post_process.cpp
+        src/iee/shader_diagnostics.cpp
+        src/iee/shader_probe.cpp
+        src/iee/shader_uniform_bridge.cpp
+        src/iee/supersample.cpp
+        src/iee/water_textures.cpp
+        src/iee/game/opengl_types.cpp
+        src/iee/game/renderer.cpp
+    )
+
+    target_link_libraries(InfinityEngine-Enhancer
+        PRIVATE
+            iee_common
+            minhook
+        psapi
+        opengl32
+        Cabinet
+        dbghelp
+        winmm
+        mfplat
+        mfreadwrite
+        mfuuid
+    )
+
+    target_compile_definitions(InfinityEngine-Enhancer
+        PRIVATE
+            _WINDOWS
+            _USRDLL
+            WIN32_LEAN_AND_MEAN
+            NOMINMAX
+    )
+
+    set_target_properties(InfinityEngine-Enhancer PROPERTIES OUTPUT_NAME "InfinityEngine-Enhancer")
+    iee_configure_target(InfinityEngine-Enhancer)
+    if(MSVC)
+        # Keep optimized release binaries while emitting a separate linker PDB
+        # for crash diagnosis. /DEBUG changes linker optimization defaults, so
+        # preserve dead-code/data folding explicitly.
+        target_compile_options(iee_common PRIVATE "$<$<CONFIG:Release>:/Zi>")
+        target_compile_options(InfinityEngine-Enhancer PRIVATE "$<$<CONFIG:Release>:/Zi>")
+        target_link_options(InfinityEngine-Enhancer PRIVATE
+            "$<$<CONFIG:Release>:/DEBUG:FULL>"
+            "$<$<CONFIG:Release>:/OPT:REF>"
+            "$<$<CONFIG:Release>:/OPT:ICF>"
+        )
+    endif()
+
+    set(IEE_RELEASE_BUNDLE_DIR "${CMAKE_BINARY_DIR}/release-bundle")
+    set(IEE_SYMBOLS_DIR "${CMAKE_BINARY_DIR}/symbols")
+    add_custom_target(release_bundle
+        COMMAND "${CMAKE_COMMAND}" -E rm -rf "${IEE_RELEASE_BUNDLE_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E rm -rf "${IEE_SYMBOLS_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E make_directory "${IEE_RELEASE_BUNDLE_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E make_directory "${IEE_SYMBOLS_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:InfinityEngine-Enhancer>" "${IEE_RELEASE_BUNDLE_DIR}/InfinityEngine-Enhancer.dll"
+        COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_PDB_FILE:InfinityEngine-Enhancer>" "${IEE_SYMBOLS_DIR}/InfinityEngine-Enhancer.pdb"
+        COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/tools/InfinityEngine-Enhancer.sample.ini" "${IEE_RELEASE_BUNDLE_DIR}/InfinityEngine-Enhancer.sample.ini"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/override" "${IEE_RELEASE_BUNDLE_DIR}/override"
+        COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/tools/M_IEEE.lua" "${IEE_RELEASE_BUNDLE_DIR}/override/M_IEEE.lua"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/game-textures" "${IEE_RELEASE_BUNDLE_DIR}/iee-textures"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/bridge-transition" "${IEE_RELEASE_BUNDLE_DIR}/iee-assets/bridge-transition"
+        DEPENDS InfinityEngine-Enhancer
+        VERBATIM
+    )
+
+    install(TARGETS InfinityEngine-Enhancer RUNTIME DESTINATION . LIBRARY DESTINATION .)
+    install(
+        FILES
+            "${CMAKE_SOURCE_DIR}/tools/InfinityEngine-Enhancer.sample.ini"
+        DESTINATION .
+    )
+    install(FILES "${CMAKE_SOURCE_DIR}/tools/M_IEEE.lua" DESTINATION override)
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/override/" DESTINATION override)
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/game-textures/" DESTINATION iee-textures)
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/bridge-transition/" DESTINATION iee-assets/bridge-transition)
+else()
+    message(STATUS "Windows DLL target disabled on this host; building iee_common and tests only.")
+endif()
+
+if(BUILD_TESTING)
+    add_executable(iee_map_page_shadow_preflight
+        tools/map_page_shadow_preflight.cpp
+    )
+    target_link_libraries(iee_map_page_shadow_preflight PRIVATE iee_common)
+    iee_configure_target(iee_map_page_shadow_preflight)
+
+    add_executable(iee_tests
+        tests/iee_tests.cpp
+    )
+
+    if(WIN32)
+        # Exercise the production registry-v1/v2 parser without requiring a
+        # live game or GL context. Texture creation remains outside the test.
+        target_sources(iee_tests PRIVATE
+            src/iee/area_animation_x4_registry.cpp
+            src/iee/creature_sprite_x2.cpp
+            src/iee/game/opengl_types.cpp
+        )
+        target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
+    endif()
+
+    target_link_libraries(iee_tests PRIVATE iee_common)
+    iee_configure_target(iee_tests)
+    add_test(NAME iee_tests COMMAND iee_tests WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+    if(WIN32)
+        # Isolated regression test for DLL worker ownership. It deliberately
+        # does not link the renderer or registry so lifecycle failures remain
+        # diagnosable even while those subsystems evolve.
+        add_executable(iee_bridge_worker_tests
+            tests/bridge_worker_lifecycle_tests.cpp
+        )
+        target_include_directories(iee_bridge_worker_tests PRIVATE "${CMAKE_SOURCE_DIR}/src")
+        target_compile_features(iee_bridge_worker_tests PRIVATE cxx_std_20)
+        iee_configure_target(iee_bridge_worker_tests)
+        add_test(NAME iee_bridge_worker_tests COMMAND iee_bridge_worker_tests)
+    endif()
+endif()

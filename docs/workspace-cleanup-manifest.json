@@ -1,0 +1,128 @@
+{
+  "schema": "bg2-upscale-workspace-cleanup-v1",
+  "date": "2026-08-31",
+  "authority_policy": "Migration evidence only. This file does not grant production, QA, installation, selection or release status.",
+  "operations": [
+    {
+      "id": "ar0410-legacy-upscale-tests",
+      "action": "move",
+      "domain": "maps",
+      "asset_ids": [
+        "maps:AR0410:day"
+      ],
+      "source_roots": [
+        "maps/AR0410/rendus-x1/tuiles-principales",
+        "maps/AR0410/rendus-x1/tuiles-principales/tests upscsale"
+      ],
+      "target": "maps/AR0410/runs/legacy-upscale-tests-20260818",
+      "file_count": 9,
+      "bytes": 82873432,
+      "aggregate_sha256": "8081397B9A1C450C43770D5685BA27C5F96B89F231A15F1168969A7B9E2EF740",
+      "status": "historical-experiment-unselected",
+      "notes": "Four root experiments and five byte-identical copies formerly stored under the typo directory tests upscsale. No selection or QA was inferred."
+    },
+    {
+      "id": "video-legacy-webm-conversions",
+      "action": "move",
+      "domain": "videos",
+      "asset_selector": "all movie rows whose source directory had an adjacent WebM conversion",
+      "source_roots": [
+        "video/<movie-source-directory>"
+      ],
+      "target": "video/<movie-source-directory>/runs/legacy-webm-conversion-20260814",
+      "file_count": 37,
+      "bytes": 558372609,
+      "aggregate_sha256": "039AE2BA81D96BF275F225E1B8350D15741F1B356B6BA2D5DB553B04A4958105",
+      "status": "historical-work-products-unselected",
+      "notes": "Systematic WebM derivatives retained per movie asset; canonical WBM sources remain unchanged."
+    },
+    {
+      "id": "video-pocketzz-comfyui-experiments",
+      "action": "move",
+      "domain": "videos",
+      "asset_ids": [
+        "videos:movie-default-pocketzz"
+      ],
+      "source_roots": [
+        "video/pocketzz"
+      ],
+      "target": "video/pocketzz/runs/pocketzz-comfyui-experiments-20260814",
+      "file_count": 275,
+      "bytes": 203514152,
+      "aggregate_sha256": "0F0BE99387F3A28C4AADAEDCBA63C4F923831B2E9E934DA5E43E176727461CCC",
+      "status": "historical-work-products-unselected",
+      "notes": "Five MP4 experiments and three 90-frame review sequences retained without QA inference."
+    },
+    {
+      "id": "video-daynite-comfyui-experiment",
+      "action": "move",
+      "domain": "videos",
+      "asset_ids": [
+        "videos:movie-default-daynite"
+      ],
+      "source_roots": [
+        "video/daynite"
+      ],
+      "target": "video/daynite/runs/daynite-comfyui-experiment-20260814",
+      "file_count": 1,
+      "bytes": 4261730,
+      "aggregate_sha256": "A8CA6249639F2BE94573820DB2F06175DC6D53DE912372E6DCEFBD45F0F3CBA6",
+      "status": "historical-work-products-unselected",
+      "notes": "One MP4 experiment retained without QA inference."
+    },
+    {
+      "id": "video-restdung-comfyui-experiment",
+      "action": "move",
+      "domain": "videos",
+      "asset_ids": [
+        "videos:movie-default-restdung"
+      ],
+      "source_roots": [
+        "video/restdung"
+      ],
+      "target": "video/restdung/runs/restdung-comfyui-experiment-20260814",
+      "file_count": 1,
+      "bytes": 1367556,
+      "aggregate_sha256": "928046A1C4E0F180210D1E0BAC40C9F2605EBDB297980B0261F4B758EF4B6680",
+      "status": "historical-work-products-unselected",
+      "notes": "One MP4 experiment retained without QA inference."
+    },
+    {
+      "id": "workspace-temp-20260827-20260828",
+      "action": "archive",
+      "domain": "global",
+      "source_roots": [
+        "temp"
+      ],
+      "target": "archive/workspace-cleanup-20260831/temp-20260827-20260828",
+      "file_count": 122,
+      "bytes": 6843907,
+      "aggregate_sha256": "CF27B738275FAD13CE8753E869ED072C12324B2E3D81BE806CA4D75841F53854",
+      "status": "archived-restorable",
+      "notes": "Logs, plans, review images and one tool DLL preserved verbatim outside active workspace state."
+    },
+    {
+      "id": "empty-animation-run-skeleton",
+      "action": "remove-empty-directory",
+      "domain": "animations",
+      "source_roots": [
+        "animations/runs/am0900dm-seedvr7b-lab-x4"
+      ],
+      "target": "",
+      "file_count": 0,
+      "bytes": 0,
+      "status": "removed-proven-empty-unreferenced",
+      "notes": "Removed only after confirming zero files and no authority, manifest, index, QA or release reference."
+    }
+  ],
+  "deferred": [
+    {
+      "asset_ids": [
+        "maps:AR0016:day",
+        "maps:AR0017:day"
+      ],
+      "decision": "do-not-regenerate",
+      "reason": "Only missing historical intermediates remain; final selected builds exist and no current validation requires regeneration."
+    }
+  ]
+}

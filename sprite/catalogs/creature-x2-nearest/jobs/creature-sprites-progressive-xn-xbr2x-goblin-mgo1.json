@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif créatures x2 NEAREST — ajout gobelin MGO1",
+  "members": [
+    "sprite/families/playable-characters/6102-dwarf-male-fighter/family-runs/complete-xn-xbr2x/jobs/dwarf-male-fighter-complete-xn-xbr2x.json",
+    "sprite/families/playable-characters/6110-human-female-fighter/family-runs/complete-xn-xbr2x/jobs/human-female-fighter-complete-xn-xbr2x.json",
+    "sprite/families/monster-icewind/e4xx-goblins/e400-mgo1-goblin-axe/catalog-x2-nearest/jobs/goblin-mgo1-xbr2x-catalog.json"
+  ],
+  "paths": {
+    "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+    "run_dir": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x6102",
+        "name": "Fighter Male Dwarf complet",
+        "areas": ["AR0411"],
+        "creatures": ["PLAYER1"]
+      },
+      {
+        "animation_id": "0x6110",
+        "name": "Fighter Female Human complet",
+        "areas": ["AR0602"],
+        "creatures": ["PLAYER1"]
+      },
+      {
+        "animation_id": "0xE400",
+        "name": "Gobelin à la hache MGO1",
+        "areas": ["AR0602"],
+        "creatures": ["ICGOB03", "FSGOBL"]
+      }
+    ]
+  }
+}

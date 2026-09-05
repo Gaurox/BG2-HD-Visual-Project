@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "OH6000",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-09-01T20:52:51.565181Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/OH6000",
+  "pack_manifest_sha256": "F4748C693E182C4C359D87D8DF838B587403959D11C612D17C2912A944D3245F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+  "required_resrefs": [
+    "BUTRFLY"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate/qa-approval.json",
+      "sha256": "03D840461E59FA18C58FB5957E275EEE458C0EF199DECAF9BD668E59C37C2F8B",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078",
+      "accepted_resrefs": [
+        "BUTRFLY"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 conservée : BUTRFLY xBR2 sans blend ni AA, nearest2 vers x4, interpolation Apollo 8 15→30 FPS et RGB=0 sous alpha nul est accepté pour l’intégration release ; les autres ressources présentes gardent leurs QA acceptées."
+}

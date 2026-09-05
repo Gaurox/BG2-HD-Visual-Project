@@ -1,0 +1,929 @@
+{
+  "$schema": "../schemas/animation-release-candidates.schema.json",
+  "schema_version": 3,
+  "generated_by": "pipeline/scripts/animation_release.py",
+  "candidates": [
+    {
+      "area": "AR0602",
+      "component_id": 3000,
+      "component_label": "animation-ar0602",
+      "payload_group": "animation-ar0602",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-v3-ef4ac04675374e8a.json",
+      "qa_approval_sha256": "E17E18AB5D60034CD46936F97A0A3A40171894110790DD4E58FC6ED18F36DFE6",
+      "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602",
+      "source_runs": [
+        {
+          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+          "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+          "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+          "role": "final",
+          "asset_ids": [
+            "BUBBLES2"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "FE30DC02C42364347F8375B2225DE7AEAA570A8D03AD94303B06C802937DE172",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "A43483C5BC55E2B865AAD7D296B9C3B29C7DDA8067AA27EC5ECBEF9137848C44",
+      "registry_bytes": 6092,
+      "required_resrefs": [
+        "AM0602AA",
+        "AM0602AB",
+        "AM0602AC",
+        "AM0602B",
+        "AM0602C",
+        "AM0602D",
+        "AM0602E",
+        "AM0602F",
+        "AM0602G",
+        "BUBBLES2",
+        "FLAME2S",
+        "PORTL1A",
+        "PORTL1B"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0900",
+      "component_id": 3001,
+      "component_label": "animation-ar0900",
+      "payload_group": "animation-ar0900",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0900/qa-approval.json",
+      "qa_approval_sha256": "031807987C82E798F80687B8C3AF998EF617E0882EFB270028780C046A4D9B4A",
+      "source_pack": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3/AR0900",
+      "source_run": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "35221D602DF6A493DB71E130542E9E06A2B18E915D7433719624569B21970C93",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "10CE10476A79B728E42D0CB68F75EA631D3DDC2A4A81FFAA1FA1C01EA226B01C",
+      "registry_bytes": 1264,
+      "required_resrefs": [
+        "AM0900DM"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0516",
+      "component_id": 3002,
+      "component_label": "animation-ar0516",
+      "payload_group": "animation-ar0516",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0516/qa-approval.json",
+      "qa_approval_sha256": "7752C484F21882CEA859AC8022C4FA0D034D5B5A974F3025B629D00557860DC2",
+      "source_pack": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1/AR0516",
+      "source_run": "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "89888DA067E25CE9816C7CC843F59A21210050C6ACBD699A9393789E3EB9D270",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "801A3902C7A0A6437A893A79F4DDD5FD05E1810E0F2A1A9F0A319A8CBF01023E",
+      "registry_bytes": 4364,
+      "required_resrefs": [
+        "AM0516LA",
+        "AM0516LB",
+        "AM0516LC",
+        "AM0516LD",
+        "SPHINCT",
+        "SPHINCT2"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "occlusion_contract": {
+        "mode": "native-wed-bridge-v1",
+        "map_component_id": 1580,
+        "map_component_label": "map-ar0516",
+        "map_payload_group": "map-ar0516",
+        "source_spec": "maps/wed-corrections/AR0516/lower-sphinct-cover.json",
+        "source": "maps/wed-corrections/AR0516/validated-output-v1/AR0516.WED",
+        "destination": "override/AR0516.WED",
+        "bytes": 41502,
+        "sha256": "8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A",
+        "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md",
+        "qa_evidence_sha256": "003B47EC8B83F3920B897A675BB1728E8DE653DC244F04C9D3BAF6160785F1CA",
+        "ini_owner": "core-steam",
+        "ini_section": "Shaders",
+        "ini_key": "EnableNativeOcclusionBridge",
+        "ini_value": "true"
+      }
+    },
+    {
+      "area": "AR0700",
+      "component_id": 3003,
+      "component_label": "animation-ar0700",
+      "payload_group": "animation-ar0700",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0700/qa-approval.json",
+      "qa_approval_sha256": "5CC20167591B20B5D7F6548B8AE50067433BE18EF53F6FB7525F970C0D845411",
+      "source_pack": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/AR0700",
+      "source_run": "animations/runs/ar0700-fountains-apo8-x4-30fps-v2 + animations/runs/ar0700-fire1-seedvr7b-lab-x4 + animations/runs/ar0700-fire4-seedvr7b-lab-x4",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "30D8B5C9461B9E7E2136F34788D254F85544629F5473FCA89D795926859BAA9A",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "CA2E6C5D797CD54A5FE81AB10BB059AFE39C74D19EDBD0CDB94A8CA8B63DCF14",
+      "registry_bytes": 1516,
+      "required_resrefs": [
+        "AM0700A",
+        "AM0700B",
+        "AM0700C",
+        "AM0700D",
+        "FIRE_1",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0603",
+      "component_id": 3004,
+      "component_label": "animation-ar0603",
+      "payload_group": "animation-ar0603",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0603/qa-approval.json",
+      "qa_approval_sha256": "4706C6E7AC2254FE852843945619D5317F40D9FC3AF9B1C032501700D9C5BBF6",
+      "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0603",
+      "source_run": "animations/runs/ar0603-all-bam-apo8-x4-30fps-v2 + proto/portals-spline-fit1-feather8.py (spline-fit1 + inner-feather8 alpha on PORTL2A; proto proto/PORTL2A-spline-fit1-feather8-x4)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "E26DCF806E599F8F806C5FECCCA54C745D854708F55A0DA56E3B8879EC6B85BC",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 2,
+      "registry_sha256": "C399B0E0BBE3B0B3DA677010DB616F8BB0615450CEFA0221861FC53F863B34DD",
+      "registry_bytes": 3588,
+      "required_resrefs": [
+        "AM0603A",
+        "AM0603B",
+        "AM0603C1",
+        "AM0603C2",
+        "AM0603D1",
+        "AM0603D2",
+        "AM0603D3",
+        "AM0603H",
+        "AM0603I",
+        "PORTL2A"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+    },
+    {
+      "area": "AR0307",
+      "component_id": 3005,
+      "component_label": "animation-ar0307",
+      "payload_group": "animation-ar0307",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0307/qa-approval.json",
+      "qa_approval_sha256": "EF45A2F59DB4B05EBCCC8D456A09460D933287C388D7767754BCD8AB03821875",
+      "source_pack": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0307",
+      "source_run": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831 + animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 (V2 TimedTimeline 30 FPS apo-8; RGB=0 sous alpha nul réappliqué après interpolation)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9522050D6761C17823A0B2C4D8006547FE3930F61FD733818A037E318C04A7A1",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "61A97F5EA38F06E7B710908772B31ACB0120D8A233ACAC3029B0EDC86F7669D8",
+      "registry_bytes": 1732,
+      "required_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0329",
+      "component_id": 3006,
+      "component_label": "animation-ar0329",
+      "payload_group": "animation-ar0329",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0329/qa-approval.json",
+      "qa_approval_sha256": "2546698A24CFCDEF6EE99B7FE9F4A8010190261DD0C06F868D9D3F7CFDAFA384",
+      "source_pack": "animations/packs-par-zone/combined-20260831-ar0307-ar0329-six-bam-30fps-v2/AR0329",
+      "source_run": "animations/runs/ar0307-ar0329-six-bam-seedvr7b-lab-x4-20260831 + animations/runs/ar0307-ar0329-six-bam-apo8-x4-30fps-v2-20260831 (V2 TimedTimeline 30 FPS apo-8; RGB=0 sous alpha nul réappliqué après interpolation)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "067EAA1FCF0760EBC6C14B7DF9B6E04F88DA312ACD4A9A5DC734DD77C9EBAAA4",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "61A97F5EA38F06E7B710908772B31ACB0120D8A233ACAC3029B0EDC86F7669D8",
+      "registry_bytes": 1732,
+      "required_resrefs": [
+        "AM0307BH",
+        "AM307RED",
+        "AM307TT1",
+        "AM307UR1",
+        "AM307UR2",
+        "AM307UR3",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2100",
+      "component_id": 3007,
+      "component_label": "animation-ar2100",
+      "payload_group": "animation-ar2100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2100/qa-approval.json",
+      "qa_approval_sha256": "233B67667E585CAB8EE0EF91CC9CE5E40A09B97B6400E070C71331C1074599E7",
+      "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-30fps-v2/AR2100",
+      "source_run": "animations/runs/ar2100-portals-seedvr7b-lab-x4 + animations/runs/ar2100-portals-apo8-x4-30fps-v2 (V2 TimedTimeline 15->30 FPS Apollo 8; alpha source entièrement opaque, sans spline fit)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "71BFCEE93A27A8BADA2D2F1769CFD7E83A59757F140B2E51C111B5FC803C460B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "577BFEBD66D2A4103969A4ED6DA35E84DCB5788F8FDD1504852302C70264B155",
+      "registry_bytes": 792,
+      "required_resrefs": [
+        "AM2100PA",
+        "AM2100PB",
+        "AM2100PC"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0309",
+      "component_id": 3008,
+      "component_label": "animation-ar0309",
+      "payload_group": "animation-ar0309",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0309/qa-approval.json",
+      "qa_approval_sha256": "0767290AA6851ED95DBC061AEF271810FA70F6BCF4F7393EF81B1DBD3BFFE6CA",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR0309",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "D5010468B66E0E7B112B969E1A516CC004181E4C8EAFECCCF9C711B92142D18F",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0800",
+      "component_id": 3009,
+      "component_label": "animation-ar0800",
+      "payload_group": "animation-ar0800",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0800/qa-approval.json",
+      "qa_approval_sha256": "E7B157A8543141374D1C37B0A82624F2D6DB2CE07DFD152AEA68B6A94B4B0A4C",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR0800",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "CAA97EB7F104004C3A01FC11C8F51A003C5FA0517A103AE9240689AB6218D78D",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1100",
+      "component_id": 3011,
+      "component_label": "animation-ar1100",
+      "payload_group": "animation-ar1100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1100/qa-approval.json",
+      "qa_approval_sha256": "977C906144067C4EA4852B65413ABEA8B8F14DB8A338C5C2C7D633FAAF6517F6",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR1100",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2 + animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "A456E65C3C5C654885F3C5EFF4013B29245C5F49A8730A329A5F54C7996A56E1",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1BEFAC2D20EC71088D8ABF8B02DE02A62226088949DB10BABA92D594FBEC9BA7",
+      "registry_bytes": 8352,
+      "required_resrefs": [
+        "BUTRFLY",
+        "CHIMSMK",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1200",
+      "component_id": 3012,
+      "component_label": "animation-ar1200",
+      "payload_group": "animation-ar1200",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1200/qa-approval.json",
+      "qa_approval_sha256": "5CFC7C86157A1A843C7B409EC1CDC14A5690E2ECA8F88F350FA1B40ED733CE63",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR1200",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "D04C3F7B9F3314EE378769F54759B0C397417E933A35E0DA6BF1CCF3B9CDD755",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "3D881DD1B1A9D35FBB75F2CF1BD44B03EE95BEFF5D7FE2AD032A717ACB2E52AE",
+      "registry_bytes": 7956,
+      "required_resrefs": [
+        "BUTRFLY",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1700",
+      "component_id": 3013,
+      "component_label": "animation-ar1700",
+      "payload_group": "animation-ar1700",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1700/qa-approval.json",
+      "qa_approval_sha256": "DA4EC68C6A4F61DF1BB1463407D4E373FB53D2DC90851689EC5D01C69F3124F8",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR1700",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "7FD321039826A424128ECBB2560543F212D7FE4467A58EDE5BFFE69983839BB1",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "3D881DD1B1A9D35FBB75F2CF1BD44B03EE95BEFF5D7FE2AD032A717ACB2E52AE",
+      "registry_bytes": 7956,
+      "required_resrefs": [
+        "BUTRFLY",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1800",
+      "component_id": 3014,
+      "component_label": "animation-ar1800",
+      "payload_group": "animation-ar1800",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1800/qa-approval.json",
+      "qa_approval_sha256": "217774D4E4A69F8C17FE6224466751E9B5E077E014A6142AD529F2B6E2C4DDA0",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR1800",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "3876E4D42A052C4A0C82B416C46E8339933A0A301897EA079735CD27080543BC",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2000",
+      "component_id": 3015,
+      "component_label": "animation-ar2000",
+      "payload_group": "animation-ar2000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2000/qa-approval.json",
+      "qa_approval_sha256": "F213255CD07CBEAF5E3D7F4A0733CE6AA6FB547F3EEDE14033C7D527FCFC76FD",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR2000",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "4D507B904E4BD759F8178C927ADA58A5577B12AFA394FA50634C2374B6FB4F6C",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "A6D59F6ADC1BF780EF4D46F793F614DF1CF67A48AD3BE55FF0E057A22935B37A",
+      "registry_bytes": 984,
+      "required_resrefs": [
+        "BUTRFLY",
+        "CHIMSMK"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR3000",
+      "component_id": 3016,
+      "component_label": "animation-ar3000",
+      "payload_group": "animation-ar3000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR3000/qa-approval.json",
+      "qa_approval_sha256": "3852E5C9D1702246B166DE9793FFE3DFEAD6CC3C6713A1DC8D5CD031ED15400C",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR3000",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "C40A61CADAF03CA128477E850F88148DE12AA5212F686BB7DED35B9329F27154",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR5500",
+      "component_id": 3017,
+      "component_label": "animation-ar5500",
+      "payload_group": "animation-ar5500",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR5500/qa-approval.json",
+      "qa_approval_sha256": "02745003C340FE49A1E497569AC01A9F3B51B8A6C24464B3666EFAE9A95E5003",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR5500",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "83A9A525FFDEEA03145A588FF572BD74B32B1572A1057FFDA1BBEB6326161AE8",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "3D881DD1B1A9D35FBB75F2CF1BD44B03EE95BEFF5D7FE2AD032A717ACB2E52AE",
+      "registry_bytes": 7956,
+      "required_resrefs": [
+        "BUTRFLY",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR6400",
+      "component_id": 3018,
+      "component_label": "animation-ar6400",
+      "payload_group": "animation-ar6400",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR6400/qa-approval.json",
+      "qa_approval_sha256": "BEDAA3633E70759335F655F3C17953722DD829774702B3D55F5B8CA9AD1F465E",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/AR6400",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "53544695FB137C901EB68F95E5C6EFCFB3ED9EC36B92A73EFDBFE3BE180CFBD0",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH4000",
+      "component_id": 3019,
+      "component_label": "animation-oh4000",
+      "payload_group": "animation-oh4000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH4000/qa-approval.json",
+      "qa_approval_sha256": "0BBECA58AED28C3540064FAA1313974282E239902A4A44527F90A0CB980E3900",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/OH4000",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "DA8AB231F2B170A4005BB4A0251B6FDD05947843002970F05575F77458BAE656",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6000",
+      "component_id": 3021,
+      "component_label": "animation-oh6000",
+      "payload_group": "animation-oh6000",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6000/qa-approval.json",
+      "qa_approval_sha256": "C16192A9C4CC4B71AB7A097BB24CCB568D87578CC6ADEFDAA5C4C454F6D2A6DD",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/OH6000",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "F4748C693E182C4C359D87D8DF838B587403959D11C612D17C2912A944D3245F",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "D07E64961E2ACC8A23FA77D961A73EA838F8649C7A2CAFA090E8B81CD7C0C16B",
+      "registry_bytes": 588,
+      "required_resrefs": [
+        "BUTRFLY"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6100",
+      "component_id": 3022,
+      "component_label": "animation-oh6100",
+      "payload_group": "animation-oh6100",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6100/qa-approval.json",
+      "qa_approval_sha256": "4B7F41646DBDAD620D59582F21ECD00EBD5E178A920B8D97785D3F0C762A4A1A",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/OH6100",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "5C143FB496D797D436572CAC40516F8B5DE5F56B8B15801CE00D2A13C365BE73",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "F2E20E1EDCEFFF0723ED2E0546B4910F1C3D3B133B917F24F84E68AECB0D4D84",
+      "registry_bytes": 816,
+      "required_resrefs": [
+        "BUTRFLY",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH6400",
+      "component_id": 3023,
+      "component_label": "animation-oh6400",
+      "payload_group": "animation-oh6400",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH6400/qa-approval.json",
+      "qa_approval_sha256": "5C9503157F61AB524477719FF43E4C1BA332285FEE77193889CA894AE7FD4680",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-dstdvl-butterfly-xbr2x-nearest2-30fps-v3-opaque-rgb-dilate-blend-safe-zero-candidate/OH6400",
+      "source_run": "animations/runs/butrfly-xbr2x-nearest2-x4 + animations/runs/butrfly-xbr2x-nearest2-x4-30fps-v3-opaque-rgb-dilate (small-subject-xbr2-nearest2-apollo30-rgb-safe; xBR 2x sans blend ni AA, nearest 2x vers x4 ; V2 TimedTimeline 15→30 FPS Apollo 8, entrée nearest-opaque-dilate ; RGB=0 sous alpha nul dans le pack blended final) + animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "1244165B1B36A1F927F862F6AC40D0612379B49F57B0A90AE2ED3DBBACABD769",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "3D881DD1B1A9D35FBB75F2CF1BD44B03EE95BEFF5D7FE2AD032A717ACB2E52AE",
+      "registry_bytes": 7956,
+      "required_resrefs": [
+        "BUTRFLY",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0300",
+      "component_id": 3024,
+      "component_label": "animation-ar0300",
+      "payload_group": "animation-ar0300",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0300/qa-approval.json",
+      "qa_approval_sha256": "45D5B9D647B1C3D77DDE054B1E439BCE6794D21863CC5E74FCA08CB1E6FA0E49",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0300",
+      "source_run": "animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "2B9393ABC7F3C06AD5985F959083D489E403F623D626098B08664743E219FAB7",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "65B5216FB5DB1D7F440FB590B0E4B64233F6B8813A602EDF4B3B2143949CACF6",
+      "registry_bytes": 648,
+      "required_resrefs": [
+        "CHIMSMK",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0400",
+      "component_id": 3025,
+      "component_label": "animation-ar0400",
+      "payload_group": "animation-ar0400",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0400/qa-approval.json",
+      "qa_approval_sha256": "816C40F29FE420322DD898B321A09E28760349C6D865FFF8B5D94743513095C3",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0400",
+      "source_run": "animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9DA5F09804DF6607DF5235B624D30283F58C0EAE71CBE9B1AB0EA860B3C934C0",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "65B5216FB5DB1D7F440FB590B0E4B64233F6B8813A602EDF4B3B2143949CACF6",
+      "registry_bytes": 648,
+      "required_resrefs": [
+        "CHIMSMK",
+        "FIRE_4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0500",
+      "component_id": 3026,
+      "component_label": "animation-ar0500",
+      "payload_group": "animation-ar0500",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0500/qa-approval.json",
+      "qa_approval_sha256": "ACE822D93553B34A599565D02758D2AB39635E36D509CFFA11ECF74D0530385E",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0500",
+      "source_run": "animations/runs/chimsmk-apo8-x4-30fps-v2-spline-fit1-feather4-oval-edgefade20x6-candidate-v2",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "61AB4384C9F6A14AB9040235AF30F4F62504CD43232D22FCEAA05E670E4A3D20",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "66FEB12DDD72F9BCA82637CF4FC847C991C80D793D68DC47580082C44D8EC4E4",
+      "registry_bytes": 420,
+      "required_resrefs": [
+        "CHIMSMK"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0411",
+      "component_id": 3027,
+      "component_label": "animation-ar0411",
+      "payload_group": "animation-ar0411",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-v3-7d222d5d634ed849.json",
+      "qa_approval_sha256": "EA9FB93896DE4A3A3E322B57072ED9F7917B309159076B83DF44B66B71E84554",
+      "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
+      "source_runs": [
+        {
+          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+          "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+          "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+          "role": "final",
+          "asset_ids": [
+            "BUBBLES2"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "09A5555A7CB89BEA7593D3F661A700C831C39D7D2FEF0063A7F75768E96DA93B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "461680C566E61FFAD44EF0F4BCD19F8C3A0F4A1ED177EE1BFC681F2D175CAD51",
+      "registry_bytes": 10448,
+      "required_resrefs": [
+        "BUBBLES2",
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0414",
+      "component_id": 3028,
+      "component_label": "animation-ar0414",
+      "payload_group": "animation-ar0414",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
+      "qa_approval_sha256": "3BAEF960BB382564707D4B9B759E217FCB01D05B2A0DD890B520B9BEA07B939C",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+      "registry_bytes": 7392,
+      "required_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR1600",
+      "component_id": 3029,
+      "component_label": "animation-ar1600",
+      "payload_group": "animation-ar1600",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1600/qa-approval.json",
+      "qa_approval_sha256": "50C221832C815C4444D029A82E10F66E5214B1DE518934C482C7218E514402F5",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR1600",
+      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "99A54A20F39680459F955046B882784A5E0997AE87A23AE1CAC8A2C46FEDE9D9",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+      "registry_bytes": 7392,
+      "required_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR6300",
+      "component_id": 3031,
+      "component_label": "animation-ar6300",
+      "payload_group": "animation-ar6300",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR6300/qa-approval.json",
+      "qa_approval_sha256": "7B1A03A7C70A62EDFB344861956DA4F9B0EAFFF916656592F1DE0CD5FACD8AC9",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR6300",
+      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "388E714861E25D71730449BA06EB098C0526321F1586BAE4C63757FA23A9293D",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+      "registry_bytes": 7392,
+      "required_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2201",
+      "component_id": 3032,
+      "component_label": "animation-ar2201",
+      "payload_group": "animation-ar2201",
+      "approval_status": "validated-awaiting-manifest-approval",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2201/qa-approval.json",
+      "qa_approval_sha256": "8CF16BA65F302D9CDE14EC52EC9C0EE7B3F457EE3F6B1BDBBB7C6F0F63C84C8B",
+      "source_pack": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201",
+      "source_run": "animations/runs/am2201a-seedvr7b-lab-x4-20260901 + animations/runs/am2201a-apo8-x4-30fps-v2-20260901 + animations/runs/am2201b-seedvr7b-lab-x4-20260901 + animations/runs/am2201b-apo8-x4-30fps-v2-spline-fit1-feather1-20260901 (V2 TimedTimeline Apollo 8 15->30 FPS; AM2201B Blended, spline Fit 1 multi-contour + feather intérieur 1 px x4)",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "490EA2EF89ECAF857D1FCB00397A1F3132B4A33ECD722CC7CEE4F267724BFD41",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "422ADF03756F7BEBC74F188069081B6EE22E49D2C7F797912D6695F485B5D7D6",
+      "registry_bytes": 536,
+      "required_resrefs": [
+        "AM2201A",
+        "AM2201B"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR5200",
+      "component_id": 3033,
+      "component_label": "animation-ar5200",
+      "payload_group": "animation-ar5200",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR5200/qa-approval.json",
+      "qa_approval_sha256": "F579A90892A15725630F853BDCFA17897B022F483B2DB7F33DBFF864BD52A6B7",
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR5200",
+      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "CC53EAC7BFE93A43D41C8FDC0B6EC232167C8DD24AD8FF6C509FFE2CB7F71614",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+      "registry_bytes": 7392,
+      "required_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2014",
+      "component_id": 3034,
+      "component_label": "animation-ar2014",
+      "payload_group": "animation-ar2014",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2014/qa-v2-6d4ab2b15ad353bc.json",
+      "qa_approval_sha256": "EF5D7AF3783429875B3615C63BAD8EB7422F2293A162F7AF65D3C1FC6E48EF1D",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2014",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "21943638B5C47C897E1349DE2667A63136645E7F9498A917EA8288AED724C76C",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2016",
+      "component_id": 3035,
+      "component_label": "animation-ar2016",
+      "payload_group": "animation-ar2016",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2016/qa-v2-ef799a88b49d89ec.json",
+      "qa_approval_sha256": "C8F3AED62E1A2F38A94172E5B2381B799F189B834677219665863BB7D2F90EC3",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2016",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "261D57EE1797EC0CE1C942BF51580E4B332DD62FD845D9BD91BE76A30C3AA5C3",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2017",
+      "component_id": 3036,
+      "component_label": "animation-ar2017",
+      "payload_group": "animation-ar2017",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2017/qa-v2-16a37cd3925dc6af.json",
+      "qa_approval_sha256": "3C0CBCD64357257B42F006AE1E0B526D5F9898AC89F203C18870999C12E1964B",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2017",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "CB119E502582C29DE5FFDF3D2D293CB5C2D84123FFA2D80016CD1919F8CCEA12",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR2018",
+      "component_id": 3037,
+      "component_label": "animation-ar2018",
+      "payload_group": "animation-ar2018",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2018/qa-v2-29de920a5b0ed718.json",
+      "qa_approval_sha256": "F7737486104B9948C4ADC60B033905E14AD67ED222C962ABA7E8C640DDBC782F",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR2018",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "9E08F8D885F3C7ED19C7909E8508961C4DB2D6172F430B781867C51F5779FA65",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "1F595C3CBCB11988ABB77CBA2BCD6BA538E862917C26D0746DF8BE4346E7A97A",
+      "registry_bytes": 252,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "OH7300",
+      "component_id": 3038,
+      "component_label": "animation-oh7300",
+      "payload_group": "animation-oh7300",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/OH7300/qa-v2-76e823565f124dc4.json",
+      "qa_approval_sha256": "D96937E2C00C91F1CB3B75AF33197A99D7BEC7CE67E17012AF9D9E69A048CB10",
+      "source_pack": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300",
+      "source_runs": [
+        {
+          "path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904",
+          "manifest_path": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/manifest.json",
+          "manifest_sha256": "EEA60A461ED18301461DE98DDB28280312CCEC1A4B1A72523EF163AF2927A40F",
+          "role": "final",
+          "asset_ids": [
+            "FPIT1S"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "A32ED675641E6556A801D893AA2AC27CBD7D34A7CD60ECADE018A87BC665B382",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 2,
+      "registry_sha256": "71CE8757AB123D90B083B8364E6EC7D5EAF3D1A1B0B858B775FD95937C72ED32",
+      "registry_bytes": 236,
+      "required_resrefs": [
+        "FPIT1S"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+    }
+  ]
+}

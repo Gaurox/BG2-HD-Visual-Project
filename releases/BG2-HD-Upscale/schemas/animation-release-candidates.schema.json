@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_by", "candidates"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"enum": [2, 3]},
+    "generated_by": {"type": "string", "minLength": 1},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "area",
+          "component_id",
+          "component_label",
+          "payload_group",
+          "approval_status",
+          "qa_approval",
+          "qa_approval_sha256",
+          "source_pack",
+          "pack_manifest",
+          "pack_manifest_sha256",
+          "registry",
+          "registry_version",
+          "registry_sha256",
+          "registry_bytes",
+          "required_resrefs",
+          "renderer_contract"
+        ],
+        "properties": {
+          "area": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
+          "component_id": {"type": "integer", "minimum": 3000},
+          "component_label": {"type": "string", "pattern": "^animation-(ar|oh)[0-9]{4}$"},
+          "payload_group": {"type": "string", "pattern": "^animation-(ar|oh)[0-9]{4}$"},
+          "approval_status": {
+            "enum": ["validated-awaiting-manifest-approval", "approved-for-release"]
+          },
+          "qa_approval": {
+            "type": "string",
+            "pattern": "^releases/BG2-HD-Upscale/manifests/animation-qa-approvals/(AR|OH)[0-9]{4}/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?[.]json$"
+          },
+          "qa_approval_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+          "source_pack": {
+            "type": "string",
+            "pattern": "^animations/packs-par-zone/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?/(AR|OH)[0-9]{4}$"
+          },
+          "source_run": {"type": "string", "minLength": 1},
+          "source_runs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "manifest_path", "manifest_sha256", "role", "asset_ids"],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "pattern": "^(?!.*[.]partial$)animations/(?:ressources/[A-Z0-9_]{1,8}/runs|batches|runs)/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?$"
+                },
+                "manifest_path": {
+                  "type": "string",
+                  "pattern": "^(?!.*[.]partial/manifest[.]json$)animations/(?:ressources/[A-Z0-9_]{1,8}/runs|batches|runs)/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?/manifest[.]json$"
+                },
+                "manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+                "role": {
+                  "enum": ["spatial", "temporal", "correction", "final", "batch"]
+                },
+                "asset_ids": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"}
+                }
+              }
+            }
+          },
+          "pack_manifest": {"const": "manifest.json"},
+          "pack_manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+          "registry": {"const": "AreaAnimations-X4.registry"},
+          "registry_version": {"enum": [2, 3]},
+          "registry_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+          "registry_bytes": {"type": "integer", "minimum": 1},
+          "required_resrefs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"}
+          },
+          "renderer_contract": {
+            "enum": [
+              "area-animation-per-area-registry-v2-timed-timeline",
+              "area-animation-per-area-registry-v3-position-timed-timeline"
+            ]
+          },
+          "occlusion_contract": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "map_component_id",
+              "map_component_label",
+              "map_payload_group",
+              "source_spec",
+              "source",
+              "destination",
+              "bytes",
+              "sha256",
+              "qa_evidence",
+              "qa_evidence_sha256",
+              "ini_owner",
+              "ini_section",
+              "ini_key",
+              "ini_value"
+            ],
+            "properties": {
+              "mode": {"const": "native-wed-bridge-v1"},
+              "map_component_id": {"type": "integer", "minimum": 1},
+              "map_component_label": {"type": "string", "pattern": "^map-(ar|oh)[0-9]{4}$"},
+              "map_payload_group": {"type": "string", "pattern": "^map-(ar|oh)[0-9]{4}$"},
+              "source_spec": {
+                "type": "string",
+                "pattern": "^(?!.*(?:^|/)\\.\\.(?:/|$))maps/wed-corrections/(AR|OH)[0-9]{4}/[A-Za-z0-9._/-]+[.]json$"
+              },
+              "source": {
+                "type": "string",
+                "pattern": "^(?!.*(?:^|/)\\.\\.(?:/|$))maps/wed-corrections/(AR|OH)[0-9]{4}/[A-Za-z0-9._/-]+[.]WED$"
+              },
+              "destination": {"type": "string", "pattern": "^override/(AR|OH)[0-9]{4}[.]WED$"},
+              "bytes": {"type": "integer", "minimum": 1},
+              "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "qa_evidence": {
+                "type": "string",
+                "pattern": "^(?!.*(?:^|/)\\.\\.(?:/|$))engine/InfinityEngine-Enhancer/source-patchee/docs/validation/[A-Za-z0-9._/-]+[.]md$"
+              },
+              "qa_evidence_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "ini_owner": {"const": "core-steam"},
+              "ini_section": {"const": "Shaders"},
+              "ini_key": {"const": "EnableNativeOcclusionBridge"},
+              "ini_value": {"const": "true"}
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "required": ["source_run"],
+            "not": {"required": ["source_runs"]}
+          },
+          {
+            "required": ["source_runs"],
+            "not": {"required": ["source_run"]}
+          }
+        ]
+      }
+    }
+  }
+}

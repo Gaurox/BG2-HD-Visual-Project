@@ -1,0 +1,21 @@
+{
+  "schema": "bg2-upscale-workspace-restoration-v1",
+  "date": "2026-09-02",
+  "authority_policy": "Physical restoration evidence only. This file grants no production, QA, installation, selection or release status.",
+  "restorations": [
+    {
+      "id": "restore-am0900dm-source-run-after-cleanup",
+      "domain": "animations",
+      "asset_ids": [
+        "animations:bam:AM0900DM"
+      ],
+      "target": "animations/runs/am0900dm-seedvr7b-lab-x4",
+      "manifest": "manifest.json",
+      "manifest_sha256": "9C895AC409E62E56B91D434C7381C398114B7B49CE0095873316EDEA92160EE7",
+      "source_archive": "external-archive:archive-post-release-20260827/animations/runs/am0900dm-seedvr7b-lab-x4",
+      "source_manifest_sha256": "9C895AC409E62E56B91D434C7381C398114B7B49CE0095873316EDEA92160EE7",
+      "status": "restored-exact-manifest",
+      "notes": "The 2026-08-31 cleanup correctly removed an empty skeleton. The completed 2026-08-26 source run was restored later from the indexed external archive at the same canonical path."
+    }
+  ]
+}

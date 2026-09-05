@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:BUBBLES2",
+  "decision": "BUBBLES2 x4 xBR2 blend + Nearest2 et timeline 30 FPS validée ingame sur les 28 occurrences de AR0411, AR0602 et AR0603. Bulles et occlusion correctes ; aucun résidu visible hors décor après correction du bridge d'occlusion native.",
+  "decision_date": "2026-09-05",
+  "decision_id": "2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+    "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+    "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+    "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-20260905/manifest.json",
+        "manifest_sha256": "044D96772FEB7DF0CC7EE52AF0326FD5539D01798D07A011B0E9274BCBF2C083",
+        "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-20260905",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-nearest2-x4/manifest.json",
+        "manifest_sha256": "783491E9F2BCA66300B9D80D214340171D935D73D303DDD281ED15A78F3DDE25",
+        "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-nearest2-x4",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recorded_at_utc": "2026-09-05T00:10:44Z",
+  "resref": "BUBBLES2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411/manifest.json",
+        "manifest_sha256": "09A5555A7CB89BEA7593D3F661A700C831C39D7D2FEF0063A7F75768E96DA93B",
+        "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
+        "registry_sha256": "461680C566E61FFAD44EF0F4BCD19F8C3A0F4A1ED177EE1BFC681F2D175CAD51",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602/manifest.json",
+        "manifest_sha256": "FE30DC02C42364347F8375B2225DE7AEAA570A8D03AD94303B06C802937DE172",
+        "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602",
+        "registry_sha256": "A43483C5BC55E2B865AAD7D296B9C3B29C7DDA8067AA27EC5ECBEF9137848C44",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0603",
+        "manifest_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0603/manifest.json",
+        "manifest_sha256": "D73D6D5344F07B10267513EE3B69C373E06D9F75EE3DF561B2EC96893637C9AA",
+        "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0603",
+        "registry_sha256": "89305235E3951F6BD74B15EAE28A41C31511DA3D373D50A4256769E14250E7DA",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/manifest.json",
+    "manifest_sha256": "A3B04D2EF8B5C949340E42868B734291FD1EC86EBC31E41FCC14766976E9DA05",
+    "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0411",
+    "AR0602",
+    "AR0603"
+  ]
+}

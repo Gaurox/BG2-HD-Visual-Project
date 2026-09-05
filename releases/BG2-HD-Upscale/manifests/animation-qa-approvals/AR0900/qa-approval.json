@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0900",
+  "status": "accepted",
+  "decision_date": "2026-08-27",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-30T22:45:45+02:00",
+  "source_pack": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3/AR0900",
+  "pack_manifest_sha256": "35221D602DF6A493DB71E130542E9E06A2B18E915D7433719624569B21970C93",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "10CE10476A79B728E42D0CB68F75EA631D3DDC2A4A81FFAA1FA1C01EA226B01C",
+  "required_resrefs": ["AM0900DM"],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/am0900dm-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "452793D18CD1F12FFD94DF81D7F41E6FAB5FC327E797A883BECB2ED972FBDD8A",
+      "accepted_resrefs": ["AM0900DM"]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "accepted_resrefs": ["AM0900DM"]
+    }
+  ],
+  "decision": "Migration de la décision QA utilisateur déjà enregistrée pour les deux occurrences masquées du pack final AR0900 v3. Cette attestation ne constitue ni une nouvelle QA ni une nouvelle promotion release."
+}

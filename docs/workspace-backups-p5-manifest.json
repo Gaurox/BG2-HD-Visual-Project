@@ -1,0 +1,195 @@
+{
+  "schema": "bg2-upscale-workspace-backups-p5-v1",
+  "date": "2026-08-31",
+  "authority_policy": "Backup retention and cleanup receipt only. This file grants no production, QA, installation, selection or release status.",
+  "hash_method": "SHA-256 of sorted relative-path|bytes|file-sha256 records, with LF separators",
+  "retention_policy": {
+    "KEEP_RESTORE": "Keep beside the active owner while that owner can still be installed or restored. Never infer current installation from the backup itself.",
+    "KEEP_HISTORICAL": "Keep in place when a sealed descriptor, validation record or historical restoration chain still depends on the path.",
+    "ARCHIVE": "Move out of active routing with path, byte count and aggregate hash recorded here.",
+    "DELETE_SAFE": "Delete only an empty directory or an exact duplicate whose retained replacement is verified by hash. An active tool may recreate a listed cache/scratch directory, but the audit then requires it to remain empty."
+  },
+  "classifications": {
+    "KEEP_RESTORE": [
+      {
+        "path": "animations/packs-par-zone",
+        "selector": "five active */install-backups trees",
+        "required_paths": [
+          "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1/install-backups",
+          "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3/install-backups",
+          "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/install-backups",
+          "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/install-backups",
+          "animations/packs-par-zone/combined-20260828-plus-ar1400-fountains-only/install-backups"
+        ],
+        "reason": "Ten per-area receipts form the reversible installation chain of the active animation packs; some receipts explicitly use a preceding backup DLL as input."
+      },
+      {
+        "path": "maps/AR0516/test-native-wed-occlusion-20260827-painted-mask-p49/install-backups",
+        "reason": "Referenced by the validated lower-SPHINCT WED correction and its restoration chain."
+      },
+      {
+        "path": "maps/technical-overlays/backups",
+        "reason": "Reversible global technical-overlay installation backup."
+      },
+      {
+        "path": "maps/technical-overlays/WTLAV-family/runs/seedvr2-7b-int8-lab-x4-reversible-test/install-backup",
+        "reason": "Run-local restoration receipt retained with its active technical-overlay run."
+      },
+      {
+        "path": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/backups",
+        "reason": "Backup owned by the canonical current sprite generation and its active-test pointer."
+      },
+      {
+        "path": "interface/gameplay-hud-bg2ee/upscale/x4-topaz-recovery-v2-d50/left-toolbar/backups",
+        "reason": "Reversible backups kept beside the only current HUD production branch."
+      },
+      {
+        "path": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/backups",
+        "reason": "Reversible backups kept beside the only current menu production branch."
+      },
+      {
+        "path": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/selection-des-trois-jeux/backups",
+        "reason": "Reversible backups for the current menu selection subset."
+      }
+    ],
+    "KEEP_HISTORICAL": [
+      {
+        "path": "backups/renderer",
+        "reason": "Eight restored transactional renderer backups remain cited by performance and validation records; moving them would break exact historical paths."
+      },
+      {
+        "path": "backups/maps/AR0900-20260830T111545270887Z-36dba8d0",
+        "reason": "Restored map transaction with receipt and complete before-state; it is also the retained replacement for the deleted raw duplicate."
+      },
+      {
+        "path": "animations/runs",
+        "selector": "run-local install-backups and *backup* subtrees",
+        "reason": "Historical animation descriptors and restore helpers use their run-relative locations; they remain sealed in place."
+      },
+      {
+        "path": "maps/AR0702/runs/seedvr2-7b-int8-lab-direct-x4-test/05_build/x2-active-backup-before-x4-test",
+        "reason": "Two-file before-state embedded in the selected sealed map run; retained for provenance without treating it as current installation state."
+      },
+      {
+        "path": "interface/menus-options-bg2ee/archive/variants",
+        "selector": "historical variant backup subtrees",
+        "reason": "Already outside active UI routing and retained with the archived comparison variants."
+      },
+      {
+        "path": "sprite/families",
+        "selector": "historical ingame-test/backups subtrees",
+        "reason": "Old active-test receipts are adapted from legacy paths and remain useful to prove or unwind their historical tests; none selects the current generation."
+      },
+      {
+        "path": "maps/AR0900/diagnostics",
+        "reason": "MAP-WATER-001 remains open; these diagnostics still support that investigation and are not an asset authority."
+      },
+      {
+        "path": "maps/AR1300/cadrages-pont-levis",
+        "reason": "Reproducible framing inputs for the still-pending event-video media pass."
+      },
+      {
+        "path": "interface/gameplay-hud-bg2ee/captures",
+        "reason": "The HUD domain README names this capture as its active analysis reference."
+      }
+    ],
+    "ARCHIVE": [
+      {
+        "id": "legacy-renderer-prototype-install-backups",
+        "source": "proto/install-backups",
+        "target": "archive/legacy/workspace-p5-20260831/proto/install-backups",
+        "file_count": 22,
+        "bytes": 28567908,
+        "aggregate_sha256": "7D1DEAF1CFC3F232DEEC3F083182479C008F6666FC103A7134DE667A7DB45941",
+        "reason": "Unique renderer bridge snapshots retain historical value, but no active caller or exact path reference remains and transactional renderer backups supersede this raw prototype layout."
+      },
+      {
+        "id": "tooltip-fps-settings-snapshot",
+        "source": "backups/settings",
+        "target": "archive/legacy/workspace-p5-20260831/backups/settings",
+        "file_count": 1,
+        "bytes": 8125,
+        "aggregate_sha256": "A21CCF3E6CD71AEBF4B2DE357D2A1230FBE28DF119FDA3B8B94AA097B39ABB1E",
+        "reason": "Unique before-state from a closed tooltip/FPS A-B test; no restoration pointer consumes it."
+      },
+      {
+        "id": "untracked-high-resolution-portrait-candidates",
+        "source": "portraits/newPortraits",
+        "target": "archive/legacy/workspace-p5-20260831/portraits/newPortraits",
+        "file_count": 4,
+        "bytes": 7667102,
+        "aggregate_sha256": "7F6BF1DC30960D44B54B76C39CA876EA3FA2E32927B178FCA067CAE6A4A6DDDC",
+        "reason": "Four 1001x1572 PNG candidates correspond by name to canonical portraits but have no recipe, manifest or QA; preserve bytes without exposing them as active portrait assets."
+      }
+    ],
+    "DELETE_SAFE": [
+      {
+        "id": "ar0900-raw-backup-exact-duplicate",
+        "kind": "exact-duplicate-tree",
+        "source": "backups/maps/AR0900-20260830-122401",
+        "replacement": "backups/maps/AR0900-20260830T111545270887Z-36dba8d0/files",
+        "file_count": 27,
+        "bytes": 159172914,
+        "aggregate_sha256": "20821D3D4EDFC03B8584A88075F606E202993436FC2D22DF8AE758DE702105E6",
+        "reason": "Every relative filename, byte count and SHA-256 equals the retained transaction before-state, whose install-backup.json provides stronger provenance."
+      },
+      {
+        "id": "portrait-reference-exact-duplicates",
+        "kind": "exact-duplicate-files",
+        "source": "portraits/Ref",
+        "file_count": 10,
+        "bytes": 2086160,
+        "aggregate_sha256": "868C889F2408ECA0EB8D875A43EF049CF0C7B6335932A1C2539DD35BED3EBC1C",
+        "reason": "All ten generic REF files are byte-identical to canonical large portraits already covered by inventaire_portraits.csv.",
+        "files": [
+          {"source": "portraits/Ref/REF (1).bmp", "canonical": "portraits/grands/NJAHEIR_L.bmp", "bytes": 208616, "sha256": "4774B6F12FB5412AD9FE43013944F79F253B21E6983ED03B28AA2E446A0CA568"},
+          {"source": "portraits/Ref/REF (10).bmp", "canonical": "portraits/grands/NVALYGA_L.bmp", "bytes": 208616, "sha256": "2559A10B258AB99522D648B400712F8E21E05847DDD8326DAA17AF390C7661F4"},
+          {"source": "portraits/Ref/REF (2).bmp", "canonical": "portraits/grands/NMAZZY_L.bmp", "bytes": 208616, "sha256": "307288DD86EC1A5EE63455C66AC940C81B64E2952443E312E1E1B21A255585E1"},
+          {"source": "portraits/Ref/REF (3).bmp", "canonical": "portraits/grands/NNALIA_L.bmp", "bytes": 208616, "sha256": "D3EFBD784B13478512DFEA4F536260D2943B9566BCF18140B7A355D7D914EB0A"},
+          {"source": "portraits/Ref/REF (4).bmp", "canonical": "portraits/grands/NVICON_L.bmp", "bytes": 208616, "sha256": "28D3A2B7788A8C70A6C1239FD0182A321208191192CA1F51A79DB4854B38B2CF"},
+          {"source": "portraits/Ref/REF (5).bmp", "canonical": "portraits/grands/NAERIE_L.bmp", "bytes": 208616, "sha256": "CEFD6F4B63B907D884AFAFB66ADE148483F3F16387A5B37CBCA9769FF6C8C1FE"},
+          {"source": "portraits/Ref/REF (6).bmp", "canonical": "portraits/grands/NHORC_L.bmp", "bytes": 208616, "sha256": "097015BC28B1A9D6BAA98A48EE4F74A326F4CD0E4F71385FD6232DD1810AEF08"},
+          {"source": "portraits/Ref/REF (7).bmp", "canonical": "portraits/grands/NKELDOR_L.bmp", "bytes": 208616, "sha256": "2853C8065D2656A49B28BE1C716D81439DAE821229A03F195320CCBE016C6024"},
+          {"source": "portraits/Ref/REF (8).bmp", "canonical": "portraits/grands/NKORGAN_L.bmp", "bytes": 208616, "sha256": "D8CB478CC396EC657200DD1521DC6504CEB8830972AD3A29D2C5ED77A6BC530C"},
+          {"source": "portraits/Ref/REF (9).bmp", "canonical": "portraits/grands/NMINSC_L.bmp", "bytes": 208616, "sha256": "F71976155098BB3F902E98DD719AACC65E99FACCB5D6CC3C55B3133986231468"}
+        ]
+      },
+      {"id": "empty-temp-root", "kind": "empty-directory", "source": "temp"},
+      {"id": "empty-video-1er-t2-frames", "kind": "empty-directory", "source": "video/pocketzz/1er_T2_frames"},
+      {"id": "empty-video-prob4-frames", "kind": "empty-directory", "source": "video/pocketzz/pocketzz_1_prob4_frames"},
+      {"id": "empty-video-pocketzz-frames", "kind": "empty-directory", "source": "video/pocketzz/pocketzz_frames"},
+      {"id": "empty-wtswam-run-root", "kind": "empty-directory", "source": "maps/technical-overlays/WTSWAM/runs"},
+      {"id": "empty-sprite-validation-cache", "kind": "empty-directory", "source": "sprite/.work/validation"},
+      {"id": "empty-proto-root", "kind": "empty-directory", "source": "proto"}
+    ]
+  },
+  "path_adapters": [
+    {
+      "historical_reference": "proto/install-backups",
+      "target": "archive/legacy/workspace-p5-20260831/proto/install-backups",
+      "resolved_by": "docs/workspace-backups-p5-manifest.json"
+    },
+    {
+      "historical_reference": "backups/settings",
+      "target": "archive/legacy/workspace-p5-20260831/backups/settings",
+      "resolved_by": "docs/workspace-backups-p5-manifest.json"
+    },
+    {
+      "historical_reference": "portraits/newPortraits",
+      "target": "archive/legacy/workspace-p5-20260831/portraits/newPortraits",
+      "resolved_by": "docs/workspace-backups-p5-manifest.json"
+    }
+  ],
+  "summary": {
+    "keep_restore_count": 8,
+    "keep_historical_count": 9,
+    "archive_count": 3,
+    "delete_safe_count": 9,
+    "archived_file_count": 27,
+    "archived_bytes": 36243135,
+    "deleted_duplicate_file_count": 37,
+    "reclaimed_bytes": 161259074,
+    "removed_empty_directory_count": 7,
+    "uncertain_count": 0
+  }
+}

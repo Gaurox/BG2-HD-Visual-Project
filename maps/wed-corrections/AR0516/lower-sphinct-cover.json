@@ -1,0 +1,110 @@
+{
+  "schema": "bg2-upscale-wed-wall-polygon-spec-v1",
+  "status": "validated-installed",
+  "area": "AR0516",
+  "purpose": "Occulter SPHINCT inférieur par la pointe et la branche de premier plan absentes des polygones Cover animations vanilla.",
+  "source_wed": {
+    "catalogue": "KEY/BIF",
+    "bif": "data/AREA050B.bif",
+    "bytes": 41384,
+    "sha256": "877a102212e3bcdbd34faedd01446287342a6448205ce45e8671b3ed7cdee19d"
+  },
+  "authoring_mask": {
+    "local_path": "animations/runs/AR0516-SPHINCT-lower-native-occlusion-reference-20260827/AR0516-SPHINCT-bas-map-seule-x4-masqsue.png",
+    "sha256": "5d62a9ad602ccea51fad8b14c117c48a560c863454d81abdea8e4653dfd153cc",
+    "dimensions_x4": [640, 480],
+    "world_origin_x1": [1452, 1392],
+    "threshold": 127,
+    "black_pixels_x4": 12581,
+    "role": "preuve d'authoring locale uniquement; non chargée au runtime"
+  },
+  "polygon": {
+    "index": 49,
+    "expected_empty_slot_hex": "670400000000000001ffffff0000ffff0000",
+    "flags": 9,
+    "flags_hex": "0x09",
+    "height": 255,
+    "wall_groups": [
+      {
+        "index": 23,
+        "expected_start": 123,
+        "expected_count": 20
+      }
+    ],
+    "bbox_x1": [1452, 1450, 1485, 1512],
+    "vertices_x1": [
+      [1452, 1486],
+      [1455, 1487],
+      [1459, 1492],
+      [1462, 1493],
+      [1462, 1480],
+      [1461, 1480],
+      [1461, 1472],
+      [1460, 1472],
+      [1460, 1458],
+      [1461, 1458],
+      [1461, 1456],
+      [1462, 1456],
+      [1464, 1450],
+      [1465, 1450],
+      [1465, 1452],
+      [1467, 1454],
+      [1467, 1457],
+      [1468, 1457],
+      [1468, 1470],
+      [1469, 1470],
+      [1469, 1482],
+      [1470, 1482],
+      [1471, 1501],
+      [1476, 1506],
+      [1478, 1506],
+      [1479, 1508],
+      [1484, 1510],
+      [1485, 1512],
+      [1452, 1512]
+    ]
+  },
+  "conversion": {
+    "source_boundary_vertices": 842,
+    "wed_vertices": 29,
+    "simplify_tolerance_x1": 0.75,
+    "intersection_over_union_x4": 0.9503731630376241,
+    "false_negative_pixels_x4": 229,
+    "false_positive_pixels_x4": 416,
+    "animation_pixels_occluded_per_phase_x4": 1539
+  },
+  "validated_output": {
+    "file": "AR0516.WED",
+    "bytes": 41502,
+    "sha256": "8a0aa3ca4c5d7a9bd42ddd0f55f6ca5ed57241a5f4b141c3cbe7d18d9aa2db1a",
+    "release_source": "maps/wed-corrections/AR0516/validated-output-v1/AR0516.WED",
+    "vertex_table_offset_before": 28532,
+    "vertex_table_offset_after": 28534,
+    "lookup_entries_added": 1
+  },
+  "qa": {
+    "date": "2026-08-27",
+    "save": "planar-test",
+    "verdict": "validated-installed",
+    "validated_by": "user",
+    "automated_tests": "176/176",
+    "install_backup": "maps/AR0516/test-native-wed-occlusion-20260827-painted-mask-p49/install-backups/override-backup-20260827-170033",
+    "release_manifest": "selected-pending-content-regeneration",
+    "revalidation": {
+      "date": "2026-08-31",
+      "save": "planar-test",
+      "verdict": "validated-installed",
+      "renderer_dll_sha256": "9fce57d11acf2dd6539b7a263b6de1a70c44f6f41981181793ca6aa785fcc98e",
+      "renderer_ini_sha256": "efc6b20059c917982b9f5e110721a19cc72f90567b73a0470f5c02c23d5d0614",
+      "registry_sha256": "801a3902c7a0a6437a893a79f4ddd5fd05e1810e0f2a1a9f0a319a8cbf01023e",
+      "evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md"
+    }
+  },
+  "compatibility": {
+    "x1_maps": "coordonnées logiques WED natives; aucun TIS modifié",
+    "x4_maps": "même polygone logique transféré par le bridge",
+    "saves": "aucun ARE ni schéma sérialisé modifié",
+    "runtime_memory": "aucune texture ni charge de registre ajoutée",
+    "rollback": "Restore-AreaOverrideAssets.ps1 avec le backup d'installation"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0414",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-09-01T20:00:00.0000000Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+  "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
+  "required_resrefs": [
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "938B16672FF721EE4C3DF6DD90D738569DEBB83446A950C2B9AF0CE68C9565DD",
+      "accepted_resrefs": [
+        "DSTDVL1A"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "BBC8F59FFE2C43BEE2DB2797B93D64A73436ED11935446479ECED06364BB565F",
+      "accepted_resrefs": [
+        "DSTDVL1B"
+      ]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate/qa-approval.json",
+      "sha256": "057376593E3445870E02D0337D05D27F85EEC30E54FBB5F455410424F1B9F083",
+      "accepted_resrefs": [
+        "DSTDVL1C"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D",
+      "accepted_resrefs": [
+        "DSTDVL1A",
+        "DSTDVL1B",
+        "DSTDVL1C"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 : les ressources du pack final, incluant les assets approuvés présents dans cette zone, sont acceptées pour l’intégration release."
+}

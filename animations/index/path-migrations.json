@@ -1,0 +1,526 @@
+{
+  "schema": "bg2-upscale-animation-path-migrations-v1",
+  "purpose": "Resolve historical proto and pack paths after physical cleanup without rewriting sealed artefacts.",
+  "authority_policy": "This file maps physical paths only. It never grants production, QA, installation or release status.",
+  "migration_verification": {
+    "date": "2026-08-31",
+    "file_count": 3030,
+    "bytes": 1320761527,
+    "aggregate_sha256": "B6AD539D01E6AB6D4D184706CFFE0F446B44FD4251A61E9BD712FFE3B6D6B856",
+    "method": "SHA-256 of sorted destination-path|bytes|file-sha256 records, identical before and after the move"
+  },
+  "retained_proto_directories": [],
+  "deprecated_output_roots": [
+    {
+      "from": "proto/AM0602C-eau-canvas-feather-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; the distinct retained alpha-feather run remains under animations/runs/AM0602C-eau-alpha-feather-x4"
+    },
+    {
+      "from": "proto/AM0602D-eau-canvas-feather-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; the distinct retained alpha-feather run remains under animations/runs/AM0602D-eau-alpha-feather-x4"
+    },
+    {
+      "from": "proto/AM0602E-eau-canvas-feather-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; the distinct retained alpha-feather run remains under animations/runs/AM0602E-eau-alpha-feather-x4"
+    },
+    {
+      "from": "proto/AM0602G-eau-canvas-feather-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; the distinct retained alpha-feather run remains under animations/runs/AM0602G-eau-alpha-feather-x4"
+    },
+    {
+      "from": "proto/FLAME2S-flamme-luminance-fade-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; no byte-identical retained run was found"
+    },
+    {
+      "from": "proto/FLAME2S-flamme-radial-fade-x4",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "historical reference only; no byte-identical retained run was found"
+    },
+    {
+      "from": "proto/ar0602-portals-spline-fit1",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "create a new animations/runs/<run-id> if this rejected workshop recipe is ever replayed"
+    },
+    {
+      "from": "proto/ar0603-portal-spline-fit1",
+      "status": "obsolete-unmaterialized",
+      "replacement_policy": "create a new animations/runs/<run-id> if this rejected workshop recipe is ever replayed"
+    }
+  ],
+  "pack_migrations": [
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8/AR0602",
+      "to": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
+      "resolution": "exact-active-payload",
+      "manifest_sha256": "8BB95DEC9B3D5A2F8839BAA23EA1F5AD83E6FDDAE142500EA6C433981606F838",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8",
+      "to": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260828-ar0602-portals-30fps-spline-feather8/manifest.json",
+      "resolution": "descriptor-only",
+      "manifest_sha256": "2A9C075D38FA8FF72ED5E4340954E17FF97910582B0A8D8004C4C0D1A7332D32",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "B27C597AD356EDF9A0512DE6AD655B62D20D677C742F29948112977FE7F59C6D",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260828-ar1400-t005-nightlight",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar1400-t005-nightlight",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "BCC1BA97914F37588EEA6A564867C45B8E464BF274466A396203E0683454C43C",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha/AR0604",
+      "to": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260823-spline-fit1-alpha/AR0604",
+      "resolution": "historical-unique-slice",
+      "manifest_sha256": "052B9C40528BC1DA22124D2CD7AB2C0095406F00DDA18D8B036FB8903715F73D",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    },
+    {
+      "from": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-rgb-neutral",
+      "to": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-rgb-neutral/manifest.json",
+      "resolution": "descriptor-only",
+      "manifest_sha256": "CDD444F72DC90719A04E1BA8E3769F3EE959B8D8557B460D4202A38400E24D4F",
+      "receipt": "docs/workspace-animation-packs-p3-manifest.json"
+    }
+  ],
+  "migrations": [
+    {
+      "from": "proto/1400T005-nightlight-x4",
+      "to": "animations/runs/1400T005-nightlight-x4",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:1400T005"]
+    },
+    {
+      "from": "proto/AM0033AB-spline-contour-x4",
+      "to": "animations/runs/AM0033AB-spline-contour-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0033AB"]
+    },
+    {
+      "from": "proto/AM0205A-pod-canvas-feather-x4",
+      "to": "animations/runs/AM0205A-pod-canvas-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0205A"]
+    },
+    {
+      "from": "proto/AM0205A-pod-interpolation-x4",
+      "to": "animations/runs/AM0205A-pod-interpolation-x4",
+      "role": "historical-base-run",
+      "asset_ids": ["animations:bam:AM0205A"]
+    },
+    {
+      "from": "proto/AM0205B-pod-canvas-feather-x4",
+      "to": "animations/runs/AM0205B-pod-canvas-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0205B"]
+    },
+    {
+      "from": "proto/AM0205C-pod-canvas-feather-x4",
+      "to": "animations/runs/AM0205C-pod-canvas-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0205C"]
+    },
+    {
+      "from": "proto/AM0205D-pod-canvas-feather-x4",
+      "to": "animations/runs/AM0205D-pod-canvas-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0205D"]
+    },
+    {
+      "from": "proto/AM0205E-orifice",
+      "to": "animations/runs/AM0205E-orifice",
+      "role": "historical-base-run",
+      "asset_ids": ["animations:bam:AM0205E"]
+    },
+    {
+      "from": "proto/AM0602B-cheminee-manual-floor-mask-x4",
+      "to": "animations/runs/AM0602B-cheminee-manual-floor-mask-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602B"]
+    },
+    {
+      "from": "proto/AM0602C-eau-alpha-feather-x4",
+      "to": "animations/runs/AM0602C-eau-alpha-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602C"]
+    },
+    {
+      "from": "proto/AM0602C-eau-seedvr3b-x4-test",
+      "to": "animations/runs/AM0602C-eau-seedvr3b-x4-test",
+      "role": "historical-experiment",
+      "asset_ids": ["animations:bam:AM0602C"]
+    },
+    {
+      "from": "proto/AM0602D-eau-alpha-feather-x4",
+      "to": "animations/runs/AM0602D-eau-alpha-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602D"]
+    },
+    {
+      "from": "proto/AM0602E-eau-alpha-feather-x4",
+      "to": "animations/runs/AM0602E-eau-alpha-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602E"]
+    },
+    {
+      "from": "proto/AM0602F-lanterne-alpha-feather-x4",
+      "to": "animations/runs/AM0602F-lanterne-alpha-feather-x4",
+      "role": "superseded-prototype",
+      "asset_ids": ["animations:bam:AM0602F"]
+    },
+    {
+      "from": "proto/AM0602F-lanterne-canvas-feather-x4",
+      "to": "animations/runs/AM0602F-lanterne-canvas-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602F"]
+    },
+    {
+      "from": "proto/AM0602G-eau-alpha-feather-x4",
+      "to": "animations/runs/AM0602G-eau-alpha-feather-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:AM0602G"]
+    },
+    {
+      "from": "proto/AM0604A-manual-mask-r2",
+      "to": "animations/runs/AM0604A-manual-mask-r2",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:AM0604A"]
+    },
+    {
+      "from": "proto/AM0604A-silhouette-feather-x4",
+      "to": "animations/runs/AM0604A-silhouette-feather-x4",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:AM0604A"]
+    },
+    {
+      "from": "proto/AM0604A-silhouette-feather-x4-r2",
+      "to": "animations/runs/AM0604A-silhouette-feather-x4-r2",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:AM0604A"]
+    },
+    {
+      "from": "proto/AM0700A-fontaine",
+      "to": "animations/runs/AM0700A-fontaine",
+      "role": "superseded-prototype",
+      "asset_ids": ["animations:bam:AM0700A"]
+    },
+    {
+      "from": "proto/AM0900DM-inner-feather-4-x4",
+      "to": "animations/runs/AM0900DM-inner-feather-4-x4",
+      "role": "historical-experiment",
+      "asset_ids": ["animations:bam:AM0900DM"]
+    },
+    {
+      "from": "proto/AM0900DM-inner-feather-8-x4",
+      "to": "animations/runs/AM0900DM-inner-feather-8-x4",
+      "role": "historical-experiment",
+      "asset_ids": ["animations:bam:AM0900DM"]
+    },
+    {
+      "from": "proto/AM0900DM-occlusion-mask",
+      "to": "animations/runs/AM0900DM-occlusion-mask",
+      "role": "qa-reference",
+      "asset_ids": ["animations:bam:AM0900DM"]
+    },
+    {
+      "from": "proto/AM3000A-coupole",
+      "to": "animations/runs/AM3000A-coupole",
+      "role": "incomplete-prototype",
+      "asset_ids": ["animations:bam:AM3000A"]
+    },
+    {
+      "from": "proto/AR0516-SPHINCT-lower-native-occlusion-reference-20260827",
+      "to": "animations/runs/AR0516-SPHINCT-lower-native-occlusion-reference-20260827",
+      "role": "qa-reference",
+      "asset_ids": ["animations:bam:SPHINCT"]
+    },
+    {
+      "from": "proto/AR0517-SPHINCT-occlusion-reference-20260827",
+      "to": "animations/runs/AR0517-SPHINCT-occlusion-reference-20260827",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:SPHINCT"]
+    },
+    {
+      "from": "proto/AR1300-pont-levis-transition",
+      "to": "animations/runs/AR1300-pont-levis-transition",
+      "role": "runtime-validated-upscale-pending",
+      "asset_ids": ["maps:AR1300:day"]
+    },
+    {
+      "from": "proto/FIRE_1-lum64-144-radial",
+      "to": "animations/runs/FIRE_1-lum64-144-radial",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-lum90-radialtight",
+      "to": "animations/runs/FIRE_1-lum90-radialtight",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-lumcut-100",
+      "to": "animations/runs/FIRE_1-lumcut-100",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-lumcut-120",
+      "to": "animations/runs/FIRE_1-lumcut-120",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-lumcut-80",
+      "to": "animations/runs/FIRE_1-lumcut-80",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-lumcut-90",
+      "to": "animations/runs/FIRE_1-lumcut-90",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-112-200",
+      "to": "animations/runs/FIRE_1-luminance-feather-112-200",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-24-64",
+      "to": "animations/runs/FIRE_1-luminance-feather-24-64",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-32-88",
+      "to": "animations/runs/FIRE_1-luminance-feather-32-88",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-40-104",
+      "to": "animations/runs/FIRE_1-luminance-feather-40-104",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-64-144",
+      "to": "animations/runs/FIRE_1-luminance-feather-64-144",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-luminance-feather-88-176",
+      "to": "animations/runs/FIRE_1-luminance-feather-88-176",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_1-radialonly",
+      "to": "animations/runs/FIRE_1-radialonly",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_1"]
+    },
+    {
+      "from": "proto/FIRE_4-lum64-144-radial",
+      "to": "animations/runs/FIRE_4-lum64-144-radial",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-lum90-radialtight",
+      "to": "animations/runs/FIRE_4-lum90-radialtight",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-lumcut-100",
+      "to": "animations/runs/FIRE_4-lumcut-100",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-lumcut-120",
+      "to": "animations/runs/FIRE_4-lumcut-120",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-lumcut-80",
+      "to": "animations/runs/FIRE_4-lumcut-80",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-lumcut-90",
+      "to": "animations/runs/FIRE_4-lumcut-90",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-112-200",
+      "to": "animations/runs/FIRE_4-luminance-feather-112-200",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-24-64",
+      "to": "animations/runs/FIRE_4-luminance-feather-24-64",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-32-88",
+      "to": "animations/runs/FIRE_4-luminance-feather-32-88",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-40-104",
+      "to": "animations/runs/FIRE_4-luminance-feather-40-104",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-64-144",
+      "to": "animations/runs/FIRE_4-luminance-feather-64-144",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-luminance-feather-88-176",
+      "to": "animations/runs/FIRE_4-luminance-feather-88-176",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FIRE_4-radialonly",
+      "to": "animations/runs/FIRE_4-radialonly",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FIRE_4"]
+    },
+    {
+      "from": "proto/FLAME2S-radial-A",
+      "to": "animations/runs/FLAME2S-radial-A",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:FLAME2S"]
+    },
+    {
+      "from": "proto/FLAME2S-radial-B",
+      "to": "animations/runs/FLAME2S-radial-B",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FLAME2S"]
+    },
+    {
+      "from": "proto/FLAME2S-radial-C",
+      "to": "animations/runs/FLAME2S-radial-C",
+      "role": "rejected-experiment",
+      "asset_ids": ["animations:bam:FLAME2S"]
+    },
+    {
+      "from": "proto/MiniMax_H3_00161__frames",
+      "to": "animations/runs/MiniMax_H3_00161__frames",
+      "role": "immutable-source-copy",
+      "asset_ids": ["maps:AR1300:day"]
+    },
+    {
+      "from": "proto/portals-spline-fit1-feather8-workshop",
+      "to": "animations/runs/portals-spline-fit1-feather8-workshop",
+      "role": "historical-workshop",
+      "asset_ids": [
+        "animations:bam:PORTL1A",
+        "animations:bam:PORTL1B",
+        "animations:bam:PORTL2A"
+      ]
+    },
+    {
+      "from": "proto/PORTL1A-spline-fit1-feather8-x4",
+      "to": "animations/runs/PORTL1A-spline-fit1-feather8-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:PORTL1A"]
+    },
+    {
+      "from": "proto/PORTL1B-spline-fit1-feather8-x4",
+      "to": "animations/runs/PORTL1B-spline-fit1-feather8-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:PORTL1B"]
+    },
+    {
+      "from": "proto/PORTL2A-spline-fit1-feather8-x4",
+      "to": "animations/runs/PORTL2A-spline-fit1-feather8-x4",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:PORTL2A"]
+    },
+    {
+      "from": "proto/SPHINCT-SPHINCT2-geometric-sigma3-erode2-20260827",
+      "to": "animations/runs/SPHINCT-SPHINCT2-geometric-sigma3-erode2-20260827",
+      "role": "canonical-prototype",
+      "asset_ids": ["animations:bam:SPHINCT", "animations:bam:SPHINCT2"]
+    },
+    {
+      "from": "proto/SPHINCT-SPHINCT2-spline-fit1-20260827",
+      "to": "animations/runs/SPHINCT-SPHINCT2-spline-fit1-20260827",
+      "role": "superseded-prototype",
+      "asset_ids": ["animations:bam:SPHINCT", "animations:bam:SPHINCT2"]
+    },
+    {
+      "from": "proto/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827",
+      "to": "animations/runs/SPHINCT-SPHINCT2-spline-fit1-inner8-20260827",
+      "role": "superseded-prototype",
+      "asset_ids": ["animations:bam:SPHINCT", "animations:bam:SPHINCT2"]
+    }
+  ],
+  "loose_file_migrations": [
+    {
+      "from": "proto/portals-spline-fit1-feather8.py",
+      "to": "animations/runs/portals-spline-fit1-feather8-workshop/portals-spline-fit1-feather8.py"
+    },
+    {
+      "from": "proto/AM0604A-constrained-spline-contour-test.py",
+      "to": "animations/runs/AM0604A-contour-workshop/AM0604A-constrained-spline-contour-test.py"
+    },
+    {
+      "from": "proto/AM0604A-potrace-contour-test.py",
+      "to": "animations/runs/AM0604A-contour-workshop/AM0604A-potrace-contour-test.py"
+    },
+    {
+      "from": "proto/AM0604A-spline-contour-test.py",
+      "to": "animations/runs/AM0604A-contour-workshop/AM0604A-spline-contour-test.py"
+    },
+    {
+      "from": "proto/AM0604A-taubin-contour-test.py",
+      "to": "animations/runs/AM0604A-contour-workshop/AM0604A-taubin-contour-test.py"
+    },
+    {
+      "from": "proto/AM0604A-vector-rounded-contour-test.py",
+      "to": "animations/runs/AM0604A-contour-workshop/AM0604A-vector-rounded-contour-test.py"
+    },
+    {
+      "from": "proto/qa-AM0604A-alpha-mask-spline-fit1.0.png",
+      "to": "animations/runs/AM0604A-contour-workshop/qa-AM0604A-alpha-mask-spline-fit1.0.png"
+    }
+  ],
+  "synthetic_run_bindings": [
+    {
+      "path": "animations/runs/AM0604A-contour-workshop",
+      "role": "historical-workshop",
+      "asset_ids": ["animations:bam:AM0604A"]
+    }
+  ]
+}

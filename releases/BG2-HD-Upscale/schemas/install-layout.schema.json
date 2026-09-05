@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source_game_root", "hd_game_root", "source_baldur_sha256", "launch_mode", "steam_source_untouched", "created_at", "package_version"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "source_game_root": {"type": "string", "minLength": 1},
+    "hd_game_root": {"type": "string", "minLength": 1},
+    "source_baldur_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "launch_mode": {"const": "dedicated-shortcut-only"},
+    "steam_source_untouched": {"const": true},
+    "created_at": {"type": "string", "minLength": 1},
+    "package_version": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "minLength": 1}
+  }
+}

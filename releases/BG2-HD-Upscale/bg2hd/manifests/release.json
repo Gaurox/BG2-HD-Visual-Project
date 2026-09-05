@@ -1,0 +1,52 @@
+{
+  "$schema": "../schemas/release.schema.json",
+  "schema_version": 1,
+  "mod": {
+    "public_name": "Baldur's Gate II: Enhanced Edition HD Upscale",
+    "technical_name": "bg2hd",
+    "setup_executable": "setup-bg2hd.exe",
+    "release_repository": "BG2-HD-Upscale"
+  },
+  "version": "0.1.0-alpha.2",
+  "target": {
+    "store": "Steam",
+    "steam_app_id": 257350,
+    "platform": "windows-x64",
+    "game": "bg2ee",
+    "game_version": "2.7.3.0"
+  },
+  "release_status": "blocked",
+  "payload_status": "not-buildable",
+  "blocking_conditions": [
+    "in-place-steam-shim-clean-install-lifecycle-test-pending",
+    "future-hd-save-native-vanilla-lifecycle-test-pending",
+    "full-vanilla-uninstall-restoration-test-pending",
+    "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
+    "renderer-clean-game-lifecycle-test-pending",
+    "native-occlusion-renderer-alpha.7-freeze-and-lifecycle-test-pending",
+    "animation-qa-historical-alpha-catalogue-hash-71957-unresolved",
+    "public-contact-and-provenance-record-pending"
+  ],
+  "manifest_files": [
+    "manifests/runtime-compatibility.json",
+    "manifests/dependency-bootstrap.json",
+    "manifests/components.json",
+    "manifests/content.json",
+    "manifests/animation-release-candidates.json",
+    "manifests/overlay-sources.json",
+    "manifests/licenses-and-exclusions.json"
+  ],
+  "content_scope": {
+    "maps": "validated SeedVR2 7B/LAB x4 zones only",
+    "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
+    "overlays": "overlay-sources.json is authoritative: validated water overlays x2, WTLAV family x4, WTSWAM/WTSEW/WTOIL stock",
+    "excluded": [
+      "all x2 map builds",
+      "installed-pending-qa maps",
+      "unapproved x4 water overlays",
+      "HUD",
+      "development override",
+      "backups, archives, previews and captures"
+    ]
+  }
+}

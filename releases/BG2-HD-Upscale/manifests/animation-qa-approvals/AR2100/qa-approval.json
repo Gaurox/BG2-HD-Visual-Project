@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR2100",
+  "status": "accepted",
+  "decision_date": "2026-09-01",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-31T22:27:57.8147108Z",
+  "source_pack": "animations/packs-par-zone/combined-20260901-ar2100-portals-30fps-v2/AR2100",
+  "pack_manifest_sha256": "71BFCEE93A27A8BADA2D2F1769CFD7E83A59757F140B2E51C111B5FC803C460B",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "577BFEBD66D2A4103969A4ED6DA35E84DCB5788F8FDD1504852302C70264B155",
+  "required_resrefs": [
+    "AM2100PA",
+    "AM2100PB",
+    "AM2100PC"
+  ],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar2100-portals-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "7646584E722C338CB2A57D7BF58B8815631C10CBD1CE84E191F55D782D6BF776",
+      "accepted_resrefs": [
+        "AM2100PA",
+        "AM2100PB",
+        "AM2100PC"
+      ]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "030D935FCDFE0CB397616435615D4A02F96F49A96459FA0BA7D0ED91F36CCF87",
+      "accepted_resrefs": [
+        "AM2100PA",
+        "AM2100PB",
+        "AM2100PC"
+      ]
+    }
+  ],
+  "decision": "Décision QA utilisateur du 2026-09-01 conservée : les trois portails AR2100 x4 interpolés à 30 FPS sont acceptés pour l'intégration release."
+}

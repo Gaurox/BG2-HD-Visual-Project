@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 3,
+  "area": "AR0411",
+  "status": "accepted",
+  "decision_date": "2026-09-05",
+  "decision_origin": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+  "recorded_at_utc": "2026-09-05T00:10:44Z",
+  "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
+  "pack_manifest_sha256": "09A5555A7CB89BEA7593D3F661A700C831C39D7D2FEF0063A7F75768E96DA93B",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "461680C566E61FFAD44EF0F4BCD19F8C3A0F4A1ED177EE1BFC681F2D175CAD51",
+  "required_resrefs": [
+    "BUBBLES2",
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/BUBBLES2/2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905.json",
+      "sha256": "2BEBE590F0F27C2B21E0D9E696B74E2D89193C5A77C698039D41285DAFA744B0",
+      "accepted_resrefs": [
+        "BUBBLES2"
+      ]
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-approval.json",
+      "sha256": "3E9D68B0EEA8C042123F551BD384B81C618613614BDD70E06DD9685F59CE4F4A",
+      "accepted_resrefs": [
+        "DSTDVL1A"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411",
+      "pack_manifest_sha256": "2274C49F3D280E8227D021213DD4706C8D10D16B5DD6FDEFEC6D450B2410EB94",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "01825E07C6ABC472F010D2D0B499E7E346ABBA8E4A6CC65D969AA96EB5FC098F"
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-approval.json",
+      "sha256": "3E9D68B0EEA8C042123F551BD384B81C618613614BDD70E06DD9685F59CE4F4A",
+      "accepted_resrefs": [
+        "DSTDVL1B"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411",
+      "pack_manifest_sha256": "2274C49F3D280E8227D021213DD4706C8D10D16B5DD6FDEFEC6D450B2410EB94",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "0A39993EAB5A2F2803EC70F97342DA3A8750C58108FCC2468DF165C33C62180A"
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-approval.json",
+      "sha256": "3E9D68B0EEA8C042123F551BD384B81C618613614BDD70E06DD9685F59CE4F4A",
+      "accepted_resrefs": [
+        "DSTDVL1C"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411",
+      "pack_manifest_sha256": "2274C49F3D280E8227D021213DD4706C8D10D16B5DD6FDEFEC6D450B2410EB94",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "01A6BEE24F4677716232B26E9927E16F637659868790B5D84C30D53722387D46"
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0411: BUBBLES2. Continuité binaire vérifiée: DSTDVL1A, DSTDVL1B, DSTDVL1C."
+}

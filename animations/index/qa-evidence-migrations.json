@@ -1,0 +1,78 @@
+{
+  "schema": "bg2-upscale-animation-qa-evidence-migrations-v1",
+  "authority_policy": "Compatibility evidence only. This file never grants or changes QA, installation or release status.",
+  "migrations": [
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "git_commit": "688f975eb7a26be6196d092e1fb9197c8123202b",
+      "git_blob": "bde07d0b658cdc9d462fb50db49c80fa69603c93",
+      "reason": "Preserve the exact canonical-registry bytes pinned by sealed animation QA before later catalogue updates."
+    },
+    {
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "git_commit": "326658ae1d47f277308c2db41976c101fceb5ffd",
+      "git_blob": "439ffa60a0537240c82180dcc1a0d151e6c9c3a1",
+      "reason": "Preserve the exact alpha-correction catalogue bytes pinned by sealed animation QA before path migration."
+    },
+    {
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "6E0A3D8DCE624815D0E44842089753D5318C09A14EA120B488C77781DC249570",
+      "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+      "git_blob": "fe0f8b464e6f45994219f967120cbdec4fd36406",
+      "reason": "Preserve the exact alpha-correction catalogue bytes pinned by the AR0307, AR0329, AR0309, AR0800 and OH6100 sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "030D935FCDFE0CB397616435615D4A02F96F49A96459FA0BA7D0ED91F36CCF87",
+      "git_commit": "9ac2cef9c26a650330611c25f571581e94b755a3",
+      "git_blob": "ccec88fb6810d2c1bb8812d2a3e77df28876b4a6",
+      "reason": "Preserve the exact animation registry bytes pinned by the AR2100 portal sealed QA record."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "6617503BA76231369A8005047AC09F846933BCB02DB4242F3F4630C0475A83DF",
+      "git_commit": "9420f9d92aef4cf90cbe37065dbf1b25b486d7f9",
+      "git_blob": "d58003b1d62517a770e9948fd45324cd6c80661f",
+      "reason": "Preserve the exact animation registry bytes pinned by the AR0307 and AR0329 sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "944FF50293151BEDDC4B544B54863ACCF0690CE0F7109E4CBE3912CFC23869FC",
+      "git_commit": "af63cdf22df168451d88b2f05909a52bee97d4d3",
+      "git_blob": "d35520c89a945216ae40b44a60d34468a929672a",
+      "reason": "Preserve the exact animation registry bytes pinned by the fourteen BUTRFLY sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "4997A49B2D693FBA0409655D325885BF066B61F4A7C2D7EEAE1D4EC2BAD50B38",
+      "git_commit": "a63c21b3b7e4af9dbd14a1b083d3299987938508",
+      "git_blob": "64dcdbf482c9f1b9d9f7c8c50e6e202a1fcd7129",
+      "reason": "Preserve the exact animation registry bytes pinned by the fourteen post-release sealed QA records."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "46C8E31C88FC8EF9FD9B49712CB6F2B3B286F4642C219DF6454C5010F5C1BB9D",
+      "git_commit": "fb9ce55f4c11dc4d3718d8ab9157000ce679e2fd",
+      "git_blob": "c34ff1d051bbe28035f1475e649d214aed52af67",
+      "reason": "Preserve the exact animation registry bytes pinned by the AR2201 sealed QA record."
+    },
+    {
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D",
+      "snapshot_path": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv",
+      "git_blob": "1aff65f26837cd90cba0efc628af70abbf6ba08f",
+      "evidence_source": "recovered-unreachable-git-blob",
+      "reason": "Preserve the exact registry bytes pinned by the AR0300, AR0400, AR0500, AR0411, AR0414, AR1600, AR5200 and AR6300 sealed QA records; recovered from an unreachable local Git blob and materialized as a hash-locked compatibility snapshot."
+    },
+    {
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "71957CF367ADE35572DA2C2D3C20D89C1574AED3FB416C62C5E542F8B0E5D078",
+      "snapshot_path": "animations/index/qa-evidence-history/animation_alpha_corrections-71957CF367ADE355.csv",
+      "git_blob": "a620adce41a4755c17b02764d95b95675d96b71c",
+      "evidence_source": "reconstructed-from-recorded-precommit-csv-normalization",
+      "reason": "Preserve the exact 28-row alpha-correction catalogue pinned by the fourteen BUTRFLY QA records; reconstructed byte-for-byte from commit a63c21b plus the three quote-only CSV differences recorded immediately before commit, and hash-locked as a compatibility snapshot."
+    }
+  ]
+}

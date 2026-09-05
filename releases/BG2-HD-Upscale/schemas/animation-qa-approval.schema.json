@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "area",
+    "status",
+    "decision_date",
+    "decision_origin",
+    "recorded_at_utc",
+    "source_pack",
+    "pack_manifest_sha256",
+    "registry",
+    "registry_version",
+    "registry_sha256",
+    "required_resrefs",
+    "evidence",
+    "decision"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"enum": [1, 2, 3]},
+    "area": {"$ref": "#/$defs/areaId"},
+    "status": {"const": "accepted"},
+    "decision_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "decision_origin": {
+      "enum": [
+        "preserved-existing-user-qa",
+        "explicit-user-ingame-qa",
+        "explicit-user-ingame-qa-with-byte-identical-carry-forward"
+      ]
+    },
+    "recorded_at_utc": {"type": "string", "minLength": 20},
+    "source_pack": {"$ref": "#/$defs/packPath"},
+    "pack_manifest_sha256": {"$ref": "#/$defs/sha256"},
+    "registry": {"const": "AreaAnimations-X4.registry"},
+    "registry_version": {"enum": [2, 3]},
+    "registry_sha256": {"$ref": "#/$defs/sha256"},
+    "required_resrefs": {"$ref": "#/$defs/resrefs"},
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/legacyEvidence"},
+          {"$ref": "#/$defs/ingameEvidence"},
+          {"$ref": "#/$defs/continuityEvidence"}
+        ]
+      }
+    },
+    "decision": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"schema_version": {"const": 1}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "properties": {
+          "decision_origin": {"const": "preserved-existing-user-qa"},
+          "evidence": {
+            "items": {"$ref": "#/$defs/legacyEvidence"}
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"schema_version": {"const": 2}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "properties": {
+          "decision_origin": {"const": "explicit-user-ingame-qa"},
+          "evidence": {
+            "items": {"$ref": "#/$defs/ingameEvidence"}
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"schema_version": {"const": 3}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "properties": {
+          "decision_origin": {
+            "const": "explicit-user-ingame-qa-with-byte-identical-carry-forward"
+          },
+          "evidence": {
+            "items": {
+              "oneOf": [
+                {"$ref": "#/$defs/ingameEvidence"},
+                {"$ref": "#/$defs/continuityEvidence"}
+              ]
+            },
+            "contains": {"$ref": "#/$defs/ingameEvidence"},
+            "minContains": 1,
+            "allOf": [
+              {
+                "contains": {"$ref": "#/$defs/continuityEvidence"},
+                "minContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "areaId": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
+    "resref": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
+    "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+    },
+    "packPath": {
+      "type": "string",
+      "pattern": "^animations/packs-par-zone/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?/(AR|OH)[0-9]{4}$"
+    },
+    "qaDecisionPath": {
+      "type": "string",
+      "pattern": "^animations/index/qa-decisions/[A-Z0-9_]{1,8}/[A-Za-z0-9][A-Za-z0-9._-]*[.]json$"
+    },
+    "qaApprovalPath": {
+      "type": "string",
+      "pattern": "^releases/BG2-HD-Upscale/manifests/animation-qa-approvals/(AR|OH)[0-9]{4}/[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9_-])?[.]json$"
+    },
+    "resrefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/resref"}
+    },
+    "singleResref": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/resref"}
+    },
+    "legacyEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "sha256", "accepted_resrefs"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "run-qa-approval",
+            "canonical-registry",
+            "canonical-alpha-corrections"
+          ]
+        },
+        "path": {"$ref": "#/$defs/relativePath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "accepted_resrefs": {"$ref": "#/$defs/resrefs"}
+      }
+    },
+    "ingameEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "sha256", "accepted_resrefs"],
+      "properties": {
+        "kind": {"const": "ingame-qa-decision"},
+        "path": {"$ref": "#/$defs/qaDecisionPath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "accepted_resrefs": {"$ref": "#/$defs/singleResref"}
+      }
+    },
+    "continuityEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "sha256",
+        "accepted_resrefs",
+        "source_pack",
+        "pack_manifest_sha256",
+        "registry_version",
+        "renderer_contract",
+        "resource_sha256"
+      ],
+      "properties": {
+        "kind": {"const": "byte-identical-release-continuity"},
+        "path": {"$ref": "#/$defs/qaApprovalPath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "accepted_resrefs": {"$ref": "#/$defs/singleResref"},
+        "source_pack": {"$ref": "#/$defs/packPath"},
+        "pack_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "registry_version": {"enum": [2, 3]},
+        "renderer_contract": {
+          "enum": [
+            "area-animation-per-area-registry-v2-timed-timeline",
+            "area-animation-per-area-registry-v3-position-timed-timeline"
+          ]
+        },
+        "resource_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

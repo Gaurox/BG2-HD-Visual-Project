@@ -1,0 +1,97 @@
+{
+  "$schema": "../schemas/runtime-compatibility.schema.json",
+  "schema_version": 1,
+  "target_game": {
+    "store": "Steam",
+    "steam_app_id": 257350,
+    "executable": "Baldur.exe",
+    "product_name": "Baldur's Gate II: Enhanced Edition",
+    "file_version": "2.7.3.0",
+    "sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57",
+    "bytes": 7202696
+  },
+  "eeex": {
+    "distribution": "external-prerequisite",
+    "version": "1.2.0",
+    "dependency_contract": "manifests/dependency-bootstrap.json",
+    "weidu_components": [
+      {"tp2": "EEEX/EEEX.TP2", "id": 0, "name": "Quick Menu Core"},
+      {"tp2": "EEEX/EEEX.TP2", "id": 1, "name": "EEex"}
+    ],
+    "files": [
+      {"path": "EEex.dll", "sha256": "ADC09B72951A28FED7B56CA1EBA530F54C90505A495432F97401EA3C9B19A4C9", "bytes": 1282048},
+      {"path": "InfinityLoader.exe", "sha256": "DF0D3604CB91C127643126B7960429194F3333BCE8BAC0E59AECB6A178AC84B9", "bytes": 41472}
+    ]
+  },
+  "steam_launch_contract": {
+    "steam_keeps_launching": "Baldur.exe",
+    "installed_steam_shim": "Baldur.exe becomes a verified copy of InfinityLoader.exe",
+    "preserved_original": "BaldurReal.exe",
+    "desktop_shortcut_target": "InfinityLoader.exe",
+    "launcher_ini_alias": "BaldurReal.exe:Baldur.exe",
+    "full_uninstall_result": "verified official Baldur.exe restored and BaldurReal.exe removed"
+  },
+  "save_compatibility_contract": {
+    "scope": "future-save-chains-from-vanilla-compatible-state",
+    "target": "BG2EE Steam 2.7.3.0 vanilla",
+    "eeex_extra_creature_marshalling": "disabled",
+    "guard_file": "bg2hd/renderer/override/M_IEEE.lua",
+    "forbidden_signature": "X-BIV1.0",
+    "legacy_save_policy": "detect-only-no-automatic-migration",
+    "validation_gate": "native-vanilla-load-save-reload-required"
+  },
+  "renderer": {
+    "distribution": "bundled-by-bg2hd-after-freeze",
+    "status": "blocked-native-occlusion-alpha.7-required",
+    "active_development_install": {
+      "path": "InfinityEngine-Enhancer.dll",
+      "sha256": "9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E",
+      "bytes": 1434112,
+      "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md"
+    },
+    "reproducible_source_build": {
+      "source": "engine/InfinityEngine-Enhancer/source-patchee",
+      "output_sha256": "9FCE57D11ACF2DD6539B7A263B6DE1A70C44F6F41981181793CA6AA785FCC98E",
+      "output_bytes": 1434112,
+      "build_status": "development DLL validated ingame for AR0516 native occlusion; not frozen as a release candidate; alpha.5 and alpha.6 predate the bridge",
+      "bundle_manifest": "manifests/renderer-bundle.json"
+    },
+    "publication_rule": "Do not promote alpha.5 or alpha.6. Freeze alpha.7 from the current source with native-occlusion markers, then require the clean-game, AR0516, in-place install, future-save and full-uninstall gates.",
+    "area_animation_runtime": {
+      "status": "integrated",
+      "payload_layout": "iee-assets/areas/<AREA>",
+      "registry_version": 3,
+      "supported_registry_versions": [1, 2, 3],
+      "timed_timeline": true,
+      "config_owner": "core-steam",
+      "native_occlusion_bridge": {
+        "required": true,
+        "release_status": "local-qa-validated-alpha.7-pending",
+        "ini_section": "Shaders",
+        "ini_key": "EnableNativeOcclusionBridge",
+        "qa_evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/native-occlusion-reactivation-20260831.md",
+        "wed_correction": "maps/wed-corrections/AR0516/lower-sphinct-cover.json"
+      }
+    }
+  },
+  "owned_ini_keys": {
+    "core-steam": {
+      "Core": {
+        "VerboseLogs": "false",
+        "PerformanceLogs": "false",
+        "EnableAreaAnimationX4": "true"
+      },
+      "Shaders": {
+        "EnableWaterEffect": "true",
+        "EnableNativeOcclusionBridge": "true"
+      }
+    },
+    "ui-mainmenu-x4": {
+      "Shaders": {
+        "EnableBigLogoX4Test": "true",
+        "EnableMainMenuX4Test": "true",
+        "EnableMenuX2Test": "false"
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 1,
+  "area": "AR0516",
+  "status": "accepted",
+  "decision_date": "2026-08-27",
+  "decision_origin": "preserved-existing-user-qa",
+  "recorded_at_utc": "2026-08-30T22:45:45+02:00",
+  "source_pack": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1/AR0516",
+  "pack_manifest_sha256": "89888DA067E25CE9816C7CC843F59A21210050C6ACBD699A9393789E3EB9D270",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "801A3902C7A0A6437A893A79F4DDD5FD05E1810E0F2A1A9F0A319A8CBF01023E",
+  "required_resrefs": ["AM0516LA", "AM0516LB", "AM0516LC", "AM0516LD", "SPHINCT", "SPHINCT2"],
+  "evidence": [
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0516-5of6-apo8-x4-30fps-v2/qa-approval.json",
+      "sha256": "8C67A4371EE6AE0C73A8A7B4167156C110E22494E58D3F74F981FF7FDBC22BBD",
+      "accepted_resrefs": ["AM0516LA", "AM0516LB", "AM0516LC", "SPHINCT", "SPHINCT2"]
+    },
+    {
+      "kind": "run-qa-approval",
+      "path": "animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/qa-approval.json",
+      "sha256": "78B15A50B0E36B89FA5F3112F7073B31FC1A54388BC79DF73DB0D6F6F4110255",
+      "accepted_resrefs": ["AM0516LA", "AM0516LB", "AM0516LC", "SPHINCT", "SPHINCT2"]
+    },
+    {
+      "kind": "canonical-registry",
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD",
+      "accepted_resrefs": ["AM0516LA", "AM0516LB", "AM0516LC", "AM0516LD", "SPHINCT", "SPHINCT2"]
+    },
+    {
+      "kind": "canonical-alpha-corrections",
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5",
+      "accepted_resrefs": ["SPHINCT", "SPHINCT2"]
+    }
+  ],
+  "decision": "Migration de la décision QA utilisateur déjà enregistrée pour le pack final AR0516 v3, réserves visuelles existantes incluses. Cette attestation ne constitue ni une nouvelle QA ni une nouvelle promotion release."
+}

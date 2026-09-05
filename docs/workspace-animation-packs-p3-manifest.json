@@ -1,0 +1,1770 @@
+{
+  "archive_root": "archive/legacy/animation-packs-p3-20260831",
+  "authority_policy": "Physical lifecycle receipt only; never grants or changes production, QA, installation, or release status. Domain authorities and sealed artefacts remain unchanged.",
+  "captured_on": "2026-08-31",
+  "control_plane_baseline": [
+    {
+      "bytes": 14355,
+      "path": "animations/index/animation_alpha_corrections.csv",
+      "sha256": "0C6C7B3252370F337450AABA3A81B7870713F657763868AA4A8843114921498B"
+    },
+    {
+      "bytes": 53444,
+      "path": "animations/index/animation_upscale_registry.csv",
+      "sha256": "4F0C96ECF7C24CAD0EAAD1890FAD610E1B53B42CCAC387FE27F8914764CC5DB8"
+    },
+    {
+      "bytes": 297681,
+      "path": "asset-tracking/runs.csv",
+      "sha256": "313CB130EE13935ED96BC8F6F3DB33447D1884B47B090B16E40DF06297E307BE"
+    },
+    {
+      "bytes": 556643,
+      "path": "asset-tracking/runs.json",
+      "sha256": "9E99A6495A63FE641A308F58B4EB87655653A692E08CA016A1EF3B85E04C5F6B"
+    },
+    {
+      "bytes": 6587,
+      "path": "releases/BG2-HD-Upscale/bg2hd/manifests/animation-release-candidates.json",
+      "sha256": "08ADE86036824D540B8230D3A6FD2749A9A069ED4A43D1C73E6D56379D2BE4E6"
+    },
+    {
+      "bytes": 4695665,
+      "path": "releases/BG2-HD-Upscale/bg2hd/manifests/content.json",
+      "sha256": "FFE14EDF54E76E41027E643B7A85EA3B33FE8A64E576B612D3828636BE271230"
+    },
+    {
+      "bytes": 6587,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "sha256": "08ADE86036824D540B8230D3A6FD2749A9A069ED4A43D1C73E6D56379D2BE4E6"
+    },
+    {
+      "bytes": 4695665,
+      "path": "releases/BG2-HD-Upscale/manifests/content.json",
+      "sha256": "FFE14EDF54E76E41027E643B7A85EA3B33FE8A64E576B612D3828636BE271230"
+    },
+    {
+      "bytes": 1697,
+      "path": "releases/BG2-HD-Upscale/manifests/release.json",
+      "sha256": "AFEBDE54AC577D114A405041C101CE5191BCC50952C20F261BA7691EE95BE7F1"
+    },
+    {
+      "bytes": 2139,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0516/qa-approval.json",
+      "sha256": "7752C484F21882CEA859AC8022C4FA0D034D5B5A974F3025B629D00557860DC2"
+    },
+    {
+      "bytes": 2740,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-approval.json",
+      "sha256": "CCF97056A5E1408DB24B2EAD6C5AA0290F6E63A5711B45A6AE6032D898F59242"
+    },
+    {
+      "bytes": 1957,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0603/qa-approval.json",
+      "sha256": "4706C6E7AC2254FE852843945619D5317F40D9FC3AF9B1C032501700D9C5BBF6"
+    },
+    {
+      "bytes": 1807,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0700/qa-approval.json",
+      "sha256": "5CC20167591B20B5D7F6548B8AE50067433BE18EF53F6FB7525F970C0D845411"
+    },
+    {
+      "bytes": 1383,
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0900/qa-approval.json",
+      "sha256": "031807987C82E798F80687B8C3AF998EF617E0882EFB270028780C046A4D9B4A"
+    }
+  ],
+  "packs": [
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 5,
+      "bytes": 75957096,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/am0033ab-apo8-x4-30fps-v2/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 81,
+      "name": "am0033ab-apo8-x4-30fps-v2",
+      "nonactive_area_count": 5,
+      "old_path": "animations/packs-par-zone/am0033ab-apo8-x4-30fps-v2",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/am0033ab-apo8-x4-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "89A5F79A427CA4072DE83ED27DDD98B0F7D7FA586075FE8BF67851BB364D25CB",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "6AEED3958D06D4CFCC053EF457CC7DBFE527E801D68F24330FD3331D36360D27"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 5,
+      "bytes": 75957120,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/am0033ab-spline-fit1-30fps-v2/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 81,
+      "name": "am0033ab-spline-fit1-30fps-v2",
+      "nonactive_area_count": 5,
+      "old_path": "animations/packs-par-zone/am0033ab-spline-fit1-30fps-v2",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/am0033ab-spline-fit1-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "14D1BADDBCDC2FBAC194AF05AD212ECA9BA570CFCE1965742D91D5A0428A17D8",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "E5211D2117546D30AEF3E1FC7DFCAFF6F2A078E555EB7FAF4E496D8FB7A52651"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 5,
+      "bytes": 75957174,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/am0033ab-spline-fit1-feather6-30fps-v2/manifest.json",
+      "exact_active_area_count": 5,
+      "file_count": 81,
+      "name": "am0033ab-spline-fit1-feather6-30fps-v2",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/am0033ab-spline-fit1-feather6-30fps-v2",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/am0033ab-spline-fit1-feather6-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "771D0A5F1C6B93E5F8BDAB4B63E6C4FEEBAE86EAD33E515297F055BECC094022",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "7100742045B8C4325F88762431FF5AA88AE05916708D23D2D2A8DA166807A632"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 6,
+      "bytes": 718392545,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0516-sphinct-sphinct2-geometric-sigma3-erode2/manifest.json",
+      "exact_active_area_count": 5,
+      "file_count": 480,
+      "name": "ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0516-sphinct-sphinct2-geometric-sigma3-erode2-alpha-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "F97663880D74C912435B2879580C3DC3234F621603C2341D6A205B1FA9FA23D6",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "9260A1D2D6DA723EA45F0E6CFE70C764B7E40B999F35D1DBE343D43DC9445ED6"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 6,
+      "bytes": 718392510,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0516-sphinct-sphinct2-spline-fit1-inner8-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 480,
+      "name": "ar0516-sphinct-sphinct2-spline-fit1-inner8-20260827",
+      "nonactive_area_count": 6,
+      "old_path": "animations/packs-par-zone/ar0516-sphinct-sphinct2-spline-fit1-inner8-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0516-sphinct-sphinct2-spline-fit1-inner8-alpha-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "8275F6884BFE0B97B76C6684D2B6446D1E1486F91066DA3A16BD2E4D20D08436",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "247A6662369882AFEC2754921C59CEAB9DFCEBEF94B511D948DD4AC3146FD548"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 6,
+      "bytes": 718392398,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0516-sphinct-spline-fit1-alpha-20260827/manifest.json",
+      "exact_active_area_count": 6,
+      "file_count": 480,
+      "name": "ar0516-sphinct-spline-fit1-alpha-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0516-sphinct-spline-fit1-alpha-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0516-sphinct-spline-fit1-alpha-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "FFEDC4015C27962B97E909EF3ADED3272EF800FF765DF03A14B50616596D3C88",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "CD6BD2C06AFBDF00145733908805F3E835384A2588F964D19CE087C4F7055316"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 6,
+      "bytes": 718392447,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0516-sphinct-spline-fit1-inner8-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 480,
+      "name": "ar0516-sphinct-spline-fit1-inner8-20260827",
+      "nonactive_area_count": 6,
+      "old_path": "animations/packs-par-zone/ar0516-sphinct-spline-fit1-inner8-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0516-sphinct-spline-fit1-inner8-alpha-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "5FE2B473ED73698FFB9D6DCACD0978F3258C5A7D1C50D79D48CE619EA270919C",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "34F9BB38FAB32574365C5A04364F7E32B05F37E4410E4D3B6775078FF74C51BA"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0517-sphinct-occlusion-masque-perso-20260827",
+      "area_count": 1,
+      "bytes": 62715446,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 1,
+      "file_count": 54,
+      "name": "ar0517-sphinct-occlusion-masque-perso-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0517-sphinct-occlusion-masque-perso-20260827",
+      "preserved": {
+        "aggregate_sha256": "1FF58DCDA2BBFD49B0BAD2DB114878A055D6D9D0FC9AE804CB899ECADC1E63DA",
+        "bytes": 62715446,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "351F97312F6FB5A8923BC78B407D9BF782B1670492F5764B44A432DED312C9C9"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0517-sphinct-occlusion-source-20260827",
+      "area_count": 1,
+      "bytes": 62713584,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 54,
+      "name": "ar0517-sphinct-occlusion-source-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0517-sphinct-occlusion-source-20260827",
+      "preserved": {
+        "aggregate_sha256": "20B12EA16FF3BFE4093BE29F4D0D860D4AC02889FEF619DE3A3E5C0E2DF06380",
+        "bytes": 62713584,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "0D4A5EF04749BDA3E6FC1D09E580E0AE1C56B4E23CDBA915BEE1EDB89DBBD174"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0518-sphinct-occlusion-masque-perso-20260827",
+      "area_count": 1,
+      "bytes": 62715476,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 54,
+      "name": "ar0518-sphinct-occlusion-masque-perso-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0518-sphinct-occlusion-masque-perso-20260827",
+      "preserved": {
+        "aggregate_sha256": "142A633944B11940A1435E17330889B296E470F091F94828662BBF38887F006A",
+        "bytes": 62715476,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "50CC73E00B165DCC95C76F855CBD052F587DC1333033A6D24307CC0620F5B61D"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0518-sphinct-occlusion-source-20260827",
+      "area_count": 1,
+      "bytes": 62713614,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 1,
+      "file_count": 54,
+      "name": "ar0518-sphinct-occlusion-source-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0518-sphinct-occlusion-source-20260827",
+      "preserved": {
+        "aggregate_sha256": "CA70C23E607A8911F17E0D72DB4C0DEE686F838B5C8A4A9386C81E40CB367C82",
+        "bytes": 62713614,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "697EEFF6CBDD08961409616C65232419EA90E3D4ED039D8ED5848B06BE0A3FE2"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0519-sphinct-occlusion-masque-perso-20260827",
+      "area_count": 1,
+      "bytes": 62715476,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 54,
+      "name": "ar0519-sphinct-occlusion-masque-perso-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0519-sphinct-occlusion-masque-perso-20260827",
+      "preserved": {
+        "aggregate_sha256": "02FED99AC5DE2B8A54177BAC02835AF3B85258A6E24FAD7559DA40D27B273AA9",
+        "bytes": 62715476,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "1C49DF6170575B8419E3953DC5CCA2A4AE44D40F42FD363DFE52E167C5D7FA4F"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0519-sphinct-occlusion-source-20260827",
+      "area_count": 1,
+      "bytes": 62713614,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 1,
+      "file_count": 54,
+      "name": "ar0519-sphinct-occlusion-source-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0519-sphinct-occlusion-source-20260827",
+      "preserved": {
+        "aggregate_sha256": "A1CF477FF60DDECC70CAB26E205FAE9C3B8576084923153EBB348905502921F5",
+        "bytes": 62713614,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "E0C7F6099288565E2274994B13D4C4E5C22F025B67CA7424471A3875C03B71A4"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0520-sphinct-occlusion-masque-perso-20260827",
+      "area_count": 1,
+      "bytes": 62715476,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 54,
+      "name": "ar0520-sphinct-occlusion-masque-perso-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0520-sphinct-occlusion-masque-perso-20260827",
+      "preserved": {
+        "aggregate_sha256": "D2D129A535B683188A88E3389F2E417B63740E983BDF12633E80B78D7F3EAF6D",
+        "bytes": 62715476,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "3BCAB3C2BFDE7B44F6F77802171A9713AC3178D8780ADDD9146F14A1D5FFE06F"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0520-sphinct-occlusion-source-20260827",
+      "area_count": 1,
+      "bytes": 62713614,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 1,
+      "file_count": 54,
+      "name": "ar0520-sphinct-occlusion-source-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0520-sphinct-occlusion-source-20260827",
+      "preserved": {
+        "aggregate_sha256": "D38C7A6A00A5840A8E8226C619079E254C33FED668792382F4C52E0200A3E133",
+        "bytes": 62713614,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "73D419B900D93604A1C039DC6C00F1CA9C6AEA4BC6D032013F4B50DB6449EA21"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0521-sphinct-occlusion-masque-perso-20260827",
+      "area_count": 1,
+      "bytes": 62715476,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 54,
+      "name": "ar0521-sphinct-occlusion-masque-perso-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/ar0521-sphinct-occlusion-masque-perso-20260827",
+      "preserved": {
+        "aggregate_sha256": "80B9823A6537CB56A68374B0BB4C4C828B77D340E7CADF113BA7E8BE020EBFB9",
+        "bytes": 62715476,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "F86A0DF8FF7F0CEB170AE6C68506BDE38F8DD91B5C51FF4BCAE0EBF84C09C06A"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0521-sphinct-occlusion-source-20260827",
+      "area_count": 1,
+      "bytes": 62713614,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 1,
+      "file_count": 54,
+      "name": "ar0521-sphinct-occlusion-source-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0521-sphinct-occlusion-source-20260827",
+      "preserved": {
+        "aggregate_sha256": "CDD7578284398FF6B55F4029D081CAAB4DE64EA7F4A7D54383311061020057D8",
+        "bytes": 62713614,
+        "file_count": 54
+      },
+      "provenance": {
+        "kind": "historical-slice",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso"
+        ]
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": "F3FC768138C7AA970FA44872FDF53B192DE1BFC35D4D3F254C1BBDDB440D4773"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0700-fire-lcut90-ovl-20260827",
+      "area_count": 0,
+      "bytes": 6079725,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 261,
+      "name": "ar0700-fire-lcut90-ovl-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827",
+      "preserved": {
+        "aggregate_sha256": "2134EC9CBAD6071ADDD8EBD2953D7368F007AB8187293E29E3D365A1EE507294",
+        "bytes": 6079725,
+        "file_count": 261
+      },
+      "provenance": {
+        "kind": "nested-area-packs",
+        "references": []
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": ""
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 83,
+      "bytes": 140631537,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0700-fire-lcut90-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 1435,
+      "name": "ar0700-fire-lcut90-split-20260827",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/ar0700-fire-lcut90-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-merge-lcut90-b"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "5DC22D2554CC64BCAC466FD25DE0F9A9C97C7F54CB5FC0F1B1B0C38BD29B4A60",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "E7782DC14BFF7FA996C5A6CF8342A9E85E84BE55C175760595677A0A0567DE1D"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0700-fire-lf40-overlap-merges-20260827",
+      "area_count": 0,
+      "bytes": 6079797,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 261,
+      "name": "ar0700-fire-lf40-overlap-merges-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827",
+      "preserved": {
+        "aggregate_sha256": "CEB71F66CA22867FD73AD2B6A4A1DD11F2F7128CCC81F46B5D92CD59AE780362",
+        "bytes": 6079797,
+        "file_count": 261
+      },
+      "provenance": {
+        "kind": "nested-area-packs",
+        "references": []
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": ""
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0700-fire-lf64-ovl-20260827",
+      "area_count": 0,
+      "bytes": 6079689,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 261,
+      "name": "ar0700-fire-lf64-ovl-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827",
+      "preserved": {
+        "aggregate_sha256": "39674BFD9EF7EB79EC16CF5F23AEDC048D18BCAFCAE87D7EF40B3A599F171272",
+        "bytes": 6079689,
+        "file_count": 261
+      },
+      "provenance": {
+        "kind": "nested-area-packs",
+        "references": []
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": ""
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 83,
+      "bytes": 140631369,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0700-fire-lf64-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 1435,
+      "name": "ar0700-fire-lf64-split-20260827",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/ar0700-fire-lf64-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-merge-lf64-b"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "7E2D12E62FAD939A04DA41475F7A333CB82885CB9EB52012C573263F3BB0D45E",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "E6D303854967F49F950C4CC509BABE1D93B9E2A737F8501514C59C3B48360262"
+    },
+    {
+      "action": "keep",
+      "area_count": 83,
+      "bytes": 140685406,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 83,
+      "file_count": 1435,
+      "name": "ar0700-fire-rgb-neutral-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire-rgb-neutral-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-fountains30-fire4x4-fire1x4-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "03FF40C0EA11C624A78401390E28FFB1220F908814D76F3429FD7A900AE1C0B5",
+        "source_present": true
+      },
+      "reason": "canonical alpha-correction output cited by animation_alpha_corrections.csv",
+      "root_manifest_sha256": "00A9B701F0A55AD0D0F2AB9A8246E72B2651BCDBA1F148777A007FC43C877747"
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0700-fire-rgbneutral-ovl-20260827",
+      "area_count": 0,
+      "bytes": 6079707,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 261,
+      "name": "ar0700-fire-rgbneutral-ovl-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827",
+      "preserved": {
+        "aggregate_sha256": "F7B1388FA3A50AB6A44E79BBF7C6A08650AFA68C3A844A63AE4953E0D66FA399",
+        "bytes": 6079707,
+        "file_count": 261
+      },
+      "provenance": {
+        "kind": "nested-area-packs",
+        "references": []
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": ""
+    },
+    {
+      "action": "move-whole-pack",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/full/ar0700-fire4-overlap-merges-20260827",
+      "area_count": 0,
+      "bytes": 6079761,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 0,
+      "file_count": 261,
+      "name": "ar0700-fire4-overlap-merges-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827",
+      "preserved": {
+        "aggregate_sha256": "B48D818B4F914FB645996C73A34D1BE30B9B9A39912334FD8869F7B9522F8A14",
+        "bytes": 6079761,
+        "file_count": 261
+      },
+      "provenance": {
+        "kind": "nested-area-packs",
+        "references": []
+      },
+      "reason": "small unique historical/diagnostic pack retained without another copy",
+      "root_manifest_sha256": ""
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 83,
+      "bytes": 140631369,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0700-fountains30-fire-lf40-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 1435,
+      "name": "ar0700-fountains30-fire-lf40-20260827",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/ar0700-fountains30-fire-lf40-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-merge-lf40-b"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "64AC85A5C5CF48EE580DFB60AAA70332B3964BF84D7B3E7B390F194F5E670940",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "326B62BB1D7B1AE2D6FF1B952436D5298016C74F117AA04C60932FA0C000C6A7"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 78,
+      "bytes": 127485261,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0700-fountains30-fire4x4-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 1305,
+      "name": "ar0700-fountains30-fire4x4-20260827",
+      "nonactive_area_count": 78,
+      "old_path": "animations/packs-par-zone/ar0700-fountains30-fire4x4-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-fountains30-fire4x4-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "2A0266603CE9C63E7DB19657660147A738F5A9B06284173B32FFD854E7E87F31",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "59AFC8CB6617567C75F01B9AA642221FC6579DE28E8FC85B4BC13926EF3D906D"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 83,
+      "bytes": 140633217,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar0700-fountains30-fire4x4-fire1x4-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 1435,
+      "name": "ar0700-fountains30-fire4x4-fire1x4-20260827",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/ar0700-fountains30-fire4x4-fire1x4-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0700-fountains30-fire4x4-fire1x4-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "03FF40C0EA11C624A78401390E28FFB1220F908814D76F3429FD7A900AE1C0B5",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "EC2298B0127B737D5CBC0C465510EC9DF8B0A75CAE2F4E078755D09DACA5185D"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 2,
+      "bytes": 81219571,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar1400-30fps-split-20260828/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 43,
+      "name": "ar1400-30fps-split-20260828",
+      "nonactive_area_count": 2,
+      "old_path": "animations/packs-par-zone/ar1400-30fps-split-20260828",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar1400-fountains-apo8-x4-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "38AB8A991A09E9B846A7BFBCE27A7BD68377C5BABCE6A902C605F73FD6F4C101",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "80897D7DBE5412919F3129B08CF865BF1BF62A23A57BEDCE96CB44C019D39E9F"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 39589271,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/ar1400-fountains-only-split-20260828/manifest.json",
+      "exact_active_area_count": 1,
+      "file_count": 31,
+      "name": "ar1400-fountains-only-split-20260828",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/ar1400-fountains-only-split-20260828",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar1400-fountains-apo8-x4-30fps-v2/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "38AB8A991A09E9B846A7BFBCE27A7BD68377C5BABCE6A902C605F73FD6F4C101",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "342E69894B479E4091170A408BD0384D9D757D563024F6451B591524ABB14D9C"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 110474457,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-ar0602-feather2-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 282,
+      "name": "bubbles2-ar0602-feather2-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/bubbles2-ar0602-feather2-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-with-bubbles2-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "5D5E7DD25B4821AEC19B9E593185BB23E75B670CD83324C82C591C303FC4BAD5",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "602439447B57CBB2549A0871C673C21D1BCDBD2AF0EB8D49D3C34C0A05F21570"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 110474457,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-ar0602-neutral-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 282,
+      "name": "bubbles2-ar0602-neutral-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/bubbles2-ar0602-neutral-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-with-bubbles2-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "5D5E7DD25B4821AEC19B9E593185BB23E75B670CD83324C82C591C303FC4BAD5",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "2FB5F2457426E329C5FD435F5424CC86BEA688B7E0B0C7040839F6F7F7DF2A27"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 110473507,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-ar0602-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 282,
+      "name": "bubbles2-ar0602-split-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/bubbles2-ar0602-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-with-bubbles2-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "5D5E7DD25B4821AEC19B9E593185BB23E75B670CD83324C82C591C303FC4BAD5",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "7325DFF7FF8C538B45AB18F156BDA60DB77825E9A9E2921267B959E8F7C9A915"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather1-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-feather1-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-feather1-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "EFC67B6665C2D2C7725259CCE6BA4089636DAC854060FC2EF9D69789896AB496"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather2-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-feather2-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-feather2-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "3155DCC58A0D7624E3A3C908E89837FB59569B5D2B7F3BB16DA2F2310EB260B6"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather3-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-feather3-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-feather3-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "3CCE38AB87F74DDD184D22DCE25D39A582221371216E5B8C4EB7A508591132D3"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather5-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-feather5-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-feather5-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "1A7B8D9EBD164CC96597995428C8F24EAA604FB551170B7BAAD5A15C141E5A64"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-feather8-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-feather8-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-feather8-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "D050006E5CD55AD3300E7A027565F76FBA33F48A9D56A15CFF1BFE3E66347293"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10938921,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-rgb-neutral-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-rgb-neutral-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-rgb-neutral-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "00E347DBF8DCA20D657C31E58907AD9D12A4EE3548F120105C8652F639E7CA51"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 3,
+      "bytes": 10936766,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/bubbles2-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 328,
+      "name": "bubbles2-split-20260827",
+      "nonactive_area_count": 3,
+      "old_path": "animations/packs-par-zone/bubbles2-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-bubbles2-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "B8118E1BAC4ADA2B3035D2F693A45CD030A77EF38A2AC1EED757FD40D342F9FF",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "4E4B5C385851EDDB9850022214D4A210C07E651FD5C608D34FA988F283865918"
+    },
+    {
+      "action": "keep-unique-slices-delete-duplicates",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260823-spline-fit1-alpha",
+      "area_count": 25,
+      "bytes": 2935182143,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 24,
+      "file_count": 2747,
+      "name": "combined-20260823-spline-fit1-alpha",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/combined-20260823-spline-fit1-alpha",
+      "preserved": {
+        "aggregate_sha256": "9D9BE230B1DD494E95BBA911B058E093B7F031B9941113CBDEBE7D29F8F58995",
+        "bytes": 11082902,
+        "file_count": 17
+      },
+      "preserved_components": [
+        "manifest.json",
+        "AR0604"
+      ],
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260823-b",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0604-spline-fit1-alpha-30fps"
+        ]
+      },
+      "reason": "historical unique area payload retained; copied combined areas are redundant",
+      "root_manifest_sha256": "1B8A60EEF88AE072022354243A783F490F75FF08666FF6DE1309CD614D58B756"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 3386525677,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2/manifest.json",
+      "exact_active_area_count": 25,
+      "file_count": 2910,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-spline-fit1-inner8",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0516-sphinct-sphinct2-geometric-sigma3-erode2"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "6CF095F94F4746C6BC6547FE9B47DACD84366BD4621E71CD9BFEE8EACD4F882B"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 3386526756,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso/manifest.json",
+      "exact_active_area_count": 26,
+      "file_count": 2910,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0517-sphinct-occlusion-masque-perso-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "A66DFB9A8B15C0A7E3F98E256648CE4E83487C1BC57DAF68F3DE0F985F37BF78"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 3386531628,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-to-ar0521-occlusion-masque-perso/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 2910,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-to-ar0521-occlusion-masque-perso",
+      "nonactive_area_count": 4,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-to-ar0521-occlusion-masque-perso",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-occlusion-masque-perso",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0518-sphinct-occlusion-masque-perso-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0519-sphinct-occlusion-masque-perso-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0520-sphinct-occlusion-masque-perso-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0521-sphinct-occlusion-masque-perso-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "33615DFB9A694DA1E3BD628C47FA1B1827213C1108884EA5228D9CC4BF10EA4E"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 3386525649,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-spline-fit1-inner8/manifest.json",
+      "exact_active_area_count": 20,
+      "file_count": 2910,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-spline-fit1-inner8",
+      "nonactive_area_count": 6,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-spline-fit1-inner8",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1-inner8",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0516-sphinct-sphinct2-spline-fit1-inner8-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "62DDF6F435DA8BAB1DA2491180BECF3A729D5C53C689177E79682D0FA2740DC6"
+    },
+    {
+      "action": "keep",
+      "area_count": 26,
+      "bytes": 3386525217,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 26,
+      "file_count": 2910,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0516-sphinct-spline-fit1-alpha-20260827"
+        ]
+      },
+      "reason": "release candidate source for AR0516",
+      "root_manifest_sha256": "4A7DAE733439F0B02A583F00FD42CDCD454DC75BFBA0E97B0FE3D2CD4261BAC3"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 5079845070,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1-inner8/manifest.json",
+      "exact_active_area_count": 20,
+      "file_count": 4353,
+      "name": "combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1-inner8",
+      "nonactive_area_count": 6,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1-inner8",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-spline-fit1",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0516-sphinct-spline-fit1-inner8-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "6A16C7513415646CFD70F268F00838246EA45EABB9FF5BB01B88DD0DBFA812BA"
+    },
+    {
+      "action": "keep",
+      "area_count": 26,
+      "bytes": 10159794004,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 26,
+      "file_count": 8682,
+      "name": "combined-20260827-ar0900-two-manual-masks-v3",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-ar0900-two-manual-masks-v3",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260823-spline-fit2-alpha",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0900-two-manual-masks-position-v3"
+        ]
+      },
+      "reason": "release candidate source for AR0900",
+      "root_manifest_sha256": "D9FBD133D7D27689FFFFA327F4D5A18F6A6578E20534DA5190623717C99E046D"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 26,
+      "bytes": 3386575111,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-native-occlusion-bridge-ar0517-mask-only/manifest.json",
+      "exact_active_area_count": 26,
+      "file_count": 2910,
+      "name": "combined-20260827-native-occlusion-bridge-ar0517-mask-only",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-native-occlusion-bridge-ar0517-mask-only",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-ar0900-plus-ar0516-sphinct-sphinct2-geometric-sigma3-erode2-ar0517-to-ar0521-occlusion-masque-perso",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0516-sphinct-sphinct2-geometric-sigma3-erode2",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0517-sphinct-occlusion-masque-perso-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "4DF12CA5B854D488A9AD48AC45680148E8E6E02C575BC1DAF3847499185F342F"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 31,
+      "bytes": 3538424293,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-am0033ab-spline-fit1/manifest.json",
+      "exact_active_area_count": 26,
+      "file_count": 3065,
+      "name": "combined-20260827-plus-am0033ab-spline-fit1",
+      "nonactive_area_count": 5,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-native-occlusion-bridge-ar0517-mask-only",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/am0033ab-spline-fit1-30fps-v2"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "C94E795803668C43225ABCEBE4CE967B435D9948BA654636064D78CECFF9534A"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 31,
+      "bytes": 3538424356,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-am0033ab-spline-fit1-feather6/manifest.json",
+      "exact_active_area_count": 31,
+      "file_count": 3065,
+      "name": "combined-20260827-plus-am0033ab-spline-fit1-feather6",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-native-occlusion-bridge-ar0517-mask-only",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/am0033ab-spline-fit1-feather6-30fps-v2"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "CD21695E72C20FB498438F263766ECDE6CAC0CAA058CF7E6457A9D38489DE39B"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 31,
+      "bytes": 3462531666,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-am0033ab-x4-30fps/manifest.json",
+      "exact_active_area_count": 26,
+      "file_count": 2990,
+      "name": "combined-20260827-plus-am0033ab-x4-30fps",
+      "nonactive_area_count": 5,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-am0033ab-x4-30fps",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-native-occlusion-bridge-ar0517-mask-only",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/am0033ab-apo8-x4-30fps-v2"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "3B5F5290DA887D48B9DA819C85A65578260134E6393E08DBBEC00791BBFB71C5"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3818687536,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-lumcut90/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 5823,
+      "name": "combined-20260827-plus-ar0700-fire-lumcut90",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-lumcut90",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-split-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lcut90-ovl-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "20B770A372F1A89AB1B07AA758EFC9FB5B95ADEB5FD6647EE9E592A26766ADC5"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3818687513,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-lumfeather40/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 5823,
+      "name": "combined-20260827-plus-ar0700-fire-lumfeather40",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-lumfeather40",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fountains30-fire-lf40-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf40-overlap-merges-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "7906640462C77AE42D61756D1014FA76253BF8CFD6E1385A848E191E3C63AD9B"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3818687354,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-lumfeather64/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 5823,
+      "name": "combined-20260827-plus-ar0700-fire-lumfeather64",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-lumfeather64",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-split-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-lf64-ovl-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "F8D6F545BBA22E2A4187DF45AEDCE0ED20D7A0237F2CE2ED1218441A249A84DF"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3818730470,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fire-rgb-neutral/manifest.json",
+      "exact_active_area_count": 105,
+      "file_count": 5823,
+      "name": "combined-20260827-plus-ar0700-fire-rgb-neutral",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fire-rgb-neutral",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgb-neutral-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire-rgbneutral-ovl-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "CDD444F72DC90719A04E1BA8E3769F3EE959B8D8557B460D4202A38400E24D4F"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 100,
+      "bytes": 3665898834,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fountains30-fire4x4/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 4351,
+      "name": "combined-20260827-plus-ar0700-fountains30-fire4x4",
+      "nonactive_area_count": 78,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fountains30-fire4x4",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fountains30-fire4x4-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "EF311BFEAD90D59DC22CB5B3FCDD03689AF2E41CC9DD9840806B136DF7621A70"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3805631063,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-ar0700-fountains30-fire4x4-fire1x4/manifest.json",
+      "exact_active_area_count": 22,
+      "file_count": 5698,
+      "name": "combined-20260827-plus-ar0700-fountains30-fire4x4-fire1x4",
+      "nonactive_area_count": 83,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-ar0700-fountains30-fire4x4-fire1x4",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-am0033ab-spline-fit1-feather6",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fountains30-fire4x4-fire1x4-20260827",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0334",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0406",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0509",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0522",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR0706",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR1603",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR2001",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/AR5202",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar0700-fire4-overlap-merges-20260827/OH8100"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "05988016AC39AC6556517061AA05B6C54FFB95B886B2B6E627466D85A75C567E"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3822890209,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-bubbles2-ar0602/manifest.json",
+      "exact_active_area_count": 104,
+      "file_count": 5984,
+      "name": "combined-20260827-plus-bubbles2-ar0602",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-bubbles2-ar0602",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/bubbles2-ar0602-neutral-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "13FACACDB5D75009AACD8786C986819417CAFD8EA583C7A728057A8894B3FE2A"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3826464107,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260827-plus-bubbles2-ar0602-feather2/manifest.json",
+      "exact_active_area_count": 104,
+      "file_count": 6091,
+      "name": "combined-20260827-plus-bubbles2-ar0602-feather2",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-bubbles2-ar0602-feather2",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/bubbles2-ar0602-feather2-20260827"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "CA3EEC15E70B5C440C7EB950B6550D3AE8CD6B867047139A0FE94ED4F864D6EB"
+    },
+    {
+      "action": "keep",
+      "area_count": 105,
+      "bytes": 3818996981,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 105,
+      "file_count": 5850,
+      "name": "combined-20260827-plus-flame2s-ar0602-radialA",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-ar0700-fire-rgb-neutral",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/flame2s-ar0602-radialA-20260827"
+        ]
+      },
+      "reason": "release candidate source for AR0700 and retained base for AR0602",
+      "root_manifest_sha256": "E7B238DE653843CD05B83286C6A1D65671EF1F39A62DF0FAA30A74640E0F0265"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 105,
+      "bytes": 3824621245,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260828-ar0602-portals-30fps-spline-feather8/manifest.json",
+      "exact_active_area_count": 105,
+      "file_count": 5889,
+      "name": "combined-20260828-ar0602-portals-30fps-spline-feather8",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA",
+          "G:/AI/BG2_Upscale/proto/ar0602-portals-spline-fit1/split-AR0602"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "2A9C075D38FA8FF72ED5E4340954E17FF97910582B0A8D8004C4C0D1A7332D32"
+    },
+    {
+      "action": "keep-unique-slices-delete-duplicates",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "area_count": 105,
+      "bytes": 3821951644,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 104,
+      "file_count": 5883,
+      "name": "combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-fit1",
+      "preserved": {
+        "aggregate_sha256": "B0148E5F61E8A7B9CAB26B7AAEF8100F6E85D110FD10A93BE88C1BE944B402B7",
+        "bytes": 109580457,
+        "file_count": 181
+      },
+      "preserved_components": [
+        "manifest.json",
+        "AR0602"
+      ],
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA",
+          "G:/AI/BG2_Upscale/proto/ar0602-portals-spline-fit1/split-AR0602"
+        ]
+      },
+      "reason": "historical unique area payload retained; copied combined areas are redundant",
+      "root_manifest_sha256": "B27C597AD356EDF9A0512DE6AD655B62D20D677C742F29948112977FE7F59C6D"
+    },
+    {
+      "action": "keep",
+      "area_count": 105,
+      "bytes": 3824621325,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 105,
+      "file_count": 5889,
+      "name": "combined-20260828-ar0603-portal-spline-feather8",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260828-ar0602-portals-30fps-spline-feather8",
+          "G:/AI/BG2_Upscale/proto/ar0603-portal-spline-fit1/split-AR0603"
+        ]
+      },
+      "reason": "release candidate source for AR0602 and AR0603",
+      "root_manifest_sha256": "7C371C99E1A40AB32ACC36C4B435F48CDA11E9E182BB571F4E11443684CB87CF"
+    },
+    {
+      "action": "keep-unique-slices-delete-duplicates",
+      "archive_path": "archive/legacy/animation-packs-p3-20260831/slices/combined-20260828-ar1400-t005-nightlight",
+      "area_count": 107,
+      "bytes": 3945404844,
+      "classification": "ARCHIVE",
+      "exact_active_area_count": 105,
+      "file_count": 5960,
+      "name": "combined-20260828-ar1400-t005-nightlight",
+      "nonactive_area_count": 2,
+      "old_path": "animations/packs-par-zone/combined-20260828-ar1400-t005-nightlight",
+      "preserved": {
+        "aggregate_sha256": "A3AE014203328808EEC80C5AEDF297FDBA7A1C31CB73814DE2BCF321EC7DEF51",
+        "bytes": 81267205,
+        "file_count": 43
+      },
+      "preserved_components": [
+        "manifest.json",
+        "AR1400",
+        "AR1404"
+      ],
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar1400-30fps-split-20260828"
+        ]
+      },
+      "reason": "historical unique area payload retained; copied combined areas are redundant",
+      "root_manifest_sha256": "BCC1BA97914F37588EEA6A564867C45B8E464BF274466A396203E0683454C43C"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 107,
+      "bytes": 3905838594,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/combined-20260828-plus-ar1400-30fps/manifest.json",
+      "exact_active_area_count": 105,
+      "file_count": 5931,
+      "name": "combined-20260828-plus-ar1400-30fps",
+      "nonactive_area_count": 2,
+      "old_path": "animations/packs-par-zone/combined-20260828-plus-ar1400-30fps",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar1400-30fps-split-20260828"
+        ]
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "70EBB5326AA9A623432987CA0B37FC6D0CA323020A61523701C46053A6F8A972"
+    },
+    {
+      "action": "keep",
+      "area_count": 106,
+      "bytes": 5938393162,
+      "classification": "KEEP_ACTIVE",
+      "exact_active_area_count": 106,
+      "file_count": 8892,
+      "name": "combined-20260828-plus-ar1400-fountains-only",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/combined-20260828-plus-ar1400-fountains-only",
+      "provenance": {
+        "kind": "combined-pack",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8",
+          "G:/AI/BG2_Upscale/animations/packs-par-zone/ar1400-fountains-only-split-20260828"
+        ]
+      },
+      "reason": "latest validated installed per-area lot, including AR1400 fountains",
+      "root_manifest_sha256": "89FF210F2A4771F1F86B78886630A20D9F3344F0CD5BE28626880A5DB1CE97D0"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 106830532,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/flame2s-ar0602-radialA-20260827/manifest.json",
+      "exact_active_area_count": 1,
+      "file_count": 175,
+      "name": "flame2s-ar0602-radialA-20260827",
+      "nonactive_area_count": 0,
+      "old_path": "animations/packs-par-zone/flame2s-ar0602-radialA-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-with-flame2s-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "6004D670F988E9611C461F83EC36C81FAA68D5100FD91D80D98D7B42D8249BF2",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "C1DFBC65BCA06548FA9364629CD7406EA318B07A68CE08629EBB1C8E616CF830"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 1,
+      "bytes": 106829599,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/flame2s-ar0602-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 175,
+      "name": "flame2s-ar0602-split-20260827",
+      "nonactive_area_count": 1,
+      "old_path": "animations/packs-par-zone/flame2s-ar0602-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-with-flame2s-merged"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "6004D670F988E9611C461F83EC36C81FAA68D5100FD91D80D98D7B42D8249BF2",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "C5F871A8050B9DC06CCEE6FFFE7096ACD3818487FF0E67DC89451D94F7850B89"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 77,
+      "bytes": 20698743,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/flame2s-radialA-premult-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 2234,
+      "name": "flame2s-radialA-premult-20260827",
+      "nonactive_area_count": 77,
+      "old_path": "animations/packs-par-zone/flame2s-radialA-premult-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-flame2s-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "2C0C4BEAC107EEB9FA945BA51B070F2094BDA85760CA99BFE49D681CD73D2452",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "DBE1363F695952DCE76AB38827523FEB8814A90D667A1183585B6767D4B7A968"
+    },
+    {
+      "action": "archive-descriptor-delete-generated-payload",
+      "area_count": 77,
+      "bytes": 20652220,
+      "classification": "DELETE_SAFE",
+      "descriptor_archive_path": "archive/legacy/animation-packs-p3-20260831/descriptors/flame2s-split-20260827/manifest.json",
+      "exact_active_area_count": 0,
+      "file_count": 2234,
+      "name": "flame2s-split-20260827",
+      "nonactive_area_count": 77,
+      "old_path": "animations/packs-par-zone/flame2s-split-20260827",
+      "provenance": {
+        "kind": "split-from-run",
+        "references": [
+          "G:/AI/BG2_Upscale/animations/runs/ar0602-flame2s-seedvr7b-lab-x4/03_runtime_pack"
+        ],
+        "source_manifest_matches": true,
+        "source_manifest_sha256": "2C0C4BEAC107EEB9FA945BA51B070F2094BDA85760CA99BFE49D681CD73D2452",
+        "source_present": true
+      },
+      "reason": "deterministic split/combination; every area payload remains active, archived, or reproducible from a source run whose manifest hash matches",
+      "root_manifest_sha256": "FB44D0EB09194E75793CA128B694263159425E44439FE4DC54D5BF439A39928B"
+    }
+  ],
+  "schema": "bg2-upscale-animation-pack-cleanup-p3-v1",
+  "scope": "animations/packs-par-zone only",
+  "summary": {
+    "archive_count": 18,
+    "delete_safe_count": 47,
+    "expected_reclaimed_bytes": 85753026372,
+    "keep_active_count": 6,
+    "original_bytes": 113882412618,
+    "original_file_count": 152594,
+    "pack_count": 71,
+    "uncertain_count": 0
+  }
+}

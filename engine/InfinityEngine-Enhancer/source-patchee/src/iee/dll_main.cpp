@@ -1,0 +1,341 @@
+#include <windows.h>
+
+#include <atomic>
+#include <cstdint>
+#include <exception>
+#include <filesystem>
+#include <memory>
+#include <mutex>
+#include <string>
+
+#include "app_context.h"
+#include "am0205e_animation_x4_test.h"
+#include "am0700a_animation_x4_test.h"
+#include "am3000a_frame_x4_test.h"
+#include "area_animation_clock_diagnostics.h"
+#include "area_animation_x4_registry.h"
+#include "area_state.h"
+#include "biglogo_ui_upscale.h"
+#include "bridge_transition.h"
+#include "creature_sprite_x2.h"
+#include "frame_hook.h"
+#include "hooks.h"
+#include "iee/core/config.h"
+#include "iee/core/logger.h"
+#include "iee/core/pattern_scanner.h"
+#include "iee/game/build_manifest.h"
+#include "iee/game/game_addrs.h"
+#include "iee/game/renderer.h"
+#include "iee/shader_probe.h"
+#include "water_textures.h"
+
+namespace iee {
+static std::unique_ptr<AppContext> g_appContext;
+enum class LifecycleState : std::uint8_t {
+  NotStarted,
+  Starting,
+  Running,
+  Failed,
+  Stopping,
+  Stopped
+};
+static std::atomic<LifecycleState> g_lifecycle{LifecycleState::NotStarted};
+static std::atomic<HANDLE> g_initThread{nullptr};
+static std::mutex g_initThreadMutex;
+const std::string LOG_FILE = "InfinityEngine-Enhancer.log";
+static void CleanupHooks() noexcept;
+
+static std::filesystem::path ModuleDirectory(const std::filesystem::path& fallback) noexcept {
+  try {
+    HMODULE selfModule = nullptr;
+    if (!GetModuleHandleExA(
+            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+            reinterpret_cast<LPCSTR>(&ModuleDirectory), &selfModule)) {
+      return fallback;
+    }
+    wchar_t path[MAX_PATH]{};
+    const auto length = GetModuleFileNameW(selfModule, path, MAX_PATH);
+    if (length == 0 || length >= MAX_PATH) return fallback;
+    return std::filesystem::path(path).parent_path();
+  } catch (...) {
+    return fallback;
+  }
+}
+
+static DWORD WINAPI InitThread(LPVOID) {
+  struct FinalizeState {
+    bool success{};
+    ~FinalizeState() {
+      if (!success) CleanupHooks();
+      g_lifecycle.store(success ? LifecycleState::Running : LifecycleState::Failed,
+                        std::memory_order_release);
+    }
+  } finalize;
+
+  try {
+    if (g_lifecycle.load(std::memory_order_acquire) != LifecycleState::Starting) return 1;
+    const auto cfgPath = core::ConfigManager::config_path();
+    core::ConfigLoadDiagnostics configDiagnostics{};
+    core::EngineConfig cfg = core::ConfigManager::load_or_default(&configDiagnostics);
+    core::set_readability_stats_enabled(cfg.enablePerformanceLogging);
+
+    auto logPath = cfgPath.parent_path() / LOG_FILE;
+    core::init_logger(logPath.string(), cfg.enableVerboseLogging);
+
+    LOG_INFO("Infinity Engine Enhancer initializing...");
+    if (configDiagnostics.fileExisted && !configDiagnostics.loadSucceeded) {
+      LOG_WARN("Could not read {}; built-in defaults are active", cfgPath.filename().string());
+    } else if (!configDiagnostics.fileExisted && !configDiagnostics.defaultFileWritten) {
+      LOG_WARN("Could not create {}; built-in defaults are active", cfgPath.filename().string());
+    }
+    if (configDiagnostics.invalidValues != 0 || configDiagnostics.malformedLines != 0) {
+      LOG_WARN("Configuration retained defaults for {} invalid values and ignored {} malformed "
+               "lines",
+               configDiagnostics.invalidValues, configDiagnostics.malformedLines);
+    }
+
+    g_appContext = std::make_unique<AppContext>();
+    auto& ctx = *g_appContext;
+    ctx.cfg = cfg;
+    game::ExecutableVersion detectedVersion{};
+    std::string detectedProductName;
+    ctx.manifest = game::detect_manifest(&detectedVersion, &detectedProductName);
+
+    LOG_INFO("InfinityEngine-Enhancer loaded (config applied)");
+    if (!ctx.manifest) {
+      if (detectedVersion.major != 0) {
+        LOG_ERROR(
+            "Unsupported executable identity: product='{}', version={}.{}.{}.{}; no hooks were "
+            "installed",
+            detectedProductName.empty() ? "<unavailable>" : detectedProductName,
+            detectedVersion.major, detectedVersion.minor, detectedVersion.patch,
+            detectedVersion.revision);
+      } else {
+        LOG_ERROR("Could not read the executable version; no hooks were installed");
+      }
+      return 1;
+    }
+    LOG_INFO("Selected build manifest: {}", ctx.manifest->buildId);
+
+    if (cfg.enableWaterEffect || cfg.enableDebugHotkeys) {
+      // Decode retained CPU assets before any render hook can run. GL object
+      // creation remains lazy on the context-owning render thread.
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)water::prepare_water_textures(moduleDir / "iee-textures");
+    }
+    if (cfg.enableMenuX2Test) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)biglogo::prepare(moduleDir / "iee-assets", 2, true, true);
+    } else if (cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)biglogo::prepare(moduleDir / "iee-assets", 4, cfg.enableBigLogoX4Test,
+                             cfg.enableMainMenuX4Test);
+    }
+    if (cfg.enableAM3000AFrameX4Test) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)am3000a_x4::prepare(moduleDir / "iee-assets");
+    }
+    if (cfg.enableAM0700AAnimationX4Test) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)am0700a_x4::prepare(moduleDir / "iee-assets");
+    }
+    if (cfg.enableAM0205EAnimationX4Test) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)am0205e_x4::prepare(moduleDir / "iee-assets");
+    }
+    if (cfg.enableAreaAnimationX4) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      const auto assets = moduleDir / "iee-assets";
+      // With iee-assets/areas present, each area owns its pack and the first one is
+      // loaded by the LoadArea hook. Without it, the historical single global pack in
+      // iee-assets is loaded here exactly as before.
+      if (!area_animation_x4::configure_area_packs(assets)) {
+        (void)area_animation_x4::prepare(assets);
+      }
+    }
+    if (cfg.creature_sprite_upscale_enabled()) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      creature_sprite_x2::configure_linear_filtering(cfg.enableCreatureSpriteLinearFiltering);
+      (void)creature_sprite_x2::prepare(moduleDir / "iee-assets" / "creature-sprites");
+    }
+    if (cfg.enableBridgeTransitionPreview) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)bridge::prepare(moduleDir / "iee-assets" / "bridge-transition");
+    }
+
+    if (cfg.enableVerboseLogging) {
+      LOG_DEBUG(
+          "Rendering config: linear=true, anisotropic={}, maxAnisotropy={:.1f}, "
+          "LOD bias={:.2f}, tileMipmaps={}, forceTextureFilterEveryDraw={}, fullFrameFxaa={}, "
+          "fullFrameSsaa2x={}, bamUiTextureProbe={}, am3000aFrameX4Test={}, "
+          "am0700aAnimationX4Test={}, am0205eAnimationX4Test={}, areaAnimationX4={}, "
+          "creatureSpriteUpscaleTest={}, creatureSpriteLinearFiltering={}, "
+          "bridgeTransitionPreview={}, "
+          "bigLogoX4Test={}, "
+          "mainMenuX4Test={}, menuX2Test={}, performanceLogs={}",
+          ctx.cfg.enableAnisotropicFiltering, ctx.cfg.maxAnisotropy, ctx.cfg.lodBias,
+          ctx.cfg.enableTileMipmaps, ctx.cfg.forceTextureFilterEveryDraw,
+          ctx.cfg.enableFullFrameFxaa,
+          ctx.cfg.enableFullFrameSsaa2x,
+          ctx.cfg.enableBamUiTextureProbe,
+          ctx.cfg.enableAM3000AFrameX4Test,
+          ctx.cfg.enableAM0700AAnimationX4Test,
+          ctx.cfg.enableAM0205EAnimationX4Test,
+          ctx.cfg.enableAreaAnimationX4, ctx.cfg.creature_sprite_upscale_enabled(),
+          ctx.cfg.enableCreatureSpriteLinearFiltering,
+          ctx.cfg.enableBridgeTransitionPreview,
+          ctx.cfg.enableBigLogoX4Test, ctx.cfg.enableMainMenuX4Test, ctx.cfg.enableMenuX2Test,
+          ctx.cfg.enablePerformanceLogging);
+    }
+
+    if (!game::resolve_addresses(ctx.addrs, ctx.cfg, *ctx.manifest)) {
+      LOG_ERROR("Critical error: Failed to locate game functions");
+      return 1;
+    }
+
+    if (auto moduleInfo = core::get_module_span(nullptr)) {
+      LOG_DEBUG("Base=0x{:X}  LoadArea=0x{:X}  RenderTexture=0x{:X}",
+                reinterpret_cast<std::uintptr_t>(moduleInfo->base), ctx.addrs.LoadArea,
+                ctx.addrs.RenderTexture);
+    }
+
+    if (!game::resolve_draw_api(ctx.draw, ctx.addrs.RenderTexture, *ctx.manifest)) {
+      LOG_ERROR("Failed to resolve draw API functions");
+      return 1;
+    }
+
+    if (g_lifecycle.load(std::memory_order_acquire) != LifecycleState::Starting) return 1;
+
+    if (!hooks::install_all(ctx)) {
+      LOG_ERROR("Failed to install hooks");
+      return 1;
+    }
+
+    // Frame boundary: SDL2 export, available without a GL context.
+    // Failure is non-fatal (time-driven shader effects stay at t=0).
+    (void)frame::install(ctx.cfg.enablePerformanceLogging, ctx.cfg.enableFullFrameFxaa,
+                         ctx.cfg.enableFullFrameSsaa2x);
+    area_animation_clock::configure(ctx.cfg.enablePerformanceLogging);
+
+    LOG_DEBUG("Installation complete");
+
+    finalize.success = true;
+    return 0;
+  } catch (const std::exception& e) {
+    try {
+      LOG_ERROR("Exception during initialization: {}", e.what());
+    } catch (...) {
+      OutputDebugStringA("InfinityEngine-Enhancer: exception during initialization");
+    }
+    return 1;
+  } catch (...) {
+    try {
+      LOG_ERROR("Unknown exception during initialization");
+    } catch (...) {
+      OutputDebugStringA("InfinityEngine-Enhancer: unknown exception during initialization");
+    }
+    return 1;
+  }
+}
+
+static void CleanupHooks() noexcept {
+  if (g_appContext) {
+    // Stop engine callbacks before releasing any state they can reach. EEex
+    // invokes ShutdownBindings before FreeLibrary; this ordering also keeps
+    // explicit shutdown safe if rendering has only just quiesced.
+    hooks::prepare_for_shutdown();
+    bridge::shutdown();
+    area_animation_clock::shutdown();
+    frame::uninstall();
+    probe::uninstall_shader_probes();
+    hooks::uninstall_all();
+    area::release_gpu_area_resources();
+    water::release_water_textures();
+    biglogo::release();
+    area_animation_x4::release();
+    creature_sprite_x2::release();
+    am0205e_x4::release();
+    am0700a_x4::release();
+    am3000a_x4::release();
+    g_appContext->reset_all_state();
+    g_appContext.reset();
+  }
+}
+}  // namespace iee
+
+// EEex integration
+extern "C" __declspec(dllexport) void __stdcall InitBindings(void* argSharedState) {
+  (void)argSharedState;
+  auto expected = iee::LifecycleState::NotStarted;
+  if (!iee::g_lifecycle.compare_exchange_strong(expected, iee::LifecycleState::Starting,
+                                                std::memory_order_acq_rel)) {
+    return;
+  }
+
+  {
+    // Publish the worker handle while shutdown is excluded. Without this
+    // handshake, ShutdownBindings can observe Starting plus a null handle and
+    // unload state while an untracked worker continues initialization.
+    std::lock_guard lock(iee::g_initThreadMutex);
+    if (iee::g_lifecycle.load(std::memory_order_acquire) != iee::LifecycleState::Starting) return;
+    if (HANDLE thread = CreateThread(nullptr, 0, iee::InitThread, nullptr, 0, nullptr)) {
+      iee::g_initThread.store(thread, std::memory_order_release);
+    } else {
+      iee::g_lifecycle.store(iee::LifecycleState::Failed, std::memory_order_release);
+      OutputDebugStringA("InfinityEngine-Enhancer: Failed to create initialization thread");
+    }
+  }
+}
+
+// EEex or another loader must call this before FreeLibrary. It deliberately
+// does not run from DllMain, where MinHook, mutexes, logging, and GL calls are
+// unsafe under the Windows loader lock.
+extern "C" __declspec(dllexport) void __stdcall ShutdownBindings() {
+  const auto previous =
+      iee::g_lifecycle.exchange(iee::LifecycleState::Stopping, std::memory_order_acq_rel);
+  if (previous == iee::LifecycleState::Stopping) {
+    return;
+  }
+  if (previous == iee::LifecycleState::NotStarted || previous == iee::LifecycleState::Stopped) {
+    iee::g_lifecycle.store(iee::LifecycleState::Stopped, std::memory_order_release);
+    return;
+  }
+
+  HANDLE thread = nullptr;
+  {
+    std::lock_guard lock(iee::g_initThreadMutex);
+    thread = iee::g_initThread.exchange(nullptr, std::memory_order_acq_rel);
+  }
+  if (thread) {
+    if (GetThreadId(thread) != GetCurrentThreadId()) {
+      WaitForSingleObject(thread, INFINITE);
+    }
+    CloseHandle(thread);
+  }
+  iee::CleanupHooks();
+  iee::g_lifecycle.store(iee::LifecycleState::Stopped, std::memory_order_release);
+}
+
+BOOL APIENTRY DllMain(HMODULE h, DWORD r, LPVOID reserved) {
+  switch (r) {
+    case DLL_PROCESS_ATTACH:
+      DisableThreadLibraryCalls(h);
+      break;
+
+    case DLL_PROCESS_DETACH:
+      // Never join workers, take locks, call Media Foundation, or uninstall
+      // hooks under the loader lock. The bridge worker uses a trivially
+      // destructible Win32 handle and retains this module while it can execute;
+      // normal ShutdownBindings performs the blocking cleanup beforehand.
+      if (reserved == nullptr &&
+          iee::g_lifecycle.load(std::memory_order_acquire) != iee::LifecycleState::Stopped) {
+        OutputDebugStringA(
+            "InfinityEngine-Enhancer: FreeLibrary called without ShutdownBindings; skipping unsafe "
+            "loader-lock cleanup");
+      }
+      break;
+    default:
+      break;
+  }
+  return TRUE;
+}

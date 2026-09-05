@@ -1,0 +1,105 @@
+{
+  "schema": "bg2-upscale-hand-painted-occlusion-masks-v1",
+  "resref": "FPIT1S",
+  "peint_par": "utilisateur",
+  "date_source": "2026-09-03/2026-09-04",
+  "enregistre_le_utc": "2026-09-04T16:15:00.982717+00:00",
+  "contrat_masque": "PNG 92x80, niveaux de gris aplatis, alpha opaque partout : blanc conserve, noir retire, gris = transition. La luminance porte le signal.",
+  "contrat_masque_note": "Le champ mask_contract de masques.json ci-joint decrit a tort une convention par canal alpha. Il est conserve tel quel parce que ce fichier est hache par le manifeste du run scelle ; se fier a contrat_masque ci-dessus, qui est celui du decodeur.",
+  "copie_conforme_de": "animations/ressources/FPIT1S/runs/fpit1s-contour-fondu-J-masques-20260904/masques-peints",
+  "dossier_de_peinture": "animations/runs/FPIT1S-occlusion-masks-20260903",
+  "occurrences_totales": 19,
+  "occurrences_avec_masque": 16,
+  "occurrences_sans_masque": [
+    "AR0522-gauche-x609-y155",
+    "AR0601-x1175-y677",
+    "AR5202-x1369-y544"
+  ],
+  "fichiers": [
+    {
+      "name": "AR0334-droite-x682-y183.png",
+      "sha256": "ea8ddd176200c56844262a80cdb6d6fa005fc44c6f2028822a66da28a26faede",
+      "bytes": 865
+    },
+    {
+      "name": "AR0334-gauche-x373-y317.png",
+      "sha256": "031cc73d8b6a241f3a7fef81780e8b6838c6d96ae8b98ac3d14db6f2a02dda54",
+      "bytes": 953
+    },
+    {
+      "name": "AR0406-x373-y963.png",
+      "sha256": "ed4c76188786b66402e7061dea80d83444fec6b2934ae679be13fc41ec7ecd1e",
+      "bytes": 979
+    },
+    {
+      "name": "AR0509-droite-x851-y189.png",
+      "sha256": "c949c35b6975bd3b57daa870c22faa70e819b0a8b427ba0e0143c0c1bb44f319",
+      "bytes": 491
+    },
+    {
+      "name": "AR0509-gauche-x603-y152.png",
+      "sha256": "f99cb6ef611db2148269ff41a1402d0fe271a52c84e39ce2e5ef85225021d14d",
+      "bytes": 373
+    },
+    {
+      "name": "AR0522-droite-x848-y190.png",
+      "sha256": "5f6f664f8f01ae97b400b2293c567924cfe56d26c7a949fa3d91fc8a08bc95ad",
+      "bytes": 334
+    },
+    {
+      "name": "AR0706-droite-x680-y179.png",
+      "sha256": "aee4afc2e0c1b044945c1125b4695460bc2c6e1e66f02cff1addb0ef0dea4046",
+      "bytes": 934
+    },
+    {
+      "name": "AR0706-gauche-x372-y315.png",
+      "sha256": "c1ed20fc046a675a537f08f1fab275c83dd543c9e69c9fbaf179e671624eb856",
+      "bytes": 986
+    },
+    {
+      "name": "AR1603-droite-x686-y180.png",
+      "sha256": "b08dfd1510dc648e9079b7a5589ed24bb5fb270e21e67fc7e61b110eb1a9a1dd",
+      "bytes": 965
+    },
+    {
+      "name": "AR1603-gauche-x372-y314.png",
+      "sha256": "ab7035d8a8e64a4d28eb5a0a40be94039d49581268332c056dd897cdb178ae1f",
+      "bytes": 996
+    },
+    {
+      "name": "AR2001-droite-x687-y180.png",
+      "sha256": "f7353f0fe2a3caedbda41fcb969e522611766bb4b1f0367c3a7f15641038eeed",
+      "bytes": 984
+    },
+    {
+      "name": "AR2001-gauche-x373-y316.png",
+      "sha256": "8e8de970e9889c4b08a6e45f88487bb3e2a5dece3a2ef627adbb1373b49b7da7",
+      "bytes": 969
+    },
+    {
+      "name": "AR2014-x420-y374.png",
+      "sha256": "2cbb055bba13226e87c12199546880aae088b2388909bac815c4ee0c2547ca1b",
+      "bytes": 903
+    },
+    {
+      "name": "AR2016-x420-y374.png",
+      "sha256": "6906c8c1baf3c2e8e50f5ddf16cdeff7f724e375f99416b0b77898bd83c920fe",
+      "bytes": 858
+    },
+    {
+      "name": "AR2017-x420-y374.png",
+      "sha256": "afb7e0da48925abb6c81ac87ca6747877c454180a4ed1a94b70de981f27fce8b",
+      "bytes": 881
+    },
+    {
+      "name": "AR2018-x420-y374.png",
+      "sha256": "a7d7ec1ae57465d47662d34f4630564f73c18e5d1415e0d46ea11a700476d1c7",
+      "bytes": 808
+    },
+    {
+      "name": "masques.json",
+      "sha256": "11e3d8d75b5dab10ffe1b849f89a2ed1f843253ad0387c3389f4e56867a1107a",
+      "bytes": 9326
+    }
+  ]
+}

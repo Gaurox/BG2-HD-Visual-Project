@@ -1,0 +1,35 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "goblin-mgo1-xbr2x-catalog",
+  "animation": {
+    "name": "Gobelin à la hache",
+    "id": "0xE400",
+    "bam_prefix": "MGO1",
+    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0"
+  },
+  "paths": {
+    "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+    "source_dir": "sprite/families/monster-icewind/e4xx-goblins/e400-mgo1-goblin-axe/catalog-x2-nearest/source",
+    "run_dir": "sprite/families/monster-icewind/e4xx-goblins/e400-mgo1-goblin-axe/catalog-x2-nearest/runs/xbr2x-x2",
+    "scalepix": "G:\\AI\\MMPX\\web\\scalepix.html",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/monster-icewind/e400-mgo1"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "ICGOB03",
+      "FSGOBL"
+    ]
+  }
+}

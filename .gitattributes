@@ -1,0 +1,39 @@
+* text=auto
+
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf
+*.cmake text eol=lf
+CMakeLists.txt text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.zip binary
+*.dll binary
+*.exe binary
+*.pdb binary
+*.obj binary
+*.pvrz binary
+*.tis binary
+*.bam binary
+*.mos binary
+*.wbm binary
+*.webm binary
+*.mp4 binary
+*.wav binary
+*.bgra binary
+*.rgba binary
+
+# Preserve the imported upstream readme byte-for-byte; its historic trailing
+# spaces are not repository formatting errors.
+portraits/mod-PPE/Readme-PPE-original.txt -text -whitespace
