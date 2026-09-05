@@ -59,7 +59,7 @@
         </div>
 
         <!--
-          WEIGHTED PROJECT PROGRESS
+          WEIGHTED WORK TO BE DONE
           Use each track's retained-result ratio (produced / total), then apply:
           maps 10%; animations 30%; sprites 40%; effects, UI/HUD, videos,
           icons, portraits, projectiles and cursor set 20% / 7 each.
@@ -67,11 +67,27 @@
         -->
         <section class="overall-progress" style="--overall-progress: 16.5" aria-labelledby="overall-progress-title" data-reveal>
           <div class="overall-progress-header">
-            <div><p class="eyebrow"><span></span> Weighted project progress</p><h2 id="overall-progress-title">One shared <em>scale.</em></h2></div>
+            <div><p class="eyebrow"><span></span> Work to be done</p><h2 id="overall-progress-title">The work <em>ahead.</em></h2></div>
             <p class="overall-progress-rate"><strong>16.5%</strong><span>weighted completion</span></p>
           </div>
-          <div class="overall-progress-meter" role="img" aria-label="Weighted project progress: 16.5 percent complete"></div>
+          <div class="overall-progress-meter" role="img" aria-label="Weighted work progress: 16.5 percent complete"></div>
           <p class="overall-progress-note">Maps account for 10% of the work, animations 30%, sprites 40%; the remaining 20% is shared equally by effects, UI and HUD, videos, icons, portraits, projectiles and the cursor set.</p>
+        </section>
+
+        <!--
+          VISIBLE IN-GAME RESULT
+          Maps use QA passed; animations use retained x4/native results; sprites
+          use active installed components; UI uses its two accepted menu groups.
+          Videos and every unintegrated domain are zero. Apply: maps 50%,
+          animations 30%, sprites 10%; the seven remaining domains share 10% / 7.
+        -->
+        <section class="overall-progress overall-progress-ingame" style="--overall-progress: 44.8" aria-labelledby="ingame-progress-title" data-reveal>
+          <div class="overall-progress-header">
+            <div><p class="eyebrow"><span></span> Visible in-game result</p><h2 id="ingame-progress-title">What the game <em>already shows.</em></h2></div>
+            <p class="overall-progress-rate"><strong>44.8%</strong><span>visible in game</span></p>
+          </div>
+          <div class="overall-progress-meter" role="img" aria-label="Visible in-game result: 44.8 percent complete"></div>
+          <p class="overall-progress-note">Maps account for 50% of this view through accepted in-game QA, animations 30% through retained x4 or native results, and active sprites 10%; effects, UI and HUD, videos, icons, portraits, projectiles and the cursor set share the remaining 10%. Video method checks count only after game integration.</p>
         </section>
 
         <ul class="legend">

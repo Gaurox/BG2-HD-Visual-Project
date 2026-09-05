@@ -61,7 +61,7 @@
         </div>
 
         <!--
-          AVANCEMENT GLOBAL PONDÉRÉ
+          TRAVAIL À RÉALISER, PONDÉRÉ
           Prendre le ratio de résultat retenu de chaque piste (produced / total),
           puis appliquer : cartes 10 %, animations 30 %, sprites 40 % ; effets,
           UI/HUD, vidéos, icônes, portraits, projectiles et curseur : 20 % / 7.
@@ -70,11 +70,27 @@
         -->
         <section class="overall-progress" style="--overall-progress: 16.5" aria-labelledby="overall-progress-title" data-reveal>
           <div class="overall-progress-header">
-            <div><p class="eyebrow"><span></span> Avancement global pondéré</p><h2 id="overall-progress-title">Une mesure <em>commune.</em></h2></div>
+            <div><p class="eyebrow"><span></span> Travail à réaliser</p><h2 id="overall-progress-title">Le chantier <em>à mener.</em></h2></div>
             <p class="overall-progress-rate"><strong>16,5 %</strong><span>d’avancement pondéré</span></p>
           </div>
-          <div class="overall-progress-meter" role="img" aria-label="Avancement global pondéré : 16,5 pour cent terminé"></div>
+          <div class="overall-progress-meter" role="img" aria-label="Avancement du travail pondéré : 16,5 pour cent terminé"></div>
           <p class="overall-progress-note">Les cartes représentent 10 % du travail, les animations 30 %, les sprites 40 % ; les 20 % restants sont répartis également entre effets, UI et HUD, vidéos, icônes, portraits, projectiles et curseur.</p>
+        </section>
+
+        <!--
+          RÉSULTAT VISIBLE EN JEU
+          Cartes : QA acceptée ; animations : résultats x4/natifs retenus ;
+          sprites : composants installés actifs ; UI : deux groupes de menus
+          acceptés. Vidéos et domaines non intégrés : zéro. Appliquer : cartes
+          50 %, animations 30 %, sprites 10 % ; les sept autres domaines : 10 % / 7.
+        -->
+        <section class="overall-progress overall-progress-ingame" style="--overall-progress: 44.8" aria-labelledby="ingame-progress-title" data-reveal>
+          <div class="overall-progress-header">
+            <div><p class="eyebrow"><span></span> Résultat visible en jeu</p><h2 id="ingame-progress-title">Ce que le jeu <em>montre déjà.</em></h2></div>
+            <p class="overall-progress-rate"><strong>44,8 %</strong><span>déjà visible en jeu</span></p>
+          </div>
+          <div class="overall-progress-meter" role="img" aria-label="Résultat visible en jeu : 44,8 pour cent terminé"></div>
+          <p class="overall-progress-note">Les cartes représentent 50 % de cette vue via leur QA ingame acceptée, les animations 30 % via les résultats x4 ou natifs retenus, et les sprites actifs 10 % ; effets, UI et HUD, vidéos, icônes, portraits, projectiles et curseur se partagent les 10 % restants. Les validations de méthode vidéo ne comptent qu’après intégration en jeu.</p>
         </section>
 
         <ul class="legend">

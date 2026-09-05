@@ -276,6 +276,8 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 .overall-progress-meter { position: relative; height: 14px; margin-top: clamp(1.5rem, 3vw, 2.2rem); overflow: hidden; background: rgba(233,223,202,.08); }
 .overall-progress-meter::after { content: ""; position: absolute; inset-block: 0; left: 0; width: calc(var(--overall-progress) * 1%); background: linear-gradient(90deg, var(--gold-dark), var(--gold-bright)); box-shadow: 1px 0 0 rgba(7,8,9,.7); transform-origin: left; animation: progress-in .9s ease-out both; }
 .overall-progress-note { max-width: 55rem; margin: .9rem 0 0; color: rgba(233,223,202,.55); font-size: .74rem; line-height: 1.6; }
+.overall-progress-ingame { border-color: rgba(233,223,202,.2); background: linear-gradient(112deg, rgba(233,223,202,.06), rgba(16,18,19,.98) 48%); }
+.overall-progress-ingame .overall-progress-meter::after { background: linear-gradient(90deg, var(--gold), var(--parchment)); }
 
 .legend { display: flex; flex-wrap: wrap; gap: .7rem 2rem; margin: 0; padding: 0; list-style: none; }
 .legend li { display: flex; align-items: baseline; gap: .6rem; color: rgba(233,223,202,.55); font-size: .74rem; }
