@@ -1,77 +1,71 @@
 # Sélection des tests
 
-## Consentement obligatoire
+## Politique
 
-Après toute tâche locale, demander explicitement à l'utilisateur de choisir une option :
+| Changement | Contrôle local | Contrôle différé |
+|---|---|---|
+| Autorité métier, asset, projection ou documentation | aucun test Python | projections au jalon ; suite complète avant release |
+| Code Python/PowerShell | test du module directement associé | suite complète avant release |
+| Manifeste candidat animation | gate de la zone concernée | gate Phase 2 avant release |
+| Moteur | build et CTest moteur | suite complète avant release |
 
-1. tests ciblés pour la tâche réalisée ;
-2. tous les tests ;
-3. aucun test.
+Les contrôles globaux restent dans la suite complète. Ils ne sont pas une conséquence automatique
+d'une modification de données. Aucun test, build, CTest ou gate ne démarre sans `--run` et sans
+choix explicite de l'utilisateur.
 
-Aucun test, build de test, CTest ou gate release ne démarre avant la réponse. Cette règle s'applique
-à tous les domaines et remplace toute formulation historique de test « obligatoire » pour le travail
-local. Une gate peut rester nécessaire pour déclarer un package/release validé ; si l'utilisateur la
-refuse, ne pas revendiquer cette validation.
+## Plan isolé recommandé
 
-La CI, les runs planifiés et les commandes explicitement demandées par l'utilisateur ne nécessitent
-pas une seconde confirmation interactive.
-
-## Préparer le choix ciblé
+Déclarer uniquement les fichiers du lot courant. `--path` est répétable et ignore les autres
+modifications du worktree :
 
 ```powershell
-python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/test_changed.py --targeted `
+  --path pipeline/scripts/build_alpha_feather.py `
+  --path pipeline/tests/test_build_alpha_feather.py
 ```
 
-La planification seule est le défaut : aucune commande de test n'est exécutée sans `--run`.
-`--targeted` classe les fichiers modifiés, y compris les deux côtés d'un rename, et ne devient
-jamais `full`. Un fichier de test modifié cible son propre module. Un chemin sans mapping produit
-un plan vide au lieu d'une suite globale. `--json` fournit le plan structuré ; `--list` reste un
-alias de compatibilité.
+Règles de sélection :
 
-`--changed` conserve un plan prudent pour la CI : il peut recommander `full`, mais même
-`--changed --run` refuse alors l'exécution. Seul `--full --run` peut démarrer la suite globale.
+- un `pipeline/tests/test_*.py` sélectionne uniquement son module ;
+- un script sélectionne `test_<nom_du_script>.py` s'il existe ;
+- les rares noms non symétriques utilisent un alias explicite dans `test_changed.py` ;
+- autorités, assets, projections et documentation ne sélectionnent aucun test Python ;
+- un chemin de code inconnu produit un avertissement et un plan vide en mode `--targeted` ;
+- rename et suppression examinent les deux chemins sans escalade globale en mode `--targeted`.
+
+Les chemins doivent être relatifs au dépôt. `--path` est incompatible avec `--base` et exige
+`--targeted`.
+
+## Modes Git et CI
+
+```powershell
+# Plan strict sur tout le worktree ; utile seulement si son contenu correspond à une tâche
+python pipeline/scripts/test_changed.py --targeted
+
+# Plan prudent pour la CI ; un chemin inconnu peut recommander la suite complète
+python pipeline/scripts/test_changed.py --changed --base origin/main
+
+# Plan exhaustif explicite
+python pipeline/scripts/test_changed.py --full
+```
+
+Même si `--changed` recommande `full`, `--changed --run` refuse l'escalade. Seul
+`--full --run` démarre la suite globale. `--json` fournit le plan structuré et `--list` reste un
+alias de compatibilité.
 
 ## Exécution après choix
 
 ```powershell
-# Ciblés
-python pipeline/scripts/test_changed.py --targeted --run
+# Reprendre les mêmes --path que dans le plan validé
+python pipeline/scripts/test_changed.py --targeted --path CHEMIN --run
 
-# Tous, seulement après choix explicite
+# Suite complète : Python (dont fraîcheur des projections), Phase 2, moteur
 python pipeline/scripts/test_changed.py --full --run
 
-# Continuer les étapes indépendantes, puis retourner un échec agrégé
-python pipeline/scripts/test_changed.py --targeted --run --keep-going
+# Poursuivre les étapes indépendantes et conserver un code final non nul en cas d'échec
+python pipeline/scripts/test_changed.py --full --run --keep-going
 ```
 
-« Aucun test » signifie : ne lancer aucune des deux commandes et l'indiquer dans le compte rendu.
-`git status`, `git diff`, `git diff --check`, la lecture des fichiers et les commandes sans `--run`
-ne sont pas des tests. Les reconstructions suivent un choix séparé dans
+Avant release, la suite complète reste obligatoire pour revendiquer une validation finale. Les
+reconstructions sont indépendantes et décrites dans
 [`WORKSPACE_INTEGRITY.md`](WORKSPACE_INTEGRITY.md).
-
-## Groupes ciblables
-
-| Groupe | Déclencheurs principaux |
-|---|---|
-| `smoke` | commande workspace et résolution des chemins |
-| `documentation` | Markdown et points d'entrée agent |
-| `workspace-command`, `workspace-paths`, `test-selection` | orchestration, chemins et sélecteur |
-| `maps`, `map-diagnostics` | cartes, WED, injection, PVRZ diagnostique |
-| `animations` | inventaire, upscale, timeline, packs et transactions animation |
-| `animation-release` | gate temporaire du seul candidat animation de zone modifié |
-| `sprite-inventory` | index et générateurs de jobs/familles |
-| `sprite-formats` | runner, registres et catalogues |
-| `sprite-installation` | installateur/restaurateur du catalogue cumulatif |
-| `graphics-inventory` | UI, portraits, vidéos, icônes, curseurs, effets, projectiles |
-| `video-upscale`, `video-interpolation` | recettes et runners vidéo |
-| `registry`, `integrity` | contrat global, projections, runs, hashes, migrations |
-| `renderer-transaction` | candidat renderer transactionnel |
-| `release`, `engine` | Phase 2 release et CTest moteur |
-
-Le sélecteur travaille au niveau module. La suite complète ajoute tous les tests Python,
-`workspace.py check --after-full-tests`, la gate release Phase 2, puis configuration/build/CTest
-moteur. Elle reste utile avant intégration sensible ou sur demande, pas comme contrôle local par
-défaut.
-
-`--keep-going` ne transforme jamais un échec en succès : toutes les étapes indépendantes restantes
-sont exécutées, les erreurs sont récapitulées et le code final reste non nul.

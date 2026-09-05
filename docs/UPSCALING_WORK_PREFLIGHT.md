@@ -30,17 +30,18 @@ depuis l'autorité concernée.
 
 1. Mettre à jour les autorités et adaptateurs ; ne jamais modifier une projection générée à la main.
 2. Vérifier que chaque nouveau run a des `asset_ids` et chaque pack physique une entrée de rétention.
-3. Préparer sans exécuter :
+3. Si du code a changé, préparer sans exécuter les tests de ses seuls fichiers :
 
    ```powershell
-   python pipeline/scripts/test_changed.py --targeted
-   python pipeline/scripts/workspace.py refresh --changed
+   python pipeline/scripts/test_changed.py --targeted --path <chemin-modifié>
    ```
 
-4. Demander séparément : tests ciblés/tous/aucun, puis reconstructions ciblées/toutes/aucune.
-5. Après accord, reconstruire les scopes exacts avant les tests afin que ceux-ci lisent des
-   projections à jour.
-6. Si une reconstruction ou un test échoue, corriger l'autorité ou son consommateur. Ne pas masquer
+4. Pour un lot limité aux autorités/assets, ne lancer aucun test Python ; conserver la validation
+   transactionnelle et ingame du domaine.
+5. À un jalon, pour un livrable de projection ou avant release/CI, préparer
+   `workspace.py refresh --changed`, puis demander reconstructions ciblées/toutes/aucune.
+6. Demander le choix ciblés/tous/aucun avant toute exécution de tests.
+7. Si une reconstruction ou un test échoue, corriger l'autorité ou son consommateur. Ne pas masquer
    l'erreur, modifier la projection, supprimer un artefact par supposition ou élargir les tests.
 
 ## Échecs typiques à prévenir

@@ -24,15 +24,6 @@ class GraphicsInventoryTests(unittest.TestCase):
             extract=False,
         )
 
-    def test_generation_is_deterministic(self) -> None:
-        second = inventory.build_outputs(
-            ROOT,
-            inventory.DEFAULT_GAME_DIR,
-            "ffprobe",
-            extract=False,
-        )
-        self.assertEqual(self.outputs, second)
-
     def test_checked_in_outputs_are_current(self) -> None:
         divergent = [
             path.relative_to(ROOT).as_posix()

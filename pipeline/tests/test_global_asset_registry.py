@@ -27,15 +27,8 @@ class GlobalAssetRegistryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.outputs = registry.build_outputs(ROOT)
-        cls.repeated_outputs = registry.build_outputs(ROOT)
         cls.records = cls.outputs["registry"]["assets"]
         cls.by_id = {record["asset_id"]: record for record in cls.records}
-
-    def test_two_generations_are_byte_identical(self) -> None:
-        self.assertEqual(
-            registry.rendered_outputs(self.outputs),
-            registry.rendered_outputs(self.repeated_outputs),
-        )
 
     def test_checked_in_outputs_are_current(self) -> None:
         self.assertEqual(registry.check_outputs(self.outputs), [])
@@ -415,7 +408,7 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             first = {
                 path.name: path.read_bytes() for path in output_dir.iterdir()
             }
-            registry.write_outputs(self.repeated_outputs, output_dir)
+            registry.write_outputs(self.outputs, output_dir)
             second = {
                 path.name: path.read_bytes() for path in output_dir.iterdir()
             }

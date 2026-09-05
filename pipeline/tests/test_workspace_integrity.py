@@ -23,13 +23,6 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         cls.run_index = cls.outputs["runs.json"]
         cls.runs = cls.run_index["runs"]
 
-    def test_projection_is_deterministic(self) -> None:
-        second = integrity.build_outputs(ROOT)
-        self.assertEqual(
-            integrity.rendered_outputs(self.outputs),
-            integrity.rendered_outputs(second),
-        )
-
     def test_generated_outputs_are_current_and_have_no_errors(self) -> None:
         registry = json.loads(
             (ROOT / "asset-tracking/registry.json").read_text(encoding="utf-8")

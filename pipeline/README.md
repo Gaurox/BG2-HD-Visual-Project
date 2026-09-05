@@ -52,7 +52,7 @@ python pipeline/scripts/inject_build.py restore <backup-dir>
 Le dossier exact de sauvegarde et les hashes sont produits par le script ; ne pas maintenir une
 seconde procédure de copie manuelle dans la documentation.
 
-## Mise à jour des projections
+## Mise à jour des projections aux jalons
 
 Préparer sans exécuter :
 
@@ -60,8 +60,10 @@ Préparer sans exécuter :
 python pipeline/scripts/workspace.py refresh --changed
 ```
 
-Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seulement avec les `--scope`
-proposés et `--run`; voir [`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
+Ne préparer ce plan que si la tâche livre une projection, à un jalon, avant release/CI, ou sur
+demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seulement avec les
+`--scope` proposés et `--run`; voir
+[`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
 
 ## Guides spécialisés
 
@@ -82,15 +84,16 @@ proposés et `--run`; voir [`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_
 | Interpolation vidéo | [`VIDEO_INTERPOLATION_PIPELINE.md`](VIDEO_INTERPOLATION_PIPELINE.md) |
 | Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
-## Tests légers
+## Tests de code ciblés
 
 ```powershell
-python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script>.py
 ```
 
-La commande planifie sans exécuter. Une modification maps cible les modules maps, jamais les tests
-sprites. Après le choix obligatoire « ciblés / tous / aucun », utiliser respectivement
-`--targeted --run`, `--full --run`, ou ne rien lancer. Voir
+La commande planifie sans exécuter et ignore les autres changements du worktree. Un script cible
+uniquement son test directement associé. Une modification d'autorité, d'asset ou de documentation
+ne sélectionne aucun test Python. Après le choix « ciblés / tous / aucun », reprendre les mêmes
+`--path` avec `--run`, utiliser `--full --run`, ou ne rien lancer. Voir
 [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Ne pas lancer SeedVR, Topaz, un build complet ou un packaging pour une modification documentaire.

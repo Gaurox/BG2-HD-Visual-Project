@@ -344,9 +344,84 @@ def default_run(
 
 
 def audit_registry(issues: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[str, int]]:
-    projection = global_registry.build_outputs(ROOT)
-    registry = projection["registry"]
+    registry_path = ROOT / "asset-tracking" / "registry.json"
+    empty_registry = {
+        "assets": [],
+        "inputs": [],
+        "asset_count": 0,
+        "asset_records_sha256": hashlib.sha256(json_bytes([])).hexdigest().upper(),
+    }
+    try:
+        payload = read_json(registry_path)
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as error:
+        add_issue(
+            issues,
+            "error",
+            "registry-projection-unreadable",
+            "global",
+            f"La projection du registre est absente ou illisible: {error}",
+            path="asset-tracking/registry.json",
+        )
+        return empty_registry, {}
+    if (
+        not isinstance(payload, dict)
+        or not isinstance(payload.get("assets"), list)
+        or not isinstance(payload.get("inputs"), list)
+    ):
+        add_issue(
+            issues,
+            "error",
+            "registry-projection-invalid",
+            "global",
+            "La projection du registre ne contient pas les listes assets et inputs attendues.",
+            path="asset-tracking/registry.json",
+        )
+        return empty_registry, {}
+
+    registry = dict(payload)
+    registry.setdefault("asset_count", len(registry["assets"]))
+    registry.setdefault(
+        "asset_records_sha256",
+        hashlib.sha256(json_bytes(registry["assets"])).hexdigest().upper(),
+    )
     records = registry["assets"]
+    inputs = registry["inputs"]
+    if not all(
+        isinstance(record, dict)
+        and isinstance(record.get("asset_id"), str)
+        and isinstance(record.get("domain"), str)
+        and isinstance(record.get("canonical_source"), dict)
+        and isinstance(record["canonical_source"].get("path"), str)
+        for record in records
+    ) or not all(
+        isinstance(item, dict)
+        and isinstance(item.get("path"), str)
+        and isinstance(item.get("sha256"), str)
+        for item in inputs
+    ):
+        add_issue(
+            issues,
+            "error",
+            "registry-projection-invalid",
+            "global",
+            "La projection du registre contient un asset ou un input invalide.",
+            path="asset-tracking/registry.json",
+        )
+        return empty_registry, {}
+
+    records_sha256 = hashlib.sha256(json_bytes(records)).hexdigest().upper()
+    if (
+        registry["asset_count"] != len(records)
+        or registry["asset_records_sha256"] != records_sha256
+    ):
+        add_issue(
+            issues,
+            "error",
+            "registry-projection-content-mismatch",
+            "global",
+            "Le compte ou le hash interne de la projection du registre est invalide.",
+            path="asset-tracking/registry.json",
+        )
     asset_ids = [record["asset_id"] for record in records]
     if len(asset_ids) != len(set(asset_ids)):
         add_issue(
@@ -357,7 +432,7 @@ def audit_registry(issues: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[s
             "Le registre global contient des identifiants dupliqués.",
         )
 
-    declared_inputs = {item["path"]: item["sha256"] for item in registry["inputs"]}
+    declared_inputs = {item["path"]: item["sha256"] for item in inputs}
     canonical_counts: Counter[str] = Counter()
     for record in records:
         canonical = record["canonical_source"]["path"]

@@ -337,11 +337,6 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="double chaque reconstruction; réservé au choix explicite ou à la CI",
     )
     parser.add_argument(
-        "--after-full-tests",
-        action="store_true",
-        help="compatibilité suite complète : check mono-passe de tous les scopes",
-    )
-    parser.add_argument(
         "--run",
         action="store_true",
         help="exécute; sans ce drapeau la commande affiche seulement le plan",
@@ -359,11 +354,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         parser.error("--keep-going exige --run")
     if args.base and not args.changed:
         parser.error("--base exige --changed")
-    if args.after_full_tests and args.mode != "check":
-        parser.error("--after-full-tests exige le mode check")
-    if args.after_full_tests and args.verify_determinism:
-        parser.error("--after-full-tests est mono-passe")
-    if args.run and not (args.changed or args.scope or args.after_full_tests):
+    if args.run and not (args.changed or args.scope):
         parser.error("--run exige --changed ou au moins un --scope explicite")
     return args
 

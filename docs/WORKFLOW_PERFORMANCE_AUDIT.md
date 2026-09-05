@@ -1,4 +1,4 @@
-# Audit de performance du workflow — 2026-08-31
+# Audit de performance du workflow — mise à jour 2026-09-06
 
 ## Conclusion
 
@@ -22,7 +22,7 @@ avant/après chaque phase.
 | Runs indexés | 562 |
 | Assets du registre global | 15 137 |
 | Sorties `asset-tracking/` | 18,2 Mio, dont `registry.json` 13,2 Mio |
-| Tests Python | 285 méthodes dans 33 fichiers, hors sous-tests |
+| Tests Python | 390 méthodes dans 40 fichiers, hors sous-tests |
 | Gates release | 12 scripts `Test-*.ps1` |
 | Code pipeline Python/PowerShell | ~40 700 lignes dans 88 fichiers |
 | Plus grands monolithes | `run_creature_sprite_x2.py` 8 214 lignes ; `audit_workspace_integrity.py` 3 018 ; `build_global_asset_registry.py` 2 237 |
@@ -30,9 +30,9 @@ avant/après chaque phase.
 
 Mesures obtenues par inventaires lecture seule ; aucun test ni projection n'a été exécuté.
 
-## Chaîne de coût actuelle
+## Ancienne chaîne de coût supprimée
 
-Exemple : une ligne d'`areas.csv` change.
+Exemple historique : une ligne d'`areas.csv` changeait.
 
 ```text
 workspace.py refresh
@@ -68,7 +68,7 @@ et CTest moteur.
 | P2 | Assertions sur snapshot global | tests d'intégrité figent compteurs, octets et présence physique | invariants sur fixtures ; snapshot réel dans une gate dédiée |
 | P2 | Documentation distribuée | commandes/tests répétés dans plusieurs guides | politique canonique unique et liens courts |
 
-## Plan pour atteindre ×10
+## Plan de réduction
 
 ### Phase 0 — appliquée dans la documentation
 
@@ -80,21 +80,27 @@ et CTest moteur.
 Gain attendu sur les petites tâches : suppression de la quasi-totalité du temps de validation
 quand l'utilisateur choisit aucun test, et forte réduction quand il choisit ciblés.
 
-### Phase 1 — appliquée
+### Phase 1 — appliquée et simplifiée
 
 - `test_changed.py` plan-only par défaut ; toute exécution exige `--run`.
-- `--targeted` classe strictement les fichiers et ne devient jamais `full` ; `--changed --run`
-  refuse une recommandation globale implicite.
-- Tests séparés par modules/groupes et scopes Python/release/engine.
+- `--targeted --path ...` isole le lot des autres changements Git et ne devient jamais `full` ;
+  `--changed --run` refuse une recommandation globale implicite.
+- Un changement de code cible uniquement son module de test direct. Autorités, assets, projections
+  et documentation ne sélectionnent aucun test Python.
+- Les groupes Python par domaine sont supprimés ; les seules gates spéciales restent release et
+  moteur.
 - `workspace.py` plan-only, mono-passe et sans test documentaire embarqué.
 - Reconstructions ciblables par `--scope graphics|registry|integrity`; `--changed` propose les scopes.
 - `--verify-determinism` est explicite ; la CI ajoute elle-même `--run`.
+- L'audit d'intégrité lit et valide la projection du registre au lieu de la reconstruire.
+- Les doubles générations dans les tests registre, graphisme et intégrité sont retirées ; le contrôle
+  de déterminisme reste disponible explicitement par CLI.
 
 Critère : une modification Markdown n'exécute rien ; une modification d'un script map ne charge ni
 sprites, ni inventaire graphique, ni release, ni moteur.
 
-Restent à implémenter : cache par hash d'inputs, scopes métier plus fins et télémétrie durée/fichiers/
-octets par stage.
+Le gain visé est supérieur à 80 % pour les lots d'assets et les changements de code localisés. La
+suite release reste exhaustive ; son temps n'est pas soumis à cet objectif.
 
 ### Phase 2 — découplage du plan de données
 
@@ -119,14 +125,10 @@ Critère : les commandes de routine ne parcourent jamais les ~192 Gio.
 
 ## Ordre recommandé
 
-1. Instrumentation des durées.
-2. Sélecteur plan-only + ciblage strict — fait.
-3. Mono-passe local et scopes de projection — fait.
-4. Séparation unitaires/intégration.
-5. Cache et scopes métier incrémentaux.
-6. Data-root externe.
-7. Découpage des monolithes.
+1. Sélecteur plan-only, chemins explicites et ciblage direct — fait.
+2. Mono-passe local et scopes de projection — fait.
+3. Mesurer plusieurs lots réels sans modifier le workflow.
+4. N'ajouter cache ou scopes incrémentaux que si la cible de 80 % n'est pas atteinte.
+5. Garder le déplacement du data-root et le découpage des monolithes comme projets séparés.
 
-Les étapes 2 à 5 devraient fournir l'essentiel du gain ×10 sans modifier les formats métier ni les
-artefacts scellés. Le déplacement du data-plane apporte ensuite un gain durable sur les scans,
-recherches et audits Windows.
+Cette phase ne modifie aucun format métier, manifeste, artefact scellé ou projection existante.

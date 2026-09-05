@@ -75,29 +75,33 @@ Avant une intervention, contrôler seulement l'état Git :
 git status --short
 ```
 
-Après l'intervention, ne lancer aucun test automatiquement. Demander explicitement à l'utilisateur
-de choisir une seule option :
+Après une modification de code, ne lancer aucun test automatiquement. Préparer uniquement les
+tests des fichiers du lot courant, sans lire les autres changements du worktree :
+
+```powershell
+python pipeline/scripts/test_changed.py --targeted --path <chemin-modifié> [--path <autre-chemin>]
+```
+
+Puis demander explicitement à l'utilisateur de choisir une seule option :
 
 - tests ciblés pour la tâche réalisée ;
 - tous les tests ;
 - aucun test.
 
-Préparer la proposition sans exécution :
+Pour une modification limitée aux autorités métier, assets, projections ou documentation, indiquer
+qu'aucun test Python ciblé n'est applicable. Ne pas proposer les groupes globaux par défaut.
 
-```powershell
-python pipeline/scripts/test_changed.py --targeted
-python pipeline/scripts/workspace.py refresh --changed
-```
-
-Demander séparément le choix de reconstruction :
+Préparer et demander séparément le choix de reconstruction seulement à un jalon, si la tâche livre
+une projection, si un consommateur en a besoin, avant release/CI, ou sur demande explicite :
 
 - reconstructions ciblées proposées par le plan ;
 - toutes les projections ;
 - aucune reconstruction.
 
-Les deux commandes sont plan-only par défaut. Toute exécution exige `--run`. Un choix ciblé utilise
-`test_changed.py --targeted --run` et les `workspace.py --scope ... --run` exacts ; il ne peut jamais
-devenir complet. `--verify-determinism` double les reconstructions et exige un accord explicite.
+Les commandes sont plan-only par défaut. Toute exécution exige `--run`. Un choix ciblé reprend les
+mêmes `--path` avec `test_changed.py --targeted --run` et les `workspace.py --scope ... --run`
+exacts ; il ne peut jamais devenir complet. `--verify-determinism` double les reconstructions et
+exige un accord explicite.
 Quand l'utilisateur demande d'aller au bout malgré les erreurs, ajouter `--keep-going`; le code final
 reste non nul et toutes les erreurs sont récapitulées.
 Voir [`docs/TEST_SELECTION.md`](docs/TEST_SELECTION.md) et

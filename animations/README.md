@@ -123,12 +123,12 @@ Contrat de rangement commun : [`../docs/ASSET_LIFECYCLE.md`](../docs/ASSET_LIFEC
 
 ```powershell
 python pipeline/scripts/sync_animation_upscale_registry.py --check
-python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script-modifié>.py
 ```
 
-Le premier contrôle ne concerne qu'une modification du registre. La seconde commande ne lance rien
-et prépare la question obligatoire « ciblés / tous / aucun ». Le groupe `animations` couvre inventaire,
-spatial, interpolation, 30 fps, runtime et packs, sans tests maps ou sprites. Ne jamais exécuter un
-autre groupe après un choix ciblé. Voir [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
+Le premier contrôle ne concerne qu'une modification du registre. La seconde commande ne lance rien,
+ignore les autres changements du worktree et cible uniquement le test associé au script. Une mise à
+jour limitée à la QA, à une sélection ou à un asset ne sélectionne aucun test Python. Voir
+[`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Une QA approuvée et une intégration release restent deux décisions distinctes.

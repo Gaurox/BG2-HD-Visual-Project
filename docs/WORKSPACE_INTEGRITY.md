@@ -1,17 +1,19 @@
 # Intégrité du workspace
 
-## Choix obligatoire
+## Fréquence
+
+Ne pas reconstruire après chaque lot d'assets. Les autorités métier restent valides tant que les
+projections sont périmées. Regrouper les reconstructions à un jalon, lorsqu'un livrable consomme une
+projection, avant une gate release/CI, ou sur demande explicite.
+
+À ces moments seulement, préparer le plan sans écriture :
 
 ```powershell
 python pipeline/scripts/workspace.py refresh --changed
 ```
 
-La commande affiche seulement les scopes affectés par les changements Git. Après la tâche, demander
-séparément :
-
-1. reconstructions ciblées proposées ;
-2. toutes les projections ;
-3. aucune reconstruction.
+Puis demander : reconstructions ciblées proposées, toutes les projections, ou aucune
+reconstruction.
 
 Sans `--run`, `refresh` et `check` ne font qu'afficher le plan. Exécutions possibles après choix :
 
@@ -34,12 +36,16 @@ python pipeline/scripts/workspace.py refresh --scope all --run --keep-going
 
 `refresh` écrit les projections ; `check` les compare sans écriture. Les stages sont mono-passe par
 défaut. `--verify-determinism` les exécute deux fois et exige un accord explicite ou une gate CI.
-Ne pas reconstruire après chaque tâche : regrouper les autorités ou attendre le livrable/gate.
 `--keep-going` poursuit les scopes indépendants, mais retourne toujours un code non nul si l'un
 d'eux échoue.
 
+L'audit d'intégrité lit `asset-tracking/registry.json` et vérifie les hashes de ses inputs. Il ne
+reconstruit plus implicitement le registre. Quand les deux scopes sont demandés, respecter l'ordre
+`registry`, puis `integrity` ; `workspace.py` l'applique déjà.
+
 Les tests suivent le choix indépendant décrit dans [`TEST_SELECTION.md`](TEST_SELECTION.md). La
-suite complète appelle tous les scopes en `check` mono-passe après ses tests.
+suite complète contrôle déjà la fraîcheur des projections dans leurs modules Python ; elle ne
+relance pas ensuite les mêmes scopes.
 
 ## Sorties générées
 

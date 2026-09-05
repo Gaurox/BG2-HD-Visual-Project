@@ -9,7 +9,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 |---|---|
 | Contrôle/régénération globale | `workspace.py` |
 | Sélection de tests Git | `test_changed.py` |
-| Suivi visuel tests/reconstructions | `progress_ui.py` |
+| Interface optionnelle sur tout le worktree | `progress_ui.py` |
 | Inventaires graphiques | `build_graphics_inventory.py` |
 | Maîtres/préflight de carte | `validate_x1_masters.py`, `audit_area_preflight.py` |
 | Extraction | `batch_extract.py`, `batch_extract_secondary.py`, `render_secondary.py` |
@@ -34,14 +34,12 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 
 ```powershell
 python pipeline/scripts/<script>.py --help
-python pipeline/scripts/test_changed.py --targeted
-python pipeline/scripts/workspace.py refresh --changed
-python pipeline/scripts/progress_ui.py
+python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script-modifié>.py
 ```
 
-Les deux commandes CLI planifient sans `--run`. L'interface planifie d'abord et exige le bouton
-`Démarrer` puis une confirmation. Demander séparément tests ciblés/tous/aucun et reconstructions
-ciblées/toutes/aucune. Contrats :
+La commande planifie sans `--run` et isole le lot courant. `workspace.py refresh --changed` est
+réservé aux jalons/projections/release. `progress_ui.py` reste disponible mais travaille sur tout le
+worktree : ne pas l'utiliser pour isoler un lot. Contrats :
 [`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md) et
 [`../../docs/WORKSPACE_INTEGRITY.md`](../../docs/WORKSPACE_INTEGRITY.md).
 
