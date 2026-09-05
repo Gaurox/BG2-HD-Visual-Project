@@ -1,10 +1,10 @@
-name: Deploy website mockup to GitHub Pages
+name: Redirect GitHub Pages to project website
 
 on:
   push:
     branches: [main]
     paths:
-      - "website/**"
+      - "pages-redirect/**"
       - ".github/workflows/website-pages.yml"
   workflow_dispatch:
 
@@ -28,10 +28,10 @@ jobs:
         uses: actions/checkout@v6
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Upload static website
+      - name: Upload redirect page
         uses: actions/upload-pages-artifact@v4
         with:
-          path: website
+          path: pages-redirect
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
