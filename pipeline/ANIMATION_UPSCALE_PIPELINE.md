@@ -72,6 +72,10 @@ Conserver le reçu. Installation et restauration ne prouvent ni QA ingame, ni s�
 Voir aussi [`ANIMATION_PACKS_PAR_ZONE.md`](ANIMATION_PACKS_PAR_ZONE.md) et
 [`area-animation-area-test/README.md`](area-animation-area-test/README.md).
 
+Le pack feuille doit provenir des producteurs courants de split/fusion et déclarer
+`runtime_budget_enforced: true` (booléen JSON). L'absence ou la valeur `false` est un refus de
+contrat : régénérer le pack depuis les runs terminés, sans modifier son manifest.
+
 ## Gates
 
 1. sélection = BAM typé et source disponible ;

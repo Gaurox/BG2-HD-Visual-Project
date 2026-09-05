@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FALL1A",
+  "correction_id": "reviewed-static-top-mask-right-tip",
+  "decision": "FALL1A x4 validé ingame dans AR2300 : raccord supérieur continu, bords latéraux nets et occlusion correcte.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-fall1a-topmask-ar2300",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-pack-finalization-20260906-001900/manifest.json",
+    "manifest_sha256": "703214FDB1849F6788248DD9EA174E13AEE195BA13EE24F7D7B1D8FA64BBD790",
+    "path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-pack-finalization-20260906-001900",
+    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-20260905-193635-555955/resources/FALL1A/02_upscale_x4/manifest.json",
+        "manifest_sha256": "96450693F3055713FBF6B0228E20A7379CAF6E00B6B943B548292693BE5610F4",
+        "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-20260905-193635-555955/resources/FALL1A/02_upscale_x4",
+        "schema": "bg2-upscale-animation-frames-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-topmask-reviewed-v1-20260906-000821/manifest.json",
+        "manifest_sha256": "4A707F914B766A5C4CD5A42C96611091753E95BB1B2B313B80F75E50B2FC8D9C",
+        "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-topmask-reviewed-v1-20260906-000821",
+        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "topmask-reviewed-v1",
+  "recorded_at_utc": "2026-09-05T22:16:23Z",
+  "resref": "FALL1A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2300",
+        "manifest_path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/AR2300/manifest.json",
+        "manifest_sha256": "8358D23D2CBC7DDE5F0D7395BEADB3FC03E64C99D702AA0EDB67E3364145FC04",
+        "path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/AR2300",
+        "registry_sha256": "86BD5509BB66EA46BA750AB76439A26A18F67890AF44B95A11FE1928ECFF0390",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/manifest.json",
+    "manifest_sha256": "8160C4130067993D321AF2EC91B7DCFD354D56BD9DB1451D09CF4B647C711606",
+    "path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR2300"
+  ]
+}

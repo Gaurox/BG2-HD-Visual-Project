@@ -1,6 +1,7 @@
 # Installateur ciblé d'animation par zone — conception
 
-Statut : plan d'implémentation. Aucun script ni format de reçu n'existe encore.
+Statut : implémenté. Les wrappers et le reçu v1 décrits ci-dessous sont actifs ; toute évolution
+conserve ce contrat et ses tests transactionnels.
 
 ## Résultat attendu
 

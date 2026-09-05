@@ -106,7 +106,7 @@ class AreaSplitTests(unittest.TestCase):
                 self.assertEqual(manifest["area_id"], entry["area_id"])
                 self.assertEqual(sorted(str(item["resref"]) for item in resources),
                                  entry["resrefs"])
-                self.assertTrue(manifest.get("runtime_budget_enforced", True))
+                self.assertIs(manifest["runtime_budget_enforced"], True)
 
             # The shared resource is physically duplicated, byte for byte.
             shared_asset = "AAX4-SHARED-frame000.rgba"
@@ -210,6 +210,7 @@ class AreaSplitTests(unittest.TestCase):
             self.assertEqual(index["areas"][0]["resrefs"], ["TESTA"])
             manifest, resources = pipeline.validate_v2_pack(merged / "AR0900")
             self.assertEqual(manifest["registry_version"], 3)
+            self.assertIs(manifest["runtime_budget_enforced"], True)
             self.assertEqual([resource["position"] for resource in resources],
                              [[1689, 2662], [2246, 2187]])
             self.assertEqual([resource["variant_index"] for resource in resources], [0, 1])

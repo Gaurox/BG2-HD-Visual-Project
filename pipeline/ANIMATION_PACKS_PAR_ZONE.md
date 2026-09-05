@@ -13,6 +13,19 @@ python pipeline/scripts/split_animation_pack_by_area.py `
 Exiger dans `manifest.json` : aucune zone au-dessus du budget, aucune ressource sans zone, packs
 relus et hashes valides. `--resume` revalide sans réécrire.
 
+## Contrat de production des packs feuilles
+
+Un pack utilisé par `Install-AreaAnimation-AreaTest.ps1` est produit uniquement par les scripts
+courants de split/fusion. Son manifest de zone doit contenir
+`runtime_budget_enforced: true` (booléen JSON exact), en plus du budget recalculé sous 512 Mio.
+
+- champ absent/faux : pack legacy ou incompatible ; régénérer un nouveau split/fusion depuis le
+  run terminé, jamais une édition manuelle du manifest ;
+- une zone avec plusieurs ressources : fusionner les feuilles mono-ressource avec
+  `merge_area_pack_resources.py` avant l'essai ciblé ;
+- le résultat est l'état complet de la zone. Ajouter une ressource exige de régénérer la feuille
+  avec les ressources déjà servies que l'on souhaite conserver.
+
 ## Combiner
 
 L'installateur remplace tout `iee-assets/areas`; il ne fusionne pas avec l'état installé. Construire
@@ -69,6 +82,8 @@ zone, sans fusion implicite. Ne pas l'utiliser pour une intégration complète.
 
 Le ciblé n'écrit ni DLL ni INI et n'active pas le mode par zone : `iee-assets\areas` doit déjà
 exister. Omettre `-GameRoot` en production pour utiliser `config://bg2ee_game_root`.
+Lancer systématiquement `-VerifyOnly` ; un refus `runtime_budget_enforced` se résout par
+régénération du pack, pas par contournement de l'installateur.
 
 Intégration complète :
 

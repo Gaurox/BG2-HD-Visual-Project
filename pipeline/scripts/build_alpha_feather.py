@@ -20,6 +20,11 @@ smoothstep ramps —
     For a light source whose native sprite is too small to have a soft glow
     of its own, this turns a hard baked-in square into a deliberate round
     halo instead of trying to erase it.
+  - top-region Gaussian: locally blurs an alpha mask's upper edge, keeping
+    the result strictly inside the original silhouette. This is intended for
+    a binary, pixel-island raccord between a top overlay and the rest of the
+    scene; a vertical smoothstep gate prevents the correction leaking below
+    the inspected region.
 
 RGB bytes are preserved exactly; the fade can only ever lower alpha, never
 raise it (`alpha_final <= alpha_source`).
@@ -41,7 +46,7 @@ from typing import Any
 
 import numpy as np
 from PIL import Image, ImageDraw
-from scipy.ndimage import distance_transform_edt
+from scipy.ndimage import distance_transform_edt, gaussian_filter
 
 import animation_paths
 
@@ -123,6 +128,39 @@ def radial_ramp(
     return ramp * ramp * (3.0 - 2.0 * ramp)
 
 
+def top_gaussian_alpha(
+    alpha: np.ndarray,
+    sigma: float,
+    full_height: int,
+    transition: int,
+) -> np.ndarray:
+    """Locally smooth alpha with a Gaussian blur in the upper canvas region.
+
+    The result is clamped to the input alpha, so opaque pixels never spread
+    into the transparent exterior. ``full_height`` is the exclusive lower row
+    of the fully corrected band; ``transition`` then ramps the correction to
+    zero with a reversed smoothstep gate.
+    """
+    height = alpha.shape[0]
+    # Keep float64 here: at the lower end of a soft transition, float32 rounds
+    # near-opaque Gaussian coverage up to 255 and turns the raccord into a hard
+    # step before the smoothstep gate can fade it out.
+    alpha_float = alpha.astype(np.float64)
+    # The extended kernel retains the faint outer tail at the raccord; the
+    # scipy default truncation (4 sigma) can otherwise become exactly opaque
+    # one row before the transition gate starts.
+    blurred = gaussian_filter(alpha_float, sigma=sigma, mode="constant", cval=0.0, truncate=8.0)
+    inside_only = np.minimum(alpha_float, blurred)
+    rows = np.arange(height, dtype=np.float64)
+    if transition == 0:
+        gate = (rows < full_height).astype(np.float32)
+    else:
+        progress = np.clip((rows - float(full_height)) / float(transition), 0.0, 1.0)
+        smoothstep = progress * progress * (3.0 - 2.0 * progress)
+        gate = np.where(rows < full_height, 1.0, 1.0 - smoothstep)
+    return alpha_float * (1.0 - gate[:, None]) + inside_only * gate[:, None]
+
+
 def checkerboard(width: int, height: int, cell: int = 16) -> Image.Image:
     yy, xx = np.indices((height, width))
     cells = ((xx // cell) + (yy // cell)) % 2
@@ -193,6 +231,18 @@ def main() -> None:
         "--radial-inner-fraction", type=float, default=0.3,
         help="fondu radial: fraction (0-1) du rayon exterieur gardee a pleine opacite avant le degrade",
     )
+    parser.add_argument(
+        "--top-gaussian-sigma-x4", type=float, default=0.0,
+        help="ecart-type du flou gaussien local de la zone haute, 0 = desactive",
+    )
+    parser.add_argument(
+        "--top-gaussian-full-height-x4", type=int, default=None,
+        help="hauteur x4 (exclusive) entierement lisse; une transition optionnelle suit",
+    )
+    parser.add_argument(
+        "--top-gaussian-transition-x4", type=int, default=0,
+        help="hauteur x4 du raccord progressif sous la zone haute (defaut: 0)",
+    )
     args = parser.parse_args()
 
     resref = args.resref.upper()
@@ -224,9 +274,17 @@ def main() -> None:
         )
         require(args.radial_outer_x_x4 > 0 and args.radial_outer_y_x4 > 0, "rayons radiaux invalides.")
         require(0 <= args.radial_inner_fraction < 1, "--radial-inner-fraction doit etre dans [0,1[.")
+    use_top_gaussian = args.top_gaussian_sigma_x4 > 0 or args.top_gaussian_full_height_x4 is not None
+    if use_top_gaussian:
+        require(args.top_gaussian_sigma_x4 > 0, "--top-gaussian-sigma-x4 doit etre strictement positif.")
+        require(
+            args.top_gaussian_full_height_x4 is not None and args.top_gaussian_full_height_x4 > 0,
+            "--top-gaussian-full-height-x4 doit etre strictement positif.",
+        )
+        require(args.top_gaussian_transition_x4 >= 0, "--top-gaussian-transition-x4 ne peut pas etre negatif.")
     require(
-        args.inner_radius_x4 > 0 or args.canvas_radius_x4 > 0 or use_luminance or use_radial,
-        "Au moins un fondu (interieur, canvas, luminance ou radial) doit etre actif.",
+        args.inner_radius_x4 > 0 or args.canvas_radius_x4 > 0 or use_luminance or use_radial or use_top_gaussian,
+        "Au moins un fondu (interieur, canvas, luminance, radial ou gaussien haut) doit etre actif.",
     )
     require(not output.exists() or not any(output.iterdir()), f"sortie non vide : {output}")
 
@@ -261,6 +319,11 @@ def main() -> None:
         label_parts.append(f"lum {args.luminance_low:g}-{args.luminance_high:g}")
     if use_radial:
         label_parts.append(f"radial {args.radial_outer_x_x4:g}x{args.radial_outer_y_x4:g}px")
+    if use_top_gaussian:
+        label_parts.append(
+            f"gauss haut sigma {args.top_gaussian_sigma_x4:g}px "
+            f"jusqu'a {args.top_gaussian_full_height_x4}px"
+        )
     label = "fondu " + " + ".join(label_parts)
 
     records: list[dict[str, Any]] = []
@@ -304,6 +367,21 @@ def main() -> None:
             faded = faded * radial_ramp(
                 physical_width, physical_height, center_x, center_y,
                 args.radial_inner_fraction, args.radial_outer_x_x4, args.radial_outer_y_x4,
+            )
+        if use_top_gaussian:
+            require(
+                args.top_gaussian_full_height_x4 <= physical_height,
+                f"{asset_name}: zone gaussienne hors canvas ({args.top_gaussian_full_height_x4}>{physical_height}).",
+            )
+            require(
+                args.top_gaussian_full_height_x4 + args.top_gaussian_transition_x4 <= physical_height,
+                f"{asset_name}: transition gaussienne hors canvas.",
+            )
+            faded = top_gaussian_alpha(
+                faded,
+                args.top_gaussian_sigma_x4,
+                args.top_gaussian_full_height_x4,
+                args.top_gaussian_transition_x4,
             )
         faded_alpha = np.rint(faded).astype(np.uint8)
         require(bool(np.all(faded_alpha <= source_alpha)), f"{asset_name}: alpha etendu hors du masque source.")
@@ -360,6 +438,8 @@ def main() -> None:
         operation_names.append("luminance-feather")
     if use_radial:
         operation_names.append("radial-feather")
+    if use_top_gaussian:
+        operation_names.append("top-region-gaussian")
     operation_type = "-plus-".join(operation_names)
 
     physical_sizes = {tuple(int(v) for v in frame["physical_size_xn"]) for frame in source_frames}
@@ -385,7 +465,10 @@ def main() -> None:
             "radial_outer_x_physical_x4": args.radial_outer_x_x4,
             "radial_outer_y_physical_x4": args.radial_outer_y_x4,
             "radial_inner_fraction": args.radial_inner_fraction if use_radial else None,
-            "curve": "smoothstep",
+            "top_gaussian_sigma_physical_x4": args.top_gaussian_sigma_x4 if use_top_gaussian else None,
+            "top_gaussian_full_height_physical_x4": args.top_gaussian_full_height_x4 if use_top_gaussian else None,
+            "top_gaussian_transition_physical_x4": args.top_gaussian_transition_x4 if use_top_gaussian else None,
+            "curve": "gaussian+smoothstep-gate" if use_top_gaussian else "smoothstep",
             "outside_source_mask": 0,
             "rgb_policy": "unchanged",
             "alpha_constraint": "final<=source",

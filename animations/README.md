@@ -54,6 +54,19 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 - Créer un nouveau run mono-asset sous `animations/ressources/<RESREF>/runs/<run-id>/`; utiliser
   `animations/batches/<run-id>/` pour un lot. `animations/runs/` reste lisible en legacy.
 
+## Pack feuille pour essai ingame ciblé
+
+Chaîne obligatoire : run x4 terminé → `split_animation_pack_by_area.py` →
+`merge_area_pack_resources.py` si la zone contient plusieurs ressources →
+`Install-AreaAnimation-AreaTest.ps1 -VerifyOnly` → installation explicite.
+
+- Le pack feuille est l'état complet voulu pour une zone, jamais un delta.
+- Son `manifest.json` porte `runtime_budget_enforced: true` (booléen JSON exact), écrit par les
+  producteurs courants de split/fusion et exigé par l'installateur ciblé.
+- Un pack historique où ce champ est absent ou faux est incompatible : régénérer un nouveau split
+  puis une nouvelle fusion depuis les runs terminés ; ne jamais éditer un manifest immuable.
+- L'essai ingame ne modifie ni QA, ni sélection, ni release.
+
 ## Parcours courant
 
 ```powershell
