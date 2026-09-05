@@ -1,6 +1,6 @@
 # BG2 HD Visual Project
 
-> **Visit the project website:** [bg2hd.gaurox.dev](https://bg2hd.gaurox.dev/) — explore the [visual gallery](https://bg2hd.gaurox.dev/gallery/) and follow the [work in progress](https://bg2hd.gaurox.dev/progress/).
+> **Visit the project website:** [bg2hd.gaurox.dev](https://bg2hd.gaurox.dev/) — explore the [visual gallery](https://bg2hd.gaurox.dev/gallery) and follow the [work in progress](https://bg2hd.gaurox.dev/progress).
 
 An unofficial, non-commercial, experimental visual project for *Baldur’s Gate II: Enhanced Edition*.
 
@@ -43,13 +43,14 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 - The release manifest is `blocked`; this repository does not provide an installable mod.
 - Validated selections and release integration are distinct from production output.
-- The presentation website is maintained in a separate repository.
+- The public website has a separate source repository; see [docs/WEBSITE.md](docs/WEBSITE.md).
 
 ## Entry points
 
 | Topic | Reference |
 |---|---|
 | Workspace rules | [AGENTS.md](AGENTS.md) |
+| Public website | [docs/WEBSITE.md](docs/WEBSITE.md) |
 | TIS/PVRZ maps | [pipeline/README.md](pipeline/README.md) |
 | BAM animations | [animations/README.md](animations/README.md) |
 | Sprites | [sprite/README.md](sprite/README.md) |

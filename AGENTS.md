@@ -4,6 +4,16 @@
 
 Point d'entrée opérationnel. Les fichiers générés décrivent l'état ; ils ne le décident pas.
 
+## Site public séparé
+
+- URL : `https://bg2hd.gaurox.dev/`.
+- Dépôt unique : `https://github.com/Gaurox/bg2-hd-website.git`.
+- Checkout local canonique : `config://website_checkout`.
+- Ne jamais recréer ni modifier `BG2_Upscale/website/` ou une copie sous `H:`.
+- Avant toute modification web, vérifier `git rev-parse --show-toplevel` et
+  `git remote get-url origin` dans le checkout canonique.
+- Procédure et frontières : [`docs/WEBSITE.md`](docs/WEBSITE.md).
+
 ## Lecture minimale
 
 1. Lire ce fichier puis [`README.md`](README.md).
