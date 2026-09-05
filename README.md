@@ -8,9 +8,9 @@ This repository is the project’s control plane: inventories, decisions, script
 
 Maps, animations, and effects are retained only when they remain coherent with the original rendering. Production output, in-game QA, installation, and release selection are tracked separately.
 
-![AR0700 — Waukeen's Promenade, vanilla on the left and x4 on the right](docs/images/readme/ar0700-waukeens-promenade-vanilla-vs-x4-v2.png)
+![AR0700 — Waukeen's Promenade detail, vanilla on the left and x4 on the right](docs/images/readme/ar0700-gate-detail-vanilla-vs-x4.png)
 
-*AR0700 · Waukeen’s Promenade · continuous x1 / x4 comparison.*
+*AR0700 · Waukeen’s Promenade · focused x1 / x4 comparison.*
 
 ## Scope
 
