@@ -520,6 +520,76 @@
       "created_utc": "2026-09-01T19:00:06.203924+00:00",
       "classification": "retained-processing-evidence",
       "reason": "Completed post-P3 pack retained as immutable processing evidence; no QA or release status inferred"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-3areas-20260905",
+      "manifest_sha256": "044D96772FEB7DF0CC7EE52AF0326FD5539D01798D07A011B0E9274BCBF2C083",
+      "created_utc": "2026-09-05T00:07:04.274061+00:00",
+      "classification": "qa-lineage",
+      "reason": "Source pack pinned by the current BUBBLES2 QA decision; retention alone grants no QA or release status"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-3areas-premultiply-20260905",
+      "manifest_sha256": "5C03376EE46EB24EADCFA8AE42C348D891C790C89B54C0794E782A9EA5A0691B",
+      "created_utc": "2026-09-05T00:07:29.812453+00:00",
+      "classification": "retained-qa-evidence",
+      "reason": "Superseded accepted BUBBLES2 pack retained as immutable QA evidence"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905",
+      "manifest_sha256": "A3B04D2EF8B5C949340E42868B734291FD1EC86EBC31E41FCC14766976E9DA05",
+      "created_utc": "2026-09-05T00:07:29.812453+00:00",
+      "classification": "release-source",
+      "reason": "Current BUBBLES2 QA selection and release-candidate source"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-ar0411-source-20260905",
+      "manifest_sha256": "0A71BD533F02A87AF7D8D2D8E6E729761FEE4A922D5A38491FF28E642DB5926E",
+      "created_utc": "2026-09-04T22:17:14.661161+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Completed AR0411 source split retained for BUBBLES2 reproducibility"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-ar0602-source-20260905",
+      "manifest_sha256": "79D0C14FE85EDEB072AD99AE0703C7D0BE92EDBFC3884094BB31DBB57643F229",
+      "created_utc": "2026-09-04T22:17:37.167494+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Completed AR0602 source split retained for BUBBLES2 reproducibility"
+    },
+    {
+      "name": "bubbles2-xbr2x-blend-ar0603-source-20260905",
+      "manifest_sha256": "B7ED10DBC1E2E51215C7552E2A4372A75BE8BC6C3A96DB91805EC178431C8BFB",
+      "created_utc": "2026-09-04T22:17:44.266561+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Completed AR0603 source split retained for BUBBLES2 reproducibility"
+    },
+    {
+      "name": "bubbles2-xbr2x-x4-30fps-20260904",
+      "manifest_sha256": "7892607358EC18900494DF741D3E193DA8D6B55F496324BCD25FA90C913FA8FA",
+      "created_utc": "2026-09-04T21:48:57.781406+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Completed BUBBLES2 x4 30 FPS pack retained for reproducibility"
+    },
+    {
+      "name": "bubbles2-xbr2x-x4-30fps-rgb-neutral-20260904",
+      "manifest_sha256": "B8A2D6E7446A0FADCF3269B9CEC60C6566BF87AF001FDC37D69E7C3EC145BD9A",
+      "created_utc": "2026-09-04T21:49:15.740465+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Completed RGB-neutral BUBBLES2 pack retained for reproducibility"
+    },
+    {
+      "name": "combined-20260905-bubbles2-xbr2x-blend-x4-30fps",
+      "manifest_sha256": "E0DC4417F40756997C3203E9FDC9474010451684E1F1BAD5036B4E86446C8DC1",
+      "created_utc": "2026-09-04T22:19:26.218479+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Superseded combined BUBBLES2 delivery pack retained as immutable processing evidence"
+    },
+    {
+      "name": "combined-20260905-bubbles2-xbr2x-x4-30fps",
+      "manifest_sha256": "B187BFDDAAA4485124670E556F284D400F2F1BEFDE7B612C58F708F51C391D4D",
+      "created_utc": "2026-09-04T22:01:04.705372+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Superseded combined BUBBLES2 delivery pack retained as immutable processing evidence"
     }
   ]
 }

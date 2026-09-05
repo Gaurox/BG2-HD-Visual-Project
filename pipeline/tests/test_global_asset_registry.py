@@ -340,6 +340,74 @@ class GlobalAssetRegistryTests(unittest.TestCase):
                 ["invalid-animation-selection"],
             )
 
+    def test_release_qa_v3_requires_complete_hashed_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            old_approval_path = (
+                root
+                / "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1234/qa-approval.json"
+            )
+            current_decision_path = (
+                root / "animations/index/qa-decisions/NEW/accepted.json"
+            )
+            write_json(old_approval_path, {"status": "accepted"})
+            write_json(current_decision_path, {"status": "accepted"})
+            qa_path = (
+                root
+                / "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR1234/qa-v3.json"
+            )
+            approval = {
+                "schema_version": 3,
+                "area": "AR1234",
+                "status": "accepted",
+                "decision_origin": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+                "required_resrefs": ["NEW", "OLD"],
+                "evidence": [
+                    {
+                        "kind": "byte-identical-release-continuity",
+                        "path": old_approval_path.relative_to(root).as_posix(),
+                        "sha256": registry.sha256_file(old_approval_path),
+                        "accepted_resrefs": ["OLD"],
+                    },
+                    {
+                        "kind": "ingame-qa-decision",
+                        "path": current_decision_path.relative_to(root).as_posix(),
+                        "sha256": registry.sha256_file(current_decision_path),
+                        "accepted_resrefs": ["NEW"],
+                    },
+                ],
+            }
+            write_json(qa_path, approval)
+            candidate_path = root / registry.ANIMATION_CANDIDATES_PATH
+            candidate = {
+                "candidates": [
+                    {
+                        "area": "AR1234",
+                        "approval_status": "approved-for-release",
+                        "required_resrefs": ["NEW", "OLD"],
+                        "qa_approval": qa_path.relative_to(root).as_posix(),
+                        "qa_approval_sha256": registry.sha256_file(qa_path),
+                    }
+                ]
+            }
+            write_json(candidate_path, candidate)
+
+            accepted = registry.load_legacy_release_animation_qa(
+                registry.RegistryBuilder(root)
+            )
+            self.assertEqual(set(accepted), {"NEW", "OLD"})
+
+            approval["evidence"][1]["sha256"] = "0" * 64
+            write_json(qa_path, approval)
+            candidate["candidates"][0]["qa_approval_sha256"] = registry.sha256_file(
+                qa_path
+            )
+            write_json(candidate_path, candidate)
+            rejected = registry.load_legacy_release_animation_qa(
+                registry.RegistryBuilder(root)
+            )
+            self.assertEqual(rejected, {})
+
     def test_generated_files_can_be_recreated_and_checked(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             output_dir = Path(temporary)

@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 654,
-  "run_records_sha256": "FF57A666811B702AA37CEE6A8BB07B45AD4D1204BF5F57825F26AC5AAC40251D",
+  "run_count": 665,
+  "run_records_sha256": "F101E15B3688573561AC39A41CAD611982993064E1829C295E42CF32ED3394FA",
   "runs": [
     {
       "asset_count": 1,
@@ -119,13 +119,13 @@
       "asset_ids": [
         "animations:pack:AR0411"
       ],
-      "descriptor_path": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411/manifest.json",
+      "descriptor_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411/manifest.json",
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-approval.json",
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-v3-7d222d5d634ed849.json",
       "outputs_state": "present",
-      "path": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411",
+      "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
       "provenance_state": "verified",
       "qa_state": "approved",
       "recipe_path": "",
@@ -207,13 +207,13 @@
       "asset_ids": [
         "animations:pack:AR0602"
       ],
-      "descriptor_path": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602/manifest.json",
+      "descriptor_path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602/manifest.json",
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-approval.json",
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-v3-ef4ac04675374e8a.json",
       "outputs_state": "present",
-      "path": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
+      "path": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602",
       "provenance_state": "verified",
       "qa_state": "approved",
       "recipe_path": "",
@@ -2283,16 +2283,15 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 2,
+      "asset_count": 1,
       "asset_ids": [
-        "animations:bam:PORTL1B",
-        "animations:pack:AR0602"
+        "animations:bam:PORTL1B"
       ],
       "descriptor_path": "animations/runs/ar0602-portl1b-apo8-x4-30fps-v2/manifest.json",
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR0602; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/ar0602-portl1b-apo8-x4-30fps-v2",
       "provenance_state": "verified",
@@ -2302,8 +2301,8 @@
       "run_id": "ar0602-portl1b-apo8-x4-30fps-v2",
       "run_key": "animations:ar0602-portl1b-apo8-x4-30fps-v2",
       "run_kind": "area-animation",
-      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
-      "selection_state": "release-candidate"
+      "selection_authority": "",
+      "selection_state": "historical"
     },
     {
       "asset_count": 13,
@@ -3099,6 +3098,250 @@
     {
       "asset_count": 1,
       "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0411-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0411-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-blend-in-ar0411-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-blend-in-ar0411-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0602-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0602-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-blend-in-ar0602-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-blend-in-ar0602-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0603-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-blend-in-ar0603-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-blend-in-ar0603-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-blend-in-ar0603-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0411-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0411-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-in-ar0411-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-in-ar0411-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0602-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0602-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-in-ar0602-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-in-ar0602-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0603-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-in-ar0603-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-in-ar0603-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-in-ar0603-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-nearest2-x4/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-nearest2-x4",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "bubbles2-xbr2x-blend-nearest2-x4",
+      "run_key": "animations:BUBBLES2:bubbles2-xbr2x-blend-nearest2-x4",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-20260905/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-20260905",
+      "provenance_state": "partial",
+      "qa_state": "validated-ingame",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "bubbles2-xbr2x-blend-premultiply-20260905",
+      "run_key": "animations:BUBBLES2:bubbles2-xbr2x-blend-premultiply-20260905",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 3,
+      "asset_ids": [
+        "animations:bam:BUBBLES2",
+        "animations:pack:AR0411",
+        "animations:pack:AR0602"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; Candidat(s) de zone: AR0602;AR0411; QA ingame explicite: animations/index/qa-decisions/BUBBLES2/2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "bubbles2-xbr2x-blend-premultiply-budget-20260905",
+      "run_key": "animations:BUBBLES2:bubbles2-xbr2x-blend-premultiply-budget-20260905",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/BUBBLES2.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "bubbles2-xbr2x-nearest2-x4",
+      "run_key": "animations:BUBBLES2:bubbles2-xbr2x-nearest2-x4",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:BUBBLES2"
+      ],
+      "descriptor_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4-30fps-v2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-nearest2-x4-30fps-v2",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "bubbles2-xbr2x-nearest2-x4-30fps-v2",
+      "run_key": "animations:BUBBLES2:bubbles2-xbr2x-nearest2-x4-30fps-v2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
         "animations:bam:BUTRFLY"
       ],
       "descriptor_path": "animations/runs/butrfly-apo8-x4-30fps-v2/manifest.json",
@@ -3350,10 +3593,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 11,
+      "asset_count": 10,
       "asset_ids": [
         "animations:bam:DSTDVL1A",
-        "animations:pack:AR0411",
         "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
@@ -3368,7 +3610,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -3492,10 +3734,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 11,
+      "asset_count": 10,
       "asset_ids": [
         "animations:bam:DSTDVL1B",
-        "animations:pack:AR0411",
         "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
@@ -3510,7 +3751,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -3634,10 +3875,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 11,
+      "asset_count": 10,
       "asset_ids": [
         "animations:bam:DSTDVL1C",
-        "animations:pack:AR0411",
         "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
@@ -3652,7 +3892,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0411;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -4392,13 +4632,15 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 0,
-      "asset_ids": [],
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:FPIT1S"
+      ],
       "descriptor_path": "",
       "domain": "animations",
       "inputs_state": "unknown",
-      "legacy": false,
-      "notes": "layout=legacy",
+      "legacy": true,
+      "notes": "layout=legacy; Migré depuis proto; rôle historique: occlusion-mask-workshop",
       "outputs_state": "present",
       "path": "animations/runs/FPIT1S-occlusion-masks-20260903",
       "provenance_state": "partial",
@@ -4407,7 +4649,7 @@
       "result_state": "unknown",
       "run_id": "FPIT1S-occlusion-masks-20260903",
       "run_key": "animations:FPIT1S-occlusion-masks-20260903",
-      "run_kind": "area-animation",
+      "run_kind": "animation-prototype",
       "selection_authority": "",
       "selection_state": "historical"
     },
@@ -15739,10 +15981,10 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "73161B6D8A251DC25D14A799D80F8C7338D5642937413E333B8FDD450A2FD4B1",
+  "source_fingerprint_sha256": "401A929D0E3EF4B812CF558E9DD379F467A6EF0AB283178A057B58D6C443589D",
   "summary": {
     "by_domain": {
-      "animations": 203,
+      "animations": 214,
       "maps": 296,
       "sprites": 143,
       "videos": 12
@@ -15750,10 +15992,10 @@
     "by_selection_state": {
       "canonical-prototype": 17,
       "current-generation": 1,
-      "historical": 271,
+      "historical": 282,
       "historical-unselected": 5,
-      "release-candidate": 56,
-      "selected": 296,
+      "release-candidate": 55,
+      "selected": 297,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2

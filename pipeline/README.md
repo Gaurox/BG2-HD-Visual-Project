@@ -5,6 +5,9 @@
 `areas.csv` est l'autorité pour l'état d'une carte, le run et le build retenus. Les dossiers de run,
 captures et projections ne permettent aucune promotion implicite.
 
+Avant toute production ou reprise, lire
+[`../docs/UPSCALING_WORK_PREFLIGHT.md`](../docs/UPSCALING_WORK_PREFLIGHT.md).
+
 ## Parcours courant
 
 | Étape | Commande ou autorité |

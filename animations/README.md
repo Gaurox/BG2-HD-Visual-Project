@@ -5,6 +5,11 @@
 Les animations BAM restent en géométrie logique x1 ; le moteur affiche leurs textures physiques
 x4 et, si le registre le demande, une timeline 30 fps.
 
+## Lecture obligatoire
+
+Avant toute production ou reprise, lire
+[`../docs/UPSCALING_WORK_PREFLIGHT.md`](../docs/UPSCALING_WORK_PREFLIGHT.md).
+
 ## Sources de vérité
 
 | Information | Autorité |

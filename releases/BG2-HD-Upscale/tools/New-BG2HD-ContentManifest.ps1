@@ -780,7 +780,8 @@ $mapSpecs = @(
     @{ ComponentId = 3710; ComponentLabel = 'map-oh6100'; PayloadGroup = 'map-oh6100'; Area = 'OH6100'; SourceRun = 'maps/OH6100/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build'; Path = 'maps/OH6100/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build'; InstallOrder = 3710 },
     @{ ComponentId = 3720; ComponentLabel = 'map-oh6100'; PayloadGroup = 'map-oh6100'; Area = 'OH6100N'; SourceRun = 'maps/OH6100/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; Path = 'maps/OH6100/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; InstallOrder = 3720 },
     @{ ComponentId = 3730; ComponentLabel = 'map-oh6200'; PayloadGroup = 'map-oh6200'; Area = 'OH6200'; SourceRun = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build'; Path = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build'; InstallOrder = 3730 },
-    @{ ComponentId = 3740; ComponentLabel = 'map-oh6200'; PayloadGroup = 'map-oh6200'; Area = 'OH6200N'; SourceRun = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; Path = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; InstallOrder = 3740 }
+    @{ ComponentId = 3740; ComponentLabel = 'map-oh6200'; PayloadGroup = 'map-oh6200'; Area = 'OH6200N'; SourceRun = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; Path = 'maps/OH6200/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build'; InstallOrder = 3740 },
+    @{ ComponentId = 3760; ComponentLabel = 'map-ar2300'; PayloadGroup = 'map-ar2300'; Area = 'AR2300'; SourceRun = 'maps/AR2300/runs/seedvr2-7b-int8-lab-batch-underdark-x4/05_build/x4-page2112-cache-safe-v1'; Path = 'maps/AR2300/runs/seedvr2-7b-int8-lab-batch-underdark-x4/05_build/x4-page2112-cache-safe-v1'; InstallOrder = 3760 }
 )
 
 # The CSV is the validation register.  Every validated day/night variant must

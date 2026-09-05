@@ -242,6 +242,14 @@ class WorkspaceIntegrityTests(unittest.TestCase):
 
     def test_animation_qa_and_sprite_restore_chains_remain_resolved(self) -> None:
         animations = self.report["domain_audits"]["animations"]
+        migration = json.loads(
+            (ROOT / "animations/index/path-migrations.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        expected_legacy_runs = len(migration["migrations"]) + len(
+            migration.get("synthetic_run_bindings", [])
+        )
         run_locations = integrity.animation_run_locations(ROOT)
         qa_directories = [
             location
@@ -293,7 +301,9 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(animations["legacy_proto_migrated_file_count"], 3030)
         self.assertEqual(animations["legacy_proto_migrated_bytes"], 1320761527)
         self.assertGreater(animations["legacy_proto_embedded_reference_count"], 0)
-        self.assertEqual(animations["legacy_proto_run_count"], 65)
+        self.assertEqual(
+            animations["legacy_proto_run_count"], expected_legacy_runs
+        )
         self.assertEqual(animations["remaining_animation_proto_directory_count"], 0)
         self.assertEqual(animations["remaining_proto_directory_count"], 0)
         adapted_evidence = animations["historical_qa_evidence_adapted_count"]
@@ -490,7 +500,10 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         self.assertEqual(retained, set())
 
         migrated_runs = [run for run in self.runs if run["domain"] == "animations" and run["legacy"]]
-        self.assertEqual(len(migrated_runs), 65)
+        expected_legacy_runs = len(migration["migrations"]) + len(
+            migration.get("synthetic_run_bindings", [])
+        )
+        self.assertEqual(len(migrated_runs), expected_legacy_runs)
         canonical_prototypes = [
             run for run in migrated_runs if run["selection_state"] == "canonical-prototype"
         ]

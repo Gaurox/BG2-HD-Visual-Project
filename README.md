@@ -8,6 +8,11 @@ This repository is the project’s control plane: inventories, decisions, script
 
 Maps, animations, and effects are retained only when they remain coherent with the original rendering. Production output, in-game QA, installation, and release selection are tracked separately.
 
+## Mandatory work preflight
+
+Before any upscale work, read [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md),
+then the domain README. This checkpoint applies especially to animation runs and per-area packs.
+
 ![AR0700 — Waukeen's Promenade detail, vanilla on the left and x4 on the right](docs/images/readme/ar0700-gate-detail-vanilla-vs-x4.png)
 
 *AR0700 · Waukeen’s Promenade · focused x1 / x4 comparison.*
@@ -50,6 +55,7 @@ Maps, animations, and effects are retained only when they remain coherent with t
 | Topic | Reference |
 |---|---|
 | Workspace rules | [AGENTS.md](AGENTS.md) |
+| Mandatory upscale preflight | [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) |
 | Public website | [docs/WEBSITE.md](docs/WEBSITE.md) |
 | TIS/PVRZ maps | [pipeline/README.md](pipeline/README.md) |
 | BAM animations | [animations/README.md](animations/README.md) |

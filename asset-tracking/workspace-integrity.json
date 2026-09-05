@@ -15,19 +15,19 @@
     "animations": {
       "approved_candidate_count": 36,
       "empty_run_count": 0,
-      "historical_qa_evidence_adapted_count": 51,
-      "ingame_qa_selected_asset_count": 1,
+      "historical_qa_evidence_adapted_count": 48,
+      "ingame_qa_selected_asset_count": 2,
       "legacy_proto_directory_migration_count": 64,
       "legacy_proto_embedded_reference_count": 204,
       "legacy_proto_embedded_reference_file_count": 68,
       "legacy_proto_loose_file_migration_count": 7,
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
-      "legacy_proto_run_count": 65,
-      "physical_run_count": 167,
+      "legacy_proto_run_count": 66,
+      "physical_run_count": 178,
       "physical_run_count_by_layout": {
         "legacy": 162,
-        "mono-asset": 5
+        "mono-asset": 16
       },
       "release_pack_indexed_count": 36,
       "release_referenced_run_count": 21,
@@ -48,7 +48,7 @@
     "path_portability": {
       "active_absolute_path_violation_count": 0,
       "active_script_file_count": 153,
-      "configured_path_count": 5,
+      "configured_path_count": 6,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
       "missing_path_count": 0,
@@ -58,7 +58,8 @@
         "mmpx_scalepix": "available",
         "topaz_gigapixel_exe": "available",
         "topaz_video_ffmpeg": "available",
-        "topaz_video_models": "available"
+        "topaz_video_models": "available",
+        "website_checkout": "available"
       },
       "unconfigured_path_count": 0
     },
@@ -282,20 +283,8 @@
     {
       "code": "animation-historical-qa-evidence-adapted",
       "details": {
-        "evidence_reference_count": 51,
+        "evidence_reference_count": 48,
         "migrations": [
-          {
-            "area": "AR0602",
-            "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
-            "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "7CD82FACDADFDF388C29E983B9C57519A165AC838D8C7416C33F23F1835AC5DD"
-          },
-          {
-            "area": "AR0602",
-            "evidence_source": "326658ae1d47f277308c2db41976c101fceb5ffd:animations/index/animation_alpha_corrections.csv",
-            "path": "animations/index/animation_alpha_corrections.csv",
-            "sha256": "7640A39573D19C979622AE7EA4B60EE459BC7D3399FCEECCC896A8BBD549E1D5"
-          },
           {
             "area": "AR0900",
             "evidence_source": "688f975eb7a26be6196d092e1fb9197c8123202b:animations/index/animation_upscale_registry.csv",
@@ -555,12 +544,6 @@
             "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
           },
           {
-            "area": "AR0411",
-            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
-            "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
-          },
-          {
             "area": "AR0414",
             "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
             "path": "animations/index/animation_upscale_registry.csv",
@@ -646,9 +629,9 @@
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
   "registry_asset_count": 15168,
-  "registry_asset_records_sha256": "865388BB8C54BA0433F6B70982633313721CC30182EDB71093F8903C3D5860CE",
-  "run_count": 654,
-  "run_records_sha256": "FF57A666811B702AA37CEE6A8BB07B45AD4D1204BF5F57825F26AC5AAC40251D",
+  "registry_asset_records_sha256": "762C91B2B2265781FED86882F4765504A496BB24A28F0306663EEC71CEE80E77",
+  "run_count": 665,
+  "run_records_sha256": "F101E15B3688573561AC39A41CAD611982993064E1829C295E42CF32ED3394FA",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -752,7 +735,7 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "73161B6D8A251DC25D14A799D80F8C7338D5642937413E333B8FDD450A2FD4B1",
+  "source_fingerprint_sha256": "401A929D0E3EF4B812CF558E9DD379F467A6EF0AB283178A057B58D6C443589D",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

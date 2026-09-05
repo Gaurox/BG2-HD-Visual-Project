@@ -1135,7 +1135,7 @@ def load_current_animation_qa(
 def load_legacy_release_animation_qa(
     builder: RegistryBuilder,
 ) -> dict[str, list[dict[str, str]]]:
-    """Keep only pre-contract QA pinned by the canonical release candidate register."""
+    """Keep only hash-pinned QA covered by the canonical release candidate register."""
 
     approvals: dict[str, list[dict[str, str]]] = {}
     document = builder.inputs.read_json(ANIMATION_CANDIDATES_PATH)
@@ -1165,14 +1165,64 @@ def load_legacy_release_animation_qa(
         approval_resrefs = {
             str(value).upper() for value in approval.get("required_resrefs", [])
         }
+        approval_schema = approval.get("schema_version")
+        expected_origins = {
+            1: "preserved-existing-user-qa",
+            2: "explicit-user-ingame-qa",
+            3: "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+        }
         if not (
             approval.get("status") == "accepted"
-            and approval.get("decision_origin") == "preserved-existing-user-qa"
+            and isinstance(approval_schema, int)
+            and approval.get("decision_origin") == expected_origins.get(approval_schema)
             and str(approval.get("area", "")).upper() == area
             and approval_resrefs == required_resrefs
             and actual_hash == declared_hash
         ):
             continue
+        if approval_schema in {2, 3}:
+            allowed_kinds = {
+                2: {"ingame-qa-decision"},
+                3: {
+                    "byte-identical-release-continuity",
+                    "ingame-qa-decision",
+                },
+            }[approval_schema]
+            covered_resrefs: set[str] = set()
+            evidence_valid = True
+            for evidence in approval.get("evidence", []):
+                if not isinstance(evidence, Mapping):
+                    evidence_valid = False
+                    break
+                accepted_resrefs = {
+                    str(value).upper()
+                    for value in evidence.get("accepted_resrefs", [])
+                }
+                evidence_path = str(evidence.get("path", ""))
+                evidence_hash = str(evidence.get("sha256", "")).upper()
+                if (
+                    evidence.get("kind") not in allowed_kinds
+                    or not accepted_resrefs
+                    or not accepted_resrefs <= required_resrefs
+                    or not all(
+                        ANIMATION_RESREF_RE.fullmatch(resref)
+                        for resref in accepted_resrefs
+                    )
+                    or not evidence_path.startswith(
+                        (
+                            "animations/index/qa-decisions/",
+                            "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/",
+                        )
+                    )
+                    or not SHA256_RE.fullmatch(evidence_hash)
+                    or not builder.inputs.exists(evidence_path)
+                    or builder.inputs.digest(evidence_path) != evidence_hash
+                ):
+                    evidence_valid = False
+                    break
+                covered_resrefs.update(accepted_resrefs)
+            if not evidence_valid or covered_resrefs != required_resrefs:
+                continue
         locator = f"json:candidates[area={area}]"
         for resref in required_resrefs:
             if not ANIMATION_RESREF_RE.fullmatch(resref):

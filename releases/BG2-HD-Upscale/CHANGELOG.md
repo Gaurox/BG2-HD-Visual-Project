@@ -19,6 +19,9 @@
 - Keeps legacy saves detect-only; no automatic migration is attempted.
 - Regenerates the map package from `areas.csv`: every currently validated day/night variant is
   represented. Exact scope is recorded in `manifests/content.json`.
+- Selects the cache-safe AR2300 build for release: its PVRZ atlas was reduced
+  from 122 to 93 pages and validated in game. The water-color mismatch remains
+  a documented known issue.
 - Restores the complete validated AR0413 result: canonical 16-page map build,
   12-sentinel TIS contour delta and a rebuilt renderer that classifies the
   stock `WTOIL` overlay as `Oil`. Packaging now rejects stale renderer DLLs
