@@ -23,11 +23,9 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 ## Examples
 
-| Vanilla game capture | x4 maps and treated animations |
-|---|---|
-| ![Vanilla BG2EE capture](docs/images/readme/ar0700-ingame-vanilla.webp) | ![BG2EE capture with x4 maps and treated animations](docs/images/readme/ar0700-ingame-x4.webp) |
+![AR0700 in-game comparison — vanilla on the left, x4 maps and treated animations on the right](docs/images/readme/ar0700-ingame-vanilla-vs-x4.png)
 
-*AR0700 capture: treated maps and animations; creature sprites remain native reference elements.*
+*AR0700 in-game capture: vanilla on the left; x4 maps and treated animations on the right. Creature sprites remain native reference elements.*
 
 <p align="center">
   <img src="docs/images/readme/creature-sprite-study.webp" width="360" alt="Goblin sprite comparison: original, bilinear, xBR, and xBR with antialiasing.">
