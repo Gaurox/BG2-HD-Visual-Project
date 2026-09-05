@@ -52,6 +52,9 @@ and can also be started manually.
   The featured map comparison uses a matched AR0700 x1/x4 pair. Remaining concept images are
   temporary and can be replaced without changing the layouts.
 - Comparison assets follow the convention documented in `assets/comparisons/README.md`.
+- Animated vanilla/x4 presentation comparisons follow
+  [`ANIMATION_PREVIEW_GUIDE.md`](ANIMATION_PREVIEW_GUIDE.md). This is website-only guidance;
+  it does not authorize changes to production animation assets.
 - Generated-image briefs are recorded in `ASSET_PROMPTS.md`.
 
 No build step or package installation is required.
