@@ -1,5 +1,7 @@
 # BG2 HD Visual Project
 
+> **Visit the project website:** [bg2hd.gaurox.dev](https://bg2hd.gaurox.dev/) — explore the [visual gallery](https://bg2hd.gaurox.dev/gallery/) and follow the [work in progress](https://bg2hd.gaurox.dev/progress/).
+
 An unofficial, non-commercial, experimental visual project for *Baldur’s Gate II: Enhanced Edition*.
 
 This repository is the project’s control plane: inventories, decisions, scripts, tests, engine code, and release manifests. It does not include original game resources, upscale outputs, runs, builds, or distributable archives.
