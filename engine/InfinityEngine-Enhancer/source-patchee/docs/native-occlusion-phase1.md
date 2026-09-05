@@ -2,8 +2,10 @@
 
 Status: source prototype implemented and host-validated on 2026-08-27; the local Phase-1 milestone
 is validated in game for an AR0516 `CGameStatic` x4 animation and a `Character` xN creature.
-The option remains disabled by default and release-wide QA is pending. See the
-[validation record](validation/native-occlusion-phase1-validation.md).
+The xN edge-support correction is validated on `BUBBLES2` in AR0411, AR0602 and AR0603 on
+2026-09-05. The option remains disabled by default and release-wide QA is pending. See the
+[Phase-1 record](validation/native-occlusion-phase1-validation.md) and the
+[BUBBLES2 record](validation/native-occlusion-bubbles2-edge-clear-20260905.md).
 
 Phase 1 does not add masks to BAMs or maps. It transfers the visibility operation already
 rasterized by the native WED path from the engine's logical x1 FX surface to the external x2/x4
@@ -29,8 +31,10 @@ native FX result after WED clipping
 For an ordinary clipped/dithered pixel whose RGB is unchanged, phase 1 stores
 `postAlpha / preAlpha`. Thus the BAM's original alpha cancels. The two other operations proved in
 the executable are represented explicitly: complete-pixel clear becomes zero visibility, and the
-fixed-black dither operation `0x4F000000` retains its exact alpha. Any other RGB mutation is not
-approximated: it invalidates the object-local capture and retains the existing xN draw.
+fixed-black dither operation `0x4F000000` retains its exact alpha. A third transfer channel marks
+an x1-transparent logical cell only when it touches an exact complete clear; the shader then
+removes xN edge pixels introduced inside that cell. Any other RGB mutation is not approximated:
+it invalidates the object-local capture and retains the existing xN draw.
 
 ## Verified executable evidence
 
@@ -94,6 +98,9 @@ delete-pending immediately after the queued engine draw. These allocations do no
 - x1 maps, unregistered objects, effects outside the three modeled creature owners, WBM/PVRZ area
   animations and screen/UI overlays: unchanged.
 - Saves: no schema, serialized state, resource identity or gameplay data is added.
+- Blended x4 edge expansion: validated on all 28 `BUBBLES2` occurrences in AR0411, AR0602 and
+  AR0603; a complete clear writes transparent black so additive RGB cannot survive outside the
+  native support.
 
 The correction is therefore engine-global for every eligible runtime object. It is not authored
 map by map. A map can still lack a relevant native polygon, set the ARE `No Wall` flag, or use an
@@ -114,10 +121,11 @@ the evidence required to claim the host suite passed; it does not authorize auto
 4. pre/post pixels produce exact complete clear and half-alpha visibility;
 5. the fixed-black native dither operation is retained;
 6. transparent source pixels do not invent a factor;
-7. geometry or surface-identity changes invalidate the capture;
-8. a native call reporting no processed polygon cannot enable composition;
-9. v1/v2/unbound v3 resources remain structurally eligible while bound v3 masks are preserved;
-10. the complete Debug DLL and both CTest targets build and pass.
+7. an x1-transparent cell adjacent to a complete clear receives the exact xN edge-clear marker;
+8. geometry or surface-identity changes invalidate the capture;
+9. a native call reporting no processed polygon cannot enable composition;
+10. v1/v2/unbound v3 resources remain structurally eligible while bound v3 masks are preserved;
+11. the complete Debug DLL and both CTest targets build and pass.
 
 ## In-game A/B gates
 
@@ -132,6 +140,7 @@ matrix passes, compare bridge off/on with identical saves, camera position, zoom
 | MonsterIcewind behind branch/arch | creature is clipped at the native boundary; animation and palette remain unchanged |
 | Layered Character with equipment | one coherent final composite is clipped; weapon/shield/helmet do not desynchronize |
 | Partial/dither polygon | native half-alpha/fixed-black pattern matches x1 when enlarged with nearest sampling |
+| AR0411/AR0602/AR0603 BUBBLES2 | no Blended RGB or xN-smoothed edge survives outside the native foreground boundary |
 | ARE `No Wall` / no polygon | no transfer draw and no visual change |
 | x1 map / unregistered object | no bridge allocation and pixel-identical native fallback |
 | Save/reload, area transition, pause, zoom, resize/fullscreen | no stale capture, crash, GL-state leak or save change |

@@ -162,9 +162,47 @@ bool NativeOcclusionMaskCapture::build_transfer(
       const auto output = index * 4u;
       transfer[output + 0u] = static_cast<std::uint8_t>(visibility);
       transfer[output + 1u] = static_cast<std::uint8_t>(fixedBlackAlpha);
-      transfer[output + 2u] = 0u;
+      // Keep the native source support temporarily. Edge-directed xN upscalers can
+      // introduce colour/alpha in an adjacent logical cell whose x1 source was
+      // transparent. The native clip cannot mutate that empty cell, so its ordinary
+      // visibility remains 255 even when the contributing source pixel was cleared.
+      transfer[output + 2u] = before == 0u ? 0xFFu : 0u;
       transfer[output + 3u] = 0xFFu;
       changed = changed || visibility != 255u || fixedBlackAlpha != 0u;
+    }
+
+    // Turn B into an exact one-cell expansion-clear marker. This is deliberately
+    // narrower than dilating the WED mask: only x1-transparent cells touching an
+    // exact native complete-pixel clear are affected. Native source pixels, partial
+    // visibility and unoccluded xN edge smoothing keep their existing result.
+    for (int y = 0; y < logicalHeight; ++y) {
+      for (int x = 0; x < logicalWidth; ++x) {
+        const auto index = static_cast<std::size_t>(y) *
+                               static_cast<std::size_t>(logicalWidth) +
+                           static_cast<std::size_t>(x);
+        const auto output = index * 4u;
+        if (transfer[output + 2u] == 0u) continue;
+
+        bool touchesCompleteClear = false;
+        for (int dy = -1; dy <= 1 && !touchesCompleteClear; ++dy) {
+          const int neighbourY = y + dy;
+          if (neighbourY < 0 || neighbourY >= logicalHeight) continue;
+          for (int dx = -1; dx <= 1; ++dx) {
+            const int neighbourX = x + dx;
+            if (neighbourX < 0 || neighbourX >= logicalWidth) continue;
+            const auto neighbour =
+                (static_cast<std::size_t>(neighbourY) *
+                     static_cast<std::size_t>(logicalWidth) +
+                 static_cast<std::size_t>(neighbourX)) *
+                4u;
+            if (transfer[neighbour] == 0u) {
+              touchesCompleteClear = true;
+              break;
+            }
+          }
+        }
+        transfer[output + 2u] = touchesCompleteClear ? 0xFFu : 0u;
+      }
     }
     return true;
   } catch (...) {

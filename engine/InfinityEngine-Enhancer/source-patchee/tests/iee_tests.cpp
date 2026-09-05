@@ -1077,6 +1077,8 @@ void test_native_occlusion_mask_capture() {
               "A native half-alpha dither should retain half visibility");
     expect_eq(transfer[8], std::uint8_t{255},
               "A transparent source pixel must not invent an occlusion factor");
+    expect_eq(transfer[10], std::uint8_t{255},
+              "An x1-transparent cell next to a complete clear should carry the xN edge clear");
     expect_eq(transfer[13], std::uint8_t{0x4F},
               "The native fixed-black dither kernel should retain its exact alpha");
   }

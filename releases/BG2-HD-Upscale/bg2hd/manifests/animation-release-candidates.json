@@ -9,16 +9,26 @@
       "component_label": "animation-ar0602",
       "payload_group": "animation-ar0602",
       "approval_status": "approved-for-release",
-      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-approval.json",
-      "qa_approval_sha256": "CCF97056A5E1408DB24B2EAD6C5AA0290F6E63A5711B45A6AE6032D898F59242",
-      "source_pack": "animations/packs-par-zone/combined-20260828-ar0603-portal-spline-feather8/AR0602",
-      "source_run": "animations/runs/ar0602-portl1b-apo8-x4-30fps-v2 + proto/portals-spline-fit1-feather8.py (spline-fit1 + inner-feather8 alpha on PORTL1A/PORTL1B; protos proto/PORTL1A-spline-fit1-feather8-x4, proto/PORTL1B-spline-fit1-feather8-x4)",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0602/qa-v3-ef4ac04675374e8a.json",
+      "qa_approval_sha256": "E17E18AB5D60034CD46936F97A0A3A40171894110790DD4E58FC6ED18F36DFE6",
+      "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0602",
+      "source_runs": [
+        {
+          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+          "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+          "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+          "role": "final",
+          "asset_ids": [
+            "BUBBLES2"
+          ]
+        }
+      ],
       "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "8BB95DEC9B3D5A2F8839BAA23EA1F5AD83E6FDDAE142500EA6C433981606F838",
+      "pack_manifest_sha256": "FE30DC02C42364347F8375B2225DE7AEAA570A8D03AD94303B06C802937DE172",
       "registry": "AreaAnimations-X4.registry",
       "registry_version": 3,
-      "registry_sha256": "A1B41485D116D48429A4D63D1A9BF1DE6BFC6D559218C59158958A071A6F4D23",
-      "registry_bytes": 3036,
+      "registry_sha256": "A43483C5BC55E2B865AAD7D296B9C3B29C7DDA8067AA27EC5ECBEF9137848C44",
+      "registry_bytes": 6092,
       "required_resrefs": [
         "AM0602AA",
         "AM0602AB",
@@ -29,6 +39,7 @@
         "AM0602E",
         "AM0602F",
         "AM0602G",
+        "BUBBLES2",
         "FLAME2S",
         "PORTL1A",
         "PORTL1B"
@@ -617,17 +628,28 @@
       "component_label": "animation-ar0411",
       "payload_group": "animation-ar0411",
       "approval_status": "approved-for-release",
-      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-approval.json",
-      "qa_approval_sha256": "3E9D68B0EEA8C042123F551BD384B81C618613614BDD70E06DD9685F59CE4F4A",
-      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0411",
-      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-v3-7d222d5d634ed849.json",
+      "qa_approval_sha256": "EA9FB93896DE4A3A3E322B57072ED9F7917B309159076B83DF44B66B71E84554",
+      "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
+      "source_runs": [
+        {
+          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
+          "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
+          "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+          "role": "final",
+          "asset_ids": [
+            "BUBBLES2"
+          ]
+        }
+      ],
       "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "2274C49F3D280E8227D021213DD4706C8D10D16B5DD6FDEFEC6D450B2410EB94",
+      "pack_manifest_sha256": "09A5555A7CB89BEA7593D3F661A700C831C39D7D2FEF0063A7F75768E96DA93B",
       "registry": "AreaAnimations-X4.registry",
       "registry_version": 3,
-      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
-      "registry_bytes": 7392,
+      "registry_sha256": "461680C566E61FFAD44EF0F4BCD19F8C3A0F4A1ED177EE1BFC681F2D175CAD51",
+      "registry_bytes": 10448,
       "required_resrefs": [
+        "BUBBLES2",
         "DSTDVL1A",
         "DSTDVL1B",
         "DSTDVL1C"

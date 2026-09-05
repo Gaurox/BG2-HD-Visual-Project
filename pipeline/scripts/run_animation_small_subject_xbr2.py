@@ -15,6 +15,12 @@ reproductible et hashé comme les autres.
 `--second-pass xbr2x` propose une variante hors recette figée : le deuxième doublement passe
 lui aussi par xBR au lieu de la répétition de texels. Elle exige son propre run et sa propre QA.
 
+`--xbr-blend` est une autre variante hors recette figée : active l'antialiasing xBR
+(blendColors) sur chaque passe xBR2x, ce qui grade l'alpha de bord (non binaire) et impose
+`--mode premultiply` à `build_blended_rgb_neutral_pack.py` au lieu de `zero`. Testé et validé
+visuellement sur `BUBBLES2` le 2026-09-05 : contours plus ronds, moins de tons inventés que
+SeedVR, sans le lissage indiscriminé d'un flou gaussien.
+
 Il ne touche ni le jeu, ni la DLL, ni l'INI, ni l'override, ni aucun catalogue : il écrit
 uniquement son étage `02_upscale_*` dans un run déjà préparé par
 `run_animation_upscale.py --prepare-only`.
@@ -76,11 +82,14 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def run_xbr2x(frames: list[np.ndarray], scalepix: Path, node: str) -> list[np.ndarray]:
+def run_xbr2x(
+    frames: list[np.ndarray], scalepix: Path, node: str, xbr_blend: bool = False
+) -> list[np.ndarray]:
     """Appelle l'adaptateur binaire approuvé, protocole legacy `XBR2BAT`.
 
     Le mode legacy est celui qu'a utilisé le run BUTRFLY de référence ; il n'encode pas
-    l'échelle dans l'en-tête et sort toujours en x2.
+    l'échelle dans l'en-tête et sort toujours en x2. `xbr_blend` est une variante hors
+    recette figée (voir `--xbr-blend` sur `build`) : la recette BUTRFLY impose blend=false.
     """
     if not scalepix.is_file():
         raise SystemExit(f"scalepix introuvable : {scalepix}")
@@ -96,7 +105,8 @@ def run_xbr2x(frames: list[np.ndarray], scalepix: Path, node: str) -> list[np.nd
         payload.extend(raw)
 
     result = subprocess.run(
-        [node, str(XBR_ADAPTER), str(scalepix)],
+        [node, str(XBR_ADAPTER), str(scalepix), "legacy-xbr2x",
+         "true" if xbr_blend else "false"],
         input=bytes(payload),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -135,7 +145,8 @@ def nearest_x2(rgba: np.ndarray) -> np.ndarray:
 
 
 def build(
-    run_root: Path, resref: str, node: str, resume: bool, second_pass: str
+    run_root: Path, resref: str, node: str, resume: bool, second_pass: str,
+    xbr_blend: bool = False,
 ) -> Path:
     recipe = SECOND_PASS_MODES[second_pass]
     stage_name = recipe["stage"]
@@ -162,9 +173,9 @@ def build(
         image = Image.open(path).convert("RGBA")
         sources.append(np.asarray(image, dtype=np.uint8))
 
-    doubled = run_xbr2x(sources, scalepix, node)
+    doubled = run_xbr2x(sources, scalepix, node, xbr_blend)
     if second_pass == "xbr2x":
-        quadrupled = run_xbr2x(doubled, scalepix, node)
+        quadrupled = run_xbr2x(doubled, scalepix, node, xbr_blend)
     else:
         quadrupled = [nearest_x2(frame) for frame in doubled]
 
@@ -240,14 +251,14 @@ def build(
             "frame_manifest_sha256": sha256_file(manifest_x1_path),
         },
         "workflow": {
-            "algorithm": recipe["algorithm"],
+            "algorithm": recipe["algorithm"] + (" (blend=true)" if xbr_blend else ""),
             "scalepix": str(scalepix),
-            "xbr_blend": False,
+            "xbr_blend": xbr_blend,
         },
         "parameters": {
             "xbr_scale": 2,
             "xbr_passes": recipe["xbr_passes"],
-            "xbr_blend": False,
+            "xbr_blend": xbr_blend,
             "post_scale": 2,
             "post_scale_method": recipe["post_scale_method"],
         },
@@ -255,7 +266,10 @@ def build(
         "padding_x1": 0,
         "aligned_canvas_size_x1": [canvas_w, canvas_h],
         "geometry_mode": manifest_x1.get("geometry_mode", "per-frame"),
-        "alpha_policy": recipe["alpha_policy"],
+        "alpha_policy": (
+            recipe["alpha_policy"] + "; xbr_blend=true grades edge alpha, no longer binary"
+            if xbr_blend else recipe["alpha_policy"]
+        ),
         "raw_rgba_layout": "RGBA8, tightly packed, top-to-bottom rows",
         "frames": frames_out,
         "completed_utc": now,
@@ -298,10 +312,14 @@ def main() -> None:
     parser.add_argument("--second-pass", choices=sorted(SECOND_PASS_MODES),
                         default="nearest",
                         help="second étage x2 : `nearest` (recette figée) ou `xbr2x` (variante)")
+    parser.add_argument("--xbr-blend", action="store_true",
+                        help="active l'antialiasing xBR (blendColors) sur chaque passe xBR2x ; "
+                             "variante hors recette figée (BUTRFLY impose blend=false), grade "
+                             "l'alpha de bord (non binaire) et exige --mode premultiply en aval")
     args = parser.parse_args()
 
     path = build(args.run_root.resolve(), args.resref.upper(), args.node, args.resume,
-                 args.second_pass)
+                 args.second_pass, args.xbr_blend)
     print(json.dumps({"status": "completed", "manifest": str(path)}, ensure_ascii=False))
 
 

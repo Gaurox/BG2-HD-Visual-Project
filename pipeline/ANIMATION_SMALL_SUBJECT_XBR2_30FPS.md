@@ -1,8 +1,8 @@
 # Petits sujets — xBR2 → Nearest2 x4 / Apollo30 RGB-Safe
 
-> Statut : recette validée le 2026-09-01 sur `BUTRFLY`. Réutilisable pour papillons, insectes,
-> petits animaux et petits effets lisibles pixel par pixel. Chaque resref requiert son propre run,
-> QA vidéo et QA ingame explicite.
+> Statut : recette sans blend validée le 2026-09-01 sur `BUTRFLY`. Variante `--xbr-blend`
+> validée le 2026-09-05 uniquement sur `BUBBLES2`. Chaque resref requiert son propre run, QA vidéo
+> et QA ingame explicite.
 
 ## Identifiant
 
@@ -29,6 +29,9 @@
    [`../sprite/XBR2X_RASTER_CONTRACT.md`](../sprite/XBR2X_RASTER_CONTRACT.md). Le run spatial doit
    inscrire `XBR/xbr2X`, `xbr_scale=2`, `xbr_passes=1`, `xbr_blend=false`, `post_scale=2`,
    `post_scale_method=nearest`.
+   Exception qualifiée : `BUBBLES2` utilise `--xbr-blend`; son alpha de bord devient non binaire et
+   impose la prémultiplication RGB finale. Ne pas reporter cette exception sur un autre resref sans
+   QA dédiée.
 3. Construire le pack x4 puis exécuter TimedTimeline v2 à 30 fps depuis ce pack :
 
 ```powershell
@@ -61,6 +64,7 @@ python pipeline/scripts/build_blended_rgb_neutral_pack.py `
 ## Invariants
 
 - xBR ×2 seul ; ne pas remplacer par xBR ×4 direct, SeedVR ou interpolation spatiale lissée.
+- `xbr_blend=false` reste le défaut ; `BUBBLES2` est l'unique exception validée.
 - `nearest-opaque-dilate` ne modifie que l'entrée RGB de Topaz ; ancres x4, alpha et géométrie restent
   inchangés.
 - La neutralisation RGB finale n'est pas un correctif alpha ; elle doit prouver alpha inchangé (`zero`)

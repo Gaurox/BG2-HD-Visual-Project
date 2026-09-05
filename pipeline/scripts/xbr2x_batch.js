@@ -8,8 +8,9 @@ const vm = require('vm');
 
 const scalepixPath = process.argv[2];
 const requestedMode = process.argv[3] || 'legacy-xbr2x';
+const xbrBlend = process.argv[4] === 'true';
 if (!scalepixPath) {
-  throw new Error('Usage: node xbr2x_batch.js <scalepix.html> [xbr2x|xbr4x]');
+  throw new Error('Usage: node xbr2x_batch.js <scalepix.html> [xbr2x|xbr4x] [true|false]');
 }
 if (!['legacy-xbr2x', 'xbr2x', 'xbr4x'].includes(requestedMode)) {
   throw new Error(`unsupported xBR mode: ${requestedMode}`);
@@ -21,7 +22,7 @@ const XN_INPUT_MAGIC = Buffer.from('XBRNBAT\0', 'ascii');
 const XN_OUTPUT_MAGIC = Buffer.from('XBRNOUT\0', 'ascii');
 
 function makeRuntime() {
-  const checks = {xbr_blend: {checked: false}, bilinear_unbiased: {checked: false}};
+  const checks = {xbr_blend: {checked: xbrBlend}, bilinear_unbiased: {checked: false}};
   const context2d = {
     createImageData(width, height) {
       return {width, height, data: new Uint8ClampedArray(width * height * 4)};

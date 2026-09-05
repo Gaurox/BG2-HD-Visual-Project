@@ -104,8 +104,9 @@ class NativeOcclusionMaskCapture {
   void finish_call(const NativeFxSurfaceView& surface, int nativeResult) noexcept;
   // Emits RGBA8 transfer texels: R is the alpha multiplier (including the
   // native complete-pixel clear); G is a fixed black-alpha replacement used by
-  // the native 0x4F000000 dither kernel. Any other RGB mutation is rejected
-  // rather than approximated.
+  // the native 0x4F000000 dither kernel; B clears xN edge pixels in an adjacent
+  // logical cell that was transparent in the x1 source. Any other RGB mutation
+  // is rejected rather than approximated.
   [[nodiscard]] bool build_transfer(int logicalWidth, int logicalHeight,
                                     std::vector<std::uint8_t>& transfer,
                                     bool& changed) const noexcept;

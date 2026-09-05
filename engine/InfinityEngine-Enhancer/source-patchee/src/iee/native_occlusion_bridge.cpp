@@ -59,10 +59,17 @@ void main() {
     ivec2 highSize = textureSize(uReplacement, 0);
     highCoord = clamp(highCoord, ivec2(0), highSize - ivec2(1));
     ivec2 maskCoord = highCoord / uScale;
-    vec2 transfer = texelFetch(uVisibility, maskCoord, 0).rg;
+    vec4 transfer = texelFetch(uVisibility, maskCoord, 0);
     vec4 replacement = texelFetch(uReplacement, highCoord, 0);
     if (transfer.g > (0.5 / 255.0)) {
         outColor = vec4(0.0, 0.0, 0.0, transfer.g);
+    } else if (transfer.r < (0.5 / 255.0) || transfer.b > (0.5 / 255.0)) {
+        // A fully cleared texel must also lose its colour: an ARE animation flagged
+        // Blended is composited additively, so its RGB reaches the scene whatever the
+        // alpha says and alpha-only visibility leaves it fully visible. B carries the
+        // same clear into an adjacent x1-transparent cell populated only by xN edge
+        // smoothing. Zero is the neutral element of both composition paths.
+        outColor = vec4(0.0, 0.0, 0.0, 0.0);
     } else {
         outColor = vec4(replacement.rgb, replacement.a * transfer.r);
     }

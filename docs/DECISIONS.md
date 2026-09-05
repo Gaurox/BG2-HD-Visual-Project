@@ -42,12 +42,12 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Finalisation QA | transaction `animation_workflow.py finalize` : décision + sélection + CSV ; essais refusés conservés | jamais par éditions partielles |
 | Promotion release | transaction ciblée `animation_release.py`, accord release distinct, aucun staging/package | changement partagé de renderer/format/Core ou package |
 | Gate release | delta par zone pendant la tâche ; gates globales au niveau package | changement runtime/format/générateur/Core ou package |
-| Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; le Core release possède son activation ; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
+| Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; le Core release possède son activation ; pour une expansion xN, effacer aussi la cellule x1 transparente adjacente à un effacement natif complet ; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
 | Polygone WED | prouver l'intersection avec l'alpha ; sinon créer un polygone local borné | WED source ou contour démontré différent |
 | Resref avec `_` | `[A-Z0-9_]{1,8}` avec au moins un alphanumérique | jamais |
 | Ressource `Blended` | neutraliser RGB sous alpha nul ; prémultiplier si alpha dégradé | jamais par correction alpha seule |
-| Micro-effet < ~2 px x1 | conserver le natif : pas assez d'information pour reconstruire une forme | recréation procédurale explicitement assumée |
-| Petit sujet pixelisé | `Small Subject xBR2 → Nearest2 x4 / Apollo30 RGB-Safe` (`small-subject-xbr2-nearest2-apollo30-rgb-safe`) : xBR2 sans blend/AA, nearest2 vers x4, Apollo 8 15→30 ; `nearest-opaque-dilate` si chroma caché ; neutralisation RGB finale si `Blended` | silhouette, alpha ou rendu ingame contradictoires |
+| Micro-effet < ~2 px x1 | natif par défaut ; exception `BUBBLES2` validée le 2026-09-05 avec xBR2 blend, prémultiplication `Blended` et correction moteur de l'expansion d'occlusion | QA ingame complète d'une nouvelle exception |
+| Petit sujet pixelisé | recette générale `Small Subject xBR2 → Nearest2 x4 / Apollo30 RGB-Safe` (`small-subject-xbr2-nearest2-apollo30-rgb-safe`) sans blend/AA ; exception `--xbr-blend` non généralisable, validée sur `BUBBLES2` ; nearest2 vers x4, Apollo 8 15→30 ; `nearest-opaque-dilate` si chroma caché ; neutralisation RGB finale si `Blended` | silhouette, alpha ou rendu ingame contradictoires |
 | Cycles vides | retirer seulement les cycles vides terminaux non référencés | registre tolérant ou occurrence les référençant |
 | Contour 1 bit crénelé | spline `fit 1.0`, puis feather intérieur si la marche reste visible | QA d'un contour où spline seule suffit |
 | Fumée : concavités internes rognées | `Spline Fit 1 Multi-Contour — Core Guard 16` (`spline-fit1-multicontour-core-guard16`) : restaurer l'alpha source à partir de 16 px x4 depuis le contour ; spline/feather limités à la bordure | épaisseur, famille ou défaut de contour différents |
