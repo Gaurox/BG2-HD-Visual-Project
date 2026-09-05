@@ -251,10 +251,9 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 
 /* Dashboard */
 /* Progress dashboard.
-   Figures are transcribed by hand from the tracking workbook. Each .track
-   carries its raw counts as custom properties (--total, --produced, --qa,
-   --release) and every bar derives its own width from them, so an update only
-   means editing those numbers plus the matching text in progress.html. */
+   Each .track carries raw comparable resource counts (--total, --produced,
+   --qa, --release). Zone packs and payload files use different units and stay
+   in the text rather than being added to a resource bar. */
 .dashboard-section { display: grid; gap: clamp(2.5rem, 5vw, 4rem); padding-block: 3rem 8rem; }
 .snapshot { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: .8rem 1rem; border: 1px solid rgba(202,164,91,.22); background: rgba(202,164,91,.06); }
 .snapshot span { flex: 0 0 auto; padding: .35rem .55rem; color: #171109; background: var(--gold); font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
@@ -266,6 +265,17 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
 .totals dt, .totals span { color: rgba(233,223,202,.45); font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
 .totals small { color: var(--gold); font-size: .72rem; }
 .totals div:first-child strong { color: var(--gold-bright); }
+
+.overall-progress { padding: clamp(1.4rem, 3vw, 2.2rem); border: 1px solid rgba(202,164,91,.35); background: linear-gradient(112deg, rgba(202,164,91,.1), rgba(16,18,19,.98) 48%); }
+.overall-progress-header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
+.overall-progress .eyebrow { margin-bottom: .6rem; }
+.overall-progress h2 { font-size: clamp(1.75rem, 3vw, 2.7rem); }
+.overall-progress-rate { display: grid; justify-items: end; gap: .25rem; margin: 0; white-space: nowrap; }
+.overall-progress-rate strong { color: var(--gold-bright); font: 500 clamp(2rem, 4vw, 3.25rem)/.9 var(--serif); }
+.overall-progress-rate span { color: rgba(233,223,202,.5); font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.overall-progress-meter { position: relative; height: 14px; margin-top: clamp(1.5rem, 3vw, 2.2rem); overflow: hidden; background: rgba(233,223,202,.08); }
+.overall-progress-meter::after { content: ""; position: absolute; inset-block: 0; left: 0; width: calc(var(--overall-progress) * 1%); background: linear-gradient(90deg, var(--gold-dark), var(--gold-bright)); box-shadow: 1px 0 0 rgba(7,8,9,.7); transform-origin: left; animation: progress-in .9s ease-out both; }
+.overall-progress-note { max-width: 55rem; margin: .9rem 0 0; color: rgba(233,223,202,.55); font-size: .74rem; line-height: 1.6; }
 
 .legend { display: flex; flex-wrap: wrap; gap: .7rem 2rem; margin: 0; padding: 0; list-style: none; }
 .legend li { display: flex; align-items: baseline; gap: .6rem; color: rgba(233,223,202,.55); font-size: .74rem; }
@@ -389,6 +399,8 @@ h1 em, h2 em { color: var(--gold-bright); font-style: normal; }
   .page-hero-content { padding-bottom: 3rem; }
   .dashboard-section { padding-bottom: 5rem; }
   .totals { grid-template-columns: 1fr; }
+  .overall-progress-header { align-items: start; flex-direction: column; }
+  .overall-progress-rate { justify-items: start; }
   .track { grid-template-columns: 1fr; gap: .7rem; }
   .track-id { grid-row: auto; }
   .track-stats { grid-column: auto; }

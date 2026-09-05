@@ -29,73 +29,89 @@
         <div class="page-hero-media"><img src="assets/images/hero-city-rooftops.webp" alt=""></div>
         <div class="page-hero-overlay"></div>
         <div class="page-shell page-hero-content">
-          <p class="eyebrow"><span></span> Production overview</p>
+          <p class="eyebrow"><span></span> A hand-kept field log</p>
           <h1>Project <em>progress.</em></h1>
-          <p>Where each family of game assets stands, from production to in-game review.</p>
+          <p>A current count of the art I have actually tested, rebuilt, or set aside — no estimated roadmap.</p>
         </div>
       </section>
 
       <!--
         MANUAL UPDATE POINT
-        Figures below are transcribed by hand from the tracking workbook dashboard.
-        For each domain, update the four raw counts in the style attribute
-        (--total / --produced / --qa / --release), the matching numbers in the
-        text, and the headline percentage. Then refresh the snapshot date and the
-        four totals. Nothing here is fetched automatically.
+        Update only after checking the canonical source indexes named in
+        website/README.md. A resource, an animation zone pack and a release
+        payload file are different units: do not sum them together.
+        For each track, update the raw counts in its style attribute, visible
+        copy, aria-label and primary percentage. Nothing here is fetched.
       -->
       <section class="dashboard-section page-shell" aria-labelledby="dashboard-title">
         <h2 class="visually-hidden" id="dashboard-title">Progress by asset domain</h2>
 
         <div class="snapshot">
           <span>Snapshot</span>
-          <p>Figures recorded on 30 August 2026 and updated by hand. They cover the seven asset domains tracked below.</p>
+          <p>Figures checked against the project’s source indexes on 5 September 2026. Ten visual families are shown below; the experimental renderer has no asset count and stays outside this table.</p>
         </div>
 
         <div class="totals">
-          <div><strong>14,788</strong><span>Assets tracked</span></div>
-          <div><strong>479</strong><span>Produced</span><small>3.2% of tracked assets</small></div>
-          <div><strong>343</strong><span>QA passed</span><small>2.3% of tracked assets</small></div>
-          <div><strong>294</strong><span>Release-ready</span><small>2.0% of tracked assets</small></div>
+          <div><strong>15,112</strong><span>Visual assets tracked</span></div>
+          <div><strong>498</strong><span>Workbench results</span><small>294 maps · 69 animations · 131 sprites · 2 UI groups · 2 video method checks</small></div>
+          <div><strong>294</strong><span>Explicit in-game QA</span><small>290 maps · 2 animations · 2 UI groups</small></div>
+          <div><strong>35</strong><span>Zone packs approved</span><small>Animation packs approved for the alpha release; they are not added to the asset total.</small></div>
         </div>
 
+        <!--
+          WEIGHTED PROJECT PROGRESS
+          Use each track's retained-result ratio (produced / total), then apply:
+          maps 10%; animations 30%; sprites 40%; effects, UI/HUD, videos,
+          icons, portraits, projectiles and cursor set 20% / 7 each.
+          Sum the contributions and update --overall-progress and the copy below.
+        -->
+        <section class="overall-progress" style="--overall-progress: 16.5" aria-labelledby="overall-progress-title" data-reveal>
+          <div class="overall-progress-header">
+            <div><p class="eyebrow"><span></span> Weighted project progress</p><h2 id="overall-progress-title">One shared <em>scale.</em></h2></div>
+            <p class="overall-progress-rate"><strong>16.5%</strong><span>weighted completion</span></p>
+          </div>
+          <div class="overall-progress-meter" role="img" aria-label="Weighted project progress: 16.5 percent complete"></div>
+          <p class="overall-progress-note">Maps account for 10% of the work, animations 30%, sprites 40%; the remaining 20% is shared equally by effects, UI and HUD, videos, icons, portraits, projectiles and the cursor set.</p>
+        </section>
+
         <ul class="legend">
-          <li><i class="swatch-produced" aria-hidden="true"></i><span><b>Produced</b> — the final asset exists and has been checked over.</span></li>
-          <li><i class="swatch-qa" aria-hidden="true"></i><span><b>QA passed</b> — reviewed in game and accepted.</span></li>
-          <li><i class="swatch-release" aria-hidden="true"></i><span><b>Release-ready</b> — cleared for inclusion in a patch.</span></li>
+          <li><i class="swatch-produced" aria-hidden="true"></i><span><b>Result recorded</b> — an output currently retained for that family.</span></li>
+          <li><i class="swatch-qa" aria-hidden="true"></i><span><b>QA accepted in game</b> — counted only when the current tracker says so.</span></li>
+          <li><i class="swatch-release" aria-hidden="true"></i><span><b>In the alpha payload</b> — comparable resource scopes only; animation packs are listed separately.</span></li>
         </ul>
 
         <div class="track-list">
-          <article class="track" style="--total: 400; --produced: 291; --qa: 287; --release: 287" data-reveal>
-            <div class="track-id"><h3>Maps</h3><span>400 assets</span></div>
+          <article class="track" style="--total: 400; --produced: 294; --qa: 290; --release: 287" data-reveal>
+            <div class="track-id"><h3>Maps</h3><span>400 map variants</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Maps: 291 of 400 produced, 287 QA passed, 287 release-ready">
+              <div class="track-bar" role="img" aria-label="Maps: 294 of 400 built, 290 accepted in game, 287 in the alpha payload">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">73%</span>
+              <span class="track-pct">74%</span>
             </div>
-            <ul class="track-stats"><li><b>291</b> produced</li><li><b>287</b> QA passed</li><li><b>287</b> release-ready</li></ul>
+            <ul class="track-stats"><li><b>294</b> built</li><li><b>290</b> accepted in game</li><li><b>287</b> in the alpha payload</li></ul>
           </article>
 
-          <article class="track" style="--total: 271; --produced: 55; --qa: 54; --release: 5" data-reveal>
-            <div class="track-id"><h3>Animations</h3><span>271 assets</span></div>
+          <article class="track" style="--total: 246; --produced: 69; --qa: 2; --release: 0" data-reveal>
+            <div class="track-id"><h3>Animations</h3><span>246 BAM resources</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Animations: 55 of 271 produced, 54 QA passed, 5 release-ready">
+              <div class="track-bar" role="img" aria-label="Animations: 69 of 246 x4 or native results retained, 2 current QA chains accepted in game; release packs use a separate unit">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">20%</span>
+              <span class="track-pct">28%</span>
             </div>
-            <ul class="track-stats"><li><b>55</b> produced</li><li><b>54</b> QA passed</li><li><b>5</b> release-ready</li></ul>
+            <ul class="track-stats"><li><b>69</b> x4 or native results retained</li><li><b>2</b> current QA chains accepted</li><li><b>35</b> zone packs approved for alpha release</li></ul>
           </article>
 
           <article class="track" style="--total: 8997; --produced: 131; --qa: 0; --release: 0" data-reveal>
             <div class="track-id"><h3>Sprites</h3><span>8,997 assets</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Sprites: 131 of 8,997 produced, none QA passed, none release-ready">
+              <div class="track-bar" role="img" aria-label="Sprites: 131 of 8,997 components built and installed, awaiting in-game QA">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
               <span class="track-pct">1.5%</span>
             </div>
-            <ul class="track-stats"><li><b>131</b> produced</li><li><b>0</b> QA passed</li><li><b>0</b> release-ready</li></ul>
+            <ul class="track-stats"><li><b>131</b> components built and installed</li><li>Awaiting in-game QA</li></ul>
           </article>
 
           <article class="track is-idle" style="--total: 467; --produced: 0; --qa: 0; --release: 0" data-reveal>
@@ -112,23 +128,23 @@
           <article class="track" style="--total: 1672; --produced: 2; --qa: 2; --release: 2" data-reveal>
             <div class="track-id"><h3>UI &amp; HUD</h3><span>1,672 assets</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="UI and HUD: 2 of 1,672 produced, 2 QA passed, 2 release-ready">
+              <div class="track-bar" role="img" aria-label="UI and HUD: 2 menu groups of 1,672 assets retained, accepted in game and in the alpha payload">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
               <span class="track-pct">0.1%</span>
             </div>
-            <ul class="track-stats"><li><b>2</b> produced</li><li><b>2</b> QA passed</li><li><b>2</b> release-ready</li></ul>
+            <ul class="track-stats"><li><b>2</b> menu groups retained</li><li><b>2</b> accepted in game</li><li><b>2</b> in the alpha payload</li></ul>
           </article>
 
-          <article class="track is-idle" style="--total: 50; --produced: 0; --qa: 0; --release: 0" data-reveal>
+          <article class="track" style="--total: 50; --produced: 2; --qa: 0; --release: 0" data-reveal>
             <div class="track-id"><h3>Videos</h3><span>50 assets</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Videos: not started, 0 of 50 produced">
+              <div class="track-bar" role="img" aria-label="Videos: 2 of 50 have validated upscale and interpolation methods, with no game or release integration">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">0%</span>
+              <span class="track-pct">4%</span>
             </div>
-            <ul class="track-stats"><li>Not started</li></ul>
+            <ul class="track-stats"><li><b>2</b> upscale + interpolation methods validated</li><li>No game or release integration yet</li></ul>
           </article>
 
           <article class="track is-idle" style="--total: 2931; --produced: 0; --qa: 0; --release: 0" data-reveal>
@@ -141,11 +157,44 @@
             </div>
             <ul class="track-stats"><li>Not started</li></ul>
           </article>
+
+          <article class="track is-idle" style="--total: 105; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Portraits</h3><span>105 portraits</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Portraits: not started, 0 of 105 retained">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0%</span>
+            </div>
+            <ul class="track-stats"><li>Not started</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 243; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Projectiles</h3><span>243 controllers</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Projectiles: not started, 0 of 243 retained">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0%</span>
+            </div>
+            <ul class="track-stats"><li>Not started</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 1; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Cursor set</h3><span>1 BAM set</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Cursor set: not started">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0%</span>
+            </div>
+            <ul class="track-stats"><li>Not started</li></ul>
+          </article>
         </div>
 
         <div class="roadmap-panel">
-          <div class="roadmap-title"><p class="eyebrow"><span></span> Delivery flow</p><h2>From source art to <em>playable result.</em></h2></div>
-          <ol class="roadmap-flow"><li><span>01</span><strong>Prepare</strong><small>Inventory and source checks</small></li><li><span>02</span><strong>Enhance</strong><small>Asset-specific production</small></li><li><span>03</span><strong>Rebuild</strong><small>Engine-ready resources</small></li><li><span>04</span><strong>Review</strong><small>In-game visual testing</small></li></ol>
+          <div class="roadmap-title"><p class="eyebrow"><span></span> How a result earns its place</p><h2>From an old file to <em>a real test.</em></h2></div>
+          <ol class="roadmap-flow"><li><span>01</span><strong>Find it</strong><small>Inventory and source extraction</small></li><li><span>02</span><strong>Try it</strong><small>A method fitted to that asset</small></li><li><span>03</span><strong>Rebuild it</strong><small>Something the engine can read</small></li><li><span>04</span><strong>Play it</strong><small>Check the actual scene, then keep or redo it</small></li></ol>
         </div>
       </section>
     </main>

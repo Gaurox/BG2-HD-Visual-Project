@@ -34,12 +34,14 @@ and can also be started manually.
 
 - Public-facing copy exists in English (root) and French (`fr/`); the `EN / FR` control switches
   between the two mirrored page sets.
-- The progress dashboard shows real figures for seven asset domains (maps, animations, sprites,
-  effects, UI/HUD, videos, icons), transcribed by hand from the tracking workbook. Nothing is
-  fetched automatically. To refresh it, edit both language pages: for each domain update the raw
-  counts in the `style` attribute (`--total` / `--produced` / `--qa` / `--release`), the numbers in
-  the visible text and the headline percentage, then the snapshot date and the four totals. The
-  bars derive their widths from the raw counts, so they stay in sync on their own.
+- The progress dashboard shows ten visual domains (maps, animations, sprites, effects, UI/HUD,
+  videos, icons, portraits, projectiles, cursor set), transcribed by hand from canonical indexes.
+  Nothing is fetched automatically. To refresh it, edit both language pages: update each track’s
+  raw counts (`--total` / `--produced` / `--qa` / `--release`), visible copy, aria-label, primary
+  percentage, snapshot and totals.
+- The global progress bar is a workload-weighted measure using retained results (`produced / total`):
+  maps 10%, animations 30%, sprites 40%; effects, UI/HUD, videos, icons, portraits, projectiles and
+  cursor set share the remaining 20% equally. Zone packs and payload files never enter this ratio.
 - Several page images are real project material rather than concept art. Each ships as the WebP
   the pages load; the full-resolution master stays outside the repository, and any heavy source
   that the site had stopped serving has been dropped and is recoverable from Git history.

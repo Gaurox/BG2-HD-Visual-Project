@@ -31,74 +31,90 @@
         <div class="page-hero-media"><img src="../assets/images/hero-city-rooftops.webp" alt=""></div>
         <div class="page-hero-overlay"></div>
         <div class="page-shell page-hero-content">
-          <p class="eyebrow"><span></span> Vue d’ensemble de la production</p>
+          <p class="eyebrow"><span></span> Carnet de suivi, tenu à la main</p>
           <h1>Avancement du <em>projet.</em></h1>
-          <p>Où en est chaque famille de ressources du jeu, de la production à la revue en jeu.</p>
+          <p>Un relevé du travail réellement lancé, reconstruit ou vérifié — pas une feuille de route estimée.</p>
         </div>
       </section>
 
       <!--
         POINT DE MISE À JOUR MANUELLE
-        Les chiffres ci-dessous sont recopiés à la main depuis le tableau de bord
-        du fichier de suivi. Pour chaque domaine, mettre à jour les quatre valeurs
-        brutes de l’attribut style (--total / --produced / --qa / --release), les
-        nombres correspondants dans le texte et le pourcentage affiché. Puis
-        actualiser la date du relevé et les quatre totaux. Rien n’est récupéré
-        automatiquement.
+        Mettre à jour seulement après lecture des index canoniques nommés dans
+        website/README.md. Une ressource, un pack d’animations par zone et un
+        fichier de payload release sont des unités différentes : ne jamais les
+        additionner. Pour chaque piste, actualiser l’attribut style, le texte,
+        l’aria-label et le pourcentage principal. Rien n’est récupéré automatiquement.
       -->
       <section class="dashboard-section page-shell" aria-labelledby="dashboard-title">
         <h2 class="visually-hidden" id="dashboard-title">Avancement par domaine de ressources</h2>
 
         <div class="snapshot">
           <span>Relevé</span>
-          <p>Chiffres relevés le 30 août 2026 et mis à jour à la main. Ils couvrent les sept domaines de ressources suivis ci-dessous.</p>
+          <p>Chiffres vérifiés dans les index source du projet le 5 septembre 2026. Les dix familles visuelles ci-dessous sont couvertes ; le moteur expérimental n’a pas de décompte de ressources et reste hors tableau.</p>
         </div>
 
         <div class="totals">
-          <div><strong>14 788</strong><span>Ressources suivies</span></div>
-          <div><strong>479</strong><span>Produites</span><small>3,2 % des ressources suivies</small></div>
-          <div><strong>343</strong><span>QA validée</span><small>2,3 % des ressources suivies</small></div>
-          <div><strong>294</strong><span>Prêtes pour la release</span><small>2,0 % des ressources suivies</small></div>
+          <div><strong>15 112</strong><span>Ressources visuelles suivies</span></div>
+          <div><strong>498</strong><span>Résultats de l’atelier</span><small>294 cartes · 69 animations · 131 sprites · 2 groupes UI · 2 méthodes vidéo</small></div>
+          <div><strong>294</strong><span>QA ingame explicites</span><small>290 cartes · 2 animations · 2 groupes UI</small></div>
+          <div><strong>35</strong><span>Packs de zone approuvés</span><small>Packs d’animations approuvés pour l’alpha, sans les ajouter au total des ressources.</small></div>
         </div>
 
+        <!--
+          AVANCEMENT GLOBAL PONDÉRÉ
+          Prendre le ratio de résultat retenu de chaque piste (produced / total),
+          puis appliquer : cartes 10 %, animations 30 %, sprites 40 % ; effets,
+          UI/HUD, vidéos, icônes, portraits, projectiles et curseur : 20 % / 7.
+          Additionner les contributions, puis mettre à jour --overall-progress
+          et le texte ci-dessous.
+        -->
+        <section class="overall-progress" style="--overall-progress: 16.5" aria-labelledby="overall-progress-title" data-reveal>
+          <div class="overall-progress-header">
+            <div><p class="eyebrow"><span></span> Avancement global pondéré</p><h2 id="overall-progress-title">Une mesure <em>commune.</em></h2></div>
+            <p class="overall-progress-rate"><strong>16,5 %</strong><span>d’avancement pondéré</span></p>
+          </div>
+          <div class="overall-progress-meter" role="img" aria-label="Avancement global pondéré : 16,5 pour cent terminé"></div>
+          <p class="overall-progress-note">Les cartes représentent 10 % du travail, les animations 30 %, les sprites 40 % ; les 20 % restants sont répartis également entre effets, UI et HUD, vidéos, icônes, portraits, projectiles et curseur.</p>
+        </section>
+
         <ul class="legend">
-          <li><i class="swatch-produced" aria-hidden="true"></i><span><b>Produites</b> — la ressource finale existe et a été contrôlée.</span></li>
-          <li><i class="swatch-qa" aria-hidden="true"></i><span><b>QA validée</b> — relue en jeu et acceptée.</span></li>
-          <li><i class="swatch-release" aria-hidden="true"></i><span><b>Prêtes pour la release</b> — validées pour intégration dans un patch.</span></li>
+          <li><i class="swatch-produced" aria-hidden="true"></i><span><b>Résultat consigné</b> — une sortie actuellement retenue pour cette famille.</span></li>
+          <li><i class="swatch-qa" aria-hidden="true"></i><span><b>QA acceptée en jeu</b> — comptée seulement si le suivi courant le confirme.</span></li>
+          <li><i class="swatch-release" aria-hidden="true"></i><span><b>Dans le payload alpha</b> — seulement pour les périmètres comparables ; les packs d’animations sont à part.</span></li>
         </ul>
 
         <div class="track-list">
-          <article class="track" style="--total: 400; --produced: 291; --qa: 287; --release: 287" data-reveal>
-            <div class="track-id"><h3>Cartes</h3><span>400 ressources</span></div>
+          <article class="track" style="--total: 400; --produced: 294; --qa: 290; --release: 287" data-reveal>
+            <div class="track-id"><h3>Cartes</h3><span>400 variantes de carte</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Cartes&nbsp;: 291 produites sur 400, 287 QA validée, 287 prêtes pour la release">
+              <div class="track-bar" role="img" aria-label="Cartes&nbsp;: 294 construites sur 400, 290 acceptées en jeu, 287 dans le payload alpha">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">73 %</span>
+              <span class="track-pct">74 %</span>
             </div>
-            <ul class="track-stats"><li><b>291</b> produites</li><li><b>287</b> QA validée</li><li><b>287</b> prêtes</li></ul>
+            <ul class="track-stats"><li><b>294</b> construites</li><li><b>290</b> acceptées en jeu</li><li><b>287</b> dans le payload alpha</li></ul>
           </article>
 
-          <article class="track" style="--total: 271; --produced: 55; --qa: 54; --release: 5" data-reveal>
-            <div class="track-id"><h3>Animations</h3><span>271 ressources</span></div>
+          <article class="track" style="--total: 246; --produced: 69; --qa: 2; --release: 0" data-reveal>
+            <div class="track-id"><h3>Animations</h3><span>246 ressources BAM</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Animations&nbsp;: 55 produites sur 271, 54 QA validée, 5 prêtes pour la release">
+              <div class="track-bar" role="img" aria-label="Animations&nbsp;: 69 résultats x4 ou natifs retenus sur 246, 2 chaînes QA courantes acceptées en jeu ; les packs release utilisent une unité différente">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">20 %</span>
+              <span class="track-pct">28 %</span>
             </div>
-            <ul class="track-stats"><li><b>55</b> produites</li><li><b>54</b> QA validée</li><li><b>5</b> prêtes</li></ul>
+            <ul class="track-stats"><li><b>69</b> résultats x4 ou natifs retenus</li><li><b>2</b> chaînes QA courantes acceptées</li><li><b>35</b> packs de zone approuvés pour l’alpha</li></ul>
           </article>
 
           <article class="track" style="--total: 8997; --produced: 131; --qa: 0; --release: 0" data-reveal>
             <div class="track-id"><h3>Sprites</h3><span>8 997 ressources</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Sprites&nbsp;: 131 produites sur 8 997, aucune QA validée, aucune prête pour la release">
+              <div class="track-bar" role="img" aria-label="Sprites&nbsp;: 131 composants construits et installés sur 8 997, en attente de QA ingame">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
               <span class="track-pct">1,5 %</span>
             </div>
-            <ul class="track-stats"><li><b>131</b> produites</li><li><b>0</b> QA validée</li><li><b>0</b> prêtes</li></ul>
+            <ul class="track-stats"><li><b>131</b> composants construits et installés</li><li>En attente de QA ingame</li></ul>
           </article>
 
           <article class="track is-idle" style="--total: 467; --produced: 0; --qa: 0; --release: 0" data-reveal>
@@ -115,23 +131,23 @@
           <article class="track" style="--total: 1672; --produced: 2; --qa: 2; --release: 2" data-reveal>
             <div class="track-id"><h3>Interface &amp; HUD</h3><span>1 672 ressources</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Interface et HUD&nbsp;: 2 produites sur 1 672, 2 QA validée, 2 prêtes pour la release">
+              <div class="track-bar" role="img" aria-label="Interface et HUD&nbsp;: 2 groupes de menus retenus sur 1 672 ressources, acceptés en jeu et dans le payload alpha">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
               <span class="track-pct">0,1 %</span>
             </div>
-            <ul class="track-stats"><li><b>2</b> produites</li><li><b>2</b> QA validée</li><li><b>2</b> prêtes</li></ul>
+            <ul class="track-stats"><li><b>2</b> groupes de menus retenus</li><li><b>2</b> acceptés en jeu</li><li><b>2</b> dans le payload alpha</li></ul>
           </article>
 
-          <article class="track is-idle" style="--total: 50; --produced: 0; --qa: 0; --release: 0" data-reveal>
+          <article class="track" style="--total: 50; --produced: 2; --qa: 0; --release: 0" data-reveal>
             <div class="track-id"><h3>Vidéos</h3><span>50 ressources</span></div>
             <div class="track-meter">
-              <div class="track-bar" role="img" aria-label="Vidéos&nbsp;: non commencé, 0 produite sur 50">
+              <div class="track-bar" role="img" aria-label="Vidéos&nbsp;: 2 méthodes d’upscale et d’interpolation validées sur 50, sans intégration jeu ni release">
                 <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
               </div>
-              <span class="track-pct">0 %</span>
+              <span class="track-pct">4 %</span>
             </div>
-            <ul class="track-stats"><li>Non commencé</li></ul>
+            <ul class="track-stats"><li><b>2</b> méthodes d’upscale + interpolation validées</li><li>Pas encore d’intégration jeu ou release</li></ul>
           </article>
 
           <article class="track is-idle" style="--total: 2931; --produced: 0; --qa: 0; --release: 0" data-reveal>
@@ -144,11 +160,44 @@
             </div>
             <ul class="track-stats"><li>Non commencé</li></ul>
           </article>
+
+          <article class="track is-idle" style="--total: 105; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Portraits</h3><span>105 portraits</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Portraits&nbsp;: non commencé, 0 résultat retenu sur 105">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 243; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Projectiles</h3><span>243 contrôleurs</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Projectiles&nbsp;: non commencé, 0 résultat retenu sur 243">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
+          </article>
+
+          <article class="track is-idle" style="--total: 1; --produced: 0; --qa: 0; --release: 0" data-reveal>
+            <div class="track-id"><h3>Curseur</h3><span>1 set BAM</span></div>
+            <div class="track-meter">
+              <div class="track-bar" role="img" aria-label="Set de curseur&nbsp;: non commencé">
+                <i class="bar-produced"></i><i class="bar-qa"></i><i class="bar-release"></i>
+              </div>
+              <span class="track-pct">0 %</span>
+            </div>
+            <ul class="track-stats"><li>Non commencé</li></ul>
+          </article>
         </div>
 
         <div class="roadmap-panel">
-          <div class="roadmap-title"><p class="eyebrow"><span></span> Chaîne de livraison</p><h2>De l’œuvre source au <em>résultat jouable.</em></h2></div>
-          <ol class="roadmap-flow"><li><span>01</span><strong>Préparer</strong><small>Inventaire et vérification des sources</small></li><li><span>02</span><strong>Améliorer</strong><small>Production propre à chaque ressource</small></li><li><span>03</span><strong>Reconstruire</strong><small>Ressources prêtes pour le moteur</small></li><li><span>04</span><strong>Vérifier</strong><small>Tests visuels en jeu</small></li></ol>
+          <div class="roadmap-title"><p class="eyebrow"><span></span> Comment un résultat garde sa place</p><h2>D’un vieux fichier à <em>un vrai test.</em></h2></div>
+          <ol class="roadmap-flow"><li><span>01</span><strong>Le trouver</strong><small>Inventaire et extraction de la source</small></li><li><span>02</span><strong>L’essayer</strong><small>Une méthode adaptée à cette ressource</small></li><li><span>03</span><strong>Le reconstruire</strong><small>Quelque chose que le moteur peut lire</small></li><li><span>04</span><strong>Le jouer</strong><small>Voir la scène réelle, garder ou refaire</small></li></ol>
         </div>
       </section>
     </main>
