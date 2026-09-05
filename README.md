@@ -8,6 +8,8 @@ This repository is the project’s control plane: inventories, decisions, script
 
 Maps, animations, and effects are retained only when they remain coherent with the original rendering. Production output, in-game QA, installation, and release selection are tracked separately.
 
+> Règle documentaire : écrire pour des agents IA. Toute nouvelle documentation ou modification doit privilégier la densité d’information. Éviter la prose longue, le contexte narratif et les répétitions.
+
 ## Mandatory work preflight
 
 Before any upscale work, read [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md),
@@ -55,6 +57,7 @@ then the domain README. This checkpoint applies especially to animation runs and
 | Topic | Reference |
 |---|---|
 | Workspace rules | [AGENTS.md](AGENTS.md) |
+| Decisions | [docs/DECISIONS.md](docs/DECISIONS.md) |
 | Mandatory upscale preflight | [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) |
 | Public website | [docs/WEBSITE.md](docs/WEBSITE.md) |
 | TIS/PVRZ maps | [pipeline/README.md](pipeline/README.md) |
@@ -63,7 +66,7 @@ then the domain README. This checkpoint applies especially to animation runs and
 | Interface | [interface/README.md](interface/README.md) |
 | Video | [video/README.md](video/README.md) |
 | Engine | [engine/InfinityEngine-Enhancer/source-patchee/README.md](engine/InfinityEngine-Enhancer/source-patchee/README.md) |
-| Release | [releases/BG2-HD-Upscale/README.md](releases/BG2-HD-Upscale/README.md) |
+| Release | [releases/BG2-HD-Upscale/README.md](releases/BG2-HD-Upscale/README.md) · [integration workflow](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) |
 
 ## Distribution boundaries
 

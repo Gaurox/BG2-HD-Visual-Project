@@ -473,7 +473,11 @@ def check(*, verify_control_plane: bool = True) -> list[str]:
                 errors.append(f"invalid or duplicate post-P3 retained pack: {name!r}")
                 continue
             declared_post_p3[name] = entry
-            manifest = PACK_ROOT / name / "manifest.json"
+            manifest_relative = Path(str(entry.get("manifest_path", "manifest.json")))
+            if manifest_relative.is_absolute() or ".." in manifest_relative.parts:
+                errors.append(f"invalid post-P3 retained manifest path: {name}")
+                continue
+            manifest = PACK_ROOT / name / manifest_relative
             expected_hash = str(entry.get("manifest_sha256", "")).upper()
             if not manifest.is_file():
                 errors.append(f"missing post-P3 retained pack manifest: {name}")
