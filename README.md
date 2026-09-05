@@ -23,10 +23,6 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 ## Examples
 
-![AR0700 in-game comparison — vanilla on the left, x4 maps and treated animations on the right](docs/images/readme/ar0700-ingame-vanilla-vs-x4.png)
-
-*AR0700 in-game capture: vanilla on the left; x4 maps and treated animations on the right. Creature sprites remain native reference elements.*
-
 <p align="center">
   <img src="docs/images/readme/creature-sprite-study.webp" width="360" alt="Goblin sprite comparison: original, bilinear, xBR, and xBR with antialiasing.">
 </p>
