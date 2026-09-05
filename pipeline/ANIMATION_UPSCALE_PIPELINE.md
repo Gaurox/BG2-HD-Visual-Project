@@ -44,6 +44,34 @@ alpha approuvé ; `--resume` revalide sans écrire. Un pack au-delà de 512 Mio 
 mode auteur lorsqu'il y a lieu, puis découpé selon
 [`ANIMATION_PACKS_PAR_ZONE.md`](ANIMATION_PACKS_PAR_ZONE.md).
 
+## Essai ingame ciblé par zone
+
+Après découpage, un pack feuille `<split-root>/ARxxxx` est l'état complet voulu pour cette zone. Il
+sert à la QA rapide ; il ne fusionne pas un delta avec les assets déjà installés et ne remplace pas
+l'intégration complète.
+
+Jeu et InfinityLoader fermés :
+
+```powershell
+.\pipeline\scripts\Install-AreaAnimation-AreaTest.ps1 `
+  -AreaPack <split-root\ARxxxx> -VerifyOnly
+.\pipeline\scripts\Install-AreaAnimation-AreaTest.ps1 `
+  -AreaPack <split-root\ARxxxx>
+
+# Employer le chemin affiché par l'installation.
+.\pipeline\scripts\Restore-AreaAnimation-AreaTest.ps1 `
+  -BackupPath <backup> -VerifyOnly
+.\pipeline\scripts\Restore-AreaAnimation-AreaTest.ps1 `
+  -BackupPath <backup>
+```
+
+Le ciblé vérifie tous les hashes, sauvegarde/restaure exclusivement
+`iee-assets\areas\ARxxxx`, et ne modifie ni DLL, ni INI, ni registre global. `iee-assets\areas`
+doit déjà exister ; omettre `-GameRoot` en production pour utiliser `config://bg2ee_game_root`.
+Conserver le reçu. Installation et restauration ne prouvent ni QA ingame, ni sélection, ni release.
+Voir aussi [`ANIMATION_PACKS_PAR_ZONE.md`](ANIMATION_PACKS_PAR_ZONE.md) et
+[`area-animation-area-test/README.md`](area-animation-area-test/README.md).
+
 ## Gates
 
 1. sélection = BAM typé et source disponible ;

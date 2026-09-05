@@ -51,6 +51,27 @@ Redécouper ensuite ce pack avec un index d'occurrences limité à la zone, puis
 
 Jeu et InfinityLoader fermés :
 
+Essai ciblé : le pack feuille est l'état complet désiré de la zone ; il remplace seulement cette
+zone, sans fusion implicite. Ne pas l'utiliser pour une intégration complète.
+
+```powershell
+.\pipeline\scripts\Install-AreaAnimation-AreaTest.ps1 `
+  -AreaPack <lot-complet\ARxxxx> -VerifyOnly
+.\pipeline\scripts\Install-AreaAnimation-AreaTest.ps1 `
+  -AreaPack <lot-complet\ARxxxx>
+
+# Le chemin de sauvegarde est affiché par l'installation.
+.\pipeline\scripts\Restore-AreaAnimation-AreaTest.ps1 `
+  -BackupPath <backup> -VerifyOnly
+.\pipeline\scripts\Restore-AreaAnimation-AreaTest.ps1 `
+  -BackupPath <backup>
+```
+
+Le ciblé n'écrit ni DLL ni INI et n'active pas le mode par zone : `iee-assets\areas` doit déjà
+exister. Omettre `-GameRoot` en production pour utiliser `config://bg2ee_game_root`.
+
+Intégration complète :
+
 ```powershell
 .\pipeline\scripts\Install-AreaAnimations-PerArea.ps1 `
   -SplitRoot <lot-complet> -VerifyOnly

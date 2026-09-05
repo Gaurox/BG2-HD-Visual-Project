@@ -99,6 +99,7 @@ GROUPS = {
             "pipeline.tests.test_animation_runtime_pack",
             "pipeline.tests.test_animation_pack_area_split",
             "pipeline.tests.test_combine_area_pack_splits",
+            "pipeline.tests.test_area_animation_area_test_transaction",
         ),
     ),
     # The commands are generated per area from SelectionPlan.animation_areas.
@@ -476,6 +477,10 @@ def classify_path(path: str) -> Classification:
     if path.startswith("animations/index/"):
         return Classification(("animations", "registry"))
     if path.startswith("animations/"):
+        return Classification(("animations",))
+    if path.startswith("pipeline/area-animation-area-test/"):
+        if path.endswith(".md"):
+            return Classification(("animations", "documentation"))
         return Classification(("animations",))
     if path.startswith("pipeline/scripts/") and name in ANIMATION_SCRIPTS:
         return Classification(("animations",))

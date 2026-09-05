@@ -28,6 +28,8 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "pipeline/scripts/build_per_frame_spline_alpha_30fps_v2.py",
             "pipeline/scripts/animation_authority_lock.py",
             "pipeline/scripts/verify_animation_release_candidate.py",
+            "pipeline/scripts/Install-AreaAnimation-AreaTest.ps1",
+            "pipeline/area-animation-area-test/area_animation_area_test.py",
         ):
             with self.subTest(path=path):
                 plan = self.plan(path)
