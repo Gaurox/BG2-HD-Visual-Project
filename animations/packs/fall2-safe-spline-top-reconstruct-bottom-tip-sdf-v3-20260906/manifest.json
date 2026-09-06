@@ -1,0 +1,189 @@
+{
+  "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+  "status": "completed",
+  "created_utc": "2026-09-06T00:21:48.241887+00:00",
+  "composition": {
+    "source_packs": [
+      {
+        "pack": "G:/AI/BG2_Upscale/animations/ressources/FALL2/runs/fall2-spatial-seedvr2-7b-lab-x4-20260905-163020-861023/03_runtime_pack",
+        "manifest_sha256": "143e081b483a006f0ec63d940ecdc6fb836c669ee06ee9a30559681ced57f256"
+      }
+    ],
+    "asset_overrides": [
+      {
+        "manifest": "G:/AI/BG2_Upscale/animations/ressources/FALL2/runs/fall2-spatial-spline-fit1-safe-boundary-top-reconstruct-bottom-tip-sdf-reinforce-v3-20260906-001708-707909/manifest.json",
+        "manifest_sha256": "7552f8e42c73cb1e290d4cd07442c3645abf68724fce4f44e9828b9360e671a0",
+        "resref": "FALL2"
+      }
+    ]
+  },
+  "scale": 4,
+  "registry": "AreaAnimations-X4.registry",
+  "registry_sha256": "e4d1e1320faa7a0a9b147479d764381423c6693943299f7db1e9027dbe4ea2f4",
+  "registry_bytes": 116,
+  "resource_count": 1,
+  "frame_count": 6,
+  "resources": [
+    {
+      "resref": "FALL2",
+      "frame_count": 6,
+      "cycle_count": 1,
+      "geometry_mode": "uniform",
+      "frames": [
+        {
+          "frame": 0,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame000.rgba",
+          "sha256": "8363fb8197be7cb8c1f7152ccebf3f214e7f433c1c468afa7dedb7ed80d3aa6e",
+          "bytes": 2745600
+        },
+        {
+          "frame": 1,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame001.rgba",
+          "sha256": "57a7dc09a108b2e9da223ffa9283f8a45ea56db6385ffbd785bfc5a98886afbd",
+          "bytes": 2745600
+        },
+        {
+          "frame": 2,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame002.rgba",
+          "sha256": "8cfe826ad33059c3ecb4b5e307c0aa71a24193cef99be6bfcd0bf2acdcca1f83",
+          "bytes": 2745600
+        },
+        {
+          "frame": 3,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame003.rgba",
+          "sha256": "8c2346c55f702223ee2173c685a69565d7e2339a3d27b569a3c4547691c95e53",
+          "bytes": 2745600
+        },
+        {
+          "frame": 4,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame004.rgba",
+          "sha256": "6485140775db198f88981ea69ffb905b7e32d72b086215066a6267a814bd1d5a",
+          "bytes": 2745600
+        },
+        {
+          "frame": 5,
+          "logical_size_x1": [
+            195,
+            220
+          ],
+          "physical_size_x4": [
+            780,
+            880
+          ],
+          "centre_x1": [
+            98,
+            236
+          ],
+          "asset": "AAX4-FALL2-frame005.rgba",
+          "sha256": "fcbd6933b6ae4fd07f42805bc8417b1afcfc8c57e50ee69546f71af0338e3589",
+          "bytes": 2745600
+        }
+      ],
+      "cycles": [
+        {
+          "cycle": 0,
+          "frame_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "assets": [
+        {
+          "name": "AAX4-FALL2-frame000.rgba",
+          "sha256": "8363fb8197be7cb8c1f7152ccebf3f214e7f433c1c468afa7dedb7ed80d3aa6e",
+          "bytes": 2745600
+        },
+        {
+          "name": "AAX4-FALL2-frame001.rgba",
+          "sha256": "57a7dc09a108b2e9da223ffa9283f8a45ea56db6385ffbd785bfc5a98886afbd",
+          "bytes": 2745600
+        },
+        {
+          "name": "AAX4-FALL2-frame002.rgba",
+          "sha256": "8cfe826ad33059c3ecb4b5e307c0aa71a24193cef99be6bfcd0bf2acdcca1f83",
+          "bytes": 2745600
+        },
+        {
+          "name": "AAX4-FALL2-frame003.rgba",
+          "sha256": "8c2346c55f702223ee2173c685a69565d7e2339a3d27b569a3c4547691c95e53",
+          "bytes": 2745600
+        },
+        {
+          "name": "AAX4-FALL2-frame004.rgba",
+          "sha256": "6485140775db198f88981ea69ffb905b7e32d72b086215066a6267a814bd1d5a",
+          "bytes": 2745600
+        },
+        {
+          "name": "AAX4-FALL2-frame005.rgba",
+          "sha256": "fcbd6933b6ae4fd07f42805bc8417b1afcfc8c57e50ee69546f71af0338e3589",
+          "bytes": 2745600
+        }
+      ]
+    }
+  ]
+}

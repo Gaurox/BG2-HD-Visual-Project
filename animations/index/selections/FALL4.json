@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FALL4",
+  "correction_id": "safe-spline8-6-v2",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALL4/02_upscale_x4/manifest.json",
+        "manifest_sha256": "A3F460A2F3D65DC8DA72D324081BE49FD3A43AAC6E463D345B55F6435A636D47",
+        "path": "animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALL4/02_upscale_x4",
+        "schema": "bg2-upscale-animation-frames-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FALL4/runs/fall4-spatial-seedvr2-7b-lab-x4-safe-spline8-6-v2-20260906-014700/manifest.json",
+        "manifest_sha256": "EFAC0FA0846F38FC23EF4E23FBE96524E47095AE9C5954E795DE57243196D4C8",
+        "path": "animations/ressources/FALL4/runs/fall4-spatial-seedvr2-7b-lab-x4-safe-spline8-6-v2-20260906-014700",
+        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-06",
+    "path": "animations/index/qa-decisions/FALL4/2026-09-06-accepted-fall4-ar2300-ingame-qa-finalization-v1-20260906-032000.json",
+    "sha256": "E82D2FE6AF45532D87857B9B9F779FC367F069385B28BF421A988B0CFB30E71B",
+    "status": "accepted"
+  },
+  "recipe_id": "safe-spline8-6-v2",
+  "resref": "FALL4",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/FALL4/runs/fall4-ar2300-ingame-qa-finalization-v1-20260906-032000/manifest.json",
+    "manifest_sha256": "014A98E5E2DC795236D1874DAB2B5CC794A38C763AE1AB87F86CF8951861B699",
+    "path": "animations/ressources/FALL4/runs/fall4-ar2300-ingame-qa-finalization-v1-20260906-032000",
+    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2300",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300/manifest.json",
+        "manifest_sha256": "7A4C75216ED800B591E639A0F1A1EDDF18725634A7B9043CD7060367BF9F4B94",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300",
+        "registry_sha256": "7688270EA10BCAB3BF89C01703E1D8FF3C4CFF4FD2FF8CA6D7F8874C59ACE84D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/manifest.json",
+    "manifest_sha256": "6BA4ABC8A279E652C560D775FF86AA63FD308AB6FD9CF9C38834FCF6EFA89D3A",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2300"
+  ],
+  "updated_at_utc": "2026-09-06T01:17:05Z"
+}

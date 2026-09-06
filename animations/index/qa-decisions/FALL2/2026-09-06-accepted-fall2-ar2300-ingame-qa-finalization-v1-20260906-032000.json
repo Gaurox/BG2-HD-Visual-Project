@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FALL2",
+  "correction_id": "manual-water-expansion-mask-v1",
+  "decision": "FALL2 x4 validé ingame dans AR2300 : rendu, raccords, animation et occlusion validés.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-fall2-ar2300-ingame-qa-finalization-v1-20260906-032000",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/FALL2/runs/fall2-ar2300-ingame-qa-finalization-v1-20260906-032000/manifest.json",
+    "manifest_sha256": "50FEF768266A68AB1AAF567717A09642ED8F3CF6CEBFA25FCB79636EAEFC4B68",
+    "path": "animations/ressources/FALL2/runs/fall2-ar2300-ingame-qa-finalization-v1-20260906-032000",
+    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/FALL2/runs/fall2-manual-water-expansion-mask-v1-20260906-030500/manifest.json",
+        "manifest_sha256": "B0E03B5413AEF1373C8D06E685CFB064B4CB19C7A2D29AA41572A0884BD09D6F",
+        "path": "animations/ressources/FALL2/runs/fall2-manual-water-expansion-mask-v1-20260906-030500",
+        "schema": "bg2-upscale-animation-manual-water-expansion-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "manual-water-expansion-mask-v1",
+  "recorded_at_utc": "2026-09-06T01:17:04Z",
+  "resref": "FALL2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2300",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300/manifest.json",
+        "manifest_sha256": "7A4C75216ED800B591E639A0F1A1EDDF18725634A7B9043CD7060367BF9F4B94",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300",
+        "registry_sha256": "7688270EA10BCAB3BF89C01703E1D8FF3C4CFF4FD2FF8CA6D7F8874C59ACE84D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/manifest.json",
+    "manifest_sha256": "6BA4ABC8A279E652C560D775FF86AA63FD308AB6FD9CF9C38834FCF6EFA89D3A",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR2300"
+  ]
+}
