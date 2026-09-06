@@ -16,6 +16,7 @@ import build_animation_runtime_pack as runtime_v1  # noqa: E402
 import run_animation_upscale_30fps_v2 as pipeline  # noqa: E402
 import split_animation_pack_by_area as splitter  # noqa: E402
 import merge_area_pack_resources as merger  # noqa: E402
+import replace_area_pack_resource as replacer  # noqa: E402
 import build_blended_rgb_neutral_pack as blend_builder  # noqa: E402
 
 
@@ -247,6 +248,45 @@ class AreaSplitTests(unittest.TestCase):
             resources[0]["position"] = [1689.5, 2662]
             with self.assertRaisesRegex(RuntimeError, "non entières"):
                 pipeline.registry_v2_from_resources(resources)
+
+    def test_replace_resource_accepts_multiple_occurrence_variants(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            occurrences = root / "occurrences.csv"
+            self.write_occurrences(occurrences, [("AR0900", "TESTA"), ("AR0900", "OTHER")])
+
+            base_pack = self.make_v1_pack(root / "base", ("TESTA", "OTHER"))
+            base_split = root / "base-split"
+            splitter.split(base_pack, base_split, occurrences, resume=False)
+
+            variants = []
+            for name in ("north", "south"):
+                pack = self.make_v1_pack(root / name, ("TESTA",))
+                split_root = root / f"{name}-split"
+                splitter.split(pack, split_root, occurrences, resume=False)
+                variants.append(split_root / "AR0900")
+            replacement = root / "replacement"
+            merger.merge(
+                [f"{variants[0]}::1689,2662", f"{variants[1]}::2246,2187"],
+                "AR0900",
+                replacement,
+                resume=False,
+            )
+
+            output = root / "output"
+            replacer.replace_resource(base_split, replacement, "TESTA", output)
+            manifest, resources = pipeline.validate_v2_pack(output / "AR0900")
+
+            self.assertEqual(manifest["replaced_resource"]["base_variant_count"], 1)
+            self.assertEqual(manifest["replaced_resource"]["replacement_variant_count"], 2)
+            self.assertEqual(
+                [item.get("position") for item in resources if item["resref"] == "TESTA"],
+                [[1689, 2662], [2246, 2187]],
+            )
+            self.assertEqual(
+                len([item for item in resources if item["resref"] == "OTHER"]),
+                1,
+            )
 
     def test_validator_keeps_registry_v2_compatibility(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

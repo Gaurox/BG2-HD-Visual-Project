@@ -65,13 +65,13 @@ def replace_resource(base_root: Path, replacement_root: Path, resref: str,
         base_target = [item for item in base_resources if v2.normalise_resref(str(item["resref"])) == resref]
         replacement_target = [item for item in replacement_resources
                               if v2.normalise_resref(str(item["resref"])) == resref]
-        require(len(base_target) == 1 and len(replacement_target) == 1,
-                f"{area}: {resref} doit être présent une fois dans chaque pack")
-        require(len(replacement_resources) == 1,
+        require(base_target and replacement_target,
+                f"{area}: {resref} doit être présent dans chaque pack")
+        require(len(replacement_target) == len(replacement_resources),
                 f"{area}: le split de remplacement doit contenir seulement {resref}")
         resources = [copy.deepcopy(item) for item in base_resources
                      if v2.normalise_resref(str(item["resref"])) != resref]
-        resources.append(copy.deepcopy(replacement_target[0]))
+        resources.extend(copy.deepcopy(replacement_target))
         resources = sorted(resources, key=v2.resource_sort_key)
         assets: dict[str, Path] = {}
         for resource in resources:
@@ -111,6 +111,8 @@ def replace_resource(base_root: Path, replacement_root: Path, resref: str,
             "area_id": area,
             "replaced_resource": {
                 "resref": resref,
+                "base_variant_count": len(base_target),
+                "replacement_variant_count": len(replacement_target),
                 "base_pack": base_dir.as_posix(),
                 "base_manifest_sha256": v2.sha256_file(base_dir / "manifest.json"),
                 "replacement_pack": replacement_dir.as_posix(),

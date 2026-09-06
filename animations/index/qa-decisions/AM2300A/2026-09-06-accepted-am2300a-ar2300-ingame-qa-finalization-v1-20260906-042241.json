@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM2300A",
+  "correction_id": "ar2300-am2300a-occurrence-occlusion-v14",
+  "decision": "QA ingame explicite utilisateur acceptee : les trois occurrences AR2300 sont conformes; le raccord central est accepte malgre ses limites residuelles.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM2300A/runs/am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241/manifest.json",
+    "manifest_sha256": "3D701BECFFDD318E147D739927AE15FE848DCD17C5D5B51AB4C61F006D6C16C6",
+    "path": "animations/ressources/AM2300A/runs/am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241",
+    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-20260906/resources/AM2300A/02_upscale_x4/manifest.json",
+        "manifest_sha256": "133D0FF52F93DCB374887FC454682633CE14360EE06EB1B5FC786A3F1C207BF6",
+        "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-20260906/resources/AM2300A/02_upscale_x4",
+        "schema": "bg2-upscale-animation-frames-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-native-angle-contact-wide-x3939-y1819-v6-20260906/manifest.json",
+        "manifest_sha256": "1DD4FA66BAFE3F197C4A3175CFABB45D1611A6A24A3F6C01C789F48B1B5D3658",
+        "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-native-angle-contact-wide-x3939-y1819-v6-20260906",
+        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "ar2300-am2300a-x4-occlusion-v14",
+  "recorded_at_utc": "2026-09-06T02:25:55Z",
+  "resref": "AM2300A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2300",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/AR2300/manifest.json",
+        "manifest_sha256": "0ED449F2DA791297EB0721864D7004C92FA4828077390DCF98B5773A0B906C5E",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/AR2300",
+        "registry_sha256": "4C7552A6078A5DDFF54CBC64926EBC472FCEABE8F7CB4A26980158C49E577570",
+        "resource_entries": 3
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/manifest.json",
+    "manifest_sha256": "61D39F4608E4315FA71BA9BC4A1891A2351BD78E04F91518012597EF8CED6BF7",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR2300"
+  ]
+}

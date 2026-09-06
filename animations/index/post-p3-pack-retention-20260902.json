@@ -661,6 +661,55 @@
       "created_utc": "2026-09-06T03:01:30+02:00",
       "classification": "retained-processing-evidence",
       "reason": "Feuille AR2300 de test ingame avec ajout de texture FALL2 limité au masque utilisateur; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v8-am2300a-spline-gauss1p5-20260906",
+      "manifest_sha256": "4C2184A89614DC815D0F58F7537FC01B52C589972AD4B989B217534CCA843DE7",
+      "created_utc": "2026-09-06T03:29:42.025224+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : AM2300A x4 avec spline Fit 1 et flou gaussien de contour ; les 11 cascades déjà validées sont conservées ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v9-am2300a-fog-fade28-20260906",
+      "manifest_sha256": "8CA149E10CF3CB2DFD15FF03D87DFF17CD7DC2B2E42841DA9030DBAF7E2EC5B7",
+      "created_utc": "2026-09-06T03:39:12.251458+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : AM2300A x4 avec fade SDF global de 28 px x4 et flous gaussiens alpha/RGB ; les 11 cascades déjà validées sont conservées ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v10-am2300a-fog-bottom-seam-20260906",
+      "manifest_sha256": "BE8F947FE5511376CFA833882228A83C82A4A5552501FDB55C91D61BA29E942A",
+      "created_utc": "2026-09-06T03:47:32.533516+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : rendu brumeux AM2300A conservé, avec restauration progressive de l'alpha sur le raccord inférieur destiné à passer sous le décor ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v11-am2300a-painted-occurrence-masks-20260906",
+      "manifest_sha256": "3003B2A35B4274D626776427A4581675BB56497FD78F1CE321C05EFFE3EEB1F2",
+      "created_utc": "2026-09-06T04:05:26.398642+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : trois variantes AM2300A liées aux coordonnées ARE et protégées par les masques peints utilisateur avec feather x4 de 12 px ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v12-am2300a-baked-foreground-occlusion-20260906",
+      "manifest_sha256": "4689FEA67EDC578B5E04938CA5328C76245628482B23E2B3B8770DA798C4ECB9",
+      "created_utc": "2026-09-06T04:14:11.290598+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : les trois masques utilisateur AM2300A sont cuits comme occlusions de premier plan, avec alpha restauré uniquement sur une bande de raccord extérieure ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v13-am2300a-middle-native-angle-contact-20260906",
+      "manifest_sha256": "FDF450E75FA23BFF089A155AB92D26179DDC6EB31D6C4BD5F0969B37FEF02D70",
+      "created_utc": "2026-09-06T04:19:34.129791+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : l'occurrence centrale AM2300A conserve sa découpe angulaire native et restaure l'alpha seulement sur le raccord côté noir du masque ; les deux variantes latérales v12 restent inchangées ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906",
+      "manifest_sha256": "61D39F4608E4315FA71BA9BC4A1891A2351BD78E04F91518012597EF8CED6BF7",
+      "created_utc": "2026-09-06T04:22:13.750619+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 complète de test ingame : marge sans fade de l'occurrence centrale AM2300A élargie à 16 px x4 côté noir, avec transition de 16 px x4 ; les deux variantes latérales validées restent inchangées ; aucun statut QA ou release n'est inféré"
     }
   ]
 }
