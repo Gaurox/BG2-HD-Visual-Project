@@ -922,8 +922,15 @@ def build_effect_bam_assets(
         for row in supplemental_rows
         if row.get("domain") == "effects"
     }
+    # A PRO may reference a visual BAM directly, without an intermediate VVC/VEF
+    # controller and without the BAM being in a dedicated effects BIF.  It is
+    # nevertheless an ``effects:bam`` work unit: omitting this source silently
+    # removes projectile-only effects from the production authority.
     resrefs = sorted(
-        set(controllers_by_bam) | set(supplemental_by_resref), key=str.casefold
+        set(controllers_by_bam)
+        | set(projectiles_by_bam)
+        | set(supplemental_by_resref),
+        key=str.casefold,
     )
     rows: list[dict[str, Any]] = []
     for resref in resrefs:
@@ -934,6 +941,8 @@ def build_effect_bam_assets(
         origins = []
         if controller_keys:
             origins.append("controller-member")
+        if projectile_keys:
+            origins.append("projectile-member")
         if supplemental:
             origins.append("dedicated-effect-bif")
 

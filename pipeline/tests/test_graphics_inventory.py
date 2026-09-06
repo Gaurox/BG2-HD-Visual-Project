@@ -6,6 +6,7 @@ import re
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -128,6 +129,49 @@ class GraphicsInventoryTests(unittest.TestCase):
                 path = ROOT / extracted
                 self.assertTrue(path.is_file(), extracted)
                 self.assertEqual(inventory.sha256_file(path), member["sha256"], extracted)
+
+    def test_direct_projectile_bam_is_an_effect_work_unit(self) -> None:
+        """A PRO-only BAM must not disappear without a VVC/VEF or BIF owner."""
+
+        key_index = mock.Mock()
+        key_index.get.return_value = None
+        rows = inventory.build_effect_bam_assets(
+            key_index,
+            effect_dependencies=[],
+            projectile_dependencies=[
+                {
+                    "asset_key": "projectile:MAGICMIS",
+                    "dependency_resref": "SPMAGMIS",
+                    "resolved_format": "BAM",
+                }
+            ],
+            supplemental_rows=[],
+            extract=False,
+        )
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(
+            rows[0],
+            {
+                "asset_key": "effects:bam:SPMAGMIS",
+                "resref": "SPMAGMIS",
+                "origin": "projectile-member",
+                "controller_count": 0,
+                "controller_keys": "",
+                "projectile_count": 1,
+                "projectile_keys": "projectile:MAGICMIS",
+                "bam_container": "",
+                "bam_version": "",
+                "frame_count": "",
+                "cycle_count": "",
+                "source_bif": "",
+                "locator": "",
+                "source_size": "",
+                "source_sha256": "",
+                "source_state": "missing",
+                "extracted_path": "effects/ressources/SPMAGMIS/source.bam",
+            },
+        )
 
 
 if __name__ == "__main__":
