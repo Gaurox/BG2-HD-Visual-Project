@@ -924,6 +924,59 @@
         "FPIT1S"
       ],
       "renderer_contract": "area-animation-per-area-registry-v2-timed-timeline"
+    },
+    {
+      "area": "AR2300",
+      "component_id": 3039,
+      "component_label": "animation-ar2300",
+      "payload_group": "animation-ar2300",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2300/qa-v2-3fa98732867d03c9.json",
+      "qa_approval_sha256": "64F64329D627A7CB74BE515298078B4C603969E6C60AE6D310FFD85133D7C797",
+      "source_pack": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300",
+      "source_runs": [
+        {
+          "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
+          "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+          "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
+          "role": "final",
+          "asset_ids": [
+            "AM2300A",
+            "FALL1A",
+            "FALL1B",
+            "FALL2",
+            "FALL3",
+            "FALL4",
+            "FALL5A",
+            "FALL5B",
+            "FALL5C",
+            "FALL6",
+            "FALLA1",
+            "FALLA2"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "39508C2926E521C4D4E11998C9970471D5CBC6C5C41EA7963880493EACC73086",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "826EDC85F0898B48B33E2F0DD9900EEF9DBD04002D66BCD9480951A371562651",
+      "registry_bytes": 5636,
+      "required_resrefs": [
+        "AM2300A",
+        "FALL1A",
+        "FALL1B",
+        "FALL2",
+        "FALL3",
+        "FALL4",
+        "FALL5A",
+        "FALL5B",
+        "FALL5C",
+        "FALL6",
+        "FALLA1",
+        "FALLA2"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }
   ]
 }

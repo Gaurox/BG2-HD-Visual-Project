@@ -241,7 +241,9 @@ def fade_all_contours(
             "outside_alpha_pixels": 0,
         }
     inside_distance = ndimage.distance_transform_edt(binary)
-    envelope = smoothstep((inside_distance - 0.5) / float(fade_width))
+    # The one-pixel contour itself must remain fully transparent.  Starting
+    # at distance 1.0 also prevents rounding a fractional envelope back to 1.
+    envelope = smoothstep((inside_distance - 1.0) / float(fade_width))
     output = np.rint(alpha.astype(np.float32) * envelope).astype(np.uint8)
     require(bool(np.all(output <= alpha)), "fade contour etend l'alpha")
     return output, {

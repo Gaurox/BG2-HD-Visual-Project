@@ -1,9 +1,9 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.6",
-  "status": "rejected",
-  "source_tree": "git:96c312b6b78ede75666a9c474cbd850821b7802c:releases/BG2-HD-Upscale/release-inputs/renderer/iee-0.1.0-alpha.5",
+  "bundle_id": "iee-0.1.0-alpha.7",
+  "status": "frozen-awaiting-clean-game-validation",
+  "source_tree": "git:98b77b9beeed37eaeffafae61848e344210730e4:engine/InfinityEngine-Enhancer/source-patchee",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
@@ -14,13 +14,13 @@
   "files": [
     {
       "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 1278976,
-      "sha256": "96F65BC0626B0172DC2D3D3495CDED39B39CDBD03925E8BCFE811CFF905E5D6E"
+      "bytes": 1550336,
+      "sha256": "60C52D05A552ACC645B0E5300EB9F75496F5F882074FC15BCF8AA0C536DDBA9E"
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
-      "bytes": 2609,
-      "sha256": "13F286A8C736A7E626A9AE3C10C6E7EB15B66D22AD08473995A504293610CB57"
+      "bytes": 3882,
+      "sha256": "844ECFC0FCEF087B785159E3C5C08889BBE866C3D337158606FB4BE00838AC83"
     },
     {
       "path": "iee-textures/iee_water_dudv.rgba",
@@ -54,11 +54,12 @@
     }
   ],
   "validation_required": [
-    "OBSOLETE: alpha.6 predates EnableNativeOcclusionBridge and FXRenderClippingPolys integration; do not promote",
-    "host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing",
-    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4 and LoadArea",
+    "host tests from the same source tree, including registry v1/v2/v3 compatibility, per-occurrence routing and TimedTimeline multi-cycle subframes",
+    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4, EnableNativeOcclusionBridge, FXRenderClippingPolys and LoadArea",
     "clean BG2EE Steam 2.7.3.0 game-hash gate",
-    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, and AR0900 v3 runtime packs",
+    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, AR0900 v3 and AR0516 native WED occlusion",
+    "AR2300 30 FPS multi-cycle TimedTimeline runtime gate with FALL1B and AM2300A",
+    "AR0516 SPHINCT/SPHINCT2 bridge-on gate with WED 8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A",
     "AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
     "in-place Steam shim lifecycle and verified full vanilla restoration"
   ]

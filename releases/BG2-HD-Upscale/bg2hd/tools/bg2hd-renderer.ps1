@@ -4,7 +4,8 @@ param(
     [Parameter(Mandatory)] [string]$GameRoot,
     [string]$RendererManifestPath,
     [string]$PayloadRoot,
-    [string]$StatePath
+    [string]$StatePath,
+    [switch]$AllowCandidate
 )
 
 $ErrorActionPreference = 'Stop'
@@ -24,7 +25,9 @@ $payload=Resolve-Absolute $PayloadRoot
 $manifest=Read-Json $manifestPath
 if(-not $StatePath){$StatePath=Join-Path $game 'bg2hd\state\renderer-files.json'}
 $expectedPaths=@('InfinityEngine-Enhancer.dll','InfinityEngine-Enhancer.sample.ini','iee-textures/iee_water_dudv.rgba','iee-textures/iee_water_foam.rgba','iee-textures/iee_water_normal.rgba','iee-textures/README.md','override/fpSEAM.glsl','override/M_IEEE.lua')
-Require ($manifest.status -in @('integrated-awaiting-clean-lifecycle-test','integrated-in-place-awaiting-user-lifecycle-test')) "Bundle renderer non eligible : $($manifest.status)"
+$eligibleStatuses=@('integrated-awaiting-clean-lifecycle-test','integrated-in-place-awaiting-user-lifecycle-test')
+if($AllowCandidate){$eligibleStatuses+= 'frozen-awaiting-clean-game-validation'}
+Require ($manifest.status -in $eligibleStatuses) "Bundle renderer non eligible : $($manifest.status)"
 $manifestPaths=@($manifest.files|ForEach-Object{[string]$_.path})
 Require (-not (Compare-Object ($expectedPaths|Sort-Object) ($manifestPaths|Sort-Object))) 'Inventaire renderer inattendu.'
 foreach($file in @($manifest.files)){

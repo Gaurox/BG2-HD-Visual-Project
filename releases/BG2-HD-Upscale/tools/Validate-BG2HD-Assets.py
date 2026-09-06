@@ -23,10 +23,6 @@ def fail(message: str) -> None:
     raise ValueError(message)
 
 
-def power_of_two(value: int) -> bool:
-    return value > 0 and value & (value - 1) == 0
-
-
 def pvrz_info(path: Path) -> dict[str, int]:
     raw = path.read_bytes()
     if len(raw) < 5:
@@ -42,8 +38,11 @@ def pvrz_info(path: Path) -> dict[str, int]:
         fail(f"{path}: magic PVR invalide")
     if fmt not in (7, 11):
         fail(f"{path}: format PVR {fmt} non autorise (DXT1/DXT5 requis)")
-    if not (power_of_two(width) and power_of_two(height) and width >= 256 and height >= 256):
-        fail(f"{path}: dimensions PVR invalides {width}x{height}")
+    # EE PVRZ pages may be non-power-of-two: AR2300's block-safe repagination
+    # intentionally emits 2112 px pages (8 cells of 264 px).  DXT payloads
+    # still require a positive x4 tile-capable canvas aligned to 4-pixel blocks.
+    if width < 256 or height < 256 or width % 4 or height % 4:
+        fail(f"{path}: dimensions PVR invalides {width}x{height} (>=256 et alignees DXT par 4 requises)")
     if (depth, surfaces, faces, mips) != (1, 1, 1, 1):
         fail(f"{path}: PVR doit etre une seule surface 2D sans mipmaps")
     block_bytes = 8 if fmt == 7 else 16

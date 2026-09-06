@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 from unittest import mock
 
@@ -31,6 +32,34 @@ ASSET_VALIDATOR = load_asset_validator()
 
 
 class AreaAnimationDeltaTests(unittest.TestCase):
+    def test_pvrz_validator_accepts_block_aligned_non_power_of_two_page(self) -> None:
+        """AR2300 repagination uses 2112 px (8 padded 264 px cells)."""
+        width = height = 2112
+        header = struct.pack(
+            "<13I",
+            ASSET_VALIDATOR.PVR_MAGIC,
+            0,
+            11,
+            0,
+            0,
+            0,
+            height,
+            width,
+            1,
+            1,
+            1,
+            1,
+            0,
+        )
+        payload = b"\0" * ((width // 4) * (height // 4) * 16)
+        with tempfile.TemporaryDirectory() as temporary:
+            page = Path(temporary) / "A230000.PVRZ"
+            page.write_bytes(struct.pack("<I", len(header) + len(payload)) + zlib.compress(header + payload))
+            self.assertEqual(
+                ASSET_VALIDATOR.pvrz_info(page),
+                {"format": 11, "width": 2112, "height": 2112},
+            )
+
     def test_area_animation_only_validator_skips_maps_and_ui(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             content_path = Path(temporary) / "content.json"

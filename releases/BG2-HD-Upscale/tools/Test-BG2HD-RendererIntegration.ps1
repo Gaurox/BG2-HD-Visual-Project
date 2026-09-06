@@ -1,5 +1,9 @@
 [CmdletBinding()]
-param([string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path)
+param(
+    [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
+    [string]$RendererManifestPath,
+    [string]$PayloadRoot
+)
 
 $ErrorActionPreference='Stop'
 function Require([bool]$Condition,[string]$Message){if(-not $Condition){throw $Message}}
@@ -8,10 +12,10 @@ $release=(Resolve-Path -LiteralPath $ReleaseRoot).Path
 $helper=Join-Path $release 'bg2hd\tools\bg2hd-renderer.ps1'
 $config=Join-Path $release 'bg2hd\tools\bg2hd-config.ps1'
 $manifestRoot=if(Test-Path -LiteralPath (Join-Path $release 'manifests') -PathType Container){Join-Path $release 'manifests'}else{Join-Path $release 'bg2hd\manifests'}
-$rendererManifestPath=Join-Path $manifestRoot 'renderer-bundle.json'
+$rendererManifestPath=if($RendererManifestPath){(Resolve-Path -LiteralPath $RendererManifestPath).Path}else{Join-Path $manifestRoot 'renderer-bundle.json'}
 $manifest=Get-Content -LiteralPath $rendererManifestPath -Raw -Encoding utf8|ConvertFrom-Json
 $compat=Join-Path $manifestRoot 'runtime-compatibility.json'
-$payload=Join-Path $release 'bg2hd\renderer'
+$payload=if($PayloadRoot){(Resolve-Path -LiteralPath $PayloadRoot).Path}else{Join-Path $release 'bg2hd\renderer'}
 $testRoot=Join-Path ([IO.Path]::GetTempPath()) ('bg2hd-renderer-'+[guid]::NewGuid().ToString('N'))
 try{
     New-Item -ItemType Directory -Path $testRoot|Out-Null
@@ -22,11 +26,11 @@ try{
         [IO.File]::WriteAllText($target,"before-$($file.path)",[Text.UTF8Encoding]::new($false));$before[$file.path]=Hash $target
     }
     $state=Join-Path $testRoot 'bg2hd\state\renderer-files.json'
-    & $helper -Action Test -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state|Out-Null
+    & $helper -Action Test -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate|Out-Null
     Require ($LASTEXITCODE -eq 0) 'Preflight renderer fixture echoue.'
-    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state
+    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate
     Require ($LASTEXITCODE -eq 0) 'Installation renderer fixture echoue.'
-    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state
+    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate
     Require ($LASTEXITCODE -eq 0) 'Installation renderer idempotente echoue.'
     foreach($file in $expected){Require ((Hash (Join-Path $testRoot $file.path.Replace('/','\'))) -eq $file.sha256) "Fichier renderer non publie : $($file.path)"}
     $configState=Join-Path $testRoot 'bg2hd\state\renderer-config.json'
@@ -50,14 +54,14 @@ try{
     & $config -Action Restore -GameRoot $testRoot -CompatibilityManifestPath $compat -StatePath $uiConfigState -Owner ui-mainmenu-x4
     Require ($LASTEXITCODE -eq 0) 'Un rollback UI repete avec INI absent doit etre idempotent.'
 
-    & $helper -Action Restore -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state
+    & $helper -Action Restore -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate
     Require ($LASTEXITCODE -eq 0) 'Restauration renderer fixture echoue.'
     foreach($file in $expected){Require ((Hash (Join-Path $testRoot $file.path.Replace('/','\'))) -eq $before[$file.path]) "Fichier renderer non restaure : $($file.path)"}
 
-    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state
+    & $helper -Action Install -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate
     $changed=Join-Path $testRoot 'override\M_IEEE.lua';[IO.File]::WriteAllText($changed,'external change',[Text.UTF8Encoding]::new($false))
     $restoreFailed=$false
-    try{& $helper -Action Restore -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state}catch{$restoreFailed=$true}
+    try{& $helper -Action Restore -GameRoot $testRoot -RendererManifestPath $rendererManifestPath -PayloadRoot $payload -StatePath $state -AllowCandidate}catch{$restoreFailed=$true}
     Require $restoreFailed 'La restauration doit refuser un renderer modifie.'
     Require ((Get-Content -LiteralPath $changed -Raw) -eq 'external change') 'Un fichier renderer externe a ete ecrase.'
     Write-Output 'BG2HD renderer integration validation passed.'

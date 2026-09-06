@@ -19,6 +19,27 @@ function Get-BundleFile([string]$Root, [string]$RelativePath) {
     Get-Item -LiteralPath $path
 }
 
+function Write-BytesAtomic([string]$Path, [byte[]]$Bytes) {
+    $parent = Split-Path -Parent $Path
+    New-Item -ItemType Directory -Path $parent -Force | Out-Null
+    $temporary = Join-Path $parent ('.' + [IO.Path]::GetFileName($Path) + '.' + [Guid]::NewGuid().ToString('N') + '.partial')
+    $backup = Join-Path $parent ('.' + [IO.Path]::GetFileName($Path) + '.' + [Guid]::NewGuid().ToString('N') + '.backup')
+    try {
+        [IO.File]::WriteAllBytes($temporary, $Bytes)
+        if (Test-Path -LiteralPath $Path) {
+            [IO.File]::Replace($temporary, $Path, $backup, $true)
+            Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue
+        }
+        else {
+            [IO.File]::Move($temporary, $Path)
+        }
+    }
+    finally {
+        if (Test-Path -LiteralPath $temporary) { Remove-Item -LiteralPath $temporary -Force -ErrorAction SilentlyContinue }
+        if (Test-Path -LiteralPath $backup) { Remove-Item -LiteralPath $backup -Force -ErrorAction SilentlyContinue }
+    }
+}
+
 $release = (Resolve-Path -LiteralPath $ReleaseRoot).Path
 $source = (Resolve-Path -LiteralPath $SourceBundle).Path
 $selectedFiles = @(
@@ -33,6 +54,7 @@ $selectedFiles = @(
 )
 $destination = Join-Path $release (Join-Path 'release-inputs\renderer' $BundleId)
 if (Test-Path -LiteralPath $destination) { throw "Candidat renderer deja present : $destination" }
+$staging = $destination + '.' + [Guid]::NewGuid().ToString('N') + '.partial'
 
 $rendererDll = Get-BundleFile $source 'InfinityEngine-Enhancer.dll'
 $binaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDll.FullName))
@@ -41,14 +63,15 @@ foreach ($marker in @('AreaAnimations-X4.registry', 'TimedTimeline', 'EnableArea
 }
 
 try {
+    New-Item -ItemType Directory -Path $staging | Out-Null
     foreach ($relative in $selectedFiles) {
         $file = Get-BundleFile $source $relative
-        $target = Join-Path $destination $relative.Replace('/', '\')
+        $target = Join-Path $staging $relative.Replace('/', '\')
         New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force | Out-Null
         Copy-Item -LiteralPath $file.FullName -Destination $target
     }
     $files = foreach ($relative in $selectedFiles) {
-        $file = Get-BundleFile $destination $relative
+        $file = Get-BundleFile $staging $relative
         [ordered]@{
             path = $relative
             bytes = $file.Length
@@ -70,19 +93,23 @@ try {
         }
         files = @($files)
         validation_required = @(
-            'host tests from the same source tree, including registry v1/v2/v3 compatibility and per-occurrence routing',
+            'host tests from the same source tree, including registry v1/v2/v3 compatibility, per-occurrence routing and TimedTimeline multi-cycle subframes',
             'renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4, EnableNativeOcclusionBridge, FXRenderClippingPolys and LoadArea',
             'clean BG2EE Steam 2.7.3.0 game-hash gate',
             'EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, AR0900 v3 and AR0516 native WED occlusion',
+            'AR2300 30 FPS multi-cycle TimedTimeline runtime gate with FALL1B and AM2300A',
             'AR0516 SPHINCT/SPHINCT2 bridge-on gate with WED 8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A',
             'AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate',
             'in-place Steam shim lifecycle and verified full vanilla restoration'
         )
     }
-    $record | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $OutputManifestPath -Encoding utf8NoBOM
+    Move-Item -LiteralPath $staging -Destination $destination
+    $recordBytes = [Text.UTF8Encoding]::new($false).GetBytes(($record | ConvertTo-Json -Depth 8))
+    Write-BytesAtomic $OutputManifestPath $recordBytes
     Write-Output "Staged animation renderer candidate $BundleId in $destination"
 }
 catch {
+    if (Test-Path -LiteralPath $staging) { Remove-Item -LiteralPath $staging -Recurse -Force }
     if (Test-Path -LiteralPath $destination) { Remove-Item -LiteralPath $destination -Recurse -Force }
     throw
 }

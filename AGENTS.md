@@ -53,6 +53,7 @@ automatiquement le suivant.
 
 Ces fichiers peuvent être supprimés et régénérés, après choix explicite, avec
 `workspace.py refresh --scope all --run`.
+Préparer d'abord le périmètre sans écrire : `workspace.py refresh --changed`.
 
 ## Modifier correctement
 

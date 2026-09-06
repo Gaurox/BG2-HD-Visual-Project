@@ -84,7 +84,7 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Interpolation vidéo | [`VIDEO_INTERPOLATION_PIPELINE.md`](VIDEO_INTERPOLATION_PIPELINE.md) |
 | Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
-## Tests de code ciblés
+## Tests légers
 
 ```powershell
 python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script>.py

@@ -39,6 +39,18 @@
       ]
     },
     {
+      "id": 3300,
+      "label": "map-ar1505",
+      "name": "AR1505 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1505"
+      ]
+    },
+    {
       "id": 3290,
       "label": "map-ar1504",
       "name": "AR1504 (x4)",
@@ -123,15 +135,27 @@
       ]
     },
     {
-      "id": 3220,
-      "label": "map-ar1611",
-      "name": "AR1611 (x4)",
+      "id": 3210,
+      "label": "map-ar1610",
+      "name": "AR1610 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar1611"
+        "map-ar1610"
+      ]
+    },
+    {
+      "id": 3310,
+      "label": "map-ar1506",
+      "name": "AR1506 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1506"
       ]
     },
     {
@@ -144,18 +168,6 @@
       ],
       "payload_groups": [
         "map-ar1609"
-      ]
-    },
-    {
-      "id": 3300,
-      "label": "map-ar1505",
-      "name": "AR1505 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1505"
       ]
     },
     {
@@ -231,6 +243,42 @@
       ]
     },
     {
+      "id": 3220,
+      "label": "map-ar1611",
+      "name": "AR1611 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1611"
+      ]
+    },
+    {
+      "id": 3320,
+      "label": "map-ar1507",
+      "name": "AR1507 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1507"
+      ]
+    },
+    {
+      "id": 3340,
+      "label": "map-ar1509",
+      "name": "AR1509 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1509"
+      ]
+    },
+    {
       "id": 3130,
       "label": "map-ar1601",
       "name": "AR1601 (x4)",
@@ -243,51 +291,15 @@
       ]
     },
     {
-      "id": 3210,
-      "label": "map-ar1610",
-      "name": "AR1610 (x4)",
+      "id": 3520,
+      "label": "map-ar1901",
+      "name": "AR1901 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar1610"
-      ]
-    },
-    {
-      "id": 3310,
-      "label": "map-ar1506",
-      "name": "AR1506 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1506"
-      ]
-    },
-    {
-      "id": 3330,
-      "label": "map-ar1508",
-      "name": "AR1508 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1508"
-      ]
-    },
-    {
-      "id": 3120,
-      "label": "map-ar1600",
-      "name": "AR1600 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1600"
+        "map-ar1901"
       ]
     },
     {
@@ -375,6 +387,18 @@
       ]
     },
     {
+      "id": 3330,
+      "label": "map-ar1508",
+      "name": "AR1508 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1508"
+      ]
+    },
+    {
       "id": 3440,
       "label": "map-ar1400",
       "name": "AR1400 (x4)",
@@ -387,21 +411,9 @@
       ]
     },
     {
-      "id": 3320,
-      "label": "map-ar1507",
-      "name": "AR1507 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1507"
-      ]
-    },
-    {
-      "id": 3430,
+      "id": 3420,
       "label": "map-ar1900",
-      "name": "AR1900 (day and night, x4)",
+      "name": "AR1900 (x4)",
       "status": "validated",
       "depends_on": [
         0
@@ -495,21 +507,9 @@
       ]
     },
     {
-      "id": 3340,
-      "label": "map-ar1509",
-      "name": "AR1509 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1509"
-      ]
-    },
-    {
-      "id": 3420,
+      "id": 3430,
       "label": "map-ar1900",
-      "name": "AR1900 (x4)",
+      "name": "AR1900 (day and night, x4)",
       "status": "validated",
       "depends_on": [
         0
@@ -519,39 +519,51 @@
       ]
     },
     {
-      "id": 3110,
-      "label": "map-ar2015",
-      "name": "AR2015 (x4)",
+      "id": 3120,
+      "label": "map-ar1600",
+      "name": "AR1600 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2015"
+        "map-ar1600"
       ]
     },
     {
-      "id": 3090,
-      "label": "map-ar2013",
-      "name": "AR2013 (x4)",
+      "id": 3100,
+      "label": "map-ar2014",
+      "name": "AR2014 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2013"
+        "map-ar2014"
       ]
     },
     {
-      "id": 3520,
-      "label": "map-ar1901",
-      "name": "AR1901 (x4)",
+      "id": 3530,
+      "label": "map-ar0714",
+      "name": "AR0714 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar1901"
+        "map-ar0714"
+      ]
+    },
+    {
+      "id": 2860,
+      "label": "map-ar2802",
+      "name": "AR2802 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar2802"
       ]
     },
     {
@@ -639,6 +651,18 @@
       ]
     },
     {
+      "id": 2870,
+      "label": "map-ar2803",
+      "name": "AR2803 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar2803"
+      ]
+    },
+    {
       "id": 2780,
       "label": "map-ar2402",
       "name": "AR2402 (x4)",
@@ -651,27 +675,15 @@
       ]
     },
     {
-      "id": 2860,
-      "label": "map-ar2802",
-      "name": "AR2802 (x4)",
+      "id": 2760,
+      "label": "map-ar2400",
+      "name": "AR2400 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2802"
-      ]
-    },
-    {
-      "id": 2770,
-      "label": "map-ar2401",
-      "name": "AR2401 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar2401"
+        "map-ar2400"
       ]
     },
     {
@@ -759,63 +771,63 @@
       ]
     },
     {
-      "id": 2680,
-      "label": "map-ar2200",
-      "name": "AR2200 (x4)",
+      "id": 2770,
+      "label": "map-ar2401",
+      "name": "AR2401 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2200"
+        "map-ar2401"
       ]
     },
     {
-      "id": 2760,
-      "label": "map-ar2400",
-      "name": "AR2400 (x4)",
+      "id": 3110,
+      "label": "map-ar2015",
+      "name": "AR2015 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2400"
+        "map-ar2015"
       ]
     },
     {
-      "id": 3100,
-      "label": "map-ar2014",
-      "name": "AR2014 (x4)",
+      "id": 2880,
+      "label": "map-ar2804",
+      "name": "AR2804 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2014"
+        "map-ar2804"
       ]
     },
     {
-      "id": 2870,
-      "label": "map-ar2803",
-      "name": "AR2803 (x4)",
+      "id": 2900,
+      "label": "map-ar2806",
+      "name": "AR2806 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2803"
+        "map-ar2806"
       ]
     },
     {
-      "id": 2890,
-      "label": "map-ar2805",
-      "name": "AR2805 (x4)",
+      "id": 3090,
+      "label": "map-ar2013",
+      "name": "AR2013 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2805"
+        "map-ar2013"
       ]
     },
     {
@@ -903,6 +915,18 @@
       ]
     },
     {
+      "id": 2890,
+      "label": "map-ar2805",
+      "name": "AR2805 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar2805"
+      ]
+    },
+    {
       "id": 3010,
       "label": "map-ar2002",
       "name": "AR2002 (x4)",
@@ -915,21 +939,9 @@
       ]
     },
     {
-      "id": 2880,
-      "label": "map-ar2804",
-      "name": "AR2804 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar2804"
-      ]
-    },
-    {
-      "id": 2990,
+      "id": 2980,
       "label": "map-ar2000",
-      "name": "AR2000 (day and night, x4)",
+      "name": "AR2000 (x4)",
       "status": "validated",
       "depends_on": [
         0
@@ -1023,39 +1035,15 @@
       ]
     },
     {
-      "id": 2900,
-      "label": "map-ar2806",
-      "name": "AR2806 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar2806"
-      ]
-    },
-    {
-      "id": 2980,
+      "id": 2990,
       "label": "map-ar2000",
-      "name": "AR2000 (x4)",
+      "name": "AR2000 (day and night, x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
         "map-ar2000"
-      ]
-    },
-    {
-      "id": 3530,
-      "label": "map-ar0714",
-      "name": "AR0714 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar0714"
       ]
     },
     {
@@ -1080,6 +1068,30 @@
       ],
       "payload_groups": [
         "map-ar1902"
+      ]
+    },
+    {
+      "id": 3560,
+      "label": "map-ar1905",
+      "name": "AR1905 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1905"
+      ]
+    },
+    {
+      "id": 3012,
+      "label": "animation-ar1200",
+      "name": "AR1200 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar1200"
       ]
     },
     {
@@ -1276,30 +1288,6 @@
       ]
     },
     {
-      "id": 4000,
-      "label": "map-ar3025",
-      "name": "AR3025 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar3025"
-      ]
-    },
-    {
-      "id": 3012,
-      "label": "animation-ar1200",
-      "name": "AR1200 area animations (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "animation-ar1200"
-      ]
-    },
-    {
       "id": 3013,
       "label": "animation-ar1700",
       "name": "AR1700 area animations (x4)",
@@ -1333,6 +1321,30 @@
       ],
       "payload_groups": [
         "animation-ar2000"
+      ]
+    },
+    {
+      "id": 3016,
+      "label": "animation-ar3000",
+      "name": "AR3000 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar3000"
+      ]
+    },
+    {
+      "id": 3037,
+      "label": "animation-ar2018",
+      "name": "AR2018 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar2018"
       ]
     },
     {
@@ -1420,6 +1432,18 @@
       ]
     },
     {
+      "id": 4000,
+      "label": "map-ar3025",
+      "name": "AR3025 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar3025"
+      ]
+    },
+    {
       "id": 3027,
       "label": "animation-ar0411",
       "name": "AR0411 area animations (x4)",
@@ -1432,27 +1456,15 @@
       ]
     },
     {
-      "id": 3990,
-      "label": "map-ar3024",
-      "name": "AR3024 (x4)",
+      "id": 3025,
+      "label": "animation-ar0400",
+      "name": "AR0400 area animations (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar3024"
-      ]
-    },
-    {
-      "id": 3026,
-      "label": "animation-ar0500",
-      "name": "AR0500 area animations (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "animation-ar0500"
+        "animation-ar0400"
       ]
     },
     {
@@ -1540,27 +1552,27 @@
       ]
     },
     {
-      "id": 3016,
-      "label": "animation-ar3000",
-      "name": "AR3000 area animations (x4)",
+      "id": 3026,
+      "label": "animation-ar0500",
+      "name": "AR0500 area animations (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "animation-ar3000"
+        "animation-ar0500"
       ]
     },
     {
-      "id": 3025,
-      "label": "animation-ar0400",
-      "name": "AR0400 area animations (x4)",
+      "id": 3990,
+      "label": "map-ar3024",
+      "name": "AR3024 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "animation-ar0400"
+        "map-ar3024"
       ]
     },
     {
@@ -1588,15 +1600,15 @@
       ]
     },
     {
-      "id": 3960,
-      "label": "map-ar3021",
-      "name": "AR3021 (x4)",
+      "id": 3740,
+      "label": "map-oh6200",
+      "name": "OH6200 (day and night, x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar3021"
+        "map-oh6200"
       ]
     },
     {
@@ -1684,6 +1696,18 @@
       ]
     },
     {
+      "id": 3750,
+      "label": "map-ar2001",
+      "name": "AR2001 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar2001"
+      ]
+    },
+    {
       "id": 3660,
       "label": "map-oh7200",
       "name": "OH7200 (x4)",
@@ -1696,27 +1720,15 @@
       ]
     },
     {
-      "id": 3740,
-      "label": "map-oh6200",
-      "name": "OH6200 (day and night, x4)",
+      "id": 3640,
+      "label": "map-oh6000",
+      "name": "OH6000 (day and night, x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-oh6200"
-      ]
-    },
-    {
-      "id": 3650,
-      "label": "map-oh7100",
-      "name": "OH7100 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-oh7100"
+        "map-oh6000"
       ]
     },
     {
@@ -1804,63 +1816,63 @@
       ]
     },
     {
-      "id": 3560,
-      "label": "map-ar1905",
-      "name": "AR1905 (x4)",
+      "id": 3650,
+      "label": "map-oh7100",
+      "name": "OH7100 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar1905"
+        "map-oh7100"
       ]
     },
     {
-      "id": 3640,
-      "label": "map-oh6000",
-      "name": "OH6000 (day and night, x4)",
+      "id": 2680,
+      "label": "map-ar2200",
+      "name": "AR2200 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-oh6000"
+        "map-ar2200"
       ]
     },
     {
-      "id": 2670,
-      "label": "map-ar2102",
-      "name": "AR2102 (x4)",
+      "id": 3760,
+      "label": "map-ar2300",
+      "name": "AR2300 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2102"
+        "map-ar2300"
       ]
     },
     {
-      "id": 3750,
-      "label": "map-ar2001",
-      "name": "AR2001 (x4)",
+      "id": 3780,
+      "label": "map-ar3003",
+      "name": "AR3003 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2001"
+        "map-ar3003"
       ]
     },
     {
-      "id": 3770,
-      "label": "map-ar3001",
-      "name": "AR3001 (x4)",
+      "id": 3960,
+      "label": "map-ar3021",
+      "name": "AR3021 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar3001"
+        "map-ar3021"
       ]
     },
     {
@@ -1948,6 +1960,18 @@
       ]
     },
     {
+      "id": 3770,
+      "label": "map-ar3001",
+      "name": "AR3001 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar3001"
+      ]
+    },
+    {
       "id": 3880,
       "label": "map-ar3013",
       "name": "AR3013 (x4)",
@@ -1960,27 +1984,15 @@
       ]
     },
     {
-      "id": 3760,
-      "label": "map-ar2300",
-      "name": "AR2300 (x4)",
+      "id": 3860,
+      "label": "map-ar3011",
+      "name": "AR3011 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar2300"
-      ]
-    },
-    {
-      "id": 3870,
-      "label": "map-ar3012",
-      "name": "AR3012 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar3012"
+        "map-ar3011"
       ]
     },
     {
@@ -2068,39 +2080,27 @@
       ]
     },
     {
-      "id": 3780,
-      "label": "map-ar3003",
-      "name": "AR3003 (x4)",
+      "id": 3870,
+      "label": "map-ar3012",
+      "name": "AR3012 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar3003"
+        "map-ar3012"
       ]
     },
     {
-      "id": 3860,
-      "label": "map-ar3011",
-      "name": "AR3011 (x4)",
+      "id": 2670,
+      "label": "map-ar2102",
+      "name": "AR2102 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar3011"
-      ]
-    },
-    {
-      "id": 2660,
-      "label": "map-ar2101",
-      "name": "AR2101 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar2101"
+        "map-ar2102"
       ]
     },
     {
@@ -2116,19 +2116,15 @@
       ]
     },
     {
-      "id": 2640,
-      "label": "map-ar3000",
-      "name": "AR3000 (x4)",
+      "id": 3038,
+      "label": "animation-oh7300",
+      "name": "OH7300 area animations (x4)",
       "status": "validated",
       "depends_on": [
-        0,
-        70,
-        80,
-        90,
-        95
+        0
       ],
       "payload_groups": [
-        "map-ar3000"
+        "animation-oh7300"
       ]
     },
     {
@@ -3140,18 +3136,6 @@
       ]
     },
     {
-      "id": 3037,
-      "label": "animation-ar2018",
-      "name": "AR2018 area animations (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "animation-ar2018"
-      ]
-    },
-    {
       "id": 1780,
       "label": "map-ar0316",
       "name": "AR0316 (x4)",
@@ -3164,6 +3148,18 @@
       ]
     },
     {
+      "id": 1790,
+      "label": "map-ar0317",
+      "name": "AR0317 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar0317"
+      ]
+    },
+    {
       "id": 1800,
       "label": "map-ar0318",
       "name": "AR0318 (x4)",
@@ -3173,6 +3169,18 @@
       ],
       "payload_groups": [
         "map-ar0318"
+      ]
+    },
+    {
+      "id": 2420,
+      "label": "map-ar0043",
+      "name": "AR0043 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar0043"
       ]
     },
     {
@@ -3260,6 +3268,18 @@
       ]
     },
     {
+      "id": 2430,
+      "label": "map-ar0044",
+      "name": "AR0044 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar0044"
+      ]
+    },
+    {
       "id": 2340,
       "label": "map-oh5000",
       "name": "OH5000 (x4)",
@@ -3269,18 +3289,6 @@
       ],
       "payload_groups": [
         "map-oh5000"
-      ]
-    },
-    {
-      "id": 2330,
-      "label": "map-ar0907",
-      "name": "AR0907 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar0907"
       ]
     },
     {
@@ -3380,27 +3388,27 @@
       ]
     },
     {
-      "id": 2420,
-      "label": "map-ar0043",
-      "name": "AR0043 (x4)",
+      "id": 2330,
+      "label": "map-ar0907",
+      "name": "AR0907 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0043"
+        "map-ar0907"
       ]
     },
     {
-      "id": 2430,
-      "label": "map-ar0044",
-      "name": "AR0044 (x4)",
+      "id": 2240,
+      "label": "map-ar0708",
+      "name": "AR0708 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0044"
+        "map-ar0708"
       ]
     },
     {
@@ -3416,15 +3424,31 @@
       ]
     },
     {
-      "id": 2450,
-      "label": "map-ar0069",
-      "name": "AR0069 (x4)",
+      "id": 2460,
+      "label": "map-ar0070",
+      "name": "AR0070 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0069"
+        "map-ar0070"
+      ]
+    },
+    {
+      "id": 2640,
+      "label": "map-ar3000",
+      "name": "AR3000 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0,
+        70,
+        80,
+        90,
+        95
+      ],
+      "payload_groups": [
+        "map-ar3000"
       ]
     },
     {
@@ -3512,6 +3536,18 @@
       ]
     },
     {
+      "id": 2450,
+      "label": "map-ar0069",
+      "name": "AR0069 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar0069"
+      ]
+    },
+    {
       "id": 2560,
       "label": "map-ar1104",
       "name": "AR1104 (x4)",
@@ -3524,27 +3560,15 @@
       ]
     },
     {
-      "id": 2240,
-      "label": "map-ar0708",
-      "name": "AR0708 (x4)",
+      "id": 2540,
+      "label": "map-ar1102",
+      "name": "AR1102 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0708"
-      ]
-    },
-    {
-      "id": 2550,
-      "label": "map-ar1103",
-      "name": "AR1103 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar1103"
+        "map-ar1102"
       ]
     },
     {
@@ -3632,27 +3656,27 @@
       ]
     },
     {
-      "id": 2460,
-      "label": "map-ar0070",
-      "name": "AR0070 (x4)",
+      "id": 2550,
+      "label": "map-ar1103",
+      "name": "AR1103 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0070"
+        "map-ar1103"
       ]
     },
     {
-      "id": 2540,
-      "label": "map-ar1102",
-      "name": "AR1102 (x4)",
+      "id": 2660,
+      "label": "map-ar2101",
+      "name": "AR2101 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar1102"
+        "map-ar2101"
       ]
     },
     {
@@ -3665,18 +3689,6 @@
       ],
       "payload_groups": [
         "map-ar0707"
-      ]
-    },
-    {
-      "id": 2220,
-      "label": "map-ar0706",
-      "name": "AR0706 (x4)",
-      "status": "validated",
-      "depends_on": [
-        0
-      ],
-      "payload_groups": [
-        "map-ar0706"
       ]
     },
     {
@@ -3920,15 +3932,15 @@
       ]
     },
     {
-      "id": 1790,
-      "label": "map-ar0317",
-      "name": "AR0317 (x4)",
+      "id": 2220,
+      "label": "map-ar0706",
+      "name": "AR0706 (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "map-ar0317"
+        "map-ar0706"
       ]
     },
     {
@@ -4184,15 +4196,15 @@
       ]
     },
     {
-      "id": 3038,
-      "label": "animation-oh7300",
-      "name": "OH7300 area animations (x4)",
+      "id": 3039,
+      "label": "animation-ar2300",
+      "name": "AR2300 area animations (x4)",
       "status": "validated",
       "depends_on": [
         0
       ],
       "payload_groups": [
-        "animation-oh7300"
+        "animation-ar2300"
       ]
     }
   ]

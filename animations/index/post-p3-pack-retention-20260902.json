@@ -712,6 +712,84 @@
       "reason": "Feuille AR2300 complète de test ingame : marge sans fade de l'occurrence centrale AM2300A élargie à 16 px x4 côté noir, avec transition de 16 px x4 ; les deux variantes latérales validées restent inchangées ; aucun statut QA ou release n'est inféré"
     },
     {
+      "name": "fall1a-topmask-reviewed-v1-ingame-test-20260906",
+      "manifest_sha256": "E2B74B1E142C80CA6406FBEAF0406DE5C9BBF37EE425A7D09A0EF5A5BBBC416D",
+      "created_utc": "2026-09-06T00:09:45.022984+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai ingame AR2300 FALL1A à raccord supérieur revu ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906",
+      "manifest_path": "AR2300/manifest.json",
+      "manifest_sha256": "8160C4130067993D321AF2EC91B7DCFD354D56BD9DB1451D09CF4B647C711606",
+      "created_utc": "2026-09-05T22:09:56.959724+00:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai ingame AR2300 combinant les variantes FALL1A et FALL2 ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-safe-spline-v3-20260906",
+      "manifest_sha256": "29C435906F90CA6580192636846FB09CF686003620B6A0FF22C693A8D7D2BF1A",
+      "created_utc": "2026-09-06T01:36:59.14085+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 spline sûre, retenue comme preuve de traitement ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-20260906",
+      "manifest_sha256": "1A7650D8F69E54672978FA3BFF59E7D60D75C88FB5ACC032142C1853370C735F",
+      "created_utc": "2026-09-06T01:49:43.449807+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai AR2300 FALL1B après correction RGB prémultiplié ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "fall2-safe-spline-top-reconstruct-bottom-tip-sdf-v3-20260906",
+      "manifest_sha256": "314DC529F967A5648D4A57959F49D146092A58912771EFD1532AAD655766CC44",
+      "created_utc": "2026-09-06T02:21:48.667206+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai AR2300 FALL2 à reconstruction du raccord inférieur ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-bottom-tip-sdf-v4-20260906",
+      "manifest_sha256": "B70EB4EA31CAECAB4E65FAEEA64CD2F15480CD6F732E6C064BA2DAC4433A68D8",
+      "created_utc": "2026-09-06T02:21:50.518767+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 intégrant le test FALL2 de raccord inférieur v4 ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-bottom-tip-sdf-v5-20260906",
+      "manifest_sha256": "A6752CB3393805BDB236BE9261AEC2F523B1ACBE78218640DC3DDCDCBACFEEE9",
+      "created_utc": "2026-09-06T02:23:04.952716+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 intégrant le test FALL2 de raccord inférieur v5 ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "fall2-bottom-overscan4x1-local-retime20-cleanrgb-v2-20260906",
+      "manifest_sha256": "74B596BFB76086BC6750EA009177A15706E17046FAEE364FE7076F316241A60C",
+      "created_utc": "2026-09-06T02:40:00.349659+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai AR2300 FALL2 d'overscan inférieur et RGB nettoyé ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-overscan4x1-v6-20260906",
+      "manifest_sha256": "B2878C89884A42C4E64306A478A1369E5462A7A276AE837250D33A038B34C004",
+      "created_utc": "2026-09-06T02:40:06.93817+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Feuille AR2300 intégrant l'overscan FALL2 v6 ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v15-fall6-painted-statue-occlusion-20260906",
+      "manifest_sha256": "32DC0851FF1F7563FAD6427E29165768C9EF0A2E5D4D585E871DB0A9A2243A42",
+      "created_utc": "2026-09-06T04:43:58.000622+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai AR2300 FALL6 avec occlusion peinte de statue ; aucun statut QA ou release n'est inféré"
+    },
+    {
+      "name": "ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906",
+      "manifest_sha256": "25C9253CE4794671EED96B86D05F117C65B05939B3C7C91A40EEC2B0217E6052",
+      "created_utc": "2026-09-06T04:53:39.535094+02:00",
+      "classification": "retained-processing-evidence",
+      "reason": "Essai AR2300 FALL6 avec occlusion peinte bornée de statue ; aucun statut QA ou release n'est inféré"
+    },
+    {
       "name": "ar2300-waterfalls-x4-30fps-test-20260906",
       "manifest_sha256": "92530903DF626F56F9EDF5B7B49877B4D45D91396856F8F51A885D452A550A09",
       "created_utc": "2026-09-06T09:18:13.694022+00:00",
