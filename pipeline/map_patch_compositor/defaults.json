@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-upscale-map-patch-compositor-config-v1",
+  "registration": {
+    "coarse_max_dimension_px": 1600,
+    "scale_min": 0.92,
+    "scale_max": 1.08,
+    "scale_steps": 9,
+    "candidate_count": 5,
+    "border_fraction": 0.18,
+    "edge_percentile": 55.0,
+    "refine_max_samples": 24000,
+    "refine_translation_px": 24.0,
+    "robust_loss_scale": 0.08,
+    "min_coarse_score": 0.20,
+    "min_peak_ratio": 1.03,
+    "min_inlier_fraction": 0.55,
+    "max_rmse": 0.22,
+    "map_search_roi": null,
+    "patch_exclude_rectangles": [],
+    "map_exclude_rectangles": []
+  },
+  "object_mask": {
+    "delta_e_floor": 8.0,
+    "delta_e_mad_factor": 3.5,
+    "gradient_floor": 0.08,
+    "minimum_component_area_px": 64,
+    "closing_radius_px": 2,
+    "opening_radius_px": 1,
+    "object_seed_patch": null
+  },
+  "blend": {
+    "dilation_px": 8,
+    "fade_width_px": 20.0,
+    "gaussian_sigma_px": 2.0,
+    "edge_guard_px": 4,
+    "minimum_coverage_px": 64
+  },
+  "color": {
+    "enabled": true,
+    "context_ring_fraction": 0.18,
+    "max_luminance_gain_delta": 0.15,
+    "max_luminance_offset": 12.0,
+    "max_chroma_shift": 8.0,
+    "max_saturation_gain_delta": 0.15,
+    "minimum_relative_improvement": 0.02,
+    "max_clipped_fraction": 0.002
+  },
+  "output": {
+    "strict_lossless_format": true,
+    "preview_padding_px": 96,
+    "preview_max_dimension_px": 1200,
+    "png_compress_level": 9
+  }
+}

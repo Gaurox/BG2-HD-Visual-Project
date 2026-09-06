@@ -45,6 +45,14 @@ class ChangedTestSelectorTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertEqual(selector.python_modules_for(self.targeted(path)), expected)
 
+    def test_compositor_package_selects_its_single_targeted_test(self) -> None:
+        self.assertEqual(
+            selector.python_modules_for(
+                self.targeted("pipeline/map_patch_compositor/core.py")
+            ),
+            ("pipeline.tests.test_map_patch_compositor",),
+        )
+
     def test_explicit_aliases_remain_narrow(self) -> None:
         cases = {
             "pipeline/scripts/inject_build.py": ("pipeline.tests.test_map_build_transaction",),

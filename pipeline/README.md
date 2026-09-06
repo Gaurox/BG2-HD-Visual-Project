@@ -75,6 +75,7 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
 | Liquides et overlays | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
+| Patch raster local | [`map_patch_compositor/README.md`](map_patch_compositor/README.md) |
 | Tuiles secondaires | [`SECONDARY_TILE_PIPELINE.md`](SECONDARY_TILE_PIPELINE.md) |
 | Masques polygonaux | [`GEOMETRIC_ALPHA_MASK_CLEANUP.md`](GEOMETRIC_ALPHA_MASK_CLEANUP.md) |
 | Masques spline | [`SPLINE_ALPHA_MASK_PIPELINE.md`](SPLINE_ALPHA_MASK_PIPELINE.md) |

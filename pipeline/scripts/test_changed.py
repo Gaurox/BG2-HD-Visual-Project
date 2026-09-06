@@ -130,6 +130,8 @@ def _test_module(path: str) -> str | None:
 def _direct_test_modules(path: str) -> tuple[str, ...]:
     normalized = path.replace("\\", "/")
     aliases = PATH_TEST_ALIASES.get(normalized)
+    if normalized.startswith("pipeline/map_patch_compositor/"):
+        return ("pipeline.tests.test_map_patch_compositor",)
     if aliases is None and normalized.startswith("pipeline/scripts/"):
         aliases = SCRIPT_TEST_ALIASES.get(normalized.rsplit("/", 1)[-1])
     if aliases:
