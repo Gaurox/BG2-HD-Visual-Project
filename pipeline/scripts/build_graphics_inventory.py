@@ -89,6 +89,7 @@ OUTPUT_PATHS = {
     "effect_manifest": "effects/index/manifest.json",
     "effect_resources": "effects/index/resources.csv",
     "effect_dependencies": "effects/index/dependencies.csv",
+    "effect_bam_assets": "effects/index/bam-assets.csv",
     "projectile_manifest": "projectiles/index/manifest.json",
     "projectile_resources": "projectiles/index/resources.csv",
     "projectile_dependencies": "projectiles/index/dependencies.csv",
@@ -856,6 +857,140 @@ def build_effects(
     return manifest, rows, dependencies, owned
 
 
+def build_effect_bam_assets(
+    index: KeyIndex,
+    effect_dependencies: Sequence[Mapping[str, Any]],
+    projectile_dependencies: Sequence[Mapping[str, Any]],
+    supplemental_rows: Sequence[Mapping[str, Any]],
+    extract: bool,
+) -> list[dict[str, Any]]:
+    """Build one work asset per visual BAM, without duplicating VVC/VEF controllers.
+
+    ``effects/index/resources.csv`` remains the controller inventory. This table is the
+    production-facing leaf inventory: a shared BAM has one row and records every known
+    controller/projectile consumer. Missing stock members stay explicit rows so the
+    processing authority can block them without inventing a source file.
+    """
+
+    controllers_by_bam: dict[str, set[str]] = defaultdict(set)
+    nested_controllers: dict[str, set[str]] = defaultdict(set)
+    for dependency in effect_dependencies:
+        controller = str(dependency["asset_key"])
+        resref = str(dependency["dependency_resref"]).upper()
+        resolved = str(dependency.get("resolved_format", "")).upper()
+        if resolved == "BAM" or (
+            dependency.get("present") == "no"
+            and dependency.get("relation") in {"animation", "alpha-animation"}
+        ):
+            controllers_by_bam[resref].add(controller)
+        elif resolved in {"VVC", "VEF"}:
+            nested_controllers[controller].add(f"effect:{resolved.lower()}:{resref}")
+
+    members_by_controller: dict[str, set[str]] = defaultdict(set)
+
+    def controller_members(controller: str, seen: set[str] | None = None) -> set[str]:
+        if controller in members_by_controller:
+            return members_by_controller[controller]
+        active = set() if seen is None else set(seen)
+        if controller in active:
+            return set()
+        active.add(controller)
+        members = {
+            resref
+            for resref, owners in controllers_by_bam.items()
+            if controller in owners
+        }
+        for child in nested_controllers.get(controller, set()):
+            members.update(controller_members(child, active))
+        members_by_controller[controller] = members
+        return members
+
+    projectiles_by_bam: dict[str, set[str]] = defaultdict(set)
+    for dependency in projectile_dependencies:
+        projectile = str(dependency["asset_key"])
+        resref = str(dependency["dependency_resref"]).upper()
+        resolved = str(dependency.get("resolved_format", "")).upper()
+        if resolved == "BAM":
+            projectiles_by_bam[resref].add(projectile)
+        elif resolved in {"VVC", "VEF"}:
+            controller = f"effect:{resolved.lower()}:{resref}"
+            for member in controller_members(controller):
+                projectiles_by_bam[member].add(projectile)
+
+    supplemental_by_resref = {
+        str(row["resref"]).upper(): row
+        for row in supplemental_rows
+        if row.get("domain") == "effects"
+    }
+    resrefs = sorted(
+        set(controllers_by_bam) | set(supplemental_by_resref), key=str.casefold
+    )
+    rows: list[dict[str, Any]] = []
+    for resref in resrefs:
+        controller_keys = sorted(controllers_by_bam.get(resref, set()), key=str.casefold)
+        projectile_keys = sorted(projectiles_by_bam.get(resref, set()), key=str.casefold)
+        supplemental = supplemental_by_resref.get(resref)
+        source_path = Path("effects/ressources") / resref / "source.bam"
+        origins = []
+        if controller_keys:
+            origins.append("controller-member")
+        if supplemental:
+            origins.append("dedicated-effect-bif")
+
+        resource = index.get(resref, TYPE_BAM)
+        if resource is None:
+            rows.append(
+                {
+                    "asset_key": f"effects:bam:{resref}",
+                    "resref": resref,
+                    "origin": ";".join(origins),
+                    "controller_count": len(controller_keys),
+                    "controller_keys": ";".join(controller_keys),
+                    "projectile_count": len(projectile_keys),
+                    "projectile_keys": ";".join(projectile_keys),
+                    "bam_container": "",
+                    "bam_version": "",
+                    "frame_count": "",
+                    "cycle_count": "",
+                    "source_bif": "",
+                    "locator": "",
+                    "source_size": "",
+                    "source_sha256": "",
+                    "source_state": "missing",
+                    "extracted_path": source_path.as_posix(),
+                }
+            )
+            continue
+
+        payload = index.resolve(resource)
+        metadata = bam_metadata(payload)
+        if extract:
+            extract_payload(ROOT / source_path, payload)
+            (ROOT / source_path.parent / "runs").mkdir(parents=True, exist_ok=True)
+        rows.append(
+            {
+                "asset_key": f"effects:bam:{resref}",
+                "resref": resref,
+                "origin": ";".join(origins),
+                "controller_count": len(controller_keys),
+                "controller_keys": ";".join(controller_keys),
+                "projectile_count": len(projectile_keys),
+                "projectile_keys": ";".join(projectile_keys),
+                "bam_container": metadata["container"],
+                "bam_version": metadata["version"],
+                "frame_count": metadata["frame_count"],
+                "cycle_count": metadata["cycle_count"],
+                "source_bif": resource.bif_name,
+                "locator": f"0x{resource.locator:08X}",
+                "source_size": len(payload),
+                "source_sha256": sha256_bytes(payload),
+                "source_state": "available",
+                "extracted_path": source_path.as_posix(),
+            }
+        )
+    return rows
+
+
 def parse_projectile_dependencies(data: bytes) -> list[tuple[str, str, tuple[int, ...]]]:
     if len(data) < 0x100 or data[:8] != b"PRO V1.0":
         raise ValueError(f"PRO invalide: {data[:8]!r}")
@@ -1167,6 +1302,7 @@ def build_supplemental_graphics(
     index: KeyIndex,
     already_owned: set[tuple[str, int]],
     extract: bool,
+    extract_effects: bool = False,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], set[tuple[str, int]]]:
     rows: list[dict[str, Any]] = []
     owned: set[tuple[str, int]] = set()
@@ -1180,10 +1316,14 @@ def build_supplemental_graphics(
         payload = index.resolve(resource)
         metadata = bam_metadata(payload)
         extracted_relative = (
-            Path("graphics/source") / domain / f"{resource.resref}.bam"
+            Path("effects/ressources") / resource.resref / "source.bam"
+            if domain == "effects"
+            else Path("graphics/source") / domain / f"{resource.resref}.bam"
         )
-        if extract:
+        if extract or (extract_effects and domain == "effects"):
             extract_payload(ROOT / extracted_relative, payload)
+            if domain == "effects":
+                (ROOT / extracted_relative.parent / "runs").mkdir(parents=True, exist_ok=True)
         rows.append(
             {
                 "asset_key": f"supplemental:{domain}:{asset_type}:{resource.resref}",
@@ -1331,6 +1471,12 @@ CSV_FIELDS = {
         "asset_key", "relation", "dependency_resref", "allowed_formats",
         "resolved_format", "present", "source_bif",
     ),
+    "effect_bam_assets": (
+        "asset_key", "resref", "origin", "controller_count", "controller_keys",
+        "projectile_count", "projectile_keys", "bam_container", "bam_version",
+        "frame_count", "cycle_count", "source_bif", "locator", "source_size",
+        "source_sha256", "source_state", "extracted_path",
+    ),
     "projectile_resources": (
         "asset_key", "resref", "projectile_type", "dependency_count", "source_bif",
         "locator", "source_size", "source_sha256", "extracted_path",
@@ -1365,6 +1511,7 @@ def build_outputs(
     game_dir: Path,
     ffprobe: str,
     extract: bool = False,
+    extract_effects: bool = False,
 ) -> dict[Path, bytes]:
     global ROOT
     previous_root = ROOT
@@ -1382,7 +1529,7 @@ def build_outputs(
         icon_manifest, icon_rows, icon_usages, icon_owned = build_icons(index, extract)
         cursor_manifest, cursor_rows, cursor_owned = build_cursors(index, extract)
         effect_manifest, effect_rows, effect_dependencies, effect_owned = build_effects(
-            index, extract
+            index, extract or extract_effects
         )
         projectile_manifest, projectile_rows, projectile_dependencies, projectile_owned = (
             build_projectiles(index, extract)
@@ -1405,7 +1552,28 @@ def build_outputs(
                 index,
                 existing_owned | new_pre_ui | ui_owned,
                 extract,
+                extract_effects,
             )
+        )
+        effect_bam_rows = build_effect_bam_assets(
+            index,
+            effect_dependencies,
+            projectile_dependencies,
+            supplemental_rows,
+            extract or extract_effects,
+        )
+        effect_manifest.update(
+            {
+                "bam_assets_csv": "effects/index/bam-assets.csv",
+                "bam_asset_count": len(effect_bam_rows),
+                "bam_source_available_count": sum(
+                    row["source_state"] == "available" for row in effect_bam_rows
+                ),
+                "bam_source_missing_count": sum(
+                    row["source_state"] == "missing" for row in effect_bam_rows
+                ),
+                "production_granularity": "one visual BAM; VVC/VEF controllers remain consumers",
+            }
         )
         ownership_sets = {
             "existing-domains": existing_owned,
@@ -1446,6 +1614,7 @@ def build_outputs(
             "cursor_resources": cursor_rows,
             "effect_resources": effect_rows,
             "effect_dependencies": effect_dependencies,
+            "effect_bam_assets": effect_bam_rows,
             "projectile_resources": projectile_rows,
             "projectile_dependencies": projectile_dependencies,
             "font_resources": font_rows,
@@ -1486,13 +1655,31 @@ def main() -> int:
     parser.add_argument("--game-dir", type=Path, default=DEFAULT_GAME_DIR)
     parser.add_argument("--ffprobe", default="ffprobe")
     parser.add_argument("--extract", action="store_true")
+    parser.add_argument(
+        "--extract-effects",
+        action="store_true",
+        help="extrait seulement les contrôleurs VVC/VEF et les BAM d'effets",
+    )
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="autorise l'extraction demandée par --extract-effects",
+    )
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--verify-determinism", action="store_true")
     args = parser.parse_args()
-    if args.check and args.extract:
-        parser.error("--check et --extract sont incompatibles")
+    if args.check and (args.extract or args.extract_effects):
+        parser.error("--check est incompatible avec une extraction")
+    if args.extract_effects and not args.run:
+        parser.error("--extract-effects exige --run")
 
-    first = build_outputs(ROOT, args.game_dir, args.ffprobe, extract=args.extract)
+    first = build_outputs(
+        ROOT,
+        args.game_dir,
+        args.ffprobe,
+        extract=args.extract,
+        extract_effects=args.extract_effects,
+    )
     if args.verify_determinism:
         second = build_outputs(ROOT, args.game_dir, args.ffprobe, extract=False)
         if first != second:

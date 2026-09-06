@@ -13,7 +13,7 @@
 | Sélecteur | `interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/selection-des-trois-jeux/assets/asset-manifest.json` |
 | Icônes | `icons/index/manifest.json`, `resources.csv`, `usages.csv` |
 | Curseurs | `cursors/index/manifest.json`, `resources.csv` |
-| Effets | `effects/index/manifest.json`, `resources.csv`, `dependencies.csv` |
+| Effets | `effects/index/manifest.json`, `resources.csv`, `dependencies.csv`, `bam-assets.csv`, `processing.csv` |
 | Projectiles | `projectiles/index/manifest.json`, `resources.csv`, `dependencies.csv` |
 | Compléments BAM | `graphics/index/supplemental-manifest.json`, `supplemental-assets.csv` |
 | Portraits | `portraits/inventaire_portraits.csv` ; une base logique, tailles L/M/S dépendantes |

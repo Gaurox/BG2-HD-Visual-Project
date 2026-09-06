@@ -62,6 +62,7 @@ then the domain README. This checkpoint applies especially to animation runs and
 | Public website | [docs/WEBSITE.md](docs/WEBSITE.md) |
 | TIS/PVRZ maps | [pipeline/README.md](pipeline/README.md) |
 | BAM animations | [animations/README.md](animations/README.md) |
+| Effects | [effects/README.md](effects/README.md) |
 | Sprites | [sprite/README.md](sprite/README.md) ; inventaire : `sprite/index/` |
 | Interface | [interface/README.md](interface/README.md) |
 | Video | [video/README.md](video/README.md) |

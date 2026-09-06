@@ -51,9 +51,10 @@ synchronisation de miroirs interrompue laisse
 | Pack animation de zone | `animations/packs-par-zone/<pack-id>/<AREA>/` | manifeste de candidats release |
 | Sprite | `sprite/families/.../<asset>/{source,jobs,runs,research}/` | pointeurs du catalogue |
 | Vidéo | `video/<asset>/<source>.wbm`, `video/<asset>/runs/<run-id>/` | `video/index/processing.csv` |
+| Effet BAM | `effects/ressources/<RESREF>/source.bam`, `effects/ressources/<RESREF>/runs/<run-id>/` | `effects/index/processing.csv` |
 
-Interface, portraits, icônes, effets et projectiles conservent leurs index actuels. Créer un
-workspace d'asset seulement au premier traitement ; ne pas dupliquer préventivement les extractions.
+Interface, portraits, icônes et projectiles conservent leurs index actuels. Les effets extraient
+leur corpus BAM sous `effects/ressources/`; les contrôleurs VVC/VEF restent sous `effects/source/`.
 
 `animations/runs/<run-id>/` reste un layout legacy accepté pour la reprise et la lecture. Aucun
 nouveau run n'y est créé par défaut.

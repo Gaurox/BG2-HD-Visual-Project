@@ -105,6 +105,7 @@ def reconstruction_scopes_for_path(path: str) -> tuple[str, ...]:
     if path in {
         "pipeline/scripts/asset_tracking_contract.py",
         "pipeline/scripts/build_global_asset_registry.py",
+        "pipeline/scripts/sync_effect_processing.py",
         "docs/asset-tracking-record.schema.json",
     }:
         return ("registry", "integrity")

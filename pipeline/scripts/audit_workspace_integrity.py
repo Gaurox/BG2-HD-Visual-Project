@@ -133,14 +133,28 @@ SOURCE_TABLES: tuple[dict[str, Any], ...] = (
         "canonical_path": "cursors/index/resources.csv",
     },
     {
-        "name": "effects",
+        "name": "effect-controllers",
         "domain": "effects",
         "csv": "effects/index/resources.csv",
         "manifest": "effects/index/manifest.json",
         "path_field": "extracted_path",
         "hash_field": "source_sha256",
         "root": "effects/source",
-        "canonical_path": "effects/index/resources.csv",
+        "canonical_path": None,
+    },
+    {
+        "name": "effect-bams",
+        "domain": "effects",
+        "csv": "effects/index/bam-assets.csv",
+        "manifest": "effects/index/manifest.json",
+        "manifest_count_field": "bam_asset_count",
+        "path_field": "extracted_path",
+        "hash_field": "source_sha256",
+        "availability_field": "source_state",
+        "available_values": {"available"},
+        "root": "effects/ressources",
+        "exclude_runs": True,
+        "canonical_path": "effects/index/bam-assets.csv",
     },
     {
         "name": "projectiles",
@@ -161,6 +175,8 @@ SOURCE_TABLES: tuple[dict[str, Any], ...] = (
         "hash_field": "source_sha256",
         "root": "graphics/source",
         "canonical_path": "graphics/index/supplemental-assets.csv",
+        "row_filter": lambda row: row.get("domain") != "effects",
+        "check_manifest_count": False,
     },
 )
 
@@ -490,12 +506,21 @@ def audit_source_tables(
     for config in SOURCE_TABLES:
         csv_path = ROOT / config["csv"]
         manifest_path = ROOT / config["manifest"]
-        rows = read_csv(csv_path)
+        all_rows = read_csv(csv_path)
+        row_filter = config.get("row_filter")
+        rows = [row for row in all_rows if row_filter is None or row_filter(row)]
         manifest = read_json(manifest_path)
         expected_paths: set[str] = set()
         missing = 0
         mismatched = 0
-        for row in rows:
+        availability_field = config.get("availability_field")
+        available_values = set(config.get("available_values", ()))
+        source_rows = [
+            row
+            for row in rows
+            if not availability_field or row.get(availability_field) in available_values
+        ]
+        for row in source_rows:
             path_text = row[config["path_field"]]
             expected_paths.add(path_text)
             path = ROOT / path_text
@@ -522,8 +547,8 @@ def audit_source_tables(
                     asset_id=row.get("asset_key", ""),
                 )
 
-        manifest_count = int(manifest["asset_count"])
-        if manifest_count != len(rows):
+        manifest_count = int(manifest[config.get("manifest_count_field", "asset_count")])
+        if config.get("check_manifest_count", True) and manifest_count != len(rows):
             add_issue(
                 issues,
                 "error",
@@ -541,6 +566,10 @@ def audit_source_tables(
             if path.is_file()
             and not (
                 config["name"] == "videos"
+                and "runs" in path.relative_to(root).parts
+            )
+            and not (
+                config.get("exclude_runs", False)
                 and "runs" in path.relative_to(root).parts
             )
         } if root.is_dir() else set()
@@ -585,15 +614,16 @@ def audit_source_tables(
                 details={"file_count": len(extra), "examples": extra[:10]},
             )
 
-        projected = canonical_counts.get(config["canonical_path"], 0)
-        if projected != len(rows):
+        canonical_path = config.get("canonical_path")
+        projected = canonical_counts.get(canonical_path, 0) if canonical_path else 0
+        if canonical_path and projected != len(rows):
             add_issue(
                 issues,
                 "error",
                 "source-registry-count-mismatch",
                 config["domain"],
                 "Le nombre d'entrées projetées depuis cette autorité diffère de son CSV.",
-                path=config["canonical_path"],
+                path=canonical_path,
                 details={"csv": len(rows), "registry": projected},
             )
         results.append(
@@ -606,6 +636,7 @@ def audit_source_tables(
                 "missing_file_count": missing,
                 "referenced_file_count": len(expected_paths),
                 "registry_projection_count": projected,
+                "unavailable_source_count": len(rows) - len(source_rows),
             }
         )
 

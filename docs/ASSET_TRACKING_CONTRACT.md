@@ -134,10 +134,12 @@ présence d'un candidat n'y suffit pas.
   références manquantes restent des anomalies et ne créent pas de source fictive.
 - Curseurs : `cursors/index/` suit `CURSORS.BAM` comme un jeu unique, faute de noms sémantiques
   fiables pour ses cycles.
-- Effets et projectiles : `effects/index/` suit un contrôleur VVC/VEF par asset et
-  `projectiles/index/` un contrôleur PRO par asset. Leurs BAM, BMP, palettes et effets imbriqués
-  restent des dépendances. Les jeux BAM de familles BIF explicitement dédiées sont inventoriés
-  séparément comme animations d'effet.
+- Effets : `effects/index/resources.csv` et `dependencies.csv` conservent le graphe VVC/VEF,
+  mais `bam-assets.csv` est l'inventaire des assets de production, un BAM visuel par ligne.
+  `processing.csv` porte les états et la sélection. Contrôleurs, palettes et PRO restent des
+  consommateurs ; un BAM partagé ne crée pas d'asset de production dupliqué.
+- Projectiles : `projectiles/index/` suit un contrôleur PRO par asset. Ses BAM, BMP, palettes et
+  effets imbriqués restent des dépendances.
 - Compléments : `graphics/index/supplemental-assets.csv` rattache les paperdolls, animations
   d'objets et autres familles BIF non ambiguës aux domaines existants sans modifier leurs manifests
   historiques. Les BIF de patch génériques restent non classés.

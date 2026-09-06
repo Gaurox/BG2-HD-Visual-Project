@@ -138,7 +138,7 @@ DOMAIN_SCOPE = {
     "effects": {
         "coverage_status": "projected",
         "authority": "effects/index/",
-        "note": "Une entrée par contrôleur VVC/VEF ; animations et palettes sont des dépendances.",
+        "note": "Une entrée par BAM visuel ; VVC/VEF, palettes et projectiles restent des consommateurs liés.",
     },
     "projectiles": {
         "coverage_status": "projected",
@@ -2322,15 +2322,6 @@ PHASE4_INVENTORIES = (
         "auxiliary": (),
     },
     {
-        "domain": "effects",
-        "manifest": "effects/index/manifest.json",
-        "resources": "effects/index/resources.csv",
-        "id_prefix": "effects",
-        "asset_type": lambda row: f"effect-controller-{stable_token(row.get('format', 'resource').lower())}",
-        "adapter": "effects.inventory.v1",
-        "auxiliary": ("effects/index/dependencies.csv",),
-    },
-    {
         "domain": "projectiles",
         "manifest": "projectiles/index/manifest.json",
         "resources": "projectiles/index/resources.csv",
@@ -2340,6 +2331,208 @@ PHASE4_INVENTORIES = (
         "auxiliary": ("projectiles/index/dependencies.csv",),
     },
 )
+
+
+def adapt_effect_bams(builder: RegistryBuilder) -> None:
+    """Project the effect work unit: one visual BAM, never one VVC/VEF controller."""
+
+    manifest_path = "effects/index/manifest.json"
+    assets_path = "effects/index/bam-assets.csv"
+    processing_path = "effects/index/processing.csv"
+    dependencies_path = "effects/index/dependencies.csv"
+    manifest = builder.inputs.read_json(manifest_path)
+    assets = builder.inputs.read_csv(assets_path)
+    dependencies = builder.inputs.read_csv(dependencies_path)
+    processing_rows = builder.inputs.read_csv(processing_path)
+
+    if manifest.get("bam_asset_count") != len(assets):
+        builder.anomaly(
+            "inventory-count-mismatch",
+            "error",
+            "effects",
+            "le nombre de BAM visuels diffère du manifeste effects",
+            source=manifest_path,
+            details={"manifest": manifest.get("bam_asset_count"), "rows": len(assets)},
+        )
+    missing_dependencies = [row for row in dependencies if row.get("present") == "no"]
+    if missing_dependencies:
+        builder.anomaly(
+            "missing-resource-dependencies",
+            "warning",
+            "effects",
+            "des dépendances de contrôleurs VVC/VEF sont absentes du jeu stock",
+            source=dependencies_path,
+            details={"affected_count": len(missing_dependencies)},
+        )
+
+    processing: dict[str, dict[str, str]] = {}
+    for row in processing_rows:
+        key = row.get("asset_key", "")
+        if not key:
+            builder.anomaly(
+                "missing-identity", "error", "effects",
+                "ligne de suivi d'effet sans asset_key", source=processing_path,
+            )
+        elif key in processing:
+            builder.anomaly(
+                "duplicate-source-row", "error", "effects",
+                "asset_key dupliqué dans le suivi des effets", source=processing_path,
+                details={"asset_key": key},
+            )
+        else:
+            processing[key] = row
+
+    asset_keys = {row.get("asset_key", "") for row in assets}
+    stale_processing = sorted(set(processing) - asset_keys, key=str.casefold)
+    if stale_processing:
+        builder.anomaly(
+            "effect-processing-asset-unknown", "error", "effects",
+            "le suivi référence un BAM absent de l'inventaire", source=processing_path,
+            details={"asset_keys": stale_processing},
+        )
+
+    allowed_production = set(STATE_VALUES["production"])
+    allowed_qa = set(STATE_VALUES["qa"])
+    allowed_installation = set(STATE_VALUES["installation"])
+    allowed_release = set(STATE_VALUES["release"])
+    for row in assets:
+        asset_key = row.get("asset_key", "")
+        resref = row.get("resref", "").upper()
+        source_state = row.get("source_state", "")
+        source_hash = row.get("source_sha256", "").upper()
+        source_available = source_state == "available"
+        source_verified = source_available and bool(SHA256_RE.fullmatch(source_hash))
+        if source_available and not source_verified:
+            builder.anomaly(
+                "source-hash-missing-or-invalid", "error", "effects",
+                "un BAM d'effet disponible n'a pas de SHA-256 valide",
+                asset_id=asset_key, source=assets_path,
+            )
+        if source_state not in {"available", "missing"}:
+            builder.anomaly(
+                "unknown-status", "error", "effects",
+                f"état source BAM inconnu: {source_state!r}",
+                asset_id=asset_key, source=assets_path,
+            )
+
+        expected_directory = f"effects/ressources/{resref}"
+        current = processing.get(asset_key)
+        if current is None:
+            builder.anomaly(
+                "effect-processing-row-missing", "error", "effects",
+                "le BAM inventorié n'a pas de ligne de suivi",
+                asset_id=asset_key, source=processing_path,
+            )
+            current = {
+                "asset_directory": expected_directory,
+                "spatial_state": "blocked" if not source_available else "not-started",
+                "interpolation_state": "not-applicable" if not source_available else "not-started",
+                "qa_state": "not-assessed",
+                "installation_state": "not-installed",
+                "release_state": "not-evaluated",
+            }
+        if current.get("asset_directory", "") != expected_directory:
+            builder.anomaly(
+                "effect-processing-identity-mismatch", "error", "effects",
+                "le dossier de travail ne correspond pas au BAM inventorié",
+                asset_id=asset_key, source=processing_path,
+                details={"actual": current.get("asset_directory", ""), "expected": expected_directory},
+            )
+
+        spatial_state = current.get("spatial_state", "")
+        interpolation_state = current.get("interpolation_state", "")
+        qa_state = current.get("qa_state", "")
+        installation_state = current.get("installation_state", "")
+        release_state = current.get("release_state", "")
+        for value, allowed, label in (
+            (spatial_state, allowed_production, "spatial"),
+            (interpolation_state, allowed_production, "interpolation"),
+            (qa_state, allowed_qa, "QA"),
+            (installation_state, allowed_installation, "installation"),
+            (release_state, allowed_release, "release"),
+        ):
+            if value not in allowed:
+                builder.anomaly(
+                    "unknown-status", "error", "effects",
+                    f"état {label} inconnu: {value!r}",
+                    asset_id=asset_key, source=processing_path,
+                )
+
+        spatial_run = current.get("spatial_run", "")
+        interpolation_run = current.get("interpolation_run", "")
+        selected_run = current.get("selected_run", "")
+        for state, run_id, label in (
+            (spatial_state, spatial_run, "spatial"),
+            (interpolation_state, interpolation_run, "interpolation"),
+        ):
+            if state in {"in-progress", "produced", "verified", "rejected"} and not run_id:
+                builder.anomaly(
+                    "effect-processing-run-missing", "error", "effects",
+                    f"run {label} absent pour une étape active",
+                    asset_id=asset_key, source=processing_path,
+                )
+        if selected_run and selected_run not in {spatial_run, interpolation_run}:
+            builder.anomaly(
+                "effect-selected-run-unknown", "error", "effects",
+                "le run sélectionné n'est ni le spatial ni l'interpolation déclarée",
+                asset_id=asset_key, source=processing_path,
+            )
+        if qa_state == "passed" and (not selected_run or not current.get("qa_evidence", "")):
+            builder.anomaly(
+                "effect-qa-evidence-missing", "error", "effects",
+                "une QA passée exige un run sélectionné et une preuve référencée",
+                asset_id=asset_key, source=processing_path,
+            )
+        if installation_state in {"staged", "installed", "drifted"} and not current.get(
+            "installation_receipt", ""
+        ):
+            builder.anomaly(
+                "effect-installation-receipt-missing", "error", "effects",
+                "une installation active exige un reçu référencé",
+                asset_id=asset_key, source=processing_path,
+            )
+
+        states = default_states()
+        states.update(
+            {
+                "source": "verified" if source_verified else "unavailable",
+                "production": spatial_state if spatial_state in allowed_production else "unknown",
+                "qa": qa_state if qa_state in allowed_qa else "not-assessed",
+                "installation": installation_state if installation_state in allowed_installation else "unknown",
+                "release": release_state if release_state in allowed_release else "not-evaluated",
+            }
+        )
+        if not source_available:
+            states["production"] = "blocked"
+
+        locator = f"csv:asset_key={asset_key}"
+        selections: list[dict[str, Any]] = []
+        if selected_run:
+            selections.append(
+                {"role": "run", "id": selected_run, "source": source_ref(processing_path, locator)}
+            )
+        if current.get("release_candidate", ""):
+            selections.append(
+                {
+                    "role": "release-candidate",
+                    "id": current["release_candidate"],
+                    "source": source_ref(processing_path, locator),
+                }
+            )
+        builder.add(
+            base_record(
+                asset_id=asset_key,
+                domain="effects",
+                asset_type="effect-bam",
+                canonical_path=assets_path,
+                locator=locator,
+                states=states,
+                provenance_state="partial" if selected_run else "not-applicable",
+                evidence=[evidence_ref(builder.inputs, processing_path, locator)],
+                selections=selections,
+                adapter="effects.bam-processing.v1",
+            )
+        )
 
 
 def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
@@ -2613,6 +2806,10 @@ def adapt_phase4_inventories(builder: RegistryBuilder) -> None:
     for row in supplemental_rows:
         asset_key = row.get("asset_key", "")
         domain = row.get("domain", "other")
+        # Effect BAMs are projected from effects/index/bam-assets.csv so that
+        # controller reuse cannot create duplicate production assets.
+        if domain == "effects":
+            continue
         asset_type = row.get("asset_type", "graphical-resource")
         resref = row.get("resref", "")
         asset_id = (
@@ -2924,6 +3121,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, dict[str, Any]]:
     adapt_animation_candidates(builder, animation_resrefs, animation_groups)
     adapt_sprites(builder)
     adapt_ui(builder, ui_groups)
+    adapt_effect_bams(builder)
     adapt_phase4_inventories(builder)
     adapt_portraits(builder)
     registry, coverage, anomalies = builder.finalize()
