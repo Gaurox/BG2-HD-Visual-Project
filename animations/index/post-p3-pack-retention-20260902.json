@@ -795,6 +795,48 @@
       "created_utc": "2026-09-06T09:18:13.694022+00:00",
       "classification": "qa-lineage",
       "reason": "Pack AR2300 TimedTimeline 30 fps référencé par les sélections QA ingame acceptées du 2026-09-06 ; aucune intégration release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-seedvr2-7b-int8-lab-x4-split-20260906",
+      "manifest_sha256": "CBF04B6A69A2FB7D6BDDB7D3398551A06F3CB1A8769C6237963EF2E30C5003F6",
+      "created_utc": "2026-09-06T18:42:25.594302+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA générées depuis le run spatial x4 AMWRPGT1 ; premier contrôle ingame ciblé AR3003 prévu, aucune QA ingame ni release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-spatial-spline-fit1-20260906-split",
+      "manifest_sha256": "453A7334E18F22E2A5FA7D4B57ECD61E56249431F052CACD36A5611390787643",
+      "created_utc": "2026-09-06T18:46:06.622145+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA dérivées de AMWRPGT1 x4 par Spline Fit 1 multi-contours ; remplace le test ingame AR3003, aucune QA ingame ni release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-spatial-spline-fit1-gauss1p5-20260906-split",
+      "manifest_sha256": "5F24A1BCA715BE91D8325073CD324A071A19A183E6462982598C072390AF7387",
+      "created_utc": "2026-09-06T18:51:45.690997+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA dérivées de AMWRPGT1 x4 par Spline Fit 1 puis gaussien de contour 1,5 px x4 ; remplace le test ingame AR3003, aucune QA ingame ni release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-spatial-spline-fit1-safe8x6-gauss1p5-20260906-split",
+      "manifest_sha256": "FF26A5C39E52C582D76398E9732F50D967E63FAA36E949D31340BA479D7C4B9F",
+      "created_utc": "2026-09-06T18:57:23.521053+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA dérivées de AMWRPGT1 x4 par Spline Fit 1 à enveloppe bornée 8/6 px x4 et gaussien de contour 1,5 px x4 ; remplace le test ingame AR3003, aucune QA ingame ni release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-spatial-spline-fit1-safe8x6-gauss3-20260906-split",
+      "manifest_sha256": "94A5DB00ABC52A61B148AF25A16F5A23A4FD1FB7B5E9AE6B25D284AD156B0933",
+      "created_utc": "2026-09-06T18:59:25.113389+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA dérivées de AMWRPGT1 x4 par Spline Fit 1 à enveloppe bornée 8/6 px x4 et gaussien de contour 3 px x4 ; remplace le test ingame AR3003, aucune QA ingame ni release n'est inférée"
+    },
+    {
+      "name": "amwrpgt1-timeline30-apo8-safe8x6-gauss3-20260906-split",
+      "manifest_sha256": "9CB2C4E2322133E28D71B17254BFFE599B2E33E49E70F8CEE331B56C1A1FDE01",
+      "created_utc": "2026-09-06T19:34:50.012854+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "17 feuilles SoA AMWRPGT1 x4 TimedTimeline 30 fps Apollo 8, transition de boucle 11→0 incluse ; test ingame AR3003 prévu, aucune QA ingame ni release n'est inférée"
     }
   ]
 }
