@@ -181,7 +181,7 @@ AM904TL4,non-traité,AR0904,1,6,102x74,BAM V1,,,,,
 AMOH7300,non-traité,OH7300,9,108,19x56,BAM V1,,,,,
 AMSTEAM1,non-traité,AR3017,7,24,56x64,BAM V1,,,,,
 AMSTEAM2,non-traité,AR3017,7,24,95x43,BAM V1,,,,,
-AMWRPGT1,non-traité,AR3003;AR3004;AR3005;AR3006;AR3007;AR3008;AR3009;AR3010;AR3011;AR3012;AR3013;AR3014;AR3015;AR3016;AR3017;AR3019;AR3020,50,12,47x85,BAM V1,,,,,
+AMWRPGT1,à-corriger,AR3003;AR3004;AR3005;AR3006;AR3007;AR3008;AR3009;AR3010;AR3011;AR3012;AR3013;AR3014;AR3015;AR3016;AR3017;AR3019;AR3020,50,12,47x85,BAM V1,,,,,"SUSPENDU le 2026-09-06 : essai portail x4 AR3003 arrêté sans QA ni promotion. Le liseret cyan défectueux est dans le raster AR3003 après encodage PVRZ DXT1/BC1 (blocs 4x4), pas dans AMWRPGT1 ; ne pas poursuivre alpha/interpolation pour ce défaut. Reprise : A/B encodeur BC1 haute qualité ou évolution du format PVRZ ; DXT5 seul ne corrige pas le RGB."
 BDFORCEW,non-traité,OH8100,2,160,164x231,BAM V1,,,,,
 BUBBLEA,non-traité,AR2903,3,20,58x53,BAM V1,,,,,
 BUBBLES2,validé-x4,AR0411;AR0602;AR0603,28,107,19x56,BAM V1,animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905,animations/index/qa-decisions/BUBBLES2/2026-09-05-accepted-bubbles2-xbr2x-blend-premultiply-budget-20260905.json,2026-09-05,,"Effet partagé de bulles montantes. Sélection x4 : xBR2 blend, Nearest2 vers x4, TimedTimeline v2 à 30 FPS et neutralisation RGB Blended par prémultiplication. QA ingame validée le 2026-09-05 sur toutes les occurrences : AR0411 (6), AR0602 (12), AR0603 (10). Correctif moteur d'occlusion native validé : aucun résidu visible hors décor."
