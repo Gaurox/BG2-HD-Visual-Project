@@ -1018,6 +1018,41 @@ bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
   return false;
 }
 
+bool resolve_native_subframe(const FrameResolution& resolution, int sequence, int nativeSlot,
+                             int logicalWidth, int logicalHeight, FrameHandle& out) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || resolution.timeline.enabled || sequence < 0 ||
+      nativeSlot < 0 || logicalWidth <= 0 || logicalHeight <= 0) {
+    return false;
+  }
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        resolution.nativeFrame.resourceIndex >= g_resources.size()) {
+      return false;
+    }
+    const auto& resource = g_resources[resolution.nativeFrame.resourceIndex];
+    if (sequence >= static_cast<int>(resource.cycles.size())) return false;
+
+    FrameHandle match{};
+    bool found = false;
+    for (const auto& cycle : resource.cycles) {
+      if (nativeSlot >= static_cast<int>(cycle.nativeFrames.size())) continue;
+      const auto frameIndex = cycle.nativeFrames[static_cast<std::size_t>(nativeSlot)];
+      if (frameIndex >= resource.frames.size()) return false;
+      const auto& frame = resource.frames[frameIndex];
+      if (frame.logicalWidth != logicalWidth || frame.logicalHeight != logicalHeight) continue;
+      if (found) return false;
+      match = {.resourceIndex = resolution.nativeFrame.resourceIndex, .frameIndex = frameIndex};
+      found = true;
+    }
+    if (!found) return false;
+    out = match;
+    return true;
+  } catch (...) {
+  }
+  return false;
+}
+
 bool has_baked_occurrence_occlusion(FrameHandle handle) noexcept {
   if (!g_ready.load(std::memory_order_acquire)) return false;
   try {

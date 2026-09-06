@@ -92,6 +92,8 @@ def replace_resource(base_root: Path, replacement_root: Path, resref: str,
             require(v2.sha256_file(target) == v2.sha256_file(source),
                     f"{area}: copie divergente {name}")
         raw_bytes = sum(int(asset["bytes"]) for resource in resources for asset in resource["assets"])
+        require(raw_bytes <= v2.MAX_RAW_BYTES,
+                f"{area}: budget runtime dépassé ({raw_bytes} > {v2.MAX_RAW_BYTES})")
         manifest = {
             "schema": v2.PACK_SCHEMA,
             "status": "completed",
@@ -115,6 +117,7 @@ def replace_resource(base_root: Path, replacement_root: Path, resref: str,
                 "replacement_manifest_sha256": v2.sha256_file(replacement_dir / "manifest.json"),
             },
             "raw_bytes": raw_bytes,
+            "runtime_budget_enforced": True,
             "base_assets": [],
             "new_assets": [],
             "resources": resources,

@@ -167,6 +167,13 @@ bool resolve_frame(const std::array<char, 8>& resref, int worldX, int worldY, in
 bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
                             std::uint32_t phase, FrameHandle& out) noexcept;
 
+// A native BAM frame can fan out into several CVidCell draws from synchronised
+// cycles. Select the one physical replacement frame whose native dimensions
+// match this low-level draw. Ambiguous or unknown dimensions fail closed.
+bool resolve_native_subframe(const FrameResolution& resolution, int sequence,
+                             int nativeSlot, int logicalWidth, int logicalHeight,
+                             FrameHandle& out) noexcept;
+
 // Registry-v3 position-bound variants were introduced for legacy pixels with
 // occurrence-specific baked foreground masks. Phase 1 must leave those pixels
 // unchanged to avoid applying a partial native dither twice. V1/V2 and unbound

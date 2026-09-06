@@ -3308,6 +3308,54 @@ void test_area_animation_registry_formats() {
               "A pack swap should reset cumulative GPU cache counters for the new area");
   iee::area_animation_x4::release();
 
+  // One native BAM frame may dispatch several synchronised cycles. The render hook must select
+  // their replacement pixels by the low-level native dimensions, never reuse the root cycle.
+  const std::array<std::array<std::uint32_t, 2>, 4> compositeDimensions{{
+      {{1, 1}}, {{2, 1}}, {{3, 1}}, {{4, 1}},
+  }};
+  for (std::size_t index = 0; index < compositeDimensions.size(); ++index) {
+    const auto bytes = static_cast<std::size_t>(compositeDimensions[index][0]) *
+                       compositeDimensions[index][1] * 4u * 4u * 4u;
+    const auto name = std::string{"AAX4-TESTA-frame00"} + std::to_string(index) + ".rgba";
+    write_file(root / name,
+               std::vector<std::byte>(bytes, std::byte{0x42}));
+  }
+  auto composite = make_header(2);
+  append_raw(composite, target.data(), target.size());
+  for (const auto value : std::array<std::uint32_t, 2>{{4, 2}}) append(composite, value);
+  for (const auto value : std::array<std::uint32_t, 5>{{0, 0, 0, 0, 0}}) append(composite, value);
+  for (const auto& dimensions : compositeDimensions) {
+    append(composite, dimensions[0]);
+    append(composite, dimensions[1]);
+  }
+  for (const auto value : std::array<std::uint32_t, 4>{{2, 0, 2, 0}}) append(composite, value);
+  for (const auto value : std::array<std::uint32_t, 4>{{2, 1, 3, 0}}) append(composite, value);
+  write_file(root / "AreaAnimations-X4.registry", composite);
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A native multi-cycle registry should prepare for subframe dispatch");
+  iee::area_animation_x4::FrameResolution compositeResolution{};
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 1, compositeResolution) &&
+                  !compositeResolution.timeline.enabled &&
+                  compositeResolution.nativeFrame.frameIndex == 2,
+              "The root native cycle should retain its own frame slot");
+  iee::area_animation_x4::FrameHandle compositeSubframe{};
+  expect_true(iee::area_animation_x4::resolve_native_subframe(
+                  compositeResolution, 0, 1, 4, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 3,
+              "A sibling cycle should resolve by its distinct low-level dimensions");
+  expect_true(iee::area_animation_x4::resolve_native_subframe(
+                  compositeResolution, 0, 1, 3, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 2,
+              "The originating cycle should remain resolvable through the same dispatch path");
+  expect_true(!iee::area_animation_x4::resolve_native_subframe(
+                  compositeResolution, 0, 1, 9, 1, compositeSubframe),
+              "An unknown low-level dimension must fail closed to the native BAM draw");
+  iee::area_animation_x4::release();
+  write_file(root / "AAX4-TESTA-frame000.rgba", rgba);
+  write_file(root / "AAX4-TESTA-frame001.rgba", rgba);
+
   // v3: two variants of one resref, told apart by the world position of the occurrence they
   // serve. This is what lets each occurrence carry its own baked occlusion.
   const std::vector<std::byte> other(4 * 4 * 4, std::byte{0x21});

@@ -106,6 +106,9 @@ thread_local int g_am0205eRenderDepth = 0;
 thread_local int g_am0205eFrameIndex = -1;
 thread_local int g_areaAnimationRenderDepth = 0;
 thread_local area_animation_x4::FrameHandle g_areaAnimationFrame{};
+thread_local area_animation_x4::FrameResolution g_areaAnimationResolution{};
+thread_local int g_areaAnimationSequence = -1;
+thread_local int g_areaAnimationSlot = -1;
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
@@ -1622,6 +1625,9 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
       g_areaCompositionMode == AreaCompositionMode::AM0205EPrototype &&
       read_am0205e_frame(thisPtr, frameIndex);
   const auto previousAreaFrame = g_areaAnimationFrame;
+  const auto previousAreaResolution = g_areaAnimationResolution;
+  const int previousAreaSequence = g_areaAnimationSequence;
+  const int previousAreaSlot = g_areaAnimationSlot;
   const int previousFrame = g_am0205eFrameIndex;
   if (areaTarget) {
     const int worldActive = read_world_active();
@@ -1630,6 +1636,9 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
     select_area_timeline_frame(thisPtr, worldActive, resolvedAreaFrame);
     ++g_areaAnimationRenderDepth;
     g_areaAnimationFrame = resolvedAreaFrame.handle;
+    g_areaAnimationResolution = resolvedAreaFrame.registry;
+    g_areaAnimationSequence = resolvedAreaFrame.sequence;
+    g_areaAnimationSlot = resolvedAreaFrame.slot;
   }
   if (am0205eTarget) {
     ++g_am0205eRenderDepth;
@@ -1661,6 +1670,9 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   if (areaTarget) {
     --g_areaAnimationRenderDepth;
     g_areaAnimationFrame = previousAreaFrame;
+    g_areaAnimationResolution = previousAreaResolution;
+    g_areaAnimationSequence = previousAreaSequence;
+    g_areaAnimationSlot = previousAreaSlot;
   }
 }
 
@@ -1924,6 +1936,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   int previousTextureId = 0;
   int transientCreatureTextureId = 0;
   int transientOcclusionTextureId = 0;
+  area_animation_x4::FrameHandle areaAnimationDrawFrame{};
   ReplacementKind replacement = ReplacementKind::None;
   auto* creatureScope = g_creatureSpriteScope;
   if (g_creatureSpriteHooksEnabled && creatureScope) {
@@ -1960,10 +1973,20 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       }
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::Registry &&
-      g_areaAnimationRenderDepth > 0) {
-    if (area_animation_x4::bind_frame_texture(
-            g_areaAnimationFrame, g_areaAnimationTextureApi, previousTextureId,
-            g_ctx && g_ctx->cfg.enablePerformanceLogging)) {
+             g_areaAnimationRenderDepth > 0) {
+    bool resolved = false;
+    if (g_areaAnimationResolution.timeline.enabled) {
+      // TimedTimeline resources remain one selected frame per high-level draw.
+      areaAnimationDrawFrame = g_areaAnimationFrame;
+      resolved = true;
+    } else {
+      resolved = area_animation_x4::resolve_native_subframe(
+          g_areaAnimationResolution, g_areaAnimationSequence, g_areaAnimationSlot,
+          logicalWidth, logicalHeight, areaAnimationDrawFrame);
+    }
+    if (resolved && area_animation_x4::bind_frame_texture(
+                        areaAnimationDrawFrame, g_areaAnimationTextureApi, previousTextureId,
+                        g_ctx && g_ctx->cfg.enablePerformanceLogging)) {
       replacement = ReplacementKind::AreaRegistry;
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::AM0205EPrototype &&
@@ -2011,7 +2034,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   }
   const bool legacyBakedAreaOcclusion =
       replacement == ReplacementKind::AreaRegistry &&
-      area_animation_x4::has_baked_occurrence_occlusion(g_areaAnimationFrame);
+      area_animation_x4::has_baked_occurrence_occlusion(areaAnimationDrawFrame);
   if (g_nativeOcclusionBridgeEnabled && nativeOcclusionSample &&
       replacement != ReplacementKind::AM0205E && !legacyBakedAreaOcclusion &&
       g_nativeOcclusionMaskCapture) {
