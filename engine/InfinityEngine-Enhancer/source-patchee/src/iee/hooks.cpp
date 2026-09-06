@@ -109,6 +109,7 @@ thread_local area_animation_x4::FrameHandle g_areaAnimationFrame{};
 thread_local area_animation_x4::FrameResolution g_areaAnimationResolution{};
 thread_local int g_areaAnimationSequence = -1;
 thread_local int g_areaAnimationSlot = -1;
+thread_local int g_areaAnimationTimelinePhase = -1;
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
@@ -530,6 +531,7 @@ struct ResolvedAreaAnimationFrame {
   std::array<char, 8> resref{};
   int sequence{-1};
   int slot{-1};
+  int timelinePhase{-1};
 };
 
 struct ResolvedCreatureSpriteFrame {
@@ -786,6 +788,7 @@ void select_area_timeline_frame(void* instance, int worldActive,
       return;
     }
     resolved.handle = timelineFrame;
+    resolved.timelinePhase = static_cast<int>(selection.phase);
     if (!g_areaTimelineActivationLogged) {
       g_areaTimelineActivationLogged = true;
       LOG_INFO(
@@ -1628,6 +1631,7 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   const auto previousAreaResolution = g_areaAnimationResolution;
   const int previousAreaSequence = g_areaAnimationSequence;
   const int previousAreaSlot = g_areaAnimationSlot;
+  const int previousAreaTimelinePhase = g_areaAnimationTimelinePhase;
   const int previousFrame = g_am0205eFrameIndex;
   if (areaTarget) {
     const int worldActive = read_world_active();
@@ -1639,6 +1643,7 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
     g_areaAnimationResolution = resolvedAreaFrame.registry;
     g_areaAnimationSequence = resolvedAreaFrame.sequence;
     g_areaAnimationSlot = resolvedAreaFrame.slot;
+    g_areaAnimationTimelinePhase = resolvedAreaFrame.timelinePhase;
   }
   if (am0205eTarget) {
     ++g_am0205eRenderDepth;
@@ -1673,6 +1678,7 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
     g_areaAnimationResolution = previousAreaResolution;
     g_areaAnimationSequence = previousAreaSequence;
     g_areaAnimationSlot = previousAreaSlot;
+    g_areaAnimationTimelinePhase = previousAreaTimelinePhase;
   }
 }
 
@@ -1975,10 +1981,11 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   } else if (g_areaCompositionMode == AreaCompositionMode::Registry &&
              g_areaAnimationRenderDepth > 0) {
     bool resolved = false;
-    if (g_areaAnimationResolution.timeline.enabled) {
-      // TimedTimeline resources remain one selected frame per high-level draw.
-      areaAnimationDrawFrame = g_areaAnimationFrame;
-      resolved = true;
+    if (g_areaAnimationResolution.timeline.enabled && g_areaAnimationTimelinePhase >= 0) {
+      resolved = area_animation_x4::resolve_timeline_subframe(
+          g_areaAnimationResolution,
+          static_cast<std::uint32_t>(g_areaAnimationTimelinePhase), logicalWidth,
+          logicalHeight, areaAnimationDrawFrame);
     } else {
       resolved = area_animation_x4::resolve_native_subframe(
           g_areaAnimationResolution, g_areaAnimationSequence, g_areaAnimationSlot,

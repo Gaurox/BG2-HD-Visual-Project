@@ -151,6 +151,22 @@ def resource_sort_key(resource: dict[str, Any]) -> tuple[str, int]:
     return normalise_resref(str(resource.get("resref", ""))), resource_variant_index(resource)
 
 
+def resource_label(key: tuple[str, int]) -> str:
+    """Stable work-directory label for one registry-v3 resource variant."""
+    resref, variant_index = key
+    return f"{resref}-v{variant_index}"
+
+
+def resource_identity(resource: dict[str, Any]) -> dict[str, Any]:
+    """JSON-safe identity retained wherever a resref has several occurrences."""
+    position = resource_position(resource)
+    return {
+        "resref": normalise_resref(str(resource["resref"])),
+        "variant_index": resource_variant_index(resource),
+        "position": list(position) if position is not None else None,
+    }
+
+
 def rate_record(rate: tuple[int, int]) -> dict[str, int]:
     return {"numerator": rate[0], "denominator": rate[1]}
 
@@ -493,12 +509,11 @@ def load_source_context(source_run: Path, resref: str) -> dict[str, Any]:
 
 
 def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> dict[str, Any]:
-    """Use a completed uniform 15 fps runtime resource as V2's interpolation source.
+    """Use final 15 fps runtime anchors as V2's interpolation source.
 
-    This is for legacy resources whose native 15 fps stream was already expanded
-    before V2 existed.  It deliberately refuses variable geometry: without the
-    original aligned canvas/crop manifests, fabricating a shared canvas would make
-    frame placement ambiguous.
+    Variable physical frames retain their placement through their immutable
+    ``centre_x1`` values.  A shared canvas is reconstructed with the maximal
+    centre as origin, exactly as the spatial pipeline's aligned crop convention.
     """
     base_pack = base_pack.resolve()
     resref = normalise_resref(str(resource.get("resref", "")))
@@ -511,19 +526,21 @@ def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> d
             f"{resref}: frames runtime non contiguës")
     first_physical = [int(value) for value in frames[0].get("physical_size_x4") or []]
     first_logical = [int(value) for value in frames[0].get("logical_size_x1") or []]
-    first_centre = frames[0].get("centre_x1")
     require(len(first_physical) == 2 and len(first_logical) == 2 and
             first_physical == [first_logical[0] * 4, first_logical[1] * 4],
-            f"{resref}: géométrie runtime uniforme invalide")
+            f"{resref}: géométrie runtime invalide")
     validated_frames = []
     for index, frame in enumerate(frames):
         physical = [int(value) for value in frame.get("physical_size_x4") or []]
         logical = [int(value) for value in frame.get("logical_size_x1") or []]
+        centre = frame.get("centre_x1")
         name = str(frame.get("asset", ""))
         raw_path = base_pack / name
-        require(logical == first_logical and physical == first_physical and
-                frame.get("centre_x1") == first_centre,
-                f"{resref}: entrée runtime-only réservée à la géométrie uniforme")
+        require(len(logical) == 2 and len(physical) == 2 and
+                physical == [logical[0] * 4, logical[1] * 4] and
+                isinstance(centre, list) and len(centre) == 2 and
+                all(isinstance(value, int) and not isinstance(value, bool) for value in centre),
+                f"{resref} frame {index}: géométrie/centre runtime invalide")
         require(raw_path.is_file() and sha256_file(raw_path) == str(frame.get("sha256", "")).lower() and
                 raw_path.stat().st_size == int(frame.get("bytes", -1)),
                 f"{resref} frame {index}: ancre runtime modifiée")
@@ -531,11 +548,21 @@ def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> d
             "frame": index,
             "logical_size_x1": logical,
             "physical_size_x4": physical,
-            "centre_x1": first_centre,
-            "crop_box_x4": [0, 0, physical[0], physical[1]],
+            "centre_x1": centre,
             "runtime_asset": name,
             "runtime_asset_sha256": str(frame["sha256"]).lower(),
         })
+    origin_x = max(int(frame["centre_x1"][0]) for frame in validated_frames)
+    origin_y = max(int(frame["centre_x1"][1]) for frame in validated_frames)
+    for frame in validated_frames:
+        left = (origin_x - int(frame["centre_x1"][0])) * 4
+        top = (origin_y - int(frame["centre_x1"][1])) * 4
+        physical = frame["physical_size_x4"]
+        frame["crop_box_x4"] = [left, top, left + physical[0], top + physical[1]]
+    aligned_x4 = [
+        max(frame["crop_box_x4"][2] for frame in validated_frames),
+        max(frame["crop_box_x4"][3] for frame in validated_frames),
+    ]
     cycles = sorted(resource.get("cycles") or [], key=lambda item: int(item.get("cycle", -1)))
     require(cycles and [int(cycle.get("cycle", -1)) for cycle in cycles] == list(range(len(cycles))),
             f"{resref}: cycles runtime non contigus")
@@ -552,8 +579,9 @@ def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> d
         "run_manifest_sha256": None,
         "frame_manifest_sha256": None,
         "upscale_manifest_sha256": None,
-        "aligned_size_x4": first_physical,
-        "geometry_mode": "runtime-uniform-base",
+        "aligned_size_x4": aligned_x4,
+        "geometry_mode": ("runtime-uniform-base" if aligned_x4 == first_physical
+                          else "runtime-centre-aligned-base"),
         "frames": validated_frames,
         "cycles": lookups,
     }
@@ -561,9 +589,10 @@ def load_runtime_uniform_context(base_pack: Path, resource: dict[str, Any]) -> d
 
 def load_input_context(source_run: Path | None, base_pack: Path,
                        resource: dict[str, Any], resref: str) -> dict[str, Any]:
-    if source_run is not None:
-        return load_source_context(source_run, resref)
-    return load_runtime_uniform_context(base_pack, resource)
+    context = (load_source_context(source_run, resref) if source_run is not None
+               else load_runtime_uniform_context(base_pack, resource))
+    context.update(resource_identity(resource))
+    return context
 
 
 def rgba_from_raw(path: Path, physical_size: list[int]) -> Image.Image:
@@ -635,13 +664,17 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
     require(transparent_rgb_mode in TRANSPARENT_RGB_MODES,
             f"mode RGB transparent inconnu : {transparent_rgb_mode}")
     base_manifest, resources, _sources = load_base_pack(base_pack)
-    by_resref = {normalise_resref(str(resource["resref"])): resource for resource in resources}
     targets = []
+    target_resources = [resource for resource in resources
+                        if normalise_resref(str(resource["resref"])) in selected]
+    found_resrefs = {normalise_resref(str(resource["resref"])) for resource in target_resources}
     for resref in selected:
-        require(resref in by_resref, f"{resref}: absent du pack de base")
-        context = load_input_context(source_run, base_pack, by_resref[resref], resref)
-        validate_target_compatibility(base_pack, by_resref[resref], context)
-        base_frame_count = int(by_resref[resref]["frame_count"])
+        require(resref in found_resrefs, f"{resref}: absent du pack de base")
+    for resource in sorted(target_resources, key=resource_sort_key):
+        resref = normalise_resref(str(resource["resref"]))
+        context = load_input_context(source_run, base_pack, resource, resref)
+        validate_target_compatibility(base_pack, resource, context)
+        base_frame_count = int(resource["frame_count"])
         next_frame = base_frame_count
         cycle_plans = []
         added_bytes = 0
@@ -704,6 +737,9 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                 })
         targets.append({
             "resref": resref,
+            "variant_index": context["variant_index"],
+            "position": context["position"],
+            "resource_key": resource_label(resource_sort_key(resource)),
             "geometry_mode": context["geometry_mode"],
             "input_mode": context["input_mode"],
             "aligned_size_x4": context["aligned_size_x4"],
@@ -840,8 +876,12 @@ def save_input_rgb(base_pack: Path, context: dict[str, Any], frame_index: int,
             rgb, replaced = input_rgb(aligned, transparent_rgb_mode)
     else:
         raw = base_pack / str(frame["runtime_asset"])
-        rgb, replaced = input_rgb(rgba_from_raw(raw, frame["physical_size_x4"]),
-                                  transparent_rgb_mode)
+        source = rgba_from_raw(raw, frame["physical_size_x4"])
+        if context["geometry_mode"] == "runtime-centre-aligned-base":
+            aligned = Image.new("RGBA", tuple(context["aligned_size_x4"]), (0, 0, 0, 0))
+            aligned.alpha_composite(source, tuple(frame["crop_box_x4"][:2]))
+            source = aligned
+        rgb, replaced = input_rgb(source, transparent_rgb_mode)
     rgb.save(destination)
     return replaced
 
@@ -981,7 +1021,7 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
         alpha = rgba_from_raw(base_raw, source["physical_size_x4"]).getchannel("A")
         rgba = rgb.convert("RGBA")
         rgba.putalpha(alpha)
-        name = asset_name(context["resref"], output_index)
+        name = asset_name(context["resref"], output_index, int(context["variant_index"]))
         destination = runtime_dir / name
         destination.write_bytes(rgba.tobytes())
         intermediates.append({
@@ -1063,16 +1103,18 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
 
 def write_v2_pack(pack_root: Path, base_pack: Path, base_manifest: dict[str, Any],
                   resources: list[dict[str, Any]], base_sources: dict[str, Path],
-                  cycle_reports: dict[tuple[str, int], tuple[Path, dict[str, Any]]],
-                  targets: list[str], authoring_for_area_split: bool = False) -> dict[str, Any]:
+                  cycle_reports: dict[tuple[str, int, int], tuple[Path, dict[str, Any]]],
+                  targets: list[dict[str, Any]], authoring_for_area_split: bool = False) -> dict[str, Any]:
     output_resources = copy.deepcopy(resources)
-    by_resref = {normalise_resref(str(item["resref"])): item for item in output_resources}
+    by_key = {resource_sort_key(item): item for item in output_resources}
+    target_keys = sorted({resource_sort_key(item) for item in targets})
     sources = dict(base_sources)
     new_assets = []
-    for resref in targets:
-        resource = by_resref[resref]
+    for key in target_keys:
+        resref, variant_index = key
+        resource = by_key[key]
         for cycle in resource["cycles"]:
-            cycle_root, report = cycle_reports[(resref, int(cycle["cycle"]))]
+            cycle_root, report = cycle_reports[(resref, variant_index, int(cycle["cycle"]))]
             cycle["timeline_frame_indices"] = [int(value) for value in report["timeline_frame_indices"]]
             for intermediate in report["intermediate_frames"]:
                 index = int(intermediate["frame"])
@@ -1103,7 +1145,7 @@ def write_v2_pack(pack_root: Path, base_pack: Path, base_manifest: dict[str, Any
         resource["native_fps"] = rate_record(NATIVE_FPS)
         resource["target_fps"] = rate_record(TARGET_FPS)
 
-    ordered = sorted(output_resources, key=lambda item: str(item["resref"]))
+    ordered = sorted(output_resources, key=resource_sort_key)
     registry = registry_v2_from_resources(ordered)
     pack_root.mkdir(parents=True)
     registry_path = pack_root / REGISTRY_NAME
@@ -1136,7 +1178,8 @@ def write_v2_pack(pack_root: Path, base_pack: Path, base_manifest: dict[str, Any
         "registry_bytes": registry_path.stat().st_size,
         "resource_count": len(ordered),
         "frame_count": sum(int(item["frame_count"]) for item in ordered),
-        "timed_resources": targets,
+        "timed_resources": sorted({resref for resref, _variant in target_keys}),
+        "timed_resource_variants": [resource_identity(by_key[key]) for key in target_keys],
         "runtime_budget_enforced": not authoring_for_area_split,
         "authoring_pack_for_area_split": authoring_for_area_split,
         "base_pack": base_pack.as_posix(),
@@ -1372,27 +1415,40 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
     require(tvai_ffmpeg.is_file() and model_dir.is_dir() and
             (model_dir / f"{model}.json").is_file(), "installation Topaz Video AI incomplète")
     base_manifest, resources, base_sources = load_base_pack(base_pack)
-    by_resref = {normalise_resref(str(item["resref"])): item for item in resources}
+    selected = sorted({normalise_resref(value) for value in resrefs})
+    target_resources = [resource for resource in resources
+                        if normalise_resref(str(resource["resref"])) in selected]
+    found_resrefs = {normalise_resref(str(resource["resref"])) for resource in target_resources}
+    require(found_resrefs == set(selected), "une ressource demandée est absente du pack de base")
+    by_key = {resource_sort_key(item): item for item in resources}
     contexts = {
-        resref: load_input_context(source_run, base_pack, by_resref[resref], resref)
-        for resref in sorted({normalise_resref(value) for value in resrefs})
+        resource_sort_key(resource): load_input_context(
+            source_run, base_pack, resource, normalise_resref(str(resource["resref"])))
+        for resource in target_resources
     }
-    cycle_reports: dict[tuple[str, int], tuple[Path, dict[str, Any]]] = {}
+    cycle_reports: dict[tuple[str, int, int], tuple[Path, dict[str, Any]]] = {}
     reviews = []
-    plan_by_resref = {item["resref"]: item for item in plan["targets"]}
-    for resref, context in contexts.items():
-        validate_target_compatibility(base_pack, by_resref[resref], context)
-        for cycle_plan in plan_by_resref[resref]["cycles"]:
+    plan_by_key = {
+        (normalise_resref(str(item["resref"])), int(item["variant_index"])): item
+        for item in plan["targets"]
+    }
+    for key, context in contexts.items():
+        resref, variant_index = key
+        resource = by_key[key]
+        validate_target_compatibility(base_pack, resource, context)
+        for cycle_plan in plan_by_key[key]["cycles"]:
             cycle_index = int(cycle_plan["cycle"])
-            cycle_root = partial / "work" / resref / f"cycle_{cycle_index:03d}"
-            report = interpolate_cycle(base_pack, by_resref[resref], context, cycle_plan,
+            cycle_root = partial / "work" / resource_label(key) / f"cycle_{cycle_index:03d}"
+            report = interpolate_cycle(base_pack, resource, context, cycle_plan,
                                        cycle_root, tvai_ffmpeg, model_dir, model, device,
                                        review_ffmpeg, resume, transparent_rgb_mode)
-            cycle_reports[(resref, cycle_index)] = (cycle_root, report)
+            cycle_reports[(resref, variant_index, cycle_index)] = (cycle_root, report)
             for review in report["reviews"]:
                 path = cycle_root / str(review["file"])
                 reviews.append({
                     "resref": resref,
+                    "variant_index": variant_index,
+                    "position": context["position"],
                     "cycle": cycle_index,
                     "kind": review["kind"],
                     "file": path.relative_to(partial).as_posix(),
@@ -1405,7 +1461,7 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
         require(resolved.parent == partial.resolve(), "pack partiel hors run V2")
         shutil.rmtree(resolved)
     pack_manifest = write_v2_pack(pack_root, base_pack.resolve(), base_manifest, resources,
-                                  base_sources, cycle_reports, sorted(contexts),
+                                  base_sources, cycle_reports, target_resources,
                                   authoring_for_area_split)
     manifest = {
         "schema": RUN_SCHEMA,
@@ -1419,7 +1475,9 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
         "base_pack_manifest_sha256": plan["base_pack_manifest_sha256"],
         "native_fps": rate_record(NATIVE_FPS),
         "target_fps": rate_record(TARGET_FPS),
-        "timed_resources": sorted(contexts),
+        "timed_resources": selected,
+        "timed_resource_variants": [resource_identity(resource)
+                                    for resource in sorted(target_resources, key=resource_sort_key)],
         "topaz": {"ffmpeg": tvai_ffmpeg.resolve().as_posix(),
                   "model_dir": model_dir.resolve().as_posix(), "model": model,
                   "device": device, "replace_duplicate_threshold": -0.01,

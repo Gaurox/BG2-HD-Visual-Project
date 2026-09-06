@@ -167,6 +167,13 @@ bool resolve_frame(const std::array<char, 8>& resref, int worldX, int worldY, in
 bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
                             std::uint32_t phase, FrameHandle& out) noexcept;
 
+// A TimedTimeline resource may still fan out into several synchronised CVidCell
+// draws. Resolve the physical frame for the shared timeline phase whose native
+// dimensions match this low-level draw. Ambiguous or unknown dimensions fail closed.
+bool resolve_timeline_subframe(const FrameResolution& resolution, std::uint32_t phase,
+                               int logicalWidth, int logicalHeight,
+                               FrameHandle& out) noexcept;
+
 // A native BAM frame can fan out into several CVidCell draws from synchronised
 // cycles. Select the one physical replacement frame whose native dimensions
 // match this low-level draw. Ambiguous or unknown dimensions fail closed.

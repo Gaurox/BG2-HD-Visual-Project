@@ -1,7 +1,18 @@
 {
-  "$schema": "../../schemas/animation-selection.schema.json",
-  "asset_id": "animations:bam:FALL2",
-  "correction_id": "manual-water-expansion-mask-v1",
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM2300A",
+  "correction_id": "ar2300-am2300a-occurrence-occlusion-v14",
+  "decision": "AR2300 : animation x4 TimedTimeline 30 fps validée ingame, rendu, cadence, géométrie, alpha et occlusion acceptés.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
+    "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
   "lineage": {
     "source_packs": [
       {
@@ -14,22 +25,10 @@
     ],
     "source_runs": []
   },
-  "qa_decision": {
-    "decision_date": "2026-09-06",
-    "path": "animations/index/qa-decisions/FALL2/2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906.json",
-    "sha256": "CB3E87731D65A7413C9FDC99A293742CF2C61894A085FD613AE833B5FBEB7070",
-    "status": "accepted"
-  },
-  "resref": "FALL2",
+  "recorded_at_utc": "2026-09-06T09:36:38Z",
+  "resref": "AM2300A",
   "result_kind": "x4",
   "schema_version": 1,
-  "selected_run": {
-    "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
-    "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
-    "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
-    "schema": "bg2-upscale-area-animation-30fps-run-v2",
-    "status": "completed"
-  },
   "source_pack": {
     "areas": [
       {
@@ -38,7 +37,7 @@
         "manifest_sha256": "39508C2926E521C4D4E11998C9970471D5CBC6C5C41EA7963880493EACC73086",
         "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300",
         "registry_sha256": "826EDC85F0898B48B33E2F0DD9900EEF9DBD04002D66BCD9480951A371562651",
-        "resource_entries": 1
+        "resource_entries": 3
       }
     ],
     "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
@@ -47,8 +46,8 @@
     "schema": "bg2-upscale-area-animation-pack-index-v1",
     "status": "completed"
   },
+  "status": "accepted",
   "tested_areas": [
     "AR2300"
-  ],
-  "updated_at_utc": "2026-09-06T09:36:43Z"
+  ]
 }

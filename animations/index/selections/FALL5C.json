@@ -3,60 +3,52 @@
   "asset_id": "animations:bam:FALL5C",
   "correction_id": "safe-spline8-6-v2",
   "lineage": {
-    "source_packs": [],
-    "source_runs": [
+    "source_packs": [
       {
-        "manifest_path": "animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALL5C/02_upscale_x4/manifest.json",
-        "manifest_sha256": "7659376C2D935863DDF8293E4581DFF91114D71F66E01F72004E96C95BCC2C54",
-        "path": "animations/batches/ar2300-waterfalls-spatial-seedvr2-7b-lab-x4-20260906/resources/FALL5C/02_upscale_x4",
-        "schema": "bg2-upscale-animation-frames-v1",
-        "status": "completed"
-      },
-      {
-        "manifest_path": "animations/ressources/FALL5C/runs/fall5c-spatial-seedvr2-7b-lab-x4-safe-spline8-6-v2-20260906-014700/manifest.json",
-        "manifest_sha256": "07867791B17881500ABDA9A0DF15289018A6D38256D00D496C0EE0ECFA487EE3",
-        "path": "animations/ressources/FALL5C/runs/fall5c-spatial-seedvr2-7b-lab-x4-safe-spline8-6-v2-20260906-014700",
-        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300/manifest.json",
+        "manifest_sha256": "D7E95C4F6D357C61280282034037805AD87C99C33C21BB812818CAFC58BE9F7A",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
         "status": "completed"
       }
-    ]
+    ],
+    "source_runs": []
   },
   "qa_decision": {
     "decision_date": "2026-09-06",
-    "path": "animations/index/qa-decisions/FALL5C/2026-09-06-accepted-fall5c-ar2300-ingame-qa-finalization-v1-20260906-032000.json",
-    "sha256": "01A98F638A21028489387ADCE2D7EF3266FB8225C2EE18395651820AF183C51A",
+    "path": "animations/index/qa-decisions/FALL5C/2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906.json",
+    "sha256": "B5F09DC7A210BF125B97C5E92670004B6076CB867DC27982ED4EFDD524350F6E",
     "status": "accepted"
   },
-  "recipe_id": "safe-spline8-6-v2",
   "resref": "FALL5C",
   "result_kind": "x4",
   "schema_version": 1,
   "selected_run": {
-    "manifest_path": "animations/ressources/FALL5C/runs/fall5c-ar2300-ingame-qa-finalization-v1-20260906-032000/manifest.json",
-    "manifest_sha256": "4B50D7E04641DF0A8BECE8B8FBF58F079CB0EDEB63E1E20523689F24D2741291",
-    "path": "animations/ressources/FALL5C/runs/fall5c-ar2300-ingame-qa-finalization-v1-20260906-032000",
-    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
+    "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
     "status": "completed"
   },
   "source_pack": {
     "areas": [
       {
         "area": "AR2300",
-        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300/manifest.json",
-        "manifest_sha256": "7A4C75216ED800B591E639A0F1A1EDDF18725634A7B9043CD7060367BF9F4B94",
-        "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/AR2300",
-        "registry_sha256": "7688270EA10BCAB3BF89C01703E1D8FF3C4CFF4FD2FF8CA6D7F8874C59ACE84D",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300/manifest.json",
+        "manifest_sha256": "39508C2926E521C4D4E11998C9970471D5CBC6C5C41EA7963880493EACC73086",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300",
+        "registry_sha256": "826EDC85F0898B48B33E2F0DD9900EEF9DBD04002D66BCD9480951A371562651",
         "resource_entries": 1
       }
     ],
-    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906/manifest.json",
-    "manifest_sha256": "6BA4ABC8A279E652C560D775FF86AA63FD308AB6FD9CF9C38834FCF6EFA89D3A",
-    "path": "animations/packs-par-zone/ar2300-waterfalls-safe-spline-v3-fall1b-premultiply-fall2-manual-water-mask-v7-20260906",
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "92530903DF626F56F9EDF5B7B49877B4D45D91396856F8F51A885D452A550A09",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906",
     "schema": "bg2-upscale-area-animation-pack-index-v1",
     "status": "completed"
   },
   "tested_areas": [
     "AR2300"
   ],
-  "updated_at_utc": "2026-09-06T01:17:07Z"
+  "updated_at_utc": "2026-09-06T09:36:51Z"
 }

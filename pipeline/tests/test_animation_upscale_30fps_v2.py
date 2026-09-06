@@ -326,12 +326,129 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
             self.assertEqual(resources[0]["frame_count"], 8)
             self.assertEqual(resources[0]["cycles"][0]["timeline_frame_indices"],
                              [0, 2, 3, 4, 1, 5, 6, 7])
-            report = json.loads((output / "work" / "TESTA" / "cycle_000" / "cycle.json").read_text())
+            report = json.loads((output / "work" / "TESTA-v0" / "cycle_000" / "cycle.json").read_text())
             self.assertEqual(report["topaz"]["input_framerate"], "15/2")
             self.assertEqual(len(report["intermediate_frames"]), 6)
             self.assertEqual([item["subphase"] for item in report["intermediate_frames"]],
                              [1, 2, 3, 1, 2, 3])
             self.assertEqual(manifest["timed_resources"], ["TESTA"])
+
+    def test_temporises_every_v3_variant_of_one_resref(self) -> None:
+        """A resref selection must retain every position-bound resource variant.
+
+        AM2300A-style occurrences share a resref but carry different baked alpha
+        occlusion.  Selecting that resref must interpolate each variant rather
+        than silently retaining only the final dictionary entry.
+        """
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _source_run, base_pack = self.make_fixture(root)
+            _manifest, resources, _sources = pipeline.load_base_pack(base_pack)
+            base = resources[0]
+            variant = copy.deepcopy(base)
+            variant["variant_index"] = 1
+            variant["position"] = [123, 456]
+            variant_assets = []
+            for frame in variant["frames"]:
+                index = int(frame["frame"])
+                name = pipeline.asset_name("TESTA", index, 1)
+                destination = base_pack / name
+                shutil.copyfile(base_pack / str(frame["asset"]), destination)
+                frame["asset"] = name
+                frame["sha256"] = sha(destination)
+                frame["bytes"] = destination.stat().st_size
+                variant_assets.append({
+                    "name": name, "sha256": frame["sha256"], "bytes": frame["bytes"],
+                })
+            variant["assets"] = variant_assets
+            v3_resources = [base, variant]
+            registry = pipeline.registry_v2_from_resources(v3_resources)
+            registry_path = base_pack / pipeline.REGISTRY_NAME
+            registry_path.write_bytes(registry)
+            (base_pack / "manifest.json").write_text(json.dumps({
+                "schema": pipeline.PACK_SCHEMA,
+                "status": "completed",
+                "scale": 4,
+                "registry_version": pipeline.REGISTRY_VERSION,
+                "runtime_contract": {"feature": "TimedTimeline", "clock": "QPC-pause-aware",
+                                     "registry_version": pipeline.REGISTRY_VERSION},
+                "registry": pipeline.REGISTRY_NAME,
+                "registry_sha256": sha(registry_path),
+                "registry_bytes": registry_path.stat().st_size,
+                "resource_count": 2,
+                "frame_count": 4,
+                "runtime_budget_enforced": True,
+                "resources": v3_resources,
+            }), encoding="utf-8")
+
+            plan = pipeline.build_plan(None, base_pack, ["TESTA"])
+            self.assertEqual([(item["resref"], item["variant_index"])
+                              for item in plan["targets"]], [("TESTA", 0), ("TESTA", 1)])
+
+            fake_topaz = root / "fake-topaz.exe"
+            fake_topaz.write_bytes(b"test")
+            model_dir = root / "models"
+            model_dir.mkdir()
+            (model_dir / "apo-8.json").write_text("{}", encoding="utf-8")
+            output = root / "variant-temporal-run"
+            with mock.patch.object(pipeline, "run_checked", side_effect=self.fake_external_command):
+                manifest = pipeline.build_run(
+                    None, base_pack, output, ["TESTA"], plan["plan_sha256"],
+                    fake_topaz, model_dir, "apo-8", "-2", "ffmpeg", False,
+                )
+
+            _pack_manifest, output_resources = pipeline.validate_v2_pack(output / "03_runtime_pack")
+            self.assertEqual([(item["resref"], item.get("variant_index", 0), item["frame_count"])
+                              for item in output_resources],
+                             [("TESTA", 0, 4), ("TESTA", 1, 4)])
+            self.assertEqual(manifest["timed_resources"], ["TESTA"])
+            self.assertEqual(manifest["timed_resource_variants"], [
+                {"resref": "TESTA", "variant_index": 0, "position": None},
+                {"resref": "TESTA", "variant_index": 1, "position": [123, 456]},
+            ])
+            self.assertTrue((output / "03_runtime_pack" / "AAX4-TESTA-frame002.rgba").is_file())
+            self.assertTrue((output / "03_runtime_pack" / "AAX4-TESTA-v1-frame002.rgba").is_file())
+
+    def test_runtime_base_realigns_variable_frame_geometry(self) -> None:
+        """Final runtime anchors with varied crops get one centre-aligned canvas."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            frames = []
+            assets = []
+            for index, (logical, centre, colour) in enumerate((
+                ([2, 1], [1, 2], (10, 20, 30, 255)),
+                ([3, 2], [4, 3], (40, 50, 60, 255)),
+            )):
+                name = pipeline.asset_name("TESTA", index)
+                path = root / name
+                physical = [logical[0] * 4, logical[1] * 4]
+                path.write_bytes(bytes(colour) * (physical[0] * physical[1]))
+                frame = {
+                    "frame": index, "logical_size_x1": logical, "physical_size_x4": physical,
+                    "centre_x1": centre, "asset": name, "sha256": sha(path),
+                    "bytes": path.stat().st_size,
+                }
+                frames.append(frame)
+                assets.append({"name": name, "sha256": frame["sha256"], "bytes": frame["bytes"]})
+            resource = {
+                "resref": "TESTA", "frame_count": 2, "cycle_count": 1,
+                "playback_mode": "Native",
+                "native_fps": {"numerator": 0, "denominator": 0},
+                "target_fps": {"numerator": 0, "denominator": 0},
+                "frames": frames,
+                "cycles": [{"cycle": 0, "native_frame_indices": [0, 1],
+                            "timeline_frame_indices": []}],
+                "assets": assets,
+            }
+            context = pipeline.load_runtime_uniform_context(root, resource)
+            self.assertEqual(context["geometry_mode"], "runtime-centre-aligned-base")
+            self.assertEqual(context["aligned_size_x4"], [20, 8])
+            self.assertEqual(context["frames"][0]["crop_box_x4"], [12, 4, 20, 8])
+            self.assertEqual(context["frames"][1]["crop_box_x4"], [0, 0, 12, 8])
+            output = root / "aligned.png"
+            pipeline.save_input_rgb(root, context, 0, output, "preserve-hidden-rgb")
+            with Image.open(output) as image:
+                self.assertEqual(image.size, (20, 8))
 
     def test_manual_mask_replaces_anchors_and_restores(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

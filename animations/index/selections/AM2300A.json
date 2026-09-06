@@ -3,60 +3,52 @@
   "asset_id": "animations:bam:AM2300A",
   "correction_id": "ar2300-am2300a-occurrence-occlusion-v14",
   "lineage": {
-    "source_packs": [],
-    "source_runs": [
+    "source_packs": [
       {
-        "manifest_path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-20260906/resources/AM2300A/02_upscale_x4/manifest.json",
-        "manifest_sha256": "133D0FF52F93DCB374887FC454682633CE14360EE06EB1B5FC786A3F1C207BF6",
-        "path": "animations/ressources/AM2300A/runs/am2300a-cascade-seedvr2-7b-lab-x4-20260906/resources/AM2300A/02_upscale_x4",
-        "schema": "bg2-upscale-animation-frames-v1",
-        "status": "completed"
-      },
-      {
-        "manifest_path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-native-angle-contact-wide-x3939-y1819-v6-20260906/manifest.json",
-        "manifest_sha256": "1DD4FA66BAFE3F197C4A3175CFABB45D1611A6A24A3F6C01C789F48B1B5D3658",
-        "path": "animations/ressources/AM2300A/runs/am2300a-cascade-x4-fog-native-angle-contact-wide-x3939-y1819-v6-20260906",
-        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300/manifest.json",
+        "manifest_sha256": "D7E95C4F6D357C61280282034037805AD87C99C33C21BB812818CAFC58BE9F7A",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
         "status": "completed"
       }
-    ]
+    ],
+    "source_runs": []
   },
   "qa_decision": {
     "decision_date": "2026-09-06",
-    "path": "animations/index/qa-decisions/AM2300A/2026-09-06-accepted-am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241.json",
-    "sha256": "61A28035EED380E5AAF01F09A73536980B01F6F639D32E4D5B076CF84A222ACE",
+    "path": "animations/index/qa-decisions/AM2300A/2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906.json",
+    "sha256": "C7F76C8C8EAA89B818B1DFE525861F885315E7D2D7353EB463CAF830313BED33",
     "status": "accepted"
   },
-  "recipe_id": "ar2300-am2300a-x4-occlusion-v14",
   "resref": "AM2300A",
   "result_kind": "x4",
   "schema_version": 1,
   "selected_run": {
-    "manifest_path": "animations/ressources/AM2300A/runs/am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241/manifest.json",
-    "manifest_sha256": "3D701BECFFDD318E147D739927AE15FE848DCD17C5D5B51AB4C61F006D6C16C6",
-    "path": "animations/ressources/AM2300A/runs/am2300a-ar2300-ingame-qa-finalization-v1-20260906-042241",
-    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
+    "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
     "status": "completed"
   },
   "source_pack": {
     "areas": [
       {
         "area": "AR2300",
-        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/AR2300/manifest.json",
-        "manifest_sha256": "0ED449F2DA791297EB0721864D7004C92FA4828077390DCF98B5773A0B906C5E",
-        "path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/AR2300",
-        "registry_sha256": "4C7552A6078A5DDFF54CBC64926EBC472FCEABE8F7CB4A26980158C49E577570",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300/manifest.json",
+        "manifest_sha256": "39508C2926E521C4D4E11998C9970471D5CBC6C5C41EA7963880493EACC73086",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300",
+        "registry_sha256": "826EDC85F0898B48B33E2F0DD9900EEF9DBD04002D66BCD9480951A371562651",
         "resource_entries": 3
       }
     ],
-    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906/manifest.json",
-    "manifest_sha256": "61D39F4608E4315FA71BA9BC4A1891A2351BD78E04F91518012597EF8CED6BF7",
-    "path": "animations/packs-par-zone/ar2300-waterfalls-v14-am2300a-middle-native-angle-wide-contact-20260906",
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "92530903DF626F56F9EDF5B7B49877B4D45D91396856F8F51A885D452A550A09",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906",
     "schema": "bg2-upscale-area-animation-pack-index-v1",
     "status": "completed"
   },
   "tested_areas": [
     "AR2300"
   ],
-  "updated_at_utc": "2026-09-06T02:25:55Z"
+  "updated_at_utc": "2026-09-06T09:36:38Z"
 }

@@ -3353,6 +3353,64 @@ void test_area_animation_registry_formats() {
                   compositeResolution, 0, 1, 9, 1, compositeSubframe),
               "An unknown low-level dimension must fail closed to the native BAM draw");
   iee::area_animation_x4::release();
+
+  // TimedTimeline must preserve the same multi-cycle dispatch as native playback. Every
+  // low-level draw selects its sibling cycle at the phase chosen once by the high-level clock.
+  for (std::size_t index = 0; index < compositeDimensions.size(); ++index) {
+    const auto bytes = static_cast<std::size_t>(compositeDimensions[index][0]) *
+                       compositeDimensions[index][1] * 4u * 4u * 4u;
+    write_file(root / (std::string{"AAX4-TESTA-frame00"} + std::to_string(index) + ".rgba"),
+               std::vector<std::byte>(bytes, std::byte{0x42}));
+    write_file(root / (std::string{"AAX4-TESTA-frame00"} +
+                       std::to_string(index + compositeDimensions.size()) + ".rgba"),
+               std::vector<std::byte>(bytes, std::byte{0x24}));
+  }
+  auto timedComposite = make_header(2);
+  append_raw(timedComposite, target.data(), target.size());
+  for (const auto value : std::array<std::uint32_t, 2>{{8, 4}}) append(timedComposite, value);
+  for (const auto value : std::array<std::uint32_t, 5>{{1, 15, 1, 30, 1}}) {
+    append(timedComposite, value);
+  }
+  for (const auto& dimensions : compositeDimensions) {
+    append(timedComposite, dimensions[0]);
+    append(timedComposite, dimensions[1]);
+  }
+  for (const auto& dimensions : compositeDimensions) {
+    append(timedComposite, dimensions[0]);
+    append(timedComposite, dimensions[1]);
+  }
+  for (std::uint32_t cycle = 0; cycle < compositeDimensions.size(); ++cycle) {
+    for (const auto value :
+         std::array<std::uint32_t, 5>{{1, cycle, 2, cycle, cycle + 4}}) {
+      append(timedComposite, value);
+    }
+  }
+  write_file(root / "AreaAnimations-X4.registry", timedComposite);
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A timed multi-cycle registry should prepare for subframe dispatch");
+  iee::area_animation_x4::FrameResolution timedCompositeResolution{};
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0,
+                  timedCompositeResolution) &&
+                  timedCompositeResolution.timeline.enabled,
+              "The timed root cycle should expose its shared timeline");
+  expect_true(iee::area_animation_x4::resolve_timeline_subframe(
+                  timedCompositeResolution, 1, 4, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 7,
+              "A timed sibling cycle should resolve at the shared interpolated phase");
+  expect_true(iee::area_animation_x4::resolve_timeline_subframe(
+                  timedCompositeResolution, 0, 3, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 2,
+              "A timed sibling cycle should resolve at a native anchor phase");
+  expect_true(iee::area_animation_x4::resolve_native_subframe(
+                  timedCompositeResolution, 0, 0, 4, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 3,
+              "A timed resource should retain exact multi-cycle native fallback dispatch");
+  expect_true(!iee::area_animation_x4::resolve_timeline_subframe(
+                  timedCompositeResolution, 1, 9, 1, compositeSubframe),
+              "An unknown timed low-level dimension must fail closed to the native draw");
+  iee::area_animation_x4::release();
   write_file(root / "AAX4-TESTA-frame000.rgba", rgba);
   write_file(root / "AAX4-TESTA-frame001.rgba", rgba);
 

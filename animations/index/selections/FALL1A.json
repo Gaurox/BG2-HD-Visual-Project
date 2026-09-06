@@ -3,60 +3,52 @@
   "asset_id": "animations:bam:FALL1A",
   "correction_id": "reviewed-static-top-mask-right-tip",
   "lineage": {
-    "source_packs": [],
-    "source_runs": [
+    "source_packs": [
       {
-        "manifest_path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-20260905-193635-555955/resources/FALL1A/02_upscale_x4/manifest.json",
-        "manifest_sha256": "96450693F3055713FBF6B0228E20A7379CAF6E00B6B943B548292693BE5610F4",
-        "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-20260905-193635-555955/resources/FALL1A/02_upscale_x4",
-        "schema": "bg2-upscale-animation-frames-v1",
-        "status": "completed"
-      },
-      {
-        "manifest_path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-topmask-reviewed-v1-20260906-000821/manifest.json",
-        "manifest_sha256": "4A707F914B766A5C4CD5A42C96611091753E95BB1B2B313B80F75E50B2FC8D9C",
-        "path": "animations/ressources/FALL1A/runs/fall1a-spatial-seedvr2-7b-lab-x4-topmask-reviewed-v1-20260906-000821",
-        "schema": "bg2-upscale-animation-alpha-feather-test-v1",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300/manifest.json",
+        "manifest_sha256": "D7E95C4F6D357C61280282034037805AD87C99C33C21BB812818CAFC58BE9F7A",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-v16-fall6-bound-painted-statue-occlusion-20260906/AR2300",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
         "status": "completed"
       }
-    ]
+    ],
+    "source_runs": []
   },
   "qa_decision": {
     "decision_date": "2026-09-06",
-    "path": "animations/index/qa-decisions/FALL1A/2026-09-06-accepted-fall1a-topmask-ar2300.json",
-    "sha256": "A6348B3BC4A6F4692D30708E54132A72D1A3D90DE88B0843BB0C903891C80F57",
+    "path": "animations/index/qa-decisions/FALL1A/2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906.json",
+    "sha256": "512C8C00E98CCD12A24FB0F74D4A1341165E338AACE134EC356C307CA1125B61",
     "status": "accepted"
   },
-  "recipe_id": "topmask-reviewed-v1",
   "resref": "FALL1A",
   "result_kind": "x4",
   "schema_version": 1,
   "selected_run": {
-    "manifest_path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-pack-finalization-20260906-001900/manifest.json",
-    "manifest_sha256": "703214FDB1849F6788248DD9EA174E13AEE195BA13EE24F7D7B1D8FA64BBD790",
-    "path": "animations/ressources/FALL1A/runs/fall1a-topmask-reviewed-v1-ar2300-pack-finalization-20260906-001900",
-    "schema": "bg2-upscale-animation-finalization-wrapper-v1",
+    "manifest_path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "493E383A6C4222166C0C5B7151F2BA7FDE011F83FEB14C185A141C7E83B2A30A",
+    "path": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
     "status": "completed"
   },
   "source_pack": {
     "areas": [
       {
         "area": "AR2300",
-        "manifest_path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/AR2300/manifest.json",
-        "manifest_sha256": "8358D23D2CBC7DDE5F0D7395BEADB3FC03E64C99D702AA0EDB67E3364145FC04",
-        "path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/AR2300",
-        "registry_sha256": "86BD5509BB66EA46BA750AB76439A26A18F67890AF44B95A11FE1928ECFF0390",
+        "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300/manifest.json",
+        "manifest_sha256": "39508C2926E521C4D4E11998C9970471D5CBC6C5C41EA7963880493EACC73086",
+        "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/AR2300",
+        "registry_sha256": "826EDC85F0898B48B33E2F0DD9900EEF9DBD04002D66BCD9480951A371562651",
         "resource_entries": 1
       }
     ],
-    "manifest_path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300/manifest.json",
-    "manifest_sha256": "8160C4130067993D321AF2EC91B7DCFD354D56BD9DB1451D09CF4B647C711606",
-    "path": "animations/packs-par-zone/ar2300-fall1a-topmask-reviewed-v1-fall2-ingame-test-20260906/AR2300",
+    "manifest_path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906/manifest.json",
+    "manifest_sha256": "92530903DF626F56F9EDF5B7B49877B4D45D91396856F8F51A885D452A550A09",
+    "path": "animations/packs-par-zone/ar2300-waterfalls-x4-30fps-test-20260906",
     "schema": "bg2-upscale-area-animation-pack-index-v1",
     "status": "completed"
   },
   "tested_areas": [
     "AR2300"
   ],
-  "updated_at_utc": "2026-09-05T22:16:23Z"
+  "updated_at_utc": "2026-09-06T09:36:39Z"
 }
