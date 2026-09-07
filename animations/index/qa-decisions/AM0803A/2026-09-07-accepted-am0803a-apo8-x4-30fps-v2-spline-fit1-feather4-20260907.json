@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0803A",
+  "decision": "QA ingame explicite AR0803 + AR0809 : flaque de sang x4 SeedVR2 7B, timeline 30fps apo-8, contour spline fit1 + feather4. Valide.",
+  "decision_date": "2026-09-07",
+  "decision_id": "2026-09-07-accepted-am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+    "manifest_sha256": "86ED707827E5D1345CD0EDAD272AC55826E89F1ECD5DCFB7CE74466ED57AA6C1",
+    "path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "35FE2238712D9BD510CA6CBEFBC59ABD6490DA606007AD5881065BCB70BDB5A9",
+        "path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "CADA707F8462C2A5EEE359F7D90BB35934777434C9DCD7B07688C97E0FCF28EB",
+        "path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907/manifest.json",
+        "manifest_sha256": "084927E0740774E83B01D22809245B68B584176D5E7AC7457B377A8158B0AAC2",
+        "path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907/manifest.json",
+        "manifest_sha256": "A072F70DAB62113B1AD4527A87379EDCF593243CEBB78786DD36F34B54BB433F",
+        "path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "spline-fit1-multicontour-per-frame-feather4",
+  "recorded_at_utc": "2026-09-07T20:10:37Z",
+  "resref": "AM0803A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0803",
+        "manifest_path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907/AR0803/manifest.json",
+        "manifest_sha256": "960E110A4CA76F86615B1B48BD538A657C196213379653EB383F40F44A6CE7CC",
+        "path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907/AR0803",
+        "registry_sha256": "0F5BE5761E0E3224B53D33DFC50D074F7BAD8A38A0DB86BE6B361B3030410D0E",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0809",
+        "manifest_path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907/AR0809/manifest.json",
+        "manifest_sha256": "FD2311A973909DD3F09A4AE144A1AF0BFF7AFE12B106C95B523B072D64317807",
+        "path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907/AR0809",
+        "registry_sha256": "0F5BE5761E0E3224B53D33DFC50D074F7BAD8A38A0DB86BE6B361B3030410D0E",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907/manifest.json",
+    "manifest_sha256": "A13E2FCC69B399C7F43214289A53E5FDDD193F2E2A562C326779FA77E9AB54E5",
+    "path": "animations/packs-par-zone/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0803",
+    "AR0809"
+  ]
+}

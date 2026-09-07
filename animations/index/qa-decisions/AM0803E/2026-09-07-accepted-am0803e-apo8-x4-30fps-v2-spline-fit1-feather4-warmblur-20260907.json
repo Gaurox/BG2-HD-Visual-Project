@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0803E",
+  "decision": "QA ingame explicite AR0803 + AR0809 : flaque de sang x4 SeedVR2 7B, timeline 30fps apo-8, contour spline fit1 + feather4, plus flou gaussien chaud cible r3.5 sur la coulure (effet billes supprime). Valide.",
+  "decision_date": "2026-09-07",
+  "decision_id": "2026-09-07-accepted-am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907/manifest.json",
+    "manifest_sha256": "2A40EEF904A59AD48941EA88640AE85D918235F76A64B5B8905309F45BF73C8F",
+    "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "2FBC78368781EE31049D728384B6591C7C69EAAC0E15FE2C450AB8DFED08B7E1",
+        "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C7CC56F6B0DFC558679CE039913557E460A4D48DE48F02188E18E191F8A6A716",
+        "path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907/manifest.json",
+        "manifest_sha256": "DCF40A22FFD1319A367F14FA5FBBB4FEC35A6F201A679D0F8D31AE0F98EF7F03",
+        "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907/manifest.json",
+        "manifest_sha256": "F05FF19410221F336D404CD7242BE093FDD73982384B2915AFD6C7E748CCDC08",
+        "path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "spline-fit1-multicontour-per-frame-feather4-warmpatchblur-r3p5",
+  "recorded_at_utc": "2026-09-07T20:10:39Z",
+  "resref": "AM0803E",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0803",
+        "manifest_path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907/AR0803/manifest.json",
+        "manifest_sha256": "0BDB11C298A9C22E7826B65B22F2BA019FF782E2755FD712E0D3922E97DE6663",
+        "path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907/AR0803",
+        "registry_sha256": "7EBA935FF4AB658B39057F52581C3B08577813B2E7B5894E00928BE70666F0C9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0809",
+        "manifest_path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907/AR0809/manifest.json",
+        "manifest_sha256": "22D27C47AA7F73A655EE16FDD68C3A1E4A5161666C93DBC0E03F9BE1106FF7DA",
+        "path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907/AR0809",
+        "registry_sha256": "7EBA935FF4AB658B39057F52581C3B08577813B2E7B5894E00928BE70666F0C9",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907/manifest.json",
+    "manifest_sha256": "FC443B30ECB9F12221DCE91A0A0C532E0D61194DC8B97950E410324411F3F4DF",
+    "path": "animations/packs-par-zone/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-split-20260907",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0803",
+    "AR0809"
+  ]
+}
