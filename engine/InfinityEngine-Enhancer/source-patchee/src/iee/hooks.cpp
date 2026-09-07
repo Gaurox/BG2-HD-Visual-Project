@@ -119,6 +119,78 @@ thread_local int g_areaAnimationSlot = -1;
 thread_local int g_areaAnimationTimelinePhase = -1;
 thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationProjectile = nullptr;
+
+// Bounded, per-process proof for the first SPMAGMIS render path. The normal
+// runtime remains unchanged: these counters only observe exact registry matches
+// and emit at most one line for each meaningful outcome.
+struct EffectAnimationDiagnosticSnapshot {
+  std::uint64_t targetCellReads{};
+  std::uint64_t registryResolved{};
+  std::uint64_t registryFallback{};
+  std::uint64_t timelineResolved{};
+  std::uint64_t x4Bound{};
+  std::uint64_t bindFallback{};
+};
+
+struct EffectAnimationDiagnostics {
+  std::atomic<std::uint64_t> targetCellReads{0};
+  std::atomic<std::uint64_t> registryResolved{0};
+  std::atomic<std::uint64_t> registryFallback{0};
+  std::atomic<std::uint64_t> timelineResolved{0};
+  std::atomic<std::uint64_t> x4Bound{0};
+  std::atomic<std::uint64_t> bindFallback{0};
+  std::atomic<std::uint32_t> reportedStages{0};
+
+  [[nodiscard]] EffectAnimationDiagnosticSnapshot snapshot() const noexcept {
+    return {
+        .targetCellReads = targetCellReads.load(std::memory_order_relaxed),
+        .registryResolved = registryResolved.load(std::memory_order_relaxed),
+        .registryFallback = registryFallback.load(std::memory_order_relaxed),
+        .timelineResolved = timelineResolved.load(std::memory_order_relaxed),
+        .x4Bound = x4Bound.load(std::memory_order_relaxed),
+        .bindFallback = bindFallback.load(std::memory_order_relaxed),
+    };
+  }
+};
+
+constexpr std::string_view kEffectAnimationDiagnosticResref{"SPMAGMIS"};
+constexpr std::uint32_t kEffectDiagnosticRegistryResolved = 1u << 0;
+constexpr std::uint32_t kEffectDiagnosticRegistryFallback = 1u << 1;
+constexpr std::uint32_t kEffectDiagnosticTimelineResolved = 1u << 2;
+constexpr std::uint32_t kEffectDiagnosticX4Bound = 1u << 3;
+constexpr std::uint32_t kEffectDiagnosticBindFallback = 1u << 4;
+EffectAnimationDiagnostics g_effectAnimationDiagnostics;
+
+[[nodiscard]] bool is_effect_animation_diagnostic_target(
+    const std::array<char, 8>& resref) noexcept {
+  return std::memcmp(resref.data(), kEffectAnimationDiagnosticResref.data(), resref.size()) == 0;
+}
+
+void log_effect_animation_diagnostic_once(std::uint32_t stage, std::string_view stageName,
+                                          int sequence, int nativeFrame, int timelinePhase,
+                                          int logicalWidth, int logicalHeight) noexcept {
+  auto reported = g_effectAnimationDiagnostics.reportedStages.load(std::memory_order_relaxed);
+  while ((reported & stage) == 0) {
+    if (g_effectAnimationDiagnostics.reportedStages.compare_exchange_weak(
+            reported, reported | stage, std::memory_order_relaxed, std::memory_order_relaxed)) {
+      try {
+        const auto snapshot = g_effectAnimationDiagnostics.snapshot();
+        LOG_INFO(
+            "Effect animation x4 diagnostic: resref=SPMAGMIS, stage={}, cellReads={}, "
+            "registryResolved={}, registryFallback={}, timelineResolved={}, x4Bound={}, "
+            "bindFallback={}, sequence={}, nativeFrame={}, timelinePhase={}, logical={}x{}; "
+            "x4Bound confirms the 4x backing texture was bound for the native draw geometry",
+            stageName, snapshot.targetCellReads, snapshot.registryResolved,
+            snapshot.registryFallback, snapshot.timelineResolved, snapshot.x4Bound,
+            snapshot.bindFallback, sequence, nativeFrame, timelinePhase, logicalWidth,
+            logicalHeight);
+      } catch (...) {
+        // Diagnostics are never allowed to perturb rendering.
+      }
+      return;
+    }
+  }
+}
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
@@ -772,9 +844,25 @@ bool read_effect_animation_frame(void* projectile, int logicalWidth, int logical
                        currentSequence)) {
     return false;
   }
+  const bool diagnosticTarget = is_effect_animation_diagnostic_target(resref);
+  if (diagnosticTarget) {
+    g_effectAnimationDiagnostics.targetCellReads.fetch_add(1, std::memory_order_relaxed);
+  }
   if (!effect_animation_x4::resolve_frame(resref, currentSequence, currentFrame, logicalWidth,
                                           logicalHeight, resolved.handle)) {
+    if (diagnosticTarget) {
+      g_effectAnimationDiagnostics.registryFallback.fetch_add(1, std::memory_order_relaxed);
+      log_effect_animation_diagnostic_once(
+          kEffectDiagnosticRegistryFallback, "registry-fallback", currentSequence, currentFrame,
+          -1, logicalWidth, logicalHeight);
+    }
     return false;
+  }
+  if (diagnosticTarget) {
+    g_effectAnimationDiagnostics.registryResolved.fetch_add(1, std::memory_order_relaxed);
+    log_effect_animation_diagnostic_once(
+        kEffectDiagnosticRegistryResolved, "registry-resolved", currentSequence, currentFrame,
+        -1, logicalWidth, logicalHeight);
   }
   resolved.resref = resref;
   resolved.sequence = currentSequence;
@@ -904,6 +992,12 @@ void select_effect_timeline_frame(void* projectile, int worldActive, int logical
     }
     resolved.handle = timelineFrame;
     resolved.timelinePhase = static_cast<int>(selection.phase);
+    if (is_effect_animation_diagnostic_target(resolved.resref)) {
+      g_effectAnimationDiagnostics.timelineResolved.fetch_add(1, std::memory_order_relaxed);
+      log_effect_animation_diagnostic_once(
+          kEffectDiagnosticTimelineResolved, "timeline-resolved", resolved.sequence,
+          resolved.slot, resolved.timelinePhase, logicalWidth, logicalHeight);
+    }
     if (!g_effectTimelineActivationLogged) {
       g_effectTimelineActivationLogged = true;
       LOG_INFO(
@@ -2169,7 +2263,20 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     effectAnimationDrawFrame = resolvedEffectAnimationFrame.handle;
     if (effect_animation_x4::bind_frame_texture(effectAnimationDrawFrame,
                                                 g_effectAnimationTextureApi, previousTextureId)) {
+      if (is_effect_animation_diagnostic_target(resolvedEffectAnimationFrame.resref)) {
+        g_effectAnimationDiagnostics.x4Bound.fetch_add(1, std::memory_order_relaxed);
+        log_effect_animation_diagnostic_once(
+            kEffectDiagnosticX4Bound, "x4-bound", resolvedEffectAnimationFrame.sequence,
+            resolvedEffectAnimationFrame.slot, resolvedEffectAnimationFrame.timelinePhase,
+            logicalWidth, logicalHeight);
+      }
       replacement = ReplacementKind::EffectAnimation;
+    } else if (is_effect_animation_diagnostic_target(resolvedEffectAnimationFrame.resref)) {
+      g_effectAnimationDiagnostics.bindFallback.fetch_add(1, std::memory_order_relaxed);
+      log_effect_animation_diagnostic_once(
+          kEffectDiagnosticBindFallback, "bind-fallback", resolvedEffectAnimationFrame.sequence,
+          resolvedEffectAnimationFrame.slot, resolvedEffectAnimationFrame.timelinePhase,
+          logicalWidth, logicalHeight);
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::Registry &&
              g_areaAnimationRenderDepth > 0) {
