@@ -49,6 +49,7 @@ class SpatialPlan:
     poll_seconds: float
     timeout_seconds: float
     upload_folder: str
+    color_correction_method: str
 
     @property
     def frame_root(self) -> Path:
@@ -202,6 +203,7 @@ def recipe_snapshot(plan: SpatialPlan) -> dict[str, Any]:
             "poll_seconds": plan.poll_seconds,
             "timeout_seconds": plan.timeout_seconds,
             "upload_folder": plan.upload_folder,
+            "color_correction_method": plan.color_correction_method,
         },
     }
 
@@ -266,9 +268,12 @@ def build_plan(
     poll_seconds: float,
     timeout_seconds: float,
     upload_folder: str,
+    color_correction_method: str = "lab",
 ) -> SpatialPlan:
     if pad < 0 or poll_seconds <= 0 or timeout_seconds <= 0:
         raise SpatialRunError("pad et délais doivent être strictement valides")
+    if color_correction_method not in {"lab", "wavelet", "adain", "none"}:
+        raise SpatialRunError(f"mode couleur SeedVR invalide: {color_correction_method}")
     try:
         resref, asset, _processing, resource_root = workflow.load_asset(root, raw_resref)
     except workflow.WorkflowError as error:
@@ -296,7 +301,7 @@ def build_plan(
         workflow_path=workflow_path, workflow_relative=workflow_relative,
         recipe_id=recipe_id.strip(), server=server, pad=pad,
         poll_seconds=poll_seconds, timeout_seconds=timeout_seconds,
-        upload_folder=upload_folder,
+        upload_folder=upload_folder, color_correction_method=color_correction_method,
     )
 
 
@@ -352,6 +357,7 @@ def upscale_frames(plan: SpatialPlan, frame_manifest: Mapping[str, Any], resume:
         "--scale", "4", "--workflow", str(plan.workflow_path), "--server", plan.server,
         "--pad", str(plan.pad), "--poll-seconds", str(plan.poll_seconds),
         "--timeout-seconds", str(plan.timeout_seconds), "--upload-folder", plan.upload_folder,
+        "--color-correction-method", plan.color_correction_method,
     ]
     if plan.spatial_root.exists():
         if not resume:
@@ -434,6 +440,7 @@ def plan_payload(plan: SpatialPlan) -> dict[str, Any]:
         "asset_id": f"effects:bam:{plan.resref}", "run_id": plan.run_id,
         "run_directory": workflow.relative_path(plan.root, plan.run_root),
         "pipeline_id": PIPELINE_ID, "recipe_id": plan.recipe_id,
+        "color_correction_method": plan.color_correction_method,
         "source": workflow.relative_path(plan.root, plan.source),
         "workflow": plan.workflow_relative,
         "stages": ["00-frames-x1", "01-spatial-x4"],
@@ -453,6 +460,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--poll-seconds", type=float, default=2.0)
     parser.add_argument("--timeout-seconds", type=float, default=900.0)
     parser.add_argument("--upload-folder", default="BG2_Upscale/effect-runs")
+    parser.add_argument(
+        "--color-correction-method",
+        choices=("lab", "wavelet", "adain", "none"),
+        default="lab",
+    )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--run", action="store_true", help="produit le run; sinon plan seulement")
     return parser
@@ -465,6 +477,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.workspace_root.resolve(), args.resref, args.run_id, args.recipe_id, args.workflow,
             server=args.server, pad=args.pad, poll_seconds=args.poll_seconds,
             timeout_seconds=args.timeout_seconds, upload_folder=args.upload_folder,
+            color_correction_method=args.color_correction_method,
         )
         result = execute(plan, resume=args.resume) if args.run else plan_payload(plan)
     except (SpatialRunError, workflow.WorkflowError) as error:

@@ -79,6 +79,16 @@ class EffectSpatialRunTests(unittest.TestCase):
         self.assertFalse(plan.run_root.exists())
         self.assertFalse(workflow.reservation_path(plan.run_root.parent.parent, plan.run_id).exists())
 
+    def test_plan_records_requested_non_lab_colour_mode(self) -> None:
+        plan = spatial.build_plan(
+            self.root, self.resref, "spatial-none", "seedvr-none", self.workflow_path,
+            server="http://127.0.0.1:8188", pad=32, poll_seconds=2.0,
+            timeout_seconds=900.0, upload_folder="BG2_Upscale/effect-runs",
+            color_correction_method="none",
+        )
+        self.assertEqual(plan.color_correction_method, "none")
+        self.assertEqual(spatial.recipe_snapshot(plan)["parameters"]["color_correction_method"], "none")
+
     def test_reservation_is_created_only_by_the_execution_path(self) -> None:
         plan = self._plan("spatial-reserved")
         spatial.reserve_plan(plan)

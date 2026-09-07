@@ -101,12 +101,15 @@ class AnimationUpscalePipelineTests(unittest.TestCase):
                 "2",
                 "--pad",
                 "1",
+                "--color-correction-method",
+                "none",
             ]
             with mock.patch.object(pipeline, "ComfyClient", FakeComfyClient):
                 pipeline.main(arguments)
 
             manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["status"], "completed")
+            self.assertEqual(manifest["parameters"]["color_correction_method"], "none")
             self.assertEqual(manifest["geometry_mode"], "per-frame")
             self.assertEqual(manifest["frames"][0]["logical_size_x1"], [2, 3])
             self.assertEqual(manifest["frames"][0]["physical_size_xn"], [4, 6])

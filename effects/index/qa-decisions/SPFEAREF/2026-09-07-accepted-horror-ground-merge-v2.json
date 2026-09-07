@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-effect-qa-decision-v1",
+  "schema_version": 1,
+  "asset_id": "effects:bam:SPFEAREF",
+  "resref": "SPFEAREF",
+  "status": "accepted",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-09-07",
+  "recorded_at_utc": "2026-09-07T09:57:08Z",
+  "decision": "Le visage au sol du sort Horreur est validé ingame : SeedVR2 7B x4 sans correction colorimétrique, timeline Apollo 8 à 30 FPS et fondu extérieur préservant les cavités internes.",
+  "selected_run": {
+    "run_id": "spfearef-interpolation-apollo8-rgb-nearest-alpha-none-20260907T093600Z",
+    "descriptor_path": "effects/ressources/SPFEAREF/runs/spfearef-interpolation-apollo8-rgb-nearest-alpha-none-20260907T093600Z/run.json",
+    "descriptor_sha256": "41F534BC54AF4ADB777BC4BD8C47A93A050AD208421B0D2A94B75123C0C50C7C"
+  },
+  "alpha_policy": {
+    "path": "effects/alpha-policies/SPFEAREF-ground-merge-v2-exterior-only.json",
+    "sha256": "E20F32EDAC69441183E2B028D4C91B0A444F085B3A356C0397AC977C1A8907D2",
+    "mode": "runtime-exterior-feather",
+    "inner_radius_x4": 32,
+    "global_opacity": 0.82,
+    "rgb_alpha_mode": "premultiply"
+  },
+  "installed_candidate": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-spfearef-ground-merge-v2-exterior-only-20260907",
+    "manifest_path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-spfearef-ground-merge-v2-exterior-only-20260907/iee-assets/effects/manifest.json",
+    "manifest_sha256": "91AA3F4EF1085AFD157BD7E01491AFD4742789B744F05BA9057CCF6805EF4D91",
+    "registry_sha256": "51613C90873D1C64B555A2AAF2B84CD9B5A85C1E4F84A3B548646A4B5607D4F6"
+  },
+  "installation": {
+    "state": "installed",
+    "receipt_path": "backups/renderer/20260907T095404025514Z-d01b68d4/renderer-install-receipt.json",
+    "receipt_sha256": "8E744184840DC1B9934703DB76B4C5774580A177CA7AF700F23A2995AC8A9A05",
+    "receipt_verification": "receipt, payload, backups and installed state verified"
+  },
+  "runtime_observation": {
+    "method": "explicit user ingame QA of the installed candidate",
+    "effect": "Horror ground face"
+  },
+  "validated_criteria": [
+    "ground face renders cleanly ingame",
+    "outer contour merges softly with the ground",
+    "internal cavities are preserved without newly widened transparency",
+    "30 FPS interpolated timeline active",
+    "x4 texture bound through the installed effect registry"
+  ],
+  "release_mutation": false
+}

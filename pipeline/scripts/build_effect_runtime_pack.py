@@ -12,7 +12,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 from PIL import Image, ImageChops, ImageFilter
+from scipy.ndimage import binary_fill_holes, distance_transform_edt
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -185,6 +187,23 @@ def transform_rgba(
                 ramp = ramp * ramp * (3.0 - 2.0 * ramp)
                 offset = (y * physical_width + x) * 4
                 pixels[offset + 3] = round(pixels[offset + 3] * ramp)
+    if alpha_policy is not None and alpha_policy.get("mode") in {
+        "runtime-inner-feather",
+        "runtime-exterior-feather",
+    }:
+        radius = float(alpha_policy["inner_radius_x4"])
+        opacity = float(alpha_policy["global_opacity"])
+        values = np.frombuffer(pixels, dtype=np.uint8).reshape(
+            target_size_x1[1] * scale, target_size_x1[0] * scale, 4
+        ).copy()
+        source_alpha = values[:, :, 3]
+        silhouette = source_alpha > 0
+        if alpha_policy["mode"] == "runtime-exterior-feather":
+            silhouette = binary_fill_holes(silhouette)
+        distance = distance_transform_edt(silhouette)
+        ramp = np.clip(distance / radius, 0.0, 1.0)
+        values[:, :, 3] = np.rint(source_alpha * opacity * ramp).astype(np.uint8)
+        pixels = bytearray(values.tobytes())
     if alpha_policy is not None and alpha_policy.get("rgb_alpha_mode") == "premultiply":
         for offset in range(0, len(pixels), 4):
             alpha_value = pixels[offset + 3]
@@ -210,8 +229,15 @@ def validate_alpha_policy(alpha_policy: Any, *, label: str) -> dict[str, Any]:
     gaussian_valid = (
         type(gaussian_sigma) in {int, float} and 0.0 <= gaussian_sigma <= 2.0
     )
+    inner_feather_valid = (
+        mode in {"runtime-inner-feather", "runtime-exterior-feather"}
+        and type(alpha_policy.get("inner_radius_x4")) in {int, float}
+        and 0.0 < float(alpha_policy["inner_radius_x4"]) <= 128.0
+        and type(alpha_policy.get("global_opacity")) in {int, float}
+        and 0.0 < float(alpha_policy["global_opacity"]) <= 1.0
+    )
     if (
-        not luminance_valid
+        not (luminance_valid or inner_feather_valid)
         or not erosion_valid
         or not gaussian_valid
         or alpha_policy.get("rgb_alpha_mode") != "premultiply"
@@ -342,8 +368,15 @@ def validate_runtime_geometry(
             and alpha_policy["outer_radius_y_x1"] > 0
             and 0 <= alpha_policy["inner_fraction"] < 1
         )
+        inner_feather_valid = (
+            mode in {"runtime-inner-feather", "runtime-exterior-feather"}
+            and type(alpha_policy.get("inner_radius_x4")) in {int, float}
+            and 0.0 < float(alpha_policy["inner_radius_x4"]) <= 128.0
+            and type(alpha_policy.get("global_opacity")) in {int, float}
+            and 0.0 < float(alpha_policy["global_opacity"]) <= 1.0
+        )
         if (
-            not (key_valid or luminance_valid or radial_valid)
+            not (key_valid or luminance_valid or radial_valid or inner_feather_valid)
             or alpha_policy.get("rgb_alpha_mode") != "premultiply"
         ):
             raise RuntimeError("politique alpha runtime invalide")
@@ -1000,7 +1033,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--alpha-policy",
-        help="versioned emissive alpha policy relative to the workspace",
+        help="versioned alpha policy relative to the workspace",
     )
     parser.add_argument("--run", action="store_true", help="write the runtime pack")
     args = parser.parse_args(argv)

@@ -62,6 +62,12 @@ def parse_args(argv: list[str] | None = None, default_scale: int = 4) -> argpars
     )
     parser.add_argument("--scale", type=int, choices=(2, 4), default=default_scale)
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
+    parser.add_argument(
+        "--color-correction-method",
+        choices=("lab", "wavelet", "adain", "none"),
+        default="lab",
+        help="mode SeedVR2 de correction couleur, appliqué en mémoire au workflow",
+    )
     parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument("--pad", type=int, default=32, help="marge x1 autour du canvas aligné")
     parser.add_argument("--poll-seconds", type=float, default=2.0)
@@ -303,12 +309,23 @@ def main(argv: list[str] | None = None, default_scale: int = 4) -> None:
     load_id = find_single_node(prompt_template, "LoadImage")
     save_id = find_single_node(prompt_template, "SaveImage")
     resize_id = find_single_node(prompt_template, "ResizeImageMaskNode")
+    post_id = find_single_node(prompt_template, "SeedVR2PostProcessing")
     prompt_template[resize_id]["inputs"]["resize_type.multiplier"] = args.scale
+    prompt_template[post_id]["inputs"]["color_correction_method"] = args.color_correction_method
     baseline = workflow_summary(prompt_template)
-    if workflow_hash.lower() == APPROVED_7B_SHA256:
+    if args.color_correction_method == "lab" and workflow_hash.lower() == APPROVED_7B_SHA256:
         validate_approved_7b_settings(baseline)
-    else:
+    elif args.color_correction_method == "lab":
         validate_seedvr_baseline(baseline)
+    else:
+        # A deliberate colour-mode experiment keeps every other approved model
+        # setting unchanged; only the post-processing method differs.
+        lab_baseline = dict(baseline)
+        lab_baseline["color_correction_method"] = "lab"
+        if workflow_hash.lower() == APPROVED_7B_SHA256:
+            validate_approved_7b_settings(lab_baseline)
+        else:
+            validate_seedvr_baseline(lab_baseline)
 
     source_records = []
     for rgb_path in rgb_frames:
@@ -322,6 +339,7 @@ def main(argv: list[str] | None = None, default_scale: int = 4) -> None:
         "scale": args.scale,
         "padding_x1": args.pad,
         "workflow_sha256": workflow_hash,
+        "color_correction_method": args.color_correction_method,
         "frame_manifest_sha256": geometry_hash,
         "sources": source_records,
     }
