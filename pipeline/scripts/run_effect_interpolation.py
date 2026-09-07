@@ -139,6 +139,8 @@ def validate_spatial_manifest(plan: InterpolationPlan) -> dict[str, Any]:
     if [item.get("frame") for item in frames] != list(range(len(frames))):
         raise InterpolationError("ordre des frames spatiales invalide")
     sizes: set[tuple[int, int]] = set()
+    aligned_sizes: set[tuple[int, int]] = set()
+    aligned_frame_count = 0
     for index, frame in enumerate(frames):
         if not isinstance(frame, Mapping):
             raise InterpolationError(f"frame spatiale invalide : {index}")
@@ -168,8 +170,56 @@ def validate_spatial_manifest(plan: InterpolationPlan) -> dict[str, Any]:
         ):
             raise InterpolationError(f"frame spatiale modifiée ou absente : {index}")
         sizes.add((int(physical[0]), int(physical[1])))
-    if len(sizes) != 1:
-        raise InterpolationError("interpolation d'effet : géométrie x4 variable non prise en charge")
+        aligned_size = frame.get("aligned_size_x1")
+        aligned_rgba = frame.get("aligned_rgba_xn")
+        aligned_digest = frame.get("aligned_rgba_xn_sha256")
+        crop = frame.get("runtime_crop_box_xn")
+        if any(value is not None for value in (aligned_size, aligned_rgba, aligned_digest, crop)):
+            if (
+                not isinstance(aligned_size, list)
+                or len(aligned_size) != 2
+                or not all(type(value) is int and value > 0 for value in aligned_size)
+                or not isinstance(aligned_rgba, str)
+                or not isinstance(aligned_digest, str)
+                or not isinstance(crop, list)
+                or len(crop) != 4
+                or not all(type(value) is int for value in crop)
+            ):
+                raise InterpolationError(f"canevas aligné incomplet : {index}")
+            aligned_physical = (int(aligned_size[0]) * 4, int(aligned_size[1]) * 4)
+            left, top, right, bottom = crop
+            if (
+                left < 0 or top < 0 or right > aligned_physical[0] or bottom > aligned_physical[1]
+                or right <= left or bottom <= top
+                or [right - left, bottom - top] != physical
+            ):
+                raise InterpolationError(f"crop runtime aligné invalide : {index}")
+            aligned_path = plan.spatial_manifest.parent / aligned_rgba
+            if (
+                not aligned_path.is_file()
+                or workflow.sha256_file(aligned_path) != aligned_digest.upper()
+            ):
+                raise InterpolationError(f"canevas aligné modifié ou absent : {index}")
+            try:
+                with Image.open(aligned_path) as aligned_image:
+                    if aligned_image.size != aligned_physical:
+                        raise InterpolationError(
+                            f"dimensions du canevas aligné invalides : {index}"
+                        )
+            except (OSError, ValueError) as exc:
+                raise InterpolationError(f"canevas aligné illisible : {index}") from exc
+            aligned_sizes.add(aligned_physical)
+            aligned_frame_count += 1
+    if len(sizes) == 1:
+        manifest["_interpolation_input"] = "native"
+        manifest["_interpolation_physical"] = next(iter(sizes))
+    elif aligned_frame_count == len(frames) and len(aligned_sizes) == 1:
+        manifest["_interpolation_input"] = "aligned"
+        manifest["_interpolation_physical"] = next(iter(aligned_sizes))
+    else:
+        raise InterpolationError(
+            "interpolation d'effet : géométrie x4 variable sans canevas aligné uniforme"
+        )
     source = manifest.get("source")
     if not isinstance(source, Mapping) or not isinstance(source.get("frame_manifest"), str):
         raise InterpolationError("provenance des frames x1 absente")
@@ -349,6 +399,10 @@ def alpha_source_slot(phase: int, source_slots: int, target_slots: int) -> int:
     return ((2 * phase * source_slots + target_slots) // (2 * target_slots)) % source_slots
 
 
+def geometry_source_slot(phase: int, multiplier: int, source_slots: int) -> int:
+    return min(phase // multiplier, source_slots - 1)
+
+
 def execute(plan: InterpolationPlan) -> dict[str, Any]:
     if plan.run_root.exists():
         raise InterpolationError(f"run déjà présent : {plan.run_root}")
@@ -364,8 +418,8 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
         source_cycle = spatial["_source_cycle"]
         multiplier = plan.target_fps // plan.native_fps
         target_count = len(source_cycle) * multiplier
-        physical = tuple(int(value) for value in frames[0]["physical_size_xn"])
-        logical = [int(value) for value in frames[0]["logical_size_x1"]]
+        input_physical = tuple(int(value) for value in spatial["_interpolation_physical"])
+        input_kind = str(spatial["_interpolation_input"])
         input_root = partial / "input-rgb"
         raw_root = partial / "apollo-raw"
         output_root = partial / "frames-rgba"
@@ -373,8 +427,13 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
             directory.mkdir(parents=True)
         for slot, source_index in enumerate(source_cycle):
             source = frames[source_index]
-            raw_path = plan.spatial_manifest.parent / str(source["raw_rgba_xn"])
-            rgba = Image.frombytes("RGBA", physical, raw_path.read_bytes())
+            raw_name = "aligned_rgba_xn" if input_kind == "aligned" else "raw_rgba_xn"
+            raw_path = plan.spatial_manifest.parent / str(source[raw_name])
+            if input_kind == "aligned":
+                with Image.open(raw_path) as aligned_image:
+                    rgba = aligned_image.convert("RGBA")
+            else:
+                rgba = Image.frombytes("RGBA", input_physical, raw_path.read_bytes())
             rgba.convert("RGB").save(input_root / f"in_{slot:03d}.png", format="PNG", compress_level=9)
         shutil.copyfile(input_root / "in_000.png", input_root / f"in_{len(source_cycle):03d}.png")
 
@@ -401,14 +460,27 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
         for phase, rgb_path in enumerate(produced[:target_count]):
             with Image.open(rgb_path) as source_rgb:
                 rgb = source_rgb.convert("RGB")
-            if rgb.size != physical:
+            if rgb.size != input_physical:
                 raise InterpolationError(f"Apollo : dimensions inattendues {rgb.size} à la phase {phase}")
             source_slot = alpha_source_slot(phase, len(source_cycle), target_count)
             source_index = source_cycle[source_slot]
-            alpha_path = plan.spatial_manifest.parent / str(frames[source_index]["alpha_xn"])
-            with Image.open(alpha_path) as alpha_image:
-                alpha = alpha_image.convert("L")
-            if alpha.size != physical:
+            alpha_source = frames[source_index]
+            geometry_slot = geometry_source_slot(phase, multiplier, len(source_cycle))
+            geometry_index = source_cycle[geometry_slot]
+            geometry_source = frames[geometry_index]
+            logical = [int(value) for value in geometry_source["logical_size_x1"]]
+            physical = tuple(int(value) for value in geometry_source["physical_size_xn"])
+            if input_kind == "aligned":
+                crop = tuple(int(value) for value in geometry_source["runtime_crop_box_xn"])
+                rgb = rgb.crop(crop)
+                alpha_path = plan.spatial_manifest.parent / str(alpha_source["aligned_rgba_xn"])
+                with Image.open(alpha_path) as aligned_image:
+                    alpha = aligned_image.convert("RGBA").getchannel("A").crop(crop)
+            else:
+                alpha_path = plan.spatial_manifest.parent / str(alpha_source["alpha_xn"])
+                with Image.open(alpha_path) as alpha_image:
+                    alpha = alpha_image.convert("L")
+            if rgb.size != physical or alpha.size != physical:
                 raise InterpolationError(f"alpha source : dimensions inattendues à la phase {phase}")
             rgba = Image.merge("RGBA", (*rgb.split(), alpha))
             png = output_root / f"frame_{phase:03d}.png"
@@ -422,6 +494,7 @@ def execute(plan: InterpolationPlan) -> dict[str, Any]:
                     "apollo_rgb_sha256": workflow.sha256_file(rgb_path),
                     "alpha_source_frame": source_index,
                     "alpha_phase_source": "deterministic-nearest-source-slot",
+                    "geometry_source_frame": geometry_index,
                     "logical_size_x1": logical,
                     "physical_size_x4": list(physical),
                     "rgba_x4": f"frames-rgba/{png.name}",

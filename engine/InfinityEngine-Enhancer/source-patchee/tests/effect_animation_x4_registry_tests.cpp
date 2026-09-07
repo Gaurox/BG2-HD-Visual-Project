@@ -83,7 +83,13 @@ int main() {
   const bool loaded = iee::effect_animation_x4::prepare(root);
   iee::effect_animation_x4::FrameHandle frame{};
   const bool resolved = loaded && iee::effect_animation_x4::ready() &&
+                        iee::effect_animation_x4::contains_resource(kResref) &&
                         iee::effect_animation_x4::resolve_frame(kResref, 0, 5, 64, 64, frame);
+  const bool diagnosticGates =
+      iee::effect_animation_x4::mark_diagnostic_stage_once(kResref, 1) &&
+      !iee::effect_animation_x4::mark_diagnostic_stage_once(kResref, 1) &&
+      iee::effect_animation_x4::mark_geometry_observation_once(kResref, 0, 5) &&
+      !iee::effect_animation_x4::mark_geometry_observation_once(kResref, 0, 5);
   const bool rejectedDimensions =
       !iee::effect_animation_x4::resolve_frame(kResref, 0, 5, 32, 64, frame);
   const bool rejectedFrame =
@@ -100,7 +106,8 @@ int main() {
                                   kResref, 0, 11, 64, 64, frame);
   iee::effect_animation_x4::release();
   std::filesystem::remove_all(root, error);
-  if (!resolved || !rejectedDimensions || !rejectedFrame || !timelineLoaded) {
+  if (!resolved || !diagnosticGates || !rejectedDimensions || !rejectedFrame ||
+      !timelineLoaded) {
     std::cerr << "effect registry resolution contract failed\n";
     return 1;
   }

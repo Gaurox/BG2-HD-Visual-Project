@@ -248,23 +248,26 @@ struct AreaAnimationRuntime {
   }
 };
 
-// Optional high-level CProjectileBAM/CVidCell composition bridge for external
-// spell and projectile effect packs. It is deliberately separate from the
-// area-animation runtime: effects have distinct lifetime, ownership and cache
-// boundaries even though both paths preserve the native CVidCell geometry.
-struct ProjectileEffectRuntime {
+// Optional high-level effect/CVidCell composition bridge for external spell
+// packs. Projectile BAMs and VVC-backed CVEFVidCell instances provide distinct
+// owner scopes; both converge on the final CInfinity::FXRender boundary.
+struct EffectAnimationRuntime {
   bool enabled{};
   std::uintptr_t projectileBamRender{};
   std::uintptr_t projectileVidCell{};
   std::string_view projectileBamRenderSignature{};
+  std::uintptr_t vvcVidCellRender{};
+  std::uintptr_t vvcVidCell{};
+  std::string_view vvcVidCellRenderSignature{};
   std::uintptr_t infinityFxRender{};
   std::string_view infinityFxRenderSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
     return projectileBamRender != 0 && projectileVidCell != 0 &&
-           !projectileBamRenderSignature.empty() && infinityFxRender != 0 &&
-           !infinityFxRenderSignature.empty();
+           !projectileBamRenderSignature.empty() && vvcVidCellRender != 0 &&
+           vvcVidCell != 0 && !vvcVidCellRenderSignature.empty() &&
+           infinityFxRender != 0 && !infinityFxRenderSignature.empty();
   }
 };
 
@@ -315,7 +318,7 @@ struct BuildManifest {
   // Appended because this aggregate uses positional initializers.
   PvrDemandRuntime pvrDemand{};
   // Appended after PVR demand to preserve every existing positional manifest.
-  ProjectileEffectRuntime projectileEffects{};
+  EffectAnimationRuntime effectAnimations{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (buildId.empty() || supportedProductNames[0].empty() || executableVersion.major == 0 ||
@@ -333,7 +336,7 @@ struct BuildManifest {
       return false;
     }
     if (!areaAnimations.validate()) return false;
-    if (!projectileEffects.validate()) return false;
+    if (!effectAnimations.validate()) return false;
     if (!worldOverlay.validate()) return false;
     if (!pvrDemand.validate()) return false;
 

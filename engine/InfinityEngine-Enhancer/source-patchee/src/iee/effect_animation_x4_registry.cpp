@@ -42,6 +42,8 @@ struct Resource {
   std::string displayName;
   std::vector<Frame> frames;
   std::vector<std::vector<std::uint32_t>> cycles;
+  std::vector<std::vector<std::uint8_t>> observedSlots;
+  std::uint32_t reportedDiagnosticStages{};
   struct Timeline {
     bool enabled{};
     std::uint32_t nativeFpsNumerator{};
@@ -320,6 +322,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
             {.logicalWidth = static_cast<int>(width), .logicalHeight = static_cast<int>(height)});
       }
       resource.cycles.reserve(cycleCount);
+      resource.observedSlots.reserve(cycleCount);
       for (std::uint32_t cycleIndex = 0; cycleIndex < cycleCount; ++cycleIndex) {
         std::uint32_t slotCount = 0;
         if (!reader.read(slotCount) || slotCount == 0 || slotCount > kMaxCycleSlots) {
@@ -331,6 +334,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
             throw std::runtime_error("invalid effect BAM cycle slot");
           }
         }
+        resource.observedSlots.emplace_back(slotCount, std::uint8_t{0});
         resource.cycles.push_back(std::move(slots));
       }
       if (version == kTimelineRegistryVersion) {
@@ -415,6 +419,57 @@ void release() noexcept {
 }
 
 bool ready() noexcept { return g_ready.load(std::memory_order_acquire); }
+
+bool contains_resource(const std::array<char, 8>& resref) noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           std::any_of(g_resources.begin(), g_resources.end(),
+                       [&](const Resource& item) { return item.resref == resref; });
+  } catch (...) {
+    return false;
+  }
+}
+
+bool mark_diagnostic_stage_once(const std::array<char, 8>& resref,
+                                std::uint32_t stage) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || stage == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
+                                       [&](const Resource& item) { return item.resref == resref; });
+    if (resource == g_resources.end() || (resource->reportedDiagnosticStages & stage) != 0) {
+      return false;
+    }
+    resource->reportedDiagnosticStages |= stage;
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
+
+bool mark_geometry_observation_once(const std::array<char, 8>& resref, int sequence,
+                                    int nativeFrame) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || nativeFrame < 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    const auto resource = std::find_if(g_resources.begin(), g_resources.end(),
+                                       [&](const Resource& item) { return item.resref == resref; });
+    if (resource == g_resources.end() ||
+        static_cast<std::size_t>(sequence) >= resource->observedSlots.size()) {
+      return false;
+    }
+    auto& slots = resource->observedSlots[static_cast<std::size_t>(sequence)];
+    if (static_cast<std::size_t>(nativeFrame) >= slots.size() || slots[nativeFrame] != 0) {
+      return false;
+    }
+    slots[nativeFrame] = 1;
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
 
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    int logicalWidth, int logicalHeight, FrameHandle& out) noexcept {

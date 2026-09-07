@@ -412,6 +412,27 @@ void test_manifest_loading() {
                 "Validated BG2EE 2.7.3 area-animation hooks should be enabled");
     expect_true(bg2ee->get().worldOverlay.enabled,
                 "Validated BG2EE 2.7.3 world-overlay hook should be enabled");
+    expect_true(bg2ee->get().effectAnimations.enabled,
+                "Validated BG2EE 2.7.3 effect-animation hooks should be enabled");
+    expect_eq(bg2ee->get().effectAnimations.projectileBamRender,
+              std::uintptr_t{0x233F20},
+              "BG2EE projectile effect owner RVA should match the offline scan");
+    expect_eq(bg2ee->get().effectAnimations.projectileVidCell,
+              std::uintptr_t{0x1B8},
+              "BG2EE projectile effect CVidCell offset should match the offline scan");
+    expect_eq(bg2ee->get().effectAnimations.vvcVidCellRender,
+              std::uintptr_t{0x254B00},
+              "BG2EE CVEFVidCell::Render RVA should match its validated vtable slot");
+    expect_eq(bg2ee->get().effectAnimations.vvcVidCell,
+              std::uintptr_t{0x248},
+              "BG2EE CVEFVidCell primary CVidCell offset should match the x64 layout");
+    expect_eq(bg2ee->get().effectAnimations.infinityFxRender,
+              std::uintptr_t{0x29DF60},
+              "BG2EE final effect FXRender boundary should match both owner call graphs");
+    auto incompleteEffectRuntime = bg2ee->get().effectAnimations;
+    incompleteEffectRuntime.vvcVidCellRenderSignature = {};
+    expect_true(!incompleteEffectRuntime.validate(),
+                "A VVC render RVA without exact signature evidence must fail validation");
     expect_eq(bg2ee->get().worldOverlay.gameAreaRender, std::uintptr_t{0x189360},
               "BG2EE CGameArea::Render RVA should match the map-composition boundary");
     expect_eq(bg2ee->get().worldOverlay.drawFlushGl, std::uintptr_t{0x42B350},

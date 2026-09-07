@@ -57,6 +57,16 @@ Le témoin de rétrocompatibilité TimedTimeline v2 est AR0603 ; les packs v3 pr
 occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 `animation-release-candidates.json` et `renderer-bundle.json`.
 
+## Effets
+
+| Sujet | Décision retenue | Réouvrir seulement si… |
+|---|---|---|
+| Frontière moteur | owner scopes `CProjectileBAM::Render` + `CVEFVidCell::Render`, substitution au `CInfinity::FXRender` final | nouveau build ou famille hors de ces owners |
+| Sélection | resref présent dans le registre ; aucun sort/resref codé en dur | besoin démontré d'un routage par occurrence |
+| Diagnostics | stages et mesures de chaque slot bornés par ressource | format de preuve runtime versionné |
+| Ajout d'un effet | pack mono-resref immuable puis composition cumulative | format de registre hétérogène requis |
+| Composition v1/v2 | versions homogènes seulement ; v1 natif et v2 30 FPS non mélangés | registre avec cadence par ressource validé |
+
 ## Sprites
 
 | Sujet | Décision retenue |

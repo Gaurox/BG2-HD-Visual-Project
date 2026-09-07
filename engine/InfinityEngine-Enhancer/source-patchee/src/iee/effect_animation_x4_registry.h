@@ -30,11 +30,20 @@ struct TimelineInfo {
 using EngineTextureApi = area_animation_x4::EngineTextureApi;
 
 // Loads EffectAnimations-X4.registry and every declared raw RGBA frame before
-// installing the projectile hook. A malformed or incomplete pack is rejected
-// as a whole; callers then retain the native BAM path.
+// installing the effect-owner hooks. A malformed or incomplete pack is
+// rejected as a whole; callers then retain the native BAM path.
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;
+[[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;
+
+// Per-resource diagnostic gates. They keep renderer logs bounded while still
+// collecting geometry evidence independently for every future effect pack.
+[[nodiscard]] bool mark_diagnostic_stage_once(const std::array<char, 8>& resref,
+                                              std::uint32_t stage) noexcept;
+[[nodiscard]] bool mark_geometry_observation_once(const std::array<char, 8>& resref,
+                                                  int sequence,
+                                                  int nativeFrame) noexcept;
 
 // Resolves one native CVidCell cycle slot. The match is exact on the eight-byte
 // resref, sequence, native frame and logical dimensions.

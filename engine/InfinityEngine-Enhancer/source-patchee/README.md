@@ -13,6 +13,7 @@ builds acceptés et les capacités par build viennent exclusivement de
 | Tuiles TIS/PVRZ xN | échelle lue dans le header TIS, puis table PVR, heuristique en dernier recours |
 | Liquides | masque WED, teinte auteur, textures DDS facultatives, shader `fpSEAM.glsl` |
 | Animations de zone | registres v1/v2/v3, TimedTimeline, packs par zone et variantes par occurrence |
+| Effets de sort x4 | registre multi-resref v1/v2, scopes projectile + VVC, fallback natif strict |
 | Sprites créature xN | chemin QA opt-in, baseline `NEAREST`, pour propriétaires/classes explicitement manifestés |
 | Transition vidéo | AR1300/BRIDGE01 uniquement, désactivée par défaut |
 | UI | essais ciblés explicitement activés |
@@ -87,6 +88,7 @@ modifie pas le bundle release scellé.
 | Occlusion native | [`docs/native-occlusion-phase1.md`](docs/native-occlusion-phase1.md) |
 | Transition AR1300 | [`docs/event-video-overlay-assets.md`](docs/event-video-overlay-assets.md) |
 | Transaction renderer | [`docs/renderer-candidate-transaction.md`](docs/renderer-candidate-transaction.md) |
+| Effets VVC | [`docs/validation/effect-vvc-bg2ee-2.7.3.md`](docs/validation/effect-vvc-bg2ee-2.7.3.md) |
 | Sprites | [`../../../sprite/README.md`](../../../sprite/README.md) |
 
 Licence : [`LICENSE`](LICENSE).

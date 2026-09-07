@@ -100,14 +100,16 @@ installation_receipt,release_state,release_candidate,notes
 
 ## Gate runtime
 
-Le prototype runtime `EffectAnimations-X4.registry` couvre les BAM de projectile via
-`CProjectileBAM` : resref/cycle/dimensions exacts, géométrie x1, backing x4,
-fallback BAM natif à toute divergence. Le registre v1 conserve la cadence BAM
-native ; le v2 ajoute une timeline QPC pause-aware ancrée sur les slots BAM pour
-les runs 30 FPS. Il ne couvre pas encore les VVC/VEF génériques.
+`EffectAnimations-X4.registry` couvre les BAM de projectile via `CProjectileBAM` et
+les BAM VVC/VEF via `CVEFVidCell`. Les deux owner scopes convergent uniquement sur
+le `CInfinity::FXRender` final : resref/cycle/dimensions exacts, géométrie x1,
+backing x4, fallback BAM natif à toute divergence. Le registre v1 conserve la
+cadence BAM native ; le v2 ajoute une timeline QPC pause-aware ancrée sur les slots
+BAM pour les runs 30 FPS. Les adresses/offsets restent manifestés par build et
+échouent fermés sur signature divergente.
 
-Si la géométrie logique observée sur le `CInfinity::FXRender` final de
-`CProjectileBAM::Render` diffère des dimensions du BAM,
+Si la géométrie logique observée sur le `CInfinity::FXRender` final d'un owner scope
+diffère des dimensions du BAM,
 `build_effect_runtime_pack.py --runtime-geometry <preuve.json>` exige une mesure
 pour chaque slot, applique un crop ou reframe validé autour de l'ancre BAM et inscrit
 cette preuve dans le manifeste dérivé. Les tirages intermédiaires de
@@ -118,5 +120,23 @@ puis prémultiplier le RGB pour les chemins `Blended`. Le run scellé reste inch
 tout slot absent ou terminal conserve le fallback natif strict.
 
 Chaque nouvelle famille doit démontrer : ancrage logique, cycle/timing, alpha,
-palette, partage multi-contrôleur, consommateur projectile et fallback natif.
+palette, partage multi-contrôleur, owner VVC/projectile et fallback natif.
 Une production temporelle ou une installation ne vaut jamais QA ingame.
+
+## Packs incrémentaux
+
+Produire un pack immuable par BAM, puis composer un nouveau pack cumulatif sans
+relancer extraction, upscale ou interpolation :
+
+```powershell
+python pipeline/scripts/compose_effect_runtime_packs.py `
+  --pack <pack-cumulatif-précédent> `
+  --pack <nouveau-pack-mono-resref> `
+  --output <nouveau-pack-cumulatif>
+# Après contrôle du plan : même commande avec --run.
+```
+
+Contraintes : packs plats complets, resrefs uniques, même version de registre.
+Ne pas mélanger v1 natif et v2 30 FPS ; un lot 30 FPS reste entièrement v2. Le
+manifeste composé garde les ressources, frames, hashes et packs sources. Le pack
+précédent reste immuable et installable.
