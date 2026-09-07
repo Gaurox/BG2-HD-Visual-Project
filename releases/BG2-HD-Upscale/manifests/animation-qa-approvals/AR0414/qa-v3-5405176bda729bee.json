@@ -1,0 +1,88 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 3,
+  "area": "AR0414",
+  "status": "accepted",
+  "decision_date": "2026-09-06",
+  "decision_origin": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+  "recorded_at_utc": "2026-09-06T15:21:55Z",
+  "source_pack": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414",
+  "pack_manifest_sha256": "020936972818E8C818F285AB3082E5DC2B21F400CD9AB85C8C0111A06935B145",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A2C09FCBE616C47D01E0175D0E2C37DDEEAA2935D182A3305431A49B5C78411D",
+  "required_resrefs": [
+    "AM414E11",
+    "AM414E12",
+    "AM414EY2",
+    "DSTDVL1A",
+    "DSTDVL1B",
+    "DSTDVL1C"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM414E11/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json",
+      "sha256": "828F13FE35DC457F1012BE687CE181963AD347A77AA3CA534994EBC647344193",
+      "accepted_resrefs": [
+        "AM414E11"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM414E12/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json",
+      "sha256": "B77081D242A56D45FC2D58CAE594C386F98E786CAD9446D6E3F8EEF1DF833EF2",
+      "accepted_resrefs": [
+        "AM414E12"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM414EY2/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json",
+      "sha256": "FFFEEFCB14BB129D54E07B4664ACD35C550D9DDC049A477B20F7F4F57091456D",
+      "accepted_resrefs": [
+        "AM414EY2"
+      ]
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
+      "sha256": "3BAEF960BB382564707D4B9B759E217FCB01D05B2A0DD890B520B9BEA07B939C",
+      "accepted_resrefs": [
+        "DSTDVL1A"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+      "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "01825E07C6ABC472F010D2D0B499E7E346ABBA8E4A6CC65D969AA96EB5FC098F"
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
+      "sha256": "3BAEF960BB382564707D4B9B759E217FCB01D05B2A0DD890B520B9BEA07B939C",
+      "accepted_resrefs": [
+        "DSTDVL1B"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+      "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "0A39993EAB5A2F2803EC70F97342DA3A8750C58108FCC2468DF165C33C62180A"
+    },
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
+      "sha256": "3BAEF960BB382564707D4B9B759E217FCB01D05B2A0DD890B520B9BEA07B939C",
+      "accepted_resrefs": [
+        "DSTDVL1C"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+      "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "01A6BEE24F4677716232B26E9927E16F637659868790B5D84C30D53722387D46"
+    }
+  ],
+  "decision": "QA ingame explicite AR0414 : AM414E11, AM414E12 et AM414EY2 rendus x4 correctement avec le cycle sélectionné ; DSTDVL1A/B/C conservés byte-identiques."
+}

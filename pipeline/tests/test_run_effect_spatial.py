@@ -117,6 +117,48 @@ class EffectSpatialRunTests(unittest.TestCase):
         self.assertEqual(normalized["workspace"], "effects/test")
         self.assertEqual(normalized["external"], "http://127.0.0.1:8188")
 
+    def test_spatial_manifest_contract_matches_the_existing_frame_upscaler(self) -> None:
+        self.assertEqual(spatial.SPATIAL_SCHEMA, "bg2-upscale-animation-frames-v1")
+
+    def test_spatial_lineage_hash_is_declared_under_source(self) -> None:
+        run_root = self.root / "run"
+        frame_root = run_root / "00-frames-x1"
+        frame_root.mkdir(parents=True)
+        frame_root.joinpath("manifest.json").write_text("{}\n", encoding="utf-8")
+        stage = run_root / "01-spatial-x4"
+        rgba = stage / "rgba/frame_000.png"
+        raw = stage / "raw_rgba/frame_000.rgba"
+        preview = stage / "preview/contact.png"
+        for path, content in ((rgba, b"rgba"), (raw, b"raw"), (preview, b"preview")):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+        spatial.write_json(
+            stage / "manifest.json",
+            {
+                "schema": spatial.SPATIAL_SCHEMA,
+                "status": "completed",
+                "scale": 4,
+                "source": {
+                    "frame_manifest_sha256": workflow.sha256_file(frame_root / "manifest.json"),
+                },
+                "frames": [
+                    {
+                        "frame": 0,
+                        "rgba_xn": "rgba/frame_000.png",
+                        "rgba_xn_sha256": workflow.sha256_file(rgba),
+                        "raw_rgba_xn": "raw_rgba/frame_000.rgba",
+                        "raw_rgba_xn_sha256": workflow.sha256_file(raw),
+                    }
+                ],
+                "preview": "preview/contact.png",
+                "preview_sha256": workflow.sha256_file(preview),
+            },
+        )
+        self.assertEqual(
+            spatial.validate_spatial_stage(self.root, stage, {"frame_count": 1})["status"],
+            "completed",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

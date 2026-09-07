@@ -1069,9 +1069,25 @@ bool resolve_native_subframe(const FrameResolution& resolution, int sequence, in
     const auto& resource = g_resources[resolution.nativeFrame.resourceIndex];
     if (sequence >= static_cast<int>(resource.cycles.size())) return false;
 
+    const auto& selectedCycle = resource.cycles[static_cast<std::size_t>(sequence)];
+    if (nativeSlot >= static_cast<int>(selectedCycle.nativeFrames.size())) return false;
+    const auto selectedFrameIndex =
+        selectedCycle.nativeFrames[static_cast<std::size_t>(nativeSlot)];
+    if (selectedFrameIndex >= resource.frames.size()) return false;
+    const auto& selectedFrame = resource.frames[selectedFrameIndex];
+    // Most BAMs dispatch only their selected cycle. Prefer that exact cycle before looking for
+    // a sibling component: several independent cycles may legitimately share the same geometry.
+    if (selectedFrame.logicalWidth == logicalWidth && selectedFrame.logicalHeight == logicalHeight) {
+      out = {.resourceIndex = resolution.nativeFrame.resourceIndex,
+             .frameIndex = selectedFrameIndex};
+      return true;
+    }
+
     FrameHandle match{};
     bool found = false;
-    for (const auto& cycle : resource.cycles) {
+    for (std::size_t cycleIndex = 0; cycleIndex < resource.cycles.size(); ++cycleIndex) {
+      if (cycleIndex == static_cast<std::size_t>(sequence)) continue;
+      const auto& cycle = resource.cycles[cycleIndex];
       if (nativeSlot >= static_cast<int>(cycle.nativeFrames.size())) continue;
       const auto frameIndex = cycle.nativeFrames[static_cast<std::size_t>(nativeSlot)];
       if (frameIndex >= resource.frames.size()) return false;

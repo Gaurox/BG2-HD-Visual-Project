@@ -1,0 +1,17 @@
+{
+  "schema": "bg2-upscale-hand-painted-occlusion-masks-v1",
+  "resref": "AM904TL4",
+  "peint_par": "utilisateur",
+  "date_source": "2026-09-06",
+  "enregistre_le_utc": "2026-09-06T18:13:18.8389866+02:00",
+  "contrat_masque": "PNG 408x296, grayscale flattened, alpha fully opaque: white keeps, black removes, gray is transition.",
+  "source_reference_x4": ".tmp/ar0904-mask-references-x4/AM904TL4-frame000-masque.png",
+  "fichiers": [
+    {"name": "AR0904-x820-y464.png", "sha256": "5cb5c6ef84cf64b36fb9f20768f6f5d71ca7d7831f7131abb4815cb3f8e2a74f", "bytes": 9959, "role": "user-painted-source"},
+    {"name": "AR0904-x820-y464-fade8.png", "sha256": "cb785b5c1edf9eed5df776e563197566c4bafc15c90fddafeb4b3cad270e01fd", "bytes": 6553, "role": "derived-inner-feather", "radius_x4": 8},
+    {"name": "AR0904-x820-y464-fade24.png", "sha256": "157839c13e5e9beae2647feeae92ed6a0d533218b584d12c447aa92c0c1b5997", "bytes": 11582, "role": "derived-inner-feather", "radius_x4": 24},
+    {"name": "AR0904-x820-y464-fade48.png", "sha256": "156706d34e48fb6b70f5f2234e7606e51d4853c5a60d34484e8abf4a75a8bba6", "bytes": 10634, "role": "derived-inner-feather", "radius_x4": 48},
+    {"name": "AR0904-x820-y464-fade36.png", "sha256": "29e2c4f3c64d005d90143eb17be4a4062b15ee11d15fe5cf27bdecc0117f8202", "bytes": 10014, "role": "derived-inner-feather", "radius_x4": 36},
+    {"name": "AR0904-x820-y464-fade30.png", "sha256": "f3e3eb143c2be25f5920bf4ee6279f0a81cf9b51b36280f662b8db4f258ad8d2", "bytes": 9228, "role": "derived-inner-feather", "radius_x4": 30}
+  ]
+}

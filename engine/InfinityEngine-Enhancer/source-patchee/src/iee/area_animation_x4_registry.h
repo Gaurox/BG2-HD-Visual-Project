@@ -175,8 +175,9 @@ bool resolve_timeline_subframe(const FrameResolution& resolution, std::uint32_t 
                                FrameHandle& out) noexcept;
 
 // A native BAM frame can fan out into several CVidCell draws from synchronised
-// cycles. Select the one physical replacement frame whose native dimensions
-// match this low-level draw. Ambiguous or unknown dimensions fail closed.
+// cycles. The selected cycle takes precedence when its native dimensions match;
+// otherwise select a unique sibling replacement frame by low-level dimensions.
+// Ambiguous or unknown sibling dimensions fail closed.
 bool resolve_native_subframe(const FrameResolution& resolution, int sequence,
                              int nativeSlot, int logicalWidth, int logicalHeight,
                              FrameHandle& out) noexcept;

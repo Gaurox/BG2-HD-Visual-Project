@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM904TL4",
+  "decision": "Validation ingame AR0904 : masque personnalisé avec fade intérieur de base 8 px x4 ; 30 fps sans saccade de boucle.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/manifest.json",
+    "manifest_sha256": "2DEB671AB9CA0FD3271139B10AE2CEF83ACA37F46068EA757B0A000BCB720D6F",
+    "path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-tl1tl2-mask-tl3tl4-x4-20260906/AR0904/manifest.json",
+        "manifest_sha256": "8E77F9B846FAF089AD6F32FA6A11CC73ABDBAFBA01CD7D059FC5DB1F5D48BD59",
+        "path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-tl1tl2-mask-tl3tl4-x4-20260906/AR0904",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-06T18:25:40Z",
+  "resref": "AM904TL4",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0904",
+        "manifest_path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904/manifest.json",
+        "manifest_sha256": "6505B6606141706043ECD3B73C974842D138E5654B20B50D893746B1AE12F400",
+        "path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904",
+        "registry_sha256": "DF75AADEC7941C57EA2DB03F1F61872FA189F9F06856E20F5CD3A29661426E93",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/manifest.json",
+    "manifest_sha256": "C2B3959E8A3E0272F620DA9D7822CF45F2B05A16A2FB103B4C2FA5860FE2245E",
+    "path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0904"
+  ]
+}

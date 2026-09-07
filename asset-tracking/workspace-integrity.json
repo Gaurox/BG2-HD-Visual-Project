@@ -13,10 +13,10 @@
       "verified": true
     },
     "animations": {
-      "approved_candidate_count": 37,
+      "approved_candidate_count": 38,
       "empty_run_count": 0,
-      "historical_qa_evidence_adapted_count": 48,
-      "ingame_qa_selected_asset_count": 14,
+      "historical_qa_evidence_adapted_count": 47,
+      "ingame_qa_selected_asset_count": 21,
       "legacy_proto_directory_migration_count": 64,
       "legacy_proto_embedded_reference_count": 204,
       "legacy_proto_embedded_reference_file_count": 68,
@@ -24,17 +24,17 @@
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
       "legacy_proto_run_count": 66,
-      "physical_run_count": 245,
+      "physical_run_count": 261,
       "physical_run_count_by_layout": {
-        "batch": 2,
+        "batch": 10,
         "legacy": 162,
-        "mono-asset": 81
+        "mono-asset": 89
       },
-      "release_pack_indexed_count": 37,
-      "release_referenced_run_count": 22,
+      "release_pack_indexed_count": 38,
+      "release_referenced_run_count": 24,
       "remaining_animation_proto_directory_count": 0,
       "remaining_proto_directory_count": 0,
-      "run_preview_record_count": 36
+      "run_preview_record_count": 40
     },
     "maps": {
       "canonical_asset_rows": 369,
@@ -284,7 +284,7 @@
     {
       "code": "animation-historical-qa-evidence-adapted",
       "details": {
-        "evidence_reference_count": 48,
+        "evidence_reference_count": 47,
         "migrations": [
           {
             "area": "AR0900",
@@ -545,12 +545,6 @@
             "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
           },
           {
-            "area": "AR0414",
-            "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
-            "path": "animations/index/animation_upscale_registry.csv",
-            "sha256": "D66A65952D7DCFE5CCC32C9EC7C2AEED74B248F8B05A6FFDB089AEFD7E117D8D"
-          },
-          {
             "area": "AR1600",
             "evidence_source": "animations/index/qa-evidence-history/animation_upscale_registry-D66A65952D7DCFE5.csv (recovered Git blob 1aff65f26837cd90cba0efc628af70abbf6ba08f)",
             "path": "animations/index/animation_upscale_registry.csv",
@@ -629,10 +623,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15169,
-  "registry_asset_records_sha256": "77C8875CE4D529FEC4AA17168B64DE7E16B66EAD28C02BD13DEBFBE51026694A",
-  "run_count": 759,
-  "run_records_sha256": "076D46BD866DFC4B2C31CFAEACEF449647887C99062A5DAE2400040CEF869382",
+  "registry_asset_count": 15170,
+  "registry_asset_records_sha256": "4A222B5CB9870D69D28C84E28DB33B412E6A3873333E40E7E7A67856687C0EAC",
+  "run_count": 776,
+  "run_records_sha256": "4A21879064A9B232E59B45B426A9338DD6800199F3E3293F98F2470353902802",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -736,7 +730,7 @@
       "registry_projection_count": 50
     }
   ],
-  "source_fingerprint_sha256": "F6A79FCCD3878E23547720861C0C2A260DC92798D0B746C8CB8FAABEA2C2A664",
+  "source_fingerprint_sha256": "FEA63267EC29E0933C853C6DB793BFA576663148925C1853AD063849B59F1EB2",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0904",
+  "status": "accepted",
+  "decision_date": "2026-09-06",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-06T18:25:40Z",
+  "source_pack": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904",
+  "pack_manifest_sha256": "6505B6606141706043ECD3B73C974842D138E5654B20B50D893746B1AE12F400",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "DF75AADEC7941C57EA2DB03F1F61872FA189F9F06856E20F5CD3A29661426E93",
+  "required_resrefs": [
+    "AM904TL1",
+    "AM904TL2",
+    "AM904TL3",
+    "AM904TL4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL1/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "7C6B0EFAE8EDF5907C8F29D5A72E953290C8B0FBCED26817D45F0A06775E299B",
+      "accepted_resrefs": [
+        "AM904TL1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL2/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "63C2B1C4932BE7C3CF33BB19D273D68C4B5865AFE71A2AC1978C4895E9B2F472",
+      "accepted_resrefs": [
+        "AM904TL2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL3/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "37B08614548B036CADEBBA96A3E053159E3E4CFE300E211678BF07E419D8B3F2",
+      "accepted_resrefs": [
+        "AM904TL3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM904TL4/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json",
+      "sha256": "E8787D0D0D37914B3C7F4C8CCA8A0CDAAAFF55BDABB54F11AE892E1BFAA6FE2C",
+      "accepted_resrefs": [
+        "AM904TL4"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0904: AM904TL1, AM904TL2, AM904TL3, AM904TL4."
+}

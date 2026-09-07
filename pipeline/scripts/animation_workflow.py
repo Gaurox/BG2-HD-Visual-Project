@@ -658,6 +658,63 @@ def _verify_output_pack(
     return True
 
 
+def _verify_merged_v1_source_run_binding(
+    workspace_root: Path,
+    final_manifest_path: Path,
+    qa_pack: Mapping[str, Any],
+    resref: str,
+) -> bool:
+    """Bind a spatial run through the standard V1 -> merged V2 -> area-split chain."""
+
+    qa_root_manifest_path = repo_path(workspace_root, str(qa_pack.get("manifest_path") or ""))
+    qa_root = load_json(qa_root_manifest_path)
+    merged_value = qa_root.get("source_pack")
+    merged_hash = qa_root.get("source_pack_manifest_sha256")
+    if merged_value is None and merged_hash is None:
+        return False
+    if not isinstance(merged_value, str) or not merged_value.strip() or not merged_hash:
+        raise WorkflowError(
+            f"{qa_root_manifest_path}: source_pack/source_pack_manifest_sha256 incomplets"
+        )
+    merged_path = _resolve_manifest_reference(workspace_root, qa_root_manifest_path, merged_value)
+    merged_manifest_path = _manifest_for_path(merged_path)
+    _verify_declared_hash(merged_manifest_path, merged_hash, f"{qa_root_manifest_path}: source_pack")
+    merged_manifest, _ = _validate_runtime_pack(merged_manifest_path.parent)
+    merged_from = merged_manifest.get("merged_from")
+    if not isinstance(merged_from, Mapping):
+        return False
+    v1_value = merged_from.get("new_v1_pack")
+    v1_hash = merged_from.get("new_v1_pack_manifest_sha256")
+    if not isinstance(v1_value, str) or not v1_value.strip() or not v1_hash:
+        raise WorkflowError(f"{merged_manifest_path}: merged_from.new_v1_pack incomplet")
+    v1_path = _resolve_manifest_reference(workspace_root, merged_manifest_path, v1_value)
+    v1_manifest_path = _manifest_for_path(v1_path)
+    _verify_declared_hash(v1_manifest_path, v1_hash, f"{merged_manifest_path}: new_v1_pack")
+    v1_manifest, v1_resources = _validate_runtime_pack(v1_manifest_path.parent)
+    source_run = v1_manifest.get("source_run")
+    source_run_hash = v1_manifest.get("source_run_manifest_sha256")
+    if not isinstance(source_run, str) or not source_run.strip() or not source_run_hash:
+        raise WorkflowError(f"{v1_manifest_path}: source_run/source_run_manifest_sha256 incomplets")
+    source_run_path = _resolve_manifest_reference(workspace_root, v1_manifest_path, source_run)
+    source_run_manifest_path = _manifest_for_path(source_run_path)
+    _verify_declared_hash(source_run_manifest_path, source_run_hash, f"{v1_manifest_path}: source_run")
+    if source_run_manifest_path != final_manifest_path:
+        raise WorkflowError(
+            f"{v1_manifest_path}: source_run différent du run final déclaré"
+        )
+    expected_resources = _resource_group(v1_resources, resref)
+    for area in qa_pack.get("areas", []):
+        if not isinstance(area, Mapping):
+            raise WorkflowError("entrée de zone QA invalide")
+        area_manifest_path = repo_path(workspace_root, str(area.get("manifest_path") or ""))
+        _, area_resources = _validate_runtime_pack(area_manifest_path.parent)
+        if _resource_group(area_resources, resref) != expected_resources:
+            raise WorkflowError(
+                f"pack QA {area.get('area')}: sortie {resref} différente du run spatial fusionné"
+            )
+    return True
+
+
 def _resource_group(
     resources: Sequence[Mapping[str, Any]], resref: str
 ) -> list[dict[str, Any]]:
@@ -696,6 +753,13 @@ def _verify_pack_binding(
         final_manifest,
         final_manifest_path,
         qa_pack,
+    ):
+        return
+    if _verify_merged_v1_source_run_binding(
+        workspace_root,
+        final_manifest_path,
+        qa_pack,
+        resref,
     ):
         return
     pack_value = final_manifest.get("pack")

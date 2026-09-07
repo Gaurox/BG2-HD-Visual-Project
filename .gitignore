@@ -25,6 +25,8 @@
 
 # Native build trees
 /build/
+/engine/InfinityEngine-Enhancer/source-patchee/build/
+/engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/
 **/cmake-build-*/
 **/build-filter-*/
 **/build-bridge-preview/
@@ -102,6 +104,7 @@
 /releases/**/payload-allvalidated*/
 
 # Generated reports, captures and logs
+/output/
 **/backups/
 **/captures/
 *.log

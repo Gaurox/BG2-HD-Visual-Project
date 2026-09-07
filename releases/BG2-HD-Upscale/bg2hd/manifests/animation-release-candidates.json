@@ -662,17 +662,32 @@
       "component_label": "animation-ar0414",
       "payload_group": "animation-ar0414",
       "approval_status": "approved-for-release",
-      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
-      "qa_approval_sha256": "3BAEF960BB382564707D4B9B759E217FCB01D05B2A0DD890B520B9BEA07B939C",
-      "source_pack": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
-      "source_run": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate + animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-v3-5405176bda729bee.json",
+      "qa_approval_sha256": "5108708DD32E56D3F03618723415FB049D42B4995379C08602D30A924EC37BAD",
+      "source_pack": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414",
+      "source_runs": [
+        {
+          "path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+          "manifest_path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906/manifest.json",
+          "manifest_sha256": "CA985481C63ED93CBA99F3F6417A0F224A61573B7AE5E2F35E5662BB21E9E09D",
+          "role": "final",
+          "asset_ids": [
+            "AM414E11",
+            "AM414E12",
+            "AM414EY2"
+          ]
+        }
+      ],
       "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "5FA9A58E11DB563F59FE2BF65C2A3CBD9F4AD14156DED76E6BF580CD3B6F835B",
+      "pack_manifest_sha256": "020936972818E8C818F285AB3082E5DC2B21F400CD9AB85C8C0111A06935B145",
       "registry": "AreaAnimations-X4.registry",
       "registry_version": 3,
-      "registry_sha256": "DA96BF1AECAECA8414F87E3BDB672704C0972F306AACFE3320369F1226D4F026",
-      "registry_bytes": 7392,
+      "registry_sha256": "A2C09FCBE616C47D01E0175D0E2C37DDEEAA2935D182A3305431A49B5C78411D",
+      "registry_bytes": 7984,
       "required_resrefs": [
+        "AM414E11",
+        "AM414E12",
+        "AM414EY2",
         "DSTDVL1A",
         "DSTDVL1B",
         "DSTDVL1C"
@@ -975,6 +990,43 @@
         "FALL6",
         "FALLA1",
         "FALLA2"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR0904",
+      "component_id": 3041,
+      "component_label": "animation-ar0904",
+      "payload_group": "animation-ar0904",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0904/qa-v2-42606e72ffa1d634.json",
+      "qa_approval_sha256": "016135EA20C9D0361916E593DAA4BC4BD661115F2D77499E3CB73899DD747777",
+      "source_pack": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904",
+      "source_runs": [
+        {
+          "path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+          "manifest_path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/manifest.json",
+          "manifest_sha256": "2DEB671AB9CA0FD3271139B10AE2CEF83ACA37F46068EA757B0A000BCB720D6F",
+          "role": "final",
+          "asset_ids": [
+            "AM904TL1",
+            "AM904TL2",
+            "AM904TL3",
+            "AM904TL4"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "6505B6606141706043ECD3B73C974842D138E5654B20B50D893746B1AE12F400",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "DF75AADEC7941C57EA2DB03F1F61872FA189F9F06856E20F5CD3A29661426E93",
+      "registry_bytes": 1188,
+      "required_resrefs": [
+        "AM904TL1",
+        "AM904TL2",
+        "AM904TL3",
+        "AM904TL4"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }

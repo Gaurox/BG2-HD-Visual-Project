@@ -783,6 +783,44 @@ class AnimationWorkflowTests(unittest.TestCase):
         result = self.fixture.finalize(apply=False)
         self.assertEqual("planned", result["mode"])
 
+    def test_finalize_accepts_v1_merge_then_area_split_binding(self) -> None:
+        final_manifest_path = self.fixture.final_run / "manifest.json"
+        final_manifest = json.loads(final_manifest_path.read_text(encoding="utf-8"))
+        final_manifest.pop("pack")
+        final_manifest.pop("pack_manifest_sha256")
+        write_json(final_manifest_path, final_manifest)
+
+        v1_pack = self.fixture.final_run / "03_runtime_pack"
+        self.fixture.build_v1_runtime_pack(v1_pack, self.fixture.payload)
+        v1_manifest_path = v1_pack / "manifest.json"
+        v1_manifest = json.loads(v1_manifest_path.read_text(encoding="utf-8"))
+        v1_manifest["source_run"] = "animations/ressources/AMTEST/runs/amtest-alpha-v1"
+        v1_manifest["source_run_manifest_sha256"] = file_sha256(final_manifest_path)
+        write_json(v1_manifest_path, v1_manifest)
+
+        merged_pack = self.fixture.root / "animations/batches/amtest-merged"
+        self.fixture.build_runtime_pack(merged_pack, self.fixture.payload)
+        merged_manifest_path = merged_pack / "manifest.json"
+        merged_manifest = json.loads(merged_manifest_path.read_text(encoding="utf-8"))
+        merged_manifest["merged_from"] = {
+            "new_v1_pack": "animations/ressources/AMTEST/runs/amtest-alpha-v1/03_runtime_pack",
+            "new_v1_pack_manifest_sha256": file_sha256(v1_manifest_path),
+        }
+        write_json(merged_manifest_path, merged_manifest)
+
+        qa_root_manifest_path = self.fixture.qa_pack / "manifest.json"
+        qa_root_manifest = json.loads(qa_root_manifest_path.read_text(encoding="utf-8"))
+        self.fixture.build_qa_pack(
+            self.fixture.qa_pack, self.fixture.payload, playback_mode="Native"
+        )
+        qa_root_manifest = json.loads(qa_root_manifest_path.read_text(encoding="utf-8"))
+        qa_root_manifest["source_pack"] = "animations/batches/amtest-merged"
+        qa_root_manifest["source_pack_manifest_sha256"] = file_sha256(merged_manifest_path)
+        write_json(qa_root_manifest_path, qa_root_manifest)
+
+        result = self.fixture.finalize(apply=False)
+        self.assertEqual("planned", result["mode"])
+
     def test_finalize_accepts_v1_final_pack_against_normalized_v2_qa_pack(self) -> None:
         final_run = self.fixture.resource / "runs/amtest-v1-final"
         runtime_pack = final_run / "03_runtime_pack"

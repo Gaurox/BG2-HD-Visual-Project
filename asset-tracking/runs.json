@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 759,
-  "run_records_sha256": "076D46BD866DFC4B2C31CFAEACEF449647887C99062A5DAE2400040CEF869382",
+  "run_count": 776,
+  "run_records_sha256": "4A21879064A9B232E59B45B426A9338DD6800199F3E3293F98F2470353902802",
   "runs": [
     {
       "asset_count": 1,
@@ -141,13 +141,13 @@
       "asset_ids": [
         "animations:pack:AR0414"
       ],
-      "descriptor_path": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414/manifest.json",
+      "descriptor_path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414/manifest.json",
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-approval.json",
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0414/qa-v3-5405176bda729bee.json",
       "outputs_state": "present",
-      "path": "animations/packs-par-zone/combined-20260901-chimsmk-oval-dstdvl1a-b-c-activefade7-20-7-candidate/AR0414",
+      "path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414",
       "provenance_state": "verified",
       "qa_state": "approved",
       "recipe_path": "",
@@ -308,6 +308,28 @@
       "result_state": "approved-for-release",
       "run_id": "release-pack-ar0900",
       "run_key": "animations-pack:AR0900",
+      "run_kind": "area-animation-release-pack",
+      "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
+      "selection_state": "release-candidate"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:pack:AR0904"
+      ],
+      "descriptor_path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "registre v3; QA: releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0904/qa-v2-42606e72ffa1d634.json",
+      "outputs_state": "present",
+      "path": "animations/packs-par-zone/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/AR0904",
+      "provenance_state": "verified",
+      "qa_state": "approved",
+      "recipe_path": "",
+      "result_state": "approved-for-release",
+      "run_id": "release-pack-ar0904",
+      "run_key": "animations-pack:AR0904",
       "run_kind": "area-animation-release-pack",
       "selection_authority": "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
       "selection_state": "release-candidate"
@@ -2169,6 +2191,182 @@
       "selection_state": "historical"
     },
     {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL1"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL1/runs/ar0904-tl1-canvas48-alpha-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL1/runs/ar0904-tl1-canvas48-alpha-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl1-canvas48-alpha-20260906",
+      "run_key": "animations:AM904TL1:ar0904-tl1-canvas48-alpha-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL1"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL1/runs/ar0904-tl1-spatial-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL1/runs/ar0904-tl1-spatial-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl1-spatial-x4-20260906",
+      "run_key": "animations:AM904TL1:ar0904-tl1-spatial-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL2"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL2/runs/ar0904-tl2-canvas48-alpha-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL2/runs/ar0904-tl2-canvas48-alpha-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl2-canvas48-alpha-20260906",
+      "run_key": "animations:AM904TL2:ar0904-tl2-canvas48-alpha-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL2"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL2/runs/ar0904-tl2-spatial-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL2/runs/ar0904-tl2-spatial-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl2-spatial-x4-20260906",
+      "run_key": "animations:AM904TL2:ar0904-tl2-spatial-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL3"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL3/runs/ar0904-tl3-canvas48-alpha-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL3/runs/ar0904-tl3-canvas48-alpha-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl3-canvas48-alpha-20260906",
+      "run_key": "animations:AM904TL3:ar0904-tl3-canvas48-alpha-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL3"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL3/runs/ar0904-tl3-spatial-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL3/runs/ar0904-tl3-spatial-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl3-spatial-x4-20260906",
+      "run_key": "animations:AM904TL3:ar0904-tl3-spatial-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL4/runs/ar0904-tl4-canvas48-alpha-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL4/runs/ar0904-tl4-canvas48-alpha-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl4-canvas48-alpha-20260906",
+      "run_key": "animations:AM904TL4:ar0904-tl4-canvas48-alpha-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/ressources/AM904TL4/runs/ar0904-tl4-spatial-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM904TL4/runs/ar0904-tl4-spatial-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0904-tl4-spatial-x4-20260906",
+      "run_key": "animations:AM904TL4:ar0904-tl4-spatial-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
       "asset_count": 4,
       "asset_ids": [
         "animations:bam:AM0205A",
@@ -3404,6 +3602,207 @@
       "selection_state": "release-candidate"
     },
     {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM414E11",
+        "animations:bam:AM414E12",
+        "animations:bam:AM414EY2",
+        "animations:pack:AR0414"
+      ],
+      "descriptor_path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch; Candidat(s) de zone: AR0414; QA ingame explicite: animations/index/qa-decisions/AM414E11/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json;animations/index/qa-decisions/AM414E12/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json;animations/index/qa-decisions/AM414EY2/2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906.json",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+      "run_key": "animations:batch:ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM414E11.json;animations/index/selections/AM414E12.json;animations/index/selections/AM414EY2.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 5,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4",
+        "animations:pack:AR0904"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch; Candidat(s) de zone: AR0904; QA ingame explicite: animations/index/qa-decisions/AM904TL1/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json;animations/index/qa-decisions/AM904TL2/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json;animations/index/qa-decisions/AM904TL3/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json;animations/index/qa-decisions/AM904TL4/2026-09-06-accepted-ar0904-taloscircle-ellipsefade-30fps-v2-20260906.json; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+      "provenance_state": "verified",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-ellipsefade-30fps-v2-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM904TL1.json;animations/index/selections/AM904TL2.json;animations/index/selections/AM904TL3.json;animations/index/selections/AM904TL4.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade24-30fps-v2-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade24-30fps-v2-20260906",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0904-taloscircle-ellipsefade-maskfade24-30fps-v2-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-ellipsefade-maskfade24-30fps-v2-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade30-30fps-v2-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade30-30fps-v2-20260906",
+      "provenance_state": "verified",
+      "qa_state": "preview-accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0904-taloscircle-ellipsefade-maskfade30-30fps-v2-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-ellipsefade-maskfade30-30fps-v2-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade36-30fps-v2-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade36-30fps-v2-20260906",
+      "provenance_state": "verified",
+      "qa_state": "preview-accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0904-taloscircle-ellipsefade-maskfade36-30fps-v2-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-ellipsefade-maskfade36-30fps-v2-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade48-30fps-v2-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-ellipsefade-maskfade48-30fps-v2-20260906",
+      "provenance_state": "verified",
+      "qa_state": "preview-accepted",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar0904-taloscircle-ellipsefade-maskfade48-30fps-v2-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-ellipsefade-maskfade48-30fps-v2-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "failed",
+      "run_id": "ar0904-taloscircle-spatial-x4-20260906",
+      "run_key": "animations:batch:ar0904-taloscircle-spatial-x4-20260906",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 4,
+      "asset_ids": [
+        "animations:bam:AM904TL1",
+        "animations:bam:AM904TL2",
+        "animations:bam:AM904TL3",
+        "animations:bam:AM904TL4"
+      ],
+      "descriptor_path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906-r2/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906-r2",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "failed",
+      "run_id": "ar0904-taloscircle-spatial-x4-20260906-r2",
+      "run_key": "animations:batch:ar0904-taloscircle-spatial-x4-20260906-r2",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
       "asset_count": 9,
       "asset_ids": [
         "animations:bam:FALL1B",
@@ -3987,10 +4386,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 10,
+      "asset_count": 9,
       "asset_ids": [
         "animations:bam:DSTDVL1A",
-        "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
         "animations:pack:AR1600",
@@ -4004,7 +4402,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1a-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -4128,10 +4526,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 10,
+      "asset_count": 9,
       "asset_ids": [
         "animations:bam:DSTDVL1B",
-        "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
         "animations:pack:AR1600",
@@ -4145,7 +4542,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1b-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -4269,10 +4666,9 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 10,
+      "asset_count": 9,
       "asset_ids": [
         "animations:bam:DSTDVL1C",
-        "animations:pack:AR0414",
         "animations:pack:AR1100",
         "animations:pack:AR1200",
         "animations:pack:AR1600",
@@ -4286,7 +4682,7 @@
       "domain": "animations",
       "inputs_state": "documented",
       "legacy": false,
-      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR0414;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
+      "notes": "layout=legacy; Candidat(s) de zone: AR1100;AR1200;AR1700;AR5500;OH6400;AR1600;AR6300;AR5200; qa-approval.json = revue/preview du run; aucune preuve de QA ingame",
       "outputs_state": "present",
       "path": "animations/runs/dstdvl1c-apo8-x4-30fps-v2-spline-fit1-coreguard16-activefade7-20-7-candidate",
       "provenance_state": "verified",
@@ -18069,10 +18465,10 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "F6A79FCCD3878E23547720861C0C2A260DC92798D0B746C8CB8FAABEA2C2A664",
+  "source_fingerprint_sha256": "FEA63267EC29E0933C853C6DB793BFA576663148925C1853AD063849B59F1EB2",
   "summary": {
     "by_domain": {
-      "animations": 282,
+      "animations": 299,
       "maps": 322,
       "sprites": 143,
       "videos": 12
@@ -18080,10 +18476,10 @@
     "by_selection_state": {
       "canonical-prototype": 17,
       "current-generation": 1,
-      "historical": 348,
+      "historical": 362,
       "historical-unselected": 5,
-      "release-candidate": 56,
-      "selected": 324,
+      "release-candidate": 57,
+      "selected": 326,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2

@@ -1,0 +1,13 @@
+{
+  "schema": "bg2-upscale-hand-painted-occlusion-masks-v1",
+  "resref": "AM904TL2",
+  "peint_par": "utilisateur",
+  "date_source": "2026-09-06",
+  "enregistre_le_utc": "2026-09-06T18:13:18.8389866+02:00",
+  "contrat_masque": "PNG 240x240, grayscale flattened, alpha fully opaque: white keeps, black removes, gray is transition.",
+  "source_reference_x4": ".tmp/ar0904-mask-references-x4/AM904TL2-frame004-masque.png",
+  "fichiers": [
+    {"name": "AR0904-x984-y613.png", "sha256": "27c7761cf90bb8c54f691485ecda3a45739b7d6a8ed449fbfd477df48ad09047", "bytes": 4254, "role": "user-painted-source"},
+    {"name": "AR0904-x984-y613-fade8.png", "sha256": "b28828fd4de6af9f3a10928c8114c23e4aa70bfd47f5ed7885ef3dd924775e31", "bytes": 2931, "role": "derived-inner-feather", "radius_x4": 8}
+  ]
+}

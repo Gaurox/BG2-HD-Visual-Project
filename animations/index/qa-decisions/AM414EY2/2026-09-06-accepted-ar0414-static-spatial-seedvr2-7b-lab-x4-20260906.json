@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM414EY2",
+  "decision": "Validation ingame explicite : rendu x4 statique correct dans AR0414.",
+  "decision_date": "2026-09-06",
+  "decision_id": "2026-09-06-accepted-ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906/manifest.json",
+    "manifest_sha256": "CA985481C63ED93CBA99F3F6417A0F224A61573B7AE5E2F35E5662BB21E9E09D",
+    "path": "animations/batches/ar0414-static-spatial-seedvr2-7b-lab-x4-20260906",
+    "schema": "bg2-upscale-area-animation-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "seedvr2-7b-lab-x4",
+  "recorded_at_utc": "2026-09-06T15:21:55Z",
+  "resref": "AM414EY2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0414",
+        "manifest_path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414/manifest.json",
+        "manifest_sha256": "020936972818E8C818F285AB3082E5DC2B21F400CD9AB85C8C0111A06935B145",
+        "path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/AR0414",
+        "registry_sha256": "A2C09FCBE616C47D01E0175D0E2C37DDEEAA2935D182A3305431A49B5C78411D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906/manifest.json",
+    "manifest_sha256": "A0DA309E31AB35DA03C228A39286447B19E36604A000458E0CEFDBE61C3CD6F0",
+    "path": "animations/packs-par-zone/ar0414-dstdvl1abc-plus-static-seedvr7b-lab-x4-20260906",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0414"
+  ]
+}

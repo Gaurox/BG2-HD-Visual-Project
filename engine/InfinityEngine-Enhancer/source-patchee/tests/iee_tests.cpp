@@ -3354,6 +3354,38 @@ void test_area_animation_registry_formats() {
               "An unknown low-level dimension must fail closed to the native BAM draw");
   iee::area_animation_x4::release();
 
+  // Independent BAM cycles may have identical geometry. The selected cycle must win before the
+  // sibling-dimension fallback, otherwise static cycle 0 assets never reach the x4 texture path.
+  for (std::size_t index = 0; index < 2; ++index) {
+    write_file(root / (std::string{"AAX4-TESTA-frame00"} + std::to_string(index) + ".rgba"),
+               std::vector<std::byte>(4 * 4 * 4, std::byte{0x42}));
+  }
+  auto duplicateGeometry = make_header(2);
+  append_raw(duplicateGeometry, target.data(), target.size());
+  for (const auto value : std::array<std::uint32_t, 2>{{2, 2}}) append(duplicateGeometry, value);
+  for (const auto value : std::array<std::uint32_t, 5>{{0, 0, 0, 0, 0}}) {
+    append(duplicateGeometry, value);
+  }
+  for (const auto value : std::array<std::uint32_t, 4>{{1, 1, 1, 1}}) {
+    append(duplicateGeometry, value);
+  }
+  for (const auto value : std::array<std::uint32_t, 6>{{1, 0, 0, 1, 1, 0}}) {
+    append(duplicateGeometry, value);
+  }
+  write_file(root / "AreaAnimations-X4.registry", duplicateGeometry);
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A native duplicate-geometry multi-cycle registry should prepare");
+  iee::area_animation_x4::FrameResolution duplicateGeometryResolution{};
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0,
+                  duplicateGeometryResolution) &&
+                  iee::area_animation_x4::resolve_native_subframe(
+                      duplicateGeometryResolution, 0, 0, 1, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 0,
+              "The selected native cycle must win when a sibling has identical geometry");
+  iee::area_animation_x4::release();
+
   // TimedTimeline must preserve the same multi-cycle dispatch as native playback. Every
   // low-level draw selects its sibling cycle at the phase chosen once by the high-level clock.
   for (std::size_t index = 0; index < compositeDimensions.size(); ++index) {

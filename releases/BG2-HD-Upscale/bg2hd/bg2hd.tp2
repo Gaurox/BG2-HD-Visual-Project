@@ -10536,6 +10536,30 @@ BEGIN ~AR0414 area animations (x4)~
   MKDIR ~iee-assets~
   MKDIR ~iee-assets/areas~
   MKDIR ~iee-assets/areas/AR0414~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame000.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame001.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame002.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame003.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame004.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame005.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame006.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E11-frame007.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E11-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame000.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame001.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame002.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame003.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame004.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame005.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame006.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414E12-frame007.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414E12-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame000.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame001.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame002.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame003.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame004.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame005.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame006.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-AM414EY2-frame007.rgba~ ~iee-assets/areas/AR0414/AAX4-AM414EY2-frame007.rgba~
   COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-DSTDVL1A-frame000.rgba~ ~iee-assets/areas/AR0414/AAX4-DSTDVL1A-frame000.rgba~
   COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-DSTDVL1A-frame001.rgba~ ~iee-assets/areas/AR0414/AAX4-DSTDVL1A-frame001.rgba~
   COPY_LARGE ~bg2hd/payload/animation-ar0414/AAX4-DSTDVL1A-frame002.rgba~ ~iee-assets/areas/AR0414/AAX4-DSTDVL1A-frame002.rgba~
@@ -12730,6 +12754,83 @@ BEGIN ~AR2008 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2008/A200806.PVRZ~ ~override/A200806.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2008/A200807.PVRZ~ ~override/A200807.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2008/AR2008.TIS~ ~override/AR2008.TIS~
+
+BEGIN ~AR0904 area animations (x4)~
+  DESIGNATED 3041
+  LABEL ~animation-ar0904~
+  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
+  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
+  MKDIR ~iee-assets~
+  MKDIR ~iee-assets/areas~
+  MKDIR ~iee-assets/areas/AR0904~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame000.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame001.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame002.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame003.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame004.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame005.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame006.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame007.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame008.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame009.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame010.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame011.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame012.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame013.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame014.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame015.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame016.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL1-frame017.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL1-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame000.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame001.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame002.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame003.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame004.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame005.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame006.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame007.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame008.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame009.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame010.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame011.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame012.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame013.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame014.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame015.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame016.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL2-frame017.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL2-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame000.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame001.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame002.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame003.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame004.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame005.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame006.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame007.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame008.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame009.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame010.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame011.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame012.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame012.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame013.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame013.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame014.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame014.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame015.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame015.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame016.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame016.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL3-frame017.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL3-frame017.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame000.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame000.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame001.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame001.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame002.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame002.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame003.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame003.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame004.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame004.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame005.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame005.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame006.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame006.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame007.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame007.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame008.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame008.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame009.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame009.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame010.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame010.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AAX4-AM904TL4-frame011.rgba~ ~iee-assets/areas/AR0904/AAX4-AM904TL4-frame011.rgba~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/AreaAnimations-X4.registry~ ~iee-assets/areas/AR0904/AreaAnimations-X4.registry~
+  COPY_LARGE ~bg2hd/payload/animation-ar0904/manifest.json~ ~iee-assets/areas/AR0904/manifest.json~
 
 BEGIN ~AR2009 (x4)~
   DESIGNATED 3050
