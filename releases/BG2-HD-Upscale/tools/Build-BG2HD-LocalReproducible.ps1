@@ -8,9 +8,10 @@ param(
 
 $ErrorActionPreference = 'Stop'
 function Get-Hash([string]$Path) {
+    $stream = [IO.File]::OpenRead($Path)
     $sha = [Security.Cryptography.SHA256]::Create()
-    try { ([BitConverter]::ToString($sha.ComputeHash([IO.File]::ReadAllBytes($Path)))).Replace('-', '') }
-    finally { $sha.Dispose() }
+    try { ([BitConverter]::ToString($sha.ComputeHash($stream))).Replace('-', '') }
+    finally { $sha.Dispose(); $stream.Dispose() }
 }
 function Require([bool]$Condition, [string]$Message) { if (-not $Condition) { throw $Message } }
 function Write-Utf8NoBom([string]$Path, [string[]]$Lines) {
@@ -56,7 +57,7 @@ Require (-not (Test-Path -LiteralPath $sidecar)) "Checksum deja present : $sidec
 $temporary = Join-Path $output ('.' + $name + '.' + [Guid]::NewGuid().ToString('N') + '.tmp')
 $publicDocuments = @(
     'README.md', 'README_FR.md', 'README_EN.md', 'CHANGELOG.md', 'KNOWN_ISSUES.md',
-    'docs/ARCHITECTURE.md', 'docs/MANIFESTS.md', 'docs/MAINTENANCE.md',
+    'docs/ARCHITECTURE.md', 'docs/MANIFESTS.md',
     'docs/INSTALLER_AND_UPSCALE_WORKFLOW.md', 'docs/LOCALIZATION.md',
     'docs/DEPENDENCY_BOOTSTRAP.md',
     'docs/STEAM_INTEGRATION.md', 'docs/TESTING.md', 'docs/RECOVERY.md',
@@ -83,6 +84,7 @@ try {
     }
     New-Item -ItemType Directory -Path (Join-Path $temporary 'tools') -Force | Out-Null
     Copy-Item -LiteralPath (Join-Path $release 'tools\Test-BG2HD-FutureSaveCompatibility.ps1') -Destination (Join-Path $temporary 'tools\Test-BG2HD-FutureSaveCompatibility.ps1')
+    Copy-Item -LiteralPath (Join-Path $release 'tools\Test-BG2HD-AR0413Contract.ps1') -Destination (Join-Path $temporary 'tools\Test-BG2HD-AR0413Contract.ps1')
     Write-Utf8NoBom (Join-Path $temporary 'BUILD-STATUS.txt') @(
         'BG2 HD local reproducible alpha build',
         "Version: $($manifest.version)",
@@ -91,7 +93,7 @@ try {
         'Save compatibility: future save chains disable EEex X-BIV1.0 marshalling.',
         'EEex: guided external prerequisite; never redistributed by BG2HD.',
         'Renderer: bundled BG2HD local-alpha payload; clean lifecycle validation remains required.',
-        'Content: validated x4 SeedVR2 7B maps and approved x4 UI only.'
+        'Content: manifest-selected validated maps, UI, overlays and area animations.'
     )
     $buildManifest = [ordered]@{
         schema_version = 1
@@ -103,7 +105,7 @@ try {
         uninstall_launcher_sha256 = Get-Hash (Join-Path $temporary 'Uninstall-BG2HD.exe')
         fixed_zip_timestamp_utc = '1980-01-01T00:00:00Z'
         public_documents = $publicDocuments
-        excluded = @('game executables', 'EEex', 'InfinityLoader', 'logs', 'saves', 'development backups', 'x2 assets')
+        excluded = @('game executables', 'EEex', 'InfinityLoader', 'logs', 'saves', 'development backups', 'unselected x2 assets', 'effect candidates pending payload projection')
     }
     [IO.File]::WriteAllText((Join-Path $temporary 'BUILD-MANIFEST.json'), ($buildManifest | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
     $checksums = @(Get-ChildItem -LiteralPath $temporary -File -Recurse | Sort-Object FullName | ForEach-Object {

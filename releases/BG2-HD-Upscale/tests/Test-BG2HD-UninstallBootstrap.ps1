@@ -26,16 +26,16 @@ try {
     $layoutPath=Join-Path $game 'bg2hd/state/install-layout.json';New-Item -ItemType Directory -Path (Split-Path -Parent $layoutPath) -Force|Out-Null;[IO.File]::WriteAllText($layoutPath,([ordered]@{schema_version=1;source_game_root=$steam;hd_game_root=$game;source_baldur_sha256=$runtime.target_game.sha256;launch_mode='dedicated-shortcut-only';steam_source_untouched=$true;created_at=(Get-Date).ToUniversalTime().ToString('o');package_version='test'}|ConvertTo-Json),[Text.UTF8Encoding]::new($false))
     [IO.File]::WriteAllText((Join-Path $game 'weidu.conf'),"lang_dir = en_US`r`n",[Text.UTF8Encoding]::new($false))
     $env:BG2HD_DESKTOP_PATH=$desktop
-    $install=Invoke-Bootstrap @('-Action','Install','-GameRoot',$game,'-SourceGameRoot',$steam,'--noautoupdate','--force-install-list','0','--language','0','--no-exit-pause') $game
+    $install=Invoke-Bootstrap @('-Action','Install','-GameRoot',$game,'--noautoupdate','--force-install-list','0','--language','0','--no-exit-pause') $game
     Require ($install.code -eq 0) "Installation bootstrap echouee : $($install.output)"
     $dependency=Get-Content -LiteralPath (Join-Path $game 'bg2hd/state/dependency-bootstrap.json') -Raw -Encoding utf8|ConvertFrom-Json
     Require ($dependency.eeex_origin -eq 'pre-existing') 'EEex pre-existant n a pas ete enregistre avant l installation BG2HD.'
-    $nonInteractive=Invoke-Bootstrap @('-Action','Uninstall','-GameRoot',$game,'-SourceGameRoot',$steam,'-NonInteractive') $game
+    $nonInteractive=Invoke-Bootstrap @('-Action','Uninstall','-GameRoot',$game,'-NonInteractive') $game
     Require ($nonInteractive.code -ne 0) 'Le choix de desinstallation a accepte un appel non interactif.'
     Require ($nonInteractive.output -match 'choix du mode de desinstallation exige une confirmation interactive') 'Le refus du choix non interactif est ambigu.'
     $core=& powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File (Join-Path $game 'bg2hd/tools/bg2hd-steam.ps1') -Action Uninstall -GameRoot $game -DesktopPath $desktop -SkipProcessCheck 2>&1|Out-String
     Require ($LASTEXITCODE -eq 0) "Retrait Core de nettoyage echoue : $core"
-    $resume=Invoke-BootstrapInteractive @('-Action','Uninstall','-GameRoot',$game,'-SourceGameRoot',$steam) $game "1`r`n"
+    $resume=Invoke-BootstrapInteractive @('-Action','Uninstall','-GameRoot',$game) $game "1`r`n"
     Require ($resume.code -eq 0) "Le desinstalleur ne reprend pas un Core deja retire : $($resume.output)"
     Require ($resume.output -match 'BG2HD est deja retire') 'La reprise de desinstallation deja retiree n a pas ete confirmee.'
     Write-Output 'UNINSTALL_BOOTSTRAP_GUARDS=PASSED'

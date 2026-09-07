@@ -84,7 +84,7 @@ Copy-Item -LiteralPath $weidu -Destination (Join-Path $temporary 'setup-bg2hd.ex
 
 $publicDocuments = @(
     'README.md', 'README_FR.md', 'README_EN.md', 'CHANGELOG.md', 'KNOWN_ISSUES.md',
-    'docs/ARCHITECTURE.md', 'docs/MANIFESTS.md', 'docs/MAINTENANCE.md',
+    'docs/ARCHITECTURE.md', 'docs/MANIFESTS.md',
     'docs/INSTALLER_AND_UPSCALE_WORKFLOW.md', 'docs/LOCALIZATION.md',
     'docs/DEPENDENCY_BOOTSTRAP.md', 'docs/STEAM_INTEGRATION.md', 'docs/TESTING.md',
     'docs/TEST_SAVE_COMPATIBILITY_FR.md', 'docs/RECOVERY.md', 'docs/COMPATIBILITY.md',

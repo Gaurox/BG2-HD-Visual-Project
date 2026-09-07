@@ -1,7 +1,7 @@
 // Generated from manifests/components.json and manifests/content.json. Do not edit manually.
 BACKUP ~bg2hd/backup~
 AUTHOR ~BG2 Upscale Project~
-VERSION ~0.1.0-alpha.2~
+VERSION ~0.1.0-alpha.3~
 AUTO_EVAL_STRINGS
 
 LANGUAGE ~English~ ~english~ ~bg2hd/tra/english/setup.tra~ ~bg2hd/tra/english/setup.tra~
@@ -5460,7 +5460,7 @@ BEGIN ~AR2905 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2905/A290506.PVRZ~ ~override/A290506.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2905/AR2905.TIS~ ~override/AR2905.TIS~
 
-BEGIN ~AR2000 (x4)~
+BEGIN ~AR2000 (day and night, x4)~
   DESIGNATED 2980
   LABEL ~map-ar2000~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -5541,14 +5541,6 @@ BEGIN ~AR2000 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A200072.PVRZ~ ~override/A200072.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A200073.PVRZ~ ~override/A200073.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A200074.PVRZ~ ~override/A200074.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-ar2000/AR2000.TIS~ ~override/AR2000.TIS~
-
-BEGIN ~AR2000 (day and night, x4)~
-  DESIGNATED 2990
-  LABEL ~map-ar2000~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N00.PVRZ~ ~override/A2000N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N01.PVRZ~ ~override/A2000N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N02.PVRZ~ ~override/A2000N02.PVRZ~
@@ -5624,6 +5616,7 @@ BEGIN ~AR2000 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N72.PVRZ~ ~override/A2000N72.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N73.PVRZ~ ~override/A2000N73.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar2000/A2000N74.PVRZ~ ~override/A2000N74.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-ar2000/AR2000.TIS~ ~override/AR2000.TIS~
   COPY_LARGE ~bg2hd/payload/map-ar2000/AR2000N.TIS~ ~override/AR2000N.TIS~
 
 BEGIN ~AR0602 area animations (x4)~
@@ -13441,7 +13434,7 @@ BEGIN ~AR1516 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1516/A151613.PVRZ~ ~override/A151613.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1516/AR1516.TIS~ ~override/AR1516.TIS~
 
-BEGIN ~AR1900 (x4)~
+BEGIN ~AR1900 (day and night, x4)~
   DESIGNATED 3420
   LABEL ~map-ar1900~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -13541,14 +13534,6 @@ BEGIN ~AR1900 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A190091.PVRZ~ ~override/A190091.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A190092.PVRZ~ ~override/A190092.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A190093.PVRZ~ ~override/A190093.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-ar1900/AR1900.TIS~ ~override/AR1900.TIS~
-
-BEGIN ~AR1900 (day and night, x4)~
-  DESIGNATED 3430
-  LABEL ~map-ar1900~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N00.PVRZ~ ~override/A1900N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N01.PVRZ~ ~override/A1900N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N02.PVRZ~ ~override/A1900N02.PVRZ~
@@ -13623,9 +13608,10 @@ BEGIN ~AR1900 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N71.PVRZ~ ~override/A1900N71.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N72.PVRZ~ ~override/A1900N72.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1900/A1900N73.PVRZ~ ~override/A1900N73.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-ar1900/AR1900.TIS~ ~override/AR1900.TIS~
   COPY_LARGE ~bg2hd/payload/map-ar1900/AR1900N.TIS~ ~override/AR1900N.TIS~
 
-BEGIN ~AR1400 (x4)~
+BEGIN ~AR1400 (day and night, x4)~
   DESIGNATED 3440
   LABEL ~map-ar1400~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -13694,14 +13680,6 @@ BEGIN ~AR1400 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A140060.PVRZ~ ~override/A140060.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A140061.PVRZ~ ~override/A140061.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A140062.PVRZ~ ~override/A140062.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-ar1400/AR1400.TIS~ ~override/AR1400.TIS~
-
-BEGIN ~AR1400 (day and night, x4)~
-  DESIGNATED 3450
-  LABEL ~map-ar1400~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N00.PVRZ~ ~override/A1400N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N01.PVRZ~ ~override/A1400N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N02.PVRZ~ ~override/A1400N02.PVRZ~
@@ -13765,6 +13743,7 @@ BEGIN ~AR1400 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N60.PVRZ~ ~override/A1400N60.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N61.PVRZ~ ~override/A1400N61.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1400/A1400N62.PVRZ~ ~override/A1400N62.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-ar1400/AR1400.TIS~ ~override/AR1400.TIS~
   COPY_LARGE ~bg2hd/payload/map-ar1400/AR1400N.TIS~ ~override/AR1400N.TIS~
 
 BEGIN ~AR1404 (x4)~
@@ -14111,7 +14090,7 @@ BEGIN ~AR1905 (x4)~
   COPY_LARGE ~bg2hd/payload/map-ar1905/A190501.PVRZ~ ~override/A190501.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-ar1905/AR1905.TIS~ ~override/AR1905.TIS~
 
-BEGIN ~OH4000 (x4)~
+BEGIN ~OH4000 (day and night, x4)~
   DESIGNATED 3570
   LABEL ~map-oh4000~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -14215,14 +14194,6 @@ BEGIN ~OH4000 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O400095.PVRZ~ ~override/O400095.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O400096.PVRZ~ ~override/O400096.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O400097.PVRZ~ ~override/O400097.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh4000/OH4000.TIS~ ~override/OH4000.TIS~
-
-BEGIN ~OH4000 (day and night, x4)~
-  DESIGNATED 3580
-  LABEL ~map-oh4000~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N00.PVRZ~ ~override/O4000N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N01.PVRZ~ ~override/O4000N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N02.PVRZ~ ~override/O4000N02.PVRZ~
@@ -14321,9 +14292,10 @@ BEGIN ~OH4000 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N95.PVRZ~ ~override/O4000N95.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N96.PVRZ~ ~override/O4000N96.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4000/O4000N97.PVRZ~ ~override/O4000N97.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh4000/OH4000.TIS~ ~override/OH4000.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh4000/OH4000N.TIS~ ~override/OH4000N.TIS~
 
-BEGIN ~OH4100 (x4)~
+BEGIN ~OH4100 (day and night, x4)~
   DESIGNATED 3590
   LABEL ~map-oh4100~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -14428,14 +14400,6 @@ BEGIN ~OH4100 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O410096.PVRZ~ ~override/O410096.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O410097.PVRZ~ ~override/O410097.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O410098.PVRZ~ ~override/O410098.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh4100/OH4100.TIS~ ~override/OH4100.TIS~
-
-BEGIN ~OH4100 (day and night, x4)~
-  DESIGNATED 3600
-  LABEL ~map-oh4100~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N00.PVRZ~ ~override/O4100N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N01.PVRZ~ ~override/O4100N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N02.PVRZ~ ~override/O4100N02.PVRZ~
@@ -14535,9 +14499,10 @@ BEGIN ~OH4100 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N96.PVRZ~ ~override/O4100N96.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N97.PVRZ~ ~override/O4100N97.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4100/O4100N98.PVRZ~ ~override/O4100N98.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh4100/OH4100.TIS~ ~override/OH4100.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh4100/OH4100N.TIS~ ~override/OH4100N.TIS~
 
-BEGIN ~OH5100 (x4)~
+BEGIN ~OH5100 (day and night, x4)~
   DESIGNATED 3610
   LABEL ~map-oh5100~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -14641,14 +14606,6 @@ BEGIN ~OH5100 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O510095.PVRZ~ ~override/O510095.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O510096.PVRZ~ ~override/O510096.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O510097.PVRZ~ ~override/O510097.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh5100/OH5100.TIS~ ~override/OH5100.TIS~
-
-BEGIN ~OH5100 (day and night, x4)~
-  DESIGNATED 3620
-  LABEL ~map-oh5100~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N00.PVRZ~ ~override/O5100N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N01.PVRZ~ ~override/O5100N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N02.PVRZ~ ~override/O5100N02.PVRZ~
@@ -14747,9 +14704,10 @@ BEGIN ~OH5100 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N95.PVRZ~ ~override/O5100N95.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N96.PVRZ~ ~override/O5100N96.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5100/O5100N97.PVRZ~ ~override/O5100N97.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh5100/OH5100.TIS~ ~override/OH5100.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh5100/OH5100N.TIS~ ~override/OH5100N.TIS~
 
-BEGIN ~OH6000 (x4)~
+BEGIN ~OH6000 (day and night, x4)~
   DESIGNATED 3630
   LABEL ~map-oh6000~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -14853,14 +14811,6 @@ BEGIN ~OH6000 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O600095.PVRZ~ ~override/O600095.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O600096.PVRZ~ ~override/O600096.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O600097.PVRZ~ ~override/O600097.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh6000/OH6000.TIS~ ~override/OH6000.TIS~
-
-BEGIN ~OH6000 (day and night, x4)~
-  DESIGNATED 3640
-  LABEL ~map-oh6000~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N00.PVRZ~ ~override/O6000N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N01.PVRZ~ ~override/O6000N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N02.PVRZ~ ~override/O6000N02.PVRZ~
@@ -14959,6 +14909,7 @@ BEGIN ~OH6000 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N95.PVRZ~ ~override/O6000N95.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N96.PVRZ~ ~override/O6000N96.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6000/O6000N97.PVRZ~ ~override/O6000N97.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh6000/OH6000.TIS~ ~override/OH6000.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh6000/OH6000N.TIS~ ~override/OH6000N.TIS~
 
 BEGIN ~OH7100 (x4)~
@@ -15011,7 +14962,7 @@ BEGIN ~OH7200 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh7200/O720016.PVRZ~ ~override/O720016.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh7200/OH7200.TIS~ ~override/OH7200.TIS~
 
-BEGIN ~OH4101 (x4)~
+BEGIN ~OH4101 (day and night, x4)~
   DESIGNATED 3670
   LABEL ~map-oh4101~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -15035,14 +14986,6 @@ BEGIN ~OH4101 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O410115.PVRZ~ ~override/O410115.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O410116.PVRZ~ ~override/O410116.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O410117.PVRZ~ ~override/O410117.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh4101/OH4101.TIS~ ~override/OH4101.TIS~
-
-BEGIN ~OH4101 (day and night, x4)~
-  DESIGNATED 3680
-  LABEL ~map-oh4101~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N00.PVRZ~ ~override/O4101N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N01.PVRZ~ ~override/O4101N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N02.PVRZ~ ~override/O4101N02.PVRZ~
@@ -15061,9 +15004,10 @@ BEGIN ~OH4101 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N15.PVRZ~ ~override/O4101N15.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N16.PVRZ~ ~override/O4101N16.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh4101/O4101N17.PVRZ~ ~override/O4101N17.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh4101/OH4101.TIS~ ~override/OH4101.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh4101/OH4101N.TIS~ ~override/OH4101N.TIS~
 
-BEGIN ~OH5300 (x4)~
+BEGIN ~OH5300 (day and night, x4)~
   DESIGNATED 3690
   LABEL ~map-oh5300~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -15094,14 +15038,6 @@ BEGIN ~OH5300 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O530022.PVRZ~ ~override/O530022.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O530023.PVRZ~ ~override/O530023.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O530024.PVRZ~ ~override/O530024.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh5300/OH5300.TIS~ ~override/OH5300.TIS~
-
-BEGIN ~OH5300 (day and night, x4)~
-  DESIGNATED 3700
-  LABEL ~map-oh5300~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N00.PVRZ~ ~override/O5300N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N01.PVRZ~ ~override/O5300N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N02.PVRZ~ ~override/O5300N02.PVRZ~
@@ -15127,9 +15063,10 @@ BEGIN ~OH5300 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N22.PVRZ~ ~override/O5300N22.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N23.PVRZ~ ~override/O5300N23.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh5300/O5300N24.PVRZ~ ~override/O5300N24.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh5300/OH5300.TIS~ ~override/OH5300.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh5300/OH5300N.TIS~ ~override/OH5300N.TIS~
 
-BEGIN ~OH6100 (x4)~
+BEGIN ~OH6100 (day and night, x4)~
   DESIGNATED 3710
   LABEL ~map-oh6100~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -15160,14 +15097,6 @@ BEGIN ~OH6100 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O610022.PVRZ~ ~override/O610022.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O610023.PVRZ~ ~override/O610023.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O610024.PVRZ~ ~override/O610024.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh6100/OH6100.TIS~ ~override/OH6100.TIS~
-
-BEGIN ~OH6100 (day and night, x4)~
-  DESIGNATED 3720
-  LABEL ~map-oh6100~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N00.PVRZ~ ~override/O6100N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N01.PVRZ~ ~override/O6100N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N02.PVRZ~ ~override/O6100N02.PVRZ~
@@ -15193,9 +15122,10 @@ BEGIN ~OH6100 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N22.PVRZ~ ~override/O6100N22.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N23.PVRZ~ ~override/O6100N23.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6100/O6100N24.PVRZ~ ~override/O6100N24.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh6100/OH6100.TIS~ ~override/OH6100.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh6100/OH6100N.TIS~ ~override/OH6100N.TIS~
 
-BEGIN ~OH6200 (x4)~
+BEGIN ~OH6200 (day and night, x4)~
   DESIGNATED 3730
   LABEL ~map-oh6200~
   REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
@@ -15226,14 +15156,6 @@ BEGIN ~OH6200 (x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O620022.PVRZ~ ~override/O620022.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O620023.PVRZ~ ~override/O620023.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O620024.PVRZ~ ~override/O620024.PVRZ~
-  COPY_LARGE ~bg2hd/payload/map-oh6200/OH6200.TIS~ ~override/OH6200.TIS~
-
-BEGIN ~OH6200 (day and night, x4)~
-  DESIGNATED 3740
-  LABEL ~map-oh6200~
-  REQUIRE_PREDICATE GAME_IS ~bg2ee~ @11
-  REQUIRE_COMPONENT ~bg2hd/bg2hd.tp2~ ~0~ @14
-  MKDIR ~override~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N00.PVRZ~ ~override/O6200N00.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N01.PVRZ~ ~override/O6200N01.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N02.PVRZ~ ~override/O6200N02.PVRZ~
@@ -15259,6 +15181,7 @@ BEGIN ~OH6200 (day and night, x4)~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N22.PVRZ~ ~override/O6200N22.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N23.PVRZ~ ~override/O6200N23.PVRZ~
   COPY_LARGE ~bg2hd/payload/map-oh6200/O6200N24.PVRZ~ ~override/O6200N24.PVRZ~
+  COPY_LARGE ~bg2hd/payload/map-oh6200/OH6200.TIS~ ~override/OH6200.TIS~
   COPY_LARGE ~bg2hd/payload/map-oh6200/OH6200N.TIS~ ~override/OH6200N.TIS~
 
 BEGIN ~AR2001 (x4)~

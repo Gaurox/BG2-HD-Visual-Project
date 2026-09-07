@@ -25,6 +25,7 @@ function Require-RendererSnapshot([string]$Game,[hashtable]$Expected,[object[]]$
 $archive=(Resolve-Path -LiteralPath $ArchivePath).Path;$source=(Resolve-Path -LiteralPath $GameRoot).Path;$release=(Resolve-Path -LiteralPath $ReleaseRoot).Path
 $rendererManifest=Get-Content -LiteralPath (Join-Path $release 'manifests/renderer-bundle.json') -Raw -Encoding utf8|ConvertFrom-Json
 $runtime=Get-Content -LiteralPath (Join-Path $release 'manifests/runtime-compatibility.json') -Raw -Encoding utf8|ConvertFrom-Json
+$loaderHash=@($runtime.eeex.files|Where-Object{$_.path-eq'InfinityLoader.exe'})[0].sha256
 $officialSource=$null;foreach($name in @('Baldur.exe','BaldurReal.exe')){$candidate=Join-Path $source $name;if((Test-Path -LiteralPath $candidate)-and(Get-Hash $candidate)-eq$runtime.target_game.sha256){$officialSource=$candidate;break}};Require ($null-ne$officialSource) 'Executable officiel absent de la fixture.'
 $loaderIniSource=Join-Path $source 'InfinityLoader.ini';$backupIni=Join-Path $source 'bg2hd/state/backups/InfinityLoader.ini.before-bg2hd';if((Test-Path -LiteralPath $backupIni)-and((Get-Content -LiteralPath $backupIni -Raw)-match '(?im)^\s*ExeNames\s*=.*\bBaldur\.exe\b')){$loaderIniSource=$backupIni}
 $rendererRuntimeFiles=@($rendererManifest.files|Where-Object{$_.role -ne 'config-template'})
@@ -35,7 +36,7 @@ try {
     [IO.File]::WriteAllText((Join-Path $game 'WeiDU.log'),"~EEEX/EEEX.TP2~ #0 #0`r`n~EEEX/EEEX.TP2~ #0 #1`r`n",[Text.UTF8Encoding]::new($false))
     Copy-Required $officialSource (Join-Path $game 'Baldur.exe');Copy-Required $loaderIniSource (Join-Path $game 'InfinityLoader.ini')
     $weiduConf=Join-Path $source 'weidu.conf';if(Test-Path -LiteralPath $weiduConf){Copy-Required $weiduConf (Join-Path $game 'weidu.conf');$lang=(Get-Content -LiteralPath $weiduConf -Raw|Select-String -Pattern '(?im)^\s*lang_dir\s*=\s*([^\s;#]+)').Matches.Groups[1].Value;if($lang){Copy-Required (Join-Path $source "lang/$lang/dialog.tlk") (Join-Path $game "lang/$lang/dialog.tlk")}}else{[IO.File]::WriteAllText((Join-Path $game 'weidu.conf'),"lang_dir = en_US`r`n",[Text.UTF8Encoding]::new($false))}
-    $originalBaldur=Get-Hash (Join-Path $game 'Baldur.exe');$originalLoaderIni=Get-Hash (Join-Path $game 'InfinityLoader.ini');$originalRendererIni=Get-Hash (Join-Path $game 'InfinityEngine-Enhancer.ini')
+    $originalBaldur=Get-Hash (Join-Path $game 'Baldur.exe');$originalRendererIni=Get-Hash (Join-Path $game 'InfinityEngine-Enhancer.ini')
     $originalRendererFiles=Get-RendererSnapshot $game $rendererRuntimeFiles
     $fixture=Join-Path $game 'override/AR0300.TIS';New-Item -ItemType Directory -Path (Split-Path -Parent $fixture) -Force|Out-Null;[IO.File]::WriteAllBytes($fixture,[byte[]](7,4,2,1));$fixtureHash=Get-Hash $fixture
     $uiFixture=Join-Path $game 'iee-assets/BIGLOGO-MOS0017-x4.dxt5';New-Item -ItemType Directory -Path (Split-Path -Parent $uiFixture) -Force|Out-Null;[IO.File]::WriteAllBytes($uiFixture,[byte[]](8,6,4,2));$uiFixtureHash=Get-Hash $uiFixture
@@ -44,17 +45,19 @@ try {
     $env:BG2HD_DESKTOP_PATH=$desktop
     Push-Location $game
     try {
-        foreach($id in @(0,100,110,1000,1010,1020,1030,1040,1050,1060)){$output=& .\setup-bg2hd.exe '--noautoupdate' '--force-install-list' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Installation WeiDU echouee : composant $id ($code) $output"}
-        $content=Get-Content -LiteralPath (Join-Path $release 'manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json
-        $byDestination=@{};foreach($entry in $content.entries){if(-not $byDestination.ContainsKey($entry.destination) -or [int]$entry.install_order -ge [int]$byDestination[$entry.destination].install_order){$byDestination[$entry.destination]=$entry}}
+        $componentIds=@(0,100,110,1000,1010,1020,1030,1040,1050,1060)
+        foreach($id in $componentIds){$output=& .\setup-bg2hd.exe '--noautoupdate' '--force-install-list' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Installation WeiDU echouee : composant $id ($code) $output"}
+        $content=Get-Content -LiteralPath (Join-Path $game 'bg2hd/manifests/content.json') -Raw -Encoding utf8|ConvertFrom-Json
+        $byDestination=@{};foreach($entry in @($content.entries|Where-Object{[int]$_.component_id-in$componentIds})){if(-not $byDestination.ContainsKey($entry.destination) -or [int]$entry.install_order -ge [int]$byDestination[$entry.destination].install_order){$byDestination[$entry.destination]=$entry}}
         foreach($destination in $byDestination.Keys){$entry=$byDestination[$destination];$file=Join-Path $game ($destination.Replace('/','\'));Require (Test-Path -LiteralPath $file -PathType Leaf) "Fichier installe absent : $destination";Require ((Get-Hash $file) -eq $entry.sha256) "Hash installe incorrect : $destination"}
         $installedIni=Get-Content -LiteralPath (Join-Path $game 'InfinityEngine-Enhancer.ini') -Raw
         foreach($setting in @('EnableBigLogoX4Test\s*=\s*true','EnableMainMenuX4Test\s*=\s*true','EnableMenuX2Test\s*=\s*false')){Require ($installedIni -match "(?im)^\s*$setting\s*$") "Configuration UI x4 absente : $setting"}
-        foreach($id in @(1060,1050,1040,1030,1020,1010,1000,110,100,0)){$output=& .\setup-bg2hd.exe '--noautoupdate' '--uninstall' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Desinstallation WeiDU echouee : composant $id ($code) $output"}
+        foreach($id in @($componentIds|Sort-Object -Descending)){$output=& .\setup-bg2hd.exe '--noautoupdate' '--uninstall' "$id" '--language' '0' '--no-exit-pause' 2>&1|Out-String;$code=$LASTEXITCODE;Require ($code -eq 0) "Desinstallation WeiDU echouee : composant $id ($code) $output"}
     } finally {Pop-Location}
-    Require ((Get-Hash (Join-Path $game 'Baldur.exe')) -eq $originalBaldur) 'Baldur.exe a ete modifie pendant le cycle archive.'
-    Require (-not(Test-Path -LiteralPath (Join-Path $game 'BaldurReal.exe'))) 'BaldurReal.exe a ete cree pendant le cycle archive.'
-    Require ((Get-Hash (Join-Path $game 'InfinityLoader.ini')) -eq $originalLoaderIni) 'InfinityLoader.ini a ete modifie pendant le cycle archive.'
+    Require ((Get-Hash (Join-Path $game 'Baldur.exe')) -eq $loaderHash) 'Le retrait archive n a pas conserve le shim EEex.'
+    Require ((Get-Hash (Join-Path $game 'BaldurReal.exe')) -eq $originalBaldur) 'Le retrait archive n a pas preserve l executable officiel.'
+    $retainedLoaderIni=Get-Content -LiteralPath (Join-Path $game 'InfinityLoader.ini') -Raw
+    Require ($retainedLoaderIni-match'(?im)^\s*ExeNames\s*=\s*BaldurReal\.exe' -and $retainedLoaderIni-match'(?im)^\s*ExeSwitchAlias\s*=\s*BaldurReal\.exe:Baldur\.exe') 'Le retrait archive n a pas conserve le routage EEex.'
     Require ((Get-Hash (Join-Path $steamSource 'Baldur.exe')) -eq $originalBaldur) 'La source Steam a ete modifiee pendant le cycle archive.'
     Require ((Get-Hash (Join-Path $game 'InfinityEngine-Enhancer.ini')) -eq $originalRendererIni) 'INI renderer non restaure apres archive.'
     Require-RendererSnapshot $game $originalRendererFiles $rendererRuntimeFiles

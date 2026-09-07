@@ -160,9 +160,13 @@ $animationComponents = foreach ($group in $animations) {
     }
 }
 
-$components = @($base + $overlayComponents + $mapComponents + $animationComponents | Sort-Object id)
+$components = @(($base + $overlayComponents + $mapComponents + $animationComponents) | Sort-Object {
+    if ($_ -is [System.Collections.IDictionary]) { [int]$_['id'] } else { [int]$_.id }
+})
 $ids = @($components | ForEach-Object { [int]$_.id })
 if (@($ids | Sort-Object -Unique).Count -ne $ids.Count) { throw 'ID composant duplique apres generation.' }
+$labels = @($components | ForEach-Object { [string]$_.label })
+if (@($labels | Sort-Object -Unique).Count -ne $labels.Count) { throw 'Label composant duplique apres generation.' }
 
 $manifest = [ordered]@{
     '$schema' = '../schemas/components.schema.json'

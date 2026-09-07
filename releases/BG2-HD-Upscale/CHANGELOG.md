@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — in-place save-compatible test installer
+## 0.1.0-alpha.3 — in-place save-compatible test installer
 
 - Restored the single-installation design: BG2HD transforms the supported
   Steam game in place and Steam launches HD through the verified
@@ -28,6 +28,8 @@
   that omit the required liquid classifiers.
 - Pins AR0413 as a permanent 17-file packaging contract and consolidates local
   installer output under the neutral name `BG2HD-Installer-Windows.zip`.
+- Packages the approved area-animation candidates with their pinned renderer,
+  QA and runtime manifests.
 
 ## 0.1.0-alpha.2 — local corrective build
 

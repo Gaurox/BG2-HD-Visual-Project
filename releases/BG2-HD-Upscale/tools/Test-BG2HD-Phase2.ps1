@@ -234,8 +234,13 @@ try {
 }
 
 $tp2 = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'bg2hd/bg2hd.tp2') -Raw
+$releaseManifest = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/release.json') -Raw | ConvertFrom-Json
 $components = (Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/components.json') -Raw | ConvertFrom-Json).components
 $content = (Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/content.json') -Raw | ConvertFrom-Json).entries
+$componentOrder = @($components | ForEach-Object { '{0:D8}' -f [int]$_.id })
+Require (($componentOrder -join "`n") -ceq (@($componentOrder | Sort-Object) -join "`n")) 'Ordre des composants non canonique.'
+$contentOrder = @($content | ForEach-Object { '{0:D8}|{1:D8}|{2}|{3}' -f [int]$_.component_id, [int]$_.install_order, [string]$_.destination, [string]$_.source })
+Require (($contentOrder -join "`n") -ceq (@($contentOrder | Sort-Object -CaseSensitive) -join "`n")) 'Ordre du contenu non canonique.'
 $runtimeCompatibility = Get-Content -LiteralPath (Join-Path $ReleaseRoot 'manifests/runtime-compatibility.json') -Raw | ConvertFrom-Json
 
 foreach ($candidate in @($animationCandidates.candidates | Where-Object { [string]$_.approval_status -eq 'approved-for-release' })) {
@@ -293,7 +298,8 @@ foreach ($name in @('animation-release-candidates.json', 'content.json', 'compon
 Require (([regex]::Matches($tp2, '(?m)^LANGUAGE ')).Count -eq 9) 'Le TP2 doit declarer neuf langues.'
 Require (([regex]::Matches($tp2, '(?m)^BEGIN ')).Count -eq @($components).Count) 'Le TP2 ne couvre pas tous les composants declares.'
 Require (([regex]::Matches($tp2, '(?m)^  COPY_LARGE ')).Count -eq @($content).Count) 'Le TP2 ne couvre pas toutes les entrees du manifeste de contenu.'
-Require ($tp2 -match '(?m)^VERSION ~0\.1\.0-alpha\.2~\r?$') 'Version WeiDU absente.'
+$versionPattern = '(?m)^VERSION ~' + [regex]::Escape([string]$releaseManifest.version) + '~\r?$'
+Require ($tp2 -match $versionPattern) 'Version WeiDU absente ou divergente du manifeste release.'
 foreach ($id in @($components | ForEach-Object { [int]$_.id })) {
     Require ($tp2 -match "(?m)^  DESIGNATED $id\r?$") "DESIGNATED absent : $id"
 }
