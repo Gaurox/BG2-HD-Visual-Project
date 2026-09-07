@@ -324,6 +324,33 @@ class EffectRuntimePackTests(unittest.TestCase):
 
         self.assertEqual(transformed, b"\0" * len(payload))
 
+    def test_bounded_gaussian_alpha_does_not_expand_the_eroded_support(self) -> None:
+        payload = bytes(
+            [
+                255, 255, 255, 0,
+                255, 255, 255, 255,
+                255, 255, 255, 0,
+            ]
+        )
+        transformed = pack.transform_rgba(
+            payload,
+            [3, 1],
+            [0, 0, 3, 1],
+            [3, 1],
+            [0, 0, 3, 1],
+            scale=1,
+            alpha_policy={
+                "mode": "runtime-rgb-luminance",
+                "luminance_low": 0,
+                "luminance_high": 1,
+                "alpha_gaussian_sigma_x4": 0.6,
+                "rgb_alpha_mode": "premultiply",
+            },
+        )
+
+        self.assertEqual(transformed[:4], b"\0" * 4)
+        self.assertEqual(transformed[-4:], b"\0" * 4)
+
     def test_accepts_external_luminance_policy_bound_to_the_source_bam(self) -> None:
         policy_path = self.root / "effects/alpha-policies/TESTFX-emissive-v1.json"
         policy_path.parent.mkdir(parents=True)

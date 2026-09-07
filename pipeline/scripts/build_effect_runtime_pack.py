@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageChops, ImageFilter
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -156,6 +156,10 @@ def transform_rgba(
     if alpha_policy is not None and alpha_policy.get("alpha_erode_radius_x4", 0):
         radius = alpha_policy["alpha_erode_radius_x4"]
         region.putalpha(region.getchannel("A").filter(ImageFilter.MinFilter(radius * 2 + 1)))
+    if alpha_policy is not None and alpha_policy.get("alpha_gaussian_sigma_x4", 0.0):
+        alpha = region.getchannel("A")
+        smoothed = alpha.filter(ImageFilter.GaussianBlur(alpha_policy["alpha_gaussian_sigma_x4"]))
+        region.putalpha(ImageChops.darker(alpha, smoothed))
     target = Image.new(
         "RGBA", (target_size_x1[0] * scale, target_size_x1[1] * scale), (0, 0, 0, 0)
     )
@@ -202,9 +206,14 @@ def validate_alpha_policy(alpha_policy: Any, *, label: str) -> dict[str, Any]:
     )
     erosion_radius = alpha_policy.get("alpha_erode_radius_x4", 0)
     erosion_valid = type(erosion_radius) is int and 0 <= erosion_radius <= 2
+    gaussian_sigma = alpha_policy.get("alpha_gaussian_sigma_x4", 0.0)
+    gaussian_valid = (
+        type(gaussian_sigma) in {int, float} and 0.0 <= gaussian_sigma <= 2.0
+    )
     if (
         not luminance_valid
         or not erosion_valid
+        or not gaussian_valid
         or alpha_policy.get("rgb_alpha_mode") != "premultiply"
     ):
         raise RuntimeError(f"{label} invalide")
