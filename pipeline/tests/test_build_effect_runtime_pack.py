@@ -298,6 +298,66 @@ class EffectRuntimePackTests(unittest.TestCase):
         self.assertLess(transformed[11], 128)
         self.assertEqual(transformed[8], (54 * transformed[11] + 127) // 255)
 
+    def test_contracts_runtime_luminance_alpha_by_requested_x4_radius(self) -> None:
+        payload = bytes(
+            [
+                255, 255, 255, 0,
+                255, 255, 255, 255,
+                255, 255, 255, 0,
+            ]
+        )
+        transformed = pack.transform_rgba(
+            payload,
+            [3, 1],
+            [0, 0, 3, 1],
+            [3, 1],
+            [0, 0, 3, 1],
+            scale=1,
+            alpha_policy={
+                "mode": "runtime-rgb-luminance",
+                "luminance_low": 0,
+                "luminance_high": 1,
+                "alpha_erode_radius_x4": 1,
+                "rgb_alpha_mode": "premultiply",
+            },
+        )
+
+        self.assertEqual(transformed, b"\0" * len(payload))
+
+    def test_accepts_external_luminance_policy_bound_to_the_source_bam(self) -> None:
+        policy_path = self.root / "effects/alpha-policies/TESTFX-emissive-v1.json"
+        policy_path.parent.mkdir(parents=True)
+        policy_path.write_text(
+            json.dumps(
+                {
+                    "schema": pack.ALPHA_POLICY_SCHEMA,
+                    "resref": self.resref,
+                    "source_bam_sha256": sha256(
+                        self.root / f"effects/ressources/{self.resref}/source.bam"
+                    ),
+                    "alpha_policy": {
+                        "mode": "runtime-rgb-luminance",
+                        "luminance_low": 8,
+                        "luminance_high": 100,
+                        "rgb_alpha_mode": "premultiply",
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+        with mock.patch.object(pack, "REPO_ROOT", self.root):
+            _, frames_x1, spatial = pack.validate_input(self.resref, self.run)
+            alpha_policy, evidence = pack.validate_external_alpha_policy(
+                self.resref, frames_x1, policy_path
+            )
+            _, assets = pack.build_pack_record(
+                self.resref, frames_x1, spatial, self.spatial, alpha_policy=alpha_policy
+            )
+
+        self.assertEqual(evidence["path"], policy_path.relative_to(self.root).as_posix())
+        self.assertEqual(assets[0]["alpha_policy"], alpha_policy)
+        self.assertIsInstance(assets[0]["_payload"], bytes)
+
     def test_rejects_geometry_without_measurement_for_each_slot(self) -> None:
         geometry_path = self._write_runtime_geometry()
         geometry = json.loads(geometry_path.read_text(encoding="utf-8"))

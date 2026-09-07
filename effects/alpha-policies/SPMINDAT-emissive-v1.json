@@ -1,0 +1,12 @@
+{
+  "schema": "bg2-upscale-effect-alpha-policy-v1",
+  "resref": "SPMINDAT",
+  "source_bam_sha256": "DB3CAF2775440B5233A1EDB9721CCE7C9E47D3A505F733E4BC60C46BD6EFC4D7",
+  "alpha_policy": {
+    "mode": "runtime-rgb-luminance",
+    "luminance_low": 48,
+    "luminance_high": 144,
+    "alpha_erode_radius_x4": 1,
+    "rgb_alpha_mode": "premultiply"
+  }
+}

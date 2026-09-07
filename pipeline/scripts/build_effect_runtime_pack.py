@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -22,6 +22,7 @@ SPATIAL_SCHEMA = "bg2-upscale-animation-frames-v1"
 INTERPOLATION_SCHEMA = "bg2-upscale-effect-interpolation-30fps-v1"
 PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
 RUNTIME_GEOMETRY_SCHEMA = "bg2-upscale-effect-runtime-geometry-v1"
+ALPHA_POLICY_SCHEMA = "bg2-upscale-effect-alpha-policy-v1"
 REGISTRY_MAGIC = b"IEEEFX4\0"
 REGISTRY_VERSION = 1
 TIMELINE_REGISTRY_VERSION = 2
@@ -152,6 +153,9 @@ def transform_rgba(
             ramp = ramp * ramp * (3.0 - 2.0 * ramp)
             values[pixel_index] = round(region_pixels[offset + 3] * ramp)
         region.putalpha(Image.frombytes("L", region.size, bytes(values)))
+    if alpha_policy is not None and alpha_policy.get("alpha_erode_radius_x4", 0):
+        radius = alpha_policy["alpha_erode_radius_x4"]
+        region.putalpha(region.getchannel("A").filter(ImageFilter.MinFilter(radius * 2 + 1)))
     target = Image.new(
         "RGBA", (target_size_x1[0] * scale, target_size_x1[1] * scale), (0, 0, 0, 0)
     )
@@ -184,6 +188,48 @@ def transform_rgba(
             pixels[offset + 1] = (pixels[offset + 1] * alpha_value + 127) // 255
             pixels[offset + 2] = (pixels[offset + 2] * alpha_value + 127) // 255
     return bytes(pixels)
+
+
+def validate_alpha_policy(alpha_policy: Any, *, label: str) -> dict[str, Any]:
+    if not isinstance(alpha_policy, dict):
+        raise RuntimeError(f"{label} invalide")
+    mode = alpha_policy.get("mode")
+    luminance_valid = (
+        mode == "runtime-rgb-luminance"
+        and type(alpha_policy.get("luminance_low")) in {int, float}
+        and type(alpha_policy.get("luminance_high")) in {int, float}
+        and 0 <= alpha_policy["luminance_low"] < alpha_policy["luminance_high"] <= 255
+    )
+    erosion_radius = alpha_policy.get("alpha_erode_radius_x4", 0)
+    erosion_valid = type(erosion_radius) is int and 0 <= erosion_radius <= 2
+    if (
+        not luminance_valid
+        or not erosion_valid
+        or alpha_policy.get("rgb_alpha_mode") != "premultiply"
+    ):
+        raise RuntimeError(f"{label} invalide")
+    return dict(alpha_policy)
+
+
+def validate_external_alpha_policy(
+    resref: str,
+    frames_x1: dict[str, Any],
+    path: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    payload = load_json(path)
+    if (
+        payload.get("schema") != ALPHA_POLICY_SCHEMA
+        or payload.get("resref") != resref
+        or str(payload.get("source_bam_sha256", "")).upper()
+        != str(frames_x1.get("source_sha256", "")).upper()
+    ):
+        raise RuntimeError("politique alpha liée à une autre source BAM")
+    alpha_policy = validate_alpha_policy(payload.get("alpha_policy"), label="politique alpha")
+    return alpha_policy, {
+        "path": relative_to_repo(path),
+        "sha256": sha256_file(path),
+        "schema": ALPHA_POLICY_SCHEMA,
+    }
 
 
 def source_rgb_alpha_mask(
@@ -524,6 +570,7 @@ def build_pack_record(
     spatial: dict[str, Any],
     spatial_dir: Path,
     runtime_geometry: dict[int, dict[str, Any]] | None = None,
+    alpha_policy: dict[str, Any] | None = None,
 ) -> tuple[bytes, list[dict[str, Any]]]:
     encoded_resref = resref.encode("ascii")
     if not encoded_resref or len(encoded_resref) > 8 or not all(
@@ -618,6 +665,12 @@ def build_pack_record(
             if len(payload) != expected_bytes:
                 raise RuntimeError(f"frame {index}: reframe RGBA x4 incohérent")
             digest = sha256_bytes(payload)
+        elif alpha_policy is not None:
+            payload = transform_rgba(
+                raw_path.read_bytes(), logical_size, [0, 0, width, height], logical_size,
+                [0, 0, width, height], alpha_policy=alpha_policy,
+            )
+            digest = sha256_bytes(payload)
         else:
             digest = source_digest
         name = frame_asset_name(resref, index)
@@ -648,6 +701,8 @@ def build_pack_record(
             )
             if geometry["mapping_mode"] == "crop":
                 asset["crop_box_x1"] = geometry["source_box_x1"]
+        elif alpha_policy is not None:
+            asset.update({"alpha_policy": alpha_policy, "_payload": payload})
         assets.append(asset)
 
     for cycle in ordered_cycles:
@@ -668,6 +723,7 @@ def build_interpolated_pack_record(
     frames_x1: dict[str, Any] | None = None,
     spatial: dict[str, Any] | None = None,
     runtime_geometry: dict[int, dict[str, Any]] | None = None,
+    alpha_policy: dict[str, Any] | None = None,
 ) -> tuple[bytes, list[dict[str, Any]], dict[str, Any]]:
     frames = interpolation.get("frames")
     timing = interpolation.get("timing")
@@ -775,6 +831,12 @@ def build_interpolated_pack_record(
             if len(payload) != expected_bytes:
                 raise RuntimeError(f"frame interpolée {index}: reframe RGBA x4 incohérent")
             digest = sha256_bytes(payload)
+        elif alpha_policy is not None:
+            payload = transform_rgba(
+                raw_path.read_bytes(), logical, [0, 0, logical[0], logical[1]], logical,
+                [0, 0, logical[0], logical[1]], alpha_policy=alpha_policy,
+            )
+            digest = sha256_bytes(payload)
         registry.extend(struct.pack("<II", runtime_logical[0], runtime_logical[1]))
         asset = {
             "frame": index,
@@ -808,6 +870,8 @@ def build_interpolated_pack_record(
             )
             if interpolation_geometry["mapping_mode"] == "crop":
                 asset["crop_box_x1"] = interpolation_geometry["aligned_source_box_x1"]
+        elif alpha_policy is not None:
+            asset.update({"alpha_policy": alpha_policy, "_payload": payload})
         assets.append(asset)
     registry.extend(struct.pack(f"<I{len(native_indices)}I", len(native_indices), *native_indices))
     registry.extend(
@@ -832,7 +896,8 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
                *, registry_version: int = REGISTRY_VERSION,
                timeline: dict[str, Any] | None = None,
                interpolation_descriptor: dict[str, Any] | None = None,
-               runtime_geometry_evidence: dict[str, Any] | None = None) -> dict[str, Any]:
+               runtime_geometry_evidence: dict[str, Any] | None = None,
+               alpha_policy_evidence: dict[str, Any] | None = None) -> dict[str, Any]:
     if output.exists():
         if not output.is_dir():
             raise RuntimeError(f"sortie runtime non répertoire : {output}")
@@ -895,6 +960,8 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
             )
         if runtime_geometry_evidence is not None:
             manifest["source"]["runtime_geometry"] = runtime_geometry_evidence
+        if alpha_policy_evidence is not None:
+            manifest["source"]["alpha_policy"] = alpha_policy_evidence
         (output / "manifest.json").write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
@@ -922,6 +989,10 @@ def main(argv: list[str] | None = None) -> int:
         "--runtime-geometry",
         help="measured runtime geometry manifest relative to the workspace",
     )
+    parser.add_argument(
+        "--alpha-policy",
+        help="versioned emissive alpha policy relative to the workspace",
+    )
     parser.add_argument("--run", action="store_true", help="write the runtime pack")
     args = parser.parse_args(argv)
     try:
@@ -931,12 +1002,21 @@ def main(argv: list[str] | None = None) -> int:
         descriptor, frames_x1, spatial = validate_input(resref, run_dir)
         runtime_geometry: dict[int, dict[str, Any]] | None = None
         runtime_geometry_evidence: dict[str, Any] | None = None
+        alpha_policy: dict[str, Any] | None = None
+        alpha_policy_evidence: dict[str, Any] | None = None
         if args.runtime_geometry:
             geometry_path = require_relative(
                 REPO_ROOT, args.runtime_geometry, "géométrie runtime"
             )
             runtime_geometry, runtime_geometry_evidence = validate_runtime_geometry(
                 resref, frames_x1, geometry_path
+            )
+        if args.alpha_policy:
+            if runtime_geometry is not None:
+                raise RuntimeError("politique alpha externe incompatible avec géométrie runtime")
+            alpha_policy_path = require_relative(REPO_ROOT, args.alpha_policy, "politique alpha")
+            alpha_policy, alpha_policy_evidence = validate_external_alpha_policy(
+                resref, frames_x1, alpha_policy_path
             )
         spatial_path = REPO_ROOT / next(
             item["path"] for item in descriptor["outputs"] if item["role"] == "spatial-manifest"
@@ -958,11 +1038,12 @@ def main(argv: list[str] | None = None) -> int:
                 frames_x1,
                 spatial,
                 runtime_geometry,
+                alpha_policy,
             )
             registry_version = TIMELINE_REGISTRY_VERSION
         else:
             registry_record, assets = build_pack_record(
-                resref, frames_x1, spatial, spatial_path.parent, runtime_geometry
+                resref, frames_x1, spatial, spatial_path.parent, runtime_geometry, alpha_policy
             )
         registry = bytearray(REGISTRY_MAGIC)
         registry.extend(struct.pack("<IIII", registry_version, 4, 1, 0))
@@ -978,6 +1059,7 @@ def main(argv: list[str] | None = None) -> int:
             "frame_bytes": sum(int(asset["bytes"]) for asset in assets),
             "interpolation_run": args.interpolation_run,
             "runtime_geometry": runtime_geometry_evidence,
+            "alpha_policy": alpha_policy_evidence,
             "write": bool(args.run),
         }
         if not args.run:
@@ -988,6 +1070,7 @@ def main(argv: list[str] | None = None) -> int:
             registry_version=registry_version, timeline=timeline,
             interpolation_descriptor=interpolation_descriptor,
             runtime_geometry_evidence=runtime_geometry_evidence,
+            alpha_policy_evidence=alpha_policy_evidence,
         )
         plan["manifest_sha256"] = sha256_file(output / "manifest.json")
         plan["registry_sha256"] = manifest["registry_sha256"]
