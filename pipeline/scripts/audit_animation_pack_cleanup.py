@@ -48,37 +48,19 @@ KEEP_ACTIVE: dict[str, str] = {
     ),
 }
 
-# These roots were produced after the 2026-08-31 P3 cleanup.  They remain on
-# disk as immutable processing/install evidence; the historical P3 receipt is
-# deliberately not rewritten to make them look like pre-cleanup inputs.
+# Manifest-less or pre-retention roots produced after the 2026-08-31 P3
+# cleanup. Other post-P3 roots are declared by POST_P3_RETENTION. Superseded
+# roots moved to the external archive are deliberately absent from this set.
 POST_P3_RETAINED: dict[str, str] = {
-    "ar2100-portals-apo8-x4-30fps-v2-split": "AR2100 portal V2 per-area source retained for reversible delivery evidence",
-    "ar2100-portals-seedvr7b-lab-x4-split": "AR2100 portal x4 per-area source retained for reversible delivery evidence",
-    "butrfly-apo8-x4-30fps-v2": "BUTRFLY V2 per-area pack retained for approved candidate evidence",
     "butrfly-apo8-x4-30fps-v2-merged": "BUTRFLY V2 merge intermediate retained for reproducibility",
-    "butrfly-seedvr7b-lab-x4": "BUTRFLY x4 per-area source retained for reproducibility",
     "butrfly-seedvr7b-lab-x4-merged": "BUTRFLY x4 merge intermediate retained for reproducibility",
     "chimsmk-apo8-x4-30fps-v2": "CHIMSMK V2 per-area source retained for reversible delivery evidence",
-    "chimsmk-apo8-x4-30fps-v2-rgb-neutral": "CHIMSMK Blended RGB-neutral per-area delivery source",
-    "chimsmk-seedvr7b-lab-x4": "CHIMSMK x4 per-area source retained for reproducibility",
-    "combined-20260901-ar1100-chimsmk-dstdvl-30fps-v2-rgb-neutral": "validated CHIMSMK and DSTDVL delivery root",
-    "combined-20260901-ar1100-chimsmk-dstdvl-x4": "CHIMSMK and DSTDVL x4 delivery baseline",
-    "combined-20260901-ar1100-chimsmk-dstdvl-x4-rgb-neutral": "CHIMSMK and DSTDVL Blended RGB-neutral x4 baseline",
     "combined-20260901-ar2100-portals-30fps-v2": "AR2100 portal V2 delivery root",
-    "combined-20260901-ar2100-portals-and-butterfly-30fps-v2": "AR2100 portal and BUTRFLY V2 delivery root",
-    "combined-20260901-ar2100-portals-and-butterfly-x4": "AR2100 portal and BUTRFLY x4 delivery root",
-    "combined-20260901-ar2100-portals-x4": "AR2100 portal x4 delivery root",
     "dstdvl-chimsmk-apo8-x4-30fps-v2-merged": "CHIMSMK and DSTDVL V2 merge intermediate retained for reproducibility",
     "dstdvl-chimsmk-seedvr7b-lab-x4-merged": "CHIMSMK and DSTDVL x4 merge intermediate retained for reproducibility",
     "dstdvl1a-apo8-x4-30fps-v2": "DSTDVL1A V2 per-area source retained for reversible delivery evidence",
-    "dstdvl1a-apo8-x4-30fps-v2-rgb-neutral": "DSTDVL1A Blended RGB-neutral per-area delivery source",
-    "dstdvl1a-seedvr7b-lab-x4": "DSTDVL1A x4 per-area source retained for reproducibility",
     "dstdvl1b-apo8-x4-30fps-v2": "DSTDVL1B V2 per-area source retained for reversible delivery evidence",
-    "dstdvl1b-apo8-x4-30fps-v2-rgb-neutral": "DSTDVL1B Blended RGB-neutral per-area delivery source",
-    "dstdvl1b-seedvr7b-lab-x4": "DSTDVL1B x4 per-area source retained for reproducibility",
     "dstdvl1c-apo8-x4-30fps-v2": "DSTDVL1C V2 per-area source retained for reversible delivery evidence",
-    "dstdvl1c-apo8-x4-30fps-v2-rgb-neutral": "DSTDVL1C Blended RGB-neutral per-area delivery source",
-    "dstdvl1c-seedvr7b-lab-x4": "DSTDVL1C x4 per-area source retained for reproducibility",
 }
 
 ARCHIVE_FULL = {
