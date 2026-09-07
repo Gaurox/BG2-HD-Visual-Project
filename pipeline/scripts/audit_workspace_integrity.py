@@ -615,7 +615,7 @@ def audit_source_tables(
             )
 
         canonical_path = config.get("canonical_path")
-        projected = canonical_counts.get(canonical_path, 0) if canonical_path else 0
+        projected = canonical_counts.get(canonical_path, 0) if canonical_path else None
         if canonical_path and projected != len(rows):
             add_issue(
                 issues,
@@ -634,6 +634,7 @@ def audit_source_tables(
                 "hash_mismatch_count": mismatched,
                 "manifest_asset_count": manifest_count,
                 "missing_file_count": missing,
+                "projectable_asset_count": len(rows),
                 "referenced_file_count": len(expected_paths),
                 "registry_projection_count": projected,
                 "unavailable_source_count": len(rows) - len(source_rows),
@@ -718,6 +719,7 @@ def audit_source_tables(
             "hash_mismatch_count": 0,
             "manifest_asset_count": len(font_rows),
             "missing_file_count": sum(not (ROOT / path).is_file() for path in font_expected),
+            "projectable_asset_count": len(font_rows),
             "referenced_file_count": len(font_expected),
             "registry_projection_count": font_projected,
         }
@@ -776,6 +778,7 @@ def audit_source_tables(
             "hash_mismatch_count": 0,
             "manifest_asset_count": len(animation_rows),
             "missing_file_count": sum(not (ROOT / path).is_file() for path in animation_expected),
+            "projectable_asset_count": len(animation_rows),
             "referenced_file_count": len(animation_expected),
             "registry_projection_count": canonical_counts.get(
                 "animations/index/animation_upscale_registry.csv", 0

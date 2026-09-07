@@ -78,11 +78,27 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         for audit in self.report["source_audits"]:
             self.assertEqual(audit["missing_file_count"], 0, audit["authority"])
             self.assertEqual(audit["hash_mismatch_count"], 0, audit["authority"])
-            self.assertEqual(
-                audit["manifest_asset_count"],
-                audit["registry_projection_count"],
-                audit["authority"],
-            )
+            if audit["registry_projection_count"] is not None:
+                self.assertEqual(
+                    audit["projectable_asset_count"],
+                    audit["registry_projection_count"],
+                    audit["authority"],
+                )
+        effect_controllers = next(
+            audit
+            for audit in self.report["source_audits"]
+            if audit["authority"] == "effects/index/resources.csv"
+        )
+        self.assertIsNone(effect_controllers["registry_projection_count"])
+        supplemental = next(
+            audit
+            for audit in self.report["source_audits"]
+            if audit["authority"] == "graphics/index/supplemental-assets.csv"
+        )
+        self.assertLess(
+            supplemental["projectable_asset_count"],
+            supplemental["manifest_asset_count"],
+        )
         video = next(
             audit
             for audit in self.report["source_audits"]

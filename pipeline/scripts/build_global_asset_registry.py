@@ -1506,7 +1506,7 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
 
         if selections:
             provenance_state = "complete"
-        elif states["production"] == "verified":
+        elif evidence:
             provenance_state = "partial"
         else:
             provenance_state = "not-applicable"
@@ -2511,14 +2511,20 @@ def adapt_effect_bams(builder: RegistryBuilder) -> None:
             selections.append(
                 {"role": "run", "id": selected_run, "source": source_ref(processing_path, locator)}
             )
-        if current.get("release_candidate", ""):
+        release_candidate = current.get("release_candidate", "")
+        if release_candidate:
             selections.append(
                 {
-                    "role": "release-candidate",
-                    "id": current["release_candidate"],
+                    "role": "candidate",
+                    "id": release_candidate,
                     "source": source_ref(processing_path, locator),
                 }
             )
+        evidence = []
+        provenance_state = "not-applicable"
+        if selected_run or release_candidate:
+            evidence.append(evidence_ref(builder.inputs, processing_path, locator))
+            provenance_state = "complete" if selected_run else "partial"
         builder.add(
             base_record(
                 asset_id=asset_key,
@@ -2527,8 +2533,8 @@ def adapt_effect_bams(builder: RegistryBuilder) -> None:
                 canonical_path=assets_path,
                 locator=locator,
                 states=states,
-                provenance_state="partial" if selected_run else "not-applicable",
-                evidence=[evidence_ref(builder.inputs, processing_path, locator)],
+                provenance_state=provenance_state,
+                evidence=evidence,
                 selections=selections,
                 adapter="effects.bam-processing.v1",
             )

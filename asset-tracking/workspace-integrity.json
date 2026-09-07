@@ -24,11 +24,11 @@
       "legacy_proto_migrated_bytes": 1320761527,
       "legacy_proto_migrated_file_count": 3030,
       "legacy_proto_run_count": 66,
-      "physical_run_count": 261,
+      "physical_run_count": 267,
       "physical_run_count_by_layout": {
         "batch": 10,
         "legacy": 162,
-        "mono-asset": 89
+        "mono-asset": 95
       },
       "release_pack_indexed_count": 38,
       "release_referenced_run_count": 24,
@@ -48,7 +48,7 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 159,
+      "active_script_file_count": 166,
       "configured_path_count": 6,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
@@ -199,6 +199,22 @@
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
   "issues": [
     {
+      "code": "source-root-unindexed-files",
+      "details": {
+        "examples": [
+          "effects/ressources/SPFEAREF/.spfearef-spatial-seedvr2-3b-int8-lab-x4-20260907T091611Z.reservation.json",
+          "effects/ressources/SPFEAREF/.spfearef-spatial-seedvr2-7b-int8-lab-x4-20260907T091611Z.reservation.json",
+          "effects/ressources/SPMAGMIS/.spmagmis-apollo8-30fps-x4-20260907.reservation.json",
+          "effects/ressources/SPMAGMIS/runtime-geometry-v1.json"
+        ],
+        "file_count": 4
+      },
+      "domain": "effects",
+      "message": "Des fichiers non référencés sont présents dans une racine de sources extraites.",
+      "path": "effects/ressources",
+      "severity": "warning"
+    },
+    {
       "code": "map-run-referenced-files-missing",
       "details": {
         "examples": [
@@ -224,6 +240,28 @@
       "message": "Des inputs/outputs intermédiaires scellés d'un run sélectionné sont absents, mais son build final existe.",
       "path": "maps/AR0017/runs/upscale-01",
       "run_id": "upscale-01",
+      "severity": "warning"
+    },
+    {
+      "code": "source-root-unindexed-files",
+      "details": {
+        "examples": [
+          "graphics/source/effects/0202A.bam",
+          "graphics/source/effects/ACIDDTH.bam",
+          "graphics/source/effects/AM0021A.bam",
+          "graphics/source/effects/AM0202AT.bam",
+          "graphics/source/effects/AM0404A.bam",
+          "graphics/source/effects/AM0404B.bam",
+          "graphics/source/effects/AM0411A.bam",
+          "graphics/source/effects/AM0411B.bam",
+          "graphics/source/effects/AM0411B1.bam",
+          "graphics/source/effects/AM0411B2.bam"
+        ],
+        "file_count": 215
+      },
+      "domain": "multiple",
+      "message": "Des fichiers non référencés sont présents dans une racine de sources extraites.",
+      "path": "graphics/source",
       "severity": "warning"
     },
     {
@@ -623,10 +661,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15170,
-  "registry_asset_records_sha256": "4A222B5CB9870D69D28C84E28DB33B412E6A3873333E40E7E7A67856687C0EAC",
-  "run_count": 776,
-  "run_records_sha256": "4A21879064A9B232E59B45B426A9338DD6800199F3E3293F98F2470353902802",
+  "registry_asset_count": 15197,
+  "registry_asset_records_sha256": "A216C1DFE49FFCC140BD3F22613F21173C3111AAD34F84F88B1203066A11A65A",
+  "run_count": 782,
+  "run_records_sha256": "AFC576F42396C9FAD5260FF7B601197B99E481711E1543B6492977B16F0565ED",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -636,6 +674,7 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 246,
       "missing_file_count": 0,
+      "projectable_asset_count": 246,
       "referenced_file_count": 246,
       "registry_projection_count": 246
     },
@@ -646,8 +685,22 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 1,
       "missing_file_count": 0,
+      "projectable_asset_count": 1,
       "referenced_file_count": 1,
-      "registry_projection_count": 1
+      "registry_projection_count": 1,
+      "unavailable_source_count": 0
+    },
+    {
+      "authority": "effects/index/bam-assets.csv",
+      "domain": "effects",
+      "extra_file_count": 4,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 494,
+      "missing_file_count": 0,
+      "projectable_asset_count": 494,
+      "referenced_file_count": 492,
+      "registry_projection_count": 494,
+      "unavailable_source_count": 2
     },
     {
       "authority": "effects/index/resources.csv",
@@ -656,8 +709,10 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 252,
       "missing_file_count": 0,
+      "projectable_asset_count": 252,
       "referenced_file_count": 252,
-      "registry_projection_count": 252
+      "registry_projection_count": null,
+      "unavailable_source_count": 0
     },
     {
       "authority": "icons/index/resources.csv",
@@ -666,18 +721,22 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 2931,
       "missing_file_count": 0,
+      "projectable_asset_count": 2931,
       "referenced_file_count": 2931,
-      "registry_projection_count": 2931
+      "registry_projection_count": 2931,
+      "unavailable_source_count": 0
     },
     {
       "authority": "graphics/index/supplemental-assets.csv",
       "domain": "multiple",
-      "extra_file_count": 0,
+      "extra_file_count": 215,
       "hash_mismatch_count": 0,
       "manifest_asset_count": 3758,
       "missing_file_count": 0,
-      "referenced_file_count": 3758,
-      "registry_projection_count": 3758
+      "projectable_asset_count": 3543,
+      "referenced_file_count": 3543,
+      "registry_projection_count": 3543,
+      "unavailable_source_count": 0
     },
     {
       "authority": "projectiles/index/resources.csv",
@@ -686,8 +745,10 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 243,
       "missing_file_count": 0,
+      "projectable_asset_count": 243,
       "referenced_file_count": 243,
-      "registry_projection_count": 243
+      "registry_projection_count": 243,
+      "unavailable_source_count": 0
     },
     {
       "authority": "interface/fonts/index/resources.csv",
@@ -696,6 +757,7 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 20,
       "missing_file_count": 0,
+      "projectable_asset_count": 20,
       "referenced_file_count": 31,
       "registry_projection_count": 20
     },
@@ -706,8 +768,10 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 24,
       "missing_file_count": 0,
+      "projectable_asset_count": 24,
       "referenced_file_count": 24,
-      "registry_projection_count": 24
+      "registry_projection_count": 24,
+      "unavailable_source_count": 0
     },
     {
       "authority": "interface/index/resources.csv",
@@ -716,8 +780,10 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 1515,
       "missing_file_count": 0,
+      "projectable_asset_count": 1515,
       "referenced_file_count": 1515,
-      "registry_projection_count": 1515
+      "registry_projection_count": 1515,
+      "unavailable_source_count": 0
     },
     {
       "authority": "video/index/resources.csv",
@@ -726,11 +792,13 @@
       "hash_mismatch_count": 0,
       "manifest_asset_count": 50,
       "missing_file_count": 0,
+      "projectable_asset_count": 50,
       "referenced_file_count": 50,
-      "registry_projection_count": 50
+      "registry_projection_count": 50,
+      "unavailable_source_count": 0
     }
   ],
-  "source_fingerprint_sha256": "FEA63267EC29E0933C853C6DB793BFA576663148925C1853AD063849B59F1EB2",
+  "source_fingerprint_sha256": "07B142C758D8F5B2CDDE1629EF823CD1AA59B37E4D7A6AC3CBC0D4EA84BC8276",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,
@@ -738,13 +806,14 @@
       "map-historical-paths-adapted": 1,
       "map-legacy-run-without-json": 1,
       "map-run-referenced-files-missing": 2,
+      "source-root-unindexed-files": 2,
       "sprite-historical-live-job-diverged": 5,
       "sprite-historical-pointers-migrated": 1
     },
     "by_severity": {
       "error": 0,
       "info": 5,
-      "warning": 7
+      "warning": 9
     },
     "candidate_cleanup": {
       "animation_empty_run_skeletons": 0,

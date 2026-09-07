@@ -186,15 +186,15 @@ def recipe_snapshot(plan: SpatialPlan) -> dict[str, Any]:
         },
         "tools": [
             {
-                "path": workflow.relative_path(plan.root, EXPORT_SCRIPT),
+                "path": workflow.relative_path(PROJECT_ROOT, EXPORT_SCRIPT),
                 "sha256": workflow.sha256_file(EXPORT_SCRIPT),
             },
             {
-                "path": workflow.relative_path(plan.root, UPSCALE_SCRIPT),
+                "path": workflow.relative_path(PROJECT_ROOT, UPSCALE_SCRIPT),
                 "sha256": workflow.sha256_file(UPSCALE_SCRIPT),
             },
             {
-                "path": workflow.relative_path(plan.root, Path(__file__)),
+                "path": workflow.relative_path(PROJECT_ROOT, Path(__file__)),
                 "sha256": workflow.sha256_file(Path(__file__)),
             },
         ],

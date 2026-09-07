@@ -170,6 +170,10 @@ class GlobalAssetRegistryTests(unittest.TestCase):
                 for item in legacy_release["provenance"]["evidence"]
             )
         )
+        blocked_animation = self.by_id["animations:bam:AMWRPGT1"]
+        self.assertEqual(blocked_animation["states"]["production"], "blocked")
+        self.assertEqual(blocked_animation["provenance"]["state"], "partial")
+        self.assertTrue(blocked_animation["provenance"]["evidence"])
         self.assertEqual(
             self.by_id["animations:pack:AR0602"]["states"]["release"],
             "integrated",
@@ -222,6 +226,15 @@ class GlobalAssetRegistryTests(unittest.TestCase):
         self.assertEqual(
             self.by_id["projectiles:projectile-fireball"]["states"]["qa"],
             "not-assessed",
+        )
+        unselected_effect = self.by_id["effects:bam:0202A"]
+        self.assertEqual(unselected_effect["provenance"]["state"], "not-applicable")
+        self.assertEqual(unselected_effect["provenance"]["evidence"], [])
+        selected_effect = self.by_id["effects:bam:SPFEAREF"]
+        self.assertEqual(selected_effect["provenance"]["state"], "complete")
+        self.assertIn(
+            "candidate",
+            {selection["role"] for selection in selected_effect["selections"]},
         )
 
     def test_uninventoried_scopes_are_unknown_not_zero(self) -> None:
