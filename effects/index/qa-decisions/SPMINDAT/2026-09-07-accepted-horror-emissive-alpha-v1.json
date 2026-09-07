@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-effect-qa-decision-v1",
+  "schema_version": 1,
+  "asset_id": "effects:bam:SPMINDAT",
+  "resref": "SPMINDAT",
+  "status": "accepted",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-09-07",
+  "recorded_at_utc": "2026-09-07T08:58:39Z",
+  "decision": "Horreur validé ingame par l'utilisateur avec alpha émissif, érosion 1 px x4 et Gaussian borné 0,6 px x4.",
+  "selected_run": {
+    "run_id": "spmindat-interpolation-apollo8-rgb-nearest-alpha-20260907T081946Z",
+    "descriptor_path": "effects/ressources/SPMINDAT/runs/spmindat-interpolation-apollo8-rgb-nearest-alpha-20260907T081946Z/run.json",
+    "descriptor_sha256": "7031FDBC99CA5D214F52D04320446259610F82A851AC786BF00091A24D5D2384"
+  },
+  "alpha_policy": {
+    "path": "effects/alpha-policies/SPMINDAT-emissive-v1.json",
+    "sha256": "DF49A0DDF1AAEFBCF3912DD8F9E6FDCECAA25F34F1CA0C6F490B4E2BBBEB8A2A",
+    "mode": "runtime-rgb-luminance",
+    "luminance_low": 48,
+    "luminance_high": 144,
+    "alpha_erode_radius_x4": 1,
+    "alpha_gaussian_sigma_x4": 0.6,
+    "rgb_alpha_mode": "premultiply"
+  },
+  "installed_candidate": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-emissive-erode1-gaussian06-20260907",
+    "manifest_path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-emissive-erode1-gaussian06-20260907/iee-assets/effects/manifest.json",
+    "manifest_sha256": "0B569354DF158E5B022EDD7257AEB6752A709D235A7B240DA0AF5752A02E913C",
+    "registry_sha256": "4A3D5FF1EB9328C6997B6F9EE063ACFE1055642EE6BA664ACAE564FD4DE892D7"
+  },
+  "installation": {
+    "state": "installed",
+    "receipt_path": "backups/renderer/20260907T085746366036Z-16392a5e/renderer-install-receipt.json",
+    "receipt_sha256": "F16962175D0ED295A31665B80BC4EF7878B37070D558837367F99482291A9228",
+    "receipt_verification": "receipt, payload, backups and installed state verified"
+  },
+  "runtime_observation": {
+    "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "observed_local": "2026-09-07T10:58:39.287+02:00",
+    "registry": "stage=registry-resolved sequence=0 nativeFrame=1 logical=33x32",
+    "timeline": "stage=timeline-resolved sequence=0 nativeFrame=1 timelinePhase=2 logical=33x32",
+    "binding": "stage=x4-bound x4Bound=1 bindFallback=0 sequence=0 nativeFrame=1 timelinePhase=2 logical=33x32"
+  },
+  "validated_criteria": [
+    "Horreur renders without an opaque background field",
+    "contours accepted ingame after bounded alpha smoothing",
+    "30 FPS interpolated timeline active",
+    "x4 texture bound on the final FX render",
+    "no registry or texture-binding fallback observed"
+  ],
+  "release_mutation": false
+}

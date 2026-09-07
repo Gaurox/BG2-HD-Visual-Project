@@ -126,6 +126,7 @@ $names = @(
     'components.json',
     'content.json',
     'animation-release-candidates.json',
+    'effect-release-candidates.json',
     'overlay-sources.json',
     'renderer-bundle.json',
     'languages.json',

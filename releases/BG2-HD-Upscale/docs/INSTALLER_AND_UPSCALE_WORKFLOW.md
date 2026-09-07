@@ -20,6 +20,7 @@ corresponding validation unclaimed.
 | Components | `manifests/components.json` |
 | Payload files | generated `manifests/content.json` |
 | Animation candidates | `manifests/animation-release-candidates.json` |
+| Effect candidates | `manifests/effect-release-candidates.json` |
 | Shared overlays | `manifests/overlay-sources.json` |
 | Runtime/bootstrap | `runtime-compatibility.json`, `dependency-bootstrap.json`, `renderer-bundle.json` |
 | Rights/exclusions | `licenses-and-exclusions.json` |

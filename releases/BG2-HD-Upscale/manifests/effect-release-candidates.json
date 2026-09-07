@@ -1,0 +1,48 @@
+{
+  "$schema": "../schemas/effect-release-candidates.schema.json",
+  "schema_version": 1,
+  "generated_by": "manual explicit release approval; payload projection pending effect release generator",
+  "candidates": [
+    {
+      "candidate_id": "effects-v2-spmagmis-spmindat-20260907",
+      "component_id": 4100,
+      "component_label": "effects-spmagmis-spmindat-x4",
+      "payload_group": "effects-spmagmis-spmindat",
+      "approval_status": "approved-for-release",
+      "resources": [
+        {
+          "asset_id": "effects:bam:SPMAGMIS",
+          "resref": "SPMAGMIS",
+          "selected_run": "spmagmis-apollo8-30fps-x4-20260907-r2",
+          "qa_evidence": "effects/index/qa-decisions/SPMAGMIS/2026-09-07-accepted-spmagmis-final-fx-r8.json",
+          "qa_evidence_sha256": "26BE4A63DE9708A760226D79362663C20FCC4152A2C3FAF3BAAC217CDD5719AF"
+        },
+        {
+          "asset_id": "effects:bam:SPMINDAT",
+          "resref": "SPMINDAT",
+          "selected_run": "spmindat-interpolation-apollo8-rgb-nearest-alpha-20260907T081946Z",
+          "qa_evidence": "effects/index/qa-decisions/SPMINDAT/2026-09-07-accepted-horror-emissive-alpha-v1.json",
+          "qa_evidence_sha256": "BF490E738B196B8793E721AD42E4707268DA7C7B614197AD38382BA05ED2B7C3"
+        }
+      ],
+      "runtime_pack": {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-emissive-erode1-gaussian06-20260907/iee-assets/effects",
+        "manifest": "manifest.json",
+        "manifest_sha256": "0B569354DF158E5B022EDD7257AEB6752A709D235A7B240DA0AF5752A02E913C",
+        "registry": "EffectAnimations-X4.registry",
+        "registry_version": 2,
+        "registry_sha256": "4A3D5FF1EB9328C6997B6F9EE063ACFE1055642EE6BA664ACAE564FD4DE892D7",
+        "registry_bytes": 1112,
+        "scale": 4,
+        "target_fps": 30
+      },
+      "renderer_contract": {
+        "source_commit": "f88f555",
+        "candidate_path": "engine/InfinityEngine-Enhancer/source-patchee/build-vs2019-30fps-multicycle/renderer-candidate-effects-v2-spmagmis-spmindat-emissive-erode1-gaussian06-20260907",
+        "dll_sha256": "8B692B333D833927D25C9D594662A61CECA7A0539C25ACCFCD809759776FCFE3",
+        "ini_sha256": "7CE795A0698D70BCBD000CD29D36F04BAF42F0C0E15E6D94599197EE4C671A7E",
+        "required_ini_key": "Shaders.EnableEffectAnimationX4=true"
+      }
+    }
+  ]
+}

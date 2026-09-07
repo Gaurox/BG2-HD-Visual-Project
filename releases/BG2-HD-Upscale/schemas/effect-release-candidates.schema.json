@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_by", "candidates"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "generated_by": {"type": "string", "minLength": 1},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "component_id", "component_label", "payload_group", "approval_status", "resources", "runtime_pack", "renderer_contract"],
+        "properties": {
+          "candidate_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "component_id": {"type": "integer", "minimum": 1},
+          "component_label": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "payload_group": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "approval_status": {"const": "approved-for-release"},
+          "resources": {"type": "array", "minItems": 1},
+          "runtime_pack": {"type": "object"},
+          "renderer_contract": {"type": "object"}
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ neither is a release source.
 | `components.json` | permanent component IDs, labels and dependencies |
 | `content.json` | source, destination, component, byte count and SHA-256 per payload file |
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
+| `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
 | `overlay-sources.json` | authoritative stock/x2/x4 decision and hashes for shared liquid resrefs |
 | `renderer-bundle.json` | frozen renderer candidate inventory |
 | `licenses-and-exclusions.json` | provenance status and forbidden payload classes |
