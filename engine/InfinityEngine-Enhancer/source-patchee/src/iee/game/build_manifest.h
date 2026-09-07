@@ -257,11 +257,14 @@ struct ProjectileEffectRuntime {
   std::uintptr_t projectileBamRender{};
   std::uintptr_t projectileVidCell{};
   std::string_view projectileBamRenderSignature{};
+  std::uintptr_t infinityFxRender{};
+  std::string_view infinityFxRenderSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
     return projectileBamRender != 0 && projectileVidCell != 0 &&
-           !projectileBamRenderSignature.empty();
+           !projectileBamRenderSignature.empty() && infinityFxRender != 0 &&
+           !infinityFxRenderSignature.empty();
   }
 };
 

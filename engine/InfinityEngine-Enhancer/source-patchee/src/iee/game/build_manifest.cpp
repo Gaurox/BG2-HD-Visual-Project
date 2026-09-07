@@ -338,6 +338,9 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x1B8,
             "4C 8B DC 55 41 54 41 56 49 8D 6B A1 48 81 EC C0 00 00 00 48 8B 05 ? ? ? ? "
             "48 33 C4",
+            0x29DF60,
+            "48 89 5C 24 08 57 48 83 EC 40 48 8B 05 ? ? ? ? 41 8B D9 41 8B F8 "
+            "4C 8B D9 4C 8B 90 10 02 00 00 41 80 7A 19 00",
         },
     },
 };
@@ -393,6 +396,9 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].projectileEffects.projectileBamRenderSignature),
               "BG2EE 2.7.3 projectile render signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].projectileEffects.infinityFxRenderSignature),
+              "BG2EE 2.7.3 projectile FXRender signature format is invalid");
 static_assert([] {
   for (const auto signature : kKnownBuilds[2].areaAnimations.signatures) {
     if (!validate_pattern_format(signature)) return false;

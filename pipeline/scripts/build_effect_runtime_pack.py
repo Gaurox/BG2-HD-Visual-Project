@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from PIL import Image
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RUN_SCHEMA_VERSION = 1
@@ -19,6 +21,7 @@ FRAME_SCHEMA = "bg2-upscale-animation-frames-x1-v1"
 SPATIAL_SCHEMA = "bg2-upscale-animation-frames-v1"
 INTERPOLATION_SCHEMA = "bg2-upscale-effect-interpolation-30fps-v1"
 PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
+RUNTIME_GEOMETRY_SCHEMA = "bg2-upscale-effect-runtime-geometry-v1"
 REGISTRY_MAGIC = b"IEEEFX4\0"
 REGISTRY_VERSION = 1
 TIMELINE_REGISTRY_VERSION = 2
@@ -72,6 +75,362 @@ def require_hash(path: Path, expected: str, label: str) -> str:
     if digest != expected.upper():
         raise RuntimeError(f"hash {label} incohérent : {path}")
     return digest
+
+
+def sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest().upper()
+
+
+def crop_rgba(
+    payload: bytes,
+    source_size: list[int],
+    crop_box_x1: list[int],
+    *,
+    scale: int = 4,
+) -> bytes:
+    source_width, source_height = source_size
+    left, top, right, bottom = crop_box_x1
+    physical_width = source_width * scale
+    physical_height = source_height * scale
+    if len(payload) != physical_width * physical_height * 4:
+        raise RuntimeError("RGBA source absent ou tronqué")
+    left *= scale
+    top *= scale
+    right *= scale
+    bottom *= scale
+    row_bytes = physical_width * 4
+    cropped_row_bytes = (right - left) * 4
+    source = memoryview(payload)
+    rows = [
+        source[y * row_bytes + left * 4:y * row_bytes + left * 4 + cropped_row_bytes]
+        for y in range(top, bottom)
+    ]
+    return b"".join(rows)
+
+
+def transform_rgba(
+    payload: bytes,
+    source_size: list[int],
+    source_box_x1: list[int],
+    target_size_x1: list[int],
+    destination_box_x1: list[int],
+    *,
+    scale: int = 4,
+    alpha_mask_x1: Image.Image | None = None,
+    alpha_source_box_x1: list[int] | None = None,
+    alpha_policy: dict[str, Any] | None = None,
+    runtime_centre_x1: list[int] | None = None,
+) -> bytes:
+    source_width, source_height = source_size
+    physical_source_size = (source_width * scale, source_height * scale)
+    if len(payload) != physical_source_size[0] * physical_source_size[1] * 4:
+        raise RuntimeError("RGBA source absent ou tronqué")
+    source_box = tuple(value * scale for value in source_box_x1)
+    destination_box = tuple(value * scale for value in destination_box_x1)
+    destination_size = (
+        destination_box[2] - destination_box[0],
+        destination_box[3] - destination_box[1],
+    )
+    source = Image.frombytes("RGBA", physical_source_size, payload)
+    region = source.crop(source_box)
+    if region.size != destination_size:
+        region = region.resize(destination_size, Image.Resampling.LANCZOS)
+    if alpha_mask_x1 is not None:
+        mask_box = alpha_source_box_x1 or source_box_x1
+        alpha = alpha_mask_x1.crop(tuple(mask_box))
+        if alpha.size != destination_size:
+            alpha = alpha.resize(destination_size, Image.Resampling.LANCZOS)
+        region.putalpha(alpha)
+    if alpha_policy is not None and alpha_policy.get("mode") == "runtime-rgb-luminance":
+        low = alpha_policy["luminance_low"]
+        high = alpha_policy["luminance_high"]
+        region_pixels = region.tobytes()
+        values = bytearray(region.width * region.height)
+        for pixel_index, offset in enumerate(range(0, len(region_pixels), 4)):
+            luminance = sum(region_pixels[offset:offset + 3]) / 3.0
+            ramp = min(1.0, max(0.0, (luminance - low) / (high - low)))
+            ramp = ramp * ramp * (3.0 - 2.0 * ramp)
+            values[pixel_index] = round(region_pixels[offset + 3] * ramp)
+        region.putalpha(Image.frombytes("L", region.size, bytes(values)))
+    target = Image.new(
+        "RGBA", (target_size_x1[0] * scale, target_size_x1[1] * scale), (0, 0, 0, 0)
+    )
+    target.paste(region, destination_box[:2])
+    pixels = bytearray(target.tobytes())
+    if alpha_policy is not None and alpha_policy.get("mode") == "runtime-radial":
+        if runtime_centre_x1 is None:
+            raise RuntimeError("centre runtime absent pour le masque radial")
+        centre_x = runtime_centre_x1[0] * scale
+        centre_y = runtime_centre_x1[1] * scale
+        outer_x = float(alpha_policy["outer_radius_x_x1"]) * scale
+        outer_y = float(alpha_policy["outer_radius_y_x1"]) * scale
+        inner = float(alpha_policy["inner_fraction"])
+        physical_width = target_size_x1[0] * scale
+        physical_height = target_size_x1[1] * scale
+        for y in range(physical_height):
+            for x in range(physical_width):
+                distance = (
+                    ((x + 0.5 - centre_x) / outer_x) ** 2
+                    + ((y + 0.5 - centre_y) / outer_y) ** 2
+                ) ** 0.5
+                ramp = min(1.0, max(0.0, (1.0 - distance) / (1.0 - inner)))
+                ramp = ramp * ramp * (3.0 - 2.0 * ramp)
+                offset = (y * physical_width + x) * 4
+                pixels[offset + 3] = round(pixels[offset + 3] * ramp)
+    if alpha_policy is not None and alpha_policy.get("rgb_alpha_mode") == "premultiply":
+        for offset in range(0, len(pixels), 4):
+            alpha_value = pixels[offset + 3]
+            pixels[offset] = (pixels[offset] * alpha_value + 127) // 255
+            pixels[offset + 1] = (pixels[offset + 1] * alpha_value + 127) // 255
+            pixels[offset + 2] = (pixels[offset + 2] * alpha_value + 127) // 255
+    return bytes(pixels)
+
+
+def source_rgb_alpha_mask(
+    frame_index: int,
+    frames_x1: dict[str, Any],
+    spatial: dict[str, Any],
+    alpha_policy: dict[str, Any],
+) -> Image.Image:
+    mode = alpha_policy.get("mode")
+    if mode not in {"source-rgb-key", "source-rgb-luminance"}:
+        raise RuntimeError("politique alpha runtime inconnue")
+    source_frames = frames_x1.get("frames")
+    source = spatial.get("source")
+    if not isinstance(source_frames, list) or not isinstance(source, dict):
+        raise RuntimeError("source RGB x1 absente pour le masque alpha runtime")
+    if frame_index < 0 or frame_index >= len(source_frames):
+        raise RuntimeError("frame source alpha runtime hors limites")
+    frame = source_frames[frame_index]
+    rgb_root = require_relative(REPO_ROOT, str(source.get("rgb", "")), "RGB source x1")
+    rgb_path = require_relative(rgb_root, str(frame.get("file", "")), "frame RGB source x1")
+    require_hash(rgb_path, str(frame.get("rgb_sha256", "")), "RGB source x1")
+    alpha_root = require_relative(REPO_ROOT, str(source.get("alpha", "")), "alpha source x1")
+    alpha_path = require_relative(
+        alpha_root, str(frame.get("file", "")), "frame alpha source x1"
+    )
+    require_hash(alpha_path, str(frame.get("alpha_sha256", "")), "alpha source x1")
+    with Image.open(rgb_path) as image:
+        rgb = image.convert("RGB")
+    with Image.open(alpha_path) as image:
+        source_alpha = image.convert("L")
+    if list(rgb.size) != frame.get("source_size") or source_alpha.size != rgb.size:
+        raise RuntimeError("dimensions RGB/alpha source x1 incompatibles")
+    pixels = rgb.tobytes()
+    source_alpha_bytes = source_alpha.tobytes()
+    if mode == "source-rgb-key":
+        threshold = alpha_policy["transparent_max_channel"]
+        mask = bytes(
+            0
+            if max(pixels[offset:offset + 3]) <= threshold
+            else source_alpha_bytes[offset // 3]
+            for offset in range(0, len(pixels), 3)
+        )
+    else:
+        low = alpha_policy["luminance_low"]
+        high = alpha_policy["luminance_high"]
+        values = bytearray(len(source_alpha_bytes))
+        for pixel_index, offset in enumerate(range(0, len(pixels), 3)):
+            luminance = sum(pixels[offset:offset + 3]) / 3.0
+            ramp = min(1.0, max(0.0, (luminance - low) / (high - low)))
+            ramp = ramp * ramp * (3.0 - 2.0 * ramp)
+            values[pixel_index] = round(source_alpha_bytes[pixel_index] * ramp)
+        mask = bytes(values)
+    return Image.frombytes("L", rgb.size, mask)
+
+
+def validate_runtime_geometry(
+    resref: str,
+    frames_x1: dict[str, Any],
+    path: Path,
+) -> tuple[dict[int, dict[str, Any]], dict[str, Any]]:
+    payload = load_json(path)
+    if (
+        payload.get("schema") != RUNTIME_GEOMETRY_SCHEMA
+        or payload.get("resref") != resref
+        or str(payload.get("source_bam_sha256", "")).upper()
+        != str(frames_x1.get("source_sha256", "")).upper()
+    ):
+        raise RuntimeError("géométrie runtime liée à une autre source BAM")
+    source_frames = frames_x1.get("frames")
+    geometry_frames = payload.get("frames")
+    if (
+        not isinstance(source_frames, list)
+        or not isinstance(geometry_frames, list)
+        or len(geometry_frames) != len(source_frames)
+        or [item.get("frame") for item in geometry_frames] != list(range(len(source_frames)))
+    ):
+        raise RuntimeError("géométrie runtime incomplète ou non contiguë")
+
+    alpha_policy = payload.get("alpha_policy")
+    if alpha_policy is not None:
+        if not isinstance(alpha_policy, dict):
+            raise RuntimeError("politique alpha runtime invalide")
+        mode = alpha_policy.get("mode")
+        key_valid = (
+            mode == "source-rgb-key"
+            and type(alpha_policy.get("transparent_max_channel")) is int
+            and 0 <= alpha_policy["transparent_max_channel"] < 255
+        )
+        luminance_valid = (
+            mode in {"source-rgb-luminance", "runtime-rgb-luminance"}
+            and type(alpha_policy.get("luminance_low")) in {int, float}
+            and type(alpha_policy.get("luminance_high")) in {int, float}
+            and 0 <= alpha_policy["luminance_low"] < alpha_policy["luminance_high"] <= 255
+        )
+        radial_valid = (
+            mode == "runtime-radial"
+            and type(alpha_policy.get("outer_radius_x_x1")) in {int, float}
+            and type(alpha_policy.get("outer_radius_y_x1")) in {int, float}
+            and type(alpha_policy.get("inner_fraction")) in {int, float}
+            and alpha_policy["outer_radius_x_x1"] > 0
+            and alpha_policy["outer_radius_y_x1"] > 0
+            and 0 <= alpha_policy["inner_fraction"] < 1
+        )
+        if (
+            not (key_valid or luminance_valid or radial_valid)
+            or alpha_policy.get("rgb_alpha_mode") != "premultiply"
+        ):
+            raise RuntimeError("politique alpha runtime invalide")
+
+    result: dict[int, dict[str, Any]] = {}
+    for index, (source_frame, geometry) in enumerate(zip(source_frames, geometry_frames)):
+        source_size = source_frame.get("source_size")
+        centre = source_frame.get("centre")
+        canvas_offset = source_frame.get("canvas_offset")
+        logical = geometry.get("logical_size_x1")
+        crop = geometry.get("crop_box_x1")
+        mapping = geometry.get("mapping")
+        runtime_centre = geometry.get("runtime_centre_x1")
+        if (
+            not isinstance(source_size, list)
+            or len(source_size) != 2
+            or not isinstance(centre, list)
+            or len(centre) != 2
+            or not isinstance(canvas_offset, list)
+            or len(canvas_offset) != 2
+            or not isinstance(logical, list)
+            or len(logical) != 2
+            or not isinstance(runtime_centre, list)
+            or len(runtime_centre) != 2
+            or not all(
+                type(value) is int
+                for value in source_size + centre + canvas_offset + logical + runtime_centre
+            )
+        ):
+            raise RuntimeError(f"frame {index}: géométrie runtime invalide")
+        width, height = logical
+        if width <= 0 or height <= 0 or width > MAX_FRAME_DIMENSION or height > MAX_FRAME_DIMENSION:
+            raise RuntimeError(f"frame {index}: dimensions runtime invalides")
+        if alpha_policy is not None and alpha_policy.get("mode") == "runtime-radial":
+            if (
+                alpha_policy["outer_radius_x_x1"]
+                > min(runtime_centre[0], width - runtime_centre[0])
+                or alpha_policy["outer_radius_y_x1"]
+                > min(runtime_centre[1], height - runtime_centre[1])
+            ):
+                raise RuntimeError(f"frame {index}: masque radial hors géométrie runtime")
+        if mapping is None:
+            if (
+                not isinstance(crop, list)
+                or len(crop) != 4
+                or not all(type(value) is int for value in crop)
+            ):
+                raise RuntimeError(f"frame {index}: crop runtime invalide")
+            source_box = crop
+            destination_box = [0, 0, width, height]
+            mapping_mode = "crop"
+        else:
+            if (
+                crop is not None
+                or not isinstance(mapping, dict)
+                or mapping.get("mode") != "contain"
+                or not isinstance(mapping.get("source_box_x1"), list)
+                or len(mapping["source_box_x1"]) != 4
+                or not isinstance(mapping.get("destination_box_x1"), list)
+                or len(mapping["destination_box_x1"]) != 4
+                or not all(
+                    type(value) is int
+                    for value in mapping["source_box_x1"] + mapping["destination_box_x1"]
+                )
+            ):
+                raise RuntimeError(f"frame {index}: reframe runtime invalide")
+            source_box = mapping["source_box_x1"]
+            destination_box = mapping["destination_box_x1"]
+            mapping_mode = "contain"
+        left, top, right, bottom = source_box
+        destination_left, destination_top, destination_right, destination_bottom = destination_box
+        source_width = right - left
+        source_height = bottom - top
+        destination_width = destination_right - destination_left
+        destination_height = destination_bottom - destination_top
+        anchor_matches = (
+            (centre[0] - left) * destination_width
+            == (runtime_centre[0] - destination_left) * source_width
+            and (centre[1] - top) * destination_height
+            == (runtime_centre[1] - destination_top) * source_height
+        )
+        if (
+            source_width <= 0
+            or source_height <= 0
+            or destination_width <= 0
+            or destination_height <= 0
+            or left < 0
+            or top < 0
+            or right > source_size[0]
+            or bottom > source_size[1]
+            or destination_left < 0
+            or destination_top < 0
+            or destination_right > width
+            or destination_bottom > height
+            or not anchor_matches
+            or (mapping_mode == "crop" and [source_width, source_height] != logical)
+            or (
+                mapping_mode == "contain"
+                and source_width * destination_height != source_height * destination_width
+            )
+        ):
+            raise RuntimeError(f"frame {index}: mapping runtime incompatible avec l'ancre BAM")
+        result[index] = {
+            "logical_size_x1": logical,
+            "mapping_mode": mapping_mode,
+            "source_box_x1": source_box,
+            "aligned_source_box_x1": [
+                left + canvas_offset[0],
+                top + canvas_offset[1],
+                right + canvas_offset[0],
+                bottom + canvas_offset[1],
+            ],
+            "destination_box_x1": destination_box,
+            "runtime_centre_x1": runtime_centre,
+            "alpha_policy": alpha_policy,
+        }
+        if mapping_mode == "crop":
+            result[index]["crop_box_x1"] = source_box
+
+    observed_slots = payload.get("observed_slots")
+    expected_slots = [
+        {"cycle": int(cycle["cycle"]), "slot": slot, "frame": int(frame)}
+        for cycle in frames_x1.get("cycles", [])
+        for slot, frame in enumerate(cycle.get("frame_indices", []))
+    ]
+    if not isinstance(observed_slots, list) or len(observed_slots) != len(expected_slots):
+        raise RuntimeError("géométrie runtime sans mesure de chaque slot BAM")
+    for expected, observed in zip(expected_slots, observed_slots):
+        frame = expected["frame"]
+        if (
+            not isinstance(observed, dict)
+            or any(observed.get(key) != value for key, value in expected.items())
+            or observed.get("logical_size_x1") != result[frame]["logical_size_x1"]
+        ):
+            raise RuntimeError("mesures runtime incompatibles avec les slots BAM")
+    evidence = {
+        "path": relative_to_repo(path),
+        "sha256": sha256_file(path),
+        "schema": RUNTIME_GEOMETRY_SCHEMA,
+        "observation": payload.get("observation"),
+    }
+    return result, evidence
 
 
 def validate_input(resref: str, run_dir: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
@@ -159,7 +518,13 @@ def validate_interpolation_input(
     return descriptor, manifest, manifest_path
 
 
-def build_pack_record(resref: str, frames_x1: dict[str, Any], spatial: dict[str, Any], spatial_dir: Path) -> tuple[bytes, list[dict[str, Any]]]:
+def build_pack_record(
+    resref: str,
+    frames_x1: dict[str, Any],
+    spatial: dict[str, Any],
+    spatial_dir: Path,
+    runtime_geometry: dict[int, dict[str, Any]] | None = None,
+) -> tuple[bytes, list[dict[str, Any]]]:
     encoded_resref = resref.encode("ascii")
     if not encoded_resref or len(encoded_resref) > 8 or not all(
         character.isalnum() or character == "_" for character in resref
@@ -188,6 +553,7 @@ def build_pack_record(resref: str, frames_x1: dict[str, Any], spatial: dict[str,
     registry.extend(struct.pack("<II", frame_count, len(ordered_cycles)))
 
     assets: list[dict[str, Any]] = []
+    alpha_masks: dict[int, Image.Image] = {}
     for index, (source_frame, scaled_frame) in enumerate(zip(source_frames, scaled_frames)):
         if source_frame.get("frame") != index or scaled_frame.get("frame") != index:
             raise RuntimeError("frames non contiguës")
@@ -220,20 +586,69 @@ def build_pack_record(resref: str, frames_x1: dict[str, Any], spatial: dict[str,
         expected_bytes = width * 4 * height * 4 * 4
         if not raw_path.is_file() or raw_path.stat().st_size != expected_bytes:
             raise RuntimeError(f"frame {index}: RGBA x4 absent ou tronqué")
-        digest = require_hash(raw_path, str(scaled_frame.get("raw_rgba_xn_sha256", "")), f"frame {index}")
+        source_digest = require_hash(
+            raw_path, str(scaled_frame.get("raw_rgba_xn_sha256", "")), f"frame {index}"
+        )
+        payload: bytes | None = None
+        geometry = runtime_geometry.get(index) if runtime_geometry is not None else None
+        if geometry is not None:
+            alpha_policy = geometry.get("alpha_policy")
+            alpha_mask = None
+            if alpha_policy is not None and str(alpha_policy.get("mode", "")).startswith(
+                "source-rgb-"
+            ):
+                if index not in alpha_masks:
+                    alpha_masks[index] = source_rgb_alpha_mask(
+                        index, frames_x1, spatial, alpha_policy
+                    )
+                alpha_mask = alpha_masks[index]
+            payload = transform_rgba(
+                raw_path.read_bytes(),
+                logical_size,
+                geometry["source_box_x1"],
+                geometry["logical_size_x1"],
+                geometry["destination_box_x1"],
+                alpha_mask_x1=alpha_mask,
+                alpha_source_box_x1=geometry["source_box_x1"],
+                alpha_policy=alpha_policy,
+                runtime_centre_x1=geometry["runtime_centre_x1"],
+            )
+            width, height = geometry["logical_size_x1"]
+            expected_bytes = width * 4 * height * 4 * 4
+            if len(payload) != expected_bytes:
+                raise RuntimeError(f"frame {index}: reframe RGBA x4 incohérent")
+            digest = sha256_bytes(payload)
+        else:
+            digest = source_digest
         name = frame_asset_name(resref, index)
         registry.extend(struct.pack("<II", width, height))
-        assets.append(
-            {
-                "frame": index,
-                "asset": name,
-                "source": relative_to_repo(raw_path),
-                "sha256": digest,
-                "bytes": expected_bytes,
-                "logical_size_x1": [width, height],
-                "physical_size_x4": [width * 4, height * 4],
-            }
-        )
+        asset = {
+            "frame": index,
+            "asset": name,
+            "source": relative_to_repo(raw_path),
+            "source_sha256": source_digest,
+            "sha256": digest,
+            "bytes": expected_bytes,
+            "logical_size_x1": [width, height],
+            "physical_size_x4": [width * 4, height * 4],
+        }
+        if geometry is not None:
+            asset.update(
+                {
+                    "source_logical_size_x1": logical_size,
+                    "mapping": {
+                        "mode": geometry["mapping_mode"],
+                        "source_box_x1": geometry["source_box_x1"],
+                        "destination_box_x1": geometry["destination_box_x1"],
+                    },
+                    "runtime_centre_x1": geometry["runtime_centre_x1"],
+                    "alpha_policy": geometry.get("alpha_policy"),
+                    "_payload": payload,
+                }
+            )
+            if geometry["mapping_mode"] == "crop":
+                asset["crop_box_x1"] = geometry["source_box_x1"]
+        assets.append(asset)
 
     for cycle in ordered_cycles:
         frames = cycle.get("frame_indices")
@@ -247,7 +662,12 @@ def build_pack_record(resref: str, frames_x1: dict[str, Any], spatial: dict[str,
 
 
 def build_interpolated_pack_record(
-    resref: str, interpolation: dict[str, Any], interpolation_dir: Path
+    resref: str,
+    interpolation: dict[str, Any],
+    interpolation_dir: Path,
+    frames_x1: dict[str, Any] | None = None,
+    spatial: dict[str, Any] | None = None,
+    runtime_geometry: dict[int, dict[str, Any]] | None = None,
 ) -> tuple[bytes, list[dict[str, Any]], dict[str, Any]]:
     frames = interpolation.get("frames")
     timing = interpolation.get("timing")
@@ -280,9 +700,19 @@ def build_interpolated_pack_record(
     if len(frames) != len(native_indices) * multiplier_numerator // multiplier_denominator:
         raise RuntimeError("nombre de phases interpolation incompatible avec le cycle natif")
 
+    interpolation_geometry: dict[str, Any] | None = None
+    if runtime_geometry is not None:
+        geometries = list(runtime_geometry.values())
+        if not geometries or any(geometry != geometries[0] for geometry in geometries[1:]):
+            raise RuntimeError(
+                "l'interpolation exige une géométrie runtime uniforme entre les slots natifs"
+            )
+        interpolation_geometry = geometries[0]
+
     registry = bytearray(resref.encode("ascii").ljust(8, b"\0"))
     registry.extend(struct.pack("<II", len(frames), 1))
     assets: list[dict[str, Any]] = []
+    alpha_masks: dict[int, Image.Image] = {}
     for index, frame in enumerate(frames):
         logical = frame.get("logical_size_x1")
         physical = frame.get("physical_size_x4")
@@ -301,20 +731,84 @@ def build_interpolated_pack_record(
         expected_bytes = physical[0] * physical[1] * 4
         if not raw_path.is_file() or raw_path.stat().st_size != expected_bytes:
             raise RuntimeError(f"frame interpolée {index}: RGBA absent ou tronqué")
-        digest = require_hash(raw_path, str(frame.get("raw_rgba_x4_sha256", "")), f"frame interpolée {index}")
-        registry.extend(struct.pack("<II", logical[0], logical[1]))
-        assets.append(
-            {
-                "frame": index,
-                "asset": frame_asset_name(resref, index),
-                "source": relative_to_repo(raw_path),
-                "sha256": digest,
-                "bytes": expected_bytes,
-                "logical_size_x1": logical,
-                "physical_size_x4": physical,
-                "alpha_source_frame": frame.get("alpha_source_frame"),
-            }
+        source_digest = require_hash(
+            raw_path, str(frame.get("raw_rgba_x4_sha256", "")), f"frame interpolée {index}"
         )
+        payload: bytes | None = None
+        runtime_logical = logical
+        runtime_physical = physical
+        digest = source_digest
+        if interpolation_geometry is not None:
+            alpha_policy = interpolation_geometry.get("alpha_policy")
+            alpha_mask = None
+            alpha_source_frame = frame.get("alpha_source_frame")
+            if alpha_policy is not None and str(alpha_policy.get("mode", "")).startswith(
+                "source-rgb-"
+            ):
+                if (
+                    frames_x1 is None
+                    or spatial is None
+                    or type(alpha_source_frame) is not int
+                ):
+                    raise RuntimeError(
+                        f"frame interpolée {index}: source alpha runtime absente"
+                    )
+                if alpha_source_frame not in alpha_masks:
+                    alpha_masks[alpha_source_frame] = source_rgb_alpha_mask(
+                        alpha_source_frame, frames_x1, spatial, alpha_policy
+                    )
+                alpha_mask = alpha_masks[alpha_source_frame]
+            payload = transform_rgba(
+                raw_path.read_bytes(),
+                logical,
+                interpolation_geometry["aligned_source_box_x1"],
+                interpolation_geometry["logical_size_x1"],
+                interpolation_geometry["destination_box_x1"],
+                alpha_mask_x1=alpha_mask,
+                alpha_source_box_x1=interpolation_geometry["source_box_x1"],
+                alpha_policy=alpha_policy,
+                runtime_centre_x1=interpolation_geometry["runtime_centre_x1"],
+            )
+            runtime_logical = interpolation_geometry["logical_size_x1"]
+            runtime_physical = [runtime_logical[0] * 4, runtime_logical[1] * 4]
+            expected_bytes = runtime_physical[0] * runtime_physical[1] * 4
+            if len(payload) != expected_bytes:
+                raise RuntimeError(f"frame interpolée {index}: reframe RGBA x4 incohérent")
+            digest = sha256_bytes(payload)
+        registry.extend(struct.pack("<II", runtime_logical[0], runtime_logical[1]))
+        asset = {
+            "frame": index,
+            "asset": frame_asset_name(resref, index),
+            "source": relative_to_repo(raw_path),
+            "source_sha256": source_digest,
+            "sha256": digest,
+            "bytes": expected_bytes,
+            "logical_size_x1": runtime_logical,
+            "physical_size_x4": runtime_physical,
+            "alpha_source_frame": frame.get("alpha_source_frame"),
+        }
+        if interpolation_geometry is not None:
+            asset.update(
+                {
+                    "source_logical_size_x1": logical,
+                    "mapping": {
+                        "mode": interpolation_geometry["mapping_mode"],
+                        "source_box_x1": interpolation_geometry["source_box_x1"],
+                        "aligned_source_box_x1": interpolation_geometry[
+                            "aligned_source_box_x1"
+                        ],
+                        "destination_box_x1": interpolation_geometry[
+                            "destination_box_x1"
+                        ],
+                    },
+                    "runtime_centre_x1": interpolation_geometry["runtime_centre_x1"],
+                    "alpha_policy": interpolation_geometry.get("alpha_policy"),
+                    "_payload": payload,
+                }
+            )
+            if interpolation_geometry["mapping_mode"] == "crop":
+                asset["crop_box_x1"] = interpolation_geometry["aligned_source_box_x1"]
+        assets.append(asset)
     registry.extend(struct.pack(f"<I{len(native_indices)}I", len(native_indices), *native_indices))
     registry.extend(
         struct.pack(
@@ -337,7 +831,8 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
                descriptor: dict[str, Any], frames_x1: dict[str, Any], spatial: dict[str, Any],
                *, registry_version: int = REGISTRY_VERSION,
                timeline: dict[str, Any] | None = None,
-               interpolation_descriptor: dict[str, Any] | None = None) -> dict[str, Any]:
+               interpolation_descriptor: dict[str, Any] | None = None,
+               runtime_geometry_evidence: dict[str, Any] | None = None) -> dict[str, Any]:
     if output.exists():
         if not output.is_dir():
             raise RuntimeError(f"sortie runtime non répertoire : {output}")
@@ -349,12 +844,20 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
     try:
         registry_path = output / REGISTRY_NAME
         registry_path.write_bytes(registry)
+        manifest_assets: list[dict[str, Any]] = []
         for asset in assets:
-            source = REPO_ROOT / asset["source"]
             target = output / asset["asset"]
-            shutil.copyfile(source, target)
+            payload = asset.get("_payload")
+            if isinstance(payload, bytes):
+                target.write_bytes(payload)
+            else:
+                source = REPO_ROOT / asset["source"]
+                shutil.copyfile(source, target)
             if sha256_file(target) != asset["sha256"]:
                 raise RuntimeError(f"copie runtime corrompue : {asset['asset']}")
+            manifest_assets.append(
+                {key: value for key, value in asset.items() if not key.startswith("_")}
+            )
         manifest = {
             "schema": PACK_SCHEMA,
             "status": "completed",
@@ -368,7 +871,7 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
             "registry_bytes": registry_path.stat().st_size,
             "frame_count": len(assets),
             "cycles": frames_x1["cycles"],
-            "frames": assets,
+            "frames": manifest_assets,
             "source": {
                 "spatial_run": descriptor["run_id"],
                 "spatial_run_descriptor_sha256": sha256_file(
@@ -390,6 +893,8 @@ def write_pack(output: Path, registry: bytes, assets: list[dict[str, Any]],
                 REPO_ROOT / "effects" / "ressources" / descriptor["asset_ids"][0].rsplit(":", 1)[-1]
                 / "runs" / interpolation_descriptor["run_id"] / "run.json"
             )
+        if runtime_geometry_evidence is not None:
+            manifest["source"]["runtime_geometry"] = runtime_geometry_evidence
         (output / "manifest.json").write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
@@ -413,6 +918,10 @@ def main(argv: list[str] | None = None) -> int:
         default="engine/InfinityEngine-Enhancer/source-patchee/assets/effects",
         help="empty runtime-pack destination relative to the workspace",
     )
+    parser.add_argument(
+        "--runtime-geometry",
+        help="measured runtime geometry manifest relative to the workspace",
+    )
     parser.add_argument("--run", action="store_true", help="write the runtime pack")
     args = parser.parse_args(argv)
     try:
@@ -420,6 +929,15 @@ def main(argv: list[str] | None = None) -> int:
         run_dir = REPO_ROOT / "effects" / "ressources" / resref / "runs" / args.spatial_run
         output = require_relative(REPO_ROOT, args.output, "sortie runtime")
         descriptor, frames_x1, spatial = validate_input(resref, run_dir)
+        runtime_geometry: dict[int, dict[str, Any]] | None = None
+        runtime_geometry_evidence: dict[str, Any] | None = None
+        if args.runtime_geometry:
+            geometry_path = require_relative(
+                REPO_ROOT, args.runtime_geometry, "géométrie runtime"
+            )
+            runtime_geometry, runtime_geometry_evidence = validate_runtime_geometry(
+                resref, frames_x1, geometry_path
+            )
         spatial_path = REPO_ROOT / next(
             item["path"] for item in descriptor["outputs"] if item["role"] == "spatial-manifest"
         )
@@ -434,11 +952,18 @@ def main(argv: list[str] | None = None) -> int:
                 resref, interpolation_dir, descriptor
             )
             registry_record, assets, timeline = build_interpolated_pack_record(
-                resref, interpolation, interpolation_path.parent
+                resref,
+                interpolation,
+                interpolation_path.parent,
+                frames_x1,
+                spatial,
+                runtime_geometry,
             )
             registry_version = TIMELINE_REGISTRY_VERSION
         else:
-            registry_record, assets = build_pack_record(resref, frames_x1, spatial, spatial_path.parent)
+            registry_record, assets = build_pack_record(
+                resref, frames_x1, spatial, spatial_path.parent, runtime_geometry
+            )
         registry = bytearray(REGISTRY_MAGIC)
         registry.extend(struct.pack("<IIII", registry_version, 4, 1, 0))
         registry.extend(registry_record)
@@ -452,6 +977,7 @@ def main(argv: list[str] | None = None) -> int:
             "frame_count": len(assets),
             "frame_bytes": sum(int(asset["bytes"]) for asset in assets),
             "interpolation_run": args.interpolation_run,
+            "runtime_geometry": runtime_geometry_evidence,
             "write": bool(args.run),
         }
         if not args.run:
@@ -461,6 +987,7 @@ def main(argv: list[str] | None = None) -> int:
             output, bytes(registry), assets, descriptor, frames_x1, spatial,
             registry_version=registry_version, timeline=timeline,
             interpolation_descriptor=interpolation_descriptor,
+            runtime_geometry_evidence=runtime_geometry_evidence,
         )
         plan["manifest_sha256"] = sha256_file(output / "manifest.json")
         plan["registry_sha256"] = manifest["registry_sha256"]

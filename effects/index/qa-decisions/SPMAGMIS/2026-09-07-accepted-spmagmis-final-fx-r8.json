@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-effect-qa-decision-v1",
+  "schema_version": 1,
+  "asset_id": "effects:bam:SPMAGMIS",
+  "resref": "SPMAGMIS",
+  "status": "accepted",
+  "decision_origin": "explicit-user-ingame-qa",
+  "decision_date": "2026-09-07",
+  "recorded_at_utc": "2026-09-07T06:54:50Z",
+  "decision": "Projectile magique complètement validé ingame par l'utilisateur.",
+  "selected_run": {
+    "run_id": "spmagmis-apollo8-30fps-x4-20260907-r2",
+    "descriptor_path": "effects/ressources/SPMAGMIS/runs/spmagmis-apollo8-30fps-x4-20260907-r2/run.json",
+    "descriptor_sha256": "2E8F0EE497141A7F17E7EF83FAF8945A13735ECE3FBDC831B0328D5FA57D64C5"
+  },
+  "runtime_geometry": {
+    "path": "effects/runtime-geometry/SPMAGMIS-v1.json",
+    "sha256": "373C176F71E4AAFF216A48FA462E8D71F8E304DA415A80DF1EFA61F6F20CABEE",
+    "logical_size_x1": [64, 78],
+    "source_frame_size_x1": [64, 64],
+    "alpha_policy": "runtime-rgb-luminance-premultiply"
+  },
+  "installed_candidate": {
+    "path": "build/effect-candidate-spmagmis-30fps-final-fx-20260907-r8",
+    "manifest_path": "build/effect-candidate-spmagmis-30fps-final-fx-20260907-r8/iee-assets/effects/manifest.json",
+    "manifest_sha256": "71A6B0CFBD94FABED01739128F1AB8AED7E310B81E9D2CABC1C4A8623B932585",
+    "registry_sha256": "17FBB7B2DFC1256293034E4DF33429E392EEA8E75DEBE74DE4836FAF4830819B",
+    "renderer_sha256": "0A2ECD1D6D75A11486030A0C96FD5BD61DD7666A6D4D2DF3BFB8243844968657"
+  },
+  "installation": {
+    "state": "installed",
+    "receipt_path": "backups/renderer/20260907T063328812267Z-57f79ea8/renderer-install-receipt.json",
+    "receipt_sha256": "702239E88BC78D5B0486372856A8537F41C3645091A77FC9203BD203D2537BF1",
+    "receipt_verification": "receipt, payload, backups and installed state verified"
+  },
+  "runtime_observation": {
+    "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "observed_local": "2026-09-07T08:51:22.205+02:00",
+    "native_intermediate": "stage=registry-fallback sequence=0 nativeFrame=0 logical=24x16",
+    "registry": "stage=registry-resolved sequence=0 nativeFrame=0 logical=64x78",
+    "timeline": "stage=timeline-resolved sequence=0 nativeFrame=0 timelinePhase=0 logical=64x78",
+    "binding": "stage=x4-bound x4Bound=1 bindFallback=0 sequence=0 nativeFrame=0 timelinePhase=0 logical=64x78"
+  },
+  "validated_criteria": [
+    "complete magic-missile projectile render",
+    "no opaque square background",
+    "no native and x4 projectile duplication",
+    "expected projectile count and stable native screen geometry",
+    "30 FPS interpolated timeline active",
+    "x4 texture bound on the final FX render"
+  ],
+  "release_mutation": false
+}

@@ -58,6 +58,10 @@ using GameStaticRenderBamFn = void (*)(void*, void*, void*);
 // on the manifested BG2EE 2.7.3 image. Keeping both non-this registers in the
 // type preserves the native call ABI when the scoped original is invoked.
 using ProjectileBamRenderFn = void (*)(void*, std::uintptr_t, void*);
+// CInfinity::FXRender receives the prepared FX surface after projectile BAM
+// composition. Scoping this call keeps the replacement away from the earlier
+// clipping-polygons draw, which has no CVidCell identity left at RenderTexture.
+using ProjectileFxRenderFn = int (*)(void*, void*, int, int, int, int, int);
 using VidCellRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, std::uint32_t);
 using InfinityFxRenderClippingPolysFn = int (*)(void*, int, int, int, void*, void*,
                                                 std::uint8_t, std::uint32_t);
@@ -86,6 +90,7 @@ static core::Hook<RenderTextureFn> g_renderTextureHook;
 static core::Hook<DrawColorToneFn> g_drawColorToneHook;
 static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
 static core::Hook<ProjectileBamRenderFn> g_projectileBamRenderHook;
+static core::Hook<ProjectileFxRenderFn> g_projectileFxRenderHook;
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
 static core::Hook<InfinityFxRenderClippingPolysFn> g_infinityFxRenderClippingPolysHook;
 static core::Hook<VidPaletteRealizeFn> g_vidPaletteRealizeHook;
@@ -119,6 +124,7 @@ thread_local int g_areaAnimationSlot = -1;
 thread_local int g_areaAnimationTimelinePhase = -1;
 thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationProjectile = nullptr;
+thread_local int g_effectAnimationFinalRenderDepth = 0;
 
 // Bounded, per-process proof for the first SPMAGMIS render path. The normal
 // runtime remains unchanged: these counters only observe exact registry matches
@@ -140,6 +146,7 @@ struct EffectAnimationDiagnostics {
   std::atomic<std::uint64_t> x4Bound{0};
   std::atomic<std::uint64_t> bindFallback{0};
   std::atomic<std::uint32_t> reportedStages{0};
+  std::atomic<std::uint64_t> reportedRegistryFallbackSlots{0};
 
   [[nodiscard]] EffectAnimationDiagnosticSnapshot snapshot() const noexcept {
     return {
@@ -189,6 +196,26 @@ void log_effect_animation_diagnostic_once(std::uint32_t stage, std::string_view 
       }
       return;
     }
+  }
+}
+
+void log_effect_animation_registry_fallback_slot_once(int sequence, int nativeFrame,
+                                                       int logicalWidth,
+                                                       int logicalHeight) noexcept {
+  if (sequence != 0 || nativeFrame < 0 || nativeFrame >= 64) return;
+  const auto slot = static_cast<std::uint64_t>(nativeFrame);
+  const auto bit = std::uint64_t{1} << slot;
+  const auto previous =
+      g_effectAnimationDiagnostics.reportedRegistryFallbackSlots.fetch_or(
+          bit, std::memory_order_relaxed);
+  if ((previous & bit) != 0) return;
+  try {
+    LOG_INFO(
+        "Effect animation x4 geometry diagnostic: resref=SPMAGMIS, "
+        "stage=registry-fallback-slot, sequence={}, nativeFrame={}, logical={}x{}",
+        sequence, nativeFrame, logicalWidth, logicalHeight);
+  } catch (...) {
+    // Diagnostics are never allowed to perturb rendering.
   }
 }
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
@@ -852,6 +879,8 @@ bool read_effect_animation_frame(void* projectile, int logicalWidth, int logical
                                           logicalHeight, resolved.handle)) {
     if (diagnosticTarget) {
       g_effectAnimationDiagnostics.registryFallback.fetch_add(1, std::memory_order_relaxed);
+      log_effect_animation_registry_fallback_slot_once(currentSequence, currentFrame,
+                                                        logicalWidth, logicalHeight);
       log_effect_animation_diagnostic_once(
           kEffectDiagnosticRegistryFallback, "registry-fallback", currentSequence, currentFrame,
           -1, logicalWidth, logicalHeight);
@@ -1217,6 +1246,14 @@ bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
     LOG_WARN("Effect animation x4 hook skipped: CProjectileBAM::Render signature differs at "
              "RVA 0x{:X}",
              effectRuntime.projectileBamRender);
+    return false;
+  }
+  if (effectRuntime.infinityFxRender > module->size ||
+      !matches_pattern_at_rva(*module, effectRuntime.infinityFxRender,
+                              effectRuntime.infinityFxRenderSignature)) {
+    LOG_WARN("Effect animation x4 hook skipped: CInfinity::FXRender signature differs at "
+             "RVA 0x{:X}",
+             effectRuntime.infinityFxRender);
     return false;
   }
   const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
@@ -1950,6 +1987,17 @@ static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags
   }
 }
 
+static int detour_projectile_fx_render(void* thisPtr, void* sourceRect, int x, int y,
+                                       int renderFlags, int transparency, int drawFlags) {
+  const bool scoped = g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
+                      g_effectAnimationProjectile;
+  if (scoped) ++g_effectAnimationFinalRenderDepth;
+  const int result = g_projectileFxRenderHook.original()(
+      thisPtr, sourceRect, x, y, renderFlags, transparency, drawFlags);
+  if (scoped) --g_effectAnimationFinalRenderDepth;
+  return result;
+}
+
 static void detour_monster_render(
     void* thisPtr, std::uintptr_t a2, std::uintptr_t a3, std::uintptr_t a4,
     std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
@@ -2255,7 +2303,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       }
     }
   } else if (g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
-             g_effectAnimationProjectile &&
+             g_effectAnimationFinalRenderDepth > 0 && g_effectAnimationProjectile &&
              read_effect_animation_frame(g_effectAnimationProjectile, logicalWidth, logicalHeight,
                                          resolvedEffectAnimationFrame)) {
     select_effect_timeline_frame(g_effectAnimationProjectile, read_world_active(), logicalWidth,
@@ -3494,13 +3542,18 @@ bool install_all(AppContext& ctx) {
         }
         if (g_effectAnimationHooksEnabled) {
           const auto& effectRuntime = ctx.manifest->projectileEffects;
+          g_projectileFxRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + effectRuntime.infinityFxRender),
+              reinterpret_cast<void*>(&detour_projectile_fx_render));
+          g_projectileFxRenderHook.enable();
           g_projectileBamRenderHook.create(
               reinterpret_cast<void*>(moduleBase + effectRuntime.projectileBamRender),
               reinterpret_cast<void*>(&detour_projectile_bam_render));
           g_projectileBamRenderHook.enable();
           LOG_INFO("Effect animation x4 projectile scope installed: CProjectileBAM::Render RVA "
-                   "0x{:X}, CVidCell offset 0x{:X}",
-                   effectRuntime.projectileBamRender, effectRuntime.projectileVidCell);
+                   "0x{:X}, final CInfinity::FXRender RVA 0x{:X}, CVidCell offset 0x{:X}",
+                   effectRuntime.projectileBamRender, effectRuntime.infinityFxRender,
+                   effectRuntime.projectileVidCell);
         }
         if (g_creatureSpriteHooksEnabled) {
           g_vidPaletteRealizeHook.create(
@@ -3549,6 +3602,7 @@ bool install_all(AppContext& ctx) {
         (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
+        (void)g_projectileFxRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
@@ -3573,6 +3627,7 @@ bool install_all(AppContext& ctx) {
         (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
+        (void)g_projectileFxRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
@@ -3749,6 +3804,7 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
+    (void)g_projectileFxRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -3792,6 +3848,7 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
+    (void)g_projectileFxRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -3842,6 +3899,7 @@ void uninstall_all() noexcept {
   (void)g_monsterRenderHook.remove();
   (void)g_monsterIcewindRenderHook.remove();
   (void)g_projectileBamRenderHook.remove();
+  (void)g_projectileFxRenderHook.remove();
   (void)g_gameStaticRenderBamHook.remove();
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
@@ -3899,6 +3957,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_monsterRenderHook.disable();
   (void)g_monsterIcewindRenderHook.disable();
   (void)g_projectileBamRenderHook.disable();
+  (void)g_projectileFxRenderHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();

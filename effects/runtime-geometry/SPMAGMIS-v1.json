@@ -1,0 +1,95 @@
+{
+  "schema": "bg2-upscale-effect-runtime-geometry-v1",
+  "resref": "SPMAGMIS",
+  "source_bam_sha256": "BEE7D9C8BD7E82BA7427968A00CDF1FFA7D58A71E92E39FA56B3A21E0B167944",
+  "alpha_policy": {
+    "mode": "runtime-rgb-luminance",
+    "luminance_low": 8,
+    "luminance_high": 100,
+    "rgb_alpha_mode": "premultiply"
+  },
+  "observation": {
+    "observed_local": "2026-09-07T08:15:07+02:00",
+    "method": "bounded registry-fallback telemetry plus static CProjectileBAM::Render call-path audit; final CInfinity::FXRender only",
+    "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+    "renderer_install_receipt": "backups/renderer/20260907T010228710468Z-f094b8b3/renderer-install-receipt.json"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    },
+    {
+      "frame": 1,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    },
+    {
+      "frame": 2,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    },
+    {
+      "frame": 3,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    },
+    {
+      "frame": 4,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    },
+    {
+      "frame": 5,
+      "logical_size_x1": [64, 78],
+      "mapping": {
+        "mode": "contain",
+        "source_box_x1": [0, 0, 64, 64],
+        "destination_box_x1": [0, 7, 64, 71]
+      },
+      "runtime_centre_x1": [32, 39]
+    }
+  ],
+  "observed_slots": [
+    {"cycle": 0, "slot": 0, "frame": 0, "logical_size_x1": [64, 78]},
+    {"cycle": 0, "slot": 1, "frame": 1, "logical_size_x1": [64, 78]},
+    {"cycle": 0, "slot": 2, "frame": 2, "logical_size_x1": [64, 78]},
+    {"cycle": 0, "slot": 3, "frame": 3, "logical_size_x1": [64, 78]},
+    {"cycle": 0, "slot": 4, "frame": 4, "logical_size_x1": [64, 78]},
+    {"cycle": 0, "slot": 5, "frame": 5, "logical_size_x1": [64, 78]}
+  ],
+  "terminal_fallbacks": [
+    {
+      "sequence": 0,
+      "native_frame": 6,
+      "logical_size_x1": [24, 16],
+      "policy": "pre-final clipping draw outside BAM cycle; excluded by final FXRender scope"
+    }
+  ]
+}

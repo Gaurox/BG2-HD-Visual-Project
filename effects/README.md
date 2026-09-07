@@ -9,6 +9,7 @@ Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF r
 | `index/manifest.json`, `resources.csv`, `dependencies.csv` | inventaire VVC/VEF et graphe de dépendances | généré |
 | `index/bam-assets.csv` | inventaire unifié des BAM d'effet, provenance, consommateurs et source | généré |
 | `index/processing.csv` | états spatiaux/temporels, sélection, QA, installation, release | autorité métier |
+| `index/qa-decisions/<RESREF>/*.json` | décisions QA ingame explicites et preuves hashées | immuable |
 
 `bam-assets.csv` inclut les BAM directement référencés par VVC/VEF, les BAM référencés directement par un PRO et les BAM des BIF dédiées effets. Les BAM partagés avec les projectiles restent des assets `effects`; leurs consommateurs PRO sont listés, sans duplication sous `projectiles/`. `origin=projectile-member` désigne un BAM connu uniquement par un PRO.
 
@@ -16,7 +17,9 @@ Un asset de production est un BAM visuel : `effects:bam:<RESREF>`. Les VVC/VEF r
 
 ```text
 effects/
+  index/qa-decisions/<RESREF>/*.json # décision QA ingame immuable
   source/{vvc,vef}/                 # contrôleurs stock extraits
+  runtime-geometry/<RESREF>-vN.json # mesures runtime liées au hash du BAM
   ressources/<RESREF>/
     source.bam                       # BAM stock unique, ignoré Git
     runs/<run-id>/
@@ -50,7 +53,10 @@ python pipeline/scripts/effect_workflow.py register-run --resref <RESREF> --stag
 python pipeline/scripts/effect_workflow.py check --resref <RESREF>
 ```
 
-Le workflow ne sélectionne aucun run, ne déclare aucune QA, n'installe rien et ne touche pas à la release. Ces axes seront ajoutés après validation du pack/runtime.
+Le workflow de production ne sélectionne aucun run, ne déclare aucune QA, n'installe
+rien et ne touche pas à la release. Après validation explicite du pack/runtime,
+`processing.csv` lie le run sélectionné, la décision immuable sous
+`index/qa-decisions/` et le reçu installé. La release reste une décision séparée.
 
 ## Producteur spatial
 
@@ -99,6 +105,17 @@ Le prototype runtime `EffectAnimations-X4.registry` couvre les BAM de projectile
 fallback BAM natif à toute divergence. Le registre v1 conserve la cadence BAM
 native ; le v2 ajoute une timeline QPC pause-aware ancrée sur les slots BAM pour
 les runs 30 FPS. Il ne couvre pas encore les VVC/VEF génériques.
+
+Si la géométrie logique observée sur le `CInfinity::FXRender` final de
+`CProjectileBAM::Render` diffère des dimensions du BAM,
+`build_effect_runtime_pack.py --runtime-geometry <preuve.json>` exige une mesure
+pour chaque slot, applique un crop ou reframe validé autour de l'ancre BAM et inscrit
+cette preuve dans le manifeste dérivé. Les tirages intermédiaires de
+`FXRenderClippingPolys` restent natifs : les remplacer produirait deux couches
+visibles. Une politique alpha asset-spécifique peut reconstruire un masque depuis le
+RGB source, le RGB x4 produit (seuil ou rampe de luminance) ou la géométrie runtime,
+puis prémultiplier le RGB pour les chemins `Blended`. Le run scellé reste inchangé ;
+tout slot absent ou terminal conserve le fallback natif strict.
 
 Chaque nouvelle famille doit démontrer : ancrage logique, cycle/timing, alpha,
 palette, partage multi-contrôleur, consommateur projectile et fallback natif.
