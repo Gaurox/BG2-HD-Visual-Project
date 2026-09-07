@@ -332,6 +332,13 @@ constexpr BuildManifest kKnownBuilds[] = {
            0x408430,
            "40 53 55 56 57 41 54 41 56 41 57 48 81 EC 80 02 00 00 48 8B 05 ? ? ? ? "
            "48 33 C4 48 89 84 24 70 02 00 00"}},
+        {
+            true,
+            0x233F20,
+            0x1B8,
+            "4C 8B DC 55 41 54 41 56 49 8D 6B A1 48 81 EC C0 00 00 00 48 8B 05 ? ? ? ? "
+            "48 33 C4",
+        },
     },
 };
 
@@ -383,6 +390,9 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].areaAnimations.fxSurfacePoolReferenceSignature),
               "BG2EE 2.7.3 FX surface-pool reference pattern format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].projectileEffects.projectileBamRenderSignature),
+              "BG2EE 2.7.3 projectile render signature format is invalid");
 static_assert([] {
   for (const auto signature : kKnownBuilds[2].areaAnimations.signatures) {
     if (!validate_pattern_format(signature)) return false;

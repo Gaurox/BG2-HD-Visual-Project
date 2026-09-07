@@ -174,6 +174,8 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.enableAM0205EAnimationX4Test);
     else if (iequals(key, "EnableAreaAnimationX4"))
       assign_bool(cfg.enableAreaAnimationX4);
+    else if (iequals(key, "EnableEffectAnimationX4"))
+      assign_bool(cfg.enableEffectAnimationX4);
     else if (iequals(key, "EnableNativeOcclusionProbe"))
       assign_bool(cfg.enableNativeOcclusionProbe);
     else if (iequals(key, "EnableNativeOcclusionBridge"))
@@ -292,6 +294,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableAM0700AAnimationX4Test", cfg.enableAM0700AAnimationX4Test);
   write_bool(f, "EnableAM0205EAnimationX4Test", cfg.enableAM0205EAnimationX4Test);
   write_bool(f, "EnableAreaAnimationX4", cfg.enableAreaAnimationX4);
+  write_bool(f, "EnableEffectAnimationX4", cfg.enableEffectAnimationX4);
   write_bool(f, "EnableNativeOcclusionProbe", cfg.enableNativeOcclusionProbe);
   write_bool(f, "EnableNativeOcclusionBridge", cfg.enableNativeOcclusionBridge);
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);

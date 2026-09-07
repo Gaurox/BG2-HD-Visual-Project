@@ -248,6 +248,23 @@ struct AreaAnimationRuntime {
   }
 };
 
+// Optional high-level CProjectileBAM/CVidCell composition bridge for external
+// spell and projectile effect packs. It is deliberately separate from the
+// area-animation runtime: effects have distinct lifetime, ownership and cache
+// boundaries even though both paths preserve the native CVidCell geometry.
+struct ProjectileEffectRuntime {
+  bool enabled{};
+  std::uintptr_t projectileBamRender{};
+  std::uintptr_t projectileVidCell{};
+  std::string_view projectileBamRenderSignature{};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    if (!enabled) return true;
+    return projectileBamRender != 0 && projectileVidCell != 0 &&
+           !projectileBamRenderSignature.empty();
+  }
+};
+
 // Optional map-composition point used by area-specific overlays. The overlay
 // is drawn at the end of CGameArea::Render, while DrawBeginScaled's map
 // framebuffer is still bound. DrawEndScaled then resolves the map (including
@@ -294,6 +311,8 @@ struct BuildManifest {
   std::array<BranchInstructionDesc, 11> renderTextureCallsites{};
   // Appended because this aggregate uses positional initializers.
   PvrDemandRuntime pvrDemand{};
+  // Appended after PVR demand to preserve every existing positional manifest.
+  ProjectileEffectRuntime projectileEffects{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (buildId.empty() || supportedProductNames[0].empty() || executableVersion.major == 0 ||
@@ -311,6 +330,7 @@ struct BuildManifest {
       return false;
     }
     if (!areaAnimations.validate()) return false;
+    if (!projectileEffects.validate()) return false;
     if (!worldOverlay.validate()) return false;
     if (!pvrDemand.validate()) return false;
 

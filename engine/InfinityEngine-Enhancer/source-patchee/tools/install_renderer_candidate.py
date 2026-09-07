@@ -1,10 +1,10 @@
 """Install or restore an experimental renderer candidate transactionally.
 
-The transaction owns exactly ``InfinityEngine-Enhancer.dll`` and
-``InfinityEngine-Enhancer.ini`` in the selected game root.  It stages verified
-copies of both the candidate and the previous state before publishing a receipt
-or mutating the game.  Restore therefore remains possible when the original
-build directory no longer exists.
+The transaction always owns ``InfinityEngine-Enhancer.dll`` and
+``InfinityEngine-Enhancer.ini``.  A candidate can additionally include one
+strictly validated x4 effect pack under ``iee-assets/effects``.  Every managed
+file is staged with its previous state before the receipt is published or the
+game is mutated, so restoration is independent from the original build tree.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ import sys
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Callable, Iterable
 
 
@@ -38,6 +38,12 @@ MANAGED_FILES = (
     "InfinityEngine-Enhancer.dll",
     "InfinityEngine-Enhancer.ini",
 )
+EFFECTS_DIRECTORY = PurePosixPath("iee-assets/effects")
+EFFECTS_PREFIX = f"{EFFECTS_DIRECTORY.as_posix()}/"
+EFFECT_PACK_SCHEMA = "bg2-upscale-effect-animation-runtime-pack-v1"
+EFFECT_REGISTRY_NAME = "EffectAnimations-X4.registry"
+EFFECT_REGISTRY_MAGIC = b"IEEEFX4\0"
+EFFECT_FRAME_NAME = re.compile(r"EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3}\.rgba$")
 GAME_EXECUTABLES = ("BaldurReal.exe", "Baldur.exe")
 PROCESS_NAMES = {"baldur.exe", "baldurreal.exe", "infinityloader.exe"}
 PAYLOAD_DIRECTORY = "candidate"
@@ -209,6 +215,132 @@ def validate_ini(path: Path) -> FileSnapshot:
     return snapshot
 
 
+def effect_candidate_name(filename: str) -> str:
+    return f"{EFFECTS_PREFIX}{filename}"
+
+
+def is_effect_candidate_name(name: str) -> bool:
+    path = PurePosixPath(name)
+    return (
+        path.as_posix() == name
+        and path.parts[:2] == EFFECTS_DIRECTORY.parts
+        and len(path.parts) == 3
+        and (
+            path.name in {"manifest.json", EFFECT_REGISTRY_NAME}
+            or EFFECT_FRAME_NAME.fullmatch(path.name) is not None
+        )
+    )
+
+
+def managed_path(root: Path, name: str, *, create_parents: bool = False) -> Path:
+    """Resolve one validated relative managed path without traversing links."""
+
+    if name in MANAGED_FILES:
+        relative = PurePosixPath(name)
+    elif is_effect_candidate_name(name):
+        relative = PurePosixPath(name)
+    else:
+        raise TransactionError(f"chemin géré invalide : {name}")
+    current = root
+    for part in relative.parts[:-1]:
+        current = current / part
+        if current.exists():
+            if current.is_symlink() or not current.is_dir():
+                raise TransactionError(f"répertoire géré non sûr : {current}")
+        elif create_parents:
+            current.mkdir()
+    return current / relative.name
+
+
+def relative_regular_files(root: Path) -> set[str]:
+    """Return a case-safe recursive file inventory and reject unsafe entries."""
+
+    files: set[str] = set()
+    lower_names: set[str] = set()
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            raise TransactionError(f"lien symbolique interdit : {path}")
+        if path.is_dir():
+            continue
+        if not path.is_file():
+            raise TransactionError(f"entrée de transaction non régulière : {path}")
+        name = path.relative_to(root).as_posix()
+        if name.lower() in lower_names:
+            raise TransactionError(f"collision de casse dans la transaction : {name}")
+        lower_names.add(name.lower())
+        files.add(name)
+    return files
+
+
+def validate_effect_pack(effect_root: Path) -> list[CandidateFile]:
+    """Validate one self-contained effect runtime pack and enumerate its files."""
+
+    if effect_root.is_symlink() or not effect_root.is_dir():
+        raise TransactionError(f"pack d'effets absent ou non sûr : {effect_root}")
+    entries = list(effect_root.iterdir())
+    if any(path.is_symlink() or not path.is_file() for path in entries):
+        raise TransactionError(f"pack d'effets non plat ou non régulier : {effect_root}")
+    by_name = {path.name: path for path in entries}
+    if len(by_name) != len(entries):
+        raise TransactionError(f"collision de noms dans le pack d'effets : {effect_root}")
+    manifest_path = by_name.get("manifest.json")
+    if manifest_path is None:
+        raise TransactionError("manifest du pack d'effets absent")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise TransactionError("manifest du pack d'effets illisible") from exc
+    if (
+        not isinstance(manifest, dict)
+        or manifest.get("schema") != EFFECT_PACK_SCHEMA
+        or manifest.get("status") != "completed"
+        or manifest.get("scale") != 4
+        or manifest.get("registry") != EFFECT_REGISTRY_NAME
+        or manifest.get("registry_magic") != "IEEEFX4"
+        or manifest.get("registry_version") not in {1, 2}
+    ):
+        raise TransactionError("manifest du pack d'effets incompatible")
+    registry_path = by_name.get(EFFECT_REGISTRY_NAME)
+    if registry_path is None:
+        raise TransactionError("registre du pack d'effets absent")
+    registry_snapshot = snapshot_file(registry_path)
+    if (
+        registry_snapshot.bytes < len(EFFECT_REGISTRY_MAGIC)
+        or registry_path.read_bytes()[: len(EFFECT_REGISTRY_MAGIC)] != EFFECT_REGISTRY_MAGIC
+        or manifest.get("registry_bytes") != registry_snapshot.bytes
+        or str(manifest.get("registry_sha256", "")).upper() != registry_snapshot.sha256
+    ):
+        raise TransactionError("registre du pack d'effets incohérent")
+    frames = manifest.get("frames")
+    if not isinstance(frames, list) or not frames or manifest.get("frame_count") != len(frames):
+        raise TransactionError("frames du pack d'effets invalides")
+    expected_names = {"manifest.json", EFFECT_REGISTRY_NAME}
+    files = [
+        CandidateFile(effect_candidate_name("manifest.json"), manifest_path, snapshot_file(manifest_path)),
+        CandidateFile(effect_candidate_name(EFFECT_REGISTRY_NAME), registry_path, registry_snapshot),
+    ]
+    for index, frame in enumerate(frames):
+        if not isinstance(frame, dict) or frame.get("frame") != index:
+            raise TransactionError("index de frame du pack d'effets invalide")
+        asset = frame.get("asset")
+        if not isinstance(asset, str) or EFFECT_FRAME_NAME.fullmatch(asset) is None:
+            raise TransactionError("nom de frame du pack d'effets invalide")
+        path = by_name.get(asset)
+        if path is None or asset in expected_names:
+            raise TransactionError(f"frame du pack d'effets absente : {asset}")
+        snapshot = snapshot_file(path)
+        if (
+            frame.get("bytes") != snapshot.bytes
+            or str(frame.get("sha256", "")).upper() != snapshot.sha256
+        ):
+            raise TransactionError(f"frame du pack d'effets incohérente : {asset}")
+        expected_names.add(asset)
+        files.append(CandidateFile(effect_candidate_name(asset), path, snapshot))
+    if set(by_name) != expected_names:
+        raise TransactionError("inventaire du pack d'effets divergent")
+    return files
+
+
 def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], Path]:
     if candidate_root.is_symlink():
         raise TransactionError(f"dossier candidat lié interdit : {candidate_root}")
@@ -223,9 +355,10 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
             raise TransactionError(f"collision de casse dans le candidat : {path.name}")
         by_lower[key] = path
     expected = {name.lower() for name in MANAGED_FILES}
-    if set(by_lower) != expected:
+    allowed = expected | {"iee-assets"}
+    if not expected.issubset(set(by_lower)) or not set(by_lower).issubset(allowed):
         missing = sorted(expected - set(by_lower))
-        extra = sorted(set(by_lower) - expected)
+        extra = sorted(set(by_lower) - allowed)
         raise TransactionError(
             f"inventaire candidat divergent ; manquants={missing}, supplémentaires={extra}"
         )
@@ -236,6 +369,14 @@ def collect_candidate_files(candidate_root: Path) -> tuple[list[CandidateFile], 
             raise TransactionError(f"source candidate non canonique : {path}")
         snapshot = validate_dll(path) if name.endswith(".dll") else validate_ini(path)
         files.append(CandidateFile(name, path, snapshot))
+    effects_container = by_lower.get("iee-assets")
+    if effects_container is not None:
+        if effects_container.name != "iee-assets" or effects_container.is_symlink() or not effects_container.is_dir():
+            raise TransactionError(f"dossier d'effets candidat non canonique : {effects_container}")
+        effect_entries = list(effects_container.iterdir())
+        if len(effect_entries) != 1 or effect_entries[0].name != "effects":
+            raise TransactionError("inventaire iee-assets candidat divergent")
+        files.extend(validate_effect_pack(effect_entries[0]))
     return files, source
 
 
@@ -330,10 +471,21 @@ def load_receipt(receipt_path: Path) -> dict[str, object]:
 
 
 def receipt_files(receipt: dict[str, object]) -> list[dict[str, object]]:
-    if receipt.get("managed_files") != list(MANAGED_FILES):
+    managed = receipt.get("managed_files")
+    if (
+        not isinstance(managed, list)
+        or len(managed) < len(MANAGED_FILES)
+        or managed[: len(MANAGED_FILES)] != list(MANAGED_FILES)
+        or any(not isinstance(name, str) for name in managed)
+        or len(set(managed)) != len(managed)
+        or any(
+            name not in MANAGED_FILES and not is_effect_candidate_name(name)
+            for name in managed
+        )
+    ):
         raise TransactionError("liste des fichiers gérés incohérente dans le reçu")
     raw_files = receipt.get("files")
-    if not isinstance(raw_files, list) or len(raw_files) != len(MANAGED_FILES):
+    if not isinstance(raw_files, list) or len(raw_files) != len(managed):
         raise TransactionError("inventaire invalide dans le reçu")
     files: list[dict[str, object]] = []
     names: set[str] = set()
@@ -341,7 +493,7 @@ def receipt_files(receipt: dict[str, object]) -> list[dict[str, object]]:
         if not isinstance(raw, dict) or not isinstance(raw.get("name"), str):
             raise TransactionError("entrée de fichier invalide dans le reçu")
         name = raw["name"]
-        if name not in MANAGED_FILES or name in names:
+        if name not in managed or name in names:
             raise TransactionError(f"nom dupliqué ou non géré dans le reçu : {name}")
         before = state_from_json(raw.get("before"), f"{name}.before")
         installed = state_from_json(raw.get("installed"), f"{name}.installed")
@@ -354,7 +506,7 @@ def receipt_files(receipt: dict[str, object]) -> list[dict[str, object]]:
             raise TransactionError(f"chemin de sauvegarde incohérent dans le reçu : {name}")
         names.add(name)
         files.append(raw)
-    if names != set(MANAGED_FILES):
+    if names != set(managed):
         raise TransactionError("inventaire incomplet dans le reçu")
     before_hash = aggregate_hash(
         (
@@ -405,30 +557,39 @@ def validate_receipt(
         raise TransactionError("payload candidat absent ou non sûr")
     if not backup_root.is_dir() or backup_root.is_symlink():
         raise TransactionError("dossier de sauvegarde absent ou non sûr")
-    expected_payload = set(MANAGED_FILES)
-    actual_payload = {path.name for path in payload_root.iterdir()}
+    expected_payload = {str(raw["name"]) for raw in files}
+    actual_payload = relative_regular_files(payload_root)
     expected_backup = {
         str(raw["name"])
         for raw in files
         if state_from_json(raw.get("before"), f"{raw['name']}.before") is not None
     }
-    actual_backup = {path.name for path in backup_root.iterdir()}
+    actual_backup = relative_regular_files(backup_root)
     if actual_payload != expected_payload or actual_backup != expected_backup:
         raise TransactionError("inventaire de transaction divergent")
+    has_effects = any(is_effect_candidate_name(name) for name in expected_payload)
+    if has_effects:
+        effect_files = validate_effect_pack(payload_root / EFFECTS_DIRECTORY)
+        if {item.name for item in effect_files} != {
+            name for name in expected_payload if is_effect_candidate_name(name)
+        }:
+            raise TransactionError("reçu et payload d'effets divergents")
     for raw in files:
         name = str(raw["name"])
         installed = state_from_json(raw.get("installed"), f"{name}.installed")
-        if optional_snapshot(payload_root / name) != installed:
+        payload_path = managed_path(payload_root, name)
+        if optional_snapshot(payload_path) != installed:
             raise TransactionError(f"payload candidat corrompu : {name}")
-        validated = (
-            validate_dll(payload_root / name)
-            if name.endswith(".dll")
-            else validate_ini(payload_root / name)
-        )
+        if name.endswith(".dll"):
+            validated = validate_dll(payload_path)
+        elif name.endswith(".ini"):
+            validated = validate_ini(payload_path)
+        else:
+            validated = installed
         if validated != installed:
             raise TransactionError(f"payload candidat divergent : {name}")
         before = state_from_json(raw.get("before"), f"{name}.before")
-        if before is not None and optional_snapshot(backup_root / name) != before:
+        if before is not None and optional_snapshot(managed_path(backup_root, name)) != before:
             raise TransactionError(f"sauvegarde corrompue : {name}")
     return game, root, files
 
@@ -452,12 +613,13 @@ def update_status(
 def require_recovery_state(game: Path, files: list[dict[str, object]]) -> None:
     for raw in files:
         name = str(raw["name"])
-        actual = optional_snapshot(game / name)
+        target = managed_path(game, name)
+        actual = optional_snapshot(target)
         before = state_from_json(raw.get("before"), f"{name}.before")
         installed = state_from_json(raw.get("installed"), f"{name}.installed")
         if actual not in {before, installed}:
             raise TransactionError(
-                f"état ni initial ni candidat, récupération refusée : {game / name}"
+                f"état ni initial ni candidat, récupération refusée : {target}"
             )
 
 
@@ -467,8 +629,9 @@ def verify_target_state(
     for raw in files:
         name = str(raw["name"])
         expected = state_from_json(raw.get(expected_key), f"{name}.{expected_key}")
-        if optional_snapshot(game / name) != expected:
-            raise TransactionError(f"état {expected_key} divergent pour {game / name}")
+        target = managed_path(game, name)
+        if optional_snapshot(target) != expected:
+            raise TransactionError(f"état {expected_key} divergent pour {target}")
 
 
 def restore_files(
@@ -477,7 +640,7 @@ def restore_files(
     require_recovery_state(game, files)
     for raw in reversed(files):
         name = str(raw["name"])
-        target = game / name
+        target = managed_path(game, name)
         before = state_from_json(raw.get("before"), f"{name}.before")
         installed = state_from_json(raw.get("installed"), f"{name}.installed")
         actual = optional_snapshot(target)
@@ -488,7 +651,7 @@ def restore_files(
         if before is None:
             safe_unlink(target, installed)
         else:
-            atomic_copy(root / BACKUP_DIRECTORY / name, target, before)
+            atomic_copy(managed_path(root / BACKUP_DIRECTORY, name), target, before)
     verify_target_state(game, files, "before")
 
 
@@ -499,7 +662,7 @@ def install_files(
     update_status(receipt, "installing")
     for raw in files:
         name = str(raw["name"])
-        target = game / name
+        target = managed_path(game, name, create_parents=True)
         before = state_from_json(raw.get("before"), f"{name}.before")
         installed = state_from_json(raw.get("installed"), f"{name}.installed")
         actual = optional_snapshot(target)
@@ -507,7 +670,7 @@ def install_files(
             continue
         if actual != before:
             raise TransactionError(f"cible divergente pendant l'installation : {target}")
-        atomic_copy(root / PAYLOAD_DIRECTORY / name, target, installed)
+        atomic_copy(managed_path(root / PAYLOAD_DIRECTORY, name), target, installed)
     verify_target_state(game, files, "installed")
     update_status(receipt, "installed")
 
@@ -529,10 +692,19 @@ def prepare_transaction(
     records: list[dict[str, object]] = []
     try:
         for candidate in candidate_files:
-            before = optional_snapshot(game / candidate.name)
-            atomic_copy(candidate.path, payload_root / candidate.name, candidate.snapshot)
+            target = managed_path(game, candidate.name)
+            before = optional_snapshot(target)
+            atomic_copy(
+                candidate.path,
+                managed_path(payload_root, candidate.name, create_parents=True),
+                candidate.snapshot,
+            )
             if before is not None:
-                atomic_copy(game / candidate.name, before_root / candidate.name, before)
+                atomic_copy(
+                    target,
+                    managed_path(before_root, candidate.name, create_parents=True),
+                    before,
+                )
             records.append(
                 {
                     "name": candidate.name,
@@ -551,7 +723,7 @@ def prepare_transaction(
             "game_root": str(game),
             "candidate_root": str(candidate_root),
             "transaction_root": str(root),
-            "managed_files": list(MANAGED_FILES),
+            "managed_files": [candidate.name for candidate in candidate_files],
             "before_set_sha256": aggregate_hash(
                 (
                     str(raw["name"]),
@@ -590,7 +762,7 @@ def install_candidate(
     candidates, source = collect_candidate_files(candidate_root)
     backup = validate_backup_root(backup_root, game, create=not verify_only)
     if verify_only:
-        return InstallResult("verified", None, MANAGED_FILES)
+        return InstallResult("verified", None, tuple(candidate.name for candidate in candidates))
     receipt, root = prepare_transaction(candidates, source, game, backup)
     files = receipt_files(receipt)
     try:
@@ -609,7 +781,7 @@ def install_candidate(
                 f"installation interrompue ; récupération requise via {root}"
             ) from exc
         raise TransactionError("installation échouée ; état initial restauré") from exc
-    return InstallResult("installed", root / RECEIPT_NAME, MANAGED_FILES)
+    return InstallResult("installed", root / RECEIPT_NAME, tuple(candidate.name for candidate in candidates))
 
 
 def restore_from_receipt(

@@ -60,6 +60,44 @@ class RendererCandidateTransactionTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.temporary.cleanup()
 
+    def write_effect_pack(self, root: Path, marker: bytes) -> dict[str, bytes]:
+        pack = root / "iee-assets" / "effects"
+        pack.mkdir(parents=True, exist_ok=True)
+        registry = transaction.EFFECT_REGISTRY_MAGIC + marker
+        frame_name = "EFX4-SPMAGMIS-frame000.rgba"
+        frame = (marker * 64)[:64]
+        (pack / transaction.EFFECT_REGISTRY_NAME).write_bytes(registry)
+        (pack / frame_name).write_bytes(frame)
+        manifest = {
+            "schema": transaction.EFFECT_PACK_SCHEMA,
+            "status": "completed",
+            "scale": 4,
+            "registry": transaction.EFFECT_REGISTRY_NAME,
+            "registry_magic": "IEEEFX4",
+            "registry_version": 1,
+            "registry_bytes": len(registry),
+            "registry_sha256": transaction.sha256_file(
+                pack / transaction.EFFECT_REGISTRY_NAME
+            ),
+            "frame_count": 1,
+            "frames": [
+                {
+                    "frame": 0,
+                    "asset": frame_name,
+                    "bytes": len(frame),
+                    "sha256": transaction.sha256_file(pack / frame_name),
+                }
+            ],
+        }
+        (pack / "manifest.json").write_text(
+            json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+        )
+        return {
+            "registry": registry,
+            "frame": frame,
+            "manifest": (pack / "manifest.json").read_bytes(),
+        }
+
     def install(self) -> transaction.InstallResult:
         return transaction.install_candidate(
             self.candidate,
@@ -107,6 +145,39 @@ class RendererCandidateTransactionTests(unittest.TestCase):
         )
         for name in transaction.MANAGED_FILES:
             self.assertFalse((self.game / name).exists())
+
+    def test_effect_pack_is_installed_and_restored_from_the_same_receipt(self) -> None:
+        payload = self.write_effect_pack(self.candidate, b"candidate-effect")
+        effect_name = "iee-assets/effects/EFX4-SPMAGMIS-frame000.rgba"
+        before_path = self.game / effect_name
+        before_path.parent.mkdir(parents=True)
+        before_path.write_bytes(b"before-effect")
+
+        result = self.install()
+        self.assertIn(effect_name, result.files)
+        self.assertEqual(
+            (self.game / effect_name).read_bytes(), payload["frame"]
+        )
+        self.assertEqual(
+            (self.game / "iee-assets/effects/manifest.json").read_bytes(),
+            payload["manifest"],
+        )
+        receipt = transaction.verify_transaction(result.receipt_path, self.game)
+        self.assertIn(effect_name, receipt["managed_files"])
+
+        shutil.rmtree(self.candidate)
+        transaction.restore_from_receipt(
+            result.receipt_path,
+            game_root=self.game,
+            process_checker=lambda: [],
+        )
+        self.assertEqual(before_path.read_bytes(), b"before-effect")
+        self.assertFalse(
+            (self.game / "iee-assets/effects/manifest.json").exists()
+        )
+        self.assertFalse(
+            (self.game / "iee-assets/effects/EffectAnimations-X4.registry").exists()
+        )
 
     def test_verify_only_writes_nothing(self) -> None:
         result = transaction.install_candidate(

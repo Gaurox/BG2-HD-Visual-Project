@@ -25,6 +25,7 @@
 #include "iee/creature_sprite_x2.h"
 #include "iee/area_animation_clock_diagnostics.h"
 #include "iee/area_animation_x4_registry.h"
+#include "iee/effect_animation_x4_registry.h"
 #include "app_context.h"
 #include "area_state.h"
 #include "iee/core/hooking.h"
@@ -53,6 +54,10 @@ using LoadAreaFn = void* (*)(void*, void*, unsigned char, unsigned char, unsigne
 using RenderTextureFn = void (*)(void*, int, void*, int, int, unsigned long);
 using DrawColorToneFn = void (*)(int);
 using GameStaticRenderBamFn = void (*)(void*, void*, void*);
+// CProjectileBAM::Render uses RCX=this, RDX=draw flags and R8=render context
+// on the manifested BG2EE 2.7.3 image. Keeping both non-this registers in the
+// type preserves the native call ABI when the scoped original is invoked.
+using ProjectileBamRenderFn = void (*)(void*, std::uintptr_t, void*);
 using VidCellRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, std::uint32_t);
 using InfinityFxRenderClippingPolysFn = int (*)(void*, int, int, int, void*, void*,
                                                 std::uint8_t, std::uint32_t);
@@ -80,6 +85,7 @@ static core::Hook<LoadAreaFn> g_loadAreaHook;
 static core::Hook<RenderTextureFn> g_renderTextureHook;
 static core::Hook<DrawColorToneFn> g_drawColorToneHook;
 static core::Hook<GameStaticRenderBamFn> g_gameStaticRenderBamHook;
+static core::Hook<ProjectileBamRenderFn> g_projectileBamRenderHook;
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
 static core::Hook<InfinityFxRenderClippingPolysFn> g_infinityFxRenderClippingPolysHook;
 static core::Hook<VidPaletteRealizeFn> g_vidPaletteRealizeHook;
@@ -99,6 +105,7 @@ static DrawFlushGlFn g_drawFlushGl{};
 static AppContext* g_ctx = nullptr;
 static am0205e_x4::EngineTextureApi g_am0205eTextureApi{};
 static area_animation_x4::EngineTextureApi g_areaAnimationTextureApi{};
+static effect_animation_x4::EngineTextureApi g_effectAnimationTextureApi{};
 static creature_sprite_x2::EngineTextureApi g_creatureSpriteTextureApi{};
 static native_occlusion_bridge::EngineTextureApi g_nativeOcclusionTextureApi{};
 static const std::byte* g_nativeFxSurfacePools{};
@@ -110,6 +117,8 @@ thread_local area_animation_x4::FrameResolution g_areaAnimationResolution{};
 thread_local int g_areaAnimationSequence = -1;
 thread_local int g_areaAnimationSlot = -1;
 thread_local int g_areaAnimationTimelinePhase = -1;
+thread_local int g_effectAnimationRenderDepth = 0;
+thread_local void* g_effectAnimationProjectile = nullptr;
 thread_local core::NativeOcclusionCorrelation* g_nativeOcclusionCorrelation = nullptr;
 thread_local core::NativeOcclusionMaskCapture* g_nativeOcclusionMaskCapture = nullptr;
 thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
@@ -169,6 +178,7 @@ bool g_creatureSpriteHooksEnabled = false;
 bool g_creatureSpriteCharacterHookEnabled = false;
 bool g_creatureSpriteMonsterHookEnabled = false;
 bool g_creatureSpriteMonsterIcewindHookEnabled = false;
+bool g_effectAnimationHooksEnabled = false;
 std::uintptr_t g_creatureSpritePaletteReturn{};
 
 // LoadArea can still resolve the outgoing area during a transition. The render
@@ -534,6 +544,15 @@ struct ResolvedAreaAnimationFrame {
   int timelinePhase{-1};
 };
 
+struct ResolvedEffectAnimationFrame {
+  effect_animation_x4::FrameHandle handle{};
+  effect_animation_x4::TimelineInfo timeline{};
+  std::array<char, 8> resref{};
+  int sequence{-1};
+  int slot{-1};
+  int timelinePhase{-1};
+};
+
 struct ResolvedCreatureSpriteFrame {
   creature_sprite_x2::FrameHandle handle{};
   std::array<char, 8> resref{};
@@ -727,6 +746,43 @@ bool read_area_animation_frame(void* gameStatic, ResolvedAreaAnimationFrame& res
   return true;
 }
 
+bool read_effect_animation_frame(void* projectile, int logicalWidth, int logicalHeight,
+                                 ResolvedEffectAnimationFrame& resolved) noexcept {
+  if (!projectile || !g_ctx || !g_ctx->manifest || !effect_animation_x4::ready()) return false;
+  const auto& effectRuntime = g_ctx->manifest->projectileEffects;
+  const auto& cellRuntime = g_ctx->manifest->areaAnimations;
+  if (!effectRuntime.enabled || !cellRuntime.enabled) return false;
+  const auto projectileBase = reinterpret_cast<std::uintptr_t>(projectile);
+  void* cell = nullptr;
+  if (!core::safe_read(reinterpret_cast<const void*>(projectileBase +
+                                                     effectRuntime.projectileVidCell),
+                       cell) ||
+      !cell) {
+    return false;
+  }
+  const auto cellBase = reinterpret_cast<std::uintptr_t>(cell);
+  std::array<char, 8> resref{};
+  std::int16_t currentFrame = -1;
+  std::int16_t currentSequence = -1;
+  if (!core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellResref),
+                       resref) ||
+      !core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellCurrentFrame),
+                       currentFrame) ||
+      !core::safe_read(reinterpret_cast<const void*>(cellBase + cellRuntime.vidCellCurrentSequence),
+                       currentSequence)) {
+    return false;
+  }
+  if (!effect_animation_x4::resolve_frame(resref, currentSequence, currentFrame, logicalWidth,
+                                          logicalHeight, resolved.handle)) {
+    return false;
+  }
+  resolved.resref = resref;
+  resolved.sequence = currentSequence;
+  resolved.slot = currentFrame;
+  (void)effect_animation_x4::timeline_info(resref, currentSequence, resolved.timeline);
+  return true;
+}
+
 int read_world_active() noexcept {
   if (!g_ctx) return -1;
   const auto* infGame = g_ctx->infGame.load(std::memory_order_relaxed);
@@ -745,9 +801,17 @@ std::atomic<std::uint64_t> g_requestedAreaTimelineGeneration{1};
 std::uint64_t g_activeAreaTimelineGeneration{};
 core::AreaAnimationTimelineClock g_areaTimelineClock;
 bool g_areaTimelineActivationLogged{};
+std::atomic<std::uint64_t> g_requestedEffectTimelineGeneration{1};
+std::uint64_t g_activeEffectTimelineGeneration{};
+core::AreaAnimationTimelineClock g_effectTimelineClock;
+bool g_effectTimelineActivationLogged{};
 
 void request_area_timeline_generation() noexcept {
   g_requestedAreaTimelineGeneration.fetch_add(1, std::memory_order_release);
+}
+
+void request_effect_timeline_generation() noexcept {
+  g_requestedEffectTimelineGeneration.fetch_add(1, std::memory_order_release);
 }
 
 void select_area_timeline_frame(void* instance, int worldActive,
@@ -799,6 +863,58 @@ void select_area_timeline_frame(void* instance, int worldActive,
     }
   } catch (...) {
     // The exact native frame selected by the registry remains the fallback.
+  }
+}
+
+void select_effect_timeline_frame(void* projectile, int worldActive, int logicalWidth,
+                                  int logicalHeight,
+                                  ResolvedEffectAnimationFrame& resolved) noexcept {
+  if (!projectile || !resolved.timeline.enabled || !frame::boundary_available()) return;
+  try {
+    const auto frequency = frame::clock_frequency();
+    const auto now = frame::clock_ticks();
+    const auto epoch = frame::frame_count();
+    if (frequency <= 0 || now <= 0 || epoch == 0) return;
+    const auto generation =
+        g_requestedEffectTimelineGeneration.load(std::memory_order_acquire);
+    if (generation != g_activeEffectTimelineGeneration) {
+      g_effectTimelineClock.begin_area(generation);
+      g_activeEffectTimelineGeneration = generation;
+    }
+    const auto selection = g_effectTimelineClock.select(
+        {.instance = reinterpret_cast<std::uintptr_t>(projectile),
+         .resref = resolved.resref,
+         .sequence = resolved.sequence,
+         .nativeSlot = resolved.slot,
+         .presentationEpoch = epoch,
+         .clockTicks = now,
+         .ticksPerSecond = frequency,
+         .worldActive = worldActive,
+         .nativeFpsNumerator = resolved.timeline.nativeFpsNumerator,
+         .nativeFpsDenominator = resolved.timeline.nativeFpsDenominator,
+         .targetFpsNumerator = resolved.timeline.targetFpsNumerator,
+         .targetFpsDenominator = resolved.timeline.targetFpsDenominator,
+         .timelinePhaseCount = resolved.timeline.phaseCount});
+    if (!selection.valid) return;
+    effect_animation_x4::FrameHandle timelineFrame{};
+    if (!effect_animation_x4::resolve_timeline_frame(
+            resolved.resref, resolved.sequence, selection.phase, logicalWidth, logicalHeight,
+            timelineFrame)) {
+      return;
+    }
+    resolved.handle = timelineFrame;
+    resolved.timelinePhase = static_cast<int>(selection.phase);
+    if (!g_effectTimelineActivationLogged) {
+      g_effectTimelineActivationLogged = true;
+      LOG_INFO(
+          "Effect TimedTimeline active: native={}/{}, target={}/{}, phases={}, "
+          "QPC pause-aware scheduler with native fallback",
+          resolved.timeline.nativeFpsNumerator, resolved.timeline.nativeFpsDenominator,
+          resolved.timeline.targetFpsNumerator, resolved.timeline.targetFpsDenominator,
+          resolved.timeline.phaseCount);
+    }
+  } catch (...) {
+    // The native frame selected during CVidCell render remains authoritative fallback.
   }
 }
 
@@ -985,6 +1101,49 @@ bool prepare_area_animation_composition_hooks(AppContext& ctx) noexcept {
       .glTextureState = reinterpret_cast<const std::uint32_t*>(
           moduleBase + runtime.glTextureState),
   };
+  return true;
+}
+
+bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
+  g_effectAnimationHooksEnabled = false;
+  g_effectAnimationTextureApi = {};
+  if (!ctx.cfg.enableEffectAnimationX4 || !effect_animation_x4::ready()) return false;
+  if (!validate_area_animation_runtime(ctx, "Effect animation x4")) return false;
+  if (!ctx.manifest || !ctx.manifest->projectileEffects.enabled) {
+    LOG_WARN("Effect animation x4 hook is unavailable for build {}",
+             ctx.manifest ? ctx.manifest->buildId : "<none>");
+    return false;
+  }
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return false;
+  const auto& effectRuntime = ctx.manifest->projectileEffects;
+  if (effectRuntime.projectileBamRender > module->size ||
+      !matches_pattern_at_rva(*module, effectRuntime.projectileBamRender,
+                              effectRuntime.projectileBamRenderSignature)) {
+    LOG_WARN("Effect animation x4 hook skipped: CProjectileBAM::Render signature differs at "
+             "RVA 0x{:X}",
+             effectRuntime.projectileBamRender);
+    return false;
+  }
+  const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+  const auto& cellRuntime = ctx.manifest->areaAnimations;
+  g_effectAnimationTextureApi = {
+      .DrawGenTexture =
+          reinterpret_cast<effect_animation_x4::EngineTextureApi::DrawGenTextureFn>(
+              moduleBase + cellRuntime.drawGenTexture),
+      .DrawBindTexture = ctx.draw.DrawBindTexture,
+      .DrawDeleteTexture =
+          reinterpret_cast<effect_animation_x4::EngineTextureApi::DrawDeleteTextureFn>(
+              moduleBase + cellRuntime.drawDeleteTexture),
+      .TexImage = reinterpret_cast<effect_animation_x4::EngineTextureApi::TexImageFn>(
+          moduleBase + cellRuntime.texImage),
+      .DrawGetRenderer =
+          reinterpret_cast<effect_animation_x4::EngineTextureApi::DrawGetRendererFn>(
+              moduleBase + cellRuntime.drawGetRenderer),
+      .glTextureState = reinterpret_cast<const std::uint32_t*>(
+          moduleBase + cellRuntime.glTextureState),
+  };
+  g_effectAnimationHooksEnabled = true;
   return true;
 }
 
@@ -1682,6 +1841,21 @@ static void detour_game_static_render_bam(void* thisPtr, void* gameArea, void* v
   }
 }
 
+static void detour_projectile_bam_render(void* thisPtr, std::uintptr_t drawFlags,
+                                         void* renderContext) {
+  const bool scoped = g_effectAnimationHooksEnabled;
+  const auto previousProjectile = g_effectAnimationProjectile;
+  if (scoped) {
+    ++g_effectAnimationRenderDepth;
+    g_effectAnimationProjectile = thisPtr;
+  }
+  g_projectileBamRenderHook.original()(thisPtr, drawFlags, renderContext);
+  if (scoped) {
+    --g_effectAnimationRenderDepth;
+    g_effectAnimationProjectile = previousProjectile;
+  }
+}
+
 static void detour_monster_render(
     void* thisPtr, std::uintptr_t a2, std::uintptr_t a3, std::uintptr_t a4,
     std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
@@ -1936,13 +2110,21 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                                            std::uint64_t logicalSize, void* clipRect,
                                            std::uint32_t flags) {
   const auto original = g_vidCellRenderTextureHook.original();
-  enum class ReplacementKind : std::uint8_t { None, CreatureSprite, AreaRegistry, AM0205E };
+  enum class ReplacementKind : std::uint8_t {
+    None,
+    CreatureSprite,
+    EffectAnimation,
+    AreaRegistry,
+    AM0205E,
+  };
   const int logicalWidth = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
   const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
   int previousTextureId = 0;
   int transientCreatureTextureId = 0;
   int transientOcclusionTextureId = 0;
   area_animation_x4::FrameHandle areaAnimationDrawFrame{};
+  effect_animation_x4::FrameHandle effectAnimationDrawFrame{};
+  ResolvedEffectAnimationFrame resolvedEffectAnimationFrame{};
   ReplacementKind replacement = ReplacementKind::None;
   auto* creatureScope = g_creatureSpriteScope;
   if (g_creatureSpriteHooksEnabled && creatureScope) {
@@ -1977,6 +2159,17 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
           }
         }
       }
+    }
+  } else if (g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
+             g_effectAnimationProjectile &&
+             read_effect_animation_frame(g_effectAnimationProjectile, logicalWidth, logicalHeight,
+                                         resolvedEffectAnimationFrame)) {
+    select_effect_timeline_frame(g_effectAnimationProjectile, read_world_active(), logicalWidth,
+                                 logicalHeight, resolvedEffectAnimationFrame);
+    effectAnimationDrawFrame = resolvedEffectAnimationFrame.handle;
+    if (effect_animation_x4::bind_frame_texture(effectAnimationDrawFrame,
+                                                g_effectAnimationTextureApi, previousTextureId)) {
+      replacement = ReplacementKind::EffectAnimation;
     }
   } else if (g_areaCompositionMode == AreaCompositionMode::Registry &&
              g_areaAnimationRenderDepth > 0) {
@@ -2013,6 +2206,10 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         break;
       case ReplacementKind::AM0205E:
         probeReplacement = core::NativeOcclusionReplacement::AreaPrototype;
+        break;
+      case ReplacementKind::EffectAnimation:
+        // Projectile scopes never create an occlusion correlation; retain a
+        // native draw if a future nested scope somehow reaches this branch.
         break;
       case ReplacementKind::AreaRegistry:
       case ReplacementKind::None:
@@ -2082,6 +2279,8 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     }
   } else if (replacement == ReplacementKind::AreaRegistry) {
     area_animation_x4::restore_texture(g_areaAnimationTextureApi, previousTextureId);
+  } else if (replacement == ReplacementKind::EffectAnimation) {
+    effect_animation_x4::restore_texture(g_effectAnimationTextureApi, previousTextureId);
   } else if (replacement == ReplacementKind::AM0205E) {
     am0205e_x4::restore_texture(g_am0205eTextureApi, previousTextureId);
   }
@@ -2133,6 +2332,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
   try {
     area_animation_clock::request_area_generation();
     request_area_timeline_generation();
+    request_effect_timeline_generation();
     bridge::reset_area();
     core::advance_readability_cache_epoch();
     LOG_DEBUG("LoadArea called - resetting scale detection for new area");
@@ -3139,11 +3339,14 @@ bool install_all(AppContext& ctx) {
     g_nativeOcclusionBridgeEnabled = false;
     g_nativeOcclusionTextureApi = {};
     g_nativeFxSurfacePools = nullptr;
+    g_effectAnimationHooksEnabled = false;
+    g_effectAnimationTextureApi = {};
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::AM0205EPrototype;
     }
+    g_effectAnimationHooksEnabled = prepare_effect_animation_composition_hooks(ctx);
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
     const bool hasBridgeTarget =
         g_areaCompositionMode == AreaCompositionMode::Registry ||
@@ -3161,7 +3364,8 @@ bool install_all(AppContext& ctx) {
           "Native occlusion phase1 bridge not prepared: no registry-backed area "
           "animation or creature xN path is active");
     }
-    if (g_areaCompositionMode != AreaCompositionMode::None || g_creatureSpriteHooksEnabled) {
+    if (g_areaCompositionMode != AreaCompositionMode::None || g_effectAnimationHooksEnabled ||
+        g_creatureSpriteHooksEnabled) {
       try {
         const auto module = core::get_module_span(nullptr);
         if (!module || !ctx.manifest) throw std::runtime_error("module or manifest unavailable");
@@ -3180,6 +3384,16 @@ bool install_all(AppContext& ctx) {
                    g_areaCompositionMode == AreaCompositionMode::Registry
                        ? "Area-animation x4 registry"
                        : "AM0205E x4");
+        }
+        if (g_effectAnimationHooksEnabled) {
+          const auto& effectRuntime = ctx.manifest->projectileEffects;
+          g_projectileBamRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + effectRuntime.projectileBamRender),
+              reinterpret_cast<void*>(&detour_projectile_bam_render));
+          g_projectileBamRenderHook.enable();
+          LOG_INFO("Effect animation x4 projectile scope installed: CProjectileBAM::Render RVA "
+                   "0x{:X}, CVidCell offset 0x{:X}",
+                   effectRuntime.projectileBamRender, effectRuntime.projectileVidCell);
         }
         if (g_creatureSpriteHooksEnabled) {
           g_vidPaletteRealizeHook.create(
@@ -3227,16 +3441,19 @@ bool install_all(AppContext& ctx) {
         (void)g_characterRenderHook.remove();
         (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
+        (void)g_projectileBamRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
         g_areaAnimationTextureApi = {};
+        g_effectAnimationTextureApi = {};
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
         g_creatureSpriteCharacterHookEnabled = false;
         g_creatureSpriteMonsterHookEnabled = false;
         g_creatureSpriteMonsterIcewindHookEnabled = false;
+        g_effectAnimationHooksEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3248,16 +3465,19 @@ bool install_all(AppContext& ctx) {
         (void)g_characterRenderHook.remove();
         (void)g_monsterRenderHook.remove();
         (void)g_monsterIcewindRenderHook.remove();
+        (void)g_projectileBamRenderHook.remove();
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
         g_areaAnimationTextureApi = {};
+        g_effectAnimationTextureApi = {};
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
         g_creatureSpriteCharacterHookEnabled = false;
         g_creatureSpriteMonsterHookEnabled = false;
         g_creatureSpriteMonsterIcewindHookEnabled = false;
+        g_effectAnimationHooksEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3421,6 +3641,7 @@ bool install_all(AppContext& ctx) {
     (void)g_characterRenderHook.remove();
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
+    (void)g_projectileBamRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -3442,12 +3663,14 @@ bool install_all(AppContext& ctx) {
     g_nativeOcclusionTextureApi = {};
     g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
+    g_effectAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
     g_creatureSpriteCharacterHookEnabled = false;
     g_creatureSpriteMonsterHookEnabled = false;
     g_creatureSpriteMonsterIcewindHookEnabled = false;
+    g_effectAnimationHooksEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -3461,6 +3684,7 @@ bool install_all(AppContext& ctx) {
     (void)g_characterRenderHook.remove();
     (void)g_monsterRenderHook.remove();
     (void)g_monsterIcewindRenderHook.remove();
+    (void)g_projectileBamRenderHook.remove();
     (void)g_gameStaticRenderBamHook.remove();
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
@@ -3482,12 +3706,14 @@ bool install_all(AppContext& ctx) {
     g_nativeOcclusionTextureApi = {};
     g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
+    g_effectAnimationTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
     g_creatureSpriteCharacterHookEnabled = false;
     g_creatureSpriteMonsterHookEnabled = false;
     g_creatureSpriteMonsterIcewindHookEnabled = false;
+    g_effectAnimationHooksEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -3508,6 +3734,7 @@ void uninstall_all() noexcept {
   (void)g_characterRenderHook.remove();
   (void)g_monsterRenderHook.remove();
   (void)g_monsterIcewindRenderHook.remove();
+  (void)g_projectileBamRenderHook.remove();
   (void)g_gameStaticRenderBamHook.remove();
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
@@ -3528,12 +3755,14 @@ void uninstall_all() noexcept {
   creature_sprite_x2::forget_engine_textures();
   am0205e_x4::forget_engine_textures();
   g_areaAnimationTextureApi = {};
+  g_effectAnimationTextureApi = {};
   g_am0205eTextureApi = {};
   g_creatureSpriteTextureApi = {};
   g_creatureSpriteHooksEnabled = false;
   g_creatureSpriteCharacterHookEnabled = false;
   g_creatureSpriteMonsterHookEnabled = false;
   g_creatureSpriteMonsterIcewindHookEnabled = false;
+  g_effectAnimationHooksEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
   g_nativeOcclusionProbeHookEnabled = false;
@@ -3562,6 +3791,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_characterRenderHook.disable();
   (void)g_monsterRenderHook.disable();
   (void)g_monsterIcewindRenderHook.disable();
+  (void)g_projectileBamRenderHook.disable();
   (void)g_gameStaticRenderBamHook.disable();
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();

@@ -25,7 +25,7 @@ EXPORT_SCRIPT = PROJECT_ROOT / "pipeline/scripts/export_bam_frames.py"
 UPSCALE_SCRIPT = PROJECT_ROOT / "pipeline/scripts/upscale_animation_frames.py"
 PIPELINE_ID = workflow.STAGES["spatial"]
 FRAME_SCHEMA = "bg2-upscale-animation-frames-x1-v1"
-SPATIAL_SCHEMA = "bg2-upscale-animation-frames-x4-v1"
+SPATIAL_SCHEMA = "bg2-upscale-animation-frames-v1"
 RECIPE_SCHEMA = "bg2-upscale-effect-spatial-recipe-v1"
 
 
@@ -144,7 +144,8 @@ def validate_spatial_stage(root: Path, stage: Path, frame_manifest: Mapping[str,
     manifest = load_json(stage / "manifest.json")
     if manifest.get("schema") != SPATIAL_SCHEMA or manifest.get("status") != "completed" or manifest.get("scale") != 4:
         raise SpatialRunError("run spatial x4 incomplet ou à mauvaise échelle")
-    if manifest.get("frame_manifest_sha256", "").upper() != workflow.sha256_file(stage.parent / "00-frames-x1/manifest.json"):
+    source = manifest.get("source")
+    if not isinstance(source, Mapping) or str(source.get("frame_manifest_sha256", "")).upper() != workflow.sha256_file(stage.parent / "00-frames-x1/manifest.json"):
         raise SpatialRunError("run spatial x4 non lié au manifeste x1 courant")
     frames = manifest.get("frames")
     if not isinstance(frames, list) or len(frames) != int(frame_manifest["frame_count"]):
@@ -380,8 +381,12 @@ def execute(plan: SpatialPlan, *, resume: bool) -> dict[str, Any]:
     _validate_reservation(plan)
     recipe = recipe_snapshot(plan)
     if plan.recipe_path.exists():
-        if load_json(plan.recipe_path) != recipe:
-            raise SpatialRunError("recipe.json existant différent; créer un nouveau run_id")
+        # A failed/unsealed run keeps the exact recipe that produced its existing
+        # frames. A later workflow-wrapper fix must validate and seal those bytes,
+        # never rewrite their provenance with the newer wrapper hash.
+        recipe = load_json(plan.recipe_path)
+        if recipe.get("schema") != RECIPE_SCHEMA or recipe.get("pipeline_id") != PIPELINE_ID:
+            raise SpatialRunError("recipe.json existant invalide; créer un nouveau run_id")
     else:
         write_json(plan.recipe_path, recipe)
     source = _ensure_source(plan)

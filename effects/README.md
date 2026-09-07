@@ -94,4 +94,12 @@ installation_receipt,release_state,release_candidate,notes
 
 ## Gate runtime
 
-Il n'existe pas encore de chemin VVC/VEF/PRO xN dans le moteur. Avant tout run x4, démontrer sur un effet représentatif : ancrage logique, cycle/timing, alpha, palette, partage multi-contrôleur, consommateur projectile et fallback natif. L'interpolation reste hors périmètre tant que ce gate spatial n'est pas validé.
+Le prototype runtime `EffectAnimations-X4.registry` couvre les BAM de projectile via
+`CProjectileBAM` : resref/cycle/dimensions exacts, géométrie x1, backing x4,
+fallback BAM natif à toute divergence. Le registre v1 conserve la cadence BAM
+native ; le v2 ajoute une timeline QPC pause-aware ancrée sur les slots BAM pour
+les runs 30 FPS. Il ne couvre pas encore les VVC/VEF génériques.
+
+Chaque nouvelle famille doit démontrer : ancrage logique, cycle/timing, alpha,
+palette, partage multi-contrôleur, consommateur projectile et fallback natif.
+Une production temporelle ou une installation ne vaut jamais QA ingame.

@@ -18,6 +18,7 @@
 #include "biglogo_ui_upscale.h"
 #include "bridge_transition.h"
 #include "creature_sprite_x2.h"
+#include "effect_animation_x4_registry.h"
 #include "frame_hook.h"
 #include "hooks.h"
 #include "iee/core/config.h"
@@ -153,6 +154,10 @@ static DWORD WINAPI InitThread(LPVOID) {
         (void)area_animation_x4::prepare(assets);
       }
     }
+    if (cfg.enableEffectAnimationX4) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)effect_animation_x4::prepare(moduleDir / "iee-assets" / "effects");
+    }
     if (cfg.creature_sprite_upscale_enabled()) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       creature_sprite_x2::configure_linear_filtering(cfg.enableCreatureSpriteLinearFiltering);
@@ -169,6 +174,7 @@ static DWORD WINAPI InitThread(LPVOID) {
           "LOD bias={:.2f}, tileMipmaps={}, forceTextureFilterEveryDraw={}, fullFrameFxaa={}, "
           "fullFrameSsaa2x={}, bamUiTextureProbe={}, am3000aFrameX4Test={}, "
           "am0700aAnimationX4Test={}, am0205eAnimationX4Test={}, areaAnimationX4={}, "
+          "effectAnimationX4={}, "
           "creatureSpriteUpscaleTest={}, creatureSpriteLinearFiltering={}, "
           "bridgeTransitionPreview={}, "
           "bigLogoX4Test={}, "
@@ -181,7 +187,8 @@ static DWORD WINAPI InitThread(LPVOID) {
           ctx.cfg.enableAM3000AFrameX4Test,
           ctx.cfg.enableAM0700AAnimationX4Test,
           ctx.cfg.enableAM0205EAnimationX4Test,
-          ctx.cfg.enableAreaAnimationX4, ctx.cfg.creature_sprite_upscale_enabled(),
+          ctx.cfg.enableAreaAnimationX4, ctx.cfg.enableEffectAnimationX4,
+          ctx.cfg.creature_sprite_upscale_enabled(),
           ctx.cfg.enableCreatureSpriteLinearFiltering,
           ctx.cfg.enableBridgeTransitionPreview,
           ctx.cfg.enableBigLogoX4Test, ctx.cfg.enableMainMenuX4Test, ctx.cfg.enableMenuX2Test,
@@ -253,6 +260,7 @@ static void CleanupHooks() noexcept {
     water::release_water_textures();
     biglogo::release();
     area_animation_x4::release();
+    effect_animation_x4::release();
     creature_sprite_x2::release();
     am0205e_x4::release();
     am0700a_x4::release();

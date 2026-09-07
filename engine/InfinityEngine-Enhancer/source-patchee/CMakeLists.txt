@@ -175,6 +175,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/creature_sprite_x2.cpp
         src/iee/diagnostics.cpp
         src/iee/dll_main.cpp
+        src/iee/effect_animation_x4_registry.cpp
         src/iee/exports.cpp
         src/iee/features/tile_render.cpp
         src/iee/frame_hook.cpp
@@ -242,6 +243,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/tools/M_IEEE.lua" "${IEE_RELEASE_BUNDLE_DIR}/override/M_IEEE.lua"
         COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/game-textures" "${IEE_RELEASE_BUNDLE_DIR}/iee-textures"
         COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/bridge-transition" "${IEE_RELEASE_BUNDLE_DIR}/iee-assets/bridge-transition"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/assets/effects" "${IEE_RELEASE_BUNDLE_DIR}/iee-assets/effects"
         DEPENDS InfinityEngine-Enhancer
         VERBATIM
     )
@@ -256,6 +258,7 @@ if(IEE_BUILD_WINDOWS_DLL)
     install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/override/" DESTINATION override)
     install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/game-textures/" DESTINATION iee-textures)
     install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/bridge-transition/" DESTINATION iee-assets/bridge-transition)
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/effects/" DESTINATION iee-assets/effects)
 else()
     message(STATUS "Windows DLL target disabled on this host; building iee_common and tests only.")
 endif()
@@ -277,6 +280,7 @@ if(BUILD_TESTING)
         target_sources(iee_tests PRIVATE
             src/iee/area_animation_x4_registry.cpp
             src/iee/creature_sprite_x2.cpp
+            src/iee/effect_animation_x4_registry.cpp
             src/iee/game/opengl_types.cpp
         )
         target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
@@ -285,6 +289,19 @@ if(BUILD_TESTING)
     target_link_libraries(iee_tests PRIVATE iee_common)
     iee_configure_target(iee_tests)
     add_test(NAME iee_tests COMMAND iee_tests WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+
+    if(WIN32)
+        add_executable(iee_effect_animation_x4_registry_tests
+            tests/effect_animation_x4_registry_tests.cpp
+            src/iee/effect_animation_x4_registry.cpp
+            src/iee/game/opengl_types.cpp
+        )
+        target_link_libraries(iee_effect_animation_x4_registry_tests PRIVATE iee_common opengl32 Cabinet)
+        iee_configure_target(iee_effect_animation_x4_registry_tests)
+        add_test(NAME iee_effect_animation_x4_registry_tests
+            COMMAND iee_effect_animation_x4_registry_tests
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+    endif()
 
     if(WIN32)
         # Isolated regression test for DLL worker ownership. It deliberately
