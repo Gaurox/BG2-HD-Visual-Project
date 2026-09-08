@@ -26,6 +26,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Interpolation | `run_animation_interpolation.py` |
 | Packs par zone/occurrence | `split_animation_pack_by_area.py`, `combine_area_pack_splits.py`, `merge_area_pack_resources.py` |
 | Essai transactionnel d'animation par zone | `Install-AreaAnimation-AreaTest.ps1`, `Restore-AreaAnimation-AreaTest.ps1` ; cœur `../area-animation-area-test/` |
+| Migration d'un ARE embarqué dans une sauvegarde test | `patch_save_area_animation_resrefs.py` ; plan-only, sauvegarde complète obligatoire |
 | Correctifs alpha/RGB | `build_alpha_feather.py` (silhouette, canvas, radial, gaussien local haut), `build_spline_top_reconstructed_alpha.py` (Fit 1 + bande haute), `build_manual_alpha_mask_30fps_v2.py`, `build_per_frame_spline_alpha_30fps_v2.py`, `build_blended_rgb_neutral_pack.py`, `build_joint_animation_rgb_seam.py`, `build_fused_area_animation_carrier.py` |
 | Sprites | `run_creature_sprite_x2.py`, `build_sprite_inventory.py`, `xbr2x_batch.js` |
 | Release | `releases/BG2-HD-Upscale/tools/*.ps1` |
