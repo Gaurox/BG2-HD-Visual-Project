@@ -180,6 +180,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/features/tile_render.cpp
         src/iee/frame_hook.cpp
         src/iee/hooks.cpp
+        src/iee/item_icon_x2.cpp
         src/iee/map_page_prewarm.cpp
         src/iee/native_occlusion_bridge.cpp
         src/iee/post_process.cpp
@@ -282,6 +283,7 @@ if(BUILD_TESTING)
             src/iee/creature_sprite_x2.cpp
             src/iee/effect_animation_x4_registry.cpp
             src/iee/game/opengl_types.cpp
+            src/iee/item_icon_x2.cpp
         )
         target_link_libraries(iee_tests PRIVATE opengl32 Cabinet)
     endif()

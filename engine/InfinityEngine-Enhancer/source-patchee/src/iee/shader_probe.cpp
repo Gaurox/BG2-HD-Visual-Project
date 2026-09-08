@@ -187,12 +187,11 @@ struct BamAtlasKeyHash {
 };
 
 std::mutex g_bamAtlasMutex;
-std::unordered_set<BamAtlasKey, BamAtlasKeyHash> g_promotedBamAtlases;
+std::unordered_map<BamAtlasKey, int, BamAtlasKeyHash> g_promotedBamAtlases;
 std::atomic<bool> g_bamAtlasPromotionFailureLogged{false};
 std::atomic<bool> g_bamAtlasUnsupportedUploadLogged{false};
 
 constexpr int kBamAtlasLogicalSize = 1024;
-constexpr int kBamAtlasScale = 4;
 
 constexpr std::size_t kMaximumBamUiUploadLogs = 256;
 
@@ -268,14 +267,15 @@ bool current_bam_atlas_key(unsigned target, BamAtlasKey& out) noexcept {
   return true;
 }
 
-bool is_promoted_bam_atlas(const BamAtlasKey& key) noexcept {
+int promoted_bam_atlas_scale(const BamAtlasKey& key) noexcept {
   std::lock_guard lock(g_bamAtlasMutex);
-  return g_promotedBamAtlases.find(key) != g_promotedBamAtlases.end();
+  const auto found = g_promotedBamAtlases.find(key);
+  return found == g_promotedBamAtlases.end() ? 0 : found->second;
 }
 
-void remember_promoted_bam_atlas(const BamAtlasKey& key) {
+void remember_promoted_bam_atlas(const BamAtlasKey& key, int scale) {
   std::lock_guard lock(g_bamAtlasMutex);
-  g_promotedBamAtlases.insert(key);
+  g_promotedBamAtlases.insert_or_assign(key, scale);
 }
 
 void forget_promoted_bam_atlas(const BamAtlasKey& key) noexcept {
@@ -289,7 +289,7 @@ void forget_promoted_bam_textures(int count, const unsigned* textures) noexcept 
   for (auto it = g_promotedBamAtlases.begin(); it != g_promotedBamAtlases.end();) {
     bool deleted = false;
     for (int index = 0; index < count; ++index) {
-      if (it->texture == textures[index]) {
+      if (it->first.texture == textures[index]) {
         deleted = true;
         break;
       }
@@ -369,8 +369,9 @@ int bytes_per_pixel(unsigned format, unsigned type) noexcept {
 
 std::vector<unsigned char> upscale_subimage_nearest(const void* data, int width, int height,
                                                      unsigned format, unsigned type,
-                                                     const PixelStoreState& state) {
-  if (!data || width <= 0 || height <= 0 || width > 4096 || height > 4096) return {};
+                                                     const PixelStoreState& state, int scale) {
+  if (!data || width <= 0 || height <= 0 || width > 4096 || height > 4096 ||
+      scale < 2 || scale > 4) return {};
   const auto& gl = game::gl::get_gl_functions();
   if (!gl.glGetIntegerv) return {};
 
@@ -391,8 +392,8 @@ std::vector<unsigned char> upscale_subimage_nearest(const void* data, int width,
   const std::size_t sourceStride = (unalignedStride + alignment - 1) & ~(alignment - 1);
   const std::size_t sourceStart = static_cast<std::size_t>(state.skipRows) * sourceStride +
                                   static_cast<std::size_t>(state.skipPixels) * pixelBytes;
-  const std::size_t destinationWidth = static_cast<std::size_t>(width) * kBamAtlasScale;
-  const std::size_t destinationHeight = static_cast<std::size_t>(height) * kBamAtlasScale;
+  const std::size_t destinationWidth = static_cast<std::size_t>(width) * scale;
+  const std::size_t destinationHeight = static_cast<std::size_t>(height) * scale;
   const std::size_t destinationStride = destinationWidth * pixelBytes;
   std::vector<unsigned char> scaled(destinationStride * destinationHeight);
   const auto* sourceBytes = static_cast<const unsigned char*>(data);
@@ -400,15 +401,15 @@ std::vector<unsigned char> upscale_subimage_nearest(const void* data, int width,
   for (int sourceY = 0; sourceY < height; ++sourceY) {
     const auto* sourceRow = sourceBytes + sourceStart +
                             static_cast<std::size_t>(sourceY) * sourceStride;
-    for (int repeatY = 0; repeatY < kBamAtlasScale; ++repeatY) {
+    for (int repeatY = 0; repeatY < scale; ++repeatY) {
       auto* destinationRow =
           scaled.data() +
-          (static_cast<std::size_t>(sourceY) * kBamAtlasScale + repeatY) * destinationStride;
+          (static_cast<std::size_t>(sourceY) * scale + repeatY) * destinationStride;
       for (int sourceX = 0; sourceX < width; ++sourceX) {
         const auto* sourcePixel = sourceRow + static_cast<std::size_t>(sourceX) * pixelBytes;
         auto* destinationPixel =
-            destinationRow + static_cast<std::size_t>(sourceX) * kBamAtlasScale * pixelBytes;
-        for (int repeatX = 0; repeatX < kBamAtlasScale; ++repeatX) {
+            destinationRow + static_cast<std::size_t>(sourceX) * scale * pixelBytes;
+        for (int repeatX = 0; repeatX < scale; ++repeatX) {
           std::memcpy(destinationPixel + static_cast<std::size_t>(repeatX) * pixelBytes,
                       sourcePixel, pixelBytes);
         }
@@ -419,23 +420,23 @@ std::vector<unsigned char> upscale_subimage_nearest(const void* data, int width,
 }
 
 std::vector<unsigned char> upscale_rgba_atlas_nearest(const unsigned char* source, int width,
-                                                       int height) {
-  if (!source || width <= 0 || height <= 0) return {};
-  const std::size_t destinationWidth = static_cast<std::size_t>(width) * kBamAtlasScale;
-  const std::size_t destinationHeight = static_cast<std::size_t>(height) * kBamAtlasScale;
+                                                       int height, int scale) {
+  if (!source || width <= 0 || height <= 0 || scale < 2 || scale > 4) return {};
+  const std::size_t destinationWidth = static_cast<std::size_t>(width) * scale;
+  const std::size_t destinationHeight = static_cast<std::size_t>(height) * scale;
   std::vector<unsigned char> scaled(destinationWidth * destinationHeight * 4);
   for (int sourceY = 0; sourceY < height; ++sourceY) {
     const auto* sourceRow = source + static_cast<std::size_t>(sourceY) * width * 4;
-    for (int repeatY = 0; repeatY < kBamAtlasScale; ++repeatY) {
+    for (int repeatY = 0; repeatY < scale; ++repeatY) {
       auto* destinationRow =
           scaled.data() +
-          (static_cast<std::size_t>(sourceY) * kBamAtlasScale + repeatY) *
+          (static_cast<std::size_t>(sourceY) * scale + repeatY) *
               destinationWidth * 4;
       for (int sourceX = 0; sourceX < width; ++sourceX) {
         const auto* sourcePixel = sourceRow + static_cast<std::size_t>(sourceX) * 4;
         auto* destinationPixel =
-            destinationRow + static_cast<std::size_t>(sourceX) * kBamAtlasScale * 4;
-        for (int repeatX = 0; repeatX < kBamAtlasScale; ++repeatX) {
+            destinationRow + static_cast<std::size_t>(sourceX) * scale * 4;
+        for (int repeatX = 0; repeatX < scale; ++repeatX) {
           std::memcpy(destinationPixel + static_cast<std::size_t>(repeatX) * 4, sourcePixel, 4);
         }
       }
@@ -446,7 +447,8 @@ std::vector<unsigned char> upscale_rgba_atlas_nearest(const unsigned char* sourc
 
 bool promote_bound_bam_atlas(const BamAtlasKey& key, unsigned target, int level, int xoffset,
                              int yoffset, int sourceWidth, int sourceHeight,
-                             const am0205e_x4::ReplacementUpload& replacement,
+                             int replacementWidth, int replacementHeight,
+                             const void* replacementData, int scale,
                              const PixelStoreState& unpackState) {
   const auto& gl = game::gl::get_gl_functions();
   if (!gl.glGetTexLevelParameteriv || !gl.glGetTexImage || !gl.glGetIntegerv ||
@@ -461,8 +463,9 @@ bool promote_bound_bam_atlas(const BamAtlasKey& key, unsigned target, int level,
   if (atlasWidth != kBamAtlasLogicalSize || atlasHeight != kBamAtlasLogicalSize ||
       xoffset < 0 || yoffset < 0 || xoffset + sourceWidth > atlasWidth ||
       yoffset + sourceHeight > atlasHeight ||
-      replacement.width != sourceWidth * kBamAtlasScale ||
-      replacement.height != sourceHeight * kBamAtlasScale || !replacement.data) {
+      replacementWidth != sourceWidth * scale ||
+      replacementHeight != sourceHeight * scale || !replacementData ||
+      scale < 2 || scale > 4) {
     return false;
   }
 
@@ -470,7 +473,7 @@ bool promote_bound_bam_atlas(const BamAtlasKey& key, unsigned target, int level,
   int packBuffer = 0;
   gl.glGetIntegerv(game::gl::MAX_TEXTURE_SIZE, &maximumTextureSize);
   gl.glGetIntegerv(game::gl::PIXEL_PACK_BUFFER_BINDING, &packBuffer);
-  if (maximumTextureSize < atlasWidth * kBamAtlasScale || packBuffer != 0) return false;
+  if (maximumTextureSize < atlasWidth * scale || packBuffer != 0) return false;
 
   std::vector<unsigned char> original(static_cast<std::size_t>(atlasWidth) * atlasHeight * 4);
   int packAlignment = 4;
@@ -481,27 +484,27 @@ bool promote_bound_bam_atlas(const BamAtlasKey& key, unsigned target, int level,
   gl.glPixelStorei(game::gl::PACK_ALIGNMENT, packAlignment);
   if (gl.glGetError && gl.glGetError() != game::gl::GL_NO_ERROR) return false;
 
-  auto promoted = upscale_rgba_atlas_nearest(original.data(), atlasWidth, atlasHeight);
+  auto promoted = upscale_rgba_atlas_nearest(original.data(), atlasWidth, atlasHeight, scale);
   if (promoted.empty()) return false;
-  const auto* replacementBytes = static_cast<const unsigned char*>(replacement.data);
+  const auto* replacementBytes = static_cast<const unsigned char*>(replacementData);
   const std::size_t promotedStride =
-      static_cast<std::size_t>(atlasWidth) * kBamAtlasScale * 4;
-  const std::size_t replacementStride = static_cast<std::size_t>(replacement.width) * 4;
-  for (int row = 0; row < replacement.height; ++row) {
+      static_cast<std::size_t>(atlasWidth) * scale * 4;
+  const std::size_t replacementStride = static_cast<std::size_t>(replacementWidth) * 4;
+  for (int row = 0; row < replacementHeight; ++row) {
     auto* destination =
         promoted.data() +
-        (static_cast<std::size_t>(yoffset) * kBamAtlasScale + row) * promotedStride +
-        static_cast<std::size_t>(xoffset) * kBamAtlasScale * 4;
+        (static_cast<std::size_t>(yoffset) * scale + row) * promotedStride +
+        static_cast<std::size_t>(xoffset) * scale * 4;
     std::memcpy(destination, replacementBytes + static_cast<std::size_t>(row) * replacementStride,
                 replacementStride);
   }
 
-  remember_promoted_bam_atlas(key);
+  remember_promoted_bam_atlas(key, scale);
   game::gl::discard_errors();
   set_tight_unpack();
   g_glTexImage2DHook.original()(target, level, static_cast<int>(game::gl::RGBA8),
-                                atlasWidth * kBamAtlasScale,
-                                atlasHeight * kBamAtlasScale, 0, game::gl::RGBA,
+                                atlasWidth * scale,
+                                atlasHeight * scale, 0, game::gl::RGBA,
                                 game::gl::UNSIGNED_BYTE, promoted.data());
   restore_unpack(unpackState);
   if (gl.glGetError && gl.glGetError() != game::gl::GL_NO_ERROR) {
@@ -1157,7 +1160,8 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
     am0205e_x4::ReplacementUpload orificeReplacement{};
     const bool useAM0205EReplacement =
         !useAM3000AReplacement && !useAM0700AReplacement &&
-        g_cfg.enableAM0205EAnimationX4Test && am0205e_x4::try_replacement(
+        g_cfg.enableAM0205EAnimationX4Test &&
+        am0205e_x4::try_replacement(
                                                     target, level, internalFormat, width, height,
                                                     border, format, type, data, orificeReplacement);
     const bool useReplacement =
@@ -1224,7 +1228,8 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
                                             const void* data) noexcept {
   bool forwarded = false;
   try {
-    if (!g_cfg.enableAM0205EAnimationX4Test) {
+    const bool am0205eEnabled = g_cfg.enableAM0205EAnimationX4Test;
+    if (!am0205eEnabled) {
       forwarded = true;
       g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format, type,
                                        data);
@@ -1237,15 +1242,17 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
 
     BamAtlasKey atlasKey{};
     const bool hasAtlas = current_bam_atlas_key(target, atlasKey);
-    const bool atlasPromoted = hasAtlas && is_promoted_bam_atlas(atlasKey);
+    const int atlasScale = hasAtlas ? promoted_bam_atlas_scale(atlasKey) : 0;
     const auto unpackState = read_unpack_state();
-    am0205e_x4::ReplacementUpload replacement{};
+    const bool tightlyPacked = unpackState.rowLength == 0 && unpackState.skipRows == 0 &&
+                               unpackState.skipPixels == 0;
+    am0205e_x4::ReplacementUpload am0205eReplacement{};
     const bool useAM0205EReplacement =
-        hasAtlas && am0205e_x4::try_subimage_replacement(
-                        target, level, width, height, format, type, data, replacement);
-
-    if (atlasPromoted) {
-      // Once promoted, every update to this shared atlas must move to x4
+        hasAtlas && tightlyPacked && am0205eEnabled &&
+        am0205e_x4::try_subimage_replacement(target, level, width, height, format, type, data,
+                                             am0205eReplacement);
+    if (atlasScale != 0) {
+      // Once promoted, every update to this shared atlas must move to scaled
       // coordinates. Non-target BAM/UI rectangles are replicated nearest so
       // neighbouring cached content remains intact and correctly addressed.
       forwarded = true;
@@ -1258,23 +1265,20 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
         return;
       }
 
-      if (useAM0205EReplacement) {
+      if (useAM0205EReplacement && atlasScale == 4) {
         set_tight_unpack();
         g_glTexSubImage2DHook.original()(
-            target, level, xoffset * kBamAtlasScale, yoffset * kBamAtlasScale,
-            replacement.width, replacement.height, game::gl::RGBA,
-            game::gl::UNSIGNED_BYTE, replacement.data);
-        if (g_cfg.enablePerformanceLogging) {
-          core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
-              replacement.width, replacement.height, game::gl::RGBA, game::gl::UNSIGNED_BYTE));
-        }
+            target, level, xoffset * atlasScale, yoffset * atlasScale,
+            am0205eReplacement.width, am0205eReplacement.height, game::gl::RGBA,
+            game::gl::UNSIGNED_BYTE, am0205eReplacement.data);
         restore_unpack(unpackState);
-        am0205e_x4::log_atlas_replacement(replacement.frameIndex, atlasKey.texture, xoffset,
-                                          yoffset, false);
+        am0205e_x4::log_atlas_replacement(am0205eReplacement.frameIndex, atlasKey.texture,
+                                          xoffset, yoffset, false);
         return;
       }
 
-      auto scaled = upscale_subimage_nearest(data, width, height, format, type, unpackState);
+      auto scaled = upscale_subimage_nearest(data, width, height, format, type, unpackState,
+                                             atlasScale);
       if (scaled.empty()) {
         if (!g_bamAtlasUnsupportedUploadLogged.exchange(true, std::memory_order_acq_rel)) {
           LOG_WARN("Skipping unsupported pixel format in promoted BAM atlas texture {}: "
@@ -1284,13 +1288,13 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
         return;
       }
       set_tight_unpack();
-      g_glTexSubImage2DHook.original()(target, level, xoffset * kBamAtlasScale,
-                                       yoffset * kBamAtlasScale,
-                                       width * kBamAtlasScale, height * kBamAtlasScale,
+      g_glTexSubImage2DHook.original()(target, level, xoffset * atlasScale,
+                                       yoffset * atlasScale,
+                                       width * atlasScale, height * atlasScale,
                                        format, type, scaled.data());
       if (g_cfg.enablePerformanceLogging) {
         core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
-            width * kBamAtlasScale, height * kBamAtlasScale, format, type));
+            width * atlasScale, height * atlasScale, format, type));
       }
       restore_unpack(unpackState);
       return;
@@ -1301,24 +1305,31 @@ static void APIENTRY detour_glTexSubImage2D(unsigned target, int level, int xoff
       // streaming atlas. Promote its existing contents before consuming this
       // subimage so normalized UVs continue to address the same logical area.
       forwarded = true;
+      const int requestedScale = 4;
+      const int replacementWidth = am0205eReplacement.width;
+      const int replacementHeight = am0205eReplacement.height;
+      const void* replacementData = am0205eReplacement.data;
       if (promote_bound_bam_atlas(atlasKey, target, level, xoffset, yoffset, width, height,
-                                  replacement, unpackState)) {
+                                  replacementWidth, replacementHeight, replacementData,
+                                  requestedScale, unpackState)) {
         if (g_cfg.enablePerformanceLogging) {
           core::record_gl_uncompressed_upload(known_uncompressed_pixel_bytes(
-              replacement.width, replacement.height, game::gl::RGBA, game::gl::UNSIGNED_BYTE));
+              replacementWidth, replacementHeight, game::gl::RGBA,
+              game::gl::UNSIGNED_BYTE));
         }
-        LOG_INFO("Promoted BAM streaming atlas texture {} from 1024x1024 to 4096x4096 for "
-                 "AM0205E; logical UV geometry stays unchanged",
-                 atlasKey.texture);
-        am0205e_x4::log_atlas_replacement(replacement.frameIndex, atlasKey.texture, xoffset,
-                                          yoffset, true);
+        LOG_INFO("Promoted BAM streaming atlas texture {} from 1024x1024 to {}x{} for {}; "
+                 "logical UV geometry stays unchanged",
+                 atlasKey.texture, 1024 * requestedScale, 1024 * requestedScale,
+                 "AM0205E");
+        am0205e_x4::log_atlas_replacement(am0205eReplacement.frameIndex, atlasKey.texture,
+                                          xoffset, yoffset, true);
         return;
       }
 
       if (!g_bamAtlasPromotionFailureLogged.exchange(true, std::memory_order_acq_rel)) {
-        LOG_WARN("AM0205E frame matched, but the bound BAM atlas texture {} could not be "
-                 "promoted safely; retaining the original x1 upload",
-                 atlasKey.texture);
+        LOG_WARN("{} frame matched, but the bound BAM atlas texture {} could not be promoted "
+                 "safely; retaining the original x1 upload",
+                 "AM0205E", atlasKey.texture);
       }
       g_glTexSubImage2DHook.original()(target, level, xoffset, yoffset, width, height, format,
                                        type, data);
@@ -1569,19 +1580,21 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
       }
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
            cfg.enableAM3000AFrameX4Test ||
-           cfg.enableAM0700AAnimationX4Test || cfg.enableAM0205EAnimationX4Test) &&
+           cfg.enableAM0700AAnimationX4Test || cfg.enableAM0205EAnimationX4Test ||
+           cfg.enableItemIconX2) &&
           gl.glTexImage2D) {
         g_glTexImage2DHook.create(reinterpret_cast<void*>(gl.glTexImage2D),
                                   reinterpret_cast<void*>(&detour_glTexImage2D));
         g_glTexImage2DHook.queue_enable();
       }
-      if ((cfg.enablePerformanceLogging || cfg.enableAM0205EAnimationX4Test) &&
+      if ((cfg.enablePerformanceLogging || cfg.enableAM0205EAnimationX4Test ||
+           cfg.enableItemIconX2) &&
           gl.glTexSubImage2D) {
         g_glTexSubImage2DHook.create(reinterpret_cast<void*>(gl.glTexSubImage2D),
                                      reinterpret_cast<void*>(&detour_glTexSubImage2D));
         g_glTexSubImage2DHook.queue_enable();
-      } else if (cfg.enableAM0205EAnimationX4Test) {
-        LOG_WARN("AM0205E x4 atlas test cannot start: glTexSubImage2D is unavailable");
+      } else if (cfg.enableAM0205EAnimationX4Test || cfg.enableItemIconX2) {
+        LOG_WARN("BAM atlas upscale cannot start: glTexSubImage2D is unavailable");
       }
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
            cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test) &&

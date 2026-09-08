@@ -46,6 +46,23 @@ Un nouveau `run.json` suit `../docs/workspace-run.schema.json`. La sélection re
 `index/processing.csv`; ni la présence d'un run ni un fichier interne ne prouvent QA, installation
 ou release. Le contenu interne des runs sera défini avec le pipeline d'upscale, pas par ce document.
 
+## Test runtime x2 des icônes d'inventaire
+
+- Source scellée : `batches/item-inventory-xbr2x-aa-v1/`.
+- Correction RGB sous alpha nul : `batches/item-inventory-xbr2x-aa-alpha-bleed-v1/` ; alpha et
+  géométrie inchangés.
+- Registre dérivé : `batches/item-inventory-xbr2x-aa-runtime-v3/ItemIcons-X2.registry`.
+- Builds : `build_item_icon_alpha_bleed.py`, puis `build_item_icon_x2_registry.py` avec les ids de
+  runs et le suffixe de frame explicites.
+- Installation : `pipeline/scripts/Install-ItemIcon-X2-Test.ps1`.
+- Restauration : `pipeline/scripts/Restore-ItemIcon-X2-Test.ps1`.
+- Contrat : scope propriétaire `CVidCell::Render`, identité `resref + cycle + slot`, substitution à
+  la composition texture commune ; centres et géométrie UI x1, texture physique RGBA x2 dédiée ;
+  repli vanilla si l’identité ou l’état OpenGL n’est pas sûr.
+- Installation = `installed-pending-qa`; aucune validation ingame ou release implicite.
+- État courant : proposition x2 conservée, `qa=pending`, installation restaurée. Réinstallation à
+  la demande avec le script ci-dessus et le runtime v3.
+
 `processing.csv` contient une ligne par `asset_key` :
 
 ```text

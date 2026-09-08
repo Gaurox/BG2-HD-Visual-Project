@@ -26,6 +26,7 @@
 #include "iee/area_animation_clock_diagnostics.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/effect_animation_x4_registry.h"
+#include "iee/item_icon_x2.h"
 #include "app_context.h"
 #include "area_state.h"
 #include "iee/core/hooking.h"
@@ -66,6 +67,11 @@ using VvcVidCellRenderFn = void (*)(void*, void*, void*);
 // RenderTexture.
 using ProjectileFxRenderFn = int (*)(void*, void*, int, int, int, int, int);
 using VidCellRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, std::uint32_t);
+using ItemVidCellRenderFn = int (*)(void*, std::uintptr_t, std::uintptr_t, std::uintptr_t,
+                                    std::uintptr_t, std::uintptr_t, std::uintptr_t,
+                                    std::uintptr_t, std::uintptr_t);
+using ItemVidCellCommonRenderTextureFn = void (*)(int, int, void*, std::uint64_t, void*, void*,
+                                                  std::uint32_t);
 using InfinityFxRenderClippingPolysFn = int (*)(void*, int, int, int, void*, void*,
                                                 std::uint8_t, std::uint32_t);
 using VidPaletteRealizeFn = void (*)(void*, std::uint32_t*, std::uint32_t, void*, std::uint32_t,
@@ -96,6 +102,8 @@ static core::Hook<ProjectileBamRenderFn> g_projectileBamRenderHook;
 static core::Hook<VvcVidCellRenderFn> g_vvcVidCellRenderHook;
 static core::Hook<ProjectileFxRenderFn> g_projectileFxRenderHook;
 static core::Hook<VidCellRenderTextureFn> g_vidCellRenderTextureHook;
+static core::Hook<ItemVidCellRenderFn> g_itemVidCellRenderHook;
+static core::Hook<ItemVidCellCommonRenderTextureFn> g_itemVidCellCommonRenderTextureHook;
 static core::Hook<InfinityFxRenderClippingPolysFn> g_infinityFxRenderClippingPolysHook;
 static core::Hook<VidPaletteRealizeFn> g_vidPaletteRealizeHook;
 static core::Hook<MonsterRenderFn> g_monsterRenderHook;
@@ -115,6 +123,7 @@ static AppContext* g_ctx = nullptr;
 static am0205e_x4::EngineTextureApi g_am0205eTextureApi{};
 static area_animation_x4::EngineTextureApi g_areaAnimationTextureApi{};
 static effect_animation_x4::EngineTextureApi g_effectAnimationTextureApi{};
+static item_icon_x2::EngineTextureApi g_itemIconTextureApi{};
 static creature_sprite_x2::EngineTextureApi g_creatureSpriteTextureApi{};
 static native_occlusion_bridge::EngineTextureApi g_nativeOcclusionTextureApi{};
 static const std::byte* g_nativeFxSurfacePools{};
@@ -130,6 +139,11 @@ thread_local int g_effectAnimationRenderDepth = 0;
 thread_local void* g_effectAnimationInstance = nullptr;
 thread_local void* g_effectAnimationCell = nullptr;
 thread_local int g_effectAnimationFinalRenderDepth = 0;
+struct ItemIconScope {
+  void* cell{};
+};
+thread_local ItemIconScope* g_itemIconScope = nullptr;
+static bool g_itemIconHooksEnabled = false;
 
 // Bounded proof for registered effect resources. Counters are process-wide;
 // stage and slot emission is independently gated per resref by the registry.
@@ -1208,6 +1222,59 @@ bool prepare_area_animation_composition_hooks(AppContext& ctx) noexcept {
   return true;
 }
 
+bool prepare_item_icon_composition_hooks(AppContext& ctx) noexcept {
+  g_itemIconHooksEnabled = false;
+  g_itemIconTextureApi = {};
+  if (!ctx.cfg.enableItemIconX2 || !item_icon_x2::ready()) return false;
+  if (!validate_area_animation_runtime(ctx, "Item icon x2")) return false;
+  if (!ctx.manifest || !ctx.manifest->itemIcons.enabled) {
+    LOG_WARN("Item icon x2 hook is unavailable for build {}",
+             ctx.manifest ? ctx.manifest->buildId : "<none>");
+    return false;
+  }
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return false;
+  const auto& itemRuntime = ctx.manifest->itemIcons;
+  if (itemRuntime.vidCellGetCurrentFrameSize > module->size ||
+      !matches_pattern_at_rva(*module, itemRuntime.vidCellGetCurrentFrameSize,
+                              itemRuntime.vidCellGetCurrentFrameSizeSignature)) {
+    LOG_WARN("Item icon x2 hook skipped: CVidCell::GetCurrentFrameSize signature differs at "
+             "RVA 0x{:X}", itemRuntime.vidCellGetCurrentFrameSize);
+    return false;
+  }
+  if (itemRuntime.vidCellRender > module->size ||
+      !matches_pattern_at_rva(*module, itemRuntime.vidCellRender,
+                              itemRuntime.vidCellRenderSignature)) {
+    LOG_WARN("Item icon x2 hook skipped: CVidCell owner render signature differs at "
+             "RVA 0x{:X}", itemRuntime.vidCellRender);
+    return false;
+  }
+  if (itemRuntime.vidCellCommonRenderTexture > module->size ||
+      !matches_pattern_at_rva(*module, itemRuntime.vidCellCommonRenderTexture,
+                              itemRuntime.vidCellCommonRenderTextureSignature)) {
+    LOG_WARN("Item icon x2 hook skipped: common texture-composition signature differs at "
+             "RVA 0x{:X}", itemRuntime.vidCellCommonRenderTexture);
+    return false;
+  }
+  const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+  const auto& textureRuntime = ctx.manifest->areaAnimations;
+  g_itemIconTextureApi = {
+      .DrawGenTexture = reinterpret_cast<item_icon_x2::EngineTextureApi::DrawGenTextureFn>(
+          moduleBase + textureRuntime.drawGenTexture),
+      .DrawBindTexture = ctx.draw.DrawBindTexture,
+      .DrawDeleteTexture = reinterpret_cast<item_icon_x2::EngineTextureApi::DrawDeleteTextureFn>(
+          moduleBase + textureRuntime.drawDeleteTexture),
+      .TexImage = reinterpret_cast<item_icon_x2::EngineTextureApi::TexImageFn>(
+          moduleBase + textureRuntime.texImage),
+      .DrawGetRenderer = reinterpret_cast<item_icon_x2::EngineTextureApi::DrawGetRendererFn>(
+          moduleBase + textureRuntime.drawGetRenderer),
+      .glTextureState = reinterpret_cast<const std::uint32_t*>(
+          moduleBase + textureRuntime.glTextureState),
+  };
+  g_itemIconHooksEnabled = true;
+  return true;
+}
+
 bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
   g_effectAnimationHooksEnabled = false;
   g_effectAnimationTextureApi = {};
@@ -2269,6 +2336,56 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   layer.capturedGeneration = generation;
   layer.captureValid = true;
   scope->pendingLayer = ownerLayer;
+}
+
+static int detour_item_vid_cell_render(void* cell, std::uintptr_t arg2,
+                                       std::uintptr_t arg3, std::uintptr_t arg4,
+                                       std::uintptr_t arg5, std::uintptr_t arg6,
+                                       std::uintptr_t arg7, std::uintptr_t arg8,
+                                       std::uintptr_t arg9) {
+  const auto original = g_itemVidCellRenderHook.original();
+  if (!g_itemIconHooksEnabled || !cell) {
+    return original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  }
+  ItemIconScope scope{.cell = cell};
+  auto* previousScope = g_itemIconScope;
+  g_itemIconScope = &scope;
+  const int result = original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  g_itemIconScope = previousScope;
+  return result;
+}
+
+static void detour_item_vid_cell_common_render_texture(
+    int x, int y, void* sourceRect, std::uint64_t logicalSize, void* renderRect,
+    void* clipRect, std::uint32_t flags) {
+  const auto original = g_itemVidCellCommonRenderTextureHook.original();
+  const int logicalWidth = static_cast<std::int32_t>(logicalSize & 0xFFFFFFFFull);
+  const int logicalHeight = static_cast<std::int32_t>(logicalSize >> 32u);
+  int previousTextureId = 0;
+  bool replacementBound = false;
+  const auto* scope = g_itemIconScope;
+  if (g_itemIconHooksEnabled && scope && scope->cell && g_ctx && g_ctx->manifest) {
+    const auto& runtime = g_ctx->manifest->itemIcons;
+    const auto* cellBytes = static_cast<const std::byte*>(scope->cell);
+    std::array<char, 8> resref{};
+    std::int16_t currentFrame = -1;
+    std::int16_t currentSequence = -1;
+    std::int32_t playbackMode = 0;
+    item_icon_x2::FrameHandle handle{};
+    replacementBound =
+        core::safe_read(cellBytes + runtime.vidCellResref, resref) &&
+        core::safe_read(cellBytes + runtime.vidCellCurrentFrame, currentFrame) &&
+        core::safe_read(cellBytes + runtime.vidCellCurrentSequence, currentSequence) &&
+        core::safe_read(cellBytes + runtime.vidCellPlaybackMode, playbackMode) &&
+        item_icon_x2::resolve_frame(resref, currentSequence, currentFrame, playbackMode,
+                                    logicalWidth, logicalHeight, handle) &&
+        item_icon_x2::bind_frame_texture(handle, logicalWidth, logicalHeight,
+                                         g_itemIconTextureApi, previousTextureId);
+  }
+  original(x, y, sourceRect, logicalSize, renderRect, clipRect, flags);
+  if (replacementBound) {
+    item_icon_x2::restore_texture(g_itemIconTextureApi, previousTextureId);
+  }
 }
 
 static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
@@ -3518,6 +3635,8 @@ bool install_all(AppContext& ctx) {
     g_nativeFxSurfacePools = nullptr;
     g_effectAnimationHooksEnabled = false;
     g_effectAnimationTextureApi = {};
+    g_itemIconHooksEnabled = false;
+    g_itemIconTextureApi = {};
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
@@ -3525,6 +3644,7 @@ bool install_all(AppContext& ctx) {
     }
     g_effectAnimationHooksEnabled = prepare_effect_animation_composition_hooks(ctx);
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
+    g_itemIconHooksEnabled = prepare_item_icon_composition_hooks(ctx);
     const bool hasBridgeTarget =
         g_areaCompositionMode == AreaCompositionMode::Registry ||
         g_creatureSpriteHooksEnabled;
@@ -3542,7 +3662,7 @@ bool install_all(AppContext& ctx) {
           "animation or creature xN path is active");
     }
     if (g_areaCompositionMode != AreaCompositionMode::None || g_effectAnimationHooksEnabled ||
-        g_creatureSpriteHooksEnabled) {
+        g_creatureSpriteHooksEnabled || g_itemIconHooksEnabled) {
       try {
         const auto module = core::get_module_span(nullptr);
         if (!module || !ctx.manifest) throw std::runtime_error("module or manifest unavailable");
@@ -3552,6 +3672,21 @@ bool install_all(AppContext& ctx) {
             reinterpret_cast<void*>(moduleBase + runtime.vidCellRenderTexture),
             reinterpret_cast<void*>(&detour_vid_cell_render_texture));
         g_vidCellRenderTextureHook.enable();
+        if (g_itemIconHooksEnabled) {
+          const auto& itemRuntime = ctx.manifest->itemIcons;
+          g_itemVidCellCommonRenderTextureHook.create(
+              reinterpret_cast<void*>(moduleBase + itemRuntime.vidCellCommonRenderTexture),
+              reinterpret_cast<void*>(&detour_item_vid_cell_common_render_texture));
+          g_itemVidCellCommonRenderTextureHook.enable();
+          g_itemVidCellRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + itemRuntime.vidCellRender),
+              reinterpret_cast<void*>(&detour_item_vid_cell_render));
+          g_itemVidCellRenderHook.enable();
+          LOG_INFO(
+              "Item icon x2 owner scope installed: CVidCell::Render RVA 0x{:X}, "
+              "common texture composition RVA 0x{:X}",
+              itemRuntime.vidCellRender, itemRuntime.vidCellCommonRenderTexture);
+        }
         if (g_areaCompositionMode != AreaCompositionMode::None) {
           g_gameStaticRenderBamHook.create(
               reinterpret_cast<void*>(moduleBase + runtime.gameStaticRenderBam),
@@ -3636,8 +3771,11 @@ bool install_all(AppContext& ctx) {
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
+        (void)g_itemVidCellRenderHook.remove();
+        (void)g_itemVidCellCommonRenderTextureHook.remove();
         g_areaAnimationTextureApi = {};
         g_effectAnimationTextureApi = {};
+        g_itemIconTextureApi = {};
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
@@ -3645,6 +3783,7 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterHookEnabled = false;
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
+        g_itemIconHooksEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3662,8 +3801,11 @@ bool install_all(AppContext& ctx) {
         (void)g_gameStaticRenderBamHook.remove();
         (void)g_vidPaletteRealizeHook.remove();
         (void)g_vidCellRenderTextureHook.remove();
+        (void)g_itemVidCellRenderHook.remove();
+        (void)g_itemVidCellCommonRenderTextureHook.remove();
         g_areaAnimationTextureApi = {};
         g_effectAnimationTextureApi = {};
+        g_itemIconTextureApi = {};
         g_am0205eTextureApi = {};
         g_creatureSpriteTextureApi = {};
         g_creatureSpriteHooksEnabled = false;
@@ -3671,6 +3813,7 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterHookEnabled = false;
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
+        g_itemIconHooksEnabled = false;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3841,6 +3984,8 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_itemVidCellRenderHook.remove();
+    (void)g_itemVidCellCommonRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
     (void)g_resFileOpenDiagnosticHook.remove();
@@ -3859,6 +4004,7 @@ bool install_all(AppContext& ctx) {
     g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
     g_effectAnimationTextureApi = {};
+    g_itemIconTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
@@ -3866,6 +4012,7 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterHookEnabled = false;
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
+    g_itemIconHooksEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -3886,6 +4033,8 @@ bool install_all(AppContext& ctx) {
     (void)g_infinityFxRenderClippingPolysHook.remove();
     (void)g_vidPaletteRealizeHook.remove();
     (void)g_vidCellRenderTextureHook.remove();
+    (void)g_itemVidCellRenderHook.remove();
+    (void)g_itemVidCellCommonRenderTextureHook.remove();
     (void)g_pvrUncompressHook.remove();
     g_pvrUncompressExpectedReturn = 0;
     (void)g_resFileOpenDiagnosticHook.remove();
@@ -3904,6 +4053,7 @@ bool install_all(AppContext& ctx) {
     g_nativeFxSurfacePools = nullptr;
     g_areaAnimationTextureApi = {};
     g_effectAnimationTextureApi = {};
+    g_itemIconTextureApi = {};
     g_am0205eTextureApi = {};
     g_creatureSpriteTextureApi = {};
     g_creatureSpriteHooksEnabled = false;
@@ -3911,6 +4061,7 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterHookEnabled = false;
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
+    g_itemIconHooksEnabled = false;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -3938,6 +4089,8 @@ void uninstall_all() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.remove();
   (void)g_vidPaletteRealizeHook.remove();
   (void)g_vidCellRenderTextureHook.remove();
+  (void)g_itemVidCellRenderHook.remove();
+  (void)g_itemVidCellCommonRenderTextureHook.remove();
   (void)g_pvrUncompressHook.remove();
   g_pvrUncompressExpectedReturn = 0;
   (void)g_resFileOpenDiagnosticHook.remove();
@@ -3951,10 +4104,12 @@ void uninstall_all() noexcept {
 
   native_occlusion_bridge::shutdown();
   area_animation_x4::forget_engine_textures();
+  item_icon_x2::forget_engine_textures();
   creature_sprite_x2::forget_engine_textures();
   am0205e_x4::forget_engine_textures();
   g_areaAnimationTextureApi = {};
   g_effectAnimationTextureApi = {};
+  g_itemIconTextureApi = {};
   g_am0205eTextureApi = {};
   g_creatureSpriteTextureApi = {};
   g_creatureSpriteHooksEnabled = false;
@@ -3962,6 +4117,7 @@ void uninstall_all() noexcept {
   g_creatureSpriteMonsterHookEnabled = false;
   g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_effectAnimationHooksEnabled = false;
+  g_itemIconHooksEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
   g_nativeOcclusionProbeHookEnabled = false;
@@ -3997,6 +4153,8 @@ void prepare_for_shutdown() noexcept {
   (void)g_infinityFxRenderClippingPolysHook.disable();
   (void)g_vidPaletteRealizeHook.disable();
   (void)g_vidCellRenderTextureHook.disable();
+  (void)g_itemVidCellRenderHook.disable();
+  (void)g_itemVidCellCommonRenderTextureHook.disable();
   (void)g_pvrUncompressHook.disable();
   g_pvrUncompressExpectedReturn = 0;
   (void)g_resFileOpenDiagnosticHook.disable();

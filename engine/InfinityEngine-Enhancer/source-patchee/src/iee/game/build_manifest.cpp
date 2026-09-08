@@ -346,6 +346,21 @@ constexpr BuildManifest kKnownBuilds[] = {
             "48 89 5C 24 08 57 48 83 EC 40 48 8B 05 ? ? ? ? 41 8B D9 41 8B F8 "
             "4C 8B D9 4C 8B 90 10 02 00 00 41 80 7A 19 00",
         },
+        {
+            true,
+            0x411780,
+            "48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 20 48 8B F9 33 DB 48 8B 89 08 01 00 00",
+            0x110,
+            0x118,
+            0x11A,
+            0x11C,
+            0x424780,
+            "40 53 56 57 41 54 41 55 41 56 41 57 48 81 EC 90 00 00 00 48 8B 05 ? ? ? ? "
+            "48 33 C4 48 89 44 24 70",
+            0x425530,
+            "4C 89 4C 24 20 55 53 56 41 55 41 56 41 57 48 8B EC 48 83 EC 68 "
+            "48 8B 05 ? ? ? ? 48 33 C4",
+        },
     },
 };
 
@@ -406,6 +421,14 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].effectAnimations.infinityFxRenderSignature),
               "BG2EE 2.7.3 effect FXRender signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].itemIcons.vidCellGetCurrentFrameSizeSignature),
+              "BG2EE 2.7.3 item CVidCell frame-size signature format is invalid");
+static_assert(validate_pattern_format(kKnownBuilds[2].itemIcons.vidCellRenderSignature),
+              "BG2EE 2.7.3 item CVidCell render signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].itemIcons.vidCellCommonRenderTextureSignature),
+              "BG2EE 2.7.3 item common texture-composition signature format is invalid");
 static_assert([] {
   for (const auto signature : kKnownBuilds[2].areaAnimations.signatures) {
     if (!validate_pattern_format(signature)) return false;

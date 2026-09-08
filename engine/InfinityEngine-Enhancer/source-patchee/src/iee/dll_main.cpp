@@ -21,6 +21,7 @@
 #include "effect_animation_x4_registry.h"
 #include "frame_hook.h"
 #include "hooks.h"
+#include "item_icon_x2.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
@@ -144,6 +145,10 @@ static DWORD WINAPI InitThread(LPVOID) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)am0205e_x4::prepare(moduleDir / "iee-assets");
     }
+    if (cfg.enableItemIconX2) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)item_icon_x2::prepare(moduleDir / "iee-assets" / "icons");
+    }
     if (cfg.enableAreaAnimationX4) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       const auto assets = moduleDir / "iee-assets";
@@ -173,7 +178,7 @@ static DWORD WINAPI InitThread(LPVOID) {
           "Rendering config: linear=true, anisotropic={}, maxAnisotropy={:.1f}, "
           "LOD bias={:.2f}, tileMipmaps={}, forceTextureFilterEveryDraw={}, fullFrameFxaa={}, "
           "fullFrameSsaa2x={}, bamUiTextureProbe={}, am3000aFrameX4Test={}, "
-          "am0700aAnimationX4Test={}, am0205eAnimationX4Test={}, areaAnimationX4={}, "
+          "am0700aAnimationX4Test={}, am0205eAnimationX4Test={}, itemIconX2={}, areaAnimationX4={}, "
           "effectAnimationX4={}, "
           "creatureSpriteUpscaleTest={}, creatureSpriteLinearFiltering={}, "
           "bridgeTransitionPreview={}, "
@@ -187,6 +192,7 @@ static DWORD WINAPI InitThread(LPVOID) {
           ctx.cfg.enableAM3000AFrameX4Test,
           ctx.cfg.enableAM0700AAnimationX4Test,
           ctx.cfg.enableAM0205EAnimationX4Test,
+          ctx.cfg.enableItemIconX2,
           ctx.cfg.enableAreaAnimationX4, ctx.cfg.enableEffectAnimationX4,
           ctx.cfg.creature_sprite_upscale_enabled(),
           ctx.cfg.enableCreatureSpriteLinearFiltering,
@@ -262,6 +268,7 @@ static void CleanupHooks() noexcept {
     area_animation_x4::release();
     effect_animation_x4::release();
     creature_sprite_x2::release();
+    item_icon_x2::release();
     am0205e_x4::release();
     am0700a_x4::release();
     am3000a_x4::release();

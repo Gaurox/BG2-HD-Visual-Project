@@ -45,12 +45,14 @@
 #include "iee/game/dds_texture.h"
 #include "iee/game/eeex_doc_layouts_x64.h"
 #include "iee/game/file_formats.h"
+#include "iee/game/opengl_types.h"
 #include "iee/game/runtime_types_x64.h"
 #include "iee/game/shader_override.h"
 #include "iee/game/tile_upscale.h"
 #include "iee/game/tile_liquid.h"
 #include "iee/game/tis_palette.h"
 #include "iee/game/wed_runtime.h"
+#include "iee/item_icon_x2.h"
 
 
 namespace {
@@ -359,6 +361,8 @@ void test_manifest_loading() {
     expect_true(found273->get().validate(), "2.7.3 manifest should validate");
     expect_true(!found273->get().areaAnimations.enabled,
                 "Unvalidated BGEE builds must keep area-animation hooks disabled");
+    expect_true(!found273->get().itemIcons.enabled,
+                "Unvalidated BGEE builds must keep item-icon hooks disabled");
     expect_eq(found273->get().referenceRvas.loadArea, std::uintptr_t{0x27EBD0},
               "2.7.3 LoadArea reference RVA should match the offline scan");
     expect_eq(found273->get().referenceRvas.renderTexture, std::uintptr_t{0x4257C0},
@@ -414,6 +418,28 @@ void test_manifest_loading() {
                 "Validated BG2EE 2.7.3 world-overlay hook should be enabled");
     expect_true(bg2ee->get().effectAnimations.enabled,
                 "Validated BG2EE 2.7.3 effect-animation hooks should be enabled");
+    expect_true(bg2ee->get().itemIcons.enabled,
+                "Validated BG2EE 2.7.3 item-icon identity hook should be enabled");
+    expect_eq(bg2ee->get().itemIcons.vidCellGetCurrentFrameSize,
+              std::uintptr_t{0x411780},
+              "BG2EE item CVidCell frame-size RVA should match the offline scan");
+    expect_eq(bg2ee->get().itemIcons.vidCellResref, std::uintptr_t{0x110},
+              "BG2EE item CVidCell resref offset should match the offline scan");
+    expect_eq(bg2ee->get().itemIcons.vidCellCurrentFrame, std::uintptr_t{0x118},
+              "BG2EE item CVidCell frame offset should match the offline scan");
+    expect_eq(bg2ee->get().itemIcons.vidCellCurrentSequence, std::uintptr_t{0x11A},
+              "BG2EE item CVidCell sequence offset should match the offline scan");
+    expect_eq(bg2ee->get().itemIcons.vidCellPlaybackMode, std::uintptr_t{0x11C},
+              "BG2EE item CVidCell playback offset should match the offline scan");
+    expect_eq(bg2ee->get().itemIcons.vidCellRender, std::uintptr_t{0x424780},
+              "BG2EE item CVidCell owner render RVA should match the offline call graph");
+    expect_eq(bg2ee->get().itemIcons.vidCellCommonRenderTexture,
+              std::uintptr_t{0x425530},
+              "BG2EE item common texture-composition RVA should cover direct callers");
+    auto incompleteItemRuntime = bg2ee->get().itemIcons;
+    incompleteItemRuntime.vidCellCommonRenderTextureSignature = {};
+    expect_true(!incompleteItemRuntime.validate(),
+                "An item composition RVA without exact signature evidence must fail validation");
     expect_eq(bg2ee->get().effectAnimations.projectileBamRender,
               std::uintptr_t{0x233F20},
               "BG2EE projectile effect owner RVA should match the offline scan");
@@ -933,6 +959,7 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableDebugHotkeys, "hotkeys default off");
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
+  expect_true(!cfg.enableItemIconX2, "item-icon x2 defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
   expect_true(!cfg.enableNativeOcclusionProbe, "native occlusion probe defaults off");
   expect_true(!cfg.enableNativeOcclusionBridge, "native occlusion bridge defaults off");
@@ -3636,6 +3663,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableDebugHotkeys = true;
     orig.enableWaterEffect = false;
     orig.enableBamUiTextureProbe = true;
+    orig.enableItemIconX2 = true;
     orig.enableAreaAnimationX4 = true;
     orig.enableNativeOcclusionProbe = true;
     orig.enableNativeOcclusionBridge = true;
@@ -3667,6 +3695,7 @@ void test_config_shader_override_roundtrip() {
   expect_true(!loaded.enableWaterEffect, "enableWaterEffect should round-trip as false");
   expect_true(loaded.enableBamUiTextureProbe,
               "enableBamUiTextureProbe should round-trip as true");
+  expect_true(loaded.enableItemIconX2, "enableItemIconX2 should round-trip as true");
   expect_true(loaded.enableAreaAnimationX4,
               "enableAreaAnimationX4 should round-trip as true");
   expect_true(loaded.enableNativeOcclusionProbe,
@@ -3727,6 +3756,91 @@ void write_u32(std::vector<std::byte>& buffer, std::size_t offset, std::uint32_t
   for (std::size_t index = 0; index < sizeof(value); ++index) {
     buffer[offset + index] = static_cast<std::byte>((value >> (index * 8)) & 0xFF);
   }
+}
+
+void write_u16(std::vector<std::byte>& buffer, std::size_t offset, std::uint16_t value) {
+  if (offset + sizeof(value) > buffer.size()) buffer.resize(offset + sizeof(value));
+  for (std::size_t index = 0; index < sizeof(value); ++index) {
+    buffer[offset + index] = static_cast<std::byte>((value >> (index * 8)) & 0xFF);
+  }
+}
+
+void write_u64(std::vector<std::byte>& buffer, std::size_t offset, std::uint64_t value) {
+  if (offset + sizeof(value) > buffer.size()) buffer.resize(offset + sizeof(value));
+  for (std::size_t index = 0; index < sizeof(value); ++index) {
+    buffer[offset + index] = static_cast<std::byte>((value >> (index * 8)) & 0xFF);
+  }
+}
+
+void test_item_icon_x2_registry() {
+#ifdef _WIN32
+  namespace fs = std::filesystem;
+  const auto root = fs::temp_directory_path() / "iee-item-icon-x2-registry-test";
+  std::error_code ec;
+  fs::remove_all(root, ec);
+  fs::create_directories(root, ec);
+  expect_true(!ec, "item-icon registry fixture directory should be created");
+
+  constexpr std::size_t headerBytes = 40;
+  constexpr std::size_t recordBytes = 40;
+  constexpr std::size_t recordCount = 2;
+  constexpr std::size_t replacementBytes = 16;
+  std::vector<std::byte> pack(headerBytes + recordBytes * recordCount +
+                              replacementBytes * recordCount);
+  const std::array<char, 8> magic{{'I', 'E', 'E', 'I', 'C', 'X', '2', '\0'}};
+  write_bytes(pack, 0, magic.data(), magic.size());
+  write_u32(pack, 8, 2);
+  write_u32(pack, 12, 2);
+  write_u32(pack, 16, recordCount);
+  write_u32(pack, 20, static_cast<std::uint32_t>(recordBytes));
+  write_u64(pack, 24, headerBytes + recordBytes * recordCount);
+  write_u64(pack, 32, pack.size());
+  const std::array<char, 8> resref{{'T', 'E', 'S', 'T', '\0', '\0', '\0', '\0'}};
+  for (std::size_t record = 0; record < recordCount; ++record) {
+    const auto base = headerBytes + record * recordBytes;
+    write_bytes(pack, base, resref.data(), resref.size());
+    write_u16(pack, base + 8, 0);
+    write_u16(pack, base + 10, static_cast<std::uint16_t>(record));
+    write_u16(pack, base + 12, 1);
+    write_u16(pack, base + 14, 1);
+    write_u16(pack, base + 16, 2);
+    write_u16(pack, base + 18, 2);
+    write_u32(pack, base + 20, static_cast<std::uint32_t>(1 - record));
+    write_u64(pack, base + 24,
+              headerBytes + recordBytes * recordCount + record * replacementBytes);
+    write_u32(pack, base + 32, replacementBytes);
+    for (std::size_t index = 0; index < replacementBytes; ++index) {
+      pack[headerBytes + recordBytes * recordCount + record * replacementBytes + index] =
+          static_cast<std::byte>(index + record);
+    }
+  }
+  {
+    std::ofstream stream(root / "ItemIcons-X2.registry", std::ios::binary);
+    stream.write(reinterpret_cast<const char*>(pack.data()),
+                 static_cast<std::streamsize>(pack.size()));
+  }
+
+  expect_true(iee::item_icon_x2::prepare(root) && iee::item_icon_x2::ready(),
+              "valid item-icon registry should load");
+  iee::item_icon_x2::FrameHandle first{};
+  iee::item_icon_x2::FrameHandle second{};
+  expect_true(iee::item_icon_x2::resolve_frame(resref, 0, 0, 0, 1, 1, first),
+              "cycle slot zero should resolve by CVidCell identity");
+  expect_true(iee::item_icon_x2::resolve_frame(resref, 0, 1, 0, 1, 1, second) &&
+                  !(second == first),
+              "cycle slot one should resolve to its own mapping");
+  iee::item_icon_x2::FrameHandle normalized{};
+  expect_true(iee::item_icon_x2::resolve_frame(resref, 4, 3, 1, 1, 1, normalized) &&
+                  normalized == second,
+              "invalid sequence and looping overflow should normalize like CVidCell");
+  expect_true(iee::item_icon_x2::resolve_frame(resref, 0, -1, 1, 1, 1, normalized) &&
+                  normalized == second,
+              "negative looping frame should normalize modulo cycle size");
+  expect_true(!iee::item_icon_x2::resolve_frame(resref, 0, 0, 0, 2, 1, normalized),
+              "logical dimension mismatch should fail closed");
+  iee::item_icon_x2::release();
+  fs::remove_all(root, ec);
+#endif
 }
 
 std::vector<std::byte> make_test_pvrz(std::uint32_t format = 11,
@@ -5464,6 +5578,7 @@ int main() {
   test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
   test_config_shader_override_roundtrip();
+  test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();
   test_map_page_shadow_idle_cancellation();

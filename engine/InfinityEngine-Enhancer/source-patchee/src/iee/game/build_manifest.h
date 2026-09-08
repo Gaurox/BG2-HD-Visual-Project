@@ -271,6 +271,32 @@ struct EffectAnimationRuntime {
   }
 };
 
+struct ItemIconRuntime {
+  bool enabled{};
+  std::uintptr_t vidCellGetCurrentFrameSize{};
+  std::string_view vidCellGetCurrentFrameSizeSignature{};
+  std::uintptr_t vidCellResref{};
+  std::uintptr_t vidCellCurrentFrame{};
+  std::uintptr_t vidCellCurrentSequence{};
+  std::uintptr_t vidCellPlaybackMode{};
+  // CVidCell owner and common texture-composition boundary. The historical
+  // RenderTexture wrapper is bypassed by the inventory path.
+  std::uintptr_t vidCellRender{};
+  std::string_view vidCellRenderSignature{};
+  std::uintptr_t vidCellCommonRenderTexture{};
+  std::string_view vidCellCommonRenderTextureSignature{};
+
+  [[nodiscard]] constexpr bool validate() const noexcept {
+    return !enabled ||
+           (vidCellGetCurrentFrameSize != 0 &&
+            !vidCellGetCurrentFrameSizeSignature.empty() && vidCellResref != 0 &&
+            vidCellCurrentFrame != 0 && vidCellCurrentSequence != 0 &&
+            vidCellPlaybackMode != 0 && vidCellRender != 0 &&
+            !vidCellRenderSignature.empty() && vidCellCommonRenderTexture != 0 &&
+            !vidCellCommonRenderTextureSignature.empty());
+  }
+};
+
 // Optional map-composition point used by area-specific overlays. The overlay
 // is drawn at the end of CGameArea::Render, while DrawBeginScaled's map
 // framebuffer is still bound. DrawEndScaled then resolves the map (including
@@ -319,6 +345,8 @@ struct BuildManifest {
   PvrDemandRuntime pvrDemand{};
   // Appended after PVR demand to preserve every existing positional manifest.
   EffectAnimationRuntime effectAnimations{};
+  // Appended after effect animations to preserve every existing positional manifest.
+  ItemIconRuntime itemIcons{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (buildId.empty() || supportedProductNames[0].empty() || executableVersion.major == 0 ||
@@ -337,6 +365,7 @@ struct BuildManifest {
     }
     if (!areaAnimations.validate()) return false;
     if (!effectAnimations.validate()) return false;
+    if (!itemIcons.validate()) return false;
     if (!worldOverlay.validate()) return false;
     if (!pvrDemand.validate()) return false;
 
