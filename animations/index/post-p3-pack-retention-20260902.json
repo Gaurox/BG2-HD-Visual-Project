@@ -4,6 +4,48 @@
   "authority_policy": "Physical retention evidence only. Entries never grant or change production, QA, installation, selection or release status.",
   "packs": [
     {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-20260908",
+      "manifest_sha256": "4A4AF6275828B4905A648EAC4985743BB9C533820B878378067A136456A72F05",
+      "created_utc": "2026-09-07T23:18:14.432889+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804 : AM2805B/C 30 fps synchronisés ; AM2805C restaure depuis l'alpha pré-spline l'unique composante supprimée >= 10000 px (41170 px avec anticrénelage sur chaque phase), sans rétablir les petites irrégularités ; raccord RGB asymétrique 32 px x4 à (483,368)/(483,553), haut inchangé et prolongé par smoothstep dans le bas ; installé pour essai ingame, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam16-20260908",
+      "manifest_sha256": "0E09C799E271B786C45293AEA2761D93DB36F580D0A931D0A626C8DF9B2325BD",
+      "created_utc": "2026-09-08T01:03:52.050481+02:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804 : AM2805B/C 30 fps synchronisés, RGB conjoint dans une bande de raccord 16 px x4 aux coordonnées ARE (483,368)/(483,553) ; alphas, centres, tailles et cycles inchangés ; essai ingame requis, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908",
+      "manifest_sha256": "932CCC577209E3472D1AE2E6A8A0524618CF770026742DDE9C2D32AA3D9240F0",
+      "created_utc": "2026-09-08T00:43:29.899946+02:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804/AR2805 : AM2805A/B/C alpha strict (RGB préservé), spline fit 1 / feather 1 x4 ; B raccord bas 8/16 x4 et C raccord haut 8/16 x4 ; aucun masque WED cuit ; B/C non liés à une occurrence pour rester éligibles au bridge d'occlusion native ; essai ingame requis, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-correctifs-wed-occlusion-final-20260908",
+      "manifest_sha256": "6D15BD8E72FB0A89D889209FE642C7C19E161A9B99E21AB4F5D9DF1B1AE5760D",
+      "created_utc": "2026-09-08T00:25:32.872912+02:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804/AR2805 final correctif : AM2805A spline fit 1 / feather 1 x4 ; AM2805B et AM2805C masqués avant spline par les polygones WED Cover animations 21/22, RGB prémultiplié une seule fois ; variantes v3 exactes AR2804 (483,368)/(483,553) ; essai ingame requis, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-correctifs-occlusion-wed-20260908",
+      "manifest_sha256": "158A4241C3356A79B60979CA33E31708DFE2C19148A9B20A1D40850624D1F34F",
+      "created_utc": "2026-09-07T22:20:49.562325+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804/AR2805 : AM2805A spline fit 1 / feather 1 x4 ; AM2805B spline feather 1 x4 et AM2805B/C variantes v3 liées aux occurrences AR2804 (483,368)/(483,553), RGB prémultiplié et masques x4 dérivés des polygones WED Cover animations 21/22 ; essai ingame requis, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-feather4-ingame-test-20260907",
+      "manifest_sha256": "5F7A5CD5626BFF56AA80BFEE7B1E33CD34AB34402EF84C478A67EA6F19C071F2",
+      "created_utc": "2026-09-07T21:50:45.296398+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "Feuilles SoA AR2804 (AM2805A/B/C) et AR2805 (AM2805A partagé) : x4 SeedVR2, TimedTimeline 30 fps Apo-8, spline fit 1 multicontour / feather 4 ; essai ingame requis, aucune QA ingame ni release n'est inférée"
+    },
+    {
       "name": "am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-split-20260907",
       "manifest_sha256": "A13E2FCC69B399C7F43214289A53E5FDDD193F2E2A562C326779FA77E9AB54E5",
       "created_utc": "2026-09-07T17:59:32.073415+00:00",
@@ -209,6 +251,6 @@
       "reason": "Pack installe et source du candidat de release FPIT1S, decision QA du 2026-09-04."
     }
   ],
-  "updated_on": "2026-09-07",
+  "updated_on": "2026-09-08",
   "external_archive_receipt": "docs/workspace-archive-manifest-animation-20260907.json"
 }

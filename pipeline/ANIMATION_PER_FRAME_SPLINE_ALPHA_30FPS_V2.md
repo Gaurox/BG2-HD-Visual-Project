@@ -11,7 +11,8 @@
 
 - Animation `TimedTimeline` v2 dont les frames ont des géométries variables.
 - Alpha 1 bit x4, plusieurs îlots possibles, silhouette coupée par le canvas.
-- Ressource ARE `Blended` : RGB prémultiplié par l'alpha final.
+- Ressource ARE `Blended` : `--rgb-policy premultiplied` (défaut), RGB prémultiplié par l'alpha final.
+- Ressource ARE alpha strict (bit `Blended` absent) : `--rgb-policy preserve`, RGB conservé et seul alpha modifié.
 
 Le script standard `build_manual_alpha_mask_30fps_v2.py` ne convient pas : il répète un masque unique et impose une géométrie uniforme.
 
@@ -25,6 +26,41 @@ python pipeline/scripts/build_per_frame_spline_alpha_30fps_v2.py `
   --run <nouveau-run> `
   --fit-error 1.0 --sample-spacing 1.5 --supersample 4 `
   --padding-x4 32 --inner-feather-x4 4
+```
+
+Pour un raccord horizontal entre deux BAM superposés, restaurer l'alpha source aux deux bords
+en contact :
+
+```powershell
+  # BAM supérieur
+  --bottom-seam-protected-depth-x4 8 --bottom-seam-transition-x4 16
+  # BAM inférieur
+  --top-seam-protected-depth-x4 8 --top-seam-transition-x4 16
+```
+
+### Variante candidate : raccord RGB conjoint B/C
+
+- Usage : deux BAM `TimedTimeline` 30 fps adjacents dans le monde, alpha strict conservé mais
+  discontinuité de couleur/texture sur leur bord commun.
+- Outil : `build_joint_animation_rgb_seam.py`; batch multi-ressources, jamais réécriture des runs
+  parents. Il vérifie les positions ARE, la géométrie, les cycles et la timeline identique.
+- Effet standard : RGB modifié uniquement où les deux alphas sont au moins au seuil ; alpha,
+  centres, tailles et cycles sont bit à bit identiques. Le mode `symmetric-midpoint` converge des
+  deux côtés ; `continue-top-into-bottom` conserve le haut et prolonge sa texture dans le bas.
+- Correctif spline borné : avec `--bottom-alpha-reference-pack`, seules les composantes connexes
+  supprimées de taille au moins `--restore-removed-component-min-pixels` sont restaurées depuis
+  l'alpha de référence. Les autres pixels alpha restent identiques au pack traité.
+
+```powershell
+python pipeline/scripts/build_joint_animation_rgb_seam.py `
+  --top-pack <AM2805B-pack> --top-position 483,368 `
+  --bottom-pack <AM2805C-pack> --bottom-position 483,553 `
+  --output animations/batches/<nouveau-batch> `
+  --seam-depth-x4 32 --alpha-threshold 128 `
+  --blend-mode continue-top-into-bottom `
+  --bottom-alpha-reference-pack <AM2805C-pack-avant-spline> `
+  --restore-removed-component-min-pixels 10000
+# Relire le plan, puis ajouter --run.
 ```
 
 La sortie courante est `animations/ressources/<RESREF>/runs/<nouveau-run>/`. `--output` reste

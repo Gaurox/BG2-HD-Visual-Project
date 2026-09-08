@@ -91,9 +91,9 @@ AM2201B,validé-x4,AR2201,5,7,148x115,BAM V1,,,,am2201b-apo8-x4-30fps-v2-spline-
 AM2300A,validé-x4,AR2300,3,7,82x125,BAM V1,animations/batches/ar2300-waterfalls-x4-30fps-test-20260906,animations/index/qa-decisions/AM2300A/2026-09-06-accepted-ar2300-waterfalls-x4-30fps-test-20260906.json,2026-09-06,ar2300-am2300a-occurrence-occlusion-v14,Pack v14 installe transactionnellement; test ingame utilisateur accepte.
 AM2801A,non-traité,AR2801;AR2808;AR2809,3,7,153x108,BAM V1,,,,,
 AM2802A,non-traité,AR2802;AR2810;AR2811,3,7,152x108,BAM V1,,,,,
-AM2805A,non-traité,AR2804;AR2805,2,7,93x104,BAM V1,,,,,
-AM2805B,non-traité,AR2804,2,7,186x184,BAM V1,,,,,
-AM2805C,non-traité,AR2804,1,7,224x182,BAM V1,,,,,
+AM2805A,à-valider,AR2804;AR2805,2,7,93x104,BAM V1,,,,,"x4 SeedVR2/LAB → TimedTimeline 30 fps Apo-8 → spline fit 1 multicontour / feather 1 px x4 ; flag ARE alpha strict, RGB préservé : run am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908. Pack AR2804/AR2805 installé pour QA ingame le 2026-09-08 ; aucune décision QA ni release."
+AM2805B,à-valider,AR2804,2,7,186x184,BAM V1,,,,,"x4 SeedVR2/LAB → TimedTimeline 30 fps Apo-8 → spline fit 1 multicontour / feather 1 px x4 ; flag ARE alpha strict, RGB préservé ; raccord bas alpha restauré 8/16 px x4, puis raccord RGB B/C asymétrique 32 px x4 à l'occurrence ARE (483,368), haut inchangé : batch am2805bc-joint-rgb-seam32-restore-large-alpha-20260908. Aucun masque WED cuit ; centres, tailles et cycles inchangés. Pack AR2804 installé pour QA ingame le 2026-09-08 ; aucune décision QA ni release."
+AM2805C,à-valider,AR2804,1,7,224x182,BAM V1,,,,,"x4 SeedVR2/LAB → TimedTimeline 30 fps Apo-8 → spline fit 1 multicontour / feather 1 px x4 ; correction bornée de la coupe spline : restauration sur chaque phase de l'unique composante alpha supprimée >= 10000 px (41170 px avec anticrénelage), autres contours spline conservés ; raccord RGB B/C asymétrique 32 px x4 à l'occurrence ARE (483,553) : batch am2805bc-joint-rgb-seam32-restore-large-alpha-20260908. Aucun masque WED cuit ; centres, tailles et cycles inchangés. Pack AR2804 installé pour QA ingame le 2026-09-08 ; aucune décision QA ni release."
 AM3000A,à-compléter,AR3000,1,16,248x221,BAM V1,,,,frame000-x4-only,Coupole; seule frame 000 traitée en x4; prototype mis de côté.
 AM3000E,non-traité,AR3000,5,24,39x68,BAM V1,,,,,
 AM3000H,non-traité,AR3000,1,15,114x119,BAM V1,,,,,

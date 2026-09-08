@@ -2,8 +2,8 @@
 
 Unlike build_manual_alpha_mask_30fps_v2.py, this tool supports variable frame
 geometry. It fits every connected alpha component independently after transparent
-padding, keeps empty phases empty, applies an optional inner feather, and
-premultiplies RGB because the target is an ARE Blended resource.
+padding, keeps empty phases empty, and can retain straight RGB for an ARE
+resource that is not Blended.
 """
 
 from __future__ import annotations
@@ -210,6 +210,73 @@ def premultiply_rgb(raw: np.ndarray, alpha: np.ndarray) -> np.ndarray:
     ).astype(np.uint8)
     result[:, :, 3] = alpha
     return result
+
+
+def apply_rgb_policy(raw: np.ndarray, alpha: np.ndarray, rgb_policy: str) -> np.ndarray:
+    """Apply alpha without changing strict-alpha RGB unless explicitly requested."""
+    if rgb_policy == "premultiplied":
+        return premultiply_rgb(raw, alpha)
+    if rgb_policy == "preserve":
+        result = raw.copy()
+        result[:, :, 3] = alpha
+        return result
+    raise RuntimeError(f"politique RGB inconnue : {rgb_policy}")
+
+
+def restore_bottom_seam(alpha: np.ndarray, source_alpha: np.ndarray, *,
+                        protected_depth: int, transition: int) -> tuple[np.ndarray, dict[str, int]]:
+    """Restore source alpha at a shared lower canvas seam without alpha expansion."""
+    require(alpha.shape == source_alpha.shape, "raccord bas : dimensions alpha incompatibles")
+    height = alpha.shape[0]
+    require(protected_depth > 0 and transition > 0,
+            "raccord bas : fournir profondeur et transition positives")
+    require(protected_depth + transition <= height,
+            "raccord bas : profondeur et transition hors frame")
+    result = alpha.astype(np.float32).copy()
+    source = source_alpha.astype(np.float32, copy=False)
+    protected_start = height - protected_depth
+    transition_start = protected_start - transition
+    blend = smoothstep(np.arange(transition, dtype=np.float32) / float(transition))
+    result[transition_start:protected_start] = (
+        result[transition_start:protected_start] * (1.0 - blend[:, None]) +
+        source[transition_start:protected_start] * blend[:, None]
+    )
+    result[protected_start:] = source[protected_start:]
+    result = np.minimum(np.rint(result), source).astype(np.uint8)
+    return result, {
+        "protected_depth_x4": protected_depth,
+        "transition_x4": transition,
+        "changed_alpha_pixels": int((result != alpha).sum()),
+    }
+
+
+def restore_top_seam(alpha: np.ndarray, source_alpha: np.ndarray, *,
+                     protected_depth: int, transition: int) -> tuple[np.ndarray, dict[str, int]]:
+    """Restore source alpha at a shared upper canvas seam without alpha expansion."""
+    require(alpha.shape == source_alpha.shape, "raccord haut : dimensions alpha incompatibles")
+    height = alpha.shape[0]
+    require(protected_depth > 0 and transition > 0,
+            "raccord haut : fournir profondeur et transition positives")
+    require(protected_depth + transition <= height,
+            "raccord haut : profondeur et transition hors frame")
+    result = alpha.astype(np.float32).copy()
+    source = source_alpha.astype(np.float32, copy=False)
+    transition_start = protected_depth
+    transition_end = transition_start + transition
+    blend = smoothstep(
+        np.arange(transition, 0, -1, dtype=np.float32) / float(transition)
+    )
+    result[:protected_depth] = source[:protected_depth]
+    result[transition_start:transition_end] = (
+        result[transition_start:transition_end] * (1.0 - blend[:, None]) +
+        source[transition_start:transition_end] * blend[:, None]
+    )
+    result = np.minimum(np.rint(result), source).astype(np.uint8)
+    return result, {
+        "protected_depth_x4": protected_depth,
+        "transition_x4": transition,
+        "changed_alpha_pixels": int((result != alpha).sum()),
+    }
 
 
 def apply_timeline_global_fade(pack_root: Path, resource: dict[str, Any], *,
@@ -439,7 +506,9 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
           fit_error: float, sample_spacing: float, supersample: int, padding: int,
           inner_feather: int, protected_core: int, oval_top_bottom_fade: int,
           oval_side_fade: int, global_fade_hold_ratio: float, active_fade_in: int,
-          active_fade_full: int, active_fade_out: int,
+          active_fade_full: int, active_fade_out: int, rgb_policy: str,
+          bottom_seam_protected_depth: int, bottom_seam_transition: int,
+          top_seam_protected_depth: int, top_seam_transition: int,
           review_ffmpeg: str) -> dict[str, Any]:
     require(not output.exists() and not output.with_name(output.name + ".partial").exists(),
             f"sortie déjà présente : {output}")
@@ -447,6 +516,15 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             inner_feather >= 0 and protected_core >= 0 and oval_top_bottom_fade >= 0 and oval_side_fade >= 0 and
             0 < global_fade_hold_ratio <= 1 and active_fade_in >= 0 and active_fade_full >= 0 and
             active_fade_out >= 0 and 0 <= threshold <= 255, "paramètres spline invalides")
+    require(rgb_policy in {"premultiplied", "preserve"}, "politique RGB invalide")
+    bottom_seam_requested = bottom_seam_protected_depth > 0 or bottom_seam_transition > 0
+    require(not bottom_seam_requested or
+            (bottom_seam_protected_depth > 0 and bottom_seam_transition > 0),
+            "raccord bas : fournir ensemble profondeur et transition")
+    top_seam_requested = top_seam_protected_depth > 0 or top_seam_transition > 0
+    require(not top_seam_requested or
+            (top_seam_protected_depth > 0 and top_seam_transition > 0),
+            "raccord haut : fournir ensemble profondeur et transition")
     active_fade_requested = any((active_fade_in, active_fade_full, active_fade_out))
     require(not active_fade_requested or (active_fade_in > 0 and active_fade_full > 0 and active_fade_out > 0),
             "fade actif : fournir les trois segments")
@@ -502,13 +580,29 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             alpha, top_bottom_fade=oval_top_bottom_fade,
             side_fade=oval_side_fade,
         )
-        result = premultiply_rgb(raw, alpha)
+        seam_report: dict[str, int] | None = None
+        top_seam_report: dict[str, int] | None = None
+        if top_seam_requested:
+            alpha, top_seam_report = restore_top_seam(
+                alpha, raw[:, :, 3],
+                protected_depth=top_seam_protected_depth,
+                transition=top_seam_transition,
+            )
+        if bottom_seam_requested:
+            alpha, seam_report = restore_bottom_seam(
+                alpha, raw[:, :, 3],
+                protected_depth=bottom_seam_protected_depth,
+                transition=bottom_seam_transition,
+            )
+        result = apply_rgb_policy(raw, alpha, rgb_policy)
         asset_path.write_bytes(result.tobytes())
         frame["bytes"] = asset_path.stat().st_size
         frame["sha256"] = sha256_file(asset_path)
         reports.append({
             "frame": int(frame["frame"]), "asset": str(frame["asset"]),
             **report, "oval_edge_fade": oval_report,
+            "top_seam_protection": top_seam_report,
+            "bottom_seam_protection": seam_report,
         })
     timeline_fade = (apply_timeline_active_fade(
         pack_root, resource, fade_in=active_fade_in, full=active_fade_full,
@@ -582,7 +676,18 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
         },
         "timeline_fade": timeline_fade,
         "alpha_formula": "alpha_source * spline_mask * inner_smoothstep",
-        "rgb_policy": "premultiplied-by-final-alpha",
+        "rgb_policy": ("premultiplied-by-final-alpha" if rgb_policy == "premultiplied"
+                       else "straight-rgb-alpha-final"),
+        "bottom_seam_protection": {
+            "protected_depth_x4": bottom_seam_protected_depth,
+            "transition_x4": bottom_seam_transition,
+            "policy": "restore-source-alpha-with-vertical-smoothstep",
+        } if bottom_seam_requested else None,
+        "top_seam_protection": {
+            "protected_depth_x4": top_seam_protected_depth,
+            "transition_x4": top_seam_transition,
+            "policy": "restore-source-alpha-with-vertical-smoothstep",
+        } if top_seam_requested else None,
     }
     temporal.write_json(pack_root / "manifest.json", pack_manifest)
     temporal.validate_v2_pack(pack_root)
@@ -607,11 +712,27 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             "active_fade_in_phases": active_fade_in,
             "active_fade_full_phases": active_fade_full,
             "active_fade_out_phases": active_fade_out,
+            "rgb_policy": rgb_policy,
+            "bottom_seam_protected_depth_x4": bottom_seam_protected_depth,
+            "bottom_seam_transition_x4": bottom_seam_transition,
+            "top_seam_protected_depth_x4": top_seam_protected_depth,
+            "top_seam_transition_x4": top_seam_transition,
         },
         "frames": reports,
         "timeline_fade": timeline_fade,
         "alpha_invariant": "alpha_final <= alpha_source",
-        "rgb_policy": "premultiplied-by-final-alpha",
+        "rgb_policy": ("premultiplied-by-final-alpha" if rgb_policy == "premultiplied"
+                       else "straight-rgb-alpha-final"),
+        "bottom_seam_protection": {
+            "protected_depth_x4": bottom_seam_protected_depth,
+            "transition_x4": bottom_seam_transition,
+            "policy": "restore-source-alpha-with-vertical-smoothstep",
+        } if bottom_seam_requested else None,
+        "top_seam_protection": {
+            "protected_depth_x4": top_seam_protected_depth,
+            "transition_x4": top_seam_transition,
+            "policy": "restore-source-alpha-with-vertical-smoothstep",
+        } if top_seam_requested else None,
         "installation": "not performed",
     }
     temporal.write_json(report_path, report)
@@ -674,6 +795,17 @@ def main() -> None:
     parser.add_argument("--active-fade-in-phases", type=int, default=0)
     parser.add_argument("--active-fade-full-phases", type=int, default=0)
     parser.add_argument("--active-fade-out-phases", type=int, default=0)
+    parser.add_argument("--rgb-policy", choices=("premultiplied", "preserve"),
+                        default="premultiplied",
+                        help="premultiplied pour ARE Blended ; preserve pour alpha strict")
+    parser.add_argument("--bottom-seam-protected-depth-x4", type=int, default=0,
+                        help="profondeur basse restauree pour une jointure entre deux BAM")
+    parser.add_argument("--bottom-seam-transition-x4", type=int, default=0,
+                        help="transition verticale entre spline et jointure basse restauree")
+    parser.add_argument("--top-seam-protected-depth-x4", type=int, default=0,
+                        help="profondeur haute restauree pour une jointure entre deux BAM")
+    parser.add_argument("--top-seam-transition-x4", type=int, default=0,
+                        help="transition verticale entre jointure haute restauree et spline")
     parser.add_argument("--threshold", type=int, default=127)
     parser.add_argument("--review-ffmpeg", default="ffmpeg")
     args = parser.parse_args()
@@ -697,6 +829,11 @@ def main() -> None:
         active_fade_in=args.active_fade_in_phases,
         active_fade_full=args.active_fade_full_phases,
         active_fade_out=args.active_fade_out_phases,
+        rgb_policy=args.rgb_policy,
+        bottom_seam_protected_depth=args.bottom_seam_protected_depth_x4,
+        bottom_seam_transition=args.bottom_seam_transition_x4,
+        top_seam_protected_depth=args.top_seam_protected_depth_x4,
+        top_seam_transition=args.top_seam_transition_x4,
         review_ffmpeg=args.review_ffmpeg,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
