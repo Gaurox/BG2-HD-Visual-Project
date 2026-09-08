@@ -1,6 +1,6 @@
 # Catmull–Rom pour sprites HD — guide de développement
 
-Statut : **plan vérifié, implémentation non commencée**. Dernière vérification : 2026-09-09.
+Statut : **D0 terminé ; implémentation D1 non commencée**. Dernière vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -88,6 +88,19 @@ Catalogue actif : `CATALOG/current-generation.json` et `CATALOG/ingame-installat
 Génération observée `D55EFD6D1B342B1240AC2BBD222BC088B38F86D4503E6F46B03CB447A704B8F2` ;
 xBR2x, x2, `antialias=false`, `xbr_blend=false`, `sampling=NEAREST` ;
 animations `0x6102`, `0x6110`, `0xE400` ; `installed-pending-qa`. Relire les autorités à la reprise.
+
+### D0 — référence locale 2026-09-09
+
+| Résultat | Preuve |
+|---|---|
+| Six sources BIF `0x0405` extraites, octets bruts et hashes conformes au tableau ci-dessus | `runs/d0-20260909-native-shaders/native-shaders/` ; `runs/d0-20260909-native-shaders/evidence.json` |
+| Snapshot INI brut, aucune installation ni modification de jeu | `runs/d0-20260909-native-shaders/candidate/InfinityEngine-Enhancer.ini` ; `runs/d0-20260909-native-shaders/evidence.json` |
+| Aucune collision avec les six shaders cibles ; seul `override/fpSEAM.glsl` est présent | `runs/d0-20260909-native-shaders/evidence.json` |
+| Autorités catalogue relues : génération `D55E…B8F2`, test `installed-pending-qa`, `NEAREST`, `0x6102/0x6110/0xE400` | `runs/d0-20260909-native-shaders/evidence.json` |
+
+Écart consigné, non corrigé : hash de l'INI live `4F9A…FA9EA` différent de
+`active-test.json` (`installed_ini_sha256=4E09…8A17`). Cet état n'est ni une installation D0 ni
+une QA ; toute opération D2+ devra partir de ce snapshot et utiliser sa transaction dédiée.
 
 ## 3. Sources natives et externes
 
@@ -521,13 +534,14 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] Sources moteur/installation et shaders BIF inspectés en lecture seule.
 - [x] Frontière différée corrigée ; appel final `glDrawArrays` identifié hors jeu.
 - [x] Guide et chemins de développement définis.
-- [ ] D0 : run de développement et snapshots créés.
+- [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
 - [ ] D1 : référence CPU/configuration implémentées.
 - [ ] D2 : préambule et dispatch GPU observés en jeu.
 - [ ] D3–D5 : shaders neutres, routage et filtre implémentés.
 - [ ] D6–D7 : transactions, tests choisis, QA et coût mesurés.
 - [ ] D8 : validation ingame et éventuelle intégration release décidées.
 
-Prochaine action d'un agent chargé d'implémenter : relire Git/autorités, créer le run D0, extraire
-les sources BIF et commencer D1. Préparer ensuite le candidat diagnostic D2 pour une courte session
-ingame. Ne pas reprendre l'ancienne idée de portée shader autour du seul `RenderTexture`.
+Prochaine action d'un agent chargé d'implémenter : D1 seulement — définir la référence CPU, les
+poids Catmull–Rom, le contrat alpha et la configuration, puis préparer les tests ciblés sans les
+exécuter avant choix utilisateur. Ne pas préparer le candidat D2 ni reprendre l'ancienne idée de
+portée shader autour du seul `RenderTexture`.
