@@ -90,5 +90,6 @@ modifie pas le bundle release scellé.
 | Transaction renderer | [`docs/renderer-candidate-transaction.md`](docs/renderer-candidate-transaction.md) |
 | Effets VVC | [`docs/validation/effect-vvc-bg2ee-2.7.3.md`](docs/validation/effect-vvc-bg2ee-2.7.3.md) |
 | Sprites | [`../../../sprite/README.md`](../../../sprite/README.md) |
+| Catmull–Rom sprites HD (plan) | [`../../../sprite/catmull-rom/README.md`](../../../sprite/catmull-rom/README.md) |
 
 Licence : [`LICENSE`](LICENSE).
