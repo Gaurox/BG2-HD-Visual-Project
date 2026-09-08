@@ -37,7 +37,9 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 - Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
 - Ajout de famille : [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
 - Contrat raster xBR2x : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md).
-- Filtrage Catmull–Rom : [`catmull-rom/README.md`](catmull-rom/README.md), guide de développement moteur ; non implémenté.
+- Catmull–Rom et suite graphique Dshaders : [`catmull-rom/README.md`](catmull-rom/README.md),
+  D0/D1 développés ; plan D2–D13 et couverture complète dans
+  [`catmull-rom/DSHADERS_SUITE.md`](catmull-rom/DSHADERS_SUITE.md), GPU/QA à réaliser.
 - Règles de placement : [`FOLDER_LAYOUT.md`](FOLDER_LAYOUT.md).
 - Installation courante : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
 

@@ -1,26 +1,36 @@
-# Catmull–Rom pour sprites HD — guide de développement
+# Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D1 implémenté ; validation en attente du choix des tests**. Dernière vérification : 2026-09-09.
+Statut : **D0/D1 développés et committés ; plan D2–D13 étendu à toute la suite**. Vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
 
-Intégrer à InfinityEngine Enhancer un filtrage Catmull–Rom des textures de créatures HD x2/x4,
-sur BG2EE Steam 2.7.3.0 Windows x64. Réduire les marches de pixels au zoom sans le flou excessif
-du réglage graphique global. Conserver géométrie x1, palettes, équipement, cadence et sauvegardes.
+Intégrer nativement à InfinityEngine Enhancer toutes les fonctions configurables de Dshaders
+0.3.5 sur BG2EE Steam 2.7.3.0 Windows x64, avec Catmull–Rom adapté aux créatures HD x2/x4.
+Livrer un candidat complet permettant les comparaisons ingame avant de choisir le rendu du patch.
+Conserver géométrie x1, ressources/palettes, équipement, cadence et sauvegardes ; les corrections
+de couleur agissent uniquement au rendu.
 
-- MVP : reconstruction 4×4 / 16 lectures, alpha traité en prémultiplié, activation opt-in.
+- Socle D2–D5 : reconstruction 4×4 / 16 lectures, alpha prémultiplié, activation opt-in.
 - Entrées : catalogue de sprites existant ; aucune nouvelle génération xBR requise.
-- Cibles primaires : `fpSprite` et `fpSELECT`. Vérifier leur couverture réelle avant de figer
-  la liste des shaders installés ; certains états peuvent employer `fpDraw`.
-- Activation : texture appartenant explicitement au module créatures, au **dessin OpenGL effectif**.
-- Exclusions : cartes, animations de zone, sorts, UI, cercles de sélection indépendants,
-  post-traitement global, modification de `fpSEAM`, remplacement global par Dshaders.
+- Socle créatures : `fpSprite`, `fpSELECT`, autres programmes seulement si tracés ; activation
+  par provenance de texture au **dessin OpenGL effectif**.
+- Suite D6–D11 obligatoire : contours, sharpen/flou, gamma/contraste/luminosité/saturation/teinte,
+  polices, sélections, anti-glitch, portées sprites/tous les shaders, paramètres manuels et presets.
+- Huit fragments cibles : `fpSprite`, `fpSELECT`, `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`,
+  `fpYUV`, `fpYUVGRY`. `fpSEAM` doit intégrer la suite et conserver l'eau IEE existante.
+- D12 : option d'optimisation disponible et comparée. D13 : sélection du rendu après QA complète.
+- Installer toutes les capacités ne signifie pas activer simultanément des options exclusives.
+  Le profil de référence reste disponible ; aucune fonction ne peut être reportée implicitement.
+- Exclusions maintenues : remplacement brut par l'installeur Dshaders, nouveaux assets d'upscale,
+  modification des sauvegardes, promotion release automatique. Le périmètre graphique global
+  précédemment exclu est désormais inclus, via des profils explicitement activés.
 - `Nearest` reste le défaut et la référence QA. Aucun rendu Catmull–Rom n'est encore approuvé.
 
 Lecture de reprise : [AGENTS](../../AGENTS.md), [README projet](../../README.md),
 [README sprites](../README.md), [décisions](../../docs/DECISIONS.md),
-[blocages](../../pipeline/PROBLEMES_A_RESOUDRE.md), puis ce guide.
+[blocages](../../pipeline/PROBLEMES_A_RESOUDRE.md), puis ce guide et
+[DSHADERS_SUITE.md](DSHADERS_SUITE.md), contrat exhaustif de l'extension D2–D13.
 Avant le code moteur : [AGENTS moteur](../../engine/InfinityEngine-Enhancer/source-patchee/AGENTS.md),
 [README moteur](../../engine/InfinityEngine-Enhancer/source-patchee/README.md),
 [threads/GL](../../engine/InfinityEngine-Enhancer/source-patchee/docs/threading-model.md).
@@ -34,13 +44,15 @@ CATALOG = sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catal
 GAME    = config://bg2ee_game_root
 ```
 
-`FEATURE` porte le guide et les futurs essais de cette fonction transversale aux familles.
+`FEATURE` reste le point d'entrée historique et conserve D0/D1 ; l'extension couvre aussi les
+autres domaines graphiques. Ne pas déplacer les runs ou dupliquer un second plan à la racine.
 Le code exécutable reste sous `ENGINE` ; aucune copie moteur sous `sprite/`.
 Arborescence prévue, créer les sous-dossiers seulement au besoin :
 
 ```text
 sprite/catmull-rom/
-  README.md                         # présent guide, suivi Git
+  README.md                         # parcours, socle et phases
+  DSHADERS_SUITE.md                  # couverture complète, paramètres et contrats D2+
   runs/<run-id>/                    # captures/preuves/candidats immuables, déjà ignorés par Git
     native-shaders/                 # octets extraits des BIF, non redistribués comme sources projet
     linked-shaders/                 # sources réellement soumises au pilote
@@ -50,6 +62,15 @@ sprite/catmull-rom/
 ```
 
 ## 2. Résultat de la dernière vérification
+
+Révision du plan : HEAD `843aa3844dda97d212706b896a100f5ac3ad5a9e`, worktree propre avant édition.
+D0 : commit `5e68244f447f942396ac189391c5ad7baee386e9` ; six shaders et snapshot INI du run
+revérifiés par SHA-256. D1 : commit `843aa38` ; maths/configuration, samplers, tests et protection
+NEAREST des installateurs présents. Leur code et les preuves D0 restent inchangés.
+L'utilisateur confirme le développement D0/D1 terminé ; le dépôt consulté ne consigne pas de
+résultat d'exécution des tests D1. Ne pas inventer un succès ni recommencer D1 pour étendre la suite.
+
+Le tableau suivant décrit le **socle créatures** ; la couverture élargie se lit dans le complément.
 
 | Point | État établi et conséquence |
 |---|---|
@@ -125,7 +146,7 @@ complet en override en dupliquant `#version`, macros de précision ou en-tête m
 | `vpDraw` | Transforme les coordonnées texels logiques : `vTc = aTc * uTcScale`. |
 | `FPSPRITE` | Flou/contour : 25 lectures à offsets UV fixes de `0.0005`, puis lecture centrale et `mix(blur_colour, tex_color, tex_color.a)`. `uTcScale` n'est pas déclaré dans ce fragment. |
 | `FPSELECT` | Lecture centrale ; seuil alpha `0.1` ; `mix(vColor, texColor, texColor.a)` si solide ; sinon voisinage 7×7 basé sur `uTcScale` pour le surlignage. |
-| `fpDraw` | Lecture centrale, modulation `vColor`, teinte `uColorTone`. Candidat seulement si le traçage prouve qu'il dessine des créatures cibles. |
+| `fpDraw` | Lecture centrale, modulation `vColor`, teinte `uColorTone`. Candidat au socle HD si tracé ; obligatoire en D8 pour la suite. |
 | `fpCatRom` | Filtre de blit opaque ; ne reconstruit pas un alpha de sprite. Conserver son chemin natif. |
 
 Première variante GPU : remplacer uniquement la lecture centrale dans les deux shaders cibles.
@@ -133,7 +154,7 @@ Conserver voisins, seuils et opérations finales natifs. La reconstruction prém
 ne prouve pas à elle seule la qualité de l'alpha final : les deux shaders mélangent à nouveau
 avec cet alpha. Tester le résultat après blending avant de modifier ces opérations.
 
-### 3.3 Dshaders : référence limitée
+### 3.3 Dshaders : source de la suite complète
 
 Révision épinglée : `4722673a8017c56ace4018b3db459392ecbb75a4` ; version annoncée 0.3.5.
 
@@ -141,13 +162,17 @@ Révision épinglée : `4722673a8017c56ace4018b3db459392ecbb75a4` ; version anno
 - [Fonctions GLSL / `uhFetchCatmullRom`](https://github.com/dtiefling/dshaders/blob/4722673a8017c56ace4018b3db459392ecbb75a4/drunkshaders/glsl-parts/functions-game.glsl).
 - [Licence MIT](https://github.com/dtiefling/dshaders/blob/4722673a8017c56ace4018b3db459392ecbb75a4/LICENSE).
 
-Retenir les mathématiques 4×4, pas le remplacement global : Dshaders modifie aussi les contours,
-la colorimétrie et les shaders de cartes. Son quadrillage tiré de `1/uTcScale` correspond aux
-dimensions logiques ; il ne connaît pas notre backing HD. Ses exigences sur le réglage natif
-Nearest ne constituent pas un contrat pour cette nouvelle implémentation. Si du code est repris,
-conserver attribution et licence ; aucune dépendance runtime au mod n'est nécessaire.
+Reprendre les fonctionnalités et paramètres, en adaptant les interfaces natives 2.7.3 et les
+textures HD. Le TP2 et les sources GLSL font foi pour les valeurs et portées réellement installées ;
+les écarts README/code vérifiés sont consignés dans [le complément](DSHADERS_SUITE.md).
+Le quadrillage `1/uTcScale` amont ne connaît pas notre backing HD. Les exigences du mod sur
+Nearest ne constituent pas un contrat pour notre implémentation. Conserver attribution et licence
+du code repris ; aucune dépendance runtime à WeiDU/Dshaders n'est nécessaire.
 
 ## 4. Architecture de référence
+
+Sections 4.1–4.4 : contrat du socle créatures D2–D5. L'extension ajoute le routage par shader,
+les profils et les effets selon [DSHADERS_SUITE.md](DSHADERS_SUITE.md), sans changer la sémantique D1.
 
 ### 4.1 Texture et provenance
 
@@ -207,7 +232,7 @@ de `VerboseLogs`, `PerformanceLogs`, du module eau et des prototypes UI.
 - Une trace bornée doit vérifier qu'aucun autre type de draw GL ne porte les sprites ciblés.
   N'ajouter un hook supplémentaire que si cette trace l'exige.
 
-### 4.3 Contrat INI et GLSL proposé
+### 4.3 Contrat INI D1 conservé et GLSL du socle
 
 Clé sous `[Shaders]` :
 
@@ -215,7 +240,7 @@ Clé sous `[Shaders]` :
 CreatureSpriteFilter = Nearest
 ```
 
-| Valeur | Enum proposé | Texture créature | Filtre shader |
+| Valeur | Enum D1 | Texture créature | Filtre shader |
 |---|---:|---|---|
 | `Nearest` | 0 | `GL_NEAREST` | chemin natif |
 | `Linear` | 1 | `GL_LINEAR` | chemin natif, A/B historique |
@@ -298,7 +323,7 @@ si A <= epsilon : RGBA = 0
 sinon : RGBA = (conversion_sortie(P/A), A)
 ```
 
-`epsilon` proposé : `1e-6`, à fixer et tester. Ne pas borner séparément les sommes intermédiaires
+`epsilon` fixé par D1 : `1e-6`. Ne pas borner séparément les sommes intermédiaires
 horizontales ; borner après accumulation complète. Les poids négatifs sont normaux : les clamps
 bornent les valeurs, sans garantir l'absence de ringing perceptible.
 
@@ -306,10 +331,12 @@ Variante initiale : espace des valeurs stockées (`GL_RGBA8`), coût réduit et 
 directe. Variante expérimentale secondaire : conversion sRGB exacte vers lumière linéaire avant
 prémultiplication, inverse après division. Ne pas gamma-corriger l'alpha ; vérifier l'état
 `FRAMEBUFFER_SRGB`/format de destination avant de revendiquer une chaîne linéaire correcte.
-Choisir une variante après QA ; aucune option colorimétrique publique supplémentaire dans le MVP.
+Ces variantes restent comparables ; D6 ajoute les paramètres colorimétriques de la suite sans
+modifier la référence CPU D1. Leur contrat et l'ordre des opérations sont dans le complément.
 
 Un Catmull–Rom local n'est pas un filtre de réduction d'échelle complet. Au zoom arrière,
-tester scintillement et moiré ; ne pas ajouter d'emblée mipmaps, sharpening ou filtre plein écran.
+tester scintillement et moiré ; ne pas ajouter de mipmaps ni de filtre plein écran au socle.
+Le sharpening est développé séparément en D6 puis disponible dans le candidat complet.
 
 ## 5. Carte du code à modifier
 
@@ -317,9 +344,9 @@ Tous les chemins suivants sont relatifs à `ENGINE`, sauf indication contraire.
 
 | Fichier/module | Intervention prévue |
 |---|---|
-| `src/iee/core/config.h/.cpp` | Enum, nouvelle clé, priorité legacy, sérialisation. |
+| `src/iee/core/config.h/.cpp` | Contrat D1 acquis ; ajouts de configuration suite sans changer enum/priorité legacy. |
 | `src/iee/core/creature_sprite_filter_math.h/.cpp` | Référence CPU pure 4×4, poids et RGBA prémultiplié ; présente depuis D1. |
-| `src/iee/dll_main.cpp` | Initialiser le mode via `configure_filter_mode`. |
+| `src/iee/dll_main.cpp` | Initialisation `configure_filter_mode` acquise ; ajouter celle de la suite. |
 | `src/iee/creature_sprite_x2.h/.cpp` | Samplers, publication d'identité après `upload_frame_locked`/`upload_composite_texture_locked`, renouvellement du cache. |
 | `src/iee/hooks.cpp` | `detour_vid_cell_render_texture` : corréler propriété et éventuelle sortie d'occlusion ; pas de portée shader limitée à cet appel. |
 | `src/iee/native_occlusion_bridge.h/.cpp` | Propager les métadonnées de l'entrée créature vers la sortie ; sampler de sortie adapté au mode 2 seulement. |
@@ -332,9 +359,11 @@ Tous les chemins suivants sont relatifs à `ENGINE`, sauf indication contraire.
 | `tools/InfinityEngine-Enhancer.sample.ini` | Nouvelle clé et portée documentées. |
 | `tests/iee_tests.cpp` et tests dédiés éventuels | Configuration, maths, contrats, cycle de vie du filtrage. |
 | `CMakeLists.txt` | Ajouter sources/tests. La copie du dossier `assets/override` existe déjà ; cela ne met pas à jour les manifests de release. |
-| Nouveau `tools/install_sprite_shader_candidate.py` | Transaction des seuls shaders retenus après traçage ; contrat ci-dessous. |
-| `pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1` | Éviter qu'une nouvelle clé Catmull persistante contourne l'assertion historique du baseline NEAREST. |
+| Nouveau `tools/install_shader_suite_candidate.py` | Transaction à liste exacte : deux shaders au premier jalon, huit au candidat complet. Remplace le nom seulement projeté `install_sprite_shader_candidate.py`. |
+| `pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1` | D1 force déjà `CreatureSpriteFilter=Nearest`. Ajouter en D11 le contrôle suite désactivée pour ce baseline. |
 | `pipeline/tests/` et `pipeline/scripts/test_changed.py` | Tests de transaction, migration INI et routage ciblé du nouveau script. |
+
+Modules supplémentaires, génération des shaders et profils : [carte de l'extension](DSHADERS_SUITE.md#6-fichiers-et-livrables).
 
 Dans `shader_probe.cpp`, `read_shader_source_prefix` lit actuellement 4096 octets pour détecter
 `uIee`. Déclarer les uniformes près du début, puis vérifier leurs **locations actives** et la version
@@ -351,33 +380,42 @@ Ne pas fonder le MVP sur un remplacement à chaud des sources ou des programmes 
 |---|---|---|
 | D0 — Référence | Relire état Git/autorités ; extraire les six ressources ; créer un run d'étude avec hashes et snapshot INI. | Sources 2.7.3 disponibles, aucune collision shader non résolue. |
 | D1 — Maths/config | Référence CPU, poids, alpha, enum et priorité INI ; tests unitaires préparés. | Reconstruction exacte au centre, invariants mathématiques et configuration spécifiés/testés selon choix utilisateur. |
-| D2 — Capture et traçage | Dump pilote et trace bornée `glDrawArrays` pour les sprites cibles, sélection, zoom et options natives. | Préambule, unité `uTex`, dimensions, blend, type de draw et liste des shaders à couvrir connus. |
-| D3 — Overrides neutres | Sources dérivées 2.7.3, contrôles d'interface et nouveaux uniformes ; mode désactivé. | Compile/link ingame réussi ; A/B neutre sur scène identique. |
+| D2 — Capture et contrat suite | Relever les huit fragments, leurs programmes et textures ; figer profils/paramètres et interfaces HD/globales. | Capture créatures exploitable ; inventaire des huit interfaces, shaders restants à observer identifiés et planifiés. |
+| D3 — Overrides neutres/transaction | Sources dérivées 2.7.3 pour les sprites ; interfaces de la suite et transaction extensible. | Compile/link ingame, A/B neutre, installation/restauration vérifiées dès le premier override. |
 | D4 — Routage texture | Registre propriétaire, hook draw effectif, uniformes dynamiques, sortie d'occlusion, nettoyage et fallback. | Créature HD détectée même après retour de RenderTexture ; témoins hors périmètre jamais marqués. |
-| D5 — Filtre GPU | 16 lectures, coordonnées physiques, alpha ; remplacement central seulement. | Référence CPU/GPU cohérente ; pas de décalage ; résultat ingame exploitable. |
-| D6 — Transactions/QA | Installer/restaurer candidat avec reçus ; exécuter la matrice visuelle et les tests choisis. | Résultats et défauts attribuables à un tuple DLL/INI/shaders/catalogue précis ; restauration vérifiée. |
-| D7 — Performance | Mesures CPU/GPU en scène chargée ; optimisation uniquement si utile. | Coût documenté, aucune perte de filtrage en texture/cache/context switches. |
-| D8 — Validation/promotion | Décision ingame explicite ; documentation finale ; demande d'intégration release distincte. | Preuve `validated-installed` seulement si acceptée ; sélection release seulement après accord spécifique. |
+| D5 — Filtre GPU de référence | 16 lectures, coordonnées physiques, alpha ; remplacement central seulement. | Référence CPU/GPU cohérente ; contrôle ingame du socle, sans sélection esthétique finale. |
+| D6 — Suite esthétique créatures HD | Contours normal/sélection, sharpen/flou, espace linéaire et cinq réglages de couleur ; paramètres indépendants. | Chaque réglage est effectif ingame, neutre désactivé, transparent sans frange ; D1 reste une référence inchangée. |
+| D7 — Tous les sprites | Ajouter la portée `fpSprite`/`fpSELECT` incluant x1 et objets au sol, sans dépendre du catalogue HD. | Profils HD seul / sprites amont comparés ; pas de double filtrage des HD. |
+| D8 — Draw/Tone/Font | Effets partagés, gamma polices/hack UI, gamma sélection, anti-glitch commutable. | UI/effets/objets/sélections et pause testés ; chaque option supportée est observable. |
+| D9 — Cartes/SEAM | Fusion source de la suite avec l'eau IEE, bornes de tuiles HD et espaces couleur. | A/B eau on/off, cartes x4, raccords, transitions et diagnostics existants préservés. |
+| D10 — YUV/YUVGRY | Filtrage/netteté/couleurs des vidéos et éléments YUV, plans/chroma/alpha natifs adaptés. | Les deux chemins compilent ; coordonnées, alpha, wrapping et préréglages vidéo vérifiés ingame. |
+| D11 — Candidat complet/QA | Installer les huit shaders, tous les paramètres et dix presets amont ; outil de profils ; couverture exhaustive des options. | Chaque option est livrée/testable ; matrice individuelle et presets combinés exécutée, reçus et restauration vérifiés. |
+| D12 — Optimisation/performance | Option GLSL optimizer et profils spécialisés ; comparer aux sources non optimisées, mesurer scènes complètes. | Optimisation reproductible/désactivable, équivalence dans tolérance, coût CPU/GPU documenté. |
+| D13 — Choix du patch/promotion | QA finale du profil exact retenu, décision utilisateur, documentation puis demande release distincte. | Aucune option manquante masquée par D5 ; profil validé et hashes scellés ; release seulement sur accord spécifique. |
 
-D1 peut avancer avant le passage ingame D2. Pour les essais D2–D5 nécessitant une DLL installée,
-employer dès le premier candidat la transaction renderer existante. Dès D3, les nouveaux overrides
-exigent aussi la transaction shader ; ne pas attendre D6 pour sécuriser leur installation.
+D0/D1 sont conservés ; la reprise est D2. Les anciens D6–D8 sont remplacés par D6–D13 ci-dessus.
+Les fonctions de D6–D12 sont obligatoires à livrer, leur activation reste optionnelle.
+Employer la transaction renderer dès le premier candidat D2 et la transaction shader dès D3.
+Chaque nouveau shader D7–D10 passe d'abord un A/B neutre. Les essais intermédiaires valident
+l'intégration ; le choix esthétique final attend le candidat complet D11 et ses mesures D12.
 
-### D2 : protocole minimal de capture
+### D2 : protocole de capture
 
 1. Fermer jeu et InfinityLoader avant changement de fichiers. Conserver l'INI exact et les hashes
    des éventuels overrides ; `fpSEAM` reste installé.
 2. Préparer un candidat INI fusionné avec `[Shaders] DumpEngineShaders=true` et
    `[Core] VerboseLogs=true`. Ne pas remplacer l'INI partagé par le sample.
-3. Pour la capture native, aucun override des shaders cibles. Archiver un dump préexistant avant
-   relance : `dump_shader_source` ouvre les fichiers en mode troncature.
+3. Pour la capture native des sprites, aucun override sprite. `fpSEAM` IEE reste installé et son
+   dump est identifié comme IEE, pas natif. Extraire son original du BIF séparément. Archiver un
+   dump préexistant avant relance : `dump_shader_source` ouvre les fichiers en mode troncature.
 4. Charger une sauvegarde avec groupe visible ; créature normale, sélection/survol, déplacement ;
    invisibilité/flou si disponible. Relever programmes et textures, pas seulement les sources.
 5. Capturer séparément « Nearest Neighbor Scaling » activé/désactivé, zooms identiques ; redémarrer
    si nécessaire. `Alternate Renderer` désactivé pour la cible OpenGL.
 6. Vérifier dans `GAME/iee-shader-dumps/` au minimum `fpSprite`, `fpSELECT`, `vpDraw` ; conserver
-   aussi `fpDraw`, `fpCatRom`, `vpBlit` s'ils sont dumpés. La sonde balaie les programmes préexistants
-   à la frontière de frame et introspecte ceux utilisés plus tard.
+   les huit fragments de la suite, `vpYUV`, `fpCatRom`, `vpBlit` s'ils sont dumpés. Compléter les
+   cinq nouveaux fragments BIF dans un **nouveau run D2**, jamais dans D0. La sonde balaie aussi
+   les programmes préexistants ; leur présence ne prouve pas un dessin effectivement observé.
 7. Archiver sources linkées et logs ; vérifier les hashes et la présence du préambule. Le dump
    contient les sources attachées actuelles, y compris un override éventuel : son nom ne prouve
    pas son origine native. Restaurer les options de diagnostic après collecte.
@@ -385,8 +423,12 @@ exigent aussi la transaction shader ; ne pas attendre D6 pour sécuriser leur in
 Trace GPU minimale bornée : contexte/programme/type de shader, texture et unité `uTex`, dimensions
 logiques/physiques, provenance, min/mag filter, viewport/FBO, paramètres de blending, options/zoom.
 Si un programme cible manque, vérifier le traçage et le log ; ne pas essayer tous les sprites.
-Si `fpDraw` est nécessaire pour une situation contractuelle, ajouter un override avec le même
-contrôle propriétaire, puis élargir explicitement la liste exacte de la transaction et ses tests.
+Pour la suite : ouvrir inventaire/texte, observer un objet au sol, les sélections porte/conteneur,
+une animation/sort, la pause/teinte et une séquence vidéo disponible. Identifier les scènes utiles
+à D8–D10 si tout n'est pas activable au premier passage ; aucun défilement exhaustif des sprites.
+Relever aussi alpha source/couverture, sous-rectangles d'atlas et textures YUV multiples.
+`fpDraw` est obligatoire pour la suite, même s'il ne porte aucun sprite HD. Dans le socle D5,
+un chemin HD par `fpDraw` reste conditionné par le même contrôle propriétaire.
 
 ## 7. Validation
 
@@ -405,6 +447,9 @@ contrôle propriétaire, puis élargir explicitement la liste exacte de la trans
 | Occlusion | Texture enfant créature reconnue ; enfant effet/zone exclu ; état GL et sampler restaurés. |
 | Distribution | Shaders et notices présents dans bundle candidat ; transactions exactes et restaurables. |
 
+Cette matrice couvre le socle. La [matrice suite](DSHADERS_SUITE.md#7-validation-et-couverture-ingame)
+ajoute paramètres, scopes, presets, shaders partagés, eau, YUV et optimisation ; elle est obligatoire.
+
 Tests des maths et du registre sans contexte GL dans une cible isolée si possible. Les tests de
 présence de chaînes ne remplacent ni un test de comportement ni la compilation réelle du pilote.
 Pour un shader manquant, tester le repli ; pour une erreur de compilation, tester la récupération
@@ -412,7 +457,7 @@ par restauration sans prétendre que l'uniforme zéro peut réparer un programme
 
 ### 7.2 QA visuelle
 
-Variantes : baseline `Nearest`, témoin `Linear`, Catmull–Rom espace stocké ; lumière linéaire
+Variantes D5 : baseline `Nearest`, témoin `Linear`, Catmull–Rom espace stocké ; lumière linéaire
 seulement après fonctionnement de la première. Pas de régénération x4 pour la seule comparaison.
 Le support mathématique x4 peut être testé sur texture synthétique ; une qualification ingame x4
 exige ensuite un catalogue x4 déjà disponible ou une génération autorisée.
@@ -429,7 +474,8 @@ exige ensuite un catalogue x4 déjà disponible ou une génération autorisée.
 
 Critères : détail conservé, lissage accepté, pas de frange sombre/colorée ni de scintillement
 supplémentaire marqué ; ancrage/crop stables ; surlignage lisible ; aucun témoin hors périmètre
-modifié. Captures fixes appariées et séquences temporelles : une seule image ne valide pas la marche.
+modifié dans le profil HD seul. Pour les scopes élargis, la matrice précise les cibles autorisées
+et les témoins. Captures fixes appariées et séquences temporelles : une image ne valide pas la marche.
 
 L'alpha de la texture masquée est lui aussi interpolé ; cela ne garantit pas une découpe WED
 strictement identique aux pixels masqués. Si un débordement visible est constaté, mesurer puis
@@ -445,7 +491,7 @@ réutiliser aveuglément le masque temporaire partagé ni corriger les WED pour 
 - Désactiver les logs verbeux pendant les mesures ; conserver les mêmes options de rendu/FPS.
 - Budget initial proposé, à fixer sur la machine de référence : surcoût total médian ≤ 5 % et
   p95 sans dégradation répétée notable. Ajouter un budget GPU de 1 ms si une mesure GPU fiable existe.
-- Coût théorique : 16 lectures centrales au lieu de 1 ; les voisins natifs restent inchangés.
+- Coût théorique du socle D5 seulement : 16 lectures centrales au lieu de 1 ; voisins natifs inchangés.
   `FPSPRITE` passe ainsi de 26 à 41 lectures source dans sa forme non optimisée, pas à 26×16.
 - Priorité : pas d'I/O/allocation/catalogue dans le hook ; locations et classification mises en
   cache ; écritures d'uniformes évitées si la valeur du **draw** est inchangée ; ensuite code GLSL.
@@ -454,6 +500,9 @@ réutiliser aveuglément le masque temporaire partagé ni corriger les WED pour 
   lecture, il n'est pas équivalent au filtre 16 lectures prémultipliées. Même contrainte pour
   une conversion sRGB après interpolation. Une optimisation 9 lectures exige un stockage/sampler
   adapté et une preuve d'équivalence ; elle n'est pas un remplacement direct.
+- D12 mesure aussi les scopes globaux, profils combinés, contours et YUV. Le 4×4 CR/sharpen doit
+  partager ses lectures ; les contours peuvent exiger un support supérieur. Ne pas annoncer
+  « 16 lectures pour toute la suite ». Contrat optimizer dans le complément.
 
 ## 8. Installation, suivi et release
 
@@ -462,7 +511,8 @@ réutiliser aveuglément le masque temporaire partagé ni corriger les WED pour 
 Référence obligatoire : [transaction renderer](../../engine/InfinityEngine-Enhancer/source-patchee/docs/renderer-candidate-transaction.md).
 Elle possède exactement DLL + INI ; conserver ce contrat. La transaction shader séparée doit avoir :
 
-- liste exacte des fichiers retenus en D2, initialement `override/fpSprite.glsl` et `override/fpSELECT.glsl` ;
+- liste exacte par candidat, initialement `override/fpSprite.glsl` et `override/fpSELECT.glsl`,
+  puis les huit fragments à D11 ; aucun glob sur `override/` ;
 - `--verify-only`, reçu unique, copies avant/après hashées, refus de liens et chemins hors périmètre ;
 - détection de collision insensible à la casse ; shader tiers inconnu => refus, aucune fusion automatique ;
 - publication fichier par fichier atomique et rollback compensatoire du lot en cas d'échec ;
@@ -475,10 +525,12 @@ Installation jeu/InfinityLoader fermés : préflight des deux transactions, shad
 vérification des deux reçus avant lancement. Si la seconde transaction échoue, restaurer la première.
 Restauration : DLL/INI puis shaders, avant tout redémarrage ; vérifier les hashes initiaux.
 
-Attention au catalogue : son installateur force seulement l'ancienne clé LINEAR à faux aujourd'hui.
-Une nouvelle clé prioritaire laissée à `CatmullRom` invaliderait la promesse NEAREST du test.
-Adapter sa gestion des clés/reçus lors du développement ; ne pas relancer un install/restore du
-catalogue pendant une transaction Catmull active. Restaurer les expérimentations dans l'ordre inverse.
+D1 a déjà ajouté `CreatureSpriteFilter=Nearest` aux installateurs et au contrat du catalogue.
+D11 doit aussi protéger ce baseline contre une suite esthétique active : contrôle explicite du
+nouveau master et preuve du profil neutre. Conserver la lecture des anciens reçus sans réécriture.
+Ne pas relancer un install/restore du catalogue ou du renderer release pendant une transaction
+suite active. Pour `fpSEAM`, sauvegarder/restaurer les octets IEE réellement installés, pas le BIF
+ni un bundle historique. Restaurer les expérimentations dans l'ordre inverse.
 
 ### 8.2 Preuve et promotion
 
@@ -486,6 +538,8 @@ Chaque `evidence.json` doit identifier : schema/version, run, commit+diff source
 hashes BIF/bruts/linkés, DLL/INI/shaders, génération catalogue, GPU/pilote/GL/GLSL,
 options natives, mode demandé/effectif, variantes/captures, tests exécutés ou non, mesures,
 reçus install/restore et décision QA utilisateur. Pas de hash/succès fictif.
+Ajouter pour la suite : profils résolus et hashes, huit états de capacité/dessin, couverture de
+chaque paramètre/preset, espaces couleur, écarts amont assumés et identité de l'optimiseur.
 
 Le run de filtrage référence la génération de sprites existante ; il ne la réécrit pas.
 Ne pas falsifier `sampling=NEAREST` de l'ancien `active-test.json` pour décrire un nouvel essai.
@@ -536,12 +590,15 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] Frontière différée corrigée ; appel final `glDrawArrays` identifié hors jeu.
 - [x] Guide et chemins de développement définis.
 - [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
-- [ ] D1 : référence CPU/configuration et tests implémentés ; exécution ou renoncement explicite en attente.
-- [ ] D2 : préambule et dispatch GPU observés en jeu.
+- [x] D1 : développement committé `843aa38`, confirmé terminé par l'utilisateur ; résultat d'exécution des tests non attesté dans la notice consultée.
+- [ ] D2 : contrat suite figé, préambule/dispatch créatures observés, couverture des huit shaders inventoriée.
 - [ ] D3–D5 : shaders neutres, routage et filtre implémentés.
-- [ ] D6–D7 : transactions, tests choisis, QA et coût mesurés.
-- [ ] D8 : validation ingame et éventuelle intégration release décidées.
+- [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
+- [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
+- [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
+- [ ] D13 : profil final validé ingame et éventuelle intégration release décidés.
 
-Prochaine action : appliquer le choix utilisateur `tests ciblés / tous les tests / aucun test`,
-consigner le résultat et clôturer D1. Ne pas engager D2 avant cette clôture ; ne pas reprendre
-l'ancienne idée de portée shader autour du seul `RenderTexture`.
+Prochaine action de développement : **D2**, après lecture du complément. Réutiliser D0/D1 ;
+consigner les résultats D1 déjà disponibles sans les inventer. Préparer le contrat de profils,
+les sources supplémentaires et la capture. Les prochains builds/tests suivent le choix utilisateur
+du lot ; aucun développement de D6+ ne doit être pris pour une simple vérification esthétique finale.
