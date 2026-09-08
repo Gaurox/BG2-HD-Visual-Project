@@ -40,6 +40,11 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 - Règles de placement : [`FOLDER_LAYOUT.md`](FOLDER_LAYOUT.md).
 - Installation courante : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
 
+Réactivation ingame : jeu et InfinityLoader fermés, sauvegarder `InfinityEngine-Enhancer.ini`, puis
+mettre `[Shaders] EnableCreatureSpriteUpscaleTest=true`; conserver les deux clés
+`EnableCreatureSpriteX2Test=false` et `EnableCreatureSpriteLinearFiltering=false`, puis redémarrer.
+Modifier seulement ces clés : l'INI est partagé avec les animations, effets et autres tests moteur.
+
 Le baseline QA utilise `NEAREST`. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
 preuve `validated-installed`. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
 plus partie du pipeline courant.
