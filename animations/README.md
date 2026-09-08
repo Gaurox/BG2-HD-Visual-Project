@@ -91,6 +91,10 @@ python pipeline/scripts/animation_workflow.py finalize `
 # Relire le plan, puis ajouter --run.
 ```
 
+Si un asset source est absorbé par un porteur fusionné présent sous un autre resref dans le pack
+testé, ajouter `--runtime-resref <PORTEUR>`. La décision et la sélection conservent l'identité de
+l'asset source et enregistrent séparément le resref réellement rendu.
+
 Pour un résultat conservé strictement natif, ne fournir ni run ni pack x4 :
 
 ```powershell

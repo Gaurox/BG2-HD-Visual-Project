@@ -11,6 +11,7 @@
     "decision_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"},
     "asset_id": {"type": "string", "pattern": "^animations:bam:(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
     "resref": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
+    "runtime_resref": {"type": "string", "pattern": "^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$"},
     "status": {"enum": ["accepted", "rejected"]},
     "result_kind": {"enum": ["x4", "native"]},
     "decision_origin": {"const": "explicit-user-ingame-qa"},

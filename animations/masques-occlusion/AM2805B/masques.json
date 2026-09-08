@@ -1,0 +1,22 @@
+{
+  "schema": "bg2-upscale-occlusion-mask-worksheet-v1",
+  "resref": "AM2805B",
+  "mask_contract": "PNG grayscale flattened; alpha fully opaque; white keeps animation, black removes it, gray is the transition.",
+  "source_wed": {
+    "area": "AR2804",
+    "source": "config://bg2ee_game_root KEY/BIF data/AREA280A.bif",
+    "sha256": "0d6d9c5854daf12391845539ae1dce5019ba50dab987480648a5d2fc106148eb",
+    "cover_animation_polygon_indexes": [21, 22]
+  },
+  "entries": [
+    {
+      "area": "AR2804",
+      "resref": "AM2805B",
+      "anchor_x1": [483, 368],
+      "mask_origin_x4": [1472, 736],
+      "mask_size_x4": [744, 736],
+      "bound_variant_required": true,
+      "directory": "AR2804-x483-y368"
+    }
+  ]
+}

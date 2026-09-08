@@ -4,6 +4,34 @@
   "authority_policy": "Physical retention evidence only. Entries never grant or change production, QA, installation, selection or release status.",
   "packs": [
     {
+      "name": "ar2804-treelife-am2805bc-fused-carrier-am28add-x4-30fps-20260908",
+      "manifest_sha256": "49271CCD762A7E83F75E20A3AE1E3724D837A33E2FBF25BCC3ACE15191453969",
+      "created_utc": "2026-09-08T18:11:58.085218+00:00",
+      "classification": "qa-lineage",
+      "reason": "AR2804 : composite source-over unique AM28ADD, prémultiplié une seule fois pour le chemin Blended ; occurrence additive AM2805B redirigée vers AM28ADD, occurrence AM2805C redirigée vers AM28NUL transparent, occurrence alpha stricte AM2805B inchangée ; validé ingame le 2026-09-08 pour AM2805B/C avec réserve non bloquante sur une amélioration facultative de la jointure horizontale ; décisions immuables sous animations/index/qa-decisions/AM2805B et AM2805C ; aucune intégration release"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-bilateral8-alphaover-20260908",
+      "manifest_sha256": "8FD4E5B2AEC739D9C8570A21D57274A0EBABB7CAA5C64F5BBBCC206BBBC28B4B",
+      "created_utc": "2026-09-08T17:41:27.821976+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804 : reprend le recouvrement bilatéral de 8 px x1 par asset / 16 px x1 total, mais remplace les alphas simplement complémentaires par une compensation exacte du rendu source-over, AM2805C étant dessinée après AM2805B ; RGB partagé et opacité composite conservée sur la zone commune, erreur alpha maximale mesurée 0,46666/255 et moyenne 0,000681/255 sur chaque phase ; géométrie BAM bilatérale inchangée et déjà installée ; pack runtime installé pour essai ingame, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908",
+      "manifest_sha256": "55A3C0FA7DB03644203B1BDBDF4770839A0F5627324581FC6F67D55BD7C781C8",
+      "created_utc": "2026-09-08T17:29:31.726790+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804 : recouvrement bilatéral de 8 px x1 par asset, soit 16 px x1 / 64 px x4 au total ; AM2805B passe de 186x184 à 186x192 par extension basse, centre inchangé ; AM2805C passe de 224x182 à 224x190 par extension haute et centre Y +8 ; pose monde et cycles conservés ; RGB partagé dans la zone commune et alphas smoothstep complémentaires ; BAM dérivés AM2805B/C et pack runtime installés pour essai ingame, aucune QA ni release n'est inférée"
+    },
+    {
+      "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-overlap2-20260908",
+      "manifest_sha256": "34CB0A71747A504977C4E6EB7AF3EA85EB513E99FF0432AD886A97CCF2B422E7",
+      "created_utc": "2026-09-08T17:13:30.625651+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AR2804 : candidat précédent conservé, plus recouvrement vertical réel de 2 px x1 / 8 px x4 au-dessus du raccord ; AM2805C passe de 224x182 à 224x184 et centre Y +2 pour conserver la pose monde ; extension RGB issue des dernières lignes visibles d'AM2805B et apparition alpha smoothstep ; BAM dérivé AM2805C installé en override avec cycles et pixels natifs existants inchangés ; essai ingame requis, aucune QA ni release n'est inférée"
+    },
+    {
       "name": "ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-joint-rgb-seam32-restore-large-alpha-20260908",
       "manifest_sha256": "4A4AF6275828B4905A648EAC4985743BB9C533820B878378067A136456A72F05",
       "created_utc": "2026-09-07T23:18:14.432889+00:00",

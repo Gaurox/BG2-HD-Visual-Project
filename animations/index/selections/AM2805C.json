@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2805C",
+  "correction_id": "ar2804-am2805bc-fused-carrier-am28add-v1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar2804-am2805bc-fused-carrier-am28add-20260908/manifest.json",
+        "manifest_sha256": "E48542BCBD99F3AAAB936EAA5A335BE90ABC40A95A80D6898325986EE487F4A8",
+        "path": "animations/batches/ar2804-am2805bc-fused-carrier-am28add-20260908",
+        "schema": "bg2-upscale-fused-area-animation-carrier-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "2CBEFEDD7C46DA80B9DA8D058B8C0684A461DA1A9A7DB819AB6961D48352B892",
+        "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908/03_runtime_pack/manifest.json",
+        "manifest_sha256": "457AC65B37CAD10301BFF203E4F525BD9123603CAB6598E822CFD542B0627BE0",
+        "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "3378B9DA6EFB35072EE8BCBB8603DCC35EC492D0DDE550DAE8CF156334E73E06",
+        "path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907/manifest.json",
+        "manifest_sha256": "4274DA5B68AED3703FFCF31ACE280B1D06AC2C22651EB7E63E81648344B52118",
+        "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908/manifest.json",
+        "manifest_sha256": "09CE52AB943E436F47DB95404E2751F2D55B55F799D99F35BF27395944EB7A03",
+        "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907/manifest.json",
+        "manifest_sha256": "DA76B6AD50912CD2D9555829EC18517CF429169670F214B969C9EED340604A44",
+        "path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-08",
+    "path": "animations/index/qa-decisions/AM2805C/2026-09-08-accepted-am2805c-ar2804-fused-carrier-selection-20260908.json",
+    "sha256": "262F687FAEF1B8C5995C68F5F37089725766C60EA5E1832F1DE9BBAA87A89805",
+    "status": "accepted"
+  },
+  "resref": "AM2805C",
+  "result_kind": "x4",
+  "runtime_resref": "AM28ADD",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM2805C/runs/am2805c-ar2804-fused-carrier-selection-20260908/manifest.json",
+    "manifest_sha256": "4128A19961E637DFA871ABDBAB90F3CC058C1470C1E245AE5CC1E7A3772D215B",
+    "path": "animations/ressources/AM2805C/runs/am2805c-ar2804-fused-carrier-selection-20260908",
+    "schema": "bg2-upscale-area-animation-fused-carrier-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2804",
+        "manifest_path": "animations/packs-par-zone/ar2804-treelife-am2805bc-fused-carrier-am28add-x4-30fps-20260908/AR2804/manifest.json",
+        "manifest_sha256": "6B13AA80058B355C5192086A03932774CC6E90997622D4CBA3EB61417F7AF9F6",
+        "path": "animations/packs-par-zone/ar2804-treelife-am2805bc-fused-carrier-am28add-x4-30fps-20260908/AR2804",
+        "registry_sha256": "7C7145777EE0B1248456B20836013D96814ACC88BE7FC0247CC3A5A2F0C413DE",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2804-treelife-am2805bc-fused-carrier-am28add-x4-30fps-20260908/manifest.json",
+    "manifest_sha256": "49271CCD762A7E83F75E20A3AE1E3724D837A33E2FBF25BCC3ACE15191453969",
+    "path": "animations/packs-par-zone/ar2804-treelife-am2805bc-fused-carrier-am28add-x4-30fps-20260908",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2804"
+  ],
+  "updated_at_utc": "2026-09-08T18:45:12Z"
+}
