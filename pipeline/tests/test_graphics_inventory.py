@@ -62,6 +62,7 @@ class GraphicsInventoryTests(unittest.TestCase):
     def test_dependency_failures_are_explicit(self) -> None:
         for manifest_name, dependencies_name in (
             ("hud_manifest", "hud_dependencies"),
+            ("icon_manifest", "icon_dependencies"),
             ("effect_manifest", "effect_dependencies"),
             ("projectile_manifest", "projectile_dependencies"),
             ("ui_manifest", "ui_dependencies"),
@@ -78,6 +79,87 @@ class GraphicsInventoryTests(unittest.TestCase):
                 sum(row["present"] == "no" for row in rows),
                 manifest_name,
             )
+
+    def test_icon_assets_are_normalized_by_family_and_frame(self) -> None:
+        manifest = inventory.json.loads(
+            self.outputs[ROOT / inventory.OUTPUT_PATHS["icon_manifest"]].decode("utf-8")
+        )
+        resources = list(
+            csv.DictReader(
+                io.StringIO(
+                    self.outputs[ROOT / inventory.OUTPUT_PATHS["icon_resources"]].decode(
+                        "utf-8-sig"
+                    ),
+                    newline="",
+                )
+            )
+        )
+        families = list(
+            csv.DictReader(
+                io.StringIO(
+                    self.outputs[ROOT / inventory.OUTPUT_PATHS["icon_families"]].decode(
+                        "utf-8-sig"
+                    ),
+                    newline="",
+                )
+            )
+        )
+        frames = list(
+            csv.DictReader(
+                io.StringIO(
+                    self.outputs[ROOT / inventory.OUTPUT_PATHS["icon_frames"]].decode(
+                        "utf-8-sig"
+                    ),
+                    newline="",
+                )
+            )
+        )
+        dependencies = list(
+            csv.DictReader(
+                io.StringIO(
+                    self.outputs[
+                        ROOT / inventory.OUTPUT_PATHS["icon_dependencies"]
+                    ].decode("utf-8-sig"),
+                    newline="",
+                )
+            )
+        )
+        missing = list(
+            csv.DictReader(
+                io.StringIO(
+                    self.outputs[
+                        ROOT / inventory.OUTPUT_PATHS["icon_missing_resources"]
+                    ].decode("utf-8-sig"),
+                    newline="",
+                )
+            )
+        )
+
+        families_by_asset: dict[str, set[str]] = {}
+        for row in families:
+            families_by_asset.setdefault(row["asset_key"], set()).add(row["family"])
+        frame_counts: dict[str, int] = {}
+        for row in frames:
+            frame_counts[row["asset_key"]] = frame_counts.get(row["asset_key"], 0) + 1
+        for row in resources:
+            self.assertEqual(
+                families_by_asset[row["asset_key"]],
+                set(row["roles"].split(";")),
+            )
+            self.assertEqual(frame_counts[row["asset_key"]], int(row["frame_count"]))
+            self.assertEqual(
+                row["extracted_path"],
+                f"icons/ressources/{row['resref']}/source.bam",
+            )
+
+        self.assertEqual(manifest["family_membership_count"], len(families))
+        self.assertEqual(manifest["frame_record_count"], len(frames))
+        self.assertEqual(manifest["dependency_count"], len(dependencies))
+        self.assertEqual(manifest["missing_resource_count"], len(missing))
+        self.assertEqual(
+            manifest["dependency_resource_count"],
+            len({row["dependency_resref"] for row in dependencies}),
+        )
 
     def test_unclassified_resources_are_preserved_as_a_gap(self) -> None:
         coverage = inventory.json.loads(

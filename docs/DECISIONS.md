@@ -67,6 +67,15 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Ajout d'un effet | pack mono-resref immuable puis composition cumulative | format de registre hétérogène requis |
 | Composition v1/v2 | versions homogènes seulement ; v1 natif et v2 30 FPS non mélangés | registre avec cadence par ressource validé |
 
+## Icônes
+
+| Sujet | Décision retenue |
+|---|---|
+| Identité | un asset par resref BAM ITM/SPL ; familles multivaluées dans `icons/index/families.csv`, jamais dans le chemin |
+| Extraction | BAM sous `icons/ressources/<RESREF>/source.bam` ; PVRZ V2 partagées sous `icons/dependencies/pvrz/` |
+| Runs | mono-asset sous `icons/ressources/<RESREF>/runs/<run-id>/`; batch explicite sous `icons/batches/`; aucun `icons/runs/` global |
+| Suivi | `icons/index/processing.csv` sépare production, sélection, QA, installation et release |
+
 ## Sprites
 
 | Sujet | Décision retenue |

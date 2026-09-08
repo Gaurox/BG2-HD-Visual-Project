@@ -80,6 +80,7 @@ SCRIPT_TEST_ALIASES = {
     "audit_workspace_integrity.py": ("test_workspace_integrity",),
     "build_global_asset_registry.py": ("test_global_asset_registry",),
     "build_graphics_inventory.py": ("test_graphics_inventory",),
+    "sync_icon_processing.py": ("test_icon_processing",),
     "build_sprite_inventory.py": ("test_sprite_inventory",),
     "verify_historical_git_evidence.py": ("test_historical_git_evidence",),
     "animation_release.py": ("test_animation_release", "test_release_animation_delta"),

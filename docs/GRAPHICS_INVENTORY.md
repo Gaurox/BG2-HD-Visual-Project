@@ -11,7 +11,7 @@
 | Menus | `interface/menus-options-bg2ee/reference/extraction-manifest.json` |
 | Sprites UI x4 | `interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json` |
 | Sélecteur | `interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/selection-des-trois-jeux/assets/asset-manifest.json` |
-| Icônes | `icons/index/manifest.json`, `resources.csv`, `usages.csv` |
+| Icônes | `icons/index/manifest.json`, `resources.csv`, `families.csv`, `usages.csv`, `frames.csv`, `dependencies.csv`, `missing-resources.csv`, `processing.csv` |
 | Curseurs | `cursors/index/manifest.json`, `resources.csv` |
 | Effets | `effects/index/manifest.json`, `resources.csv`, `dependencies.csv`, `bam-assets.csv`, `processing.csv` |
 | Projectiles | `projectiles/index/manifest.json`, `resources.csv`, `dependencies.csv` |

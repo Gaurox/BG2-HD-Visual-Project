@@ -52,9 +52,11 @@ synchronisation de miroirs interrompue laisse
 | Sprite | `sprite/families/.../<asset>/{source,jobs,runs,research}/` | pointeurs du catalogue |
 | Vidéo | `video/<asset>/<source>.wbm`, `video/<asset>/runs/<run-id>/` | `video/index/processing.csv` |
 | Effet BAM | `effects/ressources/<RESREF>/source.bam`, `effects/ressources/<RESREF>/runs/<run-id>/` | `effects/index/processing.csv` |
+| Icône ITM/SPL | `icons/ressources/<RESREF>/source.bam`, `icons/ressources/<RESREF>/runs/<run-id>/` | `icons/index/processing.csv` |
 
-Interface, portraits, icônes et projectiles conservent leurs index actuels. Les effets extraient
+Interface, portraits et projectiles conservent leurs index actuels. Les effets extraient
 leur corpus BAM sous `effects/ressources/`; les contrôleurs VVC/VEF restent sous `effects/source/`.
+Les pages PVRZ partagées des BAM V2 d'icônes restent sous `icons/dependencies/pvrz/`.
 
 `animations/runs/<run-id>/` reste un layout legacy accepté pour la reprise et la lecture. Aucun
 nouveau run n'y est créé par défaut.

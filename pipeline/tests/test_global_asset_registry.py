@@ -223,6 +223,22 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             self.by_id["cursors:cursor-set-cursors"]["states"]["source"],
             "verified",
         )
+        icon = self.by_id["icons:icon-1amul07b"]
+        self.assertEqual(
+            icon["states"],
+            {
+                "source": "verified",
+                "production": "not-started",
+                "qa": "not-assessed",
+                "installation": "not-installed",
+                "release": "not-evaluated",
+            },
+        )
+        self.assertEqual(icon["adapter"], "icons.processing.v1")
+        self.assertIn(
+            "icons/index/processing.csv",
+            {item["path"] for item in self.outputs["registry"]["inputs"]},
+        )
         self.assertEqual(
             self.by_id["projectiles:projectile-fireball"]["states"]["qa"],
             "not-assessed",

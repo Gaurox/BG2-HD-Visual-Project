@@ -2,7 +2,7 @@
 
 The scanner reads the installed stock game in place, writes only versioned
 catalogues under the workspace, and can materialise immutable source copies in
-ignored ``source/`` directories with ``--extract``.  It never writes the game.
+ignored data-plane directories with explicit extraction options. It never writes the game.
 """
 
 from __future__ import annotations
@@ -83,7 +83,11 @@ OUTPUT_PATHS = {
     "hud_dependencies": "interface/gameplay-hud-bg2ee/index/dependencies.csv",
     "icon_manifest": "icons/index/manifest.json",
     "icon_resources": "icons/index/resources.csv",
+    "icon_families": "icons/index/families.csv",
     "icon_usages": "icons/index/usages.csv",
+    "icon_frames": "icons/index/frames.csv",
+    "icon_dependencies": "icons/index/dependencies.csv",
+    "icon_missing_resources": "icons/index/missing-resources.csv",
     "cursor_manifest": "cursors/index/manifest.json",
     "cursor_resources": "cursors/index/resources.csv",
     "effect_manifest": "effects/index/manifest.json",
@@ -338,6 +342,7 @@ def bam_metadata(data: bytes) -> dict[str, Any]:
             "version": "V1",
             "frame_count": frame_count,
             "cycle_count": cycle_count,
+            "block_count": "",
             "pvrz_pages": [],
         }
     if data[:8] == b"BAM V2  ":
@@ -355,9 +360,43 @@ def bam_metadata(data: bytes) -> dict[str, Any]:
             "version": "V2",
             "frame_count": frame_count,
             "cycle_count": cycle_count,
+            "block_count": block_count,
             "pvrz_pages": pages,
         }
     raise ValueError(f"BAM non supporté: {data[:8]!r}")
+
+
+def bam_frame_metadata(data: bytes) -> list[dict[str, int | str]]:
+    if data[:4] == b"BAMC":
+        data = zlib.decompress(data[12:])
+    if data[:8] == b"BAM V1  ":
+        frame_count = struct.unpack_from("<H", data, 8)[0]
+        frames_offset = struct.unpack_from("<I", data, 0x0C)[0]
+        version = "V1"
+    elif data[:8] == b"BAM V2  ":
+        _signature, frame_count, _cycles, _blocks, frames_offset, _, _, _ = (
+            struct.unpack_from("<8s7I", data, 0)
+        )
+        version = "V2"
+    else:
+        raise ValueError(f"BAM non supporté: {data[:8]!r}")
+
+    rows: list[dict[str, int | str]] = []
+    for frame_index in range(frame_count):
+        width, height, center_x, center_y, packed = struct.unpack_from(
+            "<HHhhI", data, frames_offset + frame_index * 12
+        )
+        rows.append(
+            {
+                "frame_index": frame_index,
+                "width": width,
+                "height": height,
+                "center_x": center_x,
+                "center_y": center_y,
+                "block_count": packed >> 16 if version == "V2" else "",
+            }
+        )
+    return rows
 
 
 def mos_metadata(data: bytes) -> dict[str, Any]:
@@ -641,6 +680,10 @@ def build_icons(
     dict[str, Any],
     list[dict[str, Any]],
     list[dict[str, Any]],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
     set[tuple[str, int]],
 ]:
     usages: list[dict[str, Any]] = []
@@ -659,23 +702,92 @@ def build_icons(
     for usage in usages:
         grouped[usage["icon_resref"]].append(usage)
     rows: list[dict[str, Any]] = []
+    families: list[dict[str, Any]] = []
+    frames: list[dict[str, Any]] = []
+    dependencies: list[dict[str, Any]] = []
+    missing_rows: list[dict[str, Any]] = []
     owned: set[tuple[str, int]] = set()
-    missing = []
     for resref, resource_usages in sorted(grouped.items()):
         resource = index.get(resref, TYPE_BAM)
         if resource is None:
-            missing.append(resref)
+            roles = sorted({usage["role"] for usage in resource_usages})
+            missing_rows.append(
+                {
+                    "icon_resref": resref,
+                    "roles": ";".join(roles),
+                    "usage_count": len(resource_usages),
+                    "owner_count": len(
+                        {
+                            (usage["owner_format"], usage["owner_resref"])
+                            for usage in resource_usages
+                        }
+                    ),
+                }
+            )
             continue
         payload = index.resolve(resource)
         metadata = bam_metadata(payload)
         owned.add(resource.key)
-        extracted_relative = Path("icons/source") / f"{resref}.bam"
+        asset_key = f"icon:{resref}"
+        extracted_relative = Path("icons/ressources") / resref / "source.bam"
         if extract:
             extract_payload(ROOT / extracted_relative, payload)
         roles = sorted({usage["role"] for usage in resource_usages})
+        for role in roles:
+            role_usages = [usage for usage in resource_usages if usage["role"] == role]
+            families.append(
+                {
+                    "asset_key": asset_key,
+                    "resref": resref,
+                    "family": role,
+                    "usage_count": len(role_usages),
+                    "owner_count": len(
+                        {
+                            (usage["owner_format"], usage["owner_resref"])
+                            for usage in role_usages
+                        }
+                    ),
+                }
+            )
+        for frame in bam_frame_metadata(payload):
+            frames.append({"asset_key": asset_key, "resref": resref, **frame})
+
+        dependency_count = 0
+        for page in metadata["pvrz_pages"]:
+            page_resref = f"MOS{page:04d}"
+            dependency = index.get(page_resref, TYPE_PVRZ)
+            dependency_payload = index.resolve(dependency) if dependency else None
+            dependency_path = (
+                Path("icons/dependencies/pvrz") / f"{page_resref}.pvrz"
+                if dependency_payload is not None
+                else None
+            )
+            if dependency is not None:
+                owned.add(dependency.key)
+            if extract and dependency_payload is not None and dependency_path is not None:
+                extract_payload(ROOT / dependency_path, dependency_payload)
+            dependencies.append(
+                {
+                    "asset_key": asset_key,
+                    "relation": "texture-page",
+                    "dependency_resref": page_resref,
+                    "dependency_format": "PVRZ",
+                    "present": "yes" if dependency_payload is not None else "no",
+                    "source_bif": dependency.bif_name if dependency else "",
+                    "locator": f"0x{dependency.locator:08X}" if dependency else "",
+                    "source_size": len(dependency_payload) if dependency_payload is not None else "",
+                    "source_sha256": (
+                        sha256_bytes(dependency_payload)
+                        if dependency_payload is not None
+                        else ""
+                    ),
+                    "extracted_path": dependency_path.as_posix() if dependency_path else "",
+                }
+            )
+            dependency_count += 1
         rows.append(
             {
-                "asset_key": f"icon:{resref}",
+                "asset_key": asset_key,
                 "resref": resref,
                 "roles": ";".join(roles),
                 "usage_count": len(resource_usages),
@@ -689,6 +801,8 @@ def build_icons(
                 "bam_version": metadata["version"],
                 "frame_count": metadata["frame_count"],
                 "cycle_count": metadata["cycle_count"],
+                "block_count": metadata["block_count"],
+                "pvrz_dependency_count": dependency_count,
                 "source_bif": resource.bif_name,
                 "locator": f"0x{resource.locator:08X}",
                 "source_size": len(payload),
@@ -696,15 +810,48 @@ def build_icons(
                 "extracted_path": extracted_relative.as_posix(),
             }
         )
+    families.sort(key=lambda row: (row["asset_key"], row["family"]))
+    frames.sort(key=lambda row: (row["asset_key"], row["frame_index"]))
+    dependencies.sort(
+        key=lambda row: (row["asset_key"], row["dependency_resref"])
+    )
     manifest = {
         **manifest_base(index, "icons", len(rows)),
+        "schema": "bg2-upscale-icons-inventory-v2",
         "granularity": "one BAM icon set shared by all referencing ITM/SPL resources",
         "resources_csv": "icons/index/resources.csv",
+        "families_csv": "icons/index/families.csv",
         "usages_csv": "icons/index/usages.csv",
+        "frames_csv": "icons/index/frames.csv",
+        "dependencies_csv": "icons/index/dependencies.csv",
+        "missing_resources_csv": "icons/index/missing-resources.csv",
         "usage_count": len(usages),
-        "missing_icon_resrefs": missing,
+        "family_membership_count": len(families),
+        "frame_record_count": len(frames),
+        "dependency_count": len(dependencies),
+        "dependency_resource_count": len(
+            {row["dependency_resref"] for row in dependencies}
+        ),
+        "missing_dependency_count": sum(
+            row["present"] == "no" for row in dependencies
+        ),
+        "missing_resource_count": len(missing_rows),
+        "missing_icon_resrefs": [row["icon_resref"] for row in missing_rows],
+        "extraction_layout": {
+            "bam": "icons/ressources/<RESREF>/source.bam",
+            "pvrz": "icons/dependencies/pvrz/<RESREF>.pvrz",
+        },
     }
-    return manifest, rows, usages, owned
+    return (
+        manifest,
+        rows,
+        families,
+        usages,
+        frames,
+        dependencies,
+        missing_rows,
+        owned,
+    )
 
 
 def build_cursors(
@@ -1463,10 +1610,25 @@ CSV_FIELDS = {
     ),
     "icon_resources": (
         "asset_key", "resref", "roles", "usage_count", "owner_count", "bam_container",
-        "bam_version", "frame_count", "cycle_count", "source_bif", "locator",
-        "source_size", "source_sha256", "extracted_path",
+        "bam_version", "frame_count", "cycle_count", "block_count",
+        "pvrz_dependency_count", "source_bif", "locator", "source_size",
+        "source_sha256", "extracted_path",
+    ),
+    "icon_families": (
+        "asset_key", "resref", "family", "usage_count", "owner_count",
     ),
     "icon_usages": ("owner_format", "owner_resref", "role", "icon_resref"),
+    "icon_frames": (
+        "asset_key", "resref", "frame_index", "width", "height", "center_x",
+        "center_y", "block_count",
+    ),
+    "icon_dependencies": (
+        "asset_key", "relation", "dependency_resref", "dependency_format", "present",
+        "source_bif", "locator", "source_size", "source_sha256", "extracted_path",
+    ),
+    "icon_missing_resources": (
+        "icon_resref", "roles", "usage_count", "owner_count",
+    ),
     "cursor_resources": (
         "asset_key", "resref", "granularity", "bam_container", "bam_version",
         "frame_count", "cycle_count", "source_bif", "locator", "source_size",
@@ -1520,6 +1682,7 @@ def build_outputs(
     game_dir: Path,
     ffprobe: str,
     extract: bool = False,
+    extract_icons: bool = False,
     extract_effects: bool = False,
 ) -> dict[Path, bytes]:
     global ROOT
@@ -1535,7 +1698,16 @@ def build_outputs(
         existing_owned = existing_owned_keys(index)
         video_manifest, video_rows, video_owned = build_videos(index, ffprobe, extract)
         hud_manifest, hud_rows, hud_dependencies, hud_owned = build_hud(index, extract)
-        icon_manifest, icon_rows, icon_usages, icon_owned = build_icons(index, extract)
+        (
+            icon_manifest,
+            icon_rows,
+            icon_families,
+            icon_usages,
+            icon_frames,
+            icon_dependencies,
+            icon_missing_resources,
+            icon_owned,
+        ) = build_icons(index, extract or extract_icons)
         cursor_manifest, cursor_rows, cursor_owned = build_cursors(index, extract)
         effect_manifest, effect_rows, effect_dependencies, effect_owned = build_effects(
             index, extract or extract_effects
@@ -1619,7 +1791,11 @@ def build_outputs(
             "hud_resources": hud_rows,
             "hud_dependencies": hud_dependencies,
             "icon_resources": icon_rows,
+            "icon_families": icon_families,
             "icon_usages": icon_usages,
+            "icon_frames": icon_frames,
+            "icon_dependencies": icon_dependencies,
+            "icon_missing_resources": icon_missing_resources,
             "cursor_resources": cursor_rows,
             "effect_resources": effect_rows,
             "effect_dependencies": effect_dependencies,
@@ -1665,6 +1841,11 @@ def main() -> int:
     parser.add_argument("--ffprobe", default="ffprobe")
     parser.add_argument("--extract", action="store_true")
     parser.add_argument(
+        "--extract-icons",
+        action="store_true",
+        help="extrait seulement les BAM d'icônes et leurs PVRZ partagées",
+    )
+    parser.add_argument(
         "--extract-effects",
         action="store_true",
         help="extrait seulement les contrôleurs VVC/VEF et les BAM d'effets",
@@ -1672,25 +1853,47 @@ def main() -> int:
     parser.add_argument(
         "--run",
         action="store_true",
-        help="autorise l'extraction demandée par --extract-effects",
+        help="autorise l'extraction ciblée demandée",
+    )
+    parser.add_argument(
+        "--scope",
+        choices=("all", "icons"),
+        default="all",
+        help="limite les catalogues écrits; la construction en mémoire reste globale",
     )
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--verify-determinism", action="store_true")
     args = parser.parse_args()
-    if args.check and (args.extract or args.extract_effects):
+    if args.check and (args.extract or args.extract_icons or args.extract_effects):
         parser.error("--check est incompatible avec une extraction")
     if args.extract_effects and not args.run:
         parser.error("--extract-effects exige --run")
+    if args.extract_icons and not args.run:
+        parser.error("--extract-icons exige --run")
 
     first = build_outputs(
         ROOT,
         args.game_dir,
         args.ffprobe,
         extract=args.extract,
+        extract_icons=args.extract_icons,
         extract_effects=args.extract_effects,
     )
+    if args.scope == "icons":
+        icon_root = (ROOT / "icons/index").resolve()
+        first = {
+            path: payload
+            for path, payload in first.items()
+            if path.resolve().is_relative_to(icon_root)
+        }
     if args.verify_determinism:
         second = build_outputs(ROOT, args.game_dir, args.ffprobe, extract=False)
+        if args.scope == "icons":
+            second = {
+                path: payload
+                for path, payload in second.items()
+                if path.resolve().is_relative_to(icon_root)
+            }
         if first != second:
             raise RuntimeError("inventaire non déterministe entre deux générations")
     divergent = write_outputs(first, check=args.check)

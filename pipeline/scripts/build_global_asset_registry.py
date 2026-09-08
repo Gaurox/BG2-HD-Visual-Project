@@ -7,6 +7,7 @@ catalogues, manifests, runs, payloads or game files.
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 import csv
 from datetime import datetime, timezone
 import hashlib
@@ -2304,15 +2305,6 @@ PHASE4_INVENTORIES = (
         "auxiliary": (),
     },
     {
-        "domain": "icons",
-        "manifest": "icons/index/manifest.json",
-        "resources": "icons/index/resources.csv",
-        "id_prefix": "icons",
-        "asset_type": lambda row: "icon-bam-set",
-        "adapter": "icons.inventory.v1",
-        "auxiliary": ("icons/index/usages.csv",),
-    },
-    {
         "domain": "cursors",
         "manifest": "cursors/index/manifest.json",
         "resources": "cursors/index/resources.csv",
@@ -2331,6 +2323,350 @@ PHASE4_INVENTORIES = (
         "auxiliary": ("projectiles/index/dependencies.csv",),
     },
 )
+
+
+def adapt_icon_bams(builder: RegistryBuilder) -> None:
+    """Project one lifecycle record per ITM/SPL icon BAM resref."""
+
+    manifest_path = "icons/index/manifest.json"
+    resources_path = "icons/index/resources.csv"
+    families_path = "icons/index/families.csv"
+    usages_path = "icons/index/usages.csv"
+    frames_path = "icons/index/frames.csv"
+    dependencies_path = "icons/index/dependencies.csv"
+    missing_path = "icons/index/missing-resources.csv"
+    processing_path = "icons/index/processing.csv"
+
+    manifest = builder.inputs.read_json(manifest_path)
+    resources = builder.inputs.read_csv(resources_path)
+    families = builder.inputs.read_csv(families_path)
+    usages = builder.inputs.read_csv(usages_path)
+    frames = builder.inputs.read_csv(frames_path)
+    dependencies = builder.inputs.read_csv(dependencies_path)
+    missing_resources = builder.inputs.read_csv(missing_path)
+    processing_rows = builder.inputs.read_csv(processing_path)
+
+    count_contracts = (
+        ("asset_count", len(resources), resources_path),
+        ("family_membership_count", len(families), families_path),
+        ("usage_count", len(usages), usages_path),
+        ("frame_record_count", len(frames), frames_path),
+        ("dependency_count", len(dependencies), dependencies_path),
+        ("missing_resource_count", len(missing_resources), missing_path),
+    )
+    for field, actual, source in count_contracts:
+        if manifest.get(field) != actual:
+            builder.anomaly(
+                "inventory-count-mismatch",
+                "error",
+                "icons",
+                f"le compteur {field} diffère du CSV déclaré",
+                source=source,
+                details={"manifest": manifest.get(field), "rows": actual},
+            )
+
+    missing_dependencies = [row for row in dependencies if row.get("present") == "no"]
+    if missing_dependencies:
+        builder.anomaly(
+            "missing-resource-dependencies",
+            "warning",
+            "icons",
+            "des pages PVRZ référencées par les BAM V2 sont absentes",
+            source=dependencies_path,
+            details={"affected_count": len(missing_dependencies)},
+        )
+    if missing_resources:
+        builder.anomaly(
+            "referenced-icon-sources-missing",
+            "warning",
+            "icons",
+            "des resrefs d'icônes référencés par ITM/SPL sont absents du jeu stock",
+            source=missing_path,
+            details={"affected_count": len(missing_resources)},
+        )
+
+    resources_by_key: dict[str, dict[str, str]] = {}
+    for row in resources:
+        key = row.get("asset_key", "")
+        if not key:
+            builder.anomaly(
+                "missing-identity", "error", "icons",
+                "ligne d'inventaire sans asset_key", source=resources_path,
+            )
+        elif key in resources_by_key:
+            builder.anomaly(
+                "duplicate-source-row", "error", "icons",
+                "asset_key dupliqué dans l'inventaire icons", source=resources_path,
+                details={"asset_key": key},
+            )
+        else:
+            resources_by_key[key] = row
+
+    memberships: dict[str, set[str]] = defaultdict(set)
+    for row in families:
+        key = row.get("asset_key", "")
+        family = row.get("family", "")
+        if key not in resources_by_key:
+            builder.anomaly(
+                "icon-family-asset-unknown", "error", "icons",
+                "une appartenance de famille référence un asset absent",
+                source=families_path, details={"asset_key": key},
+            )
+        elif not family:
+            builder.anomaly(
+                "icon-family-missing", "error", "icons",
+                "une appartenance de famille est vide", asset_id=key,
+                source=families_path,
+            )
+        elif family in memberships[key]:
+            builder.anomaly(
+                "icon-family-duplicate", "error", "icons",
+                "une appartenance de famille est dupliquée", asset_id=key,
+                source=families_path, details={"family": family},
+            )
+        memberships[key].add(family)
+
+    for key, row in resources_by_key.items():
+        declared = {value for value in row.get("roles", "").split(";") if value}
+        if memberships.get(key, set()) != declared:
+            builder.anomaly(
+                "icon-family-membership-mismatch", "error", "icons",
+                "les familles normalisées diffèrent des rôles de l'asset",
+                asset_id=key, source=families_path,
+                details={
+                    "families": sorted(memberships.get(key, set())),
+                    "roles": sorted(declared),
+                },
+            )
+
+    resource_resrefs = {row.get("resref", "") for row in resources}
+    missing_resrefs = {row.get("icon_resref", "") for row in missing_resources}
+    if len(missing_resrefs) != len(missing_resources) or resource_resrefs & missing_resrefs:
+        builder.anomaly(
+            "icon-missing-resource-contract-invalid", "error", "icons",
+            "les resrefs manquantes sont dupliquées ou recouvrent les assets présents",
+            source=missing_path,
+        )
+    declared_missing = set(manifest.get("missing_icon_resrefs", []))
+    if declared_missing != missing_resrefs:
+        builder.anomaly(
+            "icon-missing-resource-contract-invalid", "error", "icons",
+            "le manifeste et le CSV des resrefs manquantes divergent",
+            source=missing_path,
+        )
+    known_usage_resrefs = resource_resrefs | missing_resrefs
+    unknown_usage_resrefs = sorted(
+        {
+            row.get("icon_resref", "")
+            for row in usages
+            if row.get("icon_resref", "") not in known_usage_resrefs
+        },
+        key=str.casefold,
+    )
+    if unknown_usage_resrefs:
+        builder.anomaly(
+            "icon-usage-resource-unknown", "error", "icons",
+            "des usages référencent une resref ni présente ni déclarée manquante",
+            source=usages_path, details={"resrefs": unknown_usage_resrefs},
+        )
+
+    frame_counts: dict[str, int] = defaultdict(int)
+    dependency_counts: dict[str, int] = defaultdict(int)
+    for row in frames:
+        frame_counts[row.get("asset_key", "")] += 1
+    for row in dependencies:
+        dependency_counts[row.get("asset_key", "")] += 1
+    auxiliary_unknown = sorted(
+        (set(frame_counts) | set(dependency_counts)) - set(resources_by_key),
+        key=str.casefold,
+    )
+    if auxiliary_unknown:
+        builder.anomaly(
+            "icon-auxiliary-asset-unknown", "error", "icons",
+            "les frames ou dépendances référencent un asset absent",
+            source=resources_path, details={"asset_keys": auxiliary_unknown},
+        )
+    for key, row in resources_by_key.items():
+        if frame_counts.get(key, 0) != int(row.get("frame_count", 0)):
+            builder.anomaly(
+                "icon-frame-count-mismatch", "error", "icons",
+                "le nombre de frames diffère de resources.csv",
+                asset_id=key, source=frames_path,
+            )
+        if dependency_counts.get(key, 0) != int(row.get("pvrz_dependency_count", 0)):
+            builder.anomaly(
+                "icon-dependency-count-mismatch", "error", "icons",
+                "le nombre de PVRZ diffère de resources.csv",
+                asset_id=key, source=dependencies_path,
+            )
+
+    processing: dict[str, dict[str, str]] = {}
+    for row in processing_rows:
+        key = row.get("asset_key", "")
+        if not key:
+            builder.anomaly(
+                "missing-identity", "error", "icons",
+                "ligne de suivi sans asset_key", source=processing_path,
+            )
+        elif key in processing:
+            builder.anomaly(
+                "duplicate-source-row", "error", "icons",
+                "asset_key dupliqué dans le suivi icons", source=processing_path,
+                details={"asset_key": key},
+            )
+        else:
+            processing[key] = row
+
+    stale = sorted(set(processing) - set(resources_by_key), key=str.casefold)
+    if stale:
+        builder.anomaly(
+            "icon-processing-asset-unknown", "error", "icons",
+            "le suivi référence un BAM absent de l'inventaire", source=processing_path,
+            details={"asset_keys": stale},
+        )
+
+    allowed_production = set(STATE_VALUES["production"])
+    allowed_qa = set(STATE_VALUES["qa"])
+    allowed_installation = set(STATE_VALUES["installation"])
+    allowed_release = set(STATE_VALUES["release"])
+    for asset_key, row in resources_by_key.items():
+        resref = row.get("resref", "").upper()
+        asset_id = f"icons:{stable_token(asset_key.lower())}"
+        source_hash = row.get("source_sha256", "").upper()
+        source_verified = bool(SHA256_RE.fullmatch(source_hash))
+        if not source_verified:
+            builder.anomaly(
+                "source-hash-missing-or-invalid", "error", "icons",
+                "un BAM d'icône n'a pas de SHA-256 valide",
+                asset_id=asset_id, source=resources_path,
+            )
+
+        expected_directory = f"icons/ressources/{resref}"
+        current = processing.get(asset_key)
+        if current is None:
+            builder.anomaly(
+                "icon-processing-row-missing", "error", "icons",
+                "le BAM inventorié n'a pas de ligne de suivi",
+                asset_id=asset_id, source=processing_path,
+            )
+            current = {
+                "asset_id": asset_id,
+                "asset_directory": expected_directory,
+                "upscale_state": "not-started",
+                "qa_state": "not-assessed",
+                "installation_state": "not-installed",
+                "release_state": "not-evaluated",
+            }
+        identity_differences = {
+            field: {"actual": current.get(field, ""), "expected": expected}
+            for field, expected in (
+                ("asset_id", asset_id),
+                ("asset_directory", expected_directory),
+            )
+            if current.get(field, "") != expected
+        }
+        if identity_differences:
+            builder.anomaly(
+                "icon-processing-identity-mismatch", "error", "icons",
+                "l'identité ou le dossier du suivi ne correspond pas à l'inventaire",
+                asset_id=asset_id, source=processing_path,
+                details=identity_differences,
+            )
+
+        upscale_state = current.get("upscale_state", "")
+        qa_state = current.get("qa_state", "")
+        installation_state = current.get("installation_state", "")
+        release_state = current.get("release_state", "")
+        for value, allowed, label in (
+            (upscale_state, allowed_production, "production"),
+            (qa_state, allowed_qa, "QA"),
+            (installation_state, allowed_installation, "installation"),
+            (release_state, allowed_release, "release"),
+        ):
+            if value not in allowed:
+                builder.anomaly(
+                    "unknown-status", "error", "icons",
+                    f"état {label} inconnu: {value!r}", asset_id=asset_id,
+                    source=processing_path,
+                )
+
+        upscale_run = current.get("upscale_run", "")
+        selected_run = current.get("selected_run", "")
+        if upscale_state in {"in-progress", "produced", "verified", "rejected"} and not upscale_run:
+            builder.anomaly(
+                "icon-processing-run-missing", "error", "icons",
+                "un état de production actif exige un run", asset_id=asset_id,
+                source=processing_path,
+            )
+        if selected_run and selected_run != upscale_run:
+            builder.anomaly(
+                "icon-selected-run-unknown", "error", "icons",
+                "le run sélectionné diffère du run d'upscale déclaré",
+                asset_id=asset_id, source=processing_path,
+            )
+        if qa_state == "passed" and (not selected_run or not current.get("qa_evidence", "")):
+            builder.anomaly(
+                "icon-qa-evidence-missing", "error", "icons",
+                "une QA passée exige un run sélectionné et une preuve",
+                asset_id=asset_id, source=processing_path,
+            )
+        if installation_state in {"staged", "installed", "drifted"} and not current.get(
+            "installation_receipt", ""
+        ):
+            builder.anomaly(
+                "icon-installation-receipt-missing", "error", "icons",
+                "une installation active exige un reçu",
+                asset_id=asset_id, source=processing_path,
+            )
+
+        states = default_states()
+        states.update(
+            {
+                "source": "verified" if source_verified else "available",
+                "production": upscale_state if upscale_state in allowed_production else "unknown",
+                "qa": qa_state if qa_state in allowed_qa else "not-assessed",
+                "installation": (
+                    installation_state
+                    if installation_state in allowed_installation
+                    else "unknown"
+                ),
+                "release": release_state if release_state in allowed_release else "not-evaluated",
+            }
+        )
+        locator = f"csv:asset_key={asset_key}"
+        selections: list[dict[str, Any]] = []
+        if selected_run:
+            selections.append(
+                {"role": "run", "id": selected_run, "source": source_ref(processing_path, locator)}
+            )
+        release_candidate = current.get("release_candidate", "")
+        if release_candidate:
+            selections.append(
+                {
+                    "role": "candidate",
+                    "id": release_candidate,
+                    "source": source_ref(processing_path, locator),
+                }
+            )
+        evidence = []
+        provenance_state = "not-applicable"
+        if upscale_run or selected_run or release_candidate:
+            evidence.append(evidence_ref(builder.inputs, processing_path, locator))
+            provenance_state = "complete" if selected_run else "partial"
+        builder.add(
+            base_record(
+                asset_id=asset_id,
+                domain="icons",
+                asset_type="icon-bam-set",
+                canonical_path=resources_path,
+                locator=locator,
+                states=states,
+                provenance_state=provenance_state,
+                evidence=evidence,
+                selections=selections,
+                adapter="icons.processing.v1",
+            )
+        )
 
 
 def adapt_effect_bams(builder: RegistryBuilder) -> None:
@@ -3127,6 +3463,7 @@ def build_outputs(root: Path = ROOT) -> dict[str, dict[str, Any]]:
     adapt_animation_candidates(builder, animation_resrefs, animation_groups)
     adapt_sprites(builder)
     adapt_ui(builder, ui_groups)
+    adapt_icon_bams(builder)
     adapt_effect_bams(builder)
     adapt_phase4_inventories(builder)
     adapt_portraits(builder)

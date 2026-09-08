@@ -130,8 +130,10 @@ présence d'un candidat n'y suffit pas.
   `processing.csv` porte les runs validés par étape et la sélection patch. Upscale et interpolation
   validés deviennent `production=verified`, `qa=passed`; `patch_state=not-integrated` devient
   `installation=not-installed`. Les WBM de zone restent sous `animations/index/`.
-- Icônes : `icons/index/` inventorie un jeu BAM par resref partagé par les usages ITM/SPL. Les
-  références manquantes restent des anomalies et ne créent pas de source fictive.
+- Icônes : `icons/index/` inventorie un jeu BAM par resref partagé par les usages ITM/SPL ;
+  `families.csv` normalise les rôles, `dependencies.csv` suit les PVRZ partagées et
+  `processing.csv` porte production, sélection, QA, installation et release. Les références
+  manquantes restent des anomalies et ne créent pas de source fictive.
 - Curseurs : `cursors/index/` suit `CURSORS.BAM` comme un jeu unique, faute de noms sémantiques
   fiables pour ses cycles.
 - Effets : `effects/index/resources.csv` et `dependencies.csv` conservent le graphe VVC/VEF,

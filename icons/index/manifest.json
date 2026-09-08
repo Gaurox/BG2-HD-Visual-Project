@@ -1,8 +1,20 @@
 {
   "asset_count": 2931,
   "chitin_key_sha256": "1818FFEBB2424992FB39FB13509E7F629AC819B08A553C2DD4AC25F2E40A979F",
+  "dependencies_csv": "icons/index/dependencies.csv",
+  "dependency_count": 931,
+  "dependency_resource_count": 100,
+  "extraction_layout": {
+    "bam": "icons/ressources/<RESREF>/source.bam",
+    "pvrz": "icons/dependencies/pvrz/<RESREF>.pvrz"
+  },
+  "families_csv": "icons/index/families.csv",
+  "family_membership_count": 2935,
+  "frame_record_count": 3707,
+  "frames_csv": "icons/index/frames.csv",
   "generated_by": "pipeline/scripts/build_graphics_inventory.py",
   "granularity": "one BAM icon set shared by all referencing ITM/SPL resources",
+  "missing_dependency_count": 0,
   "missing_icon_resrefs": [
     "0",
     "CBDHEL09",
@@ -53,8 +65,10 @@
     "SPIN649C",
     "SPIN822C"
   ],
+  "missing_resource_count": 48,
+  "missing_resources_csv": "icons/index/missing-resources.csv",
   "resources_csv": "icons/index/resources.csv",
-  "schema": "bg2-upscale-icons-inventory-v1",
+  "schema": "bg2-upscale-icons-inventory-v2",
   "source_policy": "stock BG2EE installation; KEY/BIF or loose movie files only",
   "usage_count": 8775,
   "usages_csv": "icons/index/usages.csv"
