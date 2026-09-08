@@ -597,6 +597,26 @@ class AnimationWorkflowTests(unittest.TestCase):
         checked = workflow.check_workspace(self.fixture.root, "AMTEST")
         self.assertTrue(checked["ok"], checked["errors"])
 
+    def test_finalize_records_distinct_runtime_carrier_resref(self) -> None:
+        source_pack = workflow._source_pack(
+            self.fixture.root,
+            self.fixture.qa_pack,
+            "AMTEST",
+            ["AR0001", "AR0002"],
+        )
+        with (
+            mock.patch.object(workflow, "_source_pack", return_value=source_pack),
+            mock.patch.object(workflow, "_verify_pack_binding"),
+        ):
+            applied = self.fixture.finalize(runtime_resref="AMCARRY")
+
+        decision_path = self.fixture.root / applied["tracked_files"][0]
+        selection_path = self.fixture.root / "animations/index/selections/AMTEST.json"
+        decision = json.loads(decision_path.read_text(encoding="utf-8"))
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+        self.assertEqual("AMCARRY", decision["runtime_resref"])
+        self.assertEqual("AMCARRY", selection["runtime_resref"])
+
     def test_finalize_apply_uses_shared_animation_authority_lock(self) -> None:
         lock = self.fixture.root / ".tmp/workflow-locks/animation-authority.lock"
         lock.parent.mkdir(parents=True)

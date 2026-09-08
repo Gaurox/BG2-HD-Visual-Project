@@ -1558,10 +1558,12 @@ def _finalize_unlocked(
     recipe_id: str | None = None,
     correction_id: str | None = None,
     notes: str | None = None,
+    runtime_resref: str | None = None,
     registry_status: str = "validé-x4",
     apply: bool = False,
 ) -> dict[str, Any]:
     resref = validate_resref(raw_resref)
+    effective_runtime_resref = validate_resref(runtime_resref) if runtime_resref else resref
     qa_date = validate_iso_date(decision_date)
     if decision_status not in {"accepted", "rejected"}:
         raise WorkflowError(f"décision QA invalide: {decision_status!r}")
@@ -1588,6 +1590,8 @@ def _finalize_unlocked(
         )
 
     result_kind = "native" if registry_status == "validé-natif" else "x4"
+    if result_kind == "native" and effective_runtime_resref != resref:
+        raise WorkflowError("runtime-resref distinct interdit pour une validation native")
     if result_kind == "native" and correction_id is not None:
         raise WorkflowError("correction-id interdit pour une validation native")
     effective_correction_id = (
@@ -1633,7 +1637,7 @@ def _finalize_unlocked(
         source_pack = _source_pack(
             workspace_root,
             repo_path(workspace_root, qa_pack),
-            resref,
+            effective_runtime_resref,
             tested_areas,
         )
         _verify_pack_binding(
@@ -1641,7 +1645,7 @@ def _finalize_unlocked(
             final_manifest,
             final_manifest_path,
             source_pack,
-            resref,
+            effective_runtime_resref,
         )
         run_reservation = _reservation_for_run(
             workspace_root,
@@ -1688,6 +1692,8 @@ def _finalize_unlocked(
                 "lineage": lineage,
             }
         )
+        if effective_runtime_resref != resref:
+            decision["runtime_resref"] = effective_runtime_resref
     else:
         decision["native_source"] = native_source
     if recipe_id:
@@ -1729,6 +1735,8 @@ def _finalize_unlocked(
                     "source_pack": source_pack,
                 }
             )
+            if effective_runtime_resref != resref:
+                selection["runtime_resref"] = effective_runtime_resref
         else:
             selection["native_source"] = native_source
         if recipe_id:
@@ -1818,6 +1826,7 @@ def finalize(
     recipe_id: str | None = None,
     correction_id: str | None = None,
     notes: str | None = None,
+    runtime_resref: str | None = None,
     registry_status: str = "validé-x4",
     apply: bool = False,
 ) -> dict[str, Any]:
@@ -1834,6 +1843,7 @@ def finalize(
         "recipe_id": recipe_id,
         "correction_id": correction_id,
         "notes": notes,
+        "runtime_resref": runtime_resref,
         "registry_status": registry_status,
         "apply": apply,
     }
@@ -1881,6 +1891,7 @@ def _validate_x4_decision(
     errors: list[str],
 ) -> None:
     label = relative_path(workspace_root, decision_path)
+    runtime_resref = validate_resref(str(record.get("runtime_resref") or resref))
     missing = sorted({"final_run", "source_pack", "lineage"} - set(record))
     if missing:
         errors.append(f"{label}: champs x4 absents {', '.join(missing)}")
@@ -1915,7 +1926,7 @@ def _validate_x4_decision(
         expected_pack = _source_pack(
             workspace_root,
             repo_path(workspace_root, str(source_pack.get("path") or "")),
-            resref,
+            runtime_resref,
             tested_areas,
         )
         if source_pack != expected_pack:
@@ -1925,7 +1936,7 @@ def _validate_x4_decision(
             manifest,
             manifest_path,
             expected_pack,
-            resref,
+            runtime_resref,
         )
     except (WorkflowError, RuntimeError) as error:
         errors.append(f"{label}: preuve x4 invalide: {error}")
@@ -1969,6 +1980,7 @@ def _validate_decision_record(
             "native_source",
             "source_pack",
             "lineage",
+            "runtime_resref",
         }
         unknown = sorted(set(record) - allowed)
         if unknown:
@@ -2128,6 +2140,7 @@ def check_workspace(workspace_root: Path, raw_resref: str | None = None) -> dict
                 "qa_decision",
                 "source_pack",
                 "tested_areas",
+                "runtime_resref",
             }
             unknown_selection = sorted(set(selection) - allowed_selection)
             if unknown_selection:
@@ -2182,6 +2195,10 @@ def check_workspace(workspace_root: Path, raw_resref: str | None = None) -> dict
             for key in ("recipe_id", "correction_id"):
                 if selection.get(key) != decision.get(key):
                     errors.append(f"{relative_path(workspace_root, path)}: {key} différent de la décision")
+            if selection.get("runtime_resref") != decision.get("runtime_resref"):
+                errors.append(
+                    f"{relative_path(workspace_root, path)}: runtime_resref différent de la décision"
+                )
             if result_kind == "x4":
                 for key in ("selected_run", "lineage", "source_pack"):
                     decision_key = "final_run" if key == "selected_run" else key
@@ -2288,6 +2305,10 @@ def build_parser() -> argparse.ArgumentParser:
     finalize_parser.add_argument("--decision-id")
     finalize_parser.add_argument("--recipe-id")
     finalize_parser.add_argument("--correction-id")
+    finalize_parser.add_argument(
+        "--runtime-resref",
+        help="resref réellement présent dans le pack lorsque l'asset suivi est absorbé par un porteur",
+    )
     finalize_parser.add_argument("--notes")
     finalize_parser.add_argument(
         "--registry-status",
@@ -2328,6 +2349,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 recipe_id=args.recipe_id,
                 correction_id=args.correction_id,
                 notes=args.notes,
+                runtime_resref=args.runtime_resref,
                 registry_status=args.registry_status,
                 apply=args.run,
             )

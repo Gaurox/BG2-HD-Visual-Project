@@ -150,6 +150,58 @@ class JointAnimationRgbSeamTests(unittest.TestCase):
         self.assertTrue(np.array_equal(repaired_top, top))
         self.assertTrue(np.array_equal(repaired_bottom[0, :, :3], top[-1, :, :3]))
 
+    def test_top_overlap_fades_new_rows_and_preserves_existing_bottom(self) -> None:
+        top = np.full((8, 12, 4), 40, dtype=np.uint8)
+        bottom = np.full((8, 12, 4), 180, dtype=np.uint8)
+        top[:, :, 3] = 255
+        bottom[:, :, 3] = 200
+        top_layout = builder.FrameLayout(12, 8, 0, 0)
+        bottom_layout = builder.FrameLayout(12, 8, 0, 8)
+
+        result, layout, report = builder.add_top_overlap(
+            top, bottom, top_layout=top_layout, bottom_layout=bottom_layout,
+            overlap_x4=4,
+        )
+
+        self.assertEqual(result.shape, (12, 12, 4))
+        self.assertTrue(np.array_equal(result[4:], bottom))
+        self.assertTrue(np.all(result[0, :, 3] == 0))
+        self.assertTrue(np.all(result[1:4, :, 3] > 0))
+        self.assertTrue(np.all(result[:4, :, :3] == 40))
+        self.assertEqual(layout, builder.FrameLayout(12, 12, 0, 4))
+        self.assertEqual(report["top_overlap_x1"], 1)
+
+    def test_bilateral_overlap_preserves_source_over_colour_and_opacity(self) -> None:
+        top = np.full((12, 12, 4), 40, dtype=np.uint8)
+        bottom = np.full((12, 12, 4), 180, dtype=np.uint8)
+        top[:, :, 3] = 200
+        bottom[:, :, 3] = 200
+        top_layout = builder.FrameLayout(12, 12, 0, 0)
+        bottom_layout = builder.FrameLayout(12, 12, 0, 12)
+
+        (result_top, result_bottom, layout_top, layout_bottom,
+         report) = builder.add_bilateral_overlap(
+            top, bottom, top_layout=top_layout, bottom_layout=bottom_layout,
+            extension_x4=4,
+        )
+
+        self.assertEqual(result_top.shape, (16, 12, 4))
+        self.assertEqual(result_bottom.shape, (16, 12, 4))
+        self.assertTrue(np.all(result_bottom[0, :, 3] == 0))
+        self.assertTrue(np.all(result_top[-1, :, 3] == 0))
+        self.assertTrue(np.array_equal(result_top[:8], top[:8]))
+        self.assertTrue(np.array_equal(result_bottom[8:], bottom[4:]))
+        top_alpha = result_top[8:, :, 3].astype(np.float32)
+        bottom_alpha = result_bottom[:8, :, 3].astype(np.float32)
+        composite_alpha = bottom_alpha + top_alpha * (1.0 - bottom_alpha / 255.0)
+        self.assertLessEqual(float(np.abs(composite_alpha - 200.0).max()), 1.0)
+        self.assertTrue(np.array_equal(result_top[8:, :, :3],
+                                       result_bottom[:8, :, :3]))
+        self.assertEqual(layout_top, builder.FrameLayout(12, 16, 0, 0))
+        self.assertEqual(layout_bottom, builder.FrameLayout(12, 16, 0, 8))
+        self.assertEqual(report["total_overlap_x1"], 2)
+        self.assertLessEqual(report["composite_alpha_max_error_u8"], 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

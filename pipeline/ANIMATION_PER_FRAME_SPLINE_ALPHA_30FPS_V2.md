@@ -50,6 +50,14 @@ en contact :
 - Correctif spline borné : avec `--bottom-alpha-reference-pack`, seules les composantes connexes
   supprimées de taille au moins `--restore-removed-component-min-pixels` sont restaurées depuis
   l'alpha de référence. Les autres pixels alpha restent identiques au pack traité.
+- Finition par recouvrement : `--bottom-top-overlap-x1 2` ajoute 2 lignes natives en haut du BAM
+  inférieur, décale son centre Y de 2 pour conserver la pose monde, copie les dernières lignes RGB
+  du BAM supérieur et applique un fade alpha `smoothstep`. Le BAM dérivé de `--bottom-source-bam`
+  est obligatoire et sort dans `override-assets/` avec son manifeste installable.
+- Recouvrement bilatéral : `--bilateral-extension-x1 8` étend le BAM supérieur de 8 px x1 vers
+  le bas et le BAM inférieur de 8 px x1 vers le haut. Les deux images partagent le même RGB monde
+  dans les 16 px x1 communs et leurs alphas suivent deux `smoothstep` complémentaires. Les deux
+  BAM natifs dérivés sont obligatoires ; le centre Y inférieur reçoit `+8`, le supérieur reste fixe.
 
 ```powershell
 python pipeline/scripts/build_joint_animation_rgb_seam.py `
@@ -59,7 +67,44 @@ python pipeline/scripts/build_joint_animation_rgb_seam.py `
   --seam-depth-x4 32 --alpha-threshold 128 `
   --blend-mode continue-top-into-bottom `
   --bottom-alpha-reference-pack <AM2805C-pack-avant-spline> `
-  --restore-removed-component-min-pixels 10000
+  --restore-removed-component-min-pixels 10000 `
+  --bottom-top-overlap-x1 2 --bottom-source-bam <AM2805C-source.bam> `
+  --area AR2804
+# Relire le plan, puis ajouter --run.
+```
+
+Pour remplacer le recouvrement unilatéral par la variante bilatérale :
+
+```powershell
+  --bilateral-extension-x1 8 `
+  --top-source-bam <AM2805B-source.bam> `
+  --bottom-source-bam <AM2805C-source.bam> `
+  --area AR2804
+```
+
+Le fondu bilatéral suppose que la ressource basse est dessinée après la ressource haute. Il partage
+le même champ RGB entre les deux assets et calcule les deux alphas pour conserver exactement la
+couleur et l'opacité du composite source-over ; des alphas simplement complémentaires créent une
+baisse d'opacité pouvant atteindre 25 % au centre et laissent transparaître la couleur de la map.
+
+### Variante candidate : porteur fusionné Blended
+
+- Usage : deux occurrences `Blended` se recouvrent et le moteur additionne deux RGB, même après
+  correction des alphas.
+- Outil : `build_fused_area_animation_carrier.py`, plan-only sans `--run`.
+- Principe : composite source-over x4 hors ligne, RGB final prémultiplié, une seule occurrence
+  `Blended` porte le résultat. L'autre occurrence pointe vers un BAM noir transparent. Une
+  occurrence alpha stricte distincte peut rester sur son resref d'origine.
+- Sorties : pack runtime du porteur, ARE avec seuls les deux resrefs modifiés, BAM porteur/null et
+  BAM sources d'origine restaurés. Une sauvegarde ayant déjà visité la zone peut conserver son ARE.
+
+```powershell
+python pipeline/scripts/build_fused_area_animation_carrier.py `
+  --top-pack <AM2805B-pack-recouvrement> --bottom-pack <AM2805C-pack-recouvrement> `
+  --top-position 483,368 --bottom-position 483,553 `
+  --top-source-bam animations/ressources/AM2805B/source.bam `
+  --bottom-source-bam animations/ressources/AM2805C/source.bam `
+  --area AR2804 --output animations/batches/<nouveau-batch>
 # Relire le plan, puis ajouter --run.
 ```
 
