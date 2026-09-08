@@ -565,6 +565,8 @@ function Get-EngineSourceContractSha256([string]$SourceRoot) {
         'src/iee/creature_sprite_x2.h',
         'src/iee/core/config.cpp',
         'src/iee/core/config.h',
+        'src/iee/core/creature_sprite_filter_math.cpp',
+        'src/iee/core/creature_sprite_filter_math.h',
         'src/iee/core/native_occlusion_probe.cpp',
         'src/iee/core/native_occlusion_probe.h',
         'src/iee/game/build_manifest.cpp',
@@ -1968,10 +1970,12 @@ function Assert-LiveStateTargets($State, [string]$GameRoot, [switch]$AllowInterr
 }
 
 function Assert-CatalogIniOwnedContract([string]$Text) {
+    $filterMode = Get-IniKey $Text 'Shaders' 'CreatureSpriteFilter' -AllowMissing
     if ((Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteUpscaleTest') -cne 'true' -or
         (Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteX2Test') -cne 'false' -or
-        (Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteLinearFiltering') -cne 'false') {
-        throw 'Les trois clés INI catalogue ne sont pas exactes.'
+        (Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteLinearFiltering') -cne 'false' -or
+        ($null -ne $filterMode -and $filterMode -cne 'Nearest')) {
+        throw 'Les quatre clés INI catalogue ne sont pas exactes.'
     }
 }
 
@@ -2676,6 +2680,7 @@ try {
     [void](Get-IniKey $iniBefore 'Shaders' 'EnableCreatureSpriteUpscaleTest' -AllowMissing)
     [void](Get-IniKey $iniBefore 'Shaders' 'EnableCreatureSpriteX2Test' -AllowMissing)
     [void](Get-IniKey $iniBefore 'Shaders' 'EnableCreatureSpriteLinearFiltering' -AllowMissing)
+    [void](Get-IniKey $iniBefore 'Shaders' 'CreatureSpriteFilter' -AllowMissing)
 
     $activeStatePath = Join-Path $runRoot 'ingame-installation\active-test.json'
     Assert-SafeKnownPath $activeStatePath 'État catalogue actif'
@@ -2918,6 +2923,7 @@ try {
             algorithm = [string]$upscale.algorithm; scale = $scale; passes = 1
             antialias = $false; xbr_blend = $false; sampling = 'NEAREST'
         }
+        creature_sprite_filter = 'Nearest'
         registry_layout = 'catalog'; catalog_relative_path = $catalogRelative
         catalog_magic = 'IEECSNC'; catalog_version = [uint32]$catalog.version; catalog_scale = $scale
         catalog_sha256 = $expectedCatalogSha256; catalog_bytes = [uint64]$catalog.bytes
@@ -2981,6 +2987,7 @@ try {
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteUpscaleTest' 'true'
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteX2Test' 'false'
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteLinearFiltering' 'false'
+        $iniText = Set-IniKey $iniText 'Shaders' 'CreatureSpriteFilter' 'Nearest'
         Write-TextAtomic $iniText $iniTarget
         foreach ($shard in $desiredShards) {
             if ($shard.existed_before) {

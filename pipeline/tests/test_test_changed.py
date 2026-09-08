@@ -66,6 +66,9 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "pipeline/scripts/build_spline_top_reconstructed_alpha.py": (
                 "pipeline.tests.test_spline_top_reconstructed_alpha",
             ),
+            "pipeline/scripts/Install-CreatureSprite-XN-Test.ps1": (
+                "pipeline.tests.test_creature_sprite_x2_pipeline",
+            ),
         }
         for path, expected in cases.items():
             with self.subTest(path=path):

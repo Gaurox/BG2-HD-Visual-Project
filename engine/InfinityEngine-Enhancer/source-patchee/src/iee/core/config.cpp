@@ -41,6 +41,26 @@ static std::optional<bool> parse_bool(const std::string& s) {
   return std::nullopt;
 }
 
+static std::optional<CreatureSpriteFilterMode> parse_creature_sprite_filter_mode(
+    const std::string& s) {
+  if (iequals(s, "Nearest")) return CreatureSpriteFilterMode::Nearest;
+  if (iequals(s, "Linear")) return CreatureSpriteFilterMode::Linear;
+  if (iequals(s, "CatmullRom")) return CreatureSpriteFilterMode::CatmullRom;
+  return std::nullopt;
+}
+
+const char* creature_sprite_filter_mode_name(CreatureSpriteFilterMode mode) noexcept {
+  switch (mode) {
+    case CreatureSpriteFilterMode::Nearest:
+      return "Nearest";
+    case CreatureSpriteFilterMode::Linear:
+      return "Linear";
+    case CreatureSpriteFilterMode::CatmullRom:
+      return "CatmullRom";
+  }
+  return "Nearest";
+}
+
 static std::optional<float> parse_float(const std::string& s) {
   try {
     std::size_t parsedBytes = 0;
@@ -84,8 +104,13 @@ static void normalize(EngineConfig& cfg) noexcept {
       std::clamp(cfg.mapPagePrewarmDelayFrames, std::uint32_t{0}, std::uint32_t{600});
 }
 
-static void apply_kv(EngineConfig& cfg, const std::string& section, const std::string& key,
-                     const std::string& val, ConfigLoadDiagnostics* diagnostics) {
+struct ConfigParseState {
+  bool creatureSpriteFilterPresent{};
+};
+
+static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::string& section,
+                     const std::string& key, const std::string& val,
+                     ConfigLoadDiagnostics* diagnostics) {
   const auto assign_bool = [&](bool& target) {
     if (const auto parsed = parse_bool(val)) {
       target = *parsed;
@@ -188,6 +213,15 @@ static void apply_kv(EngineConfig& cfg, const std::string& section, const std::s
       assign_bool(cfg.enableCreatureSpriteX2Test);
     else if (iequals(key, "EnableCreatureSpriteLinearFiltering"))
       assign_bool(cfg.enableCreatureSpriteLinearFiltering);
+    else if (iequals(key, "CreatureSpriteFilter")) {
+      state.creatureSpriteFilterPresent = true;
+      if (const auto parsed = parse_creature_sprite_filter_mode(val)) {
+        cfg.creatureSpriteFilter = *parsed;
+      } else {
+        cfg.creatureSpriteFilter = CreatureSpriteFilterMode::Nearest;
+        if (diagnostics) ++diagnostics->invalidValues;
+      }
+    }
     else if (iequals(key, "EnableBridgeTransitionPreview"))
       assign_bool(cfg.enableBridgeTransitionPreview);
     else if (iequals(key, "EnableBigLogoX4Test"))
@@ -226,6 +260,7 @@ bool ConfigManager::load(const std::filesystem::path& path, EngineConfig& out,
   }
 
   EngineConfig cfg = out;
+  ConfigParseState state{};
   std::string section;
   std::string line;
 
@@ -246,7 +281,13 @@ bool ConfigManager::load(const std::filesystem::path& path, EngineConfig& out,
 
     auto key = trim(raw.substr(0, eq));
     auto val = trim(raw.substr(eq + 1));
-    apply_kv(cfg, section, key, val, diagnostics);
+    apply_kv(cfg, state, section, key, val, diagnostics);
+  }
+
+  if (!state.creatureSpriteFilterPresent) {
+    cfg.creatureSpriteFilter = cfg.enableCreatureSpriteLinearFiltering
+                                   ? CreatureSpriteFilterMode::Linear
+                                   : CreatureSpriteFilterMode::Nearest;
   }
 
   normalize(cfg);
@@ -303,6 +344,8 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);
   write_bool(f, "EnableCreatureSpriteX2Test", cfg.enableCreatureSpriteX2Test);
   write_bool(f, "EnableCreatureSpriteLinearFiltering", cfg.enableCreatureSpriteLinearFiltering);
+  f << "CreatureSpriteFilter = "
+    << creature_sprite_filter_mode_name(cfg.creatureSpriteFilter) << "\n";
   write_bool(f, "EnableBridgeTransitionPreview", cfg.enableBridgeTransitionPreview);
   write_bool(f, "EnableBigLogoX4Test", cfg.enableBigLogoX4Test);
   write_bool(f, "EnableMainMenuX4Test", cfg.enableMainMenuX4Test);

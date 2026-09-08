@@ -769,6 +769,8 @@ function xbr4x(source, width, height) {
                 "src/iee/creature_sprite_x2.h",
                 "src/iee/core/config.cpp",
                 "src/iee/core/config.h",
+                "src/iee/core/creature_sprite_filter_math.cpp",
+                "src/iee/core/creature_sprite_filter_math.h",
                 "src/iee/core/native_occlusion_probe.cpp",
                 "src/iee/core/native_occlusion_probe.h",
                 "src/iee/game/build_manifest.cpp",
@@ -1904,6 +1906,8 @@ $setInfo = Read-RegistrySet '{quote(set_path)}'
                 "src/iee/creature_sprite_x2.h",
                 "src/iee/core/config.cpp",
                 "src/iee/core/config.h",
+                "src/iee/core/creature_sprite_filter_math.cpp",
+                "src/iee/core/creature_sprite_filter_math.h",
                 "src/iee/core/native_occlusion_probe.cpp",
                 "src/iee/core/native_occlusion_probe.h",
                 "src/iee/game/build_manifest.cpp",
@@ -2768,12 +2772,14 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                     "EnableCreatureSpriteUpscaleTest = true",
                     "EnableCreatureSpriteX2Test = false",
                     "EnableCreatureSpriteLinearFiltering = false",
+                    "CreatureSpriteFilter = Nearest",
                     "",
                 )
             )
             ini.write_text(original, encoding="utf-8")
             state = {
                 "schema": pipeline.XN_CATALOG_INSTALL_STATE_SCHEMA,
+                "creature_sprite_filter": "Nearest",
                 "game_root": str(game),
                 "targets": [
                     {
@@ -2788,8 +2794,8 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                 original.replace(
                     "EnableAreaAnimationX4 = true\n", ""
                 ).replace(
-                    "EnableCreatureSpriteLinearFiltering = false\n",
-                    "EnableCreatureSpriteLinearFiltering = false\nEnableAreaAnimationX4 = true\n",
+                    "CreatureSpriteFilter = Nearest\n",
+                    "CreatureSpriteFilter = Nearest\nEnableAreaAnimationX4 = true\n",
                 ),
                 encoding="utf-8",
             )

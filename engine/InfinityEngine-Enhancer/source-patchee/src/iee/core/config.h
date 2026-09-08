@@ -4,6 +4,16 @@
 #include <filesystem>
 
 namespace iee::core {
+
+enum class CreatureSpriteFilterMode : std::uint8_t {
+  Nearest = 0,
+  Linear = 1,
+  CatmullRom = 2,
+};
+
+[[nodiscard]] const char* creature_sprite_filter_mode_name(
+    CreatureSpriteFilterMode mode) noexcept;
+
 struct EngineConfig {
   bool enableAnisotropicFiltering = false;
   float maxAnisotropy = 8.0f;
@@ -89,9 +99,12 @@ struct EngineConfig {
   // x2 installations. New installers write EnableCreatureSpriteUpscaleTest.
   bool enableCreatureSpriteX2Test = false;
   // Explicit A/B diagnostic for creature-sprite xN backing textures. The
-  // default remains NEAREST so released/validated packs retain pixel-exact
-  // sampling; true selects OpenGL LINEAR for a reversible visual comparison.
+  // new enum takes precedence when CreatureSpriteFilter is present. This bool
+  // remains a parsed and serialized compatibility surface for older INIs.
   bool enableCreatureSpriteLinearFiltering = false;
+  // Effective startup mode. NEAREST remains the safe default and formal QA
+  // baseline; CatmullRom uses a NEAREST sampler plus the targeted shader path.
+  CreatureSpriteFilterMode creatureSpriteFilter = CreatureSpriteFilterMode::Nearest;
 
   [[nodiscard]] constexpr bool creature_sprite_upscale_enabled() const noexcept {
     return enableCreatureSpriteUpscaleTest || enableCreatureSpriteX2Test;

@@ -8,6 +8,10 @@
 
 #include "iee/area_animation_x4_registry.h"
 
+namespace iee::core {
+enum class CreatureSpriteFilterMode : std::uint8_t;
+}
+
 namespace iee::creature_sprite_x2 {
 inline constexpr int kNativeLogicalBorder = 1;
 inline constexpr std::size_t kMaximumCompositeLayers = 8;
@@ -198,7 +202,7 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
 // registry-set, the version-3 monolithic xN registry, and finally the legacy
 // x2 registry. A present but invalid higher-priority source fails closed
 // without falling through. No game or GL state is touched.
-void configure_linear_filtering(bool enabled) noexcept;
+void configure_filter_mode(core::CreatureSpriteFilterMode mode) noexcept;
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;

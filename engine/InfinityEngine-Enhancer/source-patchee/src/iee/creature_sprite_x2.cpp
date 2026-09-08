@@ -29,6 +29,7 @@
 #include <compressapi.h>
 #endif
 
+#include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/opengl_types.h"
@@ -385,7 +386,8 @@ std::atomic<std::uint32_t> g_loadedScale{0};
 std::atomic<bool> g_targetsCharacter{false};
 std::atomic<bool> g_targetsMonster{false};
 std::atomic<bool> g_targetsMonsterIcewind{false};
-std::atomic<bool> g_linearFiltering{false};
+std::atomic<core::CreatureSpriteFilterMode> g_filterMode{
+    core::CreatureSpriteFilterMode::Nearest};
 std::vector<Resource> g_resources;
 std::vector<CatalogAnimation> g_packAnimations;
 CatalogState g_catalog;
@@ -423,13 +425,16 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
                                          const char* reason) noexcept;
 
 [[nodiscard]] int sampling_filter() noexcept {
-  return static_cast<int>(g_linearFiltering.load(std::memory_order_acquire)
-                              ? game::gl::LINEAR
-                              : game::gl::NEAREST);
+  return static_cast<int>(
+      g_filterMode.load(std::memory_order_acquire) == core::CreatureSpriteFilterMode::Linear
+          ? game::gl::LINEAR
+          : game::gl::NEAREST);
 }
 
 [[nodiscard]] const char* sampling_filter_name() noexcept {
-  return g_linearFiltering.load(std::memory_order_acquire) ? "LINEAR" : "NEAREST";
+  return g_filterMode.load(std::memory_order_acquire) == core::CreatureSpriteFilterMode::Linear
+             ? "LINEAR"
+             : "NEAREST";
 }
 
 void reset_diagnostics_locked() noexcept {
@@ -3614,8 +3619,8 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   return false;
 }
 
-void configure_linear_filtering(bool enabled) noexcept {
-  g_linearFiltering.store(enabled, std::memory_order_release);
+void configure_filter_mode(core::CreatureSpriteFilterMode mode) noexcept {
+  g_filterMode.store(mode, std::memory_order_release);
 }
 
 void release() noexcept {

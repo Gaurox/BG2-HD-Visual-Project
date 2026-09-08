@@ -99,6 +99,7 @@ SCRIPT_TEST_ALIASES = {
     "list_animations.py": ("test_animation_inventory",),
     "Install-CreatureSprite-XN-Catalog-Test.ps1": ("test_creature_sprite_xn_catalog_install",),
     "Restore-CreatureSprite-XN-Catalog-Test.ps1": ("test_creature_sprite_xn_catalog_install",),
+    "Install-CreatureSprite-XN-Test.ps1": ("test_creature_sprite_x2_pipeline",),
     "Install-AreaAnimation-AreaTest.ps1": ("test_area_animation_area_test_transaction",),
     "Restore-AreaAnimation-AreaTest.ps1": ("test_area_animation_area_test_transaction",),
 }

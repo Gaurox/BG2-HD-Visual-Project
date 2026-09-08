@@ -28,6 +28,7 @@
 #include "iee/core/area_animation_clock_probe.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/cache_budget_simulator.h"
+#include "iee/core/creature_sprite_filter_math.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/logger.h"
@@ -180,6 +181,15 @@ template <typename T, typename U>
 void expect_eq(const T& actual, const U& expected, std::string_view message) {
   if (!(actual == expected)) {
     std::cerr << "FAIL: " << message << " (actual=" << actual << ", expected=" << expected << ")\n";
+    ++g_failures;
+  }
+}
+
+void expect_near(double actual, double expected, double tolerance,
+                 std::string_view message) {
+  if (!std::isfinite(actual) || std::abs(actual - expected) > tolerance) {
+    std::cerr << "FAIL: " << message << " (actual=" << actual << ", expected=" << expected
+              << ", tolerance=" << tolerance << ")\n";
     ++g_failures;
   }
 }
@@ -968,6 +978,8 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableCreatureSpriteX2Test, "creature-sprite x2 test defaults off");
   expect_true(!cfg.enableCreatureSpriteLinearFiltering,
               "creature-sprite linear filtering defaults off");
+  expect_true(cfg.creatureSpriteFilter == iee::core::CreatureSpriteFilterMode::Nearest,
+              "creature-sprite filter defaults to the NEAREST QA baseline");
   expect_true(!cfg.creature_sprite_upscale_enabled(),
               "creature-sprite upscale helper defaults off");
   auto newKeyOnly = cfg;
@@ -1003,6 +1015,131 @@ void test_config_shader_override_defaults() {
   wtpoolBypassOnly.bypassWtpoolTileRenderHook = true;
   expect_true(wtpoolBypassOnly.wtpool_page_check_enabled(),
               "WTPOOL page checks should run for the bypass diagnostic");
+}
+
+void test_config_creature_sprite_filter_precedence() {
+  using iee::core::CreatureSpriteFilterMode;
+  const auto tempPath =
+      std::filesystem::current_path() / "InfinityEngine-Enhancer-creature-filter-test.ini";
+  const auto load = [&](std::string_view text,
+                        iee::core::ConfigLoadDiagnostics* diagnostics = nullptr) {
+    {
+      std::ofstream out(tempPath, std::ios::trunc);
+      out << text;
+    }
+    iee::core::EngineConfig cfg{};
+    expect_true(iee::core::ConfigManager::load(tempPath, cfg, diagnostics),
+                "creature-sprite filter fixture should load");
+    return cfg;
+  };
+
+  const auto legacyLinear = load(
+      "[Shaders]\nEnableCreatureSpriteLinearFiltering = true\n");
+  expect_true(legacyLinear.creatureSpriteFilter == CreatureSpriteFilterMode::Linear,
+              "legacy true selects LINEAR when the enum key is absent");
+
+  const auto newKeyAfterLegacy = load(
+      "[Shaders]\nEnableCreatureSpriteLinearFiltering = true\n"
+      "CreatureSpriteFilter = Nearest\n");
+  expect_true(newKeyAfterLegacy.creatureSpriteFilter == CreatureSpriteFilterMode::Nearest,
+              "the enum key overrides legacy true when it appears last");
+
+  const auto newKeyBeforeLegacy = load(
+      "[Shaders]\ncreaturespritefilter = cAtMuLlRoM\n"
+      "EnableCreatureSpriteLinearFiltering = true\n");
+  expect_true(newKeyBeforeLegacy.creatureSpriteFilter == CreatureSpriteFilterMode::CatmullRom,
+              "the case-insensitive enum key overrides legacy true regardless of order");
+
+  iee::core::ConfigLoadDiagnostics invalidDiagnostics{};
+  const auto invalid = load(
+      "[Shaders]\nCreatureSpriteFilter = Lanczos\n"
+      "EnableCreatureSpriteLinearFiltering = true\n",
+      &invalidDiagnostics);
+  expect_true(invalid.creatureSpriteFilter == CreatureSpriteFilterMode::Nearest,
+              "an invalid enum value fails closed to NEAREST even when legacy is true");
+  expect_eq(invalidDiagnostics.invalidValues, std::size_t{1},
+            "an invalid creature-sprite filter value is diagnosed");
+
+  std::error_code error;
+  std::filesystem::remove(tempPath, error);
+}
+
+void test_catmull_rom_reference_weights() {
+  using iee::core::creature_sprite_filter::catmull_rom_weights;
+  constexpr std::array phases{0.0, 0.125, 0.5, 0.875, 1.0};
+  for (const double phase : phases) {
+    const auto weights = catmull_rom_weights(phase);
+    const double sum = weights[0] + weights[1] + weights[2] + weights[3];
+    expect_near(sum, 1.0, 1.0e-12, "Catmull-Rom weights must sum to one");
+    const auto mirror = catmull_rom_weights(1.0 - phase);
+    for (std::size_t index = 0; index < weights.size(); ++index) {
+      expect_near(weights[index], mirror[weights.size() - 1 - index], 1.0e-12,
+                  "Catmull-Rom weights must be symmetric");
+    }
+  }
+
+  const auto center = catmull_rom_weights(0.0);
+  expect_near(center[0], 0.0, 0.0, "center phase excludes sample -1");
+  expect_near(center[1], 1.0, 0.0, "center phase selects the base texel exactly");
+  expect_near(center[2], 0.0, 0.0, "center phase excludes sample +1");
+  expect_near(center[3], 0.0, 0.0, "center phase excludes sample +2");
+
+  const auto half = catmull_rom_weights(0.5);
+  expect_true(half[0] < 0.0 && half[3] < 0.0,
+              "Catmull-Rom outer lobes must remain negative before final clamping");
+}
+
+void test_catmull_rom_premultiplied_reference() {
+  using iee::core::creature_sprite_filter::SampleBlock;
+  using iee::core::creature_sprite_filter::kAlphaEpsilon;
+  using iee::core::creature_sprite_filter::reconstruct_premultiplied;
+  SampleBlock samples{};
+  samples[5] = {.r = 0.25, .g = 0.5, .b = 0.75, .a = 1.0};
+  const auto center = reconstruct_premultiplied(samples, 0.0, 0.0);
+  expect_near(center.r, 0.25, 0.0, "center reconstruction preserves red exactly");
+  expect_near(center.g, 0.5, 0.0, "center reconstruction preserves green exactly");
+  expect_near(center.b, 0.75, 0.0, "center reconstruction preserves blue exactly");
+  expect_near(center.a, 1.0, 0.0, "center reconstruction preserves alpha exactly");
+
+  samples.fill({.r = 0.2, .g = 0.4, .b = 0.8, .a = 0.25});
+  const auto constant = reconstruct_premultiplied(samples, 0.375, 0.625);
+  expect_near(constant.r, 0.2, 1.0e-12, "constant partial-alpha red is invariant");
+  expect_near(constant.g, 0.4, 1.0e-12, "constant partial-alpha green is invariant");
+  expect_near(constant.b, 0.8, 1.0e-12, "constant partial-alpha blue is invariant");
+  expect_near(constant.a, 0.25, 1.0e-12, "constant partial alpha is invariant");
+
+  const double nan = std::numeric_limits<double>::quiet_NaN();
+  samples.fill({.r = 100.0, .g = -100.0, .b = nan, .a = 0.0});
+  const auto hidden = reconstruct_premultiplied(samples, 0.5, 0.5);
+  expect_true(hidden.r == 0.0 && hidden.g == 0.0 && hidden.b == 0.0 && hidden.a == 0.0,
+              "RGB hidden below zero alpha must not affect reconstruction");
+
+  samples.fill({.r = 1.0, .g = 0.5, .b = 0.25, .a = kAlphaEpsilon * 0.5});
+  const auto tiny = reconstruct_premultiplied(samples, 0.25, 0.75);
+  expect_true(tiny.r == 0.0 && tiny.g == 0.0 && tiny.b == 0.0 && tiny.a == 0.0,
+              "alpha at or below epsilon must produce transparent black");
+
+  for (std::size_t index = 0; index < samples.size(); ++index) {
+    const double value = (index % 2 == 0) ? 1.0 : 0.0;
+    samples[index] = {.r = value, .g = 1.0 - value, .b = value, .a = value};
+  }
+  for (const double phaseX : {0.0, 0.25, 0.5, 0.75, 1.0}) {
+    for (const double phaseY : {0.0, 0.25, 0.5, 0.75, 1.0}) {
+      const auto result = reconstruct_premultiplied(samples, phaseX, phaseY);
+      expect_true(std::isfinite(result.r) && std::isfinite(result.g) &&
+                      std::isfinite(result.b) && std::isfinite(result.a),
+                  "impulse reconstruction must remain finite");
+      expect_true(result.r >= 0.0 && result.r <= 1.0 && result.g >= 0.0 &&
+                      result.g <= 1.0 && result.b >= 0.0 && result.b <= 1.0 &&
+                      result.a >= 0.0 && result.a <= 1.0,
+                  "impulse reconstruction must remain bounded after final clamping");
+    }
+  }
+
+  const auto invalidPhase = reconstruct_premultiplied(samples, nan, 0.5);
+  expect_true(invalidPhase.r == 0.0 && invalidPhase.g == 0.0 &&
+                  invalidPhase.b == 0.0 && invalidPhase.a == 0.0,
+              "a non-finite phase must fail closed to transparent black");
 }
 
 void test_native_occlusion_probe_correlation() {
@@ -3670,6 +3807,7 @@ void test_config_shader_override_roundtrip() {
     orig.enableCreatureSpriteUpscaleTest = true;
     orig.enableCreatureSpriteX2Test = true;
     orig.enableCreatureSpriteLinearFiltering = true;
+    orig.creatureSpriteFilter = iee::core::CreatureSpriteFilterMode::CatmullRom;
     orig.enableBigLogoX4Test = true;
     orig.enableMainMenuX4Test = true;
     orig.enableMenuX2Test = true;
@@ -3708,6 +3846,8 @@ void test_config_shader_override_roundtrip() {
               "enableCreatureSpriteX2Test should round-trip as true");
   expect_true(loaded.enableCreatureSpriteLinearFiltering,
               "enableCreatureSpriteLinearFiltering should round-trip as true");
+  expect_true(loaded.creatureSpriteFilter == iee::core::CreatureSpriteFilterMode::CatmullRom,
+              "creatureSpriteFilter should round-trip independently of the legacy bool");
   expect_true(loaded.creature_sprite_upscale_enabled(),
               "saved xN and legacy activation keys should keep the helper enabled");
   expect_true(loaded.enableBigLogoX4Test, "enableBigLogoX4Test should round-trip as true");
@@ -5577,7 +5717,10 @@ int main() {
   test_config_reports_malformed_values();
   test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
+  test_config_creature_sprite_filter_precedence();
   test_config_shader_override_roundtrip();
+  test_catmull_rom_reference_weights();
+  test_catmull_rom_premultiplied_reference();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();

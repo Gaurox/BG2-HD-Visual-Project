@@ -4839,6 +4839,8 @@ def source_tree_hash(source_root: Path) -> str:
         "src/iee/creature_sprite_x2.h",
         "src/iee/core/config.cpp",
         "src/iee/core/config.h",
+        "src/iee/core/creature_sprite_filter_math.cpp",
+        "src/iee/core/creature_sprite_filter_math.h",
         "src/iee/core/native_occlusion_probe.cpp",
         "src/iee/core/native_occlusion_probe.h",
         "src/iee/game/build_manifest.cpp",
@@ -7401,6 +7403,11 @@ def runtime_ini_owned_contract_errors(path: Path, state: dict[str, Any]) -> list
     }
     if state.get("schema") == XN_CATALOG_INSTALL_STATE_SCHEMA:
         expected["enablecreaturespritelinearfiltering"] = "false"
+        filter_mode = state.get("creature_sprite_filter")
+        if filter_mode is not None:
+            if filter_mode != "Nearest":
+                return ["catalog creature-sprite filter state is invalid"]
+            expected["creaturespritefilter"] = "nearest"
     values: dict[str, list[str]] = {key: [] for key in expected}
     section = ""
     try:

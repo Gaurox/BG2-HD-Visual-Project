@@ -107,6 +107,7 @@ add_library(iee_common STATIC
     src/iee/core/area_animation_timeline.cpp
     src/iee/core/cache_budget_simulator.cpp
     src/iee/core/config.cpp
+    src/iee/core/creature_sprite_filter_math.cpp
     src/iee/core/logger.cpp
     src/iee/core/map_page_shadow.cpp
     src/iee/core/map_texture_telemetry.cpp

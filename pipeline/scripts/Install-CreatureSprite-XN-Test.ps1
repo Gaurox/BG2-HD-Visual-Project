@@ -79,6 +79,8 @@ function Get-EngineSourceContractSha256([string]$SourceRoot) {
         'src/iee/creature_sprite_x2.h',
         'src/iee/core/config.cpp',
         'src/iee/core/config.h',
+        'src/iee/core/creature_sprite_filter_math.cpp',
+        'src/iee/core/creature_sprite_filter_math.h',
         'src/iee/core/native_occlusion_probe.cpp',
         'src/iee/core/native_occlusion_probe.h',
         'src/iee/game/build_manifest.cpp',

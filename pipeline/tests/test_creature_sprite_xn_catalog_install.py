@@ -25,6 +25,8 @@ SOURCE_FILES = (
     "src/iee/creature_sprite_x2.h",
     "src/iee/core/config.cpp",
     "src/iee/core/config.h",
+    "src/iee/core/creature_sprite_filter_math.cpp",
+    "src/iee/core/creature_sprite_filter_math.h",
     "src/iee/core/native_occlusion_probe.cpp",
     "src/iee/core/native_occlusion_probe.h",
     "src/iee/game/build_manifest.cpp",
@@ -899,8 +901,13 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
             restore_real_game()
 
     def test_install_append_and_two_level_restore_are_exact(self) -> None:
+        live_ini = self.fake.game / "InfinityEngine-Enhancer.ini"
+        live_ini.write_text(
+            "[Shaders]\r\nUnrelated = true\r\nCreatureSpriteFilter = CatmullRom\r\n",
+            encoding="utf-8",
+        )
         baseline_dll = (self.fake.game / "InfinityEngine-Enhancer.dll").read_bytes()
-        baseline_ini = (self.fake.game / "InfinityEngine-Enhancer.ini").read_bytes()
+        baseline_ini = live_ini.read_bytes()
         first_job = self.fake.root / "catalog-job-generation-one.json"
         second_job = self.fake.root / "catalog-job-generation-two.json"
         first_job_value = dict(self.fake.job_value)
@@ -920,6 +927,10 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
         first_state = json.loads(first_state_bytes)
         self.assertEqual(first_state["status"], "installed-pending-qa")
         self.assertEqual(first_state["animation_ids"], ["0x6102"])
+        self.assertEqual(first_state["creature_sprite_filter"], "Nearest")
+        installed_ini = live_ini.read_text(encoding="utf-8")
+        self.assertIn("CreatureSpriteFilter = Nearest", installed_ini)
+        self.assertNotIn("CreatureSpriteFilter = CatmullRom", installed_ini)
         live_catalog = self.fake.game / "iee-assets/creature-sprites/CreatureSprites-XN.catalog"
         self.assertEqual(sha256(live_catalog), first["catalog_sha256"])
         owner = json.loads(
@@ -984,6 +995,7 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
         live_ini.write_text(
             "[Rendering]\nUnrelated = preserved\n[Shaders]\n"
             "EnableCreatureSpriteLinearFiltering = false\n"
+            "CreatureSpriteFilter = Nearest\n"
             "EnableCreatureSpriteUpscaleTest = true\n"
             "EnableCreatureSpriteX2Test = false\n",
             encoding="utf-8",
@@ -1019,6 +1031,7 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
             "[Shaders]\nEnableCreatureSpriteX2Test = false\n"
             "EnableCreatureSpriteUpscaleTest = true\n"
             "EnableCreatureSpriteLinearFiltering = false\n"
+            "CreatureSpriteFilter = Nearest\n"
             "[Rendering]\nUnrelated = changed-order\n",
             encoding="utf-8",
         )

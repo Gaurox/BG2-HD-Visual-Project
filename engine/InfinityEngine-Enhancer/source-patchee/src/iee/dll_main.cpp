@@ -165,7 +165,7 @@ static DWORD WINAPI InitThread(LPVOID) {
     }
     if (cfg.creature_sprite_upscale_enabled()) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
-      creature_sprite_x2::configure_linear_filtering(cfg.enableCreatureSpriteLinearFiltering);
+      creature_sprite_x2::configure_filter_mode(cfg.creatureSpriteFilter);
       (void)creature_sprite_x2::prepare(moduleDir / "iee-assets" / "creature-sprites");
     }
     if (cfg.enableBridgeTransitionPreview) {
@@ -180,7 +180,7 @@ static DWORD WINAPI InitThread(LPVOID) {
           "fullFrameSsaa2x={}, bamUiTextureProbe={}, am3000aFrameX4Test={}, "
           "am0700aAnimationX4Test={}, am0205eAnimationX4Test={}, itemIconX2={}, areaAnimationX4={}, "
           "effectAnimationX4={}, "
-          "creatureSpriteUpscaleTest={}, creatureSpriteLinearFiltering={}, "
+          "creatureSpriteUpscaleTest={}, creatureSpriteFilter={}, "
           "bridgeTransitionPreview={}, "
           "bigLogoX4Test={}, "
           "mainMenuX4Test={}, menuX2Test={}, performanceLogs={}",
@@ -195,7 +195,7 @@ static DWORD WINAPI InitThread(LPVOID) {
           ctx.cfg.enableItemIconX2,
           ctx.cfg.enableAreaAnimationX4, ctx.cfg.enableEffectAnimationX4,
           ctx.cfg.creature_sprite_upscale_enabled(),
-          ctx.cfg.enableCreatureSpriteLinearFiltering,
+          core::creature_sprite_filter_mode_name(ctx.cfg.creatureSpriteFilter),
           ctx.cfg.enableBridgeTransitionPreview,
           ctx.cfg.enableBigLogoX4Test, ctx.cfg.enableMainMenuX4Test, ctx.cfg.enableMenuX2Test,
           ctx.cfg.enablePerformanceLogging);

@@ -1,6 +1,6 @@
 # Catmull–Rom pour sprites HD — guide de développement
 
-Statut : **D0 terminé ; implémentation D1 non commencée**. Dernière vérification : 2026-09-09.
+Statut : **D1 implémenté ; validation en attente du choix des tests**. Dernière vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -318,7 +318,8 @@ Tous les chemins suivants sont relatifs à `ENGINE`, sauf indication contraire.
 | Fichier/module | Intervention prévue |
 |---|---|
 | `src/iee/core/config.h/.cpp` | Enum, nouvelle clé, priorité legacy, sérialisation. |
-| `src/iee/dll_main.cpp` | Initialiser le mode ; appel actuel à `configure_linear_filtering`. |
+| `src/iee/core/creature_sprite_filter_math.h/.cpp` | Référence CPU pure 4×4, poids et RGBA prémultiplié ; présente depuis D1. |
+| `src/iee/dll_main.cpp` | Initialiser le mode via `configure_filter_mode`. |
 | `src/iee/creature_sprite_x2.h/.cpp` | Samplers, publication d'identité après `upload_frame_locked`/`upload_composite_texture_locked`, renouvellement du cache. |
 | `src/iee/hooks.cpp` | `detour_vid_cell_render_texture` : corréler propriété et éventuelle sortie d'occlusion ; pas de portée shader limitée à cet appel. |
 | `src/iee/native_occlusion_bridge.h/.cpp` | Propager les métadonnées de l'entrée créature vers la sortie ; sampler de sortie adapté au mode 2 seulement. |
@@ -535,13 +536,12 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] Frontière différée corrigée ; appel final `glDrawArrays` identifié hors jeu.
 - [x] Guide et chemins de développement définis.
 - [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
-- [ ] D1 : référence CPU/configuration implémentées.
+- [ ] D1 : référence CPU/configuration et tests implémentés ; exécution ou renoncement explicite en attente.
 - [ ] D2 : préambule et dispatch GPU observés en jeu.
 - [ ] D3–D5 : shaders neutres, routage et filtre implémentés.
 - [ ] D6–D7 : transactions, tests choisis, QA et coût mesurés.
 - [ ] D8 : validation ingame et éventuelle intégration release décidées.
 
-Prochaine action d'un agent chargé d'implémenter : D1 seulement — définir la référence CPU, les
-poids Catmull–Rom, le contrat alpha et la configuration, puis préparer les tests ciblés sans les
-exécuter avant choix utilisateur. Ne pas préparer le candidat D2 ni reprendre l'ancienne idée de
-portée shader autour du seul `RenderTexture`.
+Prochaine action : appliquer le choix utilisateur `tests ciblés / tous les tests / aucun test`,
+consigner le résultat et clôturer D1. Ne pas engager D2 avant cette clôture ; ne pas reprendre
+l'ancienne idée de portée shader autour du seul `RenderTexture`.
