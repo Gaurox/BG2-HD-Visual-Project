@@ -110,6 +110,9 @@ PATH_TEST_ALIASES = {
     "engine/InfinityEngine-Enhancer/source-patchee/tools/install_renderer_candidate.py": (
         "test_renderer_candidate_transaction",
     ),
+    "engine/InfinityEngine-Enhancer/source-patchee/tools/shader_suite_profile.py": (
+        "test_shader_suite_profile",
+    ),
 }
 
 

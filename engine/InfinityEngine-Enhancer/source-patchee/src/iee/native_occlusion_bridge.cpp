@@ -10,6 +10,7 @@
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/opengl_types.h"
+#include "iee/shader_probe.h"
 
 namespace iee::native_occlusion_bridge {
 namespace {
@@ -518,6 +519,9 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       transientTextureId = 0;
       return false;
     }
+    probe::record_creature_texture_trace(output.glName, logicalWidth, logicalHeight,
+                                         physicalWidth, physicalHeight, scale,
+                                         "creature-native-occlusion-output");
     if (!g_activeLogged) {
       g_activeLogged = true;
       LOG_INFO(

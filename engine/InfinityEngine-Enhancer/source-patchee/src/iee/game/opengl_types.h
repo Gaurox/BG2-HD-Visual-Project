@@ -138,6 +138,8 @@ using PFN_glGetAttachedShaders = void(APIENTRY*)(unsigned program, int maxCount,
 using PFN_glGetShaderSource = void(APIENTRY*)(unsigned shader, int bufSize, int* length,
                                               char* source);
 using PFN_glGetUniformLocation = int(APIENTRY*)(unsigned program, const char* name);
+using PFN_glGetUniformiv = void(APIENTRY*)(unsigned program, int location, int* params);
+using PFN_glGetUniformfv = void(APIENTRY*)(unsigned program, int location, float* params);
 using PFN_glUniform1f = void(APIENTRY*)(int location, float v0);
 using PFN_glUniform1i = void(APIENTRY*)(int location, int v0);
 using PFN_glUniform2f = void(APIENTRY*)(int location, float v0, float v1);
@@ -210,6 +212,8 @@ struct OpenGLFunctions {
   PFN_glGetAttachedShaders glGetAttachedShaders{};
   PFN_glGetShaderSource glGetShaderSource{};
   PFN_glGetUniformLocation glGetUniformLocation{};
+  PFN_glGetUniformiv glGetUniformiv{};
+  PFN_glGetUniformfv glGetUniformfv{};
   PFN_glUniform1f glUniform1f{};
   PFN_glUniform1i glUniform1i{};
   PFN_glUniform2f glUniform2f{};

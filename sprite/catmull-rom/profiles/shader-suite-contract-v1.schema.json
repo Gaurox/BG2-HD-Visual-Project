@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bg2hd.gaurox.dev/contracts/shader-suite-contract-v1.schema.json",
+  "title": "IEE shader suite contract",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "upstream",
+    "global_parameters",
+    "profile_parameters",
+    "interfaces",
+    "base_recipes",
+    "components",
+    "presets",
+    "witness_profiles"
+  ],
+  "properties": {
+    "contract_version": {"type": "integer", "minimum": 1},
+    "authority": {"type": "string"},
+    "upstream": {"type": "object"},
+    "validation_policy": {"type": "object"},
+    "global_parameters": {"type": "object"},
+    "profile_parameters": {"type": "object"},
+    "interfaces": {"type": "object"},
+    "base_recipes": {"type": "object"},
+    "components": {"type": "object"},
+    "presets": {"type": "object"},
+    "witness_profiles": {"type": "object"}
+  },
+  "additionalProperties": false
+}

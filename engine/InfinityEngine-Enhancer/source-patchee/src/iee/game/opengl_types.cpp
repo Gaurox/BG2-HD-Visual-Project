@@ -161,6 +161,10 @@ bool OpenGLFunctions::initialize() noexcept {
       reinterpret_cast<PFN_glGetShaderSource>(get_ext_proc_address(opengl32, "glGetShaderSource"));
   glGetUniformLocation = reinterpret_cast<PFN_glGetUniformLocation>(
       get_ext_proc_address(opengl32, "glGetUniformLocation"));
+  glGetUniformiv = reinterpret_cast<PFN_glGetUniformiv>(
+      get_ext_proc_address(opengl32, "glGetUniformiv"));
+  glGetUniformfv = reinterpret_cast<PFN_glGetUniformfv>(
+      get_ext_proc_address(opengl32, "glGetUniformfv"));
   glUniform1f = reinterpret_cast<PFN_glUniform1f>(get_ext_proc_address(opengl32, "glUniform1f"));
   glUniform1i = reinterpret_cast<PFN_glUniform1i>(get_ext_proc_address(opengl32, "glUniform1i"));
   glUniform2f = reinterpret_cast<PFN_glUniform2f>(get_ext_proc_address(opengl32, "glUniform2f"));

@@ -1,0 +1,297 @@
+{
+  "contract_version": 1,
+  "authority": "shader-suite-values-defaults-components-presets-and-interfaces",
+  "upstream": {
+    "project": "Dshaders",
+    "version": "0.3.5",
+    "commit": "4722673a8017c56ace4018b3db459392ecbb75a4",
+    "license": "MIT",
+    "game_target": "BG2EE Steam 2.7.3.0 Windows x64",
+    "adaptation": "IEE typed runtime parameters; no WeiDU runtime dependency"
+  },
+  "validation_policy": {
+    "numbers_must_be_finite": true,
+    "invalid_value": "diagnose-and-use-neutral",
+    "out_of_range": "diagnose-and-use-neutral",
+    "silent_clamp": false,
+    "component_application": "ordered-last-write-wins",
+    "preset_start": "component-1000-clean-base",
+    "font_gamma_component": "replace-not-multiply"
+  },
+  "global_parameters": {
+    "CreatureSpriteFilter": {
+      "type": "enum",
+      "values": ["Nearest", "Linear", "CatmullRom"],
+      "neutral": "Nearest",
+      "owner": "D1"
+    },
+    "ShaderSuiteEnabled": {
+      "type": "boolean",
+      "neutral": false
+    },
+    "Optimizer": {
+      "type": "boolean",
+      "neutral": false,
+      "delivery": "D12"
+    }
+  },
+  "profile_parameters": {
+    "Enabled": {
+      "type": "boolean",
+      "neutral": false
+    },
+    "Filter": {
+      "type": "enum",
+      "values": ["Native", "CatmullRom"],
+      "neutral": "Native"
+    },
+    "ColorSpace": {
+      "type": "enum",
+      "values": ["Stored", "SRGBLinear"],
+      "neutral": "Stored"
+    },
+    "Sharpen": {
+      "type": "number",
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "neutral": 0.0,
+      "semantics": "RGB only; -1 selects the Gaussian average; alpha unchanged"
+    },
+    "Gamma": {
+      "type": "number",
+      "exclusiveMinimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 1.0,
+      "semantics": "RGB exponent; never alpha except SelectionGamma"
+    },
+    "Contrast": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 1.0
+    },
+    "Brightness": {
+      "type": "number",
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "neutral": 0.0
+    },
+    "Saturation": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 1.0
+    },
+    "HueDegrees": {
+      "type": "number",
+      "minimum": -360.0,
+      "maximum": 360.0,
+      "neutral": 0.0,
+      "semantics": "YIQ rotation; one complete cycle accepted"
+    },
+    "OutlineMode": {
+      "type": "enum",
+      "values": ["Native", "Dshaders"],
+      "neutral": "Native"
+    },
+    "OutlineSize": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 2.0
+    },
+    "SelectedOutlineSize": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 3.5
+    },
+    "FontHackGamma": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 0.0,
+      "semantics": "0 disables the compatible-UI color hack"
+    },
+    "SelectionGamma": {
+      "type": "number",
+      "exclusiveMinimum": 0.0,
+      "maximum": 4.0,
+      "neutral": 1.0
+    },
+    "HeuristicBorder": {
+      "type": "boolean",
+      "neutral": false,
+      "semantics": "Does not replace texture bounds, memory clamps, or WED masks"
+    }
+  },
+  "interfaces": {
+    "CreatureHD": {
+      "kind": "IEE virtual profile",
+      "scope": "catalog-owned x2/x4 creature textures only",
+      "filter_owner": "global CreatureSpriteFilter; never profile Filter",
+      "parameters": [
+        "Enabled",
+        "ColorSpace",
+        "Sharpen",
+        "Gamma",
+        "Contrast",
+        "Brightness",
+        "Saturation",
+        "HueDegrees",
+        "OutlineMode",
+        "OutlineSize",
+        "SelectedOutlineSize"
+      ]
+    },
+    "fpSprite": {
+      "kind": "GL fragment shader",
+      "program_slot": 5,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "creatures, equipment, ground sprites and other sprite draws",
+      "samplers": [{"uniform": "uTex", "encoding": "straight RGBA", "alpha": "sample alpha"}],
+      "uniforms_native": ["uSpriteBlurAmount"],
+      "varyings": ["vTc", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees", "OutlineMode", "OutlineSize"]
+    },
+    "fpSELECT": {
+      "kind": "GL fragment shader",
+      "program_slot": 7,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "selected or highlighted sprites",
+      "samplers": [{"uniform": "uTex", "encoding": "straight RGBA", "alpha": "sample alpha"}],
+      "uniforms_native": ["uSpriteBlurAmount", "uTcScale"],
+      "varyings": ["vTc", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees", "OutlineMode", "OutlineSize"]
+    },
+    "fpDraw": {
+      "kind": "GL fragment shader",
+      "program_slot": 0,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "shared UI, effects, objects and selection circles",
+      "samplers": [{"uniform": "uTex", "encoding": "straight RGBA", "alpha": "sample alpha"}],
+      "uniforms_native": ["uColorTone"],
+      "varyings": ["vTc", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees", "FontHackGamma", "SelectionGamma", "HeuristicBorder"]
+    },
+    "fpTone": {
+      "kind": "GL fragment shader",
+      "program_slot": 1,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "shared tinted UI, effects, objects and selection circles",
+      "samplers": [{"uniform": "uTex", "encoding": "straight RGBA", "alpha": "sample alpha"}],
+      "uniforms_native": ["uColorTone"],
+      "varyings": ["vTc", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees", "FontHackGamma", "SelectionGamma", "HeuristicBorder"]
+    },
+    "fpFONT": {
+      "kind": "GL fragment shader",
+      "program_slot": 6,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "font glyphs",
+      "samplers": [{"uniform": "uTex", "encoding": "red coverage", "alpha": "texture red channel"}],
+      "uniforms_native": [],
+      "varyings": ["vTc", "vColor", "depth"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees"]
+    },
+    "fpSEAM": {
+      "kind": "GL fragment shader",
+      "program_slot": 8,
+      "vertex_shaders": ["vpDraw"],
+      "scope": "area tiles and IEE water override",
+      "samplers": [{"uniform": "uTex", "encoding": "straight RGBA tile atlas", "alpha": "sample alpha"}],
+      "uniforms_native": ["uTcScale", "uColorTone"],
+      "varyings": ["vTc", "vRef", "vColor"],
+      "integration": "future derived source must preserve the current IEE water path and its off path",
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees"]
+    },
+    "fpYUV": {
+      "kind": "GL fragment shader",
+      "program_slot": 3,
+      "vertex_shaders": ["vpYUV", "vpDraw"],
+      "scope": "packed planar YUV video",
+      "samplers": [{"uniform": "uTex", "encoding": "Y/U/V red-channel regions", "alpha": "opaque output"}],
+      "uniforms_native": [],
+      "varyings": ["vTc", "vTcU", "vTcV", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees"]
+    },
+    "fpYUVGRY": {
+      "kind": "GL fragment shader",
+      "program_slot": 4,
+      "vertex_shaders": ["vpYUV"],
+      "scope": "packed YUV video/effect with separate alpha",
+      "samplers": [
+        {"uniform": "uTex", "encoding": "Y/U/V red-channel regions with shader wrapping", "alpha": "not used"},
+        {"uniform": "uTex2", "encoding": "red alpha plane", "alpha": "texture red channel"}
+      ],
+      "uniforms_native": ["uColorTone"],
+      "varyings": ["vTc", "vTcU", "vTcV", "vColor"],
+      "parameters": ["Enabled", "Filter", "ColorSpace", "Sharpen", "Gamma", "Contrast", "Brightness", "Saturation", "HueDegrees"]
+    }
+  },
+  "base_recipes": {
+    "suite_disabled": {
+      "global": {},
+      "operations": []
+    },
+    "dshaders_base": {
+      "global": {"ShaderSuiteEnabled": true},
+      "operations": [
+        {"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Enabled": true, "ColorSpace": "SRGBLinear"}},
+        {"profiles": ["fpSprite", "fpSELECT"], "set": {"OutlineMode": "Dshaders"}},
+        {"profiles": ["fpDraw", "fpTone"], "set": {"HeuristicBorder": true}}
+      ]
+    }
+  },
+  "components": {
+    "1000": {"reset_base": "dshaders_base", "delivery": "D6-D10", "operations": []},
+    "1105": {"delivery": "D5/D7", "global": {"CreatureSpriteFilter": "CatmullRom"}, "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Filter": "CatmullRom"}}]},
+    "1125": {"delivery": "D5/D7-D10", "global": {"CreatureSpriteFilter": "CatmullRom"}, "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Filter": "CatmullRom"}}]},
+    "1205": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite"], "set": {"OutlineSize": 0.0}}]},
+    "1215": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite"], "set": {"OutlineSize": 0.0}}, {"profiles": ["fpSELECT"], "set": {"OutlineSize": 2.5}}]},
+    "1225": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"OutlineSize": 0.0}}]},
+    "1304": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Gamma": 1.02, "Contrast": 1.1, "Brightness": 0.05}}]},
+    "1314": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM"], "set": {"Gamma": 1.02, "Contrast": 1.1, "Brightness": 0.05}}, {"profiles": ["fpYUV", "fpYUVGRY"], "set": {"Gamma": 1.632, "Contrast": 1.1, "Brightness": 0.05}}]},
+    "1305": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Gamma": 1.02, "Contrast": 1.2, "Brightness": 0.1}}]},
+    "1315": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM"], "set": {"Gamma": 1.02, "Contrast": 1.2, "Brightness": 0.1}}, {"profiles": ["fpYUV", "fpYUVGRY"], "set": {"Gamma": 1.632, "Contrast": 1.2, "Brightness": 0.1}}]},
+    "1405": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Sharpen": 0.25}}]},
+    "1415": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Sharpen": 0.25}}]},
+    "1425": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Sharpen": 0.5}}]},
+    "1435": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Sharpen": 0.5}}]},
+    "1445": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Sharpen": -0.25}}]},
+    "1455": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Sharpen": -0.25}}]},
+    "1465": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"Sharpen": -0.5}}]},
+    "1475": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Sharpen": -0.5}}]},
+    "1505": {"delivery": "D8", "operations": [{"profiles": ["fpFONT"], "set": {"Gamma": 0.8}}]},
+    "1515": {"delivery": "D8", "operations": [{"profiles": ["fpFONT"], "set": {"Gamma": 0.8}}, {"profiles": ["fpDraw"], "set": {"FontHackGamma": 0.8}}]},
+    "1605": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"HueDegrees": 3.0}}]},
+    "1615": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"HueDegrees": 3.0}}]},
+    "1625": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"HueDegrees": 5.0}}]},
+    "1635": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"HueDegrees": 5.0}}]},
+    "1645": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"HueDegrees": -3.0}}]},
+    "1655": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"HueDegrees": -3.0}}]},
+    "1665": {"delivery": "D6/D7", "operations": [{"profiles": ["fpSprite", "fpSELECT"], "set": {"HueDegrees": -5.0}}]},
+    "1675": {"delivery": "D6-D10", "operations": [{"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"HueDegrees": -5.0}}]},
+    "1705": {"delivery": "D8", "operations": [{"profiles": ["fpDraw", "fpTone"], "set": {"SelectionGamma": 2.0}}]},
+    "1805": {"delivery": "D8", "operations": [{"profiles": ["fpDraw", "fpTone"], "set": {"HeuristicBorder": false}}]},
+    "9005": {"delivery": "D12", "global": {"Optimizer": true}, "operations": []}
+  },
+  "presets": {
+    "Templates": {"components": [1000]},
+    "BGEE13All": {"components": [1000, 1125, 1225]},
+    "BGEE13Sprites": {"components": [1000, 1105, 1225]},
+    "Intense": {"components": [1000, 1315, 1415, 1505]},
+    "IntenseBGEE13": {"components": [1000, 1125, 1225, 1315, 1415, 1505]},
+    "Moderate": {"components": [1000, 1314, 1415, 1505]},
+    "ModerateBGEE13": {"components": [1000, 1125, 1225, 1314, 1415, 1505]},
+    "AuthorChoice": {"components": [1000, 1125, 1215, 1314, 1415, 1505]},
+    "AuthorChoiceInfinityUI": {"components": [1000, 1125, 1215, 1314, 1415, 1515]},
+    "Parys": {"components": [1000, 1125, 1225, 1705, 1805]}
+  },
+  "witness_profiles": {
+    "BaselineNearest": {"base": "suite_disabled", "global": {"CreatureSpriteFilter": "Nearest"}},
+    "BaselineLinear": {"base": "suite_disabled", "global": {"CreatureSpriteFilter": "Linear"}},
+    "CatmullOnlyHD": {"base": "suite_disabled", "global": {"CreatureSpriteFilter": "CatmullRom"}},
+    "Custom": {"base": "suite_disabled", "customizable": true, "global": {}, "operations": []}
+  }
+}

@@ -58,7 +58,98 @@ struct ShaderRecord {
 struct ProgramRecord {
   bool linkLogged{};
   bool introspected{};
+  int programSlot{-1};
+  std::string vertexShaderName;
+  std::string fragmentShaderName;
   std::unordered_set<std::uintptr_t> callerLogged;
+};
+
+struct TextureTraceKey {
+  HGLRC context{};
+  unsigned texture{};
+
+  bool operator==(const TextureTraceKey& other) const noexcept {
+    return context == other.context && texture == other.texture;
+  }
+};
+
+struct TextureTraceKeyHash {
+  std::size_t operator()(const TextureTraceKey& key) const noexcept {
+    const auto context = reinterpret_cast<std::uintptr_t>(key.context);
+    return std::hash<std::uintptr_t>{}(context) ^
+           (std::hash<unsigned>{}(key.texture) + 0x9E3779B9u + (context << 6) +
+            (context >> 2));
+  }
+};
+
+struct CreatureTextureTrace {
+  int logicalWidth{};
+  int logicalHeight{};
+  int physicalWidth{};
+  int physicalHeight{};
+  int scale{};
+  std::string provenance;
+};
+
+struct BoundTextureSnapshot {
+  int unit{-1};
+  unsigned texture{};
+  int width{};
+  int height{};
+  int minFilter{};
+  int magFilter{};
+};
+
+struct SuiteDrawKey {
+  unsigned program{};
+  unsigned texture{};
+  unsigned texture2{};
+  unsigned mode{};
+  int count{};
+  int textureUnit{-1};
+  int textureUnit2{-1};
+  int minFilter{};
+  int magFilter{};
+  int minFilter2{};
+  int magFilter2{};
+  int viewportWidth{};
+  int viewportHeight{};
+  int framebuffer{};
+  int blendSource{};
+  int blendDestination{};
+  bool blend{};
+  bool framebufferSrgb{};
+
+  bool operator==(const SuiteDrawKey&) const noexcept = default;
+};
+
+struct SuiteDrawKeyHash {
+  std::size_t operator()(const SuiteDrawKey& key) const noexcept {
+    std::size_t result = 0;
+    const auto mix = [&result](auto value) {
+      const auto hashed = std::hash<decltype(value)>{}(value);
+      result ^= hashed + 0x9E3779B9u + (result << 6) + (result >> 2);
+    };
+    mix(key.program);
+    mix(key.texture);
+    mix(key.texture2);
+    mix(key.mode);
+    mix(key.count);
+    mix(key.textureUnit);
+    mix(key.textureUnit2);
+    mix(key.minFilter);
+    mix(key.magFilter);
+    mix(key.minFilter2);
+    mix(key.magFilter2);
+    mix(key.viewportWidth);
+    mix(key.viewportHeight);
+    mix(key.framebuffer);
+    mix(key.blendSource);
+    mix(key.blendDestination);
+    mix(key.blend);
+    mix(key.framebufferSrgb);
+    return result;
+  }
 };
 
 // Hook signatures are aliases of the canonical OpenGL declarations.
@@ -74,6 +165,7 @@ using Fn_glLinkProgramARB = game::gl::PFN_glLinkProgramARB;
 using Fn_glUseProgramObjectARB = game::gl::PFN_glUseProgramObjectARB;
 using Fn_glDeleteObjectARB = game::gl::PFN_glDeleteObjectARB;
 using Fn_glBindFramebuffer = game::gl::PFN_glBindFramebuffer;
+using Fn_glDrawArrays = game::gl::PFN_glDrawArrays;
 using Fn_glGenTextures = game::gl::PFN_glGenTextures;
 using Fn_glDeleteTextures = game::gl::PFN_glDeleteTextures;
 using Fn_glTexImage2D = game::gl::PFN_glTexImage2D;
@@ -92,6 +184,7 @@ core::Hook<Fn_glLinkProgramARB> g_glLinkProgramARBHook;
 core::Hook<Fn_glUseProgramObjectARB> g_glUseProgramObjectARBHook;
 core::Hook<Fn_glDeleteObjectARB> g_glDeleteObjectARBHook;
 core::Hook<Fn_glBindFramebuffer> g_glBindFramebufferHook;
+core::Hook<Fn_glDrawArrays> g_glDrawArraysHook;
 core::Hook<Fn_glGenTextures> g_glGenTexturesHook;
 core::Hook<Fn_glDeleteTextures> g_glDeleteTexturesHook;
 core::Hook<Fn_glTexImage2D> g_glTexImage2DHook;
@@ -116,10 +209,12 @@ void finish_queued_probe_hooks() noexcept {
   g_glUseProgramObjectARBHook.finish_queued_enable();
   g_glDeleteObjectARBHook.finish_queued_enable();
   g_glBindFramebufferHook.finish_queued_enable();
+  g_glDrawArraysHook.finish_queued_enable();
 }
 
 bool remove_probe_hooks() noexcept {
   bool removed = true;
+  removed = g_glDrawArraysHook.remove() && removed;
   removed = g_glCompressedTexImage2DHook.remove() && removed;
   removed = g_glTexSubImage2DHook.remove() && removed;
   removed = g_glTexImage2DHook.remove() && removed;
@@ -167,6 +262,12 @@ std::atomic<bool> g_contextRefreshPending{false};
 core::EngineConfig g_cfg;
 std::filesystem::path g_dumpDir;
 std::set<std::uint64_t> g_bamUiUploadsLogged;
+std::unordered_map<TextureTraceKey, CreatureTextureTrace, TextureTraceKeyHash>
+    g_creatureTextureTraces;
+std::unordered_set<SuiteDrawKey, SuiteDrawKeyHash> g_suiteDrawsLogged;
+
+constexpr std::size_t kMaximumCreatureTextureTraces = 2048;
+constexpr std::size_t kMaximumSuiteDrawLogs = 512;
 
 struct BamAtlasKey {
   HGLRC context{};
@@ -536,6 +637,8 @@ bool ensure_program_context() {
   g_shaderRecords.clear();
   g_programRecords.clear();
   g_overriddenPrograms.clear();
+  g_creatureTextureTraces.clear();
+  g_suiteDrawsLogged.clear();
   g_waterOverrideActiveLogged = false;
   g_waterOverrideMissingLogged = false;
   g_programContext.store(context, std::memory_order_release);
@@ -859,7 +962,11 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
   bool logWaterOverrideMissing = false;
   {
     std::lock_guard lock(g_probeMutex);
-    g_programRecords[program].introspected = true;
+    auto& record = g_programRecords[program];
+    record.introspected = true;
+    record.programSlot = inferredSlot.value_or(-1);
+    record.vertexShaderName = vertexShaderName;
+    record.fragmentShaderName = fragmentShaderName;
     if (anyOverride) {
       g_overriddenPrograms.try_emplace(program, std::make_shared<uniforms::Locations>());
     } else {
@@ -1031,6 +1138,189 @@ static void APIENTRY detour_glUseProgramObjectARB(unsigned program) noexcept {
   }
 }
 
+int sampler_unit(const game::gl::OpenGLFunctions& gl, unsigned program,
+                 const char* uniformName) noexcept {
+  if (!gl.glGetUniformLocation || !gl.glGetUniformiv) return -1;
+  const int location = gl.glGetUniformLocation(program, uniformName);
+  if (location < 0) return -1;
+  int unit = -1;
+  gl.glGetUniformiv(program, location, &unit);
+  return unit >= 0 && unit < 32 ? unit : -1;
+}
+
+BoundTextureSnapshot bound_texture_snapshot(const game::gl::OpenGLFunctions& gl,
+                                             int unit) noexcept {
+  BoundTextureSnapshot snapshot{.unit = unit};
+  if (unit < 0 || !gl.glActiveTexture || !gl.glGetIntegerv) return snapshot;
+  gl.glActiveTexture(game::gl::TEXTURE0 + static_cast<unsigned>(unit));
+  int texture = 0;
+  gl.glGetIntegerv(game::gl::TEXTURE_BINDING_2D, &texture);
+  if (texture <= 0) return snapshot;
+  snapshot.texture = static_cast<unsigned>(texture);
+  if (gl.glGetTexLevelParameteriv) {
+    gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_WIDTH,
+                                &snapshot.width);
+    gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_HEIGHT,
+                                &snapshot.height);
+  }
+  if (gl.glGetTexParameteriv) {
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                           &snapshot.minFilter);
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                           &snapshot.magFilter);
+  }
+  return snapshot;
+}
+
+bool float_uniform(const game::gl::OpenGLFunctions& gl, unsigned program,
+                   const char* uniformName, float* values) noexcept {
+  if (!values || !gl.glGetUniformLocation || !gl.glGetUniformfv) return false;
+  const int location = gl.glGetUniformLocation(program, uniformName);
+  if (location < 0) return false;
+  gl.glGetUniformfv(program, location, values);
+  return true;
+}
+
+const char* fragment_encoding(std::string_view fragmentShaderName) noexcept {
+  if (fragmentShaderName == "fpFONT") return "red-coverage";
+  if (fragmentShaderName == "fpYUV") return "packed-yuv-opaque";
+  if (fragmentShaderName == "fpYUVGRY") return "packed-yuv-plus-red-alpha";
+  if (fragmentShaderName == "fpSEAM") return "rgba-tile-atlas";
+  return "straight-rgba";
+}
+
+const char* sampling_summary(const BoundTextureSnapshot& texture) noexcept {
+  if (texture.minFilter == static_cast<int>(game::gl::NEAREST) &&
+      texture.magFilter == static_cast<int>(game::gl::NEAREST)) {
+    return "nearest";
+  }
+  if (texture.minFilter == static_cast<int>(game::gl::LINEAR) &&
+      texture.magFilter == static_cast<int>(game::gl::LINEAR)) {
+    return "linear";
+  }
+  return "mixed-or-other";
+}
+
+void trace_suite_draw(unsigned mode, int first, int count) {
+  if (!g_cfg.dumpEngineShaders || !g_cfg.enableVerboseLogging) return;
+  ensure_program_context();
+  const auto& gl = game::gl::get_gl_functions();
+  if (!gl.glGetIntegerv || !gl.glActiveTexture) return;
+
+  int currentProgram = 0;
+  gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &currentProgram);
+  if (currentProgram <= 0) return;
+
+  ProgramRecord programRecord;
+  {
+    std::lock_guard lock(g_probeMutex);
+    const auto found = g_programRecords.find(static_cast<unsigned>(currentProgram));
+    if (found == g_programRecords.end() || !found->second.introspected ||
+        found->second.programSlot < 0) {
+      return;
+    }
+    programRecord = found->second;
+  }
+
+  int activeTexture = static_cast<int>(game::gl::TEXTURE0);
+  gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &activeTexture);
+  const int unit = sampler_unit(gl, static_cast<unsigned>(currentProgram), "uTex");
+  const int unit2 = sampler_unit(gl, static_cast<unsigned>(currentProgram), "uTex2");
+  const auto texture = bound_texture_snapshot(gl, unit);
+  const auto texture2 = bound_texture_snapshot(gl, unit2);
+  gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+
+  int viewport[4] = {0, 0, 0, 0};
+  int framebuffer = 0;
+  int blendSource = 0;
+  int blendDestination = 0;
+  gl.glGetIntegerv(game::gl::VIEWPORT, viewport);
+  gl.glGetIntegerv(game::gl::FRAMEBUFFER_BINDING, &framebuffer);
+  gl.glGetIntegerv(game::gl::BLEND_SRC, &blendSource);
+  gl.glGetIntegerv(game::gl::BLEND_DST, &blendDestination);
+  const bool blend = gl.glIsEnabled && gl.glIsEnabled(game::gl::BLEND) != 0;
+  const bool framebufferSrgb =
+      gl.glIsEnabled && gl.glIsEnabled(game::gl::FRAMEBUFFER_SRGB) != 0;
+
+  float tcScale[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float blurAmount[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  const bool hasTcScale =
+      float_uniform(gl, static_cast<unsigned>(currentProgram), "uTcScale", tcScale);
+  const bool hasBlurAmount = float_uniform(
+      gl, static_cast<unsigned>(currentProgram), "uSpriteBlurAmount", blurAmount);
+
+  const SuiteDrawKey drawKey{
+      .program = static_cast<unsigned>(currentProgram),
+      .texture = texture.texture,
+      .texture2 = texture2.texture,
+      .mode = mode,
+      .count = count,
+      .textureUnit = texture.unit,
+      .textureUnit2 = texture2.unit,
+      .minFilter = texture.minFilter,
+      .magFilter = texture.magFilter,
+      .minFilter2 = texture2.minFilter,
+      .magFilter2 = texture2.magFilter,
+      .viewportWidth = viewport[2],
+      .viewportHeight = viewport[3],
+      .framebuffer = framebuffer,
+      .blendSource = blendSource,
+      .blendDestination = blendDestination,
+      .blend = blend,
+      .framebufferSrgb = framebufferSrgb,
+  };
+
+  const auto context = game::gl::current_context();
+  CreatureTextureTrace provenance;
+  bool hasProvenance = false;
+  bool shouldLog = false;
+  {
+    std::lock_guard lock(g_probeMutex);
+    if (g_suiteDrawsLogged.size() < kMaximumSuiteDrawLogs) {
+      shouldLog = g_suiteDrawsLogged.insert(drawKey).second;
+    }
+    const TextureTraceKey textureKey{context, texture.texture};
+    if (const auto found = g_creatureTextureTraces.find(textureKey);
+        found != g_creatureTextureTraces.end()) {
+      provenance = found->second;
+      hasProvenance = true;
+    }
+  }
+  if (!shouldLog) return;
+
+  LOG_INFO(
+      "Shader-suite draw trace: context=0x{:X}, program={}, slot={}, shaderType=fragment, "
+      "vertex={}, fragment={}, mode=0x{:X}, first={}, count={}, uTexUnit={}, texture={}, "
+      "physical={}x{}, min=0x{:X}, mag=0x{:X}, sampling={}, encoding={}, uTex2Unit={}, "
+      "texture2={}, physical2={}x{}, min2=0x{:X}, mag2=0x{:X}, provenance={}, "
+      "logical={}x{}, scale={}, uTcScalePresent={}, uTcScale={}x{}, "
+      "blurAmountPresent={}, blurAmount={}, viewport={}x{}@{},{} fbo={}, blend={}, "
+      "blendSrc=0x{:X}, blendDst=0x{:X}, framebufferSrgb={}",
+      reinterpret_cast<std::uintptr_t>(context), currentProgram,
+      programRecord.programSlot, programRecord.vertexShaderName,
+      programRecord.fragmentShaderName, mode, first, count, texture.unit, texture.texture,
+      texture.width, texture.height, texture.minFilter, texture.magFilter,
+      sampling_summary(texture), fragment_encoding(programRecord.fragmentShaderName),
+      texture2.unit, texture2.texture, texture2.width, texture2.height, texture2.minFilter,
+      texture2.magFilter, hasProvenance ? provenance.provenance : "engine-or-unknown",
+      hasProvenance ? provenance.logicalWidth : 0,
+      hasProvenance ? provenance.logicalHeight : 0, hasProvenance ? provenance.scale : 0,
+      hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0], viewport[2],
+      viewport[3], viewport[0], viewport[1], framebuffer, blend, blendSource,
+      blendDestination, framebufferSrgb);
+}
+
+static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) noexcept {
+  bool forwarded = false;
+  try {
+    trace_suite_draw(mode, first, count);
+    forwarded = true;
+    g_glDrawArraysHook.original()(mode, first, count);
+  } catch (...) {
+    if (!forwarded) g_glDrawArraysHook.original()(mode, first, count);
+  }
+}
+
 void forget_shader(unsigned shader) {
   std::lock_guard lock(g_probeMutex);
   g_shaderRecords.erase(shader);
@@ -1090,6 +1380,13 @@ static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures
   bool forwarded = false;
   try {
     forget_promoted_bam_textures(count, textures);
+    if (textures && count > 0) {
+      const auto context = game::gl::current_context();
+      std::lock_guard lock(g_probeMutex);
+      for (int index = 0; index < count; ++index) {
+        g_creatureTextureTraces.erase(TextureTraceKey{context, textures[index]});
+      }
+    }
     forwarded = true;
     g_glDeleteTexturesHook.original()(count, textures);
     if (g_cfg.enablePerformanceLogging) core::record_gl_texture_delete(count);
@@ -1642,8 +1939,15 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
       }
       if (cfg.enableVerboseLogging && gl.glBindFramebuffer) {
         g_glBindFramebufferHook.create(reinterpret_cast<void*>(gl.glBindFramebuffer),
-                                       reinterpret_cast<void*>(&detour_glBindFramebuffer));
+                                        reinterpret_cast<void*>(&detour_glBindFramebuffer));
         g_glBindFramebufferHook.queue_enable();
+      }
+      if (cfg.dumpEngineShaders && cfg.enableVerboseLogging && gl.glDrawArrays) {
+        g_glDrawArraysHook.create(reinterpret_cast<void*>(gl.glDrawArrays),
+                                  reinterpret_cast<void*>(&detour_glDrawArrays));
+        g_glDrawArraysHook.queue_enable();
+      } else if (cfg.dumpEngineShaders && cfg.enableVerboseLogging) {
+        LOG_WARN("Shader-suite draw trace is unavailable: glDrawArrays was not resolved");
       }
       const auto applyStatus = MH_ApplyQueued();
       finish_queued_probe_hooks();
@@ -1693,6 +1997,8 @@ void uninstall_shader_probes() noexcept {
     g_dumpedShaders.clear();
     g_fboBindsLogged.clear();
     g_bamUiUploadsLogged.clear();
+    g_creatureTextureTraces.clear();
+    g_suiteDrawsLogged.clear();
     g_waterOverrideActiveLogged = false;
     g_waterOverrideMissingLogged = false;
     g_programContext.store(nullptr, std::memory_order_release);
@@ -1836,6 +2142,35 @@ void on_frame_tick(float secondsSinceStart) noexcept {
 void set_override_effect_enabled(bool enabled) noexcept { uniforms::set_effect_enabled(enabled); }
 
 bool override_effect_enabled() noexcept { return uniforms::effect_enabled(); }
+
+void record_creature_texture_trace(unsigned glTexture, int logicalWidth, int logicalHeight,
+                                   int physicalWidth, int physicalHeight, int scale,
+                                   std::string_view provenance) noexcept {
+  try {
+    if (!g_cfg.dumpEngineShaders || !g_cfg.enableVerboseLogging || glTexture == 0 ||
+        logicalWidth <= 0 || logicalHeight <= 0 || physicalWidth <= 0 ||
+        physicalHeight <= 0 || scale <= 0 || provenance.empty()) {
+      return;
+    }
+    const TextureTraceKey key{game::gl::current_context(), glTexture};
+    CreatureTextureTrace record{
+        .logicalWidth = logicalWidth,
+        .logicalHeight = logicalHeight,
+        .physicalWidth = physicalWidth,
+        .physicalHeight = physicalHeight,
+        .scale = scale,
+        .provenance = std::string(provenance),
+    };
+    std::lock_guard lock(g_probeMutex);
+    if (g_creatureTextureTraces.size() >= kMaximumCreatureTextureTraces &&
+        !g_creatureTextureTraces.contains(key)) {
+      return;
+    }
+    g_creatureTextureTraces.insert_or_assign(key, std::move(record));
+  } catch (...) {
+    // Diagnostic metadata must never affect rendering.
+  }
+}
 
 void set_area_world_size(float widthPx, float heightPx) noexcept {
   uniforms::set_world_size(widthPx, heightPx);

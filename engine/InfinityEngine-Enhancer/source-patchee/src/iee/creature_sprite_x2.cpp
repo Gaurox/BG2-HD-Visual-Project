@@ -33,6 +33,7 @@
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/opengl_types.h"
+#include "iee/shader_probe.h"
 
 namespace iee::creature_sprite_x2 {
 
@@ -1499,6 +1500,11 @@ bool upload_frame_locked(const Frame& frame,
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_HEIGHT, &actualHeight);
   const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
+  if (success) {
+    probe::record_creature_texture_trace(
+        static_cast<unsigned>(boundTexture), textureLogicalWidth, textureLogicalHeight,
+        physicalWidth, physicalHeight, static_cast<int>(physicalScale), "creature-frame-xbr");
+  }
   restoreState();
   return success;
 }
@@ -1707,6 +1713,11 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
                               &actualHeight);
   const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
+  if (success) {
+    probe::record_creature_texture_trace(
+        generated.glName, logicalWidth, logicalHeight, physicalWidth, physicalHeight,
+        static_cast<int>(physicalScale), "creature-composite-xbr");
+  }
   restoreState();
   return success;
 }

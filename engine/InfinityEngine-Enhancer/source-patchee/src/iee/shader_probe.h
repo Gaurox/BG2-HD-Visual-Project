@@ -26,6 +26,12 @@ void on_frame_tick(float secondsSinceStart) noexcept;
 void set_override_effect_enabled(bool enabled) noexcept;
 [[nodiscard]] bool override_effect_enabled() noexcept;
 
+// D2-only diagnostic metadata for correlating actual GL draws with IEE-owned
+// creature textures. This is not the D4 production ownership registry.
+void record_creature_texture_trace(unsigned glTexture, int logicalWidth, int logicalHeight,
+                                   int physicalWidth, int physicalHeight, int scale,
+                                   std::string_view provenance) noexcept;
+
 // Published by area_state at area load; consumed by the uniform feed.
 void set_area_world_size(float widthPx, float heightPx) noexcept;
 
