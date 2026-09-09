@@ -54,7 +54,12 @@
 #include "iee/game/tis_palette.h"
 #include "iee/game/wed_runtime.h"
 #include "iee/item_icon_x2.h"
+#include "iee/shader_probe.h"
 
+namespace iee::probe {
+void record_creature_texture_trace(unsigned, int, int, int, int, int,
+                                   std::string_view) noexcept {}
+}  // namespace iee::probe
 
 namespace {
 int g_failures = 0;

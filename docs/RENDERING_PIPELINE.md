@@ -1,7 +1,7 @@
 # Pipeline de rendu BG2EE — état de connaissance
 
-Statut : référence vivante du chantier graphique. Dernière vérification : 2026-09-09 (D3 source
-préparée ; tests, compilation pilote et QA ingame non exécutés).
+Statut : référence vivante du chantier graphique. Dernière vérification : 2026-09-09 (D3 terminée ;
+huit overrides linkés, A/B neutre vérifié, transactions restaurées).
 
 ## Règle de maintenance
 
@@ -107,14 +107,12 @@ Portées « créatures, objets, UI, décors » : la table donne le rôle déduit
 ### Mécanisme actuellement utilisé
 
 - **Confirmé :** BG2EE peut charger un fragment par son nom depuis le répertoire jeu `override/`.
-  La source D3 du projet contient maintenant les huit fragments cibles ; seule une transaction
-  locale explicitement exécutée peut les placer dans le jeu.
+  Les huit fragments D3 ont été installés, linkés puis restaurés par transaction locale.
 - **Confirmé :** le bundle CMake copie `assets/override/` dans son répertoire `override`. `shader_probe.cpp` observe `glShaderSource`, compile, link, `glUseProgram`, suppression et — en mode diagnostic D2 — `glDrawArrays`.
 - **Confirmé :** les programmes sont nommés depuis le commentaire `// fp…glsl` / `// vp…glsl` de leur source, puis classés après chaque link. Les programmes contenant des uniforms `uIee*` reçoivent les uniforms IEE.
 - **Confirmé :** `game/shader_override.cpp` peut vérifier qu’un remplacement conserve les identifiants `uniform`/`varying` déclarés dans la source native. Ce contrôle est structurel : il ne prouve ni compilation pilote ni équivalence visuelle.
-- **Implémenté en source D3, non exécuté :** transaction distincte pour les huit fragments de la
-  suite. D2 n’avait installé aucun de ces remplacements. Le contrat impose une liste explicite,
-  pas un glob de `override/`.
+- **Validé D3 :** transaction distincte pour les huit fragments de la suite, liste explicite sans
+  glob de `override/`, préflight, installation, vérification et restauration autonome exécutés.
 
 ### Uniforms IEE actifs aujourd’hui
 
@@ -160,6 +158,9 @@ Le master suit le contrat INI D2 : `[ShaderSuite] Enabled = false` par défaut.
   opérations natives ; `fpSEAM` conserve l’eau IEE et sa voie off antérieure.
 - D3 source : transaction shader séparée avec manifeste, hashes, collision insensible à la casse,
   `--verify-only`, rollback et restauration autonome.
+- D3 ingame : les huit fragments ont été introspectés dans huit programmes ; aucun échec shader
+  observé. La zone statique A/B off/on est identique à 99,9985 % des canaux après capture JPEG
+  (écart moyen 0,000028 ; maximum 4). Renderer puis shaders ont été restaurés.
 
 ### Non implémenté
 
@@ -231,6 +232,7 @@ Motifs : le 9-taps natif exploite l’interpolation matérielle et ne correspond
 | `sprite/catmull-rom/profiles/shader-suite-contract-v1.json` | Autorité des huit interfaces, paramètres, presets et profils. |
 | `sprite/catmull-rom/runs/d0-20260909-native-shaders/evidence.json` | Provenance/hashes des six sources natives initiales. |
 | `sprite/catmull-rom/runs/d2-20260909-shader-suite-capture/evidence.json` | Programme/draw coverage, essais D2, hashes et restauration. |
+| `sprite/catmull-rom/runs/d3-20260909-neutral-shader-suite/evidence.json` | Candidat D3, tests, link des huit programmes, A/B neutre et restaurations. |
 | `engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp` | Scopes propriétaires et détournement `CVidCell::RenderTexture`. |
 | `engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.*` | Registre xN, palette, composition, upload, bord et sampler créature. |
 | `engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.cpp` | Hooks GL, classification/link, diagnostic de draws et contexte. |
@@ -249,8 +251,8 @@ Motifs : le 9-taps natif exploite l’interpolation matérielle et ne correspond
 | D0 — 2026-09-09 | Extraction/hash des shaders BIF de référence et snapshot de l’état local ; aucune installation. |
 | D1 | Ajout du mode `CreatureSpriteFilter`, protections `Nearest`, contrat dimensions/bord/sampler. Le résultat d’exécution des tests D1 n’est pas attesté dans les preuves consultées. |
 | D2 — 2026-09-09 | Capture des huit interfaces cibles, sources liées et draws ; correction du problème inter-contextes/sondes ; essais fluides nearest on/off. Aucun override de suite ni Catmull-Rom sprite. |
-| D3 — source préparée | Huit overrides neutres, master off et transaction séparée ajoutés. Tests, compilation/link pilote, A/B ingame et restauration restent à exécuter avant de clore D3. |
-| Prochaine phase | Clore D3 par contrôles autorisés et preuve ingame. D4+ ne sont pas commencées. |
+| D3 — 2026-09-09 | Huit overrides neutres et master off/on testés ingame ; huit programmes linkés, A/B neutre et transactions restaurées. Gates D3/release/engine vertes ; suite Python globale rouge sur dix contrôles hors D3 consignés dans le run. |
+| Prochaine phase | D4 uniquement : registre propriétaire, hook draw effectif, uniforms dynamiques, nettoyage et fallback. D5+ ne sont pas commencées. |
 
 ## Mise à jour suivante
 

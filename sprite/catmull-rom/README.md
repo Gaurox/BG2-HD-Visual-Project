@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0/D1/D2 terminés ; D3 source préparée, contrôles et QA en attente**. Vérification : 2026-09-09.
+Statut : **D0/D1/D2/D3 terminés ; D4 non commencé**. Vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -393,7 +393,7 @@ Ne pas fonder le MVP sur un remplacement à chaud des sources ou des programmes 
 | D12 — Optimisation/performance | Option GLSL optimizer et profils spécialisés ; comparer aux sources non optimisées, mesurer scènes complètes. | Optimisation reproductible/désactivable, équivalence dans tolérance, coût CPU/GPU documenté. |
 | D13 — Choix du patch/promotion | QA finale du profil exact retenu, décision utilisateur, documentation puis demande release distincte. | Aucune option manquante masquée par D5 ; profil validé et hashes scellés ; release seulement sur accord spécifique. |
 
-D0/D1 sont conservés ; la reprise est D2. Les anciens D6–D8 sont remplacés par D6–D13 ci-dessus.
+D0–D3 sont conservés ; la reprise est D4. Les anciens D6–D8 sont remplacés par D6–D13 ci-dessus.
 Les fonctions de D6–D12 sont obligatoires à livrer, leur activation reste optionnelle.
 Employer la transaction renderer dès le premier candidat D2 et la transaction shader dès D3.
 Chaque nouveau shader D7–D10 passe d'abord un A/B neutre. Les essais intermédiaires valident
@@ -592,8 +592,8 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
 - [x] D1 : développement committé `843aa38`, confirmé terminé par l'utilisateur ; résultat d'exécution des tests non attesté dans la notice consultée.
 - [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
-- [ ] D3 : source des huit shaders neutres, master off et transaction ajoutés ; tests, link/compile
-  pilote, A/B ingame et restauration non attestés.
+- [x] D3 : huit shaders neutres et master off/on testés ; huit programmes linkés sans erreur,
+  A/B ingame neutre et transactions renderer/shaders restaurées.
 - [ ] D4–D5 : routage et filtre implémentés.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
@@ -608,6 +608,12 @@ Neighbour Scaling » activé puis désactivé, selon confirmation utilisateur. A
 choix utilisateur ; cible DLL Release compilée. Les trois transactions sont restaurées ; DLL/INI et
 options natives initiales vérifiées. D0/D1 inchangés ; aucune projection ni intégration release.
 
-Prochaine action : **clore D3 uniquement** — exécuter les contrôles choisis, construire le candidat,
-installer les deux transactions, prouver compile/link et neutralité ingame, puis restaurer et sceller
-le run. Ne pas engager D4.
+Résultat D3 : run [`d3-20260909-neutral-shader-suite`](runs/d3-20260909-neutral-shader-suite/),
+preuve [`evidence.json`](runs/d3-20260909-neutral-shader-suite/evidence.json). Les huit programmes
+fragment sont linkés sans erreur ; l'A/B statique off/on est identique à 99,9985 % après capture
+JPEG. Les tests D3, release et moteur Debug/Release passent. La suite Python globale conserve dix
+échecs hors D3 consignés dans la preuve. Renderer puis shaders ont été restaurés ; aucune projection
+ni intégration release.
+
+Prochaine action : **D4 uniquement** — implémenter le registre propriétaire, le routage au draw,
+les uniforms dynamiques, le nettoyage et le fallback strict ; ne pas engager D5.
