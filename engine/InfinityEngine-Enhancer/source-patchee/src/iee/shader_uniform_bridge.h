@@ -9,6 +9,7 @@ struct Locations {
 
   int time{kUnresolved};
   int enabled{kUnresolved};
+  int shaderSuiteEnabled{kUnresolved};
   int scroll{kUnresolved};
   int zoom{kUnresolved};
   int viewport{kUnresolved};
@@ -56,7 +57,8 @@ struct Snapshot {
   unsigned feedCount{};
 };
 
-void initialize(bool effectEnabled, bool performanceEnabled) noexcept;
+void initialize(bool effectEnabled, bool shaderSuiteEnabled,
+                bool performanceEnabled) noexcept;
 void reset() noexcept;
 void set_time(float secondsSinceStart) noexcept;
 void set_effect_enabled(bool enabled) noexcept;

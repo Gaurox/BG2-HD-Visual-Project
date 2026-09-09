@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0/D1/D2 terminés ; reprise D3**. Vérification : 2026-09-09.
+Statut : **D0/D1/D2 terminés ; D3 source préparée, contrôles et QA en attente**. Vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -104,7 +104,7 @@ vers le thunk `0x531344`, résolu en import `glDrawArrays`. Preuve de routage un
 ne pas coder ces offsets dans un nouveau hook. Employer l'API GL résolue ; toute nouvelle adresse
 moteur doit passer par `src/iee/game/build_manifest.*` et sa validation.
 
-État local observé : seul `override/fpSEAM.glsl` présent ; aucun `iee-shader-dumps/`.
+État local observé en D0 : seul `override/fpSEAM.glsl` présent ; aucun `iee-shader-dumps/`.
 Catalogue actif : `CATALOG/current-generation.json` et `CATALOG/ingame-installation/active-test.json`.
 Génération observée `D55EFD6D1B342B1240AC2BBD222BC088B38F86D4503E6F46B03CB447A704B8F2` ;
 xBR2x, x2, `antialias=false`, `xbr_blend=false`, `sampling=NEAREST` ;
@@ -359,7 +359,7 @@ Tous les chemins suivants sont relatifs à `ENGINE`, sauf indication contraire.
 | `tools/InfinityEngine-Enhancer.sample.ini` | Nouvelle clé et portée documentées. |
 | `tests/iee_tests.cpp` et tests dédiés éventuels | Configuration, maths, contrats, cycle de vie du filtrage. |
 | `CMakeLists.txt` | Ajouter sources/tests. La copie du dossier `assets/override` existe déjà ; cela ne met pas à jour les manifests de release. |
-| Nouveau `tools/install_shader_suite_candidate.py` | Transaction à liste exacte : deux shaders au premier jalon, huit au candidat complet. Remplace le nom seulement projeté `install_sprite_shader_candidate.py`. |
+| `tools/install_shader_suite_candidate.py` | Transaction à liste exacte : huit shaders dès D3 selon la notice courante. Manifeste, collision/rollback/restauration ; remplace le nom projeté `install_sprite_shader_candidate.py`. |
 | `pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1` | D1 force déjà `CreatureSpriteFilter=Nearest`. Ajouter en D11 le contrôle suite désactivée pour ce baseline. |
 | `pipeline/tests/` et `pipeline/scripts/test_changed.py` | Tests de transaction, migration INI et routage ciblé du nouveau script. |
 
@@ -592,7 +592,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
 - [x] D1 : développement committé `843aa38`, confirmé terminé par l'utilisateur ; résultat d'exécution des tests non attesté dans la notice consultée.
 - [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
-- [ ] D3–D5 : shaders neutres, routage et filtre implémentés.
+- [ ] D3 : source des huit shaders neutres, master off et transaction ajoutés ; tests, link/compile
+  pilote, A/B ingame et restauration non attestés.
+- [ ] D4–D5 : routage et filtre implémentés.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -606,5 +608,6 @@ Neighbour Scaling » activé puis désactivé, selon confirmation utilisateur. A
 choix utilisateur ; cible DLL Release compilée. Les trois transactions sont restaurées ; DLL/INI et
 options natives initiales vérifiées. D0/D1 inchangés ; aucune projection ni intégration release.
 
-Prochaine action de développement : **D3 uniquement** — ajouter les huit overrides neutres/inactifs,
-préparer la transaction shader et prouver la neutralité avant restauration. Ne pas engager D4.
+Prochaine action : **clore D3 uniquement** — exécuter les contrôles choisis, construire le candidat,
+installer les deux transactions, prouver compile/link et neutralité ingame, puis restaurer et sceller
+le run. Ne pas engager D4.

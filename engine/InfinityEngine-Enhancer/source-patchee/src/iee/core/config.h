@@ -64,6 +64,10 @@ struct EngineConfig {
   bool dumpEngineShaders = false;
   bool enableDebugHotkeys = false;
   bool enableWaterEffect = true;
+  // Master gate for the Dshaders-compatible suite. D3 ships only neutral
+  // overrides, so enabling this key has no visual effect until later phases
+  // add explicitly gated operations.
+  bool shaderSuiteEnabled = false;
   // One-shot diagnostic for BAM/UI research. It logs texture uploads and
   // their call sites only; it never substitutes an asset or changes GL state.
   bool enableBamUiTextureProbe = false;

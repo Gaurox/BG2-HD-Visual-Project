@@ -68,6 +68,7 @@ then the domain README. This checkpoint applies especially to animation runs and
 | Icônes ITM/SPL | [icons/README.md](icons/README.md) |
 | Video | [video/README.md](video/README.md) |
 | Engine | [engine/InfinityEngine-Enhancer/source-patchee/README.md](engine/InfinityEngine-Enhancer/source-patchee/README.md) |
+| Pipeline de rendu | [docs/RENDERING_PIPELINE.md](docs/RENDERING_PIPELINE.md) |
 | Release | [releases/BG2-HD-Upscale/README.md](releases/BG2-HD-Upscale/README.md) · [integration workflow](releases/BG2-HD-Upscale/docs/INSTALLER_AND_UPSCALE_WORKFLOW.md) |
 
 ## Distribution boundaries

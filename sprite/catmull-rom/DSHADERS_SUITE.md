@@ -289,7 +289,8 @@ Source locale : `ENGINE/assets/override/fpSEAM.glsl`, fonctions `seamSample` et 
 ## 5. Installation, profils et optimisation
 
 - Réutiliser les deux transactions décrites dans le guide : renderer DLL/INI et liste shader exacte.
-  Livrer progressivement, puis installer les huit fragments dans le candidat D11.
+  Installer les huit fragments neutres dès D3 ; enrichir leurs opérations progressivement jusqu’au
+  candidat complet D11.
 - Chaque profil produit un nouvel INI fusionné, un identifiant et des hashes. Les huit shaders de
   travail restent paramétrables ; une variation numérique ne nécessite pas une recompilation C++.
 - Outil de profils plan-only par défaut : liste/diff des valeurs et fichiers avant `--run`.
@@ -336,7 +337,7 @@ Chemins relatifs à `ENGINE`, sauf `FEATURE`. Nouveaux chemins = propositions D2
 | `assets/override/` | Huit sorties autonomes déterministes ; `fpSEAM` issu de la fusion IEE, conservant sa voie off. |
 | `tools/build_shader_suite.py` | Assemblage/validation statique puis spécialisation/optimizer en D12 ; provenance et hashes. |
 | `tools/shader_suite_profile.py` | Matérialisation d'un profil dans un candidat, diff et export des valeurs ; aucune édition live implicite. |
-| `tools/install_shader_suite_candidate.py` | Transaction extensible introduite D3 ; huit cibles à D11, collision/rollback/restauration. |
+| `tools/install_shader_suite_candidate.py` | Transaction introduite D3 ; huit cibles exactes dès D3, collision/rollback/restauration. |
 | `tools/InfinityEngine-Enhancer.sample.ini`, `CMakeLists.txt` | Paramètres, assemblage reproductible et notices ; anciens contrats D1 inchangés. |
 | `FEATURE/profiles/` | Schéma, paramètres/defaults et dix presets amont + témoins IEE ; suivis Git. |
 | `FEATURE/runs/<id>/coverage.json` | Preuve par composant/paramètre/shader/preset ; immuable après scellement, pas une autorité release. |

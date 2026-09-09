@@ -968,6 +968,7 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.dumpEngineShaders, "shader dump defaults off");
   expect_true(!cfg.enableDebugHotkeys, "hotkeys default off");
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
+  expect_true(!cfg.shaderSuiteEnabled, "shader suite master defaults off");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableItemIconX2, "item-icon x2 defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
@@ -3799,6 +3800,7 @@ void test_config_shader_override_roundtrip() {
     orig.dumpEngineShaders = false;
     orig.enableDebugHotkeys = true;
     orig.enableWaterEffect = false;
+    orig.shaderSuiteEnabled = true;
     orig.enableBamUiTextureProbe = true;
     orig.enableItemIconX2 = true;
     orig.enableAreaAnimationX4 = true;
@@ -3825,12 +3827,27 @@ void test_config_shader_override_roundtrip() {
                 "ConfigManager::save should succeed");
   }
 
+  {
+    std::ifstream savedFile(tempPath, std::ios::binary);
+    std::ostringstream savedContents;
+    savedContents << savedFile.rdbuf();
+    const auto saved = savedContents.str();
+    const auto suiteSection = saved.find("[ShaderSuite]");
+    expect_true(suiteSection != std::string::npos &&
+                    saved.find("Enabled = true", suiteSection) != std::string::npos,
+                "shader suite master should use the frozen D2 INI section");
+    expect_true(saved.find("ShaderSuiteEnabled") == std::string::npos,
+                "draft shader-suite key should not be serialized");
+  }
+
   iee::core::EngineConfig loaded{};
   expect_true(iee::core::ConfigManager::load(tempPath, loaded),
               "ConfigManager::load should parse shader config");
   expect_true(!loaded.dumpEngineShaders, "dumpEngineShaders should round-trip as false");
   expect_true(loaded.enableDebugHotkeys, "enableDebugHotkeys should round-trip as true");
   expect_true(!loaded.enableWaterEffect, "enableWaterEffect should round-trip as false");
+  expect_true(loaded.shaderSuiteEnabled,
+              "shaderSuiteEnabled should round-trip as true");
   expect_true(loaded.enableBamUiTextureProbe,
               "enableBamUiTextureProbe should round-trip as true");
   expect_true(loaded.enableItemIconX2, "enableItemIconX2 should round-trip as true");
@@ -5673,7 +5690,7 @@ void test_fpseam_override_asset_contract() {
 
   // Our feed contract.
   for (const std::string_view name :
-       {"uIeeEnabled", "uIeeTime", "uIeeScroll", "uIeeZoom", "uIeeViewport", "uIeeWorldSizeInv",
+       {"uIeeShaderSuiteEnabled", "uIeeEnabled", "uIeeTime", "uIeeScroll", "uIeeZoom", "uIeeViewport", "uIeeWorldSizeInv",
         "uIeeWaterTint", "uIeeAreaMask", "uIeeNormalMap", "uIeeDudvMap", "uIeeFoamMap"}) {
     expect_true(source.find(name) != std::string::npos, "fpSEAM override declares feed uniform");
   }
@@ -5696,6 +5713,61 @@ void test_fpseam_override_asset_contract() {
                   source.find("foamStrength = 0.18") != std::string::npos &&
                   source.find("specularStrength = 0.08") != std::string::npos,
               "sewage should keep its dedicated dirty low-reflection grade");
+}
+
+void test_shader_suite_neutral_override_assets() {
+  namespace fs = std::filesystem;
+  struct ShaderContract {
+    std::string_view filename;
+    std::string_view nativeInterface;
+  };
+  constexpr std::array contracts{
+      ShaderContract{"fpSprite.glsl",
+                     "uniform sampler2D uTex;\nuniform float uSpriteBlurAmount;\n"
+                     "varying vec2 vTc;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpSELECT.glsl",
+                     "uniform sampler2D uTex;\nuniform float uSpriteBlurAmount;\n"
+                     "uniform vec2 uTcScale;\nvarying vec2 vTc;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpDraw.glsl",
+                     "uniform sampler2D uTex;\nuniform vec4 uColorTone;\n"
+                     "varying vec2 vTc;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpTone.glsl",
+                     "uniform sampler2D uTex;\nuniform vec4 uColorTone;\n"
+                     "varying vec2 vTc;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpFONT.glsl",
+                     "uniform sampler2D uTex;\nvarying vec2 vTc;\n"
+                     "varying vec4 vColor;\nvarying float depth;\n"},
+      ShaderContract{"fpSEAM.glsl",
+                     "uniform sampler2D uTex;\nuniform vec2 uTcScale;\n"
+                     "uniform vec4 uColorTone;\nvarying vec2 vTc;\n"
+                     "varying vec2 vRef;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpYUV.glsl",
+                     "uniform sampler2D uTex;\nvarying vec2 vTc;\n"
+                     "varying vec2 vTcU;\nvarying vec2 vTcV;\nvarying vec4 vColor;\n"},
+      ShaderContract{"fpYUVGRY.glsl",
+                     "uniform sampler2D uTex;\nuniform sampler2D uTex2;\n"
+                     "uniform vec4 uColorTone;\nvarying vec2 vTc;\n"
+                     "varying vec2 vTcU;\nvarying vec2 vTcV;\nvarying vec4 vColor;\n"},
+  };
+
+  for (const auto& expected : contracts) {
+    const auto assetPath = fs::path("assets") / "override" / expected.filename;
+    std::ifstream file(assetPath, std::ios::binary);
+    expect_true(static_cast<bool>(file), "every D3 shader override asset should exist");
+    if (!file) continue;
+    std::ostringstream contents;
+    contents << file.rdbuf();
+    const auto source = contents.str();
+    expect_true(
+        iee::game::check_interface_contract(expected.nativeInterface, source).ok,
+        "every D3 shader override should preserve its native interface");
+    expect_true(source.find("uIeeShaderSuiteEnabled") != std::string::npos,
+                "every D3 shader override should expose the inactive suite master");
+    expect_true(source.find("#version") == std::string::npos,
+                "D3 shader overrides should accept the engine GLSL preamble");
+    expect_true(source.find("void main") != std::string::npos,
+                "every D3 shader override should define main");
+  }
 }
 
 int main() {
@@ -5763,6 +5835,7 @@ int main() {
   test_liquid_tileset_fallback_tint();
   test_area_liquid_texture_packing_rejects_mismatch();
   test_fpseam_override_asset_contract();
+  test_shader_suite_neutral_override_assets();
 
   if (g_failures != 0) {
     std::cerr << g_failures << " test(s) failed\n";

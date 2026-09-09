@@ -78,6 +78,7 @@ modifie pas le bundle release scellé.
 | Sujet | Référence |
 |---|---|
 | Modules et limites | [`docs/architecture.md`](docs/architecture.md) |
+| Pipeline de rendu BG2EE | [`../../../docs/RENDERING_PIPELINE.md`](../../../docs/RENDERING_PIPELINE.md) |
 | Threads et OpenGL | [`docs/threading-model.md`](docs/threading-model.md) |
 | Manifests de build | [`docs/build-manifests.md`](docs/build-manifests.md) |
 | Reverse engineering | [`docs/reverse-engineering.md`](docs/reverse-engineering.md) |
@@ -88,6 +89,7 @@ modifie pas le bundle release scellé.
 | Occlusion native | [`docs/native-occlusion-phase1.md`](docs/native-occlusion-phase1.md) |
 | Transition AR1300 | [`docs/event-video-overlay-assets.md`](docs/event-video-overlay-assets.md) |
 | Transaction renderer | [`docs/renderer-candidate-transaction.md`](docs/renderer-candidate-transaction.md) |
+| Transaction shader-suite | [`docs/shader-suite-candidate-transaction.md`](docs/shader-suite-candidate-transaction.md) |
 | Effets VVC | [`docs/validation/effect-vvc-bg2ee-2.7.3.md`](docs/validation/effect-vvc-bg2ee-2.7.3.md) |
 | Sprites | [`../../../sprite/README.md`](../../../sprite/README.md) |
 | Catmull–Rom sprites HD (plan) | [`../../../sprite/catmull-rom/README.md`](../../../sprite/catmull-rom/README.md) |

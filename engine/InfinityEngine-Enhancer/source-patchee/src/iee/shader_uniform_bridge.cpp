@@ -24,6 +24,7 @@ std::atomic<float> g_waterTintR{0.5f};
 std::atomic<float> g_waterTintG{0.5f};
 std::atomic<float> g_waterTintB{0.5f};
 std::atomic<float> g_effectValue{0.0f};
+std::atomic<float> g_shaderSuiteEnabled{0.0f};
 std::atomic<unsigned> g_feedCount{0};
 std::atomic<std::uint64_t> g_stateRevision{1};
 std::atomic<std::uint64_t> g_performanceCalls{0};
@@ -75,8 +76,11 @@ void record_feed_performance(const LARGE_INTEGER& started, bool measured, bool s
 
 }  // namespace
 
-void initialize(bool effectEnabled, bool performanceEnabled) noexcept {
+void initialize(bool effectEnabled, bool shaderSuiteEnabled,
+                bool performanceEnabled) noexcept {
   g_effectValue.store(effectEnabled ? 1.0f : 0.0f, std::memory_order_relaxed);
+  g_shaderSuiteEnabled.store(shaderSuiteEnabled ? 1.0f : 0.0f,
+                             std::memory_order_relaxed);
   g_performanceEnabled.store(performanceEnabled, std::memory_order_relaxed);
   g_feedCount.store(0, std::memory_order_relaxed);
   g_stateRevision.store(1, std::memory_order_release);
@@ -94,6 +98,7 @@ void reset() noexcept {
   g_waterTintG.store(0.5f, std::memory_order_relaxed);
   g_waterTintB.store(0.5f, std::memory_order_relaxed);
   g_effectValue.store(0.0f, std::memory_order_relaxed);
+  g_shaderSuiteEnabled.store(0.0f, std::memory_order_relaxed);
   g_performanceEnabled.store(false, std::memory_order_relaxed);
   g_feedCount.store(0, std::memory_order_relaxed);
   g_stateRevision.store(1, std::memory_order_release);
@@ -175,6 +180,8 @@ void feed(unsigned program, Locations& locations) {
 
   locations.time = resolve_location(gl, program, locations.time, "uIeeTime");
   locations.enabled = resolve_location(gl, program, locations.enabled, "uIeeEnabled");
+  locations.shaderSuiteEnabled = resolve_location(
+      gl, program, locations.shaderSuiteEnabled, "uIeeShaderSuiteEnabled");
   locations.scroll = resolve_location(gl, program, locations.scroll, "uIeeScroll");
   locations.zoom = resolve_location(gl, program, locations.zoom, "uIeeZoom");
   locations.viewport = resolve_location(gl, program, locations.viewport, "uIeeViewport");
@@ -212,6 +219,10 @@ void feed(unsigned program, Locations& locations) {
   }
   if (locations.enabled >= 0) {
     gl.glUniform1f(locations.enabled, effectValue);
+  }
+  if (locations.shaderSuiteEnabled >= 0) {
+    gl.glUniform1f(locations.shaderSuiteEnabled,
+                   g_shaderSuiteEnabled.load(std::memory_order_relaxed));
   }
 
   int viewport[4] = {0, 0, 0, 0};

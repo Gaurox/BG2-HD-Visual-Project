@@ -15,6 +15,7 @@ uniform highp 	vec2 		uTcScale;
 uniform highp	vec4		uColorTone;
 
 // --- IEE feed (set by the DLL at program bind + frame tick) ---
+uniform highp	float		uIeeShaderSuiteEnabled; // D3 suite master; intentionally neutral
 uniform highp	float		uIeeEnabled;       // 0/1 master gate (F10)
 uniform highp	float		uIeeTime;          // seconds
 uniform highp	vec2		uIeeScroll;        // world px of viewport origin

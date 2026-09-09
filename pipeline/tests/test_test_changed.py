@@ -69,6 +69,9 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "pipeline/scripts/Install-CreatureSprite-XN-Test.ps1": (
                 "pipeline.tests.test_creature_sprite_x2_pipeline",
             ),
+            "engine/InfinityEngine-Enhancer/source-patchee/tools/install_shader_suite_candidate.py": (
+                "pipeline.tests.test_shader_suite_candidate_transaction",
+            ),
         }
         for path, expected in cases.items():
             with self.subTest(path=path):

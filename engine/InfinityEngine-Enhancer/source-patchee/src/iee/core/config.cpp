@@ -232,6 +232,12 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableMenuX2Test);
     return;
   }
+
+  // [ShaderSuite]
+  if (iequals(section, "shaderSuite")) {
+    if (iequals(key, "Enabled")) assign_bool(cfg.shaderSuiteEnabled);
+    return;
+  }
 }
 
 static void write_section(std::ofstream& f, const char* name) { f << "\n[" << name << "]\n"; }
@@ -350,6 +356,9 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableBigLogoX4Test", cfg.enableBigLogoX4Test);
   write_bool(f, "EnableMainMenuX4Test", cfg.enableMainMenuX4Test);
   write_bool(f, "EnableMenuX2Test", cfg.enableMenuX2Test);
+
+  write_section(f, "ShaderSuite");
+  write_bool(f, "Enabled", cfg.shaderSuiteEnabled);
 
   return true;
 }

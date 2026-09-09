@@ -1851,7 +1851,8 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     // The water effect ships ON by default; the ini can disable it and
     // the F10 debug cycle (when enabled) still overrides at runtime.
     if (!g_uniformsInitialized) {
-      uniforms::initialize(cfg.enableWaterEffect, cfg.enablePerformanceLogging);
+      uniforms::initialize(cfg.enableWaterEffect, cfg.shaderSuiteEnabled,
+                           cfg.enablePerformanceLogging);
       g_uniformsInitialized = true;
     }
 
