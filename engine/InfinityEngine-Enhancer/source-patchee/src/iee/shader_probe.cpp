@@ -64,6 +64,11 @@ struct ProgramRecord {
   std::unordered_set<std::uintptr_t> callerLogged;
 };
 
+struct SuiteDrawProbeState {
+  std::uint64_t calls{};
+  std::uint32_t probes{};
+};
+
 struct TextureTraceKey {
   HGLRC context{};
   unsigned texture{};
@@ -268,6 +273,12 @@ std::unordered_set<SuiteDrawKey, SuiteDrawKeyHash> g_suiteDrawsLogged;
 
 constexpr std::size_t kMaximumCreatureTextureTraces = 2048;
 constexpr std::size_t kMaximumSuiteDrawLogs = 512;
+constexpr std::uint64_t kSuiteDrawProbeInterval = 2048;
+constexpr std::uint32_t kMaximumSuiteDrawProbesPerProgram = 1024;
+thread_local HGLRC g_boundProgramContext = nullptr;
+thread_local unsigned g_boundProgram = 0;
+thread_local HGLRC g_suiteDrawProbeContext = nullptr;
+thread_local std::unordered_map<unsigned, SuiteDrawProbeState> g_suiteDrawProbeStates;
 
 struct BamAtlasKey {
   HGLRC context{};
@@ -642,7 +653,20 @@ bool ensure_program_context() {
   g_waterOverrideActiveLogged = false;
   g_waterOverrideMissingLogged = false;
   g_programContext.store(context, std::memory_order_release);
+  g_boundProgramContext = context;
+  g_boundProgram = 0;
+  g_suiteDrawProbeContext = context;
+  g_suiteDrawProbeStates.clear();
   return true;
+}
+
+bool is_program_context(HGLRC context) noexcept {
+  return context != nullptr &&
+         context == g_programContext.load(std::memory_order_acquire);
+}
+
+bool is_program_context_current() noexcept {
+  return is_program_context(game::gl::current_context());
 }
 
 std::string sanitize_preview(std::string text) {
@@ -764,7 +788,11 @@ std::optional<int> infer_program_slot(std::string_view vertexShaderName,
 
 void submit_shader_source(unsigned shader, int count, const char* const* strings,
                           const int* lengths, Fn_glShaderSource forward, bool& forwarded) {
-  ensure_program_context();
+  if (!is_program_context_current()) {
+    forwarded = true;
+    forward(shader, count, strings, lengths);
+    return;
+  }
   const std::string fullSource = gather_full_source(count, strings, lengths);
   const auto name = game::extract_shader_name(fullSource, "");
 
@@ -783,6 +811,7 @@ void submit_shader_source(unsigned shader, int count, const char* const* strings
 
 void compile_shader(unsigned shader, Fn_glCompileShader compile, bool isArb) {
   compile(shader);
+  if (!is_program_context_current()) return;
 
   const auto& gl = game::gl::get_gl_functions();
   int shaderType = 0;
@@ -900,7 +929,7 @@ void maybe_dump_engine_shader(const game::gl::OpenGLFunctions& gl, unsigned shad
 
 // Introspect a program without holding g_probeMutex across OpenGL calls.
 void link_program_introspect(unsigned program, bool isArb, bool logDetails = true) {
-  ensure_program_context();
+  if (!is_program_context_current()) return;
   const auto& gl = game::gl::get_gl_functions();
   if (!gl.glGetProgramiv || !gl.glGetAttachedShaders || !gl.glGetShaderiv) return;
 
@@ -1011,7 +1040,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
 }
 void link_program(unsigned program, Fn_glLinkProgram link, bool isArb) {
   link(program);
-  ensure_program_context();
+  if (!is_program_context_current()) return;
 
   const auto& gl = game::gl::get_gl_functions();
   int linkStatus = 1;
@@ -1028,6 +1057,7 @@ void link_program(unsigned program, Fn_glLinkProgram link, bool isArb) {
     record.introspected = false;
     g_overriddenPrograms.erase(program);
   }
+  g_suiteDrawProbeStates.erase(program);
 
   if (shouldLog || linkStatus == 0) {
     const auto infoLog = read_program_log(gl, program);
@@ -1080,8 +1110,11 @@ void feed_uniforms_to_program(unsigned program) {
 }
 
 void use_program(unsigned program, std::uintptr_t caller, bool isArb) {
+  const auto context = game::gl::current_context();
+  g_boundProgramContext = context;
+  g_boundProgram = is_program_context(context) ? program : 0;
   if (program == 0) return;
-  ensure_program_context();
+  if (g_boundProgram == 0) return;
 
   bool shouldInspect = false;
   bool shouldLogCaller = false;
@@ -1203,29 +1236,49 @@ const char* sampling_summary(const BoundTextureSnapshot& texture) noexcept {
 
 void trace_suite_draw(unsigned mode, int first, int count) {
   if (!g_cfg.dumpEngineShaders || !g_cfg.enableVerboseLogging) return;
-  ensure_program_context();
+  const auto context = game::gl::current_context();
+  if (!is_program_context(context) || g_boundProgramContext != context || g_boundProgram == 0) {
+    return;
+  }
+
+  if (g_suiteDrawProbeContext != context) {
+    g_suiteDrawProbeContext = context;
+    g_suiteDrawProbeStates.clear();
+  }
+  auto& probeState = g_suiteDrawProbeStates[g_boundProgram];
+  ++probeState.calls;
+  const bool initialProbe = probeState.calls <= 8;
+  const bool periodicProbe = probeState.calls % kSuiteDrawProbeInterval == 0;
+  if ((!initialProbe && !periodicProbe) ||
+      probeState.probes >= kMaximumSuiteDrawProbesPerProgram) {
+    return;
+  }
+  ++probeState.probes;
+
   const auto& gl = game::gl::get_gl_functions();
   if (!gl.glGetIntegerv || !gl.glActiveTexture) return;
 
-  int currentProgram = 0;
-  gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &currentProgram);
-  if (currentProgram <= 0) return;
-
-  ProgramRecord programRecord;
+  const unsigned currentProgram = g_boundProgram;
+  int programSlot = -1;
+  std::string vertexShaderName;
+  std::string fragmentShaderName;
   {
     std::lock_guard lock(g_probeMutex);
-    const auto found = g_programRecords.find(static_cast<unsigned>(currentProgram));
+    const auto found = g_programRecords.find(currentProgram);
     if (found == g_programRecords.end() || !found->second.introspected ||
         found->second.programSlot < 0) {
       return;
     }
-    programRecord = found->second;
+    const auto& record = found->second;
+    programSlot = record.programSlot;
+    vertexShaderName = record.vertexShaderName;
+    fragmentShaderName = record.fragmentShaderName;
   }
 
   int activeTexture = static_cast<int>(game::gl::TEXTURE0);
   gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &activeTexture);
-  const int unit = sampler_unit(gl, static_cast<unsigned>(currentProgram), "uTex");
-  const int unit2 = sampler_unit(gl, static_cast<unsigned>(currentProgram), "uTex2");
+  const int unit = sampler_unit(gl, currentProgram, "uTex");
+  const int unit2 = sampler_unit(gl, currentProgram, "uTex2");
   const auto texture = bound_texture_snapshot(gl, unit);
   const auto texture2 = bound_texture_snapshot(gl, unit2);
   gl.glActiveTexture(static_cast<unsigned>(activeTexture));
@@ -1245,12 +1298,12 @@ void trace_suite_draw(unsigned mode, int first, int count) {
   float tcScale[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   float blurAmount[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   const bool hasTcScale =
-      float_uniform(gl, static_cast<unsigned>(currentProgram), "uTcScale", tcScale);
+      float_uniform(gl, currentProgram, "uTcScale", tcScale);
   const bool hasBlurAmount = float_uniform(
-      gl, static_cast<unsigned>(currentProgram), "uSpriteBlurAmount", blurAmount);
+      gl, currentProgram, "uSpriteBlurAmount", blurAmount);
 
   const SuiteDrawKey drawKey{
-      .program = static_cast<unsigned>(currentProgram),
+      .program = currentProgram,
       .texture = texture.texture,
       .texture2 = texture2.texture,
       .mode = mode,
@@ -1270,7 +1323,6 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       .framebufferSrgb = framebufferSrgb,
   };
 
-  const auto context = game::gl::current_context();
   CreatureTextureTrace provenance;
   bool hasProvenance = false;
   bool shouldLog = false;
@@ -1297,10 +1349,10 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       "blurAmountPresent={}, blurAmount={}, viewport={}x{}@{},{} fbo={}, blend={}, "
       "blendSrc=0x{:X}, blendDst=0x{:X}, framebufferSrgb={}",
       reinterpret_cast<std::uintptr_t>(context), currentProgram,
-      programRecord.programSlot, programRecord.vertexShaderName,
-      programRecord.fragmentShaderName, mode, first, count, texture.unit, texture.texture,
+      programSlot, vertexShaderName, fragmentShaderName, mode, first, count, texture.unit,
+      texture.texture,
       texture.width, texture.height, texture.minFilter, texture.magFilter,
-      sampling_summary(texture), fragment_encoding(programRecord.fragmentShaderName),
+      sampling_summary(texture), fragment_encoding(fragmentShaderName),
       texture2.unit, texture2.texture, texture2.width, texture2.height, texture2.minFilter,
       texture2.magFilter, hasProvenance ? provenance.provenance : "engine-or-unknown",
       hasProvenance ? provenance.logicalWidth : 0,
@@ -1322,14 +1374,17 @@ static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) no
 }
 
 void forget_shader(unsigned shader) {
+  if (!is_program_context_current()) return;
   std::lock_guard lock(g_probeMutex);
   g_shaderRecords.erase(shader);
 }
 
 void forget_program(unsigned program) {
+  if (!is_program_context_current()) return;
   std::lock_guard lock(g_probeMutex);
   g_programRecords.erase(program);
   g_overriddenPrograms.erase(program);
+  g_suiteDrawProbeStates.erase(program);
 }
 
 static void APIENTRY detour_glDeleteShader(unsigned shader) noexcept {
@@ -1972,6 +2027,10 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     const auto context = game::gl::current_context();
     g_hookContext.store(context, std::memory_order_release);
     g_programContext.store(context, std::memory_order_release);
+    g_boundProgramContext = context;
+    g_boundProgram = 0;
+    g_suiteDrawProbeContext = context;
+    g_suiteDrawProbeStates.clear();
     g_sweepPending.store(true, std::memory_order_relaxed);
     LOG_INFO("Installed GL shader probes");
     return true;
@@ -2003,6 +2062,10 @@ void uninstall_shader_probes() noexcept {
     g_waterOverrideMissingLogged = false;
     g_programContext.store(nullptr, std::memory_order_release);
     g_hookContext.store(nullptr, std::memory_order_release);
+    g_boundProgramContext = nullptr;
+    g_boundProgram = 0;
+    g_suiteDrawProbeContext = nullptr;
+    g_suiteDrawProbeStates.clear();
     g_contextRefreshPending.store(false, std::memory_order_relaxed);
     g_shaderProbesInstalled = false;
     g_uniformsInitialized = false;
@@ -2072,6 +2135,12 @@ void on_frame_tick(float secondsSinceStart) noexcept {
     if (gl.glGetIntegerv) {
       int currentProgram = 0;
       gl.glGetIntegerv(0x8B8D /*CURRENT_PROGRAM*/, &currentProgram);
+      const auto context = game::gl::current_context();
+      g_boundProgramContext = context;
+      g_boundProgram =
+          is_program_context(context) && currentProgram > 0
+              ? static_cast<unsigned>(currentProgram)
+              : 0;
       if (currentProgram > 0) {
         bool isOverridden = false;
         {

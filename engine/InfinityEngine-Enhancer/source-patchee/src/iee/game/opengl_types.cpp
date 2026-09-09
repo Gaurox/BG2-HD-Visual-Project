@@ -2,9 +2,6 @@
 
 #include <windows.h>
 
-#include <atomic>
-#include <mutex>
-
 #include "iee/core/logger.h"
 
 namespace iee::game::gl {
@@ -260,26 +257,22 @@ bool OpenGLFunctions::initialize() noexcept {
 }
 
 OpenGLFunctions& get_gl_functions() noexcept {
-  static OpenGLFunctions instance;
-  static std::mutex mutex;
-  static std::atomic<HGLRC> lastContext{nullptr};
-  static std::atomic<bool> ready{false};
+  // Extension dispatch is context- and thread-sensitive. A process-global
+  // mutable table let a contextless video/decode thread replace live render
+  // entry points between a null check and call. Keep each caller's snapshot
+  // isolated and refresh it only when that thread changes WGL context.
+  thread_local OpenGLFunctions instance;
+  thread_local HGLRC lastContext = nullptr;
+  thread_local bool initialized = false;
 
   const auto context = current_context();
-  if (ready.load(std::memory_order_acquire) &&
-      context == lastContext.load(std::memory_order_relaxed)) {
+  if (initialized && context == lastContext) {
     return instance;
   }
 
-  // Context initialization/replacement is the slow path. The steady-state
-  // render thread avoids taking this mutex on every uniform or texture feed.
-  std::lock_guard lock(mutex);
-  if (!ready.load(std::memory_order_relaxed) ||
-      context != lastContext.load(std::memory_order_relaxed)) {
-    instance.initialize();
-    lastContext.store(context, std::memory_order_relaxed);
-    ready.store(instance.valid, std::memory_order_release);
-  }
+  instance.initialize();
+  lastContext = context;
+  initialized = true;
 
   return instance;
 }

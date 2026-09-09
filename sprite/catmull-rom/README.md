@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0/D1 développés et committés ; plan D2–D13 étendu à toute la suite**. Vérification : 2026-09-09.
+Statut : **D0/D1/D2 terminés ; reprise D3**. Vérification : 2026-09-09.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -591,14 +591,20 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] Guide et chemins de développement définis.
 - [x] D0 : autorités relues ; run `d0-20260909-native-shaders`, six shaders bruts, hashes et snapshot INI créés.
 - [x] D1 : développement committé `843aa38`, confirmé terminé par l'utilisateur ; résultat d'exécution des tests non attesté dans la notice consultée.
-- [ ] D2 : contrat suite figé, préambule/dispatch créatures observés, couverture des huit shaders inventoriée.
+- [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
 - [ ] D3–D5 : shaders neutres, routage et filtre implémentés.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
 - [ ] D13 : profil final validé ingame et éventuelle intégration release décidés.
 
-Prochaine action de développement : **D2**, après lecture du complément. Réutiliser D0/D1 ;
-consigner les résultats D1 déjà disponibles sans les inventer. Préparer le contrat de profils,
-les sources supplémentaires et la capture. Les prochains builds/tests suivent le choix utilisateur
-du lot ; aucun développement de D6+ ne doit être pris pour une simple vérification esthétique finale.
+Résultat D2 : run [`d2-20260909-shader-suite-capture`](runs/d2-20260909-shader-suite-capture/),
+preuve [`evidence.json`](runs/d2-20260909-shader-suite-capture/evidence.json). Six sources BIF
+supplémentaires et sources linkées hashées ; préambule confirmé. Les essais 1/2 ont isolé puis corrigé
+un dispatch GL inter-contextes et une sonde non bornée. L'essai 3 est fluide/stable avec « Nearest
+Neighbour Scaling » activé puis désactivé, selon confirmation utilisateur. Aucun test exécuté par
+choix utilisateur ; cible DLL Release compilée. Les trois transactions sont restaurées ; DLL/INI et
+options natives initiales vérifiées. D0/D1 inchangés ; aucune projection ni intégration release.
+
+Prochaine action de développement : **D3 uniquement** — ajouter les huit overrides neutres/inactifs,
+préparer la transaction shader et prouver la neutralité avant restauration. Ne pas engager D4.
