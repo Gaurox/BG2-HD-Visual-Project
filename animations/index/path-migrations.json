@@ -3,10 +3,10 @@
   "purpose": "Resolve historical proto and pack paths after physical cleanup without rewriting sealed artefacts.",
   "authority_policy": "This file maps physical paths only. It never grants production, QA, installation or release status.",
   "migration_verification": {
-    "date": "2026-08-31",
-    "file_count": 3030,
-    "bytes": 1320761527,
-    "aggregate_sha256": "B6AD539D01E6AB6D4D184706CFFE0F446B44FD4251A61E9BD712FFE3B6D6B856",
+    "date": "2026-09-10",
+    "file_count": 3033,
+    "bytes": 1320768761,
+    "aggregate_sha256": "EDA73564F1688C5A4071296DF0EEA6DF5EC7BD40CAD839837B690122ED01FFDE",
     "method": "SHA-256 of sorted destination-path|bytes|file-sha256 records, identical before and after the move"
   },
   "retained_proto_directories": [],
@@ -144,6 +144,16 @@
       "to": "animations/runs/AM0205E-orifice",
       "role": "historical-base-run",
       "asset_ids": ["animations:bam:AM0205E"]
+    },
+    {
+      "from": "proto/am0803-warmpatch-blur",
+      "to": "animations/runs/am0803-warmpatch-blur-workshop",
+      "role": "historical-workshop",
+      "asset_ids": [
+        "animations:bam:AM0803B",
+        "animations:bam:AM0803C",
+        "animations:bam:AM0803E"
+      ]
     },
     {
       "from": "proto/AM0602B-cheminee-manual-floor-mask-x4",

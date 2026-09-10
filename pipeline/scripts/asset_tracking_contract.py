@@ -108,7 +108,9 @@ LEGACY_STATUS_MAPPINGS: dict[str, dict[str, dict[str, str]]] = {
     "animations.index.upscale-status.v1": {
         "non-traité": {"production": "not-started"},
         "à-compléter": {"production": "in-progress"},
+        "à-valider": {"production": "produced", "qa": "pending"},
         "à-corriger": {"production": "blocked", "release": "ineligible"},
+        "à-arbitrer": {"production": "blocked"},
         "écarté": {"production": "rejected", "release": "ineligible"},
         "validé-x4": {"production": "verified"},
         "validé-natif": {"production": "verified"},

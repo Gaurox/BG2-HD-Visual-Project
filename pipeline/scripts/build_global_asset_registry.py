@@ -1413,7 +1413,6 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
                 }
             )
 
-        states["qa"] = "not-assessed"
         current_qa = current_qa_by_resref.get(resref)
         if current_qa:
             expected_current = {
@@ -1493,7 +1492,7 @@ def adapt_animation_bams(builder: RegistryBuilder) -> set[str]:
                 asset_id=asset_id,
                 source=resources_path,
             )
-        if states["production"] in {"verified", "in-progress", "blocked"}:
+        if states["production"] in {"produced", "verified", "in-progress", "blocked"}:
             evidence.extend(
                 [
                     evidence_ref(builder.inputs, registry_path, f"csv:resref={resref}"),

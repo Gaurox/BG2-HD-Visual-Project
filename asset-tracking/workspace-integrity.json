@@ -16,19 +16,19 @@
       "approved_candidate_count": 38,
       "empty_run_count": 0,
       "historical_qa_evidence_adapted_count": 47,
-      "ingame_qa_selected_asset_count": 21,
-      "legacy_proto_directory_migration_count": 64,
+      "ingame_qa_selected_asset_count": 28,
+      "legacy_proto_directory_migration_count": 65,
       "legacy_proto_embedded_reference_count": 204,
       "legacy_proto_embedded_reference_file_count": 68,
       "legacy_proto_loose_file_migration_count": 7,
-      "legacy_proto_migrated_bytes": 1320761527,
-      "legacy_proto_migrated_file_count": 3030,
-      "legacy_proto_run_count": 66,
-      "physical_run_count": 267,
+      "legacy_proto_migrated_bytes": 1320768761,
+      "legacy_proto_migrated_file_count": 3033,
+      "legacy_proto_run_count": 67,
+      "physical_run_count": 314,
       "physical_run_count_by_layout": {
-        "batch": 10,
+        "batch": 16,
         "legacy": 162,
-        "mono-asset": 95
+        "mono-asset": 136
       },
       "release_pack_indexed_count": 38,
       "release_referenced_run_count": 24,
@@ -48,13 +48,14 @@
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 166,
-      "configured_path_count": 6,
+      "active_script_file_count": 178,
+      "configured_path_count": 7,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
       "missing_path_count": 0,
       "new_historical_absolute_path_file_count": 0,
       "path_states": {
+        "animation_artifacts_archive": "available",
         "bg2ee_game_root": "available",
         "mmpx_scalepix": "available",
         "topaz_gigapixel_exe": "available",
@@ -662,9 +663,9 @@
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
   "registry_asset_count": 15197,
-  "registry_asset_records_sha256": "56B838E723CE9C80FA263C8E306B866F4B810E1CDFDC33B239687052ED441103",
-  "run_count": 782,
-  "run_records_sha256": "AFC576F42396C9FAD5260FF7B601197B99E481711E1543B6492977B16F0565ED",
+  "registry_asset_records_sha256": "0398259088004DB1F8E8994864C6724B9D24AD9DD483DB1D151CEFB1A4E16A1C",
+  "run_count": 829,
+  "run_records_sha256": "F775C903BCA9234EE70D6760AD4C097B5A34F363D15E176565D4559CA7732BCD",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -711,6 +712,18 @@
       "missing_file_count": 0,
       "projectable_asset_count": 252,
       "referenced_file_count": 252,
+      "registry_projection_count": null,
+      "unavailable_source_count": 0
+    },
+    {
+      "authority": "icons/index/dependencies.csv",
+      "domain": "icons",
+      "extra_file_count": 0,
+      "hash_mismatch_count": 0,
+      "manifest_asset_count": 931,
+      "missing_file_count": 0,
+      "projectable_asset_count": 931,
+      "referenced_file_count": 100,
       "registry_projection_count": null,
       "unavailable_source_count": 0
     },
@@ -798,7 +811,7 @@
       "unavailable_source_count": 0
     }
   ],
-  "source_fingerprint_sha256": "C8CEE8FABFFD8C14C5A28B12F5268B99894F781D3A8449703A61A1B1ABB6A7B4",
+  "source_fingerprint_sha256": "68879DEB3246B778D2C71F392FFB7CC480719E3DA7CBF15A96BF2F44D9E11652",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,

@@ -228,9 +228,9 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             icon["states"],
             {
                 "source": "verified",
-                "production": "not-started",
-                "qa": "not-assessed",
-                "installation": "not-installed",
+                "production": "verified",
+                "qa": "pending",
+                "installation": "restored",
                 "release": "not-evaluated",
             },
         )

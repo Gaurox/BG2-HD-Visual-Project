@@ -1,5 +1,5 @@
 {
-  "asset_records_sha256": "56B838E723CE9C80FA263C8E306B866F4B810E1CDFDC33B239687052ED441103",
+  "asset_records_sha256": "0398259088004DB1F8E8994864C6724B9D24AD9DD483DB1D151CEFB1A4E16A1C",
   "domains": [
     {
       "asset_count": 304,
@@ -30,35 +30,37 @@
           "state_counts": {
             "blocked": 1,
             "in-progress": 1,
-            "not-started": 171,
+            "not-started": 163,
+            "produced": 1,
             "rejected": 5,
-            "verified": 126
+            "verified": 133
           },
           "unresolved_count": 0
         },
         "provenance": {
-          "applicable_count": 128,
+          "applicable_count": 136,
           "coverage_percent": 100.0,
-          "covered_count": 128,
-          "not_applicable_count": 176,
+          "covered_count": 136,
+          "not_applicable_count": 168,
           "state_counts": {
             "complete": 14,
-            "not-applicable": 176,
-            "partial": 5,
-            "verified": 109
+            "not-applicable": 168,
+            "partial": 6,
+            "verified": 116
           },
           "unresolved_count": 0
         },
         "qa": {
           "applicable_count": 304,
-          "coverage_percent": 36.18,
-          "covered_count": 110,
+          "coverage_percent": 38.82,
+          "covered_count": 118,
           "not_applicable_count": 0,
           "state_counts": {
-            "not-assessed": 194,
-            "passed": 110
+            "not-assessed": 186,
+            "passed": 117,
+            "pending": 1
           },
-          "unresolved_count": 194
+          "unresolved_count": 186
         },
         "release": {
           "applicable_count": 304,
@@ -248,12 +250,13 @@
       "authority": "icons/index/",
       "axes": {
         "installation": {
-          "applicable_count": 0,
-          "coverage_percent": null,
-          "covered_count": 0,
-          "not_applicable_count": 2931,
+          "applicable_count": 2931,
+          "coverage_percent": 100.0,
+          "covered_count": 2931,
+          "not_applicable_count": 0,
           "state_counts": {
-            "not-applicable": 2931
+            "not-installed": 1447,
+            "restored": 1484
           },
           "unresolved_count": 0
         },
@@ -263,29 +266,32 @@
           "covered_count": 2931,
           "not_applicable_count": 0,
           "state_counts": {
-            "not-started": 2931
+            "not-started": 1447,
+            "verified": 1484
           },
           "unresolved_count": 0
         },
         "provenance": {
-          "applicable_count": 0,
-          "coverage_percent": null,
-          "covered_count": 0,
-          "not_applicable_count": 2931,
+          "applicable_count": 1484,
+          "coverage_percent": 100.0,
+          "covered_count": 1484,
+          "not_applicable_count": 1447,
           "state_counts": {
-            "not-applicable": 2931
+            "complete": 1484,
+            "not-applicable": 1447
           },
           "unresolved_count": 0
         },
         "qa": {
           "applicable_count": 2931,
-          "coverage_percent": 0.0,
-          "covered_count": 0,
+          "coverage_percent": 50.63,
+          "covered_count": 1484,
           "not_applicable_count": 0,
           "state_counts": {
-            "not-assessed": 2931
+            "not-assessed": 1447,
+            "pending": 1484
           },
-          "unresolved_count": 2931
+          "unresolved_count": 1447
         },
         "release": {
           "applicable_count": 2931,
@@ -784,14 +790,15 @@
   "generated_by": "pipeline/scripts/build_global_asset_registry.py",
   "global_axes": {
     "installation": {
-      "applicable_count": 6714,
-      "coverage_percent": 96.16,
-      "covered_count": 6456,
-      "not_applicable_count": 8483,
+      "applicable_count": 9645,
+      "coverage_percent": 97.33,
+      "covered_count": 9387,
+      "not_applicable_count": 5552,
       "state_counts": {
         "installed": 482,
-        "not-applicable": 8483,
-        "not-installed": 5974,
+        "not-applicable": 5552,
+        "not-installed": 7421,
+        "restored": 1484,
         "unknown": 258
       },
       "unresolved_count": 258
@@ -805,40 +812,40 @@
         "blocked": 595,
         "in-progress": 1,
         "not-applicable": 105,
-        "not-started": 9065,
-        "produced": 3,
+        "not-started": 7573,
+        "produced": 4,
         "ready": 4809,
         "rejected": 5,
         "unknown": 33,
-        "verified": 581
+        "verified": 2072
       },
       "unresolved_count": 33
     },
     "provenance": {
-      "applicable_count": 691,
+      "applicable_count": 2183,
       "coverage_percent": 100.0,
-      "covered_count": 691,
-      "not_applicable_count": 14506,
+      "covered_count": 2183,
+      "not_applicable_count": 13014,
       "state_counts": {
-        "complete": 22,
-        "not-applicable": 14506,
-        "partial": 5,
-        "verified": 664
+        "complete": 1506,
+        "not-applicable": 13014,
+        "partial": 6,
+        "verified": 671
       },
       "unresolved_count": 0
     },
     "qa": {
       "applicable_count": 15092,
-      "coverage_percent": 3.76,
-      "covered_count": 568,
+      "coverage_percent": 13.65,
+      "covered_count": 2060,
       "not_applicable_count": 105,
       "state_counts": {
         "not-applicable": 105,
-        "not-assessed": 14524,
-        "passed": 434,
-        "pending": 134
+        "not-assessed": 13032,
+        "passed": 441,
+        "pending": 1619
       },
-      "unresolved_count": 14524
+      "unresolved_count": 13032
     },
     "release": {
       "applicable_count": 15092,
@@ -873,17 +880,17 @@
     "installed": 482,
     "known_assets": 15197,
     "known_blocked_or_rejected": 600,
-    "known_unprocessed": 13874,
-    "produced": 584,
-    "provenance_available": 691,
-    "qa_passed": 434,
+    "known_unprocessed": 12382,
+    "produced": 2076,
+    "provenance_available": 2183,
+    "qa_passed": 441,
     "release_eligible_or_beyond": 360,
     "release_integrated_or_published": 356,
     "source_available": 14819
   },
   "schema": "bg2-upscale-global-asset-coverage-v1",
-  "source_fingerprint_sha256": "EDCCE6FC878350E344C1CF2A3A37BA334B6F2D53BEF83794B5268758F1BB3778",
-  "source_snapshot_at_utc": "2026-09-06T18:25:40Z",
+  "source_fingerprint_sha256": "50E5ACB1F4185E3A55625050BD3A20952209DC220BE339CF9EE567330089D976",
+  "source_snapshot_at_utc": "2026-09-08T18:45:12Z",
   "uninventoried_scopes": [
     {
       "asset_count": null,

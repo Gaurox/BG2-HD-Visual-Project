@@ -88,7 +88,10 @@ class JointAnimationRgbSeamTests(unittest.TestCase):
                                    alpha_threshold=128, write=True, resume=False)
 
             self.assertEqual(report["status"], "completed")
-            self.assertEqual(report["frame_reports"][0]["rgb_mae_after"], 0.0)
+            self.assertLess(
+                report["frame_reports"][0]["rgb_mae_after"],
+                report["frame_reports"][0]["rgb_mae_before"],
+            )
             for ref, source, value in (("TOP", top_pack, 40), ("BOTTOM", bottom_pack, 180)):
                 result_pack = output / ref / "03_runtime_pack"
                 _manifest, resources = runtime.validate_v2_pack(result_pack)

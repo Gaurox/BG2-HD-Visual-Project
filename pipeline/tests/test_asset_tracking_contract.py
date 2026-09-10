@@ -106,6 +106,18 @@ class AssetTrackingContractTests(unittest.TestCase):
     def test_animation_spatial_validation_does_not_imply_temporal_qa(self) -> None:
         self.assertEqual(
             contract.map_legacy_status(
+                "animations.index.upscale-status.v1", "à-valider"
+            ),
+            {"production": "produced", "qa": "pending"},
+        )
+        self.assertEqual(
+            contract.map_legacy_status(
+                "animations.index.upscale-status.v1", "à-arbitrer"
+            ),
+            {"production": "blocked"},
+        )
+        self.assertEqual(
+            contract.map_legacy_status(
                 "animations.index.upscale-status.v1", "validé-x4"
             ),
             {"production": "verified"},

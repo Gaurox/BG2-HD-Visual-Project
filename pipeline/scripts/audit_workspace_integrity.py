@@ -1359,6 +1359,9 @@ def animation_manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
     def add(value: Any) -> None:
         if isinstance(value, str):
             normalized = value.strip().upper()
+            asset_prefix = "ANIMATIONS:BAM:"
+            if normalized.startswith(asset_prefix):
+                normalized = normalized.removeprefix(asset_prefix)
             if ANIMATION_RESREF_RE.fullmatch(normalized):
                 values.add(normalized)
         elif isinstance(value, Mapping):
@@ -1369,6 +1372,7 @@ def animation_manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
     for key in ("asset", "resref", "bam_resref"):
         add(manifest.get(key))
     for key in (
+        "asset_ids",
         "resources",
         "timed_resources",
         "resrefs",
@@ -1395,7 +1399,40 @@ def animation_manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
                     add(item)
             else:
                 add(sequence)
+    for patch in manifest.get("occurrence_patches") or []:
+        if not isinstance(patch, Mapping):
+            continue
+        before = patch.get("before")
+        if isinstance(before, Mapping):
+            add(before.get("resref"))
     return values
+
+
+def animation_manifest_owned_resrefs(
+    manifest: Mapping[str, Any], pack_manifest: Mapping[str, Any] | None = None
+) -> set[str]:
+    """Prefer an explicit transform target over carried pack dependencies."""
+
+    spline = manifest.get("per_frame_spline_alpha")
+    if isinstance(spline, Mapping):
+        targeted = animation_manifest_resrefs(spline)
+        if targeted:
+            return targeted
+    targeted = set()
+    if isinstance(pack_manifest, Mapping):
+        for asset in pack_manifest.get("replacement_assets") or []:
+            if not isinstance(asset, Mapping):
+                continue
+            match = re.fullmatch(
+                r"AAX4-((?=.*[A-Z0-9])[A-Z0-9_]{1,8})-frame[0-9]+[.]rgba",
+                str(asset.get("name", "")),
+                flags=re.IGNORECASE,
+            )
+            if match:
+                targeted.add(match.group(1).upper())
+    if targeted:
+        return targeted
+    return animation_manifest_resrefs(manifest)
 
 
 def validate_animation_run_selections(
@@ -2007,12 +2044,23 @@ def audit_animations(
         manifest_resrefs = (
             animation_manifest_resrefs(manifest) if isinstance(manifest, Mapping) else set()
         )
+        pack_manifest: Mapping[str, Any] = {}
+        pack_name = manifest.get("pack") if isinstance(manifest, Mapping) else None
+        if isinstance(pack_name, str) and pack_name:
+            pack_manifest_path = run_dir / pack_name / "manifest.json"
+            if pack_manifest_path.is_file():
+                pack_manifest = read_json(pack_manifest_path)
+        manifest_owned_resrefs = (
+            animation_manifest_owned_resrefs(manifest, pack_manifest)
+            if isinstance(manifest, Mapping)
+            else set()
+        )
         request_resrefs = (
             animation_manifest_resrefs(request) if isinstance(request, Mapping) else set()
         )
         asset_ids.extend(
             f"animations:bam:{resref}"
-            for resref in sorted(manifest_resrefs | request_resrefs)
+            for resref in sorted(manifest_owned_resrefs | request_resrefs)
         )
         classified_resrefs = {
             asset_id.removeprefix("animations:bam:")

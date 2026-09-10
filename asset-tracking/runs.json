@@ -1,8 +1,8 @@
 {
   "authority_policy": "generated read-only projection; never edit or consume as a domain authority",
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
-  "run_count": 782,
-  "run_records_sha256": "AFC576F42396C9FAD5260FF7B601197B99E481711E1543B6492977B16F0565ED",
+  "run_count": 829,
+  "run_records_sha256": "F775C903BCA9234EE70D6760AD4C097B5A34F363D15E176565D4559CA7732BCD",
   "runs": [
     {
       "asset_count": 1,
@@ -1549,6 +1549,426 @@
       "selection_state": "historical"
     },
     {
+      "asset_count": 3,
+      "asset_ids": [
+        "animations:bam:AM0803B",
+        "animations:bam:AM0803C",
+        "animations:bam:AM0803E"
+      ],
+      "descriptor_path": "",
+      "domain": "animations",
+      "inputs_state": "unknown",
+      "legacy": true,
+      "notes": "layout=legacy; Migré depuis proto; rôle historique: historical-workshop",
+      "outputs_state": "present",
+      "path": "animations/runs/am0803-warmpatch-blur-workshop",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "unknown",
+      "run_id": "am0803-warmpatch-blur-workshop",
+      "run_key": "animations:am0803-warmpatch-blur-workshop",
+      "run_kind": "animation-prototype",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803A"
+      ],
+      "descriptor_path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am0803a-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM0803A:am0803a-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803A"
+      ],
+      "descriptor_path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM0803A/2026-09-07-accepted-am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803A/runs/am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM0803A:am0803a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM0803A.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803A"
+      ],
+      "descriptor_path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803A/runs/am0803a-seedvr7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803a-seedvr7b-lab-x4-20260907",
+      "run_key": "animations:AM0803A:am0803a-seedvr7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803B"
+      ],
+      "descriptor_path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am0803b-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM0803B:am0803b-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803B"
+      ],
+      "descriptor_path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM0803B:am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803B"
+      ],
+      "descriptor_path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM0803B/2026-09-07-accepted-am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803B/runs/am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_key": "animations:AM0803B:am0803b-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM0803B.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803B"
+      ],
+      "descriptor_path": "animations/ressources/AM0803B/runs/am0803b-seedvr7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803B/runs/am0803b-seedvr7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803b-seedvr7b-lab-x4-20260907",
+      "run_key": "animations:AM0803B:am0803b-seedvr7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803C"
+      ],
+      "descriptor_path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am0803c-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM0803C:am0803c-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803C"
+      ],
+      "descriptor_path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM0803C:am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803C"
+      ],
+      "descriptor_path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM0803C/2026-09-07-accepted-am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803C/runs/am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_key": "animations:AM0803C:am0803c-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM0803C.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803C"
+      ],
+      "descriptor_path": "animations/ressources/AM0803C/runs/am0803c-seedvr7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803C/runs/am0803c-seedvr7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803c-seedvr7b-lab-x4-20260907",
+      "run_key": "animations:AM0803C:am0803c-seedvr7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803D"
+      ],
+      "descriptor_path": "animations/ressources/AM0803D/runs/am0803d-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803D/runs/am0803d-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am0803d-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM0803D:am0803d-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803D"
+      ],
+      "descriptor_path": "animations/ressources/AM0803D/runs/am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM0803D/2026-09-07-accepted-am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803D/runs/am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM0803D:am0803d-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM0803D.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803D"
+      ],
+      "descriptor_path": "animations/ressources/AM0803D/runs/am0803d-seedvr7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803D/runs/am0803d-seedvr7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803d-seedvr7b-lab-x4-20260907",
+      "run_key": "animations:AM0803D:am0803d-seedvr7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803E"
+      ],
+      "descriptor_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am0803e-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM0803E:am0803e-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803E"
+      ],
+      "descriptor_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM0803E:am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803E"
+      ],
+      "descriptor_path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM0803E/2026-09-07-accepted-am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803E/runs/am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_key": "animations:AM0803E:am0803e-apo8-x4-30fps-v2-spline-fit1-feather4-warmblur-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM0803E.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM0803E"
+      ],
+      "descriptor_path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM0803E/runs/am0803e-seedvr7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am0803e-seedvr7b-lab-x4-20260907",
+      "run_key": "animations:AM0803E:am0803e-seedvr7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
       "asset_count": 1,
       "asset_ids": [
         "animations:bam:AM0900DM"
@@ -2171,6 +2591,512 @@
     {
       "asset_count": 1,
       "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am2805a-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM2805A:am2805a-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-contour-fix-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-contour-fix-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-contour-fix-20260908",
+      "run_key": "animations:AM2805A:am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-contour-fix-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908",
+      "run_key": "animations:AM2805A:am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM2805A:am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_key": "animations:AM2805A:am2805a-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805A"
+      ],
+      "descriptor_path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805a-seedvr2-7b-lab-x4-20260907",
+      "run_key": "animations:AM2805A:am2805a-seedvr2-7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottom-seam-fix-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottom-seam-fix-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottom-seam-fix-20260908",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottom-seam-fix-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam-wed-occlusion-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam-wed-occlusion-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam-wed-occlusion-20260908",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam-wed-occlusion-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam8-16-straight-rgb-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam8-16-straight-rgb-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam8-16-straight-rgb-20260908",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-spline-fit1-feather1-bottomseam8-16-straight-rgb-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "run_key": "animations:AM2805B:am2805b-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-ar2804-fused-carrier-selection-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM2805B/2026-09-08-accepted-am2805b-ar2804-fused-carrier-selection-20260908.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-ar2804-fused-carrier-selection-20260908",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-ar2804-fused-carrier-selection-20260908",
+      "run_key": "animations:AM2805B:am2805b-ar2804-fused-carrier-selection-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM2805B.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805B"
+      ],
+      "descriptor_path": "animations/ressources/AM2805B/runs/am2805b-seedvr2-7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805B/runs/am2805b-seedvr2-7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805b-seedvr2-7b-lab-x4-20260907",
+      "run_key": "animations:AM2805B:am2805b-seedvr2-7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-spline-fit1-feather1-topseam8-16-straight-rgb-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-final-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-wed-occlusion-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-wed-occlusion-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-wed-occlusion-20260908",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-spline-fit1-feather4-wed-occlusion-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "run_key": "animations:AM2805C:am2805c-apo8-x4-30fps-v2-wed-occlusion-alpha-mask-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-ar2804-fused-carrier-selection-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset; QA ingame explicite: animations/index/qa-decisions/AM2805C/2026-09-08-accepted-am2805c-ar2804-fused-carrier-selection-20260908.json",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-ar2804-fused-carrier-selection-20260908",
+      "provenance_state": "partial",
+      "qa_state": "ingame-accepted",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-ar2804-fused-carrier-selection-20260908",
+      "run_key": "animations:AM2805C:am2805c-ar2804-fused-carrier-selection-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "animations/index/selections/AM2805C.json",
+      "selection_state": "selected"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=mono-asset",
+      "outputs_state": "present",
+      "path": "animations/ressources/AM2805C/runs/am2805c-seedvr2-7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805c-seedvr2-7b-lab-x4-20260907",
+      "run_key": "animations:AM2805C:am2805c-seedvr2-7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 1,
+      "asset_ids": [
         "animations:bam:AM3000A"
       ],
       "descriptor_path": "",
@@ -2657,11 +3583,8 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 5,
+      "asset_count": 2,
       "asset_ids": [
-        "animations:bam:AM0516LA",
-        "animations:bam:AM0516LB",
-        "animations:bam:AM0516LC",
         "animations:bam:SPHINCT",
         "animations:bam:SPHINCT2"
       ],
@@ -2683,11 +3606,8 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 5,
+      "asset_count": 2,
       "asset_ids": [
-        "animations:bam:AM0516LA",
-        "animations:bam:AM0516LB",
-        "animations:bam:AM0516LC",
         "animations:bam:SPHINCT",
         "animations:bam:SPHINCT2"
       ],
@@ -2736,11 +3656,8 @@
       "selection_state": "release-candidate"
     },
     {
-      "asset_count": 5,
+      "asset_count": 2,
       "asset_ids": [
-        "animations:bam:AM0516LA",
-        "animations:bam:AM0516LB",
-        "animations:bam:AM0516LC",
         "animations:bam:SPHINCT",
         "animations:bam:SPHINCT2"
       ],
@@ -3249,33 +4166,6 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 6,
-      "asset_ids": [
-        "animations:bam:AM0700A",
-        "animations:bam:AM0700B",
-        "animations:bam:AM0700C",
-        "animations:bam:AM0700D",
-        "animations:bam:FIRE_1",
-        "animations:bam:FIRE_4"
-      ],
-      "descriptor_path": "animations/runs/ar0700-all-bam-seedvr7b-lab-x4/manifest.json",
-      "domain": "animations",
-      "inputs_state": "documented",
-      "legacy": false,
-      "notes": "layout=legacy",
-      "outputs_state": "present",
-      "path": "animations/runs/ar0700-all-bam-seedvr7b-lab-x4",
-      "provenance_state": "partial",
-      "qa_state": "not-assessed",
-      "recipe_path": "",
-      "result_state": "failed",
-      "run_id": "ar0700-all-bam-seedvr7b-lab-x4",
-      "run_key": "animations:ar0700-all-bam-seedvr7b-lab-x4",
-      "run_kind": "area-animation",
-      "selection_authority": "",
-      "selection_state": "historical"
-    },
-    {
       "asset_count": 2,
       "asset_ids": [
         "animations:bam:FIRE_1",
@@ -3734,6 +4624,121 @@
       "selection_state": "release-candidate"
     },
     {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/am2805bc-joint-rgb-seam16-alpha128-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/am2805bc-joint-rgb-seam16-alpha128-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805bc-joint-rgb-seam16-alpha128-20260908",
+      "run_key": "animations:batch:am2805bc-joint-rgb-seam16-alpha128-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805bc-joint-rgb-seam32-restore-large-alpha-20260908",
+      "run_key": "animations:batch:am2805bc-joint-rgb-seam32-restore-large-alpha-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908",
+      "run_key": "animations:batch:am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-alphaover-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-alphaover-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-alphaover-20260908",
+      "run_key": "animations:batch:am2805bc-joint-rgb-seam32-restore-large-alpha-bilateral8-alphaover-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908",
+      "run_key": "animations:batch:am2805bc-joint-rgb-seam32-restore-large-alpha-overlap2-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
       "asset_count": 4,
       "asset_ids": [
         "animations:bam:AM414E11",
@@ -3885,56 +4890,6 @@
       "selection_state": "historical"
     },
     {
-      "asset_count": 4,
-      "asset_ids": [
-        "animations:bam:AM904TL1",
-        "animations:bam:AM904TL2",
-        "animations:bam:AM904TL3",
-        "animations:bam:AM904TL4"
-      ],
-      "descriptor_path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906/manifest.json",
-      "domain": "animations",
-      "inputs_state": "documented",
-      "legacy": false,
-      "notes": "layout=batch",
-      "outputs_state": "present",
-      "path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906",
-      "provenance_state": "partial",
-      "qa_state": "not-assessed",
-      "recipe_path": "",
-      "result_state": "failed",
-      "run_id": "ar0904-taloscircle-spatial-x4-20260906",
-      "run_key": "animations:batch:ar0904-taloscircle-spatial-x4-20260906",
-      "run_kind": "area-animation",
-      "selection_authority": "",
-      "selection_state": "historical"
-    },
-    {
-      "asset_count": 4,
-      "asset_ids": [
-        "animations:bam:AM904TL1",
-        "animations:bam:AM904TL2",
-        "animations:bam:AM904TL3",
-        "animations:bam:AM904TL4"
-      ],
-      "descriptor_path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906-r2/manifest.json",
-      "domain": "animations",
-      "inputs_state": "documented",
-      "legacy": false,
-      "notes": "layout=batch",
-      "outputs_state": "present",
-      "path": "animations/batches/ar0904-taloscircle-spatial-x4-20260906-r2",
-      "provenance_state": "partial",
-      "qa_state": "not-assessed",
-      "recipe_path": "",
-      "result_state": "failed",
-      "run_id": "ar0904-taloscircle-spatial-x4-20260906-r2",
-      "run_key": "animations:batch:ar0904-taloscircle-spatial-x4-20260906-r2",
-      "run_kind": "area-animation",
-      "selection_authority": "",
-      "selection_state": "historical"
-    },
-    {
       "asset_count": 9,
       "asset_ids": [
         "animations:bam:FALL1B",
@@ -3997,6 +4952,77 @@
       "run_kind": "area-animation",
       "selection_authority": "animations/index/selections/AM2300A.json;animations/index/selections/FALL1A.json;animations/index/selections/FALL1B.json;animations/index/selections/FALL2.json;animations/index/selections/FALL3.json;animations/index/selections/FALL4.json;animations/index/selections/FALL5A.json;animations/index/selections/FALL5B.json;animations/index/selections/FALL5C.json;animations/index/selections/FALL6.json;animations/index/selections/FALLA1.json;animations/index/selections/FALLA2.json",
       "selection_state": "selected"
+    },
+    {
+      "asset_count": 2,
+      "asset_ids": [
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/ar2804-am2805bc-fused-carrier-am28add-20260908/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar2804-am2805bc-fused-carrier-am28add-20260908",
+      "provenance_state": "partial",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar2804-am2805bc-fused-carrier-am28add-20260908",
+      "run_key": "animations:batch:ar2804-am2805bc-fused-carrier-am28add-20260908",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 3,
+      "asset_ids": [
+        "animations:bam:AM2805A",
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/ar2804-treelife-apo8-x4-30fps-v2-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar2804-treelife-apo8-x4-30fps-v2-20260907",
+      "provenance_state": "complete",
+      "qa_state": "pending-explicit-user-approval",
+      "recipe_path": "request.json",
+      "result_state": "completed",
+      "run_id": "ar2804-treelife-apo8-x4-30fps-v2-20260907",
+      "run_key": "animations:batch:ar2804-treelife-apo8-x4-30fps-v2-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
+    },
+    {
+      "asset_count": 3,
+      "asset_ids": [
+        "animations:bam:AM2805A",
+        "animations:bam:AM2805B",
+        "animations:bam:AM2805C"
+      ],
+      "descriptor_path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907/manifest.json",
+      "domain": "animations",
+      "inputs_state": "documented",
+      "legacy": false,
+      "notes": "layout=batch",
+      "outputs_state": "present",
+      "path": "animations/batches/ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+      "provenance_state": "partial",
+      "qa_state": "not-assessed",
+      "recipe_path": "",
+      "result_state": "completed",
+      "run_id": "ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+      "run_key": "animations:batch:ar2804-treelife-spatial-seedvr2-7b-lab-x4-20260907",
+      "run_kind": "area-animation",
+      "selection_authority": "",
+      "selection_state": "historical"
     },
     {
       "asset_count": 1,
@@ -18597,10 +19623,10 @@
   ],
   "schema": "bg2-upscale-workspace-run-index-v1",
   "selection_policy": "selection remains in external canonical manifests or pointers",
-  "source_fingerprint_sha256": "C8CEE8FABFFD8C14C5A28B12F5268B99894F781D3A8449703A61A1B1ABB6A7B4",
+  "source_fingerprint_sha256": "68879DEB3246B778D2C71F392FFB7CC480719E3DA7CBF15A96BF2F44D9E11652",
   "summary": {
     "by_domain": {
-      "animations": 305,
+      "animations": 352,
       "maps": 322,
       "sprites": 143,
       "videos": 12
@@ -18608,10 +19634,10 @@
     "by_selection_state": {
       "canonical-prototype": 17,
       "current-generation": 1,
-      "historical": 368,
+      "historical": 408,
       "historical-unselected": 5,
       "release-candidate": 57,
-      "selected": 326,
+      "selected": 333,
       "unselected": 4,
       "validated-interpolation": 2,
       "validated-upscale": 2

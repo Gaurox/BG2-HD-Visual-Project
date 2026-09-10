@@ -46,6 +46,57 @@ class WorkspaceIntegrityTests(unittest.TestCase):
             self.assertEqual(row["asset_ids"], " | ".join(record["asset_ids"]))
             self.assertEqual(row["selection_state"], record["selection_state"])
 
+    def test_animation_transform_target_excludes_carried_pack_dependencies(self) -> None:
+        manifest = {
+            "timed_resources": ["AM2805A", "AM2805B", "AM2805C"],
+            "pack": "03_runtime_pack",
+            "per_frame_spline_alpha": {"pipeline_name": "spline-fit1"},
+        }
+        pack_manifest = {
+            "replacement_assets": [
+                {"name": "AAX4-AM2805A-frame000.rgba"},
+                {"name": "AAX4-AM2805A-frame001.rgba"},
+            ]
+        }
+        self.assertEqual(
+            integrity.animation_manifest_resrefs(manifest),
+            {"AM2805A", "AM2805B", "AM2805C"},
+        )
+        self.assertEqual(
+            integrity.animation_manifest_owned_resrefs(manifest, pack_manifest),
+            {"AM2805A"},
+        )
+
+    def test_animation_batch_assets_cover_explicit_and_fused_sources(self) -> None:
+        self.assertEqual(
+            integrity.animation_manifest_resrefs(
+                {
+                    "asset_ids": [
+                        "animations:bam:AM2805B",
+                        "animations:bam:AM2805C",
+                    ]
+                }
+            ),
+            {"AM2805B", "AM2805C"},
+        )
+        self.assertEqual(
+            integrity.animation_manifest_resrefs(
+                {
+                    "occurrence_patches": [
+                        {
+                            "before": {"resref": "AM2805B"},
+                            "after": {"resref": "AM28ADD"},
+                        },
+                        {
+                            "before": {"resref": "AM2805C"},
+                            "after": {"resref": "AM28NUL"},
+                        },
+                    ]
+                }
+            ),
+            {"AM2805B", "AM2805C"},
+        )
+
     def test_every_run_asset_link_targets_the_global_registry(self) -> None:
         registry = json.loads((ROOT / "asset-tracking/registry.json").read_text(encoding="utf-8"))
         asset_ids = {record["asset_id"] for record in registry["assets"]}
@@ -305,10 +356,10 @@ class WorkspaceIntegrityTests(unittest.TestCase):
                 self.assertTrue(run["qa_state"].startswith("preview-"), run["run_key"])
             self.assertNotEqual(run["selection_state"], "qa-approved", run["run_key"])
             self.assertIn("aucune preuve de QA ingame", run["notes"], run["run_key"])
-        self.assertEqual(animations["legacy_proto_directory_migration_count"], 64)
+        self.assertEqual(animations["legacy_proto_directory_migration_count"], 65)
         self.assertEqual(animations["legacy_proto_loose_file_migration_count"], 7)
-        self.assertEqual(animations["legacy_proto_migrated_file_count"], 3030)
-        self.assertEqual(animations["legacy_proto_migrated_bytes"], 1320761527)
+        self.assertEqual(animations["legacy_proto_migrated_file_count"], 3033)
+        self.assertEqual(animations["legacy_proto_migrated_bytes"], 1320768761)
         self.assertGreater(animations["legacy_proto_embedded_reference_count"], 0)
         self.assertEqual(
             animations["legacy_proto_run_count"], expected_legacy_runs
@@ -467,7 +518,7 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         migration = json.loads(migration_path.read_text(encoding="utf-8"))
         self.assertEqual(migration["schema"], "bg2-upscale-animation-path-migrations-v1")
         self.assertIn("never grants", migration["authority_policy"])
-        self.assertEqual(len(migration["migrations"]), 64)
+        self.assertEqual(len(migration["migrations"]), 65)
         self.assertEqual(len(migration["loose_file_migrations"]), 7)
         self.assertEqual(
             {item["from"] for item in migration["deprecated_output_roots"]},

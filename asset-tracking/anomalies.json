@@ -4,7 +4,7 @@
       "anomaly_id": "ANOM-0001",
       "code": "shared-raw-dependencies",
       "details": {
-        "resource_count": 64
+        "resource_count": 113
       },
       "domain": "other",
       "message": "des ressources brutes sont partagées entre plusieurs domaines sans créer de doublon logique",
@@ -85,7 +85,7 @@
       "domain": "icons",
       "message": "des resrefs d'icônes référencés par ITM/SPL sont absents du jeu stock",
       "severity": "warning",
-      "source": "icons/index/manifest.json"
+      "source": "icons/index/missing-resources.csv"
     },
     {
       "anomaly_id": "ANOM-0008",
@@ -163,11 +163,11 @@
       "source": "interface/menus-options-bg2ee/x4-topaz-recovery-v2-d50/sprite-manifest.json"
     }
   ],
-  "asset_records_sha256": "56B838E723CE9C80FA263C8E306B866F4B810E1CDFDC33B239687052ED441103",
+  "asset_records_sha256": "0398259088004DB1F8E8994864C6724B9D24AD9DD483DB1D151CEFB1A4E16A1C",
   "generated_by": "pipeline/scripts/build_global_asset_registry.py",
   "schema": "bg2-upscale-global-asset-anomalies-v1",
-  "source_fingerprint_sha256": "EDCCE6FC878350E344C1CF2A3A37BA334B6F2D53BEF83794B5268758F1BB3778",
-  "source_snapshot_at_utc": "2026-09-06T18:25:40Z",
+  "source_fingerprint_sha256": "50E5ACB1F4185E3A55625050BD3A20952209DC220BE339CF9EE567330089D976",
+  "source_snapshot_at_utc": "2026-09-08T18:45:12Z",
   "summary": {
     "by_code": {
       "duplicate-source-content": 1,
