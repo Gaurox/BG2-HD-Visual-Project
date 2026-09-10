@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D6 terminés ; D7 partiel : routage x1 visible, candidat soft035 sans halo installé en attente de traces/QA ; tests non exécutés**. Vérification : 2026-09-10.
+Statut : **D0–D6 terminés ; D7 partiel : Catmull–Rom x1 `soft035` sans halo validé, couverture objet au sol/`fpSELECT` restante ; tests non exécutés**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -602,7 +602,7 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
   visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
 - [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil retenu
   Catmull–Rom + `Sharpen=-0.35`, couleurs neutres, contour natif. Tests non exécutés par choix utilisateur.
-- [ ] D7 : x2 `CreatureHD` validé ; routage x1 visible ; profil soft035 sans halo installé, traces/QA à faire ; tests refusés.
+- [ ] D7 : x2 `CreatureHD` et rendu créature x1 Catmull–Rom `soft035` sans halo validés ; objet au sol/`fpSELECT` à tracer ; tests refusés.
 - [ ] D8–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -717,3 +717,16 @@ Catmull–Rom x1 ; un draw x2 `CreatureHD` reste en mode 2. Correctif source pr�
 sampler x1, substitution `NEAREST` bornée au draw avec restauration exacte, télémétrie de la valeur
 originale, et exclusion inchangée des textures HD. Tests préparés, non exécutés avant choix
 utilisateur ; nouveau candidat non installé à ce stade.
+
+Candidat courant `d7-20260910-sprite-scope-catmull-x1-samplerfix` : correctif `a8eccd4`, DLL
+Release `289D…1C67`, validation offline BG2EE 2.7.3 réussie. `fpSprite` et `fpSELECT` utilisent
+Catmull–Rom, `ColorSpace=Stored`, `Sharpen=-0.35` et couleurs neutres ; `fpSprite` conserve
+`OutlineMode=Dshaders`, `OutlineSize=0`, `fpSELECT` conserve le surlignage natif. Le sampler x1 est
+forcé à `NEAREST` pendant le draw puis restauré ; les textures catalogue HD restent exclusivement
+`CreatureHD`. Candidat précédent restauré et vérifié, nouveau candidat installé et deux reçus
+vérifiés. Session `21:01:57–21:02:25` : deux draws `fpSprite`, tous en mode 2 et `-0.35`, dont un
+sampler initialement `LINEAR` substitué puis restauré ; aucune erreur shader/OpenGL. L'utilisateur
+valide le rendu x1 sans halo. La douceur supérieure au x2 vient de la source x1 : quatre fois moins
+d'échantillons et noyau texel couvrant deux fois plus d'espace linéaire, pas d'un écart de profil.
+Tests non exécutés par choix utilisateur. La couverture Catmull–Rom objet au sol/`fpSELECT` manque ;
+D7 reste incomplet. D8 et release non commencés.

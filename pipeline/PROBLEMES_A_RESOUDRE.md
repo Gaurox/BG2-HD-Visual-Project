@@ -111,14 +111,16 @@ ne sont pas réconciliés par une décision explicite.
 - Profil soft035/native tracé : 80 routes sol, 48 routes créature, quatre `fpSprite` actifs avec
   `Sharpen=-0.35`, sept `CreatureHD` actifs, aucune erreur. Le halo natif `fpSprite`
   (`uSpriteBlurAmount=5`) reste visible et est rejeté comme contour noir.
-- Candidat courant : `fpSprite Filter=Native`, `Stored`, `Sharpen=-0.35`, couleurs neutres,
-  `OutlineMode=Dshaders` + rayon `0` pour contour effectivement absent ; `fpSELECT` reste natif.
-- Dernière trace : cinq `fpSprite` actifs avec `creatureFilterMode=0`, aucun Catmull–Rom x1 ; un
-  `CreatureHD` x2 reste en mode 2. Cause : profil x1 volontairement `Filter=Native`.
-- Correctif source préparé : profil Catmull–Rom + sampler `NEAREST` limité au draw x1 et restauré
-  exactement ; texture HD exclue. Tests préparés, non exécutés ; candidat correctif non installé.
-- Manque : choix de tests, build/candidat distinct, preuve `creatureFilterMode=2` x1 avec sampler
-  restauré, QA sans halo et validation de `fpSELECT` ; ne pas déclarer D7 terminé avant ces preuves.
+- Candidat courant : `d7-20260910-sprite-scope-catmull-x1-samplerfix`, correctif `a8eccd4` ;
+  `fpSprite`/`fpSELECT` Catmull–Rom, `Stored`, `Sharpen=-0.35`, couleurs neutres ; `fpSprite`
+  `OutlineMode=Dshaders` + rayon `0`, texture HD exclue. Build Release et validation offline 2.7.3
+  réussis ; tests refusés. Candidat précédent restauré, installation et reçus vérifiés.
+- Trace `21:01:57–21:02:25` : 64 routes créature, deux `fpSprite` en mode 2 et `-0.35`, dont un
+  sampler `LINEAR` substitué ; zéro erreur de restauration/shader/OpenGL. Rendu x1 sans halo validé
+  par l'utilisateur. Douceur supérieure au x2 expliquée par la résolution source et le rayon du
+  noyau en texels, pas par un écart de profil.
+- Manque : draws Catmull–Rom objet au sol et `fpSELECT`, plus témoin `CreatureHD` dans la même
+  session ; ne pas déclarer D7 terminé avant cette couverture.
 
 ## ENGINE-UI-001 — États UI personnalisés
 
