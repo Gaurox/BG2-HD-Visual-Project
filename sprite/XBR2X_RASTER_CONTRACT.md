@@ -21,18 +21,22 @@ Le point d'entrée est le runner, qui résout `config://mmpx_scalepix`, appelle
 `pipeline/scripts/xbr2x_batch.js` par protocole binaire et vérifie la recette :
 
 ```powershell
+python pipeline/scripts/materialize_sprite_sources.py --job <job.json>
+python pipeline/scripts/materialize_sprite_sources.py --job <job.json> --run
 python pipeline/scripts/run_creature_sprite_x2.py plan --job <job.json>
-python pipeline/scripts/run_creature_sprite_x2.py build --job <job.json>
+python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job.json>
 python pipeline/scripts/run_creature_sprite_x2.py verify --job <job.json>
 ```
 
 Pour un nouveau job, déclarer `scalepix: "config://mmpx_scalepix"`; ne pas inscrire de chemin
 machine. `xbr2x_batch.js` est un adaptateur interne, pas une CLI PNG autonome.
+Les BAM doivent venir du store central via `materialize_sprite_sources.py`. Réserver la commande
+runner `extract` aux workspaces historiques.
 
 ## Contrôles
 
 - `family_id` existe dans `sprite/index/sprite_families.csv` ;
-- `pipeline_ready=yes`, ou tous les blockers sont explicitement traités ;
+- `runtime_supported=yes`, `pipeline_ready=yes`, `blocker` et `override_collision` vides ;
 - ordre, cycles, dimensions, centres, offsets et palette dynamique x1 préservés ;
 - sortie exacte x2, alpha intact et aucune frame manquante ;
 - inspection de plusieurs directions, armes, états et silhouettes ;

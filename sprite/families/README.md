@@ -1,5 +1,8 @@
 # Familles de sprites
 
+Traitement : [`../PROCESSING.md`](../PROCESSING.md). Ne pas improviser une chaîne depuis un
+workspace existant.
+
 `../index/family-groups.csv` décide le macro-groupe et le dossier de chaque `engine_section`.
 `pipeline/scripts/sprite_layout.py` résout le chemin exact depuis les lignes normalisées des index.
 

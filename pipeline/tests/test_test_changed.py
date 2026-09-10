@@ -66,6 +66,12 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "pipeline/scripts/build_spline_top_reconstructed_alpha.py": (
                 "pipeline.tests.test_spline_top_reconstructed_alpha",
             ),
+            "pipeline/scripts/generate_character_complete_x2_jobs.py": (
+                "pipeline.tests.test_generate_character_complete_x2_jobs",
+            ),
+            "pipeline/scripts/materialize_sprite_sources.py": (
+                "pipeline.tests.test_sprite_source_materialization",
+            ),
             "pipeline/scripts/Install-CreatureSprite-XN-Test.ps1": (
                 "pipeline.tests.test_creature_sprite_x2_pipeline",
             ),

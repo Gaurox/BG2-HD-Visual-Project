@@ -1,9 +1,10 @@
 """Generate deterministic Character x2 member jobs and one complete aggregate.
 
 This command consumes the canonical ``sprite_families.csv`` inventory and
-writes one descriptor in each current-layout Character sprite workspace plus
-one aggregate below ``family-runs``.  It never extracts a BAM, dispatches xBR,
-builds the runtime, installs files, or launches the game.
+plans one descriptor in each current-layout Character sprite workspace plus
+one aggregate below ``family-runs``.  It writes only with ``--run`` and never
+extracts a BAM, dispatches xBR, builds the runtime, installs files, or launches
+the game.
 
 One member job is sufficient for every equipment BAM prefix because every ITM
 sharing the same animation code resolves to the same stock BAM family.  An
@@ -267,10 +268,23 @@ def discover_existing_jobs(
     return discovered
 
 
-def ensure_template(template: dict[str, Any], animation_id: str) -> None:
-    if not is_compatible_x2_job(template, animation_id):
+def ensure_template(
+    template: dict[str, Any], animation_id: str, *, allow_foreign_identity: bool
+) -> None:
+    animation = template.get("animation")
+    if not isinstance(animation, dict):
+        raise RuntimeError("template must contain an animation object")
+    try:
+        template_id = normalized_animation_id(str(animation.get("id", "")))
+        character_layer_config(template)
+    except RuntimeError as error:
+        raise RuntimeError("template must be a valid Character member job") from error
+    if not RESREF_RE.fullmatch(str(animation.get("bam_prefix", "")).upper()):
+        raise RuntimeError("template must contain a valid BAM prefix")
+    if not allow_foreign_identity and not is_compatible_x2_job(template, animation_id):
         raise RuntimeError("template must be a compatible Character x2 member job")
-    animation = template.get("animation", {})
+    if allow_foreign_identity and not is_compatible_x2_job(template, template_id):
+        raise RuntimeError("bootstrap template must be a compatible Character x2 member job")
     if animation.get("runtime_profile") != "character-bg2ee-2.7.3.0":
         raise RuntimeError("template must use the Character BG2EE runtime profile")
     for block in ("paths", "compatibility"):
@@ -334,6 +348,13 @@ def inherited_qa(template: dict[str, Any]) -> tuple[list[str], list[str]]:
     areas = sorted(set(str(value).upper() for value in qa.get("areas", [])))
     creatures = sorted(set(str(value).upper() for value in qa.get("creatures", [])))
     return areas, creatures
+
+
+def normalized_qa_values(values: Iterable[str], label: str) -> list[str]:
+    result = sorted({str(value).strip().upper() for value in values if str(value).strip()})
+    if any(not RESREF_RE.fullmatch(value) for value in result):
+        raise RuntimeError(f"{label} values must be BAM-safe resrefs")
+    return result
 
 
 def build_member_job(
@@ -414,6 +435,9 @@ def make_plan(
     animation_id: str,
     job_stem: str,
     force: bool,
+    bootstrap_template: bool = False,
+    qa_areas: Iterable[str] = (),
+    qa_creatures: Iterable[str] = (),
 ) -> GenerationPlan:
     project_root = project_root.resolve()
     character_root = character_root.resolve()
@@ -432,7 +456,18 @@ def make_plan(
             "--aggregate-job must be below "
             "<character-root>/family-runs/<aggregate>/jobs/"
         )
-    if character_root not in template_path.parents or template_path.parent.name != "jobs":
+    if template_path.parent.name != "jobs":
+        raise RuntimeError("template must be a Character member below a jobs/ directory")
+    if bootstrap_template:
+        try:
+            template_relative = template_path.relative_to(project_root)
+        except ValueError as error:
+            raise RuntimeError(
+                "--bootstrap-template-job must remain below sprite/"
+            ) from error
+        if not template_relative.parts or template_relative.parts[0] != "sprite":
+            raise RuntimeError("--bootstrap-template-job must remain below sprite/")
+    elif character_root not in template_path.parents:
         raise RuntimeError("--template-job must be a Character member below --character-root")
     aggregate_id = aggregate_path.stem
     if not JOB_ID_RE.fullmatch(aggregate_id) or not aggregate_id.endswith("-xbr2x"):
@@ -441,16 +476,37 @@ def make_plan(
         raise RuntimeError(f"aggregate job already exists; use --force: {aggregate_path}")
 
     template = read_json(template_path)
-    ensure_template(template, target_id)
+    ensure_template(
+        template, target_id, allow_foreign_identity=bootstrap_template
+    )
     families, excluded = load_families(families_path, target_id)
     symbols = {family.ids_symbol for family in families}
     profiles = {family.runtime_profile for family in families}
     if len(symbols) != 1 or len(profiles) != 1:
         raise RuntimeError("inventory families disagree on Character identity")
-    if str(template["animation"].get("ids_symbol", "")).upper() not in symbols:
+    if (
+        not bootstrap_template
+        and str(template["animation"].get("ids_symbol", "")).upper() not in symbols
+    ):
         raise RuntimeError("template ANIMATE.IDS symbol differs from inventory")
     if template["animation"].get("runtime_profile") not in profiles:
         raise RuntimeError("template runtime profile differs from inventory")
+
+    inherited_areas, inherited_creatures = inherited_qa(template)
+    requested_areas = normalized_qa_values(qa_areas, "--qa-area")
+    requested_creatures = normalized_qa_values(qa_creatures, "--qa-creature")
+    if bootstrap_template and (not requested_areas or not requested_creatures):
+        raise RuntimeError(
+            "bootstrap requires at least one --qa-area and one --qa-creature"
+        )
+    areas = requested_areas or inherited_areas
+    creatures = requested_creatures or inherited_creatures
+    template = dict(template)
+    template["qa"] = {
+        **(template.get("qa") if isinstance(template.get("qa"), dict) else {}),
+        "areas": areas,
+        "creatures": creatures,
+    }
 
     existing = discover_existing_jobs(character_root, target_id)
     reused: list[Path] = []
@@ -483,7 +539,6 @@ def make_plan(
             representatives.append(family.representative_item)
 
     paths = template["paths"]
-    areas, creatures = inherited_qa(template)
     required_families = [family for family in families if family.layer_kind == "body"]
     for layer in ("helmet", "shield", "weapon"):
         representative = next(
@@ -639,15 +694,39 @@ def apply_plan(plan: GenerationPlan) -> dict[str, Any]:
     }
 
 
+def describe_plan(plan: GenerationPlan) -> dict[str, Any]:
+    return {
+        "status": "character-complete-x2-jobs-planned",
+        "aggregate_job": relative_path(plan.aggregate_path, plan.project_root),
+        "member_count": len(plan.aggregate_payload["members"]),
+        "generated_member_jobs": [
+            relative_path(path, plan.project_root) for path in plan.generated_jobs
+        ],
+        "reused_member_jobs": [
+            relative_path(path, plan.project_root) for path in plan.reused_jobs
+        ],
+        "excluded_families": list(plan.excluded_families),
+        "member_registry_set_families": list(plan.member_set_families),
+        "qa": dict(plan.aggregate_payload["qa"]),
+        "writes": False,
+        "pixels_produced": False,
+    }
+
+
 def make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--animation-id", required=True)
-    parser.add_argument("--template-job", type=Path, required=True)
+    templates = parser.add_mutually_exclusive_group(required=True)
+    templates.add_argument("--template-job", type=Path)
+    templates.add_argument("--bootstrap-template-job", type=Path)
     parser.add_argument("--job-stem", required=True)
     parser.add_argument("--aggregate-job", type=Path, required=True)
     parser.add_argument("--character-root", type=Path, required=True)
     parser.add_argument("--families", type=Path, default=DEFAULT_FAMILIES)
+    parser.add_argument("--qa-area", action="append", default=[])
+    parser.add_argument("--qa-creature", action="append", default=[])
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--run", action="store_true", help="publie les descripteurs planifiés")
     return parser
 
 
@@ -660,13 +739,17 @@ def main(argv: Iterable[str] | None = None) -> None:
         project_root=PROJECT_ROOT,
         families_path=args.families,
         character_root=character_root,
-        template_path=args.template_job,
+        template_path=args.template_job or args.bootstrap_template_job,
         aggregate_path=args.aggregate_job,
         animation_id=args.animation_id,
         job_stem=args.job_stem,
         force=args.force,
+        bootstrap_template=args.bootstrap_template_job is not None,
+        qa_areas=args.qa_area,
+        qa_creatures=args.qa_creature,
     )
-    print(json.dumps(apply_plan(plan), ensure_ascii=False, indent=2))
+    result = apply_plan(plan) if args.run else describe_plan(plan)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

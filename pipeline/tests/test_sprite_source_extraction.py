@@ -72,9 +72,18 @@ class SpriteSourceExtractionTests(unittest.TestCase):
                 selected_families, selected_resources = extraction.select_inventory(
                     macro_groups=["characters"]
                 )
+                animation_families, animation_resources = extraction.select_inventory(
+                    animation_ids=["0x6100"]
+                )
             self.assertEqual(len(selected_families), 2)
             self.assertEqual(
                 [row["bam_resref"] for row in selected_resources], ["SHARED", "ONLY0"]
+            )
+            self.assertEqual(
+                [row["family_id"] for row in animation_families], ["family-0"]
+            )
+            self.assertEqual(
+                [row["bam_resref"] for row in animation_resources], ["SHARED", "ONLY0"]
             )
 
     def test_selector_is_mandatory(self) -> None:

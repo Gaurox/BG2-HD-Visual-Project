@@ -112,12 +112,24 @@ Planifier sans écrire ; une portée est obligatoire :
 ```powershell
 python pipeline/scripts/extract_sprite_sources.py --macro-group monsters
 python pipeline/scripts/extract_sprite_sources.py --family-id '<family_id>' --list
+python pipeline/scripts/extract_sprite_sources.py --animation-id 0xFFFF
 python pipeline/scripts/sync_sprite_processing.py
 ```
 
 `extract_sprite_sources.py --run` extrait uniquement les BAM natifs/canoniques. Il ne crée aucune
 frame PNG, aucun run de production, aucune installation et aucune décision QA. Ne pas utiliser
 `--all-ready --run` sans décision explicite sur cette portée globale.
+
+Après création d'un job, raccorder ses sources au runner :
+
+```powershell
+python pipeline/scripts/materialize_sprite_sources.py --job <job-ou-agregat>
+python pipeline/scripts/materialize_sprite_sources.py --job <job-ou-agregat> --run
+```
+
+La première commande est en lecture seule. `--run` exige toutes les sources centrales, crée un
+manifeste par job feuille et des liens physiques sous son `source/`, puis vérifie les octets contre
+le jeu courant. Aucun PNG, upscale, build, installation ou état QA n'est produit.
 
 ## Requêtes de décision
 

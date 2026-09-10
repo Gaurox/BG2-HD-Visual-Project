@@ -81,7 +81,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Sujet | Décision retenue |
 |---|---|
 | Sélection | inventaire normalisé `sprite/index/`, jamais resref deviné |
-| Source physique | un BAM stock par `sprite/ressources/<RESREF>/sources/<source-sha256>/`; aucune duplication par famille |
+| Source physique | un BAM stock par `sprite/ressources/<RESREF>/sources/<source-sha256>/`; `source/` runner le référence par liens physiques, sans copie par famille |
 | Groupes | `sprite/index/family-groups.csv` décide macro-dossier et bucket depuis `engine_section` |
 | Runs | sous la famille logique ; créer la feuille au premier job, jamais précréer tout l'inventaire |
 | Suivi | `sprite/index/processing.csv` sépare production, sélection, QA, installation et release |

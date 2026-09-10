@@ -349,6 +349,60 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         ):
             self._plan()
 
+    def test_bootstrap_template_reuses_recipe_but_not_identity_or_qa(self) -> None:
+        self._write_families()
+        foreign = self._template_job()
+        foreign["animation"] = {
+            **foreign["animation"],
+            "id": "0x6102",
+            "ids_symbol": "FIGHTER_MALE_DWARF",
+        }
+        self._write_json(self.template, foreign)
+
+        plan = generator.make_plan(
+            project_root=generator.PROJECT_ROOT,
+            families_path=self.families,
+            character_root=self.character_root,
+            template_path=self.template,
+            aggregate_path=self.aggregate,
+            animation_id="0x6110",
+            job_stem="bootstrap",
+            force=False,
+            bootstrap_template=True,
+            qa_areas=[" ar0700 "],
+            qa_creatures=["player2"],
+        )
+
+        self.assertEqual(plan.reused_jobs, ())
+        self.assertEqual(plan.aggregate_payload["animation"]["id"], "0x6110")
+        self.assertEqual(plan.aggregate_payload["qa"]["areas"], ["AR0700"])
+        self.assertEqual(plan.aggregate_payload["qa"]["creatures"], ["PLAYER2"])
+        self.assertTrue(
+            all(
+                write.payload.get("animation", {}).get("ids_symbol")
+                == "FIGHTER_FEMALE_HUMAN"
+                for write in plan.writes
+                if write.path != self.aggregate
+            )
+        )
+        self.assertFalse(generator.describe_plan(plan)["writes"])
+
+    def test_bootstrap_template_requires_explicit_qa(self) -> None:
+        self._write_families()
+
+        with self.assertRaisesRegex(RuntimeError, "bootstrap requires"):
+            generator.make_plan(
+                project_root=generator.PROJECT_ROOT,
+                families_path=self.families,
+                character_root=self.character_root,
+                template_path=self.template,
+                aggregate_path=self.aggregate,
+                animation_id="0x6110",
+                job_stem="bootstrap",
+                force=False,
+                bootstrap_template=True,
+            )
+
     def test_oversized_family_does_not_reuse_a_legacy_member(self) -> None:
         self._write_families()
         legacy = self._template_job()

@@ -85,6 +85,10 @@ SCRIPT_TEST_ALIASES = {
     "sprite_layout.py": ("test_sprite_layout",),
     "sync_sprite_processing.py": ("test_sprite_processing",),
     "extract_sprite_sources.py": ("test_sprite_source_extraction",),
+    "materialize_sprite_sources.py": ("test_sprite_source_materialization",),
+    "generate_character_complete_x2_jobs.py": (
+        "test_generate_character_complete_x2_jobs",
+    ),
     "verify_historical_git_evidence.py": ("test_historical_git_evidence",),
     "animation_release.py": ("test_animation_release", "test_release_animation_delta"),
     "build_spline_top_reconstructed_alpha.py": ("test_spline_top_reconstructed_alpha",),

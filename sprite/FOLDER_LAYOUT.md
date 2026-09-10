@@ -14,13 +14,13 @@ families/
     e4xx-goblins/
       e400-mgo1-goblin-axe/
         research/                 # comparisons and non-production trials
-        source/                   # matérialisation runner historique, non autorité
+        source/                   # manifeste runner + hardlinks vers ressources/, non autorité
         runs/                     # immutable build, runtime, install and QA artifacts
         jobs/                     # mutable descriptors for this sprite only
   playable-characters/
     6102-dwarf-male-fighter/
       cdmb1/
-        source/ runs/ jobs/       # source/ idem : compatibilité historique
+        source/ runs/ jobs/       # source/ idem ; legacy local valide
         variants/<recipe>/
       <resref>-<bam-prefix>/
         source/ runs/ jobs/
@@ -61,8 +61,10 @@ Macro-groupes :
 | `large-flying` | `large-flying/<classe>/` |
 | `effects` | `effects/` |
 
-Créer seulement les feuilles nécessaires. Une ressource liée à plusieurs familles n'est jamais
-dupliquée dans chaque famille.
+Créer seulement les feuilles nécessaires. `ressources/` conserve l'unique payload natif canonique.
+`materialize_sprite_sources.py --run` crée dans `source/` des liens physiques vers ce payload ; il
+ne copie pas les octets et ne produit aucun pixel. Une extraction locale historique valide reste
+lisible et ne doit pas être réécrite.
 
 Exception conservée : `playable-characters/6100-minsc/` est un workspace historique matérialisé.
 Les nouvelles familles `0x6100` se résolvent sous `6100-human-male-fighter/`; ne pas déplacer ni

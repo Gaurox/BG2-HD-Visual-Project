@@ -46,6 +46,38 @@ Pour Character, ne pas utiliser la phase `member` de ce générateur. Produire l
 doit porter une provenance `inventory`, un membre par famille incluse et un
 `qa.required_bam_prefixes` non vide.
 
+### Bootstrap d'un Character sans job existant
+
+Réutiliser seulement la recette xBR2x d'un membre Character compatible. L'identité, les familles,
+les chemins et les représentants ITM viennent de l'inventaire cible. La QA cible est obligatoire et
+n'est jamais héritée d'un autre Character.
+
+```powershell
+python pipeline/scripts/generate_character_complete_x2_jobs.py `
+  --animation-id 0xFFFF `
+  --character-root sprite/families/playable-characters/ffff-<type> `
+  --bootstrap-template-job <job-membre-character-xbr2x> `
+  --job-stem <type> `
+  --aggregate-job sprite/families/playable-characters/ffff-<type>/family-runs/complete-xn-xbr2x/jobs/<type>-complete-xn-xbr2x.json `
+  --qa-area <AREA> `
+  --qa-creature <CRE_RESREF>
+```
+
+Sans `--run`, la commande planifie et n'écrit rien. Après revue, répéter avec `--run`. Ne jamais
+utiliser `--force` pour remplacer un job ou agrégat sans décision explicite.
+
+Extraire puis matérialiser les sources avant `prepare` :
+
+```powershell
+python pipeline/scripts/extract_sprite_sources.py --animation-id 0xFFFF
+python pipeline/scripts/extract_sprite_sources.py --animation-id 0xFFFF --run
+python pipeline/scripts/materialize_sprite_sources.py --job <agregat-character>
+python pipeline/scripts/materialize_sprite_sources.py --job <agregat-character> --run
+```
+
+L'extraction remplit le store central. La matérialisation crée uniquement les manifestes et liens
+physiques attendus par le runner ; elle ne produit aucun pixel ni run.
+
 Pour convertir un catalogue historique sans ajouter de contenu, utiliser `catalog-qa-refresh` vers
 un nouveau fichier `qa-refresh-<nom>-vN.json`. Cette commande conserve les membres, `job_id` et
 `run_dir`, et rend explicites les préfixes représentatifs ; elle ne modifie jamais le job actif.
@@ -80,6 +112,10 @@ python pipeline/scripts/generate_sprite_family_append.py member `
 Vérifier le JSON retourné. Retirer `--dry-run`, puis :
 
 ```powershell
+python pipeline/scripts/extract_sprite_sources.py --family-id $familyId
+python pipeline/scripts/extract_sprite_sources.py --family-id $familyId --run
+python pipeline/scripts/materialize_sprite_sources.py --job $member
+python pipeline/scripts/materialize_sprite_sources.py --job $member --run
 python pipeline/scripts/run_creature_sprite_x2.py plan --job $member
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $member
 python pipeline/scripts/run_creature_sprite_x2.py verify --job $member

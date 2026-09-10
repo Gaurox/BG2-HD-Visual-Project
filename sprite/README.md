@@ -24,12 +24,16 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Append catalogue, installation et QA :
+[`FAMILY_APPEND.md`](FAMILY_APPEND.md).
+
 ```text
 index normalisé
+  → sélectionner une portée et des familles éligibles
   → planifier l'extraction native par portée explicite
   → extraire chaque BAM une fois dans ressources/<RESREF>/sources/<sha>/
-  → sélectionner une famille pipeline_ready
   → générer les jobs
+  → matérialiser source/ par liens physiques vers ressources/
   → run_creature_sprite_x2.py
   → vérifier le catalogue cumulatif
   → installer/restaurer transactionnellement
@@ -43,10 +47,13 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 - Inventaire : `pipeline/scripts/build_sprite_inventory.py`.
 - Extraction native dédupliquée : `pipeline/scripts/extract_sprite_sources.py` ; plan-only sans
   `--run`, aucun décodage PNG ni upscale.
+- Adaptateur de sources runner : `pipeline/scripts/materialize_sprite_sources.py` ; plan-only sans
+  `--run`, puis manifeste local et liens physiques sans copie de BAM.
 - Rangement : `pipeline/scripts/sprite_layout.py` + `index/family-groups.csv`.
 - Suivi : `pipeline/scripts/sync_sprite_processing.py` ; ajout conservateur, aucune promotion.
 - Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
-- Ajout de famille : [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
+- Traitement : [`PROCESSING.md`](PROCESSING.md) ; ajout catalogue :
+  [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
 - Contrat raster xBR2x : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md).
 - Catmull–Rom et suite graphique Dshaders : [`catmull-rom/README.md`](catmull-rom/README.md),
   D0/D1 développés ; plan D2–D13 et couverture complète dans
@@ -73,7 +80,7 @@ sprite/
     jobs/                             # entrées opérationnelles
     runs/                             # artefacts immuables, ignorés
     research/                         # expérimental
-    source/                           # matérialisation runner historique, non canonique
+    source/                           # manifeste runner + liens vers ressources/, non canonique
   catalogs/creature-x2-nearest/
     jobs/                             # transactions/générations
     runs/                             # payloads cumulés, ignorés
@@ -83,7 +90,8 @@ sprite/
 Les anciens runbooks sont sous `archive/legacy/sprite-docs/`, hors du routage opérationnel.
 
 Ne pas précréer les milliers de familles : matérialiser au premier job. Un BAM partagé reste une
-seule ressource physique ; les relations multi-familles restent dans les CSV d'index.
+seule charge utile physique ; les entrées de `source/` sont des liens physiques et les relations
+multi-familles restent dans les CSV d'index. Conserver les anciennes extractions locales valides.
 
 Ne jamais modifier un fichier dans un run scellé. Les jobs mutables doivent utiliser le layout
 courant directement ; `path-migrations.json` n'est pas un substitut pour corriger un job actif.
@@ -110,7 +118,8 @@ explicite de l'utilisateur.
 ```powershell
 python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/sprite_layout.py `
   --path pipeline/scripts/sync_sprite_processing.py `
-  --path pipeline/scripts/extract_sprite_sources.py
+  --path pipeline/scripts/extract_sprite_sources.py `
+  --path pipeline/scripts/materialize_sprite_sources.py
 ```
 
 La commande prépare la question obligatoire « ciblés / tous / aucun » et n'exécute rien sans

@@ -122,7 +122,9 @@ def select_inventory(
             rule = rules.get(section)
             if requested_families and row.get("family_id", "") not in requested_families:
                 continue
-            if requested_animations and row.get("animation_id", "").upper() not in requested_animations:
+            if requested_animations and normalize_animation_id(
+                row.get("animation_id", "")
+            ) not in requested_animations:
                 continue
             if requested_sections and section not in requested_sections:
                 continue
