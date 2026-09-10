@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D4 terminés ; D5 non commencé**. Vérification : 2026-09-10.
+Statut : **D0–D5 terminés ; D6 non commencé**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -597,7 +597,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion validés. Le chemin réel
   `fpDraw` route une sortie d'occlusion créature x2 en mode 2 avec texels physiques ; 28 témoins
   `fpDraw` restent neutres, sans fuite ni erreur shader. Tests non exécutés par choix utilisateur.
-- [ ] D5 : filtre GPU 16 lectures non commencé.
+- [x] D5 : filtre GPU 16 lectures implémenté sur `fpDraw`, `fpSprite` et `fpSELECT` ; DLL Release
+  construite, candidat installé et activation `fpDraw` attestée ingame. Aucun bug/crash ; différence
+  visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -623,5 +625,11 @@ Résultat D4 : run `d4-20260910-fpdraw-routing`, preuve locale `evidence.json`. 
 comme effet d'un objet d'invisibilité. Trace : créature masquée `43x47`/`86x94`, échelle x2,
 `mode=2`, texels `1/86 x 1/94` ; 28 témoins `fpDraw` en mode 0 ; aucune fuite de routage.
 
-Prochaine action : **D5 uniquement** — filtre GPU Catmull–Rom 16 lectures sur le chemin central,
-sans démarrer les réglages esthétiques D6.
+Résultat D5 : run `d5-20260910-catrom-reference`, preuve locale `evidence.json`. DLL Release et huit
+shaders installés ; `fpDraw`, `fpSprite` et `fpSELECT` sont linkés avec le contrat D5. La trace réelle
+`fpDraw` active `mode=2` sur une créature xBR x2 (`23x70` logique, `46x140` physique, texels physiques
+`1/46 x 1/140`) ; 42 témoins `fpDraw` restent en mode 0, sans erreur shader/OpenGL. L'utilisateur
+confirme l'absence de bug/crash ; la différence visuelle n'est pas évidente, ce qui ne constitue pas
+une sélection esthétique D5. Tests non exécutés par choix utilisateur ; candidat maintenu installé.
+
+Prochaine action : attendre une demande explicite avant D6 ; aucune intégration release engagée.

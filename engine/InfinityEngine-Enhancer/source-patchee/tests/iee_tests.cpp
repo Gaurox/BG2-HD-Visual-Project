@@ -1149,6 +1149,76 @@ void test_catmull_rom_premultiplied_reference() {
               "a non-finite phase must fail closed to transparent black");
 }
 
+void test_catmull_rom_shader_formula_matches_cpu_reference() {
+  using iee::core::creature_sprite_filter::Rgba;
+  using iee::core::creature_sprite_filter::SampleBlock;
+  using iee::core::creature_sprite_filter::kAlphaEpsilon;
+  using iee::core::creature_sprite_filter::reconstruct_premultiplied;
+
+  const auto shaderWeights = [](float phase) {
+    const float phase2 = phase * phase;
+    const float phase3 = phase2 * phase;
+    return std::array{
+        -0.5f * phase3 + phase2 - 0.5f * phase,
+        1.5f * phase3 - 2.5f * phase2 + 1.0f,
+        -1.5f * phase3 + 2.0f * phase2 + 0.5f * phase,
+        0.5f * phase3 - 0.5f * phase2,
+    };
+  };
+  const auto shaderFormula = [&](const SampleBlock& samples, float phaseX,
+                                 float phaseY) {
+    const auto weightsX = shaderWeights(phaseX);
+    const auto weightsY = shaderWeights(phaseY);
+    float alphaRaw = 0.0f;
+    std::array<float, 3> premultipliedRaw{};
+    for (std::size_t y = 0; y < 4; ++y) {
+      for (std::size_t x = 0; x < 4; ++x) {
+        const auto& sample = samples[y * 4 + x];
+        const float weight = weightsX[x] * weightsY[y];
+        const float alpha = std::clamp(static_cast<float>(sample.a), 0.0f, 1.0f);
+        alphaRaw += weight * alpha;
+        premultipliedRaw[0] += weight * static_cast<float>(sample.r) * alpha;
+        premultipliedRaw[1] += weight * static_cast<float>(sample.g) * alpha;
+        premultipliedRaw[2] += weight * static_cast<float>(sample.b) * alpha;
+      }
+    }
+    const float alpha = std::clamp(alphaRaw, 0.0f, 1.0f);
+    if (alpha <= static_cast<float>(kAlphaEpsilon)) return Rgba{};
+    return Rgba{
+        .r = std::clamp(premultipliedRaw[0], 0.0f, alpha) / alpha,
+        .g = std::clamp(premultipliedRaw[1], 0.0f, alpha) / alpha,
+        .b = std::clamp(premultipliedRaw[2], 0.0f, alpha) / alpha,
+        .a = alpha,
+    };
+  };
+
+  SampleBlock samples{};
+  for (std::size_t index = 0; index < samples.size(); ++index) {
+    const double alpha = static_cast<double>((index * 5) % 11) / 10.0;
+    samples[index] = {
+        .r = static_cast<double>((index * 3) % 13) / 12.0,
+        .g = static_cast<double>((index * 7) % 17) / 16.0,
+        .b = index % 4 == 0 ? 4.0 : static_cast<double>((index * 11) % 19) / 18.0,
+        .a = index % 4 == 0 ? 0.0 : alpha,
+    };
+  }
+
+  for (const float phaseX : {0.0f, 0.125f, 0.5f, 0.875f}) {
+    for (const float phaseY : {0.0f, 0.25f, 0.625f, 0.9375f}) {
+      const auto cpu = reconstruct_premultiplied(samples, phaseX, phaseY);
+      const auto shader = shaderFormula(samples, phaseX, phaseY);
+      expect_near(shader.r, cpu.r, 2.0e-6,
+                  "D5 float shader formula should match CPU red reference");
+      expect_near(shader.g, cpu.g, 2.0e-6,
+                  "D5 float shader formula should match CPU green reference");
+      expect_near(shader.b, cpu.b, 2.0e-6,
+                  "D5 float shader formula should match CPU blue reference");
+      expect_near(shader.a, cpu.a, 2.0e-6,
+                  "D5 float shader formula should match CPU alpha reference");
+    }
+  }
+}
+
 void test_creature_sprite_filter_texture_registry() {
   using iee::core::CreatureSpriteFilterMode;
   using namespace iee::creature_sprite_filter;
@@ -5904,11 +5974,37 @@ void test_shader_suite_neutral_override_assets() {
                 "every D3 shader override should expose the inactive suite master");
     if (expected.filename == "fpDraw.glsl" || expected.filename == "fpSprite.glsl" ||
         expected.filename == "fpSELECT.glsl") {
+      const auto countOccurrences = [&](std::string_view needle) {
+        std::size_t count = 0;
+        std::size_t offset = 0;
+        while ((offset = source.find(needle, offset)) != std::string::npos) {
+          ++count;
+          offset += needle.size();
+        }
+        return count;
+      };
       expect_true(source.find("uIeeCreatureFilterMode") != std::string::npos &&
                       source.find("uIeeCreatureTexelSize") != std::string::npos &&
                       source.find("IEE_CREATURE_ROUTING_CONTRACT_V1") !=
                           std::string::npos,
                   "D4 creature draw shaders should expose active dynamic routing uniforms");
+      expect_true(source.find("IEE_CREATURE_FILTER_CONTRACT_V1") != std::string::npos &&
+                      source.find("uIeeCreatureFilterMode > 1.5") != std::string::npos &&
+                      source.find("q = texCoord / texelSize - vec2(0.5)") !=
+                          std::string::npos &&
+                      source.find("baseTexel = floor(q)") != std::string::npos,
+                  "D5 creature draw shaders should gate physical Catmull-Rom coordinates");
+      expect_eq(countOccurrences("ieePremultipliedCreatureTap("), std::size_t{17},
+                "D5 shader should define one tap helper and invoke exactly 16 taps");
+      expect_eq(countOccurrences("ieeFetchCreatureCatmullRom("), std::size_t{2},
+                "D5 shader should replace only its single central texture read");
+      expect_true(source.find("sampleColor.rgb * alpha") != std::string::npos &&
+                      source.find("alpha <= 0.000001") != std::string::npos &&
+                      source.find("clamp(filtered.rgb, vec3(0.0), vec3(alpha))") !=
+                          std::string::npos,
+                  "D5 shader should reconstruct and clamp premultiplied RGBA");
+      expect_true(source.find("fract(") == std::string::npos,
+                  "D5 shader should preserve negative neighbor coordinates for edge clamping");
     }
     expect_true(source.find("#version") == std::string::npos,
                 "D3 shader overrides should accept the engine GLSL preamble");
@@ -5940,6 +6036,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_catmull_rom_reference_weights();
   test_catmull_rom_premultiplied_reference();
+  test_catmull_rom_shader_formula_matches_cpu_reference();
   test_creature_sprite_filter_texture_registry();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
