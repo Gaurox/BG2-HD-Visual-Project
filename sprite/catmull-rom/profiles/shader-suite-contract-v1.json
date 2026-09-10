@@ -238,7 +238,8 @@
       "global": {"ShaderSuiteEnabled": true},
       "operations": [
         {"profiles": ["fpSprite", "fpSELECT", "fpDraw", "fpTone", "fpFONT", "fpSEAM", "fpYUV", "fpYUVGRY"], "set": {"Enabled": true, "ColorSpace": "SRGBLinear"}},
-        {"profiles": ["fpSprite", "fpSELECT"], "set": {"OutlineMode": "Dshaders"}},
+        {"profiles": ["fpSprite"], "set": {"OutlineMode": "Dshaders"}},
+        {"profiles": ["fpSELECT"], "set": {"OutlineMode": "Dshaders", "OutlineSize": 3.5}},
         {"profiles": ["fpDraw", "fpTone"], "set": {"HeuristicBorder": true}}
       ]
     }

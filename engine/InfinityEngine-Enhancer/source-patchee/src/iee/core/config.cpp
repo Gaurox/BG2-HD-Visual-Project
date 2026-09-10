@@ -248,12 +248,40 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
     }
     return;
   }
+
+  // [ShaderSuite.fpSprite] / [ShaderSuite.fpSELECT]
+  if (iequals(section, "shaderSuite.fpSprite") ||
+      iequals(section, "shaderSuite.fpSELECT")) {
+    auto& profile = iequals(section, "shaderSuite.fpSprite")
+                        ? cfg.fpSpriteShaderProfile
+                        : cfg.fpSelectShaderProfile;
+    const auto result = shader_suite::apply_sprite_parameter(profile, key, val);
+    if (result == shader_suite::ApplyResult::Invalid && diagnostics) {
+      ++diagnostics->invalidValues;
+    }
+    return;
+  }
 }
 
 static void write_section(std::ofstream& f, const char* name) { f << "\n[" << name << "]\n"; }
 
 static void write_bool(std::ofstream& f, const char* key, bool v) {
   f << key << " = " << (v ? "true" : "false") << "\n";
+}
+
+static void write_sprite_profile(
+    std::ofstream& f, const shader_suite::SpriteProfile& profile) {
+  write_bool(f, "Enabled", profile.enabled);
+  f << "Filter = " << shader_suite::filter_name(profile.filter) << "\n";
+  f << "ColorSpace = " << shader_suite::color_space_name(profile.colorSpace) << "\n";
+  f << "Sharpen = " << profile.sharpen << "\n";
+  f << "Gamma = " << profile.gamma << "\n";
+  f << "Contrast = " << profile.contrast << "\n";
+  f << "Brightness = " << profile.brightness << "\n";
+  f << "Saturation = " << profile.saturation << "\n";
+  f << "HueDegrees = " << profile.hueDegrees << "\n";
+  f << "OutlineMode = " << shader_suite::outline_mode_name(profile.outlineMode) << "\n";
+  f << "OutlineSize = " << profile.outlineSize << "\n";
 }
 
 std::filesystem::path ConfigManager::config_path() {
@@ -383,6 +411,12 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   f << "OutlineMode = " << shader_suite::outline_mode_name(creatureHd.outlineMode) << "\n";
   f << "OutlineSize = " << creatureHd.outlineSize << "\n";
   f << "SelectedOutlineSize = " << creatureHd.selectedOutlineSize << "\n";
+
+  write_section(f, "ShaderSuite.fpSprite");
+  write_sprite_profile(f, cfg.fpSpriteShaderProfile);
+
+  write_section(f, "ShaderSuite.fpSELECT");
+  write_sprite_profile(f, cfg.fpSelectShaderProfile);
 
   return true;
 }

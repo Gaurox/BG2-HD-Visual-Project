@@ -1,17 +1,18 @@
 // fpSprite.glsl
-// D6 source derived from BG2EE 2.7.3.0; native operations preserved below.
+// D7 source derived from BG2EE 2.7.3.0; native operations preserved below.
 
 uniform lowp sampler2D uTex;
 uniform lowp float uSpriteBlurAmount;
 varying mediump vec2 vTc;
 varying lowp vec4 vColor;
 
-// D6 creature-HD functions adapted from Dshaders 0.3.5.
+// D6-D7 creature-HD and sprite-scope functions adapted from Dshaders 0.3.5.
 // Upstream commit: 4722673a8017c56ace4018b3db459392ecbb75a4
 // See licenses/DSHADERS-MIT.txt.
 // IEE_CREATURE_ROUTING_CONTRACT_V1
 // IEE_CREATURE_FILTER_CONTRACT_V1
 // IEE_CREATURE_STYLE_CONTRACT_V1
+// IEE_SPRITE_SCOPE_CONTRACT_V1
 
 uniform lowp float uIeeShaderSuiteEnabled;
 uniform lowp float uIeeCreatureFilterMode;

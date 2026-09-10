@@ -69,9 +69,18 @@ struct EngineConfig {
   // Master gate for the Dshaders-compatible suite. D6 adds an independently
   // gated CreatureHD profile; disabled profiles preserve the D5 path.
   bool shaderSuiteEnabled = false;
-  // D6 virtual profile. It is resolved only for catalog-owned creature
-  // textures; per-shader/global profiles remain disabled until D7+.
+  // D6 virtual profile. Catalog-owned x2/x4 textures keep this profile's
+  // priority over the D7 per-shader profiles.
   shader_suite::CreatureHdProfile creatureHdShaderProfile{};
+  // D7 shader scopes. These profiles target non-HD x1/equipment/ground
+  // sprite draws and may style HD draws only when CreatureHD is disabled;
+  // their Filter never overrides CreatureSpriteFilter on catalog textures.
+  shader_suite::SpriteProfile fpSpriteShaderProfile{};
+  shader_suite::SpriteProfile fpSelectShaderProfile{};
+  [[nodiscard]] constexpr bool sprite_shader_scope_enabled() const noexcept {
+    return shaderSuiteEnabled &&
+           (fpSpriteShaderProfile.enabled || fpSelectShaderProfile.enabled);
+  }
   // One-shot diagnostic for BAM/UI research. It logs texture uploads and
   // their call sites only; it never substitutes an asset or changes GL state.
   bool enableBamUiTextureProbe = false;

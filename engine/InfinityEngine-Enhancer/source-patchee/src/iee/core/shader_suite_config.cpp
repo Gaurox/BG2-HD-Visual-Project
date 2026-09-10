@@ -59,31 +59,9 @@ ApplyResult apply_number(float& target, std::string_view value, float neutral,
   return ApplyResult::Applied;
 }
 
-}  // namespace
-
-const char* color_space_name(ColorSpace value) noexcept {
-  switch (value) {
-    case ColorSpace::Stored:
-      return "Stored";
-    case ColorSpace::SrgbLinear:
-      return "SRGBLinear";
-  }
-  return "Stored";
-}
-
-const char* outline_mode_name(OutlineMode value) noexcept {
-  switch (value) {
-    case OutlineMode::Native:
-      return "Native";
-    case OutlineMode::Dshaders:
-      return "Dshaders";
-  }
-  return "Native";
-}
-
-ApplyResult apply_creature_hd_parameter(CreatureHdProfile& profile,
-                                        std::string_view key,
-                                        std::string_view value) noexcept {
+template <typename Profile>
+ApplyResult apply_style_parameter(Profile& profile, std::string_view key,
+                                  std::string_view value) noexcept {
   if (iequals(key, "Enabled")) {
     bool parsed = false;
     if (!parse_bool(value, parsed)) {
@@ -138,13 +116,11 @@ ApplyResult apply_creature_hd_parameter(CreatureHdProfile& profile,
   if (iequals(key, "OutlineSize")) {
     return apply_number(profile.outlineSize, value, 2.0f, 0.0f, 4.0f);
   }
-  if (iequals(key, "SelectedOutlineSize")) {
-    return apply_number(profile.selectedOutlineSize, value, 3.5f, 0.0f, 4.0f);
-  }
   return ApplyResult::Unrecognized;
 }
 
-bool valid(const CreatureHdProfile& profile) noexcept {
+template <typename Profile>
+bool valid_style(const Profile& profile) noexcept {
   const auto finite_between = [](float value, float minimum, float maximum) {
     return std::isfinite(value) && value >= minimum && value <= maximum;
   };
@@ -158,8 +134,80 @@ bool valid(const CreatureHdProfile& profile) noexcept {
          finite_between(profile.brightness, -1.0f, 1.0f) &&
          finite_between(profile.saturation, 0.0f, 4.0f) &&
          finite_between(profile.hueDegrees, -360.0f, 360.0f) &&
-         finite_between(profile.outlineSize, 0.0f, 4.0f) &&
-         finite_between(profile.selectedOutlineSize, 0.0f, 4.0f);
+         finite_between(profile.outlineSize, 0.0f, 4.0f);
+}
+
+}  // namespace
+
+const char* color_space_name(ColorSpace value) noexcept {
+  switch (value) {
+    case ColorSpace::Stored:
+      return "Stored";
+    case ColorSpace::SrgbLinear:
+      return "SRGBLinear";
+  }
+  return "Stored";
+}
+
+const char* outline_mode_name(OutlineMode value) noexcept {
+  switch (value) {
+    case OutlineMode::Native:
+      return "Native";
+    case OutlineMode::Dshaders:
+      return "Dshaders";
+  }
+  return "Native";
+}
+
+const char* filter_name(Filter value) noexcept {
+  switch (value) {
+    case Filter::Native:
+      return "Native";
+    case Filter::CatmullRom:
+      return "CatmullRom";
+  }
+  return "Native";
+}
+
+ApplyResult apply_creature_hd_parameter(CreatureHdProfile& profile,
+                                        std::string_view key,
+                                        std::string_view value) noexcept {
+  const auto common = apply_style_parameter(profile, key, value);
+  if (common != ApplyResult::Unrecognized) return common;
+  if (iequals(key, "SelectedOutlineSize")) {
+    return apply_number(profile.selectedOutlineSize, value, 3.5f, 0.0f, 4.0f);
+  }
+  return ApplyResult::Unrecognized;
+}
+
+ApplyResult apply_sprite_parameter(SpriteProfile& profile,
+                                   std::string_view key,
+                                   std::string_view value) noexcept {
+  if (iequals(key, "Filter")) {
+    if (iequals(value, "Native")) {
+      profile.filter = Filter::Native;
+      return ApplyResult::Applied;
+    }
+    if (iequals(value, "CatmullRom")) {
+      profile.filter = Filter::CatmullRom;
+      return ApplyResult::Applied;
+    }
+    profile.filter = Filter::Native;
+    return ApplyResult::Invalid;
+  }
+  return apply_style_parameter(profile, key, value);
+}
+
+bool valid(const CreatureHdProfile& profile) noexcept {
+  return valid_style(profile) && std::isfinite(profile.selectedOutlineSize) &&
+         profile.selectedOutlineSize >= 0.0f &&
+         profile.selectedOutlineSize <= 4.0f;
+}
+
+bool valid(const SpriteProfile& profile) noexcept {
+  return valid_style(profile) &&
+         (profile.filter == Filter::Native ||
+          profile.filter == Filter::CatmullRom);
 }
 
 }  // namespace iee::core::shader_suite

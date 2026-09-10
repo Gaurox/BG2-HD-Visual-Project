@@ -113,6 +113,9 @@ PATH_TEST_ALIASES = {
     "engine/InfinityEngine-Enhancer/source-patchee/tools/shader_suite_profile.py": (
         "test_shader_suite_profile",
     ),
+    "sprite/catmull-rom/profiles/shader-suite-contract-v1.json": (
+        "test_shader_suite_profile",
+    ),
     "engine/InfinityEngine-Enhancer/source-patchee/tools/build_shader_suite.py": (
         "test_build_shader_suite",
     ),

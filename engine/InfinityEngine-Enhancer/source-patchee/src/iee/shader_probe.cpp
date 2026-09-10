@@ -65,6 +65,7 @@ struct ProgramRecord {
   std::string fragmentShaderName;
   bool creatureRoutingContract{};
   bool creatureStyleContract{};
+  bool spriteScopeContract{};
   std::unordered_set<std::uintptr_t> callerLogged;
 };
 
@@ -957,6 +958,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
   bool anyOverride = false;
   bool creatureRoutingContract = false;
   bool creatureStyleContract = false;
+  bool spriteScopeContract = false;
 
   for (int i = 0; i < actualShaderCount; ++i) {
     const unsigned s = shaders[static_cast<std::size_t>(i)];
@@ -1005,6 +1007,10 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
           sourcePrefix.find("IEE_CREATURE_STYLE_CONTRACT_V1") != std::string::npos &&
           sourcePrefix.find("uniform lowp float uIeeCreatureStyleEnabled;") !=
               std::string::npos;
+      spriteScopeContract =
+          (nameForShader == "fpSprite" || nameForShader == "fpSELECT") &&
+          creatureStyleContract &&
+          sourcePrefix.find("IEE_SPRITE_SCOPE_CONTRACT_V1") != std::string::npos;
     }
 
     if (logDetails) {
@@ -1025,6 +1031,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     record.fragmentShaderName = fragmentShaderName;
     record.creatureRoutingContract = creatureRoutingContract;
     record.creatureStyleContract = creatureStyleContract;
+    record.spriteScopeContract = spriteScopeContract;
     if (anyOverride) {
       g_overriddenPrograms.try_emplace(program, std::make_shared<uniforms::Locations>());
     } else {
@@ -1262,6 +1269,7 @@ void forget_texture_storage(const TextureStorageIdentity& identity) noexcept {
 struct CreatureDrawUniformScope {
   unsigned program{};
   std::shared_ptr<uniforms::Locations> locations;
+  shader_suite::ProfileSource profileSource{shader_suite::ProfileSource::None};
   bool armed{};
 
   ~CreatureDrawUniformScope() noexcept {
@@ -1287,6 +1295,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
 
   bool routingProgram = false;
   bool styleContract = false;
+  bool spriteScopeContract = false;
   shader_suite::CreatureFragment creatureFragment{
       shader_suite::CreatureFragment::Unsupported};
   {
@@ -1298,6 +1307,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
         creature_sprite_filter::is_routing_fragment(
             program->second.fragmentShaderName);
     styleContract = program->second.creatureStyleContract;
+    spriteScopeContract = program->second.spriteScopeContract;
     creatureFragment = shader_suite::classify_creature_fragment(
         program->second.fragmentShaderName);
     if (const auto overridden = g_overriddenPrograms.find(scope.program);
@@ -1325,8 +1335,14 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
   gl.glActiveTexture(static_cast<unsigned>(activeTexture));
 
   const auto contextIdentity = reinterpret_cast<std::uintptr_t>(context);
-  (void)creature_sprite_filter::registry().observe_context(contextIdentity);
-  const auto decision = creature_sprite_filter::registry().decide({
+  auto& registry = creature_sprite_filter::registry();
+  (void)registry.observe_context(contextIdentity);
+  const auto metadata = registry.find(contextIdentity, texture.texture);
+  if (metadata && (metadata->physicalWidth != texture.width ||
+                   metadata->physicalHeight != texture.height)) {
+    return;
+  }
+  const auto decision = registry.decide({
       .contextIdentity = contextIdentity,
       .glName = texture.texture,
       .physicalWidth = texture.width,
@@ -1336,18 +1352,53 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
       .routingProgram = true,
       .uniformsAvailable = true,
   });
-  if (decision.owner) {
-    const auto style = styleContract
-                           ? shader_suite::resolve_creature_hd_draw_style(
-                                 g_cfg.shaderSuiteEnabled,
-                                 g_cfg.creatureHdShaderProfile, true,
-                                 decision.scale,
-                                 creatureFragment)
-                           : shader_suite::CreatureHdDrawStyle{};
+  if (metadata) {
+    // A known catalog texture that fails the D1 sampler/storage decision must
+    // remain neutral. Treating it as x1 would permit a second D7 filter.
+    if (!decision.owner) return;
+    const auto resolved = styleContract
+                              ? shader_suite::resolve_draw_profile(
+                                    g_cfg.shaderSuiteEnabled,
+                                    g_cfg.creatureHdShaderProfile,
+                                    g_cfg.fpSpriteShaderProfile,
+                                    g_cfg.fpSelectShaderProfile,
+                                    spriteScopeContract, true, decision.scale,
+                                    creatureFragment)
+                              : shader_suite::ResolvedDrawProfile{};
+    scope.profileSource = resolved.source;
     (void)uniforms::set_creature_draw(
         scope.program, *scope.locations, decision.mode, decision.texelWidth,
-        decision.texelHeight, style);
+        decision.texelHeight, resolved.style);
+    return;
   }
+
+  // Once ownership publication has overflowed, an absent registry entry no
+  // longer proves x1 provenance. Fail closed instead of risking HD re-filtering.
+  if (registry.state().capacityExceeded || !styleContract ||
+      !spriteScopeContract || texture.texture == 0 || texture.width <= 0 ||
+      texture.height <= 0) {
+    return;
+  }
+  const auto resolved = shader_suite::resolve_draw_profile(
+      g_cfg.shaderSuiteEnabled, g_cfg.creatureHdShaderProfile,
+      g_cfg.fpSpriteShaderProfile, g_cfg.fpSelectShaderProfile, true, false, 1,
+      creatureFragment);
+  if (!resolved.style.active) return;
+
+  float filterMode = 0.0f;
+  if (resolved.filter == core::shader_suite::Filter::CatmullRom) {
+    if (creature_sprite_filter::sampler_from_gl(texture.minFilter,
+                                                texture.magFilter) !=
+        creature_sprite_filter::Sampler::Nearest) {
+      return;
+    }
+    filterMode = 2.0f;
+  }
+  scope.profileSource = resolved.source;
+  (void)uniforms::set_creature_draw(
+      scope.program, *scope.locations, filterMode,
+      1.0f / static_cast<float>(texture.width),
+      1.0f / static_cast<float>(texture.height), resolved.style);
 }
 
 bool float_uniform(const game::gl::OpenGLFunctions& gl, unsigned program,
@@ -1379,7 +1430,8 @@ const char* sampling_summary(const BoundTextureSnapshot& texture) noexcept {
   return "mixed-or-other";
 }
 
-void trace_suite_draw(unsigned mode, int first, int count) {
+void trace_suite_draw(unsigned mode, int first, int count,
+                      shader_suite::ProfileSource profileSource) {
   if (!g_cfg.dumpEngineShaders || !g_cfg.enableVerboseLogging) return;
   const auto context = game::gl::current_context();
   if (!is_program_context(context) || g_boundProgramContext != context || g_boundProgram == 0) {
@@ -1518,7 +1570,7 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       "Shader-suite draw trace: context=0x{:X}, program={}, slot={}, shaderType=fragment, "
       "vertex={}, fragment={}, mode=0x{:X}, first={}, count={}, uTexUnit={}, texture={}, "
       "physical={}x{}, min=0x{:X}, mag=0x{:X}, sampling={}, encoding={}, uTex2Unit={}, "
-      "texture2={}, physical2={}x{}, min2=0x{:X}, mag2=0x{:X}, provenance={}, "
+      "texture2={}, physical2={}x{}, min2=0x{:X}, mag2=0x{:X}, provenance={}, suiteProfile={}, "
       "logical={}x{}, scale={}, uTcScalePresent={}, uTcScale={}x{}, "
       "blurAmountPresent={}, blurAmount={}, creatureFilterModePresent={}, "
       "creatureFilterMode={}, creatureTexelSizePresent={}, creatureTexelSize={}x{}, "
@@ -1535,6 +1587,7 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       sampling_summary(texture), fragment_encoding(fragmentShaderName),
       texture2.unit, texture2.texture, texture2.width, texture2.height, texture2.minFilter,
       texture2.magFilter, hasProvenance ? provenance.provenance : "engine-or-unknown",
+      shader_suite::profile_source_name(profileSource),
       hasProvenance ? provenance.logicalWidth : 0,
       hasProvenance ? provenance.logicalHeight : 0, hasProvenance ? provenance.scale : 0,
       hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0],
@@ -1553,7 +1606,7 @@ static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) no
   CreatureDrawUniformScope creatureUniforms;
   try {
     prepare_creature_draw(creatureUniforms);
-    trace_suite_draw(mode, first, count);
+    trace_suite_draw(mode, first, count, creatureUniforms.profileSource);
     forwarded = true;
     g_glDrawArraysHook.original()(mode, first, count);
   } catch (...) {
@@ -2217,15 +2270,18 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
                                         reinterpret_cast<void*>(&detour_glBindFramebuffer));
         g_glBindFramebufferHook.queue_enable();
       }
+      const bool spriteDrawRoutingEnabled =
+          cfg.creature_sprite_upscale_enabled() ||
+          cfg.sprite_shader_scope_enabled();
       if (((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
-           cfg.creature_sprite_upscale_enabled()) &&
+           spriteDrawRoutingEnabled) &&
           gl.glDrawArrays) {
         g_glDrawArraysHook.create(reinterpret_cast<void*>(gl.glDrawArrays),
                                   reinterpret_cast<void*>(&detour_glDrawArrays));
         g_glDrawArraysHook.queue_enable();
       } else if ((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
-                 cfg.creature_sprite_upscale_enabled()) {
-        LOG_WARN("Shader-suite creature routing is unavailable: glDrawArrays was not resolved");
+                 spriteDrawRoutingEnabled) {
+        LOG_WARN("Shader-suite sprite routing is unavailable: glDrawArrays was not resolved");
       }
       const auto applyStatus = MH_ApplyQueued();
       finish_queued_probe_hooks();

@@ -175,6 +175,19 @@ static DWORD WINAPI InitThread(LPVOID) {
 
     if (cfg.enableVerboseLogging) {
       const auto& creatureHd = ctx.cfg.creatureHdShaderProfile;
+      const auto logSpriteProfile = [](const char* name,
+                                       const core::shader_suite::SpriteProfile& profile) {
+        LOG_DEBUG(
+            "Shader-suite {}: enabled={}, filter={}, colorSpace={}, sharpen={}, "
+            "gamma={}, contrast={}, brightness={}, saturation={}, hueDegrees={}, "
+            "outlineMode={}, outlineSize={}",
+            name, profile.enabled, core::shader_suite::filter_name(profile.filter),
+            core::shader_suite::color_space_name(profile.colorSpace), profile.sharpen,
+            profile.gamma, profile.contrast, profile.brightness, profile.saturation,
+            profile.hueDegrees,
+            core::shader_suite::outline_mode_name(profile.outlineMode),
+            profile.outlineSize);
+      };
       LOG_DEBUG(
           "Rendering config: linear=true, anisotropic={}, maxAnisotropy={:.1f}, "
           "LOD bias={:.2f}, tileMipmaps={}, forceTextureFilterEveryDraw={}, fullFrameFxaa={}, "
@@ -210,6 +223,8 @@ static DWORD WINAPI InitThread(LPVOID) {
           creatureHd.brightness, creatureHd.saturation, creatureHd.hueDegrees,
           core::shader_suite::outline_mode_name(creatureHd.outlineMode),
           creatureHd.outlineSize, creatureHd.selectedOutlineSize);
+      logSpriteProfile("fpSprite", ctx.cfg.fpSpriteShaderProfile);
+      logSpriteProfile("fpSELECT", ctx.cfg.fpSelectShaderProfile);
     }
 
     if (!game::resolve_addresses(ctx.addrs, ctx.cfg, *ctx.manifest)) {

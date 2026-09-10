@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D6 terminés ; D7 non commencé**. Vérification : 2026-09-10.
+Statut : **D0–D6 terminés ; D7 partiel : x2 validé, x1 non routé ; tests non exécutés**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -602,7 +602,8 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
   visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
 - [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil retenu
   Catmull–Rom + `Sharpen=-0.35`, couleurs neutres, contour natif. Tests non exécutés par choix utilisateur.
-- [ ] D7–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
+- [ ] D7 : candidat installé ; x2 `CreatureHD` validé, mais aucun draw `fpSprite`/`fpSELECT` observé.
+- [ ] D8–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
 - [ ] D13 : profil final validé ingame et éventuelle intégration release décidés.
@@ -660,3 +661,17 @@ retenu par l'utilisateur. Run courant `d6-20260910-creature-hd-soft035`, candida
 vérifié. La session charge le profil exact, atteste 24 remplacements `0xE400` et aucune erreur ; la
 fenêtre de trace ne contient aucun draw style actif après 14 témoins neutres. Cette limite est
 consignée sans réinterprétation ; la preuve technique D6 reste la session `-0.25`.
+
+Implémentation D7 : profils typés `[ShaderSuite.fpSprite]` et `[ShaderSuite.fpSELECT]`, portée x1
+conditionnée par le programme fragment et `IEE_SPRITE_SCOPE_CONTRACT_V1`, paramètres `Filter`,
+Gaussian/couleurs/contours indépendants et texels issus du stockage GL lié. Une texture catalogue
+connue conserve exclusivement le mode D1 ; `CreatureHD` gagne en bloc, puis le profil du shader ne
+fournit que le style si `CreatureHD` est désactivé. Capacité de registre dépassée, stockage incohérent
+ou Catmull–Rom x1 sans sampler NEAREST : repli neutre. `fpDraw` reste limité au chemin créature HD
+réel. D6 `soft035` a été restauré et vérifié avant l'installation transactionnelle du candidat
+`d7-20260910-sprite-scope-upstream`. Build Release et validation offline 2.7.3 réussis ; tests non
+exécutés par choix utilisateur. Reçus D7 installés vérifiés. Session `19:25:28–19:27:34` : 93 draws
+tracés, dont trois `fpDraw/CreatureHD` x2 actifs et 90 neutres ; zéro bind/draw `fpSprite` ou
+`fpSELECT`, aucune erreur shader/OpenGL. L'utilisateur valide le rendu x2 mais ne voit aucun effet
+sur x1. Les deux programmes sont linkés avec le contrat D7 mais non utilisés dans la scène ; D7
+reste incomplet et son extension x1 ne doit pas être déclarée opérante. D8 et release non commencés.

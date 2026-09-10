@@ -988,6 +988,26 @@ void test_config_shader_override_defaults() {
                   creatureHd.outlineSize == 2.0f &&
                   creatureHd.selectedOutlineSize == 3.5f,
               "CreatureHD outline controls use the frozen D6 defaults");
+  const auto& fpSprite = cfg.fpSpriteShaderProfile;
+  const auto& fpSelect = cfg.fpSelectShaderProfile;
+  expect_true(!fpSprite.enabled && !fpSelect.enabled &&
+                  fpSprite.filter == iee::core::shader_suite::Filter::Native &&
+                  fpSelect.filter == iee::core::shader_suite::Filter::Native,
+              "D7 sprite profiles default off with native filtering");
+  expect_true(fpSprite.colorSpace == iee::core::shader_suite::ColorSpace::Stored &&
+                  fpSelect.colorSpace == iee::core::shader_suite::ColorSpace::Stored &&
+                  fpSprite.outlineMode == iee::core::shader_suite::OutlineMode::Native &&
+                  fpSelect.outlineMode == iee::core::shader_suite::OutlineMode::Native &&
+                  fpSprite.outlineSize == 2.0f && fpSelect.outlineSize == 2.0f,
+              "D7 sprite profiles use contract-v1 neutral field defaults");
+  expect_true(!cfg.sprite_shader_scope_enabled(),
+              "D7 sprite draw routing defaults off without a profile");
+  auto spriteScopeOnly = cfg;
+  spriteScopeOnly.shaderSuiteEnabled = true;
+  spriteScopeOnly.fpSpriteShaderProfile.enabled = true;
+  expect_true(spriteScopeOnly.sprite_shader_scope_enabled() &&
+                  !spriteScopeOnly.creature_sprite_upscale_enabled(),
+              "D7 routing must activate independently of the HD catalog path");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableItemIconX2, "item-icon x2 defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
@@ -1153,6 +1173,69 @@ void test_config_creature_hd_shader_profile() {
               "invalid CreatureHD values should fail closed to per-field neutral defaults");
   expect_eq(diagnostics.invalidValues, std::size_t{13},
             "every invalid CreatureHD value should be diagnosed");
+
+  std::error_code error;
+  std::filesystem::remove(tempPath, error);
+}
+
+void test_config_sprite_shader_profiles() {
+  using iee::core::shader_suite::ColorSpace;
+  using iee::core::shader_suite::Filter;
+  using iee::core::shader_suite::OutlineMode;
+  const auto tempPath =
+      std::filesystem::current_path() / "InfinityEngine-Enhancer-sprite-profiles-test.ini";
+  const auto load = [&](std::string_view text,
+                        iee::core::ConfigLoadDiagnostics* diagnostics = nullptr) {
+    {
+      std::ofstream out(tempPath, std::ios::trunc);
+      out << text;
+    }
+    iee::core::EngineConfig cfg{};
+    expect_true(iee::core::ConfigManager::load(tempPath, cfg, diagnostics),
+                "D7 sprite profile fixture should load");
+    return cfg;
+  };
+
+  const auto configured = load(
+      "[ShaderSuite.fpSprite]\n"
+      "Enabled = on\nFilter = cAtMuLlRoM\nColorSpace = SRGBLinear\n"
+      "Sharpen = -0.5\nGamma = 1.02\nContrast = 1.1\nBrightness = 0.05\n"
+      "Saturation = 1.2\nHueDegrees = -5\nOutlineMode = Dshaders\nOutlineSize = 2\n"
+      "[ShaderSuite.fpSELECT]\n"
+      "Enabled = true\nFilter = Native\nColorSpace = Stored\n"
+      "Sharpen = 0.25\nGamma = 1\nContrast = 1\nBrightness = 0\n"
+      "Saturation = 1\nHueDegrees = 5\nOutlineMode = Dshaders\nOutlineSize = 3.5\n");
+  const auto& sprite = configured.fpSpriteShaderProfile;
+  const auto& selected = configured.fpSelectShaderProfile;
+  expect_true(sprite.enabled && sprite.filter == Filter::CatmullRom &&
+                  sprite.colorSpace == ColorSpace::SrgbLinear &&
+                  sprite.sharpen == -0.5f && sprite.gamma == 1.02f &&
+                  sprite.contrast == 1.1f && sprite.brightness == 0.05f &&
+                  sprite.saturation == 1.2f && sprite.hueDegrees == -5.0f &&
+                  sprite.outlineMode == OutlineMode::Dshaders &&
+                  sprite.outlineSize == 2.0f,
+              "fpSprite should parse every D7 control");
+  expect_true(selected.enabled && selected.filter == Filter::Native &&
+                  selected.colorSpace == ColorSpace::Stored &&
+                  selected.sharpen == 0.25f && selected.hueDegrees == 5.0f &&
+                  selected.outlineMode == OutlineMode::Dshaders &&
+                  selected.outlineSize == 3.5f,
+              "fpSELECT should keep an independent D7 profile");
+
+  iee::core::ConfigLoadDiagnostics diagnostics{};
+  const auto invalid = load(
+      "[ShaderSuite.fpSELECT]\n"
+      "Enabled = perhaps\nFilter = Lanczos\nColorSpace = DisplayP3\n"
+      "OutlineMode = Glow\n",
+      &diagnostics);
+  const auto& neutral = invalid.fpSelectShaderProfile;
+  expect_true(!neutral.enabled && neutral.filter == Filter::Native &&
+                  neutral.colorSpace == ColorSpace::Stored &&
+                  neutral.outlineMode == OutlineMode::Native &&
+                  neutral.outlineSize == 2.0f,
+              "invalid D7 values should fail closed to contract-v1 neutral fields");
+  expect_eq(diagnostics.invalidValues, std::size_t{4},
+            "every invalid D7 enum or boolean should be diagnosed");
 
   std::error_code error;
   std::filesystem::remove(tempPath, error);
@@ -1477,6 +1560,84 @@ void test_shader_suite_creature_hd_routing() {
   expect_true(!resolve_creature_hd_draw_style(
                    true, profile, true, 2, CreatureFragment::Draw).active,
               "an invalid runtime profile enum should fail closed");
+}
+
+void test_shader_suite_sprite_scope_routing() {
+  using iee::core::shader_suite::ColorSpace;
+  using iee::core::shader_suite::CreatureHdProfile;
+  using iee::core::shader_suite::Filter;
+  using iee::core::shader_suite::OutlineMode;
+  using iee::core::shader_suite::SpriteProfile;
+  using iee::shader_suite::CreatureFragment;
+  using iee::shader_suite::ProfileSource;
+  using iee::shader_suite::resolve_draw_profile;
+
+  CreatureHdProfile hd{};
+  hd.enabled = true;
+  hd.sharpen = -0.35f;
+  hd.outlineMode = OutlineMode::Native;
+  hd.selectedOutlineSize = 3.5f;
+  SpriteProfile sprite{};
+  sprite.enabled = true;
+  sprite.filter = Filter::CatmullRom;
+  sprite.colorSpace = ColorSpace::SrgbLinear;
+  sprite.sharpen = 0.25f;
+  sprite.outlineMode = OutlineMode::Dshaders;
+  sprite.outlineSize = 2.0f;
+  SpriteProfile selected = sprite;
+  selected.outlineSize = 3.5f;
+
+  expect_true(resolve_draw_profile(
+                  false, hd, sprite, selected, true, false, 1,
+                  CreatureFragment::Sprite).source == ProfileSource::None,
+              "D7 profiles should require the suite master");
+  expect_true(resolve_draw_profile(
+                  true, hd, sprite, selected, true, false, 1,
+                  CreatureFragment::Draw).source == ProfileSource::None,
+              "D7 must preserve fpDraw as a creature-HD-only route");
+  expect_true(resolve_draw_profile(
+                  true, hd, sprite, selected, false, false, 1,
+                  CreatureFragment::Sprite).source == ProfileSource::None,
+              "D7 should fail closed without the versioned sprite-scope shader contract");
+
+  const auto x1Sprite = resolve_draw_profile(
+      true, hd, sprite, selected, true, false, 1, CreatureFragment::Sprite);
+  expect_true(x1Sprite.source == ProfileSource::FpSprite && x1Sprite.style.active &&
+                  x1Sprite.filter == Filter::CatmullRom &&
+                  x1Sprite.style.colorSpace == 1.0f &&
+                  x1Sprite.style.sharpen == 0.25f &&
+                  x1Sprite.style.outlineSize == 2.0f &&
+                  x1Sprite.style.textureScale == 1.0f,
+              "D7 fpSprite should style and filter non-HD x1 sprite draws");
+  const auto x1Selected = resolve_draw_profile(
+      true, hd, sprite, selected, true, false, 1, CreatureFragment::Select);
+  expect_true(x1Selected.source == ProfileSource::FpSelect &&
+                  x1Selected.filter == Filter::CatmullRom &&
+                  x1Selected.style.outlineSize == 3.5f,
+              "D7 fpSELECT should keep its independent selected-sprite values");
+
+  const auto ownedSelected = resolve_draw_profile(
+      true, hd, sprite, selected, true, true, 2, CreatureFragment::Select);
+  expect_true(ownedSelected.source == ProfileSource::CreatureHd &&
+                  ownedSelected.style.sharpen == -0.35f &&
+                  ownedSelected.style.outlineSize == 3.5f &&
+                  ownedSelected.filter == Filter::Native,
+              "CreatureHD must win in one block over fpSELECT on owned HD textures");
+
+  hd.enabled = false;
+  const auto ownedFallback = resolve_draw_profile(
+      true, hd, sprite, selected, true, true, 4, CreatureFragment::Sprite);
+  expect_true(ownedFallback.source == ProfileSource::FpSprite &&
+                  ownedFallback.style.textureScale == 4.0f &&
+                  ownedFallback.filter == Filter::Native,
+              "an HD style fallback may not supply a second per-shader filter");
+
+  hd.enabled = true;
+  hd.gamma = 0.0f;
+  expect_true(resolve_draw_profile(
+                  true, hd, sprite, selected, true, true, 2,
+                  CreatureFragment::Sprite).source == ProfileSource::None,
+              "an invalid enabled CreatureHD profile must fail closed without falling through");
 }
 
 void test_creature_sprite_filter_texture_registry() {
@@ -4285,6 +4446,23 @@ void test_config_shader_override_roundtrip() {
         iee::core::shader_suite::OutlineMode::Dshaders;
     orig.creatureHdShaderProfile.outlineSize = 1.75f;
     orig.creatureHdShaderProfile.selectedOutlineSize = 3.25f;
+    orig.fpSpriteShaderProfile.enabled = true;
+    orig.fpSpriteShaderProfile.filter =
+        iee::core::shader_suite::Filter::CatmullRom;
+    orig.fpSpriteShaderProfile.colorSpace =
+        iee::core::shader_suite::ColorSpace::SrgbLinear;
+    orig.fpSpriteShaderProfile.sharpen = -0.5f;
+    orig.fpSpriteShaderProfile.gamma = 1.02f;
+    orig.fpSpriteShaderProfile.contrast = 1.1f;
+    orig.fpSpriteShaderProfile.brightness = 0.05f;
+    orig.fpSpriteShaderProfile.saturation = 1.2f;
+    orig.fpSpriteShaderProfile.hueDegrees = -5.0f;
+    orig.fpSpriteShaderProfile.outlineMode =
+        iee::core::shader_suite::OutlineMode::Dshaders;
+    orig.fpSpriteShaderProfile.outlineSize = 2.0f;
+    orig.fpSelectShaderProfile = orig.fpSpriteShaderProfile;
+    orig.fpSelectShaderProfile.filter = iee::core::shader_suite::Filter::Native;
+    orig.fpSelectShaderProfile.outlineSize = 3.5f;
     orig.enableBamUiTextureProbe = true;
     orig.enableItemIconX2 = true;
     orig.enableAreaAnimationX4 = true;
@@ -4329,6 +4507,15 @@ void test_config_shader_override_roundtrip() {
                     saved.find("OutlineMode = Dshaders", creatureHdSection) !=
                         std::string::npos,
                 "CreatureHD profile should serialize its frozen D6 enums");
+    const auto fpSpriteSection = saved.find("[ShaderSuite.fpSprite]");
+    const auto fpSelectSection = saved.find("[ShaderSuite.fpSELECT]");
+    expect_true(fpSpriteSection != std::string::npos &&
+                    saved.find("Filter = CatmullRom", fpSpriteSection) !=
+                        std::string::npos &&
+                    fpSelectSection != std::string::npos &&
+                    saved.find("Filter = Native", fpSelectSection) !=
+                        std::string::npos,
+                "D7 sprite profiles should serialize their independent filters");
   }
 
   iee::core::EngineConfig loaded{};
@@ -4351,6 +4538,23 @@ void test_config_shader_override_roundtrip() {
                   creatureHd.outlineSize == 1.75f &&
                   creatureHd.selectedOutlineSize == 3.25f,
               "CreatureHD profile should round-trip independently of the suite master");
+  const auto& fpSprite = loaded.fpSpriteShaderProfile;
+  const auto& fpSelect = loaded.fpSelectShaderProfile;
+  expect_true(fpSprite.enabled &&
+                  fpSprite.filter == iee::core::shader_suite::Filter::CatmullRom &&
+                  fpSprite.colorSpace ==
+                      iee::core::shader_suite::ColorSpace::SrgbLinear &&
+                  fpSprite.sharpen == -0.5f && fpSprite.gamma == 1.02f &&
+                  fpSprite.contrast == 1.1f && fpSprite.brightness == 0.05f &&
+                  fpSprite.saturation == 1.2f && fpSprite.hueDegrees == -5.0f &&
+                  fpSprite.outlineMode ==
+                      iee::core::shader_suite::OutlineMode::Dshaders &&
+                  fpSprite.outlineSize == 2.0f,
+              "fpSprite D7 profile should round-trip independently");
+  expect_true(fpSelect.enabled &&
+                  fpSelect.filter == iee::core::shader_suite::Filter::Native &&
+                  fpSelect.outlineSize == 3.5f,
+              "fpSELECT D7 profile should round-trip independently");
   expect_true(loaded.enableBamUiTextureProbe,
               "enableBamUiTextureProbe should round-trip as true");
   expect_true(loaded.enableItemIconX2, "enableItemIconX2 should round-trip as true");
@@ -6316,6 +6520,12 @@ void test_shader_suite_neutral_override_assets() {
         expect_true(source.find(uniform) != std::string::npos,
                     "D6 creature draw shader should declare every style uniform");
       }
+      if (expected.filename == "fpSprite.glsl" ||
+          expected.filename == "fpSELECT.glsl") {
+        expect_true(source.find("IEE_SPRITE_SCOPE_CONTRACT_V1") !=
+                        std::string::npos,
+                    "D7 sprite shaders should expose the versioned x1 scope contract");
+      }
     }
     expect_true(source.find("#version") == std::string::npos,
                 "D3 shader overrides should accept the engine GLSL preamble");
@@ -6345,12 +6555,14 @@ int main() {
   test_config_shader_override_defaults();
   test_config_creature_sprite_filter_precedence();
   test_config_creature_hd_shader_profile();
+  test_config_sprite_shader_profiles();
   test_config_shader_override_roundtrip();
   test_catmull_rom_reference_weights();
   test_catmull_rom_premultiplied_reference();
   test_catmull_rom_shader_formula_matches_cpu_reference();
   test_shader_suite_creature_hd_math();
   test_shader_suite_creature_hd_routing();
+  test_shader_suite_sprite_scope_routing();
   test_creature_sprite_filter_texture_registry();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();

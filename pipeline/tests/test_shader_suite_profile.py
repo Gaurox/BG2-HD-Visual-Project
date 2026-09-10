@@ -62,6 +62,13 @@ class ShaderSuiteProfileTests(unittest.TestCase):
         self.assertEqual(moderate["profiles"]["fpFONT"]["Gamma"], 0.8)
         self.assertEqual(moderate["profiles"]["fpDraw"]["Gamma"], 1.02)
 
+    def test_dshaders_base_keeps_distinct_sprite_outline_sizes(self) -> None:
+        templates = MODULE.resolve_profile(self.contract, "Templates")
+        self.assertEqual(templates["profiles"]["fpSprite"]["OutlineSize"], 2.0)
+        self.assertEqual(templates["profiles"]["fpSELECT"]["OutlineSize"], 3.5)
+        self.assertEqual(templates["profiles"]["fpSprite"]["OutlineMode"], "Dshaders")
+        self.assertEqual(templates["profiles"]["fpSELECT"]["OutlineMode"], "Dshaders")
+
     def test_author_choice_infinity_ui_applies_only_documented_font_hack(self) -> None:
         profile = MODULE.resolve_profile(self.contract, "AuthorChoiceInfinityUI")
         self.assertEqual(profile["profiles"]["fpFONT"]["Gamma"], 0.8)

@@ -1,5 +1,5 @@
 // fpSprite.glsl
-// D6 source derived from BG2EE 2.7.3.0; native operations preserved below.
+// D7 source derived from BG2EE 2.7.3.0; native operations preserved below.
 
 uniform lowp sampler2D uTex;
 uniform lowp float uSpriteBlurAmount;

@@ -75,6 +75,9 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "engine/InfinityEngine-Enhancer/source-patchee/tools/build_shader_suite.py": (
                 "pipeline.tests.test_build_shader_suite",
             ),
+            "sprite/catmull-rom/profiles/shader-suite-contract-v1.json": (
+                "pipeline.tests.test_shader_suite_profile",
+            ),
             "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpDraw.glsl": (
                 "pipeline.tests.test_build_shader_suite",
             ),
