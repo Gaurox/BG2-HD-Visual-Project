@@ -105,8 +105,8 @@ DOMAIN_SCOPE = {
     },
     "sprites": {
         "coverage_status": "projected",
-        "authority": "sprite/index/ et état du catalogue cumulatif",
-        "note": "Une entrée par famille ; état actif propagé par appartenance structurée.",
+        "authority": "sprite/index/processing.csv et preuves du catalogue cumulatif",
+        "note": "Une entrée par famille/variante x2 ; le catalogue vérifie les membres actifs.",
     },
     "ui": {
         "coverage_status": "projected",
@@ -1732,6 +1732,7 @@ def adapt_animation_candidates(
 def adapt_sprites(builder: RegistryBuilder) -> None:
     family_path = "sprite/index/sprite_families.csv"
     manifest_path = "sprite/index/manifest.json"
+    processing_path = "sprite/index/processing.csv"
     current_path = (
         "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/"
         "runs/catalog-xbr2x-x2/current-generation.json"
@@ -1741,6 +1742,7 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
         "runs/catalog-xbr2x-x2/ingame-installation/active-test.json"
     )
     families = builder.inputs.read_csv(family_path)
+    processing_rows = builder.inputs.read_csv(processing_path)
     inventory = builder.inputs.read_json(manifest_path)
     inventory_status = str(inventory.get("status", ""))
     inventory_fragment = builder.map_status(
@@ -1751,6 +1753,23 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
         source=manifest_path,
     )
     inventory_verified = bool(inventory_fragment and inventory_fragment.get("source") == "verified")
+
+    processing: dict[str, dict[str, str]] = {}
+    for row in processing_rows:
+        key = row.get("asset_key", "")
+        if not key:
+            builder.anomaly(
+                "missing-identity", "error", "sprites",
+                "ligne de suivi sans asset_key", source=processing_path,
+            )
+        elif key in processing:
+            builder.anomaly(
+                "duplicate-source-row", "error", "sprites",
+                "asset_key dupliqué dans le suivi sprites", source=processing_path,
+                details={"asset_key": key},
+            )
+        else:
+            processing[key] = row
 
     active_members: set[tuple[str, str]] = set()
     active_integrity = True
@@ -1830,10 +1849,12 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
         )
 
     seen_families: set[str] = set()
+    expected_processing_keys: set[str] = set()
     matched_active = 0
     for row_index, row in enumerate(families, 2):
         family_id = row.get("family_id", "").strip()
         asset_id = f"sprites:family:{family_id}"
+        asset_key = f"{asset_id}:x2-nearest"
         if not family_id:
             builder.anomaly(
                 "missing-identity",
@@ -1854,6 +1875,7 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
             )
             continue
         seen_families.add(family_id)
+        expected_processing_keys.add(asset_key)
         try:
             resource_count = int(row.get("resource_count", "0") or 0)
         except ValueError:
@@ -1957,6 +1979,127 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
                     source=family_path,
                 )
 
+        current_processing = processing.get(asset_key)
+        processing_locator = f"csv:asset_key={asset_key}"
+        if current_processing is None:
+            builder.anomaly(
+                "sprite-processing-row-missing", "error", "sprites",
+                "la famille inventoriée n'a pas de ligne de suivi",
+                asset_id=asset_id, source=processing_path,
+            )
+            current_processing = {
+                "asset_id": asset_id,
+                "family_id": family_id,
+                "variant_id": "x2-nearest",
+                "production_state": states["production"],
+                "qa_state": states["qa"],
+                "installation_state": states["installation"],
+                "release_state": states["release"],
+            }
+        identity_differences = {
+            field: {"actual": current_processing.get(field, ""), "expected": expected}
+            for field, expected in (
+                ("asset_id", asset_id),
+                ("family_id", family_id),
+                ("variant_id", "x2-nearest"),
+            )
+            if current_processing.get(field, "") != expected
+        }
+        if identity_differences:
+            builder.anomaly(
+                "sprite-processing-identity-mismatch", "error", "sprites",
+                "l'identité du suivi ne correspond pas à l'inventaire",
+                asset_id=asset_id, source=processing_path,
+                details=identity_differences,
+            )
+        processing_fragment: dict[str, str] = {}
+        for field, axis in (
+            ("production_state", "production"),
+            ("qa_state", "qa"),
+            ("installation_state", "installation"),
+            ("release_state", "release"),
+        ):
+            value = current_processing.get(field, "")
+            if value not in STATE_VALUES[axis]:
+                builder.anomaly(
+                    "unknown-status", "error", "sprites",
+                    f"état {axis} inconnu: {value!r}",
+                    asset_id=asset_id, source=processing_path,
+                )
+            else:
+                processing_fragment[axis] = value
+        apply_fragment(
+            builder,
+            states,
+            processing_fragment,
+            domain="sprites",
+            asset_id=asset_id,
+            source=processing_path,
+            keep_axes={"production", "qa", "installation"} if is_active else None,
+        )
+
+        production_run = current_processing.get("production_run", "")
+        production_hash = current_processing.get("production_run_sha256", "").upper()
+        selected_run = current_processing.get("selected_run", "")
+        selected_hash = current_processing.get("selected_run_sha256", "").upper()
+        qa_evidence = current_processing.get("qa_evidence", "")
+        installation_receipt = current_processing.get("installation_receipt", "")
+        release_candidate = current_processing.get("release_candidate", "")
+        if production_run and not SHA256_RE.fullmatch(production_hash):
+            builder.anomaly(
+                "sprite-production-hash-missing", "error", "sprites",
+                "un run de production exige son SHA-256",
+                asset_id=asset_id, source=processing_path,
+            )
+        if selected_run and (
+            selected_run != production_run or selected_hash != production_hash
+        ):
+            builder.anomaly(
+                "sprite-selected-run-mismatch", "error", "sprites",
+                "le run sélectionné doit correspondre au run produit et à son hash",
+                asset_id=asset_id, source=processing_path,
+            )
+        if states["qa"] == "passed" and (not selected_run or not qa_evidence):
+            builder.anomaly(
+                "sprite-qa-evidence-missing", "error", "sprites",
+                "une QA passée exige un run sélectionné et une preuve",
+                asset_id=asset_id, source=processing_path,
+            )
+        if states["installation"] in {"staged", "installed", "drifted"} and not installation_receipt:
+            builder.anomaly(
+                "sprite-installation-receipt-missing", "error", "sprites",
+                "une installation active exige un reçu",
+                asset_id=asset_id, source=processing_path,
+            )
+        if is_active and current_processing.get("catalog_generation", "") != str(
+            current.get("generation_id", "")
+        ):
+            builder.anomaly(
+                "sprite-processing-generation-mismatch", "error", "sprites",
+                "le suivi actif ne référence pas la génération installée",
+                asset_id=asset_id, source=processing_path,
+            )
+        if selected_run:
+            selections.append(
+                {
+                    "role": "run",
+                    "id": selected_run,
+                    "source": source_ref(processing_path, processing_locator),
+                }
+            )
+        if release_candidate:
+            selections.append(
+                {
+                    "role": "candidate",
+                    "id": release_candidate,
+                    "source": source_ref(processing_path, processing_locator),
+                }
+            )
+        if production_run or selected_run or release_candidate:
+            evidence.append(evidence_ref(builder.inputs, processing_path, processing_locator))
+            if provenance_state == "not-applicable":
+                provenance_state = "complete" if selected_run else "partial"
+
         builder.add(
             base_record(
                 asset_id=asset_id,
@@ -1969,8 +2112,16 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
                 evidence=evidence,
                 selections=selections,
                 legacy=legacy,
-                adapter="sprites.families.v1",
+                adapter="sprites.processing.v2",
             )
+        )
+
+    stale_processing = sorted(set(processing) - expected_processing_keys, key=str.casefold)
+    if stale_processing:
+        builder.anomaly(
+            "sprite-processing-family-unknown", "error", "sprites",
+            "le suivi référence des familles absentes de l'inventaire",
+            source=processing_path, details={"asset_keys": stale_processing},
         )
 
     if active_members and matched_active != len(active_members):

@@ -17,7 +17,7 @@ class CharacterCompleteX2JobGeneratorTests(unittest.TestCase):
         self.root = Path(tempfile.mkdtemp(prefix="character-jobs-", dir=tests_root))
         token = uuid.uuid4().hex[:10]
         self.character_root = generator.CHARACTER_ROOT / f"6110-test-{token}"
-        self.template_workspace = self.character_root / "body-chfb1"
+        self.template_workspace = self.character_root / "chfb1"
         self.template_workspace.joinpath("jobs").mkdir(parents=True)
         self.families = self.root / "sprite_families.csv"
         self.template = self.template_workspace / "jobs" / "hero-chfb1-xbr2x.json"

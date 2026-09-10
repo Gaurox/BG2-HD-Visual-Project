@@ -31,7 +31,7 @@ Point d'entrée opérationnel. Les fichiers générés décrivent l'état ; ils 
 | Cartes : état, run et build retenus | [`areas.csv`](areas.csv) |
 | Animations : inventaire et QA ingame | [`animations/index/`](animations/index/), `qa-decisions/` immuable et `selections/` courant |
 | Animations : sélection release | [`animation-release-candidates.json`](releases/BG2-HD-Upscale/manifests/animation-release-candidates.json) |
-| Sprites : inventaire et éligibilité | [`sprite/index/`](sprite/index/) |
+| Sprites : inventaire, classement et cycle de vie | [`sprite/index/`](sprite/index/) ; `family-groups.csv` et `processing.csv` |
 | Sprites : génération et test actifs | `current-generation.json` et `active-test.json` canoniques |
 | UI, vidéos et autres graphismes | index listés dans [`docs/GRAPHICS_INVENTORY.md`](docs/GRAPHICS_INVENTORY.md) |
 | Portraits | `portraits/inventaire_portraits.csv` ; vues d'usage recrutables/rencontres séparées |

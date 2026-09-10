@@ -30,5 +30,5 @@ Exemple validé :
 e4xx-goblins/e400-mgo1-goblin-axe/
 ```
 
-La liste des groupes est maintenue dans
-`pipeline/scripts/generate_sprite_family_append.py:MONSTER_ICEWIND_GROUPS`.
+La liste des groupes est maintenue dans `sprite/index/family-groups.csv`; les noms détaillés des
+buckets MonsterIcewind sont centralisés dans `pipeline/scripts/sprite_layout.py`.

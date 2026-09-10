@@ -10,6 +10,8 @@ sans lancer le jeu et sans modifier le manifeste de release.
 | Objet | Source |
 |---|---|
 | Identité et gate famille | `sprite/index/sprite_families.csv` |
+| Classement | `sprite/index/family-groups.csv` via `pipeline/scripts/sprite_layout.py` |
+| Cycle de vie | `sprite/index/processing.csv` |
 | BAM, cycles, palette, collision | `sprite/index/sprite_resources.csv` |
 | État catalogue actif | `sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json` |
 | Contrat catalogue / install / rollback | `sprite/README.md`, jobs courants et manifests du catalogue |
@@ -142,6 +144,10 @@ Pour Character, le gate de composition porte sur les préfixes représentatifs s
 palette, payload, animation, hashes et absence de quarantaine restent exhaustifs.
 Ne modifier le manifeste de release qu'après accord utilisateur explicite et uniquement pour un
 élément `validated-installed`.
+
+Après production/QA/installation, mettre à jour l'autorité via le workflow dédié lorsqu'il existe.
+`sync_sprite_processing.py` initialise et complète seulement les lignes : il ne déduit ni ne
+promeut une décision depuis un dossier de run.
 
 ## Extension
 

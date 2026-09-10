@@ -107,6 +107,10 @@ présence d'un candidat n'y suffit pas.
 
 - Inventaire/source : `sprite/index/manifest.json` et ses quatre CSV. Le statut
   `generated-verified-read-only-source` devient seulement `source=verified`.
+- Classement : `sprite/index/family-groups.csv` est l'autorité `engine_section` → macro-dossier ;
+  `sprite/index/extractions.csv` est une projection supprimable des sources matérialisées.
+- Cycle de vie : `sprite/index/processing.csv` porte production, sélection, QA, installation et
+  release par famille/variante. Le synchroniseur ajoute sans modifier les décisions existantes.
 - `pipeline_ready=yes` devient `production=ready`; `no` devient `production=blocked` sous les
   règles du pipeline courant. Aucun des deux ne fixe la QA ni l'installation.
 - `current-generation.json` sélectionne la génération ; son build manifest prouve une production
@@ -148,8 +152,9 @@ présence d'un candidat n'y suffit pas.
 
 ## Incompatibilités assumées et transition
 
-- Les statuts combinés de `areas.csv`, des prototypes animation et des états sprites restent
-  nécessaires aux scripts actuels. Les adapters les lisent sans les réécrire.
+- Les statuts combinés de `areas.csv` et des prototypes animation restent nécessaires aux scripts
+  actuels. Le suivi sprite est normalisé dans `sprite/index/processing.csv` ; les pointeurs de
+  catalogue restent les preuves de génération et d'installation qu'il référence.
 - Animation distingue validation spatiale, validation temporelle d'un run et validation d'un pack
   par zone. Elles ne sont pas interchangeables.
 - Sprite distingue disponibilité technique d'une famille, build d'une génération, installation du

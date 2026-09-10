@@ -9,10 +9,15 @@ palettes). Il ne dépend pas du pipeline maps.
 
 1. [`index/README.md`](index/README.md) : schema et requêtes.
 2. `index/manifest.json` : snapshot du jeu et de l'inventaire.
-3. `index/sprite-layout.json` : layout physique courant.
-4. `index/path-migrations.json` : anciens chemins d'artefacts immuables uniquement.
-5. Les quatre CSV d'`index/` : animations, familles, ressources et items.
-6. `current-generation.json` et `active-test.json` du catalogue cumulatif.
+3. `index/family-groups.csv` : macro-groupes et règles de rangement des familles.
+4. `index/processing.csv` : production, sélection, QA, installation et release par famille/variante.
+5. `index/sprite-layout.json` : matérialisations physiques existantes ;
+   `index/path-migrations.json` : anciens chemins d'artefacts immuables.
+6. Les quatre CSV d'inventaire : animations, familles, ressources et items.
+7. `current-generation.json` et `active-test.json` du catalogue cumulatif.
+
+`index/extractions.csv` est une projection des sources effectivement matérialisées. Son absence
+signifie qu'aucune extraction centralisée n'a encore été exécutée.
 
 `pipeline_ready=yes` prouve seulement les prérequis automatisés. Ce n'est ni un build, ni une
 installation, ni une validation ingame.
@@ -21,6 +26,8 @@ installation, ni une validation ingame.
 
 ```text
 index normalisé
+  → planifier l'extraction native par portée explicite
+  → extraire chaque BAM une fois dans ressources/<RESREF>/sources/<sha>/
   → sélectionner une famille pipeline_ready
   → générer les jobs
   → run_creature_sprite_x2.py
@@ -34,6 +41,10 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 
 - Runner : `pipeline/scripts/run_creature_sprite_x2.py`.
 - Inventaire : `pipeline/scripts/build_sprite_inventory.py`.
+- Extraction native dédupliquée : `pipeline/scripts/extract_sprite_sources.py` ; plan-only sans
+  `--run`, aucun décodage PNG ni upscale.
+- Rangement : `pipeline/scripts/sprite_layout.py` + `index/family-groups.csv`.
+- Suivi : `pipeline/scripts/sync_sprite_processing.py` ; ajout conservateur, aucune promotion.
 - Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
 - Ajout de famille : [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
 - Contrat raster xBR2x : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md).
@@ -56,12 +67,13 @@ plus partie du pipeline courant.
 
 ```text
 sprite/
-  index/                              # catalogues canoniques
-  families/<classe>/<famille>/
-    source/                           # extraction native, donnée ignorée
+  index/                              # inventaire, règles et suivi
+  ressources/<RESREF>/sources/<sha>/ # BAM natif/canonique dédupliqué, ignoré
+  families/<macro>/<bucket>/<famille>/
     jobs/                             # entrées opérationnelles
     runs/                             # artefacts immuables, ignorés
     research/                         # expérimental
+    source/                           # matérialisation runner historique, non canonique
   catalogs/creature-x2-nearest/
     jobs/                             # transactions/générations
     runs/                             # payloads cumulés, ignorés
@@ -69,6 +81,9 @@ sprite/
 ```
 
 Les anciens runbooks sont sous `archive/legacy/sprite-docs/`, hors du routage opérationnel.
+
+Ne pas précréer les milliers de familles : matérialiser au premier job. Un BAM partagé reste une
+seule ressource physique ; les relations multi-familles restent dans les CSV d'index.
 
 Ne jamais modifier un fichier dans un run scellé. Les jobs mutables doivent utiliser le layout
 courant directement ; `path-migrations.json` n'est pas un substitut pour corriger un job actif.
@@ -93,7 +108,9 @@ explicite de l'utilisateur.
 ## Tests légers
 
 ```powershell
-python pipeline/scripts/test_changed.py --targeted
+python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/sprite_layout.py `
+  --path pipeline/scripts/sync_sprite_processing.py `
+  --path pipeline/scripts/extract_sprite_sources.py
 ```
 
 La commande prépare la question obligatoire « ciblés / tous / aucun » et n'exécute rien sans

@@ -179,9 +179,14 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             "integrated",
         )
         sprite = self.by_id["sprites:family:0x6102:body:armor-code:1:CDMB1"]
+        self.assertEqual(sprite["adapter"], "sprites.processing.v2")
         self.assertEqual(sprite["states"]["production"], "verified")
         self.assertEqual(sprite["states"]["qa"], "pending")
         self.assertEqual(sprite["states"]["installation"], "installed")
+        self.assertIn(
+            "sprite/index/processing.csv",
+            {item["path"] for item in self.outputs["registry"]["inputs"]},
+        )
         self.assertEqual(
             self.by_id["ui:component:main-menu-x4"]["states"]["release"],
             "integrated",

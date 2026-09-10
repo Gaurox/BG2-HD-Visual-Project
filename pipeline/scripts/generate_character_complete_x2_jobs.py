@@ -45,6 +45,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     upscale_contract,
 )
 from workspace_paths import portable_path_reference  # noqa: E402
+from sprite_layout import character_component_slug  # noqa: E402
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
 CHARACTER_ROOT = PROJECT_ROOT / "sprite" / "families" / "playable-characters"
@@ -314,12 +315,14 @@ def generated_job_id(job_stem: str, family: Family) -> str:
 
 
 def member_workspace(character_root: Path, family: Family) -> Path:
-    if family.layer_kind == "body":
-        slug = f"body-{family.bam_prefix.lower()}"
-    else:
-        assert family.representative_item is not None
-        slug = f"{family.representative_item.lower()}-{family.bam_prefix.lower()}"
-    return character_root / slug
+    return character_root / character_component_slug(
+        {
+            "layer_kind": family.layer_kind,
+            "variant_value": family.variant_value,
+            "item_resrefs": ";".join(family.item_resrefs),
+            "bam_prefix": family.bam_prefix,
+        }
+    )
 
 
 def member_job_path(character_root: Path, family: Family, job_id: str) -> Path:

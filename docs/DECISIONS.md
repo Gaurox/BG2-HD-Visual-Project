@@ -81,6 +81,11 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Sujet | Décision retenue |
 |---|---|
 | Sélection | inventaire normalisé `sprite/index/`, jamais resref deviné |
+| Source physique | un BAM stock par `sprite/ressources/<RESREF>/sources/<source-sha256>/`; aucune duplication par famille |
+| Groupes | `sprite/index/family-groups.csv` décide macro-dossier et bucket depuis `engine_section` |
+| Runs | sous la famille logique ; créer la feuille au premier job, jamais précréer tout l'inventaire |
+| Suivi | `sprite/index/processing.csv` sépare production, sélection, QA, installation et release |
+| Legacy | conserver les `source/`, jobs, runs et catalogues existants ; aucun déplacement/réécriture d'artefact scellé |
 | Filtrage QA | `NEAREST`; `LINEAR` est seulement un A/B d'affichage |
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
 | `.work/` | cache supprimable, jamais source |

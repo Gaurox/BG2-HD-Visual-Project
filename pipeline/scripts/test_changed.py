@@ -82,6 +82,9 @@ SCRIPT_TEST_ALIASES = {
     "build_graphics_inventory.py": ("test_graphics_inventory",),
     "sync_icon_processing.py": ("test_icon_processing",),
     "build_sprite_inventory.py": ("test_sprite_inventory",),
+    "sprite_layout.py": ("test_sprite_layout",),
+    "sync_sprite_processing.py": ("test_sprite_processing",),
+    "extract_sprite_sources.py": ("test_sprite_source_extraction",),
     "verify_historical_git_evidence.py": ("test_historical_git_evidence",),
     "animation_release.py": ("test_animation_release", "test_release_animation_delta"),
     "build_spline_top_reconstructed_alpha.py": ("test_spline_top_reconstructed_alpha",),
@@ -104,6 +107,14 @@ SCRIPT_TEST_ALIASES = {
     "Restore-AreaAnimation-AreaTest.ps1": ("test_area_animation_area_test_transaction",),
 }
 PATH_TEST_ALIASES = {
+    "sprite/index/family-groups.csv": (
+        "test_sprite_layout",
+        "test_sprite_processing",
+    ),
+    "sprite/index/processing.csv": (
+        "test_sprite_processing",
+        "test_global_asset_registry",
+    ),
     "pipeline/area-animation-area-test/area_animation_area_test.py": (
         "test_area_animation_area_test_transaction",
     ),

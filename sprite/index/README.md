@@ -31,6 +31,20 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 
 ## Tables
 
+- [`family-groups.csv`](family-groups.csv) : autorité manuelle de classement des
+  `engine_section`; macro-groupe, dossier, layout et règle de bucket.
+- `processing.csv` : autorité de cycle de vie par `asset_key = sprites:family:<family_id>:<variant>`.
+  `sync_sprite_processing.py` ajoute les familles absentes avec des états conservateurs et préserve
+  strictement les lignes existantes.
+- `extractions.csv` : projection générée des BAM réellement présents sous
+  `sprite/ressources/`; ne pas l'éditer. Elle reste absente avant la première extraction explicite.
+- [`qa-decisions/`](qa-decisions/) : futures décisions ingame immuables ; vide sans décision.
+
+Champs structurants de `processing.csv` : identité et dossier ; hash du jeu de sources ; run produit
+et hash ; run sélectionné et hash ; états production/QA/installation/release ; preuves QA et
+installation ; génération de catalogue et candidat release. Une ligne `ready` ou `blocked` ne
+constitue ni un run ni une QA.
+
 - [`sprite_animations.csv`](sprite_animations.csv) : une ligne par ID de l'union `ANIMATE.IDS` et
   des INI numériques. Elle conserve le symbole, la classe moteur, toutes les clés qui pilotent les
   variantes Character ou Monster et le profil runtime actuellement disponible. Les colonnes
@@ -91,6 +105,20 @@ prérequis automatisables connus. Exiger ensuite un job, une installation réver
 dans [`../README.md`](../README.md). Pour un ajout au catalogue cumulatif, appliquer exclusivement
 [`../FAMILY_APPEND.md`](../FAMILY_APPEND.md).
 
+## Extraction et suivi
+
+Planifier sans écrire ; une portée est obligatoire :
+
+```powershell
+python pipeline/scripts/extract_sprite_sources.py --macro-group monsters
+python pipeline/scripts/extract_sprite_sources.py --family-id '<family_id>' --list
+python pipeline/scripts/sync_sprite_processing.py
+```
+
+`extract_sprite_sources.py --run` extrait uniquement les BAM natifs/canoniques. Il ne crée aucune
+frame PNG, aucun run de production, aucune installation et aucune décision QA. Ne pas utiliser
+`--all-ready --run` sans décision explicite sur cette portée globale.
+
 ## Requêtes de décision
 
 ```powershell
@@ -98,6 +126,7 @@ $a = Import-Csv sprite/index/sprite_animations.csv
 $f = Import-Csv sprite/index/sprite_families.csv
 $r = Import-Csv sprite/index/sprite_resources.csv
 $i = Import-Csv sprite/index/sprite_items.csv
+$p = Import-Csv sprite/index/processing.csv
 
 $a | Where-Object animation_id -eq '0xFFFF'
 $f | Where-Object animation_id -eq '0xFFFF'
@@ -105,6 +134,7 @@ $f | ForEach-Object { $_.blocker -split ';' } | Where-Object { $_ } |
   Group-Object | Sort-Object Count -Descending
 $r | Where-Object blocker -ne ''
 $i | Where-Object item_resref -eq 'ITEMREF'
+$p | Group-Object production_state, qa_state, installation_state
 
 $m = Get-Content sprite/index/manifest.json -Raw | ConvertFrom-Json
 $m.stock_cre_usage | Select-Object cre_resource_count, animation_id_count, `

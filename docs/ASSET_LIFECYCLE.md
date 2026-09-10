@@ -49,7 +49,7 @@ synchronisation de miroirs interrompue laisse
 | Animation mono-resref | `animations/ressources/<RESREF>/`, `animations/ressources/<RESREF>/runs/<run-id>/` | `animations/index/` |
 | Animation batch | `animations/batches/<run-id>/` avec cibles explicites dans le manifeste | `animations/index/` |
 | Pack animation de zone | `animations/packs-par-zone/<pack-id>/<AREA>/` | manifeste de candidats release |
-| Sprite | `sprite/families/.../<asset>/{source,jobs,runs,research}/` | pointeurs du catalogue |
+| Sprite | source : `sprite/ressources/<RESREF>/sources/<sha>/`; jobs/runs : `sprite/families/<macro>/.../<famille>/` | `sprite/index/processing.csv`; pointeurs du catalogue |
 | Vidéo | `video/<asset>/<source>.wbm`, `video/<asset>/runs/<run-id>/` | `video/index/processing.csv` |
 | Effet BAM | `effects/ressources/<RESREF>/source.bam`, `effects/ressources/<RESREF>/runs/<run-id>/` | `effects/index/processing.csv` |
 | Icône ITM/SPL | `icons/ressources/<RESREF>/source.bam`, `icons/ressources/<RESREF>/runs/<run-id>/` | `icons/index/processing.csv` |

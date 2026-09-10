@@ -57,6 +57,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     verify_armor_set,
 )
 from workspace_paths import portable_path_reference  # noqa: E402
+from sprite_layout import family_directory as canonical_family_directory  # noqa: E402
 
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
@@ -73,30 +74,12 @@ CATALOG_APPEND_FILE_RE = re.compile(
     r"(?:append|qa-refresh)-[a-z0-9][a-z0-9-]*-v[1-9][0-9]*\.json"
 )
 
-MONSTER_ICEWIND_GROUPS = {
-    "E0": "e0xx-classic-monsters",
-    "E2": "e2xx-iwd-mixed-creatures",
-    "E3": "e3xx-ghouls-and-ghosts",
-    "E4": "e4xx-goblins",
-    "E5": "e5xx-lizardfolk",
-    "E6": "e6xx-myconids",
-    "E7": "e7xx-orogs",
-    "E8": "e8xx-orcs",
-    "E9": "e9xx-salamanders",
-    "EA": "eaxx-shriekers-and-shadows",
-    "EB": "ebxx-skeletons",
-    "EC": "ecxx-wights",
-    "ED": "edxx-yuan-ti",
-    "EE": "eexx-zombies",
-    "EF": "efxx-water-weird",
-}
-
-
 @dataclass(frozen=True)
 class InventoryFamily:
     family_id: str
     animation_id: str
     ids_symbol: str
+    engine_section: str
     runtime_profile: str
     layer_kind: str
     variant_kind: str
@@ -138,13 +121,22 @@ def family_slug(family: InventoryFamily) -> str:
 
 
 def family_workspace(family: InventoryFamily) -> Path:
-    if family.runtime_profile == "monster-icewind-bg2ee-2.7.3.0":
-        code = family.animation_id[2:4].upper()
-        group = MONSTER_ICEWIND_GROUPS.get(code)
-        if group is None:
-            raise RuntimeError(f"no MonsterIcewind folder group is defined for 0x{code}xx")
-        return FAMILIES_ROOT / "monster-icewind" / group / family_slug(family)
-    raise RuntimeError(f"no workspace layout adapter for {family.runtime_profile!r}")
+    try:
+        return canonical_family_directory(
+            {
+                "animation_id": family.animation_id,
+                "ids_symbol": family.ids_symbol,
+                "engine_section": family.engine_section,
+                "layer_kind": family.layer_kind,
+                "variant_value": family.variant_value,
+                "item_resrefs": "",
+                "bam_prefix": family.bam_prefix,
+            },
+            {"ids_symbol": family.ids_symbol},
+            project_root=PROJECT_ROOT,
+        )
+    except ValueError as error:
+        raise RuntimeError(str(error)) from error
 
 
 def member_job_id(family: InventoryFamily, version: str) -> str:
@@ -237,6 +229,7 @@ def load_inventory_family(families_path: Path, family_id: str) -> InventoryFamil
         family_id=family_id,
         animation_id=f"0x{int(animation_id, 16):04X}",
         ids_symbol=str(row.get("ids_symbol", "")).upper(),
+        engine_section=str(row.get("engine_section", "")),
         runtime_profile=profile,
         layer_kind=str(row.get("layer_kind", "")).lower(),
         variant_kind=str(row.get("variant_kind", "")).lower(),
@@ -265,7 +258,10 @@ def load_inventory_family(families_path: Path, family_id: str) -> InventoryFamil
 
 
 def assert_body_base_resref_adapter(family: InventoryFamily) -> None:
-    if family.runtime_profile != "monster-icewind-bg2ee-2.7.3.0":
+    if (
+        family.runtime_profile != "monster-icewind-bg2ee-2.7.3.0"
+        or family.engine_section != "monster_icewind"
+    ):
         raise RuntimeError(
             "family-job supports MonsterIcewind leaves only; use the complete "
             "Character generator for Character animations"

@@ -28,7 +28,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Essai transactionnel d'animation par zone | `Install-AreaAnimation-AreaTest.ps1`, `Restore-AreaAnimation-AreaTest.ps1` ; cœur `../area-animation-area-test/` |
 | Migration d'un ARE embarqué dans une sauvegarde test | `patch_save_area_animation_resrefs.py` ; plan-only, sauvegarde complète obligatoire |
 | Correctifs alpha/RGB | `build_alpha_feather.py` (silhouette, canvas, radial, gaussien local haut), `build_spline_top_reconstructed_alpha.py` (Fit 1 + bande haute), `build_manual_alpha_mask_30fps_v2.py`, `build_per_frame_spline_alpha_30fps_v2.py`, `build_blended_rgb_neutral_pack.py`, `build_joint_animation_rgb_seam.py`, `build_fused_area_animation_carrier.py` |
-| Sprites | `run_creature_sprite_x2.py`, `build_sprite_inventory.py`, `xbr2x_batch.js` |
+| Sprites | `build_sprite_inventory.py` (inventaire), `extract_sprite_sources.py` (sources BAM dédupliquées, plan-only), `sprite_layout.py` (rangement), `sync_sprite_processing.py` (autorité métier), `run_creature_sprite_x2.py` (production), `xbr2x_batch.js` |
 | Release | `releases/BG2-HD-Upscale/tools/*.ps1` |
 
 ## Commandes communes
