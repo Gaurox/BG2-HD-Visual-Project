@@ -93,6 +93,30 @@ ResolvedDrawProfile resolve_draw_profile(
   return result;
 }
 
+X1SamplerPlan resolve_x1_sampler_plan(
+    core::shader_suite::Filter filter, bool profileActive, bool catalogOwned,
+    bool minFilterNearest, bool magFilterNearest) noexcept {
+  X1SamplerPlan result{};
+  if (!profileActive || catalogOwned ||
+      filter != core::shader_suite::Filter::CatmullRom) {
+    return result;
+  }
+  result.catmullRomActive = true;
+  result.overrideMinFilter = !minFilterNearest;
+  result.overrideMagFilter = !magFilterNearest;
+  return result;
+}
+
+bool should_route_x1_to_fp_sprite(
+    bool suiteEnabled, const core::shader_suite::SpriteProfile& fpSprite,
+    SpriteScopeOwner owner, bool hdOwned, bool replacementBound,
+    int nativeTone, bool fpSpriteContractReady) noexcept {
+  return suiteEnabled && fpSprite.enabled &&
+         core::shader_suite::valid(fpSprite) &&
+         owner != SpriteScopeOwner::None && !hdOwned && !replacementBound &&
+         nativeTone == 0 && fpSpriteContractReady;
+}
+
 const char* profile_source_name(ProfileSource source) noexcept {
   switch (source) {
     case ProfileSource::None:

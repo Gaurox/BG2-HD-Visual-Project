@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D6 terminés ; D7 partiel : x2 validé, x1 non routé ; tests non exécutés**. Vérification : 2026-09-10.
+Statut : **D0–D6 terminés ; D7 partiel : routage x1 visible, candidat soft035 sans halo installé en attente de traces/QA ; tests non exécutés**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -602,7 +602,7 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
   visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
 - [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil retenu
   Catmull–Rom + `Sharpen=-0.35`, couleurs neutres, contour natif. Tests non exécutés par choix utilisateur.
-- [ ] D7 : candidat installé ; x2 `CreatureHD` validé, mais aucun draw `fpSprite`/`fpSELECT` observé.
+- [ ] D7 : x2 `CreatureHD` validé ; routage x1 visible ; profil soft035 sans halo installé, traces/QA à faire ; tests refusés.
 - [ ] D8–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -666,8 +666,10 @@ Implémentation D7 : profils typés `[ShaderSuite.fpSprite]` et `[ShaderSuite.fp
 conditionnée par le programme fragment et `IEE_SPRITE_SCOPE_CONTRACT_V1`, paramètres `Filter`,
 Gaussian/couleurs/contours indépendants et texels issus du stockage GL lié. Une texture catalogue
 connue conserve exclusivement le mode D1 ; `CreatureHD` gagne en bloc, puis le profil du shader ne
-fournit que le style si `CreatureHD` est désactivé. Capacité de registre dépassée, stockage incohérent
-ou Catmull–Rom x1 sans sampler NEAREST : repli neutre. `fpDraw` reste limité au chemin créature HD
+fournit que le style si `CreatureHD` est désactivé. Capacité de registre dépassée ou stockage
+incohérent : repli neutre. Catmull–Rom x1 substitue min/mag `NEAREST` pour le draw uniquement, puis
+restaure sampler, binding et unité active ; capacité GL insuffisante : repli neutre. Texture HD
+catalogue exclue de cette substitution. `fpDraw` reste limité au chemin créature HD
 réel. D6 `soft035` a été restauré et vérifié avant l'installation transactionnelle du candidat
 `d7-20260910-sprite-scope-upstream`. Build Release et validation offline 2.7.3 réussis ; tests non
 exécutés par choix utilisateur. Reçus D7 installés vérifiés. Session `19:25:28–19:27:34` : 93 draws
@@ -675,3 +677,43 @@ tracés, dont trois `fpDraw/CreatureHD` x2 actifs et 90 neutres ; zéro bind/dra
 `fpSELECT`, aucune erreur shader/OpenGL. L'utilisateur valide le rendu x2 mais ne voit aucun effet
 sur x1. Les deux programmes sont linkés avec le contrat D7 mais non utilisés dans la scène ; D7
 reste incomplet et son extension x1 ne doit pas être déclarée opérante. D8 et release non commencés.
+
+Correctif D7 source : les scopes `Character`/`Monster`/`MonsterIcewind` couvrent aussi les créatures
+x1 ; les objets au sol sont limités à l'appel monde manifesté `0x1F7C7D → CVidCell::Render`.
+À la composition commune, un draw propriétaire x1 neutre met en file le slot 5 `fpSprite`, puis
+restaure le ton natif. Le slot 7 `fpSELECT` reste choisi nativement. Texture catalogue HD,
+remplacement d'icône x2, ton gris/sélection/seam ou programme sans
+`IEE_SPRITE_SCOPE_CONTRACT_V1` : aucun forçage. `CreatureHD`/`fpDraw` conserve sa priorité.
+État : tests non exécutés par choix utilisateur ; build Release et validation offline 2.7.3
+réussis. Nouveau candidat transactionnel `d7-20260910-sprite-scope-routing-fix1` installé et reçus
+vérifiés après restauration vérifiée du candidat D7 partiel et de l'état D6. Traces et QA visuelle
+requises ; ne pas modifier la preuve du candidat partiel.
+
+Session corrective `20:22:00–20:22:32` : routage préparé/actif, 64 échantillons objet au sol vers
+le slot 5, un draw `fpSprite`, six draws x2 `CreatureHD`, aucune erreur shader/OpenGL. Le budget de
+trace a été consommé par les objets au sol : aucun propriétaire créature n'est tracé. L'utilisateur
+confirme néanmoins l'effet visible sur les x1 et demande le rendu doux D6 sans contour Dshaders.
+Le draw `fpSprite` observé utilise un sampler `LINEAR` ; `Filter=CatmullRom` laisse donc le profil
+suite neutre conformément au repli D7. Le candidat `d7-20260910-sprite-scope-routing-soft035` a été
+restauré avant lancement.
+
+Candidat courant `d7-20260910-sprite-scope-routing-soft035-native` : x1 `fpSprite`/`fpSELECT`
+conservent le filtrage natif validé et utilisent `ColorSpace=Stored`, `Sharpen=-0.35`, couleurs
+neutres et `OutlineMode=Native`. Les x2 restent exclusivement `CreatureHD` + Catmull–Rom, profil et
+priorité inchangés. Trace : 80 routes sol, 48 routes créature, quatre profils `fpSprite` actifs,
+sept profils `CreatureHD` actifs, aucune erreur shader/OpenGL. Le profil x1 exact est chargé, mais
+la branche native `fpSprite` conserve son halo Gaussian avec `uSpriteBlurAmount=5` ; l'utilisateur
+le perçoit comme un contour noir et le rejette.
+
+Candidat courant `d7-20260910-sprite-scope-routing-soft035-nooutline` : profil identique, sauf
+`fpSprite OutlineMode=Dshaders` avec `OutlineSize=0`. Cette combinaison sélectionne la branche sans
+halo et son rayon nul retourne le sprite sans contour ; `fpSELECT` reste `Native` pour préserver le
+surlignage du jeu. Candidat précédent restauré, nouveau candidat installé et reçus vérifiés. QA
+visuelle et trace `outlineMode=1 outlineSize=0` requises. D7 reste incomplet ; D8 et release non
+commencés.
+
+Analyse de la session suivante : cinq draws `fpSprite` actifs, tous `creatureFilterMode=0`, zéro
+Catmull–Rom x1 ; un draw x2 `CreatureHD` reste en mode 2. Correctif source préparé : plan pur du
+sampler x1, substitution `NEAREST` bornée au draw avec restauration exacte, télémétrie de la valeur
+originale, et exclusion inchangée des textures HD. Tests préparés, non exécutés avant choix
+utilisateur ; nouveau candidat non installé à ce stade.

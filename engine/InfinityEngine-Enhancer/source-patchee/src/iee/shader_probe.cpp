@@ -125,6 +125,8 @@ struct SuiteDrawKey {
   int textureUnit2{-1};
   int minFilter{};
   int magFilter{};
+  int originalMinFilter{};
+  int originalMagFilter{};
   int minFilter2{};
   int magFilter2{};
   int viewportWidth{};
@@ -134,6 +136,7 @@ struct SuiteDrawKey {
   int blendDestination{};
   bool blend{};
   bool framebufferSrgb{};
+  bool samplerOverride{};
 
   bool operator==(const SuiteDrawKey&) const noexcept = default;
 };
@@ -154,6 +157,8 @@ struct SuiteDrawKeyHash {
     mix(key.textureUnit2);
     mix(key.minFilter);
     mix(key.magFilter);
+    mix(key.originalMinFilter);
+    mix(key.originalMagFilter);
     mix(key.minFilter2);
     mix(key.magFilter2);
     mix(key.viewportWidth);
@@ -163,6 +168,7 @@ struct SuiteDrawKeyHash {
     mix(key.blendDestination);
     mix(key.blend);
     mix(key.framebufferSrgb);
+    mix(key.samplerOverride);
     return result;
   }
 };
@@ -1271,8 +1277,110 @@ struct CreatureDrawUniformScope {
   std::shared_ptr<uniforms::Locations> locations;
   shader_suite::ProfileSource profileSource{shader_suite::ProfileSource::None};
   bool armed{};
+  HGLRC samplerContext{};
+  int samplerUnit{-1};
+  unsigned samplerTexture{};
+  int originalMinFilter{};
+  int originalMagFilter{};
+  bool samplerOverrideApplied{};
+  bool samplerRestorePending{};
+
+  bool override_x1_sampler_to_nearest(
+      const BoundTextureSnapshot& texture) noexcept {
+    const auto context = game::gl::current_context();
+    const auto& gl = game::gl::get_gl_functions();
+    if (!context || texture.unit < 0 || texture.texture == 0 ||
+        !gl.glActiveTexture || !gl.glGetIntegerv || !gl.glGetTexParameteriv ||
+        !gl.glTexParameteri) {
+      return false;
+    }
+
+    int activeTexture = static_cast<int>(game::gl::TEXTURE0);
+    gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &activeTexture);
+    gl.glActiveTexture(game::gl::TEXTURE0 + static_cast<unsigned>(texture.unit));
+    int boundTexture = 0;
+    gl.glGetIntegerv(game::gl::TEXTURE_BINDING_2D, &boundTexture);
+    if (boundTexture != static_cast<int>(texture.texture)) {
+      gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+      return false;
+    }
+
+    if (texture.minFilter != static_cast<int>(game::gl::NEAREST)) {
+      gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                         static_cast<int>(game::gl::NEAREST));
+    }
+    if (texture.magFilter != static_cast<int>(game::gl::NEAREST)) {
+      gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                         static_cast<int>(game::gl::NEAREST));
+    }
+    int effectiveMinFilter = 0;
+    int effectiveMagFilter = 0;
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                           &effectiveMinFilter);
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                           &effectiveMagFilter);
+    if (effectiveMinFilter != static_cast<int>(game::gl::NEAREST) ||
+        effectiveMagFilter != static_cast<int>(game::gl::NEAREST)) {
+      gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                         texture.minFilter);
+      gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                         texture.magFilter);
+      gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+      return false;
+    }
+
+    samplerContext = context;
+    samplerUnit = texture.unit;
+    samplerTexture = texture.texture;
+    originalMinFilter = texture.minFilter;
+    originalMagFilter = texture.magFilter;
+    samplerOverrideApplied = true;
+    samplerRestorePending = true;
+    gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+    return true;
+  }
+
+  bool restore_x1_sampler() noexcept {
+    if (!samplerRestorePending) return true;
+    const auto& gl = game::gl::get_gl_functions();
+    if (game::gl::current_context() != samplerContext || !gl.glActiveTexture ||
+        !gl.glGetIntegerv || !gl.glGetTexParameteriv || !gl.glTexParameteri ||
+        !gl.glBindTexture) {
+      return false;
+    }
+
+    int activeTexture = static_cast<int>(game::gl::TEXTURE0);
+    gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &activeTexture);
+    gl.glActiveTexture(game::gl::TEXTURE0 + static_cast<unsigned>(samplerUnit));
+    int boundTexture = 0;
+    gl.glGetIntegerv(game::gl::TEXTURE_BINDING_2D, &boundTexture);
+    const bool rebound = boundTexture != static_cast<int>(samplerTexture);
+    if (rebound) {
+      gl.glBindTexture(game::gl::TEXTURE_2D, samplerTexture);
+    }
+    gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                       originalMinFilter);
+    gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                       originalMagFilter);
+    int restoredMinFilter = 0;
+    int restoredMagFilter = 0;
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
+                           &restoredMinFilter);
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
+                           &restoredMagFilter);
+    if (rebound) {
+      gl.glBindTexture(game::gl::TEXTURE_2D,
+                       boundTexture > 0 ? static_cast<unsigned>(boundTexture) : 0u);
+    }
+    gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+    const bool restored = restoredMinFilter == originalMinFilter &&
+                          restoredMagFilter == originalMagFilter;
+    if (restored) samplerRestorePending = false;
+    return restored;
+  }
 
   ~CreatureDrawUniformScope() noexcept {
+    (void)restore_x1_sampler();
     if (armed && locations) {
       (void)uniforms::set_creature_draw(program, *locations, 0.0f, 0.0f,
                                         0.0f, {});
@@ -1385,11 +1493,14 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
       creatureFragment);
   if (!resolved.style.active) return;
 
+  const auto samplerPlan = shader_suite::resolve_x1_sampler_plan(
+      resolved.filter, resolved.style.active, false,
+      texture.minFilter == static_cast<int>(game::gl::NEAREST),
+      texture.magFilter == static_cast<int>(game::gl::NEAREST));
   float filterMode = 0.0f;
-  if (resolved.filter == core::shader_suite::Filter::CatmullRom) {
-    if (creature_sprite_filter::sampler_from_gl(texture.minFilter,
-                                                texture.magFilter) !=
-        creature_sprite_filter::Sampler::Nearest) {
+  if (samplerPlan.catmullRomActive) {
+    if ((samplerPlan.overrideMinFilter || samplerPlan.overrideMagFilter) &&
+        !scope.override_x1_sampler_to_nearest(texture)) {
       return;
     }
     filterMode = 2.0f;
@@ -1431,7 +1542,7 @@ const char* sampling_summary(const BoundTextureSnapshot& texture) noexcept {
 }
 
 void trace_suite_draw(unsigned mode, int first, int count,
-                      shader_suite::ProfileSource profileSource) {
+                      const CreatureDrawUniformScope& creatureScope) {
   if (!g_cfg.dumpEngineShaders || !g_cfg.enableVerboseLogging) return;
   const auto context = game::gl::current_context();
   if (!is_program_context(context) || g_boundProgramContext != context || g_boundProgram == 0) {
@@ -1538,6 +1649,8 @@ void trace_suite_draw(unsigned mode, int first, int count,
       .textureUnit2 = texture2.unit,
       .minFilter = texture.minFilter,
       .magFilter = texture.magFilter,
+      .originalMinFilter = creatureScope.originalMinFilter,
+      .originalMagFilter = creatureScope.originalMagFilter,
       .minFilter2 = texture2.minFilter,
       .magFilter2 = texture2.magFilter,
       .viewportWidth = viewport[2],
@@ -1547,6 +1660,7 @@ void trace_suite_draw(unsigned mode, int first, int count,
       .blendDestination = blendDestination,
       .blend = blend,
       .framebufferSrgb = framebufferSrgb,
+      .samplerOverride = creatureScope.samplerOverrideApplied,
   };
 
   CreatureTextureTrace provenance;
@@ -1569,7 +1683,8 @@ void trace_suite_draw(unsigned mode, int first, int count,
   LOG_INFO(
       "Shader-suite draw trace: context=0x{:X}, program={}, slot={}, shaderType=fragment, "
       "vertex={}, fragment={}, mode=0x{:X}, first={}, count={}, uTexUnit={}, texture={}, "
-      "physical={}x{}, min=0x{:X}, mag=0x{:X}, sampling={}, encoding={}, uTex2Unit={}, "
+      "physical={}x{}, min=0x{:X}, mag=0x{:X}, sampling={}, samplerOverride={}, "
+      "originalMin=0x{:X}, originalMag=0x{:X}, encoding={}, uTex2Unit={}, "
       "texture2={}, physical2={}x{}, min2=0x{:X}, mag2=0x{:X}, provenance={}, suiteProfile={}, "
       "logical={}x{}, scale={}, uTcScalePresent={}, uTcScale={}x{}, "
       "blurAmountPresent={}, blurAmount={}, creatureFilterModePresent={}, "
@@ -1584,10 +1699,12 @@ void trace_suite_draw(unsigned mode, int first, int count,
       programSlot, vertexShaderName, fragmentShaderName, mode, first, count, texture.unit,
       texture.texture,
       texture.width, texture.height, texture.minFilter, texture.magFilter,
-      sampling_summary(texture), fragment_encoding(fragmentShaderName),
+      sampling_summary(texture), creatureScope.samplerOverrideApplied,
+      creatureScope.originalMinFilter, creatureScope.originalMagFilter,
+      fragment_encoding(fragmentShaderName),
       texture2.unit, texture2.texture, texture2.width, texture2.height, texture2.minFilter,
       texture2.magFilter, hasProvenance ? provenance.provenance : "engine-or-unknown",
-      shader_suite::profile_source_name(profileSource),
+      shader_suite::profile_source_name(creatureScope.profileSource),
       hasProvenance ? provenance.logicalWidth : 0,
       hasProvenance ? provenance.logicalHeight : 0, hasProvenance ? provenance.scale : 0,
       hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0],
@@ -1606,9 +1723,12 @@ static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) no
   CreatureDrawUniformScope creatureUniforms;
   try {
     prepare_creature_draw(creatureUniforms);
-    trace_suite_draw(mode, first, count, creatureUniforms.profileSource);
+    trace_suite_draw(mode, first, count, creatureUniforms);
     forwarded = true;
     g_glDrawArraysHook.original()(mode, first, count);
+    if (!creatureUniforms.restore_x1_sampler()) {
+      LOG_ERROR("D7 x1 Catmull-Rom sampler restoration failed");
+    }
   } catch (...) {
     if (!forwarded) g_glDrawArraysHook.original()(mode, first, count);
   }
@@ -2322,6 +2442,22 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
   } catch (...) {
     remove_probe_hooks();
     LOG_ERROR("GL shader probe initialization failed with an unknown exception");
+    return false;
+  }
+}
+
+bool sprite_scope_program_ready(int programSlot) noexcept {
+  try {
+    if (!is_program_context_current()) return false;
+    std::lock_guard lock(g_probeMutex);
+    return std::any_of(
+        g_programRecords.begin(), g_programRecords.end(),
+        [programSlot](const auto& entry) {
+          const auto& record = entry.second;
+          return record.introspected && record.programSlot == programSlot &&
+                 record.spriteScopeContract;
+        });
+  } catch (...) {
     return false;
   }
 }

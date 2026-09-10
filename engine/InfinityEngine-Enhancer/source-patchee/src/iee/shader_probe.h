@@ -20,6 +20,9 @@ struct ShaderRuntimeCapabilities {
 void log_shader_runtime_capabilities();
 bool install_shader_probes(const core::EngineConfig& cfg) noexcept;
 void uninstall_shader_probes() noexcept;
+// True only for a live, introspected engine program carrying the versioned
+// D7 sprite-scope contract at the requested DrawColorTone slot.
+[[nodiscard]] bool sprite_scope_program_ready(int programSlot) noexcept;
 // Called once per frame by the frame hook (Task 8); advances uIeeTime.
 void on_frame_tick(float secondsSinceStart) noexcept;
 // Hotkey cycle target: uIeeEnabled value 0=off / 1=effect on / 2=alignment debug.

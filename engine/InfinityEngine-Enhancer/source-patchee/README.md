@@ -16,7 +16,7 @@ builds acceptés et les capacités par build viennent exclusivement de
 | Effets de sort x4 | registre multi-resref v1/v2, scopes projectile + VVC, fallback natif strict |
 | Sprites créature xN | chemin QA opt-in, baseline `NEAREST`, pour propriétaires/classes explicitement manifestés |
 | Suite shader CreatureHD | D6 opt-in : sharpen/flou RGB, couleurs et contours Dshaders sur textures catalogue x2/x4 |
-| Suite shader Sprites | D7 opt-in : mêmes réglages sur `fpSprite`/`fpSELECT` x1, équipement et objets au sol ; filtre HD toujours possédé par D1 |
+| Suite shader Sprites | D7 opt-in : portée propriétaire x1 ; créatures via trois `Render`, objets au sol via appel monde manifesté ; slot 5 `fpSprite`, slot 7 `fpSELECT` natif ; Catmull–Rom force `NEAREST` pour le draw puis restaure le sampler ; filtre HD toujours possédé par D1 |
 | Transition vidéo | AR1300/BRIDGE01 uniquement, désactivée par défaut |
 | UI | essais ciblés explicitement activés |
 | Diagnostics | télémétrie bornée avec `PerformanceLogs=true` |
@@ -55,7 +55,7 @@ cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
 cmake --build build --config Release --target release_bundle
 ```
 
-Shaders D6 autonomes (`fpDraw`, `fpSprite`, `fpSELECT`) :
+Shaders D6–D7 autonomes (`fpDraw`, `fpSprite`, `fpSELECT`) :
 
 ```powershell
 python tools/build_shader_suite.py

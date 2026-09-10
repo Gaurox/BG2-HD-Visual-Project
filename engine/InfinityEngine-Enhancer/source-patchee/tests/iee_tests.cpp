@@ -454,6 +454,9 @@ void test_manifest_loading() {
     expect_eq(bg2ee->get().itemIcons.vidCellCommonRenderTexture,
               std::uintptr_t{0x425530},
               "BG2EE item common texture-composition RVA should cover direct callers");
+    expect_eq(bg2ee->get().itemIcons.groundItemVidCellRenderCall,
+              std::uintptr_t{0x1F7C7D},
+              "BG2EE ground-item callsite should identify the world-only CVidCell owner");
     auto incompleteItemRuntime = bg2ee->get().itemIcons;
     incompleteItemRuntime.vidCellCommonRenderTextureSignature = {};
     expect_true(!incompleteItemRuntime.validate(),
@@ -1570,7 +1573,10 @@ void test_shader_suite_sprite_scope_routing() {
   using iee::core::shader_suite::SpriteProfile;
   using iee::shader_suite::CreatureFragment;
   using iee::shader_suite::ProfileSource;
+  using iee::shader_suite::SpriteScopeOwner;
   using iee::shader_suite::resolve_draw_profile;
+  using iee::shader_suite::resolve_x1_sampler_plan;
+  using iee::shader_suite::should_route_x1_to_fp_sprite;
 
   CreatureHdProfile hd{};
   hd.enabled = true;
@@ -1616,6 +1622,28 @@ void test_shader_suite_sprite_scope_routing() {
                   x1Selected.style.outlineSize == 3.5f,
               "D7 fpSELECT should keep its independent selected-sprite values");
 
+  const auto nearestPlan =
+      resolve_x1_sampler_plan(Filter::CatmullRom, true, false, true, true);
+  const auto linearPlan =
+      resolve_x1_sampler_plan(Filter::CatmullRom, true, false, false, false);
+  const auto mixedPlan =
+      resolve_x1_sampler_plan(Filter::CatmullRom, true, false, true, false);
+  expect_true(nearestPlan.catmullRomActive && !nearestPlan.overrideMinFilter &&
+                  !nearestPlan.overrideMagFilter && linearPlan.catmullRomActive &&
+                  linearPlan.overrideMinFilter && linearPlan.overrideMagFilter &&
+                  mixedPlan.catmullRomActive && !mixedPlan.overrideMinFilter &&
+                  mixedPlan.overrideMagFilter,
+              "D7 x1 Catmull-Rom should override only non-NEAREST sampler axes");
+  expect_true(!resolve_x1_sampler_plan(Filter::Native, true, false, false, false)
+                   .catmullRomActive &&
+                  !resolve_x1_sampler_plan(Filter::CatmullRom, false, false, false,
+                                           false)
+                       .catmullRomActive &&
+                  !resolve_x1_sampler_plan(Filter::CatmullRom, true, true, false,
+                                           false)
+                       .catmullRomActive,
+              "D7 sampler overrides must exclude native, inactive, and catalog-owned draws");
+
   const auto ownedSelected = resolve_draw_profile(
       true, hd, sprite, selected, true, true, 2, CreatureFragment::Select);
   expect_true(ownedSelected.source == ProfileSource::CreatureHd &&
@@ -1638,6 +1666,32 @@ void test_shader_suite_sprite_scope_routing() {
                   true, hd, sprite, selected, true, true, 2,
                   CreatureFragment::Sprite).source == ProfileSource::None,
               "an invalid enabled CreatureHD profile must fail closed without falling through");
+
+  expect_true(should_route_x1_to_fp_sprite(
+                  true, sprite, SpriteScopeOwner::Creature, false, false, 0, true) &&
+                  should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::GroundItem, false, false, 0, true),
+              "D7 should queue fpSprite for proven x1 creature and ground-item owners");
+  expect_true(!should_route_x1_to_fp_sprite(
+                  false, sprite, SpriteScopeOwner::Creature, false, false, 0, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::None, false, false, 0, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::Creature, true, false, 0, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::Creature, false, true, 0, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::Creature, false, false, 1, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::Creature, false, false, 7, true) &&
+                  !should_route_x1_to_fp_sprite(
+                      true, sprite, SpriteScopeOwner::Creature, false, false, 0, false),
+              "D7 queue routing must preserve disabled, unowned, HD, replaced, toned, "
+              "selected, and uncontracted draws");
+  sprite.enabled = false;
+  expect_true(!should_route_x1_to_fp_sprite(
+                  true, sprite, SpriteScopeOwner::Creature, false, false, 0, true),
+              "D7 queue routing must require the fpSprite profile itself");
 }
 
 void test_creature_sprite_filter_texture_registry() {

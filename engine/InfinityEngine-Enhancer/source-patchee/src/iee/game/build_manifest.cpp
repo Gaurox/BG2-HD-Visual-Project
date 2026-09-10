@@ -360,6 +360,8 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x425530,
             "4C 89 4C 24 20 55 53 56 41 55 41 56 41 57 48 8B EC 48 83 EC 68 "
             "48 8B 05 ? ? ? ? 48 33 C4",
+            0x1F7C7D,
+            "E8 ? ? ? ? 0F B7 9D B0 02 00 00 4C 8B AC 24 40 03 00 00",
         },
     },
 };
@@ -429,6 +431,9 @@ static_assert(validate_pattern_format(kKnownBuilds[2].itemIcons.vidCellRenderSig
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].itemIcons.vidCellCommonRenderTextureSignature),
               "BG2EE 2.7.3 item common texture-composition signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].itemIcons.groundItemVidCellRenderCallSignature),
+              "BG2EE 2.7.3 ground-item CVidCell call signature format is invalid");
 static_assert([] {
   for (const auto signature : kKnownBuilds[2].areaAnimations.signatures) {
     if (!validate_pattern_format(signature)) return false;

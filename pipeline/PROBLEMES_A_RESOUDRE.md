@@ -98,6 +98,28 @@ ne sont pas réconciliés par une décision explicite.
 - Résolution : retrouver les JSON exacts et les archiver comme snapshots de compatibilité ; ne pas
   modifier les builds historiques.
 
+## SPRITE-SHADER-D7-001 — Portée x1 non qualifiée
+
+- Candidat partiel : x2 `CreatureHD` validé ; zéro bind/draw `fpSprite`/`fpSELECT`, x1 sans différence.
+- Cause : les contrats D7 étaient appliqués aux programmes seulement ; le chemin réel restait
+  `fpDraw` et ne sélectionnait pas les slots 5/7 dans la scène observée.
+- Correctif source : scopes propriétaires créature/objet au sol et mise en file du slot 5 au point
+  commun ; HD, x2, tons spéciaux et absence de contrat restent neutres.
+- Trace corrective : 64 routes objet au sol vers le slot 5, un draw `fpSprite`, six draws x2
+  `CreatureHD`, aucune erreur shader/OpenGL. Le budget borné ne trace pas de propriétaire créature.
+- QA utilisateur : effet x1 visible ; profil Dshaders initial rejeté au profit du rendu doux x2.
+- Profil soft035/native tracé : 80 routes sol, 48 routes créature, quatre `fpSprite` actifs avec
+  `Sharpen=-0.35`, sept `CreatureHD` actifs, aucune erreur. Le halo natif `fpSprite`
+  (`uSpriteBlurAmount=5`) reste visible et est rejeté comme contour noir.
+- Candidat courant : `fpSprite Filter=Native`, `Stored`, `Sharpen=-0.35`, couleurs neutres,
+  `OutlineMode=Dshaders` + rayon `0` pour contour effectivement absent ; `fpSELECT` reste natif.
+- Dernière trace : cinq `fpSprite` actifs avec `creatureFilterMode=0`, aucun Catmull–Rom x1 ; un
+  `CreatureHD` x2 reste en mode 2. Cause : profil x1 volontairement `Filter=Native`.
+- Correctif source préparé : profil Catmull–Rom + sampler `NEAREST` limité au draw x1 et restauré
+  exactement ; texture HD exclue. Tests préparés, non exécutés ; candidat correctif non installé.
+- Manque : choix de tests, build/candidat distinct, preuve `creatureFilterMode=2` x1 avec sampler
+  restauré, QA sans halo et validation de `fpSELECT` ; ne pas déclarer D7 terminé avant ces preuves.
+
 ## ENGINE-UI-001 — États UI personnalisés
 
 Valider séparément survol, clic, disabled, clavier et résolutions prises en charge. Une capture du

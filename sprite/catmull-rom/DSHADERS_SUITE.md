@@ -197,6 +197,13 @@ combinaisons. `Sprites` = `fpSprite` + `fpSELECT`, donc aussi x1 et objets au so
 `All` = les huit shaders listés, y compris polices/vidéos. `CreatureHD` seul utilise la provenance.
 Une classification par shader ne prétend pas séparer UI/effets partageant `fpDraw`.
 
+Routage D7 BG2EE 2.7.3 : publier les propriétaires créature aux trois `Render` manifestés et les
+objets au sol au seul appel monde manifesté vers `CVidCell::Render`. À la composition commune,
+router uniquement le ton neutre x1 vers `DrawColorTone(5)`/`fpSprite`, puis restaurer le ton.
+Conserver `DrawColorTone(7)`/`fpSELECT` natif. Refuser le routage si texture catalogue HD,
+remplacement x2, ton spécial ou contrat shader D7 absent ; `CreatureHD` reste propriétaire de
+`fpDraw` et du filtre HD.
+
 ### 4.2 Interfaces GPU et neutralité
 
 - Conserver la clé de texture `(contexte, nom GL, génération)` et la frontière draw du guide.
@@ -211,6 +218,9 @@ Une classification par shader ne prétend pas séparer UI/effets partageant `fpD
   ne suffisent pas à prouver cette neutralité.
 - Ne pas changer globalement le sampler des textures moteur partagées. Lectures aux centres et
   bounds prouvés ; `texelFetch` seulement si le préambule le permet, sinon `texture2D` adaptée.
+- D7 x1 Catmull–Rom : si min/mag n'est pas `NEAREST`, substituer les deux valeurs uniquement autour
+  du `glDrawArrays`, puis restaurer exactement sampler, binding et unité active. Texture catalogue
+  HD exclue ; capacité GL ou restauration non vérifiable => diagnostic, jamais activation implicite.
 - Ne pas passer toutes les textures dans le reconstructeur RGBA D1 : font = couverture rouge,
   vidéo = plans YUV et parfois alpha séparé, certains effets = blending particulier.
 - Pour chaque source non privée, contrôler l'encodage, les bornes et le blend en D2/D8–D10.

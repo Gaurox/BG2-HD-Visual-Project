@@ -10,6 +10,8 @@ namespace iee::game {
     enum class ShaderTone : int {
         None = 0,
         Grey = 1,
+        Sprite = 5,
+        Select = 7,
         Seam = 8,
     };
 

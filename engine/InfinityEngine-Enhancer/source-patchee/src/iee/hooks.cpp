@@ -18,10 +18,12 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 #include "iee/am0205e_animation_x4_test.h"
 #include "iee/bridge_transition.h"
+#include "iee/creature_sprite_filter.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/area_animation_clock_diagnostics.h"
 #include "iee/area_animation_x4_registry.h"
@@ -49,6 +51,7 @@
 #include "iee/map_page_prewarm.h"
 #include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
+#include "iee/shader_suite.h"
 
 namespace iee::hooks {
 using LoadAreaFn = void* (*)(void*, void*, unsigned char, unsigned char, unsigned char);
@@ -141,9 +144,15 @@ thread_local void* g_effectAnimationCell = nullptr;
 thread_local int g_effectAnimationFinalRenderDepth = 0;
 struct ItemIconScope {
   void* cell{};
+  bool spriteRoutingOwned{};
 };
 thread_local ItemIconScope* g_itemIconScope = nullptr;
 static bool g_itemIconHooksEnabled = false;
+static bool g_spriteShaderScopePrepared = false;
+static bool g_spriteShaderScopeActive = false;
+static std::uintptr_t g_groundItemVidCellRenderReturn{};
+thread_local int g_nativeShaderTone = static_cast<int>(game::ShaderTone::None);
+thread_local std::uint32_t g_forcedFpSpriteQueueDepth = 0;
 
 // Bounded proof for registered effect resources. Counters are process-wide;
 // stage and slot emission is independently gated per resref by the registry.
@@ -1275,6 +1284,64 @@ bool prepare_item_icon_composition_hooks(AppContext& ctx) noexcept {
   return true;
 }
 
+bool prepare_sprite_shader_scope_hooks(AppContext& ctx) noexcept {
+  g_spriteShaderScopePrepared = false;
+  g_spriteShaderScopeActive = false;
+  g_groundItemVidCellRenderReturn = 0;
+  if (!ctx.cfg.sprite_shader_scope_enabled()) return false;
+  if (!ctx.draw.DrawColorTone || !ctx.manifest ||
+      !ctx.manifest->areaAnimations.enabled || !ctx.manifest->itemIcons.enabled) {
+    LOG_WARN(
+        "D7 x1 sprite routing unavailable for build {}: DrawColorTone or owner "
+        "manifest is absent",
+        ctx.manifest ? ctx.manifest->buildId : "<none>");
+    return false;
+  }
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return false;
+  const auto& runtime = ctx.manifest->areaAnimations;
+  const auto& itemRuntime = ctx.manifest->itemIcons;
+  const std::array<std::pair<std::uintptr_t, std::string_view>, 6> ownerBoundaries{{
+      {runtime.vidCellRenderTexture, runtime.signatures[1]},
+      {runtime.characterRender, runtime.signatures[9]},
+      {runtime.monsterIcewindRender, runtime.signatures[6]},
+      {runtime.monsterRender, runtime.signatures[14]},
+      {itemRuntime.vidCellRender, itemRuntime.vidCellRenderSignature},
+      {itemRuntime.vidCellCommonRenderTexture,
+       itemRuntime.vidCellCommonRenderTextureSignature},
+  }};
+  for (const auto& [rva, signature] : ownerBoundaries) {
+    if (!matches_pattern_at_rva(*module, rva, signature)) {
+      LOG_WARN("D7 x1 sprite routing skipped: owner boundary differs at RVA 0x{:X}",
+               rva);
+      return false;
+    }
+  }
+  if (!matches_pattern_at_rva(*module, itemRuntime.groundItemVidCellRenderCall,
+                              itemRuntime.groundItemVidCellRenderCallSignature)) {
+    LOG_WARN("D7 x1 ground-item routing skipped: callsite differs at RVA 0x{:X}",
+             itemRuntime.groundItemVidCellRenderCall);
+    return false;
+  }
+  const auto* groundCall = module->base + itemRuntime.groundItemVidCellRenderCall;
+  if (core::rel32_target_checked(groundCall, 0xE8, 1, 5) !=
+      module->base + itemRuntime.vidCellRender) {
+    LOG_WARN(
+        "D7 x1 ground-item routing skipped: manifested call no longer targets "
+        "CVidCell::Render");
+    return false;
+  }
+
+  g_groundItemVidCellRenderReturn =
+      reinterpret_cast<std::uintptr_t>(groundCall + 5);
+  g_spriteShaderScopePrepared = true;
+  LOG_INFO(
+      "D7 x1 owner routing prepared: creature Character/Monster/MonsterIcewind, "
+      "ground-item call RVA 0x{:X}, fpSprite slot 5; native fpSELECT slot 7 retained",
+      itemRuntime.groundItemVidCellRenderCall);
+  return true;
+}
+
 bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
   g_effectAnimationHooksEnabled = false;
   g_effectAnimationTextureApi = {};
@@ -2095,17 +2162,19 @@ static void detour_monster_render(
     std::uintptr_t a13, std::uintptr_t a14) {
   ResolvedCreatureSpriteFrame resolved{};
   const bool target =
+      g_creatureSpriteHooksEnabled &&
       read_creature_sprite_frame(thisPtr, CreatureSpriteOwner::Monster, resolved);
   CreatureSpriteScope scope{};
+  const bool shaderScoped = g_spriteShaderScopeActive;
+  if (target || shaderScoped) scope.owner = CreatureSpriteOwner::Monster;
   if (target) {
     scope.generation = next_creature_sprite_generation();
     scope.animationId = resolved.animationId;
-    scope.owner = CreatureSpriteOwner::Monster;
     (void)append_creature_sprite_layer(scope, resolved);
   }
   // Every Monster invocation masks an outer creature scope. A nested
   // non-target render must never inherit the outer sprite's palette/frame.
-  CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  CreatureSpriteScopeOverride scopeOverride(target || shaderScoped ? &scope : nullptr);
   core::NativeOcclusionCorrelation nativeOcclusion{
       target ? core::NativeOcclusionOwner::Monster : core::NativeOcclusionOwner::None,
       reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
@@ -2139,17 +2208,19 @@ static void detour_monster_icewind_render(
     std::uintptr_t a13, std::uintptr_t a14) {
   ResolvedCreatureSpriteFrame resolved{};
   const bool target =
+      g_creatureSpriteHooksEnabled &&
       read_creature_sprite_frame(thisPtr, CreatureSpriteOwner::MonsterIcewind, resolved);
   CreatureSpriteScope scope{};
+  const bool shaderScoped = g_spriteShaderScopeActive;
+  if (target || shaderScoped) scope.owner = CreatureSpriteOwner::MonsterIcewind;
   if (target) {
     scope.generation = next_creature_sprite_generation();
     scope.animationId = resolved.animationId;
-    scope.owner = CreatureSpriteOwner::MonsterIcewind;
     (void)append_creature_sprite_layer(scope, resolved);
   }
   // Every MonsterIcewind invocation masks an outer creature scope. A nested
   // non-target render must never inherit the outer sprite's palette/frame.
-  CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  CreatureSpriteScopeOverride scopeOverride(target || shaderScoped ? &scope : nullptr);
   core::NativeOcclusionCorrelation nativeOcclusion{
       target ? core::NativeOcclusionOwner::MonsterIcewind
              : core::NativeOcclusionOwner::None,
@@ -2184,12 +2255,14 @@ static void detour_character_render(
     std::uintptr_t a13, std::uintptr_t a14) {
   ResolvedCreatureSpriteFrame resolved{};
   const bool target =
+      g_creatureSpriteHooksEnabled &&
       read_creature_sprite_frame(thisPtr, CreatureSpriteOwner::Character, resolved);
   CreatureSpriteScope scope{};
+  const bool shaderScoped = g_spriteShaderScopeActive;
+  if (target || shaderScoped) scope.owner = CreatureSpriteOwner::Character;
   if (target) {
     scope.generation = next_creature_sprite_generation();
     scope.animationId = resolved.animationId;
-    scope.owner = CreatureSpriteOwner::Character;
     (void)append_creature_sprite_layer(scope, resolved);
     if (g_ctx && g_ctx->manifest) {
       const auto animationBase = reinterpret_cast<std::uintptr_t>(thisPtr);
@@ -2222,7 +2295,7 @@ static void detour_character_render(
   }
   // Character rendering is layered. Capture every registered native layer in
   // Realize order, then replace the engine's single final composite draw.
-  CreatureSpriteScopeOverride scopeOverride(target ? &scope : nullptr);
+  CreatureSpriteScopeOverride scopeOverride(target || shaderScoped ? &scope : nullptr);
   core::NativeOcclusionCorrelation nativeOcclusion{
       target ? core::NativeOcclusionOwner::Character : core::NativeOcclusionOwner::None,
       reinterpret_cast<std::uintptr_t>(thisPtr), resolved.animationId};
@@ -2344,10 +2417,13 @@ static int detour_item_vid_cell_render(void* cell, std::uintptr_t arg2,
                                        std::uintptr_t arg7, std::uintptr_t arg8,
                                        std::uintptr_t arg9) {
   const auto original = g_itemVidCellRenderHook.original();
-  if (!g_itemIconHooksEnabled || !cell) {
+  const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
+  const bool spriteRoutingOwned =
+      g_spriteShaderScopeActive && caller == g_groundItemVidCellRenderReturn;
+  if ((!g_itemIconHooksEnabled && !spriteRoutingOwned) || !cell) {
     return original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
   }
-  ItemIconScope scope{.cell = cell};
+  ItemIconScope scope{.cell = cell, .spriteRoutingOwned = spriteRoutingOwned};
   auto* previousScope = g_itemIconScope;
   g_itemIconScope = &scope;
   const int result = original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
@@ -2382,7 +2458,79 @@ static void detour_item_vid_cell_common_render_texture(
         item_icon_x2::bind_frame_texture(handle, logicalWidth, logicalHeight,
                                          g_itemIconTextureApi, previousTextureId);
   }
+
+  auto owner = shader_suite::SpriteScopeOwner::None;
+  bool hdOwned = false;
+  const char* ownerName = "none";
+  if (g_spriteShaderScopeActive && g_creatureSpriteScope &&
+      g_creatureSpriteScope->owner != CreatureSpriteOwner::None) {
+    owner = shader_suite::SpriteScopeOwner::Creature;
+    ownerName = "creature";
+    std::uint32_t textureState = 0;
+    if (g_creatureSpriteTextureApi.glTextureState &&
+        core::safe_read(g_creatureSpriteTextureApi.glTextureState, textureState)) {
+      const auto textureId = static_cast<unsigned>((textureState >> 21u) & 0x1FFu);
+      const auto registryState = creature_sprite_filter::registry().state();
+      std::uint32_t glName = 0;
+      constexpr std::size_t kTextureDescriptorStride = 0x28;
+      const bool descriptorReadable =
+          textureId != 0 && g_creatureSpriteTextureApi.glTextureTable &&
+          core::safe_read(g_creatureSpriteTextureApi.glTextureTable +
+                              static_cast<std::size_t>(textureId) *
+                                  kTextureDescriptorStride,
+                          glName);
+      hdOwned = registryState.contextIdentity != 0 && descriptorReadable &&
+                glName != 0 &&
+                creature_sprite_filter::registry()
+                    .find(registryState.contextIdentity, glName)
+                    .has_value();
+    }
+  } else if (g_spriteShaderScopeActive && scope && scope->spriteRoutingOwned) {
+    owner = shader_suite::SpriteScopeOwner::GroundItem;
+    ownerName = "ground-item";
+  }
+  const int nativeTone = g_nativeShaderTone;
+  const bool textureRegistryReliable =
+      !creature_sprite_filter::registry().state().capacityExceeded;
+  if (owner != shader_suite::SpriteScopeOwner::None) {
+    try {
+      install_shader_probes_once();
+    } catch (...) {
+      // Contract readiness below keeps the route neutral.
+    }
+  }
+  const bool fpSpriteContractReady =
+      owner != shader_suite::SpriteScopeOwner::None &&
+      textureRegistryReliable &&
+      probe::sprite_scope_program_ready(
+          static_cast<int>(game::ShaderTone::Sprite));
+  const bool routeFpSprite =
+      g_ctx && shader_suite::should_route_x1_to_fp_sprite(
+                   g_ctx->cfg.shaderSuiteEnabled, g_ctx->cfg.fpSpriteShaderProfile,
+                   owner, hdOwned, replacementBound, nativeTone,
+                   fpSpriteContractReady);
+  if (routeFpSprite) {
+    g_drawColorToneHook.original()(static_cast<int>(game::ShaderTone::Sprite));
+    ++g_forcedFpSpriteQueueDepth;
+    if (g_ctx->cfg.enablePerformanceLogging) {
+      static std::atomic<std::uint32_t> routedLogs{0};
+      const auto logIndex = routedLogs.fetch_add(1, std::memory_order_relaxed);
+      if (logIndex < 64) {
+        LOG_INFO(
+            "D7 x1 sprite route: owner={}, shader=fpSprite, slot=5, "
+            "nativeTone={}, logical={}x{}, flags=0x{:X}, hdOwned={}, "
+            "replacementBound={}, sample={}/64",
+            ownerName, nativeTone, logicalWidth, logicalHeight, flags,
+            hdOwned, replacementBound, logIndex + 1);
+      }
+    }
+  }
   original(x, y, sourceRect, logicalSize, renderRect, clipRect, flags);
+  if (routeFpSprite) {
+    --g_forcedFpSpriteQueueDepth;
+    g_drawColorToneHook.original()(nativeTone);
+    g_nativeShaderTone = nativeTone;
+  }
   if (replacementBound) {
     item_icon_x2::restore_texture(g_itemIconTextureApi, previousTextureId);
   }
@@ -2566,7 +2714,26 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
       }
     }
   }
+  const bool preserveCreatureHdFpDraw =
+      replacement == ReplacementKind::CreatureSprite &&
+      g_forcedFpSpriteQueueDepth > 0;
+  if (preserveCreatureHdFpDraw) {
+    g_drawColorToneHook.original()(static_cast<int>(game::ShaderTone::None));
+    if (g_ctx && g_ctx->cfg.enablePerformanceLogging) {
+      static std::atomic<std::uint32_t> priorityLogs{0};
+      const auto logIndex = priorityLogs.fetch_add(1, std::memory_order_relaxed);
+      if (logIndex < 32) {
+        LOG_INFO(
+            "D7 HD priority route: owner=creature, shader=fpDraw, slot=0, "
+            "replacement=CreatureSprite, logical={}x{}, sample={}/32",
+            logicalWidth, logicalHeight, logIndex + 1);
+      }
+    }
+  }
   original(x, y, sourceRect, logicalSize, clipRect, flags);
+  if (preserveCreatureHdFpDraw) {
+    g_drawColorToneHook.original()(static_cast<int>(game::ShaderTone::Sprite));
+  }
   if (transientOcclusionTextureId > 0) {
     native_occlusion_bridge::finish_masked_texture(
         g_nativeOcclusionTextureApi, previousTextureId, transientOcclusionTextureId);
@@ -2733,6 +2900,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
 // the original triggers the fpSEAM bind, which is when the uniform feed
 // reads these values.
 static void detour_draw_color_tone(int mode) {
+  g_nativeShaderTone = mode;
   try {
     if (mode == static_cast<int>(game::ShaderTone::Seam)) {
       publish_view_state();
@@ -3644,6 +3812,11 @@ bool install_all(AppContext& ctx) {
     g_effectAnimationTextureApi = {};
     g_itemIconHooksEnabled = false;
     g_itemIconTextureApi = {};
+    g_spriteShaderScopePrepared = false;
+    g_spriteShaderScopeActive = false;
+    g_groundItemVidCellRenderReturn = 0;
+    g_nativeShaderTone = static_cast<int>(game::ShaderTone::None);
+    g_forcedFpSpriteQueueDepth = 0;
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
@@ -3652,6 +3825,7 @@ bool install_all(AppContext& ctx) {
     g_effectAnimationHooksEnabled = prepare_effect_animation_composition_hooks(ctx);
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
     g_itemIconHooksEnabled = prepare_item_icon_composition_hooks(ctx);
+    g_spriteShaderScopePrepared = prepare_sprite_shader_scope_hooks(ctx);
     const bool hasBridgeTarget =
         g_areaCompositionMode == AreaCompositionMode::Registry ||
         g_creatureSpriteHooksEnabled;
@@ -3669,7 +3843,8 @@ bool install_all(AppContext& ctx) {
           "animation or creature xN path is active");
     }
     if (g_areaCompositionMode != AreaCompositionMode::None || g_effectAnimationHooksEnabled ||
-        g_creatureSpriteHooksEnabled || g_itemIconHooksEnabled) {
+        g_creatureSpriteHooksEnabled || g_itemIconHooksEnabled ||
+        g_spriteShaderScopePrepared) {
       try {
         const auto module = core::get_module_span(nullptr);
         if (!module || !ctx.manifest) throw std::runtime_error("module or manifest unavailable");
@@ -3679,7 +3854,7 @@ bool install_all(AppContext& ctx) {
             reinterpret_cast<void*>(moduleBase + runtime.vidCellRenderTexture),
             reinterpret_cast<void*>(&detour_vid_cell_render_texture));
         g_vidCellRenderTextureHook.enable();
-        if (g_itemIconHooksEnabled) {
+        if (g_itemIconHooksEnabled || g_spriteShaderScopePrepared) {
           const auto& itemRuntime = ctx.manifest->itemIcons;
           g_itemVidCellCommonRenderTextureHook.create(
               reinterpret_cast<void*>(moduleBase + itemRuntime.vidCellCommonRenderTexture),
@@ -3690,9 +3865,10 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(&detour_item_vid_cell_render));
           g_itemVidCellRenderHook.enable();
           LOG_INFO(
-              "Item icon x2 owner scope installed: CVidCell::Render RVA 0x{:X}, "
-              "common texture composition RVA 0x{:X}",
-              itemRuntime.vidCellRender, itemRuntime.vidCellCommonRenderTexture);
+              "CVidCell owner/common scopes installed: Render RVA 0x{:X}, "
+              "common RVA 0x{:X}, item-x2={}, D7-x1={}",
+              itemRuntime.vidCellRender, itemRuntime.vidCellCommonRenderTexture,
+              g_itemIconHooksEnabled, g_spriteShaderScopePrepared);
         }
         if (g_areaCompositionMode != AreaCompositionMode::None) {
           g_gameStaticRenderBamHook.create(
@@ -3731,41 +3907,41 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(moduleBase + runtime.vidPaletteRealize),
               reinterpret_cast<void*>(&detour_vid_palette_realize));
           g_vidPaletteRealizeHook.enable();
-          if (g_creatureSpriteCharacterHookEnabled) {
-            g_characterRenderHook.create(
-                reinterpret_cast<void*>(moduleBase + runtime.characterRender),
-                reinterpret_cast<void*>(&detour_character_render));
-            g_characterRenderHook.enable();
-            LOG_INFO(
-                "Creature sprite xN owner scope installed: Character::Render RVA "
-                "0x{:X}, body cell offset 0x{:X}, overlay cell offsets "
-                "[0x{:X},0x{:X},0x{:X}], CVidPalette::Realize RVA 0x{:X}",
-                runtime.characterRender, runtime.characterCurrentCell,
-                runtime.characterOverlayCells[0], runtime.characterOverlayCells[1],
-                runtime.characterOverlayCells[2],
-                runtime.vidPaletteRealize);
-          }
-          if (g_creatureSpriteMonsterHookEnabled) {
-            g_monsterRenderHook.create(
-                reinterpret_cast<void*>(moduleBase + runtime.monsterRender),
-                reinterpret_cast<void*>(&detour_monster_render));
-            g_monsterRenderHook.enable();
-            LOG_INFO(
-                "Creature sprite xN owner scope installed: Monster::Render RVA "
-                "0x{:X}, body cell offset 0x{:X}, CVidPalette::Realize RVA 0x{:X}",
-                runtime.monsterRender, runtime.monsterCurrentCell,
-                runtime.vidPaletteRealize);
-          }
-          if (g_creatureSpriteMonsterIcewindHookEnabled) {
-            g_monsterIcewindRenderHook.create(
-                reinterpret_cast<void*>(moduleBase + runtime.monsterIcewindRender),
-                reinterpret_cast<void*>(&detour_monster_icewind_render));
-            g_monsterIcewindRenderHook.enable();
-            LOG_INFO(
-                "Creature sprite xN owner scope installed: MonsterIcewind::Render RVA "
-                "0x{:X}, CVidPalette::Realize RVA 0x{:X}",
-                runtime.monsterIcewindRender, runtime.vidPaletteRealize);
-          }
+        }
+        if (g_creatureSpriteCharacterHookEnabled || g_spriteShaderScopePrepared) {
+          g_characterRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + runtime.characterRender),
+              reinterpret_cast<void*>(&detour_character_render));
+          g_characterRenderHook.enable();
+          LOG_INFO(
+              "Creature Character owner scope installed: Render RVA 0x{:X}, "
+              "xN={}, D7-x1={}",
+              runtime.characterRender, g_creatureSpriteCharacterHookEnabled,
+              g_spriteShaderScopePrepared);
+        }
+        if (g_creatureSpriteMonsterHookEnabled || g_spriteShaderScopePrepared) {
+          g_monsterRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + runtime.monsterRender),
+              reinterpret_cast<void*>(&detour_monster_render));
+          g_monsterRenderHook.enable();
+          LOG_INFO(
+              "Creature Monster owner scope installed: Render RVA 0x{:X}, "
+              "xN={}, D7-x1={}",
+              runtime.monsterRender, g_creatureSpriteMonsterHookEnabled,
+              g_spriteShaderScopePrepared);
+        }
+        if (g_creatureSpriteMonsterIcewindHookEnabled ||
+            g_spriteShaderScopePrepared) {
+          g_monsterIcewindRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + runtime.monsterIcewindRender),
+              reinterpret_cast<void*>(&detour_monster_icewind_render));
+          g_monsterIcewindRenderHook.enable();
+          LOG_INFO(
+              "Creature MonsterIcewind owner scope installed: Render RVA 0x{:X}, "
+              "xN={}, D7-x1={}",
+              runtime.monsterIcewindRender,
+              g_creatureSpriteMonsterIcewindHookEnabled,
+              g_spriteShaderScopePrepared);
         }
         LOG_INFO("CVidCell high-level composition dispatcher installed");
       } catch (const std::exception& error) {
@@ -3791,6 +3967,9 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
         g_itemIconHooksEnabled = false;
+        g_spriteShaderScopePrepared = false;
+        g_spriteShaderScopeActive = false;
+        g_groundItemVidCellRenderReturn = 0;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3821,6 +4000,9 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
         g_itemIconHooksEnabled = false;
+        g_spriteShaderScopePrepared = false;
+        g_spriteShaderScopeActive = false;
+        g_groundItemVidCellRenderReturn = 0;
         g_creatureSpritePaletteReturn = 0;
         g_areaCompositionMode = AreaCompositionMode::None;
         g_nativeOcclusionBridgeEnabled = false;
@@ -3940,23 +4122,41 @@ bool install_all(AppContext& ctx) {
         g_drawColorToneHook.create(reinterpret_cast<void*>(ctx.draw.DrawColorTone),
                                    reinterpret_cast<void*>(&detour_draw_color_tone));
         g_drawColorToneHook.enable();
+        g_spriteShaderScopeActive = g_spriteShaderScopePrepared;
         LOG_INFO("DrawColorTone hook installed");
+        if (g_spriteShaderScopeActive) {
+          LOG_INFO(
+              "D7 x1 sprite routing active: owner-scoped neutral draws queue fpSprite; "
+              "native fpSELECT and CreatureHD fpDraw priority are preserved");
+        }
       } catch (const std::exception& e) {
+        g_spriteShaderScopeActive = false;
         ctx.cfg.enableWaterEffect = false;
         ctx.cfg.enableDebugHotkeys = false;
+        if (g_spriteShaderScopePrepared) {
+          LOG_ERROR("D7 x1 sprite routing disabled: DrawColorTone hook failed ({})",
+                    e.what());
+        }
         LOG_ERROR(
             "Water effect disabled: DrawColorTone hook installation failed ({}); a coherent "
             "world-view transform cannot be published safely. Tile upscaling remains enabled.",
             e.what());
       } catch (...) {
+        g_spriteShaderScopeActive = false;
         ctx.cfg.enableWaterEffect = false;
         ctx.cfg.enableDebugHotkeys = false;
+        if (g_spriteShaderScopePrepared) {
+          LOG_ERROR(
+              "D7 x1 sprite routing disabled: DrawColorTone hook failed with an "
+              "unknown error");
+        }
         LOG_ERROR(
             "Water effect disabled: DrawColorTone hook installation failed with an unknown "
             "error; a coherent world-view transform cannot be published safely. Tile "
             "upscaling remains enabled.");
       }
     } else {
+      g_spriteShaderScopeActive = false;
       ctx.cfg.enableWaterEffect = false;
       ctx.cfg.enableDebugHotkeys = false;
       LOG_ERROR(
@@ -4020,6 +4220,9 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
     g_itemIconHooksEnabled = false;
+    g_spriteShaderScopePrepared = false;
+    g_spriteShaderScopeActive = false;
+    g_groundItemVidCellRenderReturn = 0;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -4069,6 +4272,9 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
     g_itemIconHooksEnabled = false;
+    g_spriteShaderScopePrepared = false;
+    g_spriteShaderScopeActive = false;
+    g_groundItemVidCellRenderReturn = 0;
     g_creatureSpritePaletteReturn = 0;
     g_ctx = nullptr;
     delete g_hookInit;
@@ -4125,6 +4331,9 @@ void uninstall_all() noexcept {
   g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_effectAnimationHooksEnabled = false;
   g_itemIconHooksEnabled = false;
+  g_spriteShaderScopePrepared = false;
+  g_spriteShaderScopeActive = false;
+  g_groundItemVidCellRenderReturn = 0;
   g_creatureSpritePaletteReturn = 0;
   g_areaCompositionMode = AreaCompositionMode::None;
   g_nativeOcclusionProbeHookEnabled = false;
@@ -4148,6 +4357,9 @@ void prepare_for_shutdown() noexcept {
   // state are torn down. MinHook itself stays initialized until
   // uninstall_all(), after every MinHook-backed subsystem has removed its
   // hooks.
+  g_spriteShaderScopeActive = false;
+  g_nativeShaderTone = static_cast<int>(game::ShaderTone::None);
+  g_forcedFpSpriteQueueDepth = 0;
   (void)g_gameAreaRenderHook.disable();
   (void)g_drawColorToneHook.disable();
   (void)g_characterRenderHook.disable();

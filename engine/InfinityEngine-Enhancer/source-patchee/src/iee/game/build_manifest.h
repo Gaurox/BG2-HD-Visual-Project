@@ -285,6 +285,10 @@ struct ItemIconRuntime {
   std::string_view vidCellRenderSignature{};
   std::uintptr_t vidCellCommonRenderTexture{};
   std::string_view vidCellCommonRenderTextureSignature{};
+  // Exact world-ground call into CVidCell::Render. Other callers of the same
+  // method are UI/internal paths and must not acquire the D7 x1 owner scope.
+  std::uintptr_t groundItemVidCellRenderCall{};
+  std::string_view groundItemVidCellRenderCallSignature{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     return !enabled ||
@@ -293,7 +297,9 @@ struct ItemIconRuntime {
             vidCellCurrentFrame != 0 && vidCellCurrentSequence != 0 &&
             vidCellPlaybackMode != 0 && vidCellRender != 0 &&
             !vidCellRenderSignature.empty() && vidCellCommonRenderTexture != 0 &&
-            !vidCellCommonRenderTextureSignature.empty());
+            !vidCellCommonRenderTextureSignature.empty() &&
+            groundItemVidCellRenderCall != 0 &&
+            !groundItemVidCellRenderCallSignature.empty());
   }
 };
 

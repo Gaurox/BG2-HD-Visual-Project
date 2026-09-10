@@ -41,6 +41,18 @@ struct ResolvedDrawProfile {
   core::shader_suite::Filter filter{core::shader_suite::Filter::Native};
 };
 
+struct X1SamplerPlan {
+  bool catmullRomActive{};
+  bool overrideMinFilter{};
+  bool overrideMagFilter{};
+};
+
+enum class SpriteScopeOwner : std::uint8_t {
+  None,
+  Creature,
+  GroundItem,
+};
+
 // D6 resolver retained for the catalog-owned HD profile and its tests.
 [[nodiscard]] CreatureFragment classify_creature_fragment(
     std::string_view fragmentShader) noexcept;
@@ -58,6 +70,18 @@ struct ResolvedDrawProfile {
     const core::shader_suite::SpriteProfile& fpSelect,
     bool spriteScopeAvailable, bool catalogOwned, int textureScale,
     CreatureFragment fragment) noexcept;
+// Catmull-Rom needs exact texel-center reads. For x1 only, plan a draw-local
+// NEAREST override when the engine texture currently uses another sampler.
+// Catalog-owned HD textures never enter this override path.
+[[nodiscard]] X1SamplerPlan resolve_x1_sampler_plan(
+    core::shader_suite::Filter filter, bool profileActive, bool catalogOwned,
+    bool minFilterNearest, bool magFilterNearest) noexcept;
+// Queue-time D7 routing decision. fpSELECT remains selected by the engine's
+// native tone 7; only neutral x1 owner draws need promotion to fpSprite.
+[[nodiscard]] bool should_route_x1_to_fp_sprite(
+    bool suiteEnabled, const core::shader_suite::SpriteProfile& fpSprite,
+    SpriteScopeOwner owner, bool hdOwned, bool replacementBound,
+    int nativeTone, bool fpSpriteContractReady) noexcept;
 [[nodiscard]] const char* profile_source_name(ProfileSource source) noexcept;
 
 }  // namespace iee::shader_suite
