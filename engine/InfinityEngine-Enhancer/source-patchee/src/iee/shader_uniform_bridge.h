@@ -19,6 +19,9 @@ struct Locations {
   int normalMap{kUnresolved};
   int dudvMap{kUnresolved};
   int foamMap{kUnresolved};
+  int creatureSampler{kUnresolved};
+  int creatureFilterMode{kUnresolved};
+  int creatureTexelSize{kUnresolved};
 
   bool samplersInitialized{};
   bool viewInitialized{};
@@ -73,5 +76,15 @@ void set_view(float scrollX, float scrollY, float viewWorldWidth, float viewWorl
 // The caller owns program classification and location caching. This function
 // only resolves missing locations and feeds the currently bound program.
 void feed(unsigned program, Locations& locations);
+
+// Per-draw creature routing. These uniforms deliberately bypass
+// lastAppliedRevision because uTex may change while the program stays bound.
+[[nodiscard]] bool resolve_creature_draw_locations(
+    unsigned program, Locations& locations) noexcept;
+[[nodiscard]] int creature_sampler_unit(unsigned program,
+                                        Locations& locations) noexcept;
+[[nodiscard]] bool set_creature_draw(unsigned program, Locations& locations,
+                                     float mode, float texelWidth,
+                                     float texelHeight) noexcept;
 
 }  // namespace iee::probe::uniforms

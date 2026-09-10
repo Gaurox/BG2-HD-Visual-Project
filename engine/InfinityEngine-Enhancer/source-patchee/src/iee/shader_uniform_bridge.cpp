@@ -297,4 +297,43 @@ void feed(unsigned program, Locations& locations) {
   record_feed_performance(performanceStart, measurePerformance, false, boundTextures);
 }
 
+bool resolve_creature_draw_locations(unsigned program,
+                                     Locations& locations) noexcept {
+  const auto& gl = game::gl::get_gl_functions();
+  if (program == 0 || !gl.glGetUniformLocation || !gl.glGetUniformiv ||
+      !gl.glUniform1f || !gl.glUniform2f || !gl.glGetIntegerv) {
+    return false;
+  }
+  locations.creatureSampler = resolve_location(
+      gl, program, locations.creatureSampler, "uTex");
+  locations.creatureFilterMode = resolve_location(
+      gl, program, locations.creatureFilterMode, "uIeeCreatureFilterMode");
+  locations.creatureTexelSize = resolve_location(
+      gl, program, locations.creatureTexelSize, "uIeeCreatureTexelSize");
+  return locations.creatureSampler >= 0 && locations.creatureFilterMode >= 0 &&
+         locations.creatureTexelSize >= 0;
+}
+
+int creature_sampler_unit(unsigned program, Locations& locations) noexcept {
+  if (!resolve_creature_draw_locations(program, locations)) return -1;
+  const auto& gl = game::gl::get_gl_functions();
+  int unit = -1;
+  gl.glGetUniformiv(program, locations.creatureSampler, &unit);
+  return unit >= 0 && unit < 32 ? unit : -1;
+}
+
+bool set_creature_draw(unsigned program, Locations& locations, float mode,
+                       float texelWidth, float texelHeight) noexcept {
+  if (!resolve_creature_draw_locations(program, locations)) return false;
+  const auto& gl = game::gl::get_gl_functions();
+  int currentProgram = 0;
+  gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &currentProgram);
+  if (currentProgram <= 0 || static_cast<unsigned>(currentProgram) != program) {
+    return false;
+  }
+  gl.glUniform1f(locations.creatureFilterMode, mode);
+  gl.glUniform2f(locations.creatureTexelSize, texelWidth, texelHeight);
+  return true;
+}
+
 }  // namespace iee::probe::uniforms

@@ -31,6 +31,7 @@
 #include "iee/core/creature_sprite_filter_math.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
+#include "iee/creature_sprite_filter.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_page_shadow.h"
 #include "iee/core/map_texture_telemetry.h"
@@ -1146,6 +1147,129 @@ void test_catmull_rom_premultiplied_reference() {
   expect_true(invalidPhase.r == 0.0 && invalidPhase.g == 0.0 &&
                   invalidPhase.b == 0.0 && invalidPhase.a == 0.0,
               "a non-finite phase must fail closed to transparent black");
+}
+
+void test_creature_sprite_filter_texture_registry() {
+  using iee::core::CreatureSpriteFilterMode;
+  using namespace iee::creature_sprite_filter;
+
+  constexpr std::uintptr_t contextA = 0x1111;
+  constexpr std::uintptr_t contextB = 0x2222;
+  TextureRegistry registry(3);
+  registry.configure(CreatureSpriteFilterMode::CatmullRom);
+  const auto generationA = registry.observe_context(contextA);
+  expect_true(generationA != 0, "D4 registry should assign a context generation");
+  expect_true(registry.publish(contextA, 41, 128, 96, 2,
+                               TextureProvenance::Frame, false),
+              "validated creature frame upload should be registered");
+
+  const auto frame = registry.find(contextA, 41);
+  expect_true(frame.has_value(), "registered creature frame should be found");
+  if (frame) {
+    expect_eq(frame->contextGeneration, generationA,
+              "texture identity should retain the current context generation");
+    expect_true(frame->expectedSampler == Sampler::Nearest,
+                "Catmull-Rom source backing should require NEAREST");
+    expect_true(!frame->masked && frame->scale == 2,
+                "source metadata should retain scale and unmasked provenance");
+  }
+
+  const DrawObservation hdDraw{
+      .contextIdentity = contextA,
+      .glName = 41,
+      .physicalWidth = 128,
+      .physicalHeight = 96,
+      .sampler = Sampler::Nearest,
+      .spriteProgram = true,
+      .uniformsAvailable = true,
+  };
+  const auto active = registry.decide(hdDraw);
+  expect_true(active.owner && active.filterActive && active.mode == 2.0f,
+              "registered HD draw should select the Catmull-Rom route");
+  expect_near(active.texelWidth, 1.0 / 128.0, 1.0e-9,
+              "D4 route should use the inverse physical width");
+  expect_near(active.texelHeight, 1.0 / 96.0, 1.0e-9,
+              "D4 route should use the inverse physical height");
+
+  auto witness = hdDraw;
+  witness.glName = 99;
+  expect_true(!registry.decide(witness).owner,
+              "unregistered x1/effect witness must remain neutral");
+  witness.glName = 41;
+  witness.spriteProgram = false;
+  expect_true(!registry.decide(witness).owner,
+              "non-sprite program must remain neutral even with an HD texture bound");
+  witness.spriteProgram = true;
+  witness.sampler = Sampler::Linear;
+  expect_true(!registry.decide(witness).owner,
+              "sampler drift must fail closed");
+  expect_true(registry.decide(hdDraw).owner,
+              "same-program HD to witness to HD switching must re-evaluate uTex");
+
+  expect_true(registry.transfer_masked(contextA, 41, 42),
+              "masked output should inherit registered creature provenance");
+  const auto masked = registry.find(contextA, 42);
+  expect_true(masked && masked->masked &&
+                  masked->provenance == TextureProvenance::Masked &&
+                  masked->expectedSampler == Sampler::Nearest,
+              "Catmull-Rom masked output should be registered with NEAREST");
+  expect_true(!registry.transfer_masked(contextA, 77, 43),
+              "out-of-scope occlusion input must not mark its output");
+
+  const auto oldContentGeneration = frame ? frame->contentGeneration : 0;
+  registry.forget(contextA, 41);
+  expect_true(!registry.decide(hdDraw).owner,
+              "actual storage deletion/redefinition should remove ownership");
+  expect_true(registry.publish(contextA, 41, 128, 96, 2,
+                               TextureProvenance::CharacterComposite, false),
+              "a validated replacement may reuse the GL name");
+  const auto reused = registry.find(contextA, 41);
+  expect_true(reused && reused->contentGeneration != oldContentGeneration,
+              "GL name reuse should receive a new content generation");
+
+  const auto generationB = registry.observe_context(contextB);
+  expect_true(generationB != generationA && !registry.find(contextB, 41),
+              "context replacement should invalidate every prior texture name");
+
+  TextureRegistry bounded(1);
+  bounded.configure(CreatureSpriteFilterMode::Nearest);
+  expect_true(bounded.publish(contextA, 1, 64, 64, 2,
+                              TextureProvenance::Frame, false),
+              "bounded registry should accept its first entry");
+  expect_true(!bounded.publish(contextA, 2, 64, 64, 2,
+                               TextureProvenance::Frame, false) &&
+                  bounded.state().capacityExceeded,
+              "capacity overflow should reject unproved textures without eviction");
+  bounded.forget(contextA, 1);
+  expect_true(bounded.publish(contextA, 3, 64, 64, 2,
+                              TextureProvenance::Frame, false) &&
+                  bounded.transfer_masked(contextA, 3, 4) == false,
+              "masked propagation should also respect the fixed capacity");
+
+  TextureRegistry baseline(2);
+  baseline.configure(CreatureSpriteFilterMode::Nearest);
+  expect_true(baseline.publish(contextA, 10, 64, 64, 2,
+                               TextureProvenance::Frame, false) &&
+                  baseline.transfer_masked(contextA, 10, 11),
+              "baseline masked output should inherit creature provenance");
+  const auto baselineMask = baseline.find(contextA, 11);
+  expect_true(baselineMask && baselineMask->expectedSampler == Sampler::Linear,
+              "Nearest/Linear modes should preserve the historical LINEAR mask sampler");
+
+  TextureRegistry linear(1);
+  linear.configure(CreatureSpriteFilterMode::Linear);
+  expect_true(linear.publish(contextA, 20, 64, 64, 2,
+                             TextureProvenance::Frame, false),
+              "Linear source backing should be registrable");
+  auto linearDraw = hdDraw;
+  linearDraw.glName = 20;
+  linearDraw.physicalWidth = 64;
+  linearDraw.physicalHeight = 64;
+  linearDraw.sampler = Sampler::Linear;
+  const auto linearDecision = linear.decide(linearDraw);
+  expect_true(linearDecision.owner && !linearDecision.filterActive &&
+                  linearDecision.mode == 1.0f,
+              "Linear A/B mode should route metadata without enabling Catmull-Rom");
 }
 
 void test_native_occlusion_probe_correlation() {
@@ -5768,6 +5892,13 @@ void test_shader_suite_neutral_override_assets() {
         "every D3 shader override should preserve its native interface");
     expect_true(source.find("uIeeShaderSuiteEnabled") != std::string::npos,
                 "every D3 shader override should expose the inactive suite master");
+    if (expected.filename == "fpSprite.glsl" || expected.filename == "fpSELECT.glsl") {
+      expect_true(source.find("uIeeCreatureFilterMode") != std::string::npos &&
+                      source.find("uIeeCreatureTexelSize") != std::string::npos &&
+                      source.find("IEE_CREATURE_ROUTING_CONTRACT_V1") !=
+                          std::string::npos,
+                  "D4 sprite shaders should expose active dynamic routing uniforms");
+    }
     expect_true(source.find("#version") == std::string::npos,
                 "D3 shader overrides should accept the engine GLSL preamble");
     expect_true(source.find("void main") != std::string::npos,
@@ -5798,6 +5929,7 @@ int main() {
   test_config_shader_override_roundtrip();
   test_catmull_rom_reference_weights();
   test_catmull_rom_premultiplied_reference();
+  test_creature_sprite_filter_texture_registry();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
   test_map_page_shadow_queue_bounds_and_generations();

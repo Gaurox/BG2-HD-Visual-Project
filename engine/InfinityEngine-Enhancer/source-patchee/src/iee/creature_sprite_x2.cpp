@@ -32,6 +32,7 @@
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
+#include "iee/creature_sprite_filter.h"
 #include "iee/game/opengl_types.h"
 #include "iee/shader_probe.h"
 
@@ -408,6 +409,7 @@ bool g_compositeDimensionMismatchLogged{};
 bool g_rendererFailureLogged{};
 bool g_contextFailureLogged{};
 bool g_sourceTextureFailureLogged{};
+bool g_filterRegistryFailureLogged{};
 std::atomic<bool> g_paletteApiFailureLogged{false};
 std::atomic<bool> g_realizedPaletteLogged{false};
 std::atomic<std::uint64_t> g_filesystemAccessCounter{0};
@@ -438,6 +440,27 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
              : "NEAREST";
 }
 
+bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeight,
+                            std::uint32_t physicalScale,
+                            creature_sprite_filter::TextureProvenance provenance) noexcept {
+#ifdef _WIN32
+  const auto contextIdentity = reinterpret_cast<std::uintptr_t>(game::gl::current_context());
+#else
+  const std::uintptr_t contextIdentity = 0;
+#endif
+  const bool published = creature_sprite_filter::registry().publish(
+      contextIdentity, glName, physicalWidth, physicalHeight,
+      static_cast<int>(physicalScale), provenance, false);
+  if (!published && !g_filterRegistryFailureLogged) {
+    g_filterRegistryFailureLogged = true;
+    LOG_WARN(
+        "Creature sprite filter routing unavailable for GL texture {}; "
+        "native texture sampling retained",
+        glName);
+  }
+  return published;
+}
+
 void reset_diagnostics_locked() noexcept {
   g_creationFailureLogged = false;
   g_dimensionMismatchLogged = false;
@@ -445,6 +468,7 @@ void reset_diagnostics_locked() noexcept {
   g_rendererFailureLogged = false;
   g_contextFailureLogged = false;
   g_sourceTextureFailureLogged = false;
+  g_filterRegistryFailureLogged = false;
   g_paletteApiFailureLogged.store(false, std::memory_order_release);
   g_realizedPaletteLogged.store(false, std::memory_order_release);
   g_compositeBackingFailureLogged = false;
@@ -1501,6 +1525,9 @@ bool upload_frame_locked(const Frame& frame,
   const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
   if (success) {
+    (void)publish_filter_texture(
+        static_cast<unsigned>(boundTexture), physicalWidth, physicalHeight,
+        physicalScale, creature_sprite_filter::TextureProvenance::Frame);
     probe::record_creature_texture_trace(
         static_cast<unsigned>(boundTexture), textureLogicalWidth, textureLogicalHeight,
         physicalWidth, physicalHeight, static_cast<int>(physicalScale), "creature-frame-xbr");
@@ -1714,6 +1741,9 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
   const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
   if (success) {
+    (void)publish_filter_texture(
+        generated.glName, physicalWidth, physicalHeight, physicalScale,
+        creature_sprite_filter::TextureProvenance::CharacterComposite);
     probe::record_creature_texture_trace(
         generated.glName, logicalWidth, logicalHeight, physicalWidth, physicalHeight,
         static_cast<int>(physicalScale), "creature-composite-xbr");
@@ -3632,6 +3662,7 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
 
 void configure_filter_mode(core::CreatureSpriteFilterMode mode) noexcept {
   g_filterMode.store(mode, std::memory_order_release);
+  creature_sprite_filter::registry().configure(mode);
 }
 
 void release() noexcept {

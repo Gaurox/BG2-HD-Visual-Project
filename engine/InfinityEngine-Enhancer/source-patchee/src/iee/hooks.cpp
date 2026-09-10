@@ -2392,6 +2392,13 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                                            std::uint64_t logicalSize, void* clipRect,
                                            std::uint32_t flags) {
   const auto original = g_vidCellRenderTextureHook.original();
+  if (g_ctx && g_ctx->cfg.creature_sprite_upscale_enabled()) {
+    try {
+      install_shader_probes_once();
+    } catch (...) {
+      // Routing remains neutral when the optional GL probes are unavailable.
+    }
+  }
   enum class ReplacementKind : std::uint8_t {
     None,
     CreatureSprite,

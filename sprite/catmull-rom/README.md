@@ -594,7 +594,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
 - [x] D3 : huit shaders neutres et master off/on testés ; huit programmes linkés sans erreur,
   A/B ingame neutre et transactions renderer/shaders restaurées.
-- [ ] D4–D5 : routage et filtre implémentés.
+- [ ] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion préparés ;
+  tests, build et preuve ingame restent requis.
+- [ ] D5 : filtre GPU 16 lectures non commencé.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -615,5 +617,5 @@ JPEG. Les tests D3, release et moteur Debug/Release passent. La suite Python glo
 échecs hors D3 consignés dans la preuve. Renderer puis shaders ont été restaurés ; aucune projection
 ni intégration release.
 
-Prochaine action : **D4 uniquement** — implémenter le registre propriétaire, le routage au draw,
-les uniforms dynamiques, le nettoyage et le fallback strict ; ne pas engager D5.
+Prochaine action : **valider D4 uniquement** — tests ciblés, build DLL puis preuve ingame
+HD/témoins hors périmètre ; ne pas engager D5.

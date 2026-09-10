@@ -1,11 +1,14 @@
 // fpSELECT.glsl
-// D3 neutral source derived from BG2EE 2.7.3.0.
-// The suite uniform is intentionally unused until the affected operations land.
+// D4 routing source derived from BG2EE 2.7.3.0.
+// Valid routing modes remain pixel-identical until the D5 filter lands.
+// IEE_CREATURE_ROUTING_CONTRACT_V1
 
 uniform lowp sampler2D uTex;
 uniform lowp float uSpriteBlurAmount;
 uniform mediump vec2 uTcScale;
 uniform lowp float uIeeShaderSuiteEnabled;
+uniform lowp float uIeeCreatureFilterMode;
+uniform mediump vec2 uIeeCreatureTexelSize;
 varying mediump vec2 vTc;
 varying lowp vec4 vColor;
 
@@ -19,6 +22,11 @@ const float fSolidThreshold = 0.1;
 void main()
 {
 	vec4 texColor = texture2D(uTex, vTc);
+	// Keep the D4 uniforms active without changing any valid mode (0/1/2).
+	if (uIeeCreatureFilterMode < 0.0)
+	{
+		texColor = texture2D(uTex, vTc + uIeeCreatureTexelSize);
+	}
 	if (texColor.a > fSolidThreshold)
 	{
 		gl_FragColor = mix(vColor, texColor, texColor.a);

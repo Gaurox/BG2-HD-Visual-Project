@@ -30,6 +30,7 @@
 #include "iee/am0700a_animation_x4_test.h"
 #include "iee/am3000a_frame_x4_test.h"
 #include "iee/biglogo_ui_upscale.h"
+#include "iee/creature_sprite_filter.h"
 #include "iee/game/opengl_types.h"
 #include "iee/game/renderer.h"
 #include "iee/game/shader_override.h"
@@ -61,6 +62,7 @@ struct ProgramRecord {
   int programSlot{-1};
   std::string vertexShaderName;
   std::string fragmentShaderName;
+  bool creatureRoutingContract{};
   std::unordered_set<std::uintptr_t> callerLogged;
 };
 
@@ -103,6 +105,11 @@ struct BoundTextureSnapshot {
   int height{};
   int minFilter{};
   int magFilter{};
+};
+
+struct TextureStorageIdentity {
+  std::uintptr_t contextIdentity{};
+  unsigned texture{};
 };
 
 struct SuiteDrawKey {
@@ -657,6 +664,8 @@ bool ensure_program_context() {
   g_boundProgram = 0;
   g_suiteDrawProbeContext = context;
   g_suiteDrawProbeStates.clear();
+  (void)creature_sprite_filter::registry().observe_context(
+      reinterpret_cast<std::uintptr_t>(context));
   return true;
 }
 
@@ -944,6 +953,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
   std::string vertexShaderName;
   std::string fragmentShaderName;
   bool anyOverride = false;
+  bool creatureRoutingContract = false;
 
   for (int i = 0; i < actualShaderCount; ++i) {
     const unsigned s = shaders[static_cast<std::size_t>(i)];
@@ -976,9 +986,19 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     else if (shaderType == FRAGMENT_SHADER)
       fragmentShaderName = nameForShader;
 
+    const auto sourcePrefix = read_shader_source_prefix(gl, s);
     // Shaders declaring uIee* uniforms (our replacement sources delivered
     // through the game's override directory) get the uniform feed.
-    if (read_shader_source_prefix(gl, s).find("uIee") != std::string::npos) anyOverride = true;
+    if (sourcePrefix.find("uIee") != std::string::npos) anyOverride = true;
+    if (shaderType == FRAGMENT_SHADER &&
+        (nameForShader == "fpSprite" || nameForShader == "fpSELECT")) {
+      creatureRoutingContract =
+          sourcePrefix.find("IEE_CREATURE_ROUTING_CONTRACT_V1") != std::string::npos &&
+          sourcePrefix.find("uniform lowp float uIeeCreatureFilterMode;") !=
+              std::string::npos &&
+          sourcePrefix.find("uniform mediump vec2 uIeeCreatureTexelSize;") !=
+              std::string::npos;
+    }
 
     if (logDetails) {
       LOG_DEBUG("GL program attached shader{}: program={} shader={} type={} preview={}",
@@ -996,6 +1016,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     record.programSlot = inferredSlot.value_or(-1);
     record.vertexShaderName = vertexShaderName;
     record.fragmentShaderName = fragmentShaderName;
+    record.creatureRoutingContract = creatureRoutingContract;
     if (anyOverride) {
       g_overriddenPrograms.try_emplace(program, std::make_shared<uniforms::Locations>());
     } else {
@@ -1205,6 +1226,108 @@ BoundTextureSnapshot bound_texture_snapshot(const game::gl::OpenGLFunctions& gl,
   return snapshot;
 }
 
+TextureStorageIdentity current_texture_storage(unsigned target,
+                                               int level) noexcept {
+  if (!g_cfg.creature_sprite_upscale_enabled() ||
+      target != game::gl::TEXTURE_2D || level != 0) {
+    return {};
+  }
+  const auto context = game::gl::current_context();
+  const auto& gl = game::gl::get_gl_functions();
+  if (!is_program_context(context) || !gl.glGetIntegerv) return {};
+  int texture = 0;
+  gl.glGetIntegerv(game::gl::TEXTURE_BINDING_2D, &texture);
+  return texture > 0
+             ? TextureStorageIdentity{
+                   .contextIdentity = reinterpret_cast<std::uintptr_t>(context),
+                   .texture = static_cast<unsigned>(texture),
+               }
+             : TextureStorageIdentity{};
+}
+
+void forget_texture_storage(const TextureStorageIdentity& identity) noexcept {
+  if (identity.contextIdentity == 0 || identity.texture == 0) return;
+  creature_sprite_filter::registry().forget(identity.contextIdentity,
+                                             identity.texture);
+}
+
+struct CreatureDrawUniformScope {
+  unsigned program{};
+  std::shared_ptr<uniforms::Locations> locations;
+  bool armed{};
+
+  ~CreatureDrawUniformScope() noexcept {
+    if (armed && locations) {
+      (void)uniforms::set_creature_draw(program, *locations, 0.0f, 0.0f,
+                                        0.0f);
+    }
+  }
+};
+
+void prepare_creature_draw(CreatureDrawUniformScope& scope) {
+  const auto context = game::gl::current_context();
+  const auto& gl = game::gl::get_gl_functions();
+  if (!is_program_context(context) || !gl.glGetIntegerv ||
+      !gl.glActiveTexture) {
+    return;
+  }
+
+  int currentProgram = 0;
+  gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &currentProgram);
+  if (currentProgram <= 0) return;
+  scope.program = static_cast<unsigned>(currentProgram);
+
+  bool spriteProgram = false;
+  {
+    std::lock_guard lock(g_probeMutex);
+    const auto program = g_programRecords.find(scope.program);
+    if (program == g_programRecords.end() || !program->second.introspected) return;
+    spriteProgram = program->second.creatureRoutingContract &&
+                    (program->second.fragmentShaderName == "fpSprite" ||
+                     program->second.fragmentShaderName == "fpSELECT");
+    if (const auto overridden = g_overriddenPrograms.find(scope.program);
+        overridden != g_overriddenPrograms.end()) {
+      scope.locations = overridden->second;
+    }
+  }
+  if (!spriteProgram || !scope.locations ||
+      !uniforms::resolve_creature_draw_locations(scope.program, *scope.locations)) {
+    return;
+  }
+
+  // Establish the neutral state first. Every later query may fail closed
+  // without leaking the prior draw's dynamic routing state.
+  scope.armed = uniforms::set_creature_draw(scope.program, *scope.locations,
+                                             0.0f, 0.0f, 0.0f);
+  if (!scope.armed) return;
+
+  const int samplerUnit =
+      uniforms::creature_sampler_unit(scope.program, *scope.locations);
+  if (samplerUnit < 0) return;
+  int activeTexture = static_cast<int>(game::gl::TEXTURE0);
+  gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &activeTexture);
+  const auto texture = bound_texture_snapshot(gl, samplerUnit);
+  gl.glActiveTexture(static_cast<unsigned>(activeTexture));
+
+  const auto contextIdentity = reinterpret_cast<std::uintptr_t>(context);
+  (void)creature_sprite_filter::registry().observe_context(contextIdentity);
+  const auto decision = creature_sprite_filter::registry().decide({
+      .contextIdentity = contextIdentity,
+      .glName = texture.texture,
+      .physicalWidth = texture.width,
+      .physicalHeight = texture.height,
+      .sampler = creature_sprite_filter::sampler_from_gl(texture.minFilter,
+                                                          texture.magFilter),
+      .spriteProgram = true,
+      .uniformsAvailable = true,
+  });
+  if (decision.owner) {
+    (void)uniforms::set_creature_draw(
+        scope.program, *scope.locations, decision.mode, decision.texelWidth,
+        decision.texelHeight);
+  }
+}
+
 bool float_uniform(const game::gl::OpenGLFunctions& gl, unsigned program,
                    const char* uniformName, float* values) noexcept {
   if (!values || !gl.glGetUniformLocation || !gl.glGetUniformfv) return false;
@@ -1297,10 +1420,16 @@ void trace_suite_draw(unsigned mode, int first, int count) {
 
   float tcScale[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   float blurAmount[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureFilterMode[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureTexelSize[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   const bool hasTcScale =
       float_uniform(gl, currentProgram, "uTcScale", tcScale);
   const bool hasBlurAmount = float_uniform(
       gl, currentProgram, "uSpriteBlurAmount", blurAmount);
+  const bool hasCreatureFilterMode = float_uniform(
+      gl, currentProgram, "uIeeCreatureFilterMode", creatureFilterMode);
+  const bool hasCreatureTexelSize = float_uniform(
+      gl, currentProgram, "uIeeCreatureTexelSize", creatureTexelSize);
 
   const SuiteDrawKey drawKey{
       .program = currentProgram,
@@ -1346,7 +1475,9 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       "physical={}x{}, min=0x{:X}, mag=0x{:X}, sampling={}, encoding={}, uTex2Unit={}, "
       "texture2={}, physical2={}x{}, min2=0x{:X}, mag2=0x{:X}, provenance={}, "
       "logical={}x{}, scale={}, uTcScalePresent={}, uTcScale={}x{}, "
-      "blurAmountPresent={}, blurAmount={}, viewport={}x{}@{},{} fbo={}, blend={}, "
+      "blurAmountPresent={}, blurAmount={}, creatureFilterModePresent={}, "
+      "creatureFilterMode={}, creatureTexelSizePresent={}, creatureTexelSize={}x{}, "
+      "viewport={}x{}@{},{} fbo={}, blend={}, "
       "blendSrc=0x{:X}, blendDst=0x{:X}, framebufferSrgb={}",
       reinterpret_cast<std::uintptr_t>(context), currentProgram,
       programSlot, vertexShaderName, fragmentShaderName, mode, first, count, texture.unit,
@@ -1357,14 +1488,18 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       texture2.magFilter, hasProvenance ? provenance.provenance : "engine-or-unknown",
       hasProvenance ? provenance.logicalWidth : 0,
       hasProvenance ? provenance.logicalHeight : 0, hasProvenance ? provenance.scale : 0,
-      hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0], viewport[2],
-      viewport[3], viewport[0], viewport[1], framebuffer, blend, blendSource,
+      hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0],
+      hasCreatureFilterMode, creatureFilterMode[0], hasCreatureTexelSize,
+      creatureTexelSize[0], creatureTexelSize[1], viewport[2], viewport[3],
+      viewport[0], viewport[1], framebuffer, blend, blendSource,
       blendDestination, framebufferSrgb);
 }
 
 static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) noexcept {
   bool forwarded = false;
+  CreatureDrawUniformScope creatureUniforms;
   try {
+    prepare_creature_draw(creatureUniforms);
     trace_suite_draw(mode, first, count);
     forwarded = true;
     g_glDrawArraysHook.original()(mode, first, count);
@@ -1434,6 +1569,15 @@ static void APIENTRY detour_glGenTextures(int count, unsigned* textures) noexcep
 static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures) noexcept {
   bool forwarded = false;
   try {
+    const auto context = game::gl::current_context();
+    const auto contextIdentity = is_program_context(context)
+                                     ? reinterpret_cast<std::uintptr_t>(context)
+                                     : 0;
+    forwarded = true;
+    g_glDeleteTexturesHook.original()(count, textures);
+    if (contextIdentity != 0) {
+      creature_sprite_filter::registry().forget_many(contextIdentity, count, textures);
+    }
     forget_promoted_bam_textures(count, textures);
     if (textures && count > 0) {
       const auto context = game::gl::current_context();
@@ -1442,8 +1586,6 @@ static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures
         g_creatureTextureTraces.erase(TextureTraceKey{context, textures[index]});
       }
     }
-    forwarded = true;
-    g_glDeleteTexturesHook.original()(count, textures);
     if (g_cfg.enablePerformanceLogging) core::record_gl_texture_delete(count);
     game::request_texture_configuration_cache_reset();
   } catch (...) {
@@ -1490,6 +1632,14 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
                                          int width, int height, int border, unsigned format,
                                          unsigned type, const void* data) noexcept {
   bool forwarded = false;
+  const auto redefinedStorage = current_texture_storage(target, level);
+  bool storageForgotten = false;
+  const auto forgetStorage = [&]() noexcept {
+    if (!storageForgotten) {
+      forget_texture_storage(redefinedStorage);
+      storageForgotten = true;
+    }
+  };
   try {
     BamAtlasKey reboundAtlas{};
     if (g_cfg.enableAM0205EAnimationX4Test && level == 0 &&
@@ -1535,6 +1685,7 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
       g_glTexImage2DHook.original()(target, level, internalFormat, width, height, border, format,
                                     type, data);
     }
+    forgetStorage();
     // The engine's uncompressed UI uploads are normally RGBA8. Record a
     // fingerprint only for the known byte-sized formats; unsupported inputs
     // still get a geometry/caller record with a zero fingerprint.
@@ -1569,9 +1720,11 @@ static void APIENTRY detour_glTexImage2D(unsigned target, int level, int interna
     log_bam_ui_texture_upload(false, target, level, static_cast<unsigned>(internalFormat),
                               loggedWidth, loggedHeight, byteCount, loggedData, caller);
   } catch (...) {
-    if (!forwarded)
+    if (!forwarded) {
       g_glTexImage2DHook.original()(target, level, internalFormat, width, height, border, format,
                                     type, data);
+      forgetStorage();
+    }
   }
 }
 
@@ -1711,6 +1864,14 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
                                                    unsigned internalFormat, int width, int height,
                                                    int border, int imageSize, const void* data) noexcept {
   bool forwarded = false;
+  const auto redefinedStorage = current_texture_storage(target, level);
+  bool storageForgotten = false;
+  const auto forgetStorage = [&]() noexcept {
+    if (!storageForgotten) {
+      forget_texture_storage(redefinedStorage);
+      storageForgotten = true;
+    }
+  };
   try {
     const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
     biglogo::ReplacementUpload replacement{};
@@ -1728,6 +1889,7 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, replacement.width,
                                               replacement.height, border, replacement.byteCount,
                                               replacement.data);
+      forgetStorage();
       if (g_cfg.enablePerformanceLogging) {
         LARGE_INTEGER uploadEnded{};
         const auto nanoseconds = measured && QueryPerformanceCounter(&uploadEnded)
@@ -1744,6 +1906,7 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
     } else {
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, width, height, border,
                                               imageSize, data);
+      forgetStorage();
       if (g_cfg.enablePerformanceLogging) {
         LARGE_INTEGER uploadEnded{};
         const auto nanoseconds = measured && QueryPerformanceCounter(&uploadEnded)
@@ -1757,9 +1920,11 @@ static void APIENTRY detour_glCompressedTexImage2D(unsigned target, int level,
                                 data, caller);
     }
   } catch (...) {
-    if (!forwarded)
+    if (!forwarded) {
       g_glCompressedTexImage2DHook.original()(target, level, internalFormat, width, height,
                                               border, imageSize, data);
+      forgetStorage();
+    }
   }
 }
 
@@ -1847,6 +2012,7 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     if (g_shaderProbesInstalled) return true;
 
     g_cfg = cfg;
+    creature_sprite_filter::registry().configure(cfg.creatureSpriteFilter);
 
     // The water effect ships ON by default; the ini can disable it and
     // the F10 debug cycle (when enabled) still overrides at runtime.
@@ -1934,7 +2100,7 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
            cfg.enableAM3000AFrameX4Test ||
            cfg.enableAM0700AAnimationX4Test || cfg.enableAM0205EAnimationX4Test ||
-           cfg.enableItemIconX2) &&
+           cfg.enableItemIconX2 || cfg.creature_sprite_upscale_enabled()) &&
           gl.glTexImage2D) {
         g_glTexImage2DHook.create(reinterpret_cast<void*>(gl.glTexImage2D),
                                   reinterpret_cast<void*>(&detour_glTexImage2D));
@@ -1950,7 +2116,8 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
         LOG_WARN("BAM atlas upscale cannot start: glTexSubImage2D is unavailable");
       }
       if ((cfg.enablePerformanceLogging || cfg.enableBamUiTextureProbe ||
-           cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test) &&
+           cfg.enableBigLogoX4Test || cfg.enableMainMenuX4Test || cfg.enableMenuX2Test ||
+           cfg.creature_sprite_upscale_enabled()) &&
           gl.glCompressedTexImage2D) {
         g_glCompressedTexImage2DHook.create(reinterpret_cast<void*>(gl.glCompressedTexImage2D),
                                             reinterpret_cast<void*>(
@@ -1998,12 +2165,15 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
                                         reinterpret_cast<void*>(&detour_glBindFramebuffer));
         g_glBindFramebufferHook.queue_enable();
       }
-      if (cfg.dumpEngineShaders && cfg.enableVerboseLogging && gl.glDrawArrays) {
+      if (((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
+           cfg.creature_sprite_upscale_enabled()) &&
+          gl.glDrawArrays) {
         g_glDrawArraysHook.create(reinterpret_cast<void*>(gl.glDrawArrays),
                                   reinterpret_cast<void*>(&detour_glDrawArrays));
         g_glDrawArraysHook.queue_enable();
-      } else if (cfg.dumpEngineShaders && cfg.enableVerboseLogging) {
-        LOG_WARN("Shader-suite draw trace is unavailable: glDrawArrays was not resolved");
+      } else if ((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
+                 cfg.creature_sprite_upscale_enabled()) {
+        LOG_WARN("Shader-suite creature routing is unavailable: glDrawArrays was not resolved");
       }
       const auto applyStatus = MH_ApplyQueued();
       finish_queued_probe_hooks();
@@ -2032,6 +2202,8 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     g_boundProgram = 0;
     g_suiteDrawProbeContext = context;
     g_suiteDrawProbeStates.clear();
+    (void)creature_sprite_filter::registry().observe_context(
+        reinterpret_cast<std::uintptr_t>(context));
     g_sweepPending.store(true, std::memory_order_relaxed);
     LOG_INFO("Installed GL shader probes");
     return true;
@@ -2071,6 +2243,7 @@ void uninstall_shader_probes() noexcept {
     g_shaderProbesInstalled = false;
     g_uniformsInitialized = false;
     g_sweepPending.store(false, std::memory_order_relaxed);
+    creature_sprite_filter::registry().clear();
   } catch (...) {
     // Hooks are already gone; shutdown must not escape into the loader.
   }

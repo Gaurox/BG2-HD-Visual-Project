@@ -9,6 +9,7 @@
 
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
+#include "iee/creature_sprite_filter.h"
 #include "iee/game/opengl_types.h"
 #include "iee/shader_probe.h"
 
@@ -35,6 +36,7 @@ int g_maskUniform{-1};
 int g_scaleUniform{-1};
 bool g_failureLogged{};
 bool g_activeLogged{};
+bool g_routingFailureLogged{};
 
 constexpr const char* kVertexSource = R"glsl(
 #version 330 core
@@ -370,6 +372,9 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
         replacement.logicalHeight != logicalHeight) {
       return false;
     }
+    const auto contextIdentity = reinterpret_cast<std::uintptr_t>(context);
+    const auto creatureParent = creature_sprite_filter::registry().find(
+        contextIdentity, replacement.glName);
 
     DrawState state{};
     game::gl::discard_errors();
@@ -408,6 +413,10 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       restoreReplacement(0);
       return false;
     }
+    const bool registeredCreatureParent =
+        creatureParent && creatureParent->physicalWidth == physicalWidth &&
+        creatureParent->physicalHeight == physicalHeight &&
+        creatureParent->scale == scale;
     const auto physicalBytes = static_cast<std::uint64_t>(physicalWidth) *
                                static_cast<std::uint64_t>(physicalHeight) * 4ull;
     if (physicalBytes > kMaximumPhysicalScratchBytes) {
@@ -445,10 +454,16 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8),
                     physicalWidth, physicalHeight, 0, game::gl::RGBA,
                     game::gl::UNSIGNED_BYTE, nullptr);
+    const auto outputFilter =
+        registeredCreatureParent &&
+                creature_sprite_filter::registry().configured_mode() ==
+                    core::CreatureSpriteFilterMode::CatmullRom
+            ? game::gl::NEAREST
+            : game::gl::LINEAR;
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                       static_cast<int>(game::gl::LINEAR));
+                       static_cast<int>(outputFilter));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                       static_cast<int>(game::gl::LINEAR));
+                       static_cast<int>(outputFilter));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_S,
                        static_cast<int>(game::gl::CLAMP_TO_EDGE));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
@@ -519,9 +534,20 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
       transientTextureId = 0;
       return false;
     }
-    probe::record_creature_texture_trace(output.glName, logicalWidth, logicalHeight,
-                                         physicalWidth, physicalHeight, scale,
-                                         "creature-native-occlusion-output");
+    if (registeredCreatureParent) {
+      if (creature_sprite_filter::registry().transfer_masked(
+              contextIdentity, replacement.glName, output.glName)) {
+        probe::record_creature_texture_trace(output.glName, logicalWidth, logicalHeight,
+                                             physicalWidth, physicalHeight, scale,
+                                             "creature-native-occlusion-output");
+      } else if (!g_routingFailureLogged) {
+        g_routingFailureLogged = true;
+        LOG_WARN(
+            "Creature sprite filter provenance could not be transferred to masked GL "
+            "texture {}; native texture sampling retained",
+            output.glName);
+      }
+    }
     if (!g_activeLogged) {
       g_activeLogged = true;
       LOG_INFO(
@@ -577,5 +603,6 @@ void shutdown() noexcept {
   forget_resources();
   g_failureLogged = false;
   g_activeLogged = false;
+  g_routingFailureLogged = false;
 }
 }  // namespace iee::native_occlusion_bridge

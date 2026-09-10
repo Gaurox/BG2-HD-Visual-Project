@@ -116,6 +116,7 @@ add_library(iee_common STATIC
     src/iee/core/pattern_scanner.cpp
     src/iee/core/process_resource_telemetry.cpp
     src/iee/core/pvr_demand_telemetry.cpp
+    src/iee/creature_sprite_filter.cpp
     src/iee/game/area_texture.cpp
     src/iee/game/build_manifest.cpp
     src/iee/game/dds_texture.cpp

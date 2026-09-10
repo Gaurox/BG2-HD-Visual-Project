@@ -215,8 +215,9 @@ bool OpenGLFunctions::initialize() noexcept {
                                  glGetProgramiv != nullptr && glGetProgramInfoLog != nullptr &&
                                  glGetAttachedShaders != nullptr && glGetShaderSource != nullptr;
 
-  uniformApiAvailable = glGetUniformLocation != nullptr && glUniform1f != nullptr &&
-                        glUniform1i != nullptr && glUniform2f != nullptr && glUniform3f != nullptr;
+  uniformApiAvailable = glGetUniformLocation != nullptr && glGetUniformiv != nullptr &&
+                        glUniform1f != nullptr && glUniform1i != nullptr &&
+                        glUniform2f != nullptr && glUniform3f != nullptr;
 
   readyForSourcePatching =
       shaderObjectsAvailable && shaderIntrospectionAvailable && uniformApiAvailable;
