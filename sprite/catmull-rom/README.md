@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0/D1/D2/D3 terminés ; D4 en validation**. Vérification : 2026-09-10.
+Statut : **D0–D4 terminés ; D5 non commencé**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -594,9 +594,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
 - [x] D3 : huit shaders neutres et master off/on testés ; huit programmes linkés sans erreur,
   A/B ingame neutre et transactions renderer/shaders restaurées.
-- [ ] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion préparés ; candidat
-  initial visuellement neutre, mais `fpSprite`/`fpSELECT` non dessinés. Correction `fpDraw` préparée ;
-  tests, build et preuve ingame propriétaire/témoins restent requis.
+- [x] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion validés. Le chemin réel
+  `fpDraw` route une sortie d'occlusion créature x2 en mode 2 avec texels physiques ; 28 témoins
+  `fpDraw` restent neutres, sans fuite ni erreur shader. Tests non exécutés par choix utilisateur.
 - [ ] D5 : filtre GPU 16 lectures non commencé.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
@@ -618,5 +618,10 @@ JPEG. Les tests D3, release et moteur Debug/Release passent. La suite Python glo
 échecs hors D3 consignés dans la preuve. Renderer puis shaders ont été restaurés ; aucune projection
 ni intégration release.
 
-Prochaine action : **valider D4 uniquement** — tests ciblés, build DLL puis preuve ingame
-HD/témoins hors périmètre ; ne pas engager D5.
+Résultat D4 : run `d4-20260910-fpdraw-routing`, preuve locale `evidence.json`. DLL Release du commit
+`74cb5e5` compilée et candidat installé. QA visuelle utilisateur réussie ; anomalie d'aggro fermée
+comme effet d'un objet d'invisibilité. Trace : créature masquée `43x47`/`86x94`, échelle x2,
+`mode=2`, texels `1/86 x 1/94` ; 28 témoins `fpDraw` en mode 0 ; aucune fuite de routage.
+
+Prochaine action : **D5 uniquement** — filtre GPU Catmull–Rom 16 lectures sur le chemin central,
+sans démarrer les réglages esthétiques D6.
