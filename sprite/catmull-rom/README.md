@@ -600,8 +600,8 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D5 : filtre GPU 16 lectures implémenté sur `fpDraw`, `fpSprite` et `fpSELECT` ; DLL Release
   construite, candidat installé et activation `fpDraw` attestée ingame. Aucun bug/crash ; différence
   visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
-- [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil doux
-  Catmull–Rom + Gaussian léger validé ingame, sans crash ni erreur. Tests non exécutés par choix utilisateur.
+- [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil retenu
+  Catmull–Rom + `Sharpen=-0.35`, couleurs neutres, contour natif. Tests non exécutés par choix utilisateur.
 - [ ] D7–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
@@ -654,3 +654,9 @@ et vérifié avant installation. DLL et shaders inchangés ; INI réglé sur esp
 deux témoins `fpDraw` HD x2 actifs, 22 témoins neutres et aucune erreur shader/OpenGL. L'utilisateur
 juge le rendu « vraiment propre » et valide le profil. D6 terminé ; D7 non commencé, aucune intégration
 release engagée.
+
+Affinage post-validation : `Sharpen=-0.50` rejeté au profit de `-0.25`, puis compromis `-0.35`
+retenu par l'utilisateur. Run courant `d6-20260910-creature-hd-soft035`, candidat installé et reçu
+vérifié. La session charge le profil exact, atteste 24 remplacements `0xE400` et aucune erreur ; la
+fenêtre de trace ne contient aucun draw style actif après 14 témoins neutres. Cette limite est
+consignée sans réinterprétation ; la preuve technique D6 reste la session `-0.25`.
