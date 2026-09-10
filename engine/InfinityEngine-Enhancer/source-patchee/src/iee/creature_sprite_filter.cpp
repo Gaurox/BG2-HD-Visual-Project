@@ -168,6 +168,7 @@ DrawDecision TextureRegistry::decide(
   decision.mode = static_cast<float>(static_cast<std::uint8_t>(mode_));
   decision.texelWidth = 1.0f / static_cast<float>(metadata->physicalWidth);
   decision.texelHeight = 1.0f / static_cast<float>(metadata->physicalHeight);
+  decision.scale = metadata->scale;
   decision.provenance = metadata->provenance;
   decision.contentGeneration = metadata->contentGeneration;
   return decision;

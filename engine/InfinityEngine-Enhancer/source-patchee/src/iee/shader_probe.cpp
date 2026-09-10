@@ -34,6 +34,7 @@
 #include "iee/game/opengl_types.h"
 #include "iee/game/renderer.h"
 #include "iee/game/shader_override.h"
+#include "iee/shader_suite.h"
 #include "iee/water_textures.h"
 #include "shader_diagnostics.h"
 #include "shader_uniform_bridge.h"
@@ -63,6 +64,7 @@ struct ProgramRecord {
   std::string vertexShaderName;
   std::string fragmentShaderName;
   bool creatureRoutingContract{};
+  bool creatureStyleContract{};
   std::unordered_set<std::uintptr_t> callerLogged;
 };
 
@@ -954,6 +956,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
   std::string fragmentShaderName;
   bool anyOverride = false;
   bool creatureRoutingContract = false;
+  bool creatureStyleContract = false;
 
   for (int i = 0; i < actualShaderCount; ++i) {
     const unsigned s = shaders[static_cast<std::size_t>(i)];
@@ -998,6 +1001,10 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
               std::string::npos &&
           sourcePrefix.find("uniform mediump vec2 uIeeCreatureTexelSize;") !=
               std::string::npos;
+      creatureStyleContract =
+          sourcePrefix.find("IEE_CREATURE_STYLE_CONTRACT_V1") != std::string::npos &&
+          sourcePrefix.find("uniform lowp float uIeeCreatureStyleEnabled;") !=
+              std::string::npos;
     }
 
     if (logDetails) {
@@ -1017,6 +1024,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     record.vertexShaderName = vertexShaderName;
     record.fragmentShaderName = fragmentShaderName;
     record.creatureRoutingContract = creatureRoutingContract;
+    record.creatureStyleContract = creatureStyleContract;
     if (anyOverride) {
       g_overriddenPrograms.try_emplace(program, std::make_shared<uniforms::Locations>());
     } else {
@@ -1259,7 +1267,7 @@ struct CreatureDrawUniformScope {
   ~CreatureDrawUniformScope() noexcept {
     if (armed && locations) {
       (void)uniforms::set_creature_draw(program, *locations, 0.0f, 0.0f,
-                                        0.0f);
+                                        0.0f, {});
     }
   }
 };
@@ -1278,6 +1286,9 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
   scope.program = static_cast<unsigned>(currentProgram);
 
   bool routingProgram = false;
+  bool styleContract = false;
+  shader_suite::CreatureFragment creatureFragment{
+      shader_suite::CreatureFragment::Unsupported};
   {
     std::lock_guard lock(g_probeMutex);
     const auto program = g_programRecords.find(scope.program);
@@ -1286,6 +1297,9 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
         program->second.creatureRoutingContract &&
         creature_sprite_filter::is_routing_fragment(
             program->second.fragmentShaderName);
+    styleContract = program->second.creatureStyleContract;
+    creatureFragment = shader_suite::classify_creature_fragment(
+        program->second.fragmentShaderName);
     if (const auto overridden = g_overriddenPrograms.find(scope.program);
         overridden != g_overriddenPrograms.end()) {
       scope.locations = overridden->second;
@@ -1299,7 +1313,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
   // Establish the neutral state first. Every later query may fail closed
   // without leaking the prior draw's dynamic routing state.
   scope.armed = uniforms::set_creature_draw(scope.program, *scope.locations,
-                                             0.0f, 0.0f, 0.0f);
+                                             0.0f, 0.0f, 0.0f, {});
   if (!scope.armed) return;
 
   const int samplerUnit =
@@ -1323,9 +1337,16 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
       .uniformsAvailable = true,
   });
   if (decision.owner) {
+    const auto style = styleContract
+                           ? shader_suite::resolve_creature_hd_draw_style(
+                                 g_cfg.shaderSuiteEnabled,
+                                 g_cfg.creatureHdShaderProfile, true,
+                                 decision.scale,
+                                 creatureFragment)
+                           : shader_suite::CreatureHdDrawStyle{};
     (void)uniforms::set_creature_draw(
         scope.program, *scope.locations, decision.mode, decision.texelWidth,
-        decision.texelHeight);
+        decision.texelHeight, style);
   }
 }
 
@@ -1423,6 +1444,17 @@ void trace_suite_draw(unsigned mode, int first, int count) {
   float blurAmount[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   float creatureFilterMode[4] = {0.0f, 0.0f, 0.0f, 0.0f};
   float creatureTexelSize[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureStyleEnabled[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureColorSpace[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureSharpen[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureGamma[4] = {1.0f, 0.0f, 0.0f, 0.0f};
+  float creatureContrast[4] = {1.0f, 0.0f, 0.0f, 0.0f};
+  float creatureBrightness[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureSaturation[4] = {1.0f, 0.0f, 0.0f, 0.0f};
+  float creatureHueDegrees[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureOutlineMode[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureOutlineSize[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+  float creatureTextureScale[4] = {1.0f, 0.0f, 0.0f, 0.0f};
   const bool hasTcScale =
       float_uniform(gl, currentProgram, "uTcScale", tcScale);
   const bool hasBlurAmount = float_uniform(
@@ -1431,6 +1463,18 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       gl, currentProgram, "uIeeCreatureFilterMode", creatureFilterMode);
   const bool hasCreatureTexelSize = float_uniform(
       gl, currentProgram, "uIeeCreatureTexelSize", creatureTexelSize);
+  const bool hasCreatureStyleEnabled = float_uniform(
+      gl, currentProgram, "uIeeCreatureStyleEnabled", creatureStyleEnabled);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureColorSpace", creatureColorSpace);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureSharpen", creatureSharpen);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureGamma", creatureGamma);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureContrast", creatureContrast);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureBrightness", creatureBrightness);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureSaturation", creatureSaturation);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureHueDegrees", creatureHueDegrees);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureOutlineMode", creatureOutlineMode);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureOutlineSize", creatureOutlineSize);
+  (void)float_uniform(gl, currentProgram, "uIeeCreatureTextureScale", creatureTextureScale);
 
   const SuiteDrawKey drawKey{
       .program = currentProgram,
@@ -1478,6 +1522,10 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       "logical={}x{}, scale={}, uTcScalePresent={}, uTcScale={}x{}, "
       "blurAmountPresent={}, blurAmount={}, creatureFilterModePresent={}, "
       "creatureFilterMode={}, creatureTexelSizePresent={}, creatureTexelSize={}x{}, "
+      "creatureStylePresent={}, creatureStyleEnabled={}, creatureColorSpace={}, "
+      "creatureSharpen={}, creatureGamma={}, creatureContrast={}, creatureBrightness={}, "
+      "creatureSaturation={}, creatureHueDegrees={}, creatureOutlineMode={}, "
+      "creatureOutlineSize={}, creatureTextureScale={}, "
       "viewport={}x{}@{},{} fbo={}, blend={}, "
       "blendSrc=0x{:X}, blendDst=0x{:X}, framebufferSrgb={}",
       reinterpret_cast<std::uintptr_t>(context), currentProgram,
@@ -1491,7 +1539,11 @@ void trace_suite_draw(unsigned mode, int first, int count) {
       hasProvenance ? provenance.logicalHeight : 0, hasProvenance ? provenance.scale : 0,
       hasTcScale, tcScale[0], tcScale[1], hasBlurAmount, blurAmount[0],
       hasCreatureFilterMode, creatureFilterMode[0], hasCreatureTexelSize,
-      creatureTexelSize[0], creatureTexelSize[1], viewport[2], viewport[3],
+      creatureTexelSize[0], creatureTexelSize[1], hasCreatureStyleEnabled,
+      creatureStyleEnabled[0], creatureColorSpace[0], creatureSharpen[0],
+      creatureGamma[0], creatureContrast[0], creatureBrightness[0],
+      creatureSaturation[0], creatureHueDegrees[0], creatureOutlineMode[0],
+      creatureOutlineSize[0], creatureTextureScale[0], viewport[2], viewport[3],
       viewport[0], viewport[1], framebuffer, blend, blendSource,
       blendDestination, framebufferSrgb);
 }

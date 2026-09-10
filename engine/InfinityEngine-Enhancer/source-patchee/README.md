@@ -15,6 +15,7 @@ builds acceptés et les capacités par build viennent exclusivement de
 | Animations de zone | registres v1/v2/v3, TimedTimeline, packs par zone et variantes par occurrence |
 | Effets de sort x4 | registre multi-resref v1/v2, scopes projectile + VVC, fallback natif strict |
 | Sprites créature xN | chemin QA opt-in, baseline `NEAREST`, pour propriétaires/classes explicitement manifestés |
+| Suite shader CreatureHD | D6 opt-in : sharpen/flou RGB, couleurs et contours Dshaders sur textures catalogue x2/x4 |
 | Transition vidéo | AR1300/BRIDGE01 uniquement, désactivée par défaut |
 | UI | essais ciblés explicitement activés |
 | Diagnostics | télémétrie bornée avec `PerformanceLogs=true` |
@@ -52,6 +53,16 @@ cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
   -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON
 cmake --build build --config Release --target release_bundle
 ```
+
+Shaders D6 autonomes (`fpDraw`, `fpSprite`, `fpSELECT`) :
+
+```powershell
+python tools/build_shader_suite.py
+python tools/build_shader_suite.py --check
+python tools/build_shader_suite.py --run
+```
+
+Sans option : plan seulement. `--check` ne modifie rien ; `--run` régénère les trois sorties suivies.
 
 `cmake --install build --config Release --prefix <directory>` produit le même layout game-root.
 Le validateur d'exécutable et les gates sont décrits dans

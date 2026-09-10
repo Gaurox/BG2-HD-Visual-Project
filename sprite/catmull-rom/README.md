@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D5 terminés ; D6 non commencé**. Vérification : 2026-09-10.
+Statut : **D0–D6 terminés ; D7 non commencé**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -600,7 +600,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D5 : filtre GPU 16 lectures implémenté sur `fpDraw`, `fpSprite` et `fpSELECT` ; DLL Release
   construite, candidat installé et activation `fpDraw` attestée ingame. Aucun bug/crash ; différence
   visuelle non évidente, sans sélection esthétique requise. Tests non exécutés par choix utilisateur.
-- [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
+- [x] D6 : profil `CreatureHD`, Gaussian/sharpen, colorimétrie et contours implémentés ; profil doux
+  Catmull–Rom + Gaussian léger validé ingame, sans crash ni erreur. Tests non exécutés par choix utilisateur.
+- [ ] D7–D10 : toutes les fonctions/paramètres amont restants portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.
 - [ ] D12 : optimisation disponible et coût mesuré ; A/B équivalent.
 - [ ] D13 : profil final validé ingame et éventuelle intégration release décidés.
@@ -630,6 +632,25 @@ shaders installés ; `fpDraw`, `fpSprite` et `fpSELECT` sont linkés avec le con
 `fpDraw` active `mode=2` sur une créature xBR x2 (`23x70` logique, `46x140` physique, texels physiques
 `1/46 x 1/140`) ; 42 témoins `fpDraw` restent en mode 0, sans erreur shader/OpenGL. L'utilisateur
 confirme l'absence de bug/crash ; la différence visuelle n'est pas évidente, ce qui ne constitue pas
-une sélection esthétique D5. Tests non exécutés par choix utilisateur ; candidat maintenu installé.
+une sélection esthétique D5. Tests non exécutés par choix utilisateur ; candidat restauré avant D6.
 
-Prochaine action : attendre une demande explicite avant D6 ; aucune intégration release engagée.
+Implémentation D6 : configuration typée `[ShaderSuite.CreatureHD]`, références CPU séparées,
+profil au draw conditionné par provenance x2/x4, onze uniforms, Gaussian 4×4 partagé avec D5,
+contour logique issu d'un voisinage 6×6, pipeline couleur et générateur déterministe des trois
+shaders créature. Source Dshaders 0.3.5 épinglée et licence MIT conservée. D7 non commencé.
+
+Installation D6 : tests non exécutés par choix utilisateur ; validation hors ligne BG2EE 2.7.3 et
+build Release réussis. Profil de diagnostic combiné : sRGB linéaire, sharpen `+0.50`, gamma `1.02`,
+contraste `1.10`, luminosité `+0.05`, saturation `1.20`, teinte `+5°`, contours Dshaders `2/3.5`.
+Les huit shaders et le renderer sont installés et revérifiés ; reçus copiés dans
+`runs/d6-20260910-creature-hd-style/{shader,renderer}-transaction/`. Session AR0602 : trois témoins
+`fpDraw` HD x2 actifs, 31 témoins neutres, aucune erreur shader/OpenGL et aucun crash. Les captures
+montrent un rendu trop dur/sombre avec contours noirs ; le profil combiné doit être ajusté avant
+acceptation. Aucune intégration release engagée.
+
+Profil D6 doux : run `d6-20260910-creature-hd-soft`. Le candidat combiné précédent a été restauré
+et vérifié avant installation. DLL et shaders inchangés ; INI réglé sur espace stocké, Gaussian léger
+`Sharpen=-0.25`, couleurs neutres et `OutlineMode=Native`. Nouveau candidat installé et revérifié ;
+deux témoins `fpDraw` HD x2 actifs, 22 témoins neutres et aucune erreur shader/OpenGL. L'utilisateur
+juge le rendu « vraiment propre » et valide le profil. D6 terminé ; D7 non commencé, aucune intégration
+release engagée.

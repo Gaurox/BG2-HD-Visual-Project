@@ -323,7 +323,8 @@ int creature_sampler_unit(unsigned program, Locations& locations) noexcept {
 }
 
 bool set_creature_draw(unsigned program, Locations& locations, float mode,
-                       float texelWidth, float texelHeight) noexcept {
+                       float texelWidth, float texelHeight,
+                       const shader_suite::CreatureHdDrawStyle& style) noexcept {
   if (!resolve_creature_draw_locations(program, locations)) return false;
   const auto& gl = game::gl::get_gl_functions();
   int currentProgram = 0;
@@ -333,6 +334,75 @@ bool set_creature_draw(unsigned program, Locations& locations, float mode,
   }
   gl.glUniform1f(locations.creatureFilterMode, mode);
   gl.glUniform2f(locations.creatureTexelSize, texelWidth, texelHeight);
+
+  locations.creatureStyleEnabled = resolve_location(
+      gl, program, locations.creatureStyleEnabled, "uIeeCreatureStyleEnabled");
+  locations.creatureColorSpace = resolve_location(
+      gl, program, locations.creatureColorSpace, "uIeeCreatureColorSpace");
+  locations.creatureSharpen = resolve_location(
+      gl, program, locations.creatureSharpen, "uIeeCreatureSharpen");
+  locations.creatureGamma = resolve_location(
+      gl, program, locations.creatureGamma, "uIeeCreatureGamma");
+  locations.creatureContrast = resolve_location(
+      gl, program, locations.creatureContrast, "uIeeCreatureContrast");
+  locations.creatureBrightness = resolve_location(
+      gl, program, locations.creatureBrightness, "uIeeCreatureBrightness");
+  locations.creatureSaturation = resolve_location(
+      gl, program, locations.creatureSaturation, "uIeeCreatureSaturation");
+  locations.creatureHueDegrees = resolve_location(
+      gl, program, locations.creatureHueDegrees, "uIeeCreatureHueDegrees");
+  locations.creatureOutlineMode = resolve_location(
+      gl, program, locations.creatureOutlineMode, "uIeeCreatureOutlineMode");
+  locations.creatureOutlineSize = resolve_location(
+      gl, program, locations.creatureOutlineSize, "uIeeCreatureOutlineSize");
+  locations.creatureTextureScale = resolve_location(
+      gl, program, locations.creatureTextureScale, "uIeeCreatureTextureScale");
+
+  const bool styleLocationsReady =
+      locations.creatureStyleEnabled >= 0 && locations.creatureColorSpace >= 0 &&
+      locations.creatureSharpen >= 0 && locations.creatureGamma >= 0 &&
+      locations.creatureContrast >= 0 && locations.creatureBrightness >= 0 &&
+      locations.creatureSaturation >= 0 && locations.creatureHueDegrees >= 0 &&
+      locations.creatureOutlineMode >= 0 && locations.creatureOutlineSize >= 0 &&
+      locations.creatureTextureScale >= 0;
+  const bool styleEnabled = style.active && styleLocationsReady;
+  if (styleEnabled) {
+    const bool initialize = !locations.creatureStyleParametersInitialized;
+    const auto set_if_changed = [&](int location, float value, float& previous) {
+      if (initialize || previous != value) {
+        gl.glUniform1f(location, value);
+        previous = value;
+      }
+    };
+    set_if_changed(locations.creatureColorSpace, style.colorSpace,
+                   locations.lastCreatureColorSpace);
+    set_if_changed(locations.creatureSharpen, style.sharpen,
+                   locations.lastCreatureSharpen);
+    set_if_changed(locations.creatureGamma, style.gamma,
+                   locations.lastCreatureGamma);
+    set_if_changed(locations.creatureContrast, style.contrast,
+                   locations.lastCreatureContrast);
+    set_if_changed(locations.creatureBrightness, style.brightness,
+                   locations.lastCreatureBrightness);
+    set_if_changed(locations.creatureSaturation, style.saturation,
+                   locations.lastCreatureSaturation);
+    set_if_changed(locations.creatureHueDegrees, style.hueDegrees,
+                   locations.lastCreatureHueDegrees);
+    set_if_changed(locations.creatureOutlineMode, style.outlineMode,
+                   locations.lastCreatureOutlineMode);
+    set_if_changed(locations.creatureOutlineSize, style.outlineSize,
+                   locations.lastCreatureOutlineSize);
+    set_if_changed(locations.creatureTextureScale, style.textureScale,
+                   locations.lastCreatureTextureScale);
+    locations.creatureStyleParametersInitialized = true;
+  }
+  if (locations.creatureStyleEnabled >= 0 &&
+      (!locations.creatureStyleGateInitialized ||
+       locations.lastCreatureStyleEnabled != styleEnabled)) {
+    gl.glUniform1f(locations.creatureStyleEnabled, styleEnabled ? 1.0f : 0.0f);
+    locations.creatureStyleGateInitialized = true;
+    locations.lastCreatureStyleEnabled = styleEnabled;
+  }
   return true;
 }
 

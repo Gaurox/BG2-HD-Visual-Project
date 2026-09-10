@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <filesystem>
 
+#include "iee/core/shader_suite_config.h"
+
 namespace iee::core {
 
 enum class CreatureSpriteFilterMode : std::uint8_t {
@@ -64,10 +66,12 @@ struct EngineConfig {
   bool dumpEngineShaders = false;
   bool enableDebugHotkeys = false;
   bool enableWaterEffect = true;
-  // Master gate for the Dshaders-compatible suite. D3 ships only neutral
-  // overrides, so enabling this key has no visual effect until later phases
-  // add explicitly gated operations.
+  // Master gate for the Dshaders-compatible suite. D6 adds an independently
+  // gated CreatureHD profile; disabled profiles preserve the D5 path.
   bool shaderSuiteEnabled = false;
+  // D6 virtual profile. It is resolved only for catalog-owned creature
+  // textures; per-shader/global profiles remain disabled until D7+.
+  shader_suite::CreatureHdProfile creatureHdShaderProfile{};
   // One-shot diagnostic for BAM/UI research. It logs texture uploads and
   // their call sites only; it never substitutes an asset or changes GL state.
   bool enableBamUiTextureProbe = false;

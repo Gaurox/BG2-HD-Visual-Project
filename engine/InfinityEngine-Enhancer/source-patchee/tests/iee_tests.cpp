@@ -29,6 +29,7 @@
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/cache_budget_simulator.h"
 #include "iee/core/creature_sprite_filter_math.h"
+#include "iee/core/shader_suite_math.h"
 #include "iee/area_animation_x4_registry.h"
 #include "iee/creature_sprite_x2.h"
 #include "iee/creature_sprite_filter.h"
@@ -56,6 +57,7 @@
 #include "iee/game/wed_runtime.h"
 #include "iee/item_icon_x2.h"
 #include "iee/shader_probe.h"
+#include "iee/shader_suite.h"
 
 namespace iee::probe {
 void record_creature_texture_trace(unsigned, int, int, int, int, int,
@@ -975,6 +977,17 @@ void test_config_shader_override_defaults() {
   expect_true(!cfg.enableDebugHotkeys, "hotkeys default off");
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
   expect_true(!cfg.shaderSuiteEnabled, "shader suite master defaults off");
+  const auto& creatureHd = cfg.creatureHdShaderProfile;
+  expect_true(!creatureHd.enabled, "CreatureHD profile defaults off");
+  expect_true(creatureHd.colorSpace == iee::core::shader_suite::ColorSpace::Stored &&
+                  creatureHd.sharpen == 0.0f && creatureHd.gamma == 1.0f &&
+                  creatureHd.contrast == 1.0f && creatureHd.brightness == 0.0f &&
+                  creatureHd.saturation == 1.0f && creatureHd.hueDegrees == 0.0f,
+              "CreatureHD color controls default to a neutral transform");
+  expect_true(creatureHd.outlineMode == iee::core::shader_suite::OutlineMode::Native &&
+                  creatureHd.outlineSize == 2.0f &&
+                  creatureHd.selectedOutlineSize == 3.5f,
+              "CreatureHD outline controls use the frozen D6 defaults");
   expect_true(!cfg.enableBamUiTextureProbe, "BAM/UI texture probe defaults off");
   expect_true(!cfg.enableItemIconX2, "item-icon x2 defaults off");
   expect_true(!cfg.enableAreaAnimationX4, "area-animation x4 registry defaults off");
@@ -1066,6 +1079,80 @@ void test_config_creature_sprite_filter_precedence() {
               "an invalid enum value fails closed to NEAREST even when legacy is true");
   expect_eq(invalidDiagnostics.invalidValues, std::size_t{1},
             "an invalid creature-sprite filter value is diagnosed");
+
+  std::error_code error;
+  std::filesystem::remove(tempPath, error);
+}
+
+void test_config_creature_hd_shader_profile() {
+  using iee::core::shader_suite::ColorSpace;
+  using iee::core::shader_suite::OutlineMode;
+  const auto tempPath =
+      std::filesystem::current_path() / "InfinityEngine-Enhancer-creature-hd-test.ini";
+  const auto load = [&](std::string_view text,
+                        iee::core::ConfigLoadDiagnostics* diagnostics = nullptr) {
+    {
+      std::ofstream out(tempPath, std::ios::trunc);
+      out << text;
+    }
+    iee::core::EngineConfig cfg{};
+    expect_true(iee::core::ConfigManager::load(tempPath, cfg, diagnostics),
+                "CreatureHD profile fixture should load");
+    return cfg;
+  };
+
+  const auto configured = load(
+      "[ShaderSuite.CreatureHD]\n"
+      "Enabled = YES\n"
+      "ColorSpace = srgblinear\n"
+      "Sharpen = -0.25\n"
+      "Gamma = 2.2\n"
+      "Contrast = 1.4\n"
+      "Brightness = -0.1\n"
+      "Saturation = 0.75\n"
+      "HueDegrees = 270\n"
+      "OutlineMode = dShAdErS\n"
+      "OutlineSize = 1.5\n"
+      "SelectedOutlineSize = 4\n");
+  const auto& profile = configured.creatureHdShaderProfile;
+  expect_true(profile.enabled && profile.colorSpace == ColorSpace::SrgbLinear &&
+                  profile.outlineMode == OutlineMode::Dshaders,
+              "CreatureHD booleans and enums should parse case-insensitively");
+  expect_true(profile.sharpen == -0.25f && profile.gamma == 2.2f &&
+                  profile.contrast == 1.4f && profile.brightness == -0.1f &&
+                  profile.saturation == 0.75f && profile.hueDegrees == 270.0f &&
+                  profile.outlineSize == 1.5f &&
+                  profile.selectedOutlineSize == 4.0f,
+              "CreatureHD numeric controls should accept their documented ranges");
+
+  iee::core::ConfigLoadDiagnostics diagnostics{};
+  const auto invalid = load(
+      "[ShaderSuite.CreatureHD]\n"
+      "Enabled = perhaps\n"
+      "ColorSpace = DisplayP3\n"
+      "Sharpen = nan\n"
+      "Sharpen = 1.01\n"
+      "Gamma = inf\n"
+      "Gamma = 0\n"
+      "Contrast = -0.01\n"
+      "Brightness = 1.01\n"
+      "Saturation = 4.01\n"
+      "HueDegrees = -360.01\n"
+      "OutlineMode = Glow\n"
+      "OutlineSize = -0.01\n"
+      "SelectedOutlineSize = 4.01\n",
+      &diagnostics);
+  const auto& neutral = invalid.creatureHdShaderProfile;
+  expect_true(!neutral.enabled && neutral.colorSpace == ColorSpace::Stored &&
+                  neutral.sharpen == 0.0f && neutral.gamma == 1.0f &&
+                  neutral.contrast == 1.0f && neutral.brightness == 0.0f &&
+                  neutral.saturation == 1.0f && neutral.hueDegrees == 0.0f &&
+                  neutral.outlineMode == OutlineMode::Native &&
+                  neutral.outlineSize == 2.0f &&
+                  neutral.selectedOutlineSize == 3.5f,
+              "invalid CreatureHD values should fail closed to per-field neutral defaults");
+  expect_eq(diagnostics.invalidValues, std::size_t{13},
+            "every invalid CreatureHD value should be diagnosed");
 
   std::error_code error;
   std::filesystem::remove(tempPath, error);
@@ -1219,6 +1306,179 @@ void test_catmull_rom_shader_formula_matches_cpu_reference() {
   }
 }
 
+void test_shader_suite_creature_hd_math() {
+  using iee::core::creature_sprite_filter::Rgba;
+  using iee::core::shader_suite::ColorSpace;
+  using iee::core::shader_suite_math::apply_color_adjustments;
+  using iee::core::shader_suite_math::apply_outline;
+  using iee::core::shader_suite_math::apply_sharpen;
+  using iee::core::shader_suite_math::gaussian_weights;
+  using iee::core::shader_suite_math::linear_to_srgb;
+  using iee::core::shader_suite_math::srgb_to_linear;
+  using iee::core::shader_suite_math::to_working_space;
+
+  for (const double phase : {0.0, 0.125, 0.5, 0.875, 1.0}) {
+    const auto weights = gaussian_weights(phase);
+    expect_near(weights[0] + weights[1] + weights[2] + weights[3], 1.0,
+                1.0e-12, "D6 Gaussian weights must sum to one");
+    const auto mirror = gaussian_weights(1.0 - phase);
+    for (std::size_t index = 0; index < weights.size(); ++index) {
+      expect_near(weights[index], mirror[weights.size() - 1 - index],
+                  1.0e-10, "D6 Gaussian weights must remain phase-symmetric");
+    }
+  }
+
+  for (const double encoded : {0.0, 0.01, 0.25, 0.5, 0.75, 1.0}) {
+    expect_near(linear_to_srgb(srgb_to_linear(encoded)), encoded, 2.0e-8,
+                "D6 sRGB decode/encode should round-trip display values");
+  }
+
+  const double nan = std::numeric_limits<double>::quiet_NaN();
+  const auto hidden = to_working_space(
+      Rgba{.r = nan, .g = 100.0, .b = -100.0, .a = 0.0},
+      ColorSpace::SrgbLinear);
+  expect_true(hidden.r == 0.0 && hidden.g == 0.0 && hidden.b == 0.0 &&
+                  hidden.a == 0.0,
+              "D6 working-space decode should neutralize RGB hidden by zero alpha");
+
+  const auto softened = apply_sharpen(
+      Rgba{.r = 0.9, .g = 0.7, .b = 0.5, .a = 0.4},
+      {.r = 0.2, .g = 0.3, .b = 0.4}, -1.0);
+  expect_true(softened.r == 0.2 && softened.g == 0.3 && softened.b == 0.4 &&
+                  softened.a == 0.4,
+              "D6 sharpen -1 should select the Gaussian RGB without changing alpha");
+
+  iee::core::shader_suite_math::OutlineAlphaBlock outlineAlpha{};
+  outlineAlpha[2 * 6 + 2] = 1.0;
+  const Rgba translucent{.r = 0.8, .g = 0.4, .b = 0.2, .a = 0.25};
+  const auto outlineDisabled = apply_outline(
+      translucent, {.r = 0.0, .g = 0.0, .b = 0.0}, outlineAlpha,
+      0.5, 0.5, 0.0);
+  expect_true(outlineDisabled.r == translucent.r &&
+                  outlineDisabled.g == translucent.g &&
+                  outlineDisabled.b == translucent.b &&
+                  outlineDisabled.a == translucent.a,
+              "D6 zero outline size should preserve the source exactly");
+  const auto outlined = apply_outline(
+      translucent, {.r = 0.0, .g = 0.0, .b = 0.0}, outlineAlpha,
+      0.5, 0.5, 2.0);
+  expect_true(std::isfinite(outlined.r) && std::isfinite(outlined.g) &&
+                  std::isfinite(outlined.b) && outlined.a >= translucent.a &&
+                  outlined.a <= 1.0,
+              "D6 outline reference should remain finite and preserve/increase coverage");
+  const auto invisibleOutline = apply_outline(
+      Rgba{}, {.r = 1.0, .g = 0.0, .b = 0.0}, outlineAlpha,
+      0.5, 0.5, 2.0, 0.0);
+  expect_true(invisibleOutline.r == 0.0 && invisibleOutline.g == 0.0 &&
+                  invisibleOutline.b == 0.0 && invisibleOutline.a == 0.0,
+              "D6 zero draw opacity should suppress an otherwise visible outline");
+  const auto emptyOutline = apply_outline(
+      Rgba{}, {.r = 1.0, .g = 0.0, .b = 0.0}, {}, 0.5, 0.5, 2.0);
+  expect_true(emptyOutline.r == 0.0 && emptyOutline.g == 0.0 &&
+                  emptyOutline.b == 0.0 && emptyOutline.a == 0.0,
+              "D6 empty outline neighborhood should remain transparent black");
+
+  iee::core::shader_suite::CreatureHdProfile neutral{};
+  const Rgba original{.r = 0.2, .g = 0.4, .b = 0.8, .a = 0.6};
+  const auto unchanged = apply_color_adjustments(original, neutral);
+  expect_near(unchanged.r, original.r, 1.0e-12,
+              "D6 neutral color profile should preserve red");
+  expect_near(unchanged.g, original.g, 1.0e-12,
+              "D6 neutral color profile should preserve green");
+  expect_near(unchanged.b, original.b, 1.0e-12,
+              "D6 neutral color profile should preserve blue");
+  expect_near(unchanged.a, original.a, 0.0,
+              "D6 color controls should never modify alpha");
+
+  auto grayscale = neutral;
+  grayscale.saturation = 0.0f;
+  const auto gray = apply_color_adjustments(original, grayscale);
+  expect_near(gray.r, gray.g, 1.0e-12,
+              "D6 zero saturation should produce equal red and green");
+  expect_near(gray.g, gray.b, 1.0e-12,
+              "D6 zero saturation should produce equal green and blue");
+
+  auto fullHueCycle = neutral;
+  fullHueCycle.hueDegrees = 360.0f;
+  const auto cycled = apply_color_adjustments(original, fullHueCycle);
+  expect_near(cycled.r, original.r, 1.0e-12,
+              "D6 full hue cycle should preserve red exactly");
+  expect_near(cycled.g, original.g, 1.0e-12,
+              "D6 full hue cycle should preserve green exactly");
+  expect_near(cycled.b, original.b, 1.0e-12,
+              "D6 full hue cycle should preserve blue exactly");
+
+  auto extreme = neutral;
+  extreme.gamma = 4.0f;
+  extreme.contrast = 4.0f;
+  extreme.brightness = -1.0f;
+  extreme.saturation = 4.0f;
+  extreme.hueDegrees = -360.0f;
+  const auto bounded = apply_color_adjustments(original, extreme);
+  expect_true(std::isfinite(bounded.r) && std::isfinite(bounded.g) &&
+                  std::isfinite(bounded.b) && std::isfinite(bounded.a),
+              "D6 safe power path should remain finite at contract extremes");
+}
+
+void test_shader_suite_creature_hd_routing() {
+  using iee::core::shader_suite::ColorSpace;
+  using iee::core::shader_suite::CreatureHdProfile;
+  using iee::core::shader_suite::OutlineMode;
+  using iee::shader_suite::CreatureFragment;
+  using iee::shader_suite::classify_creature_fragment;
+  using iee::shader_suite::resolve_creature_hd_draw_style;
+
+  CreatureHdProfile profile{};
+  profile.enabled = true;
+  profile.colorSpace = ColorSpace::SrgbLinear;
+  profile.sharpen = 0.4f;
+  profile.outlineMode = OutlineMode::Dshaders;
+  profile.outlineSize = 1.5f;
+  profile.selectedOutlineSize = 3.0f;
+
+  expect_true(classify_creature_fragment("fpDraw") == CreatureFragment::Draw &&
+                  classify_creature_fragment("fpSprite") == CreatureFragment::Sprite &&
+                  classify_creature_fragment("fpSELECT") == CreatureFragment::Select &&
+                  classify_creature_fragment("fpTone") == CreatureFragment::Unsupported,
+              "D6 should classify only the three frozen creature contracts");
+  expect_true(!resolve_creature_hd_draw_style(
+                   false, profile, true, 2, CreatureFragment::Draw).active &&
+                  !resolve_creature_hd_draw_style(
+                       true, profile, false, 2, CreatureFragment::Draw).active,
+              "D6 style should require both the master gate and catalog ownership");
+  expect_true(!resolve_creature_hd_draw_style(
+                   true, profile, true, 2, CreatureFragment::Unsupported).active &&
+                  !resolve_creature_hd_draw_style(
+                       true, profile, true, 1, CreatureFragment::Draw).active,
+              "D6 should not activate the future D7/global shader paths");
+
+  const auto draw = resolve_creature_hd_draw_style(
+      true, profile, true, 2, CreatureFragment::Draw);
+  expect_true(draw.active && draw.colorSpace == 1.0f && draw.sharpen == 0.4f &&
+                  draw.outlineMode == 1.0f && draw.outlineSize == 1.5f &&
+                  draw.textureScale == 2.0f,
+              "D6 fpDraw style should expose the active CreatureHD controls");
+  const auto sprite = resolve_creature_hd_draw_style(
+      true, profile, true, 4, CreatureFragment::Sprite);
+  expect_true(sprite.active && sprite.outlineSize == 1.5f &&
+                  sprite.textureScale == 4.0f,
+              "D6 should retain the dedicated fpSprite creature contract");
+  const auto selected = resolve_creature_hd_draw_style(
+      true, profile, true, 2, CreatureFragment::Select);
+  expect_true(selected.active && selected.outlineSize == 3.0f,
+              "D6 fpSELECT should use the selected-outline size independently");
+
+  profile.gamma = 0.0f;
+  expect_true(!resolve_creature_hd_draw_style(
+                   true, profile, true, 2, CreatureFragment::Draw).active,
+              "an invalid runtime profile should fail closed");
+  profile.gamma = 1.0f;
+  profile.colorSpace = static_cast<ColorSpace>(255);
+  expect_true(!resolve_creature_hd_draw_style(
+                   true, profile, true, 2, CreatureFragment::Draw).active,
+              "an invalid runtime profile enum should fail closed");
+}
+
 void test_creature_sprite_filter_texture_registry() {
   using iee::core::CreatureSpriteFilterMode;
   using namespace iee::creature_sprite_filter;
@@ -1265,6 +1525,8 @@ void test_creature_sprite_filter_texture_registry() {
   const auto active = registry.decide(hdDraw);
   expect_true(active.owner && active.filterActive && active.mode == 2.0f,
               "registered HD draw should select the Catmull-Rom route");
+  expect_eq(active.scale, 2,
+            "D6 style routing should retain the catalog physical scale");
   expect_near(active.texelWidth, 1.0 / 128.0, 1.0e-9,
               "D4 route should use the inverse physical width");
   expect_near(active.texelHeight, 1.0 / 96.0, 1.0e-9,
@@ -4010,6 +4272,19 @@ void test_config_shader_override_roundtrip() {
     orig.enableDebugHotkeys = true;
     orig.enableWaterEffect = false;
     orig.shaderSuiteEnabled = true;
+    orig.creatureHdShaderProfile.enabled = true;
+    orig.creatureHdShaderProfile.colorSpace =
+        iee::core::shader_suite::ColorSpace::SrgbLinear;
+    orig.creatureHdShaderProfile.sharpen = 0.25f;
+    orig.creatureHdShaderProfile.gamma = 1.8f;
+    orig.creatureHdShaderProfile.contrast = 1.2f;
+    orig.creatureHdShaderProfile.brightness = -0.15f;
+    orig.creatureHdShaderProfile.saturation = 0.9f;
+    orig.creatureHdShaderProfile.hueDegrees = 45.0f;
+    orig.creatureHdShaderProfile.outlineMode =
+        iee::core::shader_suite::OutlineMode::Dshaders;
+    orig.creatureHdShaderProfile.outlineSize = 1.75f;
+    orig.creatureHdShaderProfile.selectedOutlineSize = 3.25f;
     orig.enableBamUiTextureProbe = true;
     orig.enableItemIconX2 = true;
     orig.enableAreaAnimationX4 = true;
@@ -4047,6 +4322,13 @@ void test_config_shader_override_roundtrip() {
                 "shader suite master should use the frozen D2 INI section");
     expect_true(saved.find("ShaderSuiteEnabled") == std::string::npos,
                 "draft shader-suite key should not be serialized");
+    const auto creatureHdSection = saved.find("[ShaderSuite.CreatureHD]");
+    expect_true(creatureHdSection != std::string::npos &&
+                    saved.find("ColorSpace = SRGBLinear", creatureHdSection) !=
+                        std::string::npos &&
+                    saved.find("OutlineMode = Dshaders", creatureHdSection) !=
+                        std::string::npos,
+                "CreatureHD profile should serialize its frozen D6 enums");
   }
 
   iee::core::EngineConfig loaded{};
@@ -4057,6 +4339,18 @@ void test_config_shader_override_roundtrip() {
   expect_true(!loaded.enableWaterEffect, "enableWaterEffect should round-trip as false");
   expect_true(loaded.shaderSuiteEnabled,
               "shaderSuiteEnabled should round-trip as true");
+  const auto& creatureHd = loaded.creatureHdShaderProfile;
+  expect_true(creatureHd.enabled &&
+                  creatureHd.colorSpace ==
+                      iee::core::shader_suite::ColorSpace::SrgbLinear &&
+                  creatureHd.sharpen == 0.25f && creatureHd.gamma == 1.8f &&
+                  creatureHd.contrast == 1.2f && creatureHd.brightness == -0.15f &&
+                  creatureHd.saturation == 0.9f && creatureHd.hueDegrees == 45.0f &&
+                  creatureHd.outlineMode ==
+                      iee::core::shader_suite::OutlineMode::Dshaders &&
+                  creatureHd.outlineSize == 1.75f &&
+                  creatureHd.selectedOutlineSize == 3.25f,
+              "CreatureHD profile should round-trip independently of the suite master");
   expect_true(loaded.enableBamUiTextureProbe,
               "enableBamUiTextureProbe should round-trip as true");
   expect_true(loaded.enableItemIconX2, "enableItemIconX2 should round-trip as true");
@@ -5998,13 +6292,30 @@ void test_shader_suite_neutral_override_assets() {
                 "D5 shader should define one tap helper and invoke exactly 16 taps");
       expect_eq(countOccurrences("ieeFetchCreatureCatmullRom("), std::size_t{2},
                 "D5 shader should replace only its single central texture read");
-      expect_true(source.find("sampleColor.rgb * alpha") != std::string::npos &&
+      expect_true(source.find("sampleColor.rgb * sampleColor.a") != std::string::npos &&
                       source.find("alpha <= 0.000001") != std::string::npos &&
-                      source.find("clamp(filtered.rgb, vec3(0.0), vec3(alpha))") !=
+                      source.find("clamp(catmull.rgb, vec3(0.0), vec3(alpha))") !=
                           std::string::npos,
                   "D5 shader should reconstruct and clamp premultiplied RGBA");
       expect_true(source.find("fract(") == std::string::npos,
                   "D5 shader should preserve negative neighbor coordinates for edge clamping");
+      expect_true(source.find("IEE_CREATURE_STYLE_CONTRACT_V1") !=
+                          std::string::npos &&
+                      source.find("ieeCreatureGaussianWeights") != std::string::npos &&
+                      source.find("ieeApplyCreatureOutline") != std::string::npos &&
+                      source.find("ieeCreatureHueSaturation") != std::string::npos &&
+                      source.find("pow(max(color, vec3(0.0))") != std::string::npos,
+                  "D6 creature draw shaders should expose the frozen style pipeline");
+      for (const std::string_view uniform : {
+               "uIeeCreatureStyleEnabled", "uIeeCreatureColorSpace",
+               "uIeeCreatureSharpen", "uIeeCreatureGamma",
+               "uIeeCreatureContrast", "uIeeCreatureBrightness",
+               "uIeeCreatureSaturation", "uIeeCreatureHueDegrees",
+               "uIeeCreatureOutlineMode", "uIeeCreatureOutlineSize",
+               "uIeeCreatureTextureScale"}) {
+        expect_true(source.find(uniform) != std::string::npos,
+                    "D6 creature draw shader should declare every style uniform");
+      }
     }
     expect_true(source.find("#version") == std::string::npos,
                 "D3 shader overrides should accept the engine GLSL preamble");
@@ -6033,10 +6344,13 @@ int main() {
   test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
   test_config_creature_sprite_filter_precedence();
+  test_config_creature_hd_shader_profile();
   test_config_shader_override_roundtrip();
   test_catmull_rom_reference_weights();
   test_catmull_rom_premultiplied_reference();
   test_catmull_rom_shader_formula_matches_cpu_reference();
+  test_shader_suite_creature_hd_math();
+  test_shader_suite_creature_hd_routing();
   test_creature_sprite_filter_texture_registry();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();

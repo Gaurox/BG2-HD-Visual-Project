@@ -238,6 +238,16 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
     if (iequals(key, "Enabled")) assign_bool(cfg.shaderSuiteEnabled);
     return;
   }
+
+  // [ShaderSuite.CreatureHD]
+  if (iequals(section, "shaderSuite.CreatureHD")) {
+    const auto result = shader_suite::apply_creature_hd_parameter(
+        cfg.creatureHdShaderProfile, key, val);
+    if (result == shader_suite::ApplyResult::Invalid && diagnostics) {
+      ++diagnostics->invalidValues;
+    }
+    return;
+  }
 }
 
 static void write_section(std::ofstream& f, const char* name) { f << "\n[" << name << "]\n"; }
@@ -359,6 +369,20 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
 
   write_section(f, "ShaderSuite");
   write_bool(f, "Enabled", cfg.shaderSuiteEnabled);
+
+  write_section(f, "ShaderSuite.CreatureHD");
+  const auto& creatureHd = cfg.creatureHdShaderProfile;
+  write_bool(f, "Enabled", creatureHd.enabled);
+  f << "ColorSpace = " << shader_suite::color_space_name(creatureHd.colorSpace) << "\n";
+  f << "Sharpen = " << creatureHd.sharpen << "\n";
+  f << "Gamma = " << creatureHd.gamma << "\n";
+  f << "Contrast = " << creatureHd.contrast << "\n";
+  f << "Brightness = " << creatureHd.brightness << "\n";
+  f << "Saturation = " << creatureHd.saturation << "\n";
+  f << "HueDegrees = " << creatureHd.hueDegrees << "\n";
+  f << "OutlineMode = " << shader_suite::outline_mode_name(creatureHd.outlineMode) << "\n";
+  f << "OutlineSize = " << creatureHd.outlineSize << "\n";
+  f << "SelectedOutlineSize = " << creatureHd.selectedOutlineSize << "\n";
 
   return true;
 }

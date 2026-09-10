@@ -113,6 +113,30 @@ PATH_TEST_ALIASES = {
     "engine/InfinityEngine-Enhancer/source-patchee/tools/shader_suite_profile.py": (
         "test_shader_suite_profile",
     ),
+    "engine/InfinityEngine-Enhancer/source-patchee/tools/build_shader_suite.py": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/creature-hd-common.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpDraw.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpSprite.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpSELECT.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl": (
+        "test_build_shader_suite",
+    ),
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl": (
+        "test_build_shader_suite",
+    ),
     "engine/InfinityEngine-Enhancer/source-patchee/tools/install_shader_suite_candidate.py": (
         "test_shader_suite_candidate_transaction",
     ),

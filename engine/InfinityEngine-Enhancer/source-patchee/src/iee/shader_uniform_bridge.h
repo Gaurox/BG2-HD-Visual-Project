@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "iee/shader_suite.h"
+
 namespace iee::probe::uniforms {
 
 struct Locations {
@@ -22,11 +24,25 @@ struct Locations {
   int creatureSampler{kUnresolved};
   int creatureFilterMode{kUnresolved};
   int creatureTexelSize{kUnresolved};
+  int creatureStyleEnabled{kUnresolved};
+  int creatureColorSpace{kUnresolved};
+  int creatureSharpen{kUnresolved};
+  int creatureGamma{kUnresolved};
+  int creatureContrast{kUnresolved};
+  int creatureBrightness{kUnresolved};
+  int creatureSaturation{kUnresolved};
+  int creatureHueDegrees{kUnresolved};
+  int creatureOutlineMode{kUnresolved};
+  int creatureOutlineSize{kUnresolved};
+  int creatureTextureScale{kUnresolved};
 
   bool samplersInitialized{};
   bool viewInitialized{};
   bool worldSizeInitialized{};
   bool waterTintInitialized{};
+  bool creatureStyleGateInitialized{};
+  bool lastCreatureStyleEnabled{};
+  bool creatureStyleParametersInitialized{};
   float lastScrollX{};
   float lastScrollY{};
   float lastViewWorldWidth{};
@@ -36,6 +52,16 @@ struct Locations {
   float lastWaterTintR{};
   float lastWaterTintG{};
   float lastWaterTintB{};
+  float lastCreatureColorSpace{};
+  float lastCreatureSharpen{};
+  float lastCreatureGamma{};
+  float lastCreatureContrast{};
+  float lastCreatureBrightness{};
+  float lastCreatureSaturation{};
+  float lastCreatureHueDegrees{};
+  float lastCreatureOutlineMode{};
+  float lastCreatureOutlineSize{};
+  float lastCreatureTextureScale{};
   int lastViewportWidth{};
   int lastViewportHeight{};
   std::uint64_t lastAppliedRevision{};
@@ -85,6 +111,7 @@ void feed(unsigned program, Locations& locations);
                                         Locations& locations) noexcept;
 [[nodiscard]] bool set_creature_draw(unsigned program, Locations& locations,
                                      float mode, float texelWidth,
-                                     float texelHeight) noexcept;
+                                     float texelHeight,
+                                     const shader_suite::CreatureHdDrawStyle& style) noexcept;
 
 }  // namespace iee::probe::uniforms

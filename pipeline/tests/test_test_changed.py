@@ -72,6 +72,12 @@ class ChangedTestSelectorTests(unittest.TestCase):
             "engine/InfinityEngine-Enhancer/source-patchee/tools/install_shader_suite_candidate.py": (
                 "pipeline.tests.test_shader_suite_candidate_transaction",
             ),
+            "engine/InfinityEngine-Enhancer/source-patchee/tools/build_shader_suite.py": (
+                "pipeline.tests.test_build_shader_suite",
+            ),
+            "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpDraw.glsl": (
+                "pipeline.tests.test_build_shader_suite",
+            ),
         }
         for path, expected in cases.items():
             with self.subTest(path=path):

@@ -52,6 +52,7 @@ struct DrawDecision {
   float mode{};
   float texelWidth{};
   float texelHeight{};
+  int scale{};
   TextureProvenance provenance{TextureProvenance::Frame};
   std::uint64_t contentGeneration{};
 };

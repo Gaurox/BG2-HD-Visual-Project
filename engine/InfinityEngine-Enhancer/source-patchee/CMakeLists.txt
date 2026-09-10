@@ -108,6 +108,8 @@ add_library(iee_common STATIC
     src/iee/core/cache_budget_simulator.cpp
     src/iee/core/config.cpp
     src/iee/core/creature_sprite_filter_math.cpp
+    src/iee/core/shader_suite_config.cpp
+    src/iee/core/shader_suite_math.cpp
     src/iee/core/logger.cpp
     src/iee/core/map_page_shadow.cpp
     src/iee/core/map_texture_telemetry.cpp
@@ -117,6 +119,7 @@ add_library(iee_common STATIC
     src/iee/core/process_resource_telemetry.cpp
     src/iee/core/pvr_demand_telemetry.cpp
     src/iee/creature_sprite_filter.cpp
+    src/iee/shader_suite.cpp
     src/iee/game/area_texture.cpp
     src/iee/game/build_manifest.cpp
     src/iee/game/dds_texture.cpp

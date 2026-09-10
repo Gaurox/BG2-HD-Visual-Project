@@ -174,6 +174,7 @@ static DWORD WINAPI InitThread(LPVOID) {
     }
 
     if (cfg.enableVerboseLogging) {
+      const auto& creatureHd = ctx.cfg.creatureHdShaderProfile;
       LOG_DEBUG(
           "Rendering config: linear=true, anisotropic={}, maxAnisotropy={:.1f}, "
           "LOD bias={:.2f}, tileMipmaps={}, forceTextureFilterEveryDraw={}, fullFrameFxaa={}, "
@@ -199,6 +200,16 @@ static DWORD WINAPI InitThread(LPVOID) {
           ctx.cfg.enableBridgeTransitionPreview,
           ctx.cfg.enableBigLogoX4Test, ctx.cfg.enableMainMenuX4Test, ctx.cfg.enableMenuX2Test,
           ctx.cfg.enablePerformanceLogging);
+      LOG_DEBUG(
+          "Shader-suite CreatureHD: master={}, enabled={}, colorSpace={}, sharpen={}, "
+          "gamma={}, contrast={}, brightness={}, saturation={}, hueDegrees={}, "
+          "outlineMode={}, outlineSize={}, selectedOutlineSize={}",
+          ctx.cfg.shaderSuiteEnabled, creatureHd.enabled,
+          core::shader_suite::color_space_name(creatureHd.colorSpace),
+          creatureHd.sharpen, creatureHd.gamma, creatureHd.contrast,
+          creatureHd.brightness, creatureHd.saturation, creatureHd.hueDegrees,
+          core::shader_suite::outline_mode_name(creatureHd.outlineMode),
+          creatureHd.outlineSize, creatureHd.selectedOutlineSize);
     }
 
     if (!game::resolve_addresses(ctx.addrs, ctx.cfg, *ctx.manifest)) {
