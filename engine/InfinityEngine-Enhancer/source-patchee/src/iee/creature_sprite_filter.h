@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <optional>
+#include <string_view>
 
 #include "iee/core/config.h"
 
@@ -41,7 +42,7 @@ struct DrawObservation {
   int physicalWidth{};
   int physicalHeight{};
   Sampler sampler{Sampler::Unknown};
-  bool spriteProgram{};
+  bool routingProgram{};
   bool uniformsAvailable{};
 };
 
@@ -115,6 +116,7 @@ class TextureRegistry {
 
 TextureRegistry& registry() noexcept;
 
+[[nodiscard]] bool is_routing_fragment(std::string_view name) noexcept;
 [[nodiscard]] Sampler sampler_from_gl(int minFilter, int magFilter) noexcept;
 
 }  // namespace iee::creature_sprite_filter

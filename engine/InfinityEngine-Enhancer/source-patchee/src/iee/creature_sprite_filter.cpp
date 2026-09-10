@@ -153,7 +153,7 @@ std::optional<TextureMetadata> TextureRegistry::find(
 DrawDecision TextureRegistry::decide(
     const DrawObservation& observation) const noexcept {
   DrawDecision decision{};
-  if (!observation.spriteProgram || !observation.uniformsAvailable ||
+  if (!observation.routingProgram || !observation.uniformsAvailable ||
       observation.physicalWidth <= 0 || observation.physicalHeight <= 0) {
     return decision;
   }
@@ -186,6 +186,10 @@ RegistryState TextureRegistry::state() const noexcept {
 TextureRegistry& registry() noexcept {
   static TextureRegistry instance;
   return instance;
+}
+
+bool is_routing_fragment(std::string_view name) noexcept {
+  return name == "fpDraw" || name == "fpSprite" || name == "fpSELECT";
 }
 
 Sampler sampler_from_gl(int minFilter, int magFilter) noexcept {

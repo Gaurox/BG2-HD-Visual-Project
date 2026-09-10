@@ -1153,6 +1153,15 @@ void test_creature_sprite_filter_texture_registry() {
   using iee::core::CreatureSpriteFilterMode;
   using namespace iee::creature_sprite_filter;
 
+  expect_true(is_routing_fragment("fpDraw") &&
+                  is_routing_fragment("fpSprite") &&
+                  is_routing_fragment("fpSELECT"),
+              "observed and dedicated creature draw fragments must support D4 routing");
+  expect_true(!is_routing_fragment("fpTone") &&
+                  !is_routing_fragment("fpSEAM") &&
+                  !is_routing_fragment(""),
+              "unrelated fragment programs must remain outside D4 routing");
+
   constexpr std::uintptr_t contextA = 0x1111;
   constexpr std::uintptr_t contextB = 0x2222;
   TextureRegistry registry(3);
@@ -1180,7 +1189,7 @@ void test_creature_sprite_filter_texture_registry() {
       .physicalWidth = 128,
       .physicalHeight = 96,
       .sampler = Sampler::Nearest,
-      .spriteProgram = true,
+      .routingProgram = true,
       .uniformsAvailable = true,
   };
   const auto active = registry.decide(hdDraw);
@@ -1196,10 +1205,11 @@ void test_creature_sprite_filter_texture_registry() {
   expect_true(!registry.decide(witness).owner,
               "unregistered x1/effect witness must remain neutral");
   witness.glName = 41;
-  witness.spriteProgram = false;
-  expect_true(!registry.decide(witness).owner,
-              "non-sprite program must remain neutral even with an HD texture bound");
-  witness.spriteProgram = true;
+  witness.routingProgram = false;
+  expect_true(
+      !registry.decide(witness).owner,
+      "program without the routing contract must remain neutral even with an HD texture bound");
+  witness.routingProgram = true;
   witness.sampler = Sampler::Linear;
   expect_true(!registry.decide(witness).owner,
               "sampler drift must fail closed");
@@ -5892,12 +5902,13 @@ void test_shader_suite_neutral_override_assets() {
         "every D3 shader override should preserve its native interface");
     expect_true(source.find("uIeeShaderSuiteEnabled") != std::string::npos,
                 "every D3 shader override should expose the inactive suite master");
-    if (expected.filename == "fpSprite.glsl" || expected.filename == "fpSELECT.glsl") {
+    if (expected.filename == "fpDraw.glsl" || expected.filename == "fpSprite.glsl" ||
+        expected.filename == "fpSELECT.glsl") {
       expect_true(source.find("uIeeCreatureFilterMode") != std::string::npos &&
                       source.find("uIeeCreatureTexelSize") != std::string::npos &&
                       source.find("IEE_CREATURE_ROUTING_CONTRACT_V1") !=
                           std::string::npos,
-                  "D4 sprite shaders should expose active dynamic routing uniforms");
+                  "D4 creature draw shaders should expose active dynamic routing uniforms");
     }
     expect_true(source.find("#version") == std::string::npos,
                 "D3 shader overrides should accept the engine GLSL preamble");

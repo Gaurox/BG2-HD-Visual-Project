@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0/D1/D2/D3 terminés ; D4 non commencé**. Vérification : 2026-09-09.
+Statut : **D0/D1/D2/D3 terminés ; D4 en validation**. Vérification : 2026-09-10.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -355,7 +355,7 @@ Tous les chemins suivants sont relatifs à `ENGINE`, sauf indication contraire.
 | `src/iee/shader_uniform_bridge.h/.cpp` | Locations des uniformes, alimentation statique et dynamique séparées ; aucune réutilisation de `uIeeEnabled`. |
 | `src/iee/game/opengl_types.h/.cpp` | Déjà `glDrawArrays` ; compléter seulement les requêtes GL nécessaires au contrat effectif. |
 | `src/iee/game/shader_override.*` | Renforcer si besoin le contrôle de déclarations : l'actuel vérifie essentiellement la présence de noms, pas toute l'interface typée. |
-| Nouveaux `assets/override/fpSprite.glsl`, `fpSELECT.glsl` | Sources natives adaptées, entrée cubic unique, branche désactivée identique. |
+| `assets/override/fpDraw.glsl`, `fpSprite.glsl`, `fpSELECT.glsl` | Sources natives adaptées, entrée cubic unique, branche désactivée identique ; `fpDraw` couvre le chemin créature HD réellement tracé. |
 | `tools/InfinityEngine-Enhancer.sample.ini` | Nouvelle clé et portée documentées. |
 | `tests/iee_tests.cpp` et tests dédiés éventuels | Configuration, maths, contrats, cycle de vie du filtrage. |
 | `CMakeLists.txt` | Ajouter sources/tests. La copie du dossier `assets/override` existe déjà ; cela ne met pas à jour les manifests de release. |
@@ -594,8 +594,9 @@ guide ni pour un essai d'affichage indépendant. Installation et QA ne valent pa
 - [x] D2 : contrat suite figé ; huit fragments linkés, draws observés pour `fpDraw`, `fpTone`, `fpFONT`, `fpSEAM`, `fpYUV` ; `fpSprite`, `fpSELECT`, `fpYUVGRY` restent linkés sans draw attesté et sont planifiés D6–D10.
 - [x] D3 : huit shaders neutres et master off/on testés ; huit programmes linkés sans erreur,
   A/B ingame neutre et transactions renderer/shaders restaurées.
-- [ ] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion préparés ;
-  tests, build et preuve ingame restent requis.
+- [ ] D4 : registre/routage/uniformes dynamiques et propagation d'occlusion préparés ; candidat
+  initial visuellement neutre, mais `fpSprite`/`fpSELECT` non dessinés. Correction `fpDraw` préparée ;
+  tests, build et preuve ingame propriétaire/témoins restent requis.
 - [ ] D5 : filtre GPU 16 lectures non commencé.
 - [ ] D6–D10 : toutes les fonctions/paramètres amont portés et vérifiés par domaine.
 - [ ] D11 : candidat complet installé ; couverture des options et dix presets consignée.

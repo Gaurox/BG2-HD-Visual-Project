@@ -991,7 +991,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     // through the game's override directory) get the uniform feed.
     if (sourcePrefix.find("uIee") != std::string::npos) anyOverride = true;
     if (shaderType == FRAGMENT_SHADER &&
-        (nameForShader == "fpSprite" || nameForShader == "fpSELECT")) {
+        creature_sprite_filter::is_routing_fragment(nameForShader)) {
       creatureRoutingContract =
           sourcePrefix.find("IEE_CREATURE_ROUTING_CONTRACT_V1") != std::string::npos &&
           sourcePrefix.find("uniform lowp float uIeeCreatureFilterMode;") !=
@@ -1277,20 +1277,21 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
   if (currentProgram <= 0) return;
   scope.program = static_cast<unsigned>(currentProgram);
 
-  bool spriteProgram = false;
+  bool routingProgram = false;
   {
     std::lock_guard lock(g_probeMutex);
     const auto program = g_programRecords.find(scope.program);
     if (program == g_programRecords.end() || !program->second.introspected) return;
-    spriteProgram = program->second.creatureRoutingContract &&
-                    (program->second.fragmentShaderName == "fpSprite" ||
-                     program->second.fragmentShaderName == "fpSELECT");
+    routingProgram =
+        program->second.creatureRoutingContract &&
+        creature_sprite_filter::is_routing_fragment(
+            program->second.fragmentShaderName);
     if (const auto overridden = g_overriddenPrograms.find(scope.program);
         overridden != g_overriddenPrograms.end()) {
       scope.locations = overridden->second;
     }
   }
-  if (!spriteProgram || !scope.locations ||
+  if (!routingProgram || !scope.locations ||
       !uniforms::resolve_creature_draw_locations(scope.program, *scope.locations)) {
     return;
   }
@@ -1318,7 +1319,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
       .physicalHeight = texture.height,
       .sampler = creature_sprite_filter::sampler_from_gl(texture.minFilter,
                                                           texture.magFilter),
-      .spriteProgram = true,
+      .routingProgram = true,
       .uniformsAvailable = true,
   });
   if (decision.owner) {
@@ -1580,7 +1581,6 @@ static void APIENTRY detour_glDeleteTextures(int count, const unsigned* textures
     }
     forget_promoted_bam_textures(count, textures);
     if (textures && count > 0) {
-      const auto context = game::gl::current_context();
       std::lock_guard lock(g_probeMutex);
       for (int index = 0; index < count; ++index) {
         g_creatureTextureTraces.erase(TextureTraceKey{context, textures[index]});
