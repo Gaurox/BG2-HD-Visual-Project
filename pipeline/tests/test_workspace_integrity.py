@@ -35,8 +35,15 @@ class WorkspaceIntegrityTests(unittest.TestCase):
     def test_run_csv_matches_json_exactly(self) -> None:
         csv_bytes = integrity.rendered_outputs(self.outputs)[integrity.RUN_CSV]
         self.assertTrue(csv_bytes.startswith(b"\xef\xbb\xbf"))
-        reader = csv.DictReader(io.StringIO(csv_bytes.decode("utf-8-sig"), newline=""))
-        rows = list(reader)
+        previous_limit = csv.field_size_limit()
+        try:
+            csv.field_size_limit(max(previous_limit, len(csv_bytes)))
+            reader = csv.DictReader(
+                io.StringIO(csv_bytes.decode("utf-8-sig"), newline="")
+            )
+            rows = list(reader)
+        finally:
+            csv.field_size_limit(previous_limit)
         self.assertEqual(reader.fieldnames, list(integrity.RUN_COLUMNS))
         self.assertEqual(len(rows), len(self.runs))
         self.assertEqual(len({row["run_key"] for row in rows}), len(rows))

@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "dwarf-female-thief-low-misc9p-wqsh1-xbr2x",
+  "animation": {
+    "name": "Thief Female Dwarf Low — WQSH1",
+    "id": "0x5312",
+    "ids_symbol": "THIEF_FEMALE_DWARF_LOW",
+    "bam_prefix": "WQSH1",
+    "runtime_profile": "character-bg2ee-2.7.3.0",
+    "layer": {
+      "kind": "helmet",
+      "item_resref": "MISC9P"
+    }
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_dir": "sprite/families/playable-characters/5312-dwarf-female-thief-low/misc9p-wqsh1/source",
+    "run_dir": "sprite/families/playable-characters/5312-dwarf-female-thief-low/misc9p-wqsh1/runs/xbr2x-x2",
+    "scalepix": "config://mmpx_scalepix",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/character/5312-b0ae8ac4a9419a5c"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "PLAYER1"
+    ],
+    "items": [
+      "MISC9P"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}

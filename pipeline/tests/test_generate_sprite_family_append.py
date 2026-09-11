@@ -141,6 +141,23 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
                 "override_collision": "",
                 "blocker": "" if eligible else "fixture-blocker",
             },
+            {
+                "family_id": "0xE420:body:base-resref:MGO3:MGO3",
+                "animation_id": "0xE420",
+                "ids_symbol": "GOBLIN_CAPTAIN",
+                "engine_section": "monster_icewind",
+                "runtime_profile": "monster-icewind-bg2ee-2.7.3.0",
+                "layer_kind": "body",
+                "variant_kind": "base-resref",
+                "variant_value": "MGO3",
+                "bam_prefix": "MGO3",
+                "resource_count": "20",
+                "frame_count": "1400",
+                "pipeline_ready": "yes",
+                "runtime_supported": "yes",
+                "override_collision": "",
+                "blocker": "",
+            },
         ]
         with self.families.open("w", encoding="utf-8-sig", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=fields)
@@ -288,6 +305,79 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             ["MGO2"],
         )
         self.assertEqual(json.loads(self.catalog.read_text(encoding="utf-8")), base)
+
+    def test_catalog_append_accepts_several_members_in_one_descriptor(self) -> None:
+        generator.generate_member(
+            destination=self.member,
+            template_path=self.template,
+            families_path=self.families,
+            family_id="0xE410:body:base-resref:MGO2:MGO2",
+            name="Gobelin archer",
+            qa_areas=["AR0602"],
+            qa_creatures=["FSGOBL"],
+            dry_run=False,
+        )
+        member_two = self.jobs / f"test-{self.token}-mgo3-xbr2x.json"
+        self.addCleanup(member_two.unlink, missing_ok=True)
+        member_two_payload = self._member_payload("0xE420", "MGO3", member_two.stem)
+        member_two_payload["upscale"] = dict(generator.DIRECT_X2_METHOD)
+        member_two_payload["qa"]["required_bam_prefixes"] = ["MGO3"]
+        self._write_json(member_two, member_two_payload)
+        base = {
+            "schema": generator.CATALOG_JOB_SCHEMA,
+            "job_id": "test-catalog-xbr2x",
+            "name": "Catalogue test MGO1",
+            "members": [self._relative(self.template)],
+            "paths": {
+                "game_root": "config://bg2ee_game_root",
+                "run_dir": f"pipeline/tests/{self.root.name}/catalog/runs/xbr2x-x2",
+                "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
+                "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
+            },
+            "compatibility": {"baldur_real_sha256": "A" * 64},
+            "runtime": {
+                "cmake_generator": "Visual Studio 16 2019",
+                "cmake_arch": "x64",
+            },
+            "upscale": dict(generator.DIRECT_X2_METHOD),
+            "qa": {
+                "animations": [
+                    {
+                        "animation_id": "0xE400",
+                        "name": "Gobelin hache",
+                        "areas": ["AR0602"],
+                        "creatures": ["ICGOB03"],
+                    }
+                ]
+            },
+        }
+        self._write_json(self.catalog, base)
+
+        result = generator.generate_catalog_batch_append(
+            destination=self.append,
+            base_catalog_path=self.catalog,
+            member_paths=[self.member, member_two],
+            name="Catalogue test MGO1, MGO2 et MGO3",
+            families_path=self.families,
+            require_prepared=False,
+            dry_run=False,
+        )
+
+        self.assertEqual(result["status"], "catalog-batch-append-job-created")
+        self.assertEqual(result["added_animation_ids"], ["0xE410", "0xE420"])
+        appended = json.loads(self.append.read_text(encoding="utf-8"))
+        self.assertEqual(
+            appended["members"],
+            [
+                self._relative(self.template),
+                self._relative(self.member),
+                self._relative(member_two),
+            ],
+        )
+        self.assertEqual(
+            [item["animation_id"] for item in appended["qa"]["animations"]],
+            ["0xE400", "0xE410", "0xE420"],
+        )
 
     def test_catalog_append_accepts_inventory_sealed_character_aggregate(self) -> None:
         leaf = self.jobs / f"test-{self.token}-character-body.json"

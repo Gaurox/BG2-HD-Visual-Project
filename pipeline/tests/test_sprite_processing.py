@@ -39,6 +39,7 @@ class SpriteProcessingTests(unittest.TestCase):
                 "variant_value",
                 "item_resrefs",
                 "bam_prefix",
+                "pipeline_ready",
             ),
             [
                 {
@@ -50,6 +51,7 @@ class SpriteProcessingTests(unittest.TestCase):
                     "variant_value": "MGO1",
                     "item_resrefs": "",
                     "bam_prefix": "MGO1",
+                    "pipeline_ready": "yes",
                 }
             ],
         )
@@ -123,6 +125,42 @@ class SpriteProcessingTests(unittest.TestCase):
             self.assertEqual(additions, 0)
             self.assertEqual(updated[0]["production_state"], "produced")
             self.assertEqual(updated[0]["production_run"], "sprite/example/run.json")
+
+    def test_reconcile_active_updates_only_sealed_lifecycle_facts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            families, animations, groups, output = self.configure(root)
+            patches = self.patches(root, families, animations, groups, output)
+            proof = {
+                "production_run": "sprite/catalog/build.json",
+                "production_run_sha256": "A" * 64,
+                "production_state": "verified",
+                "selected_run": "sprite/catalog/build.json",
+                "selected_run_sha256": "A" * 64,
+                "qa_state": "pending",
+                "qa_evidence": "",
+                "installation_state": "installed",
+                "installation_receipt": "sprite/catalog/active-test.json",
+                "catalog_generation": "B" * 64,
+            }
+            with patches[0], patches[1], patches[2], patches[3], patches[4], patches[5], patches[6]:
+                rows, _, _ = processing.build_rows()
+                rows[0]["production_state"] = "produced"
+                rows[0]["release_state"] = "candidate"
+                output.write_bytes(processing.csv_bytes(rows))
+                with mock.patch.object(
+                    processing,
+                    "active_members",
+                    return_value={("0XE400", "MGO1"): proof},
+                ):
+                    updated, additions, reconciled = processing.build_rows(
+                        reconcile_active=True
+                    )
+            self.assertEqual((additions, reconciled), (0, 1))
+            self.assertEqual(updated[0]["production_state"], "verified")
+            self.assertEqual(updated[0]["installation_state"], "installed")
+            self.assertEqual(updated[0]["catalog_generation"], "B" * 64)
+            self.assertEqual(updated[0]["release_state"], "candidate")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "halforc-female-cleric-misc9q-wqns3-xbr2x",
+  "animation": {
+    "name": "Cleric Female Halforc — WQNS3",
+    "id": "0x6015",
+    "ids_symbol": "CLERIC_FEMALE_HALFORC",
+    "bam_prefix": "WQNS3",
+    "runtime_profile": "character-bg2ee-2.7.3.0",
+    "layer": {
+      "kind": "weapon",
+      "item_resref": "MISC9Q"
+    }
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_dir": "sprite/families/playable-characters/6015-halforc-female-cleric/misc9q-wqns3/source",
+    "run_dir": "sprite/families/playable-characters/6015-halforc-female-cleric/misc9q-wqns3/runs/xbr2x-x2",
+    "scalepix": "config://mmpx_scalepix",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/character/6015-7c0f4a12c635b1f4"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "PLAYER1"
+    ],
+    "items": [
+      "MISC9Q"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}

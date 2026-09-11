@@ -2325,15 +2325,27 @@ def audit_sprites(
     pointer_path = ROOT / "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json"
     pointer = read_json(pointer_path)
     current_generation = pointer["generation_dir"].replace("\\", "/").rstrip("/")
-    current_job_path = ROOT / "sprite/catalogs/creature-x2-nearest/jobs/qa-refresh-current-catalog-v1.json"
-    if not current_job_path.is_file() or sha256_file(current_job_path) != pointer["job_sha256"].upper():
+    canonical_active = current_generation.rsplit("/generations/", 1)[0] + "/ingame-installation/active-test.json"
+    canonical_active_path = ROOT / canonical_active
+    current_job_reference = ""
+    current_job_path: Path | None = None
+    if canonical_active_path.is_file():
+        active_state = read_json(canonical_active_path)
+        current_job_reference = str(active_state.get("job_file", ""))
+        resolved_job = resolve_migrated_reference(current_job_reference, pairs)
+        if resolved_job:
+            current_job_path = ROOT / resolved_job
+    if (
+        current_job_path is None
+        or sha256_file(current_job_path) != pointer["job_sha256"].upper()
+    ):
         add_issue(
             issues,
             "error",
             "sprite-current-generation-job-mismatch",
             "sprites",
             "La recette historique de la génération active ne correspond plus au pointeur courant.",
-            path=repo_path(current_job_path),
+            path=current_job_reference or canonical_active,
         )
     for relative_field, hash_field in (
         ("build_manifest", "build_manifest_sha256"),
@@ -2471,8 +2483,6 @@ def audit_sprites(
         )
 
     active_tests = sorted((ROOT / "sprite").rglob("active-test.json"), key=lambda path: repo_path(path))
-    canonical_active = current_generation.rsplit("/generations/", 1)[0] + "/ingame-installation/active-test.json"
-    canonical_active_path = ROOT / canonical_active
     if not canonical_active_path.is_file():
         add_issue(
             issues,

@@ -1,8 +1,9 @@
-"""Initialize or extend the sprite-family lifecycle authority without promotion.
+"""Initialize or extend the sprite-family lifecycle authority.
 
 Existing rows are preserved. New inventory families receive conservative states.
 Membership in the exact active catalog seeds only facts already proven by its
-hashed build manifest and installation receipt. Use ``--run`` to write.
+hashed build manifest and installation receipt. ``--reconcile-active`` applies
+the same sealed facts to existing rows. Use ``--run`` to write.
 """
 
 from __future__ import annotations
@@ -179,7 +180,9 @@ def default_row(
     }
 
 
-def build_rows() -> tuple[list[dict[str, str]], int, int]:
+def build_rows(
+    reconcile_active: bool = False,
+) -> tuple[list[dict[str, str]], int, int]:
     families = read_csv(FAMILIES)
     animations = read_csv(ANIMATIONS)
     if not families or "family_id" not in families[0]:
@@ -219,7 +222,16 @@ def build_rows() -> tuple[list[dict[str, str]], int, int]:
                 raise ValueError(
                     f"{field} invalide pour {proposed['asset_key']}: {current[field]!r}"
                 )
-        rows.append({field: current.get(field, "") for field in FIELDS})
+        preserved = {field: current.get(field, "") for field in FIELDS}
+        pair = (
+            family.get("animation_id", "").upper(),
+            family.get("bam_prefix", "").upper(),
+        )
+        proven = active.get(pair)
+        if reconcile_active and proven:
+            preserved.update(proven)
+            seeded += 1
+        rows.append(preserved)
     return rows, additions, seeded
 
 
@@ -233,9 +245,14 @@ def csv_bytes(rows: Iterable[Mapping[str, str]]) -> bytes:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--reconcile-active",
+        action="store_true",
+        help="applique aux lignes existantes les preuves du catalogue actif exact",
+    )
     parser.add_argument("--run", action="store_true", help="écrit sprite/index/processing.csv")
     args = parser.parse_args()
-    rows, additions, seeded = build_rows()
+    rows, additions, seeded = build_rows(reconcile_active=args.reconcile_active)
     payload = csv_bytes(rows)
     unchanged = PROCESSING.is_file() and PROCESSING.read_bytes() == payload
     print(

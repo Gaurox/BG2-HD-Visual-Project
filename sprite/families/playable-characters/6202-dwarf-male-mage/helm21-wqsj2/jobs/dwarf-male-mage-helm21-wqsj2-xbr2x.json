@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "dwarf-male-mage-helm21-wqsj2-xbr2x",
+  "animation": {
+    "name": "Mage Male Dwarf — WQSJ2",
+    "id": "0x6202",
+    "ids_symbol": "MAGE_MALE_DWARF",
+    "bam_prefix": "WQSJ2",
+    "runtime_profile": "character-bg2ee-2.7.3.0",
+    "layer": {
+      "kind": "helmet",
+      "item_resref": "HELM21"
+    }
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_dir": "sprite/families/playable-characters/6202-dwarf-male-mage/helm21-wqsj2/source",
+    "run_dir": "sprite/families/playable-characters/6202-dwarf-male-mage/helm21-wqsj2/runs/xbr2x-x2",
+    "scalepix": "config://mmpx_scalepix",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/character/6202-6138a6012448415d"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "PLAYER1"
+    ],
+    "items": [
+      "HELM21"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}

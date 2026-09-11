@@ -495,6 +495,127 @@ def refresh_catalog_qa_payload(
     return payload
 
 
+def append_members_payload(
+    *,
+    base_catalog_path: Path,
+    member_paths: Iterable[Path],
+    destination: Path,
+    name: str,
+    families_path: Path,
+) -> tuple[
+    dict[str, Any], list[tuple[dict[str, Any], InventoryFamily | None]]
+]:
+    base_catalog_path = require_existing_job_path(resolve_path(base_catalog_path), "--catalog-job")
+    destination = require_new_catalog_job_path(destination, "--job")
+    if destination == base_catalog_path:
+        raise RuntimeError("append destination must differ from the active catalog job")
+    base = load_catalog_job(base_catalog_path)
+    catalog_contract = upscale_contract(base)
+    if catalog_contract.scale != 2 or catalog_contract.method != DIRECT_X2_METHOD:
+        raise RuntimeError("base catalog must use the explicit xBR/x2 NEAREST contract")
+    resolved_members = [
+        require_existing_job_path(resolve_path(path), "--member-job")
+        for path in member_paths
+    ]
+    if not resolved_members:
+        raise RuntimeError("at least one --member-job is required")
+    existing_paths = {
+        Path(item["_job_file"]).resolve() for item in base["_catalog_members"]
+    }
+    existing_animation_ids = {
+        f"0x{int(str(item['animation']['id']), 16):04X}"
+        for item in base["_catalog_members"]
+    }
+    families_path = resolve_path(families_path)
+    raw_base = read_json(base_catalog_path)
+    payload = refresh_catalog_qa_payload(raw_base, base, name)
+    payload["members"] = list(raw_base["members"])
+    qa = payload.get("qa")
+    if not isinstance(qa, dict):
+        raise RuntimeError("base catalog requires qa.animations")
+    animations = qa.get("animations")
+    if not isinstance(animations, list) or not animations:
+        raise RuntimeError("base catalog requires a non-empty qa.animations list")
+    qa["animations"] = list(animations)
+    additions: list[tuple[dict[str, Any], InventoryFamily | None]] = []
+    for member_path in resolved_members:
+        member_schema = read_json(member_path).get("schema")
+        if member_schema == JOB_SCHEMA:
+            member = load_job(member_path)
+            member_kind = "family"
+        elif member_schema == ARMOR_SET_SCHEMA:
+            member = load_armor_set(member_path)
+            member_kind = "character-complete"
+        else:
+            raise RuntimeError("append member must be a leaf job or Character aggregate")
+        if member_path.resolve() in existing_paths:
+            raise RuntimeError("member already belongs to the base catalog")
+        animation_id = f"0x{int(str(member['animation']['id']), 16):04X}"
+        if animation_id in existing_animation_ids:
+            raise RuntimeError(
+                f"catalog already owns animation {animation_id}; append one full animation identity only once"
+            )
+        family_id = None
+        family: InventoryFamily | None = None
+        if member_kind == "family":
+            with families_path.open(encoding="utf-8-sig", newline="") as stream:
+                for row in csv.DictReader(stream):
+                    if (
+                        f"0x{int(str(row.get('animation_id', '')), 16):04X}"
+                        == animation_id
+                        and str(row.get("bam_prefix", "")).upper()
+                        == str(member["animation"]["bam_prefix"]).upper()
+                        and str(row.get("runtime_profile", ""))
+                        == str(member["animation"].get("runtime_profile", ""))
+                    ):
+                        family_id = str(row.get("family_id", ""))
+                        break
+            if not family_id:
+                raise RuntimeError("member does not map to a canonical sprite_families.csv row")
+            family = load_inventory_family(families_path, family_id)
+            validate_member_against_inventory(member, family)
+        else:
+            inventory = member.get("inventory")
+            if not isinstance(inventory, dict):
+                raise RuntimeError("Character aggregate requires sealed inventory provenance")
+            try:
+                inventory_animation_id = (
+                    f"0x{int(str(inventory.get('animation_id', '')), 16):04X}"
+                )
+            except ValueError as error:
+                raise RuntimeError(
+                    "Character aggregate inventory animation id is invalid"
+                ) from error
+            if inventory_animation_id != animation_id:
+                raise RuntimeError("Character aggregate inventory animation id differs")
+            if int(inventory.get("included_family_count", -1)) != len(member["_members"]):
+                raise RuntimeError("Character aggregate inventory member count differs")
+            if re.fullmatch(
+                r"[0-9A-F]{64}",
+                str(inventory.get("families_csv_sha256", "")).upper(),
+            ) is None:
+                raise RuntimeError("Character aggregate inventory hash is invalid")
+        areas, creatures = member_qa(member)
+        required_prefixes = sorted_qa(
+            member.get("qa", {}).get("required_bam_prefixes", []),
+            "member qa.required_bam_prefixes",
+        )
+        payload["members"].append(relative_project_path(member_path))
+        qa["animations"].append(
+            {
+                "animation_id": animation_id,
+                "name": str(member["animation"].get("name", member["job_id"])),
+                "areas": areas,
+                "creatures": creatures,
+                "required_bam_prefixes": required_prefixes,
+            }
+        )
+        existing_paths.add(member_path.resolve())
+        existing_animation_ids.add(animation_id)
+        additions.append((member, family))
+    return payload, additions
+
+
 def append_payload(
     *,
     base_catalog_path: Path,
@@ -503,100 +624,14 @@ def append_payload(
     name: str,
     families_path: Path,
 ) -> tuple[dict[str, Any], dict[str, Any], InventoryFamily | None]:
-    base_catalog_path = require_existing_job_path(resolve_path(base_catalog_path), "--catalog-job")
-    member_path = require_existing_job_path(resolve_path(member_path), "--member-job")
-    destination = require_new_catalog_job_path(destination, "--job")
-    if destination == base_catalog_path:
-        raise RuntimeError("append destination must differ from the active catalog job")
-    base = load_catalog_job(base_catalog_path)
-    catalog_contract = upscale_contract(base)
-    if catalog_contract.scale != 2 or catalog_contract.method != DIRECT_X2_METHOD:
-        raise RuntimeError("base catalog must use the explicit xBR/x2 NEAREST contract")
-    member_schema = read_json(member_path).get("schema")
-    if member_schema == JOB_SCHEMA:
-        member = load_job(member_path)
-        member_kind = "family"
-    elif member_schema == ARMOR_SET_SCHEMA:
-        member = load_armor_set(member_path)
-        member_kind = "character-complete"
-    else:
-        raise RuntimeError("append member must be a leaf job or Character aggregate")
-    if member_path.resolve() in {
-        Path(item["_job_file"]).resolve() for item in base["_catalog_members"]
-    }:
-        raise RuntimeError("member already belongs to the base catalog")
-    animation_id = f"0x{int(str(member['animation']['id']), 16):04X}"
-    if animation_id in {
-        f"0x{int(str(item['animation']['id']), 16):04X}"
-        for item in base["_catalog_members"]
-    }:
-        raise RuntimeError(
-            f"catalog already owns animation {animation_id}; append one full animation identity only once"
-        )
-    family_id = None
-    families_path = resolve_path(families_path)
-    family: InventoryFamily | None = None
-    if member_kind == "family":
-        with families_path.open(encoding="utf-8-sig", newline="") as stream:
-            for row in csv.DictReader(stream):
-                if (
-                    f"0x{int(str(row.get('animation_id', '')), 16):04X}"
-                    == animation_id
-                    and str(row.get("bam_prefix", "")).upper()
-                    == str(member["animation"]["bam_prefix"]).upper()
-                    and str(row.get("runtime_profile", ""))
-                    == str(member["animation"].get("runtime_profile", ""))
-                ):
-                    family_id = str(row.get("family_id", ""))
-                    break
-        if not family_id:
-            raise RuntimeError("member does not map to a canonical sprite_families.csv row")
-        family = load_inventory_family(families_path, family_id)
-        validate_member_against_inventory(member, family)
-    else:
-        inventory = member.get("inventory")
-        if not isinstance(inventory, dict):
-            raise RuntimeError("Character aggregate requires sealed inventory provenance")
-        try:
-            inventory_animation_id = (
-                f"0x{int(str(inventory.get('animation_id', '')), 16):04X}"
-            )
-        except ValueError as error:
-            raise RuntimeError("Character aggregate inventory animation id is invalid") from error
-        if inventory_animation_id != animation_id:
-            raise RuntimeError("Character aggregate inventory animation id differs")
-        if int(inventory.get("included_family_count", -1)) != len(member["_members"]):
-            raise RuntimeError("Character aggregate inventory member count differs")
-        if re.fullmatch(
-            r"[0-9A-F]{64}",
-            str(inventory.get("families_csv_sha256", "")).upper(),
-        ) is None:
-            raise RuntimeError("Character aggregate inventory hash is invalid")
-    areas, creatures = member_qa(member)
-    member_qa_block = member.get("qa", {})
-    required_prefixes = sorted_qa(
-        member_qa_block.get("required_bam_prefixes", []),
-        "member qa.required_bam_prefixes",
+    payload, additions = append_members_payload(
+        base_catalog_path=base_catalog_path,
+        member_paths=[member_path],
+        destination=destination,
+        name=name,
+        families_path=families_path,
     )
-
-    raw_base = read_json(base_catalog_path)
-    payload = refresh_catalog_qa_payload(raw_base, base, name)
-    payload["members"] = list(raw_base["members"]) + [relative_project_path(member_path)]
-    qa = payload.get("qa")
-    if not isinstance(qa, dict):
-        raise RuntimeError("base catalog requires qa.animations")
-    animations = qa.get("animations")
-    if not isinstance(animations, list) or not animations:
-        raise RuntimeError("base catalog requires a non-empty qa.animations list")
-    qa["animations"] = list(animations) + [
-        {
-            "animation_id": animation_id,
-            "name": str(member["animation"].get("name", member["job_id"])),
-            "areas": areas,
-            "creatures": creatures,
-            "required_bam_prefixes": required_prefixes,
-        }
-    ]
+    member, family = additions[0]
     return payload, member, family
 
 
@@ -653,6 +688,61 @@ def generate_catalog_append(
         ),
         "added_family_id": family.family_id if family is not None else None,
         "added_animation_id": f"0x{int(str(member['animation']['id']), 16):04X}",
+        "require_prepared": require_prepared,
+        "pixels_produced": False,
+        "release_manifest_modified": False,
+        "next": (
+            "python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job "
+            f"{relative_project_path(destination)}"
+        ),
+    }
+
+
+def generate_catalog_batch_append(
+    *,
+    destination: Path,
+    base_catalog_path: Path,
+    member_paths: Iterable[Path],
+    name: str,
+    families_path: Path,
+    require_prepared: bool,
+    dry_run: bool,
+) -> dict[str, Any]:
+    payload, additions = append_members_payload(
+        base_catalog_path=base_catalog_path,
+        member_paths=member_paths,
+        destination=destination,
+        name=name,
+        families_path=families_path,
+    )
+    destination = resolve_path(destination)
+    if require_prepared:
+        for member, _family in additions:
+            if member.get("_kind") == "armor-set":
+                verify_armor_set(member)
+            else:
+                verify_all(member, compare_game_sources=True)
+    validate_payload_as_catalog(destination, payload)
+    if not dry_run:
+        atomic_write_json(destination, payload)
+        load_catalog_job(destination)
+    return {
+        "status": (
+            "catalog-batch-append-job-planned"
+            if dry_run
+            else "catalog-batch-append-job-created"
+        ),
+        "catalog_job": relative_project_path(destination),
+        "job_id": payload["job_id"],
+        "run_dir": payload["paths"]["run_dir"],
+        "added_members": [
+            relative_project_path(Path(member["_job_file"]))
+            for member, _family in additions
+        ],
+        "added_animation_ids": [
+            f"0x{int(str(member['animation']['id']), 16):04X}"
+            for member, _family in additions
+        ],
         "require_prepared": require_prepared,
         "pixels_produced": False,
         "release_manifest_modified": False,
@@ -724,7 +814,13 @@ def make_parser() -> argparse.ArgumentParser:
     )
     append.add_argument("--job", type=Path, required=True)
     append.add_argument("--catalog-job", type=Path, required=True)
-    append.add_argument("--member-job", type=Path, required=True)
+    append.add_argument(
+        "--member-job",
+        type=Path,
+        required=True,
+        action="append",
+        help="repeat to append several animations in one immutable descriptor",
+    )
     append.add_argument("--families", type=Path, default=DEFAULT_FAMILIES)
     append.add_argument("--name", required=True)
     append.add_argument("--require-prepared", action="store_true")
@@ -766,15 +862,26 @@ def main(argv: Iterable[str] | None = None) -> None:
             dry_run=args.dry_run,
         )
     elif args.command == "catalog-append":
-        result = generate_catalog_append(
-            destination=args.job,
-            base_catalog_path=args.catalog_job,
-            member_path=args.member_job,
-            name=args.name,
-            families_path=args.families,
-            require_prepared=args.require_prepared,
-            dry_run=args.dry_run,
-        )
+        if len(args.member_job) == 1:
+            result = generate_catalog_append(
+                destination=args.job,
+                base_catalog_path=args.catalog_job,
+                member_path=args.member_job[0],
+                name=args.name,
+                families_path=args.families,
+                require_prepared=args.require_prepared,
+                dry_run=args.dry_run,
+            )
+        else:
+            result = generate_catalog_batch_append(
+                destination=args.job,
+                base_catalog_path=args.catalog_job,
+                member_paths=args.member_job,
+                name=args.name,
+                families_path=args.families,
+                require_prepared=args.require_prepared,
+                dry_run=args.dry_run,
+            )
     else:
         result = generate_catalog_qa_refresh(
             destination=args.job,

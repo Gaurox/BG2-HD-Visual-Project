@@ -35,7 +35,8 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
   `engine_section`; macro-groupe, dossier, layout et règle de bucket.
 - `processing.csv` : autorité de cycle de vie par `asset_key = sprites:family:<family_id>:<variant>`.
   `sync_sprite_processing.py` ajoute les familles absentes avec des états conservateurs et préserve
-  strictement les lignes existantes.
+  les lignes existantes par défaut. `--reconcile-active` applique seulement les preuves du catalogue
+  actif scellé aux membres existants.
 - `extractions.csv` : projection générée des BAM réellement présents sous
   `sprite/ressources/`; ne pas l'éditer. Elle reste absente avant la première extraction explicite.
 - [`qa-decisions/`](qa-decisions/) : futures décisions ingame immuables ; vide sans décision.
