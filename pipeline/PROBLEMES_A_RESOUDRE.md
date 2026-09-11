@@ -120,6 +120,14 @@ ne sont pas réconciliés par une décision explicite.
   sampler `LINEAR` substitué ; zéro erreur de restauration/shader/OpenGL. Rendu x1 sans halo validé
   par l'utilisateur. Douceur supérieure au x2 expliquée par la résolution source et le rayon du
   noyau en texels, pas par un écart de profil.
+- A/B `d7-20260911-all-sprites-soft025-outline071` rejeté : le contour Dshaders `0.71` produit un
+  rendu noir incompatible avec les sprites upscalés ; l'effet des pixels de bord semi-transparents
+  reste une hypothèse visuelle non démontrée.
+- Candidat installé `d7-20260911-all-sprites-soft025-nooutline` : `Sharpen=-0.25`, couleurs neutres
+  sur `CreatureHD`/`fpSprite`/`fpSELECT`, aucun contour shader (`fpSprite` Dshaders taille `0`, autres
+  profils natifs). Installation vérifiée par le reçu
+  `backups/renderer/20260911T154559944738Z-3fd749f7/renderer-install-receipt.json`, ensemble SHA-256
+  `2B782BAAA4518BC617E19F3F6BEF6E10632A7BE73125808C1FB5623DA7F50602`. QA ingame en attente.
 - Manque : draws Catmull–Rom objet au sol et `fpSELECT`, plus témoin `CreatureHD` dans la même
   session ; ne pas déclarer D7 terminé avant cette couverture.
 

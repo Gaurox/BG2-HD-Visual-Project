@@ -1,6 +1,6 @@
 # Catmull–Rom et suite graphique Dshaders — guide de développement
 
-Statut : **D0–D6 terminés ; D7 partiel : Catmull–Rom x1 `soft035` sans halo validé, couverture objet au sol/`fpSELECT` restante ; tests non exécutés**. Vérification : 2026-09-10.
+Statut : **D0–D6 terminés ; D7 partiel : Catmull–Rom x1 `soft035` sans halo validé ; A/B `soft025` sans contour installé, QA ingame en attente ; couverture objet au sol/`fpSELECT` restante**. Vérification : 2026-09-11.
 Public : agent IA reprenant le développement sans historique de conversation.
 
 ## 1. Mission et reprise
@@ -730,3 +730,17 @@ valide le rendu x1 sans halo. La douceur supérieure au x2 vient de la source x1
 d'échantillons et noyau texel couvrant deux fois plus d'espace linéaire, pas d'un écart de profil.
 Tests non exécutés par choix utilisateur. La couverture Catmull–Rom objet au sol/`fpSELECT` manque ;
 D7 reste incomplet. D8 et release non commencés.
+
+A/B du 2026-09-11 : le candidat `d7-20260911-all-sprites-soft025-outline071`, avec
+`Sharpen=-0.25` et contour Dshaders minimal `0.71`, est rejeté visuellement. Le contour noir est
+incompatible avec les sprites upscalés ; l'interaction avec leurs pixels de bord semi-transparents
+reste une hypothèse utilisateur, pas une cause technique démontrée. Le candidat courant
+`d7-20260911-all-sprites-soft025-nooutline` conserve `Sharpen=-0.25` et les couleurs neutres sur
+`CreatureHD`, `fpSprite` et `fpSELECT`. `fpSprite` utilise `OutlineMode=Dshaders`, `OutlineSize=0` ;
+`CreatureHD` et `fpSELECT` conservent leurs contours natifs, donc aucun contour shader n'est ajouté.
+Installation vérifiée par
+`backups/renderer/20260911T154559944738Z-3fd749f7/renderer-install-receipt.json` : DLL
+`D595949D866A7A3DE90CE250CB319833BE6D90151101129C9CAC924019A826C7`, INI
+`2D6798646EC842C10F12D0AFD76340543C6B4221A9FCF40B998AFC3BA17185A4`, ensemble installé
+`2B782BAAA4518BC617E19F3F6BEF6E10632A7BE73125808C1FB5623DA7F50602`. QA ingame du candidat
+courant en attente ; D7 reste incomplet, D8 et release non commencés.
