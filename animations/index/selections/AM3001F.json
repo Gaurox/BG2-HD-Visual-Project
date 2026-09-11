@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3001F",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9A124097AB3528D211470F3A9D26AAC6BBBF5E3318B923B1ABBAD9EA441E3762",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-d-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "54E1A8214BF4D28AA0E4964594A4794FC29929AA7A3D33A2A0D1FD0E81C691D0",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-d-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-df-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "0085FBD71F7123E4E00906F381373D0400F7722DA21FE3D609EC713861DCBF27",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-df-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v3-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "CB1AC20191A758023BBA4B98B1954EC4F8595F947A1AB195E384734DE302AE3C",
+        "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v3-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-20260911/manifest.json",
+        "manifest_sha256": "B94D26ED5C5C1EDB8EA3E1E93747B8978099D683C4AF3D535E7F651242300796",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-d-20260911/manifest.json",
+        "manifest_sha256": "D3B418C938B0D0226B07C9BADBCF7E365A0D52A13B4085359EE49B53AEC5783B",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-d-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-df-20260911/manifest.json",
+        "manifest_sha256": "DA6DC30FE931E773DE033BABF071A44091548A4FB81300E7CC381DCCFB7043B9",
+        "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-df-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v3-20260911/manifest.json",
+        "manifest_sha256": "345069B53C7BD8E2179121AAB7701F9BB2452F96EA7ACABBFB8E24F8E26CD482",
+        "path": "animations/batches/ar3001-altar-three-seedvr7b-lab-x4-v3-20260911",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-11",
+    "path": "animations/index/qa-decisions/AM3001F/2026-09-11-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+    "sha256": "C9E36BFAB3543E47DB9EB3958474146350C8D7C2212E0E4A6412ED04B8423A8A",
+    "status": "accepted"
+  },
+  "recipe_id": "spline-fit1-multicontour-per-frame-feather4",
+  "resref": "AM3001F",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "E4AEB34C1759892C1A463D9293A0BE236991D1EB5287B3D1D06AB9AF28EF5CD8",
+    "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3001",
+        "manifest_path": "animations/packs-par-zone/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911/AR3001/manifest.json",
+        "manifest_sha256": "C82FD91586F154C67C66FB7AB937E2A9C746CF4754893AA71CE8E88485B74C5F",
+        "path": "animations/packs-par-zone/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911/AR3001",
+        "registry_sha256": "CAADE10E29AC7881C6A4162024162846C8B6A74495E330418E645EADF76D69BD",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "AB121CE82B0F30A5BD3B5C29E7F1209465A05F382B15C1A929957B5FB76148F6",
+    "path": "animations/packs-par-zone/ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3001"
+  ],
+  "updated_at_utc": "2026-09-11T19:47:17Z"
+}
