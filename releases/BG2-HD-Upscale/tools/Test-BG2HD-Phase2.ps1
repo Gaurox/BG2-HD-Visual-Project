@@ -62,6 +62,7 @@ $schemas = @(
     @('dependency-bootstrap.json', 'dependency-bootstrap.schema.json'),
     @('content.json', 'content.schema.json'),
     @('animation-release-candidates.json', 'animation-release-candidates.schema.json'),
+    @('sprite-release-candidates.json', 'sprite-release-candidates.schema.json'),
     @('overlay-sources.json', 'overlay-sources.schema.json'),
     @('licenses-and-exclusions.json', 'licenses-and-exclusions.schema.json'),
     @('renderer-bundle.json', 'renderer-bundle.schema.json'),
@@ -288,7 +289,7 @@ foreach ($entry in @($content | Where-Object { [string]$_.kind -eq 'area-animati
     })
     Require ($approvedCandidate.Count -eq 1) "Contenu animation sans candidat approuve unique : $($entry.area)"
 }
-foreach ($name in @('animation-release-candidates.json', 'content.json', 'components.json')) {
+foreach ($name in @('animation-release-candidates.json', 'sprite-release-candidates.json', 'content.json', 'components.json')) {
     $authority = Join-Path $ReleaseRoot "manifests/$name"
     $mirror = Join-Path $ReleaseRoot "bg2hd/manifests/$name"
     Require (Test-Path -LiteralPath $mirror -PathType Leaf) "Miroir package absent : $name"

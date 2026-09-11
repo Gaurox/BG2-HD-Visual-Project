@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_by", "candidates"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": 1},
+    "generated_by": {"type": "string", "minLength": 1},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "component_id", "component_label", "payload_group", "approval_status", "asset_scope", "source_generation", "qa_approval", "runtime_contract", "payload_projection"],
+        "properties": {
+          "candidate_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "component_id": {"type": "integer", "minimum": 1},
+          "component_label": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "payload_group": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "approval_status": {"const": "approved-for-release"},
+          "asset_scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["family_group", "variant_id", "asset_count", "animation_count", "animation_ids", "asset_keys_sha256", "selection_rows_sha256", "excluded_blocked_asset_count"],
+            "properties": {
+              "family_group": {"const": "playable-characters"},
+              "variant_id": {"const": "x2-nearest"},
+              "asset_count": {"type": "integer", "minimum": 1},
+              "animation_count": {"type": "integer", "minimum": 1},
+              "animation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^0x[A-F0-9]{4}$"}},
+              "asset_keys_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "selection_rows_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "excluded_blocked_asset_count": {"type": "integer", "minimum": 0}
+            }
+          },
+          "source_generation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["generation_id", "current_generation", "current_generation_sha256", "build_manifest", "build_manifest_sha256", "sealed_verification", "sealed_verification_sha256", "runtime_manifest", "runtime_manifest_sha256", "job_file", "job_sha256"],
+            "properties": {
+              "generation_id": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "current_generation": {"type": "string", "minLength": 1},
+              "current_generation_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "build_manifest": {"type": "string", "minLength": 1},
+              "build_manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "sealed_verification": {"type": "string", "minLength": 1},
+              "sealed_verification_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "runtime_manifest": {"type": "string", "minLength": 1},
+              "runtime_manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "job_file": {"type": "string", "minLength": 1},
+              "job_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+            }
+          },
+          "qa_approval": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256", "qa_state", "filter"],
+            "properties": {
+              "path": {"type": "string", "pattern": "^sprite/index/qa-decisions/playable-characters/[A-Za-z0-9._-]+[.]json$"},
+              "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "qa_state": {"const": "passed"},
+              "filter": {"const": "CatmullRom"}
+            }
+          },
+          "runtime_contract": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["dll_sha256", "catalog_magic", "catalog_version", "shard_registry_version", "frame_storage", "scale", "filter", "selected_animation_ids", "excluded_animation_ids"],
+            "properties": {
+              "dll_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "catalog_magic": {"const": "IEECSNC"},
+              "catalog_version": {"const": 2},
+              "shard_registry_version": {"const": 5},
+              "frame_storage": {"const": "XPRESS_HUFF-or-raw-per-frame-v1"},
+              "scale": {"const": 2},
+              "filter": {"const": "CatmullRom"},
+              "selected_animation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^0x[A-F0-9]{4}$"}},
+              "excluded_animation_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^0x[A-F0-9]{4}$"}}
+            }
+          },
+          "payload_projection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status", "content_manifest_integration", "reason"],
+            "properties": {
+              "status": {"const": "pending-playable-only-catalog"},
+              "content_manifest_integration": {"const": false},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  }
+}

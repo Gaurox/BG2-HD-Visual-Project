@@ -16,6 +16,7 @@ neither is a release source.
 | `content.json` | source, destination, component, byte count and SHA-256 per payload file |
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
 | `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
+| `sprite-release-candidates.json` | approved sprite scope, sealed generation, QA and runtime contract |
 | `overlay-sources.json` | authoritative stock/x2/x4 decision and hashes for shared liquid resrefs |
 | `renderer-bundle.json` | frozen renderer candidate inventory |
 | `licenses-and-exclusions.json` | provenance status and forbidden payload classes |
@@ -23,6 +24,9 @@ neither is a release source.
 Every content entry must have a canonical source, normalized destination,
 component ID, install order, byte count, SHA-256 and approved QA status. A
 destination collision is accepted only when explicitly ordered and validated.
+
+Sprite candidates remain `approved`, not `integrated`, until a scoped catalogue excludes every
+unapproved animation and its files are projected into `content.json`.
 
 `areas.csv` is the inclusion register for maps. For every `validated-installed`
 day/night variant, `New-BG2HD-ContentManifest.ps1` requires exactly one

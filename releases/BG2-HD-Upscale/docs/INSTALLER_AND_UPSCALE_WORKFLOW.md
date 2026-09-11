@@ -21,6 +21,7 @@ corresponding validation unclaimed.
 | Payload files | generated `manifests/content.json` |
 | Animation candidates | `manifests/animation-release-candidates.json` |
 | Effect candidates | `manifests/effect-release-candidates.json` |
+| Sprite candidates | `manifests/sprite-release-candidates.json` |
 | Shared overlays | `manifests/overlay-sources.json` |
 | Runtime/bootstrap | `runtime-compatibility.json`, `dependency-bootstrap.json`, `renderer-bundle.json` |
 | Rights/exclusions | `licenses-and-exclusions.json` |
@@ -48,6 +49,8 @@ After approval:
    appropriate source manifest/generator.
 2. Maps must match `areas.csv` and be x4 `validated-installed`; UI must declare its renderer keys
    and independent rollback state; overlays follow only `overlay-sources.json`.
+   A sprite candidate pins the selected asset digests, sealed generation, QA and runtime hashes.
+   Reject content integration if its cumulative catalogue contains an excluded animation.
 3. Regenerate only the manifest tier. Ask the test choice separately, then run its static gate only
    if the corresponding test option was authorized:
 

@@ -15,6 +15,8 @@ palettes). Il ne dépend pas du pipeline maps.
    `index/path-migrations.json` : anciens chemins d'artefacts immuables.
 6. Les quatre CSV d'inventaire : animations, familles, ressources et items.
 7. `current-generation.json` et `active-test.json` du catalogue cumulatif.
+8. Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json` ; `approved` sélectionne,
+   seul `content.json` prouve `integrated`.
 
 `index/extractions.csv` est une projection des sources effectivement matérialisées. Son absence
 signifie qu'aucune extraction centralisée n'a encore été exécutée.
