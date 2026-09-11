@@ -34,3 +34,14 @@ class TopGaussianAlphaTests(unittest.TestCase):
         self.assertLess(corrected[6, 8], 255)
         self.assertGreater(corrected[6, 8], corrected[5, 8])
         np.testing.assert_array_equal(corrected[10:], alpha[10:].astype(np.float32))
+
+
+class CanvasEdgeRampTests(unittest.TestCase):
+    def test_selected_edges_leave_bottom_center_intact(self) -> None:
+        ramp = feather.canvas_edge_ramp(12, 12, 4.0, ("top", "right", "left"))
+
+        self.assertEqual(ramp[0, 6], 0.0)
+        self.assertEqual(ramp[6, 0], 0.0)
+        self.assertEqual(ramp[6, 11], 0.0)
+        self.assertEqual(ramp[11, 6], 1.0)
+        self.assertEqual(ramp[10, 6], 1.0)

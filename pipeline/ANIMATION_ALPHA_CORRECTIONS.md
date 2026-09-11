@@ -11,9 +11,10 @@ alpha nul, suivre [`ANIMATION_BLENDED_RGB_NEUTRALISATION.md`](ANIMATION_BLENDED_
 | Défaut | Outil |
 |---|---|
 | Bord dur de silhouette | `build_alpha_feather.py --inner-radius-x4` |
-| Rectangle du canvas | `--canvas-radius-x4` |
+| Rectangle du canvas | `--canvas-radius-x4` ; `--canvas-edges top right left` pour préserver le bas ; `--canvas-bottom-radius-x4` pour y conserver un fondu distinct |
 | Fond sombre distinct du sujet | `--luminance-low` + `--luminance-high` |
 | Halo ovale | `--radial-outer-x-x4`, `--radial-outer-y-x4` |
+| Foyer `Blended` : contour fondu + halo borné | `build_animation_contour_aura_pack.py` ; paramètres FPIT1S : 12 / sigma 5 / gain 0,9 / marge 14, RGB opaque le plus proche dans le halo puis prémultiplié |
 | Raccord haut binaire / ilots de pixels | `--top-gaussian-sigma-x4` + `--top-gaussian-full-height-x4` |
 | Contours Fit 1 + raccord haut reconstruit | `build_spline_top_reconstructed_alpha.py` |
 | Masque peint | `build_manual_alpha_mask_30fps_v2.py` |

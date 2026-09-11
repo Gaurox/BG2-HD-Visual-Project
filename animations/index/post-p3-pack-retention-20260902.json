@@ -326,6 +326,41 @@
       "created_utc": "2026-09-11T20:40:12.893661+00:00",
       "classification": "pending-qa-installation-evidence",
       "reason": "Feuille complète AR0411, 174233344 octets (<512 Mio) : état de test complet qui conserve BUBBLES2 x4 et tous les effets AR0411 précédents, puis ajoute AM0411RN x4 30 fps ; fusion sans rééchantillonnage. Aucune nouvelle QA ni release n'est inférée."
+    },
+    {
+      "name": "combined-20260911-ar3011-am3011a-feather16-am3011b-flame",
+      "manifest_sha256": "C0B733BD493101CC89614236787C8AA6293D8F95A9C2972AF9378749CB985C05",
+      "created_utc": "2026-09-11T21:00:59.139555+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "Feuille AR3011 : AM3011A x4 SeedVR 7B LAB avec fondu intérieur 16 px x4 sur tout le contour ; AM3011B x4 SeedVR 7B LAB, alpha binaire conservé et RGB nul sous alpha nul pour le rendu Blended de flamme. Préflight installateur validé ; aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "combined-20260911-ar3011-am3011a-feather16-am3011b-xbr30fps-contour-aura",
+      "manifest_sha256": "C1C58F809860F4DE54F6E9624056BE5F315490004C1654B4D97180DD12C06CC3",
+      "created_utc": "2026-09-11T21:18:07.855656+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille AR3011 installée pour contrôle ingame : AM3011A x4 SeedVR 7B LAB avec fondu intérieur 16 px x4 ; AM3011B xBR2×2 x4, TimedTimeline 30 fps Apollo 8, RGB hors alpha dilaté avant interpolation, fondu intérieur 12 px x4, halo gaussien borné sigma 5/gain 0,9, marge canvas 14 px x4 et RGB prémultiplié. Prévalidation puis installation transactionnelle de la seule zone AR3011 ; sauvegarde area-test associée. Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "combined-20260911-ar3011-am3011a-feather64-am3011b-xbr30fps-contour-aura",
+      "manifest_sha256": "CA8A3EF66CCCF94793B70F4B6741B1D5335583130D41E3A22BD3329B81EAF572",
+      "created_utc": "2026-09-11T21:23:33.946049+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille AR3011 installée pour contrôle ingame : AM3011A x4 SeedVR 7B LAB avec fondu intérieur 64 px x4 (4× la variante précédente), construit depuis le rendu spatial avant alpha ; AM3011B xBR2×2 x4, TimedTimeline 30 fps Apollo 8, fondu intérieur 12 px x4, halo gaussien borné sigma 5/gain 0,9, marge canvas 14 px x4 et RGB prémultiplié, inchangé. Prévalidation puis remplacement transactionnel de la seule zone AR3011 ; sauvegarde area-test associée. Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura",
+      "manifest_sha256": "EDAD584E7D20249A3013815BACDF0B1B573E90580F12C6F26C95BE93A8D7E7E6",
+      "created_utc": "2026-09-11T21:29:34.919067+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille AR3011 installée pour contrôle ingame : AM3011A x4 SeedVR 7B LAB reprend le rendu spatial sans fondu de silhouette, avec fondu canvas 256 px x4 sur haut/gauche/droite et fondu canvas 64 px x4 conservé au bas ; AM3011B xBR2×2 x4, TimedTimeline 30 fps Apollo 8, fondu intérieur 12 px x4, halo gaussien borné sigma 5/gain 0,9, marge canvas 14 px x4 et RGB prémultiplié, inchangé. Prévalidation puis remplacement transactionnel de la seule zone AR3011 ; sauvegarde area-test associée. Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2",
+      "manifest_sha256": "112B63D8E8C9506DFCFE336EFD386C31FA6F8F93F96D684081A2424AD4B6B1E5",
+      "created_utc": "2026-09-11T21:35:42.730617+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille AR3011 installée pour contrôle ingame : AM3011A conserve le fondu canvas 256 px x4 haut/gauche/droite et 64 px x4 bas ; AM3011B xBR2×2 x4, TimedTimeline 30 fps Apollo 8, contour fondu 12 px x4 et halo sigma 5/gain 0,9. Correctif : les 59 946 pixels du halo hors alpha source héritent le RGB opaque le plus proche avant prémultiplication, supprimant l'apparition du chroma vert de palette ; les rares teintes jaune-vert des seules phases Apollo intermédiaires restent documentées. Prévalidation puis remplacement transactionnel de la seule zone AR3011 ; sauvegarde area-test associée. Aucune QA ingame ni release n'est inférée."
     }
   ],
   "updated_on": "2026-09-11",

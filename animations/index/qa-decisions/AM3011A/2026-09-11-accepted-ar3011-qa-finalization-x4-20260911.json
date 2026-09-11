@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM3011A",
+  "correction_id": "canvas-feather256-top-left-right-bottom64x4",
+  "decision": "Validation ingame complète : fondu canvas 256 px x4 haut/gauche/droite et 64 px x4 bas conforme.",
+  "decision_date": "2026-09-11",
+  "decision_id": "2026-09-11-accepted-ar3011-qa-finalization-x4-20260911",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar3011-qa-finalization-x4-20260911/manifest.json",
+    "manifest_sha256": "9EBDCA6B45E2545EDD0D0E29EAA5C558588DCF78B5B440BAAFC97BC9D70DE560",
+    "path": "animations/batches/ar3011-qa-finalization-x4-20260911",
+    "schema": "bg2-upscale-animation-qa-finalization-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "recipe_id": "seedvr2-7b-int8-lab-x4",
+  "recorded_at_utc": "2026-09-11T21:40:46Z",
+  "resref": "AM3011A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3011",
+        "manifest_path": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2/AR3011/manifest.json",
+        "manifest_sha256": "8EE21CA025EDC8F767C5AD68DD3BB801E7C01B62F407E36627CB016DE068C2A3",
+        "path": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2/AR3011",
+        "registry_sha256": "2626D00D5B89BF3F8BFB795647531BEC4484C95138C3986190B1D2E34E923169",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2/manifest.json",
+    "manifest_sha256": "112B63D8E8C9506DFCFE336EFD386C31FA6F8F93F96D684081A2424AD4B6B1E5",
+    "path": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3011"
+  ]
+}

@@ -6,8 +6,8 @@ smoothstep ramps —
   - inner-distance feather: fades to 0 within `--inner-radius-x4` px of the
     mask's own silhouette edge (canvas exterior counts as transparent), for a
     hard outline around the object itself;
-  - canvas-edge feather: fades to 0 within `--canvas-radius-x4` px of the four
-    outer canvas edges, for a visible frame-rectangle boundary;
+  - canvas-edge feather: fades to 0 within `--canvas-radius-x4` px of selected
+    outer canvas edges (all four by default), for a visible frame-rectangle boundary;
   - luminance feather: fades to 0 for pixels whose RGB mean luminance falls
     below `--luminance-low`, ramping up to full source alpha at
     `--luminance-high`. Useful when a baked-in background fills most of the
@@ -90,10 +90,24 @@ def inner_feather_ramp(alpha: np.ndarray, radius: float) -> np.ndarray:
     return ramp * ramp * (3.0 - 2.0 * ramp)
 
 
-def canvas_edge_ramp(width: int, height: int, radius: float) -> np.ndarray:
-    """Ramp fading strictly inward from the four outer canvas edges."""
+CANVAS_EDGES = ("top", "right", "bottom", "left")
+
+
+def canvas_edge_ramp(width: int, height: int, radius: float, edges: tuple[str, ...]) -> np.ndarray:
+    """Ramp fading strictly inward from selected outer canvas edges."""
+    require(radius > 0, "Le rayon de canvas doit etre strictement positif.")
+    require(edges, "Au moins un bord de canvas doit etre selectionne.")
     yy, xx = np.indices((height, width))
-    distance = np.minimum.reduce((xx, width - 1 - xx, yy, height - 1 - yy))
+    distances: list[np.ndarray] = []
+    if "top" in edges:
+        distances.append(yy)
+    if "right" in edges:
+        distances.append(width - 1 - xx)
+    if "bottom" in edges:
+        distances.append(height - 1 - yy)
+    if "left" in edges:
+        distances.append(xx)
+    distance = np.minimum.reduce(distances)
     ramp = np.clip(distance.astype(np.float32) / radius, 0.0, 1.0)
     return ramp * ramp * (3.0 - 2.0 * ramp)
 
@@ -212,6 +226,14 @@ def main() -> None:
         help="fondu de bordure du canvas rectangulaire, 0 = desactive",
     )
     parser.add_argument(
+        "--canvas-edges", nargs="+", choices=CANVAS_EDGES, default=list(CANVAS_EDGES),
+        help="bords canvas a fondre (defaut : top right bottom left)",
+    )
+    parser.add_argument(
+        "--canvas-bottom-radius-x4", type=float, default=0.0,
+        help="fondu additionnel reserve au bord bas du canvas, 0 = desactive",
+    )
+    parser.add_argument(
         "--luminance-low", type=float, default=None,
         help="fondu par luminance RGB: alpha 0 en dessous de ce niveau (0-255)",
     )
@@ -259,6 +281,11 @@ def main() -> None:
     )
     require(args.inner_radius_x4 >= 0, "Le rayon interieur ne peut pas etre negatif.")
     require(args.canvas_radius_x4 >= 0, "Le rayon de canvas ne peut pas etre negatif.")
+    require(args.canvas_bottom_radius_x4 >= 0, "Le rayon du bas ne peut pas etre negatif.")
+    require(
+        len(set(args.canvas_edges)) == len(args.canvas_edges),
+        "Chaque bord de canvas doit etre specifie au plus une fois.",
+    )
     use_luminance = args.luminance_low is not None or args.luminance_high is not None
     if use_luminance:
         require(
@@ -283,7 +310,8 @@ def main() -> None:
         )
         require(args.top_gaussian_transition_x4 >= 0, "--top-gaussian-transition-x4 ne peut pas etre negatif.")
     require(
-        args.inner_radius_x4 > 0 or args.canvas_radius_x4 > 0 or use_luminance or use_radial or use_top_gaussian,
+        args.inner_radius_x4 > 0 or args.canvas_radius_x4 > 0 or args.canvas_bottom_radius_x4 > 0
+        or use_luminance or use_radial or use_top_gaussian,
         "Au moins un fondu (interieur, canvas, luminance, radial ou gaussien haut) doit etre actif.",
     )
     require(not output.exists() or not any(output.iterdir()), f"sortie non vide : {output}")
@@ -314,7 +342,9 @@ def main() -> None:
     if args.inner_radius_x4:
         label_parts.append(f"objet {args.inner_radius_x4:g}px")
     if args.canvas_radius_x4:
-        label_parts.append(f"canvas {args.canvas_radius_x4:g}px")
+        label_parts.append(f"canvas {args.canvas_radius_x4:g}px {'/'.join(args.canvas_edges)}")
+    if args.canvas_bottom_radius_x4:
+        label_parts.append(f"canvas bas {args.canvas_bottom_radius_x4:g}px")
     if use_luminance:
         label_parts.append(f"lum {args.luminance_low:g}-{args.luminance_high:g}")
     if use_radial:
@@ -329,7 +359,7 @@ def main() -> None:
     records: list[dict[str, Any]] = []
     preview_original: Image.Image | None = None
     preview_faded: Image.Image | None = None
-    canvas_ramp_cache: dict[tuple[int, int], np.ndarray] = {}
+    canvas_ramp_cache: dict[tuple[int, int, float, tuple[str, ...]], np.ndarray] = {}
     for index, frame in enumerate(source_frames):
         require(int(frame["frame"]) == index, "index de frame non contigu.")
         raw_relative = str(frame["raw_rgba_xn"])
@@ -353,9 +383,18 @@ def main() -> None:
         if args.inner_radius_x4:
             faded = faded * inner_feather_ramp(source_alpha, args.inner_radius_x4)
         if args.canvas_radius_x4:
-            key = (physical_width, physical_height)
+            key = (physical_width, physical_height, args.canvas_radius_x4, tuple(args.canvas_edges))
             if key not in canvas_ramp_cache:
-                canvas_ramp_cache[key] = canvas_edge_ramp(physical_width, physical_height, args.canvas_radius_x4)
+                canvas_ramp_cache[key] = canvas_edge_ramp(
+                    physical_width, physical_height, args.canvas_radius_x4, tuple(args.canvas_edges)
+                )
+            faded = faded * canvas_ramp_cache[key]
+        if args.canvas_bottom_radius_x4:
+            key = (physical_width, physical_height, args.canvas_bottom_radius_x4, ("bottom",))
+            if key not in canvas_ramp_cache:
+                canvas_ramp_cache[key] = canvas_edge_ramp(
+                    physical_width, physical_height, args.canvas_bottom_radius_x4, ("bottom",)
+                )
             faded = faded * canvas_ramp_cache[key]
         if use_luminance:
             faded = faded * luminance_ramp(source_pixels[:, :, :3], args.luminance_low, args.luminance_high)
@@ -434,6 +473,8 @@ def main() -> None:
         operation_names.append("inner-distance-feather")
     if args.canvas_radius_x4:
         operation_names.append("canvas-edge-feather")
+    if args.canvas_bottom_radius_x4:
+        operation_names.append("canvas-bottom-edge-feather")
     if use_luminance:
         operation_names.append("luminance-feather")
     if use_radial:
@@ -459,7 +500,11 @@ def main() -> None:
             "radius_logical_x1": (args.inner_radius_x4 / 4.0) if args.inner_radius_x4 else None,
             "canvas_edge_radius_physical_x4": args.canvas_radius_x4 or None,
             "canvas_edge_radius_logical_x1": (args.canvas_radius_x4 / 4.0) if args.canvas_radius_x4 else None,
-            "edges": ["top", "right", "bottom", "left"] if args.canvas_radius_x4 else None,
+            "edges": list(args.canvas_edges) if args.canvas_radius_x4 else None,
+            "canvas_bottom_edge_radius_physical_x4": args.canvas_bottom_radius_x4 or None,
+            "canvas_bottom_edge_radius_logical_x1": (
+                args.canvas_bottom_radius_x4 / 4.0 if args.canvas_bottom_radius_x4 else None
+            ),
             "luminance_low": args.luminance_low,
             "luminance_high": args.luminance_high,
             "radial_outer_x_physical_x4": args.radial_outer_x_x4,
