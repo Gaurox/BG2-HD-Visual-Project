@@ -1,0 +1,105 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM1008B",
+  "correction_id": "spline-fit1-multicontour-per-frame-feather4",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9E6E9B6560C5F754257970DFBDCB137A82B8C089F00B05E4699082C2218B27BB",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "D50F3368676C6D8EA1D7658231552EBED9E0149D426E5F2CF67568840C27E8CE",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-bl-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "5AD8783CD3D30202874042284FE9882B48D84E1C724FEA5BA953093430BB6F6A",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-bl-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-seedvr7b-lab-x4-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9C756EFC324CB632B4120BBE4EB582432930B827B6BD2D17A50C794B44C20CC8",
+        "path": "animations/batches/ar1008-twisted-rune-seedvr7b-lab-x4-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-20260911/manifest.json",
+        "manifest_sha256": "888439CF152D453D00E5206BC6AD8E03F3B7512F15CDDCBB1AA6CC8D881BB238",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911/manifest.json",
+        "manifest_sha256": "CA4EE28373EF6D92CF34DAFF2312506131AA4C58A0F831238AD79429A712D9ED",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-bl-20260911/manifest.json",
+        "manifest_sha256": "6D655D6FB0F94045DB061185B3E9AAF200B9A07D9F3AD9EE3C7E924C7BD4169C",
+        "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-bl-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar1008-twisted-rune-seedvr7b-lab-x4-20260911/manifest.json",
+        "manifest_sha256": "9CB7AB2F329EF264D82240D86CE55BDFEC5ECEF3621C4BE386B90396F459EB02",
+        "path": "animations/batches/ar1008-twisted-rune-seedvr7b-lab-x4-20260911",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-11",
+    "path": "animations/index/qa-decisions/AM1008B/2026-09-11-accepted-ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+    "sha256": "6165D4C91207FAB144E493B6E1B0C3DC2913A1A6349CD9CC26B6297F0861B7A0",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-lab-x4-apo8-30fps-spline-fit1-feather4",
+  "resref": "AM1008B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "3062A07A170EF3444B78A1C6D0A016C4D08A6E89D59CCBF6132C9B5F7CAEC665",
+    "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1008",
+        "manifest_path": "animations/packs-par-zone/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911/AR1008/manifest.json",
+        "manifest_sha256": "47C83D6F830E2B15D30B5FDEB3ADA731909A0F4669EFC8D6FFFE20472BA544AF",
+        "path": "animations/packs-par-zone/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911/AR1008",
+        "registry_sha256": "1917BE7C06EADED616BA0E83559BD5CD4B92224A34EB0C2E55ECC2005D4C24F1",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "15C4B910BB288B8B2A1E32375E83343F38933B0A2562A7691C56ADD6FB27E96D",
+    "path": "animations/packs-par-zone/ar1008-twisted-rune-apo8-x4-30fps-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1008"
+  ],
+  "updated_at_utc": "2026-09-11T20:03:06Z"
+}
