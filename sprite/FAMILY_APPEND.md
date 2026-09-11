@@ -30,11 +30,11 @@ resource_count>0
 frame_count>0
 ```
 
-Pour MonsterIcewind, exiger :
+Pour Monster ou MonsterIcewind, exiger l'un des couples exacts :
 
 ```text
-runtime_profile=monster-icewind-bg2ee-2.7.3.0
-animation_id=0xE000..0xEFFF
+runtime_profile=monster-bg2ee-2.7.3.0         + animation_id=0x7000..0x7FFF
+runtime_profile=monster-icewind-bg2ee-2.7.3.0 + animation_id=0xE000..0xEFFF
 layer_kind=body
 variant_kind=base-resref
 ```
@@ -131,8 +131,8 @@ Batch Character : lancer `prepare-data --resume --defer-full-verify` sur chaque 
 
 Lire le job catalogue depuis l'état actif ; ne pas le choisir manuellement.
 
-`$member` peut être soit un job MonsterIcewind unitaire préparé, soit un agrégat Character complet
-préparé. Le résultat indique `added_member_kind=family` ou `character-complete`.
+`$member` peut être soit un job Monster/MonsterIcewind unitaire préparé, soit un agrégat Character
+complet préparé. Le résultat indique `added_member_kind=family` ou `character-complete`.
 
 ```powershell
 $catalogRun = 'sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2'

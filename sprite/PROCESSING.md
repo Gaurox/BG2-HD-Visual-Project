@@ -26,7 +26,7 @@ frame_count>0
 ```
 
 Une famille vide reste exclue avec son blocker ; ne pas créer de job vide.
-Profils automatisés actuels : `character-bg2ee-2.7.3.0` et
+Profils automatisés actuels : `character-bg2ee-2.7.3.0`, `monster-bg2ee-2.7.3.0` et
 `monster-icewind-bg2ee-2.7.3.0`. Pour tout autre profil : inventaire seulement, arrêt.
 
 ## Chaîne courante
@@ -35,7 +35,8 @@ Profils automatisés actuels : `character-bg2ee-2.7.3.0` et
    `processing.csv`.
 2. Planifier le job :
    - Character complet : `generate_character_complete_x2_jobs.py`, voir `FAMILY_APPEND.md` ;
-   - MonsterIcewind unitaire : `generate_sprite_family_append.py member`, voir `FAMILY_APPEND.md`.
+   - Monster ou MonsterIcewind unitaire : `generate_sprite_family_append.py member`, voir
+     `FAMILY_APPEND.md`.
 3. Publier le job seulement après revue : `--run` pour Character ; retirer `--dry-run` pour membre.
 4. Planifier puis extraire les BAM une fois dans le store central :
 

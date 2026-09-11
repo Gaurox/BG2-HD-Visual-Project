@@ -167,6 +167,7 @@ CATALOG_LOGICAL_CONTENT_DIGEST_DOMAIN = b"IEECSNC-LOGICAL-CONTENT-V1\0"
 CATALOG_SHARD_ANIMATION_SENTINEL = 0xFFFF
 CATALOG_OWNER_CHARACTER = 1
 CATALOG_OWNER_MONSTER_ICEWIND = 2
+CATALOG_OWNER_MONSTER = 3
 XBR_OUTPUT_BATCH_BUDGET_BYTES = 64 * 1024 * 1024
 # xBR2x calls with blend disabled are byte-compatible across these audited
 # adapter revisions. Preserve their sealed x2 components when appending a
@@ -219,6 +220,7 @@ CHARACTER_EQUIPMENT_ITEM_TYPES = {
 }
 SUPPORTED_RUNTIME_PROFILES = frozenset(
     {
+        "monster-bg2ee-2.7.3.0",
         "monster-icewind-bg2ee-2.7.3.0",
         "character-bg2ee-2.7.3.0",
     }
@@ -591,6 +593,10 @@ def load_job(job_file: Path) -> dict[str, Any]:
         raise RuntimeError("0x5000/0x6000 animations require the Character runtime profile")
     if runtime_profile == "character-bg2ee-2.7.3.0" and animation_family not in {0x5000, 0x6000}:
         raise RuntimeError("Character runtime profile requires a 0x5000/0x6000 animation")
+    if animation_family == 0x7000 and runtime_profile != "monster-bg2ee-2.7.3.0":
+        raise RuntimeError("0x7000 animations require the Monster runtime profile")
+    if runtime_profile == "monster-bg2ee-2.7.3.0" and animation_family != 0x7000:
+        raise RuntimeError("Monster runtime profile requires a 0x7000 animation")
     if runtime_profile == "monster-icewind-bg2ee-2.7.3.0" and animation_family != 0xE000:
         raise RuntimeError("MonsterIcewind runtime profile requires a 0xE000 animation")
     if runtime_profile == "character-bg2ee-2.7.3.0":
@@ -3872,6 +3878,8 @@ def catalog_owner_for_profile(profile: str) -> int:
         return CATALOG_OWNER_CHARACTER
     if profile == "monster-icewind-bg2ee-2.7.3.0":
         return CATALOG_OWNER_MONSTER_ICEWIND
+    if profile == "monster-bg2ee-2.7.3.0":
+        return CATALOG_OWNER_MONSTER
     raise RuntimeError(f"unsupported catalog runtime profile: {profile!r}")
 
 
@@ -4140,6 +4148,8 @@ def inspect_registry_catalog(
             owner == CATALOG_OWNER_CHARACTER and family in {0x5000, 0x6000}
         ) or (
             owner == CATALOG_OWNER_MONSTER_ICEWIND and family == 0xE000
+        ) or (
+            owner == CATALOG_OWNER_MONSTER and family == 0x7000
         )
         if (
             animation_id in {0, CATALOG_SHARD_ANIMATION_SENTINEL}
@@ -6762,6 +6772,7 @@ def catalog_manifest_animations(
     owner_names = {
         CATALOG_OWNER_CHARACTER: "Character",
         CATALOG_OWNER_MONSTER_ICEWIND: "MonsterIcewind",
+        CATALOG_OWNER_MONSTER: "Monster",
     }
     return [
         {
@@ -8981,7 +8992,11 @@ def runtime_log_session_after_install(
 def runtime_owner_labels(profile: str) -> tuple[str, str]:
     if profile == "character-bg2ee-2.7.3.0":
         return "Character::Render", "CGameAnimationTypeCharacter::Render"
-    return "MonsterIcewind::Render", "CGameAnimationTypeMonsterIcewind::Render"
+    if profile == "monster-icewind-bg2ee-2.7.3.0":
+        return "MonsterIcewind::Render", "CGameAnimationTypeMonsterIcewind::Render"
+    if profile == "monster-bg2ee-2.7.3.0":
+        return "Monster::Render", "CGameAnimationTypeMonster::Render"
+    raise RuntimeError(f"unsupported runtime profile: {profile!r}")
 
 
 def animation_composition_lines(
@@ -9919,6 +9934,7 @@ def sealed_catalog_generation_integrity(
                 owner_names = {
                     CATALOG_OWNER_CHARACTER: "Character",
                     CATALOG_OWNER_MONSTER_ICEWIND: "MonsterIcewind",
+                    CATALOG_OWNER_MONSTER: "Monster",
                 }
                 for manifest_animation, binary_animation in zip(
                     manifest_animations, catalog_info["animations"]
@@ -9932,11 +9948,10 @@ def sealed_catalog_generation_integrity(
                         != binary_animation["component_indices"]
                         or manifest_animation.get("runtime_profile")
                         not in SUPPORTED_RUNTIME_PROFILES
-                        or (
-                            manifest_animation.get("runtime_profile")
-                            == "character-bg2ee-2.7.3.0"
+                        or catalog_owner_for_profile(
+                            str(manifest_animation.get("runtime_profile"))
                         )
-                        != (binary_animation["owner"] == CATALOG_OWNER_CHARACTER)
+                        != binary_animation["owner"]
                     ):
                         manifest_animation_matches = False
                         break

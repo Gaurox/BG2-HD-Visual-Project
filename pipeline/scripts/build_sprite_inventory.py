@@ -376,6 +376,8 @@ def current_runtime(
     family = animation_id & 0xF000
     if family in {0x5000, 0x6000} and animation_type in {"5000", "6000"}:
         return "character-bg2ee-2.7.3.0", section == "character"
+    if family == 0x7000 and animation_type == "7000":
+        return "monster-bg2ee-2.7.3.0", section == "monster"
     if family == 0xE000 and animation_type == "E000":
         return "monster-icewind-bg2ee-2.7.3.0", section == "monster_icewind"
     return "", False

@@ -691,22 +691,25 @@ function Convert-Owner($Value, [string]$Label) {
     if ($Value -is [string]) {
         if ([string]::Equals([string]$Value, 'Character', [System.StringComparison]::Ordinal)) { return 1 }
         if ([string]::Equals([string]$Value, 'MonsterIcewind', [System.StringComparison]::Ordinal)) { return 2 }
-        throw "$Label doit être Character ou MonsterIcewind."
+        if ([string]::Equals([string]$Value, 'Monster', [System.StringComparison]::Ordinal)) { return 3 }
+        throw "$Label doit être Character, MonsterIcewind ou Monster."
     }
     $owner = [int]$Value
-    if ($owner -notin @(1, 2)) { throw "$Label doit valoir 1 ou 2." }
+    if ($owner -notin @(1, 2, 3)) { throw "$Label doit valoir 1, 2 ou 3." }
     return $owner
 }
 
 function Get-OwnerName([int]$Owner) {
     if ($Owner -eq 1) { return 'Character' }
     if ($Owner -eq 2) { return 'MonsterIcewind' }
+    if ($Owner -eq 3) { return 'Monster' }
     throw "Owner binaire invalide : $Owner"
 }
 
 function Get-OwnerRuntimeProfile([int]$Owner) {
     if ($Owner -eq 1) { return 'character-bg2ee-2.7.3.0' }
     if ($Owner -eq 2) { return 'monster-icewind-bg2ee-2.7.3.0' }
+    if ($Owner -eq 3) { return 'monster-bg2ee-2.7.3.0' }
     throw "Owner binaire invalide : $Owner"
 }
 
@@ -1361,7 +1364,8 @@ function Read-Catalog([string]$Path) {
             $members = [System.BitConverter]::ToUInt32($entry, 12)
             $family = $animationId -band 0xF000
             $ownerMatches = ($owner -eq 1 -and $family -in @(0x5000, 0x6000)) -or
-                ($owner -eq 2 -and $family -eq 0xE000)
+                ($owner -eq 2 -and $family -eq 0xE000) -or
+                ($owner -eq 3 -and $family -eq 0x7000)
             if ($animationId -lt 1 -or $animationId -gt 65534 -or
                 $animationId -le $previousAnimationId -or -not $ownerMatches -or
                 $members -lt 1 -or [uint64]$membershipStart -ne $nextMembership -or
@@ -1705,7 +1709,10 @@ function Assert-SourceMembers($Build, [string]$JobPath, $Catalog) {
             throw "Animation du membre absente du catalogue : $(Format-AnimationId $animationId)"
         }
         $runtimeProfile = [string](Get-RequiredProperty $member 'runtime_profile' 'build.source_members[]')
-        if ($runtimeProfile -notin @('character-bg2ee-2.7.3.0', 'monster-icewind-bg2ee-2.7.3.0')) {
+        if ($runtimeProfile -notin @(
+                'character-bg2ee-2.7.3.0',
+                'monster-icewind-bg2ee-2.7.3.0',
+                'monster-bg2ee-2.7.3.0')) {
             throw "Profil runtime source non supporté : $runtimeProfile"
         }
         $binaryAnimation = @($Catalog.animations | Where-Object { $_.animation_id -eq $animationId })[0]

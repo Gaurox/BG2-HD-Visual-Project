@@ -19,6 +19,7 @@ if ($jobSchema -notin @(
     throw "Schéma de job non supporté : $($job.schema)"
 }
 $supportedRuntimeProfiles = @(
+    'monster-bg2ee-2.7.3.0',
     'monster-icewind-bg2ee-2.7.3.0',
     'character-bg2ee-2.7.3.0'
 )

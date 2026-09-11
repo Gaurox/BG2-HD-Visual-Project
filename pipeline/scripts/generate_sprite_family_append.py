@@ -258,12 +258,13 @@ def load_inventory_family(families_path: Path, family_id: str) -> InventoryFamil
 
 
 def assert_body_base_resref_adapter(family: InventoryFamily) -> None:
-    if (
-        family.runtime_profile != "monster-icewind-bg2ee-2.7.3.0"
-        or family.engine_section != "monster_icewind"
-    ):
+    supported = {
+        ("monster-bg2ee-2.7.3.0", "monster"),
+        ("monster-icewind-bg2ee-2.7.3.0", "monster_icewind"),
+    }
+    if (family.runtime_profile, family.engine_section) not in supported:
         raise RuntimeError(
-            "family-job supports MonsterIcewind leaves only; use the complete "
+            "family-job supports Monster and MonsterIcewind leaves only; use the complete "
             "Character generator for Character animations"
         )
     if family.layer_kind != "body" or family.variant_kind != "base-resref":
@@ -277,8 +278,11 @@ def validate_member_template(template_path: Path, family: InventoryFamily) -> di
     template_path = require_existing_job_path(resolve_path(template_path), "--template-job")
     template = load_job(template_path)
     animation = template["animation"]
-    if animation.get("runtime_profile") != family.runtime_profile:
-        raise RuntimeError("template runtime profile differs from the selected inventory family")
+    if animation.get("runtime_profile") not in {
+        "monster-bg2ee-2.7.3.0",
+        "monster-icewind-bg2ee-2.7.3.0",
+    }:
+        raise RuntimeError("template must use a Monster or MonsterIcewind runtime profile")
     contract = upscale_contract(template)
     if contract.scale != 2 or contract.method != DIRECT_X2_METHOD:
         raise RuntimeError("template must use an xBR/x2 NEAREST contract")

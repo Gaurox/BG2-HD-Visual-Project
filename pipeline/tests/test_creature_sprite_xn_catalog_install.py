@@ -197,6 +197,17 @@ def logical_content_digest(
     return digest.hexdigest().upper()
 
 
+def animation_runtime(animation_id: int) -> tuple[int, str, str]:
+    family = animation_id & 0xF000
+    if family in (0x5000, 0x6000):
+        return 1, "Character", "character-bg2ee-2.7.3.0"
+    if family == 0xE000:
+        return 2, "MonsterIcewind", "monster-icewind-bg2ee-2.7.3.0"
+    if family == 0x7000:
+        return 3, "Monster", "monster-bg2ee-2.7.3.0"
+    raise ValueError(f"unsupported fake animation family: 0x{family:04X}")
+
+
 class FakeCatalogWorkspace:
     def __init__(self) -> None:
         self.root = Path(tempfile.mkdtemp(prefix=".xn-catalog-install-", dir=ROOT / "sprite"))
@@ -361,6 +372,7 @@ class FakeCatalogWorkspace:
         compressed_frames_by_component = []
         raw_frames_by_component = []
         for index, (animation_id, resref) in enumerate(animations):
+            owner, owner_name, runtime_profile = animation_runtime(animation_id)
             artifact = registry_artifact(
                 resref,
                 version=shard_version,
@@ -440,8 +452,8 @@ class FakeCatalogWorkspace:
             manifest_animations.append(
                 {
                     "animation_id": f"0x{animation_id:04X}",
-                    "runtime_profile": "character-bg2ee-2.7.3.0",
-                    "owner": "Character",
+                    "runtime_profile": runtime_profile,
+                    "owner": owner_name,
                     "component_indices": [index],
                 }
             )
@@ -460,7 +472,7 @@ class FakeCatalogWorkspace:
                     "job_sha256": sha256(member_job),
                     "job_id": f"member-{animation_id:04X}",
                     "animation_id": f"0x{animation_id:04X}",
-                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                    "runtime_profile": runtime_profile,
                     "build_manifest": project_relative(member_build),
                     "build_manifest_sha256": sha256(member_build),
                     "component_indices": [index],
@@ -513,7 +525,8 @@ class FakeCatalogWorkspace:
 
         animation_table = bytearray()
         for index, (animation_id, _resref) in enumerate(animations):
-            animation_table.extend(struct.pack("<IIII", animation_id, 1, index, 1))
+            owner, _owner_name, _runtime_profile = animation_runtime(animation_id)
+            animation_table.extend(struct.pack("<IIII", animation_id, owner, index, 1))
         component_table = bytearray()
         for component in components:
             component_table.extend(
@@ -534,7 +547,7 @@ class FakeCatalogWorkspace:
         logical_sha256 = logical_content_digest(
             2,
             [
-                (animation_id, 1, [effective_component_indices[index]])
+                (animation_id, animation_runtime(animation_id)[0], [effective_component_indices[index]])
                 for index, (animation_id, _resref) in enumerate(animations)
             ],
             logical_component_digests,
@@ -542,7 +555,7 @@ class FakeCatalogWorkspace:
         manifest_logical_sha256 = logical_content_digest(
             2,
             [
-                (animation_id, 1, [effective_component_indices[index]])
+                (animation_id, animation_runtime(animation_id)[0], [effective_component_indices[index]])
                 for index, (animation_id, _resref) in enumerate(animations)
             ],
             manifest_logical_component_digests,
@@ -695,7 +708,9 @@ class FakeCatalogWorkspace:
             "method": job_value["upscale"],
             "registry_layout": "catalog",
             "animation_ids": [entry["animation_id"] for entry in manifest_animations],
-            "runtime_profiles": ["character-bg2ee-2.7.3.0"],
+            "runtime_profiles": sorted(
+                {animation_runtime(animation_id)[2] for animation_id, _resref in animations}
+            ),
             "registry_catalog": "iee-assets/creature-sprites/CreatureSprites-XN.catalog",
             "registry_catalog_magic": "IEECSNC",
             "registry_catalog_version": catalog_version,
@@ -761,7 +776,9 @@ class FakeCatalogWorkspace:
             "generation_id": generation_id,
             "job_sha256": sha256(job_file),
             "method": job_value["upscale"],
-            "runtime_profiles": ["character-bg2ee-2.7.3.0"],
+            "runtime_profiles": sorted(
+                {animation_runtime(animation_id)[2] for animation_id, _resref in animations}
+            ),
             "engine_source": project_relative(self.engine),
             "engine_source_contract_sha256": source_contract(self.engine),
             "engine_build": "fake-build",
@@ -878,6 +895,19 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
             live_ini.read_text(encoding="utf-8"),
         )
         self.fake.powershell(RESTORE, "-VerifyOnly")
+        self.fake.powershell(RESTORE)
+
+    def test_catalog_install_accepts_generic_monster_owner(self) -> None:
+        self.fake.write_generation("generic-monster", [(0x7F07, "MGLCG1")])
+        self.fake.powershell(INSTALL, "-VerifyOnly")
+        self.fake.powershell(INSTALL)
+        active = json.loads(
+            (self.fake.run / "ingame-installation/active-test.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(active["animation_ids"], ["0x7F07"])
+        self.assertEqual(active["runtime_profiles"], ["monster-bg2ee-2.7.3.0"])
         self.fake.powershell(RESTORE)
 
     def test_reinstall_same_generation_is_verified_idempotent_noop(self) -> None:

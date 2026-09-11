@@ -81,7 +81,9 @@ function Assert-SealedSourceMembers($Build, $Catalog) {
         $binaryAnimation = $binaryAnimations[0]
         $runtimeProfile = [string](Get-RequiredProperty $member 'runtime_profile' 'build.source_members[]')
         if ($runtimeProfile -notin @(
-                'character-bg2ee-2.7.3.0', 'monster-icewind-bg2ee-2.7.3.0')) {
+                'character-bg2ee-2.7.3.0',
+                'monster-icewind-bg2ee-2.7.3.0',
+                'monster-bg2ee-2.7.3.0')) {
             throw "Profil runtime source non supporté : $runtimeProfile"
         }
         Assert-OrdinalEqual $runtimeProfile (Get-OwnerRuntimeProfile $binaryAnimation.owner) `

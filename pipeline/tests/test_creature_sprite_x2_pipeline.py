@@ -1231,6 +1231,18 @@ function xbr4x(source, width, height) {
             {"animation": {"runtime_profile": "character-bg2ee-2.7.3.0"}}
         )
 
+    def test_generic_monster_runtime_profile_is_supported(self) -> None:
+        profile = "monster-bg2ee-2.7.3.0"
+        pipeline.require_runtime_profile({"animation": {"runtime_profile": profile}})
+        self.assertEqual(
+            pipeline.catalog_owner_for_profile(profile),
+            pipeline.CATALOG_OWNER_MONSTER,
+        )
+        self.assertEqual(
+            pipeline.runtime_owner_labels(profile),
+            ("Monster::Render", "CGameAnimationTypeMonster::Render"),
+        )
+
     def test_unknown_runtime_profile_is_rejected(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "unsupported-runtime-profile"):
             pipeline.require_runtime_profile(

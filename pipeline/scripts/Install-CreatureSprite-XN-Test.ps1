@@ -516,7 +516,10 @@ if ($scale -notin @(2, 4)) {
 Assert-UpscaleContract $upscale $scale 'job.upscale'
 
 $runtimeProfile = [string](Get-RequiredProperty $job.animation 'runtime_profile' 'job.animation')
-if ($runtimeProfile -notin @('monster-icewind-bg2ee-2.7.3.0', 'character-bg2ee-2.7.3.0')) {
+if ($runtimeProfile -notin @(
+        'monster-bg2ee-2.7.3.0',
+        'monster-icewind-bg2ee-2.7.3.0',
+        'character-bg2ee-2.7.3.0')) {
     throw "unsupported-runtime-profile : $runtimeProfile"
 }
 if ($isArmorSet -and $runtimeProfile -ne 'character-bg2ee-2.7.3.0') {

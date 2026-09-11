@@ -30,6 +30,14 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             / "jobs"
             / "x2-nearest-v1.json"
         )
+        self.generic_monster_member = (
+            generator.FAMILIES_ROOT
+            / "monsters"
+            / "7fxx"
+            / "7f07-mglc-golem-clay"
+            / "jobs"
+            / "x2-nearest-v99.json"
+        )
         self.catalog = self.jobs / f"test-{self.token}-catalog-base-xbr2x.json"
         self.append = (
             generator.CATALOG_JOBS_ROOT
@@ -107,6 +115,23 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             "blocker",
         ]
         rows = [
+            {
+                "family_id": "0x7F07:body:base-resref:MGLC:MGLC",
+                "animation_id": "0x7F07",
+                "ids_symbol": "GOLEM_CLAY",
+                "engine_section": "monster",
+                "runtime_profile": "monster-bg2ee-2.7.3.0",
+                "layer_kind": "body",
+                "variant_kind": "base-resref",
+                "variant_value": "MGLC",
+                "bam_prefix": "MGLC",
+                "resource_count": "13",
+                "frame_count": "5994",
+                "pipeline_ready": "yes",
+                "runtime_supported": "yes",
+                "override_collision": "",
+                "blocker": "",
+            },
             {
                 "family_id": "0xE400:body:base-resref:MGO1:MGO1",
                 "animation_id": "0xE400",
@@ -209,6 +234,30 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertEqual(
             generator.member_layout(family)["family_directory"],
             "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow",
+        )
+
+    def test_generic_monster_reuses_x2_recipe_with_its_own_runtime_profile(self) -> None:
+        result = generator.generate_member(
+            destination=self.generic_monster_member,
+            template_path=self.template,
+            families_path=self.families,
+            family_id="0x7F07:body:base-resref:MGLC:MGLC",
+            name="Golem d'argile",
+            qa_areas=["ARTEST"],
+            qa_creatures=["TESTGO"],
+            dry_run=True,
+        )
+
+        self.assertEqual(result["status"], "family-member-job-planned")
+        self.assertEqual(result["runtime_profile"], "monster-bg2ee-2.7.3.0")
+        self.assertEqual(
+            generator.member_layout(
+                generator.load_inventory_family(
+                    self.families, "0x7F07:body:base-resref:MGLC:MGLC"
+                ),
+                self.generic_monster_member.name,
+            )["member_job"],
+            "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/jobs/x2-nearest-v99.json",
         )
 
     def test_unready_inventory_family_is_rejected_before_publication(self) -> None:

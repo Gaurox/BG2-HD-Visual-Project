@@ -60,7 +60,10 @@ class SpriteInventoryTests(unittest.TestCase):
             inventory.current_runtime(0xE400, "E000", "monster_icewind"),
             ("monster-icewind-bg2ee-2.7.3.0", True),
         )
-        self.assertEqual(inventory.current_runtime(0x7F07, "7000", "monster"), ("", False))
+        self.assertEqual(
+            inventory.current_runtime(0x7F07, "7000", "monster"),
+            ("monster-bg2ee-2.7.3.0", True),
+        )
 
     def test_generated_relations_are_closed(self) -> None:
         animations = rows("sprite_animations.csv")
@@ -74,8 +77,10 @@ class SpriteInventoryTests(unittest.TestCase):
         golem = families["0x7F07:body:base-resref:MGLC:MGLC"]
         self.assertEqual(golem["resource_count"], "13")
         self.assertEqual(golem["frame_count"], "5994")
-        self.assertEqual(golem["runtime_supported"], "no")
-        self.assertEqual(golem["blocker"], "runtime-profile-unsupported")
+        self.assertEqual(golem["runtime_profile"], "monster-bg2ee-2.7.3.0")
+        self.assertEqual(golem["runtime_supported"], "yes")
+        self.assertEqual(golem["pipeline_ready"], "yes")
+        self.assertEqual(golem["blocker"], "")
 
         goblin = families["0xE400:body:base-resref:MGO1:MGO1"]
         self.assertEqual(goblin["resource_count"], "20")
