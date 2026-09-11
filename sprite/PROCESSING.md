@@ -61,6 +61,23 @@ python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job-ou
 python pipeline/scripts/run_creature_sprite_x2.py verify --job <job-ou-agregat>
 ```
 
+Batch Character : ne pas vérifier chaque agrégat séparément. Utiliser :
+
+```powershell
+python pipeline/scripts/run_creature_sprite_x2.py prepare-data --resume `
+  --defer-full-verify --job <agregat-character>
+python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
+  --defer-full-verify --job <catalogue>
+python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify `
+  --keep-going --job <catalogue>
+# Après correction :
+python pipeline/scripts/run_creature_sprite_x2.py verify --resume `
+  --keep-going --job <catalogue>
+```
+
+Seul `prepared-verified` est installable. Détails des preuves/checkpoints :
+`catalogs/creature-x2-nearest/README.md`.
+
 Ne pas utiliser `run_creature_sprite_x2.py extract` pour un nouveau workspace : ce chemin legacy
 duplique les BAM et génère des PNG source.
 

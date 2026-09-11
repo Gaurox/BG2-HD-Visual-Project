@@ -10,7 +10,8 @@ Ce fichier ne contient que les blocages ouverts. Les décisions durables sont da
 - Causes mesurées : contrôles globaux répétés, fallback `full`, double déterminisme, tests sur le
   workspace réel et ~192 Gio/~466 k fichiers locaux dans le worktree.
 - Mitigation active : tests/projections plan-only ciblés ; catalogue sprites avec preuve scellée,
-  cache SHA/CRC par identité et invalidation par branche.
+  cache SHA/CRC par identité, lots provisoires, gate globale et reprise des seuls scopes
+  échoués/modifiés.
 - Travail restant : étendre ce modèle hors catalogue sprites ; séparation unitaires/intégration et
   data-root externe.
 - Rapport : [`../docs/WORKFLOW_PERFORMANCE_AUDIT.md`](../docs/WORKFLOW_PERFORMANCE_AUDIT.md).

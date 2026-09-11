@@ -124,8 +124,8 @@ python pipeline/scripts/run_creature_sprite_x2.py verify --job $member
 Exiger `prepared-verified`, xBR/x2, `antialias=false`, `xbr_blend=false`,
 `partial_alpha_pixels=0`, `new_colors=0`, `override_collisions=0`, runtime testé.
 
-Batch Character : lancer `prepare-data --resume` sur chaque agrégat. Il construit/vérifie tous les
-membres et diffère le runtime ; le `prepare` du catalogue final construit et teste la DLL une fois.
+Batch Character : lancer `prepare-data --resume --defer-full-verify` sur chaque agrégat. Il produit
+`data-prepared-unverified`, diffère la gate exhaustive et le runtime au catalogue.
 
 ## Phase 2 — job catalogue d'append
 
@@ -165,16 +165,22 @@ exactement un membre/ID et ne jamais écraser le job de base.
 Fermer `InfinityLoader.exe`, `Baldur.exe` et `BaldurReal.exe`.
 
 ```powershell
-python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $appendCatalog
-python pipeline/scripts/run_creature_sprite_x2.py verify --job $appendCatalog
+python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
+  --defer-full-verify --job $appendCatalog
+python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify `
+  --keep-going --job $appendCatalog
+
+# Après correction des scopes en erreur uniquement :
+python pipeline/scripts/run_creature_sprite_x2.py verify --resume `
+  --keep-going --job $appendCatalog
 
 python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog `
   --creature-sprite-filter Nearest
 python pipeline/scripts/run_creature_sprite_x2.py status --job $appendCatalog
 ```
 
-Par défaut : preuve scellée réutilisée. Ajouter `--full-verify` à `verify`, `prepare` ou `install`
-uniquement pour imposer le scan exhaustif. PowerShell direct sans preuve reste exhaustif.
+`install` exige la preuve scellée et ne déclenche aucun fallback exhaustif. `--full-verify` reste
+disponible pour imposer un nouveau scan complet. PowerShell direct sans preuve reste exhaustif.
 
 Exiger `installed-pending-qa`, `active_identity_matches_job=true`,
 `active_generation_is_sealed=true` et `installed_files_match=true`.

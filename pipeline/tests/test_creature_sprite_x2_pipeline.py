@@ -225,6 +225,26 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             ["verify", "--job", "sprite/jobs/catalog.json", "--full-verify"]
         )
         self.assertTrue(exhaustive.full_verify)
+        deferred = parser.parse_args(
+            [
+                "prepare",
+                "--job",
+                "sprite/jobs/catalog.json",
+                "--defer-full-verify",
+            ]
+        )
+        self.assertTrue(deferred.defer_full_verify)
+        recovery = parser.parse_args(
+            [
+                "verify",
+                "--job",
+                "sprite/jobs/catalog.json",
+                "--resume",
+                "--keep-going",
+            ]
+        )
+        self.assertTrue(recovery.resume)
+        self.assertTrue(recovery.keep_going)
         legacy_alias = parser.parse_args(
             [
                 "build",
@@ -261,7 +281,7 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             mock.patch.object(pipeline, "load_work_item", return_value=job),
             mock.patch.object(
                 pipeline,
-                "verify_catalog",
+                "verify_catalog_incremental",
                 return_value={"verification": {"files_hashed": 0}},
             ),
             mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
@@ -296,6 +316,60 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
                 "-CreatureSpriteFilter", "CatmullRom",
             ],
         )
+
+    def test_catalog_install_refuses_a_provisional_generation(self) -> None:
+        job = {"_kind": "catalog", "_job_file": Path("catalog.json")}
+        with (
+            mock.patch.object(
+                sys,
+                "argv",
+                ["run_creature_sprite_x2.py", "install", "--job", "catalog.json"],
+            ),
+            mock.patch.object(pipeline, "load_work_item", return_value=job),
+            mock.patch.object(
+                pipeline,
+                "verify_catalog_incremental",
+                side_effect=pipeline.CatalogProofMissing("proof missing"),
+            ),
+            mock.patch.object(pipeline, "powershell_script") as powershell,
+        ):
+            with self.assertRaisesRegex(pipeline.CatalogProofMissing, "proof missing"):
+                pipeline.main()
+        powershell.assert_not_called()
+
+    def test_incremental_verification_refuses_stale_proof_after_failed_full_pass(
+        self,
+    ) -> None:
+        verifier = mock.Mock()
+        context = {"generation_id": "A" * 64}
+        checkpoint_path = mock.Mock()
+        checkpoint_path.is_file.return_value = True
+        with (
+            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
+            mock.patch.object(
+                pipeline,
+                "catalog_current_generation_context",
+                return_value=context,
+            ),
+            mock.patch.object(pipeline, "load_catalog_verification_proof"),
+            mock.patch.object(
+                pipeline,
+                "catalog_verification_checkpoint_path",
+                return_value=checkpoint_path,
+            ),
+            mock.patch.object(
+                pipeline,
+                "load_catalog_verification_checkpoint",
+                return_value={"status": "verification-failed"},
+            ),
+            mock.patch.object(pipeline, "verify_catalog_outputs") as outputs,
+        ):
+            with self.assertRaisesRegex(
+                pipeline.CatalogProofMissing, "superseded"
+            ):
+                pipeline.verify_catalog_incremental({}, check_inputs=False)
+        verifier.save.assert_called_once_with()
+        outputs.assert_not_called()
 
     def test_catalog_hash_proofs_avoid_identical_rescan(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -363,6 +437,106 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
                 second.verify_file(payload, expected, scope="leaf:body")
             self.assertEqual(second.summary()["elements_invalidated"], ["leaf:body"])
 
+    def test_catalog_semantic_retry_reuses_successes_and_rechecks_only_failure(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            cache_path = Path(temporary) / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path, full_verify=True)
+            self.assertEqual(
+                first.verify_scope("leaf:clean", "A" * 64, lambda: {"ok": 1}),
+                {"ok": 1},
+            )
+            with self.assertRaisesRegex(RuntimeError, "broken"):
+                first.verify_scope(
+                    "leaf:broken",
+                    "B" * 64,
+                    lambda: (_ for _ in ()).throw(RuntimeError("broken")),
+                )
+            first.save()
+
+            callbacks = {"clean": 0, "broken": 0}
+
+            def clean() -> dict[str, int]:
+                callbacks["clean"] += 1
+                return {"ok": 1}
+
+            def repaired() -> dict[str, int]:
+                callbacks["broken"] += 1
+                return {"ok": 2}
+
+            resumed = pipeline.VerificationCache(cache_path)
+            self.assertEqual(
+                resumed.verify_scope("leaf:clean", "A" * 64, clean), {"ok": 1}
+            )
+            self.assertEqual(
+                resumed.verify_scope("leaf:broken", "B" * 64, repaired),
+                {"ok": 2},
+            )
+            summary = resumed.summary(mode="resume-errors")
+            self.assertEqual(callbacks, {"clean": 0, "broken": 1})
+            self.assertEqual(summary["scope_proofs_reused"], 1)
+            self.assertEqual(summary["scope_proofs_recorded"], 1)
+
+    def test_catalog_semantic_dependency_change_invalidates_only_its_branch(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            cache_path = Path(temporary) / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path)
+            first.verify_scope("leaf:left", "A" * 64, lambda: {"branch": "left"})
+            first.verify_scope("leaf:right", "B" * 64, lambda: {"branch": "right"})
+            first.verify_scope("member:right", "C" * 64, lambda: {"member": "right"})
+            first.save()
+
+            callbacks = {"left": 0, "right": 0, "member": 0}
+            second = pipeline.VerificationCache(cache_path)
+            second.verify_scope(
+                "leaf:left",
+                "A" * 64,
+                lambda: callbacks.__setitem__("left", callbacks["left"] + 1),
+            )
+            second.verify_scope(
+                "leaf:right",
+                "D" * 64,
+                lambda: callbacks.__setitem__("right", callbacks["right"] + 1),
+            )
+            second.verify_scope(
+                "member:right",
+                "E" * 64,
+                lambda: callbacks.__setitem__("member", callbacks["member"] + 1),
+            )
+            summary = second.summary()
+            self.assertEqual(callbacks, {"left": 0, "right": 1, "member": 1})
+            self.assertEqual(
+                summary["elements_invalidated"], ["leaf:right", "member:right"]
+            )
+
+    def test_catalog_semantic_proof_corruption_is_not_reused(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            cache_path = Path(temporary) / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path)
+            first.verify_scope("leaf:body", "A" * 64, lambda: {"frames": 12})
+            first.save()
+            cache = json.loads(cache_path.read_text(encoding="utf-8"))
+            cache["scopes"]["leaf:body"]["result"]["frames"] = 13
+            cache_path.write_text(json.dumps(cache), encoding="utf-8")
+
+            calls = 0
+
+            def verify_again() -> dict[str, int]:
+                nonlocal calls
+                calls += 1
+                return {"frames": 12}
+
+            second = pipeline.VerificationCache(cache_path)
+            self.assertEqual(
+                second.verify_scope("leaf:body", "A" * 64, verify_again),
+                {"frames": 12},
+            )
+            self.assertEqual(calls, 1)
+            self.assertEqual(second.summary()["elements_invalidated"], ["leaf:body"])
+
     def test_sealed_install_prevalidation_does_not_rehash_4897_jobs(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -408,6 +582,11 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
                 pipeline, "catalog_current_generation_context", return_value=context
             ),
             mock.patch.object(pipeline, "load_catalog_verification_proof"),
+            mock.patch.object(
+                pipeline,
+                "catalog_verification_checkpoint_path",
+                return_value=Path("missing-verification-checkpoint.json"),
+            ),
             mock.patch.object(pipeline, "verify_catalog_locked_inputs") as inputs,
             mock.patch.object(
                 pipeline,
@@ -423,6 +602,90 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             )
         inputs.assert_not_called()
         self.assertFalse(result["verification"]["source_dependencies_checked"])
+
+    def test_catalog_deferred_prepare_records_unsealed_checkpoint(self) -> None:
+        catalog = {"_kind": "catalog", "_job_file": Path("catalog.json")}
+        verifier = mock.Mock()
+        context = {"generation_id": "A" * 64}
+        checkpoint = {
+            "full_verification_started": False,
+            "verification": {"files_hashed": 0},
+        }
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            mock.patch.object(
+                pipeline,
+                "catalog_pointer_path",
+                return_value=Path(temporary) / "missing-pointer.json",
+            ),
+            mock.patch.object(
+                pipeline,
+                "build_catalog",
+                return_value={"status": "built"},
+            ) as build,
+            mock.patch.object(
+                pipeline,
+                "build_runtime",
+                return_value={"status": "built-tested"},
+            ) as runtime,
+            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
+            mock.patch.object(
+                pipeline,
+                "catalog_current_generation_context",
+                return_value=context,
+            ),
+            mock.patch.object(
+                pipeline,
+                "record_deferred_catalog_checkpoint",
+                return_value=checkpoint,
+            ) as record,
+            mock.patch.object(
+                pipeline,
+                "catalog_verification_checkpoint_path",
+                return_value=Path(temporary) / "verification-checkpoint.json",
+            ),
+            mock.patch.object(pipeline, "verify_catalog") as verify,
+        ):
+            result = pipeline.prepare_catalog(
+                catalog,
+                force=False,
+                resume=True,
+                defer_full_verify=True,
+            )
+
+        self.assertEqual(result["status"], "built-unverified")
+        self.assertFalse(result["install_ready"])
+        build.assert_called_once_with(
+            catalog, force=False, resume=True, defer_full_verify=True
+        )
+        runtime.assert_called_once_with(catalog, defer_catalog_verify=True)
+        record.assert_called_once_with(catalog, context, verifier)
+        verify.assert_not_called()
+
+    def test_catalog_resume_after_failed_full_pass_uses_scoped_recovery(self) -> None:
+        catalog = {"_kind": "catalog"}
+        expected = {"status": "prepared-verified"}
+        with (
+            mock.patch.object(
+                pipeline,
+                "verify_catalog_incremental",
+                side_effect=pipeline.CatalogProofMissing("not sealed"),
+            ) as incremental,
+            mock.patch.object(
+                pipeline,
+                "verify_catalog_scoped",
+                return_value=expected,
+            ) as scoped,
+        ):
+            result = pipeline.verify_catalog(
+                catalog, resume=True, keep_going=True
+            )
+
+        self.assertEqual(result, expected)
+        incremental.assert_called_once_with(catalog, check_inputs=True)
+        scoped.assert_called_once_with(
+            catalog, full_verify=False, keep_going=True
+        )
 
     def test_xn_adapter_exposes_direct_xbr4x_and_generic_protocol(self) -> None:
         adapter = (ROOT / "pipeline" / "scripts" / "xbr2x_batch.js").read_text(
@@ -2945,6 +3208,84 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
         aggregate.assert_called_once_with(armor_set, False, True)
         verify.assert_called_once_with(armor_set)
         runtime.assert_not_called()
+
+    def test_prepare_armor_set_data_can_defer_every_exhaustive_batch_gate(
+        self,
+    ) -> None:
+        members = [
+            {"job_id": "first", "animation": {"bam_prefix": "A"}},
+            {"job_id": "second", "animation": {"bam_prefix": "B"}},
+        ]
+        armor_set = {
+            "_members": members,
+            "compatibility": {"baldur_real_sha256": "A" * 64},
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            game = Path(temporary)
+            (game / "BaldurReal.exe").write_bytes(b"game")
+            with (
+                mock.patch.object(pipeline, "extract_sources") as extract,
+                mock.patch.object(pipeline, "build_pack") as build,
+                mock.patch.object(
+                    pipeline,
+                    "build_armor_set",
+                    return_value={"status": "reused-unverified"},
+                ) as aggregate,
+                mock.patch.object(pipeline, "job_path", return_value=game),
+                mock.patch.object(pipeline, "sha256_file") as sha256,
+                mock.patch.object(pipeline, "verify_armor_set_build") as verify,
+                mock.patch.object(
+                    pipeline, "armor_set_override_collisions", return_value=[]
+                ),
+                mock.patch.object(
+                    pipeline, "armor_set_prefixes", return_value=["A", "B"]
+                ),
+            ):
+                result = pipeline.prepare_armor_set_data(
+                    armor_set,
+                    force=False,
+                    resume=True,
+                    keep_frames=False,
+                    defer_full_verify=True,
+                )
+
+        self.assertEqual(result["status"], "data-prepared-unverified")
+        self.assertTrue(result["full_verification_deferred"])
+        self.assertEqual(
+            extract.call_args_list,
+            [
+                mock.call(
+                    members[0], force=False, resume=True, defer_full_verify=True
+                ),
+                mock.call(
+                    members[1], force=False, resume=True, defer_full_verify=True
+                ),
+            ],
+        )
+        self.assertEqual(
+            build.call_args_list,
+            [
+                mock.call(
+                    members[0],
+                    force=False,
+                    resume=True,
+                    keep_frames=False,
+                    defer_full_verify=True,
+                ),
+                mock.call(
+                    members[1],
+                    force=False,
+                    resume=True,
+                    keep_frames=False,
+                    defer_full_verify=True,
+                ),
+            ],
+        )
+        aggregate.assert_called_once_with(
+            armor_set, False, True, defer_full_verify=True
+        )
+        verify.assert_not_called()
+        sha256.assert_not_called()
 
     def test_registry_set_inspector_rejects_header_entry_and_shard_tampering(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

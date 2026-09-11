@@ -71,6 +71,25 @@ def _stable_fingerprint(path: Path, include_crc32: bool) -> dict[str, Any]:
     return result
 
 
+def _json_safe(value: Any) -> Any:
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    return value
+
+
+def _scope_proof_digest(value: dict[str, Any]) -> str:
+    body = dict(value)
+    body.pop("proof_sha256", None)
+    raw = json.dumps(
+        body, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest().upper()
+
+
 class VerificationCache:
     """Reuse hashes only while the complete filesystem identity is unchanged."""
 
@@ -80,7 +99,9 @@ class VerificationCache:
         self.started = time.perf_counter()
         self.entries: dict[str, dict[str, Any]] = {}
         self.trees: dict[str, dict[str, Any]] = {}
+        self.scopes: dict[str, dict[str, Any]] = {}
         self._memo: dict[str, dict[str, Any]] = {}
+        self._tree_memo: set[str] = set()
         self._dirty = False
         self.cache_load_error: str | None = None
         self.files_considered = 0
@@ -88,6 +109,9 @@ class VerificationCache:
         self.bytes_hashed = 0
         self.proofs_reused = 0
         self.proofs_recorded = 0
+        self.scopes_considered = 0
+        self.scope_proofs_reused = 0
+        self.scope_proofs_recorded = 0
         self.invalidated: set[str] = set()
         self._load()
 
@@ -105,15 +129,18 @@ class VerificationCache:
                 or value.get("schema") != CACHE_SCHEMA
                 or not isinstance(value.get("files"), dict)
                 or not isinstance(value.get("trees", {}), dict)
+                or not isinstance(value.get("scopes", {}), dict)
             ):
                 raise ValueError("unsupported cache schema")
             self.entries = value["files"]
             self.trees = value.get("trees", {})
+            self.scopes = value.get("scopes", {})
         except (OSError, UnicodeError, ValueError, TypeError) as error:
             # An unreadable cache is never trusted; verification falls back to hashing.
             self.cache_load_error = str(error)
             self.entries = {}
             self.trees = {}
+            self.scopes = {}
 
     def verify_file(
         self,
@@ -134,9 +161,10 @@ class VerificationCache:
         except OSError as error:
             self.invalidated.add(scope)
             raise VerificationMismatch(f"missing dependency: {path}: {error}") from error
-        cached = self._memo.get(key) or self.entries.get(key)
+        memoized = self._memo.get(key)
+        cached = memoized or self.entries.get(key)
         reusable = bool(
-            not self.full_verify
+            (memoized is not None or not self.full_verify)
             and isinstance(cached, dict)
             and cached.get("signature") == signature
             and cached.get("sha256") == expected_sha256
@@ -146,7 +174,11 @@ class VerificationCache:
             record = dict(cached)
             self.proofs_reused += 1
         else:
-            if isinstance(cached, dict):
+            if isinstance(cached, dict) and not (
+                cached.get("signature") == signature
+                and cached.get("sha256") == expected_sha256
+                and (expected_crc32 is None or cached.get("crc32") == expected_crc32)
+            ):
                 self.invalidated.add(scope)
             record = _stable_fingerprint(path, expected_crc32 is not None)
             self.files_hashed += 1
@@ -181,9 +213,10 @@ class VerificationCache:
         except OSError as error:
             self.invalidated.add(scope)
             raise VerificationMismatch(f"missing dependency: {path}: {error}") from error
-        cached = self._memo.get(key) or self.entries.get(key)
+        memoized = self._memo.get(key)
+        cached = memoized or self.entries.get(key)
         if (
-            not self.full_verify
+            (memoized is not None or not self.full_verify)
             and isinstance(cached, dict)
             and cached.get("signature") == signature
             and (not include_crc32 or isinstance(cached.get("crc32"), int))
@@ -191,7 +224,10 @@ class VerificationCache:
             record = dict(cached)
             self.proofs_reused += 1
         else:
-            if isinstance(cached, dict):
+            if isinstance(cached, dict) and not (
+                cached.get("signature") == signature
+                and (not include_crc32 or isinstance(cached.get("crc32"), int))
+            ):
                 self.invalidated.add(scope)
             record = _stable_fingerprint(path, include_crc32)
             record["path"] = str(path.resolve())
@@ -230,6 +266,23 @@ class VerificationCache:
         self.proofs_recorded += 1
         return record
 
+    def record_scanned(
+        self,
+        path: Path,
+        expected_sha256: str,
+        *,
+        expected_crc32: int | None = None,
+    ) -> dict[str, Any]:
+        """Record a file whose complete bytes were read by a semantic verifier."""
+
+        record = self.record_verified(
+            path, expected_sha256, expected_crc32=expected_crc32
+        )
+        self.files_considered += 1
+        self.files_hashed += 1
+        self.bytes_hashed += int(record["signature"]["size"])
+        return record
+
     def verify_tree(
         self,
         name: str,
@@ -247,15 +300,19 @@ class VerificationCache:
         ]
         cached = self.trees.get(name)
         if (
-            not self.full_verify
+            (name in self._tree_memo or not self.full_verify)
             and isinstance(cached, dict)
             and cached.get("sha256") == expected_sha256
             and cached.get("files") == signatures
         ):
             self.proofs_reused += 1
             self.files_considered += len(ordered)
+            self._tree_memo.add(name)
             return
-        if isinstance(cached, dict):
+        if isinstance(cached, dict) and not (
+            cached.get("sha256") == expected_sha256
+            and cached.get("files") == signatures
+        ):
             self.invalidated.add(scope)
         actual = hash_tree().upper()
         self.files_considered += len(ordered)
@@ -267,6 +324,7 @@ class VerificationCache:
                 f"tree SHA-256 mismatch for {name}: {actual} != {expected_sha256}"
             )
         self.trees[name] = {"sha256": actual, "files": signatures}
+        self._tree_memo.add(name)
         self._dirty = True
         self.proofs_recorded += 1
 
@@ -280,8 +338,64 @@ class VerificationCache:
                 for path in paths
             ],
         }
+        self._tree_memo.add(name)
         self._dirty = True
         self.proofs_recorded += 1
+
+    def verify_scope(
+        self,
+        scope: str,
+        dependency_sha256: str,
+        verify: Callable[[], Any],
+    ) -> Any:
+        """Reuse one semantic result only while its complete dependency digest matches."""
+
+        dependency_sha256 = str(dependency_sha256).upper()
+        if SHA256_PATTERN.fullmatch(dependency_sha256) is None:
+            raise VerificationMismatch(f"invalid dependency SHA-256 for scope {scope}")
+        self.scopes_considered += 1
+        cached = self.scopes.get(scope)
+        reusable = bool(
+            not self.full_verify
+            and isinstance(cached, dict)
+            and cached.get("status") == "verified"
+            and cached.get("dependency_sha256") == dependency_sha256
+            and cached.get("proof_sha256") == _scope_proof_digest(cached)
+            and "result" in cached
+        )
+        if reusable:
+            self.proofs_reused += 1
+            self.scope_proofs_reused += 1
+            return cached["result"]
+        if isinstance(cached, dict) and not (
+            cached.get("status") == "verified"
+            and cached.get("dependency_sha256") == dependency_sha256
+            and cached.get("proof_sha256") == _scope_proof_digest(cached)
+            and "result" in cached
+        ):
+            self.invalidated.add(scope)
+        try:
+            result = verify()
+        except BaseException:
+            self.invalidate_scope(scope)
+            raise
+        proof = {
+            "status": "verified",
+            "dependency_sha256": dependency_sha256,
+            "result": _json_safe(result),
+        }
+        proof["proof_sha256"] = _scope_proof_digest(proof)
+        self.scopes[scope] = proof
+        self._dirty = True
+        self.proofs_recorded += 1
+        self.scope_proofs_recorded += 1
+        return result
+
+    def invalidate_scope(self, scope: str) -> None:
+        self.invalidated.add(scope)
+        if scope in self.scopes:
+            self.scopes.pop(scope, None)
+            self._dirty = True
 
     def export_file(self, path: Path) -> dict[str, Any]:
         key = self._key(path)
@@ -300,7 +414,12 @@ class VerificationCache:
         if not self._dirty:
             return
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        value = {"schema": CACHE_SCHEMA, "files": self.entries, "trees": self.trees}
+        value = {
+            "schema": CACHE_SCHEMA,
+            "files": self.entries,
+            "trees": self.trees,
+            "scopes": self.scopes,
+        }
         temporary = self.path.with_name(f".{self.path.name}.{os.getpid()}.tmp")
         temporary.write_text(
             json.dumps(value, ensure_ascii=False, indent=2) + "\n",
@@ -314,6 +433,9 @@ class VerificationCache:
             "mode": mode or ("full" if self.full_verify else "incremental"),
             "proofs_reused": self.proofs_reused,
             "proofs_recorded": self.proofs_recorded,
+            "scopes_considered": self.scopes_considered,
+            "scope_proofs_reused": self.scope_proofs_reused,
+            "scope_proofs_recorded": self.scope_proofs_recorded,
             "files_considered": self.files_considered,
             "files_hashed": self.files_hashed,
             "bytes_hashed": self.bytes_hashed,

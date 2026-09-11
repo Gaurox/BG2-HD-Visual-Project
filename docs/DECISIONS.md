@@ -90,6 +90,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
 | `.work/` | cache supprimable, jamais source |
 | Ajout de famille | runbook actif [`../sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) |
+| Vérification batch | lots/catalogue `built-unverified` via `--defer-full-verify` ; une gate globale `--full-verify --keep-going`, reprise `--resume` limitée aux scopes échoués/modifiés ; installation scellée uniquement |
 | Routage shader D7 x1 | scopes propriétaires créature + appel monde objet au sol manifesté ; ton neutre mis en file sur slot 5 `fpSprite`, slot 7 `fpSELECT` natif conservé ; aucun forçage HD/x2/ton spécial/contrat absent |
 | Sampler Catmull–Rom D7 x1 | `NEAREST` temporaire limité au draw x1 `fpSprite`/`fpSELECT`, puis restauration exacte min/mag, binding et unité active ; jamais sur texture catalogue HD |
 
