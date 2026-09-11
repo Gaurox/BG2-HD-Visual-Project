@@ -53,6 +53,14 @@ ne sont pas réconciliés par une décision explicite.
 - Les masques polygonaux restent une solution de repli documentée dans
   [`GEOMETRIC_ALPHA_MASK_CLEANUP.md`](GEOMETRIC_ALPHA_MASK_CLEANUP.md).
 
+## WATER-002 — Fins rebords noirs après correction du mélange AR0900
+
+- Correctif alpha128 jour retenu pour poursuite QA :
+  [`AR0900_NATIVE_WATER_ALPHA128.md`](AR0900_NATIVE_WATER_ALPHA128.md).
+- Retour utilisateur du 2026-09-12 : résultat presque parfait ; fins segments noirs sur certains
+  côtés de tuiles. Cause non établie au commit ; distinguer marges RGB/alpha et rendu des quads.
+- Pas de généralisation, modification nuit ou intégration release avant résolution/QA.
+
 ## WTPOOL-001 — Piscines x4
 
 - Limite observée : certaines petites piscines dépassent le coût visuel acceptable après
