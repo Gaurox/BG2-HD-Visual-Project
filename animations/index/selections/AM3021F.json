@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3021F",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "86522236721220E279BA21770F26BBA445C594D2C586673F83B718075648854D",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "0A7EC6CF2695ACAD2FDD5817ED1989D736CF0BB7234F0EBA700CAAA92F941479",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-de-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "52E2D743C8DE146EA8098596EDD4927979F25B520A04A5DB09603174F7937F2F",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-de-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "3E05DD5B1404E71DBAB771DF7FD06A27FB754FBE00261C13B13572AA9F2DC3FB",
+        "path": "animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911/manifest.json",
+        "manifest_sha256": "19D4912857ADD4EE6442CFE1FEE9FAD954566E32E45C0017BCB5064A8FE9D48F",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911/manifest.json",
+        "manifest_sha256": "0BF2BB6873E73CAB54374490D64009ACA1B070E1359E38A68F270B3779CCF4A3",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-de-20260911/manifest.json",
+        "manifest_sha256": "9D51B7AB13A8CCC851FC68C06D839230387411DFE3EA9516075C1854C814D2C9",
+        "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-de-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911/manifest.json",
+        "manifest_sha256": "5688DE562EE84073C63272D4DBF581A98724503D1159317987019C68C1EC159E",
+        "path": "animations/batches/ar3021-illithids-seedvr7b-lab-x4-20260911",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-11",
+    "path": "animations/index/qa-decisions/AM3021F/2026-09-11-accepted-ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911.json",
+    "sha256": "B2AA947140421E8D34538A43945C538E2AE25595EB7BEAB9118F17FC2FB2E363",
+    "status": "accepted"
+  },
+  "recipe_id": "spline-fit1-multicontour-per-frame-feather4",
+  "resref": "AM3021F",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "0528834EB32218B0048B22CAE3846E97B7A218124F37597ECDC014E316A2E166",
+    "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3021",
+        "manifest_path": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/AR3021/manifest.json",
+        "manifest_sha256": "BA54341F94D942017D5658EDCE6DED8EBFA9791E0FCE2197DA9478BEE311B593",
+        "path": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/AR3021",
+        "registry_sha256": "BE36E103CA5C6CAF37125A6180B229D7EC7730ED1591E19B72CDCBB1BE8DB722",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/manifest.json",
+    "manifest_sha256": "AAD644347714BD123C293742784E33B43BFDB735E3B76340D2718F66377BB502",
+    "path": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3021"
+  ],
+  "updated_at_utc": "2026-09-11T19:13:50Z"
+}
