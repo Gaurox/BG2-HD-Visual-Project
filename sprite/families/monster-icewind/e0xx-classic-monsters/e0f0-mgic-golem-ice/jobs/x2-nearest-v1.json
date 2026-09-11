@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "monster-icewind-e0f0-mgic-golem-ice-x2-v1",
+  "animation": {
+    "name": "Golem de glace",
+    "id": "0xE0F0",
+    "bam_prefix": "MGIC",
+    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_dir": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f0-mgic-golem-ice/source/stock",
+    "run_dir": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f0-mgic-golem-ice/runs/x2-nearest-v1",
+    "scalepix": "config://mmpx_scalepix",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/mi/e0/e0f0-mgic-x2-nearest-v1"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "GOLICE01"
+    ],
+    "required_bam_prefixes": [
+      "MGIC"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}
