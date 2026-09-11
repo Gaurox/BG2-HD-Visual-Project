@@ -8327,7 +8327,11 @@ def write_catalog_install_proof(
     catalog: dict[str, Any],
     context: dict[str, Any],
     verifier: VerificationCache,
+    *,
+    status: str = "verified",
 ) -> tuple[Path, str]:
+    if status not in {"verified", "provisional"}:
+        raise RuntimeError(f"unsupported catalog install proof status: {status}")
     artifacts = []
     output_specs = catalog_output_specs(catalog, context)
     shard_crc32_by_sha256 = {
@@ -8342,6 +8346,7 @@ def write_catalog_install_proof(
     state_path = active_state_path(catalog)
     if state_path.is_file():
         state = read_json(state_path)
+        same_generation = state.get("generation_id") == context["generation_id"]
         if state.get("status") in {
             "installed-pending-qa",
             "validated-installed",
@@ -8350,6 +8355,8 @@ def write_catalog_install_proof(
             game_root = job_path(catalog, "game_root")
             for target in state.get("targets", []):
                 if not isinstance(target, dict) or not target.get("installed_present"):
+                    continue
+                if not same_generation and target.get("role") != "content-addressed-shard":
                     continue
                 expected = target.get("installed_sha256")
                 relative = str(target.get("relative_path", "")).replace("\\", "/")
@@ -8386,7 +8393,7 @@ def write_catalog_install_proof(
     verifier.save()
     value = {
         "schema": CATALOG_INSTALL_PROOF_SCHEMA,
-        "status": "verified",
+        "status": status,
         "generation_id": context["generation_id"],
         "job_sha256": context["pointer"]["job_sha256"],
         "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
@@ -10637,6 +10644,11 @@ def make_parser() -> argparse.ArgumentParser:
         help="build provisional Character lots/catalog; seal only in a later full verify",
     )
     parser.add_argument(
+        "--provisional-qa",
+        action="store_true",
+        help="catalog install only: install a built generation for visual QA before the final exhaustive seal",
+    )
+    parser.add_argument(
         "--keep-going",
         action="store_true",
         help="catalog verify only: collect every independent scope failure",
@@ -10713,6 +10725,10 @@ def main() -> None:
         raise RuntimeError(
             "--defer-full-verify requires catalog prepare or Character prepare-data"
         )
+    if args.provisional_qa and (not catalog or args.command != "install"):
+        raise RuntimeError("--provisional-qa requires a catalog install command")
+    if args.provisional_qa and args.full_verify:
+        raise RuntimeError("--provisional-qa conflicts with --full-verify")
     if args.keep_going and (
         not catalog
         or args.command != "verify"
@@ -10792,15 +10808,37 @@ def main() -> None:
     elif args.command == "install":
         catalog_verification: dict[str, Any] | None = None
         if catalog:
-            catalog_verification = (
-                verify_catalog(
-                    job,
-                    full_verify=True,
-                    check_inputs=True,
+            if args.provisional_qa:
+                verifier = catalog_verifier(job, full_verify=False)
+                context = catalog_current_generation_context(job, verifier)
+                checkpoint = load_catalog_verification_checkpoint(job, context)
+                if checkpoint.get("status") != "built-unverified":
+                    raise RuntimeError(
+                        "--provisional-qa requires a built-unverified catalog generation"
+                    )
+                for spec in catalog_output_specs(job, context):
+                    verifier.verify_file(
+                        spec["path"],
+                        str(spec["sha256"]),
+                        scope=str(spec["scope"]),
+                        expected_crc32=spec.get("crc32"),
+                    )
+                verifier.save()
+                job["_catalog_verified_context"] = context
+                catalog_verification = {
+                    "status": "provisional-prevalidated",
+                    "verification": verifier.summary(),
+                }
+            else:
+                catalog_verification = (
+                    verify_catalog(
+                        job,
+                        full_verify=True,
+                        check_inputs=True,
+                    )
+                    if args.full_verify
+                    else verify_catalog_incremental(job, check_inputs=False)
                 )
-                if args.full_verify
-                else verify_catalog_incremental(job, check_inputs=False)
-            )
         elif armor_set:
             verify_armor_set(job)
         else:
@@ -10815,7 +10853,10 @@ def main() -> None:
                 context = catalog_current_generation_context(job, verifier)
             verifier = catalog_verifier(job)
             proof_path, proof_sha256 = write_catalog_install_proof(
-                job, context, verifier
+                job,
+                context,
+                verifier,
+                status="provisional" if args.provisional_qa else "verified",
             )
             install_arguments.extend(
                 [
@@ -10825,6 +10866,8 @@ def main() -> None:
                     proof_sha256,
                 ]
             )
+            if args.provisional_qa:
+                install_arguments.append("-ProvisionalQa")
         if args.creature_sprite_filter is not None:
             if not catalog:
                 raise RuntimeError(
@@ -10839,6 +10882,7 @@ def main() -> None:
         if catalog_verification is not None and not args.full_verify:
             install_summary = catalog_verifier(job).summary()
             install_summary["source_dependencies_checked"] = False
+            install_summary["provisional_qa"] = bool(args.provisional_qa)
             catalog_verification["verification"] = install_summary
         if catalog:
             state_path = active_state_path(job)

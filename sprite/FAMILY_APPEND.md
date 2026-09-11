@@ -179,6 +179,11 @@ python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog `
 python pipeline/scripts/run_creature_sprite_x2.py status --job $appendCatalog
 ```
 
+Pour une QA visuelle au fil de l'eau, sans rescanner le catalogue complet, installer la génération
+`built-unverified` avec `install --provisional-qa --creature-sprite-filter Nearest`. Cette voie vérifie
+les identités des sorties préparées et conserve la restauration transactionnelle, mais ne scelle pas
+la génération : la gate `verify --full-verify --keep-going` reste obligatoire au jalon final.
+
 `install` exige la preuve scellée et ne déclenche aucun fallback exhaustif. `--full-verify` reste
 disponible pour imposer un nouveau scan complet. PowerShell direct sans preuve reste exhaustif.
 

@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-11T17:41:43.4187325Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "asset_key": "sprites:family:0x7F07:body:base-resref:MGLC:MGLC:x2-nearest",
+    "family_id": "0x7F07:body:base-resref:MGLC:MGLC",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x7F07",
+    "bam_prefix": "MGLC",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "B72AF41CEEE912956EE570DB2EE85CC47A23E958AFDC6BDADCE8B57646C0C1E1"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "creature": "IGOLEM02",
+    "name": "Golem geôlier",
+    "filter": "Nearest",
+    "note": "QA ingame validée explicitement par l'utilisateur le 2026-09-11."
+  },
+  "automatic_evidence": {
+    "session_after_install": true,
+    "pack_ready": true,
+    "installed_files_match": true,
+    "installed_targets_checked": 353,
+    "active_generation_is_sealed": false,
+    "verification_status": "provisional-qa",
+    "runtime_markers": [
+      "Creature sprite catalog shard 240 ready on demand for animation 0x7F07, resref MGLCG12: 13 resources, 3942524 metadata bytes",
+      "Creature sprite animation 0x7F07 reached CGameAnimationTypeMonster::Render with a registered body CVidCell",
+      "Composing creature sprite MGLCG12 animation=0x7F07 frame 137: scale=x2, BAM logical 46x93, upscaled content 92x186, bordered texture 96x190 (NEAREST)"
+    ],
+    "catalog_scope_note": "La preuve technique et la décision portent sur 0x7F07 uniquement ; le scellement exhaustif du catalogue est différé au jalon final."
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/manifest.json",
+    "source_manifest_sha256": "DF78957F7F2D444890FD604E035F9B64A0D3CEA16D725318C2613666D08C2756",
+    "selected_run": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "669B0362746487FACADA189F4235E3F0C5DF4FCEC3CAA12ED4FEB1F9899A78EB",
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-7f07-mglc-golem-clay-v1.json",
+    "job_sha256": "87B5EE45C0DAE3A6E0D593CC402FA931210D243A76E954797D534A0171810FCB",
+    "current_generation": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "current_generation_sha256": "49A0CF77F727F65899EED4B0D1273E97948D6D880FB1DE136B887571A3463F8A",
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/b72af41ceee912956ee570db2ee85cc47a23e958afdc6bdadce8b57646c0c1e1/build/build-manifest.json",
+    "build_manifest_sha256": "EC5267566C771AA2CE3F5AEA3356A993110E6CF6B58FBEFA28BCCDBB01A93F4A",
+    "installation_receipt": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_receipt_sha256": "0FE8029DADB27B4379E3737636294C1507A26C2A9F2DE7F9E88E2B28CCC8F7AE"
+  },
+  "release_manifest_modified": false
+}

@@ -9,6 +9,7 @@ param(
     [string]$CreatureSpriteFilter = 'Nearest',
     [string]$VerificationProof,
     [string]$VerificationProofSha256,
+    [switch]$ProvisionalQa,
     [switch]$FullVerify
 )
 
@@ -18,6 +19,9 @@ $ErrorActionPreference = 'Stop'
 $script:WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..')).Path.TrimEnd('\')
 $script:SpritePathMigrations = $null
 $script:VerifiedFileProofs = @{}
+if ($ProvisionalQa -and $FullVerify) {
+    throw '-ProvisionalQa est incompatible avec -FullVerify.'
+}
 
 function Get-RequiredProperty($Object, [string]$Name, [string]$Label) {
     if ($null -eq $Object) { throw "$Label absent." }
@@ -553,8 +557,9 @@ function Initialize-IncrementalVerificationProof([string]$ProofPath, [string]$Pr
     catch { throw "VerificationProof illisible : $($_.Exception.Message)" }
     Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'schema' 'verification proof')) `
         'bg2-upscale-creature-sprite-xn-catalog-install-proof-v1' 'verification proof.schema'
+    $expectedProofStatus = if ($ProvisionalQa) { 'provisional' } else { 'verified' }
     Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'status' 'verification proof')) `
-        'verified' 'verification proof.status'
+        $expectedProofStatus 'verification proof.status'
     Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'generation_id' 'verification proof')) `
         $GenerationId 'verification proof.generation_id'
     Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'job_sha256' 'verification proof')) `
@@ -623,6 +628,13 @@ function Get-IncrementalCatalogArtifacts($Build, $Catalog, [string]$BuildRoot,
         -Value ([string](Get-RequiredProperty $Build 'registry_catalog_logical_content_sha256' 'build')) -Force
     $Catalog | Add-Member -MemberType NoteProperty -Name logical_component_digests `
         -Value @($Build.registry_catalog_logical_component_digests) -Force
+    $storage = Get-RequiredProperty $Build 'storage' 'build'
+    $Catalog | Add-Member -MemberType NoteProperty -Name stored_index_bytes `
+        -Value ([uint64](Get-RequiredProperty $storage 'stored_index_bytes' 'build.storage')) -Force
+    $Catalog | Add-Member -MemberType NoteProperty -Name compressed_frame_count `
+        -Value ([uint64](Get-RequiredProperty $storage 'compressed_frame_count' 'build.storage')) -Force
+    $Catalog | Add-Member -MemberType NoteProperty -Name raw_frame_count `
+        -Value ([uint64](Get-RequiredProperty $storage 'raw_frame_count' 'build.storage')) -Force
     $catalogPath = Resolve-ChildPath $BuildRoot ([string]$Build.registry_catalog) `
         'build.registry_catalog'
     Assert-ProofCoversFile $catalogPath ([string]$Build.registry_catalog_sha256) $null `
@@ -3449,6 +3461,7 @@ try {
         job_file = Get-ProjectRelativePath $jobPath; job_id = $jobId; job_sha256 = $jobSha256
         generation_id = $generationId; game_root = $gameRoot; baldureal_sha256 = $expectedExeSha256
         installation_mode = $installMode
+        verification_status = if ($ProvisionalQa) { 'provisional-qa' } else { 'sealed-verified' }
         method = [ordered]@{
             algorithm = [string]$upscale.algorithm; scale = $scale; passes = 1
             antialias = $false; xbr_blend = $false; sampling = 'NEAREST'

@@ -140,7 +140,12 @@ def family_workspace(family: InventoryFamily) -> Path:
 
 
 def member_job_id(family: InventoryFamily, version: str) -> str:
-    profile = "monster-icewind" if family.runtime_profile.startswith("monster-") else "character"
+    if family.runtime_profile == "monster-icewind-bg2ee-2.7.3.0":
+        profile = "monster-icewind"
+    elif family.runtime_profile == "monster-bg2ee-2.7.3.0":
+        profile = "monster"
+    else:
+        profile = "character"
     value = f"{profile}-{family_slug(family)}-x2-{version}"
     if not JOB_ID_RE.fullmatch(value):
         raise RuntimeError(f"generated job_id is invalid or too long: {value}")
@@ -175,7 +180,11 @@ def member_layout(family: InventoryFamily, job_filename: str = "x2-nearest-v1.js
         raise RuntimeError("member job filename must use x2-nearest-vN.json")
     workspace = family_workspace(family)
     run_name = Path(job_filename).stem
-    profile_cache = "mi" if family.runtime_profile.startswith("monster-") else "character"
+    profile_cache = (
+        "mi"
+        if family.runtime_profile == "monster-icewind-bg2ee-2.7.3.0"
+        else "monster"
+    )
     return {
         "family_directory": relative_project_path(workspace),
         "member_job": relative_project_path(workspace / "jobs" / job_filename),

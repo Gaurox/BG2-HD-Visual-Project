@@ -249,15 +249,21 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         )
 
         self.assertEqual(result["status"], "family-member-job-planned")
+        self.assertEqual(result["job_id"], "monster-7f07-mglc-golem-clay-x2-v99")
         self.assertEqual(result["runtime_profile"], "monster-bg2ee-2.7.3.0")
+        layout = generator.member_layout(
+            generator.load_inventory_family(
+                self.families, "0x7F07:body:base-resref:MGLC:MGLC"
+            ),
+            self.generic_monster_member.name,
+        )
         self.assertEqual(
-            generator.member_layout(
-                generator.load_inventory_family(
-                    self.families, "0x7F07:body:base-resref:MGLC:MGLC"
-                ),
-                self.generic_monster_member.name,
-            )["member_job"],
+            layout["member_job"],
             "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/jobs/x2-nearest-v99.json",
+        )
+        self.assertEqual(
+            layout["engine_build"],
+            "sprite/.work/cmake/monster/7f/7f07-mglc-x2-nearest-v99",
         )
 
     def test_unready_inventory_family_is_rejected_before_publication(self) -> None:
