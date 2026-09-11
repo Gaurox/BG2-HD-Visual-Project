@@ -30,6 +30,7 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 
+from catalog_verification import VerificationCache, VerificationMismatch
 from workspace_paths import resolve_path_reference
 
 
@@ -37,6 +38,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parents[1]
 PATH_MIGRATIONS_FILE = PROJECT_ROOT / "sprite" / "index" / "path-migrations.json"
 XBR_ADAPTER = SCRIPT_DIR / "xbr2x_batch.js"
+CATALOG_BUILDER_CONTRACT = PROJECT_ROOT / "pipeline" / "catalog-builder-contract.json"
 INSTALL_SCRIPT = SCRIPT_DIR / "Install-CreatureSprite-X2-Test.ps1"
 RESTORE_SCRIPT = SCRIPT_DIR / "Restore-CreatureSprite-X2-Test.ps1"
 XN_INSTALL_SCRIPT = SCRIPT_DIR / "Install-CreatureSprite-XN-Test.ps1"
@@ -56,6 +58,12 @@ ARMOR_SET_BUILD_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-armor-set-pack-v1"
 CATALOG_BUILD_SCHEMA = "bg2-upscale-creature-sprite-xn-catalog-pack-v1"
 CATALOG_POINTER_SCHEMA = (
     "bg2-upscale-creature-sprite-xn-catalog-current-generation-v1"
+)
+CATALOG_VERIFICATION_PROOF_SCHEMA = (
+    "bg2-upscale-creature-sprite-xn-catalog-verification-proof-v1"
+)
+CATALOG_INSTALL_PROOF_SCHEMA = (
+    "bg2-upscale-creature-sprite-xn-catalog-install-proof-v1"
 )
 RUNTIME_SCHEMA = "bg2-upscale-creature-sprite-runtime-v1"
 XN_INSTALL_STATE_SCHEMA = "bg2-upscale-creature-sprite-xn-ingame-test-v2"
@@ -129,6 +137,27 @@ MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES = 1_048_576
 # Visual Studio 2019 FileTracker adds long TryCompile/tlog suffixes and still
 # fails above MAX_PATH even when Windows long paths are enabled.
 MAX_WINDOWS_CMAKE_BUILD_ROOT_CHARS = 120
+ENGINE_SOURCE_CONTRACT_FILES = (
+    "CMakeLists.txt",
+    "src/iee/hooks.cpp",
+    "src/iee/native_occlusion_bridge.cpp",
+    "src/iee/native_occlusion_bridge.h",
+    "src/iee/dll_main.cpp",
+    "src/iee/bridge_transition.cpp",
+    "src/iee/bridge_transition.h",
+    "src/iee/creature_sprite_x2.cpp",
+    "src/iee/creature_sprite_x2.h",
+    "src/iee/core/config.cpp",
+    "src/iee/core/config.h",
+    "src/iee/core/creature_sprite_filter_math.cpp",
+    "src/iee/core/creature_sprite_filter_math.h",
+    "src/iee/core/native_occlusion_probe.cpp",
+    "src/iee/core/native_occlusion_probe.h",
+    "src/iee/game/build_manifest.cpp",
+    "src/iee/game/build_manifest.h",
+    "tests/iee_tests.cpp",
+    "tests/bridge_worker_lifecycle_tests.cpp",
+)
 CATALOG_COMPONENT_DIGEST_DOMAIN = b"IEECSNC-COMPONENT-V1\0"
 CATALOG_DIRECTORY_DIGEST_DOMAIN = b"IEECSNC-DIRECTORY-V2\0"
 CATALOG_LOGICAL_CONTENT_DIGEST_DOMAIN = b"IEECSNC-LOGICAL-CONTENT-V1\0"
@@ -136,11 +165,14 @@ CATALOG_SHARD_ANIMATION_SENTINEL = 0xFFFF
 CATALOG_OWNER_CHARACTER = 1
 CATALOG_OWNER_MONSTER_ICEWIND = 2
 XBR_OUTPUT_BATCH_BUDGET_BYTES = 64 * 1024 * 1024
-# The xN adapter retains the baseline adapter's legacy protocol and xBR2x call
-# path byte-for-byte. Accepting this audited hash keeps existing x2 builds
-# resumable without spending another full xBR pass.
-LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S = frozenset(
-    {"11FE3B2F1ACAAA0F141E282D86FFE28D7A8DB0B86AFFCEDB8A16741F141FC1D4"}
+# xBR2x calls with blend disabled are byte-compatible across these audited
+# adapter revisions. Preserve their sealed x2 components when appending a
+# catalog; xBR4x and blend-enabled jobs remain bound to the current adapter.
+COMPATIBLE_XBR2X_ADAPTER_SHA256S = frozenset(
+    {
+        "11FE3B2F1ACAAA0F141E282D86FFE28D7A8DB0B86AFFCEDB8A16741F141FC1D4",
+        "9A58392214E3C479758AA221E284E3F2C380CED21BD46965D0B52D1A1A36F539",
+    }
 )
 CHARACTER_BODY_SUFFIXES = (
     "A1",
@@ -1022,8 +1054,94 @@ def catalog_leaf_payload_paths(
     return ordered
 
 
-def catalog_payload_fingerprint(path: Path) -> dict[str, Any]:
+def catalog_verification_cache_path(catalog: dict[str, Any]) -> Path:
+    return job_path(catalog, "run_dir") / "verification-cache" / "hash-cache-v1.json"
+
+
+def catalog_verification_proof_path(
+    catalog: dict[str, Any], generation_id: str
+) -> Path:
+    return (
+        job_path(catalog, "run_dir")
+        / "verification-cache"
+        / generation_id.lower()
+        / "sealed-verification.json"
+    )
+
+
+def catalog_install_proof_path(catalog: dict[str, Any], generation_id: str) -> Path:
+    return (
+        job_path(catalog, "run_dir")
+        / "verification-cache"
+        / generation_id.lower()
+        / "install-prevalidation.json"
+    )
+
+
+def catalog_verifier(
+    catalog: dict[str, Any], *, full_verify: bool | None = None
+) -> VerificationCache:
+    cached = catalog.get("_catalog_verifier")
+    if isinstance(cached, VerificationCache) and (
+        full_verify is None or cached.full_verify == full_verify
+    ):
+        return cached
+    requested_full_verify = bool(full_verify)
+    verifier = VerificationCache(
+        catalog_verification_cache_path(catalog), full_verify=requested_full_verify
+    )
+    catalog["_catalog_verifier"] = verifier
+    return verifier
+
+
+def catalog_cached_fingerprint(
+    catalog: dict[str, Any],
+    path: Path,
+    *,
+    scope: str,
+    include_crc32: bool = False,
+) -> dict[str, Any]:
+    return catalog_verifier(catalog).fingerprint_file(
+        path, scope=scope, include_crc32=include_crc32
+    )
+
+
+def catalog_builder_lock(catalog: dict[str, Any]) -> tuple[Path, str]:
+    sealed = catalog.get("_catalog_sealed_input_lock")
+    if isinstance(sealed, dict):
+        legacy_path = str(sealed.get("catalog_builder", ""))
+        legacy_sha256 = str(sealed.get("catalog_builder_sha256", "")).upper()
+        contract = read_json(CATALOG_BUILDER_CONTRACT)
+        compatible = contract.get("compatible_legacy_runner_sha256", [])
+        if (
+            legacy_path == relative_project_path(Path(__file__))
+            and legacy_sha256 in compatible
+        ):
+            # The sealed build predates separation of build and verification code.
+            return Path(__file__), legacy_sha256
+    fingerprint = catalog_cached_fingerprint(
+        catalog,
+        CATALOG_BUILDER_CONTRACT,
+        scope="catalog-builder-contract",
+    )
+    return CATALOG_BUILDER_CONTRACT, str(fingerprint["sha256"])
+
+
+def catalog_payload_fingerprint(
+    path: Path, catalog: dict[str, Any] | None = None, *, scope: str = "catalog"
+) -> dict[str, Any]:
     """Hash one regular payload from a stable file identity in a single pass."""
+
+    if catalog is not None:
+        fingerprint = catalog_cached_fingerprint(
+            catalog, path, scope=scope, include_crc32=True
+        )
+        return {
+            "path": relative_project_path(path),
+            "sha256": fingerprint["sha256"],
+            "crc32": fingerprint["crc32"],
+            "bytes": fingerprint["signature"]["size"],
+        }
 
     sha256 = hashlib.sha256()
     crc32 = 0
@@ -1062,9 +1180,16 @@ def catalog_input_lock(
     cached = catalog.get("_catalog_input_lock")
     if not refresh and isinstance(cached, dict):
         return cached
+    verifier = catalog_verifier(catalog)
+
+    def locked_sha256(path: Path, scope: str) -> str:
+        return str(
+            verifier.fingerprint_file(path, scope=scope)["sha256"]
+        )
+
     game_exe = job_path(catalog, "game_root") / "BaldurReal.exe"
     expected_exe = catalog["compatibility"]["baldur_real_sha256"].upper()
-    if not game_exe.is_file() or sha256_file(game_exe) != expected_exe:
+    if not game_exe.is_file() or locked_sha256(game_exe, "game-runtime") != expected_exe:
         raise RuntimeError("BaldurReal.exe is incompatible with the catalog job")
     source = job_path(catalog, "engine_source")
     members: list[dict[str, Any]] = []
@@ -1079,10 +1204,12 @@ def catalog_input_lock(
             )
         member_entry = {
             "job_file": relative_project_path(member_file),
-            "job_sha256": sha256_file(member_file),
+            "job_sha256": locked_sha256(member_file, f"member:{member['job_id']}"),
             "job_id": member["job_id"],
             "build_manifest": relative_project_path(member_manifest),
-            "build_manifest_sha256": sha256_file(member_manifest),
+            "build_manifest_sha256": locked_sha256(
+                member_manifest, f"member:{member['job_id']}"
+            ),
         }
         members.append(member_entry)
         for leaf in catalog_member_leaf_jobs(member):
@@ -1101,30 +1228,60 @@ def catalog_input_lock(
             leaf_jobs.append(
                 {
                     "job_file": relative_project_path(leaf_file),
-                    "job_sha256": sha256_file(leaf_file),
+                    "job_sha256": locked_sha256(
+                        leaf_file, f"leaf:{leaf['job_id']}"
+                    ),
                     "job_id": leaf["job_id"],
                     "source_manifest": relative_project_path(source_manifest),
-                    "source_manifest_sha256": sha256_file(source_manifest),
+                    "source_manifest_sha256": locked_sha256(
+                        source_manifest, f"leaf:{leaf['job_id']}"
+                    ),
                     "build_manifest": relative_project_path(leaf_manifest),
-                    "build_manifest_sha256": sha256_file(leaf_manifest),
+                    "build_manifest_sha256": locked_sha256(
+                        leaf_manifest, f"leaf:{leaf['job_id']}"
+                    ),
                     "payloads": [
-                        catalog_payload_fingerprint(path)
+                        catalog_payload_fingerprint(
+                            path, catalog, scope=f"leaf:{leaf['job_id']}"
+                        )
                         for path in catalog_leaf_payload_paths(
                             build_dir(leaf), leaf_manifest_value
                         )
                     ],
                 }
             )
+    builder_path, builder_sha256 = catalog_builder_lock(catalog)
+    engine_contract_expected = None
+    sealed = catalog.get("_catalog_sealed_input_lock")
+    if isinstance(sealed, dict):
+        engine_contract_expected = str(
+            sealed.get("engine_source_contract_sha256", "")
+        ).upper()
+    engine_paths = [source / relative for relative in ENGINE_SOURCE_CONTRACT_FILES]
+    if re.fullmatch(r"[0-9A-F]{64}", engine_contract_expected or ""):
+        verifier.verify_tree(
+            f"engine:{source.resolve()}",
+            engine_paths,
+            engine_contract_expected,
+            lambda: source_tree_hash(source),
+            scope="engine-source",
+        )
+        engine_contract_sha256 = engine_contract_expected
+    else:
+        engine_contract_sha256 = source_tree_hash(source)
+        verifier.record_verified_tree(
+            f"engine:{source.resolve()}", engine_paths, engine_contract_sha256
+        )
     result = {
         "schema": "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1",
         "job_file": relative_project_path(Path(catalog["_job_file"])),
-        "job_sha256": sha256_file(Path(catalog["_job_file"])),
+        "job_sha256": locked_sha256(Path(catalog["_job_file"]), "catalog-job"),
         "method": upscale_contract(catalog).method,
         "baldur_real_sha256": expected_exe,
         "engine_source": relative_project_path(source),
-        "engine_source_contract_sha256": source_tree_hash(source),
-        "catalog_builder": relative_project_path(Path(__file__)),
-        "catalog_builder_sha256": sha256_file(Path(__file__)),
+        "engine_source_contract_sha256": engine_contract_sha256,
+        "catalog_builder": relative_project_path(builder_path),
+        "catalog_builder_sha256": builder_sha256,
         "members": members,
         "leaf_jobs": leaf_jobs,
     }
@@ -1139,6 +1296,9 @@ def catalog_generation_id(
 
 
 def catalog_generation_dir(catalog: dict[str, Any]) -> Path:
+    cached = catalog.get("_catalog_generation_dir")
+    if isinstance(cached, Path):
+        return cached
     generation_id = catalog_generation_id(catalog)
     return job_path(catalog, "run_dir") / "generations" / generation_id.lower()
 
@@ -4410,9 +4570,12 @@ def build_adapter_hash_matches(
     manifest: dict[str, Any], contract: UpscaleContract
 ) -> bool:
     adapter_hash = str(manifest.get("xbr_adapter_sha256", "")).upper()
-    return adapter_hash == sha256_file(XBR_ADAPTER) or (
-        not contract.explicit
-        and adapter_hash in LEGACY_COMPATIBLE_XBR_ADAPTER_SHA256S
+    if adapter_hash == sha256_file(XBR_ADAPTER):
+        return True
+    return (
+        contract.scale == 2
+        and not contract.xbr_blend
+        and adapter_hash in COMPATIBLE_XBR2X_ADAPTER_SHA256S
     )
 
 
@@ -4827,29 +4990,8 @@ def build_pack(job: dict[str, Any], force: bool, resume: bool, keep_frames: bool
 
 
 def source_tree_hash(source_root: Path) -> str:
-    relative_files = [
-        "CMakeLists.txt",
-        "src/iee/hooks.cpp",
-        "src/iee/native_occlusion_bridge.cpp",
-        "src/iee/native_occlusion_bridge.h",
-        "src/iee/dll_main.cpp",
-        "src/iee/bridge_transition.cpp",
-        "src/iee/bridge_transition.h",
-        "src/iee/creature_sprite_x2.cpp",
-        "src/iee/creature_sprite_x2.h",
-        "src/iee/core/config.cpp",
-        "src/iee/core/config.h",
-        "src/iee/core/creature_sprite_filter_math.cpp",
-        "src/iee/core/creature_sprite_filter_math.h",
-        "src/iee/core/native_occlusion_probe.cpp",
-        "src/iee/core/native_occlusion_probe.h",
-        "src/iee/game/build_manifest.cpp",
-        "src/iee/game/build_manifest.h",
-        "tests/iee_tests.cpp",
-        "tests/bridge_worker_lifecycle_tests.cpp",
-    ]
     digest = hashlib.sha256()
-    for relative in relative_files:
+    for relative in ENGINE_SOURCE_CONTRACT_FILES:
         path = source_root / relative
         digest.update(relative.encode("utf-8") + b"\0")
         digest.update(path.read_bytes())
@@ -6300,6 +6442,15 @@ def build_catalog(
         raise RuntimeError(
             "catalog generations are immutable; change inputs or use --resume"
         )
+    if resume and catalog_pointer_path(catalog).is_file():
+        try:
+            verified = verify_catalog(catalog)
+            return {"status": "reused", **verified["build"], "verification": verified["verification"]}
+        except CatalogInputsChanged:
+            catalog.pop("_catalog_generation_dir", None)
+            catalog.pop("_catalog_sealed_input_lock", None)
+            catalog.pop("_catalog_input_lock", None)
+            catalog.pop("_catalog_source_collection", None)
     output = build_dir(catalog)
     if output.exists():
         if not resume:
@@ -6711,6 +6862,557 @@ def verify_catalog_pointer(catalog: dict[str, Any]) -> dict[str, Any]:
     return value
 
 
+class CatalogProofMissing(RuntimeError):
+    pass
+
+
+class CatalogInputsChanged(RuntimeError):
+    def __init__(self, message: str, verification: dict[str, Any]) -> None:
+        super().__init__(message)
+        self.verification = verification
+
+
+def catalog_proof_digest(value: dict[str, Any]) -> str:
+    body = dict(value)
+    body.pop("proof_sha256", None)
+    return canonical_json_sha256(body)
+
+
+def catalog_current_generation_context(
+    catalog: dict[str, Any], verifier: VerificationCache
+) -> dict[str, Any]:
+    pointer_path = catalog_pointer_path(catalog)
+    pointer = read_json(pointer_path)
+    expected_fields = {
+        "schema",
+        "generation_id",
+        "job_sha256",
+        "generation_dir",
+        "build_manifest",
+        "build_manifest_sha256",
+        "runtime_manifest",
+        "runtime_manifest_sha256",
+    }
+    if set(pointer) != expected_fields or pointer.get("schema") != CATALOG_POINTER_SCHEMA:
+        raise RuntimeError("catalog current-generation pointer is invalid")
+    generation_id = str(pointer.get("generation_id", "")).upper()
+    if re.fullmatch(r"[0-9A-F]{64}", generation_id) is None:
+        raise RuntimeError("catalog generation id is invalid")
+    job_file = Path(catalog["_job_file"])
+    try:
+        verifier.verify_file(
+            job_file,
+            str(pointer["job_sha256"]),
+            scope="catalog-job",
+        )
+    except VerificationMismatch as error:
+        verifier.save()
+        raise CatalogInputsChanged(str(error), verifier.summary()) from error
+    run_root = job_path(catalog, "run_dir")
+    generation = run_root / "generations" / generation_id.lower()
+    declared_generation = resolve_path(str(pointer["generation_dir"]))
+    if (
+        declared_generation != generation.resolve()
+        or str(pointer["build_manifest"]).replace("\\", "/")
+        != "build/build-manifest.json"
+        or str(pointer["runtime_manifest"]).replace("\\", "/")
+        != "runtime/runtime-manifest.json"
+    ):
+        raise RuntimeError("catalog generation pointer paths are invalid")
+    build_manifest_path = generation / "build" / "build-manifest.json"
+    runtime_manifest_path = generation / "runtime" / "runtime-manifest.json"
+    try:
+        verifier.verify_file(
+            build_manifest_path,
+            str(pointer["build_manifest_sha256"]),
+            scope="sealed-build-manifest",
+        )
+        verifier.verify_file(
+            runtime_manifest_path,
+            str(pointer["runtime_manifest_sha256"]),
+            scope="sealed-runtime-manifest",
+        )
+    except VerificationMismatch as error:
+        verifier.save()
+        raise RuntimeError(f"sealed catalog manifest changed: {error}") from error
+    build = read_json(build_manifest_path)
+    runtime = read_json(runtime_manifest_path)
+    input_lock = build.get("locks", {}).get("input_lock")
+    if (
+        build.get("schema") != CATALOG_BUILD_SCHEMA
+        or build.get("status") != "built-pending-ingame-qa"
+        or build.get("job_id") != catalog["job_id"]
+        or build.get("generation_id") != generation_id
+        or build.get("job_sha256") != pointer["job_sha256"]
+        or not isinstance(input_lock, dict)
+        or canonical_json_sha256(input_lock) != generation_id
+        or build.get("locks", {}).get("input_lock_sha256") != generation_id
+        or runtime.get("schema") != RUNTIME_SCHEMA
+        or runtime.get("status") != "built-tested"
+        or runtime.get("tests_status") != "passed"
+        or runtime.get("bridge_worker_tests_status") != "passed"
+        or runtime.get("generation_id") != generation_id
+        or runtime.get("job_id") != catalog["job_id"]
+        or runtime.get("job_sha256") != pointer["job_sha256"]
+    ):
+        raise RuntimeError("sealed catalog generation manifests are inconsistent")
+    catalog["_catalog_generation_dir"] = generation
+    catalog["_catalog_sealed_input_lock"] = input_lock
+    return {
+        "pointer_path": pointer_path,
+        "pointer": pointer,
+        "generation_id": generation_id,
+        "generation": generation,
+        "build_manifest_path": build_manifest_path,
+        "build": build,
+        "runtime_manifest_path": runtime_manifest_path,
+        "runtime": runtime,
+        "input_lock": input_lock,
+    }
+
+
+def catalog_locked_path(value: Any, label: str) -> Path:
+    text = str(value or "")
+    if not text:
+        raise RuntimeError(f"empty locked path: {label}")
+    return resolve_path(text)
+
+
+def verify_catalog_locked_inputs(
+    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
+) -> None:
+    lock = context["input_lock"]
+    failures: list[str] = []
+
+    def check(
+        path: Path,
+        expected_sha256: Any,
+        scope: str,
+        *,
+        expected_crc32: int | None = None,
+        expected_bytes: int | None = None,
+    ) -> None:
+        try:
+            verifier.verify_file(
+                path,
+                str(expected_sha256),
+                scope=scope,
+                expected_crc32=expected_crc32,
+                expected_bytes=expected_bytes,
+            )
+        except (OSError, VerificationMismatch) as error:
+            failures.append(str(error))
+
+    if lock.get("schema") != "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1":
+        raise RuntimeError("catalog sealed input lock schema is invalid")
+    if (
+        catalog_locked_path(lock.get("job_file"), "input_lock.job_file")
+        != Path(catalog["_job_file"]).resolve()
+        or lock.get("job_sha256") != context["pointer"]["job_sha256"]
+        or lock.get("method") != upscale_contract(catalog).method
+        or lock.get("baldur_real_sha256")
+        != catalog["compatibility"]["baldur_real_sha256"].upper()
+    ):
+        raise RuntimeError("catalog sealed input lock differs from the catalog job")
+    check(
+        Path(catalog["_job_file"]), lock["job_sha256"], "catalog-job"
+    )
+    check(
+        job_path(catalog, "game_root") / "BaldurReal.exe",
+        lock["baldur_real_sha256"],
+        "game-runtime",
+    )
+    engine_source = catalog_locked_path(lock.get("engine_source"), "engine_source")
+    if engine_source != job_path(catalog, "engine_source"):
+        raise RuntimeError("catalog sealed engine source path differs from the job")
+    try:
+        verifier.verify_tree(
+            f"engine:{engine_source.resolve()}",
+            [engine_source / item for item in ENGINE_SOURCE_CONTRACT_FILES],
+            str(lock.get("engine_source_contract_sha256", "")),
+            lambda: source_tree_hash(engine_source),
+            scope="engine-source",
+        )
+    except (OSError, VerificationMismatch) as error:
+        failures.append(str(error))
+
+    builder_path = catalog_locked_path(lock.get("catalog_builder"), "catalog_builder")
+    builder_sha256 = str(lock.get("catalog_builder_sha256", "")).upper()
+    contract = read_json(CATALOG_BUILDER_CONTRACT)
+    compatible_legacy = set(contract.get("compatible_legacy_runner_sha256", []))
+    if (
+        builder_path == Path(__file__).resolve()
+        and builder_sha256 in compatible_legacy
+    ):
+        proof = read_json(
+            catalog_verification_proof_path(catalog, context["generation_id"])
+        )
+        check(
+            CATALOG_BUILDER_CONTRACT,
+            proof.get("builder_contract_sha256"),
+            "catalog-builder-contract",
+        )
+    else:
+        check(builder_path, builder_sha256, "catalog-builder-contract")
+
+    members = lock.get("members")
+    leaves = lock.get("leaf_jobs")
+    if not isinstance(members, list) or not isinstance(leaves, list):
+        raise RuntimeError("catalog sealed input dependency lists are invalid")
+    for member in members:
+        if not isinstance(member, dict):
+            raise RuntimeError("catalog sealed member dependency is invalid")
+        scope = f"member:{member.get('job_id', 'unknown')}"
+        check(
+            catalog_locked_path(member.get("job_file"), "member.job_file"),
+            member.get("job_sha256"),
+            scope,
+        )
+        check(
+            catalog_locked_path(
+                member.get("build_manifest"), "member.build_manifest"
+            ),
+            member.get("build_manifest_sha256"),
+            scope,
+        )
+    for leaf in leaves:
+        if not isinstance(leaf, dict) or not isinstance(leaf.get("payloads"), list):
+            raise RuntimeError("catalog sealed leaf dependency is invalid")
+        scope = f"leaf:{leaf.get('job_id', 'unknown')}"
+        for path_key, hash_key in (
+            ("job_file", "job_sha256"),
+            ("source_manifest", "source_manifest_sha256"),
+            ("build_manifest", "build_manifest_sha256"),
+        ):
+            check(
+                catalog_locked_path(leaf.get(path_key), f"leaf.{path_key}"),
+                leaf.get(hash_key),
+                scope,
+            )
+        for payload in leaf["payloads"]:
+            if not isinstance(payload, dict):
+                raise RuntimeError("catalog sealed leaf payload is invalid")
+            check(
+                catalog_locked_path(payload.get("path"), "leaf.payload.path"),
+                payload.get("sha256"),
+                scope,
+                expected_crc32=int(payload.get("crc32", -1)),
+                expected_bytes=int(payload.get("bytes", -1)),
+            )
+    verifier.save()
+    if failures:
+        raise CatalogInputsChanged(
+            f"sealed catalog inputs changed ({len(failures)}): {failures[0]}",
+            verifier.summary(),
+        )
+
+
+def catalog_output_specs(
+    catalog: dict[str, Any], context: dict[str, Any]
+) -> list[dict[str, Any]]:
+    build_root = context["build_manifest_path"].parent
+    runtime_root = context["runtime_manifest_path"].parent
+    build = context["build"]
+    runtime = context["runtime"]
+    specs = [
+        {
+            "role": "catalog",
+            "path": catalog_payload_path(
+                build_root, build.get("registry_catalog"), "catalog registry"
+            ),
+            "sha256": build.get("registry_catalog_sha256"),
+            "bytes": build.get("registry_catalog_bytes"),
+            "scope": "sealed-catalog",
+        }
+    ]
+    for index, shard in enumerate(build.get("shards", [])):
+        if not isinstance(shard, dict):
+            raise RuntimeError("catalog sealed shard entry is invalid")
+        specs.append(
+            {
+                "role": "shard",
+                "index": index,
+                "path": catalog_payload_path(
+                    build_root, shard.get("registry"), f"catalog shard {index}"
+                ),
+                "sha256": shard.get("sha256"),
+                "crc32": int(shard.get("crc32", -1)),
+                "bytes": int(shard.get("registry_bytes", -1)),
+                "scope": f"sealed-shard:{index}",
+            }
+        )
+    specs.append(
+        {
+            "role": "runtime-dll",
+            "path": catalog_payload_path(
+                runtime_root, runtime.get("dll"), "catalog runtime DLL"
+            ),
+            "sha256": runtime.get("dll_sha256"),
+            "scope": "sealed-runtime-dll",
+        }
+    )
+    return specs
+
+
+def verify_catalog_outputs(
+    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
+) -> dict[str, Any]:
+    failures: list[str] = []
+    for spec in catalog_output_specs(catalog, context):
+        try:
+            verifier.verify_file(
+                spec["path"],
+                str(spec["sha256"]),
+                scope=str(spec["scope"]),
+                expected_crc32=spec.get("crc32"),
+                expected_bytes=spec.get("bytes"),
+            )
+            if spec["role"] == "shard":
+                object_store_path = catalog_object_store_dir(catalog) / spec["path"].name
+                if (
+                    not object_store_path.is_file()
+                    or not os.path.samefile(spec["path"], object_store_path)
+                ):
+                    raise VerificationMismatch(
+                        f"catalog shard {spec['index']} is not linked to the object store"
+                    )
+        except (OSError, VerificationMismatch) as error:
+            verifier.invalidated.add(str(spec["scope"]))
+            failures.append(str(error))
+    verifier.save()
+    if failures:
+        raise RuntimeError(
+            f"sealed catalog output corruption ({len(failures)}): {failures[0]}"
+        )
+    catalog_path = catalog_output_specs(catalog, context)[0]["path"]
+    info = inspect_registry_catalog(catalog_path)
+    build = context["build"]
+    if (
+        info["sha256"] != build.get("registry_catalog_sha256")
+        or info["directory_sha256"]
+        != build.get("registry_catalog_directory_sha256")
+        or info["logical_content_sha256"]
+        != build.get("registry_catalog_logical_content_sha256")
+        or info["shards"] != build.get("shards")
+    ):
+        raise RuntimeError("sealed catalog index differs from its manifest")
+    resources = {
+        name
+        for names in info["animation_resources"].values()
+        for name in names
+    }
+    collisions = catalog_override_collisions(catalog, resources)
+    if collisions:
+        raise RuntimeError(f"override collision: {', '.join(collisions)}")
+    return {"registry_catalog": str(catalog_path), **info}
+
+
+def load_catalog_verification_proof(
+    catalog: dict[str, Any], context: dict[str, Any]
+) -> dict[str, Any]:
+    path = catalog_verification_proof_path(catalog, context["generation_id"])
+    if not path.is_file():
+        raise CatalogProofMissing(f"catalog verification proof is missing: {path}")
+    value = read_json(path)
+    if (
+        value.get("schema") != CATALOG_VERIFICATION_PROOF_SCHEMA
+        or value.get("status") != "sealed-verified"
+        or value.get("generation_id") != context["generation_id"]
+        or value.get("job_sha256") != context["pointer"]["job_sha256"]
+        or value.get("build_manifest_sha256")
+        != context["pointer"]["build_manifest_sha256"]
+        or value.get("runtime_manifest_sha256")
+        != context["pointer"]["runtime_manifest_sha256"]
+        or value.get("input_lock_sha256") != context["generation_id"]
+        or value.get("proof_sha256") != catalog_proof_digest(value)
+    ):
+        raise RuntimeError("catalog verification proof is invalid")
+    return value
+
+
+def record_catalog_verification_proof(
+    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
+) -> dict[str, Any]:
+    lock = context["input_lock"]
+    verifier.record_verified(
+        Path(catalog["_job_file"]), str(lock["job_sha256"])
+    )
+    verifier.record_verified(
+        context["build_manifest_path"],
+        str(context["pointer"]["build_manifest_sha256"]),
+    )
+    verifier.record_verified(
+        context["runtime_manifest_path"],
+        str(context["pointer"]["runtime_manifest_sha256"]),
+    )
+    engine_source = catalog_locked_path(lock["engine_source"], "engine_source")
+    verifier.record_verified_tree(
+        f"engine:{engine_source.resolve()}",
+        [engine_source / item for item in ENGINE_SOURCE_CONTRACT_FILES],
+        str(lock["engine_source_contract_sha256"]),
+    )
+    for member in lock["members"]:
+        verifier.record_verified(
+            catalog_locked_path(member["job_file"], "member.job_file"),
+            str(member["job_sha256"]),
+        )
+        verifier.record_verified(
+            catalog_locked_path(member["build_manifest"], "member.build_manifest"),
+            str(member["build_manifest_sha256"]),
+        )
+    for leaf in lock["leaf_jobs"]:
+        for path_key, hash_key in (
+            ("job_file", "job_sha256"),
+            ("source_manifest", "source_manifest_sha256"),
+            ("build_manifest", "build_manifest_sha256"),
+        ):
+            verifier.record_verified(
+                catalog_locked_path(leaf[path_key], f"leaf.{path_key}"),
+                str(leaf[hash_key]),
+            )
+        for payload in leaf["payloads"]:
+            verifier.record_verified(
+                catalog_locked_path(payload["path"], "leaf.payload.path"),
+                str(payload["sha256"]),
+                expected_crc32=int(payload["crc32"]),
+            )
+    verifier.record_verified(
+        job_path(catalog, "game_root") / "BaldurReal.exe",
+        str(lock["baldur_real_sha256"]),
+    )
+    for spec in catalog_output_specs(catalog, context):
+        verifier.record_verified(
+            spec["path"], str(spec["sha256"]), expected_crc32=spec.get("crc32")
+        )
+    builder_contract_sha256 = sha256_file(CATALOG_BUILDER_CONTRACT)
+    verifier.record_verified(CATALOG_BUILDER_CONTRACT, builder_contract_sha256)
+    verifier.save()
+    proof = {
+        "schema": CATALOG_VERIFICATION_PROOF_SCHEMA,
+        "status": "sealed-verified",
+        "generation_id": context["generation_id"],
+        "job_sha256": context["pointer"]["job_sha256"],
+        "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
+        "runtime_manifest_sha256": context["pointer"]["runtime_manifest_sha256"],
+        "input_lock_sha256": context["generation_id"],
+        "builder_contract_sha256": builder_contract_sha256,
+        "verified_at_utc": utc_now(),
+        "verification_kind": "exhaustive",
+    }
+    proof["proof_sha256"] = catalog_proof_digest(proof)
+    write_json(catalog_verification_proof_path(catalog, context["generation_id"]), proof)
+    return proof
+
+
+def write_catalog_install_proof(
+    catalog: dict[str, Any],
+    context: dict[str, Any],
+    verifier: VerificationCache,
+) -> tuple[Path, str]:
+    artifacts = []
+    output_specs = catalog_output_specs(catalog, context)
+    shard_crc32_by_sha256 = {
+        str(spec["sha256"]).upper(): int(spec["crc32"])
+        for spec in output_specs
+        if spec["role"] == "shard"
+    }
+    for spec in output_specs:
+        exported = verifier.export_file(spec["path"])
+        exported.update({"role": spec["role"], "index": spec.get("index")})
+        artifacts.append(exported)
+    state_path = active_state_path(catalog)
+    if state_path.is_file():
+        state = read_json(state_path)
+        if state.get("status") in {
+            "installed-pending-qa",
+            "validated-installed",
+            "qa-failed",
+        }:
+            game_root = job_path(catalog, "game_root")
+            for target in state.get("targets", []):
+                if not isinstance(target, dict) or not target.get("installed_present"):
+                    continue
+                expected = target.get("installed_sha256")
+                relative = str(target.get("relative_path", "")).replace("\\", "/")
+                relative_path = Path(relative)
+                if (
+                    not relative
+                    or relative_path.is_absolute()
+                    or ".." in relative_path.parts
+                    or first_installed_target_reparse_component(
+                        game_root, relative_path
+                    )
+                    is not None
+                ):
+                    continue
+                path = (game_root / relative_path).resolve()
+                try:
+                    path.relative_to(game_root.resolve())
+                except ValueError:
+                    continue
+                try:
+                    verifier.verify_file(
+                        path, str(expected), scope=f"live:{target.get('role', relative)}"
+                    )
+                except VerificationMismatch:
+                    continue
+                exported = verifier.export_file(path)
+                expected_text = str(expected).upper()
+                if expected_text in shard_crc32_by_sha256:
+                    exported["crc32"] = shard_crc32_by_sha256[expected_text]
+                exported.update(
+                    {"role": f"live:{target.get('role', 'asset')}", "index": None}
+                )
+                artifacts.append(exported)
+    verifier.save()
+    value = {
+        "schema": CATALOG_INSTALL_PROOF_SCHEMA,
+        "status": "verified",
+        "generation_id": context["generation_id"],
+        "job_sha256": context["pointer"]["job_sha256"],
+        "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
+        "runtime_manifest_sha256": context["pointer"]["runtime_manifest_sha256"],
+        "created_at_utc": utc_now(),
+        "artifacts": artifacts,
+    }
+    value["proof_sha256"] = catalog_proof_digest(value)
+    path = catalog_install_proof_path(catalog, context["generation_id"])
+    write_json(path, value)
+    return path, sha256_file(path)
+
+
+def verify_catalog_incremental(
+    catalog: dict[str, Any], *, check_inputs: bool = True
+) -> dict[str, Any]:
+    verifier = catalog_verifier(catalog, full_verify=False)
+    context = catalog_current_generation_context(catalog, verifier)
+    load_catalog_verification_proof(catalog, context)
+    if check_inputs:
+        verify_catalog_locked_inputs(catalog, context, verifier)
+    build_info = verify_catalog_outputs(catalog, context, verifier)
+    runtime = context["runtime"]
+    dll_path = context["runtime_manifest_path"].parent / str(runtime["dll"])
+    verification = verifier.summary()
+    verification["source_dependencies_checked"] = check_inputs
+    result = {
+        "status": "prepared-verified",
+        "generation_id": context["generation_id"],
+        "animation_ids": list(context["build"].get("animation_ids", [])),
+        "runtime_profiles": runtime_profiles_for_work_item(catalog),
+        "build": {"generation_id": context["generation_id"], **build_info},
+        "runtime": {
+            "dll": str(dll_path),
+            "dll_sha256": runtime["dll_sha256"],
+            "tests_status": "passed",
+        },
+        "pointer": context["pointer"],
+        "override_collisions": 0,
+        "verification": verification,
+    }
+    catalog["_catalog_verified_context"] = context
+    return result
+
+
 def verify_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     game = job_path(armor_set, "game_root")
     if sha256_file(game / "BaldurReal.exe") != armor_set["compatibility"]["baldur_real_sha256"].upper():
@@ -6731,10 +7433,42 @@ def verify_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def prepare_armor_set(armor_set: dict[str, Any], force: bool, resume: bool) -> dict[str, Any]:
+def prepare_armor_set(
+    armor_set: dict[str, Any], force: bool, resume: bool, keep_frames: bool
+) -> dict[str, Any]:
+    for member in armor_set["_members"]:
+        extract_sources(member, force=force, resume=resume)
+        build_pack(member, force=force, resume=resume, keep_frames=keep_frames)
     build_armor_set(armor_set, force, resume)
     build_runtime(armor_set)
     return verify_armor_set(armor_set)
+
+
+def prepare_armor_set_data(
+    armor_set: dict[str, Any], force: bool, resume: bool, keep_frames: bool
+) -> dict[str, Any]:
+    """Prepare every raster member and aggregate without duplicating runtime builds."""
+
+    for member in armor_set["_members"]:
+        extract_sources(member, force=force, resume=resume)
+        build_pack(member, force=force, resume=resume, keep_frames=keep_frames)
+    build_armor_set(armor_set, force, resume)
+    game = job_path(armor_set, "game_root")
+    if sha256_file(game / "BaldurReal.exe") != armor_set["compatibility"][
+        "baldur_real_sha256"
+    ].upper():
+        raise RuntimeError("BaldurReal.exe is incompatible with the armor set")
+    build = verify_armor_set_build(armor_set)
+    collisions = armor_set_override_collisions(armor_set)
+    if collisions:
+        raise RuntimeError(f"override collision: {', '.join(collisions)}")
+    return {
+        "status": "data-prepared-verified",
+        "build": build,
+        "bam_prefixes": armor_set_prefixes(armor_set),
+        "override_collisions": 0,
+        "runtime_deferred_to_catalog": True,
+    }
 
 
 def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
@@ -6785,7 +7519,9 @@ def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def plan_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
+def plan_catalog(
+    catalog: dict[str, Any], *, full_verify: bool = False
+) -> dict[str, Any]:
     game = job_path(catalog, "game_root")
     exe = game / "BaldurReal.exe"
     expected = catalog["compatibility"]["baldur_real_sha256"].upper()
@@ -6793,11 +7529,31 @@ def plan_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
     generation_id: str | None = None
     generation_error: str | None = None
     generation: Path | None = None
-    try:
-        generation_id = catalog_generation_id(catalog)
-        generation = catalog_generation_dir(catalog)
-    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-        generation_error = str(error)
+    verification: dict[str, Any] | None = None
+    if catalog_pointer_path(catalog).is_file():
+        try:
+            verified = (
+                verify_catalog(catalog, full_verify=True)
+                if full_verify
+                else verify_catalog_incremental(catalog)
+            )
+            generation_id = verified["generation_id"]
+            generation = catalog_generation_dir(catalog)
+            verification = verified["verification"]
+        except CatalogInputsChanged as error:
+            generation_error = str(error)
+            verification = error.verification
+        except (CatalogProofMissing, OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
+            generation_error = str(error)
+    else:
+        try:
+            generation_id = catalog_generation_id(catalog)
+            generation = catalog_generation_dir(catalog)
+            verifier = catalog_verifier(catalog)
+            verifier.save()
+            verification = verifier.summary()
+        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
+            generation_error = str(error)
     return {
         "job_id": catalog["job_id"],
         "method": upscale_method_description(contract),
@@ -6817,6 +7573,7 @@ def plan_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
         "generation_id": generation_id,
         "generation_error": generation_error,
         "generation_dir": str(generation) if generation is not None else None,
+        "verification": verification,
         "build_manifest_exists": bool(
             generation is not None
             and (generation / "build" / "build-manifest.json").is_file()
@@ -6850,7 +7607,7 @@ def plan_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def verify_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
+def verify_catalog_exhaustive(catalog: dict[str, Any]) -> dict[str, Any]:
     game = job_path(catalog, "game_root")
     expected = catalog["compatibility"]["baldur_real_sha256"].upper()
     if sha256_file(game / "BaldurReal.exe") != expected:
@@ -6872,12 +7629,44 @@ def verify_catalog(catalog: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def prepare_catalog(
-    catalog: dict[str, Any], force: bool, resume: bool
+def verify_catalog(
+    catalog: dict[str, Any], *, full_verify: bool = False, check_inputs: bool = True
 ) -> dict[str, Any]:
+    if not full_verify:
+        try:
+            return verify_catalog_incremental(catalog, check_inputs=check_inputs)
+        except CatalogProofMissing:
+            pass
+    verifier = catalog_verifier(catalog, full_verify=True)
+    context = catalog_current_generation_context(catalog, verifier)
+    # Reproduce legacy generation ids while the old runner hash is explicitly
+    # mapped to the separated builder contract.
+    catalog["_catalog_sealed_input_lock"] = context["input_lock"]
+    catalog["_catalog_input_lock"] = None
+    catalog["_catalog_source_collection"] = None
+    result = verify_catalog_exhaustive(catalog)
+    context = catalog_current_generation_context(catalog, verifier)
+    record_catalog_verification_proof(catalog, context, verifier)
+    result["verification"] = verifier.summary(mode="full")
+    return result
+
+
+def prepare_catalog(
+    catalog: dict[str, Any], force: bool, resume: bool, *, full_verify: bool = False
+) -> dict[str, Any]:
+    if resume and catalog_pointer_path(catalog).is_file():
+        try:
+            return verify_catalog(catalog, full_verify=full_verify)
+        except CatalogInputsChanged:
+            if full_verify:
+                raise
+            catalog.pop("_catalog_generation_dir", None)
+            catalog.pop("_catalog_sealed_input_lock", None)
+            catalog.pop("_catalog_input_lock", None)
+            catalog.pop("_catalog_source_collection", None)
     build_catalog(catalog, force=force, resume=resume)
     build_runtime(catalog)
-    return verify_catalog(catalog)
+    return verify_catalog(catalog, full_verify=True)
 
 
 def runtime_log_session_after_install(
@@ -7405,9 +8194,9 @@ def runtime_ini_owned_contract_errors(path: Path, state: dict[str, Any]) -> list
         expected["enablecreaturespritelinearfiltering"] = "false"
         filter_mode = state.get("creature_sprite_filter")
         if filter_mode is not None:
-            if filter_mode != "Nearest":
+            if filter_mode not in {"Nearest", "CatmullRom"}:
                 return ["catalog creature-sprite filter state is invalid"]
-            expected["creaturespritefilter"] = "nearest"
+            expected["creaturespritefilter"] = filter_mode.casefold()
     values: dict[str, list[str]] = {key: [] for key in expected}
     section = ""
     try:
@@ -8432,10 +9221,23 @@ def record_qa(job: dict[str, Any], result: str, note: str) -> dict[str, Any]:
     return decision
 
 
-def powershell_script(script: Path, job: dict[str, Any]) -> None:
+def powershell_script(
+    script: Path, job: dict[str, Any], extra_arguments: list[str] | None = None
+) -> None:
     configured = job.get("tools", {}).get("powershell")
     powershell = str(configured or shutil.which("pwsh.exe") or "powershell.exe")
-    run_checked([powershell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(script), "-JobFile", str(job["_job_file"])])
+    command = [
+        powershell,
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        str(script),
+        "-JobFile",
+        str(job["_job_file"]),
+    ]
+    command.extend(extra_arguments or [])
+    run_checked(command)
 
 
 def install_restore_script(job: dict[str, Any], restore: bool) -> Path:
@@ -8496,6 +9298,7 @@ def make_parser() -> argparse.ArgumentParser:
             "build",
             "build-runtime",
             "prepare",
+            "prepare-data",
             "verify",
             "install",
             "restore",
@@ -8529,7 +9332,18 @@ def make_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="retain individual upscaled frame PNGs; --keep-x2-frames is a legacy alias",
     )
+    parser.add_argument(
+        "--creature-sprite-filter",
+        choices=("Nearest", "CatmullRom"),
+        default=None,
+        help="catalog install only; defaults to Nearest",
+    )
     parser.add_argument("--no-game-source-check", action="store_true")
+    parser.add_argument(
+        "--full-verify",
+        action="store_true",
+        help="catalog only: bypass persistent proofs and repeat exhaustive verification",
+    )
     parser.add_argument("--write-report", action="store_true")
     parser.add_argument("--result", choices=("pass", "fail"))
     parser.add_argument("--note")
@@ -8538,6 +9352,8 @@ def make_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = make_parser().parse_args()
+    if args.creature_sprite_filter is not None and args.command != "install":
+        raise RuntimeError("--creature-sprite-filter requires the install command")
     if args.scale is not None and args.command not in {
         "new-character-job",
         "new-character-equipment-job",
@@ -8587,9 +9403,15 @@ def main() -> None:
     job = load_work_item(args.job)
     armor_set = job.get("_kind") == "armor-set"
     catalog = job.get("_kind") == "catalog"
+    if args.full_verify and (
+        not catalog or args.command not in {"plan", "prepare", "verify", "install"}
+    ):
+        raise RuntimeError(
+            "--full-verify is only valid for catalog plan/prepare/verify/install"
+        )
     if args.command == "plan":
         result = (
-            plan_catalog(job)
+            plan_catalog(job, full_verify=args.full_verify)
             if catalog
             else plan_armor_set(job)
             if armor_set
@@ -8618,29 +9440,90 @@ def main() -> None:
         result = build_runtime(job)
     elif args.command == "prepare":
         result = (
-            prepare_catalog(job, args.force, args.resume)
+            prepare_catalog(
+                job, args.force, args.resume, full_verify=args.full_verify
+            )
             if catalog
-            else prepare_armor_set(job, args.force, args.resume)
+            else prepare_armor_set(
+                job, args.force, args.resume, args.keep_upscaled_frames
+            )
             if armor_set
             else prepare(job, args.force, args.resume, args.keep_upscaled_frames)
         )
+    elif args.command == "prepare-data":
+        if not armor_set or catalog:
+            raise RuntimeError("prepare-data requires a Character aggregate job")
+        result = prepare_armor_set_data(
+            job, args.force, args.resume, args.keep_upscaled_frames
+        )
     elif args.command == "verify":
         result = (
-            verify_catalog(job)
+            verify_catalog(job, full_verify=args.full_verify)
             if catalog
             else verify_armor_set(job)
             if armor_set
             else verify_all(job, not args.no_game_source_check)
         )
     elif args.command == "install":
+        catalog_verification: dict[str, Any] | None = None
         if catalog:
-            verify_catalog(job)
+            catalog_verification = verify_catalog(
+                job,
+                full_verify=args.full_verify,
+                check_inputs=args.full_verify,
+            )
         elif armor_set:
             verify_armor_set(job)
         else:
             verify_all(job, compare_game_sources=True)
-        powershell_script(install_restore_script(job, restore=False), job)
-        result = status(job)
+        install_arguments = []
+        if catalog and args.full_verify:
+            install_arguments.append("-FullVerify")
+        elif catalog:
+            context = job.get("_catalog_verified_context")
+            if not isinstance(context, dict):
+                verifier = catalog_verifier(job)
+                context = catalog_current_generation_context(job, verifier)
+            verifier = catalog_verifier(job)
+            proof_path, proof_sha256 = write_catalog_install_proof(
+                job, context, verifier
+            )
+            install_arguments.extend(
+                [
+                    "-VerificationProof",
+                    str(proof_path),
+                    "-VerificationProofSha256",
+                    proof_sha256,
+                ]
+            )
+        if args.creature_sprite_filter is not None:
+            if not catalog:
+                raise RuntimeError(
+                    "--creature-sprite-filter requires a catalog install job"
+                )
+            install_arguments.extend(
+                ["-CreatureSpriteFilter", args.creature_sprite_filter]
+            )
+        powershell_script(
+            install_restore_script(job, restore=False), job, install_arguments
+        )
+        if catalog_verification is not None and not args.full_verify:
+            install_summary = catalog_verifier(job).summary()
+            install_summary["source_dependencies_checked"] = False
+            catalog_verification["verification"] = install_summary
+        if catalog:
+            state_path = active_state_path(job)
+            state = read_json(state_path)
+            result = {
+                "status": state.get("status"),
+                "state": str(state_path),
+                "generation_id": state.get("generation_id"),
+                "installation_mode": state.get("installation_mode"),
+            }
+        else:
+            result = status(job)
+        if catalog_verification is not None:
+            result["verification"] = catalog_verification["verification"]
     elif args.command == "restore":
         powershell_script(install_restore_script(job, restore=True), job)
         result = status(job)

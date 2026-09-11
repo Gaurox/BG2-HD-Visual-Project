@@ -124,6 +124,9 @@ python pipeline/scripts/run_creature_sprite_x2.py verify --job $member
 Exiger `prepared-verified`, xBR/x2, `antialias=false`, `xbr_blend=false`,
 `partial_alpha_pixels=0`, `new_colors=0`, `override_collisions=0`, runtime testé.
 
+Batch Character : lancer `prepare-data --resume` sur chaque agrégat. Il construit/vérifie tous les
+membres et diffère le runtime ; le `prepare` du catalogue final construit et teste la DLL une fois.
+
 ## Phase 2 — job catalogue d'append
 
 Lire le job catalogue depuis l'état actif ; ne pas le choisir manuellement.
@@ -151,6 +154,9 @@ python pipeline/scripts/generate_sprite_family_append.py catalog-append `
   --dry-run
 ```
 
+Ajouter plusieurs animations dans un seul descriptor : répéter `--member-job <agregat>`. Le
+générateur refuse tout membre ou `animation_id` dupliqué et valide le catalogue complet avant écriture.
+
 Retirer `--dry-run` après revue. Le générateur doit conserver `job_id` et `paths.run_dir`, ajouter
 exactement un membre/ID et ne jamais écraser le job de base.
 
@@ -162,17 +168,18 @@ Fermer `InfinityLoader.exe`, `Baldur.exe` et `BaldurReal.exe`.
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $appendCatalog
 python pipeline/scripts/run_creature_sprite_x2.py verify --job $appendCatalog
 
-powershell -NoProfile -ExecutionPolicy Bypass -File `
-  pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 `
-  -JobFile $appendCatalog `
-  -VerifyOnly
-
-python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog
+python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog `
+  --creature-sprite-filter Nearest
 python pipeline/scripts/run_creature_sprite_x2.py status --job $appendCatalog
 ```
 
+Par défaut : preuve scellée réutilisée. Ajouter `--full-verify` à `verify`, `prepare` ou `install`
+uniquement pour imposer le scan exhaustif. PowerShell direct sans preuve reste exhaustif.
+
 Exiger `installed-pending-qa`, `active_identity_matches_job=true`,
 `active_generation_is_sealed=true` et `installed_files_match=true`.
+Pour un contrôle Catmull–Rom explicitement demandé, remplacer `Nearest` par `CatmullRom` ; l'état
+actif, l'INI et la restauration sont alors liés à cette valeur.
 
 QA ingame : manuelle, sur toutes les animations du catalogue. Enregistrer ensuite `record-qa`.
 Pour Character, le gate de composition porte sur les préfixes représentatifs scellés dans
@@ -181,9 +188,15 @@ palette, payload, animation, hashes et absence de quarantaine restent exhaustifs
 Ne modifier le manifeste de release qu'après accord utilisateur explicite et uniquement pour un
 élément `validated-installed`.
 
-Après production/QA/installation, mettre à jour l'autorité via le workflow dédié lorsqu'il existe.
-`sync_sprite_processing.py` initialise et complète seulement les lignes : il ne déduit ni ne
-promeut une décision depuis un dossier de run.
+Après installation catalogue, projeter ses preuves scellées dans l'autorité :
+
+```powershell
+python pipeline/scripts/sync_sprite_processing.py --reconcile-active
+python pipeline/scripts/sync_sprite_processing.py --reconcile-active --run
+```
+
+Ce mode met à jour production/sélection/QA/installation des membres actifs. Il ne modifie ni QA
+au-delà du statut actif, ni release. Sans `--reconcile-active`, les lignes existantes restent intactes.
 
 ## Extension
 

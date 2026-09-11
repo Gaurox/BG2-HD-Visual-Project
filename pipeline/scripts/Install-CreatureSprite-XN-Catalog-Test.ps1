@@ -2,7 +2,14 @@
 param(
     [Parameter(Mandatory = $true)]
     [string]$JobFile,
-    [switch]$VerifyOnly
+    [switch]$VerifyOnly,
+    [string]$ExpectedLiveRuntimeSha256,
+    [string]$ExpectedLiveRuntimeIniSha256,
+    [ValidateSet('Nearest', 'CatmullRom')]
+    [string]$CreatureSpriteFilter = 'Nearest',
+    [string]$VerificationProof,
+    [string]$VerificationProofSha256,
+    [switch]$FullVerify
 )
 
 Set-StrictMode -Version Latest
@@ -10,6 +17,7 @@ $ErrorActionPreference = 'Stop'
 
 $script:WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..')).Path.TrimEnd('\')
 $script:SpritePathMigrations = $null
+$script:VerifiedFileProofs = @{}
 
 function Get-RequiredProperty($Object, [string]$Name, [string]$Label) {
     if ($null -eq $Object) { throw "$Label absent." }
@@ -160,8 +168,60 @@ function Resolve-ProjectPath([string]$Value, [string]$Label) {
     return $full
 }
 
+function Resolve-ConfiguredPathReference([string]$Value, [string]$Label) {
+    $prefix = 'config://'
+    if (-not $Value.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "$Label n'est pas une référence config://."
+    }
+    $key = $Value.Substring($prefix.Length)
+    if ($key -notmatch '^[a-z0-9][a-z0-9_-]*$') {
+        throw "$Label référence config:// invalide."
+    }
+    $configPath = Join-Path $script:WorkspaceRoot 'config\workspace-paths.json'
+    try { $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json }
+    catch { throw "Configuration des chemins illisible : $($_.Exception.Message)" }
+    $definition = $config.paths.PSObject.Properties[$key].Value
+    if ($null -eq $definition) { throw "Clé config:// inconnue : $key" }
+    $environmentName = [string]$definition.environment
+    $candidate = [Environment]::GetEnvironmentVariable($environmentName)
+    if ([string]::IsNullOrWhiteSpace($candidate)) {
+        foreach ($legacyName in @($definition.legacy_environments)) {
+            $candidate = [Environment]::GetEnvironmentVariable([string]$legacyName)
+            if (-not [string]::IsNullOrWhiteSpace($candidate)) { break }
+        }
+    }
+    if ([string]::IsNullOrWhiteSpace($candidate)) {
+        $overridePath = Join-Path $script:WorkspaceRoot ([string]$config.local_override)
+        if (Test-Path -LiteralPath $overridePath -PathType Leaf) {
+            try { $override = Get-Content -LiteralPath $overridePath -Raw | ConvertFrom-Json }
+            catch { throw "Override des chemins illisible : $($_.Exception.Message)" }
+            $candidate = [string]$override.paths.PSObject.Properties[$key].Value
+        }
+    }
+    if ([string]::IsNullOrWhiteSpace($candidate)) {
+        throw "Clé config:// non configurée : $key ($environmentName)."
+    }
+    $full = [System.IO.Path]::GetFullPath($candidate)
+    $kind = [string]$definition.kind
+    if ($kind -eq 'directory' -and -not (Test-Path -LiteralPath $full -PathType Container)) {
+        throw "Dossier config:// absent : $key ($full)"
+    }
+    if ($kind -eq 'file' -and -not (Test-Path -LiteralPath $full -PathType Leaf)) {
+        throw "Fichier config:// absent : $key ($full)"
+    }
+    foreach ($marker in @($definition.markers)) {
+        if (-not (Test-Path -LiteralPath (Join-Path $full ([string]$marker)))) {
+            throw "Marqueur config:// absent : $key/$marker"
+        }
+    }
+    return $full
+}
+
 function Resolve-AnyPath([string]$Value, [string]$Label) {
     if ([string]::IsNullOrWhiteSpace($Value)) { throw "$Label est vide." }
+    if ($Value.StartsWith('config://', [System.StringComparison]::OrdinalIgnoreCase)) {
+        return Resolve-ConfiguredPathReference $Value $Label
+    }
     if ([System.IO.Path]::IsPathRooted($Value)) { return [System.IO.Path]::GetFullPath($Value) }
     return Resolve-WorkspaceRelativePath $Value
 }
@@ -190,6 +250,16 @@ function Get-ProjectRelativePath([string]$Path) {
 function Get-Sha256([string]$Path) {
     Assert-SafeKnownPath $Path 'Lecture SHA-256'
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { throw "Fichier absent : $Path" }
+    $proofKey = [System.IO.Path]::GetFullPath($Path).ToUpperInvariant()
+    if ($script:VerifiedFileProofs.ContainsKey($proofKey)) {
+        $proof = $script:VerifiedFileProofs[$proofKey]
+        $item = Get-Item -LiteralPath $Path -Force
+        if ([uint64]$item.Length -ne [uint64]$proof.bytes -or
+            [int64]$item.LastWriteTimeUtc.Ticks -ne [int64]$proof.last_write_utc_ticks) {
+            throw "Preuve incrémentale invalidée : $Path"
+        }
+        return ([string]$proof.sha256).ToUpperInvariant()
+    }
     $stream = [System.IO.File]::Open($Path, [System.IO.FileMode]::Open,
         [System.IO.FileAccess]::Read, [System.IO.FileShare]::Read)
     try {
@@ -402,6 +472,18 @@ function Exit-GameMutationMutex($Mutex) {
 
 function Get-Crc32([string]$Path) {
     Assert-SafeKnownPath $Path 'Lecture CRC32'
+    $proofKey = [System.IO.Path]::GetFullPath($Path).ToUpperInvariant()
+    if ($script:VerifiedFileProofs.ContainsKey($proofKey)) {
+        $proof = $script:VerifiedFileProofs[$proofKey]
+        if ($null -ne $proof.PSObject.Properties['crc32'] -and $null -ne $proof.crc32) {
+            $item = Get-Item -LiteralPath $Path -Force
+            if ([uint64]$item.Length -ne [uint64]$proof.bytes -or
+                [int64]$item.LastWriteTimeUtc.Ticks -ne [int64]$proof.last_write_utc_ticks) {
+                throw "Preuve incrémentale CRC32 invalidée : $Path"
+            }
+            return [uint32]$proof.crc32
+        }
+    }
     if ($null -eq ('Bg2CreatureSpriteCatalogCrc32' -as [type])) {
         Add-Type -TypeDefinition @'
 using System;
@@ -434,6 +516,145 @@ public static class Bg2CreatureSpriteCatalogCrc32 {
 '@
     }
     return [Bg2CreatureSpriteCatalogCrc32]::Compute($Path)
+}
+
+function Initialize-IncrementalVerificationProof([string]$ProofPath, [string]$ProofSha256,
+        [string]$RunRoot, [string]$GenerationId, [string]$JobSha256,
+        [string]$BuildManifestSha256, [string]$RuntimeManifestSha256) {
+    if ($FullVerify) {
+        if (-not [string]::IsNullOrWhiteSpace($ProofPath) -or
+            -not [string]::IsNullOrWhiteSpace($ProofSha256)) {
+            throw '-FullVerify est incompatible avec une preuve incrémentale.'
+        }
+        return $null
+    }
+    if ([string]::IsNullOrWhiteSpace($ProofPath) -and
+        [string]::IsNullOrWhiteSpace($ProofSha256)) {
+        return $null
+    }
+    if ([string]::IsNullOrWhiteSpace($ProofPath) -or
+        [string]::IsNullOrWhiteSpace($ProofSha256)) {
+        throw 'VerificationProof et VerificationProofSha256 sont indissociables.'
+    }
+    Assert-HashText $ProofSha256 'VerificationProofSha256'
+    $resolved = [System.IO.Path]::GetFullPath($ProofPath)
+    $proofRoot = Join-Path $RunRoot 'verification-cache'
+    if (-not (Test-PathInsideRoot $resolved $proofRoot)) {
+        throw 'VerificationProof sort du cache du run.'
+    }
+    Assert-NoReparseComponents $RunRoot $resolved 'VerificationProof'
+    if (-not (Test-Path -LiteralPath $resolved -PathType Leaf)) {
+        throw 'VerificationProof absent.'
+    }
+    if ((Get-Sha256 $resolved) -cne $ProofSha256.ToUpperInvariant()) {
+        throw 'VerificationProof SHA-256 incompatible.'
+    }
+    try { $proof = Get-Content -LiteralPath $resolved -Raw | ConvertFrom-Json }
+    catch { throw "VerificationProof illisible : $($_.Exception.Message)" }
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'schema' 'verification proof')) `
+        'bg2-upscale-creature-sprite-xn-catalog-install-proof-v1' 'verification proof.schema'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'status' 'verification proof')) `
+        'verified' 'verification proof.status'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'generation_id' 'verification proof')) `
+        $GenerationId 'verification proof.generation_id'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'job_sha256' 'verification proof')) `
+        $JobSha256 'verification proof.job_sha256'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'build_manifest_sha256' 'verification proof')) `
+        $BuildManifestSha256 'verification proof.build_manifest_sha256'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $proof 'runtime_manifest_sha256' 'verification proof')) `
+        $RuntimeManifestSha256 'verification proof.runtime_manifest_sha256'
+    $artifacts = @(Get-RequiredProperty $proof 'artifacts' 'verification proof')
+    if ($artifacts.Count -lt 3 -or $artifacts.Count -gt 32780) {
+        throw 'verification proof.artifacts hors limites.'
+    }
+    foreach ($artifact in $artifacts) {
+        $path = [System.IO.Path]::GetFullPath(
+            [string](Get-RequiredProperty $artifact 'path' 'verification proof.artifacts[]'))
+        Assert-SafeKnownPath $path 'verification proof artifact'
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+            throw "Artifact de preuve absent : $path"
+        }
+        $sha256 = [string](Get-RequiredProperty $artifact 'sha256' 'verification proof.artifacts[]')
+        Assert-HashText $sha256 'verification proof.artifacts[].sha256'
+        $bytes = [uint64](Get-RequiredProperty $artifact 'bytes' 'verification proof.artifacts[]')
+        $ticks = [int64](Get-RequiredProperty $artifact 'last_write_utc_ticks' `
+            'verification proof.artifacts[]')
+        $item = Get-Item -LiteralPath $path -Force
+        if ([uint64]$item.Length -ne $bytes -or [int64]$item.LastWriteTimeUtc.Ticks -ne $ticks) {
+            throw "Artifact modifié après prévalidation : $path"
+        }
+        $key = $path.ToUpperInvariant()
+        if ($script:VerifiedFileProofs.ContainsKey($key)) {
+            throw "Artifact dupliqué dans la preuve : $path"
+        }
+        $script:VerifiedFileProofs[$key] = $artifact
+    }
+    return $proof
+}
+
+function Assert-ProofCoversFile([string]$Path, [string]$Sha256, $Crc32, $Bytes,
+        [string]$Label) {
+    $key = [System.IO.Path]::GetFullPath($Path).ToUpperInvariant()
+    if (-not $script:VerifiedFileProofs.ContainsKey($key)) {
+        throw "$Label absent de la preuve incrémentale."
+    }
+    $proof = $script:VerifiedFileProofs[$key]
+    Assert-OrdinalEqual ([string]$proof.sha256) $Sha256 "$Label.sha256"
+    if ($null -ne $Crc32 -and [uint32]$proof.crc32 -ne [uint32]$Crc32) {
+        throw "$Label.crc32 incompatible avec la preuve."
+    }
+    if ($null -ne $Bytes -and [uint64]$proof.bytes -ne [uint64]$Bytes) {
+        throw "$Label.bytes incompatible avec la preuve."
+    }
+}
+
+function Get-IncrementalCatalogArtifacts($Build, $Catalog, [string]$BuildRoot,
+        $Runtime, [string]$RuntimeRoot) {
+    $declaredShardVersion = [uint32](Get-RequiredProperty $Build `
+        'registry_catalog_shard_version' 'build')
+    if ($Catalog.version -ne 2 -or $declaredShardVersion -ne 5) {
+        throw 'La preuve incrémentale exige le catalogue V2 et les shards V5.'
+    }
+    $Catalog | Add-Member -MemberType NoteProperty -Name shard_registry_version `
+        -Value $declaredShardVersion -Force
+    $Catalog | Add-Member -MemberType NoteProperty -Name frame_storage `
+        -Value ([string](Get-RequiredProperty $Build 'registry_catalog_frame_storage' 'build')) -Force
+    $Catalog | Add-Member -MemberType NoteProperty -Name logical_content_sha256 `
+        -Value ([string](Get-RequiredProperty $Build 'registry_catalog_logical_content_sha256' 'build')) -Force
+    $Catalog | Add-Member -MemberType NoteProperty -Name logical_component_digests `
+        -Value @($Build.registry_catalog_logical_component_digests) -Force
+    $catalogPath = Resolve-ChildPath $BuildRoot ([string]$Build.registry_catalog) `
+        'build.registry_catalog'
+    Assert-ProofCoversFile $catalogPath ([string]$Build.registry_catalog_sha256) $null `
+        ([uint64]$Build.registry_catalog_bytes) 'Catalogue source'
+    $manifestShards = @($Build.shards)
+    if ($manifestShards.Count -ne $Catalog.shard_count) {
+        throw 'build.shards count incompatible en vérification incrémentale.'
+    }
+    $resolvedShards = @()
+    for ($index = 0; $index -lt $manifestShards.Count; $index++) {
+        $manifest = $manifestShards[$index]
+        $binary = $Catalog.shards[$index]
+        $relative = ([string]$manifest.registry).Replace('/', '\')
+        if ([int]$manifest.index -ne $index -or [string]$manifest.sha256 -cne [string]$binary.sha256 -or
+            [uint32]$manifest.crc32 -ne [uint32]$binary.crc32) {
+            throw "Shard manifest/catalog incompatible : $index"
+        }
+        $path = Resolve-ChildPath $BuildRoot $relative "build.shards[$index].registry"
+        Assert-ProofCoversFile $path ([string]$binary.sha256) ([uint32]$binary.crc32) `
+            ([uint64]$binary.registry_bytes) "Shard source $index"
+        $resolvedShards += [pscustomobject]@{
+            index = $index; relative_path = $relative; source_path = $path
+            sha256 = [string]$binary.sha256; crc32 = [uint32]$binary.crc32
+            resources = @(); registry_info = $null
+        }
+    }
+    $dllPath = Resolve-ChildPath $RuntimeRoot ([string]$Runtime.dll) 'runtime.dll'
+    Assert-ProofCoversFile $dllPath ([string]$Runtime.dll_sha256) $null $null 'DLL runtime source'
+    $resources = @($Catalog.directory | ForEach-Object { [string]$_.resref } | Sort-Object -Unique)
+    return [pscustomobject]@{
+        shards = $resolvedShards; resources = $resources; logical_identity = $null
+    }
 }
 
 function Read-ExactBytes($Stream, [int]$Count, [string]$Label) {
@@ -1562,10 +1783,28 @@ function Assert-InputLock($Build, [string]$JobPath, [string]$JobSha256,
     $builder = Resolve-ProjectPath ([string](Get-RequiredProperty $inputLock 'catalog_builder' 'input_lock')) `
         'input_lock.catalog_builder'
     $expectedBuilder = Join-Path $script:WorkspaceRoot 'pipeline\scripts\run_creature_sprite_x2.py'
-    if (-not [string]::Equals($builder, $expectedBuilder,
+    $contractPath = Join-Path $script:WorkspaceRoot 'pipeline\catalog-builder-contract.json'
+    $usesLegacyBuilder = [string]::Equals($builder, $expectedBuilder,
+        [System.StringComparison]::OrdinalIgnoreCase)
+    if (-not $usesLegacyBuilder -and -not [string]::Equals($builder, $contractPath,
             [System.StringComparison]::OrdinalIgnoreCase)) { throw 'input_lock.catalog_builder non canonique.' }
-    Assert-ExpectedHash $builder ([string](Get-RequiredProperty $inputLock 'catalog_builder_sha256' 'input_lock')) `
-        'Builder catalogue verrouillé'
+    $lockedBuilderSha256 = [string](Get-RequiredProperty $inputLock 'catalog_builder_sha256' 'input_lock')
+    $actualBuilderSha256 = Get-Sha256 $builder
+    if (-not [string]::Equals($actualBuilderSha256, $lockedBuilderSha256,
+            [System.StringComparison]::OrdinalIgnoreCase)) {
+        if (-not $usesLegacyBuilder) { throw 'Contrat builder catalogue verrouillé altéré.' }
+        try { $builderContract = Get-Content -LiteralPath $contractPath -Raw | ConvertFrom-Json }
+        catch { throw "Contrat builder catalogue illisible : $($_.Exception.Message)" }
+        Assert-OrdinalEqual ([string](Get-RequiredProperty $builderContract 'schema' 'builder contract')) `
+            'bg2-upscale-creature-sprite-xn-catalog-builder-contract-v1' 'builder contract.schema'
+        $compatible = @($builderContract.compatible_legacy_runner_sha256 | Where-Object {
+                [string]::Equals([string]$_, $lockedBuilderSha256,
+                    [System.StringComparison]::OrdinalIgnoreCase)
+            })
+        if ($compatible.Count -ne 1) {
+            throw 'Builder catalogue verrouillé altéré et non compatible.'
+        }
+    }
 
     $memberLocks = @(Get-RequiredProperty $inputLock 'members' 'input_lock')
     $sourceMembers = @(Get-RequiredProperty $Build 'source_members' 'build')
@@ -1575,11 +1814,26 @@ function Assert-InputLock($Build, [string]$JobPath, [string]$JobSha256,
     }
     $seenMemberJobs = [System.Collections.Generic.HashSet[string]]::new(
         [System.StringComparer]::OrdinalIgnoreCase)
+    $sourceMembersByJob = @{}
+    foreach ($sourceMember in $sourceMembers) {
+        $sourceJob = Resolve-ProjectPath `
+            ([string](Get-RequiredProperty $sourceMember 'job_file' 'build.source_members[]')) `
+            'build.source_members[].job_file'
+        $sourceKey = $sourceJob.ToUpperInvariant()
+        if ($sourceMembersByJob.ContainsKey($sourceKey)) {
+            throw "Job source dupliqué dans input lock : $sourceJob"
+        }
+        $sourceMembersByJob[$sourceKey] = $sourceMember
+    }
     for ($i = 0; $i -lt $memberLocks.Count; $i++) {
         $entry = $memberLocks[$i]
         $jobFile = Resolve-ProjectPath ([string](Get-RequiredProperty $entry 'job_file' 'input_lock.members[]')) `
             'input_lock.members[].job_file'
         if (-not $seenMemberJobs.Add($jobFile)) { throw "Membre input lock dupliqué : $jobFile" }
+        $sourceMember = $sourceMembersByJob[$jobFile.ToUpperInvariant()]
+        if ($null -eq $sourceMember) {
+            throw "Membre input lock absent de source_members : $jobFile"
+        }
         Assert-ExpectedHash $jobFile ([string](Get-RequiredProperty $entry 'job_sha256' 'input_lock.members[]')) `
             "Job membre verrouillé $i"
         $memberJob = Get-Content -LiteralPath $jobFile -Raw | ConvertFrom-Json
@@ -1593,9 +1847,9 @@ function Assert-InputLock($Build, [string]$JobPath, [string]$JobSha256,
             "Build membre verrouillé $i"
         foreach ($name in @('job_file', 'job_sha256', 'job_id', 'build_manifest', 'build_manifest_sha256')) {
             if (-not [string]::Equals([string](Get-RequiredProperty $entry $name 'input_lock.members[]'),
-                    [string](Get-RequiredProperty $sourceMembers[$i] $name 'build.source_members[]'),
+                    [string](Get-RequiredProperty $sourceMember $name 'build.source_members[]'),
                     [System.StringComparison]::Ordinal)) {
-                throw "input_lock.members[$i].$name diffère de source_members."
+                throw "input_lock.members[$i].$name diffère de son source_member."
             }
         }
     }
@@ -1823,7 +2077,7 @@ function Assert-CatalogManifest($Build, $Catalog, [string]$BuildRoot) {
             throw 'build.storage diffère des shards V5 recalculés.'
         }
         if ([uint64](Get-RequiredProperty $Build.validation 'resource_records_sha256_verified' `
-                'build.validation') -ne [uint64]$Catalog.total_resources) {
+                'build.validation') -ne [uint64]$Catalog.directory_count) {
             throw 'Le compteur de records logiques vérifiés diffère du catalogue.'
         }
     }
@@ -1935,7 +2189,8 @@ function Assert-GameChildRelative([string]$GameRoot, [string]$Relative, [string]
     return $full
 }
 
-function Assert-LiveStateTargets($State, [string]$GameRoot, [switch]$AllowInterrupted) {
+function Assert-LiveStateTargets($State, [string]$GameRoot, [switch]$AllowInterrupted,
+        [string]$ExpectedLiveRuntimeSha256, [string]$ExpectedLiveRuntimeIniSha256) {
     $targets = @(Get-RequiredProperty $State 'targets' 'active state')
     if ($targets.Count -lt 1 -or $targets.Count -gt 32772) { throw 'active state.targets hors limites.' }
     $seen = [System.Collections.Generic.HashSet[string]]::new(
@@ -1955,8 +2210,20 @@ function Assert-LiveStateTargets($State, [string]$GameRoot, [switch]$AllowInterr
             $actualHash = Get-Sha256 $target
             if (-not [string]::Equals($actualHash, $installedHash,
                     [System.StringComparison]::OrdinalIgnoreCase)) {
-                if ([string]$targetState.role -eq 'runtime-ini') {
-                    Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $target -Raw)
+                if ([string]$targetState.role -eq 'runtime-ini' -and
+                    -not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256) -and
+                    [string]::Equals($actualHash, $ExpectedLiveRuntimeIniSha256,
+                        [System.StringComparison]::OrdinalIgnoreCase)) {
+                    # Même dérogation explicite pour l'INI Catmull live.
+                } elseif ([string]$targetState.role -eq 'runtime-ini') {
+                    Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $target -Raw) `
+                        (Get-CatalogCreatureSpriteFilter $State)
+                } elseif ([string]$targetState.role -eq 'runtime-dll' -and
+                    -not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256) -and
+                    [string]::Equals($actualHash, $ExpectedLiveRuntimeSha256,
+                        [System.StringComparison]::OrdinalIgnoreCase)) {
+                    # Dérogation explicite et liée au hash live. La transaction
+                    # suivante sauvegarde cette DLL avant tout remplacement.
                 } else {
                     throw "Cible live $relative altéré : SHA-256 $actualHash, attendu $installedHash."
                 }
@@ -1969,12 +2236,23 @@ function Assert-LiveStateTargets($State, [string]$GameRoot, [switch]$AllowInterr
     return $targets
 }
 
-function Assert-CatalogIniOwnedContract([string]$Text) {
+function Get-CatalogCreatureSpriteFilter($State) {
+    $filterMode = [string](Get-RequiredProperty $State 'creature_sprite_filter' 'catalog state')
+    if ($filterMode -cnotin @('Nearest', 'CatmullRom')) {
+        throw 'catalog state.creature_sprite_filter invalide.'
+    }
+    return $filterMode
+}
+
+function Assert-CatalogIniOwnedContract([string]$Text, [string]$ExpectedFilterMode) {
+    if ($ExpectedFilterMode -cnotin @('Nearest', 'CatmullRom')) {
+        throw 'Filtre attendu du catalogue invalide.'
+    }
     $filterMode = Get-IniKey $Text 'Shaders' 'CreatureSpriteFilter' -AllowMissing
     if ((Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteUpscaleTest') -cne 'true' -or
         (Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteX2Test') -cne 'false' -or
         (Get-IniKey $Text 'Shaders' 'EnableCreatureSpriteLinearFiltering') -cne 'false' -or
-        ($null -ne $filterMode -and $filterMode -cne 'Nearest')) {
+        ($null -eq $filterMode -or $filterMode -cne $ExpectedFilterMode)) {
         throw 'Les quatre clés INI catalogue ne sont pas exactes.'
     }
 }
@@ -2369,7 +2647,8 @@ function Get-LiveCatalogLogicalIdentity($Catalog, [string]$GameRoot) {
 }
 
 function Assert-CatalogOwnerAndState($State, [string]$StatePath, [string]$GameRoot,
-        [string]$OwnerPath, [string]$CatalogPath) {
+        [string]$OwnerPath, [string]$CatalogPath, [string]$ExpectedLiveRuntimeSha256,
+        [string]$ExpectedLiveRuntimeIniSha256) {
     Assert-OrdinalEqual ([string](Get-RequiredProperty $State 'schema' 'catalog state')) `
         'bg2-upscale-creature-sprite-xn-catalog-ingame-test-v1' 'catalog state.schema'
     if ([string]$State.status -notin @('installed-pending-qa', 'validated-installed', 'qa-failed')) {
@@ -2377,7 +2656,9 @@ function Assert-CatalogOwnerAndState($State, [string]$StatePath, [string]$GameRo
     }
     if (-not [string]::Equals([string]$State.game_root, $GameRoot,
             [System.StringComparison]::OrdinalIgnoreCase)) { throw "GameRoot de l'état catalogue incompatible." }
-    [void](Assert-LiveStateTargets $State $GameRoot)
+    [void](Assert-LiveStateTargets $State $GameRoot -ExpectedLiveRuntimeSha256 `
+        $ExpectedLiveRuntimeSha256 -ExpectedLiveRuntimeIniSha256 `
+        $ExpectedLiveRuntimeIniSha256)
     if (-not (Test-Path -LiteralPath $OwnerPath -PathType Leaf) -or
         -not (Test-Path -LiteralPath $CatalogPath -PathType Leaf)) {
         throw 'Owner ou catalogue actif absent.'
@@ -2407,7 +2688,37 @@ function Assert-CatalogOwnerAndState($State, [string]$StatePath, [string]$GameRo
     if ([uint32](Get-RequiredProperty $State 'catalog_version' 'catalog state') -ne $catalog.version) {
         throw 'catalog state.catalog_version diffère du binaire actif.'
     }
-    $logicalIdentity = Get-LiveCatalogLogicalIdentity $catalog $GameRoot
+    if ($script:VerifiedFileProofs.Count -gt 0) {
+        foreach ($shard in $catalog.shards) {
+            $relative = "iee-assets\creature-sprites\CreatureSprites-XN-$($shard.sha256).registry"
+            $path = Assert-GameChildRelative $GameRoot $relative 'Shard catalogue live incrémental'
+            Assert-ProofCoversFile $path ([string]$shard.sha256) $null `
+                ([uint64]$shard.registry_bytes) "Shard catalogue live $($shard.index)"
+        }
+        $logicalIdentity = [pscustomobject]@{
+            shard_registry_version = [uint32](Get-RequiredProperty $State `
+                'shard_registry_version' 'catalog state')
+            logical_content_sha256 = [string](Get-RequiredProperty $State `
+                'logical_content_sha256' 'catalog state')
+        }
+        $catalog | Add-Member -MemberType NoteProperty -Name shard_registry_version `
+            -Value $logicalIdentity.shard_registry_version -Force
+        $catalog | Add-Member -MemberType NoteProperty -Name frame_storage `
+            -Value ([string](Get-RequiredProperty $State 'frame_storage' 'catalog state')) -Force
+        $catalog | Add-Member -MemberType NoteProperty -Name logical_content_sha256 `
+            -Value $logicalIdentity.logical_content_sha256 -Force
+        $sealedBuildForProofPath = Resolve-ProjectPath `
+            ([string](Get-RequiredProperty $State 'build_manifest' 'catalog state')) `
+            'catalog state.build_manifest'
+        Assert-ExpectedHash $sealedBuildForProofPath `
+            ([string](Get-RequiredProperty $State 'build_manifest_sha256' 'catalog state')) `
+            'Build historique catalogue actif'
+        $sealedBuildForProof = Get-Content -LiteralPath $sealedBuildForProofPath -Raw | ConvertFrom-Json
+        $catalog | Add-Member -MemberType NoteProperty -Name logical_component_digests `
+            -Value @($sealedBuildForProof.registry_catalog_logical_component_digests) -Force
+    } else {
+        $logicalIdentity = Get-LiveCatalogLogicalIdentity $catalog $GameRoot
+    }
     $stateShardVersion = if ($null -ne $State.PSObject.Properties['shard_registry_version']) {
         [uint32]$State.shard_registry_version
     } elseif ($catalog.version -eq 1) { [uint32]3 } else {
@@ -2472,6 +2783,15 @@ function Assert-CatalogOwnerAndState($State, [string]$StatePath, [string]$GameRo
 # Restore-CreatureSprite-XN-Catalog-Test.ps1 réutilise uniquement ces validateurs
 # par dot-sourcing. Une exécution normale continue dans le workflow ci-dessous.
 if ($MyInvocation.InvocationName -eq '.') { return }
+
+if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256)) {
+    Assert-HashText $ExpectedLiveRuntimeSha256 'ExpectedLiveRuntimeSha256'
+    $ExpectedLiveRuntimeSha256 = $ExpectedLiveRuntimeSha256.ToUpperInvariant()
+}
+if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256)) {
+    Assert-HashText $ExpectedLiveRuntimeIniSha256 'ExpectedLiveRuntimeIniSha256'
+    $ExpectedLiveRuntimeIniSha256 = $ExpectedLiveRuntimeIniSha256.ToUpperInvariant()
+}
 
 $jobPath = (Resolve-Path -LiteralPath $JobFile).Path
 $jobPath = Resolve-ProjectPath $jobPath 'JobFile'
@@ -2541,6 +2861,9 @@ try {
     catch { throw "Build manifest illisible : $($_.Exception.Message)" }
     try { $runtime = Get-Content -LiteralPath $runtimeManifestPath -Raw | ConvertFrom-Json }
     catch { throw "Runtime manifest illisible : $($_.Exception.Message)" }
+    $incrementalProof = Initialize-IncrementalVerificationProof $VerificationProof `
+        $VerificationProofSha256 $runRoot $generationId $jobSha256 `
+        $buildManifestSha256 $runtimeManifestSha256
 
     Assert-OrdinalEqual ([string](Get-RequiredProperty $build 'schema' 'build')) `
         'bg2-upscale-creature-sprite-xn-catalog-pack-v1' 'build.schema'
@@ -2574,6 +2897,86 @@ try {
         [uint64](Get-Item -LiteralPath $sourceCatalog).Length) {
         throw 'build.registry_catalog_bytes diffère du fichier source.'
     }
+    if ($null -ne $incrementalProof) {
+        Assert-ProofCoversFile $sourceCatalog $expectedCatalogSha256 $null `
+            ([uint64]$build.registry_catalog_bytes) 'Catalogue source'
+        foreach ($manifestShard in @($build.shards)) {
+            $shardPath = Resolve-ChildPath $buildRoot ([string]$manifestShard.registry) `
+                'build.shards[].registry'
+            Assert-ProofCoversFile $shardPath ([string]$manifestShard.sha256) `
+                ([uint32]$manifestShard.crc32) ([uint64]$manifestShard.registry_bytes) `
+                'Shard source'
+        }
+        $runtimeRootEarly = Split-Path -Parent $runtimeManifestPath
+        $sourceDllEarly = Resolve-ChildPath $runtimeRootEarly `
+            ([string](Get-RequiredProperty $runtime 'dll' 'runtime')) 'runtime.dll'
+        Assert-ProofCoversFile $sourceDllEarly `
+            ([string](Get-RequiredProperty $runtime 'dll_sha256' 'runtime')) $null $null `
+            'DLL runtime source'
+        $activeStatePathEarly = Join-Path $runRoot 'ingame-installation\active-test.json'
+        if (Test-Path -LiteralPath $activeStatePathEarly -PathType Leaf) {
+            $activeStateEarly = Get-Content -LiteralPath $activeStatePathEarly -Raw | ConvertFrom-Json
+            if ([string]$activeStateEarly.generation_id -ceq $generationId -and
+                [string](Get-CatalogCreatureSpriteFilter $activeStateEarly) -ceq $CreatureSpriteFilter) {
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $activeStateEarly 'schema' `
+                    'catalog state')) 'bg2-upscale-creature-sprite-xn-catalog-ingame-test-v1' `
+                    'catalog state.schema'
+                if ([string]$activeStateEarly.status -notin @(
+                        'installed-pending-qa', 'validated-installed', 'qa-failed')) {
+                    throw 'catalog state.status non installable.'
+                }
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $runtime 'schema' 'runtime')) `
+                    'bg2-upscale-creature-sprite-runtime-v1' 'runtime.schema'
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $runtime 'status' 'runtime')) `
+                    'built-tested' 'runtime.status'
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $runtime 'tests_status' 'runtime')) `
+                    'passed' 'runtime.tests_status'
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $runtime 'bridge_worker_tests_status' 'runtime')) `
+                    'passed' 'runtime.bridge_worker_tests_status'
+                Assert-OrdinalEqual ([string]$runtime.generation_id) $generationId 'runtime.generation_id'
+                Assert-OrdinalEqual ([string]$runtime.job_sha256) $jobSha256 'runtime.job_sha256'
+                $inputLockEarly = Get-RequiredProperty `
+                    (Get-RequiredProperty $build 'locks' 'build') 'input_lock' 'build.locks'
+                Assert-OrdinalEqual (Get-CanonicalJsonSha256 $inputLockEarly) $generationId `
+                    'generation_id/input_lock_sha256'
+                $expectedExeEarly = [string](Get-RequiredProperty `
+                    (Get-RequiredProperty $job 'compatibility' 'job') `
+                    'baldur_real_sha256' 'job.compatibility')
+                Assert-ExpectedHash (Join-Path $gameRoot 'BaldurReal.exe') $expectedExeEarly `
+                    'BaldurReal.exe'
+                Assert-OrdinalEqual ([string]$activeStateEarly.job_id) $jobId 'catalog state.job_id'
+                Assert-OrdinalEqual ([string]$activeStateEarly.job_sha256) $jobSha256 `
+                    'catalog state.job_sha256'
+                Assert-OrdinalEqual ([string]$activeStateEarly.catalog_sha256) `
+                    $expectedCatalogSha256 'catalog state.catalog_sha256'
+                Assert-OrdinalEqual ([string]$activeStateEarly.build_manifest_sha256) `
+                    $buildManifestSha256 'catalog state.build_manifest_sha256'
+                Assert-OrdinalEqual ([string]$activeStateEarly.runtime_manifest_sha256) `
+                    $runtimeManifestSha256 'catalog state.runtime_manifest_sha256'
+                [void](Assert-LiveStateTargets $activeStateEarly $gameRoot `
+                    -ExpectedLiveRuntimeSha256 $ExpectedLiveRuntimeSha256 `
+                    -ExpectedLiveRuntimeIniSha256 $ExpectedLiveRuntimeIniSha256)
+                $iniEarly = Join-Path $gameRoot 'InfinityEngine-Enhancer.ini'
+                Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $iniEarly -Raw) `
+                    $CreatureSpriteFilter
+                $ownerEarly = Join-Path $gameRoot `
+                    'iee-assets\creature-sprites\CreatureSprites-XN.catalog-owner.json'
+                $ownerValueEarly = Get-Content -LiteralPath $ownerEarly -Raw | ConvertFrom-Json
+                foreach ($name in @('generation_id', 'job_id', 'job_sha256', 'catalog_sha256')) {
+                    Assert-OrdinalEqual ([string](Get-RequiredProperty $ownerValueEarly $name `
+                        'catalog owner')) ([string](Get-RequiredProperty $activeStateEarly $name `
+                        'catalog state')) "catalog owner.$name"
+                }
+                [pscustomobject]@{
+                    Status = if ($VerifyOnly) { 'verified' } else { [string]$activeStateEarly.status }
+                    Mode = 'already-installed'; GenerationId = $generationId; Scale = $scale
+                    CatalogVersion = $buildCatalogVersion; Shards = @($build.shards).Count
+                    GameRoot = $gameRoot; State = $activeStatePathEarly
+                }
+                return
+            }
+        }
+    }
     $catalog = Read-Catalog $sourceCatalog
     if ($catalog.scale -ne $scale -or $catalog.version -ne $buildCatalogVersion -or
         $catalog.bytes -ne [uint64]$build.registry_catalog_bytes) {
@@ -2584,8 +2987,15 @@ try {
     } elseif ($catalog.version -eq 1) { [uint32]3 } else { [uint32]0 }
     Assert-BuildValidation (Get-RequiredProperty $build 'validation' 'build') $scale `
         $catalog.version $buildShardVersion
-    $catalogArtifacts = Assert-CatalogManifest $build $catalog $buildRoot
-    $sourceMembers = @(Assert-SourceMembers $build $jobPath $catalog)
+    if ($null -ne $incrementalProof) {
+        $runtimeRootForProof = Split-Path -Parent $runtimeManifestPath
+        $catalogArtifacts = Get-IncrementalCatalogArtifacts $build $catalog $buildRoot `
+            $runtime $runtimeRootForProof
+        $sourceMembers = @($build.source_members)
+    } else {
+        $catalogArtifacts = Assert-CatalogManifest $build $catalog $buildRoot
+        $sourceMembers = @(Assert-SourceMembers $build $jobPath $catalog)
+    }
 
     Assert-OrdinalEqual ([string](Get-RequiredProperty $runtime 'schema' 'runtime')) `
         'bg2-upscale-creature-sprite-runtime-v1' 'runtime.schema'
@@ -2612,8 +3022,10 @@ try {
     }
     $engineContract = [string](Get-RequiredProperty $runtime 'engine_source_contract_sha256' 'runtime')
     Assert-HashText $engineContract 'runtime.engine_source_contract_sha256'
-    $currentEngineContract = Get-EngineSourceContractSha256 $engineSource
-    Assert-OrdinalEqual $currentEngineContract $engineContract 'runtime.engine_source_contract_sha256'
+    if ($null -eq $incrementalProof) {
+        $currentEngineContract = Get-EngineSourceContractSha256 $engineSource
+        Assert-OrdinalEqual $currentEngineContract $engineContract 'runtime.engine_source_contract_sha256'
+    }
     Assert-OrdinalEqual ([string]$build.locks.engine_source_contract_sha256) $engineContract `
         'build.locks.engine_source_contract_sha256'
 
@@ -2664,8 +3076,15 @@ try {
     Assert-HashText $expectedExeSha256 'job.compatibility.baldur_real_sha256'
     Assert-OrdinalEqual ([string]$build.locks.baldur_real_sha256) $expectedExeSha256 `
         'build.locks.baldur_real_sha256'
-    Assert-InputLock $build $jobPath $jobSha256 $generationId $scale $engineSource `
-        $engineContract $expectedExeSha256
+    if ($null -eq $incrementalProof) {
+        Assert-InputLock $build $jobPath $jobSha256 $generationId $scale $engineSource `
+            $engineContract $expectedExeSha256
+    } else {
+        $inputLock = Get-RequiredProperty (Get-RequiredProperty $build 'locks' 'build') `
+            'input_lock' 'build.locks'
+        Assert-OrdinalEqual (Get-CanonicalJsonSha256 $inputLock) $generationId `
+            'generation_id/input_lock_sha256'
+    }
     $baldurReal = Join-Path $gameRoot 'BaldurReal.exe'
     Assert-ExpectedHash $baldurReal $expectedExeSha256 'BaldurReal.exe'
 
@@ -2686,6 +3105,8 @@ try {
     Assert-SafeKnownPath $activeStatePath 'État catalogue actif'
     $previousState = $null
     $previousCatalog = $null
+    $runtimeReconciliation = $null
+    $runtimeIniDiffers = $false
     $installMode = 'initial'
     if (Test-Path -LiteralPath $activeStatePath -PathType Leaf) {
         try { $candidateState = Get-Content -LiteralPath $activeStatePath -Raw | ConvertFrom-Json }
@@ -2696,7 +3117,56 @@ try {
         if ([string]$candidateState.status -in @('installed-pending-qa', 'validated-installed', 'qa-failed')) {
             $previousState = $candidateState
             $activeInfo = Assert-CatalogOwnerAndState $previousState $activeStatePath $gameRoot `
-                $ownerTarget $catalogTarget
+                $ownerTarget $catalogTarget $ExpectedLiveRuntimeSha256 `
+                $ExpectedLiveRuntimeIniSha256
+            $previousRuntimeTargets = @($previousState.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-dll'
+                })
+            $previousIniTargets = @($previousState.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-ini'
+                })
+            if ($previousRuntimeTargets.Count -ne 1 -or $previousIniTargets.Count -ne 1) {
+                throw "L’état actif doit déclarer une cible runtime-dll et une cible runtime-ini."
+            }
+            $recordedRuntimeSha256 = [string](Get-RequiredProperty `
+                $previousRuntimeTargets[0] 'installed_sha256' 'catalog state runtime-dll')
+            $recordedRuntimeIniSha256 = [string](Get-RequiredProperty `
+                $previousIniTargets[0] 'installed_sha256' 'catalog state runtime-ini')
+            Assert-HashText $recordedRuntimeSha256 'catalog state runtime-dll.installed_sha256'
+            Assert-HashText $recordedRuntimeIniSha256 'catalog state runtime-ini.installed_sha256'
+            $liveRuntimeSha256 = Get-Sha256 $dllTarget
+            $liveRuntimeIniSha256 = Get-Sha256 $iniTarget
+            $runtimeDiffers = -not [string]::Equals(
+                $liveRuntimeSha256, $recordedRuntimeSha256,
+                [System.StringComparison]::OrdinalIgnoreCase)
+            $runtimeIniDiffers = -not [string]::Equals(
+                $liveRuntimeIniSha256, $recordedRuntimeIniSha256,
+                [System.StringComparison]::OrdinalIgnoreCase)
+            if ($runtimeDiffers) {
+                if ([string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256) -or
+                    -not [string]::Equals($liveRuntimeSha256, $ExpectedLiveRuntimeSha256,
+                        [System.StringComparison]::OrdinalIgnoreCase)) {
+                    throw 'La DLL live divergente exige son SHA-256 explicite.'
+                }
+            }
+            if ($runtimeIniDiffers -and
+                -not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256) -and
+                -not [string]::Equals($liveRuntimeIniSha256, $ExpectedLiveRuntimeIniSha256,
+                    [System.StringComparison]::OrdinalIgnoreCase)) {
+                throw 'Le hash INI live explicite ne correspond pas à la cible.'
+            }
+            if ($runtimeDiffers -or
+                ($runtimeIniDiffers -and
+                 -not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256))) {
+                $runtimeReconciliation = [ordered]@{
+                    schema = 'bg2-upscale-creature-sprite-runtime-reconciliation-v1'
+                    reason = 'explicit-live-runtime-hash'
+                    recorded_installed_sha256 = $recordedRuntimeSha256.ToUpperInvariant()
+                    accepted_live_sha256 = $liveRuntimeSha256.ToUpperInvariant()
+                    recorded_ini_sha256 = $recordedRuntimeIniSha256.ToUpperInvariant()
+                    accepted_live_ini_sha256 = $liveRuntimeIniSha256.ToUpperInvariant()
+                }
+            }
             $previousCatalog = $activeInfo.catalog
             Assert-OrdinalEqual ([string]$previousState.job_id) $jobId 'catalog state.job_id'
             Assert-UpscaleContract $previousState.method $scale 'catalog state.method'
@@ -2711,21 +3181,26 @@ try {
                     throw 'Un runtime-refresh de même version exige un catalogue octet pour octet identique.'
                 }
                 if ([string]$previousState.generation_id -ceq $generationId) {
-                    throw 'La migration runtime/storage exige une nouvelle génération scellée.'
+                    $previousFilter = Get-CatalogCreatureSpriteFilter $previousState
+                    if ($runtimeDiffers) { $installMode = 'runtime-repair' }
+                    elseif ($previousFilter -cne $CreatureSpriteFilter) {
+                        $installMode = 'filter-refresh'
+                    } else { $installMode = 'already-installed' }
+                } else {
+                    if (-not (Test-Path -LiteralPath $dllTarget -PathType Leaf)) {
+                        throw 'La migration runtime/storage exige la DLL active propriétaire.'
+                    }
+                    $previousDllSha256 = Get-Sha256 $dllTarget
+                    if ($null -ne $previousState.PSObject.Properties['installed_dll_sha256'] -and
+                        -not [string]::IsNullOrWhiteSpace([string]$previousState.installed_dll_sha256) -and
+                        [string]$previousState.installed_dll_sha256 -cne $previousDllSha256) {
+                        throw 'Le hash DLL récapitulatif de etat actif diverge de la cible live.'
+                    }
+                    if ($previousDllSha256 -ceq $expectedDllSha256) {
+                        throw 'La migration runtime/storage exige une nouvelle DLL runtime testée.'
+                    }
+                    $installMode = $semanticMode
                 }
-                if (-not (Test-Path -LiteralPath $dllTarget -PathType Leaf)) {
-                    throw 'La migration runtime/storage exige la DLL active propriétaire.'
-                }
-                $previousDllSha256 = Get-Sha256 $dllTarget
-                if ($null -ne $previousState.PSObject.Properties['installed_dll_sha256'] -and
-                    -not [string]::IsNullOrWhiteSpace([string]$previousState.installed_dll_sha256) -and
-                    [string]$previousState.installed_dll_sha256 -cne $previousDllSha256) {
-                    throw 'Le hash DLL récapitulatif de etat actif diverge de la cible live.'
-                }
-                if ($previousDllSha256 -ceq $expectedDllSha256) {
-                    throw 'La migration runtime/storage exige une nouvelle DLL runtime testée.'
-                }
-                $installMode = $semanticMode
             } else {
                 Assert-CatalogSuperset $previousCatalog $catalog
                 $installMode = 'append'
@@ -2733,6 +3208,14 @@ try {
         } elseif ([string]$candidateState.status -notin @('restored', 'rolled-back-after-install-error')) {
             throw "État catalogue existant non reconnu : $($candidateState.status)"
         }
+    }
+    if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256) -and
+        $null -eq $runtimeReconciliation) {
+        throw 'ExpectedLiveRuntimeSha256 fourni sans divergence runtime à réconcilier.'
+    }
+    if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256) -and
+        -not $runtimeIniDiffers) {
+        throw 'ExpectedLiveRuntimeIniSha256 fourni sans divergence INI à réconcilier.'
     }
     if ($null -eq $previousState -and
         ((Test-Path -LiteralPath $catalogTarget -PathType Leaf) -or
@@ -2834,6 +3317,14 @@ try {
         }
         return
     }
+    if ($installMode -eq 'already-installed') {
+        [pscustomobject]@{
+            Status = [string]$previousState.status; Mode = $installMode
+            GenerationId = $generationId; Scale = $scale; CatalogVersion = $catalog.version
+            Shards = $catalog.shard_count; GameRoot = $gameRoot; State = $activeStatePath
+        }
+        return
+    }
 
     $transactionId = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmss.fffffffZ') +
         "-$PID-$([Guid]::NewGuid().ToString('N'))"
@@ -2844,8 +3335,40 @@ try {
     if ($null -ne $previousState) {
         $previousStateBackup = Join-Path $backupRoot 'previous-active-test.json'
         Assert-SafeKnownPath $previousStateBackup 'Sauvegarde état précédent'
-        Copy-Item -LiteralPath $activeStatePath -Destination $previousStateBackup
-        Assert-ExpectedHash $previousStateBackup (Get-Sha256 $activeStatePath) 'Sauvegarde état précédent'
+        if ($null -ne $runtimeReconciliation) {
+            $recordedStateBackup = Join-Path $backupRoot 'previous-active-test-recorded.json'
+            Assert-SafeKnownPath $recordedStateBackup 'Sauvegarde état précédent enregistré'
+            Copy-Item -LiteralPath $activeStatePath -Destination $recordedStateBackup
+            $recordedStateSha256 = Get-Sha256 $activeStatePath
+            Assert-ExpectedHash $recordedStateBackup $recordedStateSha256 `
+                'Sauvegarde état précédent enregistré'
+            $runtimeReconciliation['recorded_state_path'] = `
+                Get-ProjectRelativePath $recordedStateBackup
+            $runtimeReconciliation['recorded_state_sha256'] = $recordedStateSha256
+
+            $reconciledState = $previousState | ConvertTo-Json -Depth 100 | ConvertFrom-Json
+            $reconciledRuntimeTargets = @($reconciledState.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-dll'
+                })
+            $reconciledIniTargets = @($reconciledState.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-ini'
+                })
+            $reconciledRuntimeTargets[0].installed_sha256 = `
+                [string]$runtimeReconciliation.accepted_live_sha256
+            $reconciledIniTargets[0].installed_sha256 = `
+                [string]$runtimeReconciliation.accepted_live_ini_sha256
+            $reconciledState | Add-Member -MemberType NoteProperty -Name installed_dll_sha256 `
+                -Value ([string]$runtimeReconciliation.accepted_live_sha256) -Force
+            $reconciledState | Add-Member -MemberType NoteProperty -Name installed_ini_sha256 `
+                -Value ([string]$runtimeReconciliation.accepted_live_ini_sha256) -Force
+            $reconciledState | Add-Member -MemberType NoteProperty -Name runtime_reconciliation `
+                -Value $runtimeReconciliation -Force
+            Write-JsonAtomic $reconciledState $previousStateBackup 20
+        } else {
+            Copy-Item -LiteralPath $activeStatePath -Destination $previousStateBackup
+            Assert-ExpectedHash $previousStateBackup (Get-Sha256 $activeStatePath) `
+                'Sauvegarde état précédent'
+        }
     }
 
     $targets = [System.Collections.Generic.List[object]]::new()
@@ -2923,7 +3446,7 @@ try {
             algorithm = [string]$upscale.algorithm; scale = $scale; passes = 1
             antialias = $false; xbr_blend = $false; sampling = 'NEAREST'
         }
-        creature_sprite_filter = 'Nearest'
+        creature_sprite_filter = $CreatureSpriteFilter
         registry_layout = 'catalog'; catalog_relative_path = $catalogRelative
         catalog_magic = 'IEECSNC'; catalog_version = [uint32]$catalog.version; catalog_scale = $scale
         catalog_sha256 = $expectedCatalogSha256; catalog_bytes = [uint64]$catalog.bytes
@@ -2955,6 +3478,7 @@ try {
             [ordered]@{ path = Get-ProjectRelativePath $previousStateBackup; sha256 = Get-Sha256 $previousStateBackup
                 generation_id = [string]$previousState.generation_id; transaction_id = [string]$previousState.transaction_id }
         } else { $null }
+        previous_runtime_reconciliation = $runtimeReconciliation
         imported_active_state = $importRecord
         targets = @($targets)
     }
@@ -2987,7 +3511,7 @@ try {
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteUpscaleTest' 'true'
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteX2Test' 'false'
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteLinearFiltering' 'false'
-        $iniText = Set-IniKey $iniText 'Shaders' 'CreatureSpriteFilter' 'Nearest'
+        $iniText = Set-IniKey $iniText 'Shaders' 'CreatureSpriteFilter' $CreatureSpriteFilter
         Write-TextAtomic $iniText $iniTarget
         foreach ($shard in $desiredShards) {
             if ($shard.existed_before) {
@@ -3025,7 +3549,8 @@ try {
         $installedCatalog = Read-Catalog $catalogTarget
         if ($installedCatalog.animation_count -ne $catalog.animation_count -or
             $installedCatalog.shard_count -ne $catalog.shard_count) { throw 'Catalogue installé divergent.' }
-        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $iniTarget -Raw)
+        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $iniTarget -Raw) `
+            $CreatureSpriteFilter
         foreach ($targetState in $targets) {
             $target = Assert-GameChildRelative $gameRoot ([string]$targetState.relative_path) 'Cible installée'
             $present = Test-Path -LiteralPath $target -PathType Leaf

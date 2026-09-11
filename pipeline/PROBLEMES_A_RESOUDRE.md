@@ -9,9 +9,9 @@ Ce fichier ne contient que les blocages ouverts. Les décisions durables sont da
 - Symptôme : une petite tâche peut dépasser 10 minutes.
 - Causes mesurées : contrôles globaux répétés, fallback `full`, double déterminisme, tests sur le
   workspace réel et ~192 Gio/~466 k fichiers locaux dans le worktree.
-- Mitigation active : tests plan-only avec ciblage strict ; projections plan-only, mono-passe et
-  scopes `graphics`/`registry`/`integrity` ; choix séparés avant `--run`.
-- Travail restant : cache par hashes, scopes métier plus fins, séparation unitaires/intégration et
+- Mitigation active : tests/projections plan-only ciblés ; catalogue sprites avec preuve scellée,
+  cache SHA/CRC par identité et invalidation par branche.
+- Travail restant : étendre ce modèle hors catalogue sprites ; séparation unitaires/intégration et
   data-root externe.
 - Rapport : [`../docs/WORKFLOW_PERFORMANCE_AUDIT.md`](../docs/WORKFLOW_PERFORMANCE_AUDIT.md).
 

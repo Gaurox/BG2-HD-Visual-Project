@@ -199,6 +199,17 @@ function Assert-SealedInputLock($Build, $Runtime, $Job, [string]$JobPath,
     }
     $seenMemberJobs = [System.Collections.Generic.HashSet[string]]::new(
         [System.StringComparer]::OrdinalIgnoreCase)
+    $sourceMembersByJob = @{}
+    foreach ($sourceMember in $sourceMembers) {
+        $sourceJob = Resolve-SealedProjectPath `
+            ([string](Get-RequiredProperty $sourceMember 'job_file' 'build.source_members[]')) `
+            'build.source_members[].job_file'
+        $sourceKey = $sourceJob.ToUpperInvariant()
+        if ($sourceMembersByJob.ContainsKey($sourceKey)) {
+            throw "Job source scellé dupliqué : $sourceJob"
+        }
+        $sourceMembersByJob[$sourceKey] = $sourceMember
+    }
     for ($i = 0; $i -lt $memberLocks.Count; $i++) {
         $entry = $memberLocks[$i]
         Assert-ExactPropertyNames $entry @(
@@ -209,6 +220,10 @@ function Assert-SealedInputLock($Build, $Runtime, $Job, [string]$JobPath,
             'input_lock.members[].job_file'
         if (-not $seenMemberJobs.Add($memberJob)) {
             throw "Membre input lock scellé dupliqué : $memberJob"
+        }
+        $sourceMember = $sourceMembersByJob[$memberJob.ToUpperInvariant()]
+        if ($null -eq $sourceMember) {
+            throw "Membre input lock scellé absent de source_members : $memberJob"
         }
         Assert-SealedJobId ([string](Get-RequiredProperty $entry 'job_id' 'input_lock.members[]')) `
             'input_lock.members[].job_id'
@@ -223,7 +238,7 @@ function Assert-SealedInputLock($Build, $Runtime, $Job, [string]$JobPath,
         foreach ($name in @(
                 'job_file', 'job_sha256', 'job_id', 'build_manifest', 'build_manifest_sha256')) {
             Assert-OrdinalEqual ([string](Get-RequiredProperty $entry $name 'input_lock.members[]')) `
-                ([string](Get-RequiredProperty $sourceMembers[$i] $name 'build.source_members[]')) `
+                ([string](Get-RequiredProperty $sourceMember $name 'build.source_members[]')) `
                 "input_lock.members[$i].$name"
         }
     }
@@ -748,7 +763,9 @@ try {
     if (-not $interrupted) {
         [void](Assert-CatalogOwnerAndState $state $activeStatePath $gameRoot $ownerTarget $catalogTarget)
         $iniTarget = Assert-GameChildRelative $gameRoot 'InfinityEngine-Enhancer.ini' 'INI cible'
-        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $iniTarget -Raw)
+        $stateFilterMode = Get-CatalogCreatureSpriteFilter $state
+        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $iniTarget -Raw) `
+            $stateFilterMode
     }
 
     $backupRoot = Resolve-ProjectPath ([string](Get-RequiredProperty $state 'backup_root' 'state')) `
@@ -781,7 +798,8 @@ try {
                 if (-not [string]::Equals($actualHash, $installedHash,
                         [System.StringComparison]::OrdinalIgnoreCase)) {
                     if ([string]$targetState.role -eq 'runtime-ini') {
-                        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $target -Raw)
+                        Assert-CatalogIniOwnedContract (Get-Content -LiteralPath $target -Raw) `
+                            $stateFilterMode
                     } else {
                         throw "Cible live $relative altéré : SHA-256 $actualHash, attendu $installedHash."
                     }
@@ -834,6 +852,85 @@ try {
             'bg2-upscale-creature-sprite-xn-catalog-ingame-test-v1' 'previous state.schema'
         Assert-OrdinalEqual ([string]$previousJson.generation_id) ([string]$previousRecord.generation_id) `
             'previous state.generation_id'
+        $hasReconciliation = $null -ne $state.PSObject.Properties['previous_runtime_reconciliation'] -and
+            $null -ne $state.previous_runtime_reconciliation
+        $previousHasReconciliation = $null -ne $previousJson.PSObject.Properties['runtime_reconciliation'] -and
+            $null -ne $previousJson.runtime_reconciliation
+        if ($hasReconciliation -ne $previousHasReconciliation) {
+            throw 'Réconciliation runtime précédente incomplète.'
+        }
+        if ($hasReconciliation) {
+            $reconciliation = $state.previous_runtime_reconciliation
+            Assert-ExactPropertyNames $reconciliation @(
+                'schema', 'reason', 'recorded_installed_sha256', 'accepted_live_sha256',
+                'recorded_ini_sha256', 'accepted_live_ini_sha256',
+                'recorded_state_path', 'recorded_state_sha256'
+            ) 'previous_runtime_reconciliation'
+            Assert-OrdinalEqual ([string]$reconciliation.schema) `
+                'bg2-upscale-creature-sprite-runtime-reconciliation-v1' `
+                'previous_runtime_reconciliation.schema'
+            Assert-OrdinalEqual ([string]$reconciliation.reason) 'explicit-live-runtime-hash' `
+                'previous_runtime_reconciliation.reason'
+            foreach ($name in @(
+                    'recorded_installed_sha256', 'accepted_live_sha256',
+                    'recorded_ini_sha256', 'accepted_live_ini_sha256',
+                    'recorded_state_sha256')) {
+                Assert-HashText ([string](Get-RequiredProperty $reconciliation $name `
+                        'previous_runtime_reconciliation')) "previous_runtime_reconciliation.$name"
+                Assert-OrdinalEqual ([string]$previousJson.runtime_reconciliation.$name) `
+                    ([string]$reconciliation.$name) "previous state.runtime_reconciliation.$name"
+            }
+            $recordedPath = Resolve-ProjectPath ([string](Get-RequiredProperty $reconciliation `
+                    'recorded_state_path' 'previous_runtime_reconciliation')) `
+                'previous_runtime_reconciliation.recorded_state_path'
+            $expectedRecordedPath = Join-Path $backupRoot 'previous-active-test-recorded.json'
+            if (-not [string]::Equals($recordedPath, $expectedRecordedPath,
+                    [System.StringComparison]::OrdinalIgnoreCase)) {
+                throw 'previous_runtime_reconciliation.recorded_state_path non canonique.'
+            }
+            Assert-ExpectedHash $recordedPath ([string]$reconciliation.recorded_state_sha256) `
+                'État précédent enregistré avant réconciliation runtime'
+            $recordedJson = Get-Content -LiteralPath $recordedPath -Raw | ConvertFrom-Json
+            foreach ($name in @('schema', 'transaction_id', 'generation_id', 'job_id', 'job_sha256')) {
+                Assert-OrdinalEqual ([string](Get-RequiredProperty $recordedJson $name 'recorded state')) `
+                    ([string](Get-RequiredProperty $previousJson $name 'previous state')) `
+                    "recorded state.$name"
+            }
+            $recordedRuntime = @($recordedJson.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-dll'
+                })
+            $acceptedRuntime = @($previousJson.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-dll'
+                })
+            $recordedIni = @($recordedJson.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-ini'
+                })
+            $acceptedIni = @($previousJson.targets | Where-Object {
+                    [string]$_.role -eq 'runtime-ini'
+                })
+            if ($recordedRuntime.Count -ne 1 -or $acceptedRuntime.Count -ne 1 -or
+                $recordedIni.Count -ne 1 -or $acceptedIni.Count -ne 1) {
+                throw 'Réconciliation runtime sans cibles DLL/INI uniques.'
+            }
+            Assert-OrdinalEqual ([string]$recordedRuntime[0].installed_sha256) `
+                ([string]$reconciliation.recorded_installed_sha256) `
+                'recorded state runtime-dll.installed_sha256'
+            Assert-OrdinalEqual ([string]$acceptedRuntime[0].installed_sha256) `
+                ([string]$reconciliation.accepted_live_sha256) `
+                'previous state runtime-dll.installed_sha256'
+            Assert-OrdinalEqual ([string]$previousJson.installed_dll_sha256) `
+                ([string]$reconciliation.accepted_live_sha256) `
+                'previous state.installed_dll_sha256'
+            Assert-OrdinalEqual ([string]$recordedIni[0].installed_sha256) `
+                ([string]$reconciliation.recorded_ini_sha256) `
+                'recorded state runtime-ini.installed_sha256'
+            Assert-OrdinalEqual ([string]$acceptedIni[0].installed_sha256) `
+                ([string]$reconciliation.accepted_live_ini_sha256) `
+                'previous state runtime-ini.installed_sha256'
+            Assert-OrdinalEqual ([string]$previousJson.installed_ini_sha256) `
+                ([string]$reconciliation.accepted_live_ini_sha256) `
+                'previous state.installed_ini_sha256'
+        }
         $previousPointer = New-CurrentPointerFromSealedState $previousJson $runRoot
     }
     if ($null -ne $state.PSObject.Properties['imported_active_state'] -and

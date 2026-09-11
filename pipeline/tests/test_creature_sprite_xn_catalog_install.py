@@ -327,6 +327,7 @@ class FakeCatalogWorkspace:
         semantic_index: int = 0,
         logical_manifest_semantic_index: int | None = None,
         corrupt_compressed: bool = False,
+        shared_component: bool = False,
     ) -> dict:
         if catalog_version not in (1, 2):
             raise ValueError("catalog_version must be 1 or 2")
@@ -356,6 +357,9 @@ class FakeCatalogWorkspace:
         stored_index_bytes = 0
         compressed_frame_count = 0
         raw_frame_count = 0
+        stored_index_bytes_by_component = []
+        compressed_frames_by_component = []
+        raw_frames_by_component = []
         for index, (animation_id, resref) in enumerate(animations):
             artifact = registry_artifact(
                 resref,
@@ -371,6 +375,9 @@ class FakeCatalogWorkspace:
             stored_index_bytes += int(artifact["stored_index_bytes"])
             compressed_frame_count += int(artifact["compressed_frame_count"])
             raw_frame_count += int(artifact["raw_frame_count"])
+            stored_index_bytes_by_component.append(int(artifact["stored_index_bytes"]))
+            compressed_frames_by_component.append(int(artifact["compressed_frame_count"]))
+            raw_frames_by_component.append(int(artifact["raw_frame_count"]))
             registry_hash = hashlib.sha256(raw_registry).hexdigest().upper()
             registry_name = f"CreatureSprites-XN-{registry_hash}.registry"
             registry_path = sprite_dir / registry_name
@@ -480,6 +487,30 @@ class FakeCatalogWorkspace:
                 }
             )
 
+        effective_component_indices = list(range(len(animations)))
+        effective_resrefs = [resref for _animation_id, resref in animations]
+        if shared_component:
+            if catalog_version != 2 or shard_version != 5 or len(animations) < 2:
+                raise ValueError("shared_component requires at least two V2/V5 animations")
+            for unused_shard in shards[1:]:
+                (sprite_dir / Path(unused_shard["registry"]).name).unlink()
+            components = components[:1]
+            shards = shards[:1]
+            shard_entries = shard_entries[:1]
+            logical_component_digests = logical_component_digests[:1]
+            manifest_logical_component_digests = manifest_logical_component_digests[:1]
+            memberships = [0] * len(animations)
+            effective_component_indices = [0] * len(animations)
+            effective_resrefs = [animations[0][1]] * len(animations)
+            stored_index_bytes = stored_index_bytes_by_component[0]
+            compressed_frame_count = compressed_frames_by_component[0]
+            raw_frame_count = raw_frames_by_component[0]
+            for animation in manifest_animations:
+                animation["component_indices"] = [0]
+            for member in source_members:
+                member["component_indices"] = [0]
+                member["bam_prefixes"] = [animations[0][1][:5]]
+
         animation_table = bytearray()
         for index, (animation_id, _resref) in enumerate(animations):
             animation_table.extend(struct.pack("<IIII", animation_id, 1, index, 1))
@@ -502,25 +533,32 @@ class FakeCatalogWorkspace:
         total_index_bytes = sum(item["index_bytes"] for item in components)
         logical_sha256 = logical_content_digest(
             2,
-            [(animation_id, 1, [index]) for index, (animation_id, _resref) in enumerate(animations)],
+            [
+                (animation_id, 1, [effective_component_indices[index]])
+                for index, (animation_id, _resref) in enumerate(animations)
+            ],
             logical_component_digests,
         )
         manifest_logical_sha256 = logical_content_digest(
             2,
-            [(animation_id, 1, [index]) for index, (animation_id, _resref) in enumerate(animations)],
+            [
+                (animation_id, 1, [effective_component_indices[index]])
+                for index, (animation_id, _resref) in enumerate(animations)
+            ],
             manifest_logical_component_digests,
         )
         directory_entries = []
         if catalog_version == 2:
-            for index, (animation_id, resref) in enumerate(animations):
-                directory_resref = directory_resref_override or resref
+            for index, (animation_id, _resref) in enumerate(animations):
+                directory_resref = directory_resref_override or effective_resrefs[index]
+                component_index = effective_component_indices[index]
                 directory_entries.append(
                     struct.pack(
                         "<I8sIII",
                         animation_id,
                         directory_resref.encode("ascii").ljust(8, b"\0"),
-                        index,
-                        index,
+                        component_index,
+                        component_index,
                         0,
                     )
                 )
@@ -618,7 +656,9 @@ class FakeCatalogWorkspace:
 
         validation = {
             "records_copied_without_xbr": True,
-            "resource_records_sha256_verified": len(components),
+            "resource_records_sha256_verified": (
+                len(directory_entries) if catalog_version == 2 else len(components)
+            ),
             "palette_frames_exactly_remapped": len(components),
             "partial_alpha_pixels": 0,
             "new_colors": 0,
@@ -816,6 +856,111 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.fake.close()
+
+    def test_installer_resolves_config_path_references(self) -> None:
+        script = INSTALL.read_text(encoding="utf-8")
+        restore_script = RESTORE.read_text(encoding="utf-8")
+        self.assertIn("function Resolve-ConfiguredPathReference", script)
+        self.assertIn("config://", script)
+        self.assertIn("workspace-paths.json", script)
+        self.assertIn("sourceMembersByJob", script)
+        self.assertIn("sourceMembersByJob", restore_script)
+
+    def test_catalog_install_can_select_catmull_rom_and_restore_it(self) -> None:
+        self.fake.write_generation("generation-one", [(0x6102, "CDMB1")])
+        self.fake.powershell(INSTALL, "-CreatureSpriteFilter", "CatmullRom")
+        active_path = self.fake.run / "ingame-installation/active-test.json"
+        active = json.loads(active_path.read_text(encoding="utf-8"))
+        self.assertEqual(active["creature_sprite_filter"], "CatmullRom")
+        live_ini = self.fake.game / "InfinityEngine-Enhancer.ini"
+        self.assertIn(
+            "CreatureSpriteFilter = CatmullRom",
+            live_ini.read_text(encoding="utf-8"),
+        )
+        self.fake.powershell(RESTORE, "-VerifyOnly")
+        self.fake.powershell(RESTORE)
+
+    def test_reinstall_same_generation_is_verified_idempotent_noop(self) -> None:
+        self.fake.write_generation("generation-one", [(0x6102, "CDMB1")])
+        self.fake.powershell(INSTALL)
+        active_path = self.fake.run / "ingame-installation/active-test.json"
+        before = active_path.read_bytes()
+        verified = self.fake.powershell(INSTALL, "-VerifyOnly")
+        self.assertIn("already-installed", verified.stdout)
+        self.fake.powershell(INSTALL)
+        self.assertEqual(active_path.read_bytes(), before)
+        self.fake.powershell(RESTORE)
+
+    def test_v2_shared_component_counts_each_animation_resource_record(self) -> None:
+        self.fake.write_generation(
+            "shared-component",
+            [(0x6102, "CDMB1"), (0x6110, "WQNF0")],
+            catalog_version=2,
+            shard_version=5,
+            shared_component=True,
+        )
+        self.fake.powershell(INSTALL, "-VerifyOnly")
+        self.fake.powershell(INSTALL)
+        active = json.loads(
+            (self.fake.run / "ingame-installation/active-test.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(active["total_resources"], 1)
+        self.assertEqual(active["directory_count"], 2)
+        self.fake.powershell(RESTORE)
+
+    def test_explicit_runtime_reconciliation_restores_external_runtime(self) -> None:
+        first_job = self.fake.root / "catalog-job-runtime-base.json"
+        second_job = self.fake.root / "catalog-job-runtime-append.json"
+        first_job_value = dict(self.fake.job_value)
+        first_job_value["test_generation"] = "runtime-base"
+        second_job_value = dict(self.fake.job_value)
+        second_job_value["test_generation"] = "runtime-append"
+        write_json(first_job, first_job_value)
+        write_json(second_job, second_job_value)
+
+        self.fake.write_generation(
+            "runtime-base", [(0x6102, "CDMB1")], job_file=first_job
+        )
+        self.fake.powershell(INSTALL, job_file=first_job)
+        live_dll = self.fake.game / "InfinityEngine-Enhancer.dll"
+        live_dll.write_bytes(b"external-catmull-runtime")
+        external_sha256 = sha256(live_dll)
+
+        self.fake.write_generation(
+            "runtime-append",
+            [(0x6102, "CDMB1"), (0x6200, "CHMB1")],
+            job_file=second_job,
+            runtime_dll_bytes=b"catalog-runtime-with-catmull",
+        )
+        rejected = self.fake.powershell(
+            INSTALL, "-VerifyOnly", expect_ok=False, job_file=second_job
+        )
+        self.assertIn("Cible live InfinityEngine-Enhancer.dll", rejected.stderr)
+        self.assertIn("SHA-256", rejected.stderr)
+
+        self.fake.powershell(
+            INSTALL,
+            "-ExpectedLiveRuntimeSha256",
+            external_sha256,
+            job_file=second_job,
+        )
+        active_path = self.fake.run / "ingame-installation/active-test.json"
+        active = json.loads(active_path.read_text(encoding="utf-8"))
+        reconciliation = active["previous_runtime_reconciliation"]
+        self.assertEqual(reconciliation["accepted_live_sha256"], external_sha256)
+        previous_path = ROOT / active["previous_active_state"]["path"]
+        previous = json.loads(previous_path.read_text(encoding="utf-8"))
+        previous_runtime = next(
+            target for target in previous["targets"] if target["role"] == "runtime-dll"
+        )
+        self.assertEqual(previous_runtime["installed_sha256"], external_sha256)
+
+        self.fake.powershell(RESTORE, job_file=second_job)
+        self.assertEqual(live_dll.read_bytes(), b"external-catmull-runtime")
+        restored = json.loads(active_path.read_text(encoding="utf-8"))
+        self.assertEqual(restored["installed_dll_sha256"], external_sha256)
 
     def test_verify_install_is_read_only_and_divergent_shard_fails_closed(self) -> None:
         generation = self.fake.write_generation("generation-one", [(0x6102, "CDMB1")])

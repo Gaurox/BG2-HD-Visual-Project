@@ -106,6 +106,24 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         self.assertEqual(contract.registry_version, 2)
         self.assertEqual(contract.registry_filename, "CreatureSprites-X2.registry")
 
+    def test_audited_xbr2x_adapter_revisions_remain_catalog_compatible(
+        self,
+    ) -> None:
+        legacy = pipeline.upscale_contract({})
+        explicit_x2 = pipeline.direct_upscale_contract(2)
+        explicit_x4 = pipeline.direct_upscale_contract(4)
+        historical = {
+            "xbr_adapter_sha256": "9A58392214E3C479758AA221E284E3F2C380CED21BD46965D0B52D1A1A36F539"
+        }
+        self.assertTrue(pipeline.build_adapter_hash_matches(historical, legacy))
+        self.assertTrue(pipeline.build_adapter_hash_matches(historical, explicit_x2))
+        self.assertFalse(pipeline.build_adapter_hash_matches(historical, explicit_x4))
+        self.assertFalse(
+            pipeline.build_adapter_hash_matches(
+                {"xbr_adapter_sha256": "0" * 64}, legacy
+            )
+        )
+
     def test_legacy_catalog_job_path_resolves_after_layout_migration(self) -> None:
         legacy = (
             ROOT
@@ -193,6 +211,20 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         )
         self.assertEqual(explicit.scale, 4)
         self.assertTrue(explicit.keep_upscaled_frames)
+        install = parser.parse_args(
+            [
+                "install",
+                "--job",
+                "sprite/jobs/catalog.json",
+                "--creature-sprite-filter",
+                "CatmullRom",
+            ]
+        )
+        self.assertEqual(install.creature_sprite_filter, "CatmullRom")
+        exhaustive = parser.parse_args(
+            ["verify", "--job", "sprite/jobs/catalog.json", "--full-verify"]
+        )
+        self.assertTrue(exhaustive.full_verify)
         legacy_alias = parser.parse_args(
             [
                 "build",
@@ -202,6 +234,195 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             ]
         )
         self.assertTrue(legacy_alias.keep_upscaled_frames)
+
+    def test_powershell_script_forwards_explicit_install_arguments(self) -> None:
+        job = {
+            "_job_file": Path("catalog.json"),
+            "tools": {"powershell": "pwsh.exe"},
+        }
+        with mock.patch.object(pipeline, "run_checked") as run_checked:
+            pipeline.powershell_script(
+                Path("install.ps1"),
+                job,
+                ["-CreatureSpriteFilter", "CatmullRom"],
+            )
+        command = run_checked.call_args.args[0]
+        self.assertEqual(command[-2:], ["-CreatureSpriteFilter", "CatmullRom"])
+
+    def test_catalog_install_keeps_proof_and_filter_arguments(self) -> None:
+        job = {"_kind": "catalog", "_job_file": Path("catalog.json")}
+        verifier = mock.Mock()
+        verifier.summary.return_value = {"files_hashed": 0}
+        with (
+            mock.patch.object(sys, "argv", [
+                "run_creature_sprite_x2.py", "install", "--job", "catalog.json",
+                "--creature-sprite-filter", "CatmullRom",
+            ]),
+            mock.patch.object(pipeline, "load_work_item", return_value=job),
+            mock.patch.object(
+                pipeline,
+                "verify_catalog",
+                return_value={"verification": {"files_hashed": 0}},
+            ),
+            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
+            mock.patch.object(
+                pipeline, "catalog_current_generation_context", return_value={}
+            ),
+            mock.patch.object(
+                pipeline,
+                "write_catalog_install_proof",
+                return_value=(Path("proof.json"), "A" * 64),
+            ),
+            mock.patch.object(pipeline, "powershell_script") as powershell,
+            mock.patch.object(pipeline, "active_state_path", return_value=Path("state.json")),
+            mock.patch.object(
+                pipeline,
+                "read_json",
+                return_value={
+                    "status": "installed-pending-qa",
+                    "generation_id": "B" * 64,
+                    "installation_mode": "already-installed",
+                },
+            ),
+            mock.patch("builtins.print"),
+        ):
+            pipeline.main()
+        arguments = powershell.call_args.args[2]
+        self.assertEqual(
+            arguments,
+            [
+                "-VerificationProof", "proof.json",
+                "-VerificationProofSha256", "A" * 64,
+                "-CreatureSpriteFilter", "CatmullRom",
+            ],
+        )
+
+    def test_catalog_hash_proofs_avoid_identical_rescan(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            files = []
+            expected = {}
+            for index in range(128):
+                path = root / f"leaf-{index:04d}.bin"
+                path.write_bytes(f"leaf-{index}".encode("ascii"))
+                files.append(path)
+                expected[path] = pipeline.sha256_file(path)
+            cache_path = root / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path)
+            for index, path in enumerate(files):
+                first.verify_file(
+                    path, expected[path], scope=f"leaf:{index:04d}"
+                )
+            first.save()
+            second = pipeline.VerificationCache(cache_path)
+            for index, path in enumerate(files):
+                second.verify_file(
+                    path, expected[path], scope=f"leaf:{index:04d}"
+                )
+            summary = second.summary()
+            self.assertEqual(summary["files_hashed"], 0)
+            self.assertEqual(summary["proofs_reused"], len(files))
+            self.assertEqual(summary["elements_invalidated"], [])
+
+    def test_catalog_hash_proofs_invalidate_only_changed_leaf(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            paths = []
+            cache_path = root / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path)
+            for index in range(12):
+                path = root / f"leaf-{index:02d}.bin"
+                path.write_bytes(f"source-{index}".encode("ascii"))
+                paths.append(path)
+                first.fingerprint_file(path, scope=f"leaf:{index:02d}")
+            first.save()
+            paths[7].write_bytes(b"changed-branch-seven")
+            second = pipeline.VerificationCache(cache_path)
+            for index, path in enumerate(paths):
+                second.fingerprint_file(path, scope=f"leaf:{index:02d}")
+            summary = second.summary()
+            self.assertEqual(summary["files_hashed"], 1)
+            self.assertEqual(summary["elements_invalidated"], ["leaf:07"])
+            self.assertEqual(summary["proofs_reused"], len(paths) - 1)
+
+    def test_catalog_hash_proof_still_detects_corruption(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            payload = root / "payload.registry"
+            payload.write_bytes(b"sealed-payload")
+            expected = pipeline.sha256_file(payload)
+            cache_path = root / "verification-cache.json"
+            first = pipeline.VerificationCache(cache_path)
+            first.verify_file(payload, expected, scope="leaf:body")
+            first.save()
+            payload.write_bytes(b"corrupted-payload")
+            second = pipeline.VerificationCache(cache_path)
+            with self.assertRaisesRegex(
+                pipeline.VerificationMismatch, "SHA-256 mismatch"
+            ):
+                second.verify_file(payload, expected, scope="leaf:body")
+            self.assertEqual(second.summary()["elements_invalidated"], ["leaf:body"])
+
+    def test_sealed_install_prevalidation_does_not_rehash_4897_jobs(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            job = root / "leaf-job.json"
+            job.write_text('{"job_id":"shared"}\n', encoding="utf-8")
+            expected = pipeline.sha256_file(job)
+            cache_path = root / "verification-cache.json"
+            seeded = pipeline.VerificationCache(cache_path)
+            seeded.verify_file(job, expected, scope="leaf:seed")
+            seeded.save()
+            install = pipeline.VerificationCache(cache_path)
+            for index in range(4_897):
+                install.verify_file(
+                    job, expected, scope=f"leaf:{index:04d}"
+                )
+            summary = install.summary()
+            self.assertEqual(summary["files_hashed"], 0)
+            self.assertEqual(summary["proofs_reused"], 4_897)
+            self.assertEqual(summary["elements_invalidated"], [])
+
+    def test_sealed_install_prevalidation_skips_all_source_jobs(self) -> None:
+        verifier = mock.Mock()
+        verifier.summary.return_value = {
+            "proofs_reused": 3,
+            "files_hashed": 0,
+            "elements_invalidated": [],
+            "verification_seconds": 0.01,
+        }
+        context = {
+            "generation_id": "A" * 64,
+            "build": {"animation_ids": ["0x6100"]},
+            "runtime": {
+                "dll": "InfinityEngine-Enhancer.dll",
+                "dll_sha256": "B" * 64,
+            },
+            "runtime_manifest_path": Path("runtime/runtime-manifest.json"),
+            "pointer": {"generation_id": "A" * 64},
+        }
+        catalog = {"_catalog_members": []}
+        with (
+            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
+            mock.patch.object(
+                pipeline, "catalog_current_generation_context", return_value=context
+            ),
+            mock.patch.object(pipeline, "load_catalog_verification_proof"),
+            mock.patch.object(pipeline, "verify_catalog_locked_inputs") as inputs,
+            mock.patch.object(
+                pipeline,
+                "verify_catalog_outputs",
+                return_value={"animation_resources": {}, "shards": []},
+            ),
+            mock.patch.object(
+                pipeline, "runtime_profiles_for_work_item", return_value=[]
+            ),
+        ):
+            result = pipeline.verify_catalog_incremental(
+                catalog, check_inputs=False
+            )
+        inputs.assert_not_called()
+        self.assertFalse(result["verification"]["source_dependencies_checked"])
 
     def test_xn_adapter_exposes_direct_xbr4x_and_generic_protocol(self) -> None:
         adapter = (ROOT / "pipeline" / "scripts" / "xbr2x_batch.js").read_text(
@@ -2642,6 +2863,88 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
             self.assertEqual(manifest["total_frames"], 2)
             self.assertGreater(manifest["registry_set_bytes"], 0)
             xbr.assert_not_called()
+
+    def test_prepare_armor_set_prepares_members_before_aggregation(self) -> None:
+        members = [{"job_id": "first"}, {"job_id": "second"}]
+        armor_set = {"_members": members}
+        with (
+            mock.patch.object(pipeline, "extract_sources") as extract,
+            mock.patch.object(pipeline, "build_pack") as build,
+            mock.patch.object(pipeline, "build_armor_set") as aggregate,
+            mock.patch.object(pipeline, "build_runtime") as runtime,
+            mock.patch.object(
+                pipeline, "verify_armor_set", return_value={"status": "prepared-verified"}
+            ) as verify,
+        ):
+            result = pipeline.prepare_armor_set(
+                armor_set, force=False, resume=True, keep_frames=False
+            )
+
+        self.assertEqual(result["status"], "prepared-verified")
+        self.assertEqual(
+            extract.call_args_list,
+            [
+                mock.call(members[0], force=False, resume=True),
+                mock.call(members[1], force=False, resume=True),
+            ],
+        )
+        self.assertEqual(
+            build.call_args_list,
+            [
+                mock.call(members[0], force=False, resume=True, keep_frames=False),
+                mock.call(members[1], force=False, resume=True, keep_frames=False),
+            ],
+        )
+        aggregate.assert_called_once_with(armor_set, False, True)
+        runtime.assert_called_once_with(armor_set)
+        verify.assert_called_once_with(armor_set)
+
+    def test_prepare_armor_set_data_defers_runtime_to_catalog(self) -> None:
+        members = [{"job_id": "first"}, {"job_id": "second"}]
+        armor_set = {
+            "_members": members,
+            "compatibility": {"baldur_real_sha256": "A" * 64},
+        }
+        with (
+            mock.patch.object(pipeline, "extract_sources") as extract,
+            mock.patch.object(pipeline, "build_pack") as build,
+            mock.patch.object(pipeline, "build_armor_set") as aggregate,
+            mock.patch.object(pipeline, "job_path", return_value=Path("game")),
+            mock.patch.object(pipeline, "sha256_file", return_value="A" * 64),
+            mock.patch.object(
+                pipeline, "verify_armor_set_build", return_value={"resources": []}
+            ) as verify,
+            mock.patch.object(
+                pipeline, "armor_set_override_collisions", return_value=[]
+            ),
+            mock.patch.object(
+                pipeline, "armor_set_prefixes", return_value=["BODY"]
+            ),
+            mock.patch.object(pipeline, "build_runtime") as runtime,
+        ):
+            result = pipeline.prepare_armor_set_data(
+                armor_set, force=False, resume=True, keep_frames=False
+            )
+
+        self.assertEqual(result["status"], "data-prepared-verified")
+        self.assertTrue(result["runtime_deferred_to_catalog"])
+        self.assertEqual(
+            extract.call_args_list,
+            [
+                mock.call(members[0], force=False, resume=True),
+                mock.call(members[1], force=False, resume=True),
+            ],
+        )
+        self.assertEqual(
+            build.call_args_list,
+            [
+                mock.call(members[0], force=False, resume=True, keep_frames=False),
+                mock.call(members[1], force=False, resume=True, keep_frames=False),
+            ],
+        )
+        aggregate.assert_called_once_with(armor_set, False, True)
+        verify.assert_called_once_with(armor_set)
+        runtime.assert_not_called()
 
     def test_registry_set_inspector_rejects_header_entry_and_shard_tampering(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
