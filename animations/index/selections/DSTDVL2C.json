@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:DSTDVL2C",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-preserve-rgb-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "976AA5711EF1F25E4733BE088A20D25F4EA714AD14453239C8C6DA04ACF1F0D8",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-preserve-rgb-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-dstdvl2b-coreguard16-activefade-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "3BA389A8F9C267C4EEC71B2C0800483B10A207FE375A354EB15E31D24560CB15",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-dstdvl2b-coreguard16-activefade-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "70923113501F36340DA2F3A428A6F6DFBACB4221617F89EDF14FFC1FA515AE1E",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/03_runtime_pack/manifest.json",
+        "manifest_sha256": "555DF27F5E3400704AA9C9C6C1F193BA9BD0F9D0416C83BEFCBFCAA3630CCBCB",
+        "path": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-preserve-rgb-20260911/manifest.json",
+        "manifest_sha256": "E8DBBB2A0FAC91E8CF68BBC5FCEFE453A1553F5885A092D2CF4838658E819881",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-preserve-rgb-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-dstdvl2b-coreguard16-activefade-20260911/manifest.json",
+        "manifest_sha256": "277F7FC4BB878DE3B6ADE6519BB2DAEA03907C4C5D7B76616C14CE7A5E90A4EC",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-dstdvl2b-coreguard16-activefade-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911/manifest.json",
+        "manifest_sha256": "0C9E2885323DEA6049E75B18C37DA2295C1323BA83C84FF572AB7F4866042906",
+        "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911/manifest.json",
+        "manifest_sha256": "9BAFBFA85B840923CDEFE0CDD2027FFBD08CB345EAD0E8C7CC609DC10357462D",
+        "path": "animations/batches/ar0411-planar-sphere-seedvr7b-lab-x4-20260911",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-11",
+    "path": "animations/index/qa-decisions/DSTDVL2C/2026-09-11-accepted-ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911.json",
+    "sha256": "D535B95C3988EE8ED32B24F9D744C398B2FDDD5CDC9EA862CAE71F696AB12A47",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-lab-x4-apo8-30fps-spline-fit1-coreguard16-activefade7-20-7",
+  "resref": "DSTDVL2C",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/manifest.json",
+    "manifest_sha256": "67FCCA7FC261B2B7EB7EB88A37763A6D35B6878F88E38F0CF075E1D3E07BCB31",
+    "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0411",
+        "manifest_path": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/AR0411/manifest.json",
+        "manifest_sha256": "316273F5343E72A6FDC605B08E7887FD73158F08871B5DEBDC3FD4E966181960",
+        "path": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/AR0411",
+        "registry_sha256": "227FFB58B0AD1429F661BBCFC02CB33F1CCEE2B24078E62CC37AE5E1BD10D643",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/manifest.json",
+    "manifest_sha256": "4BB7569CBDEFD1A121BC57B4BE65CC765BB11A86A13E552A37B644966D24A8DC",
+    "path": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0411"
+  ],
+  "updated_at_utc": "2026-09-11T20:48:08Z"
+}

@@ -44,18 +44,18 @@ def retarget_variant(resource: dict[str, Any], variant_index: int,
     return renamed
 
 
-def load_area_pack(spec: str) -> tuple[dict[str, Any], dict[str, Path], str]:
-    """Load one area pack; `PATH::X,Y` declares its occurrence position."""
+def load_area_pack(spec: str) -> tuple[list[tuple[dict[str, Any], dict[str, Path]]], str]:
+    """Load an area pack; `PATH::X,Y` binds its sole resource to one position."""
     path_text, separator, position_text = spec.rpartition("::")
     if not separator:
         path_text = spec
     pack = Path(path_text).resolve()
     manifest, resources = v2.validate_v2_pack(pack)
-    v2.require(len(resources) == 1,
-               f"pack à ressource unique attendu, {len(resources)} trouvées : {pack}")
-    resource = copy.deepcopy(resources[0])
-    sources = {str(asset["name"]): pack / str(asset["name"]) for asset in resource["assets"]}
     if separator:
+        v2.require(len(resources) == 1,
+                   f"liaison de position réservée à un pack mono-ressource, {len(resources)} trouvées : {pack}")
+        resource = copy.deepcopy(resources[0])
+        sources = {str(asset["name"]): pack / str(asset["name"]) for asset in resource["assets"]}
         components = position_text.split(",")
         v2.require(len(components) == 2 and all(component.strip() for component in components),
                    f"position attendue sous la forme X,Y : {position_text}")
@@ -64,7 +64,12 @@ def load_area_pack(spec: str) -> tuple[dict[str, Any], dict[str, Path], str]:
         except ValueError as exc:
             raise RuntimeError(f"position invalide : {position_text}") from exc
         v2.resource_position(resource)
-    return resource, sources, str(manifest.get("area_id", ""))
+        return [(resource, sources)], str(manifest.get("area_id", ""))
+    return [
+        (copy.deepcopy(resource),
+         {str(asset["name"]): pack / str(asset["name"]) for asset in resource["assets"]})
+        for resource in resources
+    ], str(manifest.get("area_id", ""))
 
 
 def merge(specs: list[str], area: str, output: Path, resume: bool) -> dict[str, Any]:
@@ -72,11 +77,12 @@ def merge(specs: list[str], area: str, output: Path, resume: bool) -> dict[str, 
     resources: list[dict[str, Any]] = []
     loaded: list[tuple[dict[str, Any], dict[str, Path]]] = []
     for spec in specs:
-        resource, resource_sources, pack_area = load_area_pack(spec)
+        pack_resources, pack_area = load_area_pack(spec)
         v2.require(not pack_area or pack_area == area,
                    f"pack d'une autre zone ({pack_area}) fourni pour {area}")
-        resources.append(resource)
-        loaded.append((resource, resource_sources))
+        for resource, resource_sources in pack_resources:
+            resources.append(resource)
+            loaded.append((resource, resource_sources))
 
     positions: set[tuple[str, tuple[int, int] | None]] = set()
     for resource in resources:
@@ -174,7 +180,7 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pack", action="append", required=True, dest="packs",
-                        help="pack de zone à ressource unique ; `CHEMIN::X,Y` lie l'occurrence")
+                        help="pack de zone ; `CHEMIN::X,Y` lie l'unique ressource à l'occurrence")
     parser.add_argument("--area", required=True, help="identifiant de zone, ex. AR0900")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")

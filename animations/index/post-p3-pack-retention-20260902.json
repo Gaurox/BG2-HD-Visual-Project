@@ -298,6 +298,34 @@
       "created_utc": "2026-09-11T19:59:07.175689+00:00",
       "classification": "pending-qa-processing-evidence",
       "reason": "Feuille complète AR1008 : AM1008B, AM1008BL et FLM2PUR x4 SeedVR 7B LAB, TimedTimeline 30 fps Apollo-8, Spline Fit 1 Multi-Contour / feather 4 ; essai ingame demandé, aucune QA ingame ni release n'est inférée. L'occurrence FLM2PUR à palette externe OH4210 est exclue."
+    },
+    {
+      "name": "ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911",
+      "manifest_sha256": "4BB7569CBDEFD1A121BC57B4BE65CC765BB11A86A13E552A37B644966D24A8DC",
+      "created_utc": "2026-09-11T20:23:22.462209+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "Feuille complète AR0411 : AM411MAC x4 SeedVR 7B LAB, TimedTimeline 30 fps Apollo-8, Spline Fit 1 / feather 4 ; DSTDVL2B/C x4 30 fps, Spline Fit 1 / feather 4, Core Guard 16 et fade actif 7/20/7 ; RGB prémultiplié Blended ; essai ingame demandé, aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-20260911",
+      "manifest_sha256": "C9A00CA64CC4F2C547810DD5CBEC0D3992BFD7130EDFEFE4BECA2833E6C5CE35",
+      "created_utc": "2026-09-11T20:39:08.514341+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille complète AR0411, 142561664 octets (<512 Mio) : conserve byte-à-byte BUBBLES2 x4 validé et DSTDVL1A/B/C validés, avec AM411MAC et DSTDVL2B/C validés ingame ; fusion sans rééchantillonnage pour corriger l'écrasement de BUBBLES2 lors de l'essai précédent. Aucune nouvelle QA ni release n'est inférée."
+    },
+    {
+      "name": "am0411rn-magic-sphere-apo8-x4-30fps-spline-fit1-feather4-20260911",
+      "manifest_sha256": "BD53CBF7FFCCCF11EF2560D4AC46110E403D270B79CA517DE14DB1FD76D6542E",
+      "created_utc": "2026-09-11T20:40:08.417352+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "AM0411RN, sphère magique partagée AR0411/OH5400/OH5500 : x4 SeedVR 7B LAB, TimedTimeline 30 fps Apollo-8, Spline Fit 1 Multi-Contour / feather 4, RGB prémultiplié Blended ; essai ingame demandé sur les trois cartes, aucune QA ni release n'est inférée."
+    },
+    {
+      "name": "ar0411-bubbles2-dstdvl1abc-plus-planar-sphere-plus-am0411rn-20260911",
+      "manifest_sha256": "CF58EB20ACB9B995C52E6AAAC474856CC7921322549C605D28F427A3BF60E8B1",
+      "created_utc": "2026-09-11T20:40:12.893661+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Feuille complète AR0411, 174233344 octets (<512 Mio) : état de test complet qui conserve BUBBLES2 x4 et tous les effets AR0411 précédents, puis ajoute AM0411RN x4 30 fps ; fusion sans rééchantillonnage. Aucune nouvelle QA ni release n'est inférée."
     }
   ],
   "updated_on": "2026-09-11",
