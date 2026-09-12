@@ -3627,10 +3627,12 @@ static void detour_game_area_render(void* thisPtr, void* vidMode) {
 bool install_all(AppContext& ctx) {
   g_ctx = &ctx;
   g_route2TextureTable = nullptr;
+  area::configure_texture_table(nullptr);
 
   try {
     if (ctx.cfg.enableWaterOverlayRoute2) {
       g_route2TextureTable = validate_route2_texture_table(ctx);
+      area::configure_texture_table(g_route2TextureTable);
       LOG_INFO("WATER_ROUTE2 native texture table validated={}",
                g_route2TextureTable != nullptr);
     }
@@ -4289,6 +4291,7 @@ bool install_all(AppContext& ctx) {
     g_spriteShaderScopeActive = false;
     g_groundItemVidCellRenderReturn = 0;
     g_creatureSpritePaletteReturn = 0;
+    area::configure_texture_table(nullptr);
     g_ctx = nullptr;
     delete g_hookInit;
     g_hookInit = nullptr;
@@ -4341,6 +4344,7 @@ bool install_all(AppContext& ctx) {
     g_spriteShaderScopeActive = false;
     g_groundItemVidCellRenderReturn = 0;
     g_creatureSpritePaletteReturn = 0;
+    area::configure_texture_table(nullptr);
     g_ctx = nullptr;
     delete g_hookInit;
     g_hookInit = nullptr;
@@ -4407,6 +4411,7 @@ void uninstall_all() noexcept {
   g_nativeOcclusionTextureApi = {};
   g_nativeFxSurfacePools = nullptr;
 
+  area::configure_texture_table(nullptr);
   g_ctx = nullptr;
   delete g_hookInit;
   g_hookInit = nullptr;
@@ -4449,6 +4454,7 @@ void prepare_for_shutdown() noexcept {
   map_page_prewarm::shutdown();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
+  area::configure_texture_table(nullptr);
   g_ctx = nullptr;
 }
 

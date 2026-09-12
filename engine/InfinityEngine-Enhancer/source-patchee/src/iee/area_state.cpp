@@ -61,6 +61,7 @@ std::shared_ptr<const AreaGpuSnapshot> g_latestAreaGpu;
 std::atomic<std::uint64_t> g_nextAreaGpuGeneration{1};
 std::mutex g_areaRefreshCommitMutex;
 std::atomic<std::uint64_t> g_areaRefreshGeneration{0};
+std::atomic<const std::byte*> g_validatedTextureTable{nullptr};
 
 // Render-thread-owned GL state.
 unsigned g_areaTexture{};
@@ -163,8 +164,15 @@ std::optional<game::PaletteTileAverage> read_pvrz_tint_page(
   gl.glGetIntegerv(game::gl::PIXEL_PACK_BUFFER_BINDING, &packBuffer);
   if (packBuffer != 0) return std::nullopt;
 
+  const auto* textureTable = g_validatedTextureTable.load(std::memory_order_acquire);
+  game::gl::EngineTextureDescriptor descriptor{};
+  if (!game::gl::read_engine_texture_descriptor(textureTable, candidate.texture, descriptor) ||
+      descriptor.width != candidate.width || descriptor.height != candidate.height) {
+    return std::nullopt;
+  }
+
   gl.glActiveTexture(game::gl::TEXTURE0 + game::texture_units::AreaMask);
-  gl.glBindTexture(game::gl::TEXTURE_2D, candidate.texture);
+  gl.glBindTexture(game::gl::TEXTURE_2D, descriptor.glName);
   int width = 0;
   int height = 0;
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_WIDTH, &width);
@@ -183,6 +191,13 @@ std::optional<game::PaletteTileAverage> read_pvrz_tint_page(
   gl.glGetTexImage(game::gl::TEXTURE_2D, 0, game::gl::RGBA, game::gl::UNSIGNED_BYTE, rgba.data());
   gl.glPixelStorei(game::gl::PACK_ALIGNMENT, packAlignment);
   if (gl.glGetError() != game::gl::GL_NO_ERROR) return std::nullopt;
+
+  game::gl::EngineTextureDescriptor after{};
+  if (!game::gl::read_engine_texture_descriptor(textureTable, candidate.texture, after) ||
+      after.glName != descriptor.glName || after.width != descriptor.width ||
+      after.height != descriptor.height) {
+    return std::nullopt;
+  }
 
   return game::rgba_image_average_color(rgba.data(), static_cast<std::size_t>(width),
                                         static_cast<std::size_t>(height));
@@ -258,6 +273,10 @@ const game::CGameArea* read_loaded_area_candidate(const game::CGameArea* candida
   return candidate;
 }
 }  // namespace
+
+void configure_texture_table(const std::byte* validatedTextureTable) noexcept {
+  g_validatedTextureTable.store(validatedTextureTable, std::memory_order_release);
+}
 
 const game::CGameArea* resolve_active_area(void* infGame, const game::BuildManifest& manifest) {
   if (!infGame) {

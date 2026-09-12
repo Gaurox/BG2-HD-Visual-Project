@@ -51,6 +51,25 @@ conserver les étapes déjà conformes uniquement après vérification.
 | Installation / QA | Jeu/loader fermés, transaction sauvegardée, inventaire exact et reçus hashés. QA visuelle jour et nuit séparée : profondeur/reflets, fluidité, raccords, rives, zoom/pan, pause/reprise, chargement et transitions ; météo séparée si applicable |
 | Autorités / clôture | Nouveau candidat/reçus/QA immuables ; mettre à jour suivi et sélection de la variante dans `areas.csv`. Aucun succès déduit d'une compilation ou d'une installation. Rapporter les critères non observés ; release distincte |
 
+### 0.2 Invariant universel — lecture de teinte PVRZ
+
+Correctif moteur commun à toutes les cartes/familles utilisant une page PVRZ pour la teinte route2 ;
+aucune réparation d'asset par carte n'est requise pour ce défaut précis.
+
+- `CResPVR::texture` est un **slot de la table moteur**, jamais un nom de texture OpenGL.
+- Avant `glBindTexture`/readback : résoudre le slot dans la table native manifestée
+  (512entrées, stride`0x28`) ; valider `glName+0`, dimensions`+4/+8`,
+  `deletePending+0x0D==0`. Revalider après lecture ; toute divergence → fallback familial.
+- Implémentation : `engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/opengl_types.*`,
+  publication de table dans `area_state.*`, cycle de vie dans `hooks.cpp`.
+- Candidat validé AR0046N : DLL `35A5075B1E2BD6A366F55CE9940AD5F1FA89D127FFD16098428A89F5EBC3E46F` ;
+  preuve `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/water-tint-engine-slot-resolution-20260912.md`.
+- Diagnostic d'une récidive : vérifier d'abord le hash/version du DLL réellement chargé, puis
+  corréler `Area liquid tint` au `WATER_ROUTE2 identity ... engineSlot=X glName=Y` suivant.
+  Brun intermittent seulement quand `X!=Y` indique un ancien runtime ; ne pas retraiter les PVRZ.
+- Si le DLL contient ce correctif et que le défaut revient : conserver les logs, vérifier la durée
+  de vie du descripteur et le fallback fail-closed avant toute modification d'asset ou de recette.
+
 Témoin nuit v5 :775primaires alpha128 dont3anciennement omis (2378/4662/4663),285greffesRGB,
 358secondaires,26pages installées ; chiffres propres à AR0900N, à recalculer pour toute autre map.
 Reprise détaillée : `water/AR0900_NIGHT_REPAIR_20260912.md`.

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <cstdint>
 
 #ifdef _WIN32
@@ -6,6 +7,21 @@
 #endif
 
 namespace iee::game::gl {
+
+constexpr std::size_t ENGINE_TEXTURE_DESCRIPTOR_COUNT = 512;
+constexpr std::size_t ENGINE_TEXTURE_DESCRIPTOR_STRIDE = 0x28;
+
+struct EngineTextureDescriptor {
+  unsigned glName{};
+  int width{};
+  int height{};
+  std::uint8_t deletePending{};
+};
+
+// CResPVR::texture is an engine-table slot, never an OpenGL object name.
+// The table itself must have passed the manifested runtime validation first.
+bool read_engine_texture_descriptor(const std::byte* validatedTable, unsigned engineSlot,
+                                    EngineTextureDescriptor& out) noexcept;
 
 constexpr unsigned VENDOR = 0x1F00;
 constexpr unsigned RENDERER = 0x1F01;

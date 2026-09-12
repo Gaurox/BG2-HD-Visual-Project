@@ -3,8 +3,24 @@
 #include <windows.h>
 
 #include "iee/core/logger.h"
+#include "iee/core/pattern_scanner.h"
 
 namespace iee::game::gl {
+bool read_engine_texture_descriptor(const std::byte* validatedTable, unsigned engineSlot,
+                                    EngineTextureDescriptor& out) noexcept {
+  out = {};
+  if (!validatedTable || engineSlot == 0 || engineSlot >= ENGINE_TEXTURE_DESCRIPTOR_COUNT) {
+    return false;
+  }
+  const auto* descriptor =
+      validatedTable + static_cast<std::size_t>(engineSlot) * ENGINE_TEXTURE_DESCRIPTOR_STRIDE;
+  return core::safe_read(descriptor, out.glName) &&
+         core::safe_read(descriptor + 0x04, out.width) &&
+         core::safe_read(descriptor + 0x08, out.height) &&
+         core::safe_read(descriptor + 0x0D, out.deletePending) && out.glName != 0 &&
+         out.deletePending == 0 && out.width > 0 && out.height > 0;
+}
+
 const char* error_string(unsigned error_code) noexcept {
   switch (error_code) {
     case GL_NO_ERROR:

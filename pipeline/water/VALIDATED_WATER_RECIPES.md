@@ -204,6 +204,7 @@ C:MoveToArea("ARxxxx")
 | mosaïque au début de pluie | seule ressource sèche traitée | produire et router la ressource alternative |
 | route2 invisible | identité WED/TIS/page/GL non reconnue | diagnostiquer le matcher ; ne pas augmenter q |
 | route2 perdue au passage nuit | WED remplacé sans changement de CGameArea ; cache jour conservé, rejet3 | rafraîchir snapshot WED/masque et caches tuiles au changement de resref live ; QA jour→nuit→jour |
+| teinte parfois brune après changement d'heure | slot `CResPVR` lié directement comme nomGL ; dépend de la réutilisation des slots (`engineSlot!=glName`) | installer/vérifier le runtime universel de `WATER_REPAIR_RUNBOOK.md` §0.2 ; ne pas retraiter la map |
 | quelques centres nuit non réparés | sélection ancienne limitée aux alpha strictement0 | qualifier tous les primaires stock DXT1 exclusivement eau sans secondaire ; restaurer alpha natif exact, padding compris |
 | crash intermittent | offsets WED ou resref>8 | relocation structurelle + pagination bornée |
 | autre carte modifiée par effet de bord | overlay partagé remplacé globalement | alias isolé + WED/registre exacts |

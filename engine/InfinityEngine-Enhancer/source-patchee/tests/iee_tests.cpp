@@ -6464,6 +6464,40 @@ void test_liquid_tileset_fallback_tint() {
               "Lava keeps its dedicated shader palette rather than a water fallback");
 }
 
+void test_engine_texture_descriptor_resolution() {
+  using iee::game::gl::ENGINE_TEXTURE_DESCRIPTOR_COUNT;
+  using iee::game::gl::ENGINE_TEXTURE_DESCRIPTOR_STRIDE;
+  using iee::game::gl::EngineTextureDescriptor;
+  using iee::game::gl::read_engine_texture_descriptor;
+
+  std::vector<std::byte> table(ENGINE_TEXTURE_DESCRIPTOR_COUNT *
+                               ENGINE_TEXTURE_DESCRIPTOR_STRIDE);
+  constexpr unsigned slot = 44;
+  const auto offset = static_cast<std::size_t>(slot) * ENGINE_TEXTURE_DESCRIPTOR_STRIDE;
+  const unsigned glName = 48;
+  const int width = 2048;
+  const int height = 2048;
+  std::memcpy(table.data() + offset, &glName, sizeof(glName));
+  std::memcpy(table.data() + offset + 0x04, &width, sizeof(width));
+  std::memcpy(table.data() + offset + 0x08, &height, sizeof(height));
+
+  EngineTextureDescriptor descriptor{};
+  expect_true(read_engine_texture_descriptor(table.data(), slot, descriptor) &&
+                  descriptor.glName == glName && descriptor.width == width &&
+                  descriptor.height == height,
+              "PVRZ tint readback should resolve an engine slot to its live GL name");
+  expect_true(descriptor.glName != slot,
+              "engine texture slot must not be treated as an OpenGL name");
+
+  table[offset + 0x0D] = std::byte{1};
+  expect_true(!read_engine_texture_descriptor(table.data(), slot, descriptor),
+              "pending-delete engine textures should be rejected");
+  expect_true(!read_engine_texture_descriptor(table.data(), 0, descriptor) &&
+                  !read_engine_texture_descriptor(table.data(),
+                                                  ENGINE_TEXTURE_DESCRIPTOR_COUNT, descriptor),
+              "out-of-range engine texture slots should be rejected");
+}
+
 void test_area_liquid_texture_packing_rejects_mismatch() {
   iee::game::WedAreaInfo wed{};
   wed.baseWidth = 3;
@@ -6709,6 +6743,7 @@ int main() {
   test_oil_liquid_classification();
   test_lava_variant_liquid_classification();
   test_liquid_tileset_fallback_tint();
+  test_engine_texture_descriptor_resolution();
   test_area_liquid_texture_packing_rejects_mismatch();
   test_fpseam_override_asset_contract();
   test_shader_suite_neutral_override_assets();

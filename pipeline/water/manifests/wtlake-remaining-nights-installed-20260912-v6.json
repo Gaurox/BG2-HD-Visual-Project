@@ -1,0 +1,123 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": [
+    "maps:AR0046:night",
+    "maps:AR0300:night"
+  ],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": ["AR0046N", "AR0300N"],
+  "overlay": "WTLAKE",
+  "replaces": "pipeline/water/manifests/wtlake-night-relocation-installed-20260912-v3.json",
+  "recipe": {
+    "base": "existing per-map night SeedVR2 7B INT8 LAB x4",
+    "alpha": 128,
+    "donor_band_x4": 8,
+    "padding_x4": 4,
+    "shore_guard_x1": 1,
+    "overlay": "same installed WTLAKE periodic wavelet x4",
+    "phases": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "material_id": 1,
+    "strength": 0.7,
+    "maps": {
+      "AR0046N": {
+        "full_water_primaries": 18,
+        "interfaces": 11,
+        "rgb_primary_tiles": 8,
+        "secondary_alpha_tiles": 9,
+        "alpha128_blocks": 78408,
+        "rgb_blocks_changed": 2074,
+        "secondary_alpha_blocks_changed": 2142
+      },
+      "AR0300N": {
+        "full_water_primaries": 892,
+        "interfaces": 275,
+        "rgb_primary_tiles": 193,
+        "secondary_alpha_tiles": 202,
+        "alpha128_blocks": 3885552,
+        "rgb_blocks_changed": 51092,
+        "secondary_alpha_blocks_changed": 53448
+      }
+    }
+  },
+  "source": {
+    "commit": "aaefb8a294fab5af28e968188e53618d099e2a6a",
+    "files": [
+      {
+        "path": "pipeline/scripts/repair_water_map_batch.py",
+        "sha256": "1A7C5C841FF6E0B6807272D640BB8B77115157F4B5345154C98DFB2D642E9A6E"
+      },
+      {
+        "path": "pipeline/scripts/install_water_repair_candidate.py",
+        "sha256": "5256254DAEEE4F4BD5D45F815A2C62FEB884590BDF3CB7BD40D0D2B4A974266B"
+      },
+      {
+        "path": "pipeline/water/requests/wtlake-remaining-nights-20260912-v6.json",
+        "sha256": "9CD1FB8C2E572C3914C1302B85B30D344BFAEA67F29D6C9E75C1076CD5CB36A7"
+      }
+    ]
+  },
+  "build": {
+    "directory": "build/iee-wtlake-remaining-nights-20260912-v6",
+    "configuration": "Release",
+    "target": "InfinityEngine-Enhancer",
+    "BUILD_TESTING": false,
+    "registry": {
+      "path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json",
+      "sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E",
+      "bytes": 203878
+    },
+    "generated_header": {
+      "path": "build/iee-wtlake-remaining-nights-20260912-v6/generated/iee/water_route2_registry.generated.h",
+      "sha256": "2DEC5EC617D8B83A078A455D270C888B0B2D5D4825D289934EC2D2D4D639F1F1",
+      "bytes": 508718
+    }
+  },
+  "evidence": [
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/run.json","sha256":"54A5001CBD6D6322A55F585D3601AA6EFAFA8FF0063AF7E53E6CFEECD60B3BFE","bytes":2977},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json","sha256":"ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E","bytes":203878},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/override-candidate/manifest.json","sha256":"72B957980D8D7C5F7840ECB89B62358223B2724C743A84EF196F9C2CF0527EED","bytes":3807},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0046N-repair-report.json","sha256":"1EDCA4EFF18E7E70DA195B0154C3837D1F85DE3EC1D1AED37B359106C8F5292B","bytes":15687},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0046N-alpha128-report.json","sha256":"8D56DB3397E29122B7673D2313A4A9659C02E08E941BE375027C2331C772D39B","bytes":2324},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0300N-repair-report.json","sha256":"830D789BF0272D3097D93C0FFED1262119EC6F335A752742A4A3252062FE7859","bytes":349188},
+    {"path":"maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0300N-alpha128-report.json","sha256":"E1435579A4D16253412114A8C0C4ECBC3D9DFD9D6884DB58C0C8238248E4AC59","bytes":16556}
+  ],
+  "installation_receipts": [
+    {"path":"backups/water-map-repair/20260912T142625463426Z/installation.json","sha256":"C5B71DD515C8CD6FD6268A6F1E60440C15B553D9D672C006F1C5C5E20998881D","bytes":766},
+    {"path":"backups/water-map-repair/20260912T142625463426Z/assets/override-backup-20260912-162627/install-backup.json","sha256":"E0E87AFE92FFB0DCE6AE5A7083AE05C1CD2F469BEAC11B4F19C6F626FFF0F422","bytes":7185},
+    {"path":"backups/renderer/20260912T142628515584Z-1aef779a/renderer-install-receipt.json","sha256":"2B6BC98621D602685E54DF7E9E0572E3FE1E30EB47E9C342D6E853C2B890DAB6","bytes":1884}
+  ],
+  "dll": {
+    "path": "backups/water-map-repair/20260912T142625463426Z/renderer-candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "1ACD313169DE28A0487EABF68CE51306F27D5369948477E9C9408F570675285C",
+    "bytes": 1832448
+  },
+  "ini": {
+    "path": "backups/water-map-repair/20260912T142625463426Z/renderer-candidate/InfinityEngine-Enhancer.ini",
+    "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+    "bytes": 5572
+  },
+  "verification": {
+    "registry_entries": 19,
+    "registry_files": 698,
+    "matched_files": 698,
+    "changed_map_pages": 26,
+    "untouched_registry_entries": 17,
+    "day_assets": "unchanged",
+    "night_wed_tis": "unchanged; prior WED 36 phases retained",
+    "native_geometry": "unchanged",
+    "shaders_ini": "unchanged",
+    "game_loader": "closed during installation"
+  },
+  "qa": {
+    "state": "pending-ingame",
+    "commands": ["C:MoveToArea(\"AR0046\")", "C:MoveToArea(\"AR0300\")"],
+    "sequence": "fresh start via InfinityLoader; force night; depth, animation, seams; optional night-day-night transition",
+    "expected_log": ["WATER_ROUTE2 identity wed=AR0046N q=0.7", "WATER_ROUTE2 identity wed=AR0300N q=0.7"]
+  },
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

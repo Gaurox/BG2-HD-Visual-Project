@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <optional>
 
 #include "iee/game/build_manifest.h"
@@ -11,6 +12,10 @@ struct AppContext;
 }
 
 namespace iee::area {
+// Publishes the manifested native texture table validated during hook setup.
+// Pass nullptr during shutdown. The table is read-only from this module.
+void configure_texture_table(const std::byte* validatedTextureTable) noexcept;
+
 // Resolves the currently active CGameArea from a CInfGame pointer using the
 // manifest's CInfGame offsets (visible area index -> areas array -> master area).
 const game::CGameArea* resolve_active_area(void* infGame, const game::BuildManifest& manifest);

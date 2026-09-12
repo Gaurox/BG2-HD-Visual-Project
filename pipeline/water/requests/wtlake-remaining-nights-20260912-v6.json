@@ -1,0 +1,25 @@
+{
+  "output": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6",
+  "registry": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/registry-v3.json",
+  "registry_sha256": "5151A9D988C0CC2D7797F9F478EB781BF978621F2EED9D8589B5B87E7C092770",
+  "targets": [
+    {
+      "wed": "AR0046N",
+      "variant": "night",
+      "strength": 0.70,
+      "restore_native_alpha": true,
+      "base": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-wtlake/maps/AR0046N",
+      "donor": "maps/AR0046/runs/upscale-01-nuit/tuiles-secondaires-nuit/01_upscale/AR0046N-tuiles-secondaires-nuit-x4-seedvr2-7b-int8-lab.png",
+      "donor_sha256": "E79109D3940D2569CA65085B9D84D809274F963C435BB80996F52B3C64E233D1"
+    },
+    {
+      "wed": "AR0300N",
+      "variant": "night",
+      "strength": 0.70,
+      "restore_native_alpha": true,
+      "base": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-wtlake/maps/AR0300N",
+      "donor": "maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/tuiles-secondaires-nuit/03_assemble/AR0300N-tuiles-secondaires-nuit-x4-seedvr2-7b-int8-lab-overlap.png",
+      "donor_sha256": "EE7BB243166AA5495B1CFD132605D18EE985E4BA40BB406EACFA2F989FCFAA0B"
+    }
+  ]
+}

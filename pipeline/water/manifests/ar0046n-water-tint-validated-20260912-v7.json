@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-water-route2-qa-selection-v1",
+  "status": "validated-installed",
+  "qa_date": "2026-09-12",
+  "asset_ids": ["maps:AR0046:night"],
+  "entries": [
+    {
+      "wed": "AR0046N",
+      "variant": "night",
+      "overlay": "WTLAKE",
+      "material_id": 1,
+      "strength": 0.70,
+      "state": "validated-installed"
+    }
+  ],
+  "decision": {
+    "source": "explicit-user-message",
+    "text": "validé",
+    "scope": "AR0046N repeated night cycles with universal PVRZ engine-slot resolution candidate",
+    "not_claimed": ["other pending WTLAKE maps", "weather variants", "release readiness"]
+  },
+  "asset_installation_selection": {
+    "path": "pipeline/water/manifests/wtlake-remaining-nights-installed-20260912-v6.json",
+    "sha256": "C6DAA5CDCF497A625B6835F0F2075CE99F0D915C48FD315665911140AF24CFE5"
+  },
+  "registry": {
+    "path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json",
+    "sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E"
+  },
+  "runtime_validation": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/water-tint-engine-slot-resolution-20260912.md",
+    "sha256": "7CA7439E93FD3069A64584A3FDB4E061110B4C70230A60935A31E611DFE91E00"
+  },
+  "dll_sha256": "35A5075B1E2BD6A366F55CE9940AD5F1FA89D127FFD16098428A89F5EBC3E46F",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "renderer_receipt": {
+    "path": "backups/renderer/20260912T145223328590Z-a42cd725/renderer-install-receipt.json",
+    "sha256": "71265722933637E30E127C1847D18BFE5B77404E7F1AA39EDB6043855A4185BC"
+  },
+  "rebuild": "not-required-qa-decision-only",
+  "installation": "unchanged-already-installed",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}
