@@ -1,0 +1,18 @@
+{
+  "schema": "bg2-water-route2-qa-selection-v1",
+  "status": "validated-installed",
+  "qa_date": "2026-09-12",
+  "asset_ids": ["maps:AR0900:night"],
+  "entries": [{"wed": "AR0900N", "variant": "night", "overlay": "WTLAKE", "material_id": 1, "strength": 0.70, "state": "validated-installed"}],
+  "decision": {"source": "explicit-user-message", "text": "nuit validé sur AR0900", "scope": "AR0900 night installed v5 only", "not_claimed": ["fresh day QA", "day-night-day lifecycle QA", "weather QA", "other night maps"]},
+  "installation_selection": {"path": "pipeline/water/manifests/ar0900-night-installed-20260912-v5.json", "sha256": "32F38D6308FC317D43E0D608F56DC0FD7005AB5110FA3064CEAB3249C471A48C"},
+  "registry": {"path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/registry-v3.json", "sha256": "5151A9D988C0CC2D7797F9F478EB781BF978621F2EED9D8589B5B87E7C092770"},
+  "map_build": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/maps/AR0900N",
+  "dll_sha256": "77E7A75344575DF002A3B09CA927DCE2A0B0681F857E438E010B41A52C097985",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "installation_receipt": {"path": "backups/water-map-repair/20260912T140501010610Z/installation.json", "sha256": "CA53EB6D5564AC0B3E7B7A0B2894A0AA4F087FB0BD6C4FF84D4E82637F0A88D6"},
+  "rebuild": "not-required-qa-decision-only",
+  "installation": "unchanged-already-installed",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

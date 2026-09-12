@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0900:night"],
+  "wed": "AR0900N",
+  "overlay": "WTLAKE",
+  "decision": "rejected-ingame",
+  "source": "user screenshot and explicit report: night lacks day depth, animation quality and clean seams",
+  "installed_selection": "pipeline/water/manifests/wtlake-night-relocation-installed-20260912-v3.json",
+  "evidence": [
+    {"path": "maps/water-batches/runs/ar0900-night-diagnosis-20260912-v4/20260912154950_1.jpg", "sha256": "4EDCEEA9CBED6568850EDBBFD30A9FDE57B4126519F2F9D1B53DB3F124C7354A"},
+    {"path": "maps/water-batches/runs/ar0900-night-diagnosis-20260912-v4/runtime-before.log", "sha256": "5CACE2B622924A8D3FE0CC383468DFB321C5770CD11F60D1F5DFD10C7E4062CA"},
+    {"path": "maps/water-batches/runs/ar0900-night-diagnosis-20260912-v4/diagnosis.json", "sha256": "A932EB9B37EF4D8AD41C3BD5116B55A0A4224940F9FDD3B1A361D77541BE4030"}
+  ],
+  "findings": {
+    "runtime": "15:49:21.215 detects x4 TIS; 15:49:21.368 rejects stale AR0900 WED cache, reason3; publisher checks CGameArea change only",
+    "base_alpha": "772/775 full-water tiles have exact alpha128; tiles2378/4662/4663 retain erroneous variable alpha; all775 qualify from stock DXT1",
+    "seams": "night has not received the validated day RGB donor graft",
+    "incomplete_attempt": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v4; producer stopped on alpha128 prerequisite before installation; retained, not selectable"
+  },
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

@@ -9,6 +9,7 @@ import argparse
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 import io
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -20,8 +21,9 @@ from PIL import Image
 from scipy.ndimage import binary_erosion
 
 from area_decode import decode_tis_tiles, _pvrz_page_cache
-from bg2lib import load_key, resolve_resource
-from build_water_route1_batch import parse_standalone_tis, parse_wed, parse_pvr
+from bg2lib import load_key, resolve_resource, resolve_tileset_resource
+from build_water_route1_batch import (parse_standalone_tis, parse_wed, parse_pvr,
+                                     eligible_primary_ids, source_pages, patch_candidate)
 from build_wtlake_timeline_batch import ROOT, get_path, sha256_file, relative, tis_metadata, patch_wed
 from mos_decode import decode_pvrz_page
 from water_wed import validate_polygons
@@ -245,6 +247,27 @@ def main():
         require(sha256_file(donor) == target["donor_sha256"], f"donor diverged: {area}")
         wed, archive = resolve_resource(bifs, lookup[area, 0x3e9])
         corrected_wed = patch_wed(wed, area)
+        alpha_report = None
+        if target.get("restore_native_alpha"):
+            are_name = area.removesuffix("N")
+            are_path = live / f"{are_name}.ARE"
+            are = are_path.read_bytes() if are_path.is_file() else resolve_resource(bifs, lookup[are_name, 0x3f2])[0]
+            require(len(are) > 0x52 and are[:8] == b"AREAV1.0" and are[0x52] in (0, 128), "native alpha128 contract not proven")
+            ids = eligible_primary_ids(parse_wed(wed), 1)
+            stock_tis, count, size, _ = resolve_tileset_resource(bifs, lookup[area, 0x3eb])
+            qualified, _ = source_pages(bifs, lookup, area, stock_tis, count, size, ids)
+            require(ids and qualified == ids, "full-water primary source must be DXT1")
+            alpha_report = {"eligible_primary_ids": sorted(ids), "native_alpha": 128,
+                            "are_sha256": hashlib.sha256(are).hexdigest().upper(),
+                            "recipe": "DXT5 alpha128 core+padding; RGB unchanged"}
+            print(json.dumps({"wed": area, "native_alpha128_primary_tiles": len(ids)}), flush=True)
+            if not args.run:
+                continue
+            alpha_source = output/"alpha128"/area
+            alpha_report["pages"], alpha_report["selected_blocks"] = patch_candidate(
+                source, alpha_source, area, parse_standalone_tis((source/f"{area}.TIS").read_bytes()), ids)
+            write_json(output/f"{area}-alpha128-report.json", alpha_report)
+            source = alpha_source
         report = inspect_or_patch(area, wed, source, donor, bifs, lookup, pvr,
                                  output/"maps"/area if args.run else None)
         report["stock_wed_archive"] = archive
@@ -280,7 +303,7 @@ def main():
         write_json(assets/"manifest.json", {"schema": "bg2-upscale-area-animation-override-assets-v1",
             "status": "completed", "area": "+".join(t["wed"] for t in request["targets"]),
             "files": {n: {"bytes": v["bytes"], "sha256": v["sha256"]} for n, v in install.items()}})
-        write_json(output/"run.json", {"schema": "bg2-water-map-repair-run-v1", "asset_ids": ["maps:"+t["wed"]+":day" for t in request["targets"]],
+        write_json(output/"run.json", {"schema": "bg2-water-map-repair-run-v1", "asset_ids": ["maps:"+t["wed"].removesuffix("N")+(":night" if t["wed"].endswith("N") else ":day") for t in request["targets"]],
             "created_at_utc": datetime.now(timezone.utc).isoformat(), "reports": reports,
             "installation": "not-run", "tests": "not-run-user-choice", "qa": "pending-ingame", "release": "not-requested"})
 

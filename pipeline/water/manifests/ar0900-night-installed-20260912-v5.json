@@ -1,0 +1,151 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": [
+    "maps:AR0900:night"
+  ],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": "AR0900N",
+  "overlay": "WTLAKE",
+  "replaces": "pipeline/water/manifests/wtlake-night-relocation-installed-20260912-v3.json",
+  "prior_qa": "pipeline/water/manifests/ar0900-night-rejected-20260912-v3.json",
+  "recipe": {
+    "base": "existing night SeedVR2 7B INT8 LAB grid2x5 x4",
+    "alpha": 128,
+    "full_water_primaries": 775,
+    "previously_missed_primary_ids": [
+      2378,
+      4662,
+      4663
+    ],
+    "rgb_primary_tiles": 285,
+    "secondary_alpha_tiles": 358,
+    "interfaces": 502,
+    "rgb_blocks_changed": 92317,
+    "secondary_alpha_blocks_changed": 97794,
+    "donor_band_x4": 8,
+    "padding_x4": 4,
+    "shore_guard_x1": 1,
+    "overlay": "same installed WTLAKE periodic wavelet x4",
+    "phases": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "material_id": 1,
+    "strength": 0.7
+  },
+  "runtime_fix": "Refresh WED snapshot/mask and tile caches on live WED resref change even when CGameArea is unchanged; preserve normal day draw path and exact registry matching",
+  "source": {
+    "commit": "233fe43babf7ffa686300b92e0211c50684da934",
+    "snapshot_root": "build/ar0900-night-runtime-source-20260912-v5",
+    "files": [
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp",
+        "sha256": "D8ABC0642C6A55C6694D519FBB17E1378F59FE378E28B07C381BBEBA88A36487"
+      },
+      {
+        "path": "pipeline/scripts/repair_water_map_batch.py",
+        "sha256": "1A7C5C841FF6E0B6807272D640BB8B77115157F4B5345154C98DFB2D642E9A6E"
+      },
+      {
+        "path": "pipeline/scripts/install_water_repair_candidate.py",
+        "sha256": "737D9517DC53EF82855BF35873B3C448C879CAE14D7A76797E87AAF080010717"
+      },
+      {
+        "path": "pipeline/scripts/prepare_ar0900_night_repair.py",
+        "sha256": "345A2E8071395D346B79AFC2B476473027AD0B4FF3233EE13424F5295A8B3977"
+      }
+    ]
+  },
+  "build": {
+    "directory": "build/iee-ar0900-night-seams-runtime-20260912-v4",
+    "configuration": "Release",
+    "target": "InfinityEngine-Enhancer",
+    "BUILD_TESTING": false,
+    "registry": {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/registry-v3.json",
+      "sha256": "5151A9D988C0CC2D7797F9F478EB781BF978621F2EED9D8589B5B87E7C092770",
+      "bytes": 203717
+    },
+    "generated_header": {
+      "path": "build/iee-ar0900-night-seams-runtime-20260912-v4/generated/iee/water_route2_registry.generated.h",
+      "sha256": "1A3818E64905A040CA466F19A0CD8F042C8DFCFE7F2D1309C6C7ABE29BD02D37",
+      "bytes": 508718
+    }
+  },
+  "evidence": [
+    {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/run.json",
+      "sha256": "549E5BC597350CD0542470CCDB33B7F0C0AF8F36DED9577298E73910CA13D8C5",
+      "bytes": 1645
+    },
+    {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/registry-v3.json",
+      "sha256": "5151A9D988C0CC2D7797F9F478EB781BF978621F2EED9D8589B5B87E7C092770",
+      "bytes": 203717
+    },
+    {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/override-candidate/manifest.json",
+      "sha256": "9748F07AA3B5A26C067A6A128CAA1C0AB62F2CEDF0D1F27F49AC02BDF333E827",
+      "bytes": 3800
+    },
+    {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/AR0900N-repair-report.json",
+      "sha256": "4F3AB66024A8F37ADD9E4BED45B49305E0058A21E5C74C83C92DB33587B038C9",
+      "bytes": 627011
+    },
+    {
+      "path": "maps/water-batches/runs/ar0900-night-seams-runtime-20260912-v5/AR0900N-alpha128-report.json",
+      "sha256": "622A107BDA4BE2F4D71747F0D890F6B739AA22C7844450C77D568EB631A28595",
+      "bytes": 15773
+    }
+  ],
+  "installation_receipts": [
+    {
+      "path": "backups/water-map-repair/20260912T140501010610Z/installation.json",
+      "sha256": "CA53EB6D5564AC0B3E7B7A0B2894A0AA4F087FB0BD6C4FF84D4E82637F0A88D6",
+      "bytes": 769
+    },
+    {
+      "path": "backups/water-map-repair/20260912T140501010610Z/assets/override-backup-20260912-160503/install-backup.json",
+      "sha256": "03B3ED23BE3EEA1C609B5E45E30ED43CD14178AED2F00202C15A91A40E998062",
+      "bytes": 7188
+    },
+    {
+      "path": "backups/renderer/20260912T140504323831Z-bccdd73e/renderer-install-receipt.json",
+      "sha256": "31C400B9526F7F81E4445C7D4EAC46DA70D6AB06D2751F39A3A8478261708805",
+      "bytes": 1884
+    }
+  ],
+  "dll": {
+    "path": "backups/water-map-repair/20260912T140501010610Z/renderer-candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "77E7A75344575DF002A3B09CA927DCE2A0B0681F857E438E010B41A52C097985",
+    "bytes": 1832448
+  },
+  "ini": {
+    "path": "backups/water-map-repair/20260912T140501010610Z/renderer-candidate/InfinityEngine-Enhancer.ini",
+    "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+    "bytes": 5572
+  },
+  "verification": {
+    "registry_entries": 19,
+    "registry_files": 698,
+    "matched_files": 698,
+    "changed_map_pages": 26,
+    "untouched_registry_entries": 18,
+    "day_assets": "unchanged",
+    "night_wed_tis": "unchanged; prior WED36frames retained",
+    "native_geometry": "unchanged",
+    "shaders_ini": "unchanged",
+    "restored_registry_entries": "five omitted sewage/swamp entries restored exactly from recorded v4 authority",
+    "game_loader": "closed during installation"
+  },
+  "qa": {
+    "state": "pending-ingame",
+    "command": "C:MoveToArea(\"AR0900\")",
+    "sequence": "fresh start via InfinityLoader; day -> night -> day; depth, animation, seams",
+    "expected_log": "Loaded WED AR0900N; WATER_ROUTE2 identity wed=AR0900N q=0.7; draw temporal=true frames=36"
+  },
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

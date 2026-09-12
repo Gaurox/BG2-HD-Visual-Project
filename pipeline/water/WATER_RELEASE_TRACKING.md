@@ -8,7 +8,7 @@
 | Décision QA exacte | `pipeline/water/manifests/*validated*.json` immuable |
 | Sélection eau courante | `pipeline/water/release-tracking-v1.json` |
 | Recettes | `pipeline/water/VALIDATED_WATER_RECIPES.md` |
-| Registre runtime | evidence `water-registry-current-*` du suivi |
+| Registre runtime | evidence désignée par `runtime.registry_evidence_id` du suivi ; préserver toutes ses identités |
 | Release publiée | `releases/BG2-HD-Upscale/manifests/*`, hors périmètre avant autorisation distincte |
 
 `release-tracking-v1.json` prépare la release ; il ne l'approuve pas. Il référence par SHA-256 les
@@ -47,6 +47,8 @@ python -B pipeline/scripts/audit_water_release_tracking.py --release-gate
 5. Ajouter/mettre à jour un `artifact_set`; remplacer la sélection courante, conserver la preuve
    supersédée référencée par les anciens manifests.
 6. Ajouter/mettre à jour chaque `target`; aucune propagation jour→nuit, sec→pluie ou famille→famille.
+   Toute map jour examinée inclut sa nuit ou une preuve d'absence ; checklist §0.1 du
+   `../WATER_REPAIR_RUNBOOK.md`. Une validation nuit ne prouve pas le cycle jour→nuit→jour.
 7. À chaque nouveau build moteur, remplacer atomiquement `runtime.source_commit`, registre, DLL,
    INI et shaders. Ajouter un bloqueur si diagnostics actifs ou tests absents.
 8. Exécuter l'audit normal ; préparer les tests ciblés selon `AGENTS.md`, sans les lancer sans choix.
@@ -82,6 +84,11 @@ source release ; aucune preuve déduite d'un fichier présent.
   diagnostics INI actifs, bundle final non reconstruit, tests/lifecycle non autorisés.
 
 ## Transaction release future
+
+Mise à jour 2026-09-12 : AR0900N v5 validé ingame, preuve
+`manifests/ar0900-night-validated-20260912-v5.json`. AR0046N/AR0300N restent en attente.
+Le runtime installé et ses hashes sont ceux du suivi courant ; le cycle jour→nuit→jour reste
+non attesté. Les états initiaux ci-dessus restent historiques.
 
 Après autorisation release distincte seulement :
 

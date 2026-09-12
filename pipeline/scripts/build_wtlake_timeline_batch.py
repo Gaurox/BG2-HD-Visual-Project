@@ -47,12 +47,14 @@ ACTIVE_REGISTRY = (
     / "engine/InfinityEngine-Enhancer/source-patchee/assets/water-route2/registry-v2.json"
 )
 SPECIAL_SOURCES = {
+    "AR0204": ROOT / "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/maps/AR0204",
     "AR0512": ROOT / "maps/AR0512/runs/seedvr2-7b-int8-lab-direct-x4/05_build/x4",
     "AR0900": ROOT / (
         "maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/"
         "05_build/x4-alpha128-water-seams-repaired"
     ),
     "AR1604": ROOT / "maps/AR1604/runs/seedvr2-7b-int8-lab-direct-x4/05_build",
+    "AR1600": ROOT / "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/maps/AR1600",
     "AR2300": ROOT / (
         "maps/AR2300/runs/seedvr2-7b-int8-lab-batch-underdark-x4/05_build/"
         "x4-page2112-cache-safe-v1-fall6-statue-primary-alpha-v2-margin12-20260906"
@@ -104,9 +106,11 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 def source_directory(area: str) -> Path:
+    if area in SPECIAL_SOURCES:
+        return SPECIAL_SOURCES[area]
     if area in ROUTE1_AREAS:
         return SOURCE_BATCH / "maps" / area
-    return SPECIAL_SOURCES[area]
+    raise KeyError(f"source non configurée : {area}")
 
 
 def expected_page_name(resref: str, page: int) -> str:

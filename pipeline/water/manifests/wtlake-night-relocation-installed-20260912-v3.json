@@ -1,0 +1,42 @@
+{
+  "schema": "bg2-water-wtlake-night-relocation-installation-v1",
+  "date": "2026-09-12",
+  "run": {
+    "path": "maps/water-batches/runs/wtlake-timeline30-q070-wed-relocation-20260912-v3/run.json",
+    "sha256": "067E1597BEBEB03B0493EC671B87AFA958CB5CE86F4B4866CE0E05347A939385"
+  },
+  "registry": {
+    "path": "maps/water-batches/runs/wtlake-timeline30-q070-wed-relocation-20260912-v3/registry-v3-wtlake-q070.json",
+    "sha256": "69EEA59B95CE7BA92AC9DCA2666223E7D2D74155875AD5337625ED41A5120DF7"
+  },
+  "batch_manifest": {
+    "path": "maps/water-batches/runs/wtlake-timeline30-q070-wed-relocation-20260912-v3/batch-manifest.json",
+    "sha256": "BD6187AEADFB97B9324BBBBCE135A0E8ED6ED6E5B0D14CEE3AA9D2F9242A57AD"
+  },
+  "installation": {
+    "night_assets_receipt": {
+      "path": "backups/water-wtlake-night-relocation/20260912T133541999444Z/assets/override-backup-20260912-154005/install-backup.json",
+      "sha256": "AE42B3C1376BF83164DD3848DFDBB433A8D82378682A9224281A4A271C439F0B"
+    },
+    "registry_consistency_assets_receipt": {
+      "path": "backups/water-wtlake-night-relocation/20260912T133541999444Z/registry-consistency-assets/override-backup-20260912-154131/install-backup.json",
+      "sha256": "ACA99AA1F6D0474DD467A090907DB38CEE7FD808A68962BEB13743719DEF09F1"
+    },
+    "renderer_receipt": {
+      "path": "backups/renderer/20260912T134010190125Z-84f85a58/renderer-install-receipt.json",
+      "sha256": "3B94AC773BD3C59D9189441F89786AE7430CF59AA925335C7DE57042DD0464DC"
+    },
+    "verified_registry_assets": 613,
+    "dll_sha256": "32AB1B52C88D158C7580E87E084F049A37ED128087A7EDB64C997AA181920833",
+    "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "targets": [
+    {"wed": "AR0046N", "state": "already-conform", "route2_strength": 0.70},
+    {"wed": "AR0300N", "state": "installed-pending-ingame-qa", "route2_strength": 0.70},
+    {"wed": "AR0900N", "state": "installed-pending-ingame-qa", "route2_strength": 0.70}
+  ],
+  "consistency_weds": ["AR0300", "AR0900", "AR2300"],
+  "tests": "not-run-user-choice",
+  "qa": "pending-ingame",
+  "release": "not-requested"
+}

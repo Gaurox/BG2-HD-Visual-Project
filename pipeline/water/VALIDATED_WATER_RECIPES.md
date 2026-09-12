@@ -13,12 +13,16 @@
   réinférer pour uniformiser.
 - Ordre obligatoire : inventaire résolu → audit voie1 → réparation assets → animation overlay/WED →
   registre route2 → candidat → installation transactionnelle → QA séparée → décision.
+- Chaque vérification d'une carte jour inclut l'inventaire et le traitement de sa nuit : appliquer
+  intégralement la [checklist obligatoire](../WATER_REPAIR_RUNBOOK.md#01-checklist-obligatoire--chaque-carte-jour-et-nuit),
+  avec preuve/état pour chaque critère ; aucune conclusion globale depuis le jour ou les hashes seuls.
 
 ## 1. Matrice des cas validés
 
 | Famille | Cas probant | Traitement validé | Limite |
 |---|---|---|---|
 | `lake-wtlake` | AR0900 jour, AR0204, AR1600 | voie1 réparée ; WTLAKE x4 périodique ;36phases/15Hz ; blend30FPS ; matériau eau `id=1` ; q0.70 | identités exactes seulement |
+| `lake-wtlake` | AR0900N nuit v5 | mêmes étapes que le jour, maîtres nuit x4 LAB ; alpha128 exhaustif, greffe RGB/alpha secondaire ; cache WED jour/nuit corrigé ;36phases/15Hz/blend30FPS/q0.70 | nuit explicitement validée ; cycle jour→nuit→jour et météo non attestés |
 | `lake-wtlake` | AR0046, AR0300, AR1200, AR1700, AR1901, AR2300 | rendu installé q0.70 accepté pendant la session | commande de zone validée ; variante WED exacte non journalisée ; créer un reçu avant promotion formelle |
 | `sewage-wtsew` | AR0404 | WTSEW x4 `none`/3×3 ;6→36phases Apollo-8 ;15Hz ; blend30FPS ; matériau égouts `id=4` ; q0.70 | ne couvre aucune autre identité WTSEW |
 | `sewage-wtsew` | AR2100 | WED stock + WTSEW partagé ; route2 absente ; q0 natif | n'approuve pas une future route2 AR2100 |
@@ -199,6 +203,8 @@ C:MoveToArea("ARxxxx")
 | tuiles encore saccadées | seul mouvement procédural fluide |36phases15Hz + blend30FPS |
 | mosaïque au début de pluie | seule ressource sèche traitée | produire et router la ressource alternative |
 | route2 invisible | identité WED/TIS/page/GL non reconnue | diagnostiquer le matcher ; ne pas augmenter q |
+| route2 perdue au passage nuit | WED remplacé sans changement de CGameArea ; cache jour conservé, rejet3 | rafraîchir snapshot WED/masque et caches tuiles au changement de resref live ; QA jour→nuit→jour |
+| quelques centres nuit non réparés | sélection ancienne limitée aux alpha strictement0 | qualifier tous les primaires stock DXT1 exclusivement eau sans secondaire ; restaurer alpha natif exact, padding compris |
 | crash intermittent | offsets WED ou resref>8 | relocation structurelle + pagination bornée |
 | autre carte modifiée par effet de bord | overlay partagé remplacé globalement | alias isolé + WED/registre exacts |
 | eau intérieure artificielle | recette lac propagée sans qualification | branche environnementale et QA dédiée |
@@ -207,6 +213,7 @@ C:MoveToArea("ARxxxx")
 
 - Suivi vers release : `release-tracking-v1.json` ; procédure : `WATER_RELEASE_TRACKING.md`.
 - Lac : `manifests/ar0204-ar1600-validated-installed-20260912-v1.json`.
+- Lac nuit : `manifests/ar0900-night-validated-20260912-v5.json` ; reprise `AR0900_NIGHT_REPAIR_20260912.md`.
 - Égouts : `manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json`.
 - Marais sec/pluie : `manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json`.
 - Installation marais v4 : `manifests/wtswam-rain-installed-20260912-v4.json`.

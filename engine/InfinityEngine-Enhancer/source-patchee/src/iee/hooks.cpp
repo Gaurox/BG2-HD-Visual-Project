@@ -1925,19 +1925,45 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
   if (!resolved) {
     return;
   }
-  if (resolved != g_ctx->activeArea.load()) {
+  const bool areaChanged = resolved != g_ctx->activeArea.load();
+  const auto cachedWed = g_ctx->wed.load();
+  game::CResWED* liveWed = nullptr;
+  game::CRes liveWedResource{};
+  game::ResrefBuffer liveWedName{};
+  const bool haveLiveWedName =
+      core::safe_read(reinterpret_cast<const std::byte*>(resolved) +
+                          offsetof(game::CGameArea, m_pResWED), liveWed) &&
+      liveWed && core::safe_read(liveWed, liveWedResource) &&
+      game::read_runtime_resref(liveWedResource.resref, liveWedName);
+  // Day/night swaps replace the WED without replacing CGameArea or calling
+  // LoadArea. Refresh the same CPU/GPU snapshot used for a normal area load.
+  const bool wedChanged = haveLiveWedName &&
+      (!cachedWed || game::resref_view(liveWedName) != cachedWed->areaResrefView());
+  if (areaChanged || wedChanged) {
     static const game::CGameArea* s_lastRefreshTarget = nullptr;
+    static game::ResrefBuffer s_lastRefreshWed{};
     static std::uint32_t s_lastRefreshTick = 0;
     const auto now = GetTickCount();
-    if (resolved != s_lastRefreshTarget || now - s_lastRefreshTick > 1000) {
+    if (resolved != s_lastRefreshTarget || liveWedName != s_lastRefreshWed ||
+        now - s_lastRefreshTick > 1000) {
       s_lastRefreshTarget = resolved;
+      s_lastRefreshWed = liveWedName;
       s_lastRefreshTick = now;
-      LOG_INFO("Active area changed after load; refreshing WED cache from the render thread");
+      LOG_INFO("Active area/WED changed after load; refreshing WED cache: {} -> {}",
+               cachedWed ? cachedWed->areaResrefView() : std::string_view{"-"},
+               game::resref_view(liveWedName));
+      if (wedChanged) {
+        core::advance_readability_cache_epoch();
+        features::request_tile_render_state_reset();
+        game::request_texture_configuration_cache_reset();
+        map_page_prewarm::request_area_reset();
+      }
       area::refresh_wed_cache(*g_ctx, infGame);
+      if (flushGpuUpload) (void)area::flush_pending_gpu_upload();
       // LoadArea may have selected the outgoing area's pack before the engine
       // publishes its settled active-area pointer. Keep the resident animation
       // pack in lockstep with the render-thread area resolution as well.
-      swap_area_animation_pack(*g_ctx, infGame);
+      if (areaChanged) swap_area_animation_pack(*g_ctx, infGame);
     }
   }
   if (!g_ctx->wed.load()) {

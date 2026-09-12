@@ -2,6 +2,11 @@
 
 Autorités de phase 5. Les inventaires et plans générés ne valent ni QA, ni installation, ni release.
 
+AR0900 nuit : [reprise v5](AR0900_NIGHT_REPAIR_20260912.md), validée ingame par l'utilisateur ;
+alpha128/raccords appliqués comme au jour et cache moteur corrigé pour le changement de WED nuit.
+À chaque prochaine carte jour : traiter aussi sa nuit selon la checklist §0.1 de
+[`WATER_REPAIR_RUNBOOK.md`](../WATER_REPAIR_RUNBOOK.md) ; critères et preuves distincts par variante.
+
 Guide de reprise LLM : [recettes eau validées](VALIDATED_WATER_RECIPES.md). Il consolide les
 paramètres courants, les cas probants, les limites de généralisation et les échecs observés.
 

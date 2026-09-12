@@ -6,12 +6,14 @@ Elle conserve AR0900 corrigé comme témoin ; elle ne remplace pas cette recette
 
 ## 0. Mandat et limites
 
-- Référence : AR0900 **jour**, correctif complet accepté ingame par l'utilisateur le 2026-09-12.
+- Références : AR0900 jour (voie1 historique) et AR0900N nuit v5, acceptés ingame le 2026-09-12.
+  Sélection nuit : `water/manifests/ar0900-night-validated-20260912-v5.json`.
 - Finalité : porter la réparation aux maps d'eau du jeu patché, dans une nouvelle tâche.
 - Destinataire : LLM de la prochaine tâche, modèle demandé par l'utilisateur : 5.6 Terra.
 - Cette notice ne vaut ni exécution du lot, ni QA des autres maps/nuit, ni autorisation release.
-- Voie retenue : composition native + assets corrigés. Pas de nouvelle eau procédurale, de
-  retouche globale du shader, de modification des coordonnées WED/ARE ou des sauvegardes.
+- Socle : composition native + assets corrigés ; conserver la route2 déjà sélectionnée pour les
+  identités compatibles. Recettes/dosages courants : `water/VALIDATED_WATER_RECIPES.md`.
+  Ne modifier ni coordonnées WED/ARE ni sauvegardes.
 - Unités : `x1 = monde/source`, `x4 = texture`. Tuile monde64 ; tuile x4=256 ; marge atlas4px x4.
 - Tous les chemins ci-dessous sont relatifs au dépôt, sauf `config://bg2ee_game_root`.
 - Lire `AGENTS.md`, `README.md`, `pipeline/README.md`, `docs/DECISIONS.md`,
@@ -20,6 +22,41 @@ Elle conserve AR0900 corrigé comme témoin ; elle ne remplace pas cette recette
   populations, dimensions et assertions propres au témoin. En dériver un producteur paramétré.
 - Ne pas réécrire les runs historiques. La QA courante des maps appartient à `areas.csv` ; les
   manifests de build restent dans leur état historique `built-pending-qa`.
+
+### 0.1 Checklist obligatoire — chaque carte, jour et nuit
+
+Reprendre `water/release-tracking-v1.json`, puis son audit en lecture seule. Pour toute carte jour
+examinée, résoudre aussi sa variante nocturne : ne jamais conclure le lot depuis les seuls assets
+jour. Une variante absente exige une preuve ARE/KEY/WED ; un fichier manquant n'est pas une absence
+prouvée. Matrice minimale : `ARE × WED × variante × slot × overlay × météo`.
+
+Consigner chaque ligne ci-dessous par identité : `conforme + preuve`, `corrigé + nouvel artefact`,
+`bloqué + cause` ou `non applicable + justification`. Une case inconnue reste bloquante pour une
+conclusion « traitement complet ». Appliquer toutes les réparations nécessaires à la nuit ;
+conserver les étapes déjà conformes uniquement après vérification.
+
+| Critère | Contrôle / action obligatoire |
+|---|---|
+| Sources effectives | Résoudre ARE/WED/TIS/PVRZ stock et override ; maîtres primaire/secondaire **nuit** et build sélectionné, dimensions/provenance/hashes ; aucun repli silencieux nuit→jour |
+| Parité de recette | Comparer jour/nuit étape par étape : upscale RGB, contours/spline, alpha natif, greffe RGB, alpha secondaire, padding, timeline, interpolation et matériau/q. Même recette compatible, art/éclairage propres à la nuit ; pas de copie des pixels jour |
+| Résolution réelle | TIS256px pour x4, atlas/UV cohérents, maîtres x4 à chaque coordonnée,0resampled non justifié ; examiner séparément base, secondaires et animation. Nom x4 ou hash installé seul insuffisant |
+| Alpha central exhaustif | Inventorier **tous** les usages/primaires éligibles depuis la source native, pas seulement les sorties alpha0. Vérifier chaque cœur et marge, y compris alpha partiel/255 erroné ; restaurer l'alpha ARE/runtime prouvé (AR0900=128), jamais128 universel |
+| RGB et alpha secondaires | Donneur secondaire x4 de la même variante/coordonnée ; interfaces internes prouvées depuis WED/alpha stock ; bande8x4, garde rive1x1, padding4x4 selon recette compatible ; préserver vrais contours et octets hors masque (§8) |
+| Overlay et variantes | Résoudre toutes les ressources réellement possédées/dessinées, alternatives météo comprises ; réutiliser les phases validées si hashes identiques ; isoler les alias si des consommateurs sont incompatibles |
+| Animation complète | Vérifier toutes les phases et indices WED/TIS, taille256px,36phases/15Hz et cycle2,4s pour WTLAKE ; blend renderer30FPS séparé du mouvement procédural ; aucun stock6frames masqué par un shader fluide |
+| WED nuit | Relocation complète des offsets après croissance des tables ; murs/portes/polygones/sommets bornés, géométrie conservée ; resrefs≤8octets, pages nuit sans collision ; analyser le WED nuit indépendamment |
+| Registre complet | Partir du registre courant du suivi, préserver toutes les entrées non ciblées/familles/météos ; diff des ensembles d'identités et hashes live. Ne jamais remplacer un registre complet par un lot WTLAKE seul |
+| Runtime effectif | Vérifier WED/base/overlay/page/GL exacts, masque, `overlay=true`, q attendu, `temporal=true` ; contrôler INI et plafonds registre/shader. Une entrée compilée et des hashes conformes ne prouvent pas son activation |
+| Transition sans téléportation | Vérifier jour→nuit→jour dans le même CGameArea : resref WED live, snapshot/masque et caches tuiles renouvelés. Un cache jour peut persister sans LoadArea et provoquer le rejet3/q0 ; ne pas masquer ce défaut par un rechargement obligatoire |
+| Installation / QA | Jeu/loader fermés, transaction sauvegardée, inventaire exact et reçus hashés. QA visuelle jour et nuit séparée : profondeur/reflets, fluidité, raccords, rives, zoom/pan, pause/reprise, chargement et transitions ; météo séparée si applicable |
+| Autorités / clôture | Nouveau candidat/reçus/QA immuables ; mettre à jour suivi et sélection de la variante dans `areas.csv`. Aucun succès déduit d'une compilation ou d'une installation. Rapporter les critères non observés ; release distincte |
+
+Témoin nuit v5 :775primaires alpha128 dont3anciennement omis (2378/4662/4663),285greffesRGB,
+358secondaires,26pages installées ; chiffres propres à AR0900N, à recalculer pour toute autre map.
+Reprise détaillée : `water/AR0900_NIGHT_REPAIR_20260912.md`.
+Une validation utilisateur « nuit » n'atteste pas automatiquement le cycle jour→nuit→jour ni la pluie.
+Le choix « aucun test » reste applicable : garder les assertions de production/transactions et
+les audits en lecture seule ; ne lancer ni tests, ni session QA ingame automatisée sans autorisation.
 
 ## 1. Causes établies et ordre des corrections
 
@@ -135,6 +172,10 @@ leur recommandation `--transparent-full-water-base` est invalidée pour le contr
 `audit_water_area.py` ne parcourt que la première frame primaire et sa politique lave est obsolète.
 
 ## 4. Configuration : conserver la composition native
+
+Les réglages ci-dessous décrivent le témoin historique **voie1 seule**. Avec une route2 validée,
+conserver l'INI sélectionnée (effetON, route2ON, q0.70 pour WTLAKE courant) ; ne pas remettre
+automatiquement `EnableWaterEffect=false`, ce qui supprimerait l'enrichissement validé.
 
 Dans `config://bg2ee_game_root/InfinityEngine-Enhancer.ini` :
 
