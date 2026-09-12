@@ -1,0 +1,93 @@
+{
+  "schema": "bg2-water-route2-registry-v1",
+  "version": 1,
+  "date": "2026-09-12",
+  "reference_commit": "a7397a526c52ca0ae99d121687819c41d611a6fe",
+  "fallback": {
+    "strength": 0.0,
+    "renderer": "native",
+    "reasons": [
+      "identity-absent",
+      "identity-divergent",
+      "hash-divergent",
+      "layout-divergent",
+      "page-unapproved",
+      "qa-unapproved"
+    ]
+  },
+  "entries": [
+    {
+      "id": "ar0900-day-wtlake-slot1-q100-v1",
+      "state": "approved-ingame",
+      "area_variant": "AR0900:day",
+      "wed": {
+        "resref": "AR0900",
+        "sha256": "471B1A2A5FBF4D78DDDF44851E8A95F18CDA6883B6C048D3382BC84AEE67092A",
+        "grid": {"width": 80, "height": 60},
+        "overlay_slots": ["AR0900", "WTLAKE", "", "", ""]
+      },
+      "base_tis": {
+        "resref": "AR0900",
+        "sha256": "4671AE969FDAC1AF919D1D4B887E8581BC4DC6513A727CD73775A1D1E14696F8",
+        "bytes": 69048,
+        "tile_count": 5752,
+        "tile_dimension": 256,
+        "pages": [
+          {"resref": "A090000", "width": 4096, "height": 4096, "bytes": 7014981, "sha256": "3CF9E14352EF9110822E307B2561734DA2C10000C0911C3CF7037A204872B606"},
+          {"resref": "A090001", "width": 4096, "height": 4096, "bytes": 7172780, "sha256": "867ECB936025CF9B376E27ACB3D3EF91CB873B3A3C4EF86A4E2935C82C3E8AA6"},
+          {"resref": "A090002", "width": 4096, "height": 4096, "bytes": 7129090, "sha256": "AC1C34527346A138277A87C8755B08F78DC157D26BB20FD71B96018176BD7E4D"},
+          {"resref": "A090003", "width": 4096, "height": 4096, "bytes": 7039283, "sha256": "2C297D717EE64E925B1E74859F6611A8D7F432087D9F05B72701F078E6D89E09"},
+          {"resref": "A090004", "width": 4096, "height": 4096, "bytes": 7293689, "sha256": "65A8BE88B8DE279AC645CCF82A42D88CA37FD6380F6EEAA9AFA9C9F951F28DF9"},
+          {"resref": "A090005", "width": 4096, "height": 4096, "bytes": 7270218, "sha256": "D10299BF49AF25B13E8568FBF71D95A0F1B57034EE01EAED9D7677022091F0A7"},
+          {"resref": "A090006", "width": 4096, "height": 4096, "bytes": 6945316, "sha256": "C93773991050108794C4271F45E5490DB71FA31F81336B7BFC6DFFA631E2E02C"},
+          {"resref": "A090007", "width": 4096, "height": 4096, "bytes": 6682185, "sha256": "58262B010C3FD3A2E54BAC31893ACC027B1128A1358033AB2C7A8B86FECA475C"},
+          {"resref": "A090008", "width": 4096, "height": 4096, "bytes": 6874222, "sha256": "0E60FD5E4F82A96B72F568C2A909EE4E3351F445C863793880E369E0C11F2E9B"},
+          {"resref": "A090009", "width": 4096, "height": 4096, "bytes": 6488268, "sha256": "75B93B43BC65798E8565BC3C173E73BB3DBB853C6B7DDDC4932EF5BEF0FDB292"},
+          {"resref": "A090010", "width": 4096, "height": 4096, "bytes": 6464841, "sha256": "C768D3F6C9117254DF212A814C78B7A76477611E85FA51939D528A675DC10D6C"},
+          {"resref": "A090011", "width": 4096, "height": 4096, "bytes": 6378162, "sha256": "92B295DD729387B0A4E61F297A7D43C8CC35E2D8C2D73F168EB165D8D77531E0"},
+          {"resref": "A090012", "width": 4096, "height": 4096, "bytes": 6506802, "sha256": "3001EBB6561915691317C18A6D2417D37AEAA197355BDA19948F5E6972B54A33"},
+          {"resref": "A090013", "width": 4096, "height": 4096, "bytes": 6370073, "sha256": "44E4A6112859BE25D7A5A0D7B1EFF5BFDFB8DC67897D74E54D3075E2824C7950"},
+          {"resref": "A090014", "width": 4096, "height": 4096, "bytes": 6455095, "sha256": "81750EF1831761FE708C70781F68CB617D6CD6BE969197D896826E97608DED79"},
+          {"resref": "A090015", "width": 4096, "height": 4096, "bytes": 6679146, "sha256": "AAA6DE9718A13E084FB9A29E952770536A3F22F72D829D98BF96858AC1E6FDCE"},
+          {"resref": "A090016", "width": 4096, "height": 4096, "bytes": 6501305, "sha256": "239DB5E162A0FCC44A325D573957D04D04D5714246FE7E254FDB9182B8B76723"},
+          {"resref": "A090017", "width": 4096, "height": 4096, "bytes": 6135465, "sha256": "C786204CA5DFEDCD87C5687138DE73F01A1DE8CD2457CC1B2DAD97F09A75661E"},
+          {"resref": "A090018", "width": 4096, "height": 4096, "bytes": 6555899, "sha256": "6997BC1D4ED6DB410B2634872039075B0393061F2C760B78DB6462865B6E37C5"},
+          {"resref": "A090019", "width": 4096, "height": 4096, "bytes": 6530486, "sha256": "1126CF05FFD57903290588956FA2EAFE1241ACCF4BF78B22E29F4A22A79BE35E"},
+          {"resref": "A090020", "width": 4096, "height": 4096, "bytes": 6320581, "sha256": "C4EE3244760819A0DD458FED0236E12CC68E38F9FB05D9A16AC0BC1EE2A55D25"},
+          {"resref": "A090021", "width": 4096, "height": 4096, "bytes": 4975794, "sha256": "1D9487E7099C2D81A6FA073C7D457EDBA8BF4FC374C3314B0EFF84E1FD1AA641"},
+          {"resref": "A090022", "width": 4096, "height": 4096, "bytes": 3837653, "sha256": "61F1F0435EDB915336BE3931F736836B3A06A9349CF4742C96FF4E33943434C4"},
+          {"resref": "A090023", "width": 4096, "height": 4096, "bytes": 4015436, "sha256": "C373A1160EBD687ECD49382C3EB03325381DCFD9ACF6CEFC17A331FA82C41BF2"},
+          {"resref": "A090024", "width": 4096, "height": 4096, "bytes": 3626370, "sha256": "8020AB9430E6695DAC16BB623D2C82E23E7BABD8A9498BE6DF835F4C8A107622"},
+          {"resref": "A090025", "width": 4096, "height": 4096, "bytes": 1816054, "sha256": "73CC5172ADD891930A4904C78D2301AC919854D6AB55EEBC11B5AE26827EA3BC"}
+        ],
+        "build_set_sha256": "59DBB058B087D1AD9C1D06A295E7A774D2DF1C6DBA182A2EE8912C467D30E4E8"
+      },
+      "overlay": {
+        "slot": 1,
+        "tis_resref": "WTLAKE",
+        "tis_sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+        "tis_bytes": 96,
+        "tile_count": 6,
+        "tile_dimension": 256,
+        "pages": [
+          {"resref": "WLAKE00", "width": 2048, "height": 2048, "bytes": 166525, "sha256": "BCC99E2E6E2881E9D216687044A661C68EC42D0EEC1A4103C341894BB5E2FA10"}
+        ]
+      },
+      "liquid_mode": "water",
+      "material": "lake-wtlake-existing",
+      "approved_strength": 1.0,
+      "qa": {
+        "status": "validated-ingame",
+        "evidence": "engine/InfinityEngine-Enhancer/source-patchee/docs/validation/water-route2-ar0900-20260912.md"
+      },
+      "provenance": {
+        "map_run": "maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/run.json",
+        "map_run_sha256": "AD6AB7CC4BDF0AF2B2B02A3C0CB9DA1501E6424B6559097D6527775624477FD2",
+        "overlay_build": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4",
+        "overlay_seedvr_color_correction_method": "wavelet",
+        "map_seedvr_color_correction_method": "lab",
+        "historical_artifacts_frozen": true
+      }
+    }
+  ]
+}

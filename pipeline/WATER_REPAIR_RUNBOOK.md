@@ -191,7 +191,7 @@ EnableWaterEffect = false
 | dtype / scale / resize | `default` / 4 / Lanczos |
 | seed / steps / CFG | `959948902156062` / 1 / 1 |
 | sampler / scheduler / denoise | Euler / simple / 1 |
-| couleur overlay | **wavelet** ; la recette map reste LAB |
+| couleur des témoins historiques | overlay WTLAKE **wavelet** ; carte AR0900 **LAB** |
 | VAE encode et decode | tile512, overlap128, temporal4096, temporal overlap8 |
 | padding du runner | 0 ; géométrie uniforme192×192 |
 
@@ -235,9 +235,11 @@ pas un contexte d'inférence non périodique.**
    nouvelle, remplacer uniquement les blocs alpha nécessaires, puis traiter §8 les faux contours
    et leurs marges. Préserver la spline des **vraies** rives/trous/îlots.
 
-Pas de redécoupe par tuile isolée pour l'upscale de la map. Recette maîtres AR0900 : SeedVR7B/LAB,
-x4, grille2×5, marge interne128px x1 puis retrait512px x4 ; réutiliser ces maîtres existants.
-La découpe des autres maps suit leur propre recette, pas systématiquement2×5.
+Pas de redécoupe par tuile isolée pour l'upscale de la map. Recette des maîtres historiques AR0900 :
+SeedVR7B/LAB, x4, grille2×5, marge interne128px x1 puis retrait512px x4 ; réutiliser ces maîtres
+existants. Toute nouvelle inférence SeedVR du lot eau utilise `color_correction_method=none` ;
+l'overlay WTLAKE wavelet reste également un témoin figé. La découpe des autres maps suit leur
+propre recette, pas systématiquement2×5.
 
 ## 7. Alpha central : patch DXT5 sans réencoder le RGB
 

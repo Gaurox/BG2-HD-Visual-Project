@@ -74,6 +74,14 @@ def parse_args() -> argparse.Namespace:
         help="libellé sûr utilisé dans les noms de sortie",
     )
     parser.add_argument(
+        "--color-correction-method",
+        choices=("lab", "wavelet", "adain", "none"),
+        help=(
+            "surcharge le post-traitement couleur uniquement dans le prompt runtime; "
+            "omis, conserve la valeur du workflow"
+        ),
+    )
+    parser.add_argument(
         "--expected-workflow-sha256",
         default=APPROVED_7B_SHA256,
         help="empreinte exigée; chaîne vide pour ne pas imposer d'empreinte",
@@ -256,6 +264,18 @@ def workflow_summary(prompt: dict[str, Any]) -> dict[str, Any]:
             for key in ("tile_size", "overlap", "temporal_size", "temporal_overlap")
         },
     }
+
+
+def apply_runtime_overrides(
+    prompt: dict[str, Any], *, scale: int | None, color_correction_method: str | None
+) -> dict[str, Any]:
+    if scale is not None:
+        resize_id = find_single_node(prompt, "ResizeImageMaskNode")
+        prompt[resize_id]["inputs"]["resize_type.multiplier"] = scale
+    if color_correction_method is not None:
+        post_id = find_single_node(prompt, "SeedVR2PostProcessing")
+        prompt[post_id]["inputs"]["color_correction_method"] = color_correction_method
+    return workflow_summary(prompt)
 
 
 def validate_approved_7b_settings(summary: dict[str, Any]) -> None:
@@ -693,14 +713,17 @@ def main() -> None:
     with workflow_path.open("r", encoding="utf-8") as handle:
         reference_prompt = json.load(handle)
     runtime_prompt = copy.deepcopy(reference_prompt)
-    if args.scale is not None:
-        resize_id = find_single_node(runtime_prompt, "ResizeImageMaskNode")
-        runtime_prompt[resize_id]["inputs"]["resize_type.multiplier"] = args.scale
-    summary = workflow_summary(runtime_prompt)
+    baseline_summary = apply_runtime_overrides(
+        runtime_prompt, scale=args.scale, color_correction_method=None
+    )
     if args.expected_workflow_sha256.lower() == APPROVED_7B_SHA256:
-        validate_approved_7b_settings(summary)
+        validate_approved_7b_settings(baseline_summary)
     else:
-        validate_seedvr_baseline(summary)
+        validate_seedvr_baseline(baseline_summary)
+    summary = apply_runtime_overrides(
+        runtime_prompt, scale=None,
+        color_correction_method=args.color_correction_method,
+    )
     scale = int(summary["scale"])
     if args.expected_scale is not None and scale != args.expected_scale:
         raise RuntimeError(f"facteur inattendu : {scale}; attendu {args.expected_scale}")
@@ -790,6 +813,12 @@ def main() -> None:
             raise RuntimeError("le workflow du manifeste existant diffère du workflow demandé")
         if manifest.get("parameters", {}).get("scale") != scale:
             raise RuntimeError("l'échelle du manifeste existant diffère de l'échelle demandée")
+        if manifest.get("parameters", {}).get("color_correction_method") != summary.get(
+            "color_correction_method"
+        ):
+            raise RuntimeError(
+                "la correction couleur du manifeste existant diffère de celle demandée"
+            )
         manifest["status"] = "running"
         manifest["resumed_at_utc"] = datetime.now(timezone.utc).isoformat()
         manifest["preflight"] = preflight_record
@@ -807,11 +836,18 @@ def main() -> None:
                 "sha256": workflow_hash,
             },
             "parameters": {key: value for key, value in summary.items() if key != "node_ids"},
-            "runtime_overrides": (
-                {"resize_type.multiplier": args.scale}
-                if args.scale is not None
-                else {}
-            ),
+            "runtime_overrides": {
+                **(
+                    {"resize_type.multiplier": args.scale}
+                    if args.scale is not None
+                    else {}
+                ),
+                **(
+                    {"color_correction_method": args.color_correction_method}
+                    if args.color_correction_method is not None
+                    else {}
+                ),
+            },
             "preflight": preflight_record,
             "comfyui": {
                 "server": args.server,

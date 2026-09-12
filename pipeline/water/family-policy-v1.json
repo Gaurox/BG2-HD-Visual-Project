@@ -1,0 +1,105 @@
+{
+  "schema": "bg2-water-family-policy-v1",
+  "version": 1,
+  "date": "2026-09-12",
+  "inputs": {
+    "phase23_matrix_sha256": "D76BE441D7474F79EA05CF2FB239D904A1B3662BE360FECCD069838602F19DC5",
+    "phase4_decisions_sha256": "4975164EA145779EEFE621BB74FC352F10A2C5723DB0EC125C14AAC5802660B3",
+    "reference_commit": "a7397a526c52ca0ae99d121687819c41d611a6fe"
+  },
+  "seedvr": {
+    "new_processing_color_correction_method": "none",
+    "frozen_exceptions": [
+      {
+        "asset": "AR0900-day-map",
+        "method": "lab",
+        "action": "preserve-existing-only"
+      },
+      {
+        "asset": "WTLAKE-periodic-overlay",
+        "method": "wavelet",
+        "action": "preserve-existing-only"
+      }
+    ]
+  },
+  "fallback": {
+    "route2_strength": 0.0,
+    "renderer": "native",
+    "unknown_family": "blocked",
+    "unapproved_identity": "q0"
+  },
+  "families": [
+    {
+      "id": "lake-wtlake",
+      "overlays": ["WTLAKE"],
+      "engine_mode": "water",
+      "material": "lake-wtlake-existing",
+      "route2": "exact-entry-only",
+      "strength_1": "approved-ar0900-day-only",
+      "overlay_action": "preserve-validated-periodic-reference"
+    },
+    {
+      "id": "lake-teal-wtlaka-d",
+      "overlays": ["WTLAKA", "WTLAKB", "WTLAKC", "WTLAKD"],
+      "engine_mode": "water",
+      "material": "unqualified-bright-teal",
+      "route2": "blocked-family-qa",
+      "strength_1": "not-approved",
+      "overlay_action": "new-periodic-candidate-required"
+    },
+    {
+      "id": "pool-wtpool",
+      "overlays": ["WTPOOL"],
+      "engine_mode": "water",
+      "material": "pool-specific-required",
+      "route2": "blocked-family-qa",
+      "strength_1": "not-approved",
+      "overlay_action": "restore-canonical-x2-before-qa"
+    },
+    {
+      "id": "swamp-wtswam",
+      "overlays": ["WTSWAM"],
+      "engine_mode": "swamp",
+      "material": "swamp-specific-required",
+      "route2": "blocked-missing-material",
+      "strength_1": "not-approved",
+      "overlay_action": "restore-stock-before-qa"
+    },
+    {
+      "id": "sewage-wtsew",
+      "overlays": ["WTSEW"],
+      "engine_mode": "sewage",
+      "material": "sewage-dedicated",
+      "route2": "blocked-engine-branch",
+      "strength_1": "not-approved",
+      "overlay_action": "preserve-stock"
+    },
+    {
+      "id": "oil-wtoil",
+      "overlays": ["WTOIL"],
+      "engine_mode": "oil",
+      "material": "oil-specific-required",
+      "route2": "blocked-missing-material",
+      "strength_1": "not-approved",
+      "overlay_action": "preserve-stock"
+    },
+    {
+      "id": "lava-wtlava-d",
+      "overlays": ["WTLAVA", "WTLAVB", "WTLAVC", "WTLAVD"],
+      "engine_mode": "lava",
+      "material": "lava-emissive-dedicated",
+      "route2": "blocked-engine-branch",
+      "strength_1": "forbidden-water-contract",
+      "overlay_action": "new-periodic-candidate-required"
+    },
+    {
+      "id": "brown-flowing-wt5000",
+      "overlays": ["WT5000A", "WT5000B", "WT5000C", "WT5000D"],
+      "engine_mode": "unclassified",
+      "material": "brown-flowing-specific-required",
+      "route2": "blocked-classifier-and-family-qa",
+      "strength_1": "not-approved",
+      "overlay_action": "preserve-stock"
+    }
+  ]
+}

@@ -8,6 +8,10 @@ Réparation de la composition native validée sur AR0900 jour le 2026-09-12 :
 [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md). Suivre cette notice pour les ombres/reflets,
 le mélange central et les coutures ; ne pas suivre la recommandation legacy alpha0 des audits.
 
+Pour tout **nouveau** traitement SeedVR du lot eau, imposer
+`--color-correction-method none`. Conserver sans les régénérer les témoins historiques AR0900 jour
+LAB et WTLAKE périodique wavelet. Orchestration et registre route2 : [`water/README.md`](water/README.md).
+
 ## Gate préalable
 
 ```powershell
@@ -31,7 +35,8 @@ exige une nouvelle QA par resref, puis la mise à jour explicite des tailles et 
 
 ## Traitement de la zone
 
-1. Upscaler les rendus de la zone en x4 selon `areas.csv` et le préflight.
+1. Upscaler les rendus de la zone en x4 selon `areas.csv` et le préflight, avec correction couleur
+   SeedVR `none` pour tout nouveau run eau.
 2. Conserver l'alpha source ; le builder applique le rééchantillonnage bilinéaire des masques.
 3. Pour la composition native, ne pas suivre `--transparent-full-water-base` : alpha0 efface
    l'art local. DXT1 opaque converti DXT5 + primaire exclusivement eau sans secondaire :

@@ -15,6 +15,7 @@ Avant toute production ou reprise, lire
 | Maître x1 | `python pipeline/scripts/validate_x1_masters.py --area ARxxxx` |
 | Préflight | `python pipeline/scripts/audit_area_preflight.py ARxxxx <rapport.json>` |
 | Audit eau | `python pipeline/scripts/audit_water_area.py ARxxxx <rapport.json>` |
+| Lot eau exhaustif | `python -B pipeline/scripts/orchestrate_water_batch.py` (plan-only) |
 | Exécution SeedVR | `python pipeline/scripts/run_seedvr_comfyui.py ...` |
 | Reconstruction | `python pipeline/scripts/build_upscaled_area.py ARxxxx <principale-x4.png> <build-dir> [secondaire-x4.png]` |
 | Audit technique | `python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>` |
@@ -75,6 +76,7 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
 | Réparation eau native — reprise LLM | [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md) |
 | Eau procédurale voie 2 — expérience et rollback | [`WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](WATER_ROUTE2_EXPERIMENT_RUNBOOK.md) |
+| Lot eau exhaustif — familles, plan et registre | [`water/README.md`](water/README.md) |
 | Liquides et overlays | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
 | Patch raster local | [`map_patch_compositor/README.md`](map_patch_compositor/README.md) |
