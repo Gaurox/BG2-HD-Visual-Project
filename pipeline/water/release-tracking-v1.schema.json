@@ -67,7 +67,7 @@
       "type": "object",
       "required": ["state", "source_commit", "registry_evidence_id", "dll", "ini", "shaders", "release_blockers"],
       "properties": {
-        "state": {"const": "validated-installed-development-candidate"},
+        "state": {"enum": ["validated-installed-development-candidate", "installed-pending-ingame-qa"]},
         "source_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
         "registry_evidence_id": {"type": "string"},
         "dll": {"$ref": "#/$defs/file"},

@@ -1,0 +1,25 @@
+{
+  "schema": "bg2-water-native-composition-recovery-request-v1",
+  "output": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9",
+  "registry": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/registry-v3.json",
+  "registry_sha256": "53B93F5F64ACC1EDFD9EBE1A863A4E3DCF53838CE3C3B665F4C5299A435A246A",
+  "restore_registry": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json",
+  "restore_registry_sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E",
+  "source": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/maps/AR0300N",
+  "renderer": "backups/renderer/20260912T151019906801Z-acc909cc/candidate/InfinityEngine-Enhancer.dll",
+  "renderer_sha256": "ED48BFDCBC60EE71B8C3540A7144A203D15C2FB6D5E18B054EBF60DB7DEFD0F1",
+  "asset_ids": ["maps:AR0300:night"],
+  "targets": [
+    {"wed": "AR0046N", "action": "preserve; included only to satisfy existing reviewed installer scope"},
+    {"wed": "AR0300N", "action": "restore native primary alpha128 and matching registry; preserve original night RGB and secondary draw alpha128"}
+  ],
+  "qa_decision": {
+    "rejected": "pipeline/water/manifests/ar0300n-local-art-alpha208-installed-20260912-v8.json",
+    "reason": "user reports large tile discontinuities and missing expected shadows/reflections",
+    "source_finding": "original AR0300N contains night reflections but lacks the daytime wall cast shadow; installed RGB retains the original night art",
+    "user_direction": "Respecter la nuit originale"
+  },
+  "tests": "not-run-user-choice",
+  "qa": "pending-ingame",
+  "release": "not-requested"
+}

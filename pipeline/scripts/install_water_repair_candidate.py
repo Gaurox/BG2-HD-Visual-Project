@@ -48,7 +48,7 @@ def main():
     old_registry = read(ROOT/request["registry"])
     new_registry = read(candidate/"registry-v3.json")
     targets = {t["wed"] for t in request["targets"]}
-    require(targets in ({"AR0204", "AR1600"}, {"AR0900N"}, {"AR0046N", "AR0300N"}),
+    require(targets in ({"AR0204", "AR1600"}, {"AR0900N"}, {"AR0046N", "AR0300N"}, {"AR0300N"}),
             "installer limited to reviewed repair scopes")
     old_entries = {e["id"]: e for e in old_registry["entries"]}
     require({e["id"] for e in new_registry["entries"]} == set(old_entries), "registry identity set changed")

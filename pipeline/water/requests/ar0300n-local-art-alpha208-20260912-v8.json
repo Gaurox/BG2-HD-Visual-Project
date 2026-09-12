@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-water-local-art-alpha-request-v1",
+  "output": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8",
+  "registry": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json",
+  "registry_sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E",
+  "source": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/maps/AR0300N",
+  "source_wed": "AR0300N",
+  "alpha_before": 128,
+  "alpha_candidate": 208,
+  "selection": "892 primaries used only by WTLAKE cells without secondary; core 256px plus owned 4px atlas padding",
+  "evidence": {
+    "day": {"wed": "AR0300", "tiles": 892, "rgb_luma_std": 17.816, "alpha": 128},
+    "night": {"wed": "AR0300N", "tiles": 892, "rgb_luma_std": 10.449, "alpha_before": 128},
+    "reason": "user reports night local background and shadows remain invisible with route2 active at q0.70"
+  },
+  "targets": [
+    {"wed": "AR0046N", "action": "preserve registry identity and assets"},
+    {"wed": "AR0300N", "action": "retune full-water primary alpha only"}
+  ],
+  "tests": "not-run per user instruction",
+  "qa": "pending-ingame",
+  "release": "not-requested"
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": ["AR0300N"],
+  "overlay": "WTLAKE",
+  "replaces_runtime": "pipeline/water/manifests/ar0046n-water-tint-validated-20260912-v7.json",
+  "diagnosis": {
+    "session_log": {
+      "path": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+      "sha256_at_diagnosis": "EA5085AF780683F963DFEF6A8AE7361D04BD463717E233F105076034F54D89C3",
+      "bytes_at_diagnosis": 12783295,
+      "observed": [
+        "WATER_ROUTE2 unmatched owned overlay wed=AR0300 ... coverage=1266 slots=5",
+        "WATER_ROUTE2 unmatched owned overlay wed=AR0300N ... coverage=1266 slots=5",
+        "WATER_ROUTE2 reject ... reason=6"
+      ]
+    },
+    "cause": "installed DLL contained the universal PVRZ tint-slot fix but was compiled with the default registry instead of the current v6 water registry",
+    "route1_binary_audit": {
+      "AR0300": {"eligible_full_water_tiles": 892, "alpha": 128, "constant_tiles": 892},
+      "AR0300N": {"eligible_full_water_tiles": 892, "alpha": 128, "constant_tiles": 892},
+      "conclusion": "day and night route-1 opacity are mirrored; no asset rewrite required"
+    }
+  },
+  "live_map_assets": {
+    "AR0300.WED": {"sha256": "1F2172E90C5FF41E05FB254F0573F63C30DA90BA9807C4D90A6BD4F8DF86137F", "bytes": 97104},
+    "AR0300.TIS": {"sha256": "3FED55D4A5A4A8CE0C02704F8AD0B6CEB94E9F4135BC60CAF5716A60DDBD2219", "bytes": 63264},
+    "AR0300N.WED": {"sha256": "54E6C36EE4B90A8B0F43644B2E15C1C27C8EE7D12BF90BC11FE53128C4D64F6E", "bytes": 97202},
+    "AR0300N.TIS": {"sha256": "F7DAAF1989B2079490A1EC376486E747AD74D91C5AE7246133B07F6E45D3495D", "bytes": 63912}
+  },
+  "retained_route1_evidence": [
+    {"path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0300N-alpha128-report.json", "sha256": "E1435579A4D16253412114A8C0C4ECBC3D9DFD9D6884DB58C0C8238248E4AC59", "bytes": 16556},
+    {"path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/AR0300N-repair-report.json", "sha256": "830D789BF0272D3097D93C0FFED1262119EC6F335A752742A4A3252062FE7859", "bytes": 349188}
+  ],
+  "runtime": {
+    "source_commit": "45b455df3907100862a8b480fa0e3bdf62a41049",
+    "build_directory": "build/iee-water-ar0300n-night-mirror-20260912-v7-vs2019",
+    "configuration": "Release",
+    "BUILD_TESTING": false,
+    "registry": {
+      "path": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/registry-v3.json",
+      "sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E",
+      "bytes": 203878
+    },
+    "generated_header": {
+      "path": "build/iee-water-ar0300n-night-mirror-20260912-v7-vs2019/generated/iee/water_route2_registry.generated.h",
+      "sha256": "2DEC5EC617D8B83A078A455D270C888B0B2D5D4825D289934EC2D2D4D639F1F1",
+      "bytes": 508718
+    },
+    "dll": {
+      "path": "backups/renderer/20260912T151019906801Z-acc909cc/candidate/InfinityEngine-Enhancer.dll",
+      "sha256": "ED48BFDCBC60EE71B8C3540A7144A203D15C2FB6D5E18B054EBF60DB7DEFD0F1",
+      "bytes": 1832960
+    },
+    "ini": {
+      "path": "backups/renderer/20260912T151019906801Z-acc909cc/candidate/InfinityEngine-Enhancer.ini",
+      "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+      "bytes": 5572
+    }
+  },
+  "installation_receipt": {
+    "path": "backups/renderer/20260912T151019906801Z-acc909cc/renderer-install-receipt.json",
+    "sha256": "54D911154FB5704C5EF13429A43332B832B4DAD766D945648B36B1F695BF5797",
+    "bytes": 1881,
+    "verified": true
+  },
+  "qa": {
+    "state": "pending-ingame",
+    "commands": ["C:MoveToArea(\"AR0300\")", "C:SetCurrentTime(23)"],
+    "check": ["night background and local shadows remain visible", "WTLAKE depth and animation match day parameters", "shore and internal seams"],
+    "expected_log": "WATER_ROUTE2 identity wed=AR0300N q=0.7"
+  },
+  "tests": "not-run per user instruction",
+  "release": "not-requested"
+}

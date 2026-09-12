@@ -5,6 +5,7 @@
 
 #include "iee/game/build_manifest.h"
 #include "iee/game/runtime_types_x64.h"
+#include "iee/game/tis_runtime.h"
 #include "iee/water_route2_registry.h"
 
 namespace iee {
@@ -37,6 +38,9 @@ bool read_view_transform(const game::CGameArea* area, ViewTransform& out);
 
 // Re-resolves the active area after LoadArea and caches its parsed WED into ctx.
 void refresh_wed_cache(AppContext& ctx, void* infGame);
+
+std::optional<water_route2::ArtOpacity> secondary_water_art_opacity(
+    AppContext& ctx, const game::TileInfo& tile) noexcept;
 
 // Revalidate live WED/base/overlay/page identity at the actual GL draw. No
 // texture-name registry survives cache recycling or an area transition.

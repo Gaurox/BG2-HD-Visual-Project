@@ -23,6 +23,7 @@
 |---|---|---|---|
 | `lake-wtlake` | AR0900 jour, AR0204, AR1600 | voie1 réparée ; WTLAKE x4 périodique ;36phases/15Hz ; blend30FPS ; matériau eau `id=1` ; q0.70 | identités exactes seulement |
 | `lake-wtlake` | AR0900N nuit v5 | mêmes étapes que le jour, maîtres nuit x4 LAB ; alpha128 exhaustif, greffe RGB/alpha secondaire ; cache WED jour/nuit corrigé ;36phases/15Hz/blend30FPS/q0.70 | nuit explicitement validée ; cycle jour→nuit→jour et météo non attestés |
+| `lake-wtlake` | AR0300N nuit v10 | reflets nocturnes originaux ; opacité160 appariée centres/secondaires ; x4/36phases/15Hz/blend30FPS/q0.70 | choix artistique local ; assets + DLL exacts ; jour, cycle et météo non attestés |
 | `lake-wtlake` | AR0046, AR0300, AR1200, AR1700, AR1901, AR2300 | rendu installé q0.70 accepté pendant la session | commande de zone validée ; variante WED exacte non journalisée ; créer un reçu avant promotion formelle |
 | `sewage-wtsew` | AR0404 | WTSEW x4 `none`/3×3 ;6→36phases Apollo-8 ;15Hz ; blend30FPS ; matériau égouts `id=4` ; q0.70 | ne couvre aucune autre identité WTSEW |
 | `sewage-wtsew` | AR2100 | WED stock + WTSEW partagé ; route2 absente ; q0 natif | n'approuve pas une future route2 AR2100 |
@@ -54,6 +55,10 @@ alpha(U2) = alpha(U)
 - Identité absente, divergente, non approuvée ou ressource runtime ambiguë : `q=0`, aucun heuristique.
 - `q` effectif : plafond de l'entrée exacte par la configuration ; valeur validée actuelle0.70.
 - Réinitialiser le dosage autour de chaque draw ; aucune fuite entre programmes, textures ou zones.
+
+Exception artistique AR0300N v10 (§3.6) : l'opacité auteur160 remplace volontairement le défaut128,
+indépendamment de q. `q=0` seul ne restaure donc pas la composition native de cette variante ;
+le repli natif exige la paire complète assets/runtime v9.
 
 ### 2.2 Animation
 
@@ -149,6 +154,20 @@ Ces nombres sont des preuves par carte, jamais des constantes de production.
   identités par carte. Ne pas déduire la pluie par suffixe sans vérifier TIS/page/hash.
 - QA obligatoire : sec → pluie → sec. Une capture sèche ne valide pas la paire.
 
+### 3.6 Reflets nocturnes AR0300N : opacité appariée160
+
+- QA exacte : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json`.
+- Choix utilisateur après restauration native128 : renforcer les reflets nocturnes existants,
+  sans importer l'ombre solaire absente de la source nuit.
+- 892 primaires pleines : texture160/dessin255 ;374 secondaires exclusifs : alpha texture source,
+  dessin160 au lieu de128. Conserver RGB, masques des rives, marges4px, WED/TIS, overlay et q0.70.
+- `local_art_opacity` du registre v10 contient les IDs secondaires ; runtime borné par hashes,
+  WED/TIS/page/propriétaire/rôle exacts. Toute autre opacité native reste inchangée.
+- Pages et DLL correspondante sont indivisibles. Ne pas généraliser160 : autre map = qualification
+  et autorisation artistique séparées. V8 primaire208/secondaire128 reste rejeté (tuilage).
+- Reproduction : section « Renforcement artistique explicite » de `../WATER_REPAIR_RUNBOOK.md` ;
+  run neuf obligatoire. Préserver la sélection v10 ; aucune réécriture de ses preuves.
+
 ## 4. Matériaux validés
 
 | Mode | Famille | Paramètres spécifiques | q validé |
@@ -199,6 +218,7 @@ C:MoveToArea("ARxxxx")
 | Échec | Cause | Règle |
 |---|---|---|
 | art local disparu / centre immobile | alpha0/255 ou passe secondaire supprimée | restaurer alpha natif avant route2 |
+| marches de luminosité après renforcement des reflets | opacité primaire augmentée seule (AR0300N v8 :208 contre secondaire128) | apparier les contributions ; v10 :160/160, validé pour AR0300N seulement |
 | traits noirs/bleus | RGB primaire contaminé ou padding incohérent | greffe bornée depuis secondaire même coordonnée |
 | tuiles encore saccadées | seul mouvement procédural fluide |36phases15Hz + blend30FPS |
 | mosaïque au début de pluie | seule ressource sèche traitée | produire et router la ressource alternative |
@@ -215,6 +235,7 @@ C:MoveToArea("ARxxxx")
 - Suivi vers release : `release-tracking-v1.json` ; procédure : `WATER_RELEASE_TRACKING.md`.
 - Lac : `manifests/ar0204-ar1600-validated-installed-20260912-v1.json`.
 - Lac nuit : `manifests/ar0900-night-validated-20260912-v5.json` ; reprise `AR0900_NIGHT_REPAIR_20260912.md`.
+- Docks nuit : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json` ; exception artistique §3.6.
 - Égouts : `manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json`.
 - Marais sec/pluie : `manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json`.
 - Installation marais v4 : `manifests/wtswam-rain-installed-20260912-v4.json`.

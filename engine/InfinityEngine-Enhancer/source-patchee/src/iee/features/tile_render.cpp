@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "iee/app_context.h"
+#include "iee/area_state.h"
 #include "iee/bridge_transition.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
@@ -291,6 +292,23 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
 
   if (ctx.draw.DrawColorTone) ctx.draw.DrawColorTone(tone);
 
+  std::optional<unsigned long> artSavedColor;
+  if (texId != 0 && ctx.draw.DrawColor) {
+    if (const auto opacity = area::secondary_water_art_opacity(ctx, tileInfo)) {
+      // DrawColor and native DrawAlpha share the ARGB state. No draw occurs
+      // between reading the previous color and restoring its RGB + paired alpha.
+      artSavedColor = ctx.draw.DrawColor(game::BLACK_COLOR);
+      const auto color = water_route2::art_draw_color(*artSavedColor, *opacity);
+      ctx.draw.DrawColor(color);
+      static thread_local unsigned artLogs = 0;
+      if (ctx.cfg.enableTilePageDiagnostics && artLogs < 8) {
+        ++artLogs;
+        LOG_INFO("WATER_ART_OPACITY secondary tile={} nativeAlpha={} drawAlpha={}",
+                 tileInfo.index, *artSavedColor >> 24, color >> 24);
+      }
+    }
+  }
+
   if (ctx.draw.DrawBegin) ctx.draw.DrawBegin(static_cast<int>(DrawMode::Triangles));
 
   // Keep the 64×64 screen quad (lighting/scissor correctness)
@@ -318,6 +336,7 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
   }
 
   if (ctx.draw.DrawEnd) ctx.draw.DrawEnd();
+  if (artSavedColor) ctx.draw.DrawColor(*artSavedColor);
   if (texId == 0 && ctx.draw.DrawColor) ctx.draw.DrawColor(savedColor);
   if (ctx.draw.DrawPopState) ctx.draw.DrawPopState();
 

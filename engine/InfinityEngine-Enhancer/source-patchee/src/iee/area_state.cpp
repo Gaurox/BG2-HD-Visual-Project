@@ -1,5 +1,6 @@
 #include "area_state.h"
 
+#include <algorithm>
 #include <array>
 #include <atomic>
 #include <cstdint>
@@ -363,6 +364,54 @@ bool read_view_transform(const game::CGameArea* area, ViewTransform& out) {
         viewPortNotZoomed.bottom, out.scrollX, out.scrollY, out.viewWorldW, out.viewWorldH);
   }
   return true;
+}
+
+std::optional<water_route2::ArtOpacity> secondary_water_art_opacity(
+    AppContext& ctx, const game::TileInfo& tile) noexcept {
+  const auto wed = ctx.wed.load();
+  if (!ctx.manifest || !wed || tile.index < 0) return std::nullopt;
+  const auto* entry = water_route2::secondary_art_entry(wed->areaResrefView());
+  if (!entry || tile.tileCount != entry->baseTileCount ||
+      wed->baseWidth != entry->gridWidth || wed->baseHeight != entry->gridHeight ||
+      wed->overlays.size() != entry->slotCount ||
+      !std::binary_search(entry->secondaryArtTiles.begin(), entry->secondaryArtTiles.end(),
+                          tile.index)) return std::nullopt;
+  for (std::size_t i = 0; i < wed->overlays.size(); ++i) {
+    if (wed->overlays[i].tilesetResrefView() != water_route2::resref_view(entry->slots[i]))
+      return std::nullopt;
+  }
+  const auto* active = ctx.activeArea.load();
+  if (!active || resolve_active_area(ctx.infGame.load(), *ctx.manifest) != active)
+    return std::nullopt;
+  const auto* bytes = reinterpret_cast<const std::byte*>(active);
+  game::CResWED* liveWed = nullptr;
+  game::CRes wedResource{}, tisResource{};
+  game::ResrefBuffer wedName{}, tisName{}, pageName{};
+  game::CResTile tileResource{};
+  game::CResPVR pvr{};
+  game::CInfTileSet* baseSet = nullptr;
+  std::array<game::CResTileSet*, 2> owners{};
+  if (!core::safe_read(bytes + offsetof(game::CGameArea, m_pResWED), liveWed) ||
+      !liveWed || !core::safe_read(liveWed, wedResource) ||
+      !game::read_runtime_resref(wedResource.resref, wedName) ||
+      game::resref_view(wedName) != wed->areaResrefView() ||
+      !core::safe_read(bytes + offsetof(game::CGameArea, m_cInfinity) +
+                       offsetof(game::CInfinity, pTileSets), baseSet) || !baseSet ||
+      !core::safe_read(reinterpret_cast<const std::byte*>(baseSet) +
+                       offsetof(game::CInfTileSet, tis), owners) ||
+      (tile.tileset != owners[0] && tile.tileset != owners[1]) ||
+      !core::safe_read(tile.resource, tileResource) || tileResource.tis != tile.tileset ||
+      tileResource.tileIndex != tile.index || !core::safe_read(tile.tileset, tisResource) ||
+      !game::read_runtime_resref(tisResource.resref, tisName) ||
+      game::resref_view(tisName) != water_route2::resref_view(entry->baseTis) ||
+      !tileResource.pvr || !core::safe_read(tileResource.pvr, pvr) ||
+      !game::read_runtime_resref(pvr.baseclass_0.resref, pageName) ||
+      !game::matches_pvrz_page_identity(game::resref_view(pageName),
+                                       game::resref_view(tisName), tile.entry.page))
+    return std::nullopt;
+  if (ctx.activeArea.load() != active || ctx.wed.load() != wed ||
+      water_route2::secondary_art_entry(wed->areaResrefView()) != entry) return std::nullopt;
+  return water_route2::ArtOpacity{entry->secondaryArtSourceAlpha, entry->secondaryArtTargetAlpha};
 }
 
 std::optional<water_route2::Match> route2_water_overlay_match(

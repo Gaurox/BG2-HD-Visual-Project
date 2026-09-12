@@ -1,0 +1,25 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "wed": ["AR0300N"],
+  "family": "lake-wtlake",
+  "decision": "rejected",
+  "user_report": "regression totale sur AR0300. j'ai toujours pas les ombres et reflets du fond de map. mais en plus gros probleme de tuile",
+  "candidate": {
+    "path": "pipeline/water/manifests/ar0300n-local-art-alpha208-installed-20260912-v8.json",
+    "sha256": "E5CE18240E6A52AD3AF912A7FF80844C8F523B7E3411B36CA26B3198FEBD6C96"
+  },
+  "screenshot": {
+    "path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/evidence/v8-rejected-20260912173904_1.jpg",
+    "sha256": "FC6370B21D234213CA53AE14B359523EAA35E419BED80023A3C4BC8FA2760A17"
+  },
+  "diagnosis": [
+    "alpha208 on full-water primaries broke parity with secondary native DrawAlpha128 and created tile-sized brightness discontinuities",
+    "global day/night luminance standard deviation was insufficient evidence for changing native alpha",
+    "the original night artwork lacks the daytime wall cast shadow; its night wall reflection is present in both stock and x4 artwork"
+  ],
+  "subsequent_user_direction": "Respecter la nuit originale",
+  "action": "restore native alpha128 and corresponding complete registry through new v9 candidate and receipts",
+  "release": "not-requested"
+}

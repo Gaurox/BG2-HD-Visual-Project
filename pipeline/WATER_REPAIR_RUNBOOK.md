@@ -45,7 +45,7 @@ conserver les étapes déjà conformes uniquement après vérification.
 | Overlay et variantes | Résoudre toutes les ressources réellement possédées/dessinées, alternatives météo comprises ; réutiliser les phases validées si hashes identiques ; isoler les alias si des consommateurs sont incompatibles |
 | Animation complète | Vérifier toutes les phases et indices WED/TIS, taille256px,36phases/15Hz et cycle2,4s pour WTLAKE ; blend renderer30FPS séparé du mouvement procédural ; aucun stock6frames masqué par un shader fluide |
 | WED nuit | Relocation complète des offsets après croissance des tables ; murs/portes/polygones/sommets bornés, géométrie conservée ; resrefs≤8octets, pages nuit sans collision ; analyser le WED nuit indépendamment |
-| Registre complet | Partir du registre courant du suivi, préserver toutes les entrées non ciblées/familles/météos ; diff des ensembles d'identités et hashes live. Ne jamais remplacer un registre complet par un lot WTLAKE seul |
+| Registre complet | Partir du registre courant du suivi, préserver toutes les entrées non ciblées/familles/météos ; diff des ensembles d'identités et hashes live. Configurer chaque build avec `-DIEE_WATER_ROUTE2_REGISTRY=<registre-courant>` ; vérifier ce chemin dans `CMakeCache.txt` et le hash de l'en-tête généré. Ne jamais accepter le registre par défaut ni remplacer un registre complet par un lot WTLAKE seul |
 | Runtime effectif | Vérifier WED/base/overlay/page/GL exacts, masque, `overlay=true`, q attendu, `temporal=true` ; contrôler INI et plafonds registre/shader. Une entrée compilée et des hashes conformes ne prouvent pas son activation |
 | Transition sans téléportation | Vérifier jour→nuit→jour dans le même CGameArea : resref WED live, snapshot/masque et caches tuiles renouvelés. Un cache jour peut persister sans LoadArea et provoquer le rejet3/q0 ; ne pas masquer ce défaut par un rechargement obligatoire |
 | Installation / QA | Jeu/loader fermés, transaction sauvegardée, inventaire exact et reçus hashés. QA visuelle jour et nuit séparée : profondeur/reflets, fluidité, raccords, rives, zoom/pan, pause/reprise, chargement et transitions ; météo séparée si applicable |
@@ -302,6 +302,40 @@ pas un contexte d'inférence non périodique.**
    leurs marges. Il n'offre pas une garantie générale de RGB bit-exact. Pour une implémentation
    nouvelle, remplacer uniquement les blocs alpha nécessaires, puis traiter §8 les faux contours
    et leurs marges. Préserver la spline des **vraies** rives/trous/îlots.
+
+### Parité jour/nuit : art original et composition effective
+
+- Comparer la même coordonnée dans les sources KEY/BIF jour et nuit, puis les maîtres et les pages
+  installées. Une ombre solaire peut être absente de la source nuit ; le miroir de recette ne copie
+  pas l'éclairage du jour. Vérifier séparément les reflets propres à la nuit.
+- Ne pas déduire un alpha correctif d'une moyenne ou variance de luminance. Conserver l'alpha
+  ARE/runtime prouvé et la parité d'opacité effective primaire/secondaire (§2).
+- Échec AR0300N v8 : primaires208 contre DrawAlpha128 des secondaires → grandes discontinuités par
+  tuile. **Recette rejetée, ne pas reproduire.** V9 restaure128, sans changer RGB, rives ou overlay.
+- Source AR0300N : reflet nocturne du mur présent ; ombre portée du jour absente. L'utilisateur a
+  demandé de respecter cette nuit originale. Preuves et reçu :
+  `water/manifests/ar0300n-native-composition-installed-20260912-v9.json` ; repli historique conservé.
+
+### Renforcement artistique explicite : alpha apparié (validé AR0300N v10 seulement)
+
+- Hors réparation native : uniquement sur demande utilisateur, jamais propagé aux autres maps.
+- AR0300N v10 : primaires pleines texture160/dessin255 ; secondaires texture source/dessin160
+  au lieu de128. RGB nuit, masque des rives, WED/TIS, WTLAKE x4/36 phases et q0.70 conservés.
+- Producer : `pipeline/scripts/build_water_art_opacity_candidate.py --request
+  pipeline/water/requests/ar0300n-reflections-alpha160-20260912-v10.json [--run]`.
+  Plan par défaut ; nouvel output obligatoire. 892 primaires, 374 secondaires exclusifs.
+- Le registre candidat embarque `local_art_opacity` et les IDs secondaires vérifiés contre le WED
+  natif et installé ; absence du champ = comportement inchangé. Pas de réglage INI global.
+- Le runtime vérifie WED actif, propriétaire TIS, page et rôle secondaire après validation des hashes.
+  `DrawColor` ajuste seulement le byte alpha128→160 ; restaure la couleur après dessin ; toute autre
+  opacité native reste intacte. Aucun ARE ni état sauvegardé modifié.
+- Installer/restaurer **pages + DLL/registre correspondant ensemble** : une DLL antérieure avec
+  les primaires160 recréerait un écart avec les secondaires128. V9 est le repli natif complet.
+- QA requise : raccord centre/secondaire, reflet près du phare, animation, jour→nuit→jour,
+  autres maps inchangées. Log borné attendu : `WATER_ART_OPACITY ... nativeAlpha=128 drawAlpha=160`.
+  Ni build, ni installation ne valent validation visuelle. QA utilisateur AR0300N v10 enregistrée :
+  `water/manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json` ; cycle/météo et autres
+  maps non attestés. `q=0` seul ne rétablit pas128 ; restaurer la paire v9 pour le repli natif.
 
 Pas de redécoupe par tuile isolée pour l'upscale de la map. Recette des maîtres historiques AR0900 :
 SeedVR7B/LAB, x4, grille2×5, marge interne128px x1 puis retrait512px x4 ; réutiliser ces maîtres

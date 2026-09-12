@@ -977,6 +977,17 @@ void test_logger_rotation_is_bounded() {
 }
 
 void test_water_overlay_route2_policy() {
+  using iee::water_route2::art_draw_color;
+  expect_eq(art_draw_color(0x80345678UL, {128, 160}), 0xA0345678UL,
+            "Paired secondary opacity changes alpha only");
+  expect_eq(art_draw_color(0x40345678UL, {128, 160}), 0x40345678UL,
+            "Unexpected fade alpha remains native");
+  expect_eq(art_draw_color(0xFF345678UL, {128, 160}), 0xFF345678UL,
+            "Opaque land is not attenuated");
+  expect_eq(art_draw_color(0x80345678UL, {}), 0x80345678UL,
+            "Native registry defaults preserve draw color");
+  expect_eq(art_draw_color(0x80345678UL, {128, 256}), 0x80345678UL,
+            "Invalid opacity fails closed");
   using iee::core::route2_water_strength;
   using iee::water_route2::RegistryEntry;
   using iee::water_route2::Query;

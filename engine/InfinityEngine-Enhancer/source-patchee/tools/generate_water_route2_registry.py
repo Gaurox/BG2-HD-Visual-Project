@@ -110,6 +110,7 @@ def generate(path: Path) -> str:
     entries = resolved["entries"]
     files: list[dict[str, Any]] = []
     entry_lines = []
+    art_lines = []
     identities: set[tuple[str, int, str]] = set()
     for entry in entries:
         overlay = entry["overlay"]
@@ -152,6 +153,24 @@ def generate(path: Path) -> str:
                     rows * temporal_values["stride"] > int(pages[0]["height"])):
                 raise RuntimeError(f"invalid temporal overlay: {entry['id']}")
         padded_slots = slots + [""] * (5 - len(slots))
+        art = entry.get("local_art_opacity")
+        art_fields = ["{}", "0", "0"]
+        if art is not None:
+            ids = art.get("secondary_tile_ids", [])
+            source_alpha = art.get("source_draw_alpha")
+            target_alpha = art.get("target_draw_alpha")
+            if (art.get("mode") != "paired-primary-texture-secondary-draw" or
+                    not ids or ids != sorted(set(ids)) or len(ids) > 65535 or
+                    any(type(i) is not int or not 0 <= i < min(65535, entry["base_tis"]["tile_count"]) for i in ids) or
+                    type(source_alpha) is not int or not 1 <= source_alpha <= 255 or
+                    type(target_alpha) is not int or not 1 <= target_alpha <= 255 or
+                    art.get("primary_texture_alpha") != target_alpha or
+                    entry["allow_stock_wed_when_override_absent"]):
+                raise RuntimeError(f"invalid paired art opacity: {entry['id']}")
+            symbol = f"kSecondaryArtTiles{len(art_lines)}"
+            art_lines.append(f"inline constexpr std::array<std::uint16_t, {len(ids)}> {symbol}{{{{" +
+                             ", ".join(str(i) for i in ids) + "}};")
+            art_fields = [symbol, str(source_alpha), str(target_alpha)]
         entry_lines.append(
             "  RegistryEntry{" + ", ".join([
                 cpp_resref(entry["wed"]["resref"]),
@@ -178,6 +197,7 @@ def generate(path: Path) -> str:
                 "{" + ", ".join(cpp_resref(slot) for slot in padded_slots) + "}",
                 cpp_sha(entry["wed"]["sha256"]),
                 "true" if entry["allow_stock_wed_when_override_absent"] else "false",
+                *art_fields,
             ]) + "},"
         )
     file_lines = [
@@ -200,6 +220,7 @@ def generate(path: Path) -> str:
         f"inline constexpr std::array<RegistryFileEvidence, {len(files)}> kFiles{{{{",
         *file_lines,
         "}};",
+        *art_lines,
         f"inline constexpr std::array<RegistryEntry, {len(entries)}> kEntries{{{{",
         *entry_lines,
         "}};",

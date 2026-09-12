@@ -54,7 +54,23 @@ struct RegistryEntry {
   std::array<Resref, 5> slots{};
   Sha256 wedSha256{};
   bool allowStockWedWhenOverrideAbsent{};
+  // Optional authored-art experiment. Empty in native-composition recipes.
+  std::span<const std::uint16_t> secondaryArtTiles{};
+  std::uint32_t secondaryArtSourceAlpha{};
+  std::uint32_t secondaryArtTargetAlpha{};
 };
+
+struct ArtOpacity {
+  std::uint32_t source{};
+  std::uint32_t target{};
+};
+
+inline unsigned long art_draw_color(unsigned long color, ArtOpacity opacity) noexcept {
+  // Preserve RGB, fades, and every unexpected native alpha unchanged.
+  if (opacity.source == 0 || opacity.target == 0 || opacity.target > 255 ||
+      (color >> 24) != opacity.source) return color;
+  return (color & 0x00FFFFFFUL) | (static_cast<unsigned long>(opacity.target) << 24);
+}
 
 template <std::size_t N>
 consteval Resref resref_array(const char (&value)[N]) {
@@ -129,6 +145,8 @@ inline bool identity_matches(const Query& query, const RegistryEntry& entry) noe
 // Validates every manifested override file before publishing any entry.
 bool prepare(const std::filesystem::path& overrideRoot) noexcept;
 std::optional<Match> match(const Query& query) noexcept;
+// Pointer refers to immutable compiled data, only after all entry hashes pass.
+const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept;
 std::uint32_t version() noexcept;
 void release() noexcept;
 }  // namespace iee::water_route2

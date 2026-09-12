@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-water-route2-qa-selection-v1",
+  "status": "validated-installed",
+  "qa_date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "entries": [{"wed":"AR0300N","variant":"night","overlay":"WTLAKE","material_id":1,"strength":0.70,"state":"validated-installed"}],
+  "decision": {
+    "source": "explicit-user-message",
+    "text": "validé. commite",
+    "scope": "AR0300N installed v10 paired opacity160 and original night reflections",
+    "not_claimed": ["fresh day QA", "day-night-day lifecycle QA", "weather QA", "other map QA with this DLL", "automated tests", "release readiness"]
+  },
+  "recipe": {
+    "family": "lake-wtlake",
+    "kind": "user-approved-artistic-opacity-not-native-default",
+    "primary_texture_alpha": 160,
+    "primary_draw_alpha": 255,
+    "secondary_texture_alpha": "source unchanged",
+    "secondary_draw_alpha": 160,
+    "full_water_primaries": 892,
+    "exclusive_secondaries": 374,
+    "preserved": "night RGB; shoreline masks; WED/TIS; ARE/saves; WTLAKE x4/36 phases/15Hz/render30FPS; q0.70",
+    "restriction": "exact AR0300N assets and matching DLL; never propagate160 to other identities or install pages without matching secondary runtime"
+  },
+  "installation_selection": {
+    "path": "pipeline/water/manifests/ar0300n-reflections-alpha160-installed-20260912-v10.json",
+    "sha256": "3085177D64152E63EB48A238DC19E35BF60900083D5DAF84275E859F96BB5D8D"
+  },
+  "registry": {
+    "path": "maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/registry-v3.json",
+    "sha256": "A1001BE419C374DD7B2D22B932EB47ABE4569E1B2E6C6E777835CB10E328EB4C"
+  },
+  "map_build": "maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/maps/AR0300N",
+  "dll_sha256": "250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "installation_receipt": {
+    "path": "backups/water-map-repair/20260912T161538197756Z/installation.json",
+    "sha256": "231DAC7C1FE11075EE138DDD2F5CA8B9647A6C945278605EE2E7801480B17B78"
+  },
+  "renderer_receipt": {
+    "path": "backups/renderer/20260912T161541504124Z-3fc27425/renderer-install-receipt.json",
+    "sha256": "05BD7D3549470A14983872C90A0574CC4601C9DBC4797538E3ADEB9E45B9B15A"
+  },
+  "source_provenance": "installation_selection.runtime records build baseline plus immutable source snapshots; original manifests remain unchanged",
+  "rebuild": "not-required-qa-decision-only",
+  "installation": "unchanged-already-installed",
+  "tests": "not-run-user-choice; no targeted Python test applies to this QA/documentation-only update",
+  "release": "not-requested"
+}

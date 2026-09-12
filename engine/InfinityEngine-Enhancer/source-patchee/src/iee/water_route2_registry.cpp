@@ -92,6 +92,15 @@ bool validate_file(const std::filesystem::path& root,
 
 bool validate_entry(const std::filesystem::path& root,
                     const RegistryEntry& entry) noexcept {
+  if (!entry.secondaryArtTiles.empty()) {
+    if (entry.allowStockWedWhenOverrideAbsent || entry.secondaryArtSourceAlpha == 0 ||
+        entry.secondaryArtSourceAlpha > 255 || entry.secondaryArtTargetAlpha == 0 ||
+        entry.secondaryArtTargetAlpha > 255 ||
+        !std::is_sorted(entry.secondaryArtTiles.begin(), entry.secondaryArtTiles.end()) ||
+        std::adjacent_find(entry.secondaryArtTiles.begin(), entry.secondaryArtTiles.end()) !=
+            entry.secondaryArtTiles.end() || entry.secondaryArtTiles.back() >= entry.baseTileCount)
+      return false;
+  } else if (entry.secondaryArtSourceAlpha || entry.secondaryArtTargetAlpha) return false;
   if (entry.slotCount < 2 || entry.slotCount > entry.slots.size() ||
       entry.overlaySlot == 0 || entry.overlaySlot >= entry.slotCount ||
       entry.fileStart > generated::kFiles.size() ||
@@ -186,6 +195,18 @@ std::optional<Match> match(const Query& query) noexcept {
 }
 
 std::uint32_t version() noexcept { return generated::kRegistryVersion; }
+
+const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept {
+  const auto registry = g_registry.load(std::memory_order_acquire);
+  if (!registry) return nullptr;
+  const RegistryEntry* result = nullptr;
+  for (const auto* entry : registry->entries) {
+    if (entry->secondaryArtTiles.empty() || resref_view(entry->wed) != wed) continue;
+    if (result) return nullptr;
+    result = entry;
+  }
+  return result;
+}
 
 void release() noexcept { g_registry.store({}, std::memory_order_release); }
 }  // namespace iee::water_route2

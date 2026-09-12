@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": ["AR0300N"],
+  "overlay": "WTLAKE",
+  "replaces": "pipeline/water/manifests/ar0300n-local-art-alpha208-installed-20260912-v8.json",
+  "qa_rejection": "pipeline/water/manifests/ar0300n-alpha208-rejected-20260912-v8.json",
+  "user_direction": "Respecter la nuit originale",
+  "recipe": {
+    "source": "maps/water-batches/runs/wtlake-remaining-nights-20260912-v6/maps/AR0300N",
+    "action": "exact restoration of native composition; v8 opacity compensation rejected",
+    "full_water_primaries": 892,
+    "primary_alpha_before": 208,
+    "primary_alpha_after": 128,
+    "secondary_draw_alpha": 128,
+    "changed_alpha_blocks": 3885552,
+    "changed_pages": 20,
+    "padding_x4": 4,
+    "rgb_secondary_shores_wed_tis": "byte-identical",
+    "material_id": 1,
+    "strength": 0.70,
+    "timeline": "x4; 36 phases; native15Hz; renderer30FPS"
+  },
+  "diagnosis": {
+    "tile_discontinuity": "primary effective alpha208 differed from secondary effective alpha128",
+    "daytime_cast_shadow": "absent in original AR0300N art; intentionally not copied from day",
+    "night_reflection": "present in original and installed x4 RGB; source comparison is not ingame QA",
+    "source_crop_world": [4224, 2048, 5120, 2880],
+    "water_crop_rgb_mae_0_255": 2.848421038605097,
+    "current_visual_qa": "pending"
+  },
+  "artifacts": [
+    {"path": "pipeline/water/requests/ar0300n-native-composition-20260912-v9.json", "sha256": "D26AF4B43195A8A94E08BB729116F08AE4CB79C708854D06532926213650B482", "bytes": 1638},
+    {"path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/run.json", "sha256": "2FE0ED614570CD13D5EEEDBC7483C15021905FAB0296CA3330A2C66E5D36013F", "bytes": 1250},
+    {"path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/repair-report.json", "sha256": "BB0C645BDC7FE13F7DC45D1537F7F287AFD5FAF957BA6F7BE437AD33F2ABD28F", "bytes": 17850},
+    {"path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/registry-v3.json", "sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E", "bytes": 203878},
+    {"path": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/override-candidate/manifest.json", "sha256": "2575B31F8796B047D4CE4914EE9F04C7ED077D2D9248C31A99B292CE7A6B3D94", "bytes": 2954}
+  ],
+  "runtime": {
+    "source_commit": "45b455df3907100862a8b480fa0e3bdf62a41049",
+    "build": "existing v7 DLL reused; exact restored v6 registry; universal tint-slot and WED transition fixes retained",
+    "dll": {"path": "backups/renderer/20260912T154730624936Z-56598409/candidate/InfinityEngine-Enhancer.dll", "sha256": "ED48BFDCBC60EE71B8C3540A7144A203D15C2FB6D5E18B054EBF60DB7DEFD0F1", "bytes": 1832960},
+    "ini": {"path": "backups/renderer/20260912T154730624936Z-56598409/candidate/InfinityEngine-Enhancer.ini", "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C", "bytes": 5572},
+    "other_registry_entries": "18 unchanged"
+  },
+  "installation_receipts": [
+    {"path": "backups/water-map-repair/20260912T154727105615Z/installation.json", "sha256": "6F1BC33BFC01D58096C87451D21A02336736C20F49AF642E4A860220E14F37B9", "bytes": 769},
+    {"path": "backups/water-map-repair/20260912T154727105615Z/assets/override-backup-20260912-174729/install-backup.json", "sha256": "773B9AD669506D5BF97CDEC18344F5A19828AF11852548AE646F78135310B426", "bytes": 5610},
+    {"path": "backups/renderer/20260912T154730624936Z-56598409/renderer-install-receipt.json", "sha256": "96D6EB9E27453FD6F5FB6F6FB04B966CD491FB26E71FD26586595F9C8A6E599F", "bytes": 1884}
+  ],
+  "verification": "game and loader closed; 698 registry files checked before/after; only 20 AR0300N pages changed; renderer receipt verified; INI/shaders unchanged",
+  "qa": {
+    "state": "pending-ingame",
+    "commands": ["C:MoveToArea(\"AR0300\")", "C:SetCurrentTime(23)"],
+    "check": ["no tile-sized brightness jumps", "native night wall reflection and authored art", "animation and shores", "day-night-day transition without forced reload"]
+  },
+  "tests": "not-run-user-choice; no production code change",
+  "release": "not-requested"
+}

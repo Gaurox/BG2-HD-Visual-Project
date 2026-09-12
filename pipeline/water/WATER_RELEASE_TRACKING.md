@@ -50,7 +50,9 @@ python -B pipeline/scripts/audit_water_release_tracking.py --release-gate
    Toute map jour examinée inclut sa nuit ou une preuve d'absence ; checklist §0.1 du
    `../WATER_REPAIR_RUNBOOK.md`. Une validation nuit ne prouve pas le cycle jour→nuit→jour.
 7. À chaque nouveau build moteur, remplacer atomiquement `runtime.source_commit`, registre, DLL,
-   INI et shaders. Ajouter un bloqueur si diagnostics actifs ou tests absents.
+   INI et shaders. Nouveau runtime sans QA : `installed-pending-ingame-qa`. Ne pas hériter de la QA
+   de sa DLL parente. Commit non créé : préciser baseline et snapshot source hashé dans les preuves.
+   Ajouter un bloqueur si diagnostics actifs ou tests absents.
 8. Exécuter l'audit normal ; préparer les tests ciblés selon `AGENTS.md`, sans les lancer sans choix.
 
 Commande SHA-256 :
@@ -85,10 +87,16 @@ source release ; aucune preuve déduite d'un fichier présent.
 
 ## Transaction release future
 
-Mise à jour 2026-09-12 : AR0900N v5 validé ingame, preuve
-`manifests/ar0900-night-validated-20260912-v5.json`. AR0046N/AR0300N restent en attente.
-Le runtime installé et ses hashes sont ceux du suivi courant ; le cycle jour→nuit→jour reste
-non attesté. Les états initiaux ci-dessus restent historiques.
+Mise à jour 2026-09-12 : AR0900N v5 et AR0046N v7 validés ingame. AR0300N v8 alpha208 est rejeté :
+rupture de composition avec les secondaires128. V9 installé restaure l'alpha natif128 et conserve
+l'art original nuit, conformément au choix utilisateur ; l'ombre solaire attendue est absente de
+la source nuit, son reflet nocturne est présent. Preuve :
+`manifests/ar0300n-native-composition-installed-20260912-v9.json` (repli conservé).
+Courant : v10 validé installé sur AR0300N, opacité160 appariée aux892 centres et374 secondaires,
+RGB nuit et q0.70 inchangés. QA : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json`.
+Cycle jour→nuit→jour, météo et autres maps avec cette DLL non attestés ; aucun état propagé.
+Le registre compilé et les reçus d'installation gardent leur état historique ; la QA courante est
+portée par ce nouveau manifeste. Les états initiaux ci-dessus restent historiques.
 
 Après autorisation release distincte seulement :
 

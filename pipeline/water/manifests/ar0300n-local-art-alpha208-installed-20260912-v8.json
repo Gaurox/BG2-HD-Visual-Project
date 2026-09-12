@@ -1,0 +1,72 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": ["AR0300N"],
+  "overlay": "WTLAKE",
+  "replaces": "pipeline/water/manifests/ar0300n-night-runtime-restored-installed-20260912-v7.json",
+  "reason": "v7 restored route2 q0.70 but user still could not see the night local background and shadows",
+  "measurement": {
+    "day_full_water_rgb_luma_std": 17.816,
+    "night_full_water_rgb_luma_std": 10.449,
+    "conclusion": "alpha128 gives substantially weaker local-art contrast at night on AR0300"
+  },
+  "recipe": {
+    "scope": "AR0300N full-water primary tiles only",
+    "tiles": 892,
+    "alpha_before": 128,
+    "alpha_candidate": 208,
+    "alpha_blocks_changed": 3885552,
+    "core_x4": 256,
+    "padding_x4": 4,
+    "rgb": "byte-identical",
+    "secondary_alpha": "unchanged",
+    "shore_masks": "unchanged",
+    "wed": "unchanged",
+    "overlay": "WTLAKE unchanged",
+    "phases": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "material_id": 1,
+    "strength": 0.70
+  },
+  "artifacts": [
+    {"path": "pipeline/water/requests/ar0300n-local-art-alpha208-20260912-v8.json", "sha256": "FC6013AE71C76B7D765CB0E4A9A7CB3FC449146621228E5E3F79A316664174F0", "bytes": 1168},
+    {"path": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/run.json", "sha256": "8A7E90E8EC4EBBA7849394C4DB6DB9DE189DB017B437F100FA3A7DD2689E3FD1", "bytes": 582},
+    {"path": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/registry-v3.json", "sha256": "53B93F5F64ACC1EDFD9EBE1A863A4E3DCF53838CE3C3B665F4C5299A435A246A", "bytes": 203915},
+    {"path": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/override-candidate/manifest.json", "sha256": "CAE310430E68BC0671357182E22F1DF0D3AAF9043C2BEFC5920B20EF4CBBAF69", "bytes": 2988},
+    {"path": "maps/water-batches/runs/ar0300n-local-art-alpha208-20260912-v8/AR0300N-alpha208-report.json", "sha256": "1CFC57A54986B377DBF8D4BE8D08FAB87181CDBFDF04DA0F97E29A66C50C5F64", "bytes": 847}
+  ],
+  "runtime": {
+    "source_commit": "45b455df3907100862a8b480fa0e3bdf62a41049",
+    "build_directory": "build/iee-water-ar0300n-local-art-alpha208-20260912-v8-vs2019",
+    "configuration": "Release",
+    "BUILD_TESTING": false,
+    "generated_header_sha256": "29BC226A6412A4A2E346D8E86EF2D4953C29353D681EEE1E36D8519DB1A1F066",
+    "dll": {"path": "backups/renderer/20260912T153145783628Z-4cba6df0/candidate/InfinityEngine-Enhancer.dll", "sha256": "84870023AA9D03586813F35254EC8C7DF609ACB2A04273A737D4253F7C62F3A1", "bytes": 1832960},
+    "ini": {"path": "backups/renderer/20260912T153145783628Z-4cba6df0/candidate/InfinityEngine-Enhancer.ini", "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C", "bytes": 5572}
+  },
+  "installation_receipts": [
+    {"path": "backups/water-map-repair/20260912T153142230341Z/installation.json", "sha256": "51F1840BDA37EDF270CE672BB75DC1F2C8ACEDA19BFDBFBB6D90E77DF00197A8", "bytes": 769},
+    {"path": "backups/water-map-repair/20260912T153142230341Z/assets/override-backup-20260912-173145/install-backup.json", "sha256": "67AEB0ADA72107535663199EA86AEAB55D97FDCDED6D01A0F0B4C480C8C90635", "bytes": 5610},
+    {"path": "backups/renderer/20260912T153145783628Z-4cba6df0/renderer-install-receipt.json", "sha256": "3FD9FE5BA47DE1006F9F44DB0A6ED8C33F9FBC190B28399AFD4F27624C52B4C0", "bytes": 1884}
+  ],
+  "verification": {
+    "registry_entries": 19,
+    "registry_files_verified_before_install": 698,
+    "changed_map_pages": 20,
+    "untouched_registry_entries": 18,
+    "AR0046N": "registry identity and assets unchanged",
+    "game_loader": "closed during installation"
+  },
+  "qa": {
+    "state": "pending-ingame",
+    "commands": ["C:SetCurrentTime(23)", "C:MoveToArea(\"AR0300\")"],
+    "check": ["local seabed/background and authored shadows visible", "animated water still visible", "no grid at full-water/interface boundaries", "shore masks unchanged"],
+    "expected_log": "WATER_ROUTE2 identity wed=AR0300N q=0.7"
+  },
+  "tests": "not-run per user instruction",
+  "release": "not-requested"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "bg2-water-paired-art-opacity-request-v1",
+  "output": "maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10",
+  "registry": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/registry-v3.json",
+  "registry_sha256": "ACDAFE9193E5773D3B97FD24013CC81D54E2A51CBC0CFB097CFA8B320ECFB73E",
+  "source": "maps/water-batches/runs/ar0300n-native-composition-20260912-v9/maps/AR0300N",
+  "asset_ids": ["maps:AR0300:night"],
+  "targets": [{"wed": "AR0300N", "action": "paired primary texture alpha160 and secondary draw alpha160; original night RGB unchanged"}],
+  "source_alpha": 128,
+  "target_alpha": 160,
+  "user_direction": "increase visibility of original night reflections; same effective opacity on centres and secondaries; ok go",
+  "qa": "pending-ingame",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

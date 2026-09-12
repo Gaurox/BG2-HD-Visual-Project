@@ -9,6 +9,9 @@ alpha128/raccords appliqués comme au jour et cache moteur corrigé pour le chan
 
 Guide de reprise LLM : [recettes eau validées](VALIDATED_WATER_RECIPES.md). Il consolide les
 paramètres courants, les cas probants, les limites de généralisation et les échecs observés.
+AR0300N v10 : reflets nuit validés, opacité160 appariée centres/secondaires ; RGB nocturne conservé.
+Sélection : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json`.
+Exception artistique locale : conserver pages + DLL correspondante ; aucun défaut160 global.
 Le défaut de teinte PVRZ brune intermittente est corrigé universellement dans le runtime, pas dans
 les assets par carte : invariant et diagnostic dans `WATER_REPAIR_RUNBOOK.md` §0.2 ; QA AR0046N
 dans `manifests/ar0046n-water-tint-validated-20260912-v7.json`.

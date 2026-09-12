@@ -1,0 +1,61 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR0300:night"],
+  "status": "installed-pending-ingame-qa",
+  "family": "lake-wtlake",
+  "wed": ["AR0300N"],
+  "overlay": "WTLAKE",
+  "replaces": "pipeline/water/manifests/ar0300n-native-composition-installed-20260912-v9.json",
+  "user_direction": "increase original night reflection visibility with paired opacity160; ok go; no tests",
+  "recipe": {
+    "kind": "experimental-artistic-adjustment-not-native-repair",
+    "full_water_primaries": 892,
+    "primary_texture_alpha": [128, 160],
+    "exclusive_water_secondaries": 374,
+    "secondary_draw_alpha": [128, 160],
+    "secondary_scope": "compiled role IDs; all registry asset hashes; live WED/TIS owner/page identity; expected native alpha128 only",
+    "changed_alpha_blocks": 3885552,
+    "changed_pages": 20,
+    "padding_x4": 4,
+    "preserved": "all RGB, secondary texture alpha, shoreline masks, WED, TIS, ARE, saves, INI and shaders",
+    "material_id": 1,
+    "strength": 0.70,
+    "timeline": "WTLAKE x4; 36 phases; native15Hz; renderer30FPS",
+    "day_shadows": "not copied into original night artwork"
+  },
+  "artifacts": [
+    {"path":"pipeline/water/requests/ar0300n-reflections-alpha160-20260912-v10.json","sha256":"33F20A7841296B83A9D205E1CFF40F4DFD92752922C08F491DA017FB561E5EBE","bytes":859},
+    {"path":"maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/run.json","sha256":"B97A667388E433B68F720835EE092DC778A142B5B7F2F887B8499567F2F9F29D","bytes":1253},
+    {"path":"maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/repair-report.json","sha256":"6605F472A46FBFA477F3126922A9B81831E28A190FA62D4E30548DC763C8BADC","bytes":18828},
+    {"path":"maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/registry-v3.json","sha256":"A1001BE419C374DD7B2D22B932EB47ABE4569E1B2E6C6E777835CB10E328EB4C","bytes":210663},
+    {"path":"maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/override-candidate/manifest.json","sha256":"CF89E23A19BC2A56379DEFF4D267395ADCED91366794A7E7F4DF280EDE6EB2BB","bytes":2988},
+    {"path":"maps/water-batches/runs/ar0300n-reflections-alpha160-20260912-v10/runtime-build/water_route2_registry.generated.h","sha256":"443EBB78FA1474E8F5BC7116B850385C2DDE2DB3E7F1A59347BC7D9D8827C937","bytes":511244}
+  ],
+  "runtime": {
+    "source_commit": "45b455df3907100862a8b480fa0e3bdf62a41049",
+    "source_commit_role": "baseline only; exact uncommitted source changes frozen with hashes in repair-report.source_snapshot",
+    "build": "build/iee-water-ar0300n-reflections-alpha160-20260912-v10-vs2019",
+    "build_options": "Visual Studio 16 2019 x64; Release; IEE_BUILD_WINDOWS_DLL=ON; BUILD_TESTING=OFF; IEE_WATER_ROUTE2_REGISTRY=v10 registry; DLL target only",
+    "build_result": "exit0; dependency fmt C4459 warnings; no test target built or run",
+    "dll": {"path":"backups/renderer/20260912T161541504124Z-3fc27425/candidate/InfinityEngine-Enhancer.dll","sha256":"250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59","bytes":1838080},
+    "ini": {"path":"backups/renderer/20260912T161541504124Z-3fc27425/candidate/InfinityEngine-Enhancer.ini","sha256":"F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C","bytes":5572},
+    "other_registry_entries": "18 unchanged; universal tint-slot and WED transition fixes retained",
+    "qa": "pending-ingame"
+  },
+  "installation_receipts": [
+    {"path":"backups/water-map-repair/20260912T161538197756Z/installation.json","sha256":"231DAC7C1FE11075EE138DDD2F5CA8B9647A6C945278605EE2E7801480B17B78","bytes":772},
+    {"path":"backups/water-map-repair/20260912T161538197756Z/assets/override-backup-20260912-181540/install-backup.json","sha256":"3432A032F251D3C3DC5B665F660AB07DAEE5362D4B4AEC04AD46C0BD90DB77A1","bytes":5613},
+    {"path":"backups/renderer/20260912T161541504124Z-3fc27425/renderer-install-receipt.json","sha256":"05BD7D3549470A14983872C90A0574CC4601C9DBC4797538E3ADEB9E45B9B15A","bytes":1884}
+  ],
+  "verification": "game and loader closed; 698 registry files verified before/after; 20 AR0300N pages changed; DLL/INI receipt verified; source snapshot matches built working sources",
+  "rollback": "restore both asset and renderer receipts to v9; never combine primary160 pages with old secondary128 runtime",
+  "qa": {
+    "state": "pending-ingame",
+    "commands": ["C:MoveToArea(\"AR0300\")", "C:SetCurrentTime(23)"],
+    "check": ["original night reflection visibility", "centre/secondary continuity near lighthouse", "animation and shores", "day-night-day transition; other maps unchanged"],
+    "expected_log": "WATER_ART_OPACITY secondary ... nativeAlpha=128 drawAlpha=160"
+  },
+  "tests": "not-run-user-choice; targeted Python/C++ cases added and plan prepared",
+  "release": "not-requested"
+}
