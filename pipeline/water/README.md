@@ -2,6 +2,13 @@
 
 Autorités de phase 5. Les inventaires et plans générés ne valent ni QA, ni installation, ni release.
 
+Guide de reprise LLM : [recettes eau validées](VALIDATED_WATER_RECIPES.md). Il consolide les
+paramètres courants, les cas probants, les limites de généralisation et les échecs observés.
+
+Suivi vers release : [contrat opérationnel](WATER_RELEASE_TRACKING.md) et
+`release-tracking-v1.json`. Audit strictement en lecture seule :
+`python -B pipeline/scripts/audit_water_release_tracking.py`.
+
 Reprise AR0204/AR1600 : [correctif installé et QA](AR0204_AR1600_REPAIR_20260912.md).
 Sélection installée courante :
 `manifests/ar0204-ar1600-validated-installed-20260912-v1.json` ; raccords RGB/WED corrigés,
@@ -22,6 +29,8 @@ Toute autre identité WTSWAM reste absente du registre et tombe à `q=0`.
 | Fichier | Rôle |
 |---|---|
 | `family-policy-v1.json` | Familles, méthode SeedVR et gates voie1/route2 |
+| `release-tracking-v1.json` | Sélection eau courante, preuves hashées, QA et bloqueurs release |
+| `release-tracking-v1.schema.json` | Schéma du suivi eau ; aucune autorisation release |
 | `route2-registry-v1.json` | Entrées route2 approuvées ; absence/divergence = `q=0` |
 | `../../engine/InfinityEngine-Enhancer/source-patchee/assets/water-route2/registry-v2.json` | Extension append-only consommée par le moteur |
 | `manifests/wtlake-timeline30-q070-20260912-v1.json` | Lot WTLAKE 14 identités, 36 phases/15 Hz, blend 30 FPS, route2 `q=0.70` |

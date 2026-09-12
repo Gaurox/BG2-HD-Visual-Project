@@ -1,0 +1,27 @@
+{
+  "schema": "bg2-water-lake-session-qa-v1",
+  "date": "2026-09-12",
+  "status": "mixed",
+  "installed_selection": "pipeline/water/manifests/wtlake-timeline30-q070-20260912-v1.json",
+  "route2_strength": 0.70,
+  "validated_area_commands": [
+    {"area": "AR0046", "decision": "validated-ingame", "wed_variant": "not-recorded"},
+    {"area": "AR0300", "decision": "validated-ingame", "wed_variant": "not-recorded"},
+    {"area": "AR1200", "decision": "validated-ingame", "wed_variant": "day-or-unique"},
+    {"area": "AR1700", "decision": "validated-ingame", "wed_variant": "day-or-unique"},
+    {"area": "AR1901", "decision": "validated-ingame", "wed_variant": "day-or-unique"},
+    {
+      "area": "AR2300",
+      "decision": "validated-water-render-ingame",
+      "wed_variant": "day-or-unique",
+      "scope_limit": "independent map crash/incoherence issue remains open"
+    }
+  ],
+  "deferred": [
+    {"area": "AR0512", "reason": "interior-water-profile-requires-separate-review"},
+    {"area": "AR1604", "reason": "interior-water-profile-requires-separate-review"}
+  ],
+  "variant_limit": "AR0046/AR0300 command acceptance does not identify day versus night WED; no variant-specific release approval may be inferred",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

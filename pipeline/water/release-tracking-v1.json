@@ -1,0 +1,128 @@
+{
+  "$schema": "release-tracking-v1.schema.json",
+  "schema": "bg2-water-release-tracking-v1",
+  "version": 1,
+  "updated": "2026-09-12",
+  "release_boundary": {
+    "authorization": "not-requested",
+    "release_manifests_modified": false,
+    "rule": "tracking only; never edit release manifests, payload, staging, content.json or archives without distinct release authorization"
+  },
+  "defaults": {
+    "new_seedvr_color_correction_method": "none",
+    "timeline_frames": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "route2_strength": 0.70,
+    "fallback": "q0-native",
+    "map_authority": "areas.csv",
+    "qa_authority": "immutable per-scope manifest"
+  },
+  "evidence": [
+    {"id": "wtlake-selection-v1", "kind": "installation-selection", "path": "pipeline/water/manifests/wtlake-timeline30-q070-20260912-v1.json", "sha256": "AB4BBAB1E5DCC511E61D2144101F2FE1C4A91EEBD3E02C3D86AFF90308EAADBE"},
+    {"id": "wtlake-candidate-v2", "kind": "candidate-manifest", "path": "maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2/candidate/manifest.json", "sha256": "42B273E6B2713F91A7A5367E8C60BF44D8AC66F2642C25CE33E1B1CF911944BD"},
+    {"id": "wtlake-registry-v2", "kind": "route2-registry", "path": "maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2/registry-v3-wtlake-q070.json", "sha256": "28C1149F4C1ED6EA059A332A3DFE41F3E530A98772672D90F808F9991A26F711"},
+    {"id": "wtlake-session-qa-v1", "kind": "qa-decision", "path": "pipeline/water/manifests/wtlake-session-qa-20260912-v1.json", "sha256": "EBECBF58E3CEA38BD34883950685CF181AF21ABB80DECF49CFF55A55C9110D01"},
+    {"id": "ar0204-ar1600-candidate-v1", "kind": "candidate-manifest", "path": "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/override-candidate/manifest.json", "sha256": "281CC5DD475926A7EB0255B72D78E0933BE4648691F55F2598F7E8BA369E0E5F"},
+    {"id": "ar0204-ar1600-install-v1", "kind": "installation-selection", "path": "pipeline/water/manifests/ar0204-ar1600-installed-20260912-v1.json", "sha256": "378E3F666861A08483535F3DBD9B5EE491CE608A5755FFCF865AE5B6F84B8682"},
+    {"id": "ar0204-ar1600-qa-v1", "kind": "qa-decision", "path": "pipeline/water/manifests/ar0204-ar1600-validated-installed-20260912-v1.json", "sha256": "3544389AF0676FEE168456B45CEACC44063729AEFF830462E8D07438FDC5EEBF"},
+    {"id": "ar0900-route1-run-v1", "kind": "run-manifest", "path": "maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/run.json", "sha256": "AD6AB7CC4BDF0AF2B2B02A3C0CB9DA1501E6424B6559097D6527775624477FD2"},
+    {"id": "ar0900-route1-report-v1", "kind": "repair-report", "path": "maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/repair-report.json", "sha256": "80237ACD245D83B18BBF3EFE8CC131E36F8D1755AFF31AA19E19ECCF652E7DBE"},
+    {"id": "wtsew-candidate-v1", "kind": "candidate-manifest", "path": "maps/technical-overlays/WTSEW/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar0404-20260912/08_candidate/manifest.json", "sha256": "EB65652AE4E294D8A33133622E7211C7B22F00E4485FBAB396D277CD337790E4"},
+    {"id": "wtsew-install-v1", "kind": "installation-selection", "path": "pipeline/water/manifests/wtsew-ar0404-pilot-installed-20260912-v1.json", "sha256": "97AB57CFCA636D6256CA280479288FF0CA5F79CF9143D5178E23690A0C4E8FCB"},
+    {"id": "wtsew-qa-v1", "kind": "qa-decision", "path": "pipeline/water/manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json", "sha256": "5D2A064DB1591CFFFB70982E01F74999C40E4C685CDAC4B131810537B1250E99"},
+    {"id": "wtswam-base-candidate-v2", "kind": "candidate-manifest", "path": "maps/water-batches/runs/wtswam-ar1607-ar1800-repair-20260912-v2/override-candidate/manifest.json", "sha256": "764537EDBCDFC7BD07169A364EF67E033F5E3BC98AB238DEC38366CEC9F6748D"},
+    {"id": "wtswam-base-install-v2", "kind": "installation-selection", "path": "pipeline/water/manifests/wtswam-ar1607-ar1800-repair-installed-20260912-v2.json", "sha256": "A7383DB3A29324578C271EB6583E332AA052B33CE05B9ECD217832DB17E37EDB"},
+    {"id": "wtswam-rain-candidate-v4", "kind": "candidate-manifest", "path": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/08_candidate/manifest.json", "sha256": "CFF4E949749C617CF7C6B2470F38216DA359A7E73EC7C83AB72E75693D9D9811"},
+    {"id": "wtswam-install-v4", "kind": "installation-selection", "path": "pipeline/water/manifests/wtswam-rain-installed-20260912-v4.json", "sha256": "3AB768154A395808657D9425EE8A7C4A8F09607906EB0AD37EC8A8232787F49F"},
+    {"id": "wtswam-qa-v1", "kind": "qa-decision", "path": "pipeline/water/manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json", "sha256": "2D2A1DCEB1F0B47E306E3583FB542D2210223ADE8926E4D01EDB508F5EC6AD8C"},
+    {"id": "water-registry-current-v4", "kind": "route2-registry", "path": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/registry-v3.json", "sha256": "AA96B2D854E41EFCD9411E61AA27277D241AFF4F5DE7E660B481371A99A7DE2F"}
+  ],
+  "artifact_sets": [
+    {
+      "id": "wtlake-timeline-q070-v2",
+      "family": "lake-wtlake",
+      "payload_roots": ["maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2/candidate"],
+      "evidence_ids": ["wtlake-selection-v1", "wtlake-candidate-v2", "wtlake-registry-v2"],
+      "state": "superseded-partially",
+      "notes": "AR0204 and AR1600 map assets/WED superseded by their repair set; shared WTLAKE assets remain dependencies"
+    },
+    {
+      "id": "wtlake-map-repair-ar0204-ar1600-v1",
+      "family": "lake-wtlake",
+      "payload_roots": ["maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/override-candidate"],
+      "evidence_ids": ["ar0204-ar1600-candidate-v1", "ar0204-ar1600-install-v1", "ar0204-ar1600-qa-v1"],
+      "state": "selected"
+    },
+    {
+      "id": "wtlake-map-repair-ar0900-v1",
+      "family": "lake-wtlake",
+      "payload_roots": ["maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/05_build/x4-alpha128-water-seams-repaired"],
+      "evidence_ids": ["ar0900-route1-run-v1", "ar0900-route1-report-v1", "ar0204-ar1600-qa-v1"],
+      "state": "selected"
+    },
+    {
+      "id": "wtsew-ar0404-v1",
+      "family": "sewage-wtsew",
+      "payload_roots": ["maps/technical-overlays/WTSEW/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar0404-20260912/08_candidate"],
+      "evidence_ids": ["wtsew-candidate-v1", "wtsew-install-v1", "wtsew-qa-v1"],
+      "state": "selected"
+    },
+    {
+      "id": "wtswam-base-repair-v2",
+      "family": "swamp-wtswam",
+      "payload_roots": ["maps/water-batches/runs/wtswam-ar1607-ar1800-repair-20260912-v2/override-candidate"],
+      "evidence_ids": ["wtswam-base-candidate-v2", "wtswam-base-install-v2", "wtswam-install-v4", "wtswam-qa-v1"],
+      "state": "selected"
+    },
+    {
+      "id": "wtswam-rain-isolated-v4",
+      "family": "swamp-wtswam",
+      "payload_roots": ["maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/08_candidate"],
+      "evidence_ids": ["wtswam-rain-candidate-v4", "wtswam-install-v4", "wtswam-qa-v1"],
+      "state": "selected"
+    }
+  ],
+  "runtime": {
+    "state": "validated-installed-development-candidate",
+    "source_commit": "d37c789933d218e56b96149a72fc6daae5d49e31",
+    "registry_evidence_id": "water-registry-current-v4",
+    "dll": {"path": "build/wtswam-rain-20260912-v4/renderer/InfinityEngine-Enhancer.dll", "bytes": 1830400, "sha256": "3538DA5715C814577196C5D900421B1DE8B897333A0C440FFFDA0B130E31CFAF"},
+    "ini": {"path": "build/wtswam-rain-20260912-v4/renderer/InfinityEngine-Enhancer.ini", "bytes": 5572, "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"},
+    "shaders": [
+      {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSEAM.glsl", "sha256": "763CCBD16733CFC17AEEBA72A8F31D3204E96C918753CA6FB5A49519410E4D6C"},
+      {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpTone.glsl", "sha256": "01900D8514E95D0107562204DDB896E2F8F65F1051229B13C6AFBF52E678162F"}
+    ],
+    "textures": [
+      {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/game-textures/iee_water_normal.rgba", "sha256": "BBEBC635D68084D757176F5522161310AE7C1DDCA330438EB1743D96D8EFE551"},
+      {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/game-textures/iee_water_dudv.rgba", "sha256": "3F9FBF6E982CBECEBE70386F2DF8152A85D61651FD2965D9C17CC70807BBD83E"},
+      {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/game-textures/iee_water_foam.rgba", "sha256": "F9FB4383F83BEDD94A187EC2118FFE91879AEE911C0E96E05CC3C882B309DFF6"}
+    ],
+    "release_blockers": [
+      "current INI has EnableTilePageDiagnostics=true",
+      "final renderer bundle must be rebuilt from the final water registry after the last map batch",
+      "release tests and clean-game lifecycle gates not authorized or executed",
+      "release renderer-bundle.json/runtime-compatibility.json still point to an older candidate"
+    ]
+  },
+  "targets": [
+    {"id": "water:AR0046:observed", "area_id": "AR0046", "wed": "AR0046", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "session-accepted-variant-unresolved", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["resolve whether observed WED was AR0046 or AR0046N; create variant-specific QA receipt"]},
+    {"id": "water:AR0046N:night", "area_id": "AR0046", "wed": "AR0046N", "variant": "night", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_state": "pending-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["night water QA not recorded"]},
+    {"id": "water:AR0204:day", "area_id": "AR0204", "wed": "AR0204", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "underground", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2", "wtlake-map-repair-ar0204-ar1600-v1"], "qa_evidence_id": "ar0204-ar1600-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR0300:observed", "area_id": "AR0300", "wed": "AR0300", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "session-accepted-variant-unresolved", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["resolve whether observed WED was AR0300 or AR0300N; create variant-specific QA receipt", "WED relocation repair from current producer must be applied before release candidate"]},
+    {"id": "water:AR0300N:night", "area_id": "AR0300", "wed": "AR0300N", "variant": "night", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_state": "pending-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["night water QA not recorded", "WED relocation repair from current producer must be applied before release candidate"]},
+    {"id": "water:AR0512:unique", "area_id": "AR0512", "wed": "AR0512", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "interior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "blocked-family-qa", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["interior water profile rejected/deferred; dedicated material/QA required"]},
+    {"id": "water:AR0900:day", "area_id": "AR0900", "wed": "AR0900", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2", "wtlake-map-repair-ar0900-v1"], "qa_evidence_id": "ar0204-ar1600-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR0900N:night", "area_id": "AR0900", "wed": "AR0900N", "variant": "night", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_state": "pending-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["night water treatment not validated", "WED relocation repair from current producer must be applied before release candidate"]},
+    {"id": "water:AR1200:unique", "area_id": "AR1200", "wed": "AR1200", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR1600:unique", "area_id": "AR1600", "wed": "AR1600", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2", "wtlake-map-repair-ar0204-ar1600-v1"], "qa_evidence_id": "ar0204-ar1600-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR1604:unique", "area_id": "AR1604", "wed": "AR1604", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "interior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "blocked-family-qa", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["interior water profile rejected/deferred; dedicated material/QA required"]},
+    {"id": "water:AR1700:unique", "area_id": "AR1700", "wed": "AR1700", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR1901:unique", "area_id": "AR1901", "wed": "AR1901", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR2300:unique", "area_id": "AR2300", "wed": "AR2300", "variant": "day-or-unique", "family": "lake-wtlake", "environment": "exterior", "overlay": "WTLAKE", "material_id": 1, "route2_strength": 0.70, "artifact_set_ids": ["wtlake-timeline-q070-v2"], "qa_evidence_id": "wtlake-session-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": ["independent map crash/incoherence issue remains open", "WED relocation repair from current producer must be applied before release candidate"]},
+    {"id": "water:AR0404:unique", "area_id": "AR0404", "wed": "AR0404", "variant": "day-or-unique", "family": "sewage-wtsew", "environment": "underground", "overlay": "WTSEW", "material_id": 4, "route2_strength": 0.70, "artifact_set_ids": ["wtsew-ar0404-v1"], "qa_evidence_id": "wtsew-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR2100:fallback", "area_id": "AR2100", "wed": "AR2100", "variant": "day-or-unique", "family": "sewage-wtsew", "environment": "underground", "overlay": "WTSEW", "material_id": 4, "route2_strength": 0.0, "artifact_set_ids": ["wtsew-ar0404-v1"], "qa_evidence_id": "wtsew-qa-v1", "qa_state": "validated-current-fallback", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR1607:unique", "area_id": "AR1607", "wed": "AR1607", "variant": "day-or-unique", "family": "swamp-wtswam", "environment": "exterior", "overlay": "WSWPIL/WSWPILR", "material_id": 5, "route2_strength": 0.70, "artifact_set_ids": ["wtswam-base-repair-v2", "wtswam-rain-isolated-v4"], "qa_evidence_id": "wtswam-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []},
+    {"id": "water:AR1800:unique", "area_id": "AR1800", "wed": "AR1800", "variant": "day-or-unique", "family": "swamp-wtswam", "environment": "exterior", "overlay": "WSWPIL/WSWPILR", "material_id": 5, "route2_strength": 0.70, "artifact_set_ids": ["wtswam-base-repair-v2", "wtswam-rain-isolated-v4"], "qa_evidence_id": "wtswam-qa-v1", "qa_state": "validated-ingame", "installation_state": "installed", "release_state": "not-evaluated", "blockers": []}
+  ]
+}

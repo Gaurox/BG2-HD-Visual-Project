@@ -80,6 +80,9 @@ présence d'un candidat n'y suffit pas.
   `installation=installed`.
 - `runs`, `build`, `runs_nuit` et `build_nuit` alimentent `selections` et la provenance, sans
   rechercher un candidat de remplacement dans les dossiers.
+- Les correctifs eau multi-assets utilisent en complément `pipeline/water/release-tracking-v1.json` :
+  il lie map/WED, overlay, registre, renderer, installation et QA par hashes. Il ne remplace pas
+  `areas.csv` et ne fixe jamais l'axe release.
 - L'axe release vient de la sélection release et du `content.json` généré, jamais du seul statut
   d'`areas.csv`. Aucun statut map historique n'implique donc un état release.
 

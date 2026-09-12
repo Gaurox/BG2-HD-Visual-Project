@@ -24,6 +24,7 @@ restent dans les catalogues/manifests ; les mesures détaillées restent dans le
 | Overlays liquides | `overlay-sources.json` décide stock/x2/x4 | QA comparative et modification explicite du manifeste |
 | Réparation eau native | référence AR0900 jour : effet procédural désactivé, primaire opaque DXT1→DXT5 exclusivement eau sans secondaire à alpha128, marges incluses ; greffe RGB/alpha bornée aux raccords internes | nouveau contrat de blend, format, rôle WED ou famille ; aucune application globale sans audit |
 | Coutures WTLAKE | x4 wavelet avec contexte périodique3×3 puis crop central ; LAB→wavelet seul insuffisant | QA d'une autre recette/famille ; jamais généraliser le resref ni les six frames |
+| Suivi eau vers release | `pipeline/water/release-tracking-v1.json` relie chaque WED/variante aux candidats, preuves QA, overlays et runtime ; audit read-only ; aucune autorisation release | migration versionnée du schéma ou transaction release explicitement autorisée |
 
 Procédure complète et cas exclus : [`../pipeline/WATER_REPAIR_RUNBOOK.md`](../pipeline/WATER_REPAIR_RUNBOOK.md).
 

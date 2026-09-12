@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bg2-water-release-tracking-v1.schema.json",
+  "title": "BG2EE water release tracking v1",
+  "type": "object",
+  "required": ["schema", "version", "updated", "release_boundary", "evidence", "artifact_sets", "runtime", "targets"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema": {"const": "bg2-water-release-tracking-v1"},
+    "version": {"const": 1},
+    "updated": {"type": "string", "format": "date"},
+    "release_boundary": {
+      "type": "object",
+      "required": ["authorization", "release_manifests_modified", "rule"],
+      "properties": {
+        "authorization": {"const": "not-requested"},
+        "release_manifests_modified": {"const": false},
+        "rule": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "defaults": {"type": "object"},
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence"},
+      "minItems": 1
+    },
+    "artifact_sets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifactSet"},
+      "minItems": 1
+    },
+    "runtime": {"$ref": "#/$defs/runtime"},
+    "targets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/target"},
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": ["id", "kind", "path", "sha256"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "kind": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "artifactSet": {
+      "type": "object",
+      "required": ["id", "family", "payload_roots", "evidence_ids", "state"],
+      "properties": {
+        "id": {"type": "string"},
+        "family": {"type": "string"},
+        "payload_roots": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "evidence_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "state": {"enum": ["selected", "mixed-qa", "superseded-partially"]},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["state", "source_commit", "registry_evidence_id", "dll", "ini", "shaders", "release_blockers"],
+      "properties": {
+        "state": {"const": "validated-installed-development-candidate"},
+        "source_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "registry_evidence_id": {"type": "string"},
+        "dll": {"$ref": "#/$defs/file"},
+        "ini": {"$ref": "#/$defs/file"},
+        "shaders": {"type": "array", "items": {"$ref": "#/$defs/file"}, "minItems": 1},
+        "textures": {"type": "array", "items": {"$ref": "#/$defs/file"}},
+        "release_blockers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "file": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["id", "area_id", "wed", "variant", "family", "environment", "overlay", "material_id", "route2_strength", "artifact_set_ids", "qa_state", "release_state", "blockers"],
+      "properties": {
+        "id": {"type": "string"},
+        "area_id": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
+        "wed": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N?$"},
+        "variant": {"enum": ["day-or-unique", "night"]},
+        "family": {"type": "string"},
+        "environment": {"enum": ["exterior", "interior", "underground", "unknown"]},
+        "overlay": {"type": "string"},
+        "material_id": {"type": "integer", "minimum": 0},
+        "route2_strength": {"type": "number", "minimum": 0, "maximum": 1},
+        "artifact_set_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "qa_evidence_id": {"type": "string"},
+        "qa_state": {"enum": ["validated-ingame", "validated-current-fallback", "session-accepted-variant-unresolved", "pending-ingame", "blocked-family-qa"]},
+        "installation_state": {"enum": ["installed", "not-selected"]},
+        "release_state": {"const": "not-evaluated"},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

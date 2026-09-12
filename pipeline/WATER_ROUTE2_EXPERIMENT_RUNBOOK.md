@@ -1,5 +1,8 @@
 # Eau — voie 2 : état validé et extension LLM
 
+> État historique AR0900 à `q=1.00`. La sélection finale du chantier est `q=0.70` ; pour toute
+> extension, utiliser `pipeline/water/VALIDATED_WATER_RECIPES.md` et les manifests QA courants.
+
 ## 0. Statut et portée
 
 - Implémentation AR0900 jour livrée par `a7397a52` (`feat(engine): add scoped procedural water route`).
