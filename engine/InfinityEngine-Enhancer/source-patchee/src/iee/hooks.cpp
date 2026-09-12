@@ -4426,11 +4426,12 @@ void prepare_for_shutdown() noexcept {
   g_ctx = nullptr;
 }
 
-float route2_water_overlay_strength(unsigned texture, int width, int height) noexcept {
+std::optional<water_route2::Match> route2_water_overlay_match(
+    unsigned texture, int width, int height) noexcept {
   return g_ctx && g_route2TextureTable && g_ctx->cfg.enableWaterOverlayRoute2
-             ? area::route2_water_overlay_strength(*g_ctx, texture, width, height,
-                                                   g_route2TextureTable)
-             : 0.0f;
+             ? area::route2_water_overlay_match(*g_ctx, texture, width, height,
+                                                g_route2TextureTable)
+             : std::optional<water_route2::Match>{};
 }
 
 bool is_active() {

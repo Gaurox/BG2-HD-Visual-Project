@@ -100,6 +100,32 @@ def generate(path: Path) -> str:
             raise RuntimeError(f"invalid WED layout: {entry['id']}")
         if not 0.0 <= float(entry["approved_strength"]) <= 1.0:
             raise RuntimeError(f"invalid approved strength: {entry['id']}")
+        temporal = entry.get("temporal_overlay") or {}
+        temporal_values = {
+            "frame_count": int(temporal.get("frame_count", 0)),
+            "source_fps": float(temporal.get("source_fps", 0.0)),
+            "target_fps": float(temporal.get("target_fps", 0.0)),
+            "columns": int(temporal.get("atlas_columns", 0)),
+            "stride": int(temporal.get("atlas_stride_pixels", 0)),
+            "padding": int(temporal.get("atlas_padding_pixels", 0)),
+        }
+        if temporal:
+            pages = overlay["pages"]
+            rows = ((temporal_values["frame_count"] + temporal_values["columns"] - 1)
+                    // temporal_values["columns"] if temporal_values["columns"] > 0 else 0)
+            if (temporal.get("mode") != "atlas-linear" or len(pages) != 1 or
+                    temporal_values["frame_count"] != int(overlay["tile_count"]) or
+                    temporal_values["frame_count"] < 2 or
+                    temporal_values["source_fps"] <= 0.0 or
+                    temporal_values["target_fps"] < temporal_values["source_fps"] or
+                    temporal_values["columns"] <= 0 or temporal_values["stride"] <= 0 or
+                    temporal_values["padding"] < 0 or
+                    temporal_values["stride"] !=
+                    int(overlay["tile_dimension"]) + 2 * temporal_values["padding"] or
+                    temporal_values["columns"] * temporal_values["stride"] >
+                    int(pages[0]["width"]) or
+                    rows * temporal_values["stride"] > int(pages[0]["height"])):
+                raise RuntimeError(f"invalid temporal overlay: {entry['id']}")
         padded_slots = slots + [""] * (5 - len(slots))
         entry_lines.append(
             "  RegistryEntry{" + ", ".join([
@@ -118,6 +144,12 @@ def generate(path: Path) -> str:
                 str(len(current_files)),
                 f"{float(entry['approved_strength']):.8f}f",
                 str(entry["material_id"]),
+                str(temporal_values["frame_count"]),
+                f"{temporal_values['source_fps']:.8f}f",
+                f"{temporal_values['target_fps']:.8f}f",
+                str(temporal_values["columns"]),
+                str(temporal_values["stride"]),
+                str(temporal_values["padding"]),
                 "{" + ", ".join(cpp_resref(slot) for slot in padded_slots) + "}",
                 cpp_sha(entry["wed"]["sha256"]),
                 "true" if entry["allow_stock_wed_when_override_absent"] else "false",

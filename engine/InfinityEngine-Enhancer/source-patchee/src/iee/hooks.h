@@ -1,5 +1,6 @@
 #pragma once
 #include "app_context.h"
+#include "iee/water_route2_registry.h"
 
 namespace iee::hooks {
 bool install_all(AppContext& ctx);
@@ -25,5 +26,6 @@ void on_frame_boundary(unsigned long long frame,
 void on_post_swap() noexcept;
 
 bool is_active();
-float route2_water_overlay_strength(unsigned texture, int width, int height) noexcept;
+std::optional<water_route2::Match> route2_water_overlay_match(
+    unsigned texture, int width, int height) noexcept;
 }  // namespace iee::hooks

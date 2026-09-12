@@ -45,6 +45,12 @@ struct RegistryEntry {
   std::uint32_t fileCount{};
   float approvedStrength{};
   std::uint32_t materialId{};
+  std::uint32_t temporalFrameCount{};
+  float temporalSourceFps{};
+  float temporalTargetFps{};
+  std::uint32_t temporalAtlasColumns{};
+  std::uint32_t temporalAtlasStridePixels{};
+  std::uint32_t temporalAtlasPaddingPixels{};
   std::array<Resref, 5> slots{};
   Sha256 wedSha256{};
   bool allowStockWedWhenOverrideAbsent{};
@@ -84,6 +90,18 @@ struct Match {
   float approvedStrength{};
   std::uint32_t materialId{};
   std::uint32_t registryVersion{};
+  std::uint32_t temporalFrameCount{};
+  float temporalSourceFps{};
+  float temporalTargetFps{};
+  std::uint32_t temporalAtlasColumns{};
+  std::uint32_t temporalAtlasStridePixels{};
+  std::uint32_t temporalAtlasPaddingPixels{};
+
+  [[nodiscard]] bool temporal_enabled() const noexcept {
+    return temporalFrameCount >= 2 && temporalSourceFps > 0.0f &&
+           temporalTargetFps >= temporalSourceFps && temporalAtlasColumns > 0 &&
+           temporalAtlasStridePixels > temporalAtlasPaddingPixels * 2;
+  }
 };
 
 inline bool layout_matches(const Query& query, const RegistryEntry& entry) noexcept {

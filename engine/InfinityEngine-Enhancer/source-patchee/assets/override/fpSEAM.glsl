@@ -19,6 +19,13 @@ uniform highp	float		uIeeShaderSuiteEnabled; // D3 suite master; intentionally n
 uniform highp	float		uIeeEnabled;       // 0/1 master gate (F10)
 uniform highp float uIeeWaterRoute2; // 1: native composition + overlay-only experiment
 uniform highp float uIeeWaterOverlayStrength; // per GL draw, proven AR0900 DAY/WTLAKE only
+uniform highp float uIeeWaterTimelineEnabled; // per-draw fail-closed atlas timeline
+uniform highp float uIeeWaterTimelineFrameCount;
+uniform highp float uIeeWaterTimelineSourceFps;
+uniform highp float uIeeWaterTimelineTargetFps;
+uniform highp float uIeeWaterTimelineAtlasColumns;
+uniform highp float uIeeWaterTimelineAtlasStride;
+uniform highp float uIeeWaterTimelineAtlasPadding;
 uniform highp	float		uIeeTime;          // seconds
 uniform highp	vec2		uIeeScroll;        // world px of viewport origin
 uniform highp	vec2		uIeeZoom;          // physical px per world px, per axis
@@ -88,6 +95,36 @@ vec4 seamSample(vec2 tc)
 	}
 
 	return texColor;
+}
+
+// Registry-described authored overlay timeline.  The engine still owns the
+// draw, blend and alpha composition; route2 only redirects the sample within
+// the already bound, hash-validated atlas.  A 15 Hz Apollo timeline is blended
+// at a quantized 30 Hz render clock so the 2.4 s authored WTLAKE loop is kept.
+vec4 ieeWaterTimelineSample(vec2 tc)
+{
+	float frameCount = max(uIeeWaterTimelineFrameCount, 2.0);
+	float sourceFps = max(uIeeWaterTimelineSourceFps, 0.001);
+	float targetFps = max(uIeeWaterTimelineTargetFps, sourceFps);
+	float timelineTime = floor(uIeeTime * targetFps) / targetFps;
+	float position = mod(timelineTime * sourceFps, frameCount);
+	float currentFrame = floor(position);
+	float nextFrame = mod(currentFrame + 1.0, frameCount);
+	float phaseBlend = fract(position);
+
+	float stride = uIeeWaterTimelineAtlasStride;
+	float padding = uIeeWaterTimelineAtlasPadding;
+	float columns = uIeeWaterTimelineAtlasColumns;
+	vec2 atlasPixel = tc / uTcScale;
+	vec2 localPixel = mod(atlasPixel - vec2(padding), vec2(stride));
+	float tileSize = stride - 2.0 * padding;
+	localPixel = clamp(localPixel, vec2(0.0), vec2(tileSize - 1.0));
+
+	vec2 currentCell = vec2(mod(currentFrame, columns), floor(currentFrame / columns));
+	vec2 nextCell = vec2(mod(nextFrame, columns), floor(nextFrame / columns));
+	vec2 currentTc = (vec2(padding) + currentCell * stride + localPixel) * uTcScale;
+	vec2 nextTc = (vec2(padding) + nextCell * stride + localPixel) * uTcScale;
+	return mix(seamSample(currentTc), seamSample(nextTc), phaseBlend);
 }
 
 // --- IEE water helpers (world-space, GLSL 110) ---
@@ -273,6 +310,10 @@ void main()
 	}
 
 	vec4 texColor = seamSample(vTc);
+	if (uIeeWaterTimelineEnabled > 0.5)
+	{
+		texColor = ieeWaterTimelineSample(vTc);
+	}
 
 	// Inside flagged cells the engine draws the
 	// base tile with TRANSPARENT pixels exactly where water composites

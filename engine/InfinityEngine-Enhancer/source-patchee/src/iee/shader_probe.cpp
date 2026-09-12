@@ -1722,9 +1722,11 @@ void trace_suite_draw(unsigned mode, int first, int count,
 
 struct WaterOverlayUniformScope {
   int strength{-1};
+  int timelineEnabled{-1};
   ~WaterOverlayUniformScope() noexcept {
     const auto& gl = game::gl::get_gl_functions();
     if (strength >= 0 && gl.glUniform1f) gl.glUniform1f(strength, 0.0f);
+    if (timelineEnabled >= 0 && gl.glUniform1f) gl.glUniform1f(timelineEnabled, 0.0f);
   }
 };
 
@@ -1750,12 +1752,28 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   if (locations->waterOverlayStrength == uniforms::Locations::kUnresolved) {
     locations->waterOverlayStrength = gl.glGetUniformLocation(program, "uIeeWaterOverlayStrength");
     locations->waterOverlaySampler = gl.glGetUniformLocation(program, "uTex");
+    locations->waterTimelineEnabled =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineEnabled");
+    locations->waterTimelineFrameCount =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineFrameCount");
+    locations->waterTimelineSourceFps =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineSourceFps");
+    locations->waterTimelineTargetFps =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineTargetFps");
+    locations->waterTimelineAtlasColumns =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineAtlasColumns");
+    locations->waterTimelineAtlasStride =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineAtlasStride");
+    locations->waterTimelineAtlasPadding =
+        gl.glGetUniformLocation(program, "uIeeWaterTimelineAtlasPadding");
   }
   scope.strength = locations->waterOverlayStrength;
+  scope.timelineEnabled = locations->waterTimelineEnabled;
   if (scope.strength < 0) return;
   // This signal belongs to the actual GL batch, not the earlier DrawBegin /
   // DrawEnd scope. Never use the global uniform-revision cache for it.
   gl.glUniform1f(scope.strength, 0.0f);
+  if (scope.timelineEnabled >= 0) gl.glUniform1f(scope.timelineEnabled, 0.0f);
   if (locations->waterOverlaySampler < 0) return;
   int unit = -1;
   gl.glGetUniformiv(program, locations->waterOverlaySampler, &unit);
@@ -1764,12 +1782,34 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &active);
   const auto texture = bound_texture_snapshot(gl, unit);
   gl.glActiveTexture(static_cast<unsigned>(active));
-  const float approvedStrength = hooks::route2_water_overlay_strength(
+  const auto route = hooks::route2_water_overlay_match(
       texture.texture, texture.width, texture.height);
-  const bool matched = approvedStrength > 0.0f;
+  const float approvedStrength = route ? route->approvedStrength : 0.0f;
+  const bool matched = route.has_value() && approvedStrength > 0.0f;
   const float strength = matched && g_cfg.enableWaterEffect
       ? core::route2_water_strength(g_cfg.waterOverlayStrength, approvedStrength) : 0.0f;
   gl.glUniform1f(scope.strength, strength);
+  const bool temporal = matched && strength > 0.0f && route->temporal_enabled() &&
+                        scope.timelineEnabled >= 0 &&
+                        locations->waterTimelineFrameCount >= 0 &&
+                        locations->waterTimelineSourceFps >= 0 &&
+                        locations->waterTimelineTargetFps >= 0 &&
+                        locations->waterTimelineAtlasColumns >= 0 &&
+                        locations->waterTimelineAtlasStride >= 0 &&
+                        locations->waterTimelineAtlasPadding >= 0;
+  if (temporal) {
+    gl.glUniform1f(scope.timelineEnabled, 1.0f);
+    gl.glUniform1f(locations->waterTimelineFrameCount,
+                   static_cast<float>(route->temporalFrameCount));
+    gl.glUniform1f(locations->waterTimelineSourceFps, route->temporalSourceFps);
+    gl.glUniform1f(locations->waterTimelineTargetFps, route->temporalTargetFps);
+    gl.glUniform1f(locations->waterTimelineAtlasColumns,
+                   static_cast<float>(route->temporalAtlasColumns));
+    gl.glUniform1f(locations->waterTimelineAtlasStride,
+                   static_cast<float>(route->temporalAtlasStridePixels));
+    gl.glUniform1f(locations->waterTimelineAtlasPadding,
+                   static_cast<float>(route->temporalAtlasPaddingPixels));
+  }
   if (g_cfg.enableTilePageDiagnostics) {
     static unsigned matchedTraces = 0;
     static unsigned otherTraces = 0;
@@ -1780,9 +1820,12 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
       gl.glGetIntegerv(0x80C9 /* GL_BLEND_SRC_RGB */, &src);
       gl.glGetIntegerv(0x80C8 /* GL_BLEND_DST_RGB */, &dst);
       gl.glGetIntegerv(0x8DB9 /* GL_FRAMEBUFFER_SRGB */, &srgb);
-      LOG_INFO("WATER_ROUTE2 draw program={} texture={} size={}x{} overlay={} q={} blend={}/{}/{} srgb={}",
+      LOG_INFO("WATER_ROUTE2 draw program={} texture={} size={}x{} overlay={} q={} "
+               "temporal={} frames={} sourceFps={} targetFps={} blend={}/{}/{} srgb={}",
                program, texture.texture, texture.width, texture.height, matched, strength,
-               blend, src, dst, srgb);
+               temporal, route ? route->temporalFrameCount : 0,
+               route ? route->temporalSourceFps : 0.0f,
+               route ? route->temporalTargetFps : 0.0f, blend, src, dst, srgb);
     }
   }
 }

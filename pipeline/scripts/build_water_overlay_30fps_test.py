@@ -1,9 +1,11 @@
-"""Build an isolated AR0900 WTLAKE 15->30 FPS route2 experiment.
+"""Build an isolated AR0900 WTLAKE render-rate timeline experiment.
 
-Plan-only by default. ``--run`` creates a new immutable run containing six
-Apollo-8 intermediate phases, a 12-entry WTLAKE TIS, an AR0900 WED whose
-overlay lookup interleaves anchors and intermediates, a review video, and an
-experimental fail-closed route2 registry capped at strength 0.50.
+Plan-only by default. ``--run`` creates a new immutable run containing 36
+Apollo-8 phases at 15 Hz, a matching WTLAKE TIS/WED, a 30 FPS render-time
+blend review, and an experimental fail-closed route2 registry capped at
+strength 0.50.  The six stock phases advance every six 15 Hz engine ticks,
+so their authored loop is 2.4 seconds rather than the previously assumed
+0.4 seconds.
 """
 
 from __future__ import annotations
@@ -48,8 +50,14 @@ PAGE_SIZE = 2048
 TILE_SIZE = 256
 PAD = 4
 MODEL = "apo-8"
-TIMELINE = [0, 6, 1, 7, 2, 8, 3, 9, 4, 10, 5, 11]
-RUN_SCHEMA = "bg2-water-overlay-30fps-route2-test-v1"
+SOURCE_FPS = 2.5
+NATIVE_TIMELINE_FPS = 15
+TARGET_FPS = 30
+PHASES_PER_TRANSITION = 6
+FRAME_COUNT = 36
+ATLAS_COLUMNS = 7
+ATLAS_STRIDE = TILE_SIZE + 2 * PAD
+RUN_SCHEMA = "bg2-water-overlay-render-timeline-test-v2"
 
 
 def require(condition: bool, message: str) -> None:
@@ -116,7 +124,7 @@ def plan(output: Path) -> dict[str, Any]:
         "AR0900.WED stock divergent",
     )
     return {
-        "schema": "bg2-water-overlay-30fps-route2-plan-v1",
+        "schema": "bg2-water-overlay-render-timeline-plan-v2",
         "output": str(output.resolve()),
         "source_run": str(SOURCE_RUN.relative_to(ROOT)).replace("\\", "/"),
         "source_run_manifest_sha256": sha256_file(SOURCE_RUN / "run.json"),
@@ -128,10 +136,13 @@ def plan(output: Path) -> dict[str, Any]:
         ],
         "interpolation": {
             "model": MODEL,
-            "native_fps": 15,
-            "target_fps": 30,
-            "timeline": TIMELINE,
-            "cycle_duration_seconds": 0.4,
+            "source_fps": SOURCE_FPS,
+            "native_timeline_fps": NATIVE_TIMELINE_FPS,
+            "target_fps": TARGET_FPS,
+            "phases_per_transition": PHASES_PER_TRANSITION,
+            "frame_count": FRAME_COUNT,
+            "cycle_duration_seconds": 2.4,
+            "runtime_blend": "linear-between-15hz-phases",
         },
         "route2_strength": 0.5,
         "scope": "AR0900 day only",
@@ -162,48 +173,55 @@ def interpolate(plan_data: dict[str, Any], output: Path) -> tuple[list[Path], di
     environment = dict(os.environ)
     environment["TVAI_MODEL_DIR"] = str(TOPAZ_MODELS)
     environment["TVAI_MODEL_DATA_DIR"] = str(TOPAZ_MODELS)
-    filter_text = f"tvai_fi=model={MODEL}:fps=30:rdt=-0.01:device=-2"
+    filter_text = (
+        f"tvai_fi=model={MODEL}:fps={NATIVE_TIMELINE_FPS}:rdt=-0.01:device=-2"
+    )
     run_checked(
         [
             str(TOPAZ_FFMPEG), "-hide_banner", "-loglevel", "error", "-y",
-            "-framerate", "15", "-i", str(inputs / "in_%04d.png"),
+            "-framerate", str(SOURCE_FPS), "-i", str(inputs / "in_%04d.png"),
             "-vf", filter_text, "-pix_fmt", "rgb24", str(raw / "out_%04d.png"),
         ],
         environment=environment,
     )
     raw_paths = sorted(raw.glob("out_*.png"))
-    require(len(raw_paths) in (12, 13), f"Topaz a produit {len(raw_paths)} frames")
+    require(len(raw_paths) in (FRAME_COUNT, FRAME_COUNT + 1),
+            f"Topaz a produit {len(raw_paths)} frames")
 
     anchor_mae: list[float] = []
     for index, source in enumerate(anchors):
-        shutil.copy2(source, frames / f"frame-{index:03d}.png")
-        with Image.open(raw_paths[index * 2]) as generated, Image.open(source) as expected:
+        anchor_phase = index * PHASES_PER_TRANSITION
+        shutil.copy2(source, frames / f"frame-{anchor_phase:03d}.png")
+        with Image.open(raw_paths[anchor_phase]) as generated, Image.open(source) as expected:
             anchor_mae.append(image_mae(generated, expected))
 
     intermediates: list[dict[str, Any]] = []
     for segment in range(6):
-        destination = frames / f"frame-{segment + 6:03d}.png"
         left = anchors[segment]
         right = anchors[(segment + 1) % 6]
-        with Image.open(raw_paths[segment * 2 + 1]) as generated, Image.open(
-            left
-        ) as left_image, Image.open(right) as right_image:
-            rgb = generated.convert("RGB")
-            require(rgb.size == (TILE_SIZE, TILE_SIZE), "sortie Apollo de dimension invalide")
-            alpha = Image.blend(
-                left_image.convert("RGBA").getchannel("A"),
-                right_image.convert("RGBA").getchannel("A"),
-                0.5,
-            )
-            rgba = rgb.convert("RGBA")
-            rgba.putalpha(alpha)
-            rgba.save(destination)
-        intermediates.append({
-            "frame": segment + 6,
-            "between": [segment, (segment + 1) % 6],
-            "sha256": sha256_file(destination),
-        })
-    return [frames / f"frame-{index:03d}.png" for index in range(12)], {
+        with Image.open(left) as left_image, Image.open(right) as right_image:
+            left_alpha = left_image.convert("RGBA").getchannel("A")
+            right_alpha = right_image.convert("RGBA").getchannel("A")
+            for phase in range(1, PHASES_PER_TRANSITION):
+                frame_index = segment * PHASES_PER_TRANSITION + phase
+                destination = frames / f"frame-{frame_index:03d}.png"
+                with Image.open(raw_paths[frame_index]) as generated:
+                    rgb = generated.convert("RGB")
+                    require(rgb.size == (TILE_SIZE, TILE_SIZE),
+                            "sortie Apollo de dimension invalide")
+                    alpha = Image.blend(
+                        left_alpha, right_alpha, phase / PHASES_PER_TRANSITION
+                    )
+                    rgba = rgb.convert("RGBA")
+                    rgba.putalpha(alpha)
+                    rgba.save(destination)
+                intermediates.append({
+                    "frame": frame_index,
+                    "between": [segment, (segment + 1) % 6],
+                    "fraction": phase / PHASES_PER_TRANSITION,
+                    "sha256": sha256_file(destination),
+                })
+    return [frames / f"frame-{index:03d}.png" for index in range(FRAME_COUNT)], {
         "filter": filter_text,
         "raw_frame_count": len(raw_paths),
         "anchor_rgb_mae": [round(value, 6) for value in anchor_mae],
@@ -226,6 +244,7 @@ def build_tileset(frame_paths: list[Path], output: Path) -> tuple[Path, Path]:
     output.mkdir()
     cell = TILE_SIZE + 2 * PAD
     per_row = PAGE_SIZE // cell
+    require(per_row == ATLAS_COLUMNS, "layout atlas WTLAKE divergent")
     canvas = Image.new("RGBA", (PAGE_SIZE, PAGE_SIZE), (0, 0, 0, 0))
     entries: list[tuple[int, int, int]] = []
     for index, path in enumerate(frame_paths):
@@ -246,7 +265,7 @@ def build_tileset(frame_paths: list[Path], output: Path) -> tuple[Path, Path]:
     write_pvrz(Image.fromarray(array, mode="RGBA"), pvrz_path)
 
     tis = bytearray(b"TIS V1  ")
-    tis += struct.pack("<IIII", 12, 12, 24, TILE_SIZE)
+    tis += struct.pack("<IIII", FRAME_COUNT, 12, 24, TILE_SIZE)
     for entry in entries:
         tis += struct.pack("<3I", *entry)
     tis_path = output / "WTLAKE.TIS"
@@ -271,45 +290,55 @@ def patch_wed(source: bytes) -> bytes:
             "tilemap WTLAKE AR0900 divergent")
     require(list(struct.unpack_from("<6H", source, lookup)) == list(range(6)),
             "lookup WTLAKE AR0900 divergent")
+    timeline = tuple(range(FRAME_COUNT))
+    replacement = struct.pack(f"<{FRAME_COUNT}H", *timeline)
     insertion = lookup + 12
-    output = bytearray(source[:insertion] + struct.pack("<6H", 3, 9, 4, 10, 5, 11)
-                       + source[insertion:])
-    struct.pack_into("<6H", output, lookup, 0, 6, 1, 7, 2, 8)
-    struct.pack_into("<H", output, tilemap + 2, 12)
+    output = bytearray(source[:lookup] + replacement + source[insertion:])
+    inserted_bytes = len(replacement) - 12
+    struct.pack_into("<H", output, tilemap + 2, FRAME_COUNT)
+    output[tilemap + 7] = 1
 
     for index in range(overlay_count):
         header = overlays_offset + index * 24
         tilemap_offset, lookup_offset = struct.unpack_from("<II", output, header + 16)
         if tilemap_offset >= insertion:
-            struct.pack_into("<I", output, header + 16, tilemap_offset + 12)
+            struct.pack_into("<I", output, header + 16, tilemap_offset + inserted_bytes)
         if lookup_offset >= insertion:
-            struct.pack_into("<I", output, header + 20, lookup_offset + 12)
+            struct.pack_into("<I", output, header + 20, lookup_offset + inserted_bytes)
 
     polygon_count, polygon_offset, vertex_offset, wall_group_offset, polygon_lookup = (
         struct.unpack_from("<5I", output, secondary_offset)
     )
     shifted = [
-        value + 12 if value >= insertion else value
+        value + inserted_bytes if value >= insertion else value
         for value in (polygon_offset, vertex_offset, wall_group_offset, polygon_lookup)
     ]
     struct.pack_into(
         "<5I", output, secondary_offset, polygon_count, shifted[0], shifted[1], shifted[2], shifted[3]
     )
-    require(len(output) == len(source) + 12, "taille WED interpolée invalide")
+    require(len(output) == len(source) + inserted_bytes, "taille WED interpolée invalide")
     return bytes(output)
 
 
 def build_review(frame_paths: list[Path], output: Path) -> list[dict[str, Any]]:
     review_frames = output / "05_review_frames"
     review_frames.mkdir()
-    for phase, frame_index in enumerate(TIMELINE):
-        shutil.copy2(frame_paths[frame_index], review_frames / f"frame_{phase:04d}.png")
+    review_index = 0
+    for phase, current in enumerate(frame_paths):
+        following = frame_paths[(phase + 1) % len(frame_paths)]
+        shutil.copy2(current, review_frames / f"frame_{review_index:04d}.png")
+        review_index += 1
+        with Image.open(current) as left, Image.open(following) as right:
+            Image.blend(left.convert("RGBA"), right.convert("RGBA"), 0.5).save(
+                review_frames / f"frame_{review_index:04d}.png"
+            )
+        review_index += 1
     exact = output / "review-30fps-exact.mp4"
     loop = output / "review-30fps-loop-4s.mp4"
     run_checked([
         str(REVIEW_FFMPEG), "-hide_banner", "-loglevel", "error", "-y",
         "-framerate", "30", "-i", str(review_frames / "frame_%04d.png"),
-        "-frames:v", "12", "-c:v", "libx264", "-preset", "slow", "-crf", "12",
+        "-frames:v", str(FRAME_COUNT * 2), "-c:v", "libx264", "-preset", "slow", "-crf", "12",
         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(exact),
     ])
     run_checked([
@@ -332,7 +361,7 @@ def experimental_registry(wed: Path, tis: Path, pvrz: Path, output: Path) -> Pat
     entry["overlay"].update({
         "tis_sha256": sha256_file(tis),
         "tis_bytes": tis.stat().st_size,
-        "tile_count": 12,
+        "tile_count": FRAME_COUNT,
         "pages": [{
             "resref": "WLAKE00", "width": PAGE_SIZE, "height": PAGE_SIZE,
             "bytes": pvrz.stat().st_size, "sha256": sha256_file(pvrz),
@@ -348,6 +377,15 @@ def experimental_registry(wed: Path, tis: Path, pvrz: Path, output: Path) -> Pat
         "overlay_coverage_cells": 1635,
         "allow_stock_wed_when_override_absent": False,
         "material_id": 1,
+        "temporal_overlay": {
+            "mode": "atlas-linear",
+            "frame_count": FRAME_COUNT,
+            "source_fps": NATIVE_TIMELINE_FPS,
+            "target_fps": TARGET_FPS,
+            "atlas_columns": ATLAS_COLUMNS,
+            "atlas_stride_pixels": ATLAS_STRIDE,
+            "atlas_padding_pixels": PAD,
+        },
     }
     registry = {
         "schema": "bg2-water-route2-registry-v2",
@@ -358,7 +396,7 @@ def experimental_registry(wed: Path, tis: Path, pvrz: Path, output: Path) -> Pat
         "fallback": active["fallback"],
         "experiment": {
             "status": "pending-ingame-qa",
-            "scope": "AR0900 day, Apollo-8 15->30 FPS, route2 50 percent",
+            "scope": "AR0900 day, Apollo-8 2.5->15 Hz plus render-time 30 FPS blend, route2 50 percent",
         },
     }
     destination = output / "registry-v2-experimental.json"
@@ -388,10 +426,11 @@ def execute(plan_data: dict[str, Any], output: Path) -> dict[str, Any]:
         "schema": "bg2-upscale-area-animation-override-assets-v1",
         "status": "completed",
         "area": "AR0900",
-        "purpose": "WTLAKE Apollo-8 15-to-30 FPS plus route2 50-percent experiment",
+        "purpose": "WTLAKE Apollo-8 2.5-to-15 Hz plus route2 render-time 30 FPS experiment",
         "qa_status": "pending-ingame",
         "files": files,
-        "timeline": TIMELINE,
+        "timeline": list(range(FRAME_COUNT)),
+        "animation_speed_divisor": 1,
         "rollback": "Restore-AreaOverrideAssets.ps1 with the generated install backup",
     }
     write_json(candidate / "manifest.json", asset_manifest)
@@ -404,7 +443,13 @@ def execute(plan_data: dict[str, Any], output: Path) -> dict[str, Any]:
         "plan_sha256": sha256_file(output / "plan.json"),
         "source": plan_data,
         "topaz": topaz,
-        "timeline": {"native_fps": 15, "target_fps": 30, "indices": TIMELINE},
+        "timeline": {
+            "source_fps": SOURCE_FPS,
+            "native_fps": NATIVE_TIMELINE_FPS,
+            "target_fps": TARGET_FPS,
+            "indices": list(range(FRAME_COUNT)),
+            "runtime_blend": "linear",
+        },
         "candidate_assets": "04_candidate_assets",
         "experimental_registry": registry.name,
         "reviews": reviews,

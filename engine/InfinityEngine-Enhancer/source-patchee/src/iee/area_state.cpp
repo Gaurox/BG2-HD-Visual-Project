@@ -346,23 +346,23 @@ bool read_view_transform(const game::CGameArea* area, ViewTransform& out) {
   return true;
 }
 
-float route2_water_overlay_strength(AppContext& ctx, unsigned texture,
-                                    int width, int height,
-                                    const std::byte* validatedTextureTable) noexcept {
+std::optional<water_route2::Match> route2_water_overlay_match(
+    AppContext& ctx, unsigned texture, int width, int height,
+    const std::byte* validatedTextureTable) noexcept {
   if (!ctx.manifest || !validatedTextureTable || !texture || width <= 0 || height <= 0)
-    return 0.0f;
+    return std::nullopt;
   const auto reject = [&ctx](unsigned reason, std::uint32_t count = 0) {
     static std::atomic<unsigned> loggedReasons{0};
     const unsigned bit = 1u << reason;
     if (ctx.cfg.enableTilePageDiagnostics && !(loggedReasons.fetch_or(bit) & bit)) {
       LOG_INFO("WATER_ROUTE2 reject reason={} count={}", reason, count);
     }
-    return 0.0f;
+    return std::optional<water_route2::Match>{};
   };
   const auto wed = ctx.wed.load();
   const auto* area = ctx.activeArea.load();
   if (!wed || !area || wed->overlays.size() < 2 || wed->overlays.size() > 5 ||
-      resolve_active_area(ctx.infGame.load(), *ctx.manifest) != area) return 0.0f;
+      resolve_active_area(ctx.infGame.load(), *ctx.manifest) != area) return std::nullopt;
   std::array<std::string_view, 5> slots{};
   for (std::size_t i = 0; i < wed->overlays.size(); ++i) {
     slots[i] = wed->overlays[i].tilesetResrefView();
@@ -437,7 +437,7 @@ float route2_water_overlay_strength(AppContext& ctx, unsigned texture,
                    candidate.texture, glName, match->approvedStrength);
         }
         return ctx.activeArea.load() == area && ctx.wed.load() == wed
-                   ? match->approvedStrength : 0.0f;
+                   ? match : std::optional<water_route2::Match>{};
       }
     }
   }

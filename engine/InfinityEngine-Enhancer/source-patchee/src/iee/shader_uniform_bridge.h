@@ -14,6 +14,13 @@ struct Locations {
   int waterRoute2{kUnresolved};
   int waterOverlayStrength{kUnresolved};
   int waterOverlaySampler{kUnresolved};
+  int waterTimelineEnabled{kUnresolved};
+  int waterTimelineFrameCount{kUnresolved};
+  int waterTimelineSourceFps{kUnresolved};
+  int waterTimelineTargetFps{kUnresolved};
+  int waterTimelineAtlasColumns{kUnresolved};
+  int waterTimelineAtlasStride{kUnresolved};
+  int waterTimelineAtlasPadding{kUnresolved};
   int shaderSuiteEnabled{kUnresolved};
   int scroll{kUnresolved};
   int zoom{kUnresolved};

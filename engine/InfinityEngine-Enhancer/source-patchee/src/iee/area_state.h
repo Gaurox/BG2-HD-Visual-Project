@@ -1,7 +1,10 @@
 #pragma once
 
+#include <optional>
+
 #include "iee/game/build_manifest.h"
 #include "iee/game/runtime_types_x64.h"
+#include "iee/water_route2_registry.h"
 
 namespace iee {
 struct AppContext;
@@ -32,9 +35,9 @@ void refresh_wed_cache(AppContext& ctx, void* infGame);
 
 // Revalidate live WED/base/overlay/page identity at the actual GL draw. No
 // texture-name registry survives cache recycling or an area transition.
-float route2_water_overlay_strength(AppContext& ctx, unsigned texture,
-                                    int width, int height,
-                                    const std::byte* validatedTextureTable) noexcept;
+std::optional<water_route2::Match> route2_water_overlay_match(
+    AppContext& ctx, unsigned texture, int width, int height,
+    const std::byte* validatedTextureTable) noexcept;
 
 // Publishes an immediate CPU-side no-liquid generation. The next render
 // thread flush replaces any previous area's GPU mask before drawing.

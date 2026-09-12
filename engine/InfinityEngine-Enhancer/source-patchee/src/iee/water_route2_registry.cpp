@@ -97,6 +97,19 @@ bool validate_entry(const std::filesystem::path& root,
       entry.fileStart > generated::kFiles.size() ||
       entry.fileCount > generated::kFiles.size() - entry.fileStart ||
       !(entry.approvedStrength >= 0.0f && entry.approvedStrength <= 1.0f)) return false;
+  const bool hasTemporal = entry.temporalFrameCount != 0 || entry.temporalSourceFps != 0.0f ||
+                           entry.temporalTargetFps != 0.0f ||
+                           entry.temporalAtlasColumns != 0 ||
+                           entry.temporalAtlasStridePixels != 0 ||
+                           entry.temporalAtlasPaddingPixels != 0;
+  if (hasTemporal &&
+      (entry.temporalFrameCount != entry.overlayTileCount ||
+       entry.temporalFrameCount < 2 || entry.temporalSourceFps <= 0.0f ||
+       entry.temporalTargetFps < entry.temporalSourceFps ||
+       entry.temporalAtlasColumns == 0 ||
+       entry.temporalAtlasStridePixels <= entry.temporalAtlasPaddingPixels * 2 ||
+       entry.temporalAtlasStridePixels - entry.temporalAtlasPaddingPixels * 2 !=
+           entry.tileDimension)) return false;
   const auto wedOverride = root / (std::string(resref_view(entry.wed)) + ".WED");
   std::error_code error;
   const bool hasWedOverride = std::filesystem::is_regular_file(wedOverride, error);
@@ -159,8 +172,15 @@ std::optional<Match> match(const Query& query) noexcept {
     matched = entry;
   }
   if (!matched) return std::nullopt;
-  return Match{matched->approvedStrength, matched->materialId,
-               generated::kRegistryVersion};
+  return Match{matched->approvedStrength,
+               matched->materialId,
+               generated::kRegistryVersion,
+               matched->temporalFrameCount,
+               matched->temporalSourceFps,
+               matched->temporalTargetFps,
+               matched->temporalAtlasColumns,
+               matched->temporalAtlasStridePixels,
+               matched->temporalAtlasPaddingPixels};
 }
 
 std::uint32_t version() noexcept { return generated::kRegistryVersion; }
