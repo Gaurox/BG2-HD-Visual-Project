@@ -6,8 +6,9 @@ Elle conserve AR0900 corrigé comme témoin ; elle ne remplace pas cette recette
 
 ## 0. Mandat et limites
 
-- Références : AR0900 jour (voie1 historique) et AR0900N nuit v5, acceptés ingame le 2026-09-12.
-  Sélection nuit : `water/manifests/ar0900-night-validated-20260912-v5.json`.
+- Références validées récentes : AR0900N v5 (miroir jour/nuit), AR0046N v7 (teinte PVRZ) et
+  AR0300N v10 (reflets alpha160 appariés). Matrice de reprise : §0.3 ; détails et limites dans
+  `water/VALIDATED_WATER_RECIPES.md`.
 - Finalité : porter la réparation aux maps d'eau du jeu patché, dans une nouvelle tâche.
 - Destinataire : LLM de la prochaine tâche, modèle demandé par l'utilisateur : 5.6 Terra.
 - Cette notice ne vaut ni exécution du lot, ni QA des autres maps/nuit, ni autorisation release.
@@ -76,6 +77,19 @@ Reprise détaillée : `water/AR0900_NIGHT_REPAIR_20260912.md`.
 Une validation utilisateur « nuit » n'atteste pas automatiquement le cycle jour→nuit→jour ni la pluie.
 Le choix « aucun test » reste applicable : garder les assertions de production/transactions et
 les audits en lecture seule ; ne lancer ni tests, ni session QA ingame automatisée sans autorisation.
+
+### 0.3 Exemples validés récents
+
+| Identité | Symptôme / cause | Correctif validé | Réutilisation autorisée | Preuve QA |
+|---|---|---|---|---|
+| AR0900N v5 | Nuit non traitée comme le jour ;3primaires omises ; raccords et cache WED nocturne | Miroir complet sur assets nuit :775primaires alpha128,285greffes RGB,358secondaires,26pages ; WED36phases/15Hz ; blend30FPS ; q0.70 ; rafraîchissement au changement de WED | Patron de contrôle jour/nuit pour famille WTLAKE compatible ; recalculer toutes les populations/hashes | `water/manifests/ar0900-night-validated-20260912-v5.json` |
+| AR0046N v7 | Eau parfois brune selon cycles : `CResPVR::texture` traité comme nomGL alors qu'il s'agit d'un slot moteur | Résolution slot→descripteur→nomGL, validation dimensions/état avant readback ; correctif runtime universel | Oui pour le défaut exact `engineSlot!=glName` ; ne jamais retraiter les PVRZ pour ce symptôme | `water/manifests/ar0046n-water-tint-validated-20260912-v7.json` |
+| AR0300N v10 | Reflets nocturnes originaux trop faibles ; v8 cassait les raccords avec primaire208/secondaire128 | Conserver RGB nuit ;892primaires texture160/dessin255 et374secondaires dessin160 ; runtime borné aux rôles exacts ; WTLAKE/q0.70 inchangés | Non global : choix artistique propre à AR0300N. Toute autre map exige qualification et autorisation séparées | `water/manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json` |
+
+Ordre de diagnostic : comparer sources jour/nuit → contrôler voie1/rôles/alpha/padding → vérifier
+overlay/WED/registre → confirmer runtime actif → seulement ensuite ajuster un paramètre artistique.
+Ne jamais copier l'éclairage du jour dans la nuit : AR0300N conserve son reflet nocturne natif et
+n'importe pas l'ombre solaire absente de la source nuit.
 
 ## 1. Causes établies et ordre des corrections
 

@@ -23,14 +23,15 @@
 |---|---|---|---|
 | `lake-wtlake` | AR0900 jour, AR0204, AR1600 | voie1 réparée ; WTLAKE x4 périodique ;36phases/15Hz ; blend30FPS ; matériau eau `id=1` ; q0.70 | identités exactes seulement |
 | `lake-wtlake` | AR0900N nuit v5 | mêmes étapes que le jour, maîtres nuit x4 LAB ; alpha128 exhaustif, greffe RGB/alpha secondaire ; cache WED jour/nuit corrigé ;36phases/15Hz/blend30FPS/q0.70 | nuit explicitement validée ; cycle jour→nuit→jour et météo non attestés |
+| `lake-wtlake` | AR0046N nuit v7 | WTLAKE/q0.70 ; correction runtime universelle slot PVRZ→nomGL éliminant la teinte brune intermittente | valide le défaut runtime exact ; aucune nouvelle recette d'asset ni QA des autres maps |
 | `lake-wtlake` | AR0300N nuit v10 | reflets nocturnes originaux ; opacité160 appariée centres/secondaires ; x4/36phases/15Hz/blend30FPS/q0.70 | choix artistique local ; assets + DLL exacts ; jour, cycle et météo non attestés |
 | `lake-wtlake` | AR0046, AR0300, AR1200, AR1700, AR1901, AR2300 | rendu installé q0.70 accepté pendant la session | commande de zone validée ; variante WED exacte non journalisée ; créer un reçu avant promotion formelle |
 | `sewage-wtsew` | AR0404 | WTSEW x4 `none`/3×3 ;6→36phases Apollo-8 ;15Hz ; blend30FPS ; matériau égouts `id=4` ; q0.70 | ne couvre aucune autre identité WTSEW |
 | `sewage-wtsew` | AR2100 | WED stock + WTSEW partagé ; route2 absente ; q0 natif | n'approuve pas une future route2 AR2100 |
 | `swamp-wtswam` | AR1607, AR1800 | bases réparées ; paire sèche/pluie isolée ;36phases/15Hz ; blend30FPS ; matériau marais `id=5` ; q0.70 | deux cartes seulement ; autres WTSWAM restent q0 |
 
-Non validés par ce chantier : AR0512 et AR1604, eaux intérieures ; variantes jour/nuit non observées
-séparément ; `WTLAKA-D`, `WTPOOL`, `WTOIL`, `WTLAVA-D`, `WT5000A-D`.
+Non validés par ce chantier : AR0512 et AR1604, eaux intérieures ; autres variantes jour/nuit non
+observées séparément ; `WTLAKA-D`, `WTPOOL`, `WTOIL`, `WTLAVA-D`, `WT5000A-D`.
 
 AR2300 : acceptation visuelle de l'eau distincte du problème de crash/incohérence de carte encore
 suivi dans `pipeline/PROBLEMES_A_RESOUDRE.md`. Ne pas l'utiliser comme témoin de stabilité globale.

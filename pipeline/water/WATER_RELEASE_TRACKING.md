@@ -74,13 +74,31 @@ source release ; aucune preuve déduite d'un fichier présent.
 | `pending-ingame` | candidat installé/non validé | non |
 | `blocked-family-qa` | matériau/environnement non qualifié | non |
 
-## État initial enregistré
+## État courant — audit du 2026-09-12
+
+| État eau exact | Identités |
+|---|---|
+| `validated-ingame` | AR0046N, AR0204, AR0300N, AR0900N, AR1200, AR1600, AR1700, AR1901, AR0404, AR1607, AR1800 |
+| `validated-current-fallback` | AR2100 (`q=0`, aucune route2 approuvée) |
+| `pending-ingame` | AR0300 jour, AR0900 jour, AR2300 |
+| `session-accepted-variant-unresolved` | AR0046 jour ou nuit observé historiquement ; AR0046N possède désormais sa QA exacte séparée |
+| `blocked-family-qa` | AR0512, AR1604 (eaux intérieures) |
+
+Total :18identités suivies ;11validées route2,1fallback validé,3en attente,1non résolue,
+2bloquées. Toutes sont installées ; installation ≠ QA. Autorité machine :
+`release-tracking-v1.json`. `areas.csv` garde la QA générale des maps ; le présent suivi reste plus
+strict pour chaque traitement eau/WED après modification. Aucun état release n'est déduit.
+Runtime installé v10 : source exacte commit `98cba84fa59e8647c9b4a816ca69e47dbaa3cfa8`, registre
+`ar0300n-reflections-alpha160-registry-v10`, DLL SHA256 `250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59`.
+
+## État initial enregistré — historique
 
 - Formalisés : AR0204, AR0900 jour, AR1600, AR0404, AR1607, AR1800.
 - Fallback formalisé : AR2100 q0.
 - Retours positifs à préciser : AR0046 et AR0300, variante observée inconnue.
 - Retours positifs uniques : AR1200, AR1700, AR1901 ; AR2300 garde un blocage map indépendant.
-- En attente nuit : AR0046N, AR0300N, AR0900N.
+- En attente nuit à l'ouverture du chantier : AR0046N, AR0300N, AR0900N ; toutes trois sont
+  maintenant validées sur leurs candidats exacts, sans validation implicite des cycles/météos.
 - Bloqués eaux intérieures : AR0512, AR1604.
 - Runtime développement validé ingame : commit `d37c7899`, registre19, q0.70. Non prêt release :
   diagnostics INI actifs, bundle final non reconstruit, tests/lifecycle non autorisés.

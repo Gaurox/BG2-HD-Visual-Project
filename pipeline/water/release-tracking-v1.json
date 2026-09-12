@@ -139,7 +139,7 @@
   ],
   "runtime": {
     "state": "validated-installed-development-candidate",
-    "source_commit": "45b455df3907100862a8b480fa0e3bdf62a41049",
+    "source_commit": "98cba84fa59e8647c9b4a816ca69e47dbaa3cfa8",
     "registry_evidence_id": "ar0300n-reflections-alpha160-registry-v10",
     "dll": {"path":"backups/renderer/20260912T161541504124Z-3fc27425/candidate/InfinityEngine-Enhancer.dll","sha256":"250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59","bytes":1838080},
     "ini": {"path":"backups/renderer/20260912T161541504124Z-3fc27425/candidate/InfinityEngine-Enhancer.ini","sha256":"F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C","bytes":5572},
@@ -153,7 +153,6 @@
       {"path": "engine/InfinityEngine-Enhancer/source-patchee/assets/game-textures/iee_water_foam.rgba", "sha256": "F9FB4383F83BEDD94A187EC2118FFE91879AEE911C0E96E05CC3C882B309DFF6"}
     ],
     "release_blockers": [
-      "v10 source_commit denotes build baseline; exact compiled changes are frozen in ar0300n-reflections-alpha160-report-v10.source_snapshot; final release source commit remains to select",
       "AR0900N night v5 validated; day-night-day lifecycle of runtime WED transition fix remains unconfirmed",
       "current INI has EnableTilePageDiagnostics=true",
       "WTLAKE entries require ingame QA: AR0300 day, AR0900, AR2300; AR0300N paired160 v10 validated night only; lifecycle/weather not separately attested",

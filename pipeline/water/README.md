@@ -19,6 +19,9 @@ dans `manifests/ar0046n-water-tint-validated-20260912-v7.json`.
 Suivi vers release : [contrat opérationnel](WATER_RELEASE_TRACKING.md) et
 `release-tracking-v1.json`. Audit strictement en lecture seule :
 `python -B pipeline/scripts/audit_water_release_tracking.py`.
+État courant :11identités `validated-ingame`,1fallback validé,3`pending-ingame`,1variante
+historique non résolue et2familles intérieures bloquées. La matrice nominative est dans
+`WATER_RELEASE_TRACKING.md` ; l'autorité machine reste le JSON.
 
 Reprise AR0204/AR1600 : [correctif installé et QA](AR0204_AR1600_REPAIR_20260912.md).
 Sélection installée courante :
