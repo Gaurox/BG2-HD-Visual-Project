@@ -1,0 +1,31 @@
+{
+  "schema": "bg2-water-sewage-qa-selection-v1",
+  "status": "validated-installed",
+  "qa_date": "2026-09-12",
+  "decision": "user validated both maps in their currently installed state",
+  "installation_manifest": "pipeline/water/manifests/wtsew-ar0404-pilot-installed-20260912-v1.json",
+  "registry": "maps/technical-overlays/WTSEW/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar0404-20260912/registry-v3.json",
+  "registry_sha256": "34D8E6542731867C00CA074FAA1E5A9603AF441A9F7256E80DB547D561CCC5D6",
+  "entries": [
+    {
+      "wed": "AR0404",
+      "overlay": "WTSEW",
+      "state": "validated-installed",
+      "route2_strength": 0.7,
+      "timeline": "36 phases at 15 Hz plus linear renderer blend at 30 FPS",
+      "qa_decision": "user validated ingame on 2026-09-12"
+    },
+    {
+      "wed": "AR2100",
+      "overlay": "WTSEW",
+      "state": "validated-installed-current-fallback",
+      "route2_strength": 0.0,
+      "timeline": "stock WED lookup over shared installed WTSEW overlay",
+      "qa_decision": "user validated the currently installed fallback state on 2026-09-12",
+      "scope_limit": "does not approve a future AR2100 route2 registry entry"
+    }
+  ],
+  "fallback": "identity absent or divergent remains q0-native",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

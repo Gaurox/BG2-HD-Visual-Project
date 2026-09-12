@@ -70,9 +70,10 @@
       "overlays": ["WTSEW"],
       "engine_mode": "sewage",
       "material": "sewage-dedicated",
-      "route2": "blocked-engine-branch",
+      "route2": "exact-entry-only",
+      "strength_0_70": "approved-ar0404-only",
       "strength_1": "not-approved",
-      "overlay_action": "preserve-stock"
+      "overlay_action": "shared-wtsew-x4-installed; ar0404-full-timeline-route2; ar2100-stock-wed-q0-validated"
     },
     {
       "id": "oil-wtoil",

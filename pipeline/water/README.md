@@ -7,14 +7,21 @@ Sélection installée courante :
 `manifests/ar0204-ar1600-validated-installed-20260912-v1.json` ; raccords RGB/WED corrigés,
 AR0204/AR1600/AR0900 validés0.70, interpolation30FPS conservée.
 
+Pilote égouts : [WTSEW AR0404/AR2100](WTSEW_AR0404_PILOT_20260912.md), validé ingame.
+AR0404 utilise la chaîne complète à `q=0.70` ; AR2100 est validée dans son état exact actuel
+(WED stock, overlay WTSEW partagé, route2 absente donc `q=0`).
+
 | Fichier | Rôle |
 |---|---|
 | `family-policy-v1.json` | Familles, méthode SeedVR et gates voie1/route2 |
 | `route2-registry-v1.json` | Entrées route2 approuvées ; absence/divergence = `q=0` |
 | `../../engine/InfinityEngine-Enhancer/source-patchee/assets/water-route2/registry-v2.json` | Extension append-only consommée par le moteur |
 | `manifests/wtlake-timeline30-q070-20260912-v1.json` | Lot WTLAKE 14 identités, 36 phases/15 Hz, blend 30 FPS, route2 `q=0.70` |
+| `manifests/wtsew-ar0404-pilot-installed-20260912-v1.json` | Pilote WTSEW AR0404 installé, reçus assets/shaders/renderer, QA en attente |
+| `manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json` | Décision QA ingame : AR0404 full route2 validée, AR2100 fallback courant validé |
 | `../scripts/orchestrate_water_batch.py` | Plan déterministe ; `--run` seul autorise l'exécution d'une étape supportée |
 | `../scripts/build_wtlake_timeline_batch.py` | Assemble le candidat WTLAKE ; aucun SeedVR/build moteur/install/release implicite |
+| `../scripts/build_wtsew_route2_pilot.py` | Produit le pilote AR0404 ; plan-only par défaut, exécution avec `--run` |
 
 Contrats :
 
@@ -34,6 +41,13 @@ Lot WTLAKE, plan puis assemblage explicite :
 ```powershell
 python -B pipeline/scripts/build_wtlake_timeline_batch.py --output maps/water-batches/runs/<run-id>
 python -B pipeline/scripts/build_wtlake_timeline_batch.py --output maps/water-batches/runs/<run-id> --run
+```
+
+Pilote WTSEW, plan puis production explicite dans un nouveau run :
+
+```powershell
+python -B pipeline/scripts/build_wtsew_route2_pilot.py --output maps/technical-overlays/WTSEW/runs/<run-id>
+python -B pipeline/scripts/build_wtsew_route2_pilot.py --output maps/technical-overlays/WTSEW/runs/<run-id> --run
 ```
 
 Plan complet en lecture seule :

@@ -18,7 +18,7 @@ uniform highp	vec4		uColorTone;
 uniform highp	float		uIeeShaderSuiteEnabled; // D3 suite master; intentionally neutral
 uniform highp	float		uIeeEnabled;       // 0/1 master gate (F10)
 uniform highp float uIeeWaterRoute2; // 1: native composition + overlay-only experiment
-uniform highp float uIeeWaterOverlayStrength; // per GL draw, proven AR0900 DAY/WTLAKE only
+uniform highp float uIeeWaterOverlayStrength; // per GL draw, exact registry identity only
 uniform highp float uIeeWaterTimelineEnabled; // per-draw fail-closed atlas timeline
 uniform highp float uIeeWaterTimelineFrameCount;
 uniform highp float uIeeWaterTimelineSourceFps;
@@ -328,7 +328,9 @@ void main()
 		// not by an alpha threshold. Keep base/secondary art, fades and shores.
 		// Zero strength bypasses every RGB/alpha change exactly.
 		if (uIeeEnabled > 0.5 && uIeeEnabled < 1.5 &&
-		    uIeeWaterOverlayStrength > 0.0 && cellMode > 0.5 && cellMode < 1.5)
+		    uIeeWaterOverlayStrength > 0.0 &&
+		    ((cellMode > 0.5 && cellMode < 1.5) ||
+		     (cellMode > 3.5 && cellMode < 4.5)))
 		{
 			waterCoverage = ieeCoverageWithCenter(worldPos, 1.0);
 			waterMask = clamp(uIeeWaterOverlayStrength, 0.0, 1.0);

@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-water-sewage-pilot-selection-v1",
+  "status": "installed-pending-ingame-qa",
+  "date": "2026-09-12",
+  "scope": {
+    "area": "AR0404",
+    "variant": "day-or-unique",
+    "overlay": "WTSEW",
+    "family": "sewage-wtsew",
+    "material_id": 4,
+    "overlay_slot": 1,
+    "coverage_cells": 140
+  },
+  "run": {
+    "path": "maps/technical-overlays/WTSEW/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar0404-20260912",
+    "run_manifest_sha256": "71FC84E2AE4500C9902F171140575CCCC44AF1975ADBF4C5F2D536A8758CDA85",
+    "plan_sha256": "482BF7B7ECCDB1A5F7FF6092036342603B8B61CE1169E2762B5FF7AF1E64EE39",
+    "candidate_manifest_sha256": "EB65652AE4E294D8A33133622E7211C7B22F00E4485FBAB396D277CD337790E4"
+  },
+  "production": {
+    "seedvr_model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "color_correction_method": "none",
+    "periodic_context": "3x3",
+    "source_frames": 6,
+    "native_frames": 36,
+    "native_fps": 15.0,
+    "target_fps": 30.0,
+    "interpolator": "apollo-8",
+    "runtime_blend": "linear",
+    "route2_strength": 0.7
+  },
+  "registry": {
+    "path": "maps/technical-overlays/WTSEW/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar0404-20260912/registry-v3.json",
+    "sha256": "34D8E6542731867C00CA074FAA1E5A9603AF441A9F7256E80DB547D561CCC5D6",
+    "entries": 15,
+    "added_entry": "wtsew-ar0404-slot1-q070-v3",
+    "parent_entries_unchanged": 14,
+    "fallback": "q0-native"
+  },
+  "installed": {
+    "assets": {
+      "AR0404.WED": "76E07F6D0DC0774FD2E9D27217434210420A735EE6BD5847233F57D55E11AD98",
+      "WTSEW.TIS": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+      "WSEW00.PVRZ": "B028B198CBFBFC7ECEB23AB35199A02880C1D335AFE164096C88EC0CEB152D19"
+    },
+    "shader_fpseam_sha256": "CD9D70482D5509C46BA10755A7B5650D503CDFEF9B99B9C4F3BD0BF11703076D",
+    "renderer_dll_sha256": "2BC8D24E2D502D7F34DAA04CB080AEE55FA8E494007D269C7CA20DCEA1FC5BE7",
+    "renderer_ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "receipts": {
+    "assets": "backups/water-wtsew-ar0404/assets/override-backup-20260912-134455/install-backup.json",
+    "assets_sha256": "100CE86A80031759F4DD3ADA61C28DDA0392D1FAFCE606ABD4AC4D553632E499",
+    "shaders": "backups/shader-suite/wtsew-ar0404/20260912T114501849297Z-63435473/shader-install-receipt.json",
+    "shaders_sha256": "07392690D3B0BF1A845A49D0A563F445399E40A1748F869A5A19294BE189FE38",
+    "renderer": "backups/renderer/wtsew-ar0404/20260912T114506822048Z-82d9b452/renderer-install-receipt.json",
+    "renderer_sha256": "70F9846F84DECE655F9A47BC68497E9ED0CC1BF541EDCF73215668854A46A1CA"
+  },
+  "qa": {
+    "status": "pending-ingame",
+    "command": "C:MoveToArea(\"AR0404\")",
+    "next_target_after_approval": "AR2100"
+  },
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

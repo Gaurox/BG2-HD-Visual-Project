@@ -32,7 +32,6 @@ Ce fichier ne contient que les blocages ouverts. Les décisions durables sont da
 
 | Zone | Point à reprendre |
 |---|---|
-| AR0404 | WTSEW trop clair/propre ; nouvelle QA requise |
 | AR1607 | WTSWAM brun et pause visible |
 | AR1800 | WTSWAM brun et pause visible |
 | AR2300 | crash de carte complète et incohérence d'eau ; reprise complète |
