@@ -13,6 +13,8 @@ Contrats :
 
 - nouvelle inférence SeedVR du lot : `color_correction_method=none` ;
 - artefacts témoins inchangés : AR0900 jour LAB, WTLAKE périodique wavelet ;
+- voie 1 par lot : `route1-policy-v1.json` et `../scripts/build_water_route1_batch.py` ;
+- raccords alpha secondaires confirmés : `../scripts/repair_water_secondary_alpha_seams.py` ;
 - voie1 avant route2 ;
 - registre route2 exact, versionné, fail-closed ;
 - le build moteur génère une table C++ depuis v2 et vérifie au démarrage les hashes TIS/PVRZ live ;

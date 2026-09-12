@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-water-route1-policy-v1",
+  "version": 1,
+  "date": "2026-09-12",
+  "seedvr_new_processing_color_correction_method": "none",
+  "contract": {
+    "source": "DXT1/PVR7 and alpha255",
+    "destination": "DXT5/PVR11 and alpha0",
+    "selection": "primary exclusively used by one liquid overlay without secondary; never used as secondary",
+    "patch": "DXT5 alpha128 on 256px core plus proven 4px atlas padding; RGB byte-exact",
+    "fallback": "leave source bytes unchanged and record blocker"
+  },
+  "families": {
+    "lake-wtlake": {
+      "alpha128": "candidate-installable-pending-map-qa",
+      "reason": "same engine composition contract as validated AR0900 day"
+    },
+    "lake-teal-wtlaka-d": {
+      "alpha128": "candidate-installable-pending-family-qa",
+      "reason": "water composition compatible; teal overlay material remains independently blocked"
+    },
+    "swamp-wtswam": {
+      "alpha128": "candidate-installable-pending-family-qa",
+      "reason": "native DXT1 composition restored; swamp overlay and material remain independent"
+    },
+    "sewage-wtsew": {
+      "alpha128": "candidate-installable-pending-family-qa",
+      "reason": "native DXT1 composition restored; sewage engine branch remains independent"
+    },
+    "oil-wtoil": {
+      "alpha128": "candidate-installable-pending-family-qa",
+      "reason": "native DXT1 composition restored; viscous material remains independent"
+    },
+    "pool-wtpool": {
+      "alpha128": "not-required-by-current-evidence",
+      "reason": "all detected pool liquid cells retain secondary art"
+    },
+    "lava-wtlava-d": {
+      "alpha128": "blocked-forbidden-water-contract",
+      "reason": "lava requires its dedicated emissive composition"
+    },
+    "brown-flowing-wt5000": {
+      "alpha128": "not-required-by-current-evidence",
+      "reason": "no proven central-alpha divergence"
+    }
+  }
+}
