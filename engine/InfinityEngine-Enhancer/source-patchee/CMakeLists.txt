@@ -170,7 +170,8 @@ if(IEE_BUILD_WINDOWS_DLL)
 
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     set(IEE_WATER_ROUTE2_REGISTRY
-        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json")
+        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json"
+        CACHE FILEPATH "Versioned water route2 registry compiled into the DLL")
     set(IEE_WATER_ROUTE2_PARENT_REGISTRY
         "${CMAKE_SOURCE_DIR}/../../../pipeline/water/route2-registry-v1.json")
     set(IEE_WATER_ROUTE2_GENERATED

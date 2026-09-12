@@ -47,7 +47,7 @@ bool file_sha256(const std::filesystem::path& path, Sha256& digest) noexcept {
     }
     std::ifstream stream(path, std::ios::binary);
     if (!stream) throw std::runtime_error("open");
-    std::array<char, 1024 * 1024> buffer{};
+    std::vector<char> buffer(1024 * 1024);
     while (stream) {
       stream.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
       const auto count = stream.gcount();
@@ -100,7 +100,9 @@ bool validate_entry(const std::filesystem::path& root,
   const auto wedOverride = root / (std::string(resref_view(entry.wed)) + ".WED");
   std::error_code error;
   const bool hasWedOverride = std::filesystem::is_regular_file(wedOverride, error);
-  if (error || (!hasWedOverride && !entry.allowStockWedWhenOverrideAbsent)) return false;
+  const bool wedOverrideAbsent = error == std::errc::no_such_file_or_directory;
+  if ((error && !wedOverrideAbsent) ||
+      (!hasWedOverride && !entry.allowStockWedWhenOverrideAbsent)) return false;
   if (hasWedOverride) {
     Sha256 digest{};
     if (!file_sha256(wedOverride, digest) || digest != entry.wedSha256) return false;
