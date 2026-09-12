@@ -1,6 +1,10 @@
 # AR0900 jour — mélange natif DXT1 reproduit en DXT5
 
-## Périmètre retenu le 2026-09-12
+> Fiche historique du candidat alpha128. Le candidat final réparant aussi les raccords est
+> validé ingame le 2026-09-12 ; recette complète, références et hashes dans
+> [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md). `areas.csv` sélectionne ce dernier run.
+
+## Périmètre retenu au commit `309c1db2` du 2026-09-12
 
 - Autorité courante : `areas.csv`, ligne AR0900, variante jour.
 - Retour utilisateur : résultat presque parfait ; conserver le correctif, analyser les fins
@@ -71,8 +75,10 @@ Racine des chemins relatifs : dépôt. Destination jeu : `config://bg2ee_game_ro
 - `0x2A4706..0F` : appel DrawAlpha avec valeur128 lue à `0x65B4E4` ; passe secondaire :
   `0x2A47DE..E7`. Valeur par défaut de l'exécutable, pas une capture mémoire du processus.
 
-## Défaut restant
+## Défaut restant à ce stade historique
 
 - Très fins segments noirs sur certains côtés de tuiles ; cause encore à analyser au commit.
 - Distinguer RGB caché/marges d'atlas, alpha de contour et couverture/UV de rendu.
 - Ne pas modifier l'opacité globale ni réupscaler WTLAKE pour masquer ce défaut sans preuve.
+- Résolu depuis par greffe RGB du maître secondaire continu et restauration alpha des interfaces
+  internes uniquement ; voir la notice complète. Le présent run reste immuable.

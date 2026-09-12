@@ -53,13 +53,15 @@ ne sont pas réconciliés par une décision explicite.
 - Les masques polygonaux restent une solution de repli documentée dans
   [`GEOMETRIC_ALPHA_MASK_CLEANUP.md`](GEOMETRIC_ALPHA_MASK_CLEANUP.md).
 
-## WATER-002 — Fins rebords noirs après correction du mélange AR0900
+## WATER-002 — Portage de la réparation eau native aux autres maps
 
-- Correctif alpha128 jour retenu pour poursuite QA :
-  [`AR0900_NATIVE_WATER_ALPHA128.md`](AR0900_NATIVE_WATER_ALPHA128.md).
-- Retour utilisateur du 2026-09-12 : résultat presque parfait ; fins segments noirs sur certains
-  côtés de tuiles. Cause non établie au commit ; distinguer marges RGB/alpha et rendu des quads.
-- Pas de généralisation, modification nuit ou intégration release avant résolution/QA.
+- AR0900 jour entièrement corrigé et validé par l'utilisateur le 2026-09-12 : composition native,
+  WTLAKE périodique, alpha128 central, bandes RGB/alpha des interfaces internes et marges.
+- Notice technique et preuves : [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md).
+- Restent : orchestrateur paramétré, audits/builder legacy recommandant alpha0, qualification des
+  autres structures/familles et variantes nuit. Ne pas généraliser les constantes du témoin.
+- La configuration Core release impose encore `EnableWaterEffect=true`, contrairement au témoin ;
+  intégration release distincte à décider, aucun bundle/payload à reconstruire implicitement.
 
 ## WTPOOL-001 — Piscines x4
 

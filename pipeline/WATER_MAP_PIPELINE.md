@@ -4,6 +4,10 @@ Cette branche complète [`README.md`](README.md). Elle traite l'alpha et les cel
 la zone ; elle ne décide pas automatiquement quelle version d'un overlay global doit être
 installée ou publiée.
 
+Réparation de la composition native validée sur AR0900 jour le 2026-09-12 :
+[`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md). Suivre cette notice pour les ombres/reflets,
+le mélange central et les coutures ; ne pas suivre la recommandation legacy alpha0 des audits.
+
 ## Gate préalable
 
 ```powershell
@@ -16,11 +20,12 @@ Lire le rapport, puis exiger :
 - liste exacte des resrefs de liquide ;
 - nombre de cellules concernées ;
 - politique d'overlay explicitement reconnue ;
-- besoins `transparent-full-water-base` et lissage de contour ;
+- format source/destination, rôle WED, opacité effective et lissage de contour ;
 - distinction primaire/secondaire et jour/nuit.
 
-La politique globale est `releases/BG2-HD-Upscale/manifests/overlay-sources.json` : WTLAKE,
-WTPOOL et WTLAKA-D sont publiés en x2 ; WTLAVA-D en x4 ; WTSWAM, WTSEW et WTOIL restent stock.
+La politique globale est `releases/BG2-HD-Upscale/manifests/overlay-sources.json` : au 2026-09-12,
+WTLAKE est sélectionné en x4 périodique, WTPOOL et WTLAKA-D en x2, WTLAVA-D en x4 ;
+WTSWAM, WTSEW et WTOIL restent stock. Sélection ne signifie pas publication.
 Ne jamais déduire une échelle depuis l'override, un backup ou la présence d'un run. Une modification
 exige une nouvelle QA par resref, puis la mise à jour explicite des tailles et SHA-256 du manifeste.
 
@@ -28,7 +33,9 @@ exige une nouvelle QA par resref, puis la mise à jour explicite des tailles et 
 
 1. Upscaler les rendus de la zone en x4 selon `areas.csv` et le préflight.
 2. Conserver l'alpha source ; le builder applique le rééchantillonnage bilinéaire des masques.
-3. Utiliser `--transparent-full-water-base` uniquement si l'audit le demande.
+3. Pour la composition native, ne pas suivre `--transparent-full-water-base` : alpha0 efface
+   l'art local. DXT1 opaque converti DXT5 + primaire exclusivement eau sans secondaire :
+   appliquer le contrat alpha128 et les garde-fous de `WATER_REPAIR_RUNBOOK.md` ; autres cas à auditer.
 4. Conserver DXT5 dès qu'une transparence existe ; ne jamais forcer DXT1.
 5. Construire primaire et secondaire selon le WED, puis jour et nuit indépendamment.
 6. Vérifier `0 resampled`, `0 OOB`, dimensions exactes, inventaire PVRZ et resrefs sur huit

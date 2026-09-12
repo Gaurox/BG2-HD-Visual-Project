@@ -73,6 +73,7 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Variantes jour/nuit | [`DAY_NIGHT_MAP_PIPELINE.md`](DAY_NIGHT_MAP_PIPELINE.md) |
 | Découpe selon dimensions | [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md) |
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
+| Réparation eau native — reprise LLM | [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md) |
 | Liquides et overlays | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
 | Patch raster local | [`map_patch_compositor/README.md`](map_patch_compositor/README.md) |

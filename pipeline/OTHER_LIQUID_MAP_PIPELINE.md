@@ -28,8 +28,9 @@ release. Ne pas masquer cette divergence.
 ## Règles de build
 
 - Restaurer l'alpha des variantes principale et secondaire depuis les données natives.
-- Employer `--transparent-full-water-base` uniquement si l'audit identifie les bases opaques sans
-  secondaire sous le liquide.
+- Ne pas appliquer `--transparent-full-water-base` d'après l'audit seul : la composition native
+  DXT1→DXT5 exige un contrôle de l'opacité effective, pas alpha0. Voir
+  [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md). Les autres familles restent à qualifier.
 - Garder les tuiles à secondaire et leurs masques inverses.
 - Ne jamais installer un overlay déclaré `stock` ni reconstruire un atlas pour corriger une
   sentinelle locale.
