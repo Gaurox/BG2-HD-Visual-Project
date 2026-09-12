@@ -1,0 +1,21 @@
+{
+  "schema": "bg2-water-route2-registry-v2",
+  "version": 2,
+  "date": "2026-09-12",
+  "parent": {
+    "path": "pipeline/water/route2-registry-v1.json",
+    "sha256": "E23E942D8E5D0E37F4E8455D9937F1009B81DBD4C98AA02B9F2499664AA5A909"
+  },
+  "entry_overrides": [
+    {
+      "id": "ar0900-day-wtlake-slot1-q100-v1",
+      "overlay_coverage_cells": 1635,
+      "allow_stock_wed_when_override_absent": true,
+      "material_id": 1
+    }
+  ],
+  "fallback": {
+    "strength": 0.0,
+    "unknown_or_invalid_identity": "native"
+  }
+}

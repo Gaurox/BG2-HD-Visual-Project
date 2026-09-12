@@ -59,6 +59,7 @@
 #include "iee/item_icon_x2.h"
 #include "iee/shader_probe.h"
 #include "iee/shader_suite.h"
+#include "iee/water_route2_registry.h"
 
 namespace iee::probe {
 void record_creature_texture_trace(unsigned, int, int, int, int, int,
@@ -976,36 +977,41 @@ void test_logger_rotation_is_bounded() {
 }
 
 void test_water_overlay_route2_policy() {
-  using iee::core::route2_water_identity;
-  using iee::core::route2_water_layout;
   using iee::core::route2_water_strength;
+  using iee::water_route2::RegistryEntry;
+  using iee::water_route2::Query;
+  using iee::water_route2::identity_matches;
+  using iee::water_route2::resref_array;
   std::array<std::string_view, 5> slots{"AR0900", "WTLAKE", "", "", ""};
-  expect_true(route2_water_layout(slots), "Stock five-slot WED is eligible");
-  expect_true(route2_water_layout({slots.data(), 2}), "Two populated slots are eligible");
-  expect_true(!route2_water_layout({slots.data(), 1}), "Missing overlay fails closed");
+  RegistryEntry entry{};
+  entry.wed = resref_array("AR0900");
+  entry.baseTis = resref_array("AR0900");
+  entry.overlayTis = resref_array("WTLAKE");
+  entry.overlaySlot = 1;
+  entry.gridWidth = 80;
+  entry.gridHeight = 60;
+  entry.slotCount = 5;
+  entry.baseTileCount = 5752;
+  entry.overlayTileCount = 6;
+  entry.overlayCoverageCells = 1635;
+  entry.slots = {resref_array("AR0900"), resref_array("WTLAKE"),
+                 resref_array(""), resref_array(""), resref_array("")};
+  Query query{"AR0900", "AR0900", "WTLAKE", "WLAKE00", slots,
+              1, 80, 60, 5752, 6, 1635, 2048, 2048};
+  expect_true(identity_matches(query, entry), "Exact manifested identity is eligible");
   slots[4] = "WTPOOL";
-  expect_true(!route2_water_layout(slots), "Additional populated overlay is excluded");
+  expect_true(!identity_matches(query, entry), "Additional populated overlay is excluded");
   slots[4] = "";
-  slots[0] = "AR0900N";
-  expect_true(!route2_water_layout(slots), "Night base layout is excluded");
-  expect_true(route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 6, 2048, 2048),
-              "Route2 permits only the proven standalone day overlay");
-  for (const auto area : {"", "AR2300", "AR0900N"}) {
-    expect_true(!route2_water_identity(area, "AR0900", "WTLAKE", "WLAKE00", 6, 2048, 2048),
-                "Other or missing WED identities fail closed");
-  }
-  expect_true(!route2_water_identity("AR0900", "AR0900N", "WTLAKE", "WLAKE00", 6, 2048, 2048),
-              "Night base under a day WED is excluded");
-  expect_true(!route2_water_identity("AR0900", "AR0900", "WTPOOL", "WLAKE00", 6, 2048, 2048),
-              "A recycled wrapper from another overlay is excluded");
-  expect_true(!route2_water_identity("AR0900", "AR0900", "WTLAKE", "A090000", 6, 2048, 2048),
-              "Base/secondary art pages must never receive procedural water");
-  expect_true(!route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 7, 2048, 2048) &&
-              !route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 6, 1024, 2048),
-              "Unknown atlas layouts are excluded");
+  query.wed = "AR0900N";
+  expect_true(!identity_matches(query, entry), "Night identity is excluded without an entry");
+  query.wed = "AR0900";
+  query.overlayTileCount = 7;
+  expect_true(!identity_matches(query, entry), "Unknown overlay tile count is excluded");
   for (const float q : {0.0f, 0.15f, 0.3f, 1.0f}) {
     expect_eq(route2_water_strength(q), q, "Valid route2 dosage is preserved including zero");
   }
+  expect_eq(route2_water_strength(1.0f, 0.3f), 0.3f,
+            "Registry approval caps the global requested dosage");
   for (const float q : {-0.1f, 1.1f, std::numeric_limits<float>::infinity(),
                         std::numeric_limits<float>::quiet_NaN()}) {
     expect_eq(route2_water_strength(q), 0.0f, "Invalid dosage fails to neutral, not maximum");

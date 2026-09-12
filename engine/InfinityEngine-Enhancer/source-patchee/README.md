@@ -11,7 +11,7 @@ builds acceptés et les capacités par build viennent exclusivement de
 | Fonction | Périmètre |
 |---|---|
 | Tuiles TIS/PVRZ xN | échelle lue dans le header TIS, puis table PVR, heuristique en dernier recours |
-| Liquides | masque WED, teinte auteur, textures DDS facultatives, shader `fpSEAM.glsl` |
+| Liquides | masque WED, teinte auteur, textures DDS facultatives, shader `fpSEAM.glsl`, route2 via registre v2 compilé fail-closed |
 | Animations de zone | registres v1/v2/v3, TimedTimeline, packs par zone et variantes par occurrence |
 | Effets de sort x4 | registre multi-resref v1/v2, scopes projectile + VVC, fallback natif strict |
 | Sprites créature xN | chemin QA opt-in, baseline `NEAREST`, pour propriétaires/classes explicitement manifestés |
@@ -102,6 +102,7 @@ modifie pas le bundle release scellé.
 | Transition AR1300 | [`docs/event-video-overlay-assets.md`](docs/event-video-overlay-assets.md) |
 | Transaction renderer | [`docs/renderer-candidate-transaction.md`](docs/renderer-candidate-transaction.md) |
 | Transaction shader-suite | [`docs/shader-suite-candidate-transaction.md`](docs/shader-suite-candidate-transaction.md) |
+| Route2 eau | [`../../../pipeline/water/README.md`](../../../pipeline/water/README.md) |
 | Effets VVC | [`docs/validation/effect-vvc-bg2ee-2.7.3.md`](docs/validation/effect-vvc-bg2ee-2.7.3.md) |
 | Sprites | [`../../../sprite/README.md`](../../../sprite/README.md) |
 | Catmull–Rom sprites HD (plan) | [`../../../sprite/catmull-rom/README.md`](../../../sprite/catmull-rom/README.md) |

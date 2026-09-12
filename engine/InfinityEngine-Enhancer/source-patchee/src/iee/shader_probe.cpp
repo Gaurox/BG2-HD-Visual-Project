@@ -1764,10 +1764,11 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &active);
   const auto texture = bound_texture_snapshot(gl, unit);
   gl.glActiveTexture(static_cast<unsigned>(active));
-  const bool matched = hooks::matches_route2_water_overlay(texture.texture,
-                                                           texture.width, texture.height);
+  const float approvedStrength = hooks::route2_water_overlay_strength(
+      texture.texture, texture.width, texture.height);
+  const bool matched = approvedStrength > 0.0f;
   const float strength = matched && g_cfg.enableWaterEffect
-      ? core::route2_water_strength(g_cfg.waterOverlayStrength) : 0.0f;
+      ? core::route2_water_strength(g_cfg.waterOverlayStrength, approvedStrength) : 0.0f;
   gl.glUniform1f(scope.strength, strength);
   if (g_cfg.enableTilePageDiagnostics) {
     static unsigned matchedTraces = 0;

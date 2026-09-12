@@ -29,6 +29,7 @@
 #include "iee/game/game_addrs.h"
 #include "iee/game/renderer.h"
 #include "iee/shader_probe.h"
+#include "water_route2_registry.h"
 #include "water_textures.h"
 
 namespace iee {
@@ -124,6 +125,12 @@ static DWORD WINAPI InitThread(LPVOID) {
       // creation remains lazy on the context-owning render thread.
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)water::prepare_water_textures(moduleDir / "iee-textures");
+    }
+    if (cfg.enableWaterOverlayRoute2) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      if (!water_route2::prepare(moduleDir / "override")) {
+        LOG_WARN("WATER_ROUTE2 registry has no validated entry; native q=0 fallback is active");
+      }
     }
     if (cfg.enableMenuX2Test) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
@@ -289,6 +296,7 @@ static void CleanupHooks() noexcept {
     probe::uninstall_shader_probes();
     hooks::uninstall_all();
     area::release_gpu_area_resources();
+    water_route2::release();
     water::release_water_textures();
     biglogo::release();
     area_animation_x4::release();

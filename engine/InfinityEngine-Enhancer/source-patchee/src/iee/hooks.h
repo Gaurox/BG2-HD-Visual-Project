@@ -25,5 +25,5 @@ void on_frame_boundary(unsigned long long frame,
 void on_post_swap() noexcept;
 
 bool is_active();
-bool matches_route2_water_overlay(unsigned texture, int width, int height) noexcept;
+float route2_water_overlay_strength(unsigned texture, int width, int height) noexcept;
 }  // namespace iee::hooks

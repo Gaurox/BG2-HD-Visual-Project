@@ -168,6 +168,26 @@ if(IEE_BUILD_WINDOWS_DLL)
     )
     FetchContent_MakeAvailable(minhook)
 
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    set(IEE_WATER_ROUTE2_REGISTRY
+        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json")
+    set(IEE_WATER_ROUTE2_PARENT_REGISTRY
+        "${CMAKE_SOURCE_DIR}/../../../pipeline/water/route2-registry-v1.json")
+    set(IEE_WATER_ROUTE2_GENERATED
+        "${IEE_GENERATED_DIR}/iee/water_route2_registry.generated.h")
+    add_custom_command(
+        OUTPUT "${IEE_WATER_ROUTE2_GENERATED}"
+        COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"
+                --input "${IEE_WATER_ROUTE2_REGISTRY}"
+                --output "${IEE_WATER_ROUTE2_GENERATED}"
+        DEPENDS
+            "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"
+            "${IEE_WATER_ROUTE2_REGISTRY}"
+            "${IEE_WATER_ROUTE2_PARENT_REGISTRY}"
+        VERBATIM
+    )
+
     add_library(InfinityEngine-Enhancer SHARED
         src/iee/am0205e_animation_x4_test.cpp
         src/iee/am0700a_animation_x4_test.cpp
@@ -194,6 +214,8 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/shader_uniform_bridge.cpp
         src/iee/supersample.cpp
         src/iee/water_textures.cpp
+        src/iee/water_route2_registry.cpp
+        "${IEE_WATER_ROUTE2_GENERATED}"
         src/iee/game/opengl_types.cpp
         src/iee/game/renderer.cpp
     )
@@ -207,6 +229,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         Cabinet
         dbghelp
         winmm
+        bcrypt
         mfplat
         mfreadwrite
         mfuuid
