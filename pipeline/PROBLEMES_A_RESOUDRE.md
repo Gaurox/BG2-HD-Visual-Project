@@ -63,6 +63,15 @@ ne sont pas réconciliés par une décision explicite.
 - La configuration Core release impose encore `EnableWaterEffect=true`, contrairement au témoin ;
   intégration release distincte à décider, aucun bundle/payload à reconstruire implicitement.
 
+## WATER-003 — WED timeline WTLAKE : offsets des polygones d'objets
+
+- Cause : insertion60octets dans la timeline sans déplacer les offsets internes des portes.
+- Producteurs corrigés par `scripts/water_wed.py` ; AR0204/AR1600 réinstallés et validés ingame
+  le 2026-09-12.
+- Restent installés hors périmètre de ce correctif : AR0300/N, AR0900/N, AR2300.
+- AR0204 BRIDGE01 a0polygone : offset incohérent corrigé, pas de crash prouvé associé.
+- Preuves, reçus et QA : [`water/AR0204_AR1600_REPAIR_20260912.md`](water/AR0204_AR1600_REPAIR_20260912.md).
+
 ## WTPOOL-001 — Piscines x4
 
 - Limite observée : certaines petites piscines dépassent le coût visuel acceptable après

@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-map-repair-request-v1",
+  "output": "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1",
+  "registry": "maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2/registry-v3-wtlake-q070.json",
+  "registry_sha256": "28C1149F4C1ED6EA059A332A3DFE41F3E530A98772672D90F808F9991A26F711",
+  "seedvr": "not-run",
+  "new_seedvr_color_correction_method": "none",
+  "tests": "none-user-request",
+  "targets": [
+    {
+      "wed": "AR0204",
+      "base": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-wtlake/maps/AR0204",
+      "donor": "maps/AR0204/runs/seedvr2-7b-int8-lab-split-grid-2x5-x4/tuiles-secondaires/03_assemble/AR0204-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "donor_sha256": "629FDD9028463DDB5E098FC6DC7BCC534F13309680FD5A76EADB4164A2F3DBE7",
+      "strength": 0.15,
+      "strength_reason": "Provisional reduced procedural contribution for dark underground authored water; retain 36-phase/render30 animation; ingame comparison required."
+    },
+    {
+      "wed": "AR1600",
+      "base": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-wtlake/maps/AR1600",
+      "donor": "maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4/tuiles-secondaires/03_assemble/AR1600-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "donor_sha256": "3DB86DA16E97F13CE012B60E63F8A4E4DA1040E6703A1473B8D0F19C20BC57D2",
+      "strength": 0.7
+    }
+  ]
+}

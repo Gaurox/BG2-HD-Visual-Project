@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-water-route2-registry-installation-selection-v1",
+  "status": "installed-pending-ar0204-ingame-qa",
+  "registry_run": "maps/water-batches/runs/ar0204-q070-ar1600-approved-20260912-v1",
+  "registry": "maps/water-batches/runs/ar0204-q070-ar1600-approved-20260912-v1/registry-v3.json",
+  "registry_sha256": "2BABEF180A9CDA16D125D64700A70D447EC8790E32A922E34AF7B09F0828F24C",
+  "renderer_build": "build/iee-water-ar0204-q070-ar1600-approved-20260912-vs2019",
+  "renderer_candidate": "build/water-ar0204-q070-ar1600-approved-20260912/renderer",
+  "dll_sha256": "4D05BD16389A6763E96908037966122FBD42F4546FA4C0168394724A7412F119",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "renderer_receipt": "backups/renderer/20260912T111204929317Z-e69bc37f/renderer-install-receipt.json",
+  "asset_installation": "unchanged-from-ar0204-ar1600-installed-20260912-v1",
+  "entries": [
+    {"wed": "AR0204", "strength": 0.7, "state": "installed-pending-ingame-qa",
+     "qa_request": "compare shadows, depth, seams and 30 FPS motion at q=0.70"},
+    {"wed": "AR1600", "strength": 0.7, "state": "validated-installed",
+     "qa_decision": "user validated ingame on 2026-09-12 after WED and RGB seam repair"},
+    {"wed": "AR0900", "strength": 0.7, "state": "validated-installed-unchanged-reference"}
+  ],
+  "verified_live_registry_files": 613,
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

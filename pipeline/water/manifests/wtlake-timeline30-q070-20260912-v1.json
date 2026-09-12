@@ -1,0 +1,68 @@
+{
+  "schema": "bg2-wtlake-timeline-batch-selection-v1",
+  "version": 1,
+  "date": "2026-09-12",
+  "family": "lake-wtlake",
+  "run": {
+    "path": "maps/water-batches/runs/wtlake-timeline30-q070-20260912-v2",
+    "plan_sha256": "B93BDD4EA393BEF55CB0C84593A272C17CF7181D0D08A1F6AF594A51943EBD7D",
+    "registry_sha256": "28C1149F4C1ED6EA059A332A3DFE41F3E530A98772672D90F808F9991A26F711",
+    "batch_manifest_sha256": "7DC61FC60D247B5AD37C438A37476D4B67631953153F46329469803E44DDB917",
+    "generated_header_sha256": "7A360939A2E2C4B30486C6E5C781F2F0680C9C8078A3D099BE91B4F9DC3B8AD3"
+  },
+  "parameters": {
+    "seedvr": "not-run",
+    "new_seedvr_color_correction_method": "none",
+    "route1": "existing-repaired-or-conform-build",
+    "timeline_frames": 36,
+    "native_fps": 15.0,
+    "render_fps": 30.0,
+    "route2_strength": 0.7,
+    "material_id": 1,
+    "fallback": "q0-native"
+  },
+  "shared_overlay": {
+    "tis": "WTLAKE.TIS",
+    "tis_sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+    "page": "WLAKE00.PVRZ",
+    "page_sha256": "28BB27276ABFBD995FDB9596875A9DDB4AF863967230DED3A703A96343079006"
+  },
+  "targets": [
+    {"wed": "AR0046", "variant": "day-or-unique", "coverage_cells": 48, "wed_sha256": "88D20925D70E5A2F4C7B9FCD364D1DFAC901EFC3229CEA40D8FA2995F569A2F9", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0046N", "variant": "night", "coverage_cells": 48, "wed_sha256": "F07286AE1A3E03843416A2EF9AE91D8DA7C338D08DE3F63D655447D5323AF177", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0204", "variant": "day-or-unique", "coverage_cells": 661, "wed_sha256": "E8BA023A8D42B09E314810598A455ACA755F83F550011AAF3FB3A58D2EDB4F27", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0300", "variant": "day-or-unique", "coverage_cells": 1266, "wed_sha256": "1C3790BFB64FFE4BC8E3703311C6874FEDA0248B8B21D7C1B7AD28C2E91D473D", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0300N", "variant": "night", "coverage_cells": 1266, "wed_sha256": "0177F4012695845788F7BB7C1ECE6ABB8930DBF74F2F84112FB9DAA9A8EC80CA", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0512", "variant": "day-or-unique", "coverage_cells": 6, "wed_sha256": "335F9EB517246CE3DA359DBE14A20B0C80A61E4F1D85225064964FC0E140F5F5", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR0900", "variant": "day-or-unique", "coverage_cells": 1635, "wed_sha256": "9D60A1E55B8F17632E9ED37AEB13CCF2CFB21389D4FF6CA3A017FFB546D5CE17", "state": "corrected-validated-reference"},
+    {"wed": "AR0900N", "variant": "night", "coverage_cells": 1635, "wed_sha256": "2D554F026B8DE7D042FA1013300416C01E076A497852FB47B71092115880627E", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR1200", "variant": "day-or-unique", "coverage_cells": 645, "wed_sha256": "47C670B75EFCDCB295DBC772D84BBBAAFCF64121B5E27F8A6CD68CA4C272A071", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR1600", "variant": "day-or-unique", "coverage_cells": 587, "wed_sha256": "FA186AD731A446FCF585A93FA1805E33240E0D5DCB29931527D676F1BF95D108", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR1604", "variant": "day-or-unique", "coverage_cells": 113, "wed_sha256": "127C442ECFE73FDA66317B0D45759EF65239E944C37268E426F08B70E350D954", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR1700", "variant": "day-or-unique", "coverage_cells": 416, "wed_sha256": "A07B3C0C912B8511E0983BF7ED2195AD63EC848E1F6D31B18AE7518B6D35414A", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR1901", "variant": "day-or-unique", "coverage_cells": 47, "wed_sha256": "6CC0B3E91EF682881B8DB0FEBE588450552517F5062A09C6730AC669E8CF0F4F", "state": "candidate-installable-pending-qa"},
+    {"wed": "AR2300", "variant": "day-or-unique", "coverage_cells": 1111, "wed_sha256": "8FA62F354A9CB964BD3057F6337ED73BDDE25B94C0DA28DAA004EA5F580BE55F", "state": "candidate-installable-pending-qa", "qa_note": "separate qualified review; validated 2112-page FALL6 base preserved"}
+  ],
+  "counts": {
+    "targets": 14,
+    "validated_reference": 1,
+    "pending_ingame_qa": 13,
+    "registry_entries": 14,
+    "install_operations": 613
+  },
+  "engine_build": {
+    "status": "completed-without-tests",
+    "build": "build/iee-water-route2-wtlake-q070-20260912-vs2019",
+    "dll_sha256": "58354FE6AB2EB79189351AB58FE1FA245CF35895CA69B85E004B68A2F4F82E7F"
+  },
+  "installation": {
+    "status": "installed-pending-qa",
+    "asset_receipt": "backups/water-wtlake-timeline30/override-backup-20260912-122459/install-backup.json",
+    "asset_receipt_sha256": "4AD86ACC64B504530B251AF35CBAB536FA04DE64B0D88235FF138E587791D6B1",
+    "renderer_receipt": "backups/renderer/20260912T102459934448Z-494009fc/renderer-install-receipt.json",
+    "renderer_receipt_sha256": "5A79E50660A15CE1542BE362B94EF0EBE9DFD768504030F7BEB35A55F5D8DB53",
+    "verified_live_files": 613,
+    "divergences": 0
+  },
+  "release": "not-requested"
+}

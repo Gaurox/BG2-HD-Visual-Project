@@ -29,6 +29,7 @@ from PIL import Image, ImageChops, ImageStat
 
 from bg2lib import load_key, resolve_resource
 from workspace_paths import get_path
+from water_wed import replace_overlay_timeline
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -290,34 +291,7 @@ def patch_wed(source: bytes) -> bytes:
             "tilemap WTLAKE AR0900 divergent")
     require(list(struct.unpack_from("<6H", source, lookup)) == list(range(6)),
             "lookup WTLAKE AR0900 divergent")
-    timeline = tuple(range(FRAME_COUNT))
-    replacement = struct.pack(f"<{FRAME_COUNT}H", *timeline)
-    insertion = lookup + 12
-    output = bytearray(source[:lookup] + replacement + source[insertion:])
-    inserted_bytes = len(replacement) - 12
-    struct.pack_into("<H", output, tilemap + 2, FRAME_COUNT)
-    output[tilemap + 7] = 1
-
-    for index in range(overlay_count):
-        header = overlays_offset + index * 24
-        tilemap_offset, lookup_offset = struct.unpack_from("<II", output, header + 16)
-        if tilemap_offset >= insertion:
-            struct.pack_into("<I", output, header + 16, tilemap_offset + inserted_bytes)
-        if lookup_offset >= insertion:
-            struct.pack_into("<I", output, header + 20, lookup_offset + inserted_bytes)
-
-    polygon_count, polygon_offset, vertex_offset, wall_group_offset, polygon_lookup = (
-        struct.unpack_from("<5I", output, secondary_offset)
-    )
-    shifted = [
-        value + inserted_bytes if value >= insertion else value
-        for value in (polygon_offset, vertex_offset, wall_group_offset, polygon_lookup)
-    ]
-    struct.pack_into(
-        "<5I", output, secondary_offset, polygon_count, shifted[0], shifted[1], shifted[2], shifted[3]
-    )
-    require(len(output) == len(source) + inserted_bytes, "taille WED interpolée invalide")
-    return bytes(output)
+    return replace_overlay_timeline(source, 1, FRAME_COUNT)
 
 
 def build_review(frame_paths: list[Path], output: Path) -> list[dict[str, Any]]:

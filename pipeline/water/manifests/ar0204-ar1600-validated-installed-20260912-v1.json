@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-water-route2-qa-selection-v1",
+  "status": "validated-installed",
+  "qa_date": "2026-09-12",
+  "registry_run": "maps/water-batches/runs/ar0204-ar1600-validated-20260912-v1",
+  "registry": "maps/water-batches/runs/ar0204-ar1600-validated-20260912-v1/registry-v3.json",
+  "registry_sha256": "F67E49246BD1468B6C3C086B1F21924D599B09FD3C2C9F14B292EE7E92C1C864",
+  "runtime_equivalence": {
+    "previous_registry": "maps/water-batches/runs/ar0204-q070-ar1600-approved-20260912-v1/registry-v3.json",
+    "previous_registry_sha256": "2BABEF180A9CDA16D125D64700A70D447EC8790E32A922E34AF7B09F0828F24C",
+    "generated_header_sha256": "06D2FD8BBE3B26D75F795CBD5AE06EFF1F39362812E51515D9282BF51BB89C5C",
+    "result": "byte-identical; QA metadata only; no rebuild or reinstall required"
+  },
+  "renderer_build": "build/iee-water-ar0204-q070-ar1600-approved-20260912-vs2019",
+  "renderer_candidate": "build/water-ar0204-q070-ar1600-approved-20260912/renderer",
+  "dll_sha256": "4D05BD16389A6763E96908037966122FBD42F4546FA4C0168394724A7412F119",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "renderer_receipt": "backups/renderer/20260912T111204929317Z-e69bc37f/renderer-install-receipt.json",
+  "asset_installation": "pipeline/water/manifests/ar0204-ar1600-installed-20260912-v1.json",
+  "entries": [
+    {
+      "wed": "AR0204",
+      "strength": 0.7,
+      "state": "validated-installed",
+      "qa_decision": "user validated ingame at q=0.70 on 2026-09-12"
+    },
+    {
+      "wed": "AR1600",
+      "strength": 0.7,
+      "state": "validated-installed",
+      "qa_decision": "user reconfirmed ingame at q=0.70 on 2026-09-12"
+    },
+    {
+      "wed": "AR0900",
+      "strength": 0.7,
+      "state": "validated-installed-unchanged-reference"
+    }
+  ],
+  "verified_live_registry_files": 613,
+  "tests": "not-run-user-choice",
+  "rebuild": "not-required-runtime-byte-identical",
+  "installation": "unchanged-already-installed",
+  "release": "not-requested"
+}

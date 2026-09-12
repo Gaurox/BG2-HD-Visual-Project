@@ -174,6 +174,8 @@ if(IEE_BUILD_WINDOWS_DLL)
         CACHE FILEPATH "Versioned water route2 registry compiled into the DLL")
     set(IEE_WATER_ROUTE2_PARENT_REGISTRY
         "${CMAKE_SOURCE_DIR}/../../../pipeline/water/route2-registry-v1.json")
+    set(IEE_WATER_ROUTE2_ACTIVE_REGISTRY
+        "${CMAKE_SOURCE_DIR}/assets/water-route2/registry-v2.json")
     set(IEE_WATER_ROUTE2_GENERATED
         "${IEE_GENERATED_DIR}/iee/water_route2_registry.generated.h")
     add_custom_command(
@@ -186,6 +188,7 @@ if(IEE_BUILD_WINDOWS_DLL)
             "${CMAKE_SOURCE_DIR}/tools/generate_water_route2_registry.py"
             "${IEE_WATER_ROUTE2_REGISTRY}"
             "${IEE_WATER_ROUTE2_PARENT_REGISTRY}"
+            "${IEE_WATER_ROUTE2_ACTIVE_REGISTRY}"
         VERBATIM
     )
 

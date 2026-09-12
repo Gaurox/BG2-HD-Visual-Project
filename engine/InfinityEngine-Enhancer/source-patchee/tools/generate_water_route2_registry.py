@@ -21,26 +21,51 @@ def sha256(path: Path) -> str:
 
 def load_registry(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     child = json.loads(path.read_text(encoding="utf-8"))
-    if child.get("schema") != "bg2-water-route2-registry-v2" or child.get("version") != 2:
+    schema = child.get("schema")
+    version = child.get("version")
+    if (schema, version) not in {
+        ("bg2-water-route2-registry-v2", 2),
+        ("bg2-water-route2-registry-v3", 3),
+    }:
         raise RuntimeError("unsupported water route2 registry")
     parent_ref = child.get("parent", {})
     parent_path = WORKSPACE_ROOT / str(parent_ref.get("path", ""))
     if not parent_path.is_file() or sha256(parent_path) != parent_ref.get("sha256"):
         raise RuntimeError("water route2 parent registry is absent or divergent")
     parent = json.loads(parent_path.read_text(encoding="utf-8"))
-    if parent.get("schema") != "bg2-water-route2-registry-v1" or parent.get("version") != 1:
-        raise RuntimeError("unsupported parent water route2 registry")
-    overrides = {item["id"]: item for item in child.get("entry_overrides", [])}
-    entries = parent.get("entries", [])
-    if set(overrides) != {entry.get("id") for entry in entries}:
-        raise RuntimeError("v2 overrides must cover every active parent entry exactly")
-    resolved = []
-    for entry in entries:
-        if entry.get("state") != "approved-ingame" or entry.get("qa", {}).get("status") != "validated-ingame":
-            raise RuntimeError(f"unapproved entry in active registry: {entry.get('id')}")
-        merged = dict(entry)
-        merged.update(overrides[entry["id"]])
-        resolved.append(merged)
+    if version == 2:
+        if parent.get("schema") != "bg2-water-route2-registry-v1" or parent.get("version") != 1:
+            raise RuntimeError("unsupported parent water route2 registry")
+        overrides = {item["id"]: item for item in child.get("entry_overrides", [])}
+        entries = parent.get("entries", [])
+        if set(overrides) != {entry.get("id") for entry in entries}:
+            raise RuntimeError("v2 overrides must cover every active parent entry exactly")
+        resolved = []
+        for entry in entries:
+            if entry.get("state") != "approved-ingame" or entry.get("qa", {}).get("status") != "validated-ingame":
+                raise RuntimeError(f"unapproved entry in active registry: {entry.get('id')}")
+            merged = dict(entry)
+            merged.update(overrides[entry["id"]])
+            resolved.append(merged)
+    else:
+        if parent.get("schema") != "bg2-water-route2-registry-v2" or parent.get("version") != 2:
+            raise RuntimeError("unsupported parent water route2 registry")
+        parent_ids = {item.get("id") for item in parent.get("entry_overrides", [])}
+        resolved = child.get("entries", [])
+        ids = [entry.get("id") for entry in resolved]
+        if not ids or len(ids) != len(set(ids)) or not parent_ids.issubset(set(ids)):
+            raise RuntimeError("v3 entries must be unique and retain every active parent id")
+        for entry in resolved:
+            state = entry.get("state")
+            qa_status = entry.get("qa", {}).get("status")
+            if state == "approved-ingame":
+                if qa_status != "validated-ingame":
+                    raise RuntimeError(f"approved v3 entry lacks ingame QA: {entry.get('id')}")
+            elif state == "candidate-installable-pending-qa":
+                if qa_status != "pending-ingame":
+                    raise RuntimeError(f"candidate v3 entry has divergent QA state: {entry.get('id')}")
+            else:
+                raise RuntimeError(f"unsupported v3 entry state: {entry.get('id')}")
     return child, {"entries": resolved}
 
 

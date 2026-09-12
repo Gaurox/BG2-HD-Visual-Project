@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-water-repair-installation-selection-v1",
+  "status": "installed-pending-ingame-qa",
+  "request": "pipeline/water/manifests/ar0204-ar1600-repair-20260912-v1.json",
+  "run": "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1",
+  "registry": "maps/water-batches/runs/ar0204-ar1600-seams-wed-20260912-v1/registry-v3.json",
+  "registry_sha256": "58256913AFF7568EAC94020F0421EDAEB1B08488D82AAD4FB8C62BBF3231E34A",
+  "build": "build/iee-water-ar0204-ar1600-repair-20260912-vs2019",
+  "dll_sha256": "579E6EFB252D1B66F8F3D2A4629E2E92C03A9813FAD3D33F4D1A4C279B2BC0D0",
+  "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+  "installation_receipt": "backups/water-map-repair/20260912T110237735142Z/installation.json",
+  "asset_receipt": "backups/water-map-repair/20260912T110237735142Z/assets/override-backup-20260912-130240/install-backup.json",
+  "renderer_receipt": "backups/renderer/20260912T110240820440Z-756166de/renderer-install-receipt.json",
+  "targets": [
+    {
+      "wed": "AR0204",
+      "variant": "day-or-unique",
+      "wed_sha256": "76CB75FE1D57B143C07FCA1FC918BD21BBDE20E78967F6F18D088E533C8798C1",
+      "interfaces": 298,
+      "primary_rgb_tiles": 160,
+      "rgb_blocks_modified": 45417,
+      "secondary_alpha_decoded_pixels_modified": 0,
+      "route2_strength": 0.15,
+      "strength_status": "provisional-for-dark-authored-art-pending-ingame-qa",
+      "object_polygons": 0
+    },
+    {
+      "wed": "AR1600",
+      "variant": "day-or-unique",
+      "wed_sha256": "524C5E7DB100BAE4275290E99933D0619B13A49A2F316C9B82D6C1ED75F347EC",
+      "interfaces": 164,
+      "primary_rgb_tiles": 97,
+      "rgb_blocks_modified": 31407,
+      "secondary_alpha_decoded_pixels_modified": 0,
+      "route2_strength": 0.7,
+      "object_polygons": 12
+    }
+  ],
+  "timeline": {"frames": 36, "native_fps": 15, "render_fps": 30},
+  "changed_asset_files": 66,
+  "verified_registry_assets": 613,
+  "untouched_registry_entries": 12,
+  "ar0900_assets_and_strength": "unchanged-q070",
+  "tests": "not-run-user-choice",
+  "release": "not-requested",
+  "other_wed_pointer_defects": "outside-this-installation-scope"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "bg2-water-route2-registry-revision-request-v1",
+  "source_registry": "maps/water-batches/runs/ar0204-q070-ar1600-approved-20260912-v1/registry-v3.json",
+  "source_registry_sha256": "2BABEF180A9CDA16D125D64700A70D447EC8790E32A922E34AF7B09F0828F24C",
+  "output": "maps/water-batches/runs/ar0204-ar1600-validated-20260912-v1",
+  "tests": "none-user-request",
+  "changes": [
+    {
+      "wed": "AR0204",
+      "strength": 0.7,
+      "validated_ingame": true,
+      "qa_reference": "User validated AR0204 ingame at q=0.70 on 2026-09-12 after WED and RGB seam repair"
+    },
+    {
+      "wed": "AR1600",
+      "strength": 0.7,
+      "validated_ingame": true,
+      "qa_reference": "User reconfirmed AR1600 ingame at q=0.70 on 2026-09-12 after WED and RGB seam repair"
+    }
+  ]
+}
