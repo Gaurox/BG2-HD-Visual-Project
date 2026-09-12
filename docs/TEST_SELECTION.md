@@ -1,71 +1,29 @@
-# Sélection des tests
+# Tests — index de commandes
 
-## Politique
+Ce document aide à choisir une commande lorsqu'un test apporte une information utile. Il n'impose
+aucun test, aucune question préalable et aucune suite complète. La demande utilisateur et le risque
+réel de la modification déterminent seuls si un contrôle est pertinent.
 
-| Changement | Contrôle local | Contrôle différé |
-|---|---|---|
-| Autorité métier, asset, projection ou documentation | aucun test Python | projections au jalon ; suite complète avant release |
-| Code Python/PowerShell | test du module directement associé | suite complète avant release |
-| Manifeste candidat animation | gate de la zone concernée | gate Phase 2 avant release |
-| Moteur | build et CTest moteur | suite complète avant release |
+## Commandes disponibles
 
-Les contrôles globaux restent dans la suite complète. Ils ne sont pas une conséquence automatique
-d'une modification de données. Aucun test, build, CTest ou gate ne démarre sans `--run` et sans
-choix explicite de l'utilisateur.
+| Besoin | Commande |
+|---|---|
+| Voir le test associé à un fichier | `python pipeline/scripts/test_changed.py --targeted --path <chemin>` |
+| Exécuter ce test | même commande avec `--run` |
+| Voir un plan depuis Git | `python pipeline/scripts/test_changed.py --changed --base origin/main` |
+| Voir la suite globale | `python pipeline/scripts/test_changed.py --full` |
+| Exécuter la suite globale | `python pipeline/scripts/test_changed.py --full --run` |
+| Continuer après erreurs indépendantes | ajouter `--keep-going` |
 
-## Plan isolé recommandé
+Sans `--run`, la commande affiche seulement un plan. `--targeted --path` isole le fichier indiqué
+des autres changements du worktree et ne s'élargit pas automatiquement à la suite complète.
 
-Déclarer uniquement les fichiers du lot courant. `--path` est répétable et ignore les autres
-modifications du worktree :
+## Repères de coût
 
-```powershell
-python pipeline/scripts/test_changed.py --targeted `
-  --path pipeline/scripts/build_alpha_feather.py `
-  --path pipeline/tests/test_build_alpha_feather.py
-```
+- Documentation, autorités, assets et projections n'ont généralement aucun test Python utile.
+- Un script peut sélectionner son `pipeline/tests/test_<script>.py` associé.
+- Les contrôles globaux parcourent un workspace volumineux ; les réserver aux cas où leur couverture
+  apporte réellement quelque chose, par exemple CI ou préparation explicite d'une release.
+- Build, CTest moteur, projections et QA ingame sont indépendants des tests Python.
 
-Règles de sélection :
-
-- un `pipeline/tests/test_*.py` sélectionne uniquement son module ;
-- un script sélectionne `test_<nom_du_script>.py` s'il existe ;
-- les rares noms non symétriques utilisent un alias explicite dans `test_changed.py` ;
-- autorités, assets, projections et documentation ne sélectionnent aucun test Python ;
-- un chemin de code inconnu produit un avertissement et un plan vide en mode `--targeted` ;
-- rename et suppression examinent les deux chemins sans escalade globale en mode `--targeted`.
-
-Les chemins doivent être relatifs au dépôt. `--path` est incompatible avec `--base` et exige
-`--targeted`.
-
-## Modes Git et CI
-
-```powershell
-# Plan strict sur tout le worktree ; utile seulement si son contenu correspond à une tâche
-python pipeline/scripts/test_changed.py --targeted
-
-# Plan prudent pour la CI ; un chemin inconnu peut recommander la suite complète
-python pipeline/scripts/test_changed.py --changed --base origin/main
-
-# Plan exhaustif explicite
-python pipeline/scripts/test_changed.py --full
-```
-
-Même si `--changed` recommande `full`, `--changed --run` refuse l'escalade. Seul
-`--full --run` démarre la suite globale. `--json` fournit le plan structuré et `--list` reste un
-alias de compatibilité.
-
-## Exécution après choix
-
-```powershell
-# Reprendre les mêmes --path que dans le plan validé
-python pipeline/scripts/test_changed.py --targeted --path CHEMIN --run
-
-# Suite complète : Python (dont fraîcheur des projections), Phase 2, moteur
-python pipeline/scripts/test_changed.py --full --run
-
-# Poursuivre les étapes indépendantes et conserver un code final non nul en cas d'échec
-python pipeline/scripts/test_changed.py --full --run --keep-going
-```
-
-Avant release, la suite complète reste obligatoire pour revendiquer une validation finale. Les
-reconstructions sont indépendantes et décrites dans
-[`WORKSPACE_INTEGRITY.md`](WORKSPACE_INTEGRITY.md).
+Ces repères sont des options, pas un workflow de clôture.

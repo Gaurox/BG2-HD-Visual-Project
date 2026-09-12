@@ -57,7 +57,7 @@ et CTest moteur.
 
 | Priorité | Cause | Preuve | Correction |
 |---|---|---|---|
-| P0 | Tests automatiques après chaque tâche | `AGENTS.md` imposait `--changed` ; fallback `full` très large | choix utilisateur ciblés/tous/aucun ; aucune escalade implicite |
+| P0 | Tests automatiques après chaque tâche | ancien `AGENTS.md` imposait `--changed` ; fallback `full` très large | tests uniquement s'ils apportent une information utile |
 | P0 | Régénération globale systématique | `workspace.py` lance trois générateurs, chacun deux fois | génération en lot ou seulement comme livrable/gate |
 | P0 | Plan de données dans le worktree | ~466 k fichiers, ~192 Gio pour 801 fichiers suivis | sortir runs/sources/builds du worktree via `config://...` |
 | P1 | Tests dits unitaires sur l'état réel | registry, graphics et integrity lisent `ROOT` et rebâtissent les sorties | fixtures petites pour unitaires ; tests workspace séparés |
@@ -72,7 +72,7 @@ et CTest moteur.
 
 ### Phase 0 — appliquée dans la documentation
 
-- Aucun test automatique ; question obligatoire : ciblés, tous ou aucun.
+- Aucun test automatique ni question rituelle ; lancer seulement le contrôle utile au cas courant.
 - `--list` autorisé pour estimer le plan sans exécution.
 - Un choix ciblé ne peut pas devenir `full` implicitement.
 - `workspace.py refresh/check` n'est plus un rituel de fin de tâche ; regrouper les mises à jour.
@@ -120,8 +120,8 @@ Critère : les commandes de routine ne parcourent jamais les ~192 Gio.
 - Découper les trois plus grands scripts sans changer leur CLI.
 - Transformer les tests sur workspace réel en fixtures synthétiques et petites.
 - Conserver une seule gate de snapshot réel par domaine.
-- Centraliser les politiques transversales dans `AGENTS.md`, `DECISIONS.md` et
-  `TEST_SELECTION.md` ; les README de domaine ne gardent qu'un lien.
+- Garder dans `AGENTS.md` le principe documentaire facultatif ; les autres fichiers servent
+  d'index de solutions et de commandes.
 
 ## Ordre recommandé
 

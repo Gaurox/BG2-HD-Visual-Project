@@ -1,19 +1,21 @@
 # Agent entry point — InfinityEngine-Enhancer
 
-> **Règle documentaire : écrire pour des agents IA — concis, factuel, opérationnel, non narratif. Éviter la verbosité et les répétitions. Toute nouvelle documentation ou modification doit privilégier la densité d’information, les listes/tableaux, les chemins et commandes précises. Éviter la prose longue, le contexte narratif, les répétitions et les explications principalement destinées à un lecteur humain.**
+La documentation moteur est un index de solutions. Lire seulement la rubrique utile ; aucun
+préflight, ordre de lecture, test ou audit n'est imposé.
 
-1. Read [`README.md`](README.md), then only the document for the subsystem being changed.
-2. Build identities and offsets live in `src/iee/game/build_manifest.*`; never scatter offsets in
-   hooks.
-3. Hooks must fail closed on an unknown executable, invalid manifest, capacity overflow or malformed
-   registry.
-4. Preserve x1 game geometry and save neutrality. Runtime texture scaling must not mutate ARE/WED
-   coordinates or serialized game state.
-5. Do not use `cmake-build-*`, `build-filter-*`, DLLs, logs or runtime captures as source files.
+## Invariants techniques
 
-Never run tests automatically. Ask the user to choose targeted tests, all tests, or no tests as
-defined in [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). For targeted host
-tests:
+- Les identités de build et offsets restent centralisés dans `src/iee/game/build_manifest.*`.
+- Un hook échoue fermé sur exécutable inconnu, manifeste invalide, capacité dépassée ou registre
+  mal formé.
+- Préserver la géométrie x1 et la neutralité des sauvegardes.
+- Ne pas prendre `cmake-build-*`, `build-filter-*`, DLL, logs ou captures runtime comme sources.
+- Fermer le jeu et InfinityLoader avant installation d'un candidat.
+- Une QA ingame n'autorise jamais à elle seule une modification de release.
+
+## Commandes disponibles, à la demande
+
+Tests hôte ciblés :
 
 ```powershell
 cmake -S . -B cmake-build-test -DBUILD_TESTING=ON
@@ -21,7 +23,7 @@ cmake --build cmake-build-test --target iee_tests
 ctest --test-dir cmake-build-test --output-on-failure
 ```
 
-Windows release build:
+Bundle Windows :
 
 ```powershell
 cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
@@ -29,5 +31,5 @@ cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
 cmake --build build --config Release --target release_bundle
 ```
 
-For sprite assets read `../../../sprite/README.md`; for area animations read
-`../../../animations/README.md`. Ingame QA does not authorize release-manifest integration.
+Ces commandes ne sont pas des étapes obligatoires : les employer seulement si elles produisent ou
+contrôlent directement le résultat demandé.

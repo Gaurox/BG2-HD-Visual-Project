@@ -35,11 +35,10 @@ répétées et cache froid manquent ; la fonctionnalité n'est pas qualifiée re
 La régression locale des tooltips à FPS EEex élevés et son contournement sont documentés dans
 [`docs/validation/eeex-tooltip-uncapped-fps.md`](docs/validation/eeex-tooltip-uncapped-fps.md).
 
-## Build et tests
+## Build et tests facultatifs
 
-Avant toute commande de test, demander « ciblés / tous / aucun » conformément à
-[`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Si les tests moteur ciblés
-sont choisis :
+Ces commandes sont des outils ponctuels. Ne pas imposer de menu de tests ni de build préalable ;
+les employer seulement sur demande ou lorsqu'ils sont nécessaires à l'artefact moteur demandé.
 
 ```powershell
 cmake -S . -B cmake-build-debug -DBUILD_TESTING=ON

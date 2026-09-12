@@ -1,7 +1,9 @@
 # Décisions techniques
 
-Ce fichier conserve les choix réutilisables et les essais à ne pas répéter. Les états courants
-restent dans les catalogues/manifests ; les mesures détaillées restent dans les runs et preuves.
+Ce fichier est un inventaire facultatif de solutions et d'essais déjà observés. Il n'impose aucune
+méthode, lecture, vérification ou réouverture formelle. Chercher uniquement le sujet utile, reprendre
+une solution compatible ou l'écarter si le cas courant diffère. Les états courants restent dans les
+catalogues/manifests ; les mesures détaillées restent dans les runs et preuves.
 
 ## Cartes
 

@@ -5,17 +5,17 @@
 `areas.csv` est l'autorité pour l'état d'une carte, le run et le build retenus. Les dossiers de run,
 captures et projections ne permettent aucune promotion implicite.
 
-Avant toute production ou reprise, lire
-[`../docs/UPSCALING_WORK_PREFLIGHT.md`](../docs/UPSCALING_WORK_PREFLIGHT.md).
+Les documents et commandes ci-dessous sont des aides facultatives. Aucun préflight, parcours ou
+audit n'est requis avant une correction locale.
 
-## Parcours courant
+## Outils disponibles
 
 | Étape | Commande ou autorité |
 |---|---|
 | Maître x1 | `python pipeline/scripts/validate_x1_masters.py --area ARxxxx` |
-| Préflight | `python pipeline/scripts/audit_area_preflight.py ARxxxx <rapport.json>` |
+| Diagnostic de structure | `python pipeline/scripts/audit_area_preflight.py ARxxxx <rapport.json>` |
 | Audit eau | `python pipeline/scripts/audit_water_area.py ARxxxx <rapport.json>` |
-| Lot eau exhaustif | `python -B pipeline/scripts/orchestrate_water_batch.py` (plan-only) |
+| Inventaire eau multi-cartes | `python -B pipeline/scripts/orchestrate_water_batch.py` (plan-only) |
 | Exécution SeedVR | `python pipeline/scripts/run_seedvr_comfyui.py ...` |
 | Reconstruction | `python pipeline/scripts/build_upscaled_area.py ARxxxx <principale-x4.png> <build-dir> [secondaire-x4.png]` |
 | Audit technique | `python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>` |
@@ -28,13 +28,12 @@ Pour les entrées `argparse`, consulter l'aide avant un run :
 python pipeline/scripts/run_seedvr_comfyui.py --help
 ```
 
-Les anciens splitters manuels sont archivés ; ils ne doivent pas être réintroduits dans le parcours
-courant.
+Choisir seulement l'outil qui répond au besoin courant. SeedVR, audits, reconstruction et suivi ne
+sont pas des étapes d'un parcours obligatoire.
 
-## Contrats
+## Contraintes techniques utiles
 
-- La recette et les entrées d'un run sont figées avant exécution.
-- Les sorties techniques sont contrôlées avant toute installation.
+- Une recette ou un manifeste final peut conserver les entrées nécessaires à sa reproduction.
 - Le jeu et InfinityLoader sont fermés avant `inject_build.py install` ou `restore`.
 - Une installation vérifiée ne vaut ni QA ni intégration release.
 - Les overlays de release suivent `overlay-sources.json`; voir l'ambiguïté WTLAVA-D dans
@@ -53,7 +52,7 @@ python pipeline/scripts/inject_build.py restore <backup-dir>
 Le dossier exact de sauvegarde et les hashes sont produits par le script ; ne pas maintenir une
 seconde procédure de copie manuelle dans la documentation.
 
-## Mise à jour des projections aux jalons
+## Projections facultatives
 
 Préparer sans exécuter :
 
@@ -61,9 +60,8 @@ Préparer sans exécuter :
 python pipeline/scripts/workspace.py refresh --changed
 ```
 
-Ne préparer ce plan que si la tâche livre une projection, à un jalon, avant release/CI, ou sur
-demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seulement avec les
-`--scope` proposés et `--run`; voir
+Cette commande est utile seulement lorsqu'une projection est demandée ou consommée. Les scopes et
+commandes disponibles sont listés dans
 [`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
 
 ## Guides spécialisés
@@ -89,16 +87,15 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Interpolation vidéo | [`VIDEO_INTERPOLATION_PIPELINE.md`](VIDEO_INTERPOLATION_PIPELINE.md) |
 | Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
-## Tests légers
+## Tests facultatifs
 
 ```powershell
 python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script>.py
 ```
 
-La commande planifie sans exécuter et ignore les autres changements du worktree. Un script cible
-uniquement son test directement associé. Une modification d'autorité, d'asset ou de documentation
-ne sélectionne aucun test Python. Après le choix « ciblés / tous / aucun », reprendre les mêmes
-`--path` avec `--run`, utiliser `--full --run`, ou ne rien lancer. Voir
+La commande planifie sans exécuter et ignore les autres changements du worktree. Ajouter `--run`
+uniquement lorsqu'un test est souhaité. Une modification d'autorité, d'asset ou de documentation
+n'a généralement aucun test Python applicable. Voir
 [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 Ne pas lancer SeedVR, Topaz, un build complet ou un packaging pour une modification documentaire.

@@ -1,6 +1,8 @@
 # Problèmes à résoudre
 
-Ce fichier ne contient que les blocages ouverts. Les décisions durables sont dans
+Index facultatif des symptômes encore ouverts. Il ne constitue ni une liste de travaux à effectuer,
+ni une gate, ni un ordre de diagnostic. Consulter seulement l'entrée liée à la demande courante.
+Les décisions durables sont dans
 [`../docs/DECISIONS.md`](../docs/DECISIONS.md) et les preuves moteur dans
 [`../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/`](../engine/InfinityEngine-Enhancer/source-patchee/docs/validation/).
 

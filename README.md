@@ -10,10 +10,11 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 > Règle documentaire : écrire pour des agents IA. Toute nouvelle documentation ou modification doit privilégier la densité d’information. Éviter la prose longue, le contexte narratif et les répétitions.
 
-## Mandatory work preflight
+## Aides de travail facultatives
 
-Before any upscale work, read [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md),
-then the domain README. This checkpoint applies especially to animation runs and per-area packs.
+La documentation sert d'index de solutions. Aucune lecture préalable exhaustive n'est requise.
+Consulter [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) ou le README d'un
+domaine seulement lorsqu'un repère manque pour la tâche courante.
 
 ![AR0700 — Waukeen's Promenade detail, vanilla on the left and x4 on the right](docs/images/readme/ar0700-gate-detail-vanilla-vs-x4.png)
 
@@ -58,7 +59,7 @@ then the domain README. This checkpoint applies especially to animation runs and
 |---|---|
 | Workspace rules | [AGENTS.md](AGENTS.md) |
 | Decisions | [docs/DECISIONS.md](docs/DECISIONS.md) |
-| Mandatory upscale preflight | [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) |
+| Index rapide upscaling | [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) |
 | Public website | [docs/WEBSITE.md](docs/WEBSITE.md) |
 | TIS/PVRZ maps | [pipeline/README.md](pipeline/README.md) |
 | BAM animations | [animations/README.md](animations/README.md) |

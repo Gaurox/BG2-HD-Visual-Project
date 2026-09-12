@@ -1,6 +1,11 @@
 # Contrat commun de suivi des assets — v1
 
-Ce contrat définit la projection commune utilisée par le registre agrégé. Il ne
+Ce document décrit le format lorsque le registre agrégé doit effectivement être produit. Il n'est
+pas un préflight et ne s'applique pas aux essais locaux qui n'alimentent pas ce registre. Une tâche
+peut corriger et installer un asset sans reconstruire les projections ; le suivi canonique peut être
+mis à jour une seule fois lors de la sélection finale utile.
+
+Le format définit la projection commune utilisée par le registre agrégé. Il ne
 remplace aucun catalogue ou manifeste métier. Une projection est générée en lecture seule depuis
 les sources de vérité existantes, peut être supprimée puis reconstruite, et ne reçoit jamais de
 correction manuelle d'état.

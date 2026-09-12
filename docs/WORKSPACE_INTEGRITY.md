@@ -1,91 +1,44 @@
-# Intégrité du workspace
+# Intégrité du workspace — index de commandes
 
-## Fréquence
+Les projections d'intégrité sont facultatives et régénérables. Elles ne sont pas nécessaires après
+une correction locale et leur fraîcheur ne conditionne pas les autorités métier.
 
-Ne pas reconstruire après chaque lot d'assets. Les autorités métier restent valides tant que les
-projections sont périmées. Regrouper les reconstructions à un jalon, lorsqu'un livrable consomme une
-projection, avant une gate release/CI, ou sur demande explicite.
+## Commandes disponibles
 
-À ces moments seulement, préparer le plan sans écriture :
+Afficher un plan sans écrire :
 
 ```powershell
 python pipeline/scripts/workspace.py refresh --changed
 ```
 
-Puis demander : reconstructions ciblées proposées, toutes les projections, ou aucune
-reconstruction.
-
-Sans `--run`, `refresh` et `check` ne font qu'afficher le plan. Exécutions possibles après choix :
+Produire une projection lorsqu'un consommateur la demande :
 
 ```powershell
-# Exemple ciblé ; reprendre exactement les scopes proposés
-python pipeline/scripts/workspace.py refresh --scope registry --scope integrity --run
-
-# Toutes les projections
+python pipeline/scripts/workspace.py refresh --scope graphics --run
+python pipeline/scripts/workspace.py refresh --scope registry --run
+python pipeline/scripts/workspace.py refresh --scope integrity --run
 python pipeline/scripts/workspace.py refresh --scope all --run
-
-# Continuer les scopes indépendants et récapituler les échecs
-python pipeline/scripts/workspace.py refresh --scope all --run --keep-going
 ```
 
-| Scope | Sorties |
+`--keep-going` poursuit les scopes indépendants. `--verify-determinism` effectue une seconde passe et
+coûte environ deux fois plus cher ; il n'a d'intérêt que pour un contrôle explicite de déterminisme.
+
+## Sorties
+
+| Scope | Sorties principales |
 |---|---|
 | `graphics` | inventaires graphiques complémentaires |
-| `registry` | registre, CSV, couverture et anomalies |
+| `registry` | `registry.json/.csv`, couverture et anomalies |
 | `integrity` | index des runs et rapport d'intégrité physique |
 
-`refresh` écrit les projections ; `check` les compare sans écriture. Les stages sont mono-passe par
-défaut. `--verify-determinism` les exécute deux fois et exige un accord explicite ou une gate CI.
-`--keep-going` poursuit les scopes indépendants, mais retourne toujours un code non nul si l'un
-d'eux échoue.
+Ces sorties sont jetables. Les pipelines métier lisent leurs autorités, pas ces projections.
 
-L'audit d'intégrité lit `asset-tracking/registry.json` et vérifie les hashes de ses inputs. Il ne
-reconstruit plus implicitement le registre. Quand les deux scopes sont demandés, respecter l'ordre
-`registry`, puis `integrity` ; `workspace.py` l'applique déjà.
+## Repères facultatifs pour un nouveau run
 
-Les tests suivent le choix indépendant décrit dans [`TEST_SELECTION.md`](TEST_SELECTION.md). La
-suite complète contrôle déjà la fraîcheur des projections dans leurs modules Python ; elle ne
-relance pas ensuite les mêmes scopes.
+- identité et assets concernés ;
+- recette et entrées utiles ;
+- sorties et hashes nécessaires à la reproductibilité ;
+- résultat technique séparé d'une éventuelle QA, installation ou release.
 
-## Sorties générées
-
-| Fichier | Contenu |
-|---|---|
-| `asset-tracking/registry.json`, `.csv` | assets connus et autorité associée |
-| `asset-tracking/coverage.json` | couverture par domaine et état |
-| `asset-tracking/anomalies.json` | états impossibles ou incomplets |
-| `asset-tracking/runs.json`, `.csv` | runs physiques et rattachement connu |
-| `asset-tracking/workspace-integrity.json` | erreurs, avertissements et informations de contrôle |
-
-Toutes ces sorties sont jetables. Les pipelines métier lisent les autorités listées dans
-[`ASSET_TRACKING_CONTRACT.md`](ASSET_TRACKING_CONTRACT.md), jamais ces projections.
-
-## Nouveau run
-
-Utiliser le layout natif du domaine. À défaut, suivre
-[`workspace-run.schema.json`](workspace-run.schema.json) :
-
-- identifiant stable et `asset_ids` explicites ;
-- recette/pipeline et snapshot immuable de tout job mutable ;
-- entrées, sorties et preuves hashées utiles ;
-- résultat technique séparé de la QA, de l'installation et de la release ;
-- sélection courante conservée dans une autorité externe au run.
-
-Un run existant n'est jamais réécrit pour adopter le schéma courant.
-
-## Portabilité et legacy
-
-Les chemins machine passent par [`config/workspace-paths.json`](../config/workspace-paths.json), une
-variable d'environnement, ou le fichier local ignoré `workspace-paths.local.json`. Les exceptions
-historiques sont bornées par `config/historical-absolute-paths.json`.
-
-Les compatibilités et déplacements historiques sont déclarés, non devinés :
-
-| Sujet | Registre |
-|---|---|
-| Runs et preuves d'animation déplacés | `animations/index/path-migrations.json`, `qa-evidence-migrations.json` |
-| Runs sprite déplacés | `sprite/index/path-migrations.json` |
-| Nettoyages et archives physiques | `docs/workspace-cleanup-manifest*.json` et `docs/workspace-archive-manifest*.json` |
-| Retours post-nettoyage depuis une archive | `docs/workspace-restoration-manifest.json`, avec manifeste cible et hash exact |
-
-Ces manifestes sont des preuves de migration. Ils ne deviennent pas des autorités métier.
+Un format détaillé est disponible dans `workspace-run.schema.json` lorsqu'un consommateur l'exige.
+Les chemins machine peuvent utiliser `config/workspace-paths.json`.
