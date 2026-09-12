@@ -13,10 +13,10 @@
       "verified": true
     },
     "animations": {
-      "approved_candidate_count": 38,
+      "approved_candidate_count": 40,
       "empty_run_count": 0,
       "historical_qa_evidence_adapted_count": 47,
-      "ingame_qa_selected_asset_count": 28,
+      "ingame_qa_selected_asset_count": 40,
       "legacy_proto_directory_migration_count": 65,
       "legacy_proto_embedded_reference_count": 204,
       "legacy_proto_embedded_reference_file_count": 68,
@@ -24,31 +24,31 @@
       "legacy_proto_migrated_bytes": 1320768761,
       "legacy_proto_migrated_file_count": 3033,
       "legacy_proto_run_count": 67,
-      "physical_run_count": 314,
+      "physical_run_count": 366,
       "physical_run_count_by_layout": {
-        "batch": 16,
+        "batch": 48,
         "legacy": 162,
-        "mono-asset": 136
+        "mono-asset": 156
       },
-      "release_pack_indexed_count": 38,
-      "release_referenced_run_count": 24,
+      "release_pack_indexed_count": 40,
+      "release_referenced_run_count": 27,
       "remaining_animation_proto_directory_count": 0,
       "remaining_proto_directory_count": 0,
       "run_preview_record_count": 40
     },
     "maps": {
       "canonical_asset_rows": 369,
-      "descriptor_count": 320,
+      "descriptor_count": 332,
       "extra_source_file_count": 0,
       "extracted_source_count": 800,
       "legacy_descriptor_count": 2,
       "migrated_reference_count": 1366,
-      "physical_run_count": 322,
+      "physical_run_count": 334,
       "selected_run_count": 321
     },
     "path_portability": {
       "active_absolute_path_violation_count": 0,
-      "active_script_file_count": 182,
+      "active_script_file_count": 208,
       "configured_path_count": 7,
       "historical_descriptor_file_count": 146,
       "historical_script_exception_count": 0,
@@ -115,13 +115,13 @@
       "usage_view_physical_file_count": 154
     },
     "sprites": {
-      "build_manifest_count": 4987,
+      "build_manifest_count": 4994,
       "canonical_active_test_count": 1,
       "current_generation_count": 1,
       "historical_active_test_count": 7,
       "historical_pointer_resolved_count": 7,
       "historical_pointer_unresolved_count": 0,
-      "immutable_job_snapshot_count": 2,
+      "immutable_job_snapshot_count": 5,
       "migrated_build_recipe_count": 137
     },
     "videos": {
@@ -200,6 +200,60 @@
   "generated_by": "pipeline/scripts/audit_workspace_integrity.py",
   "issues": [
     {
+      "asset_id": "animations:bam:AM411MAC",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911",
+      "run_id": "ar0411-planar-sphere-apo8-x4-30fps-spline-mac-feather4-20260911",
+      "severity": "warning"
+    },
+    {
+      "asset_id": "animations:bam:AM411MAC",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar0411-repair-am411mac-mono-spline-fit1-feather4-20260911",
+      "run_id": "ar0411-repair-am411mac-mono-spline-fit1-feather4-20260911",
+      "severity": "warning"
+    },
+    {
+      "asset_id": "animations:bam:BUBBLES2",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar0411-repair-bubbles2-mono-split-20260911",
+      "run_id": "ar0411-repair-bubbles2-mono-split-20260911",
+      "severity": "warning"
+    },
+    {
+      "asset_id": "animations:bam:AM1008B",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911",
+      "run_id": "ar1008-twisted-rune-apo8-x4-30fps-spline-b-20260911",
+      "severity": "warning"
+    },
+    {
+      "asset_id": "animations:bam:AM3001D",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar3001-altar-three-apo8-x4-30fps-spline-d-20260911",
+      "run_id": "ar3001-altar-three-apo8-x4-30fps-spline-d-20260911",
+      "severity": "warning"
+    },
+    {
+      "asset_id": "animations:bam:AM3021D",
+      "code": "animation-single-asset-run-in-batch-layout",
+      "domain": "animations",
+      "message": "Ce run batch ne déclare qu'une ressource; les nouveaux runs mono-asset appartiennent sous ressources/<RESREF>/runs.",
+      "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911",
+      "run_id": "ar3021-illithids-apo8-x4-30fps-v2-spline-d-20260911",
+      "severity": "warning"
+    },
+    {
       "code": "source-root-unindexed-files",
       "details": {
         "examples": [
@@ -241,6 +295,102 @@
       "message": "Des inputs/outputs intermédiaires scellés d'un run sélectionné sont absents, mais son build final existe.",
       "path": "maps/AR0017/runs/upscale-01",
       "run_id": "upscale-01",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0046/runs/upscale-01-nuit",
+      "run_id": "upscale-01-nuit",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0204/runs/seedvr2-7b-int8-lab-split-grid-2x5-x4",
+      "run_id": "seedvr2-7b-int8-lab-split-grid-2x5-x4",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0404/runs/upscale-01",
+      "run_id": "upscale-01",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0900/runs/voie1-native-blend-alpha128-x4-jour-20260912",
+      "run_id": "voie1-native-blend-alpha128-x4-jour-20260912",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR0900/runs/voie1-source-alpha-x4-jour-20260912",
+      "run_id": "voie1-source-alpha-x4-jour-20260912",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x3-x4",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR1607/runs/seedvr2-7b-int8-lab-grid-2x2-x4",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x2-x4",
+      "severity": "warning"
+    },
+    {
+      "code": "map-run-unselected",
+      "domain": "maps",
+      "message": "Un run physique n'est rattaché à aucune sélection de areas.csv.",
+      "path": "maps/AR1800/runs/seedvr2-7b-int8-lab-grid-2x2-x4",
+      "run_id": "seedvr2-7b-int8-lab-grid-2x2-x4",
       "severity": "warning"
     },
     {
@@ -662,10 +812,10 @@
     }
   ],
   "mode": "read-only audit; only this generated report and the generated run index are writable",
-  "registry_asset_count": 15197,
-  "registry_asset_records_sha256": "AFB38A16BB1B8F93B1754EFCB3B68E910CF0439F0112EAA21CF36C30AD586BBF",
-  "run_count": 5673,
-  "run_records_sha256": "5156D8F99089C3B8CFB5B3B112A4B91CDA33A97A67A6D193D99FE80BF162134B",
+  "registry_asset_count": 15199,
+  "registry_asset_records_sha256": "8B65DAD83ADFCAF6E00914D3F35C125BA2FB67C424AAEBA266D8703E201D52D1",
+  "run_count": 5746,
+  "run_records_sha256": "A8F243F3C7668DAC3DB216811E1E9E6EB30A639C70B8215C5BF8D0D409503F74",
   "schema": "bg2-upscale-workspace-integrity-v1",
   "source_audits": [
     {
@@ -811,14 +961,16 @@
       "unavailable_source_count": 0
     }
   ],
-  "source_fingerprint_sha256": "4181DFA4AC011B79D32261D95FF8D5AABD27BDD0234E2FCCB57D3B3AF51DA1B1",
+  "source_fingerprint_sha256": "E80CD9CDCF2D6D1F48D3EF5FE6F4B72EF96478292C5C3423ECA1B46B60CCE60C",
   "summary": {
     "by_issue_code": {
       "animation-historical-qa-evidence-adapted": 1,
+      "animation-single-asset-run-in-batch-layout": 6,
       "historical-absolute-paths-adapted": 1,
       "map-historical-paths-adapted": 1,
       "map-legacy-run-without-json": 1,
       "map-run-referenced-files-missing": 2,
+      "map-run-unselected": 12,
       "source-root-unindexed-files": 2,
       "sprite-historical-live-job-diverged": 5,
       "sprite-historical-pointers-migrated": 1
@@ -826,7 +978,7 @@
     "by_severity": {
       "error": 0,
       "info": 5,
-      "warning": 9
+      "warning": 27
     },
     "candidate_cleanup": {
       "animation_empty_run_skeletons": 0,

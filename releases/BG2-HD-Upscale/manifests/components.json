@@ -16,7 +16,7 @@
     {
       "id": 50,
       "label": "overlay-wtlake",
-      "name": "WTLAKE technical overlay (x2)",
+      "name": "WTLAKE technical overlay (x4)",
       "status": "validated",
       "depends_on": [
         0
@@ -95,6 +95,30 @@
       ],
       "payload_groups": [
         "overlay-wtlav-family"
+      ]
+    },
+    {
+      "id": 97,
+      "label": "overlay-wtswam-pilot",
+      "name": "WTSWAM technical overlay (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "overlay-wtswam-pilot"
+      ]
+    },
+    {
+      "id": 98,
+      "label": "overlay-wtpool-route2",
+      "name": "WTPOOL2 technical overlay (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "overlay-wtpool-route2"
       ]
     },
     {
@@ -2888,6 +2912,18 @@
       ]
     },
     {
+      "id": 3032,
+      "label": "animation-ar2201",
+      "name": "AR2201 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar2201"
+      ]
+    },
+    {
       "id": 3033,
       "label": "animation-ar5200",
       "name": "AR5200 area animations (x4)",
@@ -2993,6 +3029,30 @@
       ],
       "payload_groups": [
         "animation-ar0904"
+      ]
+    },
+    {
+      "id": 3042,
+      "label": "animation-ar3011",
+      "name": "AR3011 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar3011"
+      ]
+    },
+    {
+      "id": 3043,
+      "label": "animation-ar3021",
+      "name": "AR3021 area animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "animation-ar3021"
       ]
     },
     {
@@ -4085,6 +4145,66 @@
       ],
       "payload_groups": [
         "map-oh8100"
+      ]
+    },
+    {
+      "id": 4060,
+      "label": "map-ar0404",
+      "name": "AR0404 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar0404"
+      ]
+    },
+    {
+      "id": 4070,
+      "label": "map-ar1607",
+      "name": "AR1607 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1607"
+      ]
+    },
+    {
+      "id": 4080,
+      "label": "map-ar1800",
+      "name": "AR1800 (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "map-ar1800"
+      ]
+    },
+    {
+      "id": 4100,
+      "label": "effects-spmagmis-spmindat-spfearef-x4",
+      "name": "Effect animations (x4)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "effects-spmagmis-spmindat-spfearef"
+      ]
+    },
+    {
+      "id": 4200,
+      "label": "sprites-playable-characters-x2",
+      "name": "Playable-character sprites (x2)",
+      "status": "validated",
+      "depends_on": [
+        0
+      ],
+      "payload_groups": [
+        "sprites-playable-characters-x2"
       ]
     }
   ]

@@ -1,26 +1,26 @@
 {
   "$schema": "../schemas/renderer-bundle.schema.json",
   "schema_version": 1,
-  "bundle_id": "iee-0.1.0-alpha.7",
-  "status": "integrated-in-place-awaiting-user-lifecycle-test",
-  "source_tree": "git:98b77b9beeed37eaeffafae61848e344210730e4:engine/InfinityEngine-Enhancer/source-patchee",
+  "bundle_id": "iee-0.1.0-alpha.8",
+  "status": "integrated-awaiting-clean-lifecycle-test",
+  "source_tree": "git:c3bab523:engine/InfinityEngine-Enhancer/source-patchee",
   "build_environment": {
     "cmake": "4.0.2",
     "generator": "Visual Studio 16 2019, x64",
-    "compiler": "MSVC 19.29.30133 (v142)",
+    "compiler": "MSVC 19.29.30133 (v142, x64)",
     "build_type": "Release",
     "command": "cmake -S engine/InfinityEngine-Enhancer/source-patchee -B <build-dir> -G \"Visual Studio 16 2019\" -A x64 -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON; cmake --build <build-dir> --config Release --target release_bundle; ctest --test-dir <build-dir> -C Release --output-on-failure"
   },
   "files": [
     {
       "path": "InfinityEngine-Enhancer.dll",
-      "bytes": 1550336,
-      "sha256": "60C52D05A552ACC645B0E5300EB9F75496F5F882074FC15BCF8AA0C536DDBA9E"
+      "bytes": 1786368,
+      "sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98"
     },
     {
       "path": "InfinityEngine-Enhancer.sample.ini",
-      "bytes": 3882,
-      "sha256": "844ECFC0FCEF087B785159E3C5C08889BBE866C3D337158606FB4BE00838AC83"
+      "bytes": 5463,
+      "sha256": "FCA76514327C7B22F0E41EFE142099B103FB270468D54F2177F713837D34BCA8"
     },
     {
       "path": "iee-textures/iee_water_dudv.rgba",
@@ -43,9 +43,44 @@
       "sha256": "0E34BEBEB719825EB373E2D04CF8B8FE0C7CAA7679BBD85A724083AB07AC5FDE"
     },
     {
+      "path": "override/fpDraw.glsl",
+      "bytes": 15476,
+      "sha256": "1B38768899DDD9E764B7B66A6935E86C52076BB1AE4062CF36D8A824E9F99C29"
+    },
+    {
+      "path": "override/fpFONT.glsl",
+      "bytes": 396,
+      "sha256": "A340AC1BC9C6D06D37F7C184322E358ACA8382BE18FE4B9324CAEE78D0535945"
+    },
+    {
       "path": "override/fpSEAM.glsl",
-      "bytes": 15871,
-      "sha256": "FCA60B403AE41900B5A47E0249546760B2D14B5FAA3BE2329E9AA08ADF05ECAB"
+      "bytes": 19546,
+      "sha256": "763CCBD16733CFC17AEEBA72A8F31D3204E96C918753CA6FB5A49519410E4D6C"
+    },
+    {
+      "path": "override/fpSELECT.glsl",
+      "bytes": 16716,
+      "sha256": "D5E76628C119024C6FC471CEE9812D7BB5C7AC8D56F52C289D0A86215178EA3A"
+    },
+    {
+      "path": "override/fpSprite.glsl",
+      "bytes": 16402,
+      "sha256": "85A5853F5BA7A0CA9874F8D5A2898893C1895601406F2AED5480B788CE59B234"
+    },
+    {
+      "path": "override/fpTone.glsl",
+      "bytes": 18201,
+      "sha256": "01900D8514E95D0107562204DDB896E2F8F65F1051229B13C6AFBF52E678162F"
+    },
+    {
+      "path": "override/fpYUV.glsl",
+      "bytes": 759,
+      "sha256": "90A3E35CF774EFD8C35F193265825301DDCF5E098AFA399FD79A56D6979050B4"
+    },
+    {
+      "path": "override/fpYUVGRY.glsl",
+      "bytes": 1618,
+      "sha256": "4D615E07B7F95C26D14233ECB58EE13C19D4FC1674566FAC88967CA06709085F"
     },
     {
       "path": "override/M_IEEE.lua",
@@ -54,13 +89,14 @@
     }
   ],
   "validation_required": [
-    "host tests from the same source tree, including registry v1/v2/v3 compatibility, per-occurrence routing and TimedTimeline multi-cycle subframes",
-    "renderer binary markers: AreaAnimations-X4.registry, TimedTimeline, EnableAreaAnimationX4, EnableNativeOcclusionBridge, FXRenderClippingPolys and LoadArea",
+    "host tests from the same source tree",
     "clean BG2EE Steam 2.7.3.0 game-hash gate",
-    "EEex/InfinityLoader launch gate with AR0603 v2, AR0602 v3, AR0900 v3 and AR0516 native WED occlusion",
-    "AR2300 30 FPS multi-cycle TimedTimeline runtime gate with FALL1B and AM2300A",
-    "AR0516 SPHINCT/SPHINCT2 bridge-on gate with WED 8A0AA3CA4C5D7A9BD42DDD0F55F6CA5ED57241A5F4B141C3CBE7D18D9AA2DB1A",
-    "AR0603/AR0602/AR0900 -> no-pack area transition and renderer-log fallback gate",
-    "in-place Steam shim lifecycle and verified full vanilla restoration"
+    "EEex/InfinityLoader launch gate",
+    "x4 map, animation and UI smoke gates",
+    "playable-only creature catalog and CatmullRom runtime gate",
+    "approved SPMAGMIS/SPMINDAT/SPFEAREF effect registry gate",
+    "AR0516 SPHINCT/SPHINCT2 native WED occlusion gate with bridge enabled",
+    "AR0413 WTOIL overlay classified as Oil with liquidOverlayMask 0x02",
+    "In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3"
   ]
 }

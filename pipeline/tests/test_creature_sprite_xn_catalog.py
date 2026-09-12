@@ -785,6 +785,39 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
                     build, "../outside.registry", "test payload"
                 )
 
+    def test_verified_set_leaf_payloads_resolve_beside_set_index(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
+            build_dir = Path(temporary) / "build"
+            pack = build_dir / "iee-assets" / "creature-sprites"
+            pack.mkdir(parents=True)
+            set_index = pack / pipeline.XN_REGISTRY_SET_FILENAME
+            shard = pack / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=0)
+            set_index.write_bytes(b"set-index")
+            shard.write_bytes(b"shard")
+            manifest = {
+                "registry_layout": "set",
+                "registry_set": "iee-assets/creature-sprites/" + set_index.name,
+            }
+            verified = {
+                "sha256": pipeline.sha256_file(set_index),
+                "registry_set_bytes": set_index.stat().st_size,
+                "shards": [
+                    {
+                        "registry": shard.name,
+                        "sha256": pipeline.sha256_file(shard),
+                        "crc32": pipeline.crc32_file(shard),
+                        "registry_bytes": shard.stat().st_size,
+                    }
+                ],
+            }
+            with (
+                mock.patch.object(pipeline, "build_dir", return_value=build_dir),
+                mock.patch.object(pipeline, "read_json", return_value=manifest),
+            ):
+                records = pipeline.catalog_verified_leaf_payload_records({}, verified)
+            self.assertIn(str(set_index.resolve()).casefold(), records)
+            self.assertIn(str(shard.resolve()).casefold(), records)
+
     def test_catalog_component_copy_is_bound_to_locked_source_digest(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

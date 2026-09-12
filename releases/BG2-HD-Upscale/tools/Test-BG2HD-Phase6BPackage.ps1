@@ -47,7 +47,7 @@ try {
     $uninstallStream = $uninstallEntry.Open(); try { Require ((Hash-Stream $uninstallStream) -eq $build.uninstall_launcher_sha256) 'Empreinte lanceur de desinstallation invalide.' } finally { $uninstallStream.Dispose() }
     $rendererReader = [IO.StreamReader]::new(($zip.GetEntry('bg2hd/manifests/renderer-bundle.json')).Open())
     try { $renderer = ($rendererReader.ReadToEnd() | ConvertFrom-Json) } finally { $rendererReader.Dispose() }
-    Require ($renderer.status -eq 'integrated-in-place-awaiting-user-lifecycle-test') 'Statut renderer archive invalide.'
+    Require ($renderer.status -in @('integrated-awaiting-clean-lifecycle-test','integrated-in-place-awaiting-user-lifecycle-test')) 'Statut renderer archive invalide.'
     foreach($file in @($renderer.files)) {
         $entry = $zip.GetEntry(('bg2hd/renderer/' + $file.path))
         Require ($null -ne $entry) "Renderer absent de l archive : $($file.path)"

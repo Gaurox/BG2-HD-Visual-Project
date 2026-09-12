@@ -8037,7 +8037,11 @@ def catalog_verified_leaf_payload_records(
         "bytes": build["registry_set_bytes"],
     }
     for shard in build["shards"]:
-        path = root / str(shard["registry"])
+        # ``inspect_registry_set`` exposes shard names relative to the set
+        # index, while the leaf manifest stores paths relative to the build
+        # root.  Resolve them beside the set index so both layouts identify
+        # the same payload during sealed-lock verification.
+        path = set_path.parent / Path(str(shard["registry"])).name
         records[str(path.resolve()).casefold()] = {
             "sha256": shard["sha256"],
             "crc32": shard["crc32"],

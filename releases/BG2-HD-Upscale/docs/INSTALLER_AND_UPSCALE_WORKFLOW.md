@@ -66,8 +66,8 @@ This tier must not build the full staging or archive.
 
 ## Renderer prerequisite
 
-An animation candidate relying on a renderer fix must not be integrated against a rejected or
-different bundled DLL. Stage the exact eight-file `iee-0.1.0-alpha.7` candidate from a source
+An asset candidate relying on a renderer fix must not be integrated against a rejected or
+different bundled DLL. Stage the exact fifteen-file `iee-0.1.0-alpha.8` candidate from a source
 `release-bundle`, with a `git:<commit>:<source-root>` provenance value, then validate it before
 promotion. The promotion must atomically replace `bg2hd/renderer` and both copies of
 `renderer-bundle.json`; `runtime-compatibility.json` must pin the same DLL hash/bytes. Keep the

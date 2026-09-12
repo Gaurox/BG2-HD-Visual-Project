@@ -128,7 +128,21 @@ class WorkspaceIntegrityTests(unittest.TestCase):
         )
         self.assertEqual(
             [run["run_key"] for run in map_runs if run["selection_state"] != "selected"],
-            ["maps:AR0410:legacy-upscale-tests-20260818"],
+            [
+                "maps:AR0046:upscale-01-nuit",
+                "maps:AR0204:seedvr2-7b-int8-lab-split-grid-2x5-x4",
+                "maps:AR0300:seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+                "maps:AR0404:upscale-01",
+                "maps:AR0410:legacy-upscale-tests-20260818",
+                "maps:AR0900:seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+                "maps:AR0900:seedvr2-7b-int8-lab-grid-2x5-x4-nuit",
+                "maps:AR0900:voie1-native-blend-alpha128-x4-jour-20260912",
+                "maps:AR0900:voie1-source-alpha-x4-jour-20260912",
+                "maps:AR1000:seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+                "maps:AR1600:seedvr2-7b-int8-lab-grid-2x3-x4",
+                "maps:AR1607:seedvr2-7b-int8-lab-grid-2x2-x4",
+                "maps:AR1800:seedvr2-7b-int8-lab-grid-2x2-x4",
+            ],
         )
         self.assertTrue(all(run["outputs_state"] != "missing" for run in map_runs))
 

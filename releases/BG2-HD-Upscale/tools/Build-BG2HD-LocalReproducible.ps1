@@ -93,7 +93,7 @@ try {
         'Save compatibility: future save chains disable EEex X-BIV1.0 marshalling.',
         'EEex: guided external prerequisite; never redistributed by BG2HD.',
         'Renderer: bundled BG2HD local-alpha payload; clean lifecycle validation remains required.',
-        'Content: manifest-selected validated maps, UI, overlays and area animations.'
+        'Content: manifest-selected validated maps, UI, overlays, area animations, effects and playable-character sprites.'
     )
     $buildManifest = [ordered]@{
         schema_version = 1
@@ -105,7 +105,7 @@ try {
         uninstall_launcher_sha256 = Get-Hash (Join-Path $temporary 'Uninstall-BG2HD.exe')
         fixed_zip_timestamp_utc = '1980-01-01T00:00:00Z'
         public_documents = $publicDocuments
-        excluded = @('game executables', 'EEex', 'InfinityLoader', 'logs', 'saves', 'development backups', 'unselected x2 assets', 'effect candidates pending payload projection')
+        excluded = @('game executables', 'EEex', 'InfinityLoader', 'logs', 'saves', 'development backups', 'unselected or unapproved assets')
     }
     [IO.File]::WriteAllText((Join-Path $temporary 'BUILD-MANIFEST.json'), ($buildManifest | ConvertTo-Json -Depth 8), [Text.UTF8Encoding]::new($false))
     $checksums = @(Get-ChildItem -LiteralPath $temporary -File -Recurse | Sort-Object FullName | ForEach-Object {

@@ -160,7 +160,48 @@ $animationComponents = foreach ($group in $animations) {
     }
 }
 
-$components = @(($base + $overlayComponents + $mapComponents + $animationComponents) | Sort-Object {
+$sprites = @($content.entries | Where-Object { $_.kind -eq 'sprite' } | Group-Object component_id | Sort-Object { [int]$_.Name })
+$spriteComponents = foreach ($group in $sprites) {
+    $entries = @($group.Group)
+    $labels = @($entries | ForEach-Object { [string]$_.component_label } | Sort-Object -Unique)
+    $groups = @($entries | ForEach-Object { [string]$_.payload_group } | Sort-Object -Unique)
+    $areas = @($entries | ForEach-Object { [string]$_.area } | Sort-Object -Unique)
+    $scales = @($entries | ForEach-Object { [int]$_.scale } | Sort-Object -Unique)
+    $roots = @($entries | ForEach-Object { ([string]$_.destination -split '/', 3)[0..1] -join '/' } | Sort-Object -Unique)
+    if ($labels.Count -ne 1 -or $groups.Count -ne 1 -or $areas.Count -ne 1 -or $areas[0] -ne 'SPRITES' -or $scales.Count -ne 1 -or $scales[0] -ne 2 -or $roots.Count -ne 1 -or $roots[0] -ne 'iee-assets/creature-sprites') {
+        throw "Composant sprite incoherent : $($group.Name)"
+    }
+    [ordered]@{
+        id = [int]$group.Name
+        label = $labels[0]
+        name = 'Playable-character sprites (x2)'
+        status = 'validated'
+        depends_on = @(0)
+        payload_groups = @($groups[0])
+    }
+}
+
+$effects = @($content.entries | Where-Object { $_.kind -eq 'effect' } | Group-Object component_id | Sort-Object { [int]$_.Name })
+$effectComponents = foreach ($group in $effects) {
+    $entries = @($group.Group)
+    $labels = @($entries | ForEach-Object { [string]$_.component_label } | Sort-Object -Unique)
+    $groups = @($entries | ForEach-Object { [string]$_.payload_group } | Sort-Object -Unique)
+    $areas = @($entries | ForEach-Object { [string]$_.area } | Sort-Object -Unique)
+    $roots = @($entries | ForEach-Object { ([string]$_.destination -split '/', 3)[0..1] -join '/' } | Sort-Object -Unique)
+    if ($labels.Count -ne 1 -or $groups.Count -ne 1 -or $areas.Count -ne 1 -or $areas[0] -ne 'EFFECTS' -or $roots.Count -ne 1 -or $roots[0] -ne 'iee-assets/effects') {
+        throw "Composant effet incoherent : $($group.Name)"
+    }
+    [ordered]@{
+        id = [int]$group.Name
+        label = $labels[0]
+        name = 'Effect animations (x4)'
+        status = 'validated'
+        depends_on = @(0)
+        payload_groups = @($groups[0])
+    }
+}
+
+$components = @(($base + $overlayComponents + $mapComponents + $animationComponents + $spriteComponents + $effectComponents) | Sort-Object {
     if ($_ -is [System.Collections.IDictionary]) { [int]$_['id'] } else { [int]$_.id }
 })
 $ids = @($components | ForEach-Object { [int]$_.id })

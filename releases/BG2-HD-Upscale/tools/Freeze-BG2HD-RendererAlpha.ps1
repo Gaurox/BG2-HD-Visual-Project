@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory)]
     [string]$SourceBundle,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
-    [string]$BundleId = 'iee-0.1.0-alpha.7'
+    [string]$BundleId = 'iee-0.1.0-alpha.8'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -21,7 +21,14 @@ $expectedFiles = @(
     'iee-textures/iee_water_foam.rgba',
     'iee-textures/iee_water_normal.rgba',
     'iee-textures/README.md',
+    'override/fpDraw.glsl',
+    'override/fpFONT.glsl',
     'override/fpSEAM.glsl',
+    'override/fpSELECT.glsl',
+    'override/fpSprite.glsl',
+    'override/fpTone.glsl',
+    'override/fpYUV.glsl',
+    'override/fpYUVGRY.glsl',
     'override/M_IEEE.lua'
 )
 $sourceRoot = (Resolve-Path -LiteralPath $SourceBundle).Path
@@ -38,7 +45,7 @@ if (Compare-Object -ReferenceObject ($expectedFiles | Sort-Object) -DifferenceOb
 # as a freeze-time contract so that source/binary drift cannot recur.
 $rendererDll = Get-BundleFile $sourceRoot 'InfinityEngine-Enhancer.dll'
 $rendererBinaryText = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDll.FullName))
-foreach ($marker in @('WTSEW', 'WTOIL', 'AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
+foreach ($marker in @('WTSEW', 'WTOIL', 'AreaAnimations-X4.registry', 'TimedTimeline', 'EnableAreaAnimationX4', 'EnableEffectAnimationX4', 'CreatureSprites-XN.catalog', 'EnableNativeOcclusionBridge', 'FXRenderClippingPolys', 'LoadArea')) {
     if ($rendererBinaryText.IndexOf($marker, [StringComparison]::Ordinal) -lt 0) {
         throw "DLL renderer obsolete : classificateur liquide absent du binaire ($marker)."
     }
@@ -67,20 +74,22 @@ $record = [ordered]@{
     schema_version = 1
     bundle_id = $BundleId
     status = 'frozen-awaiting-clean-game-validation'
-    source_tree = 'engine/InfinityEngine-Enhancer/source-patchee'
+    source_tree = 'git:c3bab523:engine/InfinityEngine-Enhancer/source-patchee'
     build_environment = [ordered]@{
         cmake = '4.0.2'
-        generator = 'Ninja 1.13.0.git.kitware.jobserver-pipe-1'
+        generator = 'Visual Studio 16 2019, x64'
         compiler = 'MSVC 19.29.30133 (v142, x64)'
         build_type = 'Release'
-        command = 'cmake -S engine/InfinityEngine-Enhancer/source-patchee -B <build-dir> -G Ninja -DCMAKE_BUILD_TYPE=Release -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON; cmake --build <build-dir> --target release_bundle'
+        command = 'cmake -S engine/InfinityEngine-Enhancer/source-patchee -B <build-dir> -G "Visual Studio 16 2019" -A x64 -DIEE_BUILD_WINDOWS_DLL=ON -DBUILD_TESTING=ON; cmake --build <build-dir> --config Release --target release_bundle; ctest --test-dir <build-dir> -C Release --output-on-failure'
     }
     files = @($files)
     validation_required = @(
         'host tests from the same source tree',
         'clean BG2EE Steam 2.7.3.0 game-hash gate',
         'EEex/InfinityLoader launch gate',
-        'x4 map and UI smoke gates',
+        'x4 map, animation and UI smoke gates',
+        'playable-only creature catalog and CatmullRom runtime gate',
+        'approved SPMAGMIS/SPMINDAT/SPFEAREF effect registry gate',
         'AR0516 SPHINCT/SPHINCT2 native WED occlusion gate with bridge enabled',
         'AR0413 WTOIL overlay classified as Oil with liquidOverlayMask 0x02',
         'In-place Steam shim lifecycle and verified full vanilla restoration after Phase 3'

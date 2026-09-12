@@ -34,7 +34,7 @@ function Write-JsonAtomic([string]$Path, [object]$Value) {
 function Relative-WindowsPath([string]$Path) { return $Path.Replace('/', '\') }
 function Get-ExpectedFiles([object]$Manifest) {
     $files = @($Manifest.files)
-    if ($files.Count -ne 8) { throw 'Inventaire renderer inattendu : huit fichiers sont requis.' }
+    if ($files.Count -ne 15) { throw 'Inventaire renderer inattendu : quinze fichiers sont requis.' }
     $paths = @($files | ForEach-Object { [string]$_.path })
     $expected = @(
         'InfinityEngine-Enhancer.dll',
@@ -43,7 +43,14 @@ function Get-ExpectedFiles([object]$Manifest) {
         'iee-textures/iee_water_foam.rgba',
         'iee-textures/iee_water_normal.rgba',
         'iee-textures/README.md',
+        'override/fpDraw.glsl',
+        'override/fpFONT.glsl',
         'override/fpSEAM.glsl',
+        'override/fpSELECT.glsl',
+        'override/fpSprite.glsl',
+        'override/fpTone.glsl',
+        'override/fpYUV.glsl',
+        'override/fpYUVGRY.glsl',
         'override/M_IEEE.lua'
     )
     if (Compare-Object ($expected | Sort-Object) ($paths | Sort-Object)) { throw 'Inventaire renderer non approuve.' }

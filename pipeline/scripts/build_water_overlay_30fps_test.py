@@ -44,7 +44,7 @@ ACTIVE_REGISTRY = (
 )
 TOPAZ_FFMPEG = get_path("topaz_video_ffmpeg")
 TOPAZ_MODELS = get_path("topaz_video_models")
-REVIEW_FFMPEG = Path("C:/ffmpeg/bin/ffmpeg.exe")
+REVIEW_FFMPEG = Path(shutil.which("ffmpeg") or TOPAZ_FFMPEG)
 WED_TYPE = 0x03E9
 PVR_MAGIC = 0x03525650
 PAGE_SIZE = 2048

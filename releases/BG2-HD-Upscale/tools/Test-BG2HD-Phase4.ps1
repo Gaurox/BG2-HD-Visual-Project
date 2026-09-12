@@ -19,7 +19,7 @@ Require (Test-Json -Path $contentPath -SchemaFile (Join-Path $release 'schemas/c
 $content = Get-Content -LiteralPath $contentPath -Raw -Encoding utf8 | ConvertFrom-Json
 $expected = @{}
 foreach($entry in $content.entries) {
-    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -eq 'overlay' -and [int]$entry.scale -eq 2)
+    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite') -and [int]$entry.scale -eq 2)
     Require ($entry.qa_status -eq 'validated' -and $validScale) "Entree non validee : $($entry.source)"
     Require ($entry.source -notmatch '(^|/)(override|backups|archive|captures|temp)(/|$)') "Source interdite : $($entry.source)"
     $relative = (Join-Path $entry.payload_group ([IO.Path]::GetFileName($entry.source))).Replace('\','/')
@@ -43,11 +43,11 @@ Require (Test-Json -Path $runtimeManifestPath -SchemaFile (Join-Path $release 's
 $runtimeManifest=Get-Content -LiteralPath $runtimeManifestPath -Raw -Encoding utf8|ConvertFrom-Json
 $tp2=Get-Content -LiteralPath (Join-Path $release 'bg2hd/bg2hd.tp2') -Raw
 $rendererPayload=Join-Path $release 'bg2hd/renderer'
-Require ($releaseManifest.release_status -eq 'blocked' -and $releaseManifest.payload_status -eq 'not-buildable') 'Le statut public ne doit pas etre promu avant la levee des blocages.'
+Require ($releaseManifest.release_status -eq 'blocked' -and $releaseManifest.payload_status -eq 'buildable') 'Le payload local doit etre buildable sans promouvoir le statut public.'
 Require ($runtimeManifest.steam_launch_contract.installed_steam_shim -eq 'Baldur.exe becomes a verified copy of InfinityLoader.exe') 'Le contrat du shim Steam integre est incorrect.'
 Require ($runtimeManifest.steam_launch_contract.preserved_original -eq 'BaldurReal.exe') 'La preservation de l executable officiel est absente.'
 Require ($tp2 -match ('VERSION ~'+[regex]::Escape([string]$releaseManifest.version)+'~')) 'La version TP2 ne correspond pas au manifeste de release.'
-Require ($rendererManifest.status -eq 'integrated-in-place-awaiting-user-lifecycle-test') 'Statut renderer local integre inattendu.'
+Require ($rendererManifest.status -in @('integrated-awaiting-clean-lifecycle-test','integrated-in-place-awaiting-user-lifecycle-test')) 'Statut renderer local integre inattendu.'
 Require ($runtimeManifest.renderer.area_animation_runtime.status -eq 'integrated') 'Le runtime animation de zone doit etre integre.'
 foreach($file in @($rendererManifest.files)){
     $path=Join-Path $rendererPayload $file.path.Replace('/','\')
@@ -56,7 +56,7 @@ foreach($file in @($rendererManifest.files)){
 }
 $rendererDllPath=Join-Path $rendererPayload 'InfinityEngine-Enhancer.dll'
 $rendererBinaryText=[Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($rendererDllPath))
-foreach($marker in @('WTSEW','WTOIL','AreaAnimations-X4.registry','TimedTimeline','EnableAreaAnimationX4','EnableNativeOcclusionBridge','FXRenderClippingPolys','LoadArea')){
+foreach($marker in @('WTSEW','WTOIL','AreaAnimations-X4.registry','TimedTimeline','EnableAreaAnimationX4','EnableEffectAnimationX4','CreatureSprites-XN.catalog','EnableNativeOcclusionBridge','FXRenderClippingPolys','LoadArea')){
     Require ($rendererBinaryText.IndexOf($marker,[StringComparison]::Ordinal) -ge 0) "Classificateur liquide absent de la DLL renderer : $marker"
 }
 $rendererActual=@(Get-ChildItem -LiteralPath $rendererPayload -File -Recurse|ForEach-Object{[IO.Path]::GetRelativePath($rendererPayload,$_.FullName).Replace('\','/')})
@@ -68,7 +68,7 @@ Require ($coreHelper -match 'BaldurReal\.exe:Baldur\.exe') 'Le Core ne configure
 Require ($coreHelper -match 'Move-Item\s+-LiteralPath\s+\$baldur') 'Le Core ne publie pas transactionnellement le shim Baldur.exe.'
 & (Join-Path $release 'tools/Test-BG2HD-FutureSaveCompatibility.ps1') -ReleaseRoot $release
 & (Join-Path $release 'tools/Test-BG2HD-AR0413Contract.ps1') -ReleaseRoot $release -PayloadRoot $payload
-Write-Output "Phase 4 payload validation passed: $($expected.Count) declared x4 files verified."
+Write-Output "Phase 4 payload validation passed: $($expected.Count) declared files verified."
 }
 finally {
     Exit-BG2HDAnimationAuthorityLock -Lease $animationAuthorityLease

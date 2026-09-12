@@ -628,31 +628,32 @@
       "component_label": "animation-ar0411",
       "payload_group": "animation-ar0411",
       "approval_status": "approved-for-release",
-      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-v3-7d222d5d634ed849.json",
-      "qa_approval_sha256": "EA9FB93896DE4A3A3E322B57072ED9F7917B309159076B83DF44B66B71E84554",
-      "source_pack": "animations/packs-par-zone/bubbles2-xbr2x-blend-3areas-premultiply-budget-20260905/AR0411",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0411/qa-v2-bc7b3ca39f33b57a.json",
+      "qa_approval_sha256": "80A3FCA2653918626F497923F9CC5EDE3F7181C73445105999E43A42EBD3B6CD",
+      "source_pack": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/AR0411",
       "source_runs": [
         {
-          "path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905",
-          "manifest_path": "animations/ressources/BUBBLES2/runs/bubbles2-xbr2x-blend-premultiply-budget-20260905/manifest.json",
-          "manifest_sha256": "4A6BA4389F05CB3718ADEA2A306101437E98EE598A0F2D67F2ED1C4F3FCEB1CE",
+          "path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911",
+          "manifest_path": "animations/batches/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/manifest.json",
+          "manifest_sha256": "67FCCA7FC261B2B7EB7EB88A37763A6D35B6878F88E38F0CF075E1D3E07BCB31",
           "role": "final",
           "asset_ids": [
-            "BUBBLES2"
+            "AM411MAC",
+            "DSTDVL2B",
+            "DSTDVL2C"
           ]
         }
       ],
       "pack_manifest": "manifest.json",
-      "pack_manifest_sha256": "09A5555A7CB89BEA7593D3F661A700C831C39D7D2FEF0063A7F75768E96DA93B",
+      "pack_manifest_sha256": "316273F5343E72A6FDC605B08E7887FD73158F08871B5DEBDC3FD4E966181960",
       "registry": "AreaAnimations-X4.registry",
       "registry_version": 3,
-      "registry_sha256": "461680C566E61FFAD44EF0F4BCD19F8C3A0F4A1ED177EE1BFC681F2D175CAD51",
-      "registry_bytes": 10448,
+      "registry_sha256": "227FFB58B0AD1429F661BBCFC02CB33F1CCEE2B24078E62CC37AE5E1BD10D643",
+      "registry_bytes": 5268,
       "required_resrefs": [
-        "BUBBLES2",
-        "DSTDVL1A",
-        "DSTDVL1B",
-        "DSTDVL1C"
+        "AM411MAC",
+        "DSTDVL2B",
+        "DSTDVL2C"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     },
@@ -745,7 +746,7 @@
       "component_id": 3032,
       "component_label": "animation-ar2201",
       "payload_group": "animation-ar2201",
-      "approval_status": "validated-awaiting-manifest-approval",
+      "approval_status": "approved-for-release",
       "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR2201/qa-approval.json",
       "qa_approval_sha256": "8CF16BA65F302D9CDE14EC52EC9C0EE7B3F457EE3F6B1BDBBB7C6F0F63C84C8B",
       "source_pack": "animations/packs-par-zone/combined-20260901-active-plus-am2201ab-spline-fit1-feather1-30fps-v2/AR2201",
@@ -1027,6 +1028,74 @@
         "AM904TL2",
         "AM904TL3",
         "AM904TL4"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR3011",
+      "component_id": 3042,
+      "component_label": "animation-ar3011",
+      "payload_group": "animation-ar3011",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR3011/qa-v2-e366ecf0f35f0ac3.json",
+      "qa_approval_sha256": "3FD906331E1D9CC26780CD8FA9FA4ED09967BBB13638575596BFBDE422563BB8",
+      "source_pack": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2/AR3011",
+      "source_runs": [
+        {
+          "path": "animations/batches/ar3011-qa-finalization-x4-20260911",
+          "manifest_path": "animations/batches/ar3011-qa-finalization-x4-20260911/manifest.json",
+          "manifest_sha256": "9EBDCA6B45E2545EDD0D0E29EAA5C558588DCF78B5B440BAAFC97BC9D70DE560",
+          "role": "final",
+          "asset_ids": [
+            "AM3011A",
+            "AM3011B"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "8EE21CA025EDC8F767C5AD68DD3BB801E7C01B62F407E36627CB016DE068C2A3",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "2626D00D5B89BF3F8BFB795647531BEC4484C95138C3986190B1D2E34E923169",
+      "registry_bytes": 464,
+      "required_resrefs": [
+        "AM3011A",
+        "AM3011B"
+      ],
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
+    },
+    {
+      "area": "AR3021",
+      "component_id": 3043,
+      "component_label": "animation-ar3021",
+      "payload_group": "animation-ar3021",
+      "approval_status": "approved-for-release",
+      "qa_approval": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR3021/qa-v2-0da2d8e6ddca07e1.json",
+      "qa_approval_sha256": "35546381EF18EDBFE0335ABB7E8D47FE48417316CC51E2549126AFB6B92E95FD",
+      "source_pack": "animations/packs-par-zone/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/AR3021",
+      "source_runs": [
+        {
+          "path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911",
+          "manifest_path": "animations/batches/ar3021-illithids-apo8-x4-30fps-v2-spline-fit1-feather4-20260911/manifest.json",
+          "manifest_sha256": "0528834EB32218B0048B22CAE3846E97B7A218124F37597ECDC014E316A2E166",
+          "role": "final",
+          "asset_ids": [
+            "AM3021D",
+            "AM3021E",
+            "AM3021F"
+          ]
+        }
+      ],
+      "pack_manifest": "manifest.json",
+      "pack_manifest_sha256": "BA54341F94D942017D5658EDCE6DED8EBFA9791E0FCE2197DA9478BEE311B593",
+      "registry": "AreaAnimations-X4.registry",
+      "registry_version": 3,
+      "registry_sha256": "BE36E103CA5C6CAF37125A6180B229D7EC7730ED1591E19B72CDCBB1BE8DB722",
+      "registry_bytes": 1044,
+      "required_resrefs": [
+        "AM3021D",
+        "AM3021E",
+        "AM3021F"
       ],
       "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline"
     }

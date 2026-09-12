@@ -93,7 +93,7 @@ foreach ($component in $components) {
 }
 foreach ($entry in $content) {
     if (-not $componentById.ContainsKey([int]$entry.component_id)) { throw "Entree de contenu sans composant : $($entry.source)" }
-    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -eq 'overlay' -and [int]$entry.scale -eq 2)
+    $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite') -and [int]$entry.scale -eq 2)
     if ($entry.qa_status -ne 'validated' -or -not $validScale) { throw "Contenu non valide : $($entry.source)" }
     if ($entry.source -match '(^|/)(override|backups|archive|captures|temp)(/|$)') { throw "Source interdite : $($entry.source)" }
 }

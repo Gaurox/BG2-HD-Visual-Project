@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.4 — consolidated validated asset build
+
+- Projects every approved area-animation candidate, including AR0411, AR2201,
+  AR3011 and AR3021, from immutable QA evidence.
+- Adds the approved SPMAGMIS, SPMINDAT and SPFEAREF x4 effect pack.
+- Adds the playable-only 78-animation x2 creature catalogue with Catmull-Rom
+  filtering; the unapproved 0xE400 family remains excluded.
+- Packages the validated AR0046N, AR0204, AR0300N, AR0404, AR0900N, AR1000,
+  AR1600, AR1607 and AR1800 water/WED corrections and their exact runtime aliases.
+- Freezes renderer alpha.8 with the complete shader suite required by maps,
+  effects and sprites. Automated install/rollback validation passes; clean-game
+  lifecycle validation remains a publication blocker.
+
 ## 0.1.0-alpha.3 — in-place save-compatible test installer
 
 - Restored the single-installation design: BG2HD transforms the supported

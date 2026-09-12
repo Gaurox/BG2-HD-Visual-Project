@@ -1,23 +1,23 @@
 {
   "$schema": "../schemas/overlay-sources.schema.json",
   "schema_version": 1,
-  "generated_by": "manual reviewed overlay policy 2026-08-27",
+  "generated_by": "manual reviewed overlay policy 2026-09-12",
   "policies": [
     {
       "resref": "WTLAKE",
       "policy": "package",
-      "scale": 2,
+      "scale": 4,
       "validation_status": "validated-installed",
-      "reason": "x2 was installed during the validated water-map QA; the later x4 transaction was not independently approved",
+      "reason": "x4 wavelet with a periodic 3x3 source context was validated ingame on AR0900; periodic context removes the square tile seams exposed by vanilla water composition",
       "component_id": 50,
       "component_label": "overlay-wtlake",
       "payload_group": "overlay-wtlake",
       "component_area": "WTLAKE",
-      "source_run": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-x2/03_build/x2",
-      "source_path": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-x2/03_build/x2",
+      "source_run": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4",
+      "source_path": "maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4",
       "files": [
-        { "name": "WTLAKE.TIS", "bytes": 96, "sha256": "AAB8EEC55DCB08D742331A31D117544AF4085DF1CC5289D3B8FB0870BA992AED" },
-        { "name": "WLAKE00.PVRZ", "bytes": 43432, "sha256": "AB1E37D225BB8B22FE7CDC8E02D5115E53360308D643BC58724B7FEBB2DEA180" }
+        { "name": "WTLAKE.TIS", "bytes": 96, "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1" },
+        { "name": "WLAKE00.PVRZ", "bytes": 166525, "sha256": "BCC99E2E6E2881E9D216687044A661C68EC42D0EEC1A4103C341894BB5E2FA10" }
       ]
     },
     {
@@ -35,6 +35,23 @@
       "files": [
         { "name": "WTPOOL.TIS", "bytes": 96, "sha256": "AAB8EEC55DCB08D742331A31D117544AF4085DF1CC5289D3B8FB0870BA992AED" },
         { "name": "WPOOL00.PVRZ", "bytes": 31454, "sha256": "A15EE27AEA064AFF65BAED538338860C9AC527151A455A57AB91357204390143" }
+      ]
+    },
+    {
+      "resref": "WTPOOL2",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the route2 fountain alias and its AR1000 WED routing were validated ingame at q0.70",
+      "component_id": 98,
+      "component_label": "overlay-wtpool-route2",
+      "payload_group": "overlay-wtpool-route2",
+      "component_area": "WTPOOL2",
+      "source_run": "maps/technical-overlays/WTPOOL2/runs/release-route2-v5/04_build_x4",
+      "source_path": "maps/technical-overlays/WTPOOL2/runs/release-route2-v5/04_build_x4",
+      "files": [
+        { "name": "WTPOOL2.TIS", "bytes": 456, "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83" },
+        { "name": "WPOOL200.PVRZ", "bytes": 597095, "sha256": "8EDCD76360C9D63029CCDE8A1A27F3511BC963F7A5D5A526A9E814B6FB350C36" }
       ]
     },
     {
@@ -110,7 +127,26 @@
       "policy": "stock",
       "scale": 1,
       "validation_status": "validated-stock",
-      "reason": "validated map QA explicitly keeps the shared swamp overlay stock"
+      "reason": "the original WTSWAM resource remains stock; validated runtime routing uses the dedicated WSWPIL/WSWPILR aliases"
+    },
+    {
+      "resref": "WSWPIL",
+      "policy": "package",
+      "scale": 4,
+      "validation_status": "validated-installed",
+      "reason": "the dry and rain aliases were validated ingame together on AR1607 and AR1800 with the swamp material route",
+      "component_id": 97,
+      "component_label": "overlay-wtswam-pilot",
+      "payload_group": "overlay-wtswam-pilot",
+      "component_area": "WTSWAM",
+      "source_run": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/08_candidate",
+      "source_path": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/08_candidate",
+      "files": [
+        { "name": "WSWPIL.TIS", "bytes": 456, "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83" },
+        { "name": "WSWPILR.TIS", "bytes": 456, "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83" },
+        { "name": "WWPIL00.PVRZ", "bytes": 648817, "sha256": "C255EA9220BA6E2DB72BD9738B8E2945F4B2F4E44B257F32096744DD427096B2" },
+        { "name": "WWPILR00.PVRZ", "bytes": 969019, "sha256": "C86609CC71D7983CE780C678807B726F08BAE16409D725A7415BD9566DD9F585" }
+      ]
     },
     {
       "resref": "WTSEW",

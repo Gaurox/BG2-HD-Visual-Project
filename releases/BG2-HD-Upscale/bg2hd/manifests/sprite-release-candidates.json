@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/sprite-release-candidates.schema.json",
   "schema_version": 1,
-  "generated_by": "manual explicit release approval; playable-only payload projection pending",
+  "generated_by": "manual explicit release approval; strict playable-only payload projection integrated",
   "candidates": [
     {
       "candidate_id": "playable-characters-x2-catmull-rom-v1-20260911",
@@ -99,17 +99,17 @@
         "excluded_blocked_asset_count": 246
       },
       "source_generation": {
-        "generation_id": "4B0E31A4544B281CFC2D7F1FDBF7B94F03DC62DAF97259A2F4C42853B9B615AC",
-        "current_generation": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
-        "current_generation_sha256": "FDB1D8CC1310D01FEA88A6A3116EFC5D11FFF0AF5DFA9120D0D8138E9B8C38EA",
-        "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/4b0e31a4544b281cfc2d7f1fdbf7b94f03dc62daf97259a2f4c42853b9b615ac/build/build-manifest.json",
-        "build_manifest_sha256": "8E46B306D537769B8AE8E254520C0DBA23BBFE3127A6AC529B46CF9F17AF2F5E",
-        "sealed_verification": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/verification-cache/4b0e31a4544b281cfc2d7f1fdbf7b94f03dc62daf97259a2f4c42853b9b615ac/sealed-verification.json",
-        "sealed_verification_sha256": "30F4D0D9B69B904D39571A36AECCC81A8B43B6527C2B0E2789BC65B7A556B7BF",
-        "runtime_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/4b0e31a4544b281cfc2d7f1fdbf7b94f03dc62daf97259a2f4c42853b9b615ac/runtime/runtime-manifest.json",
-        "runtime_manifest_sha256": "8CD21717EF3009FB17DF70170B285CD7CE54E0D36A070AEF7438C4C8D3CCD744",
-        "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-all-playable-characters-v1.json",
-        "job_sha256": "115873A1C6C37562315812C0ABDABF00BD30CC49B219F6569C33C25AE7B17448"
+        "generation_id": "D9BB54834FA266D6CAD19539EC9AAD24BBAF7D434CFDDDF20B4989E2BB1BDF10",
+        "current_generation": "sprite/catalogs/creature-x2-nearest/runs/release-playable-characters-x2/current-generation.json",
+        "current_generation_sha256": "7CC39FE7DA397EB7934FA943B5297CF70B9C29C9F19E63C6CF65E2E276556A20",
+        "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/release-playable-characters-x2/generations/d9bb54834fa266d6cad19539ec9aad24bbaf7d434cfdddf20b4989e2bb1bdf10/build/build-manifest.json",
+        "build_manifest_sha256": "ABD465C0EC6418848EBF8EA94CD13D85CB0EDE3B731829CC3A6A1BE5A48B3082",
+        "sealed_verification": "sprite/catalogs/creature-x2-nearest/runs/release-playable-characters-x2/verification-cache/d9bb54834fa266d6cad19539ec9aad24bbaf7d434cfdddf20b4989e2bb1bdf10/sealed-verification.json",
+        "sealed_verification_sha256": "E047CCAE095C8D91C91F9B3EA8F24A83A3557CF73053BD5DAA7E98A9B0047FEB",
+        "runtime_manifest": "sprite/catalogs/creature-x2-nearest/runs/release-playable-characters-x2/generations/d9bb54834fa266d6cad19539ec9aad24bbaf7d434cfdddf20b4989e2bb1bdf10/runtime/runtime-manifest.json",
+        "runtime_manifest_sha256": "4607D4DCF25DA20AA011C2ACFD1BA650EEAC0A325C73885198066323C763A73E",
+        "job_file": "sprite/catalogs/creature-x2-nearest/jobs/release-playable-characters-v1.json",
+        "job_sha256": "EB050EBFA6342EECAB2EC683C1711893EBABCE9BFFFC37B044786A174F0EF84D"
       },
       "qa_approval": {
         "path": "sprite/index/qa-decisions/playable-characters/2026-09-11-accepted-playable-characters-x2-catmull-rom-v1.json",
@@ -118,7 +118,7 @@
         "filter": "CatmullRom"
       },
       "runtime_contract": {
-        "dll_sha256": "D595949D866A7A3DE90CE250CB319833BE6D90151101129C9CAC924019A826C7",
+        "dll_sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98",
         "catalog_magic": "IEECSNC",
         "catalog_version": 2,
         "shard_registry_version": 5,
@@ -210,9 +210,9 @@
         ]
       },
       "payload_projection": {
-        "status": "pending-playable-only-catalog",
-        "content_manifest_integration": false,
-        "reason": "The sealed cumulative generation also contains unapproved animation 0xE400; content integration requires a catalog projection restricted to the 78 selected animation IDs."
+        "status": "integrated",
+        "content_manifest_integration": true,
+        "reason": "The sealed generation contains exactly the 78 approved playable animation IDs; unapproved animation 0xE400 is absent from the byte-pinned payload."
       }
     }
   ]

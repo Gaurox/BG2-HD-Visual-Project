@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0411",
+  "status": "accepted",
+  "decision_date": "2026-09-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-11T20:48:08Z",
+  "source_pack": "animations/packs-par-zone/ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911/AR0411",
+  "pack_manifest_sha256": "316273F5343E72A6FDC605B08E7887FD73158F08871B5DEBDC3FD4E966181960",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "227FFB58B0AD1429F661BBCFC02CB33F1CCEE2B24078E62CC37AE5E1BD10D643",
+  "required_resrefs": [
+    "AM411MAC",
+    "DSTDVL2B",
+    "DSTDVL2C"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM411MAC/2026-09-11-accepted-ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911.json",
+      "sha256": "016F11E58BB9146572B249488392F9FEBF91C1F77A191BC80FA38066FC4B501A",
+      "accepted_resrefs": [
+        "AM411MAC"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL2B/2026-09-11-accepted-ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911.json",
+      "sha256": "F3B5D65176478F29DF23AB9EF2BF59692D22A3A04FEC91B85FBC055D7F39DA3B",
+      "accepted_resrefs": [
+        "DSTDVL2B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/DSTDVL2C/2026-09-11-accepted-ar0411-planar-sphere-apo8-x4-30fps-spline-fit1-dstdvl2-coreguard16-activefade-20260911.json",
+      "sha256": "D535B95C3988EE8ED32B24F9D744C398B2FDDD5CDC9EA862CAE71F696AB12A47",
+      "accepted_resrefs": [
+        "DSTDVL2C"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0411: AM411MAC, DSTDVL2B, DSTDVL2C."
+}

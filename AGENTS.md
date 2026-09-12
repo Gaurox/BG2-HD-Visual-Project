@@ -2,6 +2,10 @@
 
 > La documentation de ce dépôt est une mémoire de solutions, pas un workflow imposé.
 
+> **Règle documentaire : écrire pour des agents IA. Toute nouvelle documentation ou modification doit privilégier la densité d’information.
+> Éviter la prose longue ; préférer les chemins,
+> commandes et décisions vérifiables.**
+
 ## Principe de travail
 
 - Partir de la demande utilisateur et du plus petit périmètre utile.
@@ -35,6 +39,23 @@
 | Animations | [`animations/index/`](animations/index/) |
 | Sprites | [`sprite/index/`](sprite/index/) |
 | Release | [`releases/BG2-HD-Upscale/manifests/release.json`](releases/BG2-HD-Upscale/manifests/release.json) |
+
+## Sources de vérité
+
+Chaque domaine conserve séparément les états `source`, `production`, `QA`, `installation` et
+`release`. Les index de domaine et manifestes finaux indiqués ci-dessus font autorité ; un état ne
+permet jamais d'en déduire un autre.
+
+## Projections générées
+
+`asset-tracking/registry.json`, `runs.json` et leurs dérivés sont régénérables. Si le résultat
+demandé les consomme, préparer le périmètre avec
+`python pipeline/scripts/workspace.py refresh --changed`, puis exécuter avec `--run`. Pour une
+correction ciblée, `python pipeline/scripts/test_changed.py --targeted --path <fichier> --run`
+sélectionne les tests dans `pipeline/tests`. Les chemins locaux passent par `config://`.
+
+Ne jamais réécrire un run historique : produire une nouvelle version lorsque son remplacement est
+nécessaire.
 
 Les fichiers `asset-tracking/registry.*`, `coverage.json`, `anomalies.json`,
 `workspace-integrity.json` et `runs.*` sont des projections facultatives et régénérables, jamais

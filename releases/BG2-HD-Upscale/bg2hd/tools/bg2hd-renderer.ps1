@@ -24,7 +24,14 @@ $manifestPath=Resolve-Absolute $RendererManifestPath
 $payload=Resolve-Absolute $PayloadRoot
 $manifest=Read-Json $manifestPath
 if(-not $StatePath){$StatePath=Join-Path $game 'bg2hd\state\renderer-files.json'}
-$expectedPaths=@('InfinityEngine-Enhancer.dll','InfinityEngine-Enhancer.sample.ini','iee-textures/iee_water_dudv.rgba','iee-textures/iee_water_foam.rgba','iee-textures/iee_water_normal.rgba','iee-textures/README.md','override/fpSEAM.glsl','override/M_IEEE.lua')
+$expectedPaths=@(
+    'InfinityEngine-Enhancer.dll','InfinityEngine-Enhancer.sample.ini',
+    'iee-textures/iee_water_dudv.rgba','iee-textures/iee_water_foam.rgba',
+    'iee-textures/iee_water_normal.rgba','iee-textures/README.md',
+    'override/fpDraw.glsl','override/fpFONT.glsl','override/fpSEAM.glsl',
+    'override/fpSELECT.glsl','override/fpSprite.glsl','override/fpTone.glsl',
+    'override/fpYUV.glsl','override/fpYUVGRY.glsl','override/M_IEEE.lua'
+)
 $eligibleStatuses=@('integrated-awaiting-clean-lifecycle-test','integrated-in-place-awaiting-user-lifecycle-test')
 if($AllowCandidate){$eligibleStatuses+= 'frozen-awaiting-clean-game-validation'}
 Require ($manifest.status -in $eligibleStatuses) "Bundle renderer non eligible : $($manifest.status)"

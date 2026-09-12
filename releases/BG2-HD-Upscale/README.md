@@ -6,8 +6,8 @@ Source de l'installeur WeiDU `bg2hd` pour BG2EE Steam 2.7.3.0, Windows x64. Ce d
 l'`override` de développement ni un dépôt d'archives construites.
 
 [`manifests/release.json`](manifests/release.json) est l'autorité de version, de cible et de statut.
-La release courante reste `blocked` et son payload `not-buildable` tant que ses conditions ne sont
-pas levées. Les quantités de fichiers/composants se lisent dans `content.json` et `components.json`;
+La release courante reste `blocked` pour les validations de cycle de vie en jeu, mais son payload
+local est `buildable`. Les quantités de fichiers/composants se lisent dans `content.json` et `components.json`;
 elles ne sont pas recopiées ici.
 
 ## Lecture

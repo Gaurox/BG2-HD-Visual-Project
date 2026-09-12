@@ -1065,7 +1065,7 @@ def audit_maps(issues: list[dict[str, Any]], runs: dict[str, dict[str, Any]]) ->
     legacy_count = 0
     migrated_reference_count = 0
     for area_dir in sorted((ROOT / "maps").iterdir(), key=lambda path: path.name):
-        if not area_dir.is_dir():
+        if not area_dir.is_dir() or not re.fullmatch(r"(?:AR|OH)\d{4}", area_dir.name, re.IGNORECASE):
             continue
         run_root = area_dir / "runs"
         if not run_root.is_dir():
@@ -1399,6 +1399,11 @@ def animation_manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
                     add(item)
             else:
                 add(sequence)
+    for area in manifest.get("areas") or []:
+        if not isinstance(area, Mapping):
+            continue
+        for item in area.get("resrefs") or []:
+            add(item)
     for patch in manifest.get("occurrence_patches") or []:
         if not isinstance(patch, Mapping):
             continue
@@ -3065,14 +3070,20 @@ def audit_workspace_backups_p5(issues: list[dict[str, Any]]) -> dict[str, Any]:
         entry_valid = True
         source = ROOT / source_text
         if kind == "empty-directory" and source.exists():
-            if not source.is_dir() or any(source.iterdir()):
+            children = list(source.iterdir()) if source.is_dir() else []
+            recreated_run_root = (
+                source_text.startswith("maps/technical-overlays/")
+                and bool(children)
+                and all(child.is_dir() and (child / "run.json").is_file() for child in children)
+            )
+            if not source.is_dir() or (children and not recreated_run_root):
                 entry_valid = False
                 add_issue(
                     issues,
                     "error",
                     "backups-p5-empty-directory-not-empty",
                     "workspace",
-                    "Un dossier supprimable/recréable vide en P5 contient désormais des éléments.",
+                    "Un dossier supprimable/recréable vide en P5 contient des éléments sans descripteur de run.",
                     path=source_text,
                 )
         elif kind != "empty-directory" and source.exists():

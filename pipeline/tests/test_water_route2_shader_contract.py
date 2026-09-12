@@ -9,13 +9,13 @@ ENGINE = Path(__file__).resolve().parents[2] / "engine/InfinityEngine-Enhancer/s
 class WaterRoute2ShaderContractTests(unittest.TestCase):
     def test_identity_resolves_engine_slot_to_live_gl_name(self):
         source = (ENGINE / "src/iee/area_state.cpp").read_text(encoding="utf-8")
-        begin = source.index("float route2_water_overlay_strength")
+        begin = source.index("std::optional<water_route2::Match> route2_water_overlay_match")
         scope = source[begin:source.index("void refresh_wed_cache", begin)]
         self.assertIn("water_route2::match(query)", scope)
         self.assertIn("wed->overlays[slot].coverageCells", scope)
         self.assertIn("validatedTextureTable +", scope)
         self.assertIn("core::safe_read(descriptor, glName)", scope)
-        self.assertIn("glName == texture", scope)
+        self.assertIn("glName != texture", scope)
         self.assertNotIn("candidate.texture == texture", scope)
         self.assertNotIn("DrawBindTexture", scope)
 
@@ -47,7 +47,7 @@ class WaterRoute2ShaderContractTests(unittest.TestCase):
         scope = source[begin:end]
         self.assertIn("~WaterOverlayUniformScope() noexcept", scope)
         self.assertIn("gl.glUniform1f(strength, 0.0f)", scope)
-        self.assertIn("hooks::route2_water_overlay_strength", scope)
+        self.assertIn("hooks::route2_water_overlay_match", scope)
         self.assertLess(scope.index("prepare_water_overlay_draw(waterUniforms)"),
                         scope.index("g_glDrawArraysHook.original()(mode, first, count)"))
 

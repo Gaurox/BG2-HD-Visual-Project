@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/effect-release-candidates.schema.json",
   "schema_version": 1,
-  "generated_by": "manual explicit release approval; payload projection pending effect release generator",
+  "generated_by": "manual explicit release approval; strict effect payload projection integrated",
   "candidates": [
     {
       "candidate_id": "effects-v2-spmagmis-spmindat-spfearef-ground-merge-v2-20260907",
@@ -49,6 +49,11 @@
         "dll_sha256": "8B692B333D833927D25C9D594662A61CECA7A0539C25ACCFCD809759776FCFE3",
         "ini_sha256": "7CE795A0698D70BCBD000CD29D36F04BAF42F0C0E15E6D94599197EE4C671A7E",
         "required_ini_key": "Shaders.EnableEffectAnimationX4=true"
+      },
+      "payload_projection": {
+        "status": "integrated",
+        "content_manifest_integration": true,
+        "reason": "The approved three-resource runtime pack is projected byte-for-byte into content.json with pinned QA and payload hashes."
       }
     }
   ]

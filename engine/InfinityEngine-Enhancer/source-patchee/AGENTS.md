@@ -3,6 +3,8 @@
 La documentation moteur est un index de solutions. Lire seulement la rubrique utile ; aucun
 préflight, ordre de lecture, test ou audit n'est imposé.
 
+> **Règle documentaire : écrire pour des agents IA. Toute nouvelle documentation ou modification doit privilégier la densité d’information. Éviter la prose longue ; conserver les invariants, commandes et preuves utiles.**
+
 ## Invariants techniques
 
 - Les identités de build et offsets restent centralisés dans `src/iee/game/build_manifest.*`.

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3011",
+  "status": "accepted",
+  "decision_date": "2026-09-11",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-11T21:40:46Z",
+  "source_pack": "animations/packs-par-zone/combined-20260911-ar3011-am3011a-canvas256-top-left-right-bottom64-am3011b-xbr30fps-contour-aura-rgb-dilate-v2/AR3011",
+  "pack_manifest_sha256": "8EE21CA025EDC8F767C5AD68DD3BB801E7C01B62F407E36627CB016DE068C2A3",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "2626D00D5B89BF3F8BFB795647531BEC4484C95138C3986190B1D2E34E923169",
+  "required_resrefs": [
+    "AM3011A",
+    "AM3011B"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3011A/2026-09-11-accepted-ar3011-qa-finalization-x4-20260911.json",
+      "sha256": "0D74C046B95AD98EF44BB1401A70F45CF5E226B7C82B287D2D96D07947C9CEC3",
+      "accepted_resrefs": [
+        "AM3011A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3011B/2026-09-11-accepted-ar3011-qa-finalization-x4-20260911.json",
+      "sha256": "0FFACF595EFCA6F8DBD189ADA2CFF55E7FA19FD003CAB229B162E7E09CDE4D3F",
+      "accepted_resrefs": [
+        "AM3011B"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR3011: AM3011A, AM3011B."
+}

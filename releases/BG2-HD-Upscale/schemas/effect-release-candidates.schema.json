@@ -12,7 +12,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["candidate_id", "component_id", "component_label", "payload_group", "approval_status", "resources", "runtime_pack", "renderer_contract"],
+        "required": ["candidate_id", "component_id", "component_label", "payload_group", "approval_status", "resources", "runtime_pack", "renderer_contract", "payload_projection"],
         "properties": {
           "candidate_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
           "component_id": {"type": "integer", "minimum": 1},
@@ -21,7 +21,17 @@
           "approval_status": {"const": "approved-for-release"},
           "resources": {"type": "array", "minItems": 1},
           "runtime_pack": {"type": "object"},
-          "renderer_contract": {"type": "object"}
+          "renderer_contract": {"type": "object"},
+          "payload_projection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status", "content_manifest_integration", "reason"],
+            "properties": {
+              "status": {"enum": ["pending-effect-release-generator", "integrated"]},
+              "content_manifest_integration": {"type": "boolean"},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
         }
       }
     }

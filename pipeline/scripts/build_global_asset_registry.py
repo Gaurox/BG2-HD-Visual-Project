@@ -594,12 +594,14 @@ def apply_fragment(
         states[axis] = value
 
 
-def load_content_groups(inputs: InputCatalog) -> tuple[dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]]]:
+def load_content_groups(inputs: InputCatalog) -> tuple[dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]], dict[str, list[dict[str, Any]]]]:
     path = "releases/BG2-HD-Upscale/manifests/content.json"
     content = inputs.read_json(path)
     map_groups: dict[str, list[dict[str, Any]]] = {}
     animation_groups: dict[str, list[dict[str, Any]]] = {}
     ui_groups: dict[str, list[dict[str, Any]]] = {}
+    sprite_groups: dict[str, list[dict[str, Any]]] = {}
+    effect_groups: dict[str, list[dict[str, Any]]] = {}
     for entry in content.get("entries", []):
         kind = entry.get("kind")
         if kind == "map":
@@ -608,7 +610,11 @@ def load_content_groups(inputs: InputCatalog) -> tuple[dict[str, list[dict[str, 
             animation_groups.setdefault(str(entry.get("area", "")), []).append(entry)
         elif kind == "ui":
             ui_groups.setdefault(str(entry.get("component_label", "")), []).append(entry)
-    return map_groups, animation_groups, ui_groups
+        elif kind == "sprite":
+            sprite_groups.setdefault(str(entry.get("component_label", "")), []).append(entry)
+        elif kind == "effect":
+            effect_groups.setdefault(str(entry.get("component_label", "")), []).append(entry)
+    return map_groups, animation_groups, ui_groups, sprite_groups, effect_groups
 
 
 def load_auxiliary_map_release_contracts(inputs: InputCatalog) -> dict[str, list[dict[str, Any]]]:
@@ -1729,7 +1735,10 @@ def adapt_animation_candidates(
         )
 
 
-def adapt_sprites(builder: RegistryBuilder) -> None:
+def adapt_sprites(
+    builder: RegistryBuilder,
+    sprite_groups: Mapping[str, list[dict[str, Any]]],
+) -> None:
     family_path = "sprite/index/sprite_families.csv"
     manifest_path = "sprite/index/manifest.json"
     processing_path = "sprite/index/processing.csv"
@@ -1753,6 +1762,55 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
         source=manifest_path,
     )
     inventory_verified = bool(inventory_fragment and inventory_fragment.get("source") == "verified")
+
+    candidate_path = "releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json"
+    candidates = builder.inputs.read_json(candidate_path).get("candidates", [])
+    integrated_candidates = [
+        candidate
+        for candidate in candidates
+        if candidate.get("approval_status") == "approved-for-release"
+        and candidate.get("payload_projection", {}).get("status") == "integrated"
+        and candidate.get("payload_projection", {}).get("content_manifest_integration") is True
+    ]
+    selected_release_ids: set[str] = set()
+    sprite_content_valid = False
+    sprite_content_path = "releases/BG2-HD-Upscale/manifests/content.json"
+    if integrated_candidates:
+        if len(integrated_candidates) != 1:
+            builder.anomaly(
+                "sprite-release-candidate-ambiguous", "error", "sprites",
+                "plusieurs projections sprite intégrées sont déclarées",
+                source=candidate_path,
+            )
+        else:
+            candidate = integrated_candidates[0]
+            selected_release_ids = {
+                str(value).upper()
+                for value in candidate.get("asset_scope", {}).get("animation_ids", [])
+            }
+            label = str(candidate.get("component_label", ""))
+            content_entries = list(sprite_groups.get(label, []))
+            expected_prefix = (
+                str(candidate.get("source_generation", {}).get("build_manifest", ""))
+                .rsplit("/", 1)[0]
+                + "/iee-assets/creature-sprites/"
+            )
+            sprite_content_valid = bool(content_entries) and all(
+                entry.get("kind") == "sprite"
+                and entry.get("qa_status") == "validated"
+                and entry.get("payload_group") == candidate.get("payload_group")
+                and str(entry.get("source", "")).startswith(expected_prefix)
+                and str(entry.get("destination", "")).startswith(
+                    "iee-assets/creature-sprites/"
+                )
+                for entry in content_entries
+            )
+            if not sprite_content_valid:
+                builder.anomaly(
+                    "sprite-release-content-mismatch", "error", "sprites",
+                    "content.json ne correspond pas à la projection sprite approuvée",
+                    source=sprite_content_path,
+                )
 
     processing: dict[str, dict[str, str]] = {}
     for row in processing_rows:
@@ -2035,8 +2093,25 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
             domain="sprites",
             asset_id=asset_id,
             source=processing_path,
-            keep_axes={"production", "qa", "installation"} if is_active else None,
+            # The active cumulative catalog only proves production and installation.
+            # Per-family QA remains pinned to its selected immutable generation.
+            keep_axes={"production", "installation"} if is_active else None,
         )
+        if row.get("animation_id", "").upper() in selected_release_ids:
+            if sprite_content_valid and states["release"] in {"eligible", "approved"}:
+                states["release"] = "integrated"
+                evidence.extend(
+                    [
+                        evidence_ref(builder.inputs, candidate_path, "json:candidates[0]"),
+                        evidence_ref(
+                            builder.inputs,
+                            sprite_content_path,
+                            "json:entries[kind=sprite]",
+                        ),
+                    ]
+                )
+            elif not sprite_content_valid:
+                states["release"] = "blocked"
 
         production_run = current_processing.get("production_run", "")
         production_hash = current_processing.get("production_run_sha256", "").upper()
@@ -2071,14 +2146,30 @@ def adapt_sprites(builder: RegistryBuilder) -> None:
                 "une installation active exige un reçu",
                 asset_id=asset_id, source=processing_path,
             )
-        if is_active and current_processing.get("catalog_generation", "") != str(
-            current.get("generation_id", "")
-        ):
-            builder.anomaly(
-                "sprite-processing-generation-mismatch", "error", "sprites",
-                "le suivi actif ne référence pas la génération installée",
-                asset_id=asset_id, source=processing_path,
+        tracked_generation = current_processing.get("catalog_generation", "")
+        if is_active and tracked_generation != str(current.get("generation_id", "")):
+            # Appends create a new cumulative generation without invalidating the
+            # immutable generation on which an individual family's QA was made.
+            tracked_build_path = (
+                f"{Path(current_path).parent.as_posix()}/generations/"
+                f"{tracked_generation.lower()}/build/build-manifest.json"
             )
+            tracked_pair_present = False
+            if tracked_generation and builder.inputs.exists(tracked_build_path):
+                tracked_build = builder.inputs.read_json(tracked_build_path)
+                for member in tracked_build.get("source_members", []):
+                    animation_id = str(member.get("animation_id", ""))
+                    raw_prefixes = member.get("bam_prefixes", [])
+                    prefixes = raw_prefixes if isinstance(raw_prefixes, list) else str(raw_prefixes).split()
+                    if pair[0] == animation_id and pair[1] in prefixes:
+                        tracked_pair_present = True
+                        break
+            if not tracked_pair_present:
+                builder.anomaly(
+                    "sprite-processing-generation-mismatch", "error", "sprites",
+                    "le suivi actif ne référence ni la génération courante ni une génération immuable contenant la famille",
+                    asset_id=asset_id, source=processing_path,
+                )
         if selected_run:
             selections.append(
                 {
@@ -2819,7 +2910,10 @@ def adapt_icon_bams(builder: RegistryBuilder) -> None:
         )
 
 
-def adapt_effect_bams(builder: RegistryBuilder) -> None:
+def adapt_effect_bams(
+    builder: RegistryBuilder,
+    effect_groups: Mapping[str, list[dict[str, Any]]],
+) -> None:
     """Project the effect work unit: one visual BAM, never one VVC/VEF controller."""
 
     manifest_path = "effects/index/manifest.json"
@@ -2830,6 +2924,48 @@ def adapt_effect_bams(builder: RegistryBuilder) -> None:
     assets = builder.inputs.read_csv(assets_path)
     dependencies = builder.inputs.read_csv(dependencies_path)
     processing_rows = builder.inputs.read_csv(processing_path)
+    candidate_path = "releases/BG2-HD-Upscale/manifests/effect-release-candidates.json"
+    candidates = builder.inputs.read_json(candidate_path).get("candidates", [])
+    integrated = [
+        candidate
+        for candidate in candidates
+        if candidate.get("approval_status") == "approved-for-release"
+        and candidate.get("payload_projection", {}).get("status") == "integrated"
+        and candidate.get("payload_projection", {}).get("content_manifest_integration") is True
+    ]
+    selected_release_resrefs: set[str] = set()
+    effect_content_valid = False
+    effect_content_path = "releases/BG2-HD-Upscale/manifests/content.json"
+    if integrated:
+        if len(integrated) != 1:
+            builder.anomaly(
+                "effect-release-candidate-ambiguous", "error", "effects",
+                "plusieurs projections d'effets intégrées sont déclarées",
+                source=candidate_path,
+            )
+        else:
+            candidate = integrated[0]
+            selected_release_resrefs = {
+                str(resource.get("resref", "")).upper()
+                for resource in candidate.get("resources", [])
+            }
+            label = str(candidate.get("component_label", ""))
+            content_entries = list(effect_groups.get(label, []))
+            source_prefix = str(candidate.get("runtime_pack", {}).get("path", "")).rstrip("/") + "/"
+            effect_content_valid = bool(content_entries) and all(
+                entry.get("kind") == "effect"
+                and entry.get("qa_status") == "validated"
+                and entry.get("payload_group") == candidate.get("payload_group")
+                and str(entry.get("source", "")).startswith(source_prefix)
+                and str(entry.get("destination", "")).startswith("iee-assets/effects/")
+                for entry in content_entries
+            )
+            if not effect_content_valid:
+                builder.anomaly(
+                    "effect-release-content-mismatch", "error", "effects",
+                    "content.json ne correspond pas au pack d'effets approuvé",
+                    source=effect_content_path,
+                )
 
     if manifest.get("bam_asset_count") != len(assets):
         builder.anomaly(
@@ -3011,6 +3147,22 @@ def adapt_effect_bams(builder: RegistryBuilder) -> None:
         if selected_run or release_candidate:
             evidence.append(evidence_ref(builder.inputs, processing_path, locator))
             provenance_state = "complete" if selected_run else "partial"
+        if resref in selected_release_resrefs:
+            if effect_content_valid and states["release"] in {"eligible", "approved"}:
+                states["release"] = "integrated"
+                evidence.extend(
+                    [
+                        evidence_ref(builder.inputs, candidate_path, "json:candidates[0]"),
+                        evidence_ref(
+                            builder.inputs,
+                            effect_content_path,
+                            "json:entries[kind=effect]",
+                        ),
+                    ]
+                )
+                provenance_state = "verified"
+            elif not effect_content_valid:
+                states["release"] = "blocked"
         builder.add(
             base_record(
                 asset_id=asset_key,
@@ -3605,16 +3757,16 @@ def build_coverage(
 
 def build_outputs(root: Path = ROOT) -> dict[str, dict[str, Any]]:
     builder = RegistryBuilder(root)
-    map_groups, animation_groups, ui_groups = load_content_groups(builder.inputs)
+    map_groups, animation_groups, ui_groups, sprite_groups, effect_groups = load_content_groups(builder.inputs)
     auxiliary_contracts = load_auxiliary_map_release_contracts(builder.inputs)
     adapt_maps(builder, map_groups, auxiliary_contracts)
     animation_resrefs = adapt_animation_bams(builder)
     adapt_animation_wbms(builder)
     adapt_animation_candidates(builder, animation_resrefs, animation_groups)
-    adapt_sprites(builder)
+    adapt_sprites(builder, sprite_groups)
     adapt_ui(builder, ui_groups)
     adapt_icon_bams(builder)
-    adapt_effect_bams(builder)
+    adapt_effect_bams(builder, effect_groups)
     adapt_phase4_inventories(builder)
     adapt_portraits(builder)
     registry, coverage, anomalies = builder.finalize()

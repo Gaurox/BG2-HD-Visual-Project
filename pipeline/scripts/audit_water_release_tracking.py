@@ -1,4 +1,4 @@
-"""Audit the water release-preparation authority without changing release state."""
+"""Audit water release preparation and explicitly authorized integrations."""
 
 from __future__ import annotations
 
@@ -101,10 +101,16 @@ def validate_tracking(
         errors.append("unsupported schema/version")
 
     boundary = data.get("release_boundary", {})
-    if boundary.get("authorization") != "not-requested":
-        errors.append("tracking authority cannot grant release authorization")
-    if boundary.get("release_manifests_modified") is not False:
-        errors.append("release_manifests_modified must remain false in tracking authority")
+    authorization = boundary.get("authorization")
+    release_authorized = bool(
+        isinstance(authorization, str)
+        and re.fullmatch(r"explicit-user-request-[0-9]{4}-[0-9]{2}-[0-9]{2}", authorization)
+    )
+    if authorization not in {"not-requested"} and not release_authorized:
+        errors.append("invalid release authorization record")
+    expected_modified = release_authorized
+    if boundary.get("release_manifests_modified") is not expected_modified:
+        errors.append("release_manifests_modified disagrees with release authorization")
 
     evidence = data.get("evidence", [])
     if not isinstance(evidence, list) or not evidence:
@@ -220,8 +226,6 @@ def validate_tracking(
         strength = target.get("route2_strength")
         if not isinstance(strength, (int, float)) or not 0 <= float(strength) <= 1:
             errors.append(f"target[{target_id}]: invalid route2 strength")
-        if target.get("release_state") != "not-evaluated":
-            errors.append(f"target[{target_id}]: tracking cannot approve release")
         qa_state = target.get("qa_state")
         qa_counts[str(qa_state)] += 1
         if qa_state not in QA_STATES:
@@ -240,6 +244,14 @@ def validate_tracking(
             errors.append(f"target[{target_id}]: blockers must be a list")
         else:
             blocker_count += len(blockers)
+        release_state = target.get("release_state")
+        if release_state not in {"not-evaluated", "integrated"}:
+            errors.append(f"target[{target_id}]: tracking cannot approve release")
+        elif release_state == "integrated":
+            if not release_authorized:
+                errors.append(f"target[{target_id}]: integration lacks release authorization")
+            if qa_state not in VALIDATED_QA or not isinstance(blockers, list) or blockers:
+                errors.append(f"target[{target_id}]: integrated target is not fully validated")
         if verify_files and area_id in area_rows and qa_state in VALIDATED_QA:
             field = "status_nuit" if variant == "night" else "status"
             if area_rows[area_id].get(field) != "validated-installed":
@@ -265,7 +277,7 @@ def validate_tracking(
         "qa_states": dict(sorted(qa_counts.items())),
         "target_blockers": blocker_count,
         "runtime_blockers": len(runtime_blockers),
-        "release_authorized": False,
+        "release_authorized": release_authorized,
         "release_candidate_ready": technical_ready,
     }
     return errors, summary

@@ -26,7 +26,15 @@ class ContourAuraTests(unittest.TestCase):
         self.assertGreater(stats["aura_expanded_pixels"], 0)
         self.assertGreater(output[17, 20, 3], 0)
         self.assertEqual(output[0, 20, 3], 0)
-        self.assertTrue(np.all(output[..., :3] <= pixels[..., :3]))
+        source = pixels[..., 3] > 0
+        aura_only = (output[..., 3] > 0) & ~source
+        self.assertTrue(np.all(output[source, :3] <= pixels[source, :3]))
+        expected_aura_rgb = np.rint(
+            np.array([200, 100, 50], dtype=np.float64)
+            * output[aura_only, 3, None]
+            / 255.0
+        ).astype(np.uint8)
+        self.assertTrue(np.array_equal(output[aura_only, :3], expected_aura_rgb))
         self.assertTrue(np.all(output[output[..., 3] == 0, :3] == 0))
 
     def test_aura_replaces_hidden_green_chroma_with_nearest_opaque_rgb(self) -> None:
@@ -43,5 +51,9 @@ class ContourAuraTests(unittest.TestCase):
         aura_only = (output[..., 3] > 0) & (pixels[..., 3] == 0)
 
         self.assertEqual(stats["aura_rgb_dilated_pixels"], int(aura_only.sum()))
-        self.assertTrue(np.all(output[aura_only, 0] > output[aura_only, 1]))
-        self.assertTrue(np.all(output[aura_only, 1] > output[aura_only, 2]))
+        expected = np.rint(
+            np.array([220, 80, 20], dtype=np.float64)
+            * output[aura_only, 3, None]
+            / 255.0
+        ).astype(np.uint8)
+        self.assertTrue(np.array_equal(output[aura_only, :3], expected))

@@ -7,7 +7,7 @@
     "setup_executable": "setup-bg2hd.exe",
     "release_repository": "BG2-HD-Upscale"
   },
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "target": {
     "store": "Steam",
     "steam_app_id": 257350,
@@ -16,14 +16,14 @@
     "game_version": "2.7.3.0"
   },
   "release_status": "blocked",
-  "payload_status": "not-buildable",
+  "payload_status": "buildable",
   "blocking_conditions": [
     "in-place-steam-shim-clean-install-lifecycle-test-pending",
     "future-hd-save-native-vanilla-lifecycle-test-pending",
     "full-vanilla-uninstall-restoration-test-pending",
     "bootstrap-clean-game-eeex-absent-lifecycle-test-pending",
     "renderer-clean-game-lifecycle-test-pending",
-    "native-occlusion-renderer-alpha.7-freeze-and-lifecycle-test-pending",
+    "renderer-alpha.8-clean-game-combined-lifecycle-test-pending",
     "animation-qa-historical-alpha-catalogue-hash-71957-unresolved",
     "public-contact-and-provenance-record-pending"
   ],
@@ -39,10 +39,11 @@
     "manifests/licenses-and-exclusions.json"
   ],
   "content_scope": {
-    "maps": "validated SeedVR2 7B/LAB x4 zones only",
+    "maps": "validated SeedVR2 7B/LAB x4 zones plus byte-pinned validated water/WED repairs",
     "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
-    "overlays": "overlay-sources.json is authoritative: validated water overlays x2, WTLAV family x4, WTSWAM/WTSEW/WTOIL stock",
-    "sprites": "approved playable Character x2 Catmull-Rom selection; playable-only catalog projection pending before content.json integration",
+    "overlays": "overlay-sources.json is authoritative: validated WTLAKE/WTPOOL2/WSWPIL aliases and WTLAV family; WTSWAM/WTSEW/WTOIL remain stock",
+    "sprites": "approved 78-animation playable Character x2 Catmull-Rom catalog, projected byte-for-byte",
+    "effects": "approved SPMAGMIS, SPMINDAT and SPFEAREF x4 runtime pack, projected byte-for-byte",
     "excluded": [
       "all x2 map builds",
       "installed-pending-qa maps",

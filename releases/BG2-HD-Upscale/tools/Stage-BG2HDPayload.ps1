@@ -30,7 +30,7 @@ try {
     $targets = @{}
     $totalBytes = [Int64]0
     foreach ($entry in @($content.entries | Sort-Object component_id, install_order, destination, source)) {
-        $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -eq 'overlay' -and [int]$entry.scale -eq 2)
+        $validScale = ([int]$entry.scale -eq 4) -or ($entry.kind -in @('overlay', 'sprite') -and [int]$entry.scale -eq 2)
         Require ($entry.qa_status -eq 'validated' -and $validScale) "Entree non validee : $($entry.source)"
         Require ($entry.source -notmatch '(^|/)(override|backups|archive|captures|temp)(/|$)') "Source interdite : $($entry.source)"
         $source = [IO.Path]::GetFullPath((Join-Path $workspace ($entry.source.Replace('/','\'))))

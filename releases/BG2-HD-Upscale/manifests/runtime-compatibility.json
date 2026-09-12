@@ -42,21 +42,21 @@
   },
   "renderer": {
     "distribution": "bundled-by-bg2hd-after-freeze",
-    "status": "integrated-in-place-awaiting-user-lifecycle-test",
+    "status": "integrated-awaiting-clean-lifecycle-test",
     "active_development_install": {
       "path": "InfinityEngine-Enhancer.dll",
-      "sha256": "60C52D05A552ACC645B0E5300EB9F75496F5F882074FC15BCF8AA0C536DDBA9E",
-      "bytes": 1550336,
-      "qa_evidence": "animations/batches/ar2300-waterfalls-x4-30fps-test-20260906/qa-approval.json"
+      "sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98",
+      "bytes": 1786368,
+      "qa_evidence": "sprite/index/qa-decisions/playable-characters/2026-09-11-accepted-playable-characters-x2-catmull-rom-v1.json"
     },
     "reproducible_source_build": {
-      "source": "git:98b77b9beeed37eaeffafae61848e344210730e4:engine/InfinityEngine-Enhancer/source-patchee",
-      "output_sha256": "60C52D05A552ACC645B0E5300EB9F75496F5F882074FC15BCF8AA0C536DDBA9E",
-      "output_bytes": 1550336,
-      "build_status": "alpha.7 frozen from the TimedTimeline multi-cycle source; automated renderer and AR2300 validation passed; clean-game lifecycle remains required",
+      "source": "git:c3bab523:engine/InfinityEngine-Enhancer/source-patchee",
+      "output_sha256": "C0D7BBAE0DACD1ED794A34300B8523BFFC63C9894F95C866715513848FC2BA98",
+      "output_bytes": 1786368,
+      "build_status": "alpha.8 frozen from the current unified animation, effect, sprite and water runtime; native tests passed; clean-game lifecycle remains required",
       "bundle_manifest": "manifests/renderer-bundle.json"
     },
-    "publication_rule": "Do not publish alpha.5 or alpha.6. Alpha.7 is integrated in place only; keep the release blocked until clean-game, AR0516, future-save and full-uninstall gates are recorded.",
+    "publication_rule": "Alpha.8 is the only current renderer bundle; keep the release blocked until clean-game, AR0516, future-save and full-uninstall lifecycle gates are recorded.",
     "area_animation_runtime": {
       "status": "integrated",
       "payload_layout": "iee-assets/areas/<AREA>",
@@ -83,6 +83,9 @@
       },
       "Shaders": {
         "EnableWaterEffect": "true",
+        "EnableEffectAnimationX4": "true",
+        "EnableCreatureSpriteUpscaleTest": "true",
+        "CreatureSpriteFilter": "CatmullRom",
         "EnableNativeOcclusionBridge": "true"
       }
     },

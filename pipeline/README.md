@@ -31,6 +31,9 @@ python pipeline/scripts/run_seedvr_comfyui.py --help
 Choisir seulement l'outil qui répond au besoin courant. SeedVR, audits, reconstruction et suivi ne
 sont pas des étapes d'un parcours obligatoire.
 
+Les anciens splitters manuels sont archivés ; `run_seedvr_comfyui.py` est l'entrée actuelle pour
+les découpes pilotées par le pipeline.
+
 ## Contraintes techniques utiles
 
 - Une recette ou un manifeste final peut conserver les entrées nécessaires à sa reproduction.
@@ -87,7 +90,7 @@ commandes disponibles sont listés dans
 | Interpolation vidéo | [`VIDEO_INTERPOLATION_PIPELINE.md`](VIDEO_INTERPOLATION_PIPELINE.md) |
 | Scripts disponibles | [`scripts/README.md`](scripts/README.md) |
 
-## Tests facultatifs
+## Tests légers (facultatifs)
 
 ```powershell
 python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<script>.py

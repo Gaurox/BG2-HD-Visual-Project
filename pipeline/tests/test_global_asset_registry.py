@@ -140,10 +140,10 @@ class GlobalAssetRegistryTests(unittest.TestCase):
             ar0404["states"],
             {
                 "source": "extracted",
-                "production": "produced",
-                "qa": "pending",
+                "production": "verified",
+                "qa": "passed",
                 "installation": "installed",
-                "release": "not-evaluated",
+                "release": "integrated",
             },
         )
         self.assertEqual(
@@ -181,7 +181,7 @@ class GlobalAssetRegistryTests(unittest.TestCase):
         sprite = self.by_id["sprites:family:0x6102:body:armor-code:1:CDMB1"]
         self.assertEqual(sprite["adapter"], "sprites.processing.v2")
         self.assertEqual(sprite["states"]["production"], "verified")
-        self.assertEqual(sprite["states"]["qa"], "pending")
+        self.assertEqual(sprite["states"]["qa"], "passed")
         self.assertEqual(sprite["states"]["installation"], "installed")
         self.assertIn(
             "sprite/index/processing.csv",
@@ -252,7 +252,7 @@ class GlobalAssetRegistryTests(unittest.TestCase):
         self.assertEqual(unselected_effect["provenance"]["state"], "not-applicable")
         self.assertEqual(unselected_effect["provenance"]["evidence"], [])
         selected_effect = self.by_id["effects:bam:SPFEAREF"]
-        self.assertEqual(selected_effect["provenance"]["state"], "complete")
+        self.assertEqual(selected_effect["provenance"]["state"], "verified")
         self.assertIn(
             "candidate",
             {selection["role"] for selection in selected_effect["selections"]},

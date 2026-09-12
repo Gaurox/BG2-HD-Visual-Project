@@ -3,6 +3,8 @@ param(
     [string]$WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..\..')).Path,
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\manifests\content.json'),
     [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json'),
+    [string]$SpriteCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\sprite-release-candidates.json'),
+    [string]$EffectCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\effect-release-candidates.json'),
     [string]$RuntimeCompatibilityPath = (Join-Path $PSScriptRoot '..\manifests\runtime-compatibility.json'),
     [string]$OverlayPolicyPath = (Join-Path $PSScriptRoot '..\manifests\overlay-sources.json'),
     [switch]$IncludePendingAnimationCandidates,
@@ -493,9 +495,134 @@ function Get-AnimationCandidateEntries {
     return @($result)
 }
 
+function Get-SpriteCandidateEntries {
+    param([string]$Workspace, [string]$CandidatesPath)
+
+    $result = [System.Collections.Generic.List[object]]::new()
+    $register = Read-Json $CandidatesPath
+    foreach ($candidate in @($register.candidates | Where-Object { $_.approval_status -eq 'approved-for-release' -and $_.payload_projection.status -eq 'integrated' })) {
+        Require ([bool]$candidate.payload_projection.content_manifest_integration) "Projection sprite non integree : $($candidate.candidate_id)"
+        $source = $candidate.source_generation
+        foreach ($record in @(
+            @{ Path = [string]$source.current_generation; Hash = [string]$source.current_generation_sha256 },
+            @{ Path = [string]$source.build_manifest; Hash = [string]$source.build_manifest_sha256 },
+            @{ Path = [string]$source.sealed_verification; Hash = [string]$source.sealed_verification_sha256 },
+            @{ Path = [string]$source.runtime_manifest; Hash = [string]$source.runtime_manifest_sha256 },
+            @{ Path = [string]$source.job_file; Hash = [string]$source.job_sha256 },
+            @{ Path = [string]$candidate.qa_approval.path; Hash = [string]$candidate.qa_approval.sha256 }
+        )) {
+            $path = Join-Path $Workspace ($record.Path.Replace('/', '\'))
+            Require (Test-Path -LiteralPath $path -PathType Leaf) "Preuve sprite absente : $($record.Path)"
+            Require ((Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash -eq $record.Hash) "Hash de preuve sprite invalide : $($record.Path)"
+        }
+
+        $pointer = Read-Json (Join-Path $Workspace ($source.current_generation.Replace('/', '\')))
+        $build = Read-Json (Join-Path $Workspace ($source.build_manifest.Replace('/', '\')))
+        $proof = Read-Json (Join-Path $Workspace ($source.sealed_verification.Replace('/', '\')))
+        $runtime = Read-Json (Join-Path $Workspace ($source.runtime_manifest.Replace('/', '\')))
+        $expectedIds = @($candidate.asset_scope.animation_ids | ForEach-Object { [string]$_ } | Sort-Object)
+        $selectedIds = @($candidate.runtime_contract.selected_animation_ids | ForEach-Object { [string]$_ } | Sort-Object)
+        $buildIds = @($build.animation_ids | ForEach-Object { [string]$_ } | Sort-Object)
+        Require (-not (Compare-Object $expectedIds $selectedIds)) "Selection runtime sprite incoherente : $($candidate.candidate_id)"
+        Require (-not (Compare-Object $expectedIds $buildIds)) "Catalogue sprite non restreint a la selection approuvee : $($candidate.candidate_id)"
+        Require (@($buildIds | Where-Object { @($candidate.runtime_contract.excluded_animation_ids) -contains $_ }).Count -eq 0) "Animation sprite exclue presente : $($candidate.candidate_id)"
+        Require ($pointer.generation_id -eq $source.generation_id -and $build.generation_id -eq $source.generation_id -and $runtime.generation_id -eq $source.generation_id) "Generation sprite incoherente : $($candidate.candidate_id)"
+        Require ($build.schema -eq 'bg2-upscale-creature-sprite-xn-catalog-pack-v1' -and $build.status -eq 'built-pending-ingame-qa') "Build sprite non finalise : $($candidate.candidate_id)"
+        Require ($proof.status -eq 'sealed-verified') "Verification scellee sprite absente : $($candidate.candidate_id)"
+        Require ($runtime.status -eq 'built-tested' -and $runtime.tests_status -eq 'passed' -and $runtime.bridge_worker_tests_status -eq 'passed') "Runtime sprite non teste : $($candidate.candidate_id)"
+        Require ($runtime.dll_sha256 -eq [string]$candidate.runtime_contract.dll_sha256) "DLL runtime sprite differente du contrat : $($candidate.candidate_id)"
+        Require ([int]$build.registry_scale -eq [int]$candidate.runtime_contract.scale -and [int]$build.registry_catalog_version -eq [int]$candidate.runtime_contract.catalog_version -and [int]$build.registry_catalog_shard_version -eq [int]$candidate.runtime_contract.shard_registry_version) "Format de catalogue sprite incoherent : $($candidate.candidate_id)"
+
+        $generationRoot = Split-Path -Parent (Split-Path -Parent (Join-Path $Workspace ($source.build_manifest.Replace('/', '\'))))
+        $buildRoot = Join-Path $generationRoot 'build'
+        $baseSpec = @{
+            ComponentId = [int]$candidate.component_id
+            ComponentLabel = [string]$candidate.component_label
+            PayloadGroup = [string]$candidate.payload_group
+            Area = 'SPRITES'
+            SourceRun = [IO.Path]::GetRelativePath($Workspace, $generationRoot).Replace('\', '/')
+            Kind = 'sprite'
+            DestinationRoot = 'iee-assets/creature-sprites'
+            Model = 'CatmullRom'
+            InstallOrder = [int]$candidate.component_id
+            ReplacesComponentOutput = $false
+            Scale = 2
+        }
+        $payloads = @(
+            @{ Path = [string]$build.registry_catalog; Hash = [string]$build.registry_catalog_sha256; Bytes = [int64]$build.registry_catalog_bytes }
+        ) + @($build.shards | ForEach-Object { @{ Path = [string]$_.registry; Hash = [string]$_.sha256; Bytes = [int64]$_.registry_bytes } })
+        $expectedNames = @($payloads | ForEach-Object { [IO.Path]::GetFileName([string]$_.Path) } | Sort-Object)
+        Require (@($expectedNames | Sort-Object -Unique).Count -eq $expectedNames.Count) "Noms de payload sprite dupliques : $($candidate.candidate_id)"
+        foreach ($payload in $payloads) {
+            $file = Get-Item -LiteralPath (Join-Path $buildRoot ($payload.Path.Replace('/', '\'))) -ErrorAction Stop
+            Require ($file.Length -eq $payload.Bytes) "Taille payload sprite invalide : $($file.Name)"
+            Require ((Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq $payload.Hash) "Hash payload sprite invalide : $($file.Name)"
+            $result.Add((New-ContentEntry $baseSpec $file))
+        }
+        $packRoot = Join-Path $buildRoot 'iee-assets\creature-sprites'
+        $actualNames = @(Get-ChildItem -LiteralPath $packRoot -File | ForEach-Object Name | Sort-Object)
+        Require (-not (Compare-Object $expectedNames $actualNames)) "Inventaire du catalogue sprite inattendu : $($candidate.candidate_id)"
+    }
+    return @($result)
+}
+
+function Get-EffectCandidateEntries {
+    param([string]$Workspace, [string]$CandidatesPath)
+
+    $result = [System.Collections.Generic.List[object]]::new()
+    $register = Read-Json $CandidatesPath
+    foreach ($candidate in @($register.candidates | Where-Object { $_.approval_status -eq 'approved-for-release' -and $_.payload_projection.status -eq 'integrated' })) {
+        Require ([bool]$candidate.payload_projection.content_manifest_integration) "Projection effet non integree : $($candidate.candidate_id)"
+        foreach ($resource in @($candidate.resources)) {
+            Require (Test-QAEvidenceHash -Workspace $Workspace -RelativePath ([string]$resource.qa_evidence) -ExpectedHash ([string]$resource.qa_evidence_sha256)) "Preuve QA effet invalide : $($resource.resref)"
+        }
+        $packRoot = Join-Path $Workspace ($candidate.runtime_pack.path.Replace('/', '\'))
+        $manifestPath = Join-Path $packRoot ([string]$candidate.runtime_pack.manifest)
+        Require (Test-Path -LiteralPath $manifestPath -PathType Leaf) "Manifest effet absent : $($candidate.candidate_id)"
+        Require ((Get-FileHash -LiteralPath $manifestPath -Algorithm SHA256).Hash -eq [string]$candidate.runtime_pack.manifest_sha256) "Hash manifest effet invalide : $($candidate.candidate_id)"
+        $pack = Read-Json $manifestPath
+        $expectedResrefs = @($candidate.resources | ForEach-Object { ([string]$_.resref).ToUpperInvariant() } | Sort-Object)
+        $packResrefs = @($pack.resources | ForEach-Object { ([string]$_.resref).ToUpperInvariant() } | Sort-Object)
+        Require (-not (Compare-Object $expectedResrefs $packResrefs)) "Ressources du pack effet incoherentes : $($candidate.candidate_id)"
+        Require ($pack.schema -eq 'bg2-upscale-effect-animation-runtime-pack-v1' -and $pack.status -eq 'completed' -and [int]$pack.scale -eq 4) "Pack effet non finalise : $($candidate.candidate_id)"
+        Require ([string]$pack.registry -eq [string]$candidate.runtime_pack.registry -and [int]$pack.registry_version -eq [int]$candidate.runtime_pack.registry_version -and [int64]$pack.registry_bytes -eq [int64]$candidate.runtime_pack.registry_bytes -and [string]$pack.registry_sha256 -eq [string]$candidate.runtime_pack.registry_sha256) "Registre effet incoherent : $($candidate.candidate_id)"
+
+        $baseSpec = @{
+            ComponentId = [int]$candidate.component_id
+            ComponentLabel = [string]$candidate.component_label
+            PayloadGroup = [string]$candidate.payload_group
+            Area = 'EFFECTS'
+            SourceRun = [string]$candidate.runtime_pack.path
+            Kind = 'effect'
+            DestinationRoot = 'iee-assets/effects'
+            Model = "EffectAnimationRuntimeV$([int]$pack.registry_version)"
+            InstallOrder = [int]$candidate.component_id
+            ReplacesComponentOutput = $false
+            Scale = 4
+        }
+        $expectedNames = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        foreach ($name in @([string]$candidate.runtime_pack.manifest, [string]$candidate.runtime_pack.registry)) { [void]$expectedNames.Add($name) }
+        $result.Add((New-ContentEntry $baseSpec (Get-Item -LiteralPath $manifestPath)))
+        $registryFile = Get-Item -LiteralPath (Join-Path $packRoot ([string]$pack.registry)) -ErrorAction Stop
+        Require ($registryFile.Length -eq [int64]$pack.registry_bytes -and (Get-FileHash -LiteralPath $registryFile.FullName -Algorithm SHA256).Hash -eq [string]$pack.registry_sha256) "Payload registre effet invalide : $($candidate.candidate_id)"
+        $result.Add((New-ContentEntry $baseSpec $registryFile))
+        foreach ($frame in @($pack.frames)) {
+            $name = [string]$frame.asset
+            Require ($name -match '^EFX4-[A-Z0-9_]{1,8}-frame[0-9]{3}[.]rgba$') "Nom de frame effet invalide : $name"
+            [void]$expectedNames.Add($name)
+            $file = Get-Item -LiteralPath (Join-Path $packRoot $name) -ErrorAction Stop
+            Require ($file.Length -eq [int64]$frame.bytes -and (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -eq [string]$frame.sha256) "Payload frame effet invalide : $name"
+            $result.Add((New-ContentEntry $baseSpec $file))
+        }
+        $actualNames = @(Get-ChildItem -LiteralPath $packRoot -File | ForEach-Object Name | Sort-Object)
+        Require (-not (Compare-Object (@($expectedNames | Sort-Object)) $actualNames)) "Inventaire du pack effet inattendu : $($candidate.candidate_id)"
+    }
+    return @($result)
+}
+
 $mapSpecs = @(
     @{ ComponentId = 1000; ComponentLabel = 'map-ar0300'; PayloadGroup = 'map-ar0300'; Area = 'AR0300'; SourceRun = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; Path = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; InstallOrder = 1000 },
-    @{ ComponentId = 1000; ComponentLabel = 'map-ar0300'; PayloadGroup = 'map-ar0300'; Area = 'AR0300N'; SourceRun = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-page4096'; Path = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-page4096'; InstallOrder = 1000 },
+    @{ ComponentId = 1000; ComponentLabel = 'map-ar0300'; PayloadGroup = 'map-ar0300'; Area = 'AR0300N'; SourceRun = 'maps/AR0300/runs/release-water-night-v10-20260912/05_build'; Path = 'maps/AR0300/runs/release-water-night-v10-20260912/05_build'; InstallOrder = 1000; IncludeWed = $true },
     @{ ComponentId = 1010; ComponentLabel = 'map-ar0400'; PayloadGroup = 'map-ar0400'; Area = 'AR0400'; SourceRun = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-jour/05_build'; Path = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-jour/05_build'; InstallOrder = 1010 },
     @{ ComponentId = 1010; ComponentLabel = 'map-ar0400'; PayloadGroup = 'map-ar0400'; Area = 'AR0400N'; SourceRun = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-nuit/05_build'; Path = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-nuit/05_build'; InstallOrder = 1010 },
     @{ ComponentId = 1020; ComponentLabel = 'map-ar0500'; PayloadGroup = 'map-ar0500'; Area = 'AR0500'; SourceRun = 'maps/AR0500/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; Path = 'maps/AR0500/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; InstallOrder = 1020 },
@@ -513,9 +640,9 @@ $mapSpecs = @(
     @{ ComponentId = 1110; ComponentLabel = 'map-ar0020'; PayloadGroup = 'map-ar0020'; Area = 'AR0020N'; SourceRun = 'maps/AR0020/runs/seedvr2-7b-int8-lab-x4-nuit/05_build/x4'; Path = 'maps/AR0020/runs/seedvr2-7b-int8-lab-x4-nuit/05_build/x4'; InstallOrder = 1110 },
     @{ ComponentId = 1120; ComponentLabel = 'map-ar0800'; PayloadGroup = 'map-ar0800'; Area = 'AR0800'; SourceRun = 'maps/AR0800/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build/x4'; Path = 'maps/AR0800/runs/seedvr2-7b-int8-lab-grid-2x2-x4-jour/05_build/x4'; InstallOrder = 1120 },
     @{ ComponentId = 1120; ComponentLabel = 'map-ar0800'; PayloadGroup = 'map-ar0800'; Area = 'AR0800N'; SourceRun = 'maps/AR0800/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build/x4'; Path = 'maps/AR0800/runs/seedvr2-7b-int8-lab-grid-2x2-x4-nuit/05_build/x4'; InstallOrder = 1120 },
-    @{ ComponentId = 1130; ComponentLabel = 'map-ar0900'; PayloadGroup = 'map-ar0900'; Area = 'AR0900'; SourceRun = 'maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build/x4-water-alpha-antialias-page4096'; Path = 'maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build/x4-water-alpha-antialias-page4096'; InstallOrder = 1130 },
-    @{ ComponentId = 1130; ComponentLabel = 'map-ar0900'; PayloadGroup = 'map-ar0900'; Area = 'AR0900N'; SourceRun = 'maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-water-alpha-antialias-page4096'; Path = 'maps/AR0900/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-water-alpha-antialias-page4096'; InstallOrder = 1130 },
-    @{ ComponentId = 1140; ComponentLabel = 'map-ar1000'; PayloadGroup = 'map-ar1000'; Area = 'AR1000'; SourceRun = 'maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build/x4'; Path = 'maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build/x4'; InstallOrder = 1140 },
+    @{ ComponentId = 1130; ComponentLabel = 'map-ar0900'; PayloadGroup = 'map-ar0900'; Area = 'AR0900'; SourceRun = 'maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/05_build/x4-alpha128-water-seams-repaired'; Path = 'maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/05_build/x4-alpha128-water-seams-repaired'; InstallOrder = 1130 },
+    @{ ComponentId = 1130; ComponentLabel = 'map-ar0900'; PayloadGroup = 'map-ar0900'; Area = 'AR0900N'; SourceRun = 'maps/AR0900/runs/release-water-night-v5-20260912/05_build'; Path = 'maps/AR0900/runs/release-water-night-v5-20260912/05_build'; InstallOrder = 1130; IncludeWed = $true },
+    @{ ComponentId = 1140; ComponentLabel = 'map-ar1000'; PayloadGroup = 'map-ar1000'; Area = 'AR1000'; SourceRun = 'maps/AR1000/runs/release-water-day-v5-20260912/05_build'; Path = 'maps/AR1000/runs/release-water-day-v5-20260912/05_build'; InstallOrder = 1140; IncludeWed = $true },
     @{ ComponentId = 1140; ComponentLabel = 'map-ar1000'; PayloadGroup = 'map-ar1000'; Area = 'AR1000N'; SourceRun = 'maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-page4096'; Path = 'maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-nuit/05_build/x4-page4096'; InstallOrder = 1140 },
     @{ ComponentId = 1160; ComponentLabel = 'map-ar0418'; PayloadGroup = 'map-ar0418'; Area = 'AR0418'; SourceRun = 'maps/AR0418/runs/upscale-01/05_build'; Path = 'maps/AR0418/runs/upscale-01/05_build'; InstallOrder = 1160 },
     @{ ComponentId = 1170; ComponentLabel = 'map-ar0701'; PayloadGroup = 'map-ar0701'; Area = 'AR0701'; SourceRun = 'maps/AR0701/runs/upscale-01/05_build'; Path = 'maps/AR0701/runs/upscale-01/05_build'; InstallOrder = 1170 },
@@ -614,7 +741,7 @@ $mapSpecs = @(
     @{ ComponentId = 2100; ComponentLabel = 'map-ar0201'; PayloadGroup = 'map-ar0201'; Area = 'AR0201'; SourceRun = 'maps/AR0201/runs/seedvr2-7b-int8-lab-split-grid-2x2-x4/05_build/x4'; Path = 'maps/AR0201/runs/seedvr2-7b-int8-lab-split-grid-2x2-x4/05_build/x4'; InstallOrder = 2100 },
     @{ ComponentId = 2110; ComponentLabel = 'map-ar0205'; PayloadGroup = 'map-ar0205'; Area = 'AR0205'; SourceRun = 'maps/AR0205/runs/seedvr2-7b-int8-lab-split-grid-2x3-x4/05_build/x4'; Path = 'maps/AR0205/runs/seedvr2-7b-int8-lab-split-grid-2x3-x4/05_build/x4'; InstallOrder = 2110 },
     @{ ComponentId = 2120; ComponentLabel = 'map-ar0202'; PayloadGroup = 'map-ar0202'; Area = 'AR0202'; SourceRun = 'maps/AR0202/runs/seedvr2-7b-int8-lab-split-grid-2x3-x4/05_build/x4'; Path = 'maps/AR0202/runs/seedvr2-7b-int8-lab-split-grid-2x3-x4/05_build/x4'; InstallOrder = 2120 },
-    @{ ComponentId = 2130; ComponentLabel = 'map-ar0204'; PayloadGroup = 'map-ar0204'; Area = 'AR0204'; SourceRun = 'maps/AR0204/runs/seedvr2-7b-int8-lab-split-grid-2x5-x4/05_build/x4'; Path = 'maps/AR0204/runs/seedvr2-7b-int8-lab-split-grid-2x5-x4/05_build/x4'; InstallOrder = 2130 },
+    @{ ComponentId = 2130; ComponentLabel = 'map-ar0204'; PayloadGroup = 'map-ar0204'; Area = 'AR0204'; SourceRun = 'maps/AR0204/runs/release-water-v1-20260912/05_build'; Path = 'maps/AR0204/runs/release-water-v1-20260912/05_build'; InstallOrder = 2130; IncludeWed = $true },
     @{ ComponentId = 2140; ComponentLabel = 'map-ar0600'; PayloadGroup = 'map-ar0600'; Area = 'AR0600'; SourceRun = 'maps/AR0600/runs/seedvr2-7b-int8-lab-grid-2x2-x4-png-review/05_build/x4-7b-primary-dxt1-official'; Path = 'maps/AR0600/runs/seedvr2-7b-int8-lab-grid-2x2-x4-png-review/05_build/x4-7b-primary-dxt1-official'; InstallOrder = 2140 },
     @{ ComponentId = 2150; ComponentLabel = 'map-ar0601'; PayloadGroup = 'map-ar0601'; Area = 'AR0601'; SourceRun = 'maps/AR0601/runs/seedvr2-7b-int8-lab-split-rows-x4/05_build/x4-7b-primary-dxt1-official'; Path = 'maps/AR0601/runs/seedvr2-7b-int8-lab-split-rows-x4/05_build/x4-7b-primary-dxt1-official'; InstallOrder = 2150 },
     @{ ComponentId = 2160; ComponentLabel = 'map-ar0604'; PayloadGroup = 'map-ar0604'; Area = 'AR0604'; SourceRun = 'maps/AR0604/runs/seedvr2-7b-int8-lab-direct-x4-png-review/05_build/x4-7b-primary-secondary-dxt5-wtswam-stock-feather-1.25'; Path = 'maps/AR0604/runs/seedvr2-7b-int8-lab-direct-x4-png-review/05_build/x4-7b-primary-secondary-dxt5-wtswam-stock-feather-1.25'; InstallOrder = 2160 },
@@ -655,7 +782,7 @@ $mapSpecs = @(
     @{ ComponentId = 2490; ComponentLabel = 'map-ar0016'; PayloadGroup = 'map-ar0016'; Area = 'AR0016'; SourceRun = 'maps/AR0016/runs/upscale-01/05_build'; Path = 'maps/AR0016/runs/upscale-01/05_build'; InstallOrder = 2490 },
     @{ ComponentId = 2500; ComponentLabel = 'map-ar0017'; PayloadGroup = 'map-ar0017'; Area = 'AR0017'; SourceRun = 'maps/AR0017/runs/upscale-01/05_build'; Path = 'maps/AR0017/runs/upscale-01/05_build'; InstallOrder = 2500 },
     @{ ComponentId = 2510; ComponentLabel = 'map-ar0046'; PayloadGroup = 'map-ar0046'; Area = 'AR0046'; SourceRun = 'maps/AR0046/runs/upscale-01-jour/05_build'; Path = 'maps/AR0046/runs/upscale-01-jour/05_build'; InstallOrder = 2510 },
-    @{ ComponentId = 2510; ComponentLabel = 'map-ar0046'; PayloadGroup = 'map-ar0046'; Area = 'AR0046N'; SourceRun = 'maps/AR0046/runs/upscale-01-nuit/05_build'; Path = 'maps/AR0046/runs/upscale-01-nuit/05_build'; InstallOrder = 2510 },
+    @{ ComponentId = 2510; ComponentLabel = 'map-ar0046'; PayloadGroup = 'map-ar0046'; Area = 'AR0046N'; SourceRun = 'maps/AR0046/runs/release-water-v6-20260912/05_build'; Path = 'maps/AR0046/runs/release-water-v6-20260912/05_build'; InstallOrder = 2510; IncludeWed = $true },
     @{ ComponentId = 2520; ComponentLabel = 'map-ar1100'; PayloadGroup = 'map-ar1100'; Area = 'AR1100'; SourceRun = 'maps/AR1100/runs/upscale-01/05_build'; Path = 'maps/AR1100/runs/upscale-01/05_build'; InstallOrder = 2520 },
     @{ ComponentId = 2530; ComponentLabel = 'map-ar1101'; PayloadGroup = 'map-ar1101'; Area = 'AR1101'; SourceRun = 'maps/AR1101/runs/upscale-01/05_build'; Path = 'maps/AR1101/runs/upscale-01/05_build'; InstallOrder = 2530 },
     @{ ComponentId = 2540; ComponentLabel = 'map-ar1102'; PayloadGroup = 'map-ar1102'; Area = 'AR1102'; SourceRun = 'maps/AR1102/runs/upscale-01/05_build'; Path = 'maps/AR1102/runs/upscale-01/05_build'; InstallOrder = 2540 },
@@ -718,7 +845,7 @@ $mapSpecs = @(
     @{ ComponentId = 3090; ComponentLabel = 'map-ar2013'; PayloadGroup = 'map-ar2013'; Area = 'AR2013'; SourceRun = 'maps/AR2013/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR2013/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3090 },
     @{ ComponentId = 3100; ComponentLabel = 'map-ar2014'; PayloadGroup = 'map-ar2014'; Area = 'AR2014'; SourceRun = 'maps/AR2014/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR2014/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3100 },
     @{ ComponentId = 3110; ComponentLabel = 'map-ar2015'; PayloadGroup = 'map-ar2015'; Area = 'AR2015'; SourceRun = 'maps/AR2015/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR2015/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3110 },
-    @{ ComponentId = 3120; ComponentLabel = 'map-ar1600'; PayloadGroup = 'map-ar1600'; Area = 'AR1600'; SourceRun = 'maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4/05_build'; Path = 'maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4/05_build'; InstallOrder = 3120 },
+    @{ ComponentId = 3120; ComponentLabel = 'map-ar1600'; PayloadGroup = 'map-ar1600'; Area = 'AR1600'; SourceRun = 'maps/AR1600/runs/release-water-v1-20260912/05_build'; Path = 'maps/AR1600/runs/release-water-v1-20260912/05_build'; InstallOrder = 3120; IncludeWed = $true },
     @{ ComponentId = 3130; ComponentLabel = 'map-ar1601'; PayloadGroup = 'map-ar1601'; Area = 'AR1601'; SourceRun = 'maps/AR1601/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR1601/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3130 },
     @{ ComponentId = 3140; ComponentLabel = 'map-ar1602'; PayloadGroup = 'map-ar1602'; Area = 'AR1602'; SourceRun = 'maps/AR1602/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR1602/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3140 },
     @{ ComponentId = 3150; ComponentLabel = 'map-ar1603'; PayloadGroup = 'map-ar1603'; Area = 'AR1603'; SourceRun = 'maps/AR1603/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; Path = 'maps/AR1603/runs/seedvr2-7b-int8-lab-direct-x4/05_build'; InstallOrder = 3150 },
@@ -810,7 +937,10 @@ $mapSpecs = @(
     @{ ComponentId = 4020; ComponentLabel = 'map-ar3027'; PayloadGroup = 'map-ar3027'; Area = 'AR3027'; SourceRun = 'maps/AR3027/runs/seedvr2-7b-int8-lab-batch-watchers-keep-x4/05_build/x4-seedvr2-7b-int8-lab'; Path = 'maps/AR3027/runs/seedvr2-7b-int8-lab-batch-watchers-keep-x4/05_build/x4-seedvr2-7b-int8-lab'; InstallOrder = 4020 },
     @{ ComponentId = 4030; ComponentLabel = 'map-ar5202'; PayloadGroup = 'map-ar5202'; Area = 'AR5202'; SourceRun = 'maps/AR5202/runs/seedvr2-7b-int8-lab-grid-2x2-x4/05_build/x4'; Path = 'maps/AR5202/runs/seedvr2-7b-int8-lab-grid-2x2-x4/05_build/x4'; InstallOrder = 4030 },
     @{ ComponentId = 4040; ComponentLabel = 'map-oh7300'; PayloadGroup = 'map-oh7300'; Area = 'OH7300'; SourceRun = 'maps/OH7300/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; Path = 'maps/OH7300/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; InstallOrder = 4040 },
-    @{ ComponentId = 4050; ComponentLabel = 'map-oh8100'; PayloadGroup = 'map-oh8100'; Area = 'OH8100'; SourceRun = 'maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; Path = 'maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; InstallOrder = 4050 }
+    @{ ComponentId = 4050; ComponentLabel = 'map-oh8100'; PayloadGroup = 'map-oh8100'; Area = 'OH8100'; SourceRun = 'maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; Path = 'maps/OH8100/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build/x4'; InstallOrder = 4050 },
+    @{ ComponentId = 4060; ComponentLabel = 'map-ar0404'; PayloadGroup = 'map-ar0404'; Area = 'AR0404'; SourceRun = 'maps/AR0404/runs/release-water-v1-20260912/05_build'; Path = 'maps/AR0404/runs/release-water-v1-20260912/05_build'; InstallOrder = 4060; IncludeWed = $true },
+    @{ ComponentId = 4070; ComponentLabel = 'map-ar1607'; PayloadGroup = 'map-ar1607'; Area = 'AR1607'; SourceRun = 'maps/AR1607/runs/release-water-v4-20260912/05_build'; Path = 'maps/AR1607/runs/release-water-v4-20260912/05_build'; InstallOrder = 4070; IncludeWed = $true },
+    @{ ComponentId = 4080; ComponentLabel = 'map-ar1800'; PayloadGroup = 'map-ar1800'; Area = 'AR1800'; SourceRun = 'maps/AR1800/runs/release-water-v4-20260912/05_build'; Path = 'maps/AR1800/runs/release-water-v4-20260912/05_build'; InstallOrder = 4080; IncludeWed = $true }
 )
 
 # The CSV is the validation register.  Every validated day/night variant must
@@ -916,7 +1046,8 @@ if (-not $isAnimationDelta) {
         $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
         if (-not (Test-Path -LiteralPath $sourceDirectory -PathType Container)) { throw "Source canonique absente : $sourceDirectory" }
         $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB'; ReplacesComponentOutput = $false }
-        $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in '.TIS', '.PVRZ' } | Sort-Object Name
+        $extensions = if ($spec.IncludeWed) { @('.TIS', '.PVRZ', '.WED') } else { @('.TIS', '.PVRZ') }
+        $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in $extensions } | Sort-Object Name
         if ($files.Count -eq 0) { throw "Aucun TIS/PVRZ dans : $sourceDirectory" }
         foreach ($file in $files) { $entries.Add((New-ContentEntry $normalized $file)) }
     }
@@ -954,6 +1085,14 @@ if (-not $isAnimationDelta) {
 }
 foreach ($entry in @(Get-AnimationCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $AnimationCandidatesPath -RuntimePath $RuntimeCompatibilityPath -IncludePending $IncludePendingAnimationCandidates -OnlyAreas @($selectedAnimationAreas))) {
     $entries.Add($entry)
+}
+if (-not $isAnimationDelta) {
+    foreach ($entry in @(Get-SpriteCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $SpriteCandidatesPath)) {
+        $entries.Add($entry)
+    }
+    foreach ($entry in @(Get-EffectCandidateEntries -Workspace $WorkspaceRoot -CandidatesPath $EffectCandidatesPath)) {
+        $entries.Add($entry)
+    }
 }
 foreach ($entry in $entries) {
     Require ($entry -is [System.Collections.IDictionary]) 'Sortie non structuree interdite dans content.json.'

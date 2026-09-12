@@ -14,8 +14,8 @@
       "type": "object",
       "required": ["authorization", "release_manifests_modified", "rule"],
       "properties": {
-        "authorization": {"const": "not-requested"},
-        "release_manifests_modified": {"const": false},
+        "authorization": {"type": "string", "pattern": "^(not-requested|explicit-user-request-[0-9]{4}-[0-9]{2}-[0-9]{2})$"},
+        "release_manifests_modified": {"type": "boolean"},
         "rule": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false
@@ -105,7 +105,7 @@
         "qa_evidence_id": {"type": "string"},
         "qa_state": {"enum": ["validated-ingame", "validated-current-fallback", "session-accepted-variant-unresolved", "pending-ingame", "blocked-family-qa"]},
         "installation_state": {"enum": ["installed", "not-selected"]},
-        "release_state": {"const": "not-evaluated"},
+        "release_state": {"enum": ["not-evaluated", "integrated"]},
         "blockers": {"type": "array", "items": {"type": "string"}}
       },
       "additionalProperties": false
