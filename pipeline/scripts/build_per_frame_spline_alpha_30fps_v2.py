@@ -443,13 +443,23 @@ def add_label(image: Image.Image, label: str) -> Image.Image:
     return labelled
 
 
+def review_timeline(cycles: list[dict[str, Any]]) -> list[tuple[int, int, int]]:
+    """Flatten every TimedTimeline cycle while retaining its review coordinates."""
+    timeline: list[tuple[int, int, int]] = []
+    for cycle in sorted(cycles, key=lambda item: int(item["cycle"])):
+        cycle_index = int(cycle["cycle"])
+        for phase, frame_index in enumerate(cycle["timeline_frame_indices"]):
+            timeline.append((cycle_index, phase, int(frame_index)))
+    require(timeline, "review spline : aucune phase de cycle")
+    return timeline
+
+
 def render_reviews(source_pack: Path, output_pack: Path, resource: dict[str, Any],
                    work_root: Path, review_ffmpeg: str) -> list[dict[str, str]]:
     frames = sorted(resource["frames"], key=lambda item: int(item["frame"]))
     by_index = {int(frame["frame"]): frame for frame in frames}
     cycles = sorted(resource["cycles"], key=lambda item: int(item["cycle"]))
-    require(len(cycles) == 1, "review spline : multi-cycle non supporté")
-    timeline = [int(value) for value in cycles[0]["timeline_frame_indices"]]
+    timeline = review_timeline(cycles)
     canvas_size, offsets = alignment_bounds(frames)
     offset_by_index = {
         int(frame["frame"]): offset for frame, offset in zip(frames, offsets, strict=True)
@@ -458,7 +468,10 @@ def render_reviews(source_pack: Path, output_pack: Path, resource: dict[str, Any
     review_frames.mkdir(parents=True)
     samples: list[Image.Image] = []
     sample_positions = set(np.linspace(0, len(timeline) - 1, min(6, len(timeline)), dtype=int))
-    for phase, frame_index in enumerate(timeline):
+    sample_positions.update(
+        index for index, (_, phase, _) in enumerate(timeline) if phase == 0
+    )
+    for review_index, (cycle, phase, frame_index) in enumerate(timeline):
         frame = by_index[frame_index]
         before = preview(source_pack / str(frame.get("review_source_asset", frame["asset"])), frame["physical_size_x4"],
                          offset_by_index[frame_index], canvas_size)
@@ -467,9 +480,12 @@ def render_reviews(source_pack: Path, output_pack: Path, resource: dict[str, Any
         paired = Image.new("RGB", (before.width * 2, before.height), "black")
         paired.paste(before, (0, 0))
         paired.paste(after, (before.width, 0))
-        paired = add_label(paired, f"phase {phase:02d} — avant (gauche) / spline fit 1 + feather (droite)")
-        paired.save(review_frames / f"frame_{phase:04d}.png")
-        if phase in sample_positions:
+        paired = add_label(
+            paired,
+            f"cycle {cycle:02d}, phase {phase:02d} — avant (gauche) / spline fit 1 + feather (droite)",
+        )
+        paired.save(review_frames / f"frame_{review_index:04d}.png")
+        if review_index in sample_positions:
             samples.append(paired)
     contact = Image.new("RGB", (max(image.width for image in samples),
                                   sum(image.height for image in samples)), "black")

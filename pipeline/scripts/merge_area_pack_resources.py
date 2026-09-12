@@ -1,6 +1,7 @@
-"""Merge single-resource area packs, binding variants to exact world positions.
+"""Merge area-pack resources, binding variants to exact world positions.
 
 `PATH::X,Y` binds the input resource to the occurrence at the raw ARE coordinates `(X,Y)`.
+`PATH::RESREF::X,Y` selects one resource from a multi-resource pack before binding it.
 Several inputs may keep the same resref: registry v3 distinguishes their assets with a stable
 variant index and the runtime selects the exact position before considering an unbound fallback.
 No ARE rewrite or alternate BAM resref is needed, so explored zones stored in old saves use the
@@ -45,13 +46,26 @@ def retarget_variant(resource: dict[str, Any], variant_index: int,
 
 
 def load_area_pack(spec: str) -> tuple[list[tuple[dict[str, Any], dict[str, Path]]], str]:
-    """Load an area pack; `PATH::X,Y` binds its sole resource to one position."""
-    path_text, separator, position_text = spec.rpartition("::")
-    if not separator:
-        path_text = spec
+    """Load an area pack, optionally selecting one resource before position binding."""
+    parts = spec.split("::")
+    v2.require(1 <= len(parts) <= 3 and parts[0],
+               f"pack attendu sous la forme PATH, PATH::X,Y ou PATH::RESREF::X,Y : {spec}")
+    path_text = parts[0]
+    selected_resref: str | None = None
+    position_text: str | None = None
+    if len(parts) == 2:
+        position_text = parts[1]
+    elif len(parts) == 3:
+        selected_resref = v2.normalise_resref(parts[1])
+        position_text = parts[2]
     pack = Path(path_text).resolve()
     manifest, resources = v2.validate_v2_pack(pack)
-    if separator:
+    if selected_resref is not None:
+        resources = [resource for resource in resources
+                     if v2.normalise_resref(str(resource["resref"])) == selected_resref]
+        v2.require(len(resources) == 1,
+                   f"ressource sélectionnée absente ou ambiguë ({selected_resref}) : {pack}")
+    if position_text is not None:
         v2.require(len(resources) == 1,
                    f"liaison de position réservée à un pack mono-ressource, {len(resources)} trouvées : {pack}")
         resource = copy.deepcopy(resources[0])
@@ -180,7 +194,7 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pack", action="append", required=True, dest="packs",
-                        help="pack de zone ; `CHEMIN::X,Y` lie l'unique ressource à l'occurrence")
+                        help="pack ; `CHEMIN::X,Y` lie un mono-ressource, `CHEMIN::RESREF::X,Y` sélectionne puis lie")
     parser.add_argument("--area", required=True, help="identifiant de zone, ex. AR0900")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")

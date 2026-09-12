@@ -361,8 +361,32 @@
       "created_utc": "2026-09-11T21:35:42.730617+00:00",
       "classification": "pending-qa-installation-evidence",
       "reason": "Feuille AR3011 installée pour contrôle ingame : AM3011A conserve le fondu canvas 256 px x4 haut/gauche/droite et 64 px x4 bas ; AM3011B xBR2×2 x4, TimedTimeline 30 fps Apollo 8, contour fondu 12 px x4 et halo sigma 5/gain 0,9. Correctif : les 59 946 pixels du halo hors alpha source héritent le RGB opaque le plus proche avant prémultiplication, supprimant l'apparition du chroma vert de palette ; les rares teintes jaune-vert des seules phases Apollo intermédiaires restent documentées. Prévalidation puis remplacement transactionnel de la seule zone AR3011 ; sauvegarde area-test associée. Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "ar2000-am2000ab-apo8-x4-30fps-spline-fit1-feather4-ingame-test-20260912",
+      "manifest_path": "AR2000/manifest.json",
+      "manifest_sha256": "0A9ED514CE14B6F8BE8BB083CAD5DBC6EB9C4480FDE46209F6FDC5869210C429",
+      "created_utc": "2026-09-11T22:06:40.644347+00:00",
+      "classification": "pending-qa-processing-evidence",
+      "reason": "Feuille complète AR2000 pour essai ingame demandé : AM2000A/B x4 SeedVR 7B LAB, TimedTimeline 30 fps Apollo-8, Spline Fit 1 Multi-Contour / feather 4, RGB alpha strict préservé ; variantes v3 liées à (1769,1223), 186330368 octets (<512 Mio). Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "ar2000-am2000ab-apo8-x4-30fps-cross-seam-p8t16-rgb-g4d32-ingame-test-20260912",
+      "manifest_path": "AR2000/manifest.json",
+      "manifest_sha256": "B0AEE100ABA3D37C29D2379134ADE0FB6809D4FBF9AEDC39DA656DCE543F4305",
+      "created_utc": "2026-09-11T22:25:18.274769+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Variante AR2000 installée pour essai ingame demandé : AM2000A/B reconstruits phase par phase sur le canvas commun des quatre cycles ; spline Fit 1 / feather 4 sur le contour global, alpha source restauré à 8 px x4 puis transition 16 px x4 autour des deux axes internes, lissage RGB gaussien 2D sigma 4 borné à 32 px x4. Tailles, centres et timelines inchangés ; prévalidation puis remplacement transactionnel de la seule zone AR2000, sauvegarde AR2000-20260911T222609274472Z-abe0b8e3. Aucune QA ingame ni release n'est inférée."
+    },
+    {
+      "name": "ar2000-am2000ab-apo8-x4-30fps-cross-seam-p8t16-rgb-g2d12s55-ingame-test-20260912",
+      "manifest_path": "AR2000/manifest.json",
+      "manifest_sha256": "3C2549EC48935CAD80A545C78C331332A2C6600EBDB6AA140170362E3E2C9E57",
+      "created_utc": "2026-09-11T22:33:52.797792+00:00",
+      "classification": "pending-qa-installation-evidence",
+      "reason": "Variante AR2000 à raccord réduit installée après contrôle ingame : même spline globale et même protection alpha 8+16 px x4 que la variante précédente ; lissage RGB ramené de sigma 4/profondeur 32/intensité 100 % à sigma 2/profondeur 12/intensité 55 %. Tailles, centres et timelines inchangés ; prévalidation puis remplacement transactionnel de la seule zone AR2000, sauvegarde AR2000-20260911T223552941434Z-bfa19466. Aucune QA ingame ni release n'est inférée."
     }
   ],
-  "updated_on": "2026-09-11",
+  "updated_on": "2026-09-12",
   "external_archive_receipt": "docs/workspace-archive-manifest-animation-20260907.json"
 }

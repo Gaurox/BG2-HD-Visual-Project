@@ -14,6 +14,17 @@ import build_per_frame_spline_alpha_30fps_v2 as builder  # noqa: E402
 
 
 class PerFrameSplineAlphaTests(unittest.TestCase):
+    def test_review_timeline_preserves_each_cycle_and_phase(self) -> None:
+        cycles = [
+            {"cycle": 1, "timeline_frame_indices": [4, 5]},
+            {"cycle": 0, "timeline_frame_indices": [0, 2]},
+        ]
+
+        self.assertEqual(
+            builder.review_timeline(cycles),
+            [(0, 0, 0), (0, 1, 2), (1, 0, 4), (1, 1, 5)],
+        )
+
     def test_preserve_rgb_policy_changes_only_alpha(self) -> None:
         raw = np.array([[[90, 120, 180, 255], [15, 30, 45, 255]]], dtype=np.uint8)
         alpha = np.array([[64, 0]], dtype=np.uint8)

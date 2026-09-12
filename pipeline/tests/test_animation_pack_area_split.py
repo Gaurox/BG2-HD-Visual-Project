@@ -249,6 +249,23 @@ class AreaSplitTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "non entières"):
                 pipeline.registry_v2_from_resources(resources)
 
+    def test_merge_selects_one_resource_from_multi_resource_pack(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            occurrences = root / "occurrences.csv"
+            self.write_occurrences(occurrences, [("AR0900", "TESTA"), ("AR0900", "OTHER")])
+            pack = self.make_v1_pack(root, ("TESTA", "OTHER"))
+            split_root = root / "split"
+            splitter.split(pack, split_root, occurrences, resume=False)
+
+            output = root / "selected"
+            merger.merge([f"{split_root / 'AR0900'}::TESTA::1689,2662"],
+                         "AR0900", output, resume=False)
+            _manifest, resources = pipeline.validate_v2_pack(output / "AR0900")
+
+            self.assertEqual([resource["resref"] for resource in resources], ["TESTA"])
+            self.assertEqual(resources[0]["position"], [1689, 2662])
+
     def test_replace_resource_accepts_multiple_occurrence_variants(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
