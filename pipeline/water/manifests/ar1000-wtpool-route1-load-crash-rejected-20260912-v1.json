@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "rejected-load-crash",
+  "family": "pool-wtpool",
+  "wed": "AR1000",
+  "variant": "day",
+  "night": "excluded",
+  "candidate": "pipeline/water/manifests/ar1000-wtpool-route1-candidate-20260912-v1.json",
+  "installation": "pipeline/water/manifests/ar1000-wtpool-route1-installed-20260912-v1.json",
+  "user_report": "crash au chargement de la sauvegarde sur la map",
+  "failure": {
+    "exception_code": "0xC0000005",
+    "stage": "LoadGame immediately after LoadArea",
+    "cause": "WTPOOL1 page 0 must be named WPOOL100.PVRZ; installed v1 provided WPL1000.PVRZ",
+    "missing_resource": "WPOOL100.PVRZ",
+    "incorrect_resource": "WPL1000.PVRZ"
+  },
+  "crash_evidence": [
+    {
+      "path": "config://bg2ee_game_root/InfinityLoader_Crash/InfinityLoader_Crash_10.log",
+      "bytes": 376,
+      "sha256": "F51505D6545C66D9E27AD3863B876A988C1D536F25B44A98EC7FBCEE58D0E05C"
+    },
+    {
+      "path": "config://bg2ee_game_root/InfinityLoader_Crash/InfinityLoader_Crash_10_small.dmp",
+      "bytes": 95722350,
+      "sha256": "CC46F5499356EED60B4C3B268207A620E6DCC815F9860BC910084F75FAF9E207"
+    },
+    {
+      "path": "config://bg2ee_game_root/InfinityLoader_Crash/InfinityLoader_Crash_10_big.dmp",
+      "bytes": 1103816895,
+      "sha256": "E59F0CAE58565DEEC5520D9B9E203BDA84A216E7C14F7723020F209E59C438AD"
+    }
+  ],
+  "replacement": "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2",
+  "qa": "v1 rejected before visual assessment; no route2 conclusion",
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

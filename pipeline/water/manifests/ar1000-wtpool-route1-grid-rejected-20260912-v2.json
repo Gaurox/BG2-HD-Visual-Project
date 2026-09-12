@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "rejected-visual-grid",
+  "family": "pool-wtpool",
+  "wed": "AR1000",
+  "variant": "day",
+  "night": "excluded",
+  "candidate": "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2",
+  "installation": "pipeline/water/manifests/ar1000-wtpool-route1-installed-20260912-v2.json",
+  "user_verdict": "non valide. la texture eau fait un cadrillage",
+  "evidence": {
+    "source": "user attachment",
+    "name": "20260912190228_1.jpg",
+    "bytes": 952499,
+    "sha256": "C620DBB16876F8959427E7AEFD7A06E3E7E0DD07C1C17BA806E332F98AD4CDC5"
+  },
+  "diagnosis": {
+    "wed_and_resource_routing": "valid; AR1000 loaded with WTPOOL1/WPOOL100 at q0",
+    "cause": "SeedVR x4 amplified the stock 64x64 diagonal grain into repeated rectangular relief",
+    "rejected_seedvr_x4_mean_high_frequency_energy": 17.2763,
+    "replacement_periodic_bilinear_x4_mean_high_frequency_energy": 1.4345,
+    "replacement_reduction_factor": 12.0434,
+    "route2_conclusion": "none; failure is present in the route1 texture at q0"
+  },
+  "replacement": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3",
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

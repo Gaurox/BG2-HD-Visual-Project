@@ -1,0 +1,97 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "installed-pending-ingame-qa",
+  "family": "pool-wtpool",
+  "wed": ["AR1000"],
+  "variant": "day",
+  "night": "excluded",
+  "overlay": "WTPOOL2",
+  "source_assets": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3/candidate",
+  "replaces_runtime": "AR1000 unmatched q0 under registry ar0300n-reflections-alpha160 v10",
+  "user_direction": "apply the documented water parameters after q0 was visually static; no tests; install ingame",
+  "route2": {
+    "entry_id": "wtpool-ar1000-day-slot1-q070-v12",
+    "identity": "AR1000 + slot1 WTPOOL2 + WPOOL200 + exact WED/TIS/PVRZ hashes",
+    "timeline_frames": 36,
+    "source_fps": 15.0,
+    "renderer_fps": 30.0,
+    "mode": "atlas-linear",
+    "material_id": 1,
+    "approved_strength": 0.70,
+    "configured_strength": 0.70,
+    "fallback": "q0-native on absent or divergent identity",
+    "family_qualification": "AR1000-day candidate only; pool-wtpool not generalized or validated"
+  },
+  "artifacts": [
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route2-q070-20260912-v5/run.json",
+      "sha256": "2E794992EBA611570D0EDEF3FABF74CAAAF780024B75B24419EC6F30AC3994DA",
+      "bytes": 729
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route2-q070-20260912-v5/registry-v3.json",
+      "sha256": "66209EFDBB793F7E38D7F12EC1F54FFD3F7EDE35021B8F83763BCE39557C8C49",
+      "bytes": 236806
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route2-q070-20260912-v5/candidate-manifest.json",
+      "sha256": "5D502AEE92047740C4F43F9E18B15300541D83B60A0ADD6FEBD8593B01F8CAE2",
+      "bytes": 1337
+    }
+  ],
+  "build": {
+    "directory": "build/iee-water-ar1000-wtpool-route2-q070-20260912-v12-vs2019",
+    "configuration": "Release x64; Visual Studio 16 2019; BUILD_TESTING=OFF; DLL target only",
+    "generated_registry_header": {
+      "bytes": 579065,
+      "sha256": "0044005F4B00052BD7A87B9646FAD726AF8D7F8788894BFD49BD9D4D34FF6915"
+    },
+    "dll": {
+      "bytes": 1844736,
+      "sha256": "189D6173E2AAA2FB60A0E04E7099CF2B045EE0F2A2719BA6D89096D45D096219"
+    },
+    "warnings": "known third-party fmt/spdlog C4459 only"
+  },
+  "installed_files": {
+    "InfinityEngine-Enhancer.dll": {
+      "bytes": 1844736,
+      "sha256": "189D6173E2AAA2FB60A0E04E7099CF2B045EE0F2A2719BA6D89096D45D096219"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "bytes": 5572,
+      "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+      "changed": false
+    }
+  },
+  "installation_receipts": [
+    {
+      "path": "backups/renderer/20260912T172456983055Z-b64ece29/renderer-install-receipt.json",
+      "sha256": "4AE61F2E2C30892BC95E82BC10D11FCD1507AEB2BB571AFF055E462BC972B8D2",
+      "bytes": 1876
+    }
+  ],
+  "asset_integrity": {
+    "AR1000.WED": "166B533584022E38F9F79D0505B23D505599502FA635715BDF589A81545C1DCD",
+    "WTPOOL2.TIS": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+    "WPOOL200.PVRZ": "8EDCD76360C9D63029CCDE8A1A27F3511BC963F7A5D5A526A9E814B6FB350C36",
+    "AR1000N.WED": "absent-unchanged"
+  },
+  "verification": "game and InfinityLoader closed; renderer preflight, transactional install, receipt verification and live hashes succeeded",
+  "rollback": "restore backups/renderer/20260912T172456983055Z-b64ece29/renderer-install-receipt.json",
+  "qa": {
+    "state": "pending-ingame",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "expected_log": "WATER_ROUTE2 draw wed=AR1000 overlay=true q=0.7 temporal=true frames=36 sourceFps=15 targetFps=30",
+    "checks": [
+      "visible fluid movement and 30 FPS phase transitions",
+      "no return of the rectangular grid",
+      "pool-specific color and scale remain plausible",
+      "secondary art, transparency, zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

@@ -19,9 +19,15 @@ dans `manifests/ar0046n-water-tint-validated-20260912-v7.json`.
 Suivi vers release : [contrat opérationnel](WATER_RELEASE_TRACKING.md) et
 `release-tracking-v1.json`. Audit strictement en lecture seule :
 `python -B pipeline/scripts/audit_water_release_tracking.py`.
-État courant :11identités `validated-ingame`,1fallback validé,3`pending-ingame`,1variante
-historique non résolue et2familles intérieures bloquées. La matrice nominative est dans
+État courant :11identités `validated-ingame`,1fallback validé,4`pending-ingame`,1variante
+historique non résolue et2familles intérieures bloquées, soit19identités. La matrice nominative est dans
 `WATER_RELEASE_TRACKING.md` ; l'autorité machine reste le JSON.
+
+AR1000 jour / WTPOOL : v1 rejetée sur crash de nom de page ; v2 charge mais rejetée pour
+quadrillage, SeedVR x4 ayant amplifié la trame diagonale source. V3 installée sans IA : bilinéaire
+x4 périodique3×3, interpolation cyclique linéaire36phases/15Hz ; énergie du motif réduite12,04×.
+Verdict q0 : aucun quadrillage, eau jugée figée. Voie2 v5 exacte installée : blend30FPS,
+matériau1, q0.70 ; validée ingame le2026-09-12. `AR1000N` est exclu.
 
 Reprise AR0204/AR1600 : [correctif installé et QA](AR0204_AR1600_REPAIR_20260912.md).
 Sélection installée courante :
@@ -56,6 +62,15 @@ Toute autre identité WTSWAM reste absente du registre et tombe à `q=0`.
 | `manifests/wtswam-weather-installed-20260912-v3.json` | Historique fpTone, rejeté en QA |
 | `manifests/wtswam-rain-installed-20260912-v4.json` | Installation v4 : assets sec/pluie isolés, registre19, reçus immuables |
 | `manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json` | Sélection QA courante : les deux cartes v4 validées à q0.70 |
+| `manifests/ar1000-wtpool-route1-candidate-20260912-v1.json` | AR1000 jour : candidat WTPOOL1 périodique 36phases q0 |
+| `manifests/ar1000-wtpool-route1-load-crash-rejected-20260912-v1.json` | AR1000 jour v1 : rejet sur crash de chargement, cause page PVRZ mal nommée |
+| `manifests/ar1000-wtpool-route1-grid-rejected-20260912-v2.json` | AR1000 jour v2 : rejet visuel du quadrillage SeedVR x4 |
+| `manifests/ar1000-wtpool-periodic-bilinear-candidate-20260912-v3.json` | AR1000 jour v3 : candidat non génératif périodique |
+| `manifests/ar1000-wtpool-periodic-bilinear-installed-20260912-v3.json` | AR1000 jour v3 : installation vérifiée, QA ingame en attente |
+| `manifests/ar1000-wtpool-periodic-bilinear-static-rejected-20260912-v3.json` | AR1000 jour v3 : apparence q0 propre, mouvement rejeté comme figé |
+| `manifests/ar1000-wtpool-route2-installed-20260912-v5.json` | AR1000 jour v5 : voie2 exacte q0.70/blend30FPS installée, QA en attente |
+| `manifests/ar1000-wtpool-route2-validated-20260912-v5.json` | AR1000 jour v5 : décision QA ingame validée |
+| `../scripts/build_ar1000_wtpool_route2_candidate.py` | Produit le registre exact AR1000 jour ; plan-only par défaut, `--run` explicite |
 | `../scripts/orchestrate_water_batch.py` | Plan déterministe ; `--run` seul autorise l'exécution d'une étape supportée |
 | `../scripts/build_wtlake_timeline_batch.py` | Assemble le candidat WTLAKE ; aucun SeedVR/build moteur/install/release implicite |
 | `../scripts/build_wtsew_route2_pilot.py` | Produit le pilote AR0404 ; plan-only par défaut, exécution avec `--run` |

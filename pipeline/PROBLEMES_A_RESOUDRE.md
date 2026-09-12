@@ -73,6 +73,13 @@ ne sont pas réconciliés par une décision explicite.
 
 - Limite observée : certaines petites piscines dépassent le coût visuel acceptable après
   reconstruction.
+- AR1000 jour : v1 rejetée sur crash de nom de page ; v2 charge mais rejetée pour quadrillage.
+  SeedVR x4 amplifie la faible trame diagonale source en reliefs rectangulaires répétés. V2 restaurée ;
+  v3 non générative installée : bilinéaire x4 périodique3×3, interpolation cyclique linéaire
+  6→36phases/15Hz, q0 ; énergie haute fréquence17,2763→1,4345. Q0 accepté sans quadrillage mais
+  rejeté comme figé. Voie2 v5 installée sur identité AR1000 exacte : blend30FPS, matériau1, q0.70 ;
+  validée ingame le2026-09-12. Base conforme ;37/37cellules avec secondaire, aucune correction alpha
+  central ; nuit exclue. Cas AR1000 jour résolu ; aucune généralisation WTPOOL.
 - Ne pas généraliser un masque ou un seuil depuis une seule zone.
 
 ## ALPHA-001 — Liserés de transparence

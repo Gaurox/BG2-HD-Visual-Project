@@ -26,12 +26,22 @@
 | `lake-wtlake` | AR0046N nuit v7 | WTLAKE/q0.70 ; correction runtime universelle slot PVRZ→nomGL éliminant la teinte brune intermittente | valide le défaut runtime exact ; aucune nouvelle recette d'asset ni QA des autres maps |
 | `lake-wtlake` | AR0300N nuit v10 | reflets nocturnes originaux ; opacité160 appariée centres/secondaires ; x4/36phases/15Hz/blend30FPS/q0.70 | choix artistique local ; assets + DLL exacts ; jour, cycle et météo non attestés |
 | `lake-wtlake` | AR0046, AR0300, AR1200, AR1700, AR1901, AR2300 | rendu installé q0.70 accepté pendant la session | commande de zone validée ; variante WED exacte non journalisée ; créer un reçu avant promotion formelle |
+| `pool-wtpool` | AR1000 jour v5 | WTPOOL2 bilinéaire x4 périodique sans SeedVR ;6→36phases linéaires/15Hz ; blend30FPS ; matériau eau `id=1` ; q0.70 | identité AR1000 jour exacte seulement ; AR1000N exclu |
 | `sewage-wtsew` | AR0404 | WTSEW x4 `none`/3×3 ;6→36phases Apollo-8 ;15Hz ; blend30FPS ; matériau égouts `id=4` ; q0.70 | ne couvre aucune autre identité WTSEW |
 | `sewage-wtsew` | AR2100 | WED stock + WTSEW partagé ; route2 absente ; q0 natif | n'approuve pas une future route2 AR2100 |
 | `swamp-wtswam` | AR1607, AR1800 | bases réparées ; paire sèche/pluie isolée ;36phases/15Hz ; blend30FPS ; matériau marais `id=5` ; q0.70 | deux cartes seulement ; autres WTSWAM restent q0 |
 
 Non validés par ce chantier : AR0512 et AR1604, eaux intérieures ; autres variantes jour/nuit non
-observées séparément ; `WTLAKA-D`, `WTPOOL`, `WTOIL`, `WTLAVA-D`, `WT5000A-D`.
+observées séparément ; autres identités `WTPOOL`, `WTLAKA-D`, `WTOIL`, `WTLAVA-D`, `WT5000A-D`.
+
+WTPOOL / AR1000 jour : v1 rejetée sur crash de nom de page ; v2 charge mais rejetée pour
+quadrillage. Cause : SeedVR x4 amplifie la faible trame diagonale du64×64 stock en reliefs
+rectangulaires répétés, bien que les raccords soient conformes. V3 installée sans IA : contexte
+périodique3×3, bilinéaire x4, crop central, interpolation cyclique linéaire6→36phases/15Hz, q0.
+Énergie haute fréquence17,2763→1,4345. Verdict q0 : quadrillage supprimé, mouvement jugé figé ;
+voie2 devenue nécessaire. V5 exacte AR1000 jour installée : blend30FPS, matériau eau`id=1`, q0.70,
+validée ingame le2026-09-12. Les37cellules liquides conservent un secondaire, donc aucune correction
+alpha central. Ne pas généraliser cette validation à la famille ; `AR1000N` est exclu.
 
 AR2300 : acceptation visuelle de l'eau distincte du problème de crash/incohérence de carte encore
 suivi dans `pipeline/PROBLEMES_A_RESOUDRE.md`. Ne pas l'utiliser comme témoin de stabilité globale.
@@ -228,6 +238,7 @@ C:MoveToArea("ARxxxx")
 | teinte parfois brune après changement d'heure | slot `CResPVR` lié directement comme nomGL ; dépend de la réutilisation des slots (`engineSlot!=glName`) | installer/vérifier le runtime universel de `WATER_REPAIR_RUNBOOK.md` §0.2 ; ne pas retraiter la map |
 | quelques centres nuit non réparés | sélection ancienne limitée aux alpha strictement0 | qualifier tous les primaires stock DXT1 exclusivement eau sans secondaire ; restaurer alpha natif exact, padding compris |
 | crash intermittent | offsets WED ou resref>8 | relocation structurelle + pagination bornée |
+| quadrillage WTPOOL x4 | SeedVR amplifie la trame diagonale faible du stock en reliefs répétés | recette non générative périodique bilinéaire ; QA par carte |
 | autre carte modifiée par effet de bord | overlay partagé remplacé globalement | alias isolé + WED/registre exacts |
 | eau intérieure artificielle | recette lac propagée sans qualification | branche environnementale et QA dédiée |
 

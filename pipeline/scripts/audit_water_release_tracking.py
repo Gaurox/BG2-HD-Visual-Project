@@ -27,7 +27,12 @@ QA_STATES = {
     "blocked-family-qa",
 }
 VALIDATED_QA = {"validated-ingame", "validated-current-fallback"}
-MATERIALS = {"lake-wtlake": 1, "sewage-wtsew": 4, "swamp-wtswam": 5}
+MATERIALS = {
+    "lake-wtlake": 1,
+    "pool-wtpool": 1,
+    "sewage-wtsew": 4,
+    "swamp-wtswam": 5,
+}
 
 
 def sha256(path: Path) -> str:

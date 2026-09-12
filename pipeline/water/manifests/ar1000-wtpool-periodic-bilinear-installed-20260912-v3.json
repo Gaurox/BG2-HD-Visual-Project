@@ -1,0 +1,106 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "installed-pending-ingame-qa",
+  "family": "pool-wtpool",
+  "wed": ["AR1000"],
+  "variant": "day",
+  "night": "excluded",
+  "overlay": "WTPOOL2",
+  "source_overlay": "WTPOOL",
+  "replaces": "pipeline/water/manifests/ar1000-wtpool-route1-installed-20260912-v2.json",
+  "user_direction": "v2 rejected for visible grid; find cause and correct; no tests",
+  "recipe": {
+    "route": 1,
+    "kind": "non-generative-periodic-bilinear-x4-and-cyclic-linear-timeline",
+    "overlay_slot": 1,
+    "coverage_cells": 37,
+    "liquid_cells_with_secondary": 37,
+    "liquid_cells_without_secondary": 0,
+    "alpha_central_action": "none",
+    "spatial": "3x3 wrapped context, bilinear x4, central crop",
+    "temporal": "cyclic linear interpolation, 6 source frames to 36 phases",
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "runtime_material_id": 1,
+    "runtime_strength": 0.0
+  },
+  "repair": {
+    "rejected_version": "v2",
+    "rejection_manifest": "pipeline/water/manifests/ar1000-wtpool-route1-grid-rejected-20260912-v2.json",
+    "cause": "SeedVR x4 amplified weak source grain into repeated rectangular relief",
+    "generative_spatial_removed": true,
+    "generative_temporal_removed": true,
+    "rejected_mean_high_frequency_energy": 17.2763,
+    "current_mean_high_frequency_energy": 1.4345,
+    "reduction_factor": 12.0434,
+    "mean_seam_ratio_xy": [1.1873, 1.2694],
+    "v2_restored_before_v3_install": true
+  },
+  "artifacts": [
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3/run.json",
+      "sha256": "10382AC9CAC93ACDD90D421962AFC7E5D3D8CD2AFDEAA9709BCCA0E696B9245E",
+      "bytes": 836
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3/candidate/manifest.json",
+      "sha256": "FFBFFFC75D08C49535E1EAD1DE596D652A032CDF7D06E767009BE6D5714B4146",
+      "bytes": 1821
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3/candidate-receipt.json",
+      "sha256": "EFC48081D9CBDC0C2F837C72D1B8FF36278EB1BE0E9D6D5D31A5E77A194A1007",
+      "bytes": 733
+    }
+  ],
+  "installed_files": {
+    "AR1000.WED": {
+      "bytes": 83884,
+      "sha256": "166B533584022E38F9F79D0505B23D505599502FA635715BDF589A81545C1DCD",
+      "present_before": false
+    },
+    "WTPOOL2.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+      "present_before": false
+    },
+    "WPOOL200.PVRZ": {
+      "bytes": 597095,
+      "sha256": "8EDCD76360C9D63029CCDE8A1A27F3511BC963F7A5D5A526A9E814B6FB350C36",
+      "present_before": false
+    }
+  },
+  "installation_receipts": [
+    {
+      "path": "backups/water-ar1000-wtpool-periodic-bilinear-v3/override-backup-20260912-191033/install-backup.json",
+      "sha256": "6CDCE9F5022FF70A8616E2AB3B97D7D803605DC6FF5A669004EDE18E08E10100",
+      "bytes": 947
+    }
+  ],
+  "verification": "game and InfinityLoader closed; v2 restoration preflight and restore passed; v3 TIS/PVRZ inventory and WED structure verified; install preflight passed; three new override files and post-install hashes verified; v1/v2 alias pages absent",
+  "rollback": "restore backups/water-ar1000-wtpool-periodic-bilinear-v3/override-backup-20260912-191033; all three v3 files were absent before installation",
+  "runtime": {
+    "state": "unchanged",
+    "registry_entry": null,
+    "route2": "deferred-until-route1-ingame-qa",
+    "strength": 0.0,
+    "dll_sha256": "250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59",
+    "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "qa": {
+    "state": "pending-ingame-retry-after-grid-fix",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "checks": [
+      "absence of rectangular grid",
+      "complete and fluid pool animation",
+      "absence of tile seams",
+      "secondary art, reflections and transparency",
+      "zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

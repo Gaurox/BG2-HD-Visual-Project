@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from water_wed import replace_overlay_timeline, validate_polygons
+from water_wed import replace_overlay_resref, replace_overlay_timeline, validate_polygons
 
 
 def fixture():
@@ -53,6 +53,18 @@ class WaterWedTests(unittest.TestCase):
         struct.pack_into("<H", source, 114, 99)
         with self.assertRaises(ValueError):
             replace_overlay_timeline(bytes(source), 1, 36)
+
+    def test_overlay_resref_changes_only_the_eight_byte_field(self):
+        before = fixture()
+        after = replace_overlay_resref(before, 1, "wtpool1")
+        self.assertEqual(after[60:68], b"WTPOOL1\0")
+        self.assertEqual(after[:60] + after[68:], before[:60] + before[68:])
+        self.assertEqual(validate_polygons(after), validate_polygons(before))
+
+    def test_overlay_resref_rejects_unsafe_or_overlong_names(self):
+        for value in ("", "WTPOOL100", "WT-POOL", "ÉTANG"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                replace_overlay_resref(fixture(), 1, value)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,79 @@
+{
+  "schema": "bg2-water-pool-candidate-selection-v1",
+  "status": "candidate-installable-pending-ingame-qa",
+  "date": "2026-09-12",
+  "scope": {
+    "area": "AR1000",
+    "wed": "AR1000",
+    "variant": "day",
+    "night": "excluded",
+    "overlay_source": "WTPOOL",
+    "overlay_candidate": "WTPOOL2",
+    "page_candidate": "WPOOL200",
+    "family": "pool-wtpool",
+    "overlay_slot": 1,
+    "coverage_cells": 37
+  },
+  "route1": {
+    "base_state": "already-conform-installed",
+    "liquid_cells_with_secondary": 37,
+    "liquid_cells_without_secondary": 0,
+    "alpha_central_action": "none",
+    "rejected_recipe": "SeedVR2 7B x4 periodic",
+    "rejection": "visible repeated rectangular grid",
+    "repair": "non-generative periodic bilinear x4 plus cyclic linear 36-phase timeline"
+  },
+  "production": {
+    "run": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3",
+    "run_sha256": "10382AC9CAC93ACDD90D421962AFC7E5D3D8CD2AFDEAA9709BCCA0E696B9245E",
+    "plan_sha256": "21F32760E63902575626F01969B9001E1295781C69EE3C8044BE9EE392EB0ACF",
+    "candidate": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3/candidate",
+    "candidate_manifest_sha256": "FFBFFFC75D08C49535E1EAD1DE596D652A032CDF7D06E767009BE6D5714B4146",
+    "candidate_receipt_sha256": "EFC48081D9CBDC0C2F837C72D1B8FF36278EB1BE0E9D6D5D31A5E77A194A1007",
+    "spatial": "periodic-3x3-bilinear-x4",
+    "generative_spatial": false,
+    "temporal": "cyclic-linear-6-to-36",
+    "generative_temporal": false,
+    "source_frames": 6,
+    "native_frames": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "mean_seam_ratio_xy": [1.1873, 1.2694],
+    "mean_high_frequency_energy": 1.4345,
+    "rejected_seedvr_mean_high_frequency_energy": 17.2763
+  },
+  "candidate_files": {
+    "AR1000.WED": {
+      "bytes": 83884,
+      "sha256": "166B533584022E38F9F79D0505B23D505599502FA635715BDF589A81545C1DCD"
+    },
+    "WTPOOL2.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83"
+    },
+    "WPOOL200.PVRZ": {
+      "bytes": 597095,
+      "sha256": "8EDCD76360C9D63029CCDE8A1A27F3511BC963F7A5D5A526A9E814B6FB350C36"
+    }
+  },
+  "route2": {
+    "state": "deferred-until-route1-ingame-qa",
+    "strength": 0.0,
+    "registry_entry": null
+  },
+  "tests": "none-user-choice",
+  "installation": "not-run",
+  "qa": {
+    "status": "pending-ingame",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "checks": [
+      "absence of rectangular grid",
+      "complete and fluid pool animation",
+      "absence of tile seams",
+      "secondary art, reflections and transparency",
+      "zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "release": "not-requested"
+}

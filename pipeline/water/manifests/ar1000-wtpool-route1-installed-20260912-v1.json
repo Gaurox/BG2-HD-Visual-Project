@@ -1,0 +1,87 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "installed-pending-ingame-qa",
+  "family": "pool-wtpool",
+  "wed": ["AR1000"],
+  "variant": "day",
+  "night": "excluded",
+  "overlay": "WTPOOL1",
+  "source_overlay": "WTPOOL",
+  "candidate_selection": "pipeline/water/manifests/ar1000-wtpool-route1-candidate-20260912-v1.json",
+  "user_direction": "no tests; install ingame",
+  "recipe": {
+    "route": 1,
+    "kind": "isolated-periodic-x4-overlay-and-expanded-wed-timeline",
+    "overlay_slot": 1,
+    "coverage_cells": 37,
+    "liquid_cells_with_secondary": 37,
+    "liquid_cells_without_secondary": 0,
+    "alpha_central_action": "none",
+    "scale": 4,
+    "timeline": "WTPOOL1; 36 phases; native 15 Hz; renderer 30 FPS",
+    "runtime_material_id": 1,
+    "runtime_strength": 0.0
+  },
+  "artifacts": [
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-20260912-v1/run.json",
+      "sha256": "65B8C324B641EE2F4353EF6493E6553155CB04A4AAAA1F881B1569FAA197F041"
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-20260912-v1/08_candidate/manifest.json",
+      "sha256": "E21916BADB0069E393F4EE505BBB5828F19A3B868C243495CCCE8285D6C63B68"
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-20260912-v1/candidate-receipt.json",
+      "sha256": "A265C024B6319FDAF56BC93875EE41A8938C2D1855AF4A03691C3C8E325B9B89"
+    }
+  ],
+  "installed_files": {
+    "AR1000.WED": {
+      "bytes": 83884,
+      "sha256": "DE24550D1A80019B92EB2135AB4849650847D365DFE18F15F2A048B7043C2282",
+      "present_before": false
+    },
+    "WTPOOL1.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+      "present_before": false
+    },
+    "WPL1000.PVRZ": {
+      "bytes": 1082761,
+      "sha256": "669B7AA62202F8FF71E84712BA1AD52DBBEA6715D6791D46F381FD951ADED4E9",
+      "present_before": false
+    }
+  },
+  "installation_receipts": [
+    {
+      "path": "backups/water-ar1000-wtpool-route1-v1/override-backup-20260912-185219/install-backup.json",
+      "sha256": "FD0C761DBC424C13F178A4C6CF029EB57D07D6D24C27AD9FCC3FBD117FD5DCFC"
+    }
+  ],
+  "verification": "game and InfinityLoader closed; verify-only preflight passed; three new override files installed and post-install hashes verified",
+  "rollback": "remove only the three files listed by the installation receipt because all were absent before installation",
+  "runtime": {
+    "state": "unchanged",
+    "registry_entry": null,
+    "route2": "deferred-until-route1-ingame-qa",
+    "strength": 0.0,
+    "dll_sha256": "250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59",
+    "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "qa": {
+    "state": "pending-ingame",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "checks": [
+      "pool animation and complete cycle",
+      "absence of dark or square seams",
+      "secondary art, reflections and transparency",
+      "zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

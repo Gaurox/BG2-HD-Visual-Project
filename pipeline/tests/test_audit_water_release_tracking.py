@@ -24,7 +24,7 @@ class WaterReleaseTrackingTests(unittest.TestCase):
             self.data, ROOT, verify_files=False, verify_git=False
         )
         self.assertEqual(errors, [])
-        self.assertEqual(summary["targets"], 18)
+        self.assertEqual(summary["targets"], len(self.data["targets"]))
         self.assertFalse(summary["release_candidate_ready"])
 
     def test_duplicate_target_is_rejected(self):

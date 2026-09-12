@@ -1,0 +1,35 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "partially-accepted-route2-required",
+  "family": "pool-wtpool",
+  "wed": "AR1000",
+  "variant": "day",
+  "night": "excluded",
+  "candidate": "maps/water-batches/runs/ar1000-wtpool-periodic-bilinear-20260912-v3",
+  "user_verdict": "no repeated patterns; water is completely static",
+  "accepted": [
+    "periodic bilinear x4 removes the SeedVR rectangular grid",
+    "WTPOOL2 loads without the v1 page-name crash"
+  ],
+  "rejected": [
+    "q0 presentation does not provide perceptible water movement",
+    "renderer 30 FPS interpolation was declared by the asset manifest but inactive because AR1000 had no exact runtime registry entry"
+  ],
+  "diagnosis": {
+    "wed_timeline": "36 distinct phases at speed divisor 1",
+    "mean_adjacent_phase_mae_255": 0.5677,
+    "full_cycle_span_mae_255": 3.9928,
+    "runtime_observation": "unmatched owned overlay; q=0; temporal=false",
+    "cause": "route1 v3 installed the atlas and WED timeline but deferred route2, so neither atlas-linear 30 FPS blending nor procedural movement was active"
+  },
+  "decision": {
+    "retain_assets": "AR1000.WED + WTPOOL2.TIS + WPOOL200.PVRZ v3",
+    "next_route": 2,
+    "parameters": "exact AR1000-day identity; 36 phases at 15 Hz; atlas-linear renderer at 30 FPS; material 1; q=0.70",
+    "scope": "AR1000 day only; no family-wide propagation; AR1000N excluded"
+  },
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

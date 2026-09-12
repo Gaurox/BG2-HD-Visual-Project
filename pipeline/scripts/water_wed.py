@@ -87,3 +87,30 @@ def replace_overlay_timeline(data: bytes, slot: int, frames: int, speed: int = 1
     if restored != data:
         raise ValueError("WED bytes changed outside timeline and relocated pointers")
     return bytes(output)
+
+
+def replace_overlay_resref(data: bytes, slot: int, resref: str) -> bytes:
+    """Replace one overlay TIS resref without changing any WED geometry or offsets."""
+    validate_polygons(data)
+    layers, _, headers = struct.unpack_from("<3I", data, 8)
+    if not 0 <= slot < layers:
+        raise ValueError("invalid overlay slot")
+    try:
+        encoded = resref.upper().encode("ascii")
+    except UnicodeEncodeError as error:
+        raise ValueError("overlay resref must be ASCII") from error
+    if not 1 <= len(encoded) <= 8 or not all(
+        character == 0x5F or 0x30 <= character <= 0x39 or 0x41 <= character <= 0x5A
+        for character in encoded
+    ):
+        raise ValueError("overlay resref must match [A-Z0-9_]{1,8}")
+    field = headers + slot * 24 + 4
+    _span(data, field, 8)
+    output = bytearray(data)
+    output[field:field + 8] = encoded.ljust(8, b"\0")
+    validate_polygons(bytes(output))
+    restored = bytearray(output)
+    restored[field:field + 8] = data[field:field + 8]
+    if restored != data:
+        raise ValueError("WED bytes changed outside the overlay resref")
+    return bytes(output)

@@ -1,0 +1,29 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "validated-installed",
+  "family": "pool-wtpool",
+  "wed": "AR1000",
+  "variant": "day",
+  "night": "excluded",
+  "overlay": "WTPOOL2",
+  "user_verdict": "AR1000 day water validated",
+  "validated_candidate": {
+    "run": "maps/water-batches/runs/ar1000-wtpool-route2-q070-20260912-v5/run.json",
+    "registry": "maps/water-batches/runs/ar1000-wtpool-route2-q070-20260912-v5/registry-v3.json",
+    "installation": "pipeline/water/manifests/ar1000-wtpool-route2-installed-20260912-v5.json",
+    "renderer_receipt": "backups/renderer/20260912T172456983055Z-b64ece29/renderer-install-receipt.json"
+  },
+  "recipe": {
+    "spatial": "periodic 3x3 bilinear x4; central crop; no SeedVR",
+    "temporal": "cyclic linear 6 to 36 phases at 15 Hz; atlas-linear renderer blend at 30 FPS",
+    "material_id": 1,
+    "route2_strength": 0.70,
+    "coverage_cells": 37,
+    "secondary_art_cells": 37
+  },
+  "scope_limit": "validation applies only to exact AR1000 day WED/TIS/PVRZ/runtime hashes; no WTPOOL family-wide inference; AR1000N excluded",
+  "installation_state": "installed",
+  "release": "not-requested"
+}

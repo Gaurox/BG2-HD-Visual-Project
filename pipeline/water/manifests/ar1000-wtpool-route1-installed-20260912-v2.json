@@ -1,0 +1,100 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:day"],
+  "status": "installed-pending-ingame-qa",
+  "family": "pool-wtpool",
+  "wed": ["AR1000"],
+  "variant": "day",
+  "night": "excluded",
+  "overlay": "WTPOOL1",
+  "source_overlay": "WTPOOL",
+  "replaces": "pipeline/water/manifests/ar1000-wtpool-route1-installed-20260912-v1.json",
+  "user_direction": "reported load crash; no tests; keep installed for corrected ingame retry",
+  "recipe": {
+    "route": 1,
+    "kind": "isolated-periodic-x4-overlay-and-expanded-wed-timeline",
+    "overlay_slot": 1,
+    "coverage_cells": 37,
+    "liquid_cells_with_secondary": 37,
+    "liquid_cells_without_secondary": 0,
+    "alpha_central_action": "none",
+    "scale": 4,
+    "timeline": "WTPOOL1; 36 phases; native 15 Hz; renderer 30 FPS",
+    "runtime_material_id": 1,
+    "runtime_strength": 0.0
+  },
+  "repair": {
+    "rejected_version": "v1",
+    "rejection_manifest": "pipeline/water/manifests/ar1000-wtpool-route1-load-crash-rejected-20260912-v1.json",
+    "cause": "incorrect v1 PVRZ name WPL1000.PVRZ",
+    "correct_name": "WPOOL100.PVRZ",
+    "content_change": "none; only the PVRZ resource filename changed",
+    "v1_restored_before_v2_install": true
+  },
+  "artifacts": [
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2/run.json",
+      "sha256": "44961C11BAA3CDE7A63CF8717464A61C866376B2A57F03B345C364EF63BBBB74",
+      "bytes": 1147
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2/candidate/manifest.json",
+      "sha256": "F0BEE867940AE73835C31FBE48ACFBB79B8EC598CED3AD40FAFB738280B6948E",
+      "bytes": 1672
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000-wtpool-route1-page-alias-20260912-v2/candidate-receipt.json",
+      "sha256": "27169494B735596D6854107A068984587B43A0E1BD834759DC005C4D1254AA2C",
+      "bytes": 771
+    }
+  ],
+  "installed_files": {
+    "AR1000.WED": {
+      "bytes": 83884,
+      "sha256": "DE24550D1A80019B92EB2135AB4849650847D365DFE18F15F2A048B7043C2282",
+      "present_before": false
+    },
+    "WTPOOL1.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+      "present_before": false
+    },
+    "WPOOL100.PVRZ": {
+      "bytes": 1082761,
+      "sha256": "669B7AA62202F8FF71E84712BA1AD52DBBEA6715D6791D46F381FD951ADED4E9",
+      "present_before": false
+    }
+  },
+  "installation_receipts": [
+    {
+      "path": "backups/water-ar1000-wtpool-route1-v2/override-backup-20260912-185942/install-backup.json",
+      "sha256": "75B61030F392FD1BB7A9BD24EDC3F32887C5463B51278B5D36B6A82053AAD88D",
+      "bytes": 947
+    }
+  ],
+  "verification": "game and InfinityLoader closed; v1 restoration preflight and restore passed; v2 TIS/PVRZ inventory and WED structure verified; install preflight passed; three new override files and post-install hashes verified; rejected WPL1000.PVRZ absent",
+  "rollback": "restore backups/water-ar1000-wtpool-route1-v2/override-backup-20260912-185942; all three v2 files were absent before installation",
+  "runtime": {
+    "state": "unchanged",
+    "registry_entry": null,
+    "route2": "deferred-until-route1-ingame-qa",
+    "strength": 0.0,
+    "dll_sha256": "250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59",
+    "ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "qa": {
+    "state": "pending-ingame-retry-after-load-crash-fix",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "checks": [
+      "save and area load completes without crash",
+      "pool animation and complete cycle",
+      "absence of dark or square seams",
+      "secondary art, reflections and transparency",
+      "zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "tests": "none-user-choice",
+  "release": "not-requested"
+}

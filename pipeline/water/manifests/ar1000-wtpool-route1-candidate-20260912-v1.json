@@ -1,0 +1,91 @@
+{
+  "schema": "bg2-water-pool-candidate-selection-v1",
+  "status": "candidate-installable-pending-ingame-qa",
+  "date": "2026-09-12",
+  "scope": {
+    "area": "AR1000",
+    "wed": "AR1000",
+    "variant": "day",
+    "night": "excluded",
+    "overlay_source": "WTPOOL",
+    "overlay_candidate": "WTPOOL1",
+    "family": "pool-wtpool",
+    "overlay_slot": 1,
+    "coverage_cells": 37
+  },
+  "route1": {
+    "base_state": "already-conform-installed",
+    "base_run": "maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour",
+    "base_tis_sha256": "34F982A73BE9D6B022B9175560A72970096526F90915E9198370CFDE00F2A4E7",
+    "liquid_cells_with_secondary": 37,
+    "liquid_cells_without_secondary": 0,
+    "alpha_central_action": "none",
+    "canonical_x2_issue": "non-periodic dark right/bottom borders",
+    "repair": "isolated periodic x4 overlay plus 36-phase WED timeline"
+  },
+  "production": {
+    "run": "maps/water-batches/runs/ar1000-wtpool-route1-20260912-v1",
+    "run_sha256": "65B8C324B641EE2F4353EF6493E6553155CB04A4AAAA1F881B1569FAA197F041",
+    "plan_sha256": "7A25AF37589FDF6F909019FBB95502681B578583F969B1762C1DFE39105DD8C6",
+    "candidate": "maps/water-batches/runs/ar1000-wtpool-route1-20260912-v1/08_candidate",
+    "candidate_manifest_sha256": "E21916BADB0069E393F4EE505BBB5828F19A3B868C243495CCCE8285D6C63B68",
+    "candidate_receipt_sha256": "A265C024B6319FDAF56BC93875EE41A8938C2D1855AF4A03691C3C8E325B9B89",
+    "seedvr_model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "color_correction_method": "none",
+    "periodic_context": "3x3",
+    "mean_seam_ratio_xy": [1.0845, 1.0238],
+    "source_frames": 6,
+    "native_frames": 36,
+    "native_fps": 15.0,
+    "target_fps": 30.0,
+    "interpolator": "apollo-8",
+    "runtime_blend": "linear"
+  },
+  "candidate_files": {
+    "AR1000.WED": {
+      "bytes": 83884,
+      "sha256": "DE24550D1A80019B92EB2135AB4849650847D365DFE18F15F2A048B7043C2282"
+    },
+    "WTPOOL1.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83"
+    },
+    "WPL1000.PVRZ": {
+      "bytes": 1082761,
+      "sha256": "669B7AA62202F8FF71E84712BA1AD52DBBEA6715D6791D46F381FD951ADED4E9"
+    }
+  },
+  "wed_invariants": {
+    "stock_sha256": "3B0A65C65B995B0092DAB10BE88CF129929877DF27E9ACCC76E6565C09194472",
+    "objects": 14,
+    "wall_polygons": 301,
+    "object_polygons": 32,
+    "changed_fields": [
+      "overlay1 resref WTPOOL -> WTPOOL1",
+      "overlay1 timeline 6 -> 36 sequential frames",
+      "overlay1 speed divisor 6 -> 1",
+      "absolute offsets relocated after timeline growth"
+    ]
+  },
+  "route2": {
+    "state": "deferred-until-route1-ingame-qa",
+    "strength": 0.0,
+    "registry_entry": null,
+    "reason": "route1 must be installed and assessed before deciding whether a pool-specific material is necessary"
+  },
+  "tests": "not-run-user-choice",
+  "installation": "not-run",
+  "qa": {
+    "status": "pending-ingame",
+    "command": "C:MoveToArea(\"AR1000\")",
+    "checks": [
+      "pool animation and complete cycle",
+      "absence of dark or square seams",
+      "secondary art, reflections and transparency",
+      "zoom, pan, pause and reload",
+      "AR1000N excluded and unchanged"
+    ]
+  },
+  "release": "not-requested"
+}

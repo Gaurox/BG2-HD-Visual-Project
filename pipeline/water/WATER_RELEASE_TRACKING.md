@@ -23,7 +23,7 @@ TP2, archives et manifests release restent inchangés.
 - `targets[]` : une entrée par WED/variante ; famille, environnement, overlay, matériau, q,
   artefacts, QA, installation, bloqueurs.
 - `release_state` reste `not-evaluated` jusqu'à la transaction release explicitement autorisée.
-- Le suivi courant contient18 identités :14 WTLAKE,2 WTSEW,2 WTSWAM.
+- Le suivi courant contient19 identités :14 WTLAKE,1 WTPOOL,2 WTSEW,2 WTSWAM.
 
 ## Audit lecture seule
 
@@ -71,25 +71,30 @@ source release ; aucune preuve déduite d'un fichier présent.
 | `validated-ingame` | identité exacte validée, preuve QA référencée | oui après autres gates |
 | `validated-current-fallback` | état q0 observé ; aucune route2 approuvée | seulement comme fallback |
 | `session-accepted-variant-unresolved` | retour positif sans WED jour/nuit identifié | non ; reçu spécifique requis |
-| `pending-ingame` | candidat installé/non validé | non |
+| `pending-ingame` | candidat sélectionné, installé ou non, sans QA ingame | non |
 | `blocked-family-qa` | matériau/environnement non qualifié | non |
 
 ## État courant — audit du 2026-09-12
 
 | État eau exact | Identités |
 |---|---|
-| `validated-ingame` | AR0046N, AR0204, AR0300N, AR0900N, AR1200, AR1600, AR1700, AR1901, AR0404, AR1607, AR1800 |
+| `validated-ingame` | AR0046N, AR0204, AR0300N, AR0900N, AR1000 jour, AR1200, AR1600, AR1700, AR1901, AR0404, AR1607, AR1800 |
 | `validated-current-fallback` | AR2100 (`q=0`, aucune route2 approuvée) |
 | `pending-ingame` | AR0300 jour, AR0900 jour, AR2300 |
 | `session-accepted-variant-unresolved` | AR0046 jour ou nuit observé historiquement ; AR0046N possède désormais sa QA exacte séparée |
 | `blocked-family-qa` | AR0512, AR1604 (eaux intérieures) |
 
-Total :18identités suivies ;11validées route2,1fallback validé,3en attente,1non résolue,
+Total :19identités suivies ;11validées route2,1fallback validé,4en attente,1non résolue,
 2bloquées. Toutes sont installées ; installation ≠ QA. Autorité machine :
 `release-tracking-v1.json`. `areas.csv` garde la QA générale des maps ; le présent suivi reste plus
 strict pour chaque traitement eau/WED après modification. Aucun état release n'est déduit.
-Runtime installé v10 : source exacte commit `98cba84fa59e8647c9b4a816ca69e47dbaa3cfa8`, registre
-`ar0300n-reflections-alpha160-registry-v10`, DLL SHA256 `250A5BC2872CD91DBFD4DEFDBC898CFAFAB010AC3033E27820209F354447AD59`.
+AR1000 jour : v1 rejetée sur crash de nom de page ; v2 charge à q0 mais rejetée pour quadrillage,
+SeedVR x4 ayant amplifié la trame diagonale source. V2 restaurée ; v3 non générative installée,
+bilinéaire périodique3×3 et interpolation cyclique linéaire36phases. Énergie haute fréquence
+réduite17,2763→1,4345. Q0 accepté sans motif mais rejeté comme figé ; voie2 v5 exacte installée à
+q0.70, 36phases/15Hz et blend30FPS, validée ingame le2026-09-12. `AR1000N` reste hors périmètre.
+Runtime installé v12 : source commit `98cba84fa59e8647c9b4a816ca69e47dbaa3cfa8`, registre
+`ar1000-wtpool-route2-registry-v5`, DLL SHA256 `189D6173E2AAA2FB60A0E04E7099CF2B045EE0F2A2719BA6D89096D45D096219`.
 
 ## État initial enregistré — historique
 
