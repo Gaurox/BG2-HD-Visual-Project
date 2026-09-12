@@ -92,6 +92,15 @@ namespace iee::game {
         CResPVR *pvr{};
     };
 
+    // Prefix of the CInfTileSet::pResTiles element, not a bare CResTile.
+    // BG2EE 2.7.3 RVA 0x2A44DF..0x2A4505 selects rainResource for wet states.
+    struct CInfTileResourcePrefix {
+        CResTile dry{};
+        std::int32_t poolIndex{};
+        std::uint32_t color{};
+        CResTile *rainResource{};
+    };
+
     struct CResWED {
         CRes baseclass_0{};
         void *pWEDHeader{};
@@ -457,6 +466,7 @@ namespace iee::game {
     static_assert(sizeof(CResPVR) == 0x70);
     static_assert(sizeof(CResTileSet) == 0x60);
     static_assert(sizeof(CResTile) == 0x18);
+    static_assert(offsetof(CInfTileResourcePrefix, rainResource) == 0x20);
     static_assert(sizeof(CResWED) == 0x88);
     static_assert(sizeof(CVidPalette) == 0x30);
     static_assert(sizeof(CVIDIMG_PALETTEAFFECT) == 0xD0);

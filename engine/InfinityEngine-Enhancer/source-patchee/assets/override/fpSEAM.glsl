@@ -330,7 +330,8 @@ void main()
 		if (uIeeEnabled > 0.5 && uIeeEnabled < 1.5 &&
 		    uIeeWaterOverlayStrength > 0.0 &&
 		    ((cellMode > 0.5 && cellMode < 1.5) ||
-		     (cellMode > 3.5 && cellMode < 4.5)))
+		     (cellMode > 3.5 && cellMode < 4.5) ||
+		     (cellMode > 4.5 && cellMode < 5.5)))
 		{
 			waterCoverage = ieeCoverageWithCenter(worldPos, 1.0);
 			waterMask = clamp(uIeeWaterOverlayStrength, 0.0, 1.0);
@@ -398,6 +399,16 @@ void main()
 			foamColor = ieeSrgbToLinear(vec3(0.34, 0.29, 0.12));
 			foamStrength = 0.18;
 			specularStrength = 0.08;
+		}
+		else if (cellMode > 4.5 && cellMode < 5.5)
+		{
+			// Swamp water keeps WTSWAM's blue-green identity but reads as
+			// vegetation-rich, turbid and less reflective than lake water.
+			deepColor = ieeSrgbToLinear(vec3(0.055, 0.12, 0.10));
+			shallowColor = ieeSrgbToLinear(vec3(0.30, 0.48, 0.37));
+			foamColor = ieeSrgbToLinear(vec3(0.30, 0.40, 0.31));
+			foamStrength = 0.25;
+			specularStrength = 0.40;
 		}
 
 		// Shore proximity: brightens shallows and drives the foam band.

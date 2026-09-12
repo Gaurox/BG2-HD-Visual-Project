@@ -65,6 +65,10 @@ python tools/build_shader_suite.py --run
 
 Sans option : plan seulement. `--check` ne modifie rien ; `--run` régénère les trois sorties suivies.
 
+Adaptateur eau météo `fpTone`, dérivé de `fpSEAM` :
+`python tools/build_water_tone_shader.py` prépare ; `--run` régénère. Ne pas éditer sa sortie
+directement. Qualification météo limitée aux identités marais approuvées ; autres draws natifs.
+
 `cmake --install build --config Release --prefix <directory>` produit le même layout game-root.
 Le validateur d'exécutable et les gates sont décrits dans
 [`docs/new-build-validation.md`](docs/new-build-validation.md). Les dépendances `FetchContent`

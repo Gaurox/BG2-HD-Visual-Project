@@ -1,0 +1,82 @@
+{
+  "schema": "bg2-water-swamp-pilot-selection-v1",
+  "status": "installed-pending-ingame-qa",
+  "date": "2026-09-12",
+  "scope": {
+    "areas": [
+      {
+        "area": "AR1607",
+        "variant": "day-or-unique",
+        "overlay_slot": 1,
+        "coverage_cells": 874
+      },
+      {
+        "area": "AR1800",
+        "variant": "day-or-unique",
+        "overlay_slot": 1,
+        "coverage_cells": 101
+      }
+    ],
+    "overlay": "WTSWAM",
+    "family": "swamp-wtswam",
+    "material_id": 5
+  },
+  "run": {
+    "path": "maps/technical-overlays/WTSWAM/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar1607-ar1800-20260912",
+    "run_manifest_sha256": "6235E1ABDD339FFE6C962D84D89522728DB5A98DB21D8C1069521FA14C38F5F4",
+    "plan_sha256": "FA27517D81D9E530FFDC385428554C822A4F5B0EA5E5B1260474221338FC7074",
+    "candidate_manifest_sha256": "019260B7279895E8069DA7DFFC13558FF224FC4804C678D1CE42BBF533ADF987"
+  },
+  "production": {
+    "seedvr_model": "seedvr2_7b_int8_convrot.safetensors",
+    "scale": 4,
+    "color_correction_method": "none",
+    "periodic_context": "3x3",
+    "source_frames": 6,
+    "native_frames": 36,
+    "native_fps": 15.0,
+    "target_fps": 30.0,
+    "interpolator": "apollo-8",
+    "runtime_blend": "linear",
+    "route2_strength": 0.7
+  },
+  "registry": {
+    "path": "maps/technical-overlays/WTSWAM/runs/seedvr2-none-apollo8-x4-15hz-route2-render30-q070-ar1607-ar1800-20260912/registry-v3.json",
+    "sha256": "B37AC8176CDFAB633790FCFF9271C70EDDB5CA9D303F1026D52A48432ADB3222",
+    "entries": 17,
+    "added_entries": [
+      "wtswam-ar1607-slot1-q070-v3",
+      "wtswam-ar1800-slot1-q070-v3"
+    ],
+    "parent_entries_unchanged": 15,
+    "fallback": "q0-native"
+  },
+  "installed": {
+    "assets": {
+      "AR1607.WED": "CA7F4BE8494EC79B1AA8827430640357019BF7A24833E3FAA9B66CAF6709C3D5",
+      "AR1800.WED": "579DC59D98BE9C358F258E603AE44B87FAC7D093CEC613CDB0F856D3BEE5C44E",
+      "WTSWAM.TIS": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83",
+      "WSWAM00.PVRZ": "C255EA9220BA6E2DB72BD9738B8E2945F4B2F4E44B257F32096744DD427096B2"
+    },
+    "shader_fpseam_sha256": "A63D1FCDAC49CDAA09B191FC08800E79A38069165927E549C47877B956FD8472",
+    "renderer_dll_sha256": "32D519D11FC0E1628D0157E3326BC750710DD48D3DA55AE1D3ABBEF153FAF90B",
+    "renderer_ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+  },
+  "receipts": {
+    "assets": "backups/water-wtswam-ar1607-ar1800/assets/override-backup-20260912-140428/install-backup.json",
+    "assets_sha256": "5D4EFB2E69466089C7BC52817F16258CA66216C902BA903C70CF4F83B81F207F",
+    "shaders": "backups/shader-suite/wtswam-ar1607-ar1800/20260912T120435747308Z-6fb55305/shader-install-receipt.json",
+    "shaders_sha256": "B13937B33A894D5D2C95A540E5DBBBAF54FC2241D91F48307854B74C4E12C179",
+    "renderer": "backups/renderer/wtswam-ar1607-ar1800/20260912T120443537901Z-af1ac89a/renderer-install-receipt.json",
+    "renderer_sha256": "39CE57082845C4EA64F419722673136C96DF90556AC5E896C923C5A5FE6B687A"
+  },
+  "qa": {
+    "status": "pending-ingame",
+    "commands": [
+      "C:MoveToArea(\"AR1607\")",
+      "C:MoveToArea(\"AR1800\")"
+    ]
+  },
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

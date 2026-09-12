@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-weather-selection-v1",
+  "date": "2026-09-12",
+  "status": "installed-pending-ingame-qa",
+  "areas": ["AR1607", "AR1800"],
+  "parent_selection": "pipeline/water/manifests/wtswam-ar1607-ar1800-repair-installed-20260912-v2.json",
+  "parent_qa": {"decision": "rejected-ingame", "authority": "explicit-user-feedback", "AR1607": "good-before-rain-repeated-tiles-during-rain", "AR1800": "repeated-tiles"},
+  "screenshots": [
+    {"name": "20260912143310_1.jpg", "sha256": "0889EA0CC1A88E3456CC80C0253CD094D015F489B59B5A7290F38DA84EFF4B09"},
+    {"name": "20260912143319_1.jpg", "sha256": "51090C0B6BE61B5656598B3C110355D04419223B18113A74A673C795D4BD9D21"}
+  ],
+  "cause": "fpTone-weather-path-missing-route2-and-timeline",
+  "correction": "generated-fpTone-adapter-with-native-tone-alpha-and-q0-fallback",
+  "weather_scope": "exact-registry-identities-material5-only",
+  "build": "build/iee-wtswam-weather-20260912-v3",
+  "candidate": "build/wtswam-weather-20260912-v3",
+  "registry": {
+    "path": "maps/water-batches/runs/wtswam-ar1607-ar1800-repair-20260912-v2/registry-v3.json",
+    "sha256": "877BC199CB31B70F2A5D31EDAF77E19E55D8556819B493797CAD8CF46BC854C5",
+    "unchanged": true,
+    "entries": 17
+  },
+  "installed": {
+    "renderer_dll_sha256": "B5A52A242A232EF8A6840B6555EE7CE0094527D170C9B689A4BA8C329189B07A",
+    "renderer_ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+    "fpTone_sha256": "01900D8514E95D0107562204DDB896E2F8F65F1051229B13C6AFBF52E678162F",
+    "fpSEAM_sha256": "763CCBD16733CFC17AEEBA72A8F31D3204E96C918753CA6FB5A49519410E4D6C",
+    "route2_strength": 0.70,
+    "assets_changed": false,
+    "ini_changed": false,
+    "other_shader_contents_changed": false
+  },
+  "receipts": {
+    "shaders": "backups/shader-suite/wtswam-weather-20260912-v3/20260912T124011363487Z-78898609/shader-install-receipt.json",
+    "renderer": "backups/renderer/wtswam-weather-20260912-v3/20260912T124017182381Z-db7bc102/renderer-install-receipt.json"
+  },
+  "installation_checks": {"registry_files_before": 696, "shader_receipt": "verified", "renderer_receipt": "verified", "game_launched": false},
+  "qa": "pending-before-and-during-rain",
+  "tests": "prepared-not-run-explicit-user-choice",
+  "release": "not-requested"
+}

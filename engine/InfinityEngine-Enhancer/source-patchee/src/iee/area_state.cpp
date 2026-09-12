@@ -351,15 +351,24 @@ std::optional<water_route2::Match> route2_water_overlay_match(
     const std::byte* validatedTextureTable) noexcept {
   if (!ctx.manifest || !validatedTextureTable || !texture || width <= 0 || height <= 0)
     return std::nullopt;
-  const auto reject = [&ctx](unsigned reason, std::uint32_t count = 0) {
-    static std::atomic<unsigned> loggedReasons{0};
+  const auto wed = ctx.wed.load();
+  static thread_local std::shared_ptr<const game::WedAreaInfo> diagnosticWed;
+  static thread_local unsigned loggedReasons = 0;
+  static thread_local unsigned identityLogs[2]{};
+  if (diagnosticWed != wed) {
+    diagnosticWed = wed;
+    loggedReasons = 0;
+    identityLogs[0] = identityLogs[1] = 0;
+  }
+  const auto reject = [&ctx, &wed](unsigned reason, std::uint32_t count = 0) {
     const unsigned bit = 1u << reason;
-    if (ctx.cfg.enableTilePageDiagnostics && !(loggedReasons.fetch_or(bit) & bit)) {
-      LOG_INFO("WATER_ROUTE2 reject reason={} count={}", reason, count);
+    if (ctx.cfg.enableTilePageDiagnostics && !(loggedReasons & bit)) {
+      loggedReasons |= bit;
+      LOG_INFO("WATER_ROUTE2 reject wed={} reason={} count={}",
+               wed ? wed->areaResrefView() : std::string_view{"-"}, reason, count);
     }
     return std::optional<water_route2::Match>{};
   };
-  const auto wed = ctx.wed.load();
   const auto* area = ctx.activeArea.load();
   if (!wed || !area || wed->overlays.size() < 2 || wed->overlays.size() > 5 ||
       resolve_active_area(ctx.infGame.load(), *ctx.manifest) != area) return std::nullopt;
@@ -403,41 +412,68 @@ std::optional<water_route2::Match> route2_water_overlay_match(
     void** overlayResources = nullptr;
     std::uint32_t overlayCount = 0;
     if (!readResources(tileSets[slot], overlayResources, overlayCount) || !overlayCount) continue;
+    // The WED names the dry TIS. Native wet states may draw the separate
+    // resource owned by the same tile wrapper; never infer it from a suffix.
+    std::array<game::CResTileSet*, 2> ownedTis{};
+    if (!core::safe_read(reinterpret_cast<const std::byte*>(tileSets[slot]) +
+                        offsetof(game::CInfTileSet, tis), ownedTis)) continue;
     for (std::uint32_t i = 0; i < overlayCount; ++i) {
       void* wrapper = nullptr;
-      PvrzTintCandidate candidate{};
-      if (!core::safe_read(overlayResources + i, wrapper) ||
-          !read_pvrz_tint_candidate(wrapper, i, slots[slot], candidate)) continue;
-      // CResPVR::texture is an engine slot, not the live GL name. Resolve per draw.
-      if (candidate.texture == 0 || candidate.texture >= 512) continue;
-      const auto* descriptor = validatedTextureTable +
-                               static_cast<std::size_t>(candidate.texture) * 0x28;
-      unsigned glName = 0;
-      int backingWidth = 0, backingHeight = 0;
-      std::uint8_t deletePending = 0;
-      if (!core::safe_read(descriptor, glName) ||
-          !core::safe_read(descriptor + 0x04, backingWidth) ||
-          !core::safe_read(descriptor + 0x08, backingHeight) ||
-          !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
-          backingWidth != width || backingHeight != height || glName != texture ||
-          candidate.width != width || candidate.height != height) continue;
-      const water_route2::Query query{
-          game::resref_view(wedName), game::resref_view(baseName), slots[slot],
-          game::resref_view(candidate.resref), {slots.data(), wed->overlays.size()},
-          static_cast<std::uint32_t>(slot), wed->baseWidth, wed->baseHeight,
-          baseCount, overlayCount, wed->overlays[slot].coverageCells,
-          static_cast<std::uint32_t>(width), static_cast<std::uint32_t>(height)};
-      const auto match = water_route2::match(query);
-      if (match) {
-        static std::atomic<unsigned> identityLogs{0};
-        if (ctx.cfg.enableTilePageDiagnostics && identityLogs.fetch_add(1) < 8) {
-          LOG_INFO("WATER_ROUTE2 identity registry={} slot={} baseTiles={} overlayTiles={} "
-                   "page={} engineSlot={} glName={} q={}", match->registryVersion, slot,
-                   baseCount, overlayCount, game::resref_view(candidate.resref),
-                   candidate.texture, glName, match->approvedStrength);
+      if (!core::safe_read(overlayResources + i, wrapper) || !wrapper) continue;
+      game::CResTile* rainResource = nullptr;
+      (void)core::safe_read(reinterpret_cast<const std::byte*>(wrapper) +
+                           offsetof(game::CInfTileResourcePrefix, rainResource), rainResource);
+      const std::array<const void*, 2> variants{wrapper, rainResource};
+      for (std::size_t weather = 0; weather < variants.size(); ++weather) {
+        if (!variants[weather] || !ownedTis[weather]) continue;
+        game::CRes variantTis{};
+        game::ResrefBuffer variantName{};
+        if (!core::safe_read(ownedTis[weather], variantTis) ||
+            !game::read_runtime_resref(variantTis.resref, variantName)) continue;
+        const auto expectedName = weather == 0 ? slots[slot] : game::resref_view(variantName);
+        PvrzTintCandidate candidate{};
+        if (!read_pvrz_tint_candidate(variants[weather], i, expectedName, candidate)) continue;
+        // CResPVR::texture is an engine slot, not the live GL name. Resolve per draw.
+        if (candidate.texture == 0 || candidate.texture >= 512) continue;
+        const auto* descriptor = validatedTextureTable +
+                                 static_cast<std::size_t>(candidate.texture) * 0x28;
+        unsigned glName = 0;
+        int backingWidth = 0, backingHeight = 0;
+        std::uint8_t deletePending = 0;
+        if (!core::safe_read(descriptor, glName) ||
+            !core::safe_read(descriptor + 0x04, backingWidth) ||
+            !core::safe_read(descriptor + 0x08, backingHeight) ||
+            !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
+            backingWidth != width || backingHeight != height || glName != texture ||
+            candidate.width != width || candidate.height != height) continue;
+        const water_route2::Query query{
+            game::resref_view(wedName), game::resref_view(baseName), expectedName,
+            game::resref_view(candidate.resref), {slots.data(), wed->overlays.size()},
+            static_cast<std::uint32_t>(slot), wed->baseWidth, wed->baseHeight,
+            baseCount, overlayCount, wed->overlays[slot].coverageCells,
+            static_cast<std::uint32_t>(width), static_cast<std::uint32_t>(height)};
+        const auto match = water_route2::match(query);
+        if (!match && ctx.cfg.enableTilePageDiagnostics && !(loggedReasons & (1u << 7))) {
+          loggedReasons |= 1u << 7;
+          LOG_INFO("WATER_ROUTE2 unmatched owned overlay wed={} base={} overlay={} page={} "
+                   "grid={}x{} baseTiles={} overlayTiles={} coverage={} slots={}",
+                   query.wed, query.baseTis, query.overlayTis, query.page,
+                   query.gridWidth, query.gridHeight, query.baseTileCount,
+                   query.overlayTileCount, query.overlayCoverageCells, query.slots.size());
         }
-        return ctx.activeArea.load() == area && ctx.wed.load() == wed
-                   ? match : std::optional<water_route2::Match>{};
+        if (match) {
+          if (ctx.cfg.enableTilePageDiagnostics && identityLogs[weather] < 8) {
+            ++identityLogs[weather];
+            std::uint8_t nativeAlpha = 0;
+            (void)core::safe_read(areaBytes + offsetof(game::CGameArea, m_waterAlpha), nativeAlpha);
+            LOG_INFO("WATER_ROUTE2 identity wed={} nativeAlpha={} registry={} slot={} baseTiles={} overlayTiles={} "
+                     "page={} engineSlot={} glName={} q={}", game::resref_view(wedName), nativeAlpha, match->registryVersion, slot,
+                     baseCount, overlayCount, game::resref_view(candidate.resref),
+                     candidate.texture, glName, match->approvedStrength);
+          }
+          return ctx.activeArea.load() == area && ctx.wed.load() == wed
+                     ? match : std::optional<water_route2::Match>{};
+        }
       }
     }
   }

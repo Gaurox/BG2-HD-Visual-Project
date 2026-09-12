@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-water-swamp-repair-selection-v1",
+  "date": "2026-09-12",
+  "status": "installed-pending-ingame-qa",
+  "areas": ["AR1607", "AR1800"],
+  "replaces_rejected_selection": "pipeline/water/manifests/wtswam-ar1607-ar1800-pilot-installed-20260912-v1.json",
+  "qa_rejection": "pipeline/water/manifests/wtswam-ar1607-ar1800-rejected-20260912-v1.json",
+  "run": {
+    "path": "maps/water-batches/runs/wtswam-ar1607-ar1800-repair-20260912-v2",
+    "manifest_sha256": "7F8571EB3BE6C90055AB248304A2D96EB35CF87830BE51B259BAFAEBB2514E6A",
+    "candidate_manifest_sha256": "764537EDBCDFC7BD07169A364EF67E033F5E3BC98AB238DEC38366CEC9F6748D"
+  },
+  "repair": {
+    "AR1607": {"central_tiles": 525, "native_alpha": 100, "rgb_seam_tiles": 128},
+    "AR1800": {"central_tiles": 7, "native_alpha": 128, "central_alpha_changed": false, "rgb_seam_tiles": 7},
+    "changed_pvrz_files": 37,
+    "secondary_alpha": "already-255-no-decoded-change",
+    "swamp_shallow_rgb": [0.30, 0.48, 0.37],
+    "swamp_specular": 0.40,
+    "route2_strength": 0.70,
+    "diagnostics": "identity-and-draw-budget-per-wed"
+  },
+  "registry": {
+    "path": "maps/water-batches/runs/wtswam-ar1607-ar1800-repair-20260912-v2/registry-v3.json",
+    "sha256": "877BC199CB31B70F2A5D31EDAF77E19E55D8556819B493797CAD8CF46BC854C5",
+    "entries": 17,
+    "prior_validated_entries_unchanged": 15,
+    "fallback": "q0-native"
+  },
+  "installed": {
+    "renderer_dll_sha256": "8F2D0CF39B6FB89F717C8F4EAD7501D8ABD24721B006801EC3FD6970CC5F0010",
+    "renderer_ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+    "shader_fpseam_sha256": "763CCBD16733CFC17AEEBA72A8F31D3204E96C918753CA6FB5A49519410E4D6C",
+    "unchanged": ["AR1607.WED", "AR1800.WED", "WTSWAM.TIS", "WSWAM00.PVRZ", "InfinityEngine-Enhancer.ini"]
+  },
+  "receipts": {
+    "assets": "backups/wtswam-repair-20260912-v2/assets/override-backup-20260912-142755/install-backup.json",
+    "assets_sha256": "E9C2C21B7DA8DDB8BDDFA49D2EE7E4CDBA605B179ED9789190FED1BA2BCB50B3",
+    "shaders": "backups/shader-suite/wtswam-repair-20260912-v2/20260912T122801947713Z-e5c180f9/shader-install-receipt.json",
+    "shaders_sha256": "750B681A337A881C2E034E00EA9A09C75044873B609621A65E99BEAA1663AAC3",
+    "renderer": "backups/renderer/wtswam-repair-20260912-v2/20260912T122810797706Z-88c364c9/renderer-install-receipt.json",
+    "renderer_sha256": "5658343C1A13FD3DCABEEB41D80CBCA044D780607FE17B7C791155FF6DA334D3"
+  },
+  "installation_checks": {"live_registry_files": 696, "candidate_pvrz_hashes": 37, "shader_receipt": "verified", "renderer_receipt": "verified", "game_launched": false},
+  "qa": {"status": "pending-ingame", "procedural_activation": "not-confirmed-runtime-on-targets", "commands": ["C:MoveToArea(\"AR1607\")", "C:MoveToArea(\"AR1800\")"]},
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}

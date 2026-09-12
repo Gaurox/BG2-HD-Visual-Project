@@ -11,6 +11,14 @@ Pilote égouts : [WTSEW AR0404/AR2100](WTSEW_AR0404_PILOT_20260912.md), validé 
 AR0404 utilise la chaîne complète à `q=0.70` ; AR2100 est validée dans son état exact actuel
 (WED stock, overlay WTSEW partagé, route2 absente donc `q=0`).
 
+Pilote marais : [WTSWAM AR1607/AR1800](WTSWAM_AR1607_AR1800_PILOT_20260912.md), première QA
+rejetée (tuilage, transparence, mouvement). Correctif v2 installé : alpha natif100 AR1607,
+raccords RGB des deux cartes, matériau marais plus contrasté, diagnostics par WED ; `q=0.70`.
+V2/v3 rejetées sous pluie : variante `WTSWAMR` omise (palette6frames face au WED36frames).
+[Reprise ressource pluie v4](WTSWAM_RAIN_RESOURCE_REPAIR_20260912.md) : paire sec/pluie
+isolée `WSWPIL`/`WSWPILR`, x4/36phases et route2 q0.70 ; état installé validé par l'utilisateur.
+Toute autre identité WTSWAM reste absente du registre et tombe à `q=0`.
+
 | Fichier | Rôle |
 |---|---|
 | `family-policy-v1.json` | Familles, méthode SeedVR et gates voie1/route2 |
@@ -19,9 +27,17 @@ AR0404 utilise la chaîne complète à `q=0.70` ; AR2100 est validée dans son �
 | `manifests/wtlake-timeline30-q070-20260912-v1.json` | Lot WTLAKE 14 identités, 36 phases/15 Hz, blend 30 FPS, route2 `q=0.70` |
 | `manifests/wtsew-ar0404-pilot-installed-20260912-v1.json` | Pilote WTSEW AR0404 installé, reçus assets/shaders/renderer, QA en attente |
 | `manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json` | Décision QA ingame : AR0404 full route2 validée, AR2100 fallback courant validé |
+| `manifests/wtswam-ar1607-ar1800-pilot-installed-20260912-v1.json` | Installation initiale historique, rejetée par la QA suivante |
+| `manifests/wtswam-ar1607-ar1800-rejected-20260912-v1.json` | Décision utilisateur et captures du rejet |
+| `manifests/wtswam-ar1607-ar1800-repair-installed-20260912-v2.json` | Assets correctifs conservés ; renderer remplacé par v3 météo |
+| `manifests/wtswam-weather-installed-20260912-v3.json` | Historique fpTone, rejeté en QA |
+| `manifests/wtswam-rain-installed-20260912-v4.json` | Installation v4 : assets sec/pluie isolés, registre19, reçus immuables |
+| `manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json` | Sélection QA courante : les deux cartes v4 validées à q0.70 |
 | `../scripts/orchestrate_water_batch.py` | Plan déterministe ; `--run` seul autorise l'exécution d'une étape supportée |
 | `../scripts/build_wtlake_timeline_batch.py` | Assemble le candidat WTLAKE ; aucun SeedVR/build moteur/install/release implicite |
 | `../scripts/build_wtsew_route2_pilot.py` | Produit le pilote AR0404 ; plan-only par défaut, exécution avec `--run` |
+| `../scripts/build_wtswam_route2_pilot.py` | Produit le pilote AR1607/AR1800 ; plan-only par défaut, exécution avec `--run` |
+| `../scripts/repair_wtswam_pilot.py` | Reprise du pilote rejeté depuis identités exactes ; nouveau run, plan-only sans `--run` |
 
 Contrats :
 
@@ -48,6 +64,13 @@ Pilote WTSEW, plan puis production explicite dans un nouveau run :
 ```powershell
 python -B pipeline/scripts/build_wtsew_route2_pilot.py --output maps/technical-overlays/WTSEW/runs/<run-id>
 python -B pipeline/scripts/build_wtsew_route2_pilot.py --output maps/technical-overlays/WTSEW/runs/<run-id> --run
+```
+
+Pilote WTSWAM, plan puis production explicite dans un nouveau run :
+
+```powershell
+python -B pipeline/scripts/build_wtswam_route2_pilot.py --output maps/technical-overlays/WTSWAM/runs/<run-id>
+python -B pipeline/scripts/build_wtswam_route2_pilot.py --output maps/technical-overlays/WTSWAM/runs/<run-id> --run
 ```
 
 Plan complet en lecture seule :

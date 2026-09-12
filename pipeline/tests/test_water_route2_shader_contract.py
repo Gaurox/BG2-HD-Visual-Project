@@ -30,14 +30,15 @@ class WaterRoute2ShaderContractTests(unittest.TestCase):
         self.assertIn("uIeeWaterRoute2 < 0.5 && uIeeEnabled > 0.5", source)
         self.assertIn("uIeeEnabled > 1.5 && uIeeWaterRoute2 < 0.5", source)
 
-    def test_route2_accepts_only_water_and_sewage_material_cells(self):
+    def test_route2_accepts_only_water_sewage_and_swamp_material_cells(self):
         source = (ENGINE / "assets/override/fpSEAM.glsl").read_text(encoding="utf-8")
         begin = source.index("if (uIeeWaterRoute2 > 0.5)")
         end = source.index("else if (uIeeEnabled > 0.5", begin)
         route2_gate = source[begin:end]
         self.assertIn("cellMode > 0.5 && cellMode < 1.5", route2_gate)
         self.assertIn("cellMode > 3.5 && cellMode < 4.5", route2_gate)
-        self.assertNotIn("cellMode > 4.5", route2_gate)
+        self.assertIn("cellMode > 4.5 && cellMode < 5.5", route2_gate)
+        self.assertNotIn("cellMode > 5.5", route2_gate)
 
     def test_routing_is_at_actual_gl_draw_and_resets_afterwards(self):
         source = (ENGINE / "src/iee/shader_probe.cpp").read_text(encoding="utf-8")

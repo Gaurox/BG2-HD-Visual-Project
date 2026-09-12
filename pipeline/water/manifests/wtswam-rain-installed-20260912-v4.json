@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-water-rain-selection-v1",
+  "date": "2026-09-12",
+  "status": "installed-pending-ingame-qa",
+  "areas": ["AR1607", "AR1800"],
+  "parent_selection": "pipeline/water/manifests/wtswam-weather-installed-20260912-v3.json",
+  "parent_qa": "rejected-by-user-rain-mosaic-persists",
+  "diagnostic": "missing-stock-WTSWAMR-palette6-resource-under-WED36-and-dry-only-runtime-ownership",
+  "run": {
+    "path": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4",
+    "manifest_sha256": "61CE0792ACFBB1979D498F10DA336A3F77C0478D7CFC95AAED39C22705C0E1B3",
+    "candidate_manifest_sha256": "CFF4E949749C617CF7C6B2470F38216DA359A7E73EC7C83AB72E75693D9D9811",
+    "registry_sha256": "AA96B2D854E41EFCD9411E61AA27277D241AFF4F5DE7E660B481371A99A7DE2F"
+  },
+  "production": {
+    "dry_alias": "WSWPIL",
+    "rain_alias": "WSWPILR",
+    "dry_pixels": "unchanged-from-v2",
+    "rain_source": "WTSWAMR",
+    "scale": 4,
+    "color_correction_method": "none",
+    "periodic_context": "3x3",
+    "native_frames": 36,
+    "native_fps": 15,
+    "renderer_fps": 30,
+    "q": 0.70,
+    "registry_entries": 19,
+    "prior_validated_entries_unchanged": 15,
+    "global_WTSWAMR_modified": false
+  },
+  "installed": {
+    "renderer_dll_sha256": "3538DA5715C814577196C5D900421B1DE8B897333A0C440FFFDA0B130E31CFAF",
+    "renderer_ini_sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C",
+    "assets": ["AR1607.WED", "AR1800.WED", "WSWPIL.TIS", "WSWPILR.TIS", "WWPIL00.PVRZ", "WWPILR00.PVRZ"],
+    "shaders_changed": false,
+    "base_pages_changed": false
+  },
+  "receipts": {
+    "assets": "backups/wtswam-rain-20260912-v4/assets/override-backup-20260912-145552/install-backup.json",
+    "assets_sha256": "3250F58B92DE8ECA7439B54613A03B842CFF35DE1F1282A213603B3325898DA5",
+    "renderer": "backups/renderer/wtswam-rain-20260912-v4/20260912T125601002876Z-981221b0/renderer-install-receipt.json",
+    "renderer_sha256": "A5116E2D74648AB40559CEE9C01DBBB73F94E00CE1067F9F9C466E57E3D44CBF"
+  },
+  "installation_checks": {"live_registry_files": 698, "candidate_files": 6, "renderer_receipt": "verified", "game_launched": false},
+  "qa": "pending-dry-rain-transitions-both-maps",
+  "tests": "prepared-not-run-user-choice",
+  "release": "not-requested"
+}

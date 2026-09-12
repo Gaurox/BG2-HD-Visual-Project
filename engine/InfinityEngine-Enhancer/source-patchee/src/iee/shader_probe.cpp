@@ -1739,15 +1739,18 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &program);
   if (program <= 0) return;
   std::shared_ptr<uniforms::Locations> locations;
+  bool tonePass = false;
   {
     std::lock_guard lock(g_probeMutex);
     const auto record = g_programRecords.find(static_cast<unsigned>(program));
     const auto overridden = g_overriddenPrograms.find(static_cast<unsigned>(program));
     if (record == g_programRecords.end() || !record->second.introspected ||
-        record->second.fragmentShaderName != "fpSEAM" ||
+        (record->second.fragmentShaderName != "fpSEAM" &&
+         record->second.fragmentShaderName != "fpTone") ||
         record->second.vertexShaderName != "vpDraw" ||
         overridden == g_overriddenPrograms.end()) return;
     locations = overridden->second;
+    tonePass = record->second.fragmentShaderName == "fpTone";
   }
   if (locations->waterOverlayStrength == uniforms::Locations::kUnresolved) {
     locations->waterOverlayStrength = gl.glGetUniformLocation(program, "uIeeWaterOverlayStrength");
@@ -1785,7 +1788,10 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   const auto route = hooks::route2_water_overlay_match(
       texture.texture, texture.width, texture.height);
   const float approvedStrength = route ? route->approvedStrength : 0.0f;
-  const bool matched = route.has_value() && approvedStrength > 0.0f;
+  // Weather uses fpTone for the very same atlas. Qualify that new path only
+  // for approved swamp identities; all previous materials keep their baseline.
+  const bool matched = route.has_value() && approvedStrength > 0.0f &&
+                       (!tonePass || route->materialId == 5);
   const float strength = matched && g_cfg.enableWaterEffect
       ? core::route2_water_strength(g_cfg.waterOverlayStrength, approvedStrength) : 0.0f;
   gl.glUniform1f(scope.strength, strength);
@@ -1811,17 +1817,27 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
                    static_cast<float>(route->temporalAtlasPaddingPixels));
   }
   if (g_cfg.enableTilePageDiagnostics) {
-    static unsigned matchedTraces = 0;
-    static unsigned otherTraces = 0;
-    auto& traces = matched ? matchedTraces : otherTraces;
-    if (traces++ < 16) {
+    static unsigned matchedTraces[4]{};
+    static unsigned otherTraces[4]{};
+    static water_route2::Resref tracedWed{};
+    if (route && tracedWed != route->wed) {
+      tracedWed = route->wed;
+      for (auto& value : matchedTraces) value = 0;
+      for (auto& value : otherTraces) value = 0;
+    }
+    const unsigned traceBucket = (tonePass ? 1 : 0) + (route && route->weatherVariant ? 2 : 0);
+    auto& traces = matched ? matchedTraces[traceBucket] : otherTraces[traceBucket];
+    if (traces < 16) {
+      ++traces;
       int blend = 0, src = 0, dst = 0, srgb = 0;
       gl.glGetIntegerv(0x0BE2 /* GL_BLEND */, &blend);
       gl.glGetIntegerv(0x80C9 /* GL_BLEND_SRC_RGB */, &src);
       gl.glGetIntegerv(0x80C8 /* GL_BLEND_DST_RGB */, &dst);
       gl.glGetIntegerv(0x8DB9 /* GL_FRAMEBUFFER_SRGB */, &srgb);
-      LOG_INFO("WATER_ROUTE2 draw program={} texture={} size={}x{} overlay={} q={} "
+      LOG_INFO("WATER_ROUTE2 draw wed={} weather={} program={} texture={} size={}x{} overlay={} q={} "
                "temporal={} frames={} sourceFps={} targetFps={} blend={}/{}/{} srgb={}",
+               route ? water_route2::resref_view(route->wed) : std::string_view{"-"},
+               route && route->weatherVariant,
                program, texture.texture, texture.width, texture.height, matched, strength,
                temporal, route ? route->temporalFrameCount : 0,
                route ? route->temporalSourceFps : 0.0f,

@@ -72,6 +72,14 @@ l'animation. Ce n'est pas un besoin de calculer de nouveaux reflets 3D.
   Il conserve l'alpha hérité pour une texture normale ; quads monde64, UV étendus selon TIS.
 - Ce128 est le défaut lu dans le binaire, pas une mesure mémoire universelle. Nouveau moteur,
   hook de blend ou réglage natif différent : requalifier ; ne pas patcher des RVA en dur.
+- Contre-exemple confirmé WTSWAM (2026-09-12) : `AR1607.ARE[0x52]=100`,
+  `AR1800.ARE[0x52]=0` → défaut128. Chargement natif `0x18C23A..0x18C24A` :
+  header+0x4a vers `m_waterAlpha`, zéro remplacé par128 ; rendu `0x1893AD..0x1893CC`
+  publie `min(m_waterAlpha,255)` dans `WATER_ALPHA` (`0x65B4E4`). Les primaires
+  DXT5 éligibles doivent reproduire cette valeur par carte, padding compris, et non128 universel.
+  Les secondaires conservent leur alpha source : ne pas doubler l'atténuation native.
+  Requalifier ARE override/sauvegardé et alpha effectif ; reprise :
+  `pipeline/water/WTSWAM_AR1607_AR1800_PILOT_20260912.md`.
 
 ## 3. Inventaire préalable du lot
 

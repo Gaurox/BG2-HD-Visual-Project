@@ -96,12 +96,14 @@ struct Match {
   std::uint32_t temporalAtlasColumns{};
   std::uint32_t temporalAtlasStridePixels{};
   std::uint32_t temporalAtlasPaddingPixels{};
+  Resref wed{};
 
   [[nodiscard]] bool temporal_enabled() const noexcept {
     return temporalFrameCount >= 2 && temporalSourceFps > 0.0f &&
            temporalTargetFps >= temporalSourceFps && temporalAtlasColumns > 0 &&
            temporalAtlasStridePixels > temporalAtlasPaddingPixels * 2;
   }
+  bool weatherVariant{};
 };
 
 inline bool layout_matches(const Query& query, const RegistryEntry& entry) noexcept {

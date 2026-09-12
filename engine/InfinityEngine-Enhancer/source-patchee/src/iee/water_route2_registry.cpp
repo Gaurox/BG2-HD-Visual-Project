@@ -180,7 +180,9 @@ std::optional<Match> match(const Query& query) noexcept {
                matched->temporalTargetFps,
                matched->temporalAtlasColumns,
                matched->temporalAtlasStridePixels,
-               matched->temporalAtlasPaddingPixels};
+               matched->temporalAtlasPaddingPixels,
+               matched->wed,
+               matched->overlayTis != matched->slots[matched->overlaySlot]};
 }
 
 std::uint32_t version() noexcept { return generated::kRegistryVersion; }
