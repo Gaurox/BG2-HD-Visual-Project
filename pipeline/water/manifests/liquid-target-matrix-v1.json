@@ -1,0 +1,1637 @@
+{
+  "schema": "bg2-liquid-target-matrix-v1",
+  "version": 1,
+  "generated_at_utc": "2026-09-12T02:58:58.948836+00:00",
+  "source_matrix_sha256": "D76BE441D7474F79EA05CF2FB239D904A1B3662BE360FECCD069838602F19DC5",
+  "counts": {
+    "targets": 98,
+    "weds": 67,
+    "families": 8,
+    "states": {
+      "already-conform": 5,
+      "blocked": 33,
+      "candidate-installable-pending-qa": 59,
+      "corrected": 1
+    }
+  },
+  "targets": [
+    {
+      "wed": "AR0011",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0011",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0011",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0011",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0046",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0046N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0204",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0300",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0300N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0310",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0404",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSEW",
+      "family": "sewage-wtsew",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0408",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0413",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0500",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0500N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0503",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0506",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0512",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "already-conform",
+      "reasons": [
+        "native-composition-kept",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "not-required",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0603",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "already-conform",
+      "reasons": [
+        "stock-overlay-native-q0",
+        "dedicated-route2-material-unapproved"
+      ],
+      "route2_strength": 0.0,
+      "qa": "not-required",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0604",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0700",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0700N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0703",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0900",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "corrected",
+      "reasons": [
+        "validated-reference-route1-and-route2"
+      ],
+      "route2_strength": 1.0,
+      "qa": "validated-reference",
+      "installation": "reference-already-installed",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR0900N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1000",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1000N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1003",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1004",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1100",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1100",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1106",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1200",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1201",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1203",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "already-conform",
+      "reasons": [
+        "stock-overlay-native-q0",
+        "dedicated-route2-material-unapproved"
+      ],
+      "route2_strength": 0.0,
+      "qa": "not-required",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1401",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1401",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1401",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1401",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1403",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1500",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1600",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1601",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1604",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "already-conform",
+      "reasons": [
+        "native-composition-kept",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "not-required",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1607",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1700",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1800",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR1901",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2000",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2000N",
+      "variant": "night",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2011",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2012",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2100",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSEW",
+      "family": "sewage-wtsew",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2102",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2210",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2300",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKE",
+      "family": "lake-wtlake",
+      "state": "blocked",
+      "reasons": [
+        "qualified-map-review-required",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2500",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2600",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2602",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2700",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2804",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2805",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2903",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2903",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2903",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR2903",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3000",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKA",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3000",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAKB",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3000",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAKC",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3000",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAKD",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3024",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTOIL",
+      "family": "oil-wtoil",
+      "state": "already-conform",
+      "reasons": [
+        "stock-overlay-native-q0",
+        "dedicated-route2-material-unapproved"
+      ],
+      "route2_strength": 0.0,
+      "qa": "not-required",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR3025",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "route1-candidate-assembled",
+        "route2-unapproved-q0",
+        "family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5000",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WT5000A",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5000",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WT5000B",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5000",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WT5000C",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5000",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WT5000D",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5010",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTPOOL",
+      "family": "pool-wtpool",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5200",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5200",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5200",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5200",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5201",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5201",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5201",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5201",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5203",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WT5000A",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5203",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WT5000B",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5203",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WT5000C",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5203",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WT5000D",
+      "family": "brown-flowing-wt5000",
+      "state": "blocked",
+      "reasons": [
+        "liquid-classifier-unresolved",
+        "dedicated-material-and-family-qa-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5204",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAVA",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5204",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAVB",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5204",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAVC",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR5204",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAVD",
+      "family": "lava-wtlava-d",
+      "state": "blocked",
+      "reasons": [
+        "water-alpha128-forbidden",
+        "non-periodic-overlay",
+        "dedicated-emissive-route-required"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR6008",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTSWAM",
+      "family": "swamp-wtswam",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR6300",
+      "variant": "day-or-unique",
+      "overlay_slot": 1,
+      "overlay": "WTLAKA",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR6300",
+      "variant": "day-or-unique",
+      "overlay_slot": 2,
+      "overlay": "WTLAKB",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR6300",
+      "variant": "day-or-unique",
+      "overlay_slot": 3,
+      "overlay": "WTLAKC",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    },
+    {
+      "wed": "AR6300",
+      "variant": "day-or-unique",
+      "overlay_slot": 4,
+      "overlay": "WTLAKD",
+      "family": "lake-teal-wtlaka-d",
+      "state": "candidate-installable-pending-qa",
+      "reasons": [
+        "canonical-overlay-action-assembled",
+        "route2-unapproved-q0"
+      ],
+      "route2_strength": 0.0,
+      "qa": "pending",
+      "installation": "not-run",
+      "release": "not-requested"
+    }
+  ]
+}

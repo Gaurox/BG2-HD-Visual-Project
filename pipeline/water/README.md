@@ -15,6 +15,7 @@ Contrats :
 - artefacts témoins inchangés : AR0900 jour LAB, WTLAKE périodique wavelet ;
 - voie 1 par lot : `route1-policy-v1.json` et `../scripts/build_water_route1_batch.py` ;
 - raccords alpha secondaires confirmés : `../scripts/repair_water_secondary_alpha_seams.py` ;
+- lots QA hors ligne : `../scripts/assemble_water_qa_batches.py` et `manifests/qa-batches-20260912-v1.json` ;
 - voie1 avant route2 ;
 - registre route2 exact, versionné, fail-closed ;
 - le build moteur génère une table C++ depuis v2 et vérifie au démarrage les hashes TIS/PVRZ live ;

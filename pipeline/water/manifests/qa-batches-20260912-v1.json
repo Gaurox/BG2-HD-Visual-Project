@@ -1,0 +1,127 @@
+{
+  "schema": "bg2-water-qa-batches-v1",
+  "version": 1,
+  "generated_at_utc": "2026-09-12T02:58:58.950835+00:00",
+  "candidate_root": "maps/water-batches/runs/qa-candidates-20260912-v1",
+  "renderer": {
+    "q0-native": {
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/renderer/q0-native",
+      "files": [
+        {
+          "name": "InfinityEngine-Enhancer.dll",
+          "bytes": 1774080,
+          "sha256": "9823C8C8F5F5DB46523947243BEDCC8D986A6740C5F97FC91121ED6C55C608C7"
+        },
+        {
+          "name": "InfinityEngine-Enhancer.ini",
+          "bytes": 5576,
+          "sha256": "320D83C8C63D3C056F4BC3B68A4DD47EF8BA8FC179E0E10C7372F945394ACB63"
+        }
+      ],
+      "receipt_sha256": "1EEBCD6980E27C4B8F0089C1260D5E0D2C49EDBC3D1FAC9EB1B6B8724B63B30C"
+    },
+    "q1-ar0900-reference": {
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/renderer/q1-ar0900-reference",
+      "files": [
+        {
+          "name": "InfinityEngine-Enhancer.dll",
+          "bytes": 1774080,
+          "sha256": "9823C8C8F5F5DB46523947243BEDCC8D986A6740C5F97FC91121ED6C55C608C7"
+        },
+        {
+          "name": "InfinityEngine-Enhancer.ini",
+          "bytes": 5576,
+          "sha256": "6FAD10C4C6DD689F6EA12A3DC413DD79E08F41111DF789F1BC3A32ECE9D00367"
+        }
+      ],
+      "receipt_sha256": "D991F0AEBA65CC107FAB8419881644A57497713392616581F4579722181F1D33"
+    }
+  },
+  "batches": [
+    {
+      "family": "brown-flowing-wt5000",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/brown-flowing-wt5000",
+      "targets": 8,
+      "maps": 2,
+      "copy_operations": 0,
+      "remove_operations": 0,
+      "manifest_sha256": "C8FEE15B85D54F90A860253248A2FB717F8DC698D34FCAC16D2A3662E533EFC9",
+      "receipt_sha256": "A760CFE7293E5AE4EBEE32234A1E02F8F8D1A58A780E79D1B3ED3379E43681E5"
+    },
+    {
+      "family": "lake-teal-wtlaka-d",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-teal-wtlaka-d",
+      "targets": 8,
+      "maps": 2,
+      "copy_operations": 51,
+      "remove_operations": 0,
+      "manifest_sha256": "5C3A19FDB19733FBED5DB588D0BCDFF1D0CC9ABC3C6F33624349B358FBBF5D3F",
+      "receipt_sha256": "555BCFC25EE361FF61E16CDEF2C9FC91BEBDD5F543F6F9FEB1E5DB1287709743"
+    },
+    {
+      "family": "lake-wtlake",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lake-wtlake",
+      "targets": 14,
+      "maps": 14,
+      "copy_operations": 466,
+      "remove_operations": 0,
+      "manifest_sha256": "9A01FB5B8164EF39D2E01839A1266715085F740A9C18C14D4EE496C30731A074",
+      "receipt_sha256": "47D0910296440FB19719C8A28D34A9552C1E5F3B6035AAB3EEBBAF888A8F7011"
+    },
+    {
+      "family": "lava-wtlava-d",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/lava-wtlava-d",
+      "targets": 24,
+      "maps": 6,
+      "copy_operations": 8,
+      "remove_operations": 0,
+      "manifest_sha256": "5EE400682A8B495ADE3DB23FBC931AF7FBE58245C15BC0DDAF88075DC839ED97",
+      "receipt_sha256": "E62D41821AA0A8B1BE9D757A27A21810F739C7430BEE2D475CA4DF59FCECA5E2"
+    },
+    {
+      "family": "oil-wtoil",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/oil-wtoil",
+      "targets": 6,
+      "maps": 6,
+      "copy_operations": 41,
+      "remove_operations": 1,
+      "manifest_sha256": "B67B5E08A13EA6C47C504B4C0F9E9F29EE33D7BDD18B55817C723A15A52A48D4",
+      "receipt_sha256": "9C260FF795BBC9308009764FF476D379A465B548C098ECCBB5AB7AF11EDDE026"
+    },
+    {
+      "family": "pool-wtpool",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/pool-wtpool",
+      "targets": 17,
+      "maps": 17,
+      "copy_operations": 105,
+      "remove_operations": 0,
+      "manifest_sha256": "0E67EBF72603F92223D08764A15DBAA7E887FC397B005AEFDB4F79B2DD4E02AC",
+      "receipt_sha256": "82F16089C62ECD6EC920FC1BE30EA09C30850FBA88639C89F08C1FEC515ECD92"
+    },
+    {
+      "family": "sewage-wtsew",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/sewage-wtsew",
+      "targets": 2,
+      "maps": 2,
+      "copy_operations": 126,
+      "remove_operations": 1,
+      "manifest_sha256": "E4D623BE350D8A44AE2AA5CBD2708B4060F03DF25B88262BA8E1D8A5B8D2B640",
+      "receipt_sha256": "7817E8DA22968EC419CA6E3C68A8EF52F16B07D429BD35F4D4AD3203AD8783A0"
+    },
+    {
+      "family": "swamp-wtswam",
+      "path": "maps/water-batches/runs/qa-candidates-20260912-v1/batches/swamp-wtswam",
+      "targets": 19,
+      "maps": 19,
+      "copy_operations": 599,
+      "remove_operations": 2,
+      "manifest_sha256": "FF3AD49E2492CDD563C14690C7AAD25797496E171A1CE81412ADA0E4BBD94EE1",
+      "receipt_sha256": "6F713AFB3C02ABEF8490F91F437C50E3B75862947425E8A29CCD2DDAC12394BE"
+    }
+  ],
+  "matrix": "pipeline/water/manifests/liquid-target-matrix-v1.json",
+  "matrix_sha256": "223538407EB6942B11F3F90D36C3B31704CB393942CBDB3B2679515056543C37",
+  "installation": "not-run",
+  "tests": "not-run-user-choice",
+  "release": "not-requested"
+}
