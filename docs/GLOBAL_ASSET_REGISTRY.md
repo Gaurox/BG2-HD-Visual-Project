@@ -23,14 +23,15 @@ deux lectures du même état produisent donc les mêmes octets.
 ## Génération et contrôle
 
 ```powershell
-python pipeline/scripts/build_global_asset_registry.py --verify-determinism
+python pipeline/scripts/build_global_asset_registry.py
 python pipeline/scripts/build_global_asset_registry.py --check
+python pipeline/scripts/build_global_asset_registry.py --verify-determinism
 ```
 
-La première commande construit deux projections en mémoire, vérifie leur identité puis écrit les
-quatre sorties. La seconde ne modifie rien et échoue si une sortie manque ou ne correspond plus aux
-sources actuelles. Le dossier `asset-tracking/` peut être supprimé puis régénéré par la première
-commande.
+La première commande écrit une seule passe quand cette projection est explicitement nécessaire. La
+seconde ne modifie rien. La troisième double le calcul et est réservée à un diagnostic de
+déterminisme ou à la finalisation. Aucune de ces commandes ne suit automatiquement l'acceptation
+d'un asset. Le dossier `asset-tracking/` peut être supprimé puis régénéré.
 
 La projection humaine XLSX et les métriques structurées associées sont décrites dans
 [`HUMAN_PROJECT_TRACKING_XLSX.md`](HUMAN_PROJECT_TRACKING_XLSX.md). Elles lisent ces sorties après

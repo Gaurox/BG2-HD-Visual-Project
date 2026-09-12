@@ -17,7 +17,7 @@ sans lancer le jeu et sans modifier le manifeste de release.
 | Contrat catalogue / install / rollback | `sprite/README.md`, jobs courants et manifests du catalogue |
 | Générateur | `pipeline/scripts/generate_sprite_family_append.py` |
 
-## Gates obligatoires
+## Conditions locales d'éligibilité
 
 Sélectionner exactement un `family_id`. Exiger :
 
@@ -124,8 +124,8 @@ python pipeline/scripts/run_creature_sprite_x2.py verify --job $member
 Exiger `prepared-verified`, xBR/x2, `antialias=false`, `xbr_blend=false`,
 `partial_alpha_pixels=0`, `new_colors=0`, `override_collisions=0`, runtime testé.
 
-Batch Character : lancer `prepare-data --resume --defer-full-verify` sur chaque agrégat. Il produit
-`data-prepared-unverified`, diffère la gate exhaustive et le runtime au catalogue.
+Batch Character : lancer `prepare-data --resume` sur chaque agrégat. Il produit
+`data-prepared-unverified` et diffère la vérification exhaustive au jalon final.
 
 ## Phase 2 — job catalogue d'append
 
@@ -166,38 +166,27 @@ Fermer `InfinityLoader.exe`, `Baldur.exe` et `BaldurReal.exe`.
 
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
-  --defer-full-verify --job $appendCatalog
-python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify `
-  --keep-going --job $appendCatalog
-
-# Après correction des scopes en erreur uniquement :
-python pipeline/scripts/run_creature_sprite_x2.py verify --resume `
-  --keep-going --job $appendCatalog
-
+  --job $appendCatalog
 python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog `
   --creature-sprite-filter Nearest
 python pipeline/scripts/run_creature_sprite_x2.py status --job $appendCatalog
 ```
 
-Pour une QA visuelle au fil de l'eau, sans rescanner le catalogue complet, installer la génération
-`built-unverified` avec `install --provisional-qa --creature-sprite-filter Nearest`. Cette voie vérifie
-les identités des sorties préparées et conserve la restauration transactionnelle, mais ne scelle pas
-la génération : la gate `verify --full-verify --keep-going` reste obligatoire au jalon final.
-
-`install` exige la preuve scellée et ne déclenche aucun fallback exhaustif. `--full-verify` reste
-disponible pour imposer un nouveau scan complet. PowerShell direct sans preuve reste exhaustif.
+`prepare` et `install` utilisent automatiquement la voie locale `built-unverified` : seules les
+sorties installées sont contrôlées et la restauration reste transactionnelle. La finalisation lance
+séparément `verify --full-verify --keep-going`.
 
 Exiger `installed-pending-qa`, `active_identity_matches_job=true`,
-`active_generation_is_sealed=true` et `installed_files_match=true`.
+`installed_files_match=true`. Le scellement global reste absent avant finalisation.
 Pour un contrôle Catmull–Rom explicitement demandé, remplacer `Nearest` par `CatmullRom` ; l'état
 actif, l'INI et la restauration sont alors liés à cette valeur.
 
-QA ingame : manuelle, sur toutes les animations du catalogue. Enregistrer ensuite `record-qa`.
-Pour Character, le gate de composition porte sur les préfixes représentatifs scellés dans
-`qa.required_bam_prefixes`, pas sur toutes les combinaisons d'équipement. Les contrôles de santé,
-palette, payload, animation, hashes et absence de quarantaine restent exhaustifs.
-Ne modifier le manifeste de release qu'après accord utilisateur explicite et uniquement pour un
-élément `validated-installed`.
+QA ingame quotidienne : manuelle sur les nouveaux membres et leurs préfixes représentatifs, puis
+`record-qa`. La reprise exhaustive de tout le catalogue est réservée à la finalisation. Pour
+Character, le contrôle de composition porte sur `qa.required_bam_prefixes`, pas sur toutes les
+combinaisons d'équipement.
+Après décision explicite d'acceptation d'un élément `validated-installed`, écrire seulement son
+registre candidat. Différer contenu, composants, TP2, miroirs et package.
 
 Après installation catalogue, projeter ses preuves scellées dans l'autorité :
 
@@ -215,10 +204,9 @@ au-delà du statut actif, ni release. Sans `--reconcile-active`, les lignes exis
 de création de membre fondé sur les champs exacts de `sprite_families.csv` et ses tests ; ne pas
 modifier la phase d'append.
 
-## Test
+## Test facultatif
 
-Ne pas l'exécuter automatiquement. Demander « tests ciblés / tous / aucun » conformément à
-[`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md). Si ciblés est choisi :
+Exécuter seulement si le générateur a changé ou si le résultat local est douteux :
 
 ```powershell
 python -m unittest pipeline.tests.test_generate_sprite_family_append

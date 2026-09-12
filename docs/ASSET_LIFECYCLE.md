@@ -5,11 +5,13 @@ Les autorités métier restent celles d'[`ASSET_TRACKING_CONTRACT.md`](ASSET_TRA
 
 ## Invariants
 
+- La voie quotidienne suit [`PRODUCTION_RAPIDE.md`](PRODUCTION_RAPIDE.md) et s'arrête après
+  l'enregistrement du résultat accepté.
 - Créer le run directement dans le layout courant du domaine.
-- Ne jamais déplacer, renommer ou modifier un run scellé.
-- Une correction produit un nouveau run et référence ses parents ; elle ne remplace pas leurs octets.
-- Conserver un essai refusé avec son manifeste et son résultat. Seule une sélection explicite rend un
-  run courant.
+- Un run de travail peut être repris ou jeté. Seul un résultat accepté/scellé est immuable.
+- Une correction d'un résultat scellé produit un nouveau run et référence son parent.
+- Conserver un refus uniquement s'il apporte une décision réutilisable ; le média volumineux reste
+  jetable tant qu'aucune autorité ne le référence.
 - Garder la sélection hors du run : `areas.csv`, registre animation, pointeurs sprite ou
   `video/index/processing.csv` selon le domaine.
 - QA, installation et release sont trois décisions distinctes.
@@ -20,16 +22,16 @@ Les autorités métier restent celles d'[`ASSET_TRACKING_CONTRACT.md`](ASSET_TRA
 
 | Étape | Écriture autoritaire |
 |---|---|
-| Essai | nouveau run immuable ; aucune promotion |
-| Correction | nouveau run avec parents/hashes ; essais précédents conservés |
+| Essai | run de travail mutable/jetable ; aucune promotion |
+| Correction | reprise du travail ou nouveau run si le parent est déjà scellé |
 | Revue technique | preuve interne au run ; QA ingame inchangée |
 | Essai jeu | installation/restauration transactionnelle ; QA encore `pending` |
 | Décision ingame | preuve immuable + sélection courante + autorité métier, en une transaction |
-| Release | accord distinct ; candidat exact + contenu/composants/TP2 ciblés |
-| Package | accord distinct ; staging, archive et gates globales |
+| Acceptation | sceller le résultat exact et écrire seulement le candidat du domaine |
+| Finalisation | compiler contenu/composants/TP2, puis staging, archive et gates globales |
 
-Après un checkpoint, les tests et les projections restent deux choix indépendants. Un commit porte
-les fichiers de contrôle affichés par l'outil ; il ne tente pas d'ajouter les médias ignorés.
+Après un checkpoint, les tests et les projections restent deux choix indépendants. Les projections
+globales et les miroirs package ne sont pas mis à jour pendant la production rapide.
 
 Les transactions animation partagent `.tmp/workflow-locks/animation-authority.lock` et journalisent
 leurs sauvegardes sous `.tmp/workflow-transactions/`. Une relance `--run` restaure d'abord une

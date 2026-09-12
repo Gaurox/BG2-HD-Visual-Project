@@ -1,13 +1,13 @@
 # Installateur ciblé d'animation par zone — conception
 
-Statut : implémenté. Les wrappers et le reçu v1 décrits ci-dessous sont actifs ; toute évolution
-conserve ce contrat et ses tests transactionnels.
+Statut : implémenté. Ce document contraint seulement une évolution de cet installateur ; il n'est
+pas à relire ni à exécuter pour accepter un asset.
 
 ## Résultat attendu
 
 Installer ou restaurer un pack complet d'une seule zone sans lire, hacher ni modifier les autres
-zones installées. Le chemin de production reste l'installation complète ; cet outil sert aux essais
-et à la QA ingame.
+zones installées. Cet outil est la voie quotidienne pour les essais et la QA ingame ; l'installation
+complète appartient à une QA cumulative explicitement demandée ou à la finalisation.
 
 Invariants :
 
@@ -214,13 +214,12 @@ les wrappers de production.
 ## Fichiers à modifier pendant l'implémentation
 
 1. Ajouter le cœur Python, les deux wrappers et le module de tests ci-dessus.
-2. Ajouter `area_animation_area_test.py` à `ANIMATION_SCRIPTS` et le module de tests au groupe
-   `animations` dans `pipeline/scripts/test_changed.py`.
-3. Étendre `pipeline/tests/test_test_changed.py` pour le routage du cœur et des wrappers.
-4. Mettre à jour `pipeline/ANIMATION_PACKS_PAR_ZONE.md` : outil ciblé = QA ; outil complet =
+2. Nommer le test `pipeline/tests/test_area_animation_area_test.py` afin que le sélecteur direct le
+   trouve sans table de routage.
+3. Mettre à jour `pipeline/ANIMATION_PACKS_PAR_ZONE.md` : outil ciblé = QA ; outil complet =
    intégration complète ; rappeler qu'un pack feuille remplace toute la zone.
-5. Mettre à jour `pipeline/scripts/README.md` avec install, verify et restore.
-6. Ne modifier aucune autorité animation, donnée de production, QA ou release.
+4. Mettre à jour `pipeline/scripts/README.md` avec install, verify et restore.
+5. Ne modifier aucune autorité animation, donnée de production, QA ou release.
 
 ## Critères d'acceptation
 

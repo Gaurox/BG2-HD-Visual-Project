@@ -5,10 +5,10 @@
 Les animations BAM restent en géométrie logique x1 ; le moteur affiche leurs textures physiques
 x4 et, si le registre le demande, une timeline 30 fps.
 
-## Lecture obligatoire
+## Voie rapide
 
-Avant toute production ou reprise, lire
-[`../docs/UPSCALING_WORK_PREFLIGHT.md`](../docs/UPSCALING_WORK_PREFLIGHT.md).
+Suivre [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md). Consulter un guide spécialisé
+uniquement si le format ou le défaut rencontré l'exige.
 
 ## Sources de vérité
 
@@ -56,7 +56,7 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 
 ## Pack feuille pour essai ingame ciblé
 
-Chaîne obligatoire : run x4 terminé → `split_animation_pack_by_area.py` →
+Lorsque l'essai ingame nécessite un pack de zone : run x4 terminé → `split_animation_pack_by_area.py` →
 `merge_area_pack_resources.py` si la zone contient plusieurs ressources →
 `Install-AreaAnimation-AreaTest.ps1 -VerifyOnly` → installation explicite.
 
@@ -113,17 +113,20 @@ la release. Les écritures `finalize --run` et `animation_release.py --run` part
 `.tmp/workflow-locks/animation-authority.lock`. Après interruption brutale, relancer `finalize --run` :
 le journal `.tmp/workflow-transactions/animation-authority-active.json` est restauré. Pour
 `animation-release-active.json`, relancer la même commande `animation_release.py --run`. Toute autre
-commande métier/release refuse ces journaux. `validé-natif` s'arrête ici et reste absent des packs x4. Pour `validé-x4`,
-après accord release distinct :
+commande métier/release refuse ces journaux. `validé-natif` s'arrête ici et reste absent des packs x4.
+Pour `validé-x4`, enregistrer le candidat accepté sans compiler la release :
 
 ```powershell
 python pipeline/scripts/animation_release.py --area ARxxxx --approve
-# Relire le plan, puis ajouter --run. Ajouter --test-delta seulement après choix des tests.
+# Ajouter --run après revue du plan. La commande n'écrit que le candidat et sa QA.
 ```
+
+Cette commande ne sait plus compiler la release ni lancer une gate. La finalisation utilise
+séparément `Compile-BG2HD-Release.ps1`.
 
 Contrat de rangement commun : [`../docs/ASSET_LIFECYCLE.md`](../docs/ASSET_LIFECYCLE.md).
 
-## Contrôles
+## Contrôles facultatifs
 
 ```powershell
 python pipeline/scripts/sync_animation_upscale_registry.py --check

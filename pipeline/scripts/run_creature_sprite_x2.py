@@ -8898,16 +8898,15 @@ def prepare_catalog(
     resume: bool,
     *,
     full_verify: bool = False,
-    defer_full_verify: bool = False,
 ) -> dict[str, Any]:
-    if defer_full_verify and full_verify:
-        raise RuntimeError("--defer-full-verify conflicts with --full-verify")
-    if resume and catalog_pointer_path(catalog).is_file() and not defer_full_verify:
+    if resume and catalog_pointer_path(catalog).is_file():
         try:
-            return verify_catalog(
-                catalog, full_verify=full_verify, resume=resume
+            return (
+                verify_catalog(catalog, full_verify=True, resume=True)
+                if full_verify
+                else verify_catalog_incremental(catalog, check_inputs=True)
             )
-        except CatalogInputsChanged:
+        except (CatalogInputsChanged, CatalogProofMissing):
             if full_verify:
                 raise
             catalog.pop("_catalog_generation_dir", None)
@@ -8915,23 +8914,17 @@ def prepare_catalog(
             catalog.pop("_catalog_input_lock", None)
             catalog.pop("_catalog_source_collection", None)
             catalog.pop("_catalog_source_collection_verified", None)
-    if defer_full_verify and resume and catalog_pointer_path(catalog).is_file():
-        try:
-            return verify_catalog_incremental(catalog, check_inputs=True)
-        except CatalogProofMissing:
-            pass
-        except CatalogInputsChanged:
-            pass
+    defer_verification = not full_verify
     build = build_catalog(
         catalog,
         force=force,
         resume=resume,
-        defer_full_verify=defer_full_verify,
+        defer_full_verify=defer_verification,
     )
     runtime = build_runtime(
-        catalog, defer_catalog_verify=defer_full_verify
+        catalog, defer_catalog_verify=defer_verification
     )
-    if defer_full_verify:
+    if defer_verification:
         verifier = catalog_verifier(catalog, full_verify=False)
         context = catalog_current_generation_context(catalog, verifier)
         checkpoint = record_deferred_catalog_checkpoint(catalog, context, verifier)
@@ -10643,16 +10636,6 @@ def make_parser() -> argparse.ArgumentParser:
         help="catalog only: bypass persistent proofs and repeat exhaustive verification",
     )
     parser.add_argument(
-        "--defer-full-verify",
-        action="store_true",
-        help="build provisional Character lots/catalog; seal only in a later full verify",
-    )
-    parser.add_argument(
-        "--provisional-qa",
-        action="store_true",
-        help="catalog install only: install a built generation for visual QA before the final exhaustive seal",
-    )
-    parser.add_argument(
         "--keep-going",
         action="store_true",
         help="catalog verify only: collect every independent scope failure",
@@ -10722,17 +10705,6 @@ def main() -> None:
         raise RuntimeError(
             "--full-verify is only valid for catalog plan/prepare/verify/install"
         )
-    if args.defer_full_verify and not (
-        (catalog and args.command == "prepare")
-        or (armor_set and args.command == "prepare-data")
-    ):
-        raise RuntimeError(
-            "--defer-full-verify requires catalog prepare or Character prepare-data"
-        )
-    if args.provisional_qa and (not catalog or args.command != "install"):
-        raise RuntimeError("--provisional-qa requires a catalog install command")
-    if args.provisional_qa and args.full_verify:
-        raise RuntimeError("--provisional-qa conflicts with --full-verify")
     if args.keep_going and (
         not catalog
         or args.command != "verify"
@@ -10777,7 +10749,6 @@ def main() -> None:
                 args.force,
                 args.resume,
                 full_verify=args.full_verify,
-                defer_full_verify=args.defer_full_verify,
             )
             if catalog
             else prepare_armor_set(
@@ -10794,7 +10765,7 @@ def main() -> None:
             args.force,
             args.resume,
             args.keep_upscaled_frames,
-            defer_full_verify=args.defer_full_verify,
+            defer_full_verify=True,
         )
     elif args.command == "verify":
         result = (
@@ -10811,38 +10782,39 @@ def main() -> None:
         )
     elif args.command == "install":
         catalog_verification: dict[str, Any] | None = None
+        provisional_qa = False
         if catalog:
-            if args.provisional_qa:
-                verifier = catalog_verifier(job, full_verify=False)
-                context = catalog_current_generation_context(job, verifier)
-                checkpoint = load_catalog_verification_checkpoint(job, context)
-                if checkpoint.get("status") != "built-unverified":
-                    raise RuntimeError(
-                        "--provisional-qa requires a built-unverified catalog generation"
-                    )
-                for spec in catalog_output_specs(job, context):
-                    verifier.verify_file(
-                        spec["path"],
-                        str(spec["sha256"]),
-                        scope=str(spec["scope"]),
-                        expected_crc32=spec.get("crc32"),
-                    )
-                verifier.save()
-                job["_catalog_verified_context"] = context
-                catalog_verification = {
-                    "status": "provisional-prevalidated",
-                    "verification": verifier.summary(),
-                }
-            else:
-                catalog_verification = (
-                    verify_catalog(
-                        job,
-                        full_verify=True,
-                        check_inputs=True,
-                    )
-                    if args.full_verify
-                    else verify_catalog_incremental(job, check_inputs=False)
+            if args.full_verify:
+                catalog_verification = verify_catalog(
+                    job,
+                    full_verify=True,
+                    check_inputs=True,
                 )
+            else:
+                try:
+                    catalog_verification = verify_catalog_incremental(
+                        job, check_inputs=False
+                    )
+                except CatalogProofMissing:
+                    verifier = catalog_verifier(job, full_verify=False)
+                    context = catalog_current_generation_context(job, verifier)
+                    checkpoint = load_catalog_verification_checkpoint(job, context)
+                    if checkpoint.get("status") != "built-unverified":
+                        raise
+                    for spec in catalog_output_specs(job, context):
+                        verifier.verify_file(
+                            spec["path"],
+                            str(spec["sha256"]),
+                            scope=str(spec["scope"]),
+                            expected_crc32=spec.get("crc32"),
+                        )
+                    verifier.save()
+                    job["_catalog_verified_context"] = context
+                    provisional_qa = True
+                    catalog_verification = {
+                        "status": "provisional-prevalidated",
+                        "verification": verifier.summary(),
+                    }
         elif armor_set:
             verify_armor_set(job)
         else:
@@ -10860,7 +10832,7 @@ def main() -> None:
                 job,
                 context,
                 verifier,
-                status="provisional" if args.provisional_qa else "verified",
+                status="provisional" if provisional_qa else "verified",
             )
             install_arguments.extend(
                 [
@@ -10870,7 +10842,7 @@ def main() -> None:
                     proof_sha256,
                 ]
             )
-            if args.provisional_qa:
+            if provisional_qa:
                 install_arguments.append("-ProvisionalQa")
         if args.creature_sprite_filter is not None:
             if not catalog:
@@ -10886,7 +10858,7 @@ def main() -> None:
         if catalog_verification is not None and not args.full_verify:
             install_summary = catalog_verifier(job).summary()
             install_summary["source_dependencies_checked"] = False
-            install_summary["provisional_qa"] = bool(args.provisional_qa)
+            install_summary["provisional_qa"] = provisional_qa
             catalog_verification["verification"] = install_summary
         if catalog:
             state_path = active_state_path(job)

@@ -42,9 +42,9 @@ instructions to produce exactly one executable-section match.
 
 ## Manifest And Tests
 
-Before executing any test command, ask the user to choose targeted tests, all tests, or no tests as
-defined in [`../../../../docs/TEST_SELECTION.md`](../../../../docs/TEST_SELECTION.md). If tests are
-declined, do not claim this build validation complete.
+This section applies only when support for a new executable build is explicitly being added. Its
+focused host/native tests are necessary to claim that build supported; they are not a routine asset
+gate and do not trigger unrelated repository suites.
 
 1. Add a distinct `BuildManifest` entry with the exact fixed version.
 2. Add tests for manifest validation, lookup by id, selection by version, and

@@ -1,11 +1,11 @@
 # Manifests and validation
 
-For the implementation sequence that changes these manifests, use the
-[installer and upscale integration contract](INSTALLER_AND_UPSCALE_WORKFLOW.md).
+This document applies during explicit finalization. Daily asset work follows
+[`../../../docs/PRODUCTION_RAPIDE.md`](../../../docs/PRODUCTION_RAPIDE.md).
 
-The release manifests are the only authority for a package. `areas.csv` is a
-production catalogue and the development `override` is a test environment;
-neither is a release source.
+The compiled release manifests are the only authority for a package. Candidate registries are the
+small daily-write authorities; `areas.csv` is a production catalogue and the development
+`override` is a test environment.
 
 | File | Purpose |
 |---|---|
@@ -14,6 +14,7 @@ neither is a release source.
 | `dependency-bootstrap.json` | pinned EEex installer, dependency states, ownership and bootstrap order |
 | `components.json` | permanent component IDs, labels and dependencies |
 | `content.json` | source, destination, component, byte count and SHA-256 per payload file |
+| `map-release-candidates.csv` | accepted map variants and selected source directories |
 | `animation-release-candidates.json` | approved per-area v2/v3 animation packs and renderer contract |
 | `effect-release-candidates.json` | approved shared x4/30 FPS effect packs, QA and renderer contract |
 | `sprite-release-candidates.json` | approved sprite scope, sealed generation, QA and runtime contract |
@@ -21,18 +22,17 @@ neither is a release source.
 | `renderer-bundle.json` | frozen renderer candidate inventory |
 | `licenses-and-exclusions.json` | provenance status and forbidden payload classes |
 
-Every content entry must have a canonical source, normalized destination,
-component ID, install order, byte count, SHA-256 and approved QA status. A
-destination collision is accepted only when explicitly ordered and validated.
+During finalization, every content entry must have a canonical source, normalized destination,
+component ID, install order, byte count, SHA-256 and approved QA status. A destination collision is
+accepted only when explicitly ordered and validated.
 
 Sprite candidates remain `approved`, not `integrated`, until a scoped catalogue excludes every
 unapproved animation and its files are projected into `content.json`.
 
-`areas.csv` is the inclusion register for maps. For every `validated-installed`
-day/night variant, `New-BG2HD-ContentManifest.ps1` requires exactly one
-reviewed source run. It refuses both missing validated variants and stale
-manifest variants. `New-BG2HD-ComponentManifest.ps1` then derives the matching
-map components from the content manifest.
+`map-release-candidates.csv` is the inclusion register for newly accepted maps. Adding a row performs
+no scan or hash. Historical map specifications embedded in `New-BG2HD-ContentManifest.ps1` are a
+compatibility bootstrap only. During finalization, the generator combines both sources and computes
+the final inventory; `New-BG2HD-ComponentManifest.ps1` derives the matching components.
 
 Une animation dont `occlusion_contract.mode` vaut `native-wed-bridge-v1` impose simultanément :
 
@@ -48,9 +48,9 @@ declared as `package` by `overlay-sources.json`; `stock` entries are forbidden f
 The current policy keeps the validated water set x2 and the lava family x4.
 `Stage-BG2HDPayload.ps1` copies from that manifest and
 rechecks hashes; x2 is rejected for every other content kind.
-`Generate-BG2HD-Tp2.ps1` emits explicit `COPY_LARGE` operations. Run the
-validation scripts after any regeneration; do not hand-edit generated payload
-lists or select files from a live game installation.
+`Generate-BG2HD-Tp2.ps1` emits explicit `COPY_LARGE` operations. These global projections are
+compiled together by `Compile-BG2HD-Release.ps1`; do not hand-edit generated payload lists or
+select files from a live game installation.
 
 `dependency-bootstrap.json` is a contract, not an embedded EEex payload. It
 records the only accepted official archive and the no-write actions for every

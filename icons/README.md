@@ -2,6 +2,8 @@
 
 Ce domaine suit un asset physique par resref BAM référencé par un champ graphique ITM ou SPL.
 Un BAM partagé entre plusieurs familles reste un seul asset et un seul remplacement runtime.
+La production quotidienne suit [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md) ; les
+inventaires globaux ne sont pas reconstruits après chaque icône.
 
 ## Autorités
 

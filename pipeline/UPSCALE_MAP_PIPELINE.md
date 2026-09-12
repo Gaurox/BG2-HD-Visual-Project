@@ -1,7 +1,7 @@
 # Upscale des cartes — paramètres retenus
 
-La séquence, les commandes et les gates sont dans [`README.md`](README.md). Cette page fixe
-seulement la recette d'inférence.
+Les outils facultatifs sont indexés dans [`README.md`](README.md). Cette page fixe seulement la
+recette d'inférence.
 
 ## Recette par défaut
 
@@ -38,6 +38,9 @@ python pipeline/scripts/build_upscaled_area.py `
 python pipeline/scripts/verify_upscaled.py `
   ARxxxx <build-dir> <principale-x4.png>
 ```
+
+Le contrôle vérifie seulement structure, dimensions, pages référencées et coordonnées. L'ancien
+round-trip intégral et son calcul PSNR ont été supprimés ; la QA visuelle juge le rendu.
 
 - DXT1 si tout est opaque, DXT5 dès qu'un alpha est requis.
 - `0 resampled` et `0 OOB` sont obligatoires.

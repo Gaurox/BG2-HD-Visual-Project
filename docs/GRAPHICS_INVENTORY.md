@@ -27,8 +27,8 @@ L'état de release provient exclusivement des manifestes sous `releases/BG2-HD-U
 python pipeline/scripts/workspace.py refresh --changed
 ```
 
-La commande planifie sans écrire. Si `graphics` est proposé, demander le choix de reconstruction
-avant `workspace.py refresh --scope graphics --run`; ajouter `registry`/`integrity` seulement s'ils
-sont proposés ou demandés. Les inventaires sont déterministes et refusent les catégories inconnues.
-`--verify-determinism` double le coût et reste explicite. Les quantités courantes se lisent dans
-`asset-tracking/coverage.json` ; elles ne sont pas recopiées ici.
+La commande planifie sans écrire. Exécuter `workspace.py refresh --scope graphics --run` seulement
+si une vue globale ou un consommateur la demande. `registry` et `integrity` restent indépendants.
+`--verify-determinism` double le coût et est réservé à un diagnostic explicite ou à la finalisation.
+Les quantités courantes se lisent dans `asset-tracking/coverage.json` ; elles ne sont pas recopiées
+ici.

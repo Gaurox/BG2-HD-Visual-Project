@@ -12,6 +12,10 @@ Maps, animations, and effects are retained only when they remain coherent with t
 
 ## Aides de travail facultatives
 
+La production quotidienne et la finalisation sont séparées par
+[`docs/PRODUCTION_RAPIDE.md`](docs/PRODUCTION_RAPIDE.md). Un asset accepté n'entraîne pas la
+reconstruction des projections ou du package.
+
 La documentation sert d'index de solutions. Aucune lecture préalable exhaustive n'est requise.
 Consulter [docs/UPSCALING_WORK_PREFLIGHT.md](docs/UPSCALING_WORK_PREFLIGHT.md) ou le README d'un
 domaine seulement lorsqu'un repère manque pour la tâche courante.

@@ -22,7 +22,6 @@ python pipeline/scripts/extract_character_portraits.py --output portraits --prun
 | Mod PPE | `portraits/mod-PPE/inventaire.csv` | corpus tiers non installé ; exclu du registre du patch | `organize_ppe_portraits.py` |
 
 `grands/`, `moyens/` et `petits/` sont des données extraites reconstructibles. Ne pas lancer
-`workspace.py ... --run` automatiquement après régénération : préparer avec
-`python pipeline/scripts/workspace.py refresh --changed`, puis demander scopes ciblés/toutes/aucune
-conformément à
-[`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
+`workspace.py ... --run` automatiquement après régénération. Les projections globales sont
+réservées à un besoin explicite ou à la finalisation ; voir
+[`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md).

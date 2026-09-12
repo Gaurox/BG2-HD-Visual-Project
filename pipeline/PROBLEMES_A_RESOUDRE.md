@@ -11,12 +11,9 @@ Les décisions durables sont dans
 - Symptôme : une petite tâche peut dépasser 10 minutes.
 - Causes mesurées : contrôles globaux répétés, fallback `full`, double déterminisme, tests sur le
   workspace réel et ~192 Gio/~466 k fichiers locaux dans le worktree.
-- Mitigation active : tests/projections plan-only ciblés ; catalogue sprites avec preuve scellée,
-  cache SHA/CRC par identité, lots provisoires, gate globale et reprise des seuls scopes
-  échoués/modifiés.
-- Travail restant : étendre ce modèle hors catalogue sprites ; séparation unitaires/intégration et
-  data-root externe.
-- Rapport : [`../docs/WORKFLOW_PERFORMANCE_AUDIT.md`](../docs/WORKFLOW_PERFORMANCE_AUDIT.md).
+- Mitigation active : sélection conventionnelle des seuls tests voisins ; préparation sprite locale
+  par défaut ; compilation et gates globales réservées à la finalisation explicite.
+- Travail restant : déplacer hors du worktree les données temporaires qui pénalisent encore Git.
 
 ## MAP-PERF-001 — Chargement des cartes x4
 

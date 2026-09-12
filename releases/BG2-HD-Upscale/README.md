@@ -10,7 +10,14 @@ La release courante reste `blocked` pour les validations de cycle de vie en jeu,
 local est `buildable`. Les quantités de fichiers/composants se lisent dans `content.json` et `components.json`;
 elles ne sont pas recopiées ici.
 
-## Lecture
+## Modes
+
+- Production quotidienne : [`../../docs/PRODUCTION_RAPIDE.md`](../../docs/PRODUCTION_RAPIDE.md) ;
+  écrire seulement l'autorité candidate du domaine.
+- Finalisation explicite : `tools/Compile-BG2HD-Release.ps1` compile les projections ; lancer
+  `tools/Test-BG2HD-Phase2.ps1` séparément pour la gate statique.
+
+## Références de finalisation
 
 - Utilisateur : [`README_FR.md`](README_FR.md) ou [`README_EN.md`](README_EN.md).
 - Agent d'intégration :
@@ -25,5 +32,5 @@ elles ne sont pas recopiées ici.
   [`docs/DISTRIBUTION_POLICY.md`](docs/DISTRIBUTION_POLICY.md).
 - Suivi : [`CHANGELOG.md`](CHANGELOG.md), [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md).
 
-Payload, staging, `content.json` et archive ne sont reconstruits qu'après accord explicite prévu
-par le workflow d'intégration.
+Payload, staging, `content.json` et archive ne sont jamais reconstruits pendant l'acceptation
+quotidienne d'un asset.

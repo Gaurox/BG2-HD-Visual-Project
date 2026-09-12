@@ -5,7 +5,8 @@ huit overrides linkés, A/B neutre vérifié, transactions restaurées).
 
 ## Règle de maintenance
 
-- Mettre à jour ce document après chaque phase significative du chantier Catmull-Rom / suite shaders.
+- Mettre à jour ce document seulement lorsqu'une décision finale réutilisable du chantier
+  Catmull-Rom / suite shaders doit être conservée.
 - Ne documenter comme **confirmé** qu’un comportement lisible dans le code, un shader archivé ou une preuve de test identifiée.
 - Marquer **hypothèse** lorsqu’une interprétation reste plausible mais non prouvée ; marquer **à vérifier** lorsqu’aucune preuve ne permet encore de conclure.
 - Les runs et leurs `evidence.json` restent les preuves immuables ; ce document les indexe, sans les remplacer.

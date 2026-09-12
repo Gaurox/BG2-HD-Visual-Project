@@ -1,6 +1,6 @@
 # Suite Dshaders complète — contrat de développement D2–D13
 
-Complément obligatoire du [guide principal](README.md). Révision : 2026-09-09.
+Spécification complémentaire du [guide principal](README.md). Révision : 2026-09-09.
 Autorisation : étendre le plan à toutes les options pour les tester ingame avant choix du patch.
 Ce document spécifie le travail restant ; aucune installation ni validation nouvelle n'en découle.
 

@@ -8,6 +8,9 @@
 
 ## Principe de travail
 
+- Doctrine canonique : [`docs/PRODUCTION_RAPIDE.md`](docs/PRODUCTION_RAPIDE.md). Par défaut, une
+  tâche ajoute ou corrige un asset autonome puis s'arrête ; la compilation globale appartient à une
+  finalisation explicitement demandée.
 - Partir de la demande utilisateur et du plus petit périmètre utile.
 - Ne jamais exiger la lecture intégrale d'un document. Ouvrir uniquement la rubrique liée au
   symptôme, au format ou à l'outil rencontré.

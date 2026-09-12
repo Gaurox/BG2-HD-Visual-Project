@@ -1,4 +1,4 @@
-"""Promote explicit animation in-game QA decisions into the release manifests.
+"""Record explicit animation in-game QA decisions as release candidates.
 
 The command is plan-only unless ``--run`` is supplied.  It consumes tracked,
 immutable per-resref QA decisions and one exact per-area pack.  Legacy release
@@ -21,7 +21,6 @@ import re
 import shutil
 import subprocess
 import sys
-import tempfile
 from typing import Any, Iterable, Mapping, Sequence
 import uuid
 
@@ -32,9 +31,6 @@ CANDIDATES = RELEASE_ROOT / "manifests" / "animation-release-candidates.json"
 CONTENT = RELEASE_ROOT / "manifests" / "content.json"
 COMPONENTS = RELEASE_ROOT / "manifests" / "components.json"
 RUNTIME_COMPATIBILITY = RELEASE_ROOT / "manifests" / "runtime-compatibility.json"
-PACKAGE_MANIFESTS = RELEASE_ROOT / "bg2hd" / "manifests"
-PACKAGE_TP2 = RELEASE_ROOT / "bg2hd" / "bg2hd.tp2"
-PACKAGE_SYNC_MARKER = PACKAGE_MANIFESTS / ".package-metadata-sync.partial"
 SELECTIONS = ROOT / "animations" / "index" / "selections"
 REGISTRY = ROOT / "animations" / "index" / "animation_upscale_registry.csv"
 AREAS = ROOT / "areas.csv"
@@ -116,9 +112,7 @@ def configure_workspace_root(root: Path) -> None:
     """Point the verifier at an explicit workspace without changing code location."""
 
     global ROOT, RELEASE_ROOT, CANDIDATES, CONTENT, COMPONENTS
-    global RUNTIME_COMPATIBILITY, PACKAGE_MANIFESTS
-    global PACKAGE_SYNC_MARKER
-    global PACKAGE_TP2, SELECTIONS, REGISTRY, AREAS, QA_APPROVALS, TRANSACTION_ROOT
+    global RUNTIME_COMPATIBILITY, SELECTIONS, REGISTRY, AREAS, QA_APPROVALS, TRANSACTION_ROOT
     global PUBLICATION_JOURNAL, AUTHORITY_JOURNAL
     ROOT = root.resolve()
     RELEASE_ROOT = ROOT / "releases" / "BG2-HD-Upscale"
@@ -126,9 +120,6 @@ def configure_workspace_root(root: Path) -> None:
     CONTENT = RELEASE_ROOT / "manifests" / "content.json"
     COMPONENTS = RELEASE_ROOT / "manifests" / "components.json"
     RUNTIME_COMPATIBILITY = RELEASE_ROOT / "manifests" / "runtime-compatibility.json"
-    PACKAGE_MANIFESTS = RELEASE_ROOT / "bg2hd" / "manifests"
-    PACKAGE_TP2 = RELEASE_ROOT / "bg2hd" / "bg2hd.tp2"
-    PACKAGE_SYNC_MARKER = PACKAGE_MANIFESTS / ".package-metadata-sync.partial"
     SELECTIONS = ROOT / "animations" / "index" / "selections"
     REGISTRY = ROOT / "animations" / "index" / "animation_upscale_registry.csv"
     AREAS = ROOT / "areas.csv"
@@ -1972,73 +1963,6 @@ def verify_release_candidate(
     )
 
 
-def verify_release_candidate_registry(
-    *,
-    candidates_path: Path,
-    approval_overrides: Mapping[str, Path] | None = None,
-    allow_pending: bool = False,
-) -> list[dict[str, Any]]:
-    """Physically verify every candidate carried by one complete registry."""
-
-    resolved_candidates_path = candidates_path.resolve()
-    document = load_json(resolved_candidates_path)
-    candidates = validate_candidates_document_shape(
-        document,
-        label=str(resolved_candidates_path),
-    )
-    normalized_overrides: dict[str, Path] = {}
-    for raw_area, path in (approval_overrides or {}).items():
-        area = normalize_area(str(raw_area))
-        require(area not in normalized_overrides, f"override d'approbation dupliqué : {area}")
-        normalized_overrides[area] = Path(path).resolve()
-
-    areas = [normalize_area(str(candidate.get("area", ""))) for candidate in candidates]
-    unknown_overrides = sorted(set(normalized_overrides) - set(areas))
-    require(
-        not unknown_overrides,
-        "override d'approbation sans candidat : " + ",".join(unknown_overrides),
-    )
-
-    results: list[dict[str, Any]] = []
-    approval_cache: dict[
-        str,
-        tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]], list[str], Path, Path],
-    ] = {}
-    legacy_evidence_cache: set[tuple[str, str, str]] = set()
-    for area in areas:
-        results.append(
-            _verify_release_candidate_from_validated_registry(
-                area=area,
-                candidates=candidates,
-                approval_override_path=normalized_overrides.get(area),
-                allow_pending=allow_pending,
-                approval_cache=approval_cache,
-                legacy_evidence_cache=legacy_evidence_cache,
-            )
-        )
-    return results
-
-
-def powershell() -> str:
-    executable = shutil.which("pwsh")
-    if not executable:
-        raise ReleasePromotionError("PowerShell 7 (pwsh) est requis pour générer les manifestes release")
-    return executable
-
-
-def run_command(argv: Sequence[str]) -> None:
-    completed = subprocess.run(
-        list(argv), cwd=ROOT, text=True, capture_output=True, check=False
-    )
-    if completed.returncode:
-        detail = (completed.stderr or completed.stdout).strip()
-        raise ReleasePromotionError(
-            f"commande de prévalidation échouée ({completed.returncode}) : "
-            + subprocess.list2cmdline(list(argv))
-            + (f"\n{detail}" if detail else "")
-        )
-
-
 @contextmanager
 def workflow_lock():
     """Serialize QA and release authority access with a crash-safe OS lock."""
@@ -2078,12 +2002,6 @@ def _allowed_publication_target(path: Path) -> bool:
     resolved = path.resolve()
     fixed = {
         CANDIDATES.resolve(),
-        CONTENT.resolve(),
-        COMPONENTS.resolve(),
-        (PACKAGE_MANIFESTS / CANDIDATES.name).resolve(),
-        (PACKAGE_MANIFESTS / CONTENT.name).resolve(),
-        (PACKAGE_MANIFESTS / COMPONENTS.name).resolve(),
-        PACKAGE_TP2.resolve(),
     }
     if resolved in fixed:
         return True
@@ -2272,259 +2190,29 @@ def publish_transaction(
     return [repo_path(path) for path in changed]
 
 
-def merge_animation_delta(area: str, delta_path: Path, output_path: Path) -> None:
-    """Replace one area's entries without rebuilding unrelated release content."""
+def apply_acceptance(plan: Mapping[str, Any]) -> list[str]:
+    """Publish only the accepted candidate and its immutable QA decision."""
 
-    current = load_json(CONTENT)
-    delta = load_json(delta_path)
-    current_entries = current.get("entries")
-    delta_entries = delta.get("entries")
-    require(isinstance(current_entries, list), "content.json: entries invalides")
-    require(isinstance(delta_entries, list) and bool(delta_entries), f"delta release vide : {area}")
-    require(
-        all(
-            isinstance(entry, Mapping)
-            and entry.get("kind") == "area-animation"
-            and str(entry.get("area", "")).upper() == area
-            for entry in delta_entries
-        ),
-        f"delta release hors zone : {area}",
-    )
-    merged_entries = [
-        entry
-        for entry in current_entries
-        if not (
-            isinstance(entry, Mapping)
-            and entry.get("kind") == "area-animation"
-            and str(entry.get("area", "")).upper() == area
-        )
-    ]
-    merged_entries.extend(delta_entries)
-    merged_entries.sort(
-        key=lambda entry: (
-            int(entry.get("component_id", -1)),
-            int(entry.get("install_order", -1)),
-            str(entry.get("destination", "")),
-            str(entry.get("source", "")),
-        )
-    )
-    merged = dict(current)
-    merged["entries"] = merged_entries
-    output_path.write_bytes(json_bytes(merged))
-
-
-def validate_generated_manifest_set(
-    *,
-    temp_root: Path,
-    pwsh: str,
-    candidate_path: Path,
-    approval_path: Path,
-    content_path: Path,
-    components_path: Path,
-    tp2_path: Path,
-    plan: Mapping[str, Any],
-) -> None:
-    validator = temp_root / "validate-generated-manifests.ps1"
-    validator.write_text(
-        """[CmdletBinding()]
-param([string]$ReleaseRoot,[string]$Candidate,[string]$Approval,[string]$Content,[string]$Components)
-$ErrorActionPreference = 'Stop'
-$checks = @(
-  @($Candidate, (Join-Path $ReleaseRoot 'schemas/animation-release-candidates.schema.json')),
-  @($Approval, (Join-Path $ReleaseRoot 'schemas/animation-qa-approval.schema.json')),
-  @($Content, (Join-Path $ReleaseRoot 'schemas/content.schema.json')),
-  @($Components, (Join-Path $ReleaseRoot 'schemas/components.schema.json'))
-)
-foreach ($check in $checks) {
-  if (-not (Test-Json -LiteralPath $check[0] -SchemaFile $check[1])) { throw ('Schema invalide: ' + $check[0]) }
-}
-""",
-        encoding="utf-8",
-    )
-    run_command(
-        (
-            pwsh,
-            "-NoLogo",
-            "-NoProfile",
-            "-NonInteractive",
-            "-File",
-            str(validator),
-            "-ReleaseRoot",
-            str(RELEASE_ROOT),
-            "-Candidate",
-            str(candidate_path),
-            "-Approval",
-            str(approval_path),
-            "-Content",
-            str(content_path),
-            "-Components",
-            str(components_path),
-        )
-    )
-    content = load_json(content_path)
-    components = load_json(components_path)
-    generated_candidate_rows = validate_candidates_document_shape(
-        load_json(candidate_path),
-        label=str(candidate_path.resolve()),
-    )
-    validate_occlusion_contracts(
-        generated_candidate_rows,
-        validate_release_mapping=True,
-        components_document=components,
-        content_document=content,
-        require_animation_dependencies=True,
-    )
-    entries = content.get("entries")
-    component_rows = components.get("components")
-    require(isinstance(entries, list) and entries, "content.json généré vide")
-    require(isinstance(component_rows, list) and component_rows, "components.json généré vide")
-    target_components = [
-        item
-        for item in component_rows
-        if isinstance(item, Mapping) and integer(item.get("id", -1), "id composant généré") == integer(plan["component_id"], "component_id plan")
-    ]
-    require(len(target_components) == 1, f"composant animation généré absent ou dupliqué : {plan['area']}")
-    component = target_components[0]
-    require(component.get("label") == f"animation-{str(plan['area']).lower()}", f"label composant animation incohérent : {plan['area']}")
-    require(f"animation-{str(plan['area']).lower()}" in (component.get("payload_groups") or []), f"payload group animation absent : {plan['area']}")
-    tp2 = tp2_path.read_text(encoding="utf-8-sig")
-    require(bool(tp2.strip()), "TP2 généré vide")
-    require(f"DESIGNATED {integer(plan['component_id'], 'component_id plan')}" in tp2, f"composant absent du TP2 : {plan['area']}")
-    require(f"BEGIN ~{plan['area']} area animations (x4)~" in tp2, f"bloc animation absent du TP2 : {plan['area']}")
-
-
-def apply_promotion(plan: Mapping[str, Any], *, test_delta: bool) -> list[str]:
     approval_path = Path(plan["qa_approval_path"])
     approval_data = bytes(plan["qa_approval_bytes"])
     if approval_path.is_file():
-        require(approval_path.read_bytes() == approval_data, f"une autre approbation existe : {repo_path(approval_path)}")
-    with tempfile.TemporaryDirectory(prefix="bg2-animation-release-") as temporary:
-        temp = Path(temporary)
-        candidate_path = temp / "animation-release-candidates.json"
-        approval_override_path = temp / approval_path.name
-        delta_content_path = temp / "content.animation-delta.json"
-        content_path = temp / "content.json"
-        components_path = temp / "components.json"
-        tp2_path = temp / "bg2hd.tp2"
-        candidate_path.write_bytes(bytes(plan["candidate_bytes"]))
-        approval_override_path.write_bytes(approval_data)
-        verify_release_candidate_registry(
-            candidates_path=candidate_path,
-            approval_overrides={str(plan["area"]): approval_override_path},
-            allow_pending=True,
+        require(
+            approval_path.read_bytes() == approval_data,
+            f"une autre approbation existe : {repo_path(approval_path)}",
         )
-        pwsh = powershell()
-        run_command(
-            (
-                pwsh,
-                "-NoLogo",
-                "-NoProfile",
-                "-NonInteractive",
-                "-File",
-                str(RELEASE_ROOT / "tools" / "New-BG2HD-ContentManifest.ps1"),
-                "-WorkspaceRoot",
-                str(ROOT),
-                "-AnimationCandidatesPath",
-                str(candidate_path),
-                "-AnimationQaApprovalOverridePath",
-                str(approval_override_path),
-                "-OutputPath",
-                str(delta_content_path),
-                "-OnlyAnimationArea",
-                str(plan["area"]),
-            )
-        )
-        merge_animation_delta(str(plan["area"]), delta_content_path, content_path)
-        run_command(
-            (
-                pwsh,
-                "-NoLogo",
-                "-NoProfile",
-                "-NonInteractive",
-                "-File",
-                str(RELEASE_ROOT / "tools" / "New-BG2HD-ComponentManifest.ps1"),
-                "-ReleaseRoot",
-                str(RELEASE_ROOT),
-                "-AnimationCandidatesPath",
-                str(candidate_path),
-                "-ContentPath",
-                str(content_path),
-                "-OutputPath",
-                str(components_path),
-            )
-        )
-        run_command(
-            (
-                pwsh,
-                "-NoLogo",
-                "-NoProfile",
-                "-NonInteractive",
-                "-File",
-                str(RELEASE_ROOT / "tools" / "Generate-BG2HD-Tp2.ps1"),
-                "-ReleaseRoot",
-                str(RELEASE_ROOT),
-                "-ContentPath",
-                str(content_path),
-                "-ComponentsPath",
-                str(components_path),
-                "-OutputPath",
-                str(tp2_path),
-            )
-        )
-        validate_generated_manifest_set(
-            temp_root=temp,
-            pwsh=pwsh,
-            candidate_path=candidate_path,
-            approval_path=approval_override_path,
-            content_path=content_path,
-            components_path=components_path,
-            tp2_path=tp2_path,
-            plan=plan,
-        )
-        if test_delta:
-            run_command(
-                (
-                    pwsh,
-                    "-NoLogo",
-                    "-NoProfile",
-                    "-NonInteractive",
-                    "-File",
-                    str(RELEASE_ROOT / "tools" / "Test-BG2HDAreaAnimationCandidate.ps1"),
-                    "-Area",
-                    str(plan["area"]),
-                    "-AnimationCandidatesPath",
-                    str(candidate_path),
-                    "-AnimationQaApprovalOverridePath",
-                    str(approval_override_path),
-                )
-            )
-        candidate_data = candidate_path.read_bytes()
-        content_data = content_path.read_bytes()
-        components_data = components_path.read_bytes()
-        tp2_data = tp2_path.read_bytes()
-        files = {
+    return publish_transaction(
+        {
             approval_path: approval_data,
-            CANDIDATES: candidate_data,
-            CONTENT: content_data,
-            COMPONENTS: components_data,
-            PACKAGE_MANIFESTS / CANDIDATES.name: candidate_data,
-            PACKAGE_MANIFESTS / CONTENT.name: content_data,
-            PACKAGE_MANIFESTS / COMPONENTS.name: components_data,
-            PACKAGE_TP2: tp2_data,
-        }
-        return publish_transaction(files, journal_path=PUBLICATION_JOURNAL)
+            CANDIDATES: bytes(plan["candidate_bytes"]),
+        },
+        journal_path=PUBLICATION_JOURNAL,
+    )
 
 
-def public_plan(plan: Mapping[str, Any], *, test_delta: bool = False) -> dict[str, Any]:
+def public_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
     writes = [
         repo_path(Path(plan["qa_approval_path"])),
         repo_path(CANDIDATES),
-        repo_path(CONTENT),
-        repo_path(COMPONENTS),
-        repo_path(PACKAGE_MANIFESTS / CANDIDATES.name),
-        repo_path(PACKAGE_MANIFESTS / CONTENT.name),
-        repo_path(PACKAGE_MANIFESTS / COMPONENTS.name),
-        repo_path(PACKAGE_TP2),
     ]
     return {
         "mode": "plan",
@@ -2537,26 +2225,20 @@ def public_plan(plan: Mapping[str, Any], *, test_delta: bool = False) -> dict[st
         "qa_approval": repo_path(Path(plan["qa_approval_path"])),
         "source_runs": plan["source_runs"],
         "writes": writes,
-        "tests": "delta gate requested" if test_delta else "not run unless --test-delta is explicit",
     }
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Promouvoir une QA ingame animation vers les manifestes release"
-    )
+    parser = argparse.ArgumentParser(description="Enregistrer un candidat animation accepté")
     parser.add_argument("--area", required=True)
     parser.add_argument("--pack", help="pack de zone exact si plusieurs sélections existent")
     parser.add_argument("--decision-note", default="")
-    parser.add_argument("--approve", action="store_true", help="accord release explicite obligatoire")
+    parser.add_argument("--approve", action="store_true", help="décision explicite d'acceptation du candidat")
     parser.add_argument("--run", action="store_true", help="publier la transaction; sinon plan seulement")
-    parser.add_argument("--test-delta", action="store_true", help="lancer aussi la gate ciblée autorisée")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
     if not args.approve:
-        parser.error("--approve est requis : la QA et la release sont deux décisions distinctes")
-    if args.test_delta and not args.run:
-        parser.error("--test-delta exige --run")
+        parser.error("--approve est requis : la QA et l'acceptation du candidat sont deux décisions distinctes")
     return args
 
 
@@ -2568,16 +2250,15 @@ def main(argv: Sequence[str] | None = None) -> int:
             with workflow_lock():
                 require(
                     not AUTHORITY_JOURNAL.exists()
-                    and not PUBLICATION_JOURNAL.exists()
-                    and not PACKAGE_SYNC_MARKER.exists(),
+                    and not PUBLICATION_JOURNAL.exists(),
                     "transaction animation interrompue active; relancer sa commande d'origine avant de recalculer le plan",
                 )
                 plan = build_promotion(area, args.pack, args.decision_note)
-            payload = public_plan(plan, test_delta=args.test_delta)
+            payload = public_plan(plan)
             if args.json:
                 print(json.dumps(payload, ensure_ascii=False, indent=2))
             else:
-                print(f"PLAN release animation : {payload['area']}")
+                print(f"PLAN candidat animation : {payload['area']}")
                 print(f"pack : {payload['source_pack']}")
                 print("assets : " + ", ".join(payload["required_resrefs"]))
                 if payload["carried_resrefs"]:
@@ -2586,18 +2267,17 @@ def main(argv: Sequence[str] | None = None) -> int:
                 print("écritures prévues :")
                 for path in payload["writes"]:
                     print(f"  - {path}")
-                print("Aucune écriture. Relancer avec --run après le choix de reconstruction.")
+                print("Aucune écriture. Relancer avec --run pour enregistrer le candidat accepté.")
             return 0
         with workflow_lock():
             require(
-                not AUTHORITY_JOURNAL.exists() and not PACKAGE_SYNC_MARKER.exists(),
-                "transaction QA ou synchronisation des miroirs animation interrompue; "
-                "relancer d'abord la commande d'origine",
+                not AUTHORITY_JOURNAL.exists(),
+                "transaction QA animation interrompue; relancer d'abord la commande d'origine",
             )
             recovered = recover_publication_journal()
             plan = build_promotion(area, args.pack, args.decision_note)
-            payload = public_plan(plan, test_delta=args.test_delta)
-            changed = apply_promotion(plan, test_delta=args.test_delta)
+            payload = public_plan(plan)
+            changed = apply_acceptance(plan)
         result = {
             **payload,
             "mode": "applied",
@@ -2607,7 +2287,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.json:
             print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
-            print(f"Release animation intégrée : {payload['area']}")
+            print(f"Candidat animation accepté : {payload['area']}")
             if recovered:
                 print("Transaction interrompue précédente restaurée avant publication.")
             if changed:

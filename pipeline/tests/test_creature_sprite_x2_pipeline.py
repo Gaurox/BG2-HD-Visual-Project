@@ -225,15 +225,6 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             ["verify", "--job", "sprite/jobs/catalog.json", "--full-verify"]
         )
         self.assertTrue(exhaustive.full_verify)
-        deferred = parser.parse_args(
-            [
-                "prepare",
-                "--job",
-                "sprite/jobs/catalog.json",
-                "--defer-full-verify",
-            ]
-        )
-        self.assertTrue(deferred.defer_full_verify)
         recovery = parser.parse_args(
             [
                 "verify",
@@ -317,8 +308,9 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
             ],
         )
 
-    def test_catalog_install_refuses_a_provisional_generation(self) -> None:
+    def test_catalog_install_refuses_missing_proof_without_deferred_checkpoint(self) -> None:
         job = {"_kind": "catalog", "_job_file": Path("catalog.json")}
+        verifier = mock.Mock()
         with (
             mock.patch.object(
                 sys,
@@ -330,6 +322,17 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
                 pipeline,
                 "verify_catalog_incremental",
                 side_effect=pipeline.CatalogProofMissing("proof missing"),
+            ),
+            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
+            mock.patch.object(
+                pipeline,
+                "catalog_current_generation_context",
+                return_value={"generation_id": "A" * 64},
+            ),
+            mock.patch.object(
+                pipeline,
+                "load_catalog_verification_checkpoint",
+                return_value={"status": "verification-failed"},
             ),
             mock.patch.object(pipeline, "powershell_script") as powershell,
         ):
@@ -650,7 +653,6 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
                 catalog,
                 force=False,
                 resume=True,
-                defer_full_verify=True,
             )
 
         self.assertEqual(result["status"], "built-unverified")

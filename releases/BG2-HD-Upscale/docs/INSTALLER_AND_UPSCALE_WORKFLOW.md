@@ -2,15 +2,13 @@
 
 > **Règle documentaire : écrire pour des agents IA — concis, factuel, opérationnel, non narratif. Éviter la verbosité et les répétitions. Toute nouvelle documentation ou modification doit privilégier la densité d’information, les listes/tableaux, les chemins et commandes précises. Éviter la prose longue, le contexte narratif, les répétitions et les explications principalement destinées à un lecteur humain.**
 
-Operational reference for agents. Manifests are authoritative.
+Finalization reference. Daily production follows
+[`../../../docs/PRODUCTION_RAPIDE.md`](../../../docs/PRODUCTION_RAPIDE.md).
 
 Release authoring and gates require PowerShell 7 (`pwsh`); installer runtime helpers invoked by
 WeiDU remain compatible with Windows PowerShell.
 
-No test or release gate runs automatically. Before executing one, ask the user to choose targeted
-tests, all tests, or no tests according to
-[`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). Refusal leaves the
-corresponding validation unclaimed.
+Release gates run only when finalization or the corresponding validation is explicitly requested.
 
 ## Source of truth
 
@@ -19,6 +17,7 @@ corresponding validation unclaimed.
 | Version, target, blockers | `manifests/release.json` |
 | Components | `manifests/components.json` |
 | Payload files | generated `manifests/content.json` |
+| Map candidates | `manifests/map-release-candidates.csv` |
 | Animation candidates | `manifests/animation-release-candidates.json` |
 | Effect candidates | `manifests/effect-release-candidates.json` |
 | Sprite candidates | `manifests/sprite-release-candidates.json` |
@@ -36,33 +35,29 @@ Generated TP2, package manifests, staging and archives are never hand-edited.
 - BG2HD does not redistribute EEex or InfinityLoader.
 - Normal uninstall retains EEex; full vanilla removal requires explicit confirmation.
 
-## Integrate validated content
+## Accept validated content
 
-QA and release are separate decisions. At the end of a task that produced a
-`validated-installed` candidate, ask whether to integrate it. Without an
-explicit affirmative answer, do not edit generator selections, regenerate `content.json`, stage or package. If the task
-produced no eligible candidate, state that no integration is necessary.
+QA, candidate acceptance and package compilation are separate decisions. Daily work records only
+the accepted candidate. It does not edit global generator selections, regenerate `content.json`,
+stage or package.
 
-After approval:
+For a map accepted by the user:
 
-1. Pin the canonical source, unused permanent component ID, hashes and exact destination in the
-   appropriate source manifest/generator.
-2. Maps must match `areas.csv` and be x4 `validated-installed`; UI must declare its renderer keys
-   and independent rollback state; overlays follow only `overlay-sources.json`.
-   A sprite candidate pins the selected asset digests, sealed generation, QA and runtime hashes.
-   Reject content integration if its cumulative catalogue contains an excluded animation.
-3. Regenerate only the manifest tier. Ask the test choice separately, then run its static gate only
-   if the corresponding test option was authorized:
+Add one row to `manifests/map-release-candidates.csv` with `area`, permanent `component_id`, selected
+`source_path`, `include_wed` and `model`. This performs no command, hash or projection. Other domains
+write their own candidate authority. Global compilation is deferred.
+
+## Compile accepted candidates
+
+Only during explicit finalization, compile all accepted candidate authorities in one operation:
 
 ```powershell
-& .\tools\New-BG2HD-ContentManifest.ps1
-& .\tools\New-BG2HD-ComponentManifest.ps1
-& .\tools\Sync-BG2HD-PackageMetadata.ps1
-& .\tools\Generate-BG2HD-Tp2.ps1
+& .\tools\Compile-BG2HD-Release.ps1
 & .\tools\Test-BG2HD-Phase2.ps1
 ```
 
-This tier must not build the full staging or archive.
+Compilation is an explicit mutating action. The second command is an independent final gate. This
+tier does not build the full staging or archive.
 
 ## Renderer prerequisite
 
@@ -91,11 +86,9 @@ python pipeline/scripts/animation_release.py --area ARxxxx --approve
 python pipeline/scripts/animation_release.py --area ARxxxx --approve --run
 ```
 
-The command validates decision, selection, pack, registry and run hashes; before writing, it
-revalidates physically every candidate carried by the complete registry. It replaces only this
-area's entries in the full content manifest and regenerates components/package mirrors/TP2
-transactionally. It never stages or packages. `--test-delta` is allowed only after the separate
-targeted-test choice.
+The command validates the changed decision, selection, pack, registry and run hashes. By default it
+writes only the area QA and candidate authority; it does not inspect every other candidate or
+regenerate global projections. Compilation and focused diagnostics are separate explicit commands.
 Finalization and promotion share one advisory lock. A durable ignored journal restores every
 published manifest before a retry if the preceding process stopped mid-transaction.
 Manifest generators, validators, staging and package builders hold the same lock for their full
@@ -115,7 +108,7 @@ exact, exposer le composant map attendu et ajouter sa dépendance au composant a
 posséder l'activation du bridge ; aucun bundle antérieur aux marqueurs
 `EnableNativeOcclusionBridge` et `FXRenderClippingPolys` n'est promouvable.
 
-After the test choice authorizes it, validate only the changed candidate:
+When a focused diagnostic is requested, validate only the changed candidate:
 
 ```powershell
 & .\tools\Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx
@@ -127,8 +120,7 @@ a shared renderer/format/generator/Core change.
 
 ## Package tier
 
-Requires separate authorization because it rebuilds staging and archives, plus the separate test
-choice before its gates. Increment
+This finalization step rebuilds staging and archives. Increment
 `release.json` when the user-facing package changes, sync metadata, then run:
 
 ```powershell

@@ -1,22 +1,18 @@
 # Testing and evidence
 
-Use the [installer and upscale integration contract](INSTALLER_AND_UPSCALE_WORKFLOW.md)
-to determine the required regeneration path before applying these gates.
-
-Never execute a gate automatically. Ask the user to choose targeted tests, all tests, or no tests
-as defined in [`../../../docs/TEST_SELECTION.md`](../../../docs/TEST_SELECTION.md). “Required” below
-means required evidence for claiming the corresponding validation tier; if tests are declined, stop
-before that claim and report the missing evidence.
+Finalization-only reference. Daily asset acceptance does not invoke these gates. Use
+[`../../../docs/PRODUCTION_RAPIDE.md`](../../../docs/PRODUCTION_RAPIDE.md) outside an explicit
+release/package request.
 
 ## Validation tiers
 
-After authorization, use the smallest gate that proves the change, then retain the complete package
-gate before any distributable archive. A fast gate is not a release waiver.
+Use the smallest gate technically needed for the requested claim. The complete package gate remains
+necessary only before a distributable archive.
 
 | Tier | Trigger | Required proof |
 |---|---|---|
-| Animation delta | Each approved area-animation candidate | `Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx`: candidate manifest/registry/index, exact frames and hashes, temporary per-area staging, generated component and TP2 entries |
-| Manifest integration | Each explicitly approved content integration | Regenerate manifests and TP2, then run Phase 2 static validation |
+| Animation delta | Explicit diagnostic of one area-animation candidate | `Test-BG2HDAreaAnimationCandidate.ps1 -Area ARxxxx`: candidate manifest/registry/index, exact frames and hashes, temporary per-area staging, generated component and TP2 entries |
+| Manifest integration | Explicit finalization | Compile manifests and TP2, then run Phase 2 static validation |
 | Package | Before building, updating or validating an archive; also after a shared generator, runtime, format or Core change | Full staging, Phase 4, animation compatibility pilots, Phase 5A and Phase 6B |
 
 The animation-delta gate creates its own temporary `content.json` and payload;
@@ -25,16 +21,16 @@ the declared immutable area pack, so it replaces neither the full payload gate
 nor clean-game runtime QA. Run the package tier immediately when a shared
 contract changes or when preparing an archive.
 
-## Required automated checks
+## Finalization automated checks
 
 After payload or Core changes, run the manifest/TP2 checks, asset validator,
 helper lifecycle matrix, fault-injection rollback tests, WeiDU update test,
 archive install/uninstall test and EEex-to-vanilla test. The Phase 5A wrapper
 records this suite:
 
-The static payload gate also proves that every `validated-installed` CSV map
-variant is present and that no undeclared map file survives in the staged
-payload.
+The static payload gate proves that every compiled bootstrap/candidate map is still
+`validated-installed`, matches its selected CSV run, and has no undeclared staged file. A validated
+production map is not implicitly included in a release.
 It separately executes `Test-BG2HD-AR0413Contract.ps1`; changing AR0413 or its
 renderer classification requires an explicit, reviewed update of the pinned
 17-file contract after a new in-game validation.
@@ -45,7 +41,7 @@ renderer classification requires an explicit, reviewed update of the pinned
   -ArchivePath <path-to-release.zip>
 ```
 
-## Required manual checks
+## Finalization manual checks
 
 On an otherwise clean, supported Steam install with the external prerequisite:
 

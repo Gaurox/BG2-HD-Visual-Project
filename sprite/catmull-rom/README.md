@@ -3,6 +3,10 @@
 Statut : **D0–D6 terminés ; D7 partiel : Catmull–Rom x1 `soft035` sans halo validé ; A/B `soft025` sans contour installé, QA ingame en attente ; couverture objet au sol/`fpSELECT` restante**. Vérification : 2026-09-11.
 Public : agent IA reprenant le développement sans historique de conversation.
 
+> Spécification bornée du chantier renderer, pas workflow quotidien des assets. Consulter seulement
+> la section liée au changement moteur demandé ; la politique courante reste
+> [`../../docs/PRODUCTION_RAPIDE.md`](../../docs/PRODUCTION_RAPIDE.md).
+
 ## 1. Mission et reprise
 
 Intégrer nativement à InfinityEngine Enhancer toutes les fonctions configurables de Dshaders
@@ -563,12 +567,12 @@ python pipeline/scripts/test_changed.py --targeted `
   --path engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp
 ```
 
-Demander le choix **tests ciblés / tous les tests / aucun test** avant exécution.
-Après choix ciblé, reprendre exactement les mêmes `--path` avec `--run`.
-Lire [TEST_SELECTION](../../docs/TEST_SELECTION.md) ; ne pas élargir un lot ciblé au worktree entier.
+Exécuter le plan ciblé avec `--run` seulement si le changement de code nécessite ce contrôle ; ne
+pas élargir le lot au worktree entier. Voir [TEST_SELECTION](../../docs/TEST_SELECTION.md).
 Le nouveau script de transaction doit avoir son test directement associé dans ce routage.
 
-Build Windows de développement après choix autorisant les builds/tests, depuis `ENGINE` :
+Build Windows de développement uniquement pour un changement moteur qui doit être compilé, depuis
+`ENGINE` :
 
 ```powershell
 cmake -S . -B cmake-build-catmull-rom -G "Visual Studio 17 2022" -A x64 `

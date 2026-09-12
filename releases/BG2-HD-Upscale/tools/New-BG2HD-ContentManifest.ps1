@@ -2,6 +2,7 @@
 param(
     [string]$WorkspaceRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..\..')).Path,
     [string]$OutputPath = (Join-Path $PSScriptRoot '..\manifests\content.json'),
+    [string]$MapCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\map-release-candidates.csv'),
     [string]$AnimationCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\animation-release-candidates.json'),
     [string]$SpriteCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\sprite-release-candidates.json'),
     [string]$EffectCandidatesPath = (Join-Path $PSScriptRoot '..\manifests\effect-release-candidates.json'),
@@ -620,7 +621,7 @@ function Get-EffectCandidateEntries {
     return @($result)
 }
 
-$mapSpecs = @(
+$legacyMapSpecs = @(
     @{ ComponentId = 1000; ComponentLabel = 'map-ar0300'; PayloadGroup = 'map-ar0300'; Area = 'AR0300'; SourceRun = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; Path = 'maps/AR0300/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/05_build'; InstallOrder = 1000 },
     @{ ComponentId = 1000; ComponentLabel = 'map-ar0300'; PayloadGroup = 'map-ar0300'; Area = 'AR0300N'; SourceRun = 'maps/AR0300/runs/release-water-night-v10-20260912/05_build'; Path = 'maps/AR0300/runs/release-water-night-v10-20260912/05_build'; InstallOrder = 1000; IncludeWed = $true },
     @{ ComponentId = 1010; ComponentLabel = 'map-ar0400'; PayloadGroup = 'map-ar0400'; Area = 'AR0400'; SourceRun = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-jour/05_build'; Path = 'maps/AR0400/runs/seedvr2-7b-int8-lab-grid-2x4-x4-jour/05_build'; InstallOrder = 1010 },
@@ -943,30 +944,56 @@ $mapSpecs = @(
     @{ ComponentId = 4080; ComponentLabel = 'map-ar1800'; PayloadGroup = 'map-ar1800'; Area = 'AR1800'; SourceRun = 'maps/AR1800/runs/release-water-v4-20260912/05_build'; Path = 'maps/AR1800/runs/release-water-v4-20260912/05_build'; InstallOrder = 4080; IncludeWed = $true }
 )
 
-# The CSV is the validation register.  Every validated day/night variant must
-# have one explicit, reviewed canonical source above; this keeps a new CSV
-# validation from silently disappearing from a package.
+# Les entrées ci-dessus constituent le bootstrap historique. Toute nouvelle carte est enregistrée
+# comme candidat de données ; ajouter une carte ne doit plus modifier ce générateur.
+$candidateMapSpecs = @()
+if (-not $isAnimationDelta) {
+    Require (Test-Path -LiteralPath $MapCandidatesPath -PathType Leaf) "Registre candidats map absent : $MapCandidatesPath"
+    $candidateMapSpecs = @(Import-Csv -LiteralPath $MapCandidatesPath | ForEach-Object {
+        $area = ([string]$_.area).Trim().ToUpperInvariant()
+        Require ($area -match '^(AR|OH)[0-9]{4}N?$') "Zone candidate map invalide : $area"
+        $baseArea = $area -replace 'N$',''
+        $sourcePath = ([string]$_.source_path).Trim().Replace('\', '/')
+        Require ($sourcePath -like "maps/$baseArea/runs/*/*") "Source candidate map invalide : $area / $sourcePath"
+        $componentId = [int]$_.component_id
+        Require ($componentId -gt 0) "ComponentId candidat map invalide : $area"
+        $includeWed = ([string]$_.include_wed).Trim().ToLowerInvariant()
+        Require ($includeWed -in @('true', 'false')) "include_wed candidat map invalide : $area"
+        @{
+            ComponentId = $componentId
+            ComponentLabel = "map-$($baseArea.ToLowerInvariant())"
+            PayloadGroup = "map-$($baseArea.ToLowerInvariant())"
+            Area = $area
+            SourceRun = $sourcePath
+            Path = $sourcePath
+            InstallOrder = $componentId
+            IncludeWed = $includeWed -eq 'true'
+            Scale = 4
+            CandidateModel = [string]$_.model
+            ReplacesComponentOutput = $false
+        }
+    })
+}
+$mapSpecs = @($legacyMapSpecs) + @($candidateMapSpecs)
+$duplicateMapAreas = @($mapSpecs | Group-Object Area | Where-Object Count -gt 1 | ForEach-Object Name)
+Require ($duplicateMapAreas.Count -eq 0) "Variantes map candidates dupliquees : $($duplicateMapAreas -join ', ')"
+foreach ($group in @($mapSpecs | Group-Object ComponentId)) {
+    $labels = @($group.Group | ForEach-Object { [string]$_.ComponentLabel } | Sort-Object -Unique)
+    $payloadGroups = @($group.Group | ForEach-Object { [string]$_.PayloadGroup } | Sort-Object -Unique)
+    $baseAreas = @($group.Group | ForEach-Object { ([string]$_.Area) -replace 'N$','' } | Sort-Object -Unique)
+    Require ($labels.Count -eq 1 -and $payloadGroups.Count -eq 1 -and $baseAreas.Count -eq 1) "ComponentId map partage entre zones incoherentes : $($group.Name)"
+}
+
+# The CSV proves production/QA state. Package inclusion is independent: only the historical
+# bootstrap and explicit map candidates are compiled. Every included map must still match the CSV.
 if (-not $isAnimationDelta) {
     $areasCsv = Join-Path $WorkspaceRoot 'areas.csv'
     if (-not (Test-Path -LiteralPath $areasCsv -PathType Leaf)) { throw "Registre des zones absent : $areasCsv" }
     $validatedAreas = Import-Csv -LiteralPath $areasCsv | Where-Object { $_.area_id -match '^(AR|OH)\d{4}$' }
     $areasById = @{}
     foreach ($area in $validatedAreas) { $areasById[[string]$area.area_id] = $area }
-    $requiredVariants = [Collections.Generic.List[string]]::new()
-    foreach ($area in $validatedAreas) {
-        if ($area.status -eq 'validated-installed') { $requiredVariants.Add([string]$area.area_id) }
-        if ($area.status_nuit -eq 'validated-installed') { $requiredVariants.Add(([string]$area.area_id) + 'N') }
-    }
-    $declaredVariants = @($mapSpecs | ForEach-Object { [string]$_.Area })
-    $missingVariants = @($requiredVariants | Sort-Object -Unique | Where-Object { $_ -notin $declaredVariants })
-    $extraVariants = @($declaredVariants | Sort-Object -Unique | Where-Object { $_ -notin $requiredVariants })
-    if ($missingVariants.Count -gt 0 -or $extraVariants.Count -gt 0) {
-        throw "Couverture CSV/manifeste invalide. Manquantes: $($missingVariants -join ', '). En trop: $($extraVariants -join ', ')"
-    }
-
-    # The release may select a reviewed sub-build below the current run, but it may
-    # never silently package another run. This closes the previous state where the
-    # CSV and the release covered the same areas while disagreeing on 37 run IDs.
+    # The release may select a reviewed sub-build below the current run, but it may never silently
+    # package another run.
     foreach ($spec in $mapSpecs) {
         $variant = [string]$spec.Area
         $isNight = $variant.EndsWith('N', [StringComparison]::Ordinal)
@@ -1045,7 +1072,8 @@ if (-not $isAnimationDelta) {
     foreach ($spec in $mapSpecs) {
         $sourceDirectory = Join-Path $WorkspaceRoot $spec.Path
         if (-not (Test-Path -LiteralPath $sourceDirectory -PathType Container)) { throw "Source canonique absente : $sourceDirectory" }
-        $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = 'SeedVR2-7B-LAB'; ReplacesComponentOutput = $false }
+        $model = if ([string]::IsNullOrWhiteSpace([string]$spec.CandidateModel)) { 'SeedVR2-7B-LAB' } else { [string]$spec.CandidateModel }
+        $normalized = $spec + @{ Kind = 'map'; DestinationRoot = 'override'; Model = $model; ReplacesComponentOutput = $false }
         $extensions = if ($spec.IncludeWed) { @('.TIS', '.PVRZ', '.WED') } else { @('.TIS', '.PVRZ') }
         $files = Get-ChildItem -LiteralPath $sourceDirectory -File | Where-Object { $_.Extension -in $extensions } | Sort-Object Name
         if ($files.Count -eq 0) { throw "Aucun TIS/PVRZ dans : $sourceDirectory" }

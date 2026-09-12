@@ -26,6 +26,9 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+Voie quotidienne : [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md). Les documents
+ci-dessous sont des recettes conditionnelles, pas une chaîne universelle.
+
 Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Append catalogue, installation et QA :
 [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
 
@@ -124,8 +127,8 @@ python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/sprit
   --path pipeline/scripts/materialize_sprite_sources.py
 ```
 
-La commande prépare la question obligatoire « ciblés / tous / aucun » et n'exécute rien sans
-`--run`. Voir [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
+La commande affiche seulement les tests associés et n'exécute rien sans `--run`. Ne l'utiliser que
+si ces tests apportent une information utile. Voir [`../docs/TEST_SELECTION.md`](../docs/TEST_SELECTION.md).
 
 L'index et les générateurs sélectionnent `sprite-inventory`; le runner et les formats sélectionnent
 `sprite-formats`; seuls les scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`

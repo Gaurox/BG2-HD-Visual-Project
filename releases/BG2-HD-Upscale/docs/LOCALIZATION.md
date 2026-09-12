@@ -1,5 +1,7 @@
 # WeiDU localization
 
+Finalization-only contract; a daily asset task does not regenerate translations or TP2.
+
 `manifests/languages.json` is authoritative for languages, encoding and review status. English is
 loaded first as fallback; the selected TRA is loaded second. The game language and WeiDU language
 are independent.

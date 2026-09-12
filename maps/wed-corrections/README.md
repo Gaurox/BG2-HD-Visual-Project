@@ -20,9 +20,9 @@ ou décalé dans le WED natif.
    `pipeline/scripts/build_wed_mask_polygon_patch.py`. Le builder exige le hash WED source, les
    octets exacts d'un slot vide et la plage lookup attendue du wall group. Toute divergence échoue
    fermée.
-6. Contrôler le contour quantifié sur la carte, l'intersection réelle avec toutes les phases, les
-   différences binaires du WED puis demander « tests ciblés / tous / aucun » avant toute suite
-   Python ; voir [`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md).
+6. Contrôler le contour quantifié sur la carte, l'intersection réelle avec les phases concernées et
+   les différences binaires du WED. Lancer un test Python ciblé seulement si le builder ou son
+   contrat a changé ; voir [`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md).
 7. Installer uniquement jeu et InfinityLoader fermés avec
    `pipeline/scripts/Install-AreaOverrideAssets.ps1`, puis valider ingame. Conserver le backup de
    restauration et ne promouvoir ni staging ni manifeste de release sans accord distinct.

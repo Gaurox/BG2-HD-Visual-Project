@@ -33,6 +33,9 @@ Créer un run directement sous le BAM concerné. Aucun nouveau run sous `effects
 
 ## Workflow de production
 
+La voie quotidienne suit [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md) : le pack
+mono-BAM accepté est l'unité finale ; les packs cumulatifs et projections sont différés.
+
 `pipeline/scripts/effect_workflow.py` ne génère pas d'image. Il contrôle l'autorité et les descripteurs scellés ; le producteur écrit les fichiers du run avant son enregistrement.
 
 | Étape | `pipeline.id` imposé | Entrée et lineage requis | Écriture autorité |
@@ -123,10 +126,11 @@ Chaque nouvelle famille doit démontrer : ancrage logique, cycle/timing, alpha,
 palette, partage multi-contrôleur, owner VVC/projectile et fallback natif.
 Une production temporelle ou une installation ne vaut jamais QA ingame.
 
-## Packs incrémentaux
+## Packs cumulatifs — finalisation
 
-Produire un pack immuable par BAM, puis composer un nouveau pack cumulatif sans
-relancer extraction, upscale ou interpolation :
+Produire un pack immuable par BAM. Composer un nouveau pack cumulatif seulement pour une
+finalisation ou un essai cumulatif explicitement demandé, sans relancer extraction, upscale ou
+interpolation :
 
 ```powershell
 python pipeline/scripts/compose_effect_runtime_packs.py `

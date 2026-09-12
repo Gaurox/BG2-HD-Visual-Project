@@ -17,9 +17,8 @@ des suffixes acceptés, du remappage palette ou des limites runtime :
 python pipeline/scripts/build_sprite_inventory.py
 ```
 
-Après la génération, demander « tests ciblés / tous / aucun ». Le test ciblé, seulement après ce
-choix, est `python -m unittest pipeline.tests.test_sprite_inventory`. Voir
-[`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md).
+Le test ciblé `python -m unittest pipeline.tests.test_sprite_inventory` sert après modification du
+scanner, de son schéma ou de ses règles. Une simple régénération d'inventaire ne l'impose pas.
 
 La provenance exacte de l'installation analysée, ses hashes, les limites appliquées, l'usage des
 animations par les CRE stock, les totaux et les projections déterministes de registry-set x2/x4 sont dans

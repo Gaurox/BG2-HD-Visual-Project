@@ -12,7 +12,7 @@
 
 Ne jamais déduire identité, préfixe, équipement, QA ou release depuis un nom ou un dossier.
 
-## Gates
+## Conditions locales
 
 Exiger pour chaque famille non vide :
 
@@ -59,16 +59,15 @@ python pipeline/scripts/materialize_sprite_sources.py --job <job-ou-agregat> --r
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py plan --job <job-ou-agregat>
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job-ou-agregat>
-python pipeline/scripts/run_creature_sprite_x2.py verify --job <job-ou-agregat>
 ```
 
-Batch Character : ne pas vérifier chaque agrégat séparément. Utiliser :
+Pour un jalon final de catalogue seulement :
 
 ```powershell
 python pipeline/scripts/run_creature_sprite_x2.py prepare-data --resume `
-  --defer-full-verify --job <agregat-character>
+  --job <agregat-character>
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
-  --defer-full-verify --job <catalogue>
+  --job <catalogue>
 python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify `
   --keep-going --job <catalogue>
 # Après correction :
@@ -76,8 +75,8 @@ python pipeline/scripts/run_creature_sprite_x2.py verify --resume `
   --keep-going --job <catalogue>
 ```
 
-Seul `prepared-verified` est installable. Détails des preuves/checkpoints :
-`catalogs/creature-x2-nearest/README.md`.
+`prepare` produit par défaut `built-unverified`, directement installable pour la QA progressive.
+`--full-verify` est réservé au jalon final. Détails : `catalogs/creature-x2-nearest/README.md`.
 
 Ne pas utiliser `run_creature_sprite_x2.py extract` pour un nouveau workspace : ce chemin legacy
 duplique les BAM et génère des PNG source.
@@ -95,7 +94,8 @@ duplique les BAM et génère des PNG source.
 
 ## Interdictions
 
-- Ne jamais modifier un job, run, build, reçu, décision QA ou catalogue scellé.
+- Ne jamais modifier un résultat accepté/scellé, un reçu final ou une décision QA. Les essais de
+  travail non sélectionnés peuvent être repris ou supprimés.
 - Ne jamais précréer tout l'inventaire ni copier un BAM partagé par famille.
 - Jeu et InfinityLoader fermés avant install/restore.
 - `pending-qa` n'est pas validé ; release après `validated-installed` et accord explicite.

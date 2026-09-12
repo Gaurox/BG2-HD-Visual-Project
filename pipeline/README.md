@@ -18,9 +18,10 @@ audit n'est requis avant une correction locale.
 | Inventaire eau multi-cartes | `python -B pipeline/scripts/orchestrate_water_batch.py` (plan-only) |
 | Exécution SeedVR | `python pipeline/scripts/run_seedvr_comfyui.py ...` |
 | Reconstruction | `python pipeline/scripts/build_upscaled_area.py ARxxxx <principale-x4.png> <build-dir> [secondaire-x4.png]` |
-| Audit technique | `python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>` |
+| Contrôle structurel rapide | `python pipeline/scripts/verify_upscaled.py ARxxxx <build-dir> <principale-x4.png>` |
 | Installation/retour arrière | `python pipeline/scripts/inject_build.py ...` |
 | État métier | édition explicite de `areas.csv` après décision QA |
+| Acceptation map | ajouter une ligne à `releases/BG2-HD-Upscale/manifests/map-release-candidates.csv` |
 
 Pour les entrées `argparse`, consulter l'aide avant un run :
 
@@ -30,6 +31,9 @@ python pipeline/scripts/run_seedvr_comfyui.py --help
 
 Choisir seulement l'outil qui répond au besoin courant. SeedVR, audits, reconstruction et suivi ne
 sont pas des étapes d'un parcours obligatoire.
+
+Une ligne candidate contient seulement zone, composant, dossier retenu, WED éventuel et modèle.
+Aucun hash, manifeste global, TP2, miroir, staging ou archive n'est calculé à ce stade.
 
 Les anciens splitters manuels sont archivés ; `run_seedvr_comfyui.py` est l'entrée actuelle pour
 les découpes pilotées par le pipeline.

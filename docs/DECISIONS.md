@@ -42,13 +42,14 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Ressource ARE | inventaire typé BAM/WBM/PVRZ ; pipeline BAM limité aux BAM compatibles | pipeline dédié validé pour un autre type/palette |
 | Interpolation | TimedTimeline v2 pause-aware ; v3 ajoute le routage par occurrence | nouvelle timeline sans couture ni dérive, validée ingame |
 | Pack > 512 Mio | pack d'auteur puis split par zone | runtime borné alternatif démontré |
-| Runs interrompus | conserver request/manifest, supprimer les frames partielles, repartir des sources | jamais depuis une sortie partielle |
+| Runs interrompus | conserver la recette utile, supprimer les frames partielles, repartir des sources | jamais depuis une sortie partielle |
 | Rangement des nouveaux runs | mono-resref sous `animations/ressources/<RESREF>/runs/`; lots sous `animations/batches/`; legacy lu sans déplacement | déplacement explicitement planifié avec réécriture contrôlée de toutes les références |
 | Réservation d'un run | `animation_workflow.py new-run --run` crée un marqueur exclusif hors feuille ; `finalize --run` le consomme après validation du run | annulation explicite après contrôle d'absence du run et du `.partial` |
 | QA d'un run | `qa-approval.json` = revue technique/vidéo ; décision ingame immuable sous `animations/index/qa-decisions/`, sélection courante séparée | migration versionnée du contrat |
-| Finalisation QA | transaction `animation_workflow.py finalize` : décision + sélection + CSV ; essais refusés conservés | jamais par éditions partielles |
-| Promotion release | transaction ciblée `animation_release.py`, accord release distinct, aucun staging/package | changement partagé de renderer/format/Core ou package |
-| Gate release | delta par zone pendant la tâche ; gates globales au niveau package | changement runtime/format/générateur/Core ou package |
+| Finalisation QA | transaction `animation_workflow.py finalize` : décision + sélection + CSV ; refus conservé seulement si réutilisable | jamais par éditions partielles |
+| Acceptation candidate | `animation_release.py --run` écrit QA + candidat uniquement | remplacement explicite du candidat |
+| Compilation release | `Compile-BG2HD-Release.ps1` compile tous les domaines ; aucune exécution quotidienne | finalisation explicite |
+| Gate release | diagnostic delta facultatif ; gates globales au niveau finalisation/package | changement runtime/format/générateur/Core ou package |
 | Occlusion xN | bridge moteur pre/post `FXRenderClippingPolys`; le Core release possède son activation ; pour une expansion xN, effacer aussi la cellule x1 transparente adjacente à un effacement natif complet ; masque peint seulement pour donnée WED absente/fausse ou exception v3 | nouvelle famille/build ou régression tracée |
 | Polygone WED | prouver l'intersection avec l'alpha ; sinon créer un polygone local borné | WED source ou contour démontré différent |
 | Resref avec `_` | `[A-Z0-9_]{1,8}` avec au moins un alphanumérique | jamais |
@@ -97,7 +98,7 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |
 | `.work/` | cache supprimable, jamais source |
 | Ajout de famille | runbook actif [`../sprite/FAMILY_APPEND.md`](../sprite/FAMILY_APPEND.md) |
-| Vérification batch | lots/catalogue `built-unverified` via `--defer-full-verify` ; une gate globale `--full-verify --keep-going`, reprise `--resume` limitée aux scopes échoués/modifiés ; installation scellée uniquement |
+| Vérification batch | `prepare` produit `built-unverified` et `install` permet la QA locale ; `--full-verify --keep-going` seulement au jalon final |
 | Routage shader D7 x1 | scopes propriétaires créature + appel monde objet au sol manifesté ; ton neutre mis en file sur slot 5 `fpSprite`, slot 7 `fpSELECT` natif conservé ; aucun forçage HD/x2/ton spécial/contrat absent |
 | Sampler Catmull–Rom D7 x1 | `NEAREST` temporaire limité au draw x1 `fpSprite`/`fpSELECT`, puis restauration exacte min/mag, binding et unité active ; jamais sur texture catalogue HD |
 
@@ -130,8 +131,8 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Clone autonome | le plan de contrôle committé fait autorité ; médias ignorés seulement si déclarés |
 | Candidat renderer | transaction DLL+INI avec reçu, jamais copie brute |
 | Tests locaux | code : `--targeted --path ...`, module direct seulement ; autorités/assets/docs : aucun test Python |
-| Élargissement des tests | le ciblage ne devient jamais complet ; `--full --run` exige un accord distinct |
-| Projections globales | jalon/livrable/release seulement ; mono-passe ; déterminisme doublé seulement sur accord/CI |
+| Élargissement des tests | supprimé : le sélecteur ne connaît que la correspondance directe script/test |
+| Projections globales | finalisation/livrable seulement ; mono-passe ; déterminisme doublé seulement sur demande explicite |
 
 ## Maintenance
 

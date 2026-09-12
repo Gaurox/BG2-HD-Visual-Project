@@ -314,82 +314,6 @@ class AnimationReleaseTests(unittest.TestCase):
             self.assertFalse(target.exists())
             self.assertEqual([], list(root.glob("*.partial")))
 
-    def test_merge_animation_delta_replaces_only_requested_area(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            content = root / "content.json"
-            delta = root / "delta.json"
-            output = root / "merged.json"
-            write_json(
-                content,
-                {
-                    "schema_version": 1,
-                    "entries": [
-                        {
-                            "component_id": 1000,
-                            "install_order": 1000,
-                            "kind": "map",
-                            "area": "AR0001",
-                            "destination": "override/A.PVRZ",
-                            "source": "maps/A.PVRZ",
-                        },
-                        {
-                            "component_id": 3000,
-                            "install_order": 3000,
-                            "kind": "area-animation",
-                            "area": "AR0001",
-                            "destination": "iee-assets/areas/AR0001/old.rgba",
-                            "source": "animations/old.rgba",
-                        },
-                        {
-                            "component_id": 3001,
-                            "install_order": 3001,
-                            "kind": "area-animation",
-                            "area": "AR0002",
-                            "destination": "iee-assets/areas/AR0002/kept.rgba",
-                            "source": "animations/kept.rgba",
-                        },
-                    ],
-                },
-            )
-            replacement = {
-                "component_id": 3000,
-                "install_order": 3000,
-                "kind": "area-animation",
-                "area": "AR0001",
-                "destination": "iee-assets/areas/AR0001/new.rgba",
-                "source": "animations/new.rgba",
-            }
-            write_json(delta, {"schema_version": 1, "entries": [replacement]})
-            with mock.patch.object(release, "CONTENT", content):
-                release.merge_animation_delta("AR0001", delta, output)
-            merged = json.loads(output.read_text(encoding="utf-8"))["entries"]
-            self.assertIn(replacement, merged)
-            self.assertTrue(any(item.get("area") == "AR0002" for item in merged))
-            self.assertTrue(any(item.get("kind") == "map" for item in merged))
-            self.assertFalse(any(item.get("source") == "animations/old.rgba" for item in merged))
-
-    def test_merge_animation_delta_rejects_foreign_area(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            content = root / "content.json"
-            delta = root / "delta.json"
-            write_json(content, {"entries": []})
-            write_json(
-                delta,
-                {
-                    "entries": [
-                        {
-                            "kind": "area-animation",
-                            "area": "AR0002",
-                        }
-                    ]
-                },
-            )
-            with mock.patch.object(release, "CONTENT", content):
-                with self.assertRaises(release.ReleasePromotionError):
-                    release.merge_animation_delta("AR0001", delta, root / "merged.json")
-
     def test_publish_transaction_rolls_back_prior_write(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -477,8 +401,9 @@ class AnimationReleaseTests(unittest.TestCase):
             root = Path(temporary)
             with configured_workspace(root):
                 first = release.CANDIDATES
-                second = release.CONTENT
+                second = release.QA_APPROVALS / "AR0000" / "test.json"
                 first.parent.mkdir(parents=True)
+                second.parent.mkdir(parents=True)
                 first.write_bytes(b"first-before")
                 second.write_bytes(b"second-before")
                 real_write = release.write_atomic
@@ -546,48 +471,7 @@ class AnimationReleaseTests(unittest.TestCase):
                         require_structured=True,
                     )
 
-    def test_complete_registry_preflight_verifies_every_candidate_once(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            candidates_path = root / "candidates.json"
-            approval_override = root / "new-approval.json"
-            write_json(candidates_path, {"candidates": []})
-            candidates = [{"area": "AR0001"}, {"area": "OH6000"}]
-
-            def verified(**kwargs):
-                return {"area": kwargs["area"]}
-
-            with mock.patch.object(
-                release,
-                "validate_candidates_document_shape",
-                return_value=candidates,
-            ), mock.patch.object(
-                release,
-                "_verify_release_candidate_from_validated_registry",
-                side_effect=verified,
-            ) as verify_one:
-                result = release.verify_release_candidate_registry(
-                    candidates_path=candidates_path,
-                    approval_overrides={"OH6000": approval_override},
-                    allow_pending=True,
-                )
-
-            self.assertEqual([{"area": "AR0001"}, {"area": "OH6000"}], result)
-            self.assertEqual(2, verify_one.call_count)
-            first = verify_one.call_args_list[0].kwargs
-            second = verify_one.call_args_list[1].kwargs
-            self.assertIs(first["candidates"], candidates)
-            self.assertIs(second["candidates"], candidates)
-            self.assertIs(first["approval_cache"], second["approval_cache"])
-            self.assertIs(
-                first["legacy_evidence_cache"], second["legacy_evidence_cache"]
-            )
-            self.assertIsNone(first["approval_override_path"])
-            self.assertEqual(approval_override.resolve(), second["approval_override_path"])
-            self.assertTrue(first["allow_pending"])
-            self.assertTrue(second["allow_pending"])
-
-    def test_apply_preflights_complete_registry_before_generators_or_publish(self) -> None:
+    def test_acceptance_publishes_only_candidate_and_qa(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             approval_path = root / "approvals" / "new.json"
@@ -595,25 +479,16 @@ class AnimationReleaseTests(unittest.TestCase):
                 "area": "AR0001",
                 "qa_approval_path": approval_path,
                 "qa_approval_bytes": b"{}\n",
-                "candidate_bytes": b"{}\n",
+                "candidate_bytes": b"{\"candidates\": []}\n",
             }
             with mock.patch.object(
-                release,
-                "verify_release_candidate_registry",
-                side_effect=release.ReleasePromotionError("candidat existant invalide"),
-            ) as preflight, mock.patch.object(
-                release, "powershell"
-            ) as find_powershell, mock.patch.object(
-                release, "publish_transaction"
+                release, "publish_transaction", return_value=["candidate"]
             ) as publish:
-                with self.assertRaisesRegex(
-                    release.ReleasePromotionError, "candidat existant invalide"
-                ):
-                    release.apply_promotion(plan, test_delta=False)
+                changed = release.apply_acceptance(plan)
 
-            preflight.assert_called_once()
-            find_powershell.assert_not_called()
-            publish.assert_not_called()
+            self.assertEqual(["candidate"], changed)
+            files = publish.call_args.args[0]
+            self.assertEqual({approval_path, release.CANDIDATES}, set(files))
 
     def test_v3_continuity_registry_version_requires_a_json_integer(self) -> None:
         approval = {
