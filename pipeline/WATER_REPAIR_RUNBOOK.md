@@ -1,5 +1,9 @@
 # Réparation complète de l'eau — reprise LLM
 
+Pour expérimenter la voie 2 avant une généralisation :
+[`WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](WATER_ROUTE2_EXPERIMENT_RUNBOOK.md).
+Elle conserve AR0900 corrigé comme témoin ; elle ne remplace pas cette recette native validée.
+
 ## 0. Mandat et limites
 
 - Référence : AR0900 **jour**, correctif complet accepté ingame par l'utilisateur le 2026-09-12.

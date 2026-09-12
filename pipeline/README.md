@@ -74,6 +74,7 @@ demande. Demander ensuite « scopes ciblés / toutes / aucune ». Exécuter seul
 | Découpe selon dimensions | [`MAP_SPLITTING_POLICY.md`](MAP_SPLITTING_POLICY.md) |
 | Eau | [`WATER_MAP_PIPELINE.md`](WATER_MAP_PIPELINE.md) |
 | Réparation eau native — reprise LLM | [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md) |
+| Eau procédurale voie 2 — expérience et rollback | [`WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](WATER_ROUTE2_EXPERIMENT_RUNBOOK.md) |
 | Liquides et overlays | [`OTHER_LIQUID_MAP_PIPELINE.md`](OTHER_LIQUID_MAP_PIPELINE.md) |
 | Alpha | [`ALPHA_MAP_PIPELINE.md`](ALPHA_MAP_PIPELINE.md) |
 | Patch raster local | [`map_patch_compositor/README.md`](map_patch_compositor/README.md) |
