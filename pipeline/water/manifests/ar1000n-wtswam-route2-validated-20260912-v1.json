@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-water-qa-decision-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:night"],
+  "status": "validated-installed",
+  "family": "swamp-wtswam",
+  "wed": "AR1000N",
+  "variant": "night",
+  "overlay": "WSWPIL",
+  "user_verdict": "résultat satisfaisant ; animation discrète acceptée sans modification supplémentaire",
+  "validated_candidate": {
+    "run": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/run.json",
+    "registry": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+    "installation": "pipeline/water/manifests/ar1000n-wtswam-route2-installed-20260912-v1.json",
+    "asset_receipt": "backups/water-ar1000n-20260912-v1/assets/override-backup-20260912-194755/install-backup.json",
+    "renderer_receipt": "backups/renderer/20260912T174749656853Z-b681e761/renderer-install-receipt.json"
+  },
+  "recipe": {
+    "spatial": "reuse validated non-generative WSWPIL x4 asset",
+    "temporal": "36 phases at 15 Hz; atlas-linear renderer blend at 30 FPS",
+    "material_id": 5,
+    "route2_strength": 0.70,
+    "coverage_cells": 37,
+    "secondary_art_cells": 37
+  },
+  "scope_limit": "validation applies only to exact AR1000N dry-night WED/TIS/PVRZ/runtime hashes; WSWPILR rain is installed but was not separately observed; no WTSWAM family-wide inference",
+  "installation_state": "installed",
+  "tests": "not-run-user-request",
+  "release": "not-requested"
+}

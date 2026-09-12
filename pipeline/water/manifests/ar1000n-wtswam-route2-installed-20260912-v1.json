@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-water-installation-selection-v1",
+  "date": "2026-09-12",
+  "asset_ids": ["maps:AR1000:night"],
+  "status": "installed-pending-ingame-qa",
+  "family": "swamp-wtswam",
+  "wed": ["AR1000N"],
+  "variant": "night",
+  "overlay": "WSWPIL/WSWPILR",
+  "source_assets": "maps/technical-overlays/WTSWAMR/runs/seedvr-none-apollo36-isolated-rain-20260912-v4/08_candidate",
+  "user_direction": "use the fastest suitable documented method for AR1000 night; no tests; install ingame",
+  "route2": {
+    "entry_ids": [
+      "wtswam-ar1000n-night-slot1-q070-v1",
+      "wtswamr-ar1000n-night-rain-slot1-q070-v1"
+    ],
+    "timeline_frames": 36,
+    "source_fps": 15.0,
+    "renderer_fps": 30.0,
+    "mode": "atlas-linear",
+    "material_id": 5,
+    "approved_strength": 0.70,
+    "fallback": "q0-native on absent or divergent identity"
+  },
+  "artifacts": [
+    {
+      "path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/run.json",
+      "sha256": "C7FF4594AED38710CDD4DAB6716E981DDAFABFBF20821274E446828130622B7E"
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+      "sha256": "433AEC70EF6852D12648AA8F68D5D6AC0DAE408D0DD0BCCC3A17CDDB8501386E"
+    },
+    {
+      "path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/override-candidate/manifest.json",
+      "sha256": "47B71D347A079FC9094C4C316142A01EAF37796F40AA3A33F87DD77AE02B8B44"
+    }
+  ],
+  "installed_files": {
+    "AR1000N.WED": {
+      "bytes": 83926,
+      "sha256": "795127FD20A744520345159465BC49FAD62A51239F72865E62D6EDCD8CFC253F"
+    },
+    "InfinityEngine-Enhancer.dll": {
+      "bytes": 1848320,
+      "sha256": "ABBF3679F3A4D70D61EBD31864D9FCC9DDDBC76A46221CFDF4D587CA15C8F7D9"
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "bytes": 5572,
+      "sha256": "F90885D3E920E06663E0E86FC44FB6A20C0191D8B09CC0F91130169C7B29570C"
+    }
+  },
+  "installation_receipts": [
+    {
+      "path": "backups/renderer/20260912T174749656853Z-b681e761/renderer-install-receipt.json",
+      "sha256": "21C9B23ED3A5951F7EA77A1D0AE5D58DCC3FFC4FA1F5D835896E7697D2C18466"
+    },
+    {
+      "path": "backups/water-ar1000n-20260912-v1/assets/override-backup-20260912-194755/install-backup.json",
+      "sha256": "46EF843E3E3ACC6B2F80BD16BC5A787934B8A95586E1BE1392DF63187935735E"
+    }
+  ],
+  "verification": "game and InfinityLoader closed; transactional installers verified live WED, DLL and INI",
+  "tests": "not-run-user-request",
+  "release": "not-requested"
+}

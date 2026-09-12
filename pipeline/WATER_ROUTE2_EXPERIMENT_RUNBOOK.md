@@ -58,7 +58,8 @@ Lave, huile, goo et eaux intérieures n'ont pas de généralisation validée.
 
 La voie 1 non générative a supprimé le quadrillage, mais q0 a été jugé figé. La solution validée v5
 combine WTPOOL2 bilinéaire périodique, 36 phases/15 Hz, blend 30 FPS, matériau 1 et q0.70. Elle est
-bornée à AR1000 jour ; AR1000N reste hors périmètre.
+bornée à AR1000 jour. AR1000N est un cas séparé `swamp-wtswam` : WSWPIL sec, 36 phases/15 Hz,
+blend 30 FPS, matériau 5 et q0.70 validés ingame ; WSWPILR pluie reste non observé.
 
 Références :
 

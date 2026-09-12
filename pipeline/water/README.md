@@ -15,7 +15,7 @@ et ouvrir uniquement la référence utile.
 | Politique machine par famille | `family-policy-v1.json` |
 | Registre route2 | `route2-registry-v1.json` et registre v2 du moteur |
 
-## Cas AR1000 jour validé
+## Cas AR1000 jour et nuit validés
 
 - Famille : `pool-wtpool` ; identité : `AR1000` jour uniquement.
 - V1 : crash causé par un nom de page PVRZ incompatible.
@@ -24,13 +24,19 @@ et ouvrir uniquement la référence utile.
   jugée figée à `q=0`.
 - V5 validée ingame : 6→36 phases linéaires à 15 Hz, interpolation renderer 30 FPS, matériau eau
   `id=1`, route2 exacte `q=0.70`.
-- `AR1000N` n'a pas été traité et aucune conclusion ne lui est propagée.
+- `AR1000N` appartient à `swamp-wtswam`, pas à `pool-wtpool` : alias sec `WSWPIL`, 36 phases à
+  15 Hz, blend 30 FPS, matériau `id=5`, route2 exacte `q=0.70`.
+- Le rendu nocturne sec d'AR1000N est validé ingame avec son animation discrète ; `WSWPILR` pluie
+  est installé mais n'a pas été observé séparément.
 
 Références finales :
 
 - `manifests/ar1000-wtpool-route2-validated-20260912-v5.json`
 - `manifests/ar1000-wtpool-route2-installed-20260912-v5.json`
+- `manifests/ar1000n-wtswam-route2-validated-20260912-v1.json`
+- `manifests/ar1000n-wtswam-route2-installed-20260912-v1.json`
 - `../scripts/build_ar1000_wtpool_route2_candidate.py`
+- `../scripts/build_ar1000n_wtswam_route2_candidate.py`
 
 ## État et sécurité
 

@@ -30,6 +30,7 @@ compatible, pas des recettes universelles.
 | `lake-wtlake` nuit | AR0046N v7 | correction runtime slot PVRZ→nom GL | défaut runtime exact |
 | `lake-wtlake` nuit | AR0300N v10 | RGB nocturne ; opacité primaire/secondaire 160 ; q0.70 | choix artistique local |
 | `pool-wtpool` | AR1000 jour v5 | bilinéaire x4 périodique sans SeedVR ; 6→36 linéaire/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | AR1000 jour ; AR1000N exclu |
+| `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |
 | `swamp-wtswam` | AR1607, AR1800 | paire sèche/pluie isolée ; 36 phases ; matériau 5 ; q0.70 | ces deux cartes |
@@ -64,7 +65,7 @@ Repères techniques :
 |---:|---|---|---:|
 | 1 | WTLAKE / WTPOOL qualifié | matériau eau, teinte issue de l'art | 0.70 |
 | 4 | WTSEW | deep `(0.10,0.075,0.03)` ; shallow `(0.24,0.19,0.075)` ; foam `(0.34,0.29,0.12)` ; foam 0.18 ; spec 0.08 | 0.70 AR0404 |
-| 5 | WTSWAM | deep `(0.055,0.12,0.10)` ; shallow `(0.30,0.48,0.37)` ; foam `(0.30,0.40,0.31)` ; foam 0.25 ; spec 0.40 | 0.70 AR1607/AR1800 |
+| 5 | WTSWAM | deep `(0.055,0.12,0.10)` ; shallow `(0.30,0.48,0.37)` ; foam `(0.30,0.40,0.31)` ; foam 0.25 ; spec 0.40 | 0.70 AR1607/AR1800 et AR1000N sec |
 
 ## Détails de réparation réutilisables
 
@@ -81,6 +82,7 @@ Repères techniques :
 ## Références finales
 
 - AR1000 : `manifests/ar1000-wtpool-route2-validated-20260912-v5.json`
+- AR1000N : `manifests/ar1000n-wtswam-route2-validated-20260912-v1.json`
 - Lacs : `manifests/ar0204-ar1600-validated-installed-20260912-v1.json`
 - AR0900N : `manifests/ar0900-night-validated-20260912-v5.json`
 - AR0300N : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json`

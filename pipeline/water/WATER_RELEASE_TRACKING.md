@@ -36,13 +36,14 @@ enregistrée une seule fois.
 
 ## État utile au 2026-09-12
 
-- Validés ingame : AR0046N, AR0204, AR0300N, AR0900N, AR1000 jour, AR1200, AR1600, AR1700,
+- Validés ingame : AR0046N, AR0204, AR0300N, AR0900N, AR1000 jour, AR1000N sec, AR1200, AR1600, AR1700,
   AR1901, AR0404, AR1607, AR1800.
 - Fallback q0 validé : AR2100.
 - En attente ou historiquement ambiguës : AR0300 jour, AR0900 jour, AR2300, AR0046 historique.
 - Eaux intérieures non qualifiées : AR0512, AR1604.
 - AR1000 jour courant : v5 q0.70, 36 phases/15 Hz, blend 30 FPS, validé ingame.
-- AR1000N : hors périmètre et sans état déduit du jour.
+- AR1000N courant : WSWPIL sec q0.70, 36 phases/15 Hz, blend 30 FPS, validé ingame ; animation
+  discrète acceptée. WSWPILR pluie est installé mais non observé séparément.
 
 L'autorité machine reste `release-tracking-v1.json` si cette synthèse devient obsolète.
 
