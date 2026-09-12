@@ -1,56 +1,49 @@
-# Eau — voie 2 : lancement expérimental LLM
+# Eau — voie 2 : état validé et extension LLM
 
-## 0. Mandat, statut, frontières
+## 0. Statut et portée
 
-- Document préparé le 2026-09-12. **Voie 2 non implémentée, non validée.**
-- But : conserver art local, ombres/reflets peints, contours et animation native ; ajouter une
-  contribution procédurale dosable, homogène entre centre et bords. Aucun nouveau reflet 3D.
-- Première cible : **AR0900 JOUR corrigé**, uniquement. Ne pas généraliser la voie 1 au préalable.
-- Référence acceptée : voie 1 ; documentation/QA committées dans `f1cad546`.
-- Lire cette notice ne vaut pas autorisation d'exécution. Dans la nouvelle tâche, confirmer le
-  mandat d'implémentation/installation ; demander séparément le choix des tests avant exécution.
-- Aucun rebuild de map, SeedVR, changement WTLAKE, WED/ARE/sauvegarde, autre shader, réglage
-  sprites, projection ou release dans le premier essai. Une extension requiert un accord explicite.
-- Ne pas promettre « shader seul, toutes les maps, sans rebuild » : c'est une hypothèse à qualifier.
-  Un shader ne répare pas des RGB noircis ni une animation générique mal raccordée déjà stockés.
-- Tous les chemins sont relatifs au dépôt, sauf les clés `config://...`.
+- Implémentation AR0900 jour livrée par `a7397a52` (`feat(engine): add scoped procedural water route`).
+- Validation utilisateur le 2026-09-12 : **dosage `1.00` retenu**, jugé nettement plus beau grâce
+  au mouvement procédural. Dosages comparés : `0`, `0.15`, `0.30`, `0.50`, `1.00`.
+- Portée actuellement codée : **AR0900 jour, overlay1 WTLAKE, page WLAKE00 uniquement**.
+- Hors cette identité : dosage forcé à0 ; rendu natif/voie1. Nuit, autres zones, overlays et familles
+  non qualifiés.
+- Autorité de preuve :
+  `engine/InfinityEngine-Enhancer/source-patchee/docs/validation/water-route2-ar0900-20260912.md`.
+- Voie1 requise en amont pour les assets défectueux :
+  [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md). La voie2 ne corrige ni RGB noircis,
+  alpha central erroné, faux contours, padding, ni frames d'overlay non périodiques.
+- Aucun rebuild map/overlay, WED/ARE, coordonnées, sauvegarde ou release dans l'implémentation voie2.
+- Cette notice documente le résultat et la méthode d'extension. Elle n'autorise ni généralisation,
+  installation, tests, projections, packaging ni promotion release.
 
-Lectures obligatoires :
+Lectures minimales avant reprise : `AGENTS.md`, `README.md`, `pipeline/README.md`,
+`docs/DECISIONS.md`, `pipeline/PROBLEMES_A_RESOUDRE.md`, notice voie1, puis
+`engine/InfinityEngine-Enhancer/source-patchee/{AGENTS.md,README.md}` et les transactions renderer/
+shader-suite du moteur.
 
-1. `AGENTS.md`, `README.md`, `pipeline/README.md`, `docs/DECISIONS.md`,
-   `pipeline/PROBLEMES_A_RESOUDRE.md`.
-2. [Réparation voie 1](WATER_REPAIR_RUNBOOK.md), surtout §§1–4,10–11 : contrat natif,
-   causes résolues, preuve d'installation et limites. Ne pas réexécuter ses producteurs.
-3. `engine/InfinityEngine-Enhancer/source-patchee/{AGENTS.md,README.md}`.
-4. Sous ce moteur : `docs/{renderer-candidate-transaction,shader-suite-candidate-transaction}.md`.
-5. `docs/TEST_SELECTION.md`. Pour de nouveaux formats/offsets : index documentaire BG2EE,
-   puis référence nécessaire ; `src/iee/game/build_manifest.*` reste l'autorité binaire.
+## 1. Référence AR0900 conservée
 
-## 1. État témoin vérifié — ne pas confondre avec les anciens essais
-
-`ENGINE = engine/InfinityEngine-Enhancer/source-patchee` dans les tableaux ci-dessous.
-Les hashes suivants sont des repères, **pas** une permission d'écraser un état live divergent.
-À la reprise, revalider les fichiers effectifs, les sélections et l'absence d'intervention concurrente.
-
-| Objet | État vérifié |
+| Objet | Valeur validée |
 |---|---|
-| Sélection map | `areas.csv`, AR0900 jour, `voie1-water-rgb-seams-x4-jour-20260912`, `validated-installed` |
-| Build | `maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/05_build/x4-alpha128-water-seams-repaired` |
-| Preuve map | `backups/maps/AR0900-20260911T235034477666Z-b986b035/install-backup.json` ; 27 fichiers live conformes |
-| Ensemble map installé | `59DBB058B087D1AD9C1D06A295E7A774D2DF1C6DBA182A2EE8912C467D30E4E8` |
-| Overlay | `maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4` ; conforme au live |
-| `WTLAKE.TIS` | `1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1` |
-| `WLAKE00.PVRZ` | `BCC99E2E6E2881E9D216687044A661C68EC42D0EEC1A4103C341894BB5E2FA10` |
-| `InfinityEngine-Enhancer.dll` live | `8FF3629FEEDB61453B3D316C2C6534F5D109C4390DDE723E39311066A99B9648` |
-| `InfinityEngine-Enhancer.ini` live | `93EA39BD9BFDCDBB24A38809964B034FF649AD3FF5A621D169B8721181BCAFFC` |
-| Réglages live `[Shaders]` | `EnableWaterEffect=false`, `EnableDebugHotkeys=false` |
-| `override/fpSEAM.glsl` live = source ENGINE | `E8D0F51E3A5D0C8E52F0DB03FE792FBCB700ED07951CE7825238B47264D00488` |
-| `BaldurReal.exe` 2.7.3.0 | `B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57` |
-| WED | Pas de `override/AR0900.WED` au contrôle ; WED stock, 80×60 cellules |
+| Zone/variante | AR0900 jour ; WED stock80×60 ;5slots, seuls0/1 renseignés |
+| Base | AR0900.TIS,5752tuiles |
+| Overlay ciblé | WTLAKE.TIS,6frames ; WLAKE00.PVRZ2048×2048 |
+| Build map voie1 | `maps/AR0900/runs/voie1-water-rgb-seams-x4-jour-20260912/05_build/x4-alpha128-water-seams-repaired` |
+| Ensemble map | `59DBB058B087D1AD9C1D06A295E7A774D2DF1C6DBA182A2EE8912C467D30E4E8` |
+| Reçu map | `backups/maps/AR0900-20260911T235034477666Z-b986b035/install-backup.json` |
+| Build overlay | `maps/technical-overlays/WTLAKE/runs/seedvr2-7b-int8-wavelet-periodic-x4/04_build_x4` |
+| WTLAKE.TIS | `1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1` |
+| WLAKE00.PVRZ | `BCC99E2E6E2881E9D216687044A661C68EC42D0EEC1A4103C341894BB5E2FA10` |
+| Binaire jeu | BG2EE2.7.3.0, `BaldurReal.exe` SHA256 `B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57` |
+| Commit voie1/doc initiale | `f1cad546`, `9fe13f01` |
+| Commit voie2 | `a7397a52` |
 
-- `Baldur.exe` est ici un lanceur, pas le binaire à utiliser pour les offsets.
-- Les huit shaders live correspondent aux sources au contrôle. Ne pas supposer que cela restera vrai.
-- Textures procédurales présentes sous `config://bg2ee_game_root/iee-textures/` :
+Ne jamais restaurer le reçu map ci-dessus pour annuler la voie2 : son état `before` est l'ancien
+candidat voie1 avec traits noirs. La voie2 ne modifie aucun fichier map ; restaurer uniquement ses
+transactions renderer/shader.
+
+Textures procédurales attendues sous `config://bg2ee_game_root/iee-textures/` :
 
 | Fichier | SHA256 |
 |---|---|
@@ -58,263 +51,267 @@ Les hashes suivants sont des repères, **pas** une permission d'écraser un éta
 | `iee_water_dudv.rgba` | `3F9FBF6E982CBECEBE70386F2DF8152A85D61651FD2965D9C17CC70807BBD83E` |
 | `iee_water_foam.rgba` | `F9FB4383F83BEDD94A187EC2118FFE91879AEE911C0E96E05CC3C882B309DFF6` |
 
-Pas de DDS correspondants au contrôle. Le loader préfère `.dds` à `.rgba` ; un DDS présent mais
-invalide bloque le chargement, sans repli RGBA. Ne pas chercher ces textures dans `iee-assets/`.
+Le loader préfère `.dds` à `.rgba`. Un DDS présent mais invalide bloque le chargement sans repli
+RGBA : inventorier les deux extensions avant diagnostic.
 
-**Retour arrière :** restaurer l'ancien reçu map ci-dessus remettrait l'essai *antérieur* avec
-raccords noirs (`before_set_sha256=9DE7EDB09EBD019B45DA1DC1EB3064A88846C8905561D55A35EEB4FDD86D953B`).
-Il sert à vérifier le témoin actuel, pas à annuler la voie 2. La voie 2 doit créer ses propres reçus
-à partir de l'état final actuel. Ne pas réutiliser non plus un ancien reçu renderer avant voie 1.
+## 2. Configuration retenue
 
-## 2. Diagnostic établi du shader actuel
+Réglage visuel validé pour AR0900 jour :
 
-Source à modifier éventuellement : `ENGINE/assets/override/fpSEAM.glsl`, pas un dump ni un bundle.
+```ini
+[Shaders]
+EnableWaterEffect = true
+EnableWaterOverlayRoute2 = true
+WaterOverlayStrength = 1.00
+EnableDebugHotkeys = false
+```
 
-| Code actuel | Conséquence |
-|---|---|
-| `waterMask = (1.0 - texColor.a) * cellSoft`, seulement si `vColor.a > 0.9` | Confond alpha de contour et alpha de mélange central128 |
-| `texColor.rgb = ...mix(artLinear, water, waterMask)` | Remplace une partie de l'art local par du procédural |
-| `texColor.a = max(texColor.a, waterMask)` | Rend opaque un trou primaire alpha0 ; masque l'overlay animé dessous |
-| `alphaScale=0` si cellule liquide et `0.15 < vColor.a < 0.9` | Supprime notamment la passe d'art secondaire `WATER_ALPHA` ; le commentaire « must stay vanilla » plus haut ne décrit pas le résultat final |
-| Diagnostic `uIeeEnabled>1.5` | Peut supprimer les passes semi-transparentes et forcer alpha1 ; pas un contrôle d'identité natif |
+- `WaterOverlayStrength=1.00` : RGB de l'underlay WTLAKE remplacé entièrement par le matériau
+  procédural animé. L'art local de la map reste composé au-dessus avec ses alphas natifs réparés.
+- `EnableWaterEffect=true` est nécessaire à la production de `P`; route2 empêche l'ancien effet
+  destructif de s'appliquer aux draws non ciblés.
+- Valeurs source par défaut : route2`false`, strength`0`. Valeur non finie/hors `[0,1]` →0.
+- `EnableTilePageDiagnostics=true` a servi aux essais. Réglage retenu hors diagnostic :
+  `EnableTilePageDiagnostics=false` pour éviter les logs. L'activer temporairement uniquement pour
+  prouver un nouveau ciblage.
+- Ne pas activer F10 pendant la QA ; le hash d'une INI de QA avec diagnosticsON n'est pas le hash de
+  l'INI finale diagnosticsOFF.
 
-Activer uniquement `EnableWaterEffect=true`, supprimer uniquement `alphaScale`, ou appliquer le
-même alpha final partout **n'est pas une réparation démontrée**.
+Historique de décision :
 
-### Contrat déjà réparé à conserver
+| q | Résultat |
+|---:|---|
+|0|Identique voie1 après correction du routage ; gate neutre validée|
+|0.15|Différence légère ; peut-être meilleure|
+|0.30|Mouvement plus perceptible ; gain statique faible|
+|0.50|Diagnostic intermédiaire, non retenu|
+|1.00|Préférence utilisateur nette ; **valeur retenue AR0900 jour**|
 
-- Animation générique WTLAKE : six frames périodiques x4 ; dessin natif conservé.
-- Centre sans secondaire : primaire DXT5, alpha texture `128/255`, alpha dessin1.
-  Vanilla DXT1 : texture opaque, DrawAlpha `128/255`. Contribution équivalente.
-- Cellule avec secondaire : primaire de décor/contour ; art secondaire avec alpha texture
-  de couverture et alpha dessin `128/255`. Ne pas lui imposer aussi alpha texture128.
-- RGB et alpha des interfaces internes + padding ont été réparés séparément des vraies rives.
-- Noir RGB ≠ trou alpha ≠ absence de secondaire. `1-alpha` ne reconstruit plus à lui seul la
-  géométrie de l'eau après introduction de l'alpha128 de mélange.
-- Les 775 primaires centrales et les 860 cellules avec secondaire doivent avoir une animation
-  et des contributions comparables. Garder le décor opaque et les vraies rives intacts.
-
-## 3. Inspection runtime obligatoire avant choix d'implémentation
-
-Fichiers sous ENGINE ; lire les fonctions concernées, pas seulement leurs commentaires :
-
-| Fichier | Vérification |
-|---|---|
-| `src/iee/features/tile_render.cpp` | Identité tileset/tuile/page, flags, UV xN, DrawColor/DrawAlpha hérités ; aucune sémantique explicite primaire/secondaire envoyée au shader actuellement |
-| `src/iee/shader_probe.cpp` | Programme réellement lié, classification `vpDraw/fpSEAM` slot8 ; détection `uIee*`, feed et horloge `on_frame_tick` |
-| `src/iee/shader_uniform_bridge.{h,cpp}` | Locations, invalidation/cache par révision, samplers, uniforms ; aucune uniform actuelle de dosage ou d'identité de passe eau |
-| `src/iee/area_state.cpp` | WED réellement chargé, génération/changement de zone, teinte, upload masque |
-| `src/iee/game/area_texture.cpp` | Masque R8 par cellule64, première couche liquide WED gagne ; pas un masque de contour au pixel |
-| `src/iee/game/tile_liquid.{h,cpp}` | Modes0 aucun,1 eau,2 lave,3 goo,4 égouts,5 marais,6 huile ; classification resref |
-| `src/iee/water_textures.cpp`, `src/iee/dll_main.cpp` | Chargement `iee-textures`, DDS prioritaire, erreurs/upload/bind |
-| `src/iee/core/config.{h,cpp}`, `src/iee/hooks.cpp` | Activation et replis en cas d'échec des hooks |
-
-Exiger une preuve du chemin réel pour au moins : centre sans secondaire, eau avec secondaire,
-rive partiellement couverte, terre non liquide ; ajouter un fade et un changement de zone.
-La trace minimale associe : resref zone/WED/tileset, cellule, ID tuile, rôle, programme lié,
-format, alpha texture pertinent, alpha dessin, blend factors, ordre des passes et nombre d'applications.
-Si une instrumentation est nécessaire, bornée et désactivée par défaut ; demander les tests avant
-exécution et ne pas modifier le jeu durant ce diagnostic sans mandat d'installation.
-
-Points bloquants à lever :
-
-- `vColor.a≈0.5` ne prouve pas « secondaire » ; `vColor.a≈1` ne prouve pas « primaire ».
-- Une page PVRZ contient plusieurs rôles possibles ; ne pas classifier l'eau par simple textureId.
-- Le masque WED actuel ne fournit ni le rôle du draw, ni le contour exact, ni toutes les couches
-  liquides superposées. Sa couverture élargie peut déborder vers une cellule voisine non marquée.
-- Les textures x1 peuvent être déléguées au renderer natif par le hook xN : un mécanisme placé
-  uniquement dans son chemin xN ne couvrira pas automatiquement WTSEW/WTSWAM/WTOIL stock.
-- Un nouveau signal par draw ne doit pas être bloqué par `lastAppliedRevision` inchangée ;
-  réinitialiser/restaurer le contexte entre draws, zones et contextes GL pour éviter toute fuite.
-- `EnableWaterEffect` est global ; il n'existe pas ici de clé INI confirmée « AR0900 seulement ».
-  Prévoir un opt-in explicite testé si le candidat doit être strictement borné à cette zone.
-  Sinon annoncer sa portée globale et obtenir l'accord avant installation ; ne pas inventer une clé.
-
-## 4. Cible de composition — contrat, pas patch prêt à copier
-
-Notations simplifiées pour une zone entièrement eau : `U` animation générique native, `A` art local,
-`a` son opacité effective, `P` contribution procédurale, `q` dosage choisi dans `[0,1]`.
+## 3. Contrat de composition
 
 ```text
-Témoin : C0 = a*A + (1-a)*U
-Cible  : U2 = (1-q)*U + q*P
-         C2 = a*A + (1-a)*U2
-Invariants : q=0 => C2=C0 ; EnableWaterEffect=false => chemin témoin inchangé.
+U = RGB overlay natif animé WTLAKE
+P = RGB matériau procédural animé
+A = art local map réparé par voie1
+a = alpha effectif natif de A
+U2 = mix(U, P, q)
+C2 = a*A + (1-a)*U2
+alpha(U2) = alpha(U)
+q=0 => C2 identique voie1
+q=1 => U2=P ; A, a et ordre des passes inchangés
 ```
 
-La formule décrit les contributions ; implémenter dans l'espace colorimétrique réel du framebuffer
-et du blend, à vérifier. Ne pas introduire une conversion sRGB/linéaire supplémentaire dans le
-chemin neutre. Le fragment actuel est en alpha droit ; vérifier les facteurs GL avant toute formule.
+Invariants obligatoires :
 
-Ordre de préférence à évaluer après la trace :
+- modifier uniquement le RGB de l'overlay animé identifié ; jamais son alpha ;
+- conserver `vColor`, tone, facteurs de blend et ordre natifs ;
+- ne pas relever `texColor.a` en route2 ;
+- ne pas annuler la passe secondaire `WATER_ALPHA` en route2 ;
+- ne pas exécuter l'ancien remplacement procédural en plus de route2 ;
+- dosage par draw, initialisé/remis à0 autour de chaque `glDrawArrays` ; aucune fuite de programme,
+  texture, zone ou contexte GL ;
+- non-éligible/erreur/identité inconnue → dosage0 et rendu natif ; aucun fallback heuristique.
 
-1. Appliquer `q` **une seule fois à la couche animée sous-jacente identifiée**, laisser l'art
-   primaire/secondaire et leurs alphas natifs inchangés. Ce modèle conserve naturellement la même
-   contribution de l'art au centre et au bord. L'identification et le programme de cet overlay sont
-   à prouver ; ne pas affirmer que `fpSEAM` actuel dispose déjà des signaux nécessaires.
-2. Composition équivalente dans le chemin primaire : acceptable seulement si la dérivation prend
-   en compte l'art central dans la primaire, l'art de bord dans une passe ultérieure, la couverture
-   des rives et les fades. Ne pas simplement interpoler RGB puis relever alpha : cela n'est pas
-   équivalent au modèle ci-dessus. Fournir les équations par population et leur vérification.
-3. Si les entrées GLSL ne suffisent pas, ajouter le minimum de contexte runtime explicite et
-   documenté ; ne pas remplacer les signaux absents par des seuils alpha/couleur universels.
-   Présenter cette extension et obtenir accord avant de dépasser le périmètre initial.
+Trace AR0900 : blend actif `SRC_ALPHA(770) / ONE_MINUS_SRC_ALPHA(771)`, framebuffer sRGB0.
+Le matériau `P` est calculé en linéaire puis encodé ; `mix(U,P,q)` est réalisé en RGB stocké avant
+les tone/blend existants. Le chemin q0 contourne le calcul et toute conversion colorimétrique.
 
-Pour les trois cas :
+## 4. Implémentation livrée
 
-- Ne plus annuler `WATER_ALPHA` dans la voie 2 ; ne pas exécuter l'ancien remplacement en plus du nouveau.
-- Conserver les assets voie 1 et alpha128 pour le premier essai. Si un nouveau contrat exige de
-  changer cet alpha, le démontrer puis créer un candidat assets séparé après accord ; jamais écraser
-  le témoin ni double-atténuer à128×128.
-- Décorréler couverture eau, opacité de l'art et dosage procédural. Garder les vraies rives.
-- `q` est un paramètre conceptuel **à implémenter**, pas une option INI existante. Commencer à0.
-  À dosage nul, contourner réellement le calcul procédural et ses modifications alpha/RGB.
-- Valeurs exploratoires après identité validée : 0.15 puis0.30 ; aucune valeur n'est validée d'avance.
-- Hors zone/famille/rôle autorisé, identité manquante, masque invalide, texture indisponible ou
-  build inconnu : rendu natif, sans réutiliser un état de la zone/draw précédent.
-- Le mode3/5/6 n'a pas actuellement une branche visuelle dédiée comme la lave/les égouts.
-  Leur simple classification ne vaut pas prise en charge graphique correcte.
+| Fichier | Rôle |
+|---|---|
+| `ENGINE/assets/override/fpSEAM.glsl` | Uniforms route2/strength ; calcul `P` ; mix RGB seulement ; conservation alpha/WATER_ALPHA |
+| `ENGINE/src/iee/core/config.{h,cpp}` | Clés INI, sérialisation, validation `[0,1]`, defaults fail-closed |
+| `ENGINE/src/iee/core/water_overlay_policy.h` | Identité AR0900/WTLAKE stricte et layout WED |
+| `ENGINE/src/iee/shader_uniform_bridge.{h,cpp}` | Uniform global `uIeeWaterRoute2` |
+| `ENGINE/src/iee/shader_probe.cpp` | Détection draw `vpDraw/fpSEAM`, sampler réel, uniform strength par draw, reset RAII, logs bornés |
+| `ENGINE/src/iee/area_state.{h,cpp}` | Revalidation WED/base/overlay/page live et correspondance texture moteur→GL |
+| `ENGINE/src/iee/hooks.{h,cpp}` | Table textures native manifestée, validation signatures/mémoire, pont de sélection |
+| `ENGINE/tests/iee_tests.cpp` | Policy/layout/dosage/defaults/INI |
+| `pipeline/tests/test_water_route2_shader_contract.py` | Gardes source ; ne remplace pas compilation GLSL/QA ingame |
 
-## 5. Candidats, tests et jalons
+`ENGINE = engine/InfinityEngine-Enhancer/source-patchee`.
 
-1. `git status --short`. Ne pas embarquer les travaux animations ou autres changements concurrents.
-2. Revalider §1. Si drift : expliquer, arrêter l'installation, ne rien restaurer automatiquement.
-3. Geler un nouveau dossier d'expérience versionné, par exemple
-   `ENGINE/docs/validation/water-route2-ar0900-<id>/`, avec requête, hashes d'entrée, hypothèses,
-   portée, équations, fichiers modifiés, contrôles, références des candidats/reçus et QA distinctes.
-   Les grosses copies binaires restent dans les répertoires locaux de candidats, pas dans Git.
-4. Snapshot exact du live (shaders, DLL, INI, dépendances) avant modification. Conserver le témoin.
-5. Implémenter un premier candidat **neutre** (`q=0`) et sa sélection de passe ; ne pas régler
-   simultanément palette, vagues, écume, cadence et transparence.
-6. Préparer uniquement le plan des fichiers modifiés, sans lancer les tests :
+### Sélection exacte actuelle
 
-```powershell
-python pipeline/scripts/test_changed.py --targeted --path engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSEAM.glsl
+À chaque draw `vpDraw/fpSEAM` :
+
+1. lire le sampler `uTex` et la texture2D liée ; restaurer l'unité active ;
+2. exiger zone active stable, WED/runtime `AR0900`, base80×60 ;
+3. accepter2–5slots WED, base`AR0900`, overlay1`WTLAKE`, slots2+ sans resref ni couverture ;
+4. exiger base runtime5752tuiles, overlay runtime6tuiles ; refuser base`AR0900N` ;
+5. valider chaque wrapper WTLAKE : index TIS, entrée, page `WLAKE00`, dimensions2048² ;
+6. `CResPVR::texture` est un **slot moteur**, pas un nomGL. Résoudre le nomGL live depuis la table
+   manifestée :512descripteurs, stride0x28, nom+0, largeur+4, hauteur+8, deletePending+0x0D ;
+7. comparer ce nomGL au sampler courant ; recontrôler zone/WED avant succès ;
+8. exiger `cellMode=1` dans le fragment ; appliquer q configuré ; sinon q0.
+
+Validation table native indépendante des options sprites/occlusion : section et mémoireRW non
+exécutables, trois signatures/référencesRIP, sélecteur secondaire+0x24. Échec → route2 inactive.
+Ne pas appeler `DrawBindTexture` pendant le draw et ne pas conserver un nomGL en cache.
+
+### Deux erreurs corrigées pendant q0
+
+| Erreur | Symptôme | Correction |
+|---|---|---|
+| `overlays.size()!=2` | AR0900 stock possède5slots ; aucun draw reconnu | Accepter2–5, exiger slots2+ vides/sans couverture |
+| `CResPVR::texture == GL name` | Slot moteur22, nomGL25 ; `overlay=false` | Résolution live par descripteur natif validé |
+
+Ne jamais réintroduire ces simplifications dans une généralisation.
+
+## 5. Preuve et candidat retenu
+
+Gate q0-r2 observée :
+
+```text
+WATER_ROUTE2 native texture table validated=true
+WATER_ROUTE2 identity slots=5 baseTiles=5752 overlayTiles=6 page=WLAKE00 engineSlot=22 glName=25
+WATER_ROUTE2 draw program=24 texture=25 size=2048x2048 overlay=true q=0 blend=1/770/771 srgb=0
 ```
 
-Ajouter les `--path` réels de tout C++/test modifié. Demander explicitement **tests ciblés / tous /
-aucun**. Reprendre exactement le plan accepté avec `--run`, sans escalade globale. Ajouter des tests
-de composition et de sélection/fallback ; le shader compile réellement dans le contexte du jeu.
-Un succès CTest ou un contrôle textuel ne prouve ni le link GL ni la QA visuelle.
+Les pages map4096² ont été tracées `overlay=false q=0`. Neutralité q0 confirmée ingame.
+À15%, trace `overlay=true q=0.15`; à100%, validation visuelle utilisateur retenue.
 
-7. Si nouvelle DLL nécessaire : build ciblé après accord selon le README moteur, cible CMake
-   `InfinityEngine-Enhancer` dans un nouveau dossier de build ; aucun `release_bundle`, packaging
-   ou `cmake --install` dans le jeu. Si GLSL seul : DLL live inchangée.
-8. Installer transactionnellement (§6) après autorisation. Vérifier hashes et link réel.
-9. Gate A : effet OFF identique au témoin. Gate B : effet ON, `q=0`, identique au témoin.
-   Comparer à même scène/zoom/phase native ; une capture non synchronisée n'est pas une diff fiable.
-10. Seulement après A+B : nouveau candidat versionné avec `q>0`, validation utilisateur AR0900 jour.
-11. Échec : arrêter le réglage esthétique ; tracer contribution/ordre/alpha par population, ou
-    restaurer le témoin (§6). Ne pas lancer un nouvel upscale pour masquer une erreur de composition.
+| Objet | Valeur |
+|---|---|
+| Candidat q1 local | `build/water-route2-ar0900-20260912-q100/renderer/` |
+| DLL | `5AA0C41F9B1ED75FD170A15668A56908AA77153EC1939DADE4C139AE510B84D9` |
+| INI q1 diagnosticsON | `7860F28D78DF284CD402CC89F2CCA440FF93C44F18FE5956443521BFE4FCD4B0` |
+| fpSEAM | `CDE3FF62046DAB3F9DDE1C85E9C5C57EB51FE7F229074F4B15339D3C4425B00D` |
+| Reçu renderer q1 | `backups/renderer/20260912T010634675930Z-92bbee1b/renderer-install-receipt.json` |
+| Reçu shaders initial | `backups/shader-suite/20260912T003316103827Z-b4481933/shader-install-receipt.json` |
+| Build DLL | `build/iee-water-route2-ar0900-20260912-vs2019`, Release, VS2019, BUILD_TESTING=OFF |
 
-## 6. Installation et retour arrière exacts
+- Le dossier `build/` et les reçus sont locaux/ignorés : vérifier leur présence ; la preuve Git
+  durable est le document de validation.
+- Aucun unittest/CTest n'a été exécuté : choix utilisateur « aucun test ». La DLL Release a compilé ;
+  installation/preflight/verify et QA ingame ont réussi. Ne pas transformer cela en succès de tests.
+- Les27fichiers AR0900, WTLAKE.TIS, WLAKE00.PVRZ, BaldurReal et les sept autres shaders sont restés
+  inchangés pendant les essais.
+- Le candidat q1 est validé localement, pas intégré à `areas.csv` ni au manifeste release.
 
-Ces commandes sont des **gabarits futurs**, à exécuter seulement après mandat, gates et jeu fermé.
-`<...>` désigne un chemin réel à résoudre, jamais une valeur à copier littéralement.
-Depuis la racine du dépôt :
+## 6. Procédure d'extension à d'autres eaux
+
+### 6.1 Précondition assets — voie1 d'abord si nécessaire
+
+Pour chaque zone/variante :
+
+1. résoudre WED/base/overlays effectifs, sources stock/installées/build sélectionné ; jour/nuit séparés ;
+2. appliquer l'audit voie1 : art local, populations primaire/secondaire, formats, alpha effectif,
+   RGB des interfaces, padding, périodicité et animation de l'overlay ;
+3. réparer les défauts d'assets selon la notice voie1 avant route2. Ne pas utiliser le shader pour
+   masquer alpha0, alpha255 central, coutures bleues/noires ou frames immobiles ;
+4. conserver un témoin voie1 installé et un reçu propre par zone/overlay.
+
+Route2 dépend donc de voie1 quand les assets ont le défaut AR0900. Une zone dont les assets natifs/
+xN sont déjà corrects peut passer directement au routage q0 après preuve du même contrat de blend.
+
+### 6.2 Ne pas élargir la condition AR0900 à l'aveugle
+
+Remplacer la policy codée en dur par une allowlist/registre validé, versionné et fail-closed. Une
+entrée minimale par cible contient :
+
+```text
+areaVariant, wedResref, baseTisResref, baseWidth, baseHeight, baseTileCount,
+overlaySlot, overlayTisResref, overlayTileCount,
+allowedPvrzPages[{resref,width,height}], liquidMode,
+source/build hashes, approvedStrength, qaStatus
+```
+
+Règles :
+
+- aucun match sur seul nom de zone, taille, alpha, couleur, textureId, GL name ou `vColor.a` ;
+- inventorier toutes les pages d'un overlay et tous leurs usages ; une page mixte/inconnue est refusée ;
+- résoudre slot moteur→nomGL à chaque draw via la table validée ; pas de cache persistant ;
+- revalider activeArea/WED avant/après résolution ; reset q0 après draw et transition ;
+- accepter x1/x2/x4 seulement avec dimensions/pages explicitement manifestées ;
+- overlay stock délégué au renderer natif : prouver le même chemin `vpDraw/fpSEAM`; ne pas supposer
+  que le hook xN l'intercepte ;
+- WED moddé, overlay supplémentaire, population/dimension/hash divergents → q0 + diagnostic borné ;
+- chaque entrée a un dosage approuvé séparé. **Ne pas propager `1.00` depuis WTLAKE**.
+
+### 6.3 Qualification par famille
+
+| Famille | Risque |
+|---|---|
+| WTLAKE, WTLAKA–D | Teinte, vitesse, mer/lac, nombre de pages/frames, centre/bords |
+| WTPOOL | Petite surface ; cycle x4 historiquement figé ; source x2 courante |
+| WTRIV/WTWAVE/WTFALL/WTURN, YS* | Direction du courant ; shader lac non interchangeable |
+| WTSWAM | Stock ; eau sombre/brune ; éviter bleu/écume propre |
+| WTSEW | Stock ; branche matériau égouts existante mais route2 non qualifiée |
+| WTOIL, WTGOO* | Viscosité/opacité ; matériau d'eau non adapté par défaut |
+| WTLAVA–D | Émissivité/opacité ; branche lave existante mais alpha128 eau interdit |
+| Multi-overlay/jour-nuit/WED moddé | Ordre, collisions, reset, identité et fallback |
+
+Le shader possède des branches visuelles historiques lave et égouts ; leur présence ne constitue ni
+un routage route2 ni une QA. Modes marais/huile/goo n'ont pas de matériau dédié validé.
+
+### 6.4 Gates obligatoires par nouvelle entrée/famille
+
+1. Créer candidat/manifest/snapshot neufs ; ne pas réécrire runs, reçus ou candidats AR0900.
+2. Ajouter tests policy/config/sélection/fallback et garde GLSL. Selon `AGENTS.md`, préparer
+   `test_changed.py --targeted --path ...`, puis demander **ciblés / tous / aucun** avant exécution.
+3. Compiler uniquement `InfinityEngine-Enhancer`; aucun release_bundle/package/staging.
+4. Installer transactionnellement, jeu et InfinityLoader fermés ; préflight puis install puis verify.
+5. Gate q0 : `overlay=true q=0` sur chaque page autorisée, `overlay=false q=0` partout ailleurs ;
+   rendu strictement identique au témoin voie1. Une image identique sans trace positive est un échec.
+6. Gate q>0 : commencer par une valeur visible mais prudente selon la famille. Pour WTLAKE AR0900,
+   q1 est déjà retenu ; pour toute autre cible, q1 reste une hypothèse à tester.
+7. QA : animation, art local, ombres/reflets, transparence, rives, centre/bords, zoom/pan,
+   pause/reprise, transition/retour, nuit, carte sèche, UI/sprites, coût de frame.
+8. Enregistrer logs bornés, captures/vidéo, hashes, reçus, décision utilisateur par zone/variante.
+9. Échec : q0/fallback ou restore du nouveau reçu ; ne pas modifier les assets pour compenser sans
+   retourner à l'audit voie1.
+
+Logs attendus avec diagnosticsON :
+
+```text
+WATER_ROUTE2 native texture table validated=true
+WATER_ROUTE2 identity ... page=<PVRZ> engineSlot=<id> glName=<name>
+WATER_ROUTE2 draw ... overlay=true q=<requested> blend=1/770/771 srgb=0
+WATER_ROUTE2 draw ... overlay=false q=0 ...
+```
+
+`Water shader override is active` prouve l'interface, pas le ciblage. `feed()` peut forcer l'effet
+à0 si masque/textures manquent. Toujours exiger la trace `overlay=true` et le q attendu.
+
+## 7. Installation et rollback
+
+Outils :
 
 ```powershell
 $taskGame = python -B -c "import sys; sys.path.insert(0,'pipeline/scripts'); from workspace_paths import get_path; print(get_path('bg2ee_game_root'))"
 $taskEngine = 'engine/InfinityEngine-Enhancer/source-patchee'
-```
-
-Préparation hors jeu :
-
-- Fermer BG2EE/BaldurReal et InfinityLoader avant installation/restauration ; ne pas tuer de processus
-  ou abandonner une sauvegarde sans accord. Ne pas installer une moitié de candidat pendant le jeu.
-- La transaction shaders impose **huit fichiers**, pas un sous-ensemble : `fpSprite.glsl`,
-  `fpSELECT.glsl`, `fpDraw.glsl`, `fpTone.glsl`, `fpFONT.glsl`, `fpSEAM.glsl`, `fpYUV.glsl`, `fpYUVGRY.glsl`.
-- `<baseline-eight>` : copie exacte des huit shaders live au snapshot, et rien d'autre.
-  `<source-eight>` : mêmes sept shaders inchangés + `fpSEAM` candidat. Ne pas passer le dossier
-  `override` complet du jeu ; l'inventaire strict le refuserait. Ne pas partir d'une vieille suite D2/D3.
-- Vérifier source/live des sept shaders avant et après préparation. Ne pas régénérer la suite
-  sprites : `build_shader_suite.py` ne produit pas `fpSEAM`.
-- Le candidat GLSL conserve `// fpSEAM.glsl`, `void main`, l'interface native et
-  `uIeeShaderSuiteEnabled` ; pas de `#version` ajouté (préambule moteur).
-- `<renderer-candidate>` contient exactement `InfinityEngine-Enhancer.dll` et
-  `InfinityEngine-Enhancer.ini` ; copie DLL live si inchangée, INI dérivée du live.
-  Modifier uniquement les clés de cette expérience. Aucun pack effets optionnel.
-
-```powershell
-python "$taskEngine/tools/install_shader_suite_candidate.py" prepare <source-eight> <new-shader-candidate> --baseline-override <baseline-eight>
-python "$taskEngine/tools/install_shader_suite_candidate.py" install <new-shader-candidate> --game-root "$taskGame" --verify-only
+python "$taskEngine/tools/install_shader_suite_candidate.py" install <shader-candidate> --game-root "$taskGame" --verify-only
 python "$taskEngine/tools/install_renderer_candidate.py" install <renderer-candidate> --game-root "$taskGame" --verify-only
-```
-
-`prepare` écrit le candidat ; `install/restore --verify-only` contrôlent sans installer/restaurer.
-Ces installateurs n'ont pas d'option `--run` : **sans `--verify-only`, install/restore écrivent**.
-Comparer encore le snapshot runtime juste avant installation : les deux outils ne constituent pas
-une transaction atomique commune.
-
-```powershell
-python "$taskEngine/tools/install_shader_suite_candidate.py" install <new-shader-candidate> --game-root "$taskGame"
+python "$taskEngine/tools/install_shader_suite_candidate.py" install <shader-candidate> --game-root "$taskGame"
 python "$taskEngine/tools/install_renderer_candidate.py" install <renderer-candidate> --game-root "$taskGame"
-python "$taskEngine/tools/install_shader_suite_candidate.py" verify <new-shader-receipt> --game-root "$taskGame"
-python "$taskEngine/tools/install_renderer_candidate.py" verify <new-renderer-receipt> --game-root "$taskGame"
+python "$taskEngine/tools/install_shader_suite_candidate.py" verify <shader-receipt> --game-root "$taskGame"
+python "$taskEngine/tools/install_renderer_candidate.py" verify <renderer-receipt> --game-root "$taskGame"
 ```
 
-- Enregistrer les deux reçus exacts retournés (`backups/shader-suite/`, `backups/renderer/`).
-- Si la seconde installation échoue, inspecter son résultat/rollback puis restaurer la première ;
-  ne jamais démarrer le jeu dans un état mixte. Dérive tierce : arrêter, pas de copie forcée.
-- Redémarrer le jeu pour charger DLL/INI/GLSL. Le hash disque ne prouve pas le programme déjà lié.
-- Contrôler les logs : `Water shader override is active in engine program`, absence d'erreur
-  compile/link, masque liquide AR0900 chargé/uploadé, textures choisies/bindées, uniforms et temps.
-  Le message « active » détecte l'interface `uIee*`, pas à lui seul l'identité de notre candidat :
-  associer hash installé, démarrage frais et preuve de branche/dosage via diagnostics bornés.
-- `feed()` peut forcer `uIeeEnabled=0` si masque ou textures ne se bindent pas : un rendu identique
-  à `q=0` sans preuve d'activation serait un faux succès. Garder F10 désactivé pour la QA finale.
+- Shader candidate : exactement huit shaders ; sept inchangés + fpSEAM. Renderer candidate :
+  exactement DLL+INI. Comparer le live au snapshot juste avant écriture.
+- Les deux transactions ne sont pas atomiques ensemble. Installer shader puis renderer ; échec du
+  second → inspecter rollback puis restaurer le premier. Dérive tierce → arrêter.
+- Redémarrage frais obligatoire après installation. Hash disque seul ≠ programme lié.
+- Rollback, runtime fermé, ordre inverse : renderer puis shader, chaque restore précédé de
+  `--verify-only`, puis verify du reçu. Avec plusieurs essais, dérouler les reçus dans l'ordre inverse.
+- Ne jamais restaurer un reçu antérieur au témoin voie1 et ne jamais restaurer le reçu map AR0900.
 
-Retour au témoin, runtime fermé, **ordre inverse** :
+## 8. Release et décision globale
 
-```powershell
-python "$taskEngine/tools/install_renderer_candidate.py" restore <new-renderer-receipt> --game-root "$taskGame" --verify-only
-python "$taskEngine/tools/install_renderer_candidate.py" restore <new-renderer-receipt> --game-root "$taskGame"
-python "$taskEngine/tools/install_shader_suite_candidate.py" restore <new-shader-receipt> --game-root "$taskGame" --verify-only
-python "$taskEngine/tools/install_shader_suite_candidate.py" restore <new-shader-receipt> --game-root "$taskGame"
-python "$taskEngine/tools/install_renderer_candidate.py" verify <new-renderer-receipt> --game-root "$taskGame"
-python "$taskEngine/tools/install_shader_suite_candidate.py" verify <new-shader-receipt> --game-root "$taskGame"
-```
+- AR0900 q1 n'autorise aucune autre zone/famille ni variante nuit.
+- Le runtime peut devenir commun seulement après matrice multi-familles ; les entrées d'allowlist et
+  dosages restent spécifiques aux assets/variantes approuvés.
+- Si une cible échoue route2 mais réussit voie1 : conserver la voie1 pour cette cible. Architecture
+  finale possible : runtime commun fail-closed + allowlist partielle + réparations assets voie1.
+- Après validation ingame, demander séparément l'intégration aux manifests Core/release.
+  Ne modifier ni payload, staging, `content.json`, archive ou projection sans accord.
+- Réconcilier avant release `runtime-compatibility.json`, INI samples et réglages Core :
+  `EnableWaterEffect=true`, route2 explicite, dosage par politique/allowlist ; diagnosticsOFF.
+- Livrables d'une généralisation : source, tests choisis, registre/version, candidats, hashes/reçus,
+  preuves q0/q>0, QA par cible, exclusions, rollback, coût/performance et commit isolé.
 
-Recontrôler les hashes §1, INI effetOFF, les 27 fichiers map et WTLAKE. Avec plusieurs essais,
-restaurer les transactions dans l'ordre inverse complet jusqu'au témoin, pas seulement le dernier.
-Ne toucher ni aux reçus historiques ni à la sélection AR0900 pour enregistrer un essai non validé.
-
-## 7. QA et décision de généralisation
-
-### AR0900 jour — gates minimales
-
-- Comparaisons témoin/ON-q0/ON-q>0 à même scène et zoom ; captures + courte vidéo pour l'animation.
-- Centre, bords, sous pont, zone claire/sombre, orbe/effets proches : art et profondeur conservés.
-- Absence de carreaux bleus, centre statique, traits noirs, double contour, différence centre/bord.
-- Continuité spatiale des vagues et des marges, plusieurs zooms/pans ; pas d'eau sur le décor.
-- Pause/reprise, changement de zone/retour, jour/nuit : vérifier l'horloge et les resets, ne pas
-  supposer que `uIeeTime` suit l'horloge native d'animation. Nuit = QA séparée, pas acquise.
-- Texte, UI, sprites, objets au sol et scènes sèches inchangés ; temps de frame comparables à froid/chaud.
-- Arrêter sur crash, GL invalide, mauvaise identité, mélange non compris ou rollback non vérifié.
-
-### Après accord utilisateur seulement — matrice multi-familles
-
-| Cas | Risque à qualifier |
-|---|---|
-| Lac WTLAKE et eau lac/mer WTLAKA–D | Teinte locale, ombres/reflets, frames, centre/bords ; maps et formats distincts |
-| Piscine WTPOOL | Petite surface, animation native, échelle x2, couverture des rives |
-| Rivière/cascade et familles YS | Courant/animation orientés ; aucun remplacement universel par vagues de lac |
-| Marais WTSWAM | Overlay stock ; couleur sombre, pas de bleu/écume imposés |
-| Égouts WTSEW | Overlay stock ; palette sale, transparence et débit spécifiques |
-| Huile WTOIL / goo WTGOO* si présents | Viscosité/aspect distincts ; pas de transparence d'eau imposée |
-| Lave WTLAVA–D | Émissivité/opacité spécifiques ; ne pas lui appliquer automatiquement alpha128 d'eau |
-| Carte sèche, multi-overlay, WED moddé, format x1/x2/x4, jour/nuit | Fallback sûr, identité, ordre des couches, absence de fuite d'état |
-
-Choisir les zones réelles à partir des WED/sélections, pas de noms supposés. Réconcilier d'abord
-`overlay-sources.json` avec les audits : ceux-ci classent encore WTLAVA–D stock alors que le
-manifeste sélectionne x4. Les réglages release/sample imposent encore `EnableWaterEffect=true` :
-ce n'est ni la preuve de validation de la voie 2 ni l'autorisation de modifier la release.
-
-Livrables de la tâche d'exécution : sources et tests ciblés, équations/trace de composition,
-manifeste candidat/hashes/reçus, résultat QA utilisateur par zone/variante/famille, rollback vérifié,
-liste des limites. Commit explicite du seul lot. Si accepté ingame, demander séparément
-l'intégration release ; aucun payload/staging/content/archive reconstruit implicitement.
-
-**Décision finale :** shader/runtime global seulement si la matrice prouve la compatibilité des
-assets existants. Sinon recette hybride : runtime commun + réparations d'assets ciblées selon le
-runbook voie 1. Ne jamais déclarer toutes les maps réparées depuis le seul témoin AR0900.
+Ne jamais annoncer « toutes les eaux réparées » tant qu'une famille, variante ou structure WED reste
+non auditée ou non validée ingame.
