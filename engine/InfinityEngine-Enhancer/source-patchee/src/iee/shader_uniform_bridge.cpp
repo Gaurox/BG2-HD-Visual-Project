@@ -24,6 +24,7 @@ std::atomic<float> g_waterTintR{0.5f};
 std::atomic<float> g_waterTintG{0.5f};
 std::atomic<float> g_waterTintB{0.5f};
 std::atomic<float> g_effectValue{0.0f};
+std::atomic<float> g_waterRoute2{0.0f};
 std::atomic<float> g_shaderSuiteEnabled{0.0f};
 std::atomic<unsigned> g_feedCount{0};
 std::atomic<std::uint64_t> g_stateRevision{1};
@@ -77,7 +78,8 @@ void record_feed_performance(const LARGE_INTEGER& started, bool measured, bool s
 }  // namespace
 
 void initialize(bool effectEnabled, bool shaderSuiteEnabled,
-                bool performanceEnabled) noexcept {
+                bool performanceEnabled, bool waterRoute2) noexcept {
+  g_waterRoute2.store(waterRoute2 ? 1.0f : 0.0f, std::memory_order_relaxed);
   g_effectValue.store(effectEnabled ? 1.0f : 0.0f, std::memory_order_relaxed);
   g_shaderSuiteEnabled.store(shaderSuiteEnabled ? 1.0f : 0.0f,
                              std::memory_order_relaxed);
@@ -87,6 +89,7 @@ void initialize(bool effectEnabled, bool shaderSuiteEnabled,
 }
 
 void reset() noexcept {
+  g_waterRoute2.store(0.0f, std::memory_order_relaxed);
   g_time.store(0.0f, std::memory_order_relaxed);
   g_worldWidth.store(0.0f, std::memory_order_relaxed);
   g_worldHeight.store(0.0f, std::memory_order_relaxed);
@@ -180,6 +183,8 @@ void feed(unsigned program, Locations& locations) {
 
   locations.time = resolve_location(gl, program, locations.time, "uIeeTime");
   locations.enabled = resolve_location(gl, program, locations.enabled, "uIeeEnabled");
+  locations.waterRoute2 = resolve_location(gl, program, locations.waterRoute2,
+                                           "uIeeWaterRoute2");
   locations.shaderSuiteEnabled = resolve_location(
       gl, program, locations.shaderSuiteEnabled, "uIeeShaderSuiteEnabled");
   locations.scroll = resolve_location(gl, program, locations.scroll, "uIeeScroll");
@@ -219,6 +224,9 @@ void feed(unsigned program, Locations& locations) {
   }
   if (locations.enabled >= 0) {
     gl.glUniform1f(locations.enabled, effectValue);
+  }
+  if (locations.waterRoute2 >= 0) {
+    gl.glUniform1f(locations.waterRoute2, g_waterRoute2.load(std::memory_order_relaxed));
   }
   if (locations.shaderSuiteEnabled >= 0) {
     gl.glUniform1f(locations.shaderSuiteEnabled,

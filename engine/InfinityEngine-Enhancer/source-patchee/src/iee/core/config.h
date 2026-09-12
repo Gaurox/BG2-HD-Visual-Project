@@ -66,6 +66,9 @@ struct EngineConfig {
   bool dumpEngineShaders = false;
   bool enableDebugHotkeys = false;
   bool enableWaterEffect = true;
+  // Experimental overlay-only composition. Non-target draws remain native.
+  bool enableWaterOverlayRoute2 = false;
+  float waterOverlayStrength = 0.0f;
   // Master gate for the Dshaders-compatible suite. D6 adds an independently
   // gated CreatureHD profile; disabled profiles preserve the D5 path.
   bool shaderSuiteEnabled = false;

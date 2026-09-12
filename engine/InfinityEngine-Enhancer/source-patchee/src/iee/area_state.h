@@ -30,6 +30,12 @@ bool read_view_transform(const game::CGameArea* area, ViewTransform& out);
 // Re-resolves the active area after LoadArea and caches its parsed WED into ctx.
 void refresh_wed_cache(AppContext& ctx, void* infGame);
 
+// Revalidate live WED/base/overlay/page identity at the actual GL draw. No
+// texture-name registry survives cache recycling or an area transition.
+bool matches_route2_water_overlay(AppContext& ctx, unsigned texture,
+                                  int width, int height,
+                                  const std::byte* validatedTextureTable) noexcept;
+
 // Publishes an immediate CPU-side no-liquid generation. The next render
 // thread flush replaces any previous area's GPU mask before drawing.
 void reset_gpu_area_state() noexcept;

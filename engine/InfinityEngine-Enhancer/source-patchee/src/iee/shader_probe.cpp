@@ -36,6 +36,8 @@
 #include "iee/game/shader_override.h"
 #include "iee/shader_suite.h"
 #include "iee/water_textures.h"
+#include "iee/hooks.h"
+#include "iee/core/water_overlay_policy.h"
 #include "shader_diagnostics.h"
 #include "shader_uniform_bridge.h"
 
@@ -1718,11 +1720,79 @@ void trace_suite_draw(unsigned mode, int first, int count,
       blendDestination, framebufferSrgb);
 }
 
+struct WaterOverlayUniformScope {
+  int strength{-1};
+  ~WaterOverlayUniformScope() noexcept {
+    const auto& gl = game::gl::get_gl_functions();
+    if (strength >= 0 && gl.glUniform1f) gl.glUniform1f(strength, 0.0f);
+  }
+};
+
+void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
+  if (!g_cfg.enableWaterOverlayRoute2 || !is_program_context_current()) return;
+  const auto& gl = game::gl::get_gl_functions();
+  if (!gl.glGetIntegerv || !gl.glGetUniformLocation || !gl.glGetUniformiv ||
+      !gl.glUniform1f || !gl.glActiveTexture || !gl.glGetTexLevelParameteriv) return;
+  int program = 0;
+  gl.glGetIntegerv(game::gl::CURRENT_PROGRAM, &program);
+  if (program <= 0) return;
+  std::shared_ptr<uniforms::Locations> locations;
+  {
+    std::lock_guard lock(g_probeMutex);
+    const auto record = g_programRecords.find(static_cast<unsigned>(program));
+    const auto overridden = g_overriddenPrograms.find(static_cast<unsigned>(program));
+    if (record == g_programRecords.end() || !record->second.introspected ||
+        record->second.fragmentShaderName != "fpSEAM" ||
+        record->second.vertexShaderName != "vpDraw" ||
+        overridden == g_overriddenPrograms.end()) return;
+    locations = overridden->second;
+  }
+  if (locations->waterOverlayStrength == uniforms::Locations::kUnresolved) {
+    locations->waterOverlayStrength = gl.glGetUniformLocation(program, "uIeeWaterOverlayStrength");
+    locations->waterOverlaySampler = gl.glGetUniformLocation(program, "uTex");
+  }
+  scope.strength = locations->waterOverlayStrength;
+  if (scope.strength < 0) return;
+  // This signal belongs to the actual GL batch, not the earlier DrawBegin /
+  // DrawEnd scope. Never use the global uniform-revision cache for it.
+  gl.glUniform1f(scope.strength, 0.0f);
+  if (locations->waterOverlaySampler < 0) return;
+  int unit = -1;
+  gl.glGetUniformiv(program, locations->waterOverlaySampler, &unit);
+  if (unit < 0 || unit > 7) return;
+  int active = static_cast<int>(game::gl::TEXTURE0);
+  gl.glGetIntegerv(game::gl::ACTIVE_TEXTURE, &active);
+  const auto texture = bound_texture_snapshot(gl, unit);
+  gl.glActiveTexture(static_cast<unsigned>(active));
+  const bool matched = hooks::matches_route2_water_overlay(texture.texture,
+                                                           texture.width, texture.height);
+  const float strength = matched && g_cfg.enableWaterEffect
+      ? core::route2_water_strength(g_cfg.waterOverlayStrength) : 0.0f;
+  gl.glUniform1f(scope.strength, strength);
+  if (g_cfg.enableTilePageDiagnostics) {
+    static unsigned matchedTraces = 0;
+    static unsigned otherTraces = 0;
+    auto& traces = matched ? matchedTraces : otherTraces;
+    if (traces++ < 16) {
+      int blend = 0, src = 0, dst = 0, srgb = 0;
+      gl.glGetIntegerv(0x0BE2 /* GL_BLEND */, &blend);
+      gl.glGetIntegerv(0x80C9 /* GL_BLEND_SRC_RGB */, &src);
+      gl.glGetIntegerv(0x80C8 /* GL_BLEND_DST_RGB */, &dst);
+      gl.glGetIntegerv(0x8DB9 /* GL_FRAMEBUFFER_SRGB */, &srgb);
+      LOG_INFO("WATER_ROUTE2 draw program={} texture={} size={}x{} overlay={} q={} blend={}/{}/{} srgb={}",
+               program, texture.texture, texture.width, texture.height, matched, strength,
+               blend, src, dst, srgb);
+    }
+  }
+}
+
 static void APIENTRY detour_glDrawArrays(unsigned mode, int first, int count) noexcept {
   bool forwarded = false;
   CreatureDrawUniformScope creatureUniforms;
+  WaterOverlayUniformScope waterUniforms;
   try {
     prepare_creature_draw(creatureUniforms);
+    prepare_water_overlay_draw(waterUniforms);
     trace_suite_draw(mode, first, count, creatureUniforms);
     forwarded = true;
     g_glDrawArraysHook.original()(mode, first, count);
@@ -2243,7 +2313,7 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     // the F10 debug cycle (when enabled) still overrides at runtime.
     if (!g_uniformsInitialized) {
       uniforms::initialize(cfg.enableWaterEffect, cfg.shaderSuiteEnabled,
-                           cfg.enablePerformanceLogging);
+                           cfg.enablePerformanceLogging, cfg.enableWaterOverlayRoute2);
       g_uniformsInitialized = true;
     }
 
@@ -2394,13 +2464,13 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
           cfg.creature_sprite_upscale_enabled() ||
           cfg.sprite_shader_scope_enabled();
       if (((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
-           spriteDrawRoutingEnabled) &&
+           spriteDrawRoutingEnabled || cfg.enableWaterOverlayRoute2) &&
           gl.glDrawArrays) {
         g_glDrawArraysHook.create(reinterpret_cast<void*>(gl.glDrawArrays),
                                   reinterpret_cast<void*>(&detour_glDrawArrays));
         g_glDrawArraysHook.queue_enable();
       } else if ((cfg.dumpEngineShaders && cfg.enableVerboseLogging) ||
-                 spriteDrawRoutingEnabled) {
+                 spriteDrawRoutingEnabled || cfg.enableWaterOverlayRoute2) {
         LOG_WARN("Shader-suite sprite routing is unavailable: glDrawArrays was not resolved");
       }
       const auto applyStatus = MH_ApplyQueued();

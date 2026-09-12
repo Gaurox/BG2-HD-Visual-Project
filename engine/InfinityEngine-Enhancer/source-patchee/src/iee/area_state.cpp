@@ -16,6 +16,7 @@
 #include "iee/core/gl_state_guard.h"
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
+#include "iee/core/water_overlay_policy.h"
 #include "iee/game/area_texture.h"
 #include "iee/game/opengl_types.h"
 #include "iee/game/resref_runtime.h"
@@ -342,6 +343,105 @@ bool read_view_transform(const game::CGameArea* area, ViewTransform& out) {
         viewPortNotZoomed.bottom, out.scrollX, out.scrollY, out.viewWorldW, out.viewWorldH);
   }
   return true;
+}
+
+bool matches_route2_water_overlay(AppContext& ctx, unsigned texture,
+                                  int width, int height,
+                                  const std::byte* validatedTextureTable) noexcept {
+  if (!ctx.manifest || !validatedTextureTable || !texture ||
+      width != 2048 || height != 2048) return false;
+  const auto reject = [&ctx](unsigned reason, std::uint32_t count = 0) {
+    static std::atomic<unsigned> loggedReasons{0};
+    const unsigned bit = 1u << reason;
+    if (ctx.cfg.enableTilePageDiagnostics && !(loggedReasons.fetch_or(bit) & bit)) {
+      LOG_INFO("WATER_ROUTE2 reject reason={} count={}", reason, count);
+    }
+    return false;
+  };
+  const auto wed = ctx.wed.load();
+  const auto* area = ctx.activeArea.load();
+  if (!wed || !area || wed->areaResrefView() != "AR0900" ||
+      wed->baseWidth != 80 || wed->baseHeight != 60 ||
+      wed->overlays.size() < 2 || wed->overlays.size() > 5 ||
+      resolve_active_area(ctx.infGame.load(), *ctx.manifest) != area) return false;
+  // Stock AR0900 has five header slots, but only base + WTLAKE populated.
+  std::array<std::string_view, 5> slots{};
+  for (std::size_t i = 0; i < wed->overlays.size(); ++i) {
+    slots[i] = wed->overlays[i].tilesetResrefView();
+    if (i >= 2 && wed->overlays[i].coverageCells != 0)
+      return reject(1, wed->overlays[i].coverageCells);
+  }
+  if (!core::route2_water_layout({slots.data(), wed->overlays.size()})) return reject(2);
+
+  const auto* areaBytes = reinterpret_cast<const std::byte*>(area);
+  game::CResWED* liveWed = nullptr;
+  game::CRes wedResource{};
+  game::ResrefBuffer wedName{};
+  if (!core::safe_read(areaBytes + offsetof(game::CGameArea, m_pResWED), liveWed) ||
+      !liveWed || !core::safe_read(liveWed, wedResource) ||
+      !game::read_runtime_resref(wedResource.resref, wedName) ||
+      game::resref_view(wedName) != "AR0900") return reject(3);
+
+  std::array<game::CInfTileSet*, 5> tileSets{};
+  if (!core::safe_read(areaBytes + offsetof(game::CGameArea, m_cInfinity) +
+                      offsetof(game::CInfinity, pTileSets), tileSets) ||
+      !tileSets[0] || !tileSets[1]) return reject(4);
+  const auto readResources = [](const game::CInfTileSet* set, void**& resources,
+                                std::uint32_t& count) {
+    const auto* bytes = reinterpret_cast<const std::byte*>(set);
+    return core::safe_read(bytes + offsetof(game::CInfTileSet, pResTiles), resources) &&
+           core::safe_read(bytes + offsetof(game::CInfTileSet, nTiles), count) && resources;
+  };
+  void** baseResources = nullptr;
+  std::uint32_t baseCount = 0;
+  void* baseWrapper = nullptr;
+  game::CResTile baseTile{};
+  game::CRes baseTis{};
+  game::ResrefBuffer baseName{};
+  // The runtime base identity also excludes a night TIS swapped under a day WED.
+  if (!readResources(tileSets[0], baseResources, baseCount) || baseCount != 5752 ||
+      !core::safe_read(baseResources, baseWrapper) || !baseWrapper ||
+      !core::safe_read(baseWrapper, baseTile) || !baseTile.tis ||
+      !core::safe_read(baseTile.tis, baseTis) ||
+      !game::read_runtime_resref(baseTis.resref, baseName)) return reject(5, baseCount);
+  void** overlayResources = nullptr;
+  std::uint32_t overlayCount = 0;
+  if (!readResources(tileSets[1], overlayResources, overlayCount) || overlayCount != 6)
+    return reject(6, overlayCount);
+  for (std::uint32_t i = 0; i < overlayCount; ++i) {
+    void* wrapper = nullptr;
+    PvrzTintCandidate candidate{};
+    if (!core::safe_read(overlayResources + i, wrapper) ||
+        !read_pvrz_tint_candidate(wrapper, i, "WTLAKE", candidate)) continue;
+    // CResPVR::texture is an engine slot, NOT the GL_TEXTURE_BINDING_2D name.
+    // Resolve the current descriptor on every draw (no stale-name cache/bind).
+    if (candidate.texture == 0 || candidate.texture >= 512) continue;
+    const auto* descriptor = validatedTextureTable +
+                             static_cast<std::size_t>(candidate.texture) * 0x28;
+    unsigned glName = 0;
+    int backingWidth = 0, backingHeight = 0;
+    std::uint8_t deletePending = 0;
+    if (!core::safe_read(descriptor, glName) ||
+        !core::safe_read(descriptor + 0x04, backingWidth) ||
+        !core::safe_read(descriptor + 0x08, backingHeight) ||
+        !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
+        backingWidth != width || backingHeight != height) continue;
+    if (glName == texture && candidate.width == width &&
+        candidate.height == height &&
+        core::route2_water_identity(game::resref_view(wedName),
+                                   game::resref_view(baseName), "WTLAKE",
+                                   game::resref_view(candidate.resref), overlayCount,
+                                   width, height)) {
+      static std::atomic<unsigned> identityLogs{0};
+      if (ctx.cfg.enableTilePageDiagnostics && identityLogs.fetch_add(1) < 8) {
+        LOG_INFO("WATER_ROUTE2 identity slots={} baseTiles={} overlayTiles={} "
+                 "page={} engineSlot={} glName={}", wed->overlays.size(), baseCount,
+                 overlayCount, game::resref_view(candidate.resref), candidate.texture, glName);
+      }
+      return ctx.activeArea.load() == area && ctx.wed.load() == wed;
+    }
+  }
+  return false;
 }
 
 void refresh_wed_cache(AppContext& ctx, void* infGame) {

@@ -25,6 +25,7 @@
 #endif
 
 #include "iee/core/config.h"
+#include "iee/core/water_overlay_policy.h"
 #include "iee/core/area_animation_clock_probe.h"
 #include "iee/core/area_animation_timeline.h"
 #include "iee/core/cache_budget_simulator.h"
@@ -974,8 +975,47 @@ void test_logger_rotation_is_bounded() {
   expect_true(!error, "Logger rotation fixture should be removable after the sink closes");
 }
 
+void test_water_overlay_route2_policy() {
+  using iee::core::route2_water_identity;
+  using iee::core::route2_water_layout;
+  using iee::core::route2_water_strength;
+  std::array<std::string_view, 5> slots{"AR0900", "WTLAKE", "", "", ""};
+  expect_true(route2_water_layout(slots), "Stock five-slot WED is eligible");
+  expect_true(route2_water_layout({slots.data(), 2}), "Two populated slots are eligible");
+  expect_true(!route2_water_layout({slots.data(), 1}), "Missing overlay fails closed");
+  slots[4] = "WTPOOL";
+  expect_true(!route2_water_layout(slots), "Additional populated overlay is excluded");
+  slots[4] = "";
+  slots[0] = "AR0900N";
+  expect_true(!route2_water_layout(slots), "Night base layout is excluded");
+  expect_true(route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 6, 2048, 2048),
+              "Route2 permits only the proven standalone day overlay");
+  for (const auto area : {"", "AR2300", "AR0900N"}) {
+    expect_true(!route2_water_identity(area, "AR0900", "WTLAKE", "WLAKE00", 6, 2048, 2048),
+                "Other or missing WED identities fail closed");
+  }
+  expect_true(!route2_water_identity("AR0900", "AR0900N", "WTLAKE", "WLAKE00", 6, 2048, 2048),
+              "Night base under a day WED is excluded");
+  expect_true(!route2_water_identity("AR0900", "AR0900", "WTPOOL", "WLAKE00", 6, 2048, 2048),
+              "A recycled wrapper from another overlay is excluded");
+  expect_true(!route2_water_identity("AR0900", "AR0900", "WTLAKE", "A090000", 6, 2048, 2048),
+              "Base/secondary art pages must never receive procedural water");
+  expect_true(!route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 7, 2048, 2048) &&
+              !route2_water_identity("AR0900", "AR0900", "WTLAKE", "WLAKE00", 6, 1024, 2048),
+              "Unknown atlas layouts are excluded");
+  for (const float q : {0.0f, 0.15f, 0.3f, 1.0f}) {
+    expect_eq(route2_water_strength(q), q, "Valid route2 dosage is preserved including zero");
+  }
+  for (const float q : {-0.1f, 1.1f, std::numeric_limits<float>::infinity(),
+                        std::numeric_limits<float>::quiet_NaN()}) {
+    expect_eq(route2_water_strength(q), 0.0f, "Invalid dosage fails to neutral, not maximum");
+  }
+}
+
 void test_config_shader_override_defaults() {
   iee::core::EngineConfig cfg{};
+  expect_true(!cfg.enableWaterOverlayRoute2 && cfg.waterOverlayStrength == 0.0f,
+              "Experimental water route defaults off and neutral");
   expect_true(!cfg.dumpEngineShaders, "shader dump defaults off");
   expect_true(!cfg.enableDebugHotkeys, "hotkeys default off");
   expect_true(cfg.enableWaterEffect, "water effect defaults ON");
@@ -4486,6 +4526,8 @@ void test_config_shader_override_roundtrip() {
     orig.dumpEngineShaders = false;
     orig.enableDebugHotkeys = true;
     orig.enableWaterEffect = false;
+    orig.enableWaterOverlayRoute2 = true;
+    orig.waterOverlayStrength = 0.15f;
     orig.shaderSuiteEnabled = true;
     orig.creatureHdShaderProfile.enabled = true;
     orig.creatureHdShaderProfile.colorSpace =
@@ -4578,6 +4620,8 @@ void test_config_shader_override_roundtrip() {
   expect_true(!loaded.dumpEngineShaders, "dumpEngineShaders should round-trip as false");
   expect_true(loaded.enableDebugHotkeys, "enableDebugHotkeys should round-trip as true");
   expect_true(!loaded.enableWaterEffect, "enableWaterEffect should round-trip as false");
+  expect_true(loaded.enableWaterOverlayRoute2 && loaded.waterOverlayStrength == 0.15f,
+              "Overlay experiment mode and dosage should round-trip independently");
   expect_true(loaded.shaderSuiteEnabled,
               "shaderSuiteEnabled should round-trip as true");
   const auto& creatureHd = loaded.creatureHdShaderProfile;
@@ -6607,6 +6651,7 @@ int main() {
   test_config_reports_malformed_values();
   test_logger_rotation_is_bounded();
   test_config_shader_override_defaults();
+  test_water_overlay_route2_policy();
   test_config_creature_sprite_filter_precedence();
   test_config_creature_hd_shader_profile();
   test_config_sprite_shader_profiles();

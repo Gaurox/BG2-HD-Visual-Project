@@ -1,4 +1,5 @@
 #include "config.h"
+#include "water_overlay_policy.h"
 
 #include <algorithm>
 #include <cctype>
@@ -90,6 +91,7 @@ static std::optional<std::uint32_t> parse_u32(const std::string& s) {
 }
 
 static void normalize(EngineConfig& cfg) noexcept {
+  cfg.waterOverlayStrength = route2_water_strength(cfg.waterOverlayStrength);
   if (!std::isfinite(cfg.maxAnisotropy)) cfg.maxAnisotropy = 8.0f;
   if (!std::isfinite(cfg.lodBias)) cfg.lodBias = -0.25f;
   if (!std::isfinite(cfg.mapPagePrewarmBudgetMs)) cfg.mapPagePrewarmBudgetMs = 8.0f;
@@ -189,6 +191,10 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableDebugHotkeys);
     else if (iequals(key, "EnableWaterEffect"))
       assign_bool(cfg.enableWaterEffect);
+    else if (iequals(key, "EnableWaterOverlayRoute2"))
+      assign_bool(cfg.enableWaterOverlayRoute2);
+    else if (iequals(key, "WaterOverlayStrength"))
+      assign_float(cfg.waterOverlayStrength);
     else if (iequals(key, "EnableBamUiTextureProbe"))
       assign_bool(cfg.enableBamUiTextureProbe);
     else if (iequals(key, "EnableAM3000AFrameX4Test"))
@@ -376,6 +382,8 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "DumpEngineShaders", cfg.dumpEngineShaders);
   write_bool(f, "EnableDebugHotkeys", cfg.enableDebugHotkeys);
   write_bool(f, "EnableWaterEffect", cfg.enableWaterEffect);
+  write_bool(f, "EnableWaterOverlayRoute2", cfg.enableWaterOverlayRoute2);
+  f << "WaterOverlayStrength = " << cfg.waterOverlayStrength << "\n";
   write_bool(f, "EnableBamUiTextureProbe", cfg.enableBamUiTextureProbe);
   write_bool(f, "EnableAM3000AFrameX4Test", cfg.enableAM3000AFrameX4Test);
   write_bool(f, "EnableAM0700AAnimationX4Test", cfg.enableAM0700AAnimationX4Test);

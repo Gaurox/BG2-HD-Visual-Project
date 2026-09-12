@@ -11,6 +11,9 @@ struct Locations {
 
   int time{kUnresolved};
   int enabled{kUnresolved};
+  int waterRoute2{kUnresolved};
+  int waterOverlayStrength{kUnresolved};
+  int waterOverlaySampler{kUnresolved};
   int shaderSuiteEnabled{kUnresolved};
   int scroll{kUnresolved};
   int zoom{kUnresolved};
@@ -87,7 +90,7 @@ struct Snapshot {
 };
 
 void initialize(bool effectEnabled, bool shaderSuiteEnabled,
-                bool performanceEnabled) noexcept;
+                bool performanceEnabled, bool waterRoute2 = false) noexcept;
 void reset() noexcept;
 void set_time(float secondsSinceStart) noexcept;
 void set_effect_enabled(bool enabled) noexcept;

@@ -123,6 +123,7 @@ static const void* g_pvrCacheEntries{};
 static DrawFlushGlFn g_drawFlushGl{};
 
 static AppContext* g_ctx = nullptr;
+static const std::byte* g_route2TextureTable = nullptr;
 static am0205e_x4::EngineTextureApi g_am0205eTextureApi{};
 static area_animation_x4::EngineTextureApi g_areaAnimationTextureApi{};
 static effect_animation_x4::EngineTextureApi g_effectAnimationTextureApi{};
@@ -453,6 +454,38 @@ int current_engine_texture_id(const native_occlusion_bridge::EngineTextureApi& a
   std::uint32_t state = 0;
   if (!core::safe_read(api.glTextureState, state)) return 0;
   return static_cast<int>((state >> 21u) & 0x1FFu);
+}
+
+// Independent of sprite/occlusion feature flags; read-only use of the same
+// manifested native descriptor layout. No DrawBindTexture call during GL draws.
+const std::byte* validate_route2_texture_table(const AppContext& ctx) noexcept {
+  if (!ctx.manifest || !ctx.manifest->areaAnimations.enabled) return nullptr;
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return nullptr;
+  const auto& runtime = ctx.manifest->areaAnimations;
+  constexpr std::size_t kTableBytes = 0x28 * 512;
+  if (!runtime.glTextureTable ||
+      !core::is_read_write_non_executable_section(*module, runtime.glTextureTable,
+                                                 kTableBytes)) return nullptr;
+  const auto* table = module->base + runtime.glTextureTable;
+  if (!core::is_writable_non_executable_memory(table, kTableBytes)) return nullptr;
+  constexpr std::array<std::uintptr_t, 3> offsets{{0x28, 0x00, 0x0D}};
+  for (std::size_t i = 0; i < runtime.glTextureTableReferences.size(); ++i) {
+    if (!runtime.glTextureTableReferences[i] ||
+        !matches_pattern_at_rva(*module, runtime.glTextureTableReferences[i],
+                               runtime.signatures[10 + i])) return nullptr;
+    const auto* instruction = module->base + runtime.glTextureTableReferences[i];
+    std::int32_t displacement = 0;
+    if (!core::safe_read(instruction + 3, displacement) ||
+        instruction + 7 + displacement != table + offsets[i]) return nullptr;
+  }
+  if (!runtime.glTextureSecondarySelectorReference ||
+      !matches_pattern_at_rva(*module, runtime.glTextureSecondarySelectorReference,
+                              runtime.signatures[13])) return nullptr;
+  std::uint8_t secondaryOffset = 0;
+  if (!core::safe_read(module->base + runtime.glTextureSecondarySelectorReference + 5,
+                       secondaryOffset) || secondaryOffset != 0x24) return nullptr;
+  return table;
 }
 
 bool validate_native_occlusion_bridge_runtime(AppContext& ctx) noexcept {
@@ -3567,8 +3600,14 @@ static void detour_game_area_render(void* thisPtr, void* vidMode) {
 
 bool install_all(AppContext& ctx) {
   g_ctx = &ctx;
+  g_route2TextureTable = nullptr;
 
   try {
+    if (ctx.cfg.enableWaterOverlayRoute2) {
+      g_route2TextureTable = validate_route2_texture_table(ctx);
+      LOG_INFO("WATER_ROUTE2 native texture table validated={}",
+               g_route2TextureTable != nullptr);
+    }
     if (!g_hookInit) g_hookInit = new core::HookInit();
     g_loadAreaHook.create(reinterpret_cast<void*>(ctx.addrs.LoadArea),
                           reinterpret_cast<void*>(&detour_load_area));
@@ -4385,6 +4424,12 @@ void prepare_for_shutdown() noexcept {
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
   g_ctx = nullptr;
+}
+
+bool matches_route2_water_overlay(unsigned texture, int width, int height) noexcept {
+  return g_ctx && g_route2TextureTable && g_ctx->cfg.enableWaterOverlayRoute2 &&
+         area::matches_route2_water_overlay(*g_ctx, texture, width, height,
+                                           g_route2TextureTable);
 }
 
 bool is_active() {

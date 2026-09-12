@@ -17,6 +17,8 @@ uniform highp	vec4		uColorTone;
 // --- IEE feed (set by the DLL at program bind + frame tick) ---
 uniform highp	float		uIeeShaderSuiteEnabled; // D3 suite master; intentionally neutral
 uniform highp	float		uIeeEnabled;       // 0/1 master gate (F10)
+uniform highp float uIeeWaterRoute2; // 1: native composition + overlay-only experiment
+uniform highp float uIeeWaterOverlayStrength; // per GL draw, proven AR0900 DAY/WTLAKE only
 uniform highp	float		uIeeTime;          // seconds
 uniform highp	vec2		uIeeScroll;        // world px of viewport origin
 uniform highp	vec2		uIeeZoom;          // physical px per world px, per axis
@@ -249,7 +251,7 @@ void main()
 	// inside the blue-zone cells. The WATER_ALPHA secondary pass (vColor.a
 	// well below 1) is discarded and flagged output is forced opaque so the
 	// base-tile draw's reading stays visible over the underneath water tile.
-	if (uIeeEnabled > 1.5)
+	if (uIeeEnabled > 1.5 && uIeeWaterRoute2 < 0.5)
 	{
 		vec4 art = seamSample(vTc);
 		if (cellMode > 0.5)
@@ -279,7 +281,19 @@ void main()
 	// vColor.a < 1 and must stay vanilla.
 	float waterMask = 0.0;
 	float waterCoverage = 0.0;
-	if (uIeeEnabled > 0.5 && vColor.a > 0.9)
+	if (uIeeWaterRoute2 > 0.5)
+	{
+		// The native animated underlay is identified by live resource ownership,
+		// not by an alpha threshold. Keep base/secondary art, fades and shores.
+		// Zero strength bypasses every RGB/alpha change exactly.
+		if (uIeeEnabled > 0.5 && uIeeEnabled < 1.5 &&
+		    uIeeWaterOverlayStrength > 0.0 && cellMode > 0.5 && cellMode < 1.5)
+		{
+			waterCoverage = ieeCoverageWithCenter(worldPos, 1.0);
+			waterMask = clamp(uIeeWaterOverlayStrength, 0.0, 1.0);
+		}
+	}
+	else if (uIeeEnabled > 0.5 && vColor.a > 0.9)
 	{
 		// Wide cell gate: hole pixels up to one mask texel OUTSIDE a flagged
 		// cell still count (coverage 0.2 from one neighbor tap) — authored
@@ -290,7 +304,7 @@ void main()
 		waterMask = (1.0 - texColor.a) * cellSoft;
 	}
 
-	if (waterMask > 0.02)
+	if ((uIeeWaterRoute2 > 0.5 && waterMask > 0.0) || waterMask > 0.02)
 	{
 		float t = uIeeTime;
 		vec3 normal = ieeWaterNormal(worldPos, t);
@@ -312,6 +326,7 @@ void main()
 		// Partially opaque contour pixels still contribute their real art.
 		vec3 artLinear = ieeSrgbToLinear(texColor.rgb);
 		vec3 artColor = mix(uIeeWaterTint, artLinear, texColor.a);
+		if (uIeeWaterRoute2 > 0.5) artColor = uIeeWaterTint;
 		float artLuma = dot(artColor, vec3(0.2126, 0.7152, 0.0722));
 		// Normalize the art tone so dark night pixels still yield a usable hue;
 		// soften extremes so bright rim pixels can't smear the palette.
@@ -377,8 +392,17 @@ void main()
 		// art rgb is black anyway); the seamSample bilinear already softens
 		// the alpha edge. Raise the output alpha so our water covers the
 		// engine's generic animated tile drawn underneath the cell.
-		texColor.rgb = ieeLinearToSrgb(mix(artLinear, water, waterMask));
-		texColor.a = max(texColor.a, waterMask);
+		if (uIeeWaterRoute2 > 0.5)
+		{
+			// Mix only U with P in stored RGB, before the existing native tint/
+			// blend. The painted A pass above it keeps its original effective alpha.
+			texColor.rgb = mix(texColor.rgb, ieeLinearToSrgb(water), waterMask);
+		}
+		else
+		{
+			texColor.rgb = ieeLinearToSrgb(mix(artLinear, water, waterMask));
+			texColor.a = max(texColor.a, waterMask);
+		}
 	}
 
 	texColor = texColor * vColor;
@@ -393,7 +417,7 @@ void main()
 	// look different. Suppress the pass entirely while ON
 	// so every water cell shares one source of truth; OFF and ALIGN keep it.
 	float alphaScale = 1.0;
-	if (uIeeEnabled > 0.5 && uIeeEnabled < 1.5 && cellMode > 0.5 &&
+	if (uIeeWaterRoute2 < 0.5 && uIeeEnabled > 0.5 && uIeeEnabled < 1.5 && cellMode > 0.5 &&
 	    vColor.a > 0.15 && vColor.a < 0.9)
 	{
 		alphaScale = 0.0;
