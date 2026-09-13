@@ -1,0 +1,138 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T20:07:50.6016023Z",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monsters",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "477F1831159D3E37FAC6D1470A4755743214A2381852B86372384940B86FEB81"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "note": "Les neuf familles Faune sauvage 7F sont validées ingame par l'utilisateur le 2026-09-13. MSPS a fait l'objet d'une vérification runtime : géométrie logique native, backing x2 uniquement."
+  },
+  "entries": [
+    {
+      "animation_id": "0x7F0A",
+      "name": "Panthère et grands félins — MGCP",
+      "bam_prefix": "MGCP",
+      "creature": "C6GUEN",
+      "job_file": "sprite/families/monsters/7fxx/7f0a-mgcp-greatcat-panther/jobs/x2-nearest-v1.json",
+      "job_sha256": "4716A2A23692E7B2F790BE0D109F639F85651B7F759C413A06A1AA9206BA9EC7",
+      "source_manifest": "sprite/families/monsters/7fxx/7f0a-mgcp-greatcat-panther/source/stock/manifest.json",
+      "source_manifest_sha256": "55CC2D44509CFEEC3015C3720667D793FC7576F3909AEA3DDCB02EBB96BD78A0",
+      "build_manifest": "sprite/families/monsters/7fxx/7f0a-mgcp-greatcat-panther/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "615AFBD063E597BBECD309B2F4DC16C50A68B07C7F1814E0DFCDFB6AF42783AA"
+    },
+    {
+      "animation_id": "0x7F0B",
+      "name": "Léopard, lion et grands félins — MGCL",
+      "bam_prefix": "MGCL",
+      "creature": "CATLEO01",
+      "job_file": "sprite/families/monsters/7fxx/7f0b-mgcl-greatcat-leopard/jobs/x2-nearest-v1.json",
+      "job_sha256": "85B09C96D1CB8CCB8D9F2D4B1DE56965081D164470C9DE471E4A0CF9697DA338",
+      "source_manifest": "sprite/families/monsters/7fxx/7f0b-mgcl-greatcat-leopard/source/stock/manifest.json",
+      "source_manifest_sha256": "BAC802A6CFCD7E2E121CA7F3C211CE0E32E8BC8E81C907D4D29DE54534A84296",
+      "build_manifest": "sprite/families/monsters/7fxx/7f0b-mgcl-greatcat-leopard/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "4F761461A1E6EEDC38B618283FEA948EF8478ADD1366B422F5A3CCA77164F611"
+    },
+    {
+      "animation_id": "0x7F13",
+      "name": "Serpents et boalisks — MSNK",
+      "bam_prefix": "MSNK",
+      "creature": "SNAKE01",
+      "job_file": "sprite/families/monsters/7fxx/7f13-msnk-snake/jobs/x2-nearest-v1.json",
+      "job_sha256": "B02D28A608EDFC8DDDE26F89A39056286DAF9C9C84DBC4E21290C86C4E75EA99",
+      "source_manifest": "sprite/families/monsters/7fxx/7f13-msnk-snake/source/stock/manifest.json",
+      "source_manifest_sha256": "E248E4E504CC0015892DEAF8559B7F1FCEE33809C2AB633E85E664F689C0F955",
+      "build_manifest": "sprite/families/monsters/7fxx/7f13-msnk-snake/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "CE91AD3DA89C02464915CAD58D4D7C943B17B975F36FCBC9E733440B8A3A8DF0"
+    },
+    {
+      "animation_id": "0x7F16",
+      "name": "Élans — AMOO",
+      "bam_prefix": "AMOO",
+      "creature": "MOOSE",
+      "job_file": "sprite/families/monsters/7fxx/7f16-amoo-moose/jobs/x2-nearest-v1.json",
+      "job_sha256": "F825F8678D2B8DB5AF296DF4BBCF0C5B2BA738086E1115104A423DEA2E94EC91",
+      "source_manifest": "sprite/families/monsters/7fxx/7f16-amoo-moose/source/stock/manifest.json",
+      "source_manifest_sha256": "73B98BE5442AA74C63ED15A8627DF8A9190F5D0BAD29998C189C4B6AE372D64D",
+      "build_manifest": "sprite/families/monsters/7fxx/7f16-amoo-moose/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "FFC84A8CFA52A18B84A7538D2D316E37ADD8252186E8F68DDCA1A2B9CC52BD04"
+    },
+    {
+      "animation_id": "0x7F17",
+      "name": "Lapins — ARAB",
+      "bam_prefix": "ARAB",
+      "creature": "RABBIT",
+      "job_file": "sprite/families/monsters/7fxx/7f17-arab-rabbit/jobs/x2-nearest-v1.json",
+      "job_sha256": "F53FC00B84FED438F18A3662FCB537D1FB0AD06F0E775E22FEC5A039ABE3F28E",
+      "source_manifest": "sprite/families/monsters/7fxx/7f17-arab-rabbit/source/stock/manifest.json",
+      "source_manifest_sha256": "558B90EA2F22E6771D671A75DD30801D6E5CC166FEC36848874F09E0D1293D62",
+      "build_manifest": "sprite/families/monsters/7fxx/7f17-arab-rabbit/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "D8D8C7F6299F526258CFF977C3A45128B0EB149F3882BB57759F89EBDCDE3C9F"
+    },
+    {
+      "animation_id": "0x7F18",
+      "name": "Daims — ADER",
+      "bam_prefix": "ADER",
+      "creature": "DEER01",
+      "job_file": "sprite/families/monsters/7fxx/7f18-ader-deer/jobs/x2-nearest-v1.json",
+      "job_sha256": "868E1563165833177F89EE0B3D5D621BE486E5F186023A1D801B1F90CF6DC947",
+      "source_manifest": "sprite/families/monsters/7fxx/7f18-ader-deer/source/stock/manifest.json",
+      "source_manifest_sha256": "32E52F4CFADB11488F3AEF2E6A2942C802526123D299A3A686C47BC5E2167B30",
+      "build_manifest": "sprite/families/monsters/7fxx/7f18-ader-deer/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "6A6B85585F92D9BC43D0A325C1C4635F6FB1E552DEA05571FB5A35CAF6F8AECF"
+    },
+    {
+      "animation_id": "0x7F20",
+      "name": "Marmottes et furets — AGRO",
+      "bam_prefix": "AGRO",
+      "creature": "GRHOG01",
+      "job_file": "sprite/families/monsters/7fxx/7f20-agro-groundhog/jobs/x2-nearest-v1.json",
+      "job_sha256": "349F81F47363C072C1E4F955A8E2FE5B849D5935ED08095910C748056BF9D61F",
+      "source_manifest": "sprite/families/monsters/7fxx/7f20-agro-groundhog/source/stock/manifest.json",
+      "source_manifest_sha256": "48AD25E133A4D9830D00FE8043A341352DB56F923ACB87D4100F43561D54C43C",
+      "build_manifest": "sprite/families/monsters/7fxx/7f20-agro-groundhog/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "1A65D94986B93F004146A191741E52C51A67242268E40E33592AF754D1C18187"
+    },
+    {
+      "animation_id": "0x7F21",
+      "name": "Faisans — APHE",
+      "bam_prefix": "APHE",
+      "creature": "PHEAS01",
+      "job_file": "sprite/families/monsters/7fxx/7f21-aphe-pheasant/jobs/x2-nearest-v1.json",
+      "job_sha256": "19C951F89487E7C6A92F55C3601B1B105811A7E9AB0A043AC010893B11EBAB03",
+      "source_manifest": "sprite/families/monsters/7fxx/7f21-aphe-pheasant/source/stock/manifest.json",
+      "source_manifest_sha256": "061009B50EEC5909F2D54B6AC1A622B1EF87F7CE3373BD77FB7904A369DFFCC6",
+      "build_manifest": "sprite/families/monsters/7fxx/7f21-aphe-pheasant/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "9DE4172ADB3A18133E7F9C3B1D4BE593F478C17381CEEAF63CF03600B7FDBD35"
+    },
+    {
+      "animation_id": "0x7F2F",
+      "name": "Petites araignées — MSPS",
+      "bam_prefix": "MSPS",
+      "creature": "SPIDSM01",
+      "job_file": "sprite/families/monsters/7fxx/7f2f-msps-spider-small/jobs/x2-nearest-v1.json",
+      "job_sha256": "88F8ABF86855CF3694813F1C931BE0ABA2FFE6A2A3EB9871269A22B8797A7C81",
+      "source_manifest": "sprite/families/monsters/7fxx/7f2f-msps-spider-small/source/stock/manifest.json",
+      "source_manifest_sha256": "320FEAA418C6B14532A10EEC35A8A434B51022E3176340F2F721AA0556ABA53F",
+      "build_manifest": "sprite/families/monsters/7fxx/7f2f-msps-spider-small/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "D8E32057E701714DD5BEB7B6582FD28023C17178E22AA18BEF4983914A135701"
+    }
+  ],
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-7fxx-wildlife-v1.json",
+    "job_sha256": "F3ED569E4DC15B6CD64D506F025C6ED67DF213DE434DB471D5CEBE5090D7CD20",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "8E14B7EC3F7D38F2B88CA59989C6368B43998F91F5BE78E26D59612567D634D6",
+    "installation_status": "installed-pending-qa"
+  },
+  "release_manifest_modified": false
+}

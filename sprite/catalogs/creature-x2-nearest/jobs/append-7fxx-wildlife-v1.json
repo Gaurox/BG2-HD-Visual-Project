@@ -1,0 +1,163 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif créatures x2 — ajout Faune sauvage 7F",
+  "members": [
+    "sprite/families/monsters/7fxx/7f0a-mgcp-greatcat-panther/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f0b-mgcl-greatcat-leopard/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f13-msnk-snake/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f16-amoo-moose/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f17-arab-rabbit/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f18-ader-deer/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f20-agro-groundhog/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f21-aphe-pheasant/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f2f-msps-spider-small/jobs/x2-nearest-v1.json"
+  ],
+  "parent": {
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/f88516cac8183fe5a9833c5838dcb2de455e2e580672ba472137ce75f013baf0/build/build-manifest.json",
+    "build_manifest_sha256": "B34E3E1A583396C1168D6AF3B7EA93BEFEBB46FF91A848C346BA5405459BE511",
+    "catalog_sha256": "B754D5D0F57831F178766ACC9ED941901460FE1771FC8EF7F20395C79957B6C8"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "run_dir": "sprite/creature_sprites_progressive_xn_xbr2x/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x7F0A",
+        "name": "Panthère et grands félins — MGCP",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "C6GUEN"
+        ],
+        "required_bam_prefixes": [
+          "MGCP"
+        ]
+      },
+      {
+        "animation_id": "0x7F0B",
+        "name": "Léopard, lion et grands félins — MGCL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "CATLEO01"
+        ],
+        "required_bam_prefixes": [
+          "MGCL"
+        ]
+      },
+      {
+        "animation_id": "0x7F13",
+        "name": "Serpents et boalisks — MSNK",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "SNAKE01"
+        ],
+        "required_bam_prefixes": [
+          "MSNK"
+        ]
+      },
+      {
+        "animation_id": "0x7F16",
+        "name": "Élans — AMOO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "MOOSE"
+        ],
+        "required_bam_prefixes": [
+          "AMOO"
+        ]
+      },
+      {
+        "animation_id": "0x7F17",
+        "name": "Lapins — ARAB",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "RABBIT"
+        ],
+        "required_bam_prefixes": [
+          "ARAB"
+        ]
+      },
+      {
+        "animation_id": "0x7F18",
+        "name": "Daims — ADER",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DEER01"
+        ],
+        "required_bam_prefixes": [
+          "ADER"
+        ]
+      },
+      {
+        "animation_id": "0x7F20",
+        "name": "Marmottes et furets — AGRO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "GRHOG01"
+        ],
+        "required_bam_prefixes": [
+          "AGRO"
+        ]
+      },
+      {
+        "animation_id": "0x7F21",
+        "name": "Faisans — APHE",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "PHEAS01"
+        ],
+        "required_bam_prefixes": [
+          "APHE"
+        ]
+      },
+      {
+        "animation_id": "0x7F2F",
+        "name": "Petites araignées — MSPS",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "SPIDSM01"
+        ],
+        "required_bam_prefixes": [
+          "MSPS"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  }
+}
