@@ -425,6 +425,14 @@ function xbr4x(source, width, height) {
                 resources, 4, maximum_bytes=result["registry_bytes"] - 1
             )
 
+    def test_registry_preflight_accepts_large_native_frame_within_payload_bound(self) -> None:
+        frame = self.make_frame()
+        frame.width = 320
+        frame.height = 240
+        resources = [{"frames": [frame], "cycles": [{"frame_indices": [0]}]}]
+        result = pipeline.preflight_registry_layout(resources, 2)
+        self.assertEqual(result["index_bytes"], 320 * 240 * 4)
+
     def test_x4_registry_limit_is_centralized_at_512_mib(self) -> None:
         self.assertEqual(pipeline.MAX_REGISTRY_BYTES, 128 * 1024 * 1024)
         self.assertEqual(pipeline.maximum_registry_bytes(2), pipeline.MAX_REGISTRY_BYTES)

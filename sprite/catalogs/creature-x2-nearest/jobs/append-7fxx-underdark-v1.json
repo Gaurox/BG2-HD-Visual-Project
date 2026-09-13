@@ -1,0 +1,163 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif créatures x2 — ajout Monstres de l’Outreterre 7F",
+  "members": [
+    "sprite/families/monsters/7fxx/7f01-mmin-mindflayer/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f02-mbeh-beholder/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f08-moty-otyugh/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f0c-mkuo-kuo-toa/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f14-mgit-githyanki/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f15-mbes-beholder-small/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f27-mdro-drow/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f28-mkul-kuo-toa-large/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f29-mfdr-drow-female/jobs/x2-nearest-v1.json"
+  ],
+  "parent": {
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/477f1831159d3e37fac6d1470a4755743214a2381852b86372384940b86feb81/build/build-manifest.json",
+    "build_manifest_sha256": "F26226996C5CC7C977A5BD8426862C04B18F56DDA8F640223ABFBAF2DAF587D4",
+    "catalog_sha256": "6F68B2C9D6B8AB79807602A062F98232687653DD718C1ED1BDBF1B9C3BE5421F"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "run_dir": "sprite/creature_sprites_progressive_xn_xbr2x/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x7F01",
+        "name": "Flagelleurs mentaux — MMIN",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "MINDAL01"
+        ],
+        "required_bam_prefixes": [
+          "MMIN"
+        ]
+      },
+      {
+        "animation_id": "0x7F02",
+        "name": "Spectateurs et tyrannœils — MBEH",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BEHOLD01"
+        ],
+        "required_bam_prefixes": [
+          "MBEH"
+        ]
+      },
+      {
+        "animation_id": "0x7F08",
+        "name": "Otyughs — MOTY",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "OTYUGH01"
+        ],
+        "required_bam_prefixes": [
+          "MOTY"
+        ]
+      },
+      {
+        "animation_id": "0x7F0C",
+        "name": "Kuo-toas — MKUO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "KUOTOA01"
+        ],
+        "required_bam_prefixes": [
+          "MKUO"
+        ]
+      },
+      {
+        "animation_id": "0x7F14",
+        "name": "Githyankis — MGIT",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "GITH01"
+        ],
+        "required_bam_prefixes": [
+          "MGIT"
+        ]
+      },
+      {
+        "animation_id": "0x7F15",
+        "name": "Petits tyrannœils — MBES",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BEHGAU01"
+        ],
+        "required_bam_prefixes": [
+          "MBES"
+        ]
+      },
+      {
+        "animation_id": "0x7F27",
+        "name": "Drows — MDRO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DROW01"
+        ],
+        "required_bam_prefixes": [
+          "MDRO"
+        ]
+      },
+      {
+        "animation_id": "0x7F28",
+        "name": "Grands kuo-toas — MKUL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "KUOMON01"
+        ],
+        "required_bam_prefixes": [
+          "MKUL"
+        ]
+      },
+      {
+        "animation_id": "0x7F29",
+        "name": "Drows femelles — MFDR",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DROW02"
+        ],
+        "required_bam_prefixes": [
+          "MFDR"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  }
+}

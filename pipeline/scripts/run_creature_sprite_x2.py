@@ -2365,8 +2365,12 @@ def load_source_frames(manifest_path: Path) -> tuple[list[SourceFrame], list[dic
         frame_records = []
         for frame_index, (indices, center_x, center_y, tr) in enumerate(decoded):
             height, width = indices.shape
-            if width * height > 65535:
-                raise RuntimeError(f"{resref} frame {frame_index}: frame too large")
+            # The registry stores width and height independently as u16.  Do not
+            # impose a legacy u16 cap on their product: large native creature
+            # frames (for example MKUOG2SL at 320x240) are valid when their xN
+            # payload fits the lazy frame-index bound checked during preflight.
+            if not (1 <= width <= 4096 and 1 <= height <= 4096):
+                raise RuntimeError(f"{resref} frame {frame_index}: invalid frame dimensions")
             if metadata:
                 expected = metadata[frame_index]
                 geometry = (int(expected["index"]), int(expected["width"]), int(expected["height"]), int(expected["center_x"]), int(expected["center_y"]))
@@ -6658,14 +6662,43 @@ def build_catalog_delta(
         logical_digests = list(
             parent_manifest["registry_catalog_logical_component_digests"]
         )
-        source_indices: dict[str, int] = {}
+        if len(logical_digests) != len(components) or len(set(logical_digests)) != len(
+            logical_digests
+        ):
+            raise RuntimeError("parent catalog logical component digests are invalid")
+        # A new animation may intentionally reuse the exact same BAM component
+        # as an existing animation (for example BG2 and Icewind aliases).  Seed
+        # the lookup from the sealed parent so the delta adds only its animation
+        # mapping, rather than emitting an identical content-addressed shard.
+        source_indices = {
+            digest: index for index, digest in enumerate(logical_digests)
+        }
         shard_resources: dict[int, list[str]] = {}
+        parent_ordinals: dict[int, dict[int, str]] = {}
+        for entry in parent_index["directory"]:
+            shard_index = int(entry["shard_index"])
+            ordinal = int(entry["resource_ordinal"])
+            resref = str(entry["resref"])
+            existing = parent_ordinals.setdefault(shard_index, {}).setdefault(
+                ordinal, resref
+            )
+            if existing != resref:
+                raise RuntimeError("parent catalog shard resource ordinals conflict")
+        for shard in shards:
+            shard_index = int(shard["index"])
+            ordinals = parent_ordinals.get(shard_index, {})
+            resource_count = int(shard["resource_count"])
+            if sorted(ordinals) != list(range(resource_count)):
+                raise RuntimeError("parent catalog shard resources are incomplete")
+            shard_resources[shard_index] = [ordinals[index] for index in range(resource_count)]
         delta_stored_index_bytes = 0
         delta_compressed_frames = 0
         delta_raw_frames = 0
         seen_hashes = {str(value["sha256"]) for value in shards}
         contract = upscale_contract(catalog)
         for component in collection["components"]:
+            if component["source_digest"] in source_indices:
+                continue
             component_index = len(components)
             source_indices[component["source_digest"]] = component_index
             partitions = partition_registry_resources(

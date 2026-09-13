@@ -224,7 +224,7 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
         self.assertEqual(actual["sha256"], expected["sha256"])
         self.assertEqual(verified["sha256"], expected["sha256"])
 
-    def test_delta_build_reads_only_new_payload_and_parent_index(self) -> None:
+    def test_delta_build_reuses_parent_component_without_reading_parent_payload(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT / "sprite") as temporary:
             root = Path(temporary)
             parent_pack = root / "parent/build/iee-assets/creature-sprites"
@@ -251,7 +251,7 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
             }
             pipeline.write_json(parent_manifest_path, parent_manifest)
             source = root / "delta.registry"
-            source.write_bytes(self.registry_bytes("RESC", 0x6120))
+            source.write_bytes(self.registry_bytes("RESA", 0x6120))
             records = pipeline.inspect_registry(source, include_resource_records=True)["resource_records"]
             source_digest = pipeline.catalog_source_component_sha256(2, records)
             collection = {
@@ -263,14 +263,14 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
                 "animations": [{
                     "animation_id": "0x6120", "runtime_profile": "character-bg2ee-2.7.3.0",
                     "owner": pipeline.CATALOG_OWNER_CHARACTER,
-                    "component_source_digests": [source_digest], "resources": ["RESC"],
+                    "component_source_digests": [source_digest], "resources": ["RESA"],
                 }],
                 "source_members": [{
                     "job_file": "delta.json", "job_sha256": "B" * 64,
                     "job_id": "delta", "animation_id": "0x6120",
                     "runtime_profile": "character-bg2ee-2.7.3.0",
                     "build_manifest": "delta-build.json", "build_manifest_sha256": "C" * 64,
-                    "component_source_digests": [source_digest], "bam_prefixes": ["RESC"],
+                    "component_source_digests": [source_digest], "bam_prefixes": ["RESA"],
                 }],
             }
             job_file = root / "delta-job.json"
@@ -304,6 +304,9 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
             verified = pipeline.inspect_registry_catalog(built)
         self.assertEqual(result["status"], "built-delta")
         self.assertEqual([value["animation_id"] for value in verified["animations"]], ["0x6102", "0x6110", "0x6120"])
+        self.assertEqual(verified["shard_count"], 2)
+        self.assertEqual(verified["animations"][-1]["component_indices"], [0])
+        self.assertEqual(verified["animation_resources"]["0x6120"], ["RESA"])
 
     def test_catalog_round_trip_supports_x4_nearest_payloads(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
