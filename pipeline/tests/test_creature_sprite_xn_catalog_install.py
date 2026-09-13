@@ -205,6 +205,18 @@ class ThinCatalogInstallTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("runtime stable", result.stderr)
 
+    def test_catalog_installer_accepts_delta_jobs(self) -> None:
+        job = json.loads(self.job.read_text(encoding="utf-8"))
+        job["schema"] = "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1"
+        write_json(self.job, job)
+        result = self.run_ps(
+            INSTALL,
+            "-JobFile", self.job,
+            "-RuntimeManifest", self.runtime_manifest,
+            "-VerifyOnly",
+        )
+        self.assertIn("verified", result.stdout)
+
     def test_legacy_restore_does_not_restore_its_runtime_dll(self) -> None:
         backup = self.run / "ingame-installation/backups/legacy"
         backup.mkdir(parents=True)

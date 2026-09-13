@@ -30,6 +30,24 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Runtime de développement | `Install-IEE-Runtime-Test.ps1` ; indépendant des assets |
 | Finalisation release | `releases/BG2-HD-Upscale/tools/Compile-BG2HD-Release.ps1` |
 
+## Catalogue sprites : ajout incrémental
+
+Un nouveau lot utilise `bg2-upscale-creature-sprite-xn-catalog-delta-job-v1` et ne contient que
+ses nouveaux `members`/`qa.animations`. `parent` épingle la génération acceptée :
+
+```json
+"parent": {
+  "build_manifest": "<generation>/build/build-manifest.json",
+  "build_manifest_sha256": "<SHA256>",
+  "catalog_sha256": "<SHA256 du catalogue>"
+}
+```
+
+`build` lit l'index parent, crée seulement les nouveaux shards, relie les anciens sans les lire et
+écrit directement le pointeur installable. Un ID d'animation parent ne peut pas être remplacé par
+un delta. Contrôle quotidien : `verify` (métadonnées). Scan de tous les shards, réservé à la
+finalisation : `verify --full-verify`.
+
 ## Commandes communes
 
 ```powershell

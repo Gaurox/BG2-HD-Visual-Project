@@ -11,7 +11,10 @@ $ErrorActionPreference = 'Stop'
 
 $jobPath = Resolve-WorkspaceInput $JobFile -RequireExisting
 $job = Read-JsonFile $jobPath
-if ($job.schema -ne 'bg2-upscale-creature-sprite-xn-catalog-job-v1') { throw 'Job catalogue non supporté.' }
+if ($job.schema -notin @(
+        'bg2-upscale-creature-sprite-xn-catalog-job-v1',
+        'bg2-upscale-creature-sprite-xn-catalog-delta-job-v1'
+    )) { throw 'Job catalogue non supporté.' }
 $game = Resolve-WorkspaceInput ([string]$job.paths.game_root) -RequireExisting
 $run = Resolve-WorkspaceInput ([string]$job.paths.run_dir) -RequireExisting
 $pointerPath = Join-Path $run 'current-generation.json'

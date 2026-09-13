@@ -30,7 +30,6 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageDraw
 
-from catalog_verification import VerificationCache, VerificationMismatch
 from workspace_paths import resolve_path_reference
 
 
@@ -52,18 +51,13 @@ XN_CATALOG_RESTORE_SCRIPT = (
 JOB_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-job-v1"
 ARMOR_SET_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-armor-set-v1"
 CATALOG_JOB_SCHEMA = "bg2-upscale-creature-sprite-xn-catalog-job-v1"
+CATALOG_DELTA_SCHEMA = "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1"
 SOURCE_SCHEMA = "bg2-upscale-creature-sprite-source-v1"
 BUILD_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-pack-v1"
 ARMOR_SET_BUILD_SCHEMA = "bg2-upscale-creature-sprite-xbr2x-armor-set-pack-v1"
 CATALOG_BUILD_SCHEMA = "bg2-upscale-creature-sprite-xn-catalog-pack-v1"
 CATALOG_POINTER_SCHEMA = (
     "bg2-upscale-creature-sprite-xn-catalog-current-generation-v1"
-)
-CATALOG_VERIFICATION_PROOF_SCHEMA = (
-    "bg2-upscale-creature-sprite-xn-catalog-verification-proof-v1"
-)
-CATALOG_VERIFICATION_CHECKPOINT_SCHEMA = (
-    "bg2-upscale-creature-sprite-xn-catalog-verification-checkpoint-v1"
 )
 RUNTIME_SCHEMA = "bg2-upscale-creature-sprite-runtime-v1"
 XN_INSTALL_STATE_SCHEMA = "bg2-upscale-creature-sprite-xn-ingame-test-v2"
@@ -754,12 +748,14 @@ def load_armor_set(set_file: Path) -> dict[str, Any]:
 
 def runtime_profiles_for_work_item(work_item: dict[str, Any]) -> list[str]:
     if work_item.get("_kind") == "catalog":
-        return sorted(
-            {
+        profiles = {
                 str(member["animation"]["runtime_profile"])
                 for member in work_item["_catalog_members"]
-            }
-        )
+        }
+        parent = work_item.get("_catalog_parent")
+        if isinstance(parent, dict):
+            profiles.update(str(value) for value in parent["manifest"]["runtime_profiles"])
+        return sorted(profiles)
     return [str(work_item["animation"].get("runtime_profile", ""))]
 
 
@@ -830,7 +826,7 @@ def normalized_catalog_qa_contract(
 def load_catalog_job(catalog_file: Path) -> dict[str, Any]:
     catalog_file = resolve_path(catalog_file)
     catalog = read_json(catalog_file)
-    if catalog.get("schema") != CATALOG_JOB_SCHEMA:
+    if catalog.get("schema") not in {CATALOG_JOB_SCHEMA, CATALOG_DELTA_SCHEMA}:
         raise RuntimeError(f"unsupported catalog schema: {catalog.get('schema')!r}")
     job_id = str(catalog.get("job_id", ""))
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,63}", job_id):
@@ -859,6 +855,55 @@ def load_catalog_job(catalog_file: Path) -> dict[str, Any]:
     if not contract.explicit:
         raise RuntimeError("catalog requires an explicit xN upscale contract")
     catalog["upscale"] = contract.method
+
+    parent = catalog.get("parent")
+    if catalog.get("schema") == CATALOG_DELTA_SCHEMA:
+        if not isinstance(parent, dict) or set(parent) != {
+            "build_manifest",
+            "build_manifest_sha256",
+            "catalog_sha256",
+        }:
+            raise RuntimeError(
+                "catalog delta parent requires build_manifest, build_manifest_sha256 "
+                "and catalog_sha256"
+            )
+        parent_manifest_path = resolve_path(str(parent["build_manifest"]))
+        assert_workspace_child(parent_manifest_path, "parent.build_manifest")
+        expected_manifest_sha256 = str(parent["build_manifest_sha256"]).upper()
+        expected_catalog_sha256 = str(parent["catalog_sha256"]).upper()
+        if not re.fullmatch(r"[0-9A-F]{64}", expected_manifest_sha256) or not re.fullmatch(
+            r"[0-9A-F]{64}", expected_catalog_sha256
+        ):
+            raise RuntimeError("catalog delta parent hashes must be SHA-256 values")
+        if sha256_file(parent_manifest_path) != expected_manifest_sha256:
+            raise RuntimeError("catalog delta parent build manifest changed")
+        parent_manifest = read_json(parent_manifest_path)
+        parent_catalog_path = parent_manifest_path.parent / str(
+            parent_manifest.get("registry_catalog", "")
+        )
+        if (
+            parent_manifest.get("schema") != CATALOG_BUILD_SCHEMA
+            or parent_manifest.get("status") != "built-pending-ingame-qa"
+            or parent_manifest.get("method") != contract.method
+            or parent_manifest.get("registry_scale") != contract.scale
+            or parent_manifest.get("registry_catalog_sha256") != expected_catalog_sha256
+            or not parent_catalog_path.is_file()
+        ):
+            raise RuntimeError("catalog delta parent generation is incompatible")
+        if (
+            parent_manifest.get("locks", {}).get("baldur_real_sha256")
+            != expected_exe
+        ):
+            raise RuntimeError("catalog delta parent game profile differs")
+        catalog["_catalog_parent"] = {
+            "manifest_path": parent_manifest_path,
+            "manifest_sha256": expected_manifest_sha256,
+            "catalog_path": parent_catalog_path,
+            "catalog_sha256": expected_catalog_sha256,
+            "manifest": parent_manifest,
+        }
+    elif parent is not None:
+        raise RuntimeError("catalog parent is only valid for a delta job")
 
     loaded_members: list[dict[str, Any]] = []
     seen_files: set[Path] = set()
@@ -955,7 +1000,7 @@ def load_work_item(path: Path) -> dict[str, Any]:
         return load_job(path)
     if schema == ARMOR_SET_SCHEMA:
         return load_armor_set(path)
-    if schema == CATALOG_JOB_SCHEMA:
+    if schema in {CATALOG_JOB_SCHEMA, CATALOG_DELTA_SCHEMA}:
         return load_catalog_job(path)
     raise RuntimeError(f"unsupported job schema: {schema!r}")
 
@@ -963,7 +1008,7 @@ def load_work_item(path: Path) -> dict[str, Any]:
 def load_catalog_control_job(path: Path) -> dict[str, Any] | None:
     path = resolve_path(path)
     catalog = read_json(path)
-    if catalog.get("schema") != CATALOG_JOB_SCHEMA:
+    if catalog.get("schema") not in {CATALOG_JOB_SCHEMA, CATALOG_DELTA_SCHEMA}:
         return None
     paths = catalog.get("paths")
     if not isinstance(paths, dict) or not paths.get("game_root") or not paths.get("run_dir"):
@@ -1073,60 +1118,6 @@ def catalog_leaf_payload_paths(
     return ordered
 
 
-def catalog_verification_cache_path(catalog: dict[str, Any]) -> Path:
-    return job_path(catalog, "run_dir") / "verification-cache" / "hash-cache-v1.json"
-
-
-def catalog_verification_proof_path(
-    catalog: dict[str, Any], generation_id: str
-) -> Path:
-    return (
-        job_path(catalog, "run_dir")
-        / "verification-cache"
-        / generation_id.lower()
-        / "sealed-verification.json"
-    )
-
-
-def catalog_verification_checkpoint_path(
-    catalog: dict[str, Any], generation_id: str
-) -> Path:
-    return (
-        job_path(catalog, "run_dir")
-        / "verification-cache"
-        / generation_id.lower()
-        / "verification-checkpoint.json"
-    )
-
-
-def catalog_verifier(
-    catalog: dict[str, Any], *, full_verify: bool | None = None
-) -> VerificationCache:
-    cached = catalog.get("_catalog_verifier")
-    if isinstance(cached, VerificationCache) and (
-        full_verify is None or cached.full_verify == full_verify
-    ):
-        return cached
-    requested_full_verify = bool(full_verify)
-    verifier = VerificationCache(
-        catalog_verification_cache_path(catalog), full_verify=requested_full_verify
-    )
-    catalog["_catalog_verifier"] = verifier
-    return verifier
-
-
-def catalog_cached_fingerprint(
-    catalog: dict[str, Any],
-    path: Path,
-    *,
-    scope: str,
-    include_crc32: bool = False,
-) -> dict[str, Any]:
-    return catalog_verifier(catalog).fingerprint_file(
-        path, scope=scope, include_crc32=include_crc32
-    )
-
-
 def catalog_builder_lock(catalog: dict[str, Any]) -> tuple[Path, str]:
     sealed = catalog.get("_catalog_sealed_input_lock")
     if isinstance(sealed, dict):
@@ -1140,12 +1131,7 @@ def catalog_builder_lock(catalog: dict[str, Any]) -> tuple[Path, str]:
         ):
             # The sealed build predates separation of build and verification code.
             return Path(__file__), legacy_sha256
-    fingerprint = catalog_cached_fingerprint(
-        catalog,
-        CATALOG_BUILDER_CONTRACT,
-        scope="catalog-builder-contract",
-    )
-    return CATALOG_BUILDER_CONTRACT, str(fingerprint["sha256"])
+    return CATALOG_BUILDER_CONTRACT, sha256_file(CATALOG_BUILDER_CONTRACT)
 
 
 def catalog_payload_fingerprint(
@@ -1153,16 +1139,7 @@ def catalog_payload_fingerprint(
 ) -> dict[str, Any]:
     """Hash one regular payload from a stable file identity in a single pass."""
 
-    if catalog is not None:
-        fingerprint = catalog_cached_fingerprint(
-            catalog, path, scope=scope, include_crc32=True
-        )
-        return {
-            "path": relative_project_path(path),
-            "sha256": fingerprint["sha256"],
-            "crc32": fingerprint["crc32"],
-            "bytes": fingerprint["signature"]["size"],
-        }
+    del catalog, scope
 
     sha256 = hashlib.sha256()
     crc32 = 0
@@ -1201,12 +1178,61 @@ def catalog_input_lock(
     cached = catalog.get("_catalog_input_lock")
     if not refresh and isinstance(cached, dict):
         return cached
-    verifier = catalog_verifier(catalog)
+
+    parent = catalog.get("_catalog_parent")
+    if isinstance(parent, dict):
+        members = []
+        for member in catalog["_catalog_members"]:
+            member_manifest = build_dir(member) / "build-manifest.json"
+            leafs = []
+            for leaf in catalog_member_leaf_jobs(member):
+                leaf_manifest = build_dir(leaf) / "build-manifest.json"
+                leaf_manifest_value = read_json(leaf_manifest)
+                leafs.append(
+                    {
+                        "job_file": relative_project_path(Path(leaf["_job_file"])),
+                        "job_sha256": sha256_file(Path(leaf["_job_file"])),
+                        "build_manifest": relative_project_path(leaf_manifest),
+                        "build_manifest_sha256": sha256_file(leaf_manifest),
+                        "payloads": [
+                            catalog_payload_fingerprint(path)
+                            for path in catalog_leaf_payload_paths(
+                                build_dir(leaf), leaf_manifest_value
+                            )
+                        ],
+                    }
+                )
+            members.append(
+                {
+                    "job_file": relative_project_path(Path(member["_job_file"])),
+                    "job_sha256": sha256_file(Path(member["_job_file"])),
+                    "build_manifest": relative_project_path(member_manifest),
+                    "build_manifest_sha256": sha256_file(member_manifest),
+                    "leafs": leafs,
+                }
+            )
+        result = {
+            "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-input-v1",
+            "job_file": relative_project_path(Path(catalog["_job_file"])),
+            "job_sha256": sha256_file(Path(catalog["_job_file"])),
+            "method": upscale_contract(catalog).method,
+            "baldur_real_sha256": catalog["compatibility"][
+                "baldur_real_sha256"
+            ].upper(),
+            "parent": {
+                "build_manifest": relative_project_path(parent["manifest_path"]),
+                "build_manifest_sha256": parent["manifest_sha256"],
+                "catalog_sha256": parent["catalog_sha256"],
+                "generation_id": parent["manifest"]["generation_id"],
+            },
+            "members": members,
+        }
+        catalog["_catalog_input_lock"] = result
+        return result
 
     def locked_sha256(path: Path, scope: str) -> str:
-        return str(
-            verifier.fingerprint_file(path, scope=scope)["sha256"]
-        )
+        del scope
+        return sha256_file(path)
 
     game_exe = job_path(catalog, "game_root") / "BaldurReal.exe"
     expected_exe = catalog["compatibility"]["baldur_real_sha256"].upper()
@@ -1278,21 +1304,12 @@ def catalog_input_lock(
         engine_contract_expected = str(
             sealed.get("engine_source_contract_sha256", "")
         ).upper()
-    engine_paths = [source / relative for relative in ENGINE_SOURCE_CONTRACT_FILES]
     if re.fullmatch(r"[0-9A-F]{64}", engine_contract_expected or ""):
-        verifier.verify_tree(
-            f"engine:{source.resolve()}",
-            engine_paths,
-            engine_contract_expected,
-            lambda: source_tree_hash(source),
-            scope="engine-source",
-        )
+        if source_tree_hash(source) != engine_contract_expected:
+            raise RuntimeError("catalog engine source contract changed")
         engine_contract_sha256 = engine_contract_expected
     else:
         engine_contract_sha256 = source_tree_hash(source)
-        verifier.record_verified_tree(
-            f"engine:{source.resolve()}", engine_paths, engine_contract_sha256
-        )
     result = {
         "schema": "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1",
         "job_file": relative_project_path(Path(catalog["_job_file"])),
@@ -4706,6 +4723,264 @@ def write_registry_catalog(
     return inspect_registry_catalog(path)
 
 
+def read_sealed_catalog_index(path: Path, expected_sha256: str) -> dict[str, Any]:
+    """Read the small immutable index without opening any referenced shard."""
+
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest().upper() != expected_sha256.upper():
+        raise RuntimeError("sealed parent catalog hash differs")
+    if len(raw) < REGISTRY_CATALOG_HEADER_BYTES:
+        raise RuntimeError("sealed parent catalog is truncated")
+    (
+        magic,
+        version,
+        scale,
+        animation_count,
+        component_count,
+        membership_count,
+        shard_count,
+        total_resources,
+        total_frames,
+        total_index_bytes,
+        total_registry_bytes,
+    ) = struct.unpack_from("<8sIIIIIIQQQQ", raw, 0)
+    directory_count, directory_entry_bytes, directory_digest = struct.unpack_from(
+        "<II32s", raw, REGISTRY_CATALOG_V1_HEADER_BYTES
+    )
+    expected_bytes = (
+        REGISTRY_CATALOG_HEADER_BYTES
+        + animation_count * REGISTRY_CATALOG_ANIMATION_ENTRY_BYTES
+        + membership_count * REGISTRY_CATALOG_MEMBERSHIP_BYTES
+        + component_count * REGISTRY_CATALOG_COMPONENT_ENTRY_BYTES
+        + shard_count * REGISTRY_CATALOG_SHARD_ENTRY_BYTES
+        + directory_count * REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES
+    )
+    if (
+        magic != XN_REGISTRY_CATALOG_MAGIC
+        or version != XN_REGISTRY_CATALOG_VERSION
+        or scale not in {2, 4}
+        or directory_entry_bytes != REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES
+        or len(raw) != expected_bytes
+    ):
+        raise RuntimeError("sealed parent catalog format is incompatible")
+    animation_offset = REGISTRY_CATALOG_HEADER_BYTES
+    membership_offset = animation_offset + animation_count * REGISTRY_CATALOG_ANIMATION_ENTRY_BYTES
+    component_offset = membership_offset + membership_count * REGISTRY_CATALOG_MEMBERSHIP_BYTES
+    shard_offset = component_offset + component_count * REGISTRY_CATALOG_COMPONENT_ENTRY_BYTES
+    directory_offset = shard_offset + shard_count * REGISTRY_CATALOG_SHARD_ENTRY_BYTES
+    memberships = list(struct.unpack_from(f"<{membership_count}I", raw, membership_offset))
+    animations = []
+    for index in range(animation_count):
+        animation_id, owner, start, count = struct.unpack_from(
+            "<IIII", raw, animation_offset + index * REGISTRY_CATALOG_ANIMATION_ENTRY_BYTES
+        )
+        animations.append(
+            {
+                "animation_id": f"0x{animation_id:04X}",
+                "owner": owner,
+                "component_indices": memberships[start : start + count],
+            }
+        )
+    components = []
+    for index in range(component_count):
+        values = struct.unpack_from(
+            "<32sIIIIQQQ",
+            raw,
+            component_offset + index * REGISTRY_CATALOG_COMPONENT_ENTRY_BYTES,
+        )
+        components.append(
+            {
+                "index": index,
+                "digest": values[0].hex().upper(),
+                "shard_start": values[1],
+                "shard_count": values[2],
+                "resource_count": values[3],
+                "frame_count": values[5],
+                "index_bytes": values[6],
+                "registry_bytes": values[7],
+            }
+        )
+    shards = []
+    for index in range(shard_count):
+        digest, crc32, resources, frames, index_bytes, registry_bytes = struct.unpack_from(
+            "<32sIIQQQ", raw, shard_offset + index * REGISTRY_CATALOG_SHARD_ENTRY_BYTES
+        )
+        sha256 = digest.hex().upper()
+        shards.append(
+            {
+                "index": index,
+                "registry": "iee-assets/creature-sprites/" + catalog_shard_filename(sha256),
+                "sha256": sha256,
+                "crc32": crc32,
+                "resource_count": resources,
+                "frame_count": frames,
+                "index_bytes": index_bytes,
+                "registry_bytes": registry_bytes,
+            }
+        )
+    raw_directory = raw[directory_offset:]
+    if catalog_directory_digest(scale, raw_directory) != directory_digest.hex().upper():
+        raise RuntimeError("sealed parent catalog directory changed")
+    directory = []
+    for index in range(directory_count):
+        animation_id, resref, component, shard, ordinal = struct.unpack_from(
+            "<I8sIII",
+            raw_directory,
+            index * REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES,
+        )
+        directory.append(
+            {
+                "animation_id": f"0x{animation_id:04X}",
+                "resref": resref.split(b"\0", 1)[0].decode("ascii"),
+                "component_index": component,
+                "shard_index": shard,
+                "resource_ordinal": ordinal,
+            }
+        )
+    return {
+        "scale": scale,
+        "animations": animations,
+        "components": components,
+        "shards": shards,
+        "directory": directory,
+        "total_resources": total_resources,
+        "total_frames": total_frames,
+        "total_index_bytes": total_index_bytes,
+        "total_registry_bytes": total_registry_bytes,
+    }
+
+
+def write_registry_catalog_index(
+    path: Path,
+    scale: int,
+    animations: list[dict[str, Any]],
+    components: list[dict[str, Any]],
+    shards: list[dict[str, Any]],
+    directory: list[dict[str, Any]],
+    logical_component_digests: list[str],
+    storage: dict[str, Any],
+) -> dict[str, Any]:
+    """Write a runtime-compatible catalog from trusted index metadata."""
+
+    animations = sorted(animations, key=lambda item: int(item["animation_id"], 16))
+    memberships: list[int] = []
+    animation_bytes = bytearray()
+    normalized_animations = []
+    for animation in animations:
+        animation_id = int(animation["animation_id"], 16)
+        indices = sorted({int(value) for value in animation["component_indices"]})
+        start = len(memberships)
+        memberships.extend(indices)
+        animation_bytes.extend(
+            struct.pack(
+                "<IIII", animation_id, int(animation["owner"]), start, len(indices)
+            )
+        )
+        normalized_animations.append(
+            {
+                "animation_id": f"0x{animation_id:04X}",
+                "owner": int(animation["owner"]),
+                "membership_start": start,
+                "membership_count": len(indices),
+                "component_indices": indices,
+            }
+        )
+    normalized_shards = [
+        {
+            "index": index,
+            "registry": "iee-assets/creature-sprites/"
+            + catalog_shard_filename(str(shard["sha256"]).upper()),
+            "sha256": str(shard["sha256"]).upper(),
+            "crc32": int(shard["crc32"]),
+            "resource_count": int(shard["resource_count"]),
+            "frame_count": int(shard["frame_count"]),
+            "index_bytes": int(shard["index_bytes"]),
+            "registry_bytes": int(shard["registry_bytes"]),
+        }
+        for index, shard in enumerate(shards)
+    ]
+    shard_bytes = [catalog_shard_entry_bytes(shard, path) for shard in normalized_shards]
+    component_bytes = bytearray()
+    for index, component in enumerate(components):
+        start, count = int(component["shard_start"]), int(component["shard_count"])
+        digest = catalog_component_digest(scale, shard_bytes[start : start + count])
+        if index != int(component["index"]) or digest != str(component["digest"]).upper():
+            raise RuntimeError("catalog component metadata is inconsistent")
+        component_bytes.extend(
+            struct.pack(
+                "<32sIIIIQQQ",
+                bytes.fromhex(digest), start, count, int(component["resource_count"]), 0,
+                int(component["frame_count"]), int(component["index_bytes"]),
+                int(component["registry_bytes"]),
+            )
+        )
+    raw_directory = bytearray()
+    normalized_directory = sorted(
+        directory, key=lambda item: (int(item["animation_id"], 16), str(item["resref"]))
+    )
+    for entry in normalized_directory:
+        resref = str(entry["resref"]).encode("ascii").ljust(8, b"\0")
+        raw_directory.extend(
+            struct.pack(
+                "<I8sIII", int(entry["animation_id"], 16), resref,
+                int(entry["component_index"]), int(entry["shard_index"]),
+                int(entry["resource_ordinal"]),
+            )
+        )
+    totals = {
+        "total_resources": sum(int(item["resource_count"]) for item in components),
+        "total_frames": sum(int(item["frame_count"]) for item in components),
+        "total_index_bytes": sum(int(item["index_bytes"]) for item in components),
+        "total_registry_bytes": sum(int(item["registry_bytes"]) for item in components),
+    }
+    directory_sha256 = catalog_directory_digest(scale, bytes(raw_directory))
+    raw = bytearray(
+        struct.pack(
+            "<8sIIIIIIQQQQ", XN_REGISTRY_CATALOG_MAGIC, XN_REGISTRY_CATALOG_VERSION,
+            scale, len(animations), len(components), len(memberships), len(shards),
+            totals["total_resources"], totals["total_frames"],
+            totals["total_index_bytes"], totals["total_registry_bytes"],
+        )
+    )
+    raw.extend(struct.pack("<II32s", len(normalized_directory), REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES, bytes.fromhex(directory_sha256)))
+    raw.extend(animation_bytes)
+    if memberships:
+        raw.extend(struct.pack(f"<{len(memberships)}I", *memberships))
+    raw.extend(component_bytes)
+    for value in shard_bytes:
+        raw.extend(value)
+    raw.extend(raw_directory)
+    path.write_bytes(raw)
+    logical_content_sha256 = catalog_logical_content_digest(
+        scale, normalized_animations, logical_component_digests
+    )
+    animation_resources: dict[str, list[str]] = {}
+    for entry in normalized_directory:
+        animation_resources.setdefault(entry["animation_id"], []).append(entry["resref"])
+    return {
+        "version": XN_REGISTRY_CATALOG_VERSION,
+        "scale": scale,
+        "sha256": hashlib.sha256(raw).hexdigest().upper(),
+        "registry_catalog_bytes": len(raw),
+        "animation_count": len(animations),
+        "component_count": len(components),
+        "membership_count": len(memberships),
+        "shard_count": len(shards),
+        "directory_count": len(normalized_directory),
+        "directory_entry_bytes": REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES,
+        "directory_sha256": directory_sha256,
+        "logical_component_digests": logical_component_digests,
+        "logical_content_sha256": logical_content_sha256,
+        "animations": normalized_animations,
+        "components": components,
+        "shards": normalized_shards,
+        "animation_resources": animation_resources,
+        "shard_registry_version": CATALOG_SHARD_REGISTRY_VERSION,
+        **totals,
+        **storage,
+    }
+
+
 def build_adapter_hash_matches(
     manifest: dict[str, Any], contract: UpscaleContract
 ) -> bool:
@@ -5258,12 +5533,7 @@ def catalog_provisional_runtime_info(
         or not dll.is_file()
     ):
         raise RuntimeError("provisional catalog runtime differs from the generation")
-    catalog_cached_fingerprint(
-        job,
-        dll,
-        scope="sealed-runtime-dll",
-    )
-    if catalog_verifier(job).export_file(dll)["sha256"] != manifest.get("dll_sha256"):
+    if sha256_file(dll) != manifest.get("dll_sha256"):
         raise RuntimeError("provisional catalog runtime DLL hash differs")
     return manifest
 
@@ -6861,6 +7131,257 @@ def catalog_build_validation(
     }
 
 
+def write_catalog_build_pointer(catalog: dict[str, Any], manifest_path: Path) -> dict[str, Any]:
+    generation_id = catalog_generation_id(catalog)
+    value = {
+        "schema": CATALOG_POINTER_SCHEMA,
+        "generation_id": generation_id,
+        "job_sha256": sha256_file(Path(catalog["_job_file"])),
+        "generation_dir": relative_project_path(catalog_generation_dir(catalog)),
+        "build_manifest": "build/build-manifest.json",
+        "build_manifest_sha256": sha256_file(manifest_path),
+    }
+    write_json(catalog_pointer_path(catalog), value)
+    return value
+
+
+def build_catalog_delta(
+    catalog: dict[str, Any], *, resume: bool, verify_members: bool
+) -> dict[str, Any]:
+    """Append new members while treating every parent byte as immutable authority."""
+
+    parent = catalog["_catalog_parent"]
+    generation_id = catalog_generation_id(catalog)
+    output = build_dir(catalog)
+    if output.exists():
+        if not resume:
+            raise RuntimeError(f"catalog build exists; use --resume: {output}")
+        manifest = read_json(output / "build-manifest.json")
+        write_catalog_build_pointer(catalog, output / "build-manifest.json")
+        return {
+            "status": "reused",
+            "generation_id": generation_id,
+            "registry_catalog": str(output / manifest["registry_catalog"]),
+            "shard_count": len(manifest["shards"]),
+        }
+
+    collection = catalog_source_collection(catalog, verify_members=verify_members)
+    parent_manifest = parent["manifest"]
+    parent_index = read_sealed_catalog_index(
+        parent["catalog_path"], parent["catalog_sha256"]
+    )
+    if parent_index["scale"] != upscale_contract(catalog).scale:
+        raise RuntimeError("catalog delta scale differs from its parent")
+    parent_ids = {entry["animation_id"] for entry in parent_index["animations"]}
+    delta_ids = {entry["animation_id"] for entry in collection["animations"]}
+    duplicates = sorted(parent_ids & delta_ids)
+    if duplicates:
+        raise RuntimeError(
+            "catalog delta may only append new animation ids: " + ", ".join(duplicates)
+        )
+    collisions = catalog_override_collisions(
+        catalog,
+        {
+            resref
+            for animation in collection["animations"]
+            for resref in animation["resources"]
+        },
+    )
+    if collisions:
+        raise RuntimeError(f"override collision: {', '.join(collisions)}")
+
+    generation = catalog_generation_dir(catalog)
+    assert_workspace_child(generation, "catalog delta generation")
+    generation.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix="build-", dir=generation))
+    try:
+        pack_dir = temporary / "iee-assets" / "creature-sprites"
+        pack_dir.mkdir(parents=True)
+        shards = [dict(value) for value in parent_index["shards"]]
+        for shard in shards:
+            name = Path(str(shard["registry"])).name
+            source = parent["catalog_path"].parent / name
+            destination = pack_dir / name
+            if not source.is_file():
+                raise RuntimeError(f"sealed parent shard is missing: {name}")
+            os.link(source, destination)
+
+        components = [dict(value) for value in parent_index["components"]]
+        logical_digests = list(
+            parent_manifest["registry_catalog_logical_component_digests"]
+        )
+        source_indices: dict[str, int] = {}
+        shard_resources: dict[int, list[str]] = {}
+        delta_stored_index_bytes = 0
+        delta_compressed_frames = 0
+        delta_raw_frames = 0
+        seen_hashes = {str(value["sha256"]) for value in shards}
+        contract = upscale_contract(catalog)
+        for component in collection["components"]:
+            component_index = len(components)
+            source_indices[component["source_digest"]] = component_index
+            partitions = partition_registry_resources(
+                component["records"],
+                maximum_resources=MAX_RESOURCES,
+                maximum_bytes=maximum_registry_bytes(contract.scale),
+                maximum_shards=MAX_REGISTRY_SET_SHARDS,
+            )
+            shard_start = len(shards)
+            raw_entries = []
+            for local_index, records in enumerate(partitions):
+                scratch = pack_dir / f".delta-{component_index:05d}-{local_index:04d}.tmp"
+                info = write_compressed_catalog_registry_records(
+                    scratch, contract.scale, records
+                )
+                if info["sha256"] in seen_hashes:
+                    raise RuntimeError("catalog delta duplicates an existing shard")
+                seen_hashes.add(info["sha256"])
+                final_path = pack_dir / catalog_shard_filename(info["sha256"])
+                publish_catalog_shard_object(
+                    catalog, scratch, final_path, info["sha256"]
+                )
+                shard = {"index": len(shards), **info}
+                shards.append(shard)
+                shard_resources[shard["index"]] = list(info["resources"])
+                raw_entries.append(catalog_shard_entry_bytes(info, final_path))
+                delta_stored_index_bytes += int(info["stored_index_bytes"])
+                delta_compressed_frames += int(info["compressed_frame_count"])
+                delta_raw_frames += int(info["raw_frame_count"])
+            components.append(
+                {
+                    "index": component_index,
+                    "digest": catalog_component_digest(contract.scale, raw_entries),
+                    "shard_start": shard_start,
+                    "shard_count": len(partitions),
+                    "resource_count": sum(int(value["resource_count"]) for value in shards[shard_start:]),
+                    "frame_count": sum(int(value["frame_count"]) for value in shards[shard_start:]),
+                    "index_bytes": sum(int(value["index_bytes"]) for value in shards[shard_start:]),
+                    "registry_bytes": sum(int(value["registry_bytes"]) for value in shards[shard_start:]),
+                }
+            )
+            logical_digests.append(component["source_digest"])
+
+        delta_animations = catalog_manifest_animations(collection, source_indices)
+        binary_animations = list(parent_index["animations"])
+        binary_animations.extend(
+            {
+                "animation_id": value["animation_id"],
+                "owner": catalog_owner_for_profile(value["runtime_profile"]),
+                "component_indices": value["component_indices"],
+            }
+            for value in delta_animations
+        )
+        directory = list(parent_index["directory"])
+        for animation in binary_animations[len(parent_index["animations"]):]:
+            for component_index in animation["component_indices"]:
+                component = components[component_index]
+                for shard_index in range(
+                    component["shard_start"],
+                    component["shard_start"] + component["shard_count"],
+                ):
+                    for ordinal, resref in enumerate(shard_resources[shard_index]):
+                        directory.append(
+                            {
+                                "animation_id": animation["animation_id"],
+                                "resref": resref,
+                                "component_index": component_index,
+                                "shard_index": shard_index,
+                                "resource_ordinal": ordinal,
+                            }
+                        )
+        parent_storage = parent_manifest["storage"]
+        stored_index_bytes = int(parent_storage["stored_index_bytes"]) + delta_stored_index_bytes
+        total_index_bytes = sum(int(value["index_bytes"]) for value in components)
+        storage = {
+            "stored_index_bytes": stored_index_bytes,
+            "compressed_frame_count": int(parent_storage["compressed_frame_count"]) + delta_compressed_frames,
+            "raw_frame_count": int(parent_storage["raw_frame_count"]) + delta_raw_frames,
+            "index_storage_ratio": stored_index_bytes / total_index_bytes,
+        }
+        catalog_path = pack_dir / XN_REGISTRY_CATALOG_FILENAME
+        info = write_registry_catalog_index(
+            catalog_path,
+            contract.scale,
+            binary_animations,
+            components,
+            shards,
+            directory,
+            logical_digests,
+            storage,
+        )
+        input_lock = catalog_input_lock(catalog)
+        if canonical_json_sha256(input_lock) != generation_id:
+            raise RuntimeError("catalog delta inputs changed during generation")
+        source_members = list(parent_manifest["source_members"])
+        source_members.extend(catalog_manifest_source_members(collection, source_indices))
+        manifest_animations = list(parent_manifest["animations"])
+        manifest_animations.extend(delta_animations)
+        manifest_animations.sort(key=lambda value: int(value["animation_id"], 16))
+        job_file = Path(catalog["_job_file"])
+        job_sha256 = sha256_file(job_file)
+        provenance = temporary / "provenance" / "job.json"
+        provenance.parent.mkdir(parents=True)
+        shutil.copyfile(job_file, provenance)
+        report = {
+            "schema": CATALOG_BUILD_SCHEMA,
+            "status": "built-pending-ingame-qa",
+            "created_at_utc": utc_now(),
+            "job_file": relative_project_path(job_file),
+            "job_sha256": job_sha256,
+            "job_snapshot": "provenance/job.json",
+            "job_snapshot_sha256": job_sha256,
+            "job_id": catalog["job_id"],
+            "generation_id": generation_id,
+            "parent_generation_id": parent_manifest["generation_id"],
+            "method": contract.method,
+            "registry_layout": "catalog",
+            "animation_ids": [value["animation_id"] for value in manifest_animations],
+            "runtime_profiles": runtime_profiles_for_work_item(catalog),
+            "registry_catalog": "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME,
+            "registry_catalog_magic": registry_magic_name(XN_REGISTRY_CATALOG_MAGIC),
+            "registry_catalog_version": XN_REGISTRY_CATALOG_VERSION,
+            "registry_catalog_shard_version": CATALOG_SHARD_REGISTRY_VERSION,
+            "registry_catalog_frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
+            "shard_object_store": relative_project_path(catalog_object_store_dir(catalog)),
+            "shards_hardlinked_from_object_store": True,
+            "registry_scale": contract.scale,
+            "registry_catalog_sha256": info["sha256"],
+            "registry_catalog_bytes": info["registry_catalog_bytes"],
+            "registry_catalog_directory_count": info["directory_count"],
+            "registry_catalog_directory_entry_bytes": info["directory_entry_bytes"],
+            "registry_catalog_directory_sha256": info["directory_sha256"],
+            "registry_catalog_logical_component_digests": info["logical_component_digests"],
+            "registry_catalog_logical_content_sha256": info["logical_content_sha256"],
+            "animations": manifest_animations,
+            "components": info["components"],
+            "shards": info["shards"],
+            "totals": {key: info[key] for key in ("total_resources", "total_frames", "total_index_bytes", "total_registry_bytes")},
+            "storage": {"shard_registry_version": CATALOG_SHARD_REGISTRY_VERSION, "frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1", **storage},
+            "source_members": source_members,
+            "locks": {
+                "input_lock_sha256": generation_id,
+                "baldur_real_sha256": input_lock["baldur_real_sha256"],
+                "member_count": len(source_members),
+                "delta_member_count": len(collection["source_members"]),
+                "input_lock": input_lock,
+            },
+            "validation": {
+                "parent_generation_trusted": True,
+                "parent_shards_read": 0,
+                "delta_members_verified": bool(verify_members),
+                "final_full_audit_deferred": True,
+                "release_manifest_modified": False,
+            },
+        }
+        write_json(temporary / "build-manifest.json", report)
+        temporary.replace(output)
+        write_catalog_build_pointer(catalog, output / "build-manifest.json")
+        return {"status": "built-delta", "generation_id": generation_id, **info}
+    except Exception:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+
+
 def build_catalog(
     catalog: dict[str, Any],
     force: bool,
@@ -6868,55 +7389,24 @@ def build_catalog(
     *,
     defer_full_verify: bool = False,
 ) -> dict[str, Any]:
+    if isinstance(catalog.get("_catalog_parent"), dict):
+        if force:
+            raise RuntimeError("catalog generations are immutable; use --resume")
+        return build_catalog_delta(
+            catalog, resume=resume, verify_members=not defer_full_verify
+        )
     if force:
         raise RuntimeError(
             "catalog generations are immutable; change inputs or use --resume"
         )
     if resume and catalog_pointer_path(catalog).is_file():
-        try:
-            if defer_full_verify:
-                verifier = catalog_verifier(catalog, full_verify=False)
-                context = catalog_current_generation_context(catalog, verifier)
-                current_lock = catalog_input_lock(catalog, refresh=True)
-                if canonical_json_sha256(current_lock) != context["generation_id"]:
-                    raise CatalogInputsChanged(
-                        "catalog inputs changed after the provisional generation",
-                        verifier.summary(),
-                    )
-                return {
-                    "status": "reused-unverified",
-                    **catalog_provisional_build_info(catalog),
-                    "verification": verifier.summary(mode="deferred"),
-                }
-            verified = verify_catalog(catalog)
-            return {
-                "status": "reused",
-                **verified["build"],
-                "verification": verified["verification"],
-            }
-        except CatalogInputsChanged:
-            try:
-                if catalog_previous_full_verification_started(catalog):
-                    catalog["_catalog_resume_scoped_verification"] = True
-            except (OSError, RuntimeError, ValueError, KeyError, TypeError):
-                pass
-            catalog.pop("_catalog_generation_dir", None)
-            catalog.pop("_catalog_sealed_input_lock", None)
-            catalog.pop("_catalog_input_lock", None)
-            catalog.pop("_catalog_source_collection", None)
-            catalog.pop("_catalog_source_collection_verified", None)
+        verified = verify_catalog(catalog)
+        return {"status": "reused", **verified["build"]}
     output = build_dir(catalog)
     if output.exists():
         if not resume:
             raise RuntimeError(f"catalog build exists; use --resume: {output}")
-        return {
-            "status": "reused-unverified" if defer_full_verify else "reused",
-            **(
-                catalog_provisional_build_info(catalog)
-                if defer_full_verify
-                else verify_catalog_build(catalog)
-            ),
-        }
+        return {"status": "reused", **read_json(output / "build-manifest.json")}
     collisions = catalog_override_collisions(catalog)
     if collisions:
         raise RuntimeError(f"override collision: {', '.join(collisions)}")
@@ -7120,6 +7610,7 @@ def build_catalog(
         if output.exists():
             raise RuntimeError("catalog build appeared during generation")
         temporary.replace(output)
+        write_catalog_build_pointer(catalog, output / "build-manifest.json")
         return {"status": "built", "generation_id": generation_id, **info}
     except Exception:
         shutil.rmtree(temporary, ignore_errors=True)
@@ -7134,11 +7625,7 @@ def catalog_provisional_build_info(catalog: dict[str, Any]) -> dict[str, Any]:
     manifest = read_json(manifest_path)
     lock = manifest.get("locks", {}).get("input_lock")
     contract = upscale_contract(catalog)
-    job_sha256 = catalog_cached_fingerprint(
-        catalog,
-        Path(catalog["_job_file"]),
-        scope="catalog-job",
-    )["sha256"]
+    job_sha256 = sha256_file(Path(catalog["_job_file"]))
     if (
         manifest.get("schema") != CATALOG_BUILD_SCHEMA
         or manifest.get("status") != "built-pending-ingame-qa"
@@ -7410,964 +7897,8 @@ def verify_catalog_pointer(catalog: dict[str, Any]) -> dict[str, Any]:
     return value
 
 
-class CatalogProofMissing(RuntimeError):
-    pass
-
-
 class CatalogInputsChanged(RuntimeError):
-    def __init__(self, message: str, verification: dict[str, Any]) -> None:
-        super().__init__(message)
-        self.verification = verification
-
-
-class CatalogVerificationIncomplete(RuntimeError):
-    def __init__(
-        self,
-        message: str,
-        verification: dict[str, Any],
-        failures: list[dict[str, str]],
-    ) -> None:
-        super().__init__(message)
-        self.verification = verification
-        self.failures = failures
-
-
-def catalog_proof_digest(value: dict[str, Any]) -> str:
-    body = dict(value)
-    body.pop("proof_sha256", None)
-    return canonical_json_sha256(body)
-
-
-def catalog_verification_checkpoint_value(
-    context: dict[str, Any],
-    *,
-    status: str,
-    full_verification_started: bool,
-    failures: list[dict[str, str]],
-    verification: dict[str, Any],
-) -> dict[str, Any]:
-    value = {
-        "schema": CATALOG_VERIFICATION_CHECKPOINT_SCHEMA,
-        "status": status,
-        "generation_id": context["generation_id"],
-        "job_sha256": context["pointer"]["job_sha256"],
-        "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
-        "runtime_manifest_sha256": context["pointer"]["runtime_manifest_sha256"],
-        "full_verification_started": full_verification_started,
-        "updated_at_utc": utc_now(),
-        "failures": failures,
-        "verification": verification,
-    }
-    value["proof_sha256"] = catalog_proof_digest(value)
-    return value
-
-
-def load_catalog_verification_checkpoint(
-    catalog: dict[str, Any], context: dict[str, Any]
-) -> dict[str, Any]:
-    path = catalog_verification_checkpoint_path(catalog, context["generation_id"])
-    value = read_json(path)
-    if (
-        value.get("schema") != CATALOG_VERIFICATION_CHECKPOINT_SCHEMA
-        or value.get("status")
-        not in {"built-unverified", "verification-failed", "sealed-verified"}
-        or value.get("generation_id") != context["generation_id"]
-        or value.get("job_sha256") != context["pointer"]["job_sha256"]
-        or value.get("build_manifest_sha256")
-        != context["pointer"]["build_manifest_sha256"]
-        or value.get("runtime_manifest_sha256")
-        != context["pointer"]["runtime_manifest_sha256"]
-        or not isinstance(value.get("failures"), list)
-        or value.get("proof_sha256") != catalog_proof_digest(value)
-    ):
-        raise RuntimeError("catalog verification checkpoint is invalid")
-    return value
-
-
-def write_catalog_verification_checkpoint(
-    catalog: dict[str, Any],
-    context: dict[str, Any],
-    *,
-    status: str,
-    full_verification_started: bool,
-    failures: list[dict[str, str]],
-    verifier: VerificationCache,
-) -> dict[str, Any]:
-    verifier.save()
-    value = catalog_verification_checkpoint_value(
-        context,
-        status=status,
-        full_verification_started=full_verification_started,
-        failures=failures,
-        verification=verifier.summary(
-            mode="full" if verifier.full_verify else "resume-errors"
-        ),
-    )
-    write_json(
-        catalog_verification_checkpoint_path(catalog, context["generation_id"]),
-        value,
-    )
-    return value
-
-
-def record_deferred_catalog_checkpoint(
-    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
-) -> dict[str, Any]:
-    path = catalog_verification_checkpoint_path(catalog, context["generation_id"])
-    if path.is_file():
-        current = load_catalog_verification_checkpoint(catalog, context)
-        if current.get("full_verification_started") is True:
-            return current
-    return write_catalog_verification_checkpoint(
-        catalog,
-        context,
-        status="built-unverified",
-        full_verification_started=False,
-        failures=[],
-        verifier=verifier,
-    )
-
-
-def catalog_previous_full_verification_started(catalog: dict[str, Any]) -> bool:
-    """Read only the prior signed checkpoint when the mutable job changed."""
-
-    pointer = read_json(catalog_pointer_path(catalog))
-    expected_fields = {
-        "schema",
-        "generation_id",
-        "job_sha256",
-        "generation_dir",
-        "build_manifest",
-        "build_manifest_sha256",
-        "runtime_manifest",
-        "runtime_manifest_sha256",
-    }
-    generation_id = str(pointer.get("generation_id", "")).upper()
-    if (
-        set(pointer) != expected_fields
-        or pointer.get("schema") != CATALOG_POINTER_SCHEMA
-        or re.fullmatch(r"[0-9A-F]{64}", generation_id) is None
-    ):
-        raise RuntimeError("previous catalog generation pointer is invalid")
-    generation = job_path(catalog, "run_dir") / "generations" / generation_id.lower()
-    if resolve_path(str(pointer["generation_dir"])) != generation.resolve():
-        raise RuntimeError("previous catalog generation path is invalid")
-    checkpoint = load_catalog_verification_checkpoint(
-        catalog,
-        {"generation_id": generation_id, "pointer": pointer},
-    )
-    return checkpoint.get("full_verification_started") is True
-
-
-def catalog_current_generation_context(
-    catalog: dict[str, Any], verifier: VerificationCache
-) -> dict[str, Any]:
-    pointer_path = catalog_pointer_path(catalog)
-    pointer = read_json(pointer_path)
-    expected_fields = {
-        "schema",
-        "generation_id",
-        "job_sha256",
-        "generation_dir",
-        "build_manifest",
-        "build_manifest_sha256",
-        "runtime_manifest",
-        "runtime_manifest_sha256",
-    }
-    if set(pointer) != expected_fields or pointer.get("schema") != CATALOG_POINTER_SCHEMA:
-        raise RuntimeError("catalog current-generation pointer is invalid")
-    generation_id = str(pointer.get("generation_id", "")).upper()
-    if re.fullmatch(r"[0-9A-F]{64}", generation_id) is None:
-        raise RuntimeError("catalog generation id is invalid")
-    job_file = Path(catalog["_job_file"])
-    try:
-        verifier.verify_file(
-            job_file,
-            str(pointer["job_sha256"]),
-            scope="catalog-job",
-        )
-    except VerificationMismatch as error:
-        verifier.save()
-        raise CatalogInputsChanged(str(error), verifier.summary()) from error
-    run_root = job_path(catalog, "run_dir")
-    generation = run_root / "generations" / generation_id.lower()
-    declared_generation = resolve_path(str(pointer["generation_dir"]))
-    if (
-        declared_generation != generation.resolve()
-        or str(pointer["build_manifest"]).replace("\\", "/")
-        != "build/build-manifest.json"
-        or str(pointer["runtime_manifest"]).replace("\\", "/")
-        != "runtime/runtime-manifest.json"
-    ):
-        raise RuntimeError("catalog generation pointer paths are invalid")
-    build_manifest_path = generation / "build" / "build-manifest.json"
-    runtime_manifest_path = generation / "runtime" / "runtime-manifest.json"
-    try:
-        verifier.verify_file(
-            build_manifest_path,
-            str(pointer["build_manifest_sha256"]),
-            scope="sealed-build-manifest",
-        )
-        verifier.verify_file(
-            runtime_manifest_path,
-            str(pointer["runtime_manifest_sha256"]),
-            scope="sealed-runtime-manifest",
-        )
-    except VerificationMismatch as error:
-        verifier.save()
-        raise RuntimeError(f"sealed catalog manifest changed: {error}") from error
-    build = read_json(build_manifest_path)
-    runtime = read_json(runtime_manifest_path)
-    input_lock = build.get("locks", {}).get("input_lock")
-    if (
-        build.get("schema") != CATALOG_BUILD_SCHEMA
-        or build.get("status") != "built-pending-ingame-qa"
-        or build.get("job_id") != catalog["job_id"]
-        or build.get("generation_id") != generation_id
-        or build.get("job_sha256") != pointer["job_sha256"]
-        or not isinstance(input_lock, dict)
-        or canonical_json_sha256(input_lock) != generation_id
-        or build.get("locks", {}).get("input_lock_sha256") != generation_id
-        or runtime.get("schema") != RUNTIME_SCHEMA
-        or runtime.get("status") != "built-tested"
-        or runtime.get("tests_status") != "passed"
-        or runtime.get("bridge_worker_tests_status") != "passed"
-        or runtime.get("generation_id") != generation_id
-        or runtime.get("job_id") != catalog["job_id"]
-        or runtime.get("job_sha256") != pointer["job_sha256"]
-    ):
-        raise RuntimeError("sealed catalog generation manifests are inconsistent")
-    catalog["_catalog_generation_dir"] = generation
-    catalog["_catalog_sealed_input_lock"] = input_lock
-    return {
-        "pointer_path": pointer_path,
-        "pointer": pointer,
-        "generation_id": generation_id,
-        "generation": generation,
-        "build_manifest_path": build_manifest_path,
-        "build": build,
-        "runtime_manifest_path": runtime_manifest_path,
-        "runtime": runtime,
-        "input_lock": input_lock,
-    }
-
-
-def catalog_locked_path(value: Any, label: str) -> Path:
-    text = str(value or "")
-    if not text:
-        raise RuntimeError(f"empty locked path: {label}")
-    return resolve_path(text)
-
-
-def verify_catalog_locked_inputs(
-    catalog: dict[str, Any],
-    context: dict[str, Any],
-    verifier: VerificationCache,
-    *,
-    collect_errors: bool = False,
-) -> list[dict[str, str]]:
-    lock = context["input_lock"]
-    failures: list[dict[str, str]] = []
-
-    def check(
-        path: Path,
-        expected_sha256: Any,
-        scope: str,
-        *,
-        expected_crc32: int | None = None,
-        expected_bytes: int | None = None,
-    ) -> None:
-        try:
-            verifier.verify_file(
-                path,
-                str(expected_sha256),
-                scope=scope,
-                expected_crc32=expected_crc32,
-                expected_bytes=expected_bytes,
-            )
-        except (OSError, VerificationMismatch) as error:
-            verifier.invalidate_scope(scope)
-            failures.append({"scope": scope, "error": str(error)})
-
-    if lock.get("schema") != "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1":
-        raise RuntimeError("catalog sealed input lock schema is invalid")
-    if (
-        catalog_locked_path(lock.get("job_file"), "input_lock.job_file")
-        != Path(catalog["_job_file"]).resolve()
-        or lock.get("job_sha256") != context["pointer"]["job_sha256"]
-        or lock.get("method") != upscale_contract(catalog).method
-        or lock.get("baldur_real_sha256")
-        != catalog["compatibility"]["baldur_real_sha256"].upper()
-    ):
-        raise RuntimeError("catalog sealed input lock differs from the catalog job")
-    check(
-        Path(catalog["_job_file"]), lock["job_sha256"], "catalog-job"
-    )
-    check(
-        job_path(catalog, "game_root") / "BaldurReal.exe",
-        lock["baldur_real_sha256"],
-        "game-runtime",
-    )
-    engine_source = catalog_locked_path(lock.get("engine_source"), "engine_source")
-    if engine_source != job_path(catalog, "engine_source"):
-        raise RuntimeError("catalog sealed engine source path differs from the job")
-    try:
-        verifier.verify_tree(
-            f"engine:{engine_source.resolve()}",
-            [engine_source / item for item in ENGINE_SOURCE_CONTRACT_FILES],
-            str(lock.get("engine_source_contract_sha256", "")),
-            lambda: source_tree_hash(engine_source),
-            scope="engine-source",
-        )
-    except (OSError, VerificationMismatch) as error:
-        verifier.invalidate_scope("engine-source")
-        failures.append({"scope": "engine-source", "error": str(error)})
-
-    builder_path = catalog_locked_path(lock.get("catalog_builder"), "catalog_builder")
-    builder_sha256 = str(lock.get("catalog_builder_sha256", "")).upper()
-    contract = read_json(CATALOG_BUILDER_CONTRACT)
-    compatible_legacy = set(contract.get("compatible_legacy_runner_sha256", []))
-    if (
-        builder_path == Path(__file__).resolve()
-        and builder_sha256 in compatible_legacy
-    ):
-        proof = read_json(
-            catalog_verification_proof_path(catalog, context["generation_id"])
-        )
-        check(
-            CATALOG_BUILDER_CONTRACT,
-            proof.get("builder_contract_sha256"),
-            "catalog-builder-contract",
-        )
-    else:
-        check(builder_path, builder_sha256, "catalog-builder-contract")
-
-    members = lock.get("members")
-    leaves = lock.get("leaf_jobs")
-    if not isinstance(members, list) or not isinstance(leaves, list):
-        raise RuntimeError("catalog sealed input dependency lists are invalid")
-    for member in members:
-        if not isinstance(member, dict):
-            raise RuntimeError("catalog sealed member dependency is invalid")
-        scope = f"member:{member.get('job_id', 'unknown')}"
-        check(
-            catalog_locked_path(member.get("job_file"), "member.job_file"),
-            member.get("job_sha256"),
-            scope,
-        )
-        check(
-            catalog_locked_path(
-                member.get("build_manifest"), "member.build_manifest"
-            ),
-            member.get("build_manifest_sha256"),
-            scope,
-        )
-    for leaf in leaves:
-        if not isinstance(leaf, dict) or not isinstance(leaf.get("payloads"), list):
-            raise RuntimeError("catalog sealed leaf dependency is invalid")
-        scope = f"leaf:{leaf.get('job_id', 'unknown')}"
-        for path_key, hash_key in (
-            ("job_file", "job_sha256"),
-            ("source_manifest", "source_manifest_sha256"),
-            ("build_manifest", "build_manifest_sha256"),
-        ):
-            check(
-                catalog_locked_path(leaf.get(path_key), f"leaf.{path_key}"),
-                leaf.get(hash_key),
-                scope,
-            )
-        for payload in leaf["payloads"]:
-            if not isinstance(payload, dict):
-                raise RuntimeError("catalog sealed leaf payload is invalid")
-            if verifier.full_verify:
-                # The scoped leaf semantic pass reads, hashes and validates each
-                # payload once; avoid a redundant pre-scan in the same full run.
-                continue
-            check(
-                catalog_locked_path(payload.get("path"), "leaf.payload.path"),
-                payload.get("sha256"),
-                scope,
-                expected_crc32=int(payload.get("crc32", -1)),
-                expected_bytes=int(payload.get("bytes", -1)),
-            )
-    verifier.save()
-    if failures:
-        if collect_errors:
-            return failures
-        raise CatalogInputsChanged(
-            "sealed catalog inputs changed "
-            f"({len(failures)}): {failures[0]['error']}",
-            verifier.summary(),
-        )
-    return []
-
-
-def catalog_output_specs(
-    catalog: dict[str, Any], context: dict[str, Any]
-) -> list[dict[str, Any]]:
-    build_root = context["build_manifest_path"].parent
-    runtime_root = context["runtime_manifest_path"].parent
-    build = context["build"]
-    runtime = context["runtime"]
-    specs = [
-        {
-            "role": "catalog",
-            "path": catalog_payload_path(
-                build_root, build.get("registry_catalog"), "catalog registry"
-            ),
-            "sha256": build.get("registry_catalog_sha256"),
-            "bytes": build.get("registry_catalog_bytes"),
-            "scope": "sealed-catalog",
-        }
-    ]
-    for index, shard in enumerate(build.get("shards", [])):
-        if not isinstance(shard, dict):
-            raise RuntimeError("catalog sealed shard entry is invalid")
-        specs.append(
-            {
-                "role": "shard",
-                "index": index,
-                "path": catalog_payload_path(
-                    build_root, shard.get("registry"), f"catalog shard {index}"
-                ),
-                "sha256": shard.get("sha256"),
-                "crc32": int(shard.get("crc32", -1)),
-                "bytes": int(shard.get("registry_bytes", -1)),
-                "scope": f"sealed-shard:{index}",
-            }
-        )
-    specs.append(
-        {
-            "role": "runtime-dll",
-            "path": catalog_payload_path(
-                runtime_root, runtime.get("dll"), "catalog runtime DLL"
-            ),
-            "sha256": runtime.get("dll_sha256"),
-            "scope": "sealed-runtime-dll",
-        }
-    )
-    return specs
-
-
-def verify_catalog_outputs_collect(
-    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
-) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
-    failures: list[dict[str, str]] = []
-    specs = catalog_output_specs(catalog, context)
-    catalog_spec = specs[0]
-    shard_specs = [spec for spec in specs if spec["role"] == "shard"]
-    verified_shards: dict[str, dict[str, Any]] = {}
-    shard_dependencies: list[str] = []
-
-    for spec in specs:
-        if spec["role"] not in {"catalog", "shard", "runtime-dll"}:
-            raise RuntimeError("unsupported sealed catalog output role")
-        try:
-            if not verifier.full_verify or spec["role"] == "runtime-dll":
-                verifier.verify_file(
-                    spec["path"],
-                    str(spec["sha256"]),
-                    scope=str(spec["scope"]),
-                    expected_crc32=spec.get("crc32"),
-                    expected_bytes=spec.get("bytes"),
-                )
-            elif (
-                not spec["path"].is_file()
-                or (
-                    spec.get("bytes") is not None
-                    and spec["path"].stat().st_size != int(spec["bytes"])
-                )
-            ):
-                raise VerificationMismatch(
-                    f"missing or size-mismatched catalog output: {spec['path']}"
-                )
-            if spec["role"] == "shard":
-                object_store_path = catalog_object_store_dir(catalog) / spec["path"].name
-                if (
-                    not object_store_path.is_file()
-                    or not os.path.samefile(spec["path"], object_store_path)
-                ):
-                    raise VerificationMismatch(
-                        f"catalog shard {spec['index']} is not linked to the object store"
-                    )
-        except (OSError, VerificationMismatch) as error:
-            scope = str(spec["scope"])
-            verifier.invalidate_scope(scope)
-            failures.append({"scope": scope, "error": str(error)})
-
-    failed_scopes = {failure["scope"] for failure in failures}
-    for spec in shard_specs:
-        file_scope = str(spec["scope"])
-        semantic_scope = f"catalog-shard:{str(spec['sha256']).upper()}"
-        dependency_sha256 = canonical_json_sha256(
-            {
-                "validator": "catalog-shard-semantics-v1",
-                "sha256": spec["sha256"],
-                "crc32": spec["crc32"],
-                "bytes": spec["bytes"],
-            }
-        )
-        shard_dependencies.append(dependency_sha256)
-        if file_scope in failed_scopes:
-            continue
-
-        def verify_shard(current: dict[str, Any] = spec) -> dict[str, Any]:
-            object_path = catalog_object_store_dir(catalog) / current["path"].name
-            info = inspect_registry(
-                object_path, include_resource_records=True
-            )
-            if (
-                info["sha256"] != current["sha256"]
-                or info["crc32"] != current["crc32"]
-                or info["registry_bytes"] != current["bytes"]
-            ):
-                raise RuntimeError(
-                    f"catalog shard differs from its sealed entry: {current['index']}"
-                )
-            return info
-
-        try:
-            shard_info = verifier.verify_scope(
-                semantic_scope, dependency_sha256, verify_shard
-            )
-            verified_shards[spec["path"].name] = shard_info
-            if verifier.full_verify:
-                verifier.record_scanned(
-                    spec["path"],
-                    str(spec["sha256"]),
-                    expected_crc32=int(spec["crc32"]),
-                )
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            failures.append({"scope": semantic_scope, "error": str(error)})
-
-    if failures:
-        verifier.save()
-        return None, failures
-    catalog_path = catalog_spec["path"]
-    dependency_sha256 = canonical_json_sha256(
-        {
-            "validator": "catalog-output-semantics-v1",
-            "generation_id": context["generation_id"],
-            "build_manifest_sha256": context["pointer"][
-                "build_manifest_sha256"
-            ],
-            "catalog_sha256": catalog_spec["sha256"],
-            "catalog_bytes": catalog_spec["bytes"],
-            "shard_dependencies": shard_dependencies,
-        }
-    )
-
-    def verify_semantics() -> dict[str, Any]:
-        info = inspect_registry_catalog(
-            catalog_path, verified_shards=verified_shards
-        )
-        build = context["build"]
-        if (
-            info["sha256"] != build.get("registry_catalog_sha256")
-            or info["directory_sha256"]
-            != build.get("registry_catalog_directory_sha256")
-            or info["logical_content_sha256"]
-            != build.get("registry_catalog_logical_content_sha256")
-            or info["shards"] != build.get("shards")
-        ):
-            raise RuntimeError("sealed catalog index differs from its manifest")
-        return {"registry_catalog": str(catalog_path), **info}
-
-    try:
-        info = verifier.verify_scope(
-            "catalog-output-semantics", dependency_sha256, verify_semantics
-        )
-        if verifier.full_verify:
-            verifier.record_scanned(
-                catalog_path, str(catalog_spec["sha256"])
-            )
-    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-        return None, [
-            {"scope": "catalog-output-semantics", "error": str(error)}
-        ]
-    resources = {
-        name
-        for names in info["animation_resources"].values()
-        for name in names
-    }
-    collisions = catalog_override_collisions(catalog, resources)
-    if collisions:
-        return None, [
-            {
-                "scope": "catalog-override",
-                "error": f"override collision: {', '.join(collisions)}",
-            }
-        ]
-    verifier.save()
-    return info, []
-
-
-def verify_catalog_outputs(
-    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
-) -> dict[str, Any]:
-    info, failures = verify_catalog_outputs_collect(catalog, context, verifier)
-    if failures or info is None:
-        raise RuntimeError(
-            "sealed catalog output corruption "
-            f"({len(failures)}): {failures[0]['error']}"
-        )
-    return info
-
-
-def catalog_verified_leaf_payload_records(
-    leaf: dict[str, Any], build: dict[str, Any]
-) -> dict[str, dict[str, Any]]:
-    manifest = read_json(build_dir(leaf) / "build-manifest.json")
-    root = build_dir(leaf)
-    layout = str(manifest.get("registry_layout", "monolith"))
-    records: dict[str, dict[str, Any]] = {}
-    if layout == "monolith":
-        path = root / str(manifest["registry"])
-        records[str(path.resolve()).casefold()] = {
-            "sha256": build["sha256"],
-            "crc32": build["crc32"],
-            "bytes": build["registry_bytes"],
-        }
-        return records
-    if layout != "set":
-        raise RuntimeError("unsupported verified leaf registry layout")
-    set_path = root / str(manifest["registry_set"])
-    records[str(set_path.resolve()).casefold()] = {
-        "sha256": build["sha256"],
-        "crc32": crc32_file(set_path),
-        "bytes": build["registry_set_bytes"],
-    }
-    for shard in build["shards"]:
-        # ``inspect_registry_set`` exposes shard names relative to the set
-        # index, while the leaf manifest stores paths relative to the build
-        # root.  Resolve them beside the set index so both layouts identify
-        # the same payload during sealed-lock verification.
-        path = set_path.parent / Path(str(shard["registry"])).name
-        records[str(path.resolve()).casefold()] = {
-            "sha256": shard["sha256"],
-            "crc32": shard["crc32"],
-            "bytes": shard["registry_bytes"],
-        }
-    return records
-
-
-def verify_catalog_source_scopes(
-    catalog: dict[str, Any],
-    context: dict[str, Any],
-    verifier: VerificationCache,
-    *,
-    blocked_scopes: set[str] | None = None,
-    keep_going: bool = False,
-) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
-    """Verify leaf/member semantics once and retain successful scoped results."""
-
-    blocked = blocked_scopes or set()
-    lock = context["input_lock"]
-    leaf_locks = {
-        str(item.get("job_id")): item
-        for item in lock.get("leaf_jobs", [])
-        if isinstance(item, dict)
-    }
-    member_locks = {
-        str(item.get("job_id")): item
-        for item in lock.get("members", [])
-        if isinstance(item, dict)
-    }
-    expected_leaf_count = sum(
-        len(catalog_member_leaf_jobs(member))
-        for member in catalog["_catalog_members"]
-    )
-    if (
-        len(leaf_locks) != expected_leaf_count
-        or len(member_locks) != len(catalog["_catalog_members"])
-    ):
-        raise RuntimeError("catalog scoped dependency lock is incomplete")
-
-    failures: list[dict[str, str]] = []
-    verified_leafs: dict[str, dict[str, Any]] = {}
-    leaf_dependencies: dict[str, str] = {}
-    for member in catalog["_catalog_members"]:
-        for leaf in catalog_member_leaf_jobs(member):
-            job_id = str(leaf["job_id"])
-            scope = f"leaf:{job_id}"
-            leaf_lock = leaf_locks.get(job_id)
-            if leaf_lock is None:
-                raise RuntimeError(f"catalog leaf lock is missing: {job_id}")
-            dependency_sha256 = canonical_json_sha256(
-                {
-                    "validator": "catalog-leaf-semantics-v1",
-                    "method": upscale_contract(catalog).method,
-                    "leaf": leaf_lock,
-                }
-            )
-            leaf_dependencies[job_id] = dependency_sha256
-            if scope in blocked:
-                verifier.invalidate_scope(scope)
-                continue
-
-            def verify_leaf(
-                current: dict[str, Any] = leaf,
-                locked: dict[str, Any] = leaf_lock,
-            ) -> dict[str, Any]:
-                result = {
-                    "source": verify_sources(current, compare_game=True),
-                    "build": verify_build(
-                        current, include_resource_records=True
-                    ),
-                }
-                actual_payloads = catalog_verified_leaf_payload_records(
-                    current, result["build"]
-                )
-                for locked_payload in locked["payloads"]:
-                    path = catalog_locked_path(
-                        locked_payload["path"], "leaf.payload.path"
-                    )
-                    actual = actual_payloads.get(str(path.resolve()).casefold())
-                    if actual is None or any(
-                        int(actual[field]) != int(locked_payload[field])
-                        if field in {"crc32", "bytes"}
-                        else str(actual[field]).upper()
-                        != str(locked_payload[field]).upper()
-                        for field in ("sha256", "crc32", "bytes")
-                    ):
-                        raise RuntimeError(
-                            f"catalog leaf payload differs from its lock: {current['job_id']}"
-                        )
-                return result
-
-            try:
-                verified_leafs[job_id] = verifier.verify_scope(
-                    scope, dependency_sha256, verify_leaf
-                )
-                if verifier.full_verify:
-                    for locked_payload in leaf_lock["payloads"]:
-                        verifier.record_scanned(
-                            catalog_locked_path(
-                                locked_payload["path"], "leaf.payload.path"
-                            ),
-                            str(locked_payload["sha256"]),
-                            expected_crc32=int(locked_payload["crc32"]),
-                        )
-            except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-                failures.append({"scope": scope, "error": str(error)})
-                if not keep_going:
-                    verifier.save()
-                    return None, failures
-
-    verified_members: dict[str, dict[str, Any]] = {}
-    member_dependencies: dict[str, str] = {}
-    for member in catalog["_catalog_members"]:
-        job_id = str(member["job_id"])
-        scope = f"member:{job_id}"
-        leaves = catalog_member_leaf_jobs(member)
-        if any(str(leaf["job_id"]) not in verified_leafs for leaf in leaves):
-            verifier.invalidate_scope(scope)
-            continue
-        member_lock = member_locks.get(job_id)
-        if member_lock is None:
-            raise RuntimeError(f"catalog member lock is missing: {job_id}")
-        dependency_sha256 = canonical_json_sha256(
-            {
-                "validator": "catalog-member-semantics-v1",
-                "member": member_lock,
-                "leaf_dependencies": [
-                    leaf_dependencies[str(leaf["job_id"])] for leaf in leaves
-                ],
-            }
-        )
-        member_dependencies[job_id] = dependency_sha256
-
-        def verify_member(current: dict[str, Any] = member) -> dict[str, Any]:
-            if current.get("_kind") == "armor-set":
-                member_results = {
-                    str(leaf["job_id"]): verified_leafs[str(leaf["job_id"])]
-                    for leaf in catalog_member_leaf_jobs(current)
-                }
-                return {
-                    "build": verify_armor_set_build(
-                        current, verified_members=member_results
-                    )
-                }
-            return {"build": verified_leafs[str(current["job_id"])]["build"]}
-
-        try:
-            verified_members[job_id] = verifier.verify_scope(
-                scope, dependency_sha256, verify_member
-            )
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            failures.append({"scope": scope, "error": str(error)})
-            if not keep_going:
-                verifier.save()
-                return None, failures
-
-    if failures or len(verified_members) != len(catalog["_catalog_members"]):
-        verifier.save()
-        return None, failures
-    dependency_sha256 = canonical_json_sha256(
-        {
-            "validator": "catalog-source-semantics-v1",
-            "generation_id": context["generation_id"],
-            "member_dependencies": member_dependencies,
-        }
-    )
-    try:
-        collection = verifier.verify_scope(
-            "catalog-source-semantics",
-            dependency_sha256,
-            lambda: catalog_source_collection(
-                catalog,
-                verified_leafs=verified_leafs,
-                verified_members=verified_members,
-                verify_members=False,
-            ),
-        )
-    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-        failures.append(
-            {"scope": "catalog-source-semantics", "error": str(error)}
-        )
-        verifier.save()
-        return None, failures
-    verifier.save()
-    return collection, []
-
-
-def load_catalog_verification_proof(
-    catalog: dict[str, Any], context: dict[str, Any]
-) -> dict[str, Any]:
-    path = catalog_verification_proof_path(catalog, context["generation_id"])
-    if not path.is_file():
-        raise CatalogProofMissing(f"catalog verification proof is missing: {path}")
-    value = read_json(path)
-    if (
-        value.get("schema") != CATALOG_VERIFICATION_PROOF_SCHEMA
-        or value.get("status") != "sealed-verified"
-        or value.get("generation_id") != context["generation_id"]
-        or value.get("job_sha256") != context["pointer"]["job_sha256"]
-        or value.get("build_manifest_sha256")
-        != context["pointer"]["build_manifest_sha256"]
-        or value.get("runtime_manifest_sha256")
-        != context["pointer"]["runtime_manifest_sha256"]
-        or value.get("input_lock_sha256") != context["generation_id"]
-        or value.get("proof_sha256") != catalog_proof_digest(value)
-    ):
-        raise RuntimeError("catalog verification proof is invalid")
-    return value
-
-
-def record_catalog_verification_proof(
-    catalog: dict[str, Any], context: dict[str, Any], verifier: VerificationCache
-) -> dict[str, Any]:
-    lock = context["input_lock"]
-    verifier.record_verified(
-        Path(catalog["_job_file"]), str(lock["job_sha256"])
-    )
-    verifier.record_verified(
-        context["build_manifest_path"],
-        str(context["pointer"]["build_manifest_sha256"]),
-    )
-    verifier.record_verified(
-        context["runtime_manifest_path"],
-        str(context["pointer"]["runtime_manifest_sha256"]),
-    )
-    engine_source = catalog_locked_path(lock["engine_source"], "engine_source")
-    verifier.record_verified_tree(
-        f"engine:{engine_source.resolve()}",
-        [engine_source / item for item in ENGINE_SOURCE_CONTRACT_FILES],
-        str(lock["engine_source_contract_sha256"]),
-    )
-    for member in lock["members"]:
-        verifier.record_verified(
-            catalog_locked_path(member["job_file"], "member.job_file"),
-            str(member["job_sha256"]),
-        )
-        verifier.record_verified(
-            catalog_locked_path(member["build_manifest"], "member.build_manifest"),
-            str(member["build_manifest_sha256"]),
-        )
-    for leaf in lock["leaf_jobs"]:
-        for path_key, hash_key in (
-            ("job_file", "job_sha256"),
-            ("source_manifest", "source_manifest_sha256"),
-            ("build_manifest", "build_manifest_sha256"),
-        ):
-            verifier.record_verified(
-                catalog_locked_path(leaf[path_key], f"leaf.{path_key}"),
-                str(leaf[hash_key]),
-            )
-        for payload in leaf["payloads"]:
-            verifier.record_verified(
-                catalog_locked_path(payload["path"], "leaf.payload.path"),
-                str(payload["sha256"]),
-                expected_crc32=int(payload["crc32"]),
-            )
-    verifier.record_verified(
-        job_path(catalog, "game_root") / "BaldurReal.exe",
-        str(lock["baldur_real_sha256"]),
-    )
-    for spec in catalog_output_specs(catalog, context):
-        verifier.record_verified(
-            spec["path"], str(spec["sha256"]), expected_crc32=spec.get("crc32")
-        )
-    builder_contract_sha256 = sha256_file(CATALOG_BUILDER_CONTRACT)
-    verifier.record_verified(CATALOG_BUILDER_CONTRACT, builder_contract_sha256)
-    verifier.save()
-    proof = {
-        "schema": CATALOG_VERIFICATION_PROOF_SCHEMA,
-        "status": "sealed-verified",
-        "generation_id": context["generation_id"],
-        "job_sha256": context["pointer"]["job_sha256"],
-        "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
-        "runtime_manifest_sha256": context["pointer"]["runtime_manifest_sha256"],
-        "input_lock_sha256": context["generation_id"],
-        "builder_contract_sha256": builder_contract_sha256,
-        "verified_at_utc": utc_now(),
-        "verification_kind": "exhaustive",
-    }
-    proof["proof_sha256"] = catalog_proof_digest(proof)
-    write_json(catalog_verification_proof_path(catalog, context["generation_id"]), proof)
-    return proof
-
-
-def verify_catalog_incremental(
-    catalog: dict[str, Any], *, check_inputs: bool = True
-) -> dict[str, Any]:
-    verifier = catalog_verifier(catalog, full_verify=False)
-    context = catalog_current_generation_context(catalog, verifier)
-    load_catalog_verification_proof(catalog, context)
-    checkpoint_path = catalog_verification_checkpoint_path(
-        catalog, context["generation_id"]
-    )
-    if checkpoint_path.is_file():
-        checkpoint = load_catalog_verification_checkpoint(catalog, context)
-        if checkpoint.get("status") != "sealed-verified":
-            verifier.save()
-            raise CatalogProofMissing(
-                "catalog sealed proof is superseded by an incomplete verification"
-            )
-    if check_inputs:
-        verify_catalog_locked_inputs(catalog, context, verifier)
-    build_info = verify_catalog_outputs(catalog, context, verifier)
-    runtime = context["runtime"]
-    dll_path = context["runtime_manifest_path"].parent / str(runtime["dll"])
-    verification = verifier.summary()
-    verification["source_dependencies_checked"] = check_inputs
-    result = {
-        "status": "prepared-verified",
-        "generation_id": context["generation_id"],
-        "animation_ids": list(context["build"].get("animation_ids", [])),
-        "runtime_profiles": runtime_profiles_for_work_item(catalog),
-        "build": {"generation_id": context["generation_id"], **build_info},
-        "runtime": {
-            "dll": str(dll_path),
-            "dll_sha256": runtime["dll_sha256"],
-            "tests_status": "passed",
-        },
-        "pointer": context["pointer"],
-        "override_collisions": 0,
-        "verification": verification,
-    }
-    catalog["_catalog_verified_context"] = context
-    return result
+    pass
 
 
 def verify_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
@@ -8520,271 +8051,92 @@ def plan_armor_set(armor_set: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def catalog_generation_snapshot(catalog: dict[str, Any], *, full_verify: bool) -> dict[str, Any]:
+    pointer = read_json(catalog_pointer_path(catalog))
+    required = {
+        "schema", "generation_id", "job_sha256", "generation_dir",
+        "build_manifest", "build_manifest_sha256",
+    }
+    if not required.issubset(pointer) or pointer["schema"] != CATALOG_POINTER_SCHEMA:
+        raise RuntimeError("catalog current-generation pointer is invalid")
+    if pointer["job_sha256"] != sha256_file(Path(catalog["_job_file"])):
+        raise CatalogInputsChanged("catalog job changed after generation")
+    generation = resolve_path(str(pointer["generation_dir"]))
+    manifest_path = generation / str(pointer["build_manifest"])
+    if (
+        not manifest_path.is_file()
+        or sha256_file(manifest_path) != pointer["build_manifest_sha256"]
+    ):
+        raise RuntimeError("catalog build manifest changed after generation")
+    manifest = read_json(manifest_path)
+    if (
+        manifest.get("schema") != CATALOG_BUILD_SCHEMA
+        or manifest.get("status") != "built-pending-ingame-qa"
+        or manifest.get("generation_id") != pointer["generation_id"]
+        or manifest.get("job_sha256") != pointer["job_sha256"]
+    ):
+        raise RuntimeError("catalog build identity is inconsistent")
+    catalog_path = manifest_path.parent / str(manifest["registry_catalog"])
+    if (
+        not catalog_path.is_file()
+        or catalog_path.stat().st_size != manifest["registry_catalog_bytes"]
+    ):
+        raise RuntimeError("catalog index is missing or has the wrong size")
+    verification = {
+        "mode": "full-final-audit" if full_verify else "metadata-only",
+        "parent_shards_read": 0,
+        "source_members_read": 0,
+    }
+    if full_verify:
+        if sha256_file(catalog_path) != manifest["registry_catalog_sha256"]:
+            raise RuntimeError("catalog index hash differs from its manifest")
+        info = inspect_registry_catalog(catalog_path)
+        if (
+            info["directory_sha256"]
+            != manifest["registry_catalog_directory_sha256"]
+            or info["shards"] != manifest["shards"]
+        ):
+            raise RuntimeError("catalog payload differs from its manifest")
+        verification["shards_verified"] = len(info["shards"])
+    return {
+        "status": "prepared-verified" if full_verify else "ready-for-ingame-qa",
+        "generation_id": pointer["generation_id"],
+        "animation_ids": manifest["animation_ids"],
+        "runtime_profiles": manifest["runtime_profiles"],
+        "build": manifest,
+        "pointer": pointer,
+        "verification": verification,
+    }
+
+
 def plan_catalog(
     catalog: dict[str, Any], *, full_verify: bool = False
 ) -> dict[str, Any]:
-    game = job_path(catalog, "game_root")
-    exe = game / "BaldurReal.exe"
-    expected = catalog["compatibility"]["baldur_real_sha256"].upper()
-    contract = upscale_contract(catalog)
-    generation_id: str | None = None
-    generation_error: str | None = None
-    generation: Path | None = None
-    verification: dict[str, Any] | None = None
+    generation_id = catalog_generation_id(catalog)
+    generation = catalog_generation_dir(catalog)
+    current = None
+    error = None
     if catalog_pointer_path(catalog).is_file():
         try:
-            verified = (
-                verify_catalog(catalog, full_verify=True)
-                if full_verify
-                else verify_catalog_incremental(catalog)
-            )
-            generation_id = verified["generation_id"]
-            generation = catalog_generation_dir(catalog)
-            verification = verified["verification"]
-        except CatalogInputsChanged as error:
-            generation_error = str(error)
-            verification = error.verification
-        except (CatalogProofMissing, OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            generation_error = str(error)
-    else:
-        try:
-            generation_id = catalog_generation_id(catalog)
-            generation = catalog_generation_dir(catalog)
-            verifier = catalog_verifier(catalog)
-            verifier.save()
-            verification = verifier.summary()
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            generation_error = str(error)
+            current = catalog_generation_snapshot(catalog, full_verify=full_verify)
+        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exception:
+            error = str(exception)
     return {
         "job_id": catalog["job_id"],
-        "method": upscale_method_description(contract),
-        "animation_ids": [
+        "method": upscale_method_description(upscale_contract(catalog)),
+        "mode": "parent-plus-delta" if "_catalog_parent" in catalog else "legacy-full",
+        "delta_animation_ids": [
             member["animation"]["id"] for member in catalog["_catalog_members"]
         ],
         "runtime_profiles": runtime_profiles_for_work_item(catalog),
-        "member_jobs": [
-            member["job_id"] for member in catalog["_catalog_members"]
-        ],
-        "leaf_job_count": sum(
-            len(catalog_member_leaf_jobs(member))
-            for member in catalog["_catalog_members"]
-        ),
-        "baldur_real_compatible": exe.is_file()
-        and sha256_file(exe) == expected,
         "generation_id": generation_id,
-        "generation_error": generation_error,
-        "generation_dir": str(generation) if generation is not None else None,
-        "verification": verification,
-        "build_manifest_exists": bool(
-            generation is not None
-            and (generation / "build" / "build-manifest.json").is_file()
-        ),
-        "runtime_manifest_exists": bool(
-            generation is not None
-            and (generation / "runtime" / "runtime-manifest.json").is_file()
-        ),
-        "current_generation_pointer_exists": catalog_pointer_path(
-            catalog
-        ).is_file(),
-        "registry_layout_policy": "content-addressed-multi-animation-catalog",
-        "shard_object_store": str(catalog_object_store_dir(catalog)),
-        "generation_shards_are_hardlinks": True,
-        "game_install_shards_are_independent_copies": True,
-        "maximum_animations": MAX_REGISTRY_CATALOG_ANIMATIONS,
-        "maximum_components": MAX_REGISTRY_CATALOG_COMPONENTS,
-        "maximum_memberships": MAX_REGISTRY_CATALOG_MEMBERSHIPS,
-        "maximum_shards": MAX_REGISTRY_CATALOG_SHARDS,
-        "maximum_physical_resources": MAX_REGISTRY_CATALOG_RESOURCES,
-        "maximum_frames": MAX_REGISTRY_CATALOG_FRAMES,
-        "maximum_registry_bytes": MAX_REGISTRY_CATALOG_BYTES,
-        "maximum_directory_entries": MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES,
-        "maximum_shard_bytes": maximum_registry_bytes(contract.scale),
-        "import_active_state": catalog.get("installation", {}).get(
-            "import_active_state"
-        ),
+        "generation_dir": str(generation),
+        "current_generation": current,
+        "generation_error": error,
+        "parent_shards_read": 0,
         "install_is_explicit": True,
         "game_launch_is_never_automatic": True,
         "release_manifest_is_out_of_scope": True,
-    }
-
-
-def verify_catalog_exhaustive(catalog: dict[str, Any]) -> dict[str, Any]:
-    game = job_path(catalog, "game_root")
-    expected = catalog["compatibility"]["baldur_real_sha256"].upper()
-    if sha256_file(game / "BaldurReal.exe") != expected:
-        raise RuntimeError("BaldurReal.exe is incompatible with the catalog")
-    build = verify_catalog_build(catalog)
-    runtime = verify_runtime(catalog)
-    pointer = verify_catalog_pointer(catalog)
-    return {
-        "status": "prepared-verified",
-        "generation_id": build["generation_id"],
-        "animation_ids": [
-            animation["animation_id"] for animation in build["animations"]
-        ],
-        "runtime_profiles": runtime_profiles_for_work_item(catalog),
-        "build": build,
-        "runtime": runtime,
-        "pointer": pointer,
-        "override_collisions": 0,
-    }
-
-
-def verify_catalog_scoped(
-    catalog: dict[str, Any],
-    *,
-    full_verify: bool,
-    keep_going: bool,
-) -> dict[str, Any]:
-    verifier = catalog_verifier(catalog, full_verify=full_verify)
-    context = catalog_current_generation_context(catalog, verifier)
-    if not full_verify:
-        checkpoint = load_catalog_verification_checkpoint(catalog, context)
-        if checkpoint.get("full_verification_started") is not True:
-            raise RuntimeError(
-                "catalog is built-unverified; run verify --full-verify --keep-going first"
-            )
-
-    try:
-        failures = verify_catalog_locked_inputs(
-            catalog,
-            context,
-            verifier,
-            collect_errors=True,
-        )
-    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-        failures = [{"scope": "catalog-input-contract", "error": str(error)}]
-    if failures and not keep_going:
-        checkpoint = write_catalog_verification_checkpoint(
-            catalog,
-            context,
-            status="verification-failed",
-            full_verification_started=True,
-            failures=failures,
-            verifier=verifier,
-        )
-        raise CatalogVerificationIncomplete(
-            f"catalog verification failed ({len(failures)}): {failures[0]['error']}",
-            checkpoint["verification"],
-            failures,
-        )
-
-    blocked_scopes = {failure["scope"] for failure in failures}
-    collection: dict[str, Any] | None = None
-    source_failures: list[dict[str, str]] = []
-    if "catalog-input-contract" not in blocked_scopes:
-        try:
-            collection, source_failures = verify_catalog_source_scopes(
-                catalog,
-                context,
-                verifier,
-                blocked_scopes=blocked_scopes,
-                keep_going=keep_going,
-            )
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            source_failures = [
-                {"scope": "catalog-source-contract", "error": str(error)}
-            ]
-    failures.extend(source_failures)
-    if failures and not keep_going:
-        checkpoint = write_catalog_verification_checkpoint(
-            catalog,
-            context,
-            status="verification-failed",
-            full_verification_started=True,
-            failures=failures,
-            verifier=verifier,
-        )
-        raise CatalogVerificationIncomplete(
-            f"catalog verification failed ({len(failures)}): {failures[0]['error']}",
-            checkpoint["verification"],
-            failures,
-        )
-
-    try:
-        catalog_info, output_failures = verify_catalog_outputs_collect(
-            catalog, context, verifier
-        )
-    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-        catalog_info = None
-        output_failures = [
-            {"scope": "catalog-output-contract", "error": str(error)}
-        ]
-    failures.extend(output_failures)
-    root_result: dict[str, Any] | None = None
-    if collection is not None and catalog_info is not None:
-        root_dependency = canonical_json_sha256(
-            {
-                "validator": "catalog-root-semantics-v1",
-                "generation_id": context["generation_id"],
-                "build_manifest_sha256": context["pointer"][
-                    "build_manifest_sha256"
-                ],
-                "runtime_manifest_sha256": context["pointer"][
-                    "runtime_manifest_sha256"
-                ],
-                "catalog_logical_content_sha256": catalog_info[
-                    "logical_content_sha256"
-                ],
-            }
-        )
-
-        def verify_root() -> dict[str, Any]:
-            build = verify_catalog_build(
-                catalog,
-                collection=collection,
-                catalog_info=catalog_info,
-                verify_shard_hashes=False,
-            )
-            runtime = verify_runtime(catalog, catalog_info=build)
-            pointer = verify_catalog_pointer(catalog)
-            return {"build": build, "runtime": runtime, "pointer": pointer}
-
-        try:
-            root_result = verifier.verify_scope(
-                "catalog-root-semantics", root_dependency, verify_root
-            )
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            failures.append(
-                {"scope": "catalog-root-semantics", "error": str(error)}
-            )
-
-    if failures or root_result is None:
-        checkpoint = write_catalog_verification_checkpoint(
-            catalog,
-            context,
-            status="verification-failed",
-            full_verification_started=True,
-            failures=failures,
-            verifier=verifier,
-        )
-        first_error = failures[0]["error"] if failures else "root verification blocked"
-        raise CatalogVerificationIncomplete(
-            f"catalog verification failed ({len(failures)}): {first_error}",
-            checkpoint["verification"],
-            failures,
-        )
-
-    record_catalog_verification_proof(catalog, context, verifier)
-    checkpoint = write_catalog_verification_checkpoint(
-        catalog,
-        context,
-        status="sealed-verified",
-        full_verification_started=True,
-        failures=[],
-        verifier=verifier,
-    )
-    verification = checkpoint["verification"]
-    return {
-        "status": "prepared-verified",
-        "generation_id": context["generation_id"],
-        "animation_ids": list(context["build"].get("animation_ids", [])),
-        "runtime_profiles": runtime_profiles_for_work_item(catalog),
-        "build": root_result["build"],
-        "runtime": root_result["runtime"],
-        "pointer": root_result["pointer"],
-        "override_collisions": 0,
-        "verification": verification,
     }
 
 
@@ -8794,19 +8146,9 @@ def verify_catalog(
     full_verify: bool = False,
     check_inputs: bool = True,
     resume: bool = False,
-    keep_going: bool = False,
 ) -> dict[str, Any]:
-    if not full_verify:
-        try:
-            return verify_catalog_incremental(catalog, check_inputs=check_inputs)
-        except CatalogProofMissing:
-            if resume:
-                return verify_catalog_scoped(
-                    catalog, full_verify=False, keep_going=keep_going
-                )
-    return verify_catalog_scoped(
-        catalog, full_verify=True, keep_going=keep_going
-    )
+    del check_inputs, resume
+    return catalog_generation_snapshot(catalog, full_verify=full_verify)
 
 
 def prepare_catalog(
@@ -8816,61 +8158,16 @@ def prepare_catalog(
     *,
     full_verify: bool = False,
 ) -> dict[str, Any]:
-    if resume and catalog_pointer_path(catalog).is_file():
-        try:
-            return (
-                verify_catalog(catalog, full_verify=True, resume=True)
-                if full_verify
-                else verify_catalog_incremental(catalog, check_inputs=True)
-            )
-        except (CatalogInputsChanged, CatalogProofMissing):
-            if full_verify:
-                raise
-            catalog.pop("_catalog_generation_dir", None)
-            catalog.pop("_catalog_sealed_input_lock", None)
-            catalog.pop("_catalog_input_lock", None)
-            catalog.pop("_catalog_source_collection", None)
-            catalog.pop("_catalog_source_collection_verified", None)
-    defer_verification = not full_verify
     build = build_catalog(
-        catalog,
-        force=force,
-        resume=resume,
-        defer_full_verify=defer_verification,
+        catalog, force=force, resume=resume, defer_full_verify=False
     )
-    runtime = build_runtime(
-        catalog, defer_catalog_verify=defer_verification
-    )
-    if defer_verification:
-        verifier = catalog_verifier(catalog, full_verify=False)
-        context = catalog_current_generation_context(catalog, verifier)
-        checkpoint = record_deferred_catalog_checkpoint(catalog, context, verifier)
-        if catalog.pop("_catalog_resume_scoped_verification", False):
-            checkpoint = write_catalog_verification_checkpoint(
-                catalog,
-                context,
-                status="built-unverified",
-                full_verification_started=True,
-                failures=[],
-                verifier=verifier,
-            )
-        return {
-            "status": "built-unverified",
-            "generation_id": context["generation_id"],
-            "build": build,
-            "runtime": runtime,
-            "checkpoint": str(
-                catalog_verification_checkpoint_path(
-                    catalog, context["generation_id"]
-                )
-            ),
-            "full_verification_started": checkpoint[
-                "full_verification_started"
-            ],
-            "install_ready": False,
-            "verification": checkpoint["verification"],
-        }
-    return verify_catalog(catalog, full_verify=True)
+    result = catalog_generation_snapshot(catalog, full_verify=full_verify)
+    return {
+        **result,
+        "build_result": build,
+        "runtime_mode": "independent-stable-runtime",
+        "install_ready": True,
+    }
 
 
 def runtime_log_session_after_install(
@@ -10571,12 +9868,7 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--full-verify",
         action="store_true",
-        help="catalog only: bypass persistent proofs and repeat exhaustive verification",
-    )
-    parser.add_argument(
-        "--keep-going",
-        action="store_true",
-        help="catalog verify only: collect every independent scope failure",
+        help="catalog only: final audit that reads every shard",
     )
     parser.add_argument("--write-report", action="store_true")
     parser.add_argument("--result", choices=("pass", "fail"))
@@ -10636,7 +9928,7 @@ def main() -> None:
         return
     job = (
         load_catalog_control_job(args.job)
-        if args.command in {"install", "restore", "status"} and not args.full_verify
+        if args.command in {"install", "restore", "status", "verify", "record-qa"}
         else None
     )
     if job is None:
@@ -10648,14 +9940,6 @@ def main() -> None:
     ):
         raise RuntimeError(
             "--full-verify is only valid for catalog plan/prepare/verify/install"
-        )
-    if args.keep_going and (
-        not catalog
-        or args.command != "verify"
-        or not (args.full_verify or args.resume)
-    ):
-        raise RuntimeError(
-            "--keep-going requires catalog verify with --full-verify or --resume"
         )
     if args.command == "plan":
         result = (
@@ -10717,7 +10001,6 @@ def main() -> None:
                 job,
                 full_verify=args.full_verify,
                 resume=args.resume,
-                keep_going=args.keep_going,
             )
             if catalog
             else verify_armor_set(job)
@@ -10775,20 +10058,6 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except CatalogVerificationIncomplete as error:
-        print(
-            json.dumps(
-                {
-                    "status": "verification-failed",
-                    "failures": error.failures,
-                    "verification": error.verification,
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            file=sys.stderr,
-        )
-        raise SystemExit(1)
     except (OSError, RuntimeError, ValueError, subprocess.CalledProcessError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         raise SystemExit(1)

@@ -352,6 +352,127 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
             [pipeline.CATALOG_OWNER_CHARACTER] * 2,
         )
 
+    def test_sealed_index_reader_never_opens_parent_shards(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            catalog, expected = self.make_catalog(Path(temporary))
+            for shard in catalog.parent.glob("CreatureSprites-XN-*.registry"):
+                shard.unlink()
+            index = pipeline.read_sealed_catalog_index(catalog, expected["sha256"])
+        self.assertEqual(index["animations"], [
+            {"animation_id": "0x6102", "owner": pipeline.CATALOG_OWNER_CHARACTER, "component_indices": [0]},
+            {"animation_id": "0x6110", "owner": pipeline.CATALOG_OWNER_CHARACTER, "component_indices": [1]},
+        ])
+        self.assertEqual([entry["resref"] for entry in index["directory"]], ["RESA", "RESB"])
+
+    def test_trusted_index_writer_is_runtime_byte_compatible(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            catalog, expected = self.make_catalog(root)
+            index = pipeline.read_sealed_catalog_index(catalog, expected["sha256"])
+            rebuilt = root / "rebuilt" / pipeline.XN_REGISTRY_CATALOG_FILENAME
+            rebuilt.parent.mkdir()
+            for shard in root.glob("CreatureSprites-XN-*.registry"):
+                shutil.copyfile(shard, rebuilt.parent / shard.name)
+            actual = pipeline.write_registry_catalog_index(
+                rebuilt,
+                index["scale"],
+                index["animations"],
+                index["components"],
+                index["shards"],
+                index["directory"],
+                expected["logical_component_digests"],
+                {
+                    "stored_index_bytes": expected["stored_index_bytes"],
+                    "compressed_frame_count": expected["compressed_frame_count"],
+                    "raw_frame_count": expected["raw_frame_count"],
+                    "index_storage_ratio": expected["index_storage_ratio"],
+                },
+            )
+            verified = pipeline.inspect_registry_catalog(rebuilt)
+        self.assertEqual(actual["sha256"], expected["sha256"])
+        self.assertEqual(verified["sha256"], expected["sha256"])
+
+    def test_delta_build_reads_only_new_payload_and_parent_index(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT / "sprite") as temporary:
+            root = Path(temporary)
+            parent_pack = root / "parent/build/iee-assets/creature-sprites"
+            parent_pack.mkdir(parents=True)
+            parent_catalog, parent_info = self.make_catalog(parent_pack, compressed=True)
+            parent_manifest_path = root / "parent/build/build-manifest.json"
+            parent_manifest = {
+                "schema": pipeline.CATALOG_BUILD_SCHEMA,
+                "status": "built-pending-ingame-qa",
+                "generation_id": "PARENT",
+                "method": pipeline.direct_upscale_contract(2).method,
+                "registry_scale": 2,
+                "runtime_profiles": ["character-bg2ee-2.7.3.0"],
+                "registry_catalog": "iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+                "registry_catalog_sha256": parent_info["sha256"],
+                "registry_catalog_logical_component_digests": parent_info["logical_component_digests"],
+                "animations": [
+                    {"animation_id": value["animation_id"], "runtime_profile": "character-bg2ee-2.7.3.0", "owner": "Character", "component_indices": value["component_indices"]}
+                    for value in parent_info["animations"]
+                ],
+                "source_members": [],
+                "storage": {key: parent_info[key] for key in ("stored_index_bytes", "compressed_frame_count", "raw_frame_count", "index_storage_ratio")},
+                "locks": {"baldur_real_sha256": "A" * 64},
+            }
+            pipeline.write_json(parent_manifest_path, parent_manifest)
+            source = root / "delta.registry"
+            source.write_bytes(self.registry_bytes("RESC", 0x6120))
+            records = pipeline.inspect_registry(source, include_resource_records=True)["resource_records"]
+            source_digest = pipeline.catalog_source_component_sha256(2, records)
+            collection = {
+                "generation_id": "unused",
+                "components": [{
+                    "source_digest": source_digest, "records": records,
+                    "resource_count": 1, "frame_count": 1, "index_bytes": 4,
+                }],
+                "animations": [{
+                    "animation_id": "0x6120", "runtime_profile": "character-bg2ee-2.7.3.0",
+                    "owner": pipeline.CATALOG_OWNER_CHARACTER,
+                    "component_source_digests": [source_digest], "resources": ["RESC"],
+                }],
+                "source_members": [{
+                    "job_file": "delta.json", "job_sha256": "B" * 64,
+                    "job_id": "delta", "animation_id": "0x6120",
+                    "runtime_profile": "character-bg2ee-2.7.3.0",
+                    "build_manifest": "delta-build.json", "build_manifest_sha256": "C" * 64,
+                    "component_source_digests": [source_digest], "bam_prefixes": ["RESC"],
+                }],
+            }
+            job_file = root / "delta-job.json"
+            job_file.write_text("{}\n", encoding="utf-8")
+            input_lock = {"schema": "test-delta", "baldur_real_sha256": "A" * 64}
+            catalog = {
+                "_kind": "catalog", "_job_file": str(job_file), "_catalog_members": [],
+                "_catalog_input_lock": input_lock, "job_id": "delta-test",
+                "upscale": pipeline.direct_upscale_contract(2).method,
+                "compatibility": {"baldur_real_sha256": "A" * 64},
+                "paths": {"run_dir": str(root / "run"), "game_root": str(root / "game")},
+                "_catalog_parent": {
+                    "manifest_path": parent_manifest_path,
+                    "manifest_sha256": pipeline.sha256_file(parent_manifest_path),
+                    "catalog_path": parent_catalog,
+                    "catalog_sha256": parent_info["sha256"], "manifest": parent_manifest,
+                },
+            }
+            original_inspect = pipeline.inspect_registry
+            def reject_parent_shard(path, *args, **kwargs):
+                if Path(path).parent == parent_pack and Path(path).suffix == ".registry":
+                    raise AssertionError("parent shard was opened")
+                return original_inspect(path, *args, **kwargs)
+            with (
+                mock.patch.object(pipeline, "catalog_source_collection", return_value=collection),
+                mock.patch.object(pipeline, "catalog_override_collisions", return_value=[]),
+                mock.patch.object(pipeline, "inspect_registry", side_effect=reject_parent_shard),
+            ):
+                result = pipeline.build_catalog_delta(catalog, resume=False, verify_members=True)
+            built = pipeline.catalog_generation_dir(catalog) / "build/iee-assets/creature-sprites/CreatureSprites-XN.catalog"
+            verified = pipeline.inspect_registry_catalog(built)
+        self.assertEqual(result["status"], "built-delta")
+        self.assertEqual([value["animation_id"] for value in verified["animations"]], ["0x6102", "0x6110", "0x6120"])
+
     def test_installed_catalog_contract_accepts_only_retired_storage_repack_shards(
         self,
     ) -> None:
@@ -784,39 +905,6 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
                 pipeline.catalog_payload_path(
                     build, "../outside.registry", "test payload"
                 )
-
-    def test_verified_set_leaf_payloads_resolve_beside_set_index(self) -> None:
-        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
-            build_dir = Path(temporary) / "build"
-            pack = build_dir / "iee-assets" / "creature-sprites"
-            pack.mkdir(parents=True)
-            set_index = pack / pipeline.XN_REGISTRY_SET_FILENAME
-            shard = pack / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=0)
-            set_index.write_bytes(b"set-index")
-            shard.write_bytes(b"shard")
-            manifest = {
-                "registry_layout": "set",
-                "registry_set": "iee-assets/creature-sprites/" + set_index.name,
-            }
-            verified = {
-                "sha256": pipeline.sha256_file(set_index),
-                "registry_set_bytes": set_index.stat().st_size,
-                "shards": [
-                    {
-                        "registry": shard.name,
-                        "sha256": pipeline.sha256_file(shard),
-                        "crc32": pipeline.crc32_file(shard),
-                        "registry_bytes": shard.stat().st_size,
-                    }
-                ],
-            }
-            with (
-                mock.patch.object(pipeline, "build_dir", return_value=build_dir),
-                mock.patch.object(pipeline, "read_json", return_value=manifest),
-            ):
-                records = pipeline.catalog_verified_leaf_payload_records({}, verified)
-            self.assertIn(str(set_index.resolve()).casefold(), records)
-            self.assertIn(str(shard.resolve()).casefold(), records)
 
     def test_catalog_component_copy_is_bound_to_locked_source_digest(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
