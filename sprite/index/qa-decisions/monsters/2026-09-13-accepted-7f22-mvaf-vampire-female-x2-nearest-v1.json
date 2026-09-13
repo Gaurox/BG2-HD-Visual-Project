@@ -1,0 +1,70 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T19:29:53.6220236Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "asset_key": "sprites:family:0x7F22:body:base-resref:MVAF:MVAF:x2-nearest",
+    "family_id": "0x7F22:body:base-resref:MVAF:MVAF",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x7F22",
+    "bam_prefix": "MVAF",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "F88516CAC8183FE5A9833C5838DCB2DE455E2E580672BA472137CE75F013BAF0"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "scenarios": [
+      {
+        "creature": "BODTAN",
+        "name": "Tanova"
+      },
+      {
+        "creature": "C6VALEN",
+        "name": "Valen"
+      },
+      {
+        "creature": "C6HAREI",
+        "name": "Hareishan"
+      }
+    ],
+    "note": "Les trois personnages de la famille MVAF ont été validés ingame explicitement par l'utilisateur le 2026-09-13."
+  },
+  "automatic_evidence": {
+    "build_manifest": "sprite/families/monsters/7fxx/7f22-mvaf-vampire-female/runs/x2-nearest-v1/build/build-manifest.json",
+    "build_manifest_sha256": "2E7F0F63BA1A94B71266AB58DB976E224B10BF083FA6396A6F932CE90412CBBF",
+    "runtime_manifest": "sprite/families/monsters/7fxx/7f22-mvaf-vampire-female/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+    "runtime_manifest_sha256": "1A0DCDA6514B951B1A53E0BC82969E344E8F20C11A9C30D54AC33B81B375DF57",
+    "comparison_sheet_count": 13,
+    "historical_installation_state": "installed",
+    "active_installation_status": "installed-pending-qa"
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f22-mvaf-vampire-female/source/stock/manifest.json",
+    "source_manifest_sha256": "31C32D423FFF6364B2DEA6AE3E8FCA8117061EF25F345A86F37C67681B6113AC",
+    "selected_run": "sprite/families/monsters/7fxx/7f22-mvaf-vampire-female/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "2E7F0F63BA1A94B71266AB58DB976E224B10BF083FA6396A6F932CE90412CBBF",
+    "job_file": "sprite/families/monsters/7fxx/7f22-mvaf-vampire-female/jobs/x2-nearest-v1.json",
+    "job_sha256": "35ACD368D0068075280B8C742C01D3DD7BA6EA1D052469BFA83AC61C23711004"
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-7f22-mvaf-vampire-female-v1.json",
+    "job_sha256": "EE740FC336CFC9DE1ECCFA7B8E92C6D93EABA648EF6DEEF90A881D53CF7A0CD9",
+    "current_generation": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "current_generation_sha256": "8D9A58E4FC83D375FC64143F48E2A5BC7AAE749140C66C4078A7BACC6B87AAA6",
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/f88516cac8183fe5a9833c5838dcb2de455e2e580672ba472137ce75f013baf0/build/build-manifest.json",
+    "build_manifest_sha256": "B34E3E1A583396C1168D6AF3B7EA93BEFEBB46FF91A848C346BA5405459BE511",
+    "catalog_sha256": "B754D5D0F57831F178766ACC9ED941901460FE1771FC8EF7F20395C79957B6C8",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "636F297BCA4A521D95542EAF35B3F9CE354421192290294AC08BCCC424A8BCF5",
+    "installation_status": "installed-pending-qa",
+    "installed_runtime_manifest": "pipeline/runtime/manifests/iee-water-ar1000n-creature-catalog-v2-v1.json",
+    "installed_runtime_manifest_sha256": "E3E2E9C20DD5CC8EF62B799ECC1A5350ABF94DF3FA2BC7D381512EBDCB489B44",
+    "installed_runtime_dll_sha256": "ABBF3679F3A4D70D61EBD31864D9FCC9DDDBC76A46221CFDF4D587CA15C8F7D9"
+  },
+  "release_manifest_modified": false
+}
