@@ -339,6 +339,7 @@ class FakeCatalogWorkspace:
         logical_manifest_semantic_index: int | None = None,
         corrupt_compressed: bool = False,
         shared_component: bool = False,
+        stable_builder_contract: bool = False,
     ) -> dict:
         if catalog_version not in (1, 2):
             raise ValueError("catalog_version must be 1 or 2")
@@ -626,6 +627,11 @@ class FakeCatalogWorkspace:
         catalog_path = sprite_dir / "CreatureSprites-XN.catalog"
         catalog_path.write_bytes(catalog_raw)
 
+        builder_path = ROOT / (
+            "pipeline/catalog-builder-contract.json"
+            if stable_builder_contract
+            else "pipeline/scripts/run_creature_sprite_x2.py"
+        )
         input_lock = {
             "schema": "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1",
             "job_file": project_relative(job_file),
@@ -634,8 +640,8 @@ class FakeCatalogWorkspace:
             "baldur_real_sha256": sha256(self.game / "BaldurReal.exe"),
             "engine_source": project_relative(self.engine),
             "engine_source_contract_sha256": source_contract(self.engine),
-            "catalog_builder": "pipeline/scripts/run_creature_sprite_x2.py",
-            "catalog_builder_sha256": sha256(ROOT / "pipeline/scripts/run_creature_sprite_x2.py"),
+            "catalog_builder": project_relative(builder_path),
+            "catalog_builder_sha256": sha256(builder_path),
             "members": [
                 {
                     key: member[key]
@@ -910,6 +916,16 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
         self.assertEqual(active["runtime_profiles"], ["monster-bg2ee-2.7.3.0"])
         self.fake.powershell(RESTORE)
 
+    def test_restore_accepts_stable_catalog_builder_contract(self) -> None:
+        self.fake.write_generation(
+            "stable-builder-contract",
+            [(0x7F0D, "MLICG1")],
+            stable_builder_contract=True,
+        )
+        self.fake.powershell(INSTALL)
+        self.fake.powershell(RESTORE, "-VerifyOnly")
+        self.fake.powershell(RESTORE)
+
     def test_reinstall_same_generation_is_verified_idempotent_noop(self) -> None:
         self.fake.write_generation("generation-one", [(0x6102, "CDMB1")])
         self.fake.powershell(INSTALL)
@@ -991,6 +1007,94 @@ class CreatureSpriteXNCatalogInstallTests(unittest.TestCase):
         self.assertEqual(live_dll.read_bytes(), b"external-catmull-runtime")
         restored = json.loads(active_path.read_text(encoding="utf-8"))
         self.assertEqual(restored["installed_dll_sha256"], external_sha256)
+
+    def test_compatible_live_runtime_is_reused_and_never_restored_over(self) -> None:
+        self.fake.write_generation(
+            "reuse-live-runtime",
+            [(0x6102, "CDMB1")],
+            runtime_dll_bytes=b"different-generation-runtime",
+            catalog_version=2,
+            shard_version=5,
+        )
+        live_dll = self.fake.game / "InfinityEngine-Enhancer.dll"
+        live_before = live_dll.read_bytes()
+        runtime_source = self.fake.root / "compatible-live-runtime.dll"
+        runtime_source.write_bytes(live_before)
+        evidence = self.fake.root / "water-runtime-evidence.json"
+        write_json(evidence, {"runtime": "compatible"})
+        capability = self.fake.root / "runtime-capabilities.json"
+        write_json(
+            capability,
+            {
+                "schema": "bg2-upscale-runtime-capabilities-v1",
+                "status": "development-candidate",
+                "runtime_id": "fake-water-and-creatures-v1",
+                "source_commit": "1" * 40,
+                "game_profile": {
+                    "id": "fake-bg2ee",
+                    "baldur_real_sha256": sha256(
+                        self.fake.game / "BaldurReal.exe"
+                    ),
+                },
+                "dll": {
+                    "path": project_relative(runtime_source),
+                    "sha256": sha256(runtime_source),
+                    "bytes": runtime_source.stat().st_size,
+                },
+                "capabilities": {
+                    "creature_sprite_xn_catalog": {
+                        "catalog_magic": "IEECSNC",
+                        "catalog_versions": [1, 2],
+                        "shard_registry_magic": "IEECSXN",
+                        "shard_registry_versions": [3, 5],
+                        "frame_storage": [
+                            "raw-v3",
+                            "XPRESS_HUFF-or-raw-per-frame-v1",
+                        ],
+                        "directory_v2_entry_bytes": 24,
+                    }
+                },
+                "evidence": [
+                    {
+                        "kind": "fake-water-runtime",
+                        "path": project_relative(evidence),
+                        "sha256": sha256(evidence),
+                    }
+                ],
+            },
+        )
+
+        verified = self.fake.powershell(
+            INSTALL,
+            "-VerifyOnly",
+            "-ReuseLiveRuntimeManifest",
+            str(capability),
+        )
+        self.assertIn("verified", verified.stdout)
+        self.assertEqual(live_dll.read_bytes(), live_before)
+
+        self.fake.powershell(
+            INSTALL, "-ReuseLiveRuntimeManifest", str(capability)
+        )
+        self.assertEqual(live_dll.read_bytes(), live_before)
+        active = json.loads(
+            (self.fake.run / "ingame-installation/active-test.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            active["runtime_selection"]["mode"], "reuse-compatible-live"
+        )
+        runtime_target = next(
+            target for target in active["targets"] if target["role"] == "runtime-dll"
+        )
+        self.assertTrue(runtime_target["immutable_noop"])
+        self.assertIsNone(runtime_target["backup_path"])
+        self.assertEqual(runtime_target["installed_sha256"], sha256(live_dll))
+
+        self.fake.powershell(RESTORE, "-VerifyOnly")
+        self.fake.powershell(RESTORE)
+        self.assertEqual(live_dll.read_bytes(), live_before)
 
     def test_verify_install_is_read_only_and_divergent_shard_fails_closed(self) -> None:
         generation = self.fake.write_generation("generation-one", [(0x6102, "CDMB1")])

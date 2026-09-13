@@ -186,12 +186,33 @@ function Assert-SealedInputLock($Build, $Runtime, $Job, [string]$JobPath,
         'input_lock.catalog_builder'
     $expectedBuilder = [System.IO.Path]::GetFullPath(
         (Join-Path $script:WorkspaceRoot 'pipeline\scripts\run_creature_sprite_x2.py'))
-    if (-not [string]::Equals($builder, $expectedBuilder,
+    $contractPath = [System.IO.Path]::GetFullPath(
+        (Join-Path $script:WorkspaceRoot 'pipeline\catalog-builder-contract.json'))
+    $usesLegacyBuilder = [string]::Equals($builder, $expectedBuilder,
+        [System.StringComparison]::OrdinalIgnoreCase)
+    if (-not $usesLegacyBuilder -and -not [string]::Equals($builder, $contractPath,
             [System.StringComparison]::OrdinalIgnoreCase)) {
         throw 'input_lock.catalog_builder non canonique.'
     }
-    Assert-HashText ([string](Get-RequiredProperty $inputLock `
-            'catalog_builder_sha256' 'input_lock')) 'input_lock.catalog_builder_sha256'
+    $lockedBuilderSha256 = [string](Get-RequiredProperty $inputLock `
+        'catalog_builder_sha256' 'input_lock')
+    Assert-HashText $lockedBuilderSha256 'input_lock.catalog_builder_sha256'
+    $actualBuilderSha256 = Get-Sha256 $builder
+    if (-not [string]::Equals($actualBuilderSha256, $lockedBuilderSha256,
+            [System.StringComparison]::OrdinalIgnoreCase)) {
+        if (-not $usesLegacyBuilder) { throw 'Contrat builder catalogue verrouillé altéré.' }
+        try { $builderContract = Get-Content -LiteralPath $contractPath -Raw | ConvertFrom-Json }
+        catch { throw "Contrat builder catalogue illisible : $($_.Exception.Message)" }
+        Assert-OrdinalEqual ([string](Get-RequiredProperty $builderContract 'schema' 'builder contract')) `
+            'bg2-upscale-creature-sprite-xn-catalog-builder-contract-v1' 'builder contract.schema'
+        $compatible = @($builderContract.compatible_legacy_runner_sha256 | Where-Object {
+                [string]::Equals([string]$_, $lockedBuilderSha256,
+                    [System.StringComparison]::OrdinalIgnoreCase)
+            })
+        if ($compatible.Count -ne 1) {
+            throw 'Builder catalogue verrouillé altéré et non compatible.'
+        }
+    }
 
     $memberLocks = @(Get-RequiredProperty $inputLock 'members' 'input_lock')
     $sourceMembers = @(Get-RequiredProperty $Build 'source_members' 'build')
@@ -698,6 +719,42 @@ try {
     Assert-SealedInputLock $build $runtime $job $jobPath $jobSha256 `
         ([string]$state.generation_id) $scale $expectedExeHash
 
+    $runtimeDllImmutable = $false
+    if ($null -ne $state.PSObject.Properties['runtime_selection'] -and
+        $null -ne $state.runtime_selection) {
+        $runtimeSelection = $state.runtime_selection
+        Assert-ExactPropertyNames $runtimeSelection @(
+            'schema', 'mode', 'runtime_id', 'capability_manifest',
+            'capability_manifest_sha256', 'installed_dll_sha256'
+        ) 'state.runtime_selection'
+        Assert-OrdinalEqual ([string](Get-RequiredProperty $runtimeSelection 'schema' `
+                'state.runtime_selection')) 'bg2-upscale-runtime-selection-v1' `
+            'state.runtime_selection.schema'
+        $runtimeMode = [string](Get-RequiredProperty $runtimeSelection 'mode' `
+            'state.runtime_selection')
+        if ($runtimeMode -eq 'reuse-compatible-live') {
+            $capabilityPath = Resolve-ProjectPath ([string](Get-RequiredProperty `
+                    $runtimeSelection 'capability_manifest' 'state.runtime_selection')) `
+                'state.runtime_selection.capability_manifest'
+            Assert-ExpectedHash $capabilityPath ([string](Get-RequiredProperty `
+                    $runtimeSelection 'capability_manifest_sha256' 'state.runtime_selection')) `
+                'Manifeste de capacités runtime scellé'
+            $reusedRuntime = Assert-LiveRuntimeCapabilityManifest $capabilityPath $gameRoot `
+                $expectedExeHash ([uint32]$state.catalog_version) `
+                ([uint32]$state.shard_registry_version) ([string]$state.frame_storage) `
+                ([uint32]$state.directory_entry_bytes)
+            Assert-OrdinalEqual ([string]$reusedRuntime.runtime_id) `
+                ([string](Get-RequiredProperty $runtimeSelection 'runtime_id' `
+                    'state.runtime_selection')) 'state.runtime_selection.runtime_id'
+            Assert-OrdinalEqual ([string]$reusedRuntime.dll_sha256) `
+                ([string](Get-RequiredProperty $runtimeSelection 'installed_dll_sha256' `
+                    'state.runtime_selection')) 'state.runtime_selection.installed_dll_sha256'
+            $runtimeDllImmutable = $true
+        } elseif ($runtimeMode -ne 'generation-runtime') {
+            throw "Mode runtime de l'état non supporté : $runtimeMode"
+        }
+    }
+
     $catalogRelative = 'iee-assets\creature-sprites\CreatureSprites-XN.catalog'
     $ownerRelative = 'iee-assets\creature-sprites\CreatureSprites-XN.catalog-owner.json'
     Assert-OrdinalEqual (([string](Get-RequiredProperty $state 'catalog_relative_path' 'state')).Replace('/', '\')) `
@@ -728,7 +785,12 @@ try {
         Assert-Boolean $immutable 'state.targets[].immutable_noop'
         Assert-Boolean $existed 'state.targets[].existed_before'
         if ($required.ContainsKey($relative)) {
-            if ($role -cne $required[$relative] -or $immutable) { throw "Rôle de cible invalide : $relative" }
+            if ($role -cne $required[$relative]) { throw "Rôle de cible invalide : $relative" }
+            if ($role -eq 'runtime-dll') {
+                if ([bool]$immutable -ne $runtimeDllImmutable) {
+                    throw "Invariant de réutilisation runtime invalide : $relative"
+                }
+            } elseif ($immutable) { throw "Cible partagée déclarée immutable à tort : $relative" }
         } elseif ($relative -match '^iee-assets\\creature-sprites\\CreatureSprites-XN-[0-9A-F]{64}\.registry$') {
             if ($role -eq 'content-addressed-shard') {
                 if (-not $expectedShardTargets.Contains($relative) -or $immutable -ne $existed) {
@@ -820,7 +882,7 @@ try {
             if ($null -ne $targetState.backup_path -or -not $targetState.existed_before) {
                 throw "Métadonnées immutable invalides : $relative"
             }
-            Assert-ExpectedHash $target ([string]$targetState.original_sha256) "Shard immutable $relative"
+            Assert-ExpectedHash $target ([string]$targetState.original_sha256) "Cible immutable $relative"
         } elseif ($targetState.existed_before) {
             $backup = Resolve-ProjectPath ([string](Get-RequiredProperty $targetState 'backup_path' 'state.targets[]')) `
                 'state.targets[].backup_path'
@@ -989,7 +1051,7 @@ try {
                 'target.restore_source_path'
             Copy-FileAtomic $restoreSource $target ([string]$targetState.original_sha256)
         } elseif ($targetState.immutable_noop) {
-            Assert-ExpectedHash $target ([string]$targetState.original_sha256) 'Shard immutable restauré'
+            Assert-ExpectedHash $target ([string]$targetState.original_sha256) 'Cible immutable restaurée'
         } elseif ($targetState.existed_before) {
             $backup = Resolve-ProjectPath ([string]$targetState.backup_path) 'target.backup_path'
             Copy-FileAtomic $backup $target ([string]$targetState.original_sha256)

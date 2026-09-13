@@ -5,6 +5,7 @@ param(
     [switch]$VerifyOnly,
     [string]$ExpectedLiveRuntimeSha256,
     [string]$ExpectedLiveRuntimeIniSha256,
+    [string]$ReuseLiveRuntimeManifest,
     [ValidateSet('Nearest', 'CatmullRom')]
     [string]$CreatureSpriteFilter = 'Nearest',
     [string]$VerificationProof,
@@ -2799,14 +2800,116 @@ function Assert-CatalogOwnerAndState($State, [string]$StatePath, [string]$GameRo
     }
 }
 
-# Restore-CreatureSprite-XN-Catalog-Test.ps1 réutilise uniquement ces validateurs
-# par dot-sourcing. Une exécution normale continue dans le workflow ci-dessous.
-if ($MyInvocation.InvocationName -eq '.') { return }
-
 if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256)) {
     Assert-HashText $ExpectedLiveRuntimeSha256 'ExpectedLiveRuntimeSha256'
     $ExpectedLiveRuntimeSha256 = $ExpectedLiveRuntimeSha256.ToUpperInvariant()
 }
+
+function Assert-LiveRuntimeCapabilityManifest([string]$ManifestPath, [string]$GameRoot,
+        [string]$ExpectedBaldurRealSha256, [uint32]$CatalogVersion,
+        [uint32]$ShardRegistryVersion, [string]$FrameStorage,
+        [uint32]$DirectoryEntryBytes) {
+    $resolved = Resolve-ProjectPath $ManifestPath 'ReuseLiveRuntimeManifest'
+    if (-not (Test-Path -LiteralPath $resolved -PathType Leaf)) {
+        throw "Manifeste de capacités runtime absent : $resolved"
+    }
+    try { $manifest = Get-Content -LiteralPath $resolved -Raw | ConvertFrom-Json }
+    catch { throw "Manifeste de capacités runtime illisible : $($_.Exception.Message)" }
+    Assert-ExactPropertyNames $manifest @(
+        'schema', 'status', 'runtime_id', 'source_commit', 'game_profile',
+        'dll', 'capabilities', 'evidence'
+    ) 'runtime capabilities'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $manifest 'schema' 'runtime capabilities')) `
+        'bg2-upscale-runtime-capabilities-v1' 'runtime capabilities.schema'
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $manifest 'status' 'runtime capabilities')) `
+        'development-candidate' 'runtime capabilities.status'
+    $runtimeId = [string](Get-RequiredProperty $manifest 'runtime_id' 'runtime capabilities')
+    if ($runtimeId -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$') {
+        throw 'runtime capabilities.runtime_id invalide.'
+    }
+    if ([string](Get-RequiredProperty $manifest 'source_commit' 'runtime capabilities') `
+            -notmatch '^[0-9a-fA-F]{40}$') {
+        throw 'runtime capabilities.source_commit invalide.'
+    }
+
+    $gameProfile = Get-RequiredProperty $manifest 'game_profile' 'runtime capabilities'
+    Assert-ExactPropertyNames $gameProfile @('id', 'baldur_real_sha256') `
+        'runtime capabilities.game_profile'
+    [void](Get-RequiredProperty $gameProfile 'id' 'runtime capabilities.game_profile')
+    Assert-OrdinalEqual ([string](Get-RequiredProperty $gameProfile 'baldur_real_sha256' `
+            'runtime capabilities.game_profile')) $ExpectedBaldurRealSha256 `
+        'runtime capabilities.game_profile.baldur_real_sha256'
+
+    $dll = Get-RequiredProperty $manifest 'dll' 'runtime capabilities'
+    Assert-ExactPropertyNames $dll @('path', 'sha256', 'bytes') 'runtime capabilities.dll'
+    $dllSha256 = [string](Get-RequiredProperty $dll 'sha256' 'runtime capabilities.dll')
+    Assert-HashText $dllSha256 'runtime capabilities.dll.sha256'
+    $dllSource = Resolve-ProjectPath ([string](Get-RequiredProperty $dll 'path' `
+            'runtime capabilities.dll')) 'runtime capabilities.dll.path'
+    Assert-ExpectedHash $dllSource $dllSha256 'DLL du manifeste de capacités'
+    if ([uint64](Get-RequiredProperty $dll 'bytes' 'runtime capabilities.dll') -ne
+        [uint64](Get-Item -LiteralPath $dllSource).Length) {
+        throw 'runtime capabilities.dll.bytes divergent.'
+    }
+
+    $capabilities = Get-RequiredProperty $manifest 'capabilities' 'runtime capabilities'
+    $creature = Get-RequiredProperty $capabilities 'creature_sprite_xn_catalog' `
+        'runtime capabilities.capabilities'
+    Assert-ExactPropertyNames $creature @(
+        'catalog_magic', 'catalog_versions', 'shard_registry_magic',
+        'shard_registry_versions', 'frame_storage', 'directory_v2_entry_bytes'
+    ) 'runtime capabilities.creature_sprite_xn_catalog'
+    Assert-OrdinalEqual ([string]$creature.catalog_magic) 'IEECSNC' `
+        'runtime capabilities.creature_sprite_xn_catalog.catalog_magic'
+    Assert-OrdinalEqual ([string]$creature.shard_registry_magic) 'IEECSXN' `
+        'runtime capabilities.creature_sprite_xn_catalog.shard_registry_magic'
+    $catalogVersions = @($creature.catalog_versions | ForEach-Object { [uint32]$_ })
+    $shardVersions = @($creature.shard_registry_versions | ForEach-Object { [uint32]$_ })
+    $frameStorageValues = @(Assert-StringArray $creature.frame_storage `
+        'runtime capabilities.creature_sprite_xn_catalog.frame_storage')
+    if ($CatalogVersion -notin $catalogVersions) {
+        throw "Le runtime live ne déclare pas le catalogue V$CatalogVersion."
+    }
+    if ($ShardRegistryVersion -notin $shardVersions) {
+        throw "Le runtime live ne déclare pas les shards V$ShardRegistryVersion."
+    }
+    if ($FrameStorage -notin $frameStorageValues) {
+        throw "Le runtime live ne déclare pas le stockage $FrameStorage."
+    }
+    if ($CatalogVersion -eq 2 -and
+        [uint32](Get-RequiredProperty $creature 'directory_v2_entry_bytes' `
+            'runtime capabilities.creature_sprite_xn_catalog') -ne $DirectoryEntryBytes) {
+        throw 'Le runtime live ne déclare pas la bonne taille de directory V2.'
+    }
+
+    foreach ($record in @(Get-RequiredProperty $manifest 'evidence' 'runtime capabilities')) {
+        Assert-ExactPropertyNames $record @('kind', 'path', 'sha256') `
+            'runtime capabilities.evidence[]'
+        [void](Get-RequiredProperty $record 'kind' 'runtime capabilities.evidence[]')
+        $evidencePath = Resolve-ProjectPath ([string](Get-RequiredProperty $record 'path' `
+                'runtime capabilities.evidence[]')) 'runtime capabilities.evidence[].path'
+        Assert-ExpectedHash $evidencePath ([string](Get-RequiredProperty $record 'sha256' `
+                'runtime capabilities.evidence[]')) 'Preuve du manifeste de capacités'
+    }
+
+    $liveDll = Assert-GameChildRelative $GameRoot 'InfinityEngine-Enhancer.dll' 'DLL live réutilisée'
+    Assert-ExpectedHash $liveDll $dllSha256 'DLL live réutilisée'
+    if ([uint64](Get-Item -LiteralPath $liveDll).Length -ne [uint64]$dll.bytes) {
+        throw 'La taille de la DLL live diffère du manifeste de capacités.'
+    }
+    return [pscustomobject]@{
+        runtime_id = $runtimeId
+        manifest_path = Get-ProjectRelativePath $resolved
+        manifest_sha256 = Get-Sha256 $resolved
+        dll_sha256 = $dllSha256.ToUpperInvariant()
+        dll_bytes = [uint64]$dll.bytes
+    }
+}
+
+# Restore-CreatureSprite-XN-Catalog-Test.ps1 réutilise uniquement ces validateurs
+# par dot-sourcing. Une exécution normale continue dans le workflow ci-dessous.
+if ($MyInvocation.InvocationName -eq '.') { return }
+
 if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256)) {
     Assert-HashText $ExpectedLiveRuntimeIniSha256 'ExpectedLiveRuntimeIniSha256'
     $ExpectedLiveRuntimeIniSha256 = $ExpectedLiveRuntimeIniSha256.ToUpperInvariant()
@@ -2916,7 +3019,8 @@ try {
         [uint64](Get-Item -LiteralPath $sourceCatalog).Length) {
         throw 'build.registry_catalog_bytes diffère du fichier source.'
     }
-    if ($null -ne $incrementalProof) {
+    if ($null -ne $incrementalProof -and
+        [string]::IsNullOrWhiteSpace($ReuseLiveRuntimeManifest)) {
         Assert-ProofCoversFile $sourceCatalog $expectedCatalogSha256 $null `
             ([uint64]$build.registry_catalog_bytes) 'Catalogue source'
         foreach ($manifestShard in @($build.shards)) {
@@ -3114,6 +3218,18 @@ try {
     $catalogTarget = Assert-GameChildRelative $gameRoot $catalogRelative 'Catalogue cible'
     $ownerTarget = Assert-GameChildRelative $gameRoot $ownerRelative 'Owner cible'
     if (-not (Test-Path -LiteralPath $iniTarget -PathType Leaf)) { throw 'InfinityEngine-Enhancer.ini est absent.' }
+    $reusedRuntime = $null
+    if (-not [string]::IsNullOrWhiteSpace($ReuseLiveRuntimeManifest)) {
+        $reusedRuntime = Assert-LiveRuntimeCapabilityManifest $ReuseLiveRuntimeManifest $gameRoot `
+            $expectedExeSha256 $catalog.version $catalog.shard_registry_version `
+            ([string]$catalog.frame_storage) $catalog.directory_entry_bytes
+        if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256) -and
+            -not [string]::Equals($ExpectedLiveRuntimeSha256, $reusedRuntime.dll_sha256,
+                [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw 'ExpectedLiveRuntimeSha256 diffère du manifeste de capacités runtime.'
+        }
+        $ExpectedLiveRuntimeSha256 = [string]$reusedRuntime.dll_sha256
+    }
     $iniBefore = Get-Content -LiteralPath $iniTarget -Raw
     [void](Get-IniKey $iniBefore 'Shaders' 'EnableCreatureSpriteUpscaleTest' -AllowMissing)
     [void](Get-IniKey $iniBefore 'Shaders' 'EnableCreatureSpriteX2Test' -AllowMissing)
@@ -3229,7 +3345,7 @@ try {
         }
     }
     if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeSha256) -and
-        $null -eq $runtimeReconciliation) {
+        $null -eq $runtimeReconciliation -and $null -eq $reusedRuntime) {
         throw 'ExpectedLiveRuntimeSha256 fourni sans divergence runtime à réconcilier.'
     }
     if (-not [string]::IsNullOrWhiteSpace($ExpectedLiveRuntimeIniSha256) -and
@@ -3392,22 +3508,28 @@ try {
 
     $targets = [System.Collections.Generic.List[object]]::new()
     foreach ($definition in @(
-        [pscustomobject]@{ relative = 'InfinityEngine-Enhancer.dll'; role = 'runtime-dll'; immutable = $false },
+        [pscustomobject]@{ relative = 'InfinityEngine-Enhancer.dll'; role = 'runtime-dll'; immutable = [bool]($null -ne $reusedRuntime) },
         [pscustomobject]@{ relative = 'InfinityEngine-Enhancer.ini'; role = 'runtime-ini'; immutable = $false }
     )) {
         $target = Assert-GameChildRelative $gameRoot $definition.relative 'Cible transactionnelle'
         $existed = Test-Path -LiteralPath $target -PathType Leaf
+        if ($definition.immutable -and -not $existed) {
+            throw "La cible runtime à réutiliser est absente : $($definition.relative)"
+        }
         $backup = $null; $original = $null
         if ($existed) {
             $original = Get-Sha256 $target
-            $backup = Join-Path $backupRoot $definition.relative
-            Assert-SafeKnownPath $backup "Sauvegarde $($definition.relative)"
-            New-Item -ItemType Directory -Path (Split-Path -Parent $backup) -Force | Out-Null
-            Copy-Item -LiteralPath $target -Destination $backup
-            Assert-ExpectedHash $backup $original "Sauvegarde $($definition.relative)"
+            if (-not $definition.immutable) {
+                $backup = Join-Path $backupRoot $definition.relative
+                Assert-SafeKnownPath $backup "Sauvegarde $($definition.relative)"
+                New-Item -ItemType Directory -Path (Split-Path -Parent $backup) -Force | Out-Null
+                Copy-Item -LiteralPath $target -Destination $backup
+                Assert-ExpectedHash $backup $original "Sauvegarde $($definition.relative)"
+            }
         }
         $targets.Add([pscustomobject]@{
-            relative_path = $definition.relative; role = $definition.role; immutable_noop = $false
+            relative_path = $definition.relative; role = $definition.role
+            immutable_noop = [bool]$definition.immutable
             existed_before = [bool]$existed; original_sha256 = $original
             backup_path = if ($null -ne $backup) { Get-ProjectRelativePath $backup } else { $null }
             installed_present = $null; installed_sha256 = $null
@@ -3489,6 +3611,21 @@ try {
         total_index_bytes = [uint64]$catalog.total_index_bytes
         total_registry_bytes = [uint64]$catalog.total_registry_bytes
         source_dll_sha256 = $expectedDllSha256
+        runtime_selection = if ($null -ne $reusedRuntime) {
+            [ordered]@{
+                schema = 'bg2-upscale-runtime-selection-v1'; mode = 'reuse-compatible-live'
+                runtime_id = [string]$reusedRuntime.runtime_id
+                capability_manifest = [string]$reusedRuntime.manifest_path
+                capability_manifest_sha256 = [string]$reusedRuntime.manifest_sha256
+                installed_dll_sha256 = [string]$reusedRuntime.dll_sha256
+            }
+        } else {
+            [ordered]@{
+                schema = 'bg2-upscale-runtime-selection-v1'; mode = 'generation-runtime'
+                runtime_id = $generationId; capability_manifest = $null
+                capability_manifest_sha256 = $null; installed_dll_sha256 = $expectedDllSha256
+            }
+        }
         build_manifest = Get-ProjectRelativePath $buildManifestPath
         build_manifest_sha256 = $buildManifestSha256
         runtime_manifest = Get-ProjectRelativePath $runtimeManifestPath
@@ -3526,7 +3663,13 @@ try {
     }
 
     try {
-        Copy-FileAtomic $sourceDll $dllTarget $expectedDllSha256
+        $installedDllSha256 = if ($null -ne $reusedRuntime) {
+            Assert-ExpectedHash $dllTarget $reusedRuntime.dll_sha256 'DLL live conservée'
+            [string]$reusedRuntime.dll_sha256
+        } else {
+            Copy-FileAtomic $sourceDll $dllTarget $expectedDllSha256
+            $expectedDllSha256
+        }
         $iniText = Get-Content -LiteralPath $iniTarget -Raw
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteUpscaleTest' 'true'
         $iniText = Set-IniKey $iniText 'Shaders' 'EnableCreatureSpriteX2Test' 'false'
@@ -3564,7 +3707,7 @@ try {
             Copy-FileAtomic $sourceCatalog $catalogTarget $expectedCatalogSha256
         }
 
-        Assert-ExpectedHash $dllTarget $expectedDllSha256 'DLL installée'
+        Assert-ExpectedHash $dllTarget $installedDllSha256 'DLL installée'
         Assert-ExpectedHash $catalogTarget $expectedCatalogSha256 'Catalogue installé'
         $installedCatalog = Read-Catalog $catalogTarget
         if ($installedCatalog.animation_count -ne $catalog.animation_count -or
@@ -3633,6 +3776,7 @@ try {
         ShardRegistryVersion = $catalog.shard_registry_version
         DirectoryEntries = $catalog.directory_count; Animations = $catalog.animation_count
         Components = $catalog.component_count; Shards = $catalog.shard_count
+        RuntimeMode = [string]$state.runtime_selection.mode
         GameRoot = $gameRoot; Backup = $backupRoot; State = $activeStatePath
     }
 }
