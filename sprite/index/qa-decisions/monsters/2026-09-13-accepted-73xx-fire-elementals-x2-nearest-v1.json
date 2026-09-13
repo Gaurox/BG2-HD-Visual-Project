@@ -1,0 +1,90 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T21:56:23.459877Z",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monsters",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "2F87F9297EA7640AF12734974FB40C721169DA8DB439CF831FD716DA405C5048"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "note": "Les cinq variantes Élémentaires de feu sont validées ingame explicitement par l’utilisateur le 2026-09-13."
+  },
+  "entries": [
+    {
+      "animation_id": "0x7310",
+      "name": "Élémentaire de feu — MFIE",
+      "bam_prefix": "MFIE",
+      "creature": "ELFIR01",
+      "job_file": "sprite/families/monsters/73xx/7310-mfie-elemental-fire/jobs/x2-nearest-v1.json",
+      "job_sha256": "DD0D20F7F2D84438DEF4C70DC555020685CF441D6AAE825DFF12F63ACCD8A1F5",
+      "source_manifest": "sprite/families/monsters/73xx/7310-mfie-elemental-fire/source/stock/manifest.json",
+      "source_manifest_sha256": "DE94D42742668D397F63913F374A958D7F78EEFC05CD681E48D97D5B7698088D",
+      "build_manifest": "sprite/families/monsters/73xx/7310-mfie-elemental-fire/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "A5FDE30CB643970B6EEBB8314F09549F74727CD1188D02733113012FF336254B"
+    },
+    {
+      "animation_id": "0x7311",
+      "name": "Élémentaire de feu mineur — MFIS",
+      "bam_prefix": "MFIS",
+      "creature": "ELFIRL01",
+      "job_file": "sprite/families/monsters/73xx/7311-mfis-elemental-fire-small/jobs/x2-nearest-v1.json",
+      "job_sha256": "152AC39ED371DF2D3D51D4B545BAABE66F315C68F420ACDA0F5BFA02D4F4ED2F",
+      "source_manifest": "sprite/families/monsters/73xx/7311-mfis-elemental-fire-small/source/stock/manifest.json",
+      "source_manifest_sha256": "53096258E1979F0D98516FEBD0D785066FC7B8D0A032C29F5EE495A4EA4E24AD",
+      "build_manifest": "sprite/families/monsters/73xx/7311-mfis-elemental-fire-small/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "F5A651EDE7A2283F52CE46BC547F1D03CC64E17B092EB44BD4092CCFD6193F99"
+    },
+    {
+      "animation_id": "0x7312",
+      "name": "Élémentaire de feu violet — MFIE",
+      "bam_prefix": "MFIE",
+      "creature": "GOLMAG01",
+      "job_file": "sprite/families/monsters/73xx/7312-mfie-elemental-fire-purple/jobs/x2-nearest-v1.json",
+      "job_sha256": "A5386ACCBCE4971099C1584F18098A8FAB9B3C287A46100F52EA7040480F490D",
+      "source_manifest": "sprite/families/monsters/73xx/7312-mfie-elemental-fire-purple/source/stock/manifest.json",
+      "source_manifest_sha256": "68E0565F4CF7E20D4EC9E8D7E5B7FE7D3B395626F6AEA8452F33CA362084334C",
+      "build_manifest": "sprite/families/monsters/73xx/7312-mfie-elemental-fire-purple/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "054EDE90FD89AD3626A1C1DB9CA1158B2D54BCD73F3AAAAFE10B5543E527E075"
+    },
+    {
+      "animation_id": "0x7313",
+      "name": "Élémentaire de feu violet mineur — MFIS",
+      "bam_prefix": "MFIS",
+      "creature": "ELFIRPR",
+      "job_file": "sprite/families/monsters/73xx/7313-mfis-elemental-fire-small-purple/jobs/x2-nearest-v1.json",
+      "job_sha256": "DFA8493065EB06B4DA0E151E758AE8682F83B61DEF477491C36F3408A56D5C6E",
+      "source_manifest": "sprite/families/monsters/73xx/7313-mfis-elemental-fire-small-purple/source/stock/manifest.json",
+      "source_manifest_sha256": "3DDB2F7DCD5CDB9E9AF09EC868241BB364AF585C0CC2C8CAA6DBE0257BE006A0",
+      "build_manifest": "sprite/families/monsters/73xx/7313-mfis-elemental-fire-small-purple/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C93F77748F0C4BCC2D13202440AAE22B01C02F3CD8C8EC1160AC34BF9F857F30"
+    },
+    {
+      "animation_id": "0x7314",
+      "name": "Homme brûlant — MFIE",
+      "bam_prefix": "MFIE",
+      "creature": "GOLBUR01",
+      "job_file": "sprite/families/monsters/73xx/7314-mfie-burning-man/jobs/x2-nearest-v1.json",
+      "job_sha256": "B34920CC039C417A9FA2CE560CBB6B753DA0BCB7F863A15F6B61C7DEEF05047E",
+      "source_manifest": "sprite/families/monsters/73xx/7314-mfie-burning-man/source/stock/manifest.json",
+      "source_manifest_sha256": "F4C33BDD885DBC81D1AAD9C81B7D7EC3B0AFEB48626C43B41230B9B3E54DFC69",
+      "build_manifest": "sprite/families/monsters/73xx/7314-mfie-burning-man/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "517A47E7B11F3C5AC014BB3F694F8B4B85D64E1DE2A03321D65F51CBD80ED73C"
+    }
+  ],
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-73xx-fire-elementals-v1.json",
+    "job_sha256": "B25F745CE07234117B2E2C05283CFCBD11BCC942680F361085E96884976EAF85",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "6B060550F6E7EE4F0512EE12D0CB36FB31CA32A39FFCAEE7E3E2037BE3839B51",
+    "installation_status": "installed-pending-qa"
+  },
+  "release_manifest_modified": false
+}
