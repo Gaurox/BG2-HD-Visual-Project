@@ -1,0 +1,387 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif creatures x2 - derniers monstres 7Fxx",
+  "members": [
+    "sprite/families/monsters/7fxx/7f24-npir-pirate/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f2a-nsai-sailor-man/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f2c-nsol-amnian-soldier/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f2e-mrav-raver/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f30-nboh-bodhi/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f31-nell-ellesime/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f32-msly-slayer/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f36-nshd-shadow-thief/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f37-nire-jon-irenicus/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3a-niro-irenicus-robed/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3d-mmel-melissan/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3e-mfig-giant-fire/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3f-mfig-giant-yaga-shura/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f41-mdjl-efreeti-noble/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f42-niro-red-wizard/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f43-moty-yochlol/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f45-msai-lagoon-creature/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f46-mbeg-death-tyrant/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f50-mmst-nishruu/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f51-mmst-hakeashar/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f52-nsai-sailor-green/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f53-nsai-sailor-red/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f54-nsai-sailor-dark/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f55-nsol-crusader-soldier/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f60-msnk-snake-water/jobs/x2-nearest-v1.json"
+  ],
+  "parent": {
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/2f87f9297ea7640af12734974fb40c721169da8db439cf831fd716da405c5048/build/build-manifest.json",
+    "build_manifest_sha256": "423CF7C731EEFD67402E5601C4D426EED96B6EAFB229C745265F3EBDCB69A899",
+    "catalog_sha256": "DA0415188C8CE0B8DCE604B476378C20AD22A8255863F409146C6365DE03FE68"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "run_dir": "sprite/creature_sprites_progressive_xn_xbr2x/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x7F24",
+        "name": "Pirate NPIR",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "PIRSEA01"
+        ],
+        "required_bam_prefixes": [
+          "NPIR"
+        ]
+      },
+      {
+        "animation_id": "0x7F2A",
+        "name": "Sailor NSAI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BSAILOR1"
+        ],
+        "required_bam_prefixes": [
+          "NSAI"
+        ]
+      },
+      {
+        "animation_id": "0x7F2C",
+        "name": "Amnian Soldier NSOL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "AMNCEN1"
+        ],
+        "required_bam_prefixes": [
+          "NSOL"
+        ]
+      },
+      {
+        "animation_id": "0x7F2E",
+        "name": "Raver MRAV",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "CHALRV01"
+        ],
+        "required_bam_prefixes": [
+          "MRAV"
+        ]
+      },
+      {
+        "animation_id": "0x7F30",
+        "name": "Bodhi NBOH",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BODHI"
+        ],
+        "required_bam_prefixes": [
+          "NBOH"
+        ]
+      },
+      {
+        "animation_id": "0x7F31",
+        "name": "Ellesime NELL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DRELLE"
+        ],
+        "required_bam_prefixes": [
+          "NELL"
+        ]
+      },
+      {
+        "animation_id": "0x7F32",
+        "name": "Slayer MSLY",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "SLAYER"
+        ],
+        "required_bam_prefixes": [
+          "MSLY"
+        ]
+      },
+      {
+        "animation_id": "0x7F36",
+        "name": "Shadow Thief NSHD",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "CSTHIEF3"
+        ],
+        "required_bam_prefixes": [
+          "NSHD"
+        ]
+      },
+      {
+        "animation_id": "0x7F37",
+        "name": "Jon Irenicus NIRE",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "CSJON"
+        ],
+        "required_bam_prefixes": [
+          "NIRE"
+        ]
+      },
+      {
+        "animation_id": "0x7F3A",
+        "name": "Irenicus Robed NIRO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "LAVOK01"
+        ],
+        "required_bam_prefixes": [
+          "NIRO"
+        ]
+      },
+      {
+        "animation_id": "0x7F3D",
+        "name": "Melissan MMEL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "FINMEL01"
+        ],
+        "required_bam_prefixes": [
+          "MMEL"
+        ]
+      },
+      {
+        "animation_id": "0x7F3E",
+        "name": "Giant Fire MFIG",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "GIAFIR01"
+        ],
+        "required_bam_prefixes": [
+          "MFIG"
+        ]
+      },
+      {
+        "animation_id": "0x7F3F",
+        "name": "Giant Yaga Shura MFIG",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "YAGA01"
+        ],
+        "required_bam_prefixes": [
+          "MFIG"
+        ]
+      },
+      {
+        "animation_id": "0x7F41",
+        "name": "Efreeti Noble MDJL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "EFREETSU"
+        ],
+        "required_bam_prefixes": [
+          "MDJL"
+        ]
+      },
+      {
+        "animation_id": "0x7F42",
+        "name": "Red Wizard NIRO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "OHBDENNA"
+        ],
+        "required_bam_prefixes": [
+          "NIRO"
+        ]
+      },
+      {
+        "animation_id": "0x7F43",
+        "name": "Yochlol MOTY",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "OTYUGH01"
+        ],
+        "required_bam_prefixes": [
+          "MOTY"
+        ]
+      },
+      {
+        "animation_id": "0x7F45",
+        "name": "Lagoon Creature MSAI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "QASAH2"
+        ],
+        "required_bam_prefixes": [
+          "MSAI"
+        ]
+      },
+      {
+        "animation_id": "0x7F46",
+        "name": "Death Tyrant MBEG",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BEHOLD01"
+        ],
+        "required_bam_prefixes": [
+          "MBEG"
+        ]
+      },
+      {
+        "animation_id": "0x7F50",
+        "name": "Nishruu MMST",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "MIST01"
+        ],
+        "required_bam_prefixes": [
+          "MMST"
+        ]
+      },
+      {
+        "animation_id": "0x7F51",
+        "name": "Hakeashar MMST",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "MIST01"
+        ],
+        "required_bam_prefixes": [
+          "MMST"
+        ]
+      },
+      {
+        "animation_id": "0x7F52",
+        "name": "Sailor Green NSAI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BSAILOR1"
+        ],
+        "required_bam_prefixes": [
+          "NSAI"
+        ]
+      },
+      {
+        "animation_id": "0x7F53",
+        "name": "Sailor Red NSAI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BSAILOR1"
+        ],
+        "required_bam_prefixes": [
+          "NSAI"
+        ]
+      },
+      {
+        "animation_id": "0x7F54",
+        "name": "Sailor Dark NSAI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BSAILOR1"
+        ],
+        "required_bam_prefixes": [
+          "NSAI"
+        ]
+      },
+      {
+        "animation_id": "0x7F55",
+        "name": "Crusader Soldier NSOL",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "AMNCEN1"
+        ],
+        "required_bam_prefixes": [
+          "NSOL"
+        ]
+      },
+      {
+        "animation_id": "0x7F60",
+        "name": "Snake Water MSNK",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "SNAKE01"
+        ],
+        "required_bam_prefixes": [
+          "MSNK"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  }
+}
