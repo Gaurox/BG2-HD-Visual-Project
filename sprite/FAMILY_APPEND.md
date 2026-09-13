@@ -78,18 +78,6 @@ python pipeline/scripts/materialize_sprite_sources.py --job <agregat-character> 
 L'extraction remplit le store central. La matérialisation crée uniquement les manifestes et liens
 physiques attendus par le runner ; elle ne produit aucun pixel ni run.
 
-Pour convertir un catalogue historique sans ajouter de contenu, utiliser `catalog-qa-refresh` vers
-un nouveau fichier `qa-refresh-<nom>-vN.json`. Cette commande conserve les membres, `job_id` et
-`run_dir`, et rend explicites les préfixes représentatifs ; elle ne modifie jamais le job actif.
-
-```powershell
-python pipeline/scripts/generate_sprite_family_append.py catalog-qa-refresh `
-  --job sprite/catalogs/creature-x2-nearest/jobs/qa-refresh-<nom>-v1.json `
-  --catalog-job <catalog-job-actif> `
-  --name 'Catalogue x2 — QA représentative explicite' `
-  --dry-run
-```
-
 ## Phase 1 — job membre
 
 Résoudre le chemin V2 ; ne pas choisir un chemin plat sous `sprite/jobs/`.
@@ -154,11 +142,12 @@ python pipeline/scripts/generate_sprite_family_append.py catalog-append `
   --dry-run
 ```
 
-Ajouter plusieurs animations dans un seul descriptor : répéter `--member-job <agregat>`. Le
-générateur refuse tout membre ou `animation_id` dupliqué et valide le catalogue complet avant écriture.
+Ajouter plusieurs animations dans un seul delta : répéter `--member-job <agregat>`. Le générateur
+valide uniquement ces membres, refuse les `animation_id` déjà présents dans le manifeste parent et
+épingle les empreintes de la génération acceptée. Il ne charge ni ne recopie les anciens jobs.
 
-Retirer `--dry-run` après revue. Le générateur doit conserver `job_id` et `paths.run_dir`, ajouter
-exactement un membre/ID et ne jamais écraser le job de base.
+Retirer `--dry-run` après revue. Le fichier produit contient seulement les nouveaux
+`members`/`qa.animations`, conserve `job_id` et `paths.run_dir`, et n'écrase jamais le job de base.
 
 ## Phase 3 — construire et installer
 
@@ -172,12 +161,11 @@ python pipeline/scripts/run_creature_sprite_x2.py install --job $appendCatalog `
 python pipeline/scripts/run_creature_sprite_x2.py status --job $appendCatalog
 ```
 
-`prepare` et `install` utilisent automatiquement la voie locale `built-unverified` : seules les
-sorties installées sont contrôlées et la restauration reste transactionnelle. La finalisation lance
-séparément `verify --full-verify --keep-going`.
+`prepare` vérifie et construit seulement le delta, puis relie les shards parents sans les relire.
+`install` utilise le pointeur produit et conserve une restauration transactionnelle. La finalisation
+lance séparément `verify --full-verify`.
 
-Exiger `installed-pending-qa`, `active_identity_matches_job=true`,
-`installed_files_match=true`. Le scellement global reste absent avant finalisation.
+Exiger `installed-pending-qa`. Le scellement physique global reste absent avant finalisation.
 Pour un contrôle Catmull–Rom explicitement demandé, remplacer `Nearest` par `CatmullRom` ; l'état
 actif, l'INI et la restauration sont alors liés à cette valeur.
 
@@ -187,16 +175,6 @@ Character, le contrôle de composition porte sur `qa.required_bam_prefixes`, pas
 combinaisons d'équipement.
 Après décision explicite d'acceptation d'un élément `validated-installed`, écrire seulement son
 registre candidat. Différer contenu, composants, TP2, miroirs et package.
-
-Après installation catalogue, projeter ses preuves scellées dans l'autorité :
-
-```powershell
-python pipeline/scripts/sync_sprite_processing.py --reconcile-active
-python pipeline/scripts/sync_sprite_processing.py --reconcile-active --run
-```
-
-Ce mode met à jour production/sélection/QA/installation des membres actifs. Il ne modifie ni QA
-au-delà du statut actif, ni release. Sans `--reconcile-active`, les lignes existantes restent intactes.
 
 ## Extension
 

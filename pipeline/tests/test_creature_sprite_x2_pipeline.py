@@ -278,6 +278,15 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         arguments = powershell.call_args.args[2]
         self.assertEqual(arguments, ["-CreatureSpriteFilter", "CatmullRom"])
 
+    def test_root_catalog_build_is_read_only(self) -> None:
+        catalog = {"_kind": "catalog"}
+        with self.assertRaisesRegex(RuntimeError, "root catalog is immutable"):
+            pipeline.build_catalog(catalog, force=False, resume=False)
+
+    def test_catalog_cannot_rebuild_the_shared_runtime(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "stable runtime manifest"):
+            pipeline.build_runtime({"_kind": "catalog"})
+
     def test_xn_adapter_exposes_direct_xbr4x_and_generic_protocol(self) -> None:
         adapter = (ROOT / "pipeline" / "scripts" / "xbr2x_batch.js").read_text(
             encoding="utf-8"
@@ -1527,164 +1536,6 @@ function xbr4x(source, width, height) {
             pipeline.animation_composition_lines(session, "0xE400", "TEST"),
             [],
         )
-
-    def test_catalog_qa_shared_prefix_for_a_does_not_satisfy_b(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            game = root / "game"
-            run = root / "run"
-            game.mkdir()
-            state_path = run / "ingame-installation" / "active-test.json"
-            pipeline.write_json(
-                state_path,
-                {"installed_at_utc": "2000-01-01T00:00:00+00:00"},
-            )
-            (game / "InfinityEngine-Enhancer.log").write_text(
-                "\n".join(
-                    (
-                        "[2026-08-26 12:00:00.000] Creature sprite xBR catalog ready: "
-                        "scale=x2, 2 animations, source=CreatureSprites-XN.catalog; "
-                        "filter=NEAREST",
-                        "[2026-08-26 12:00:00.100] Creature sprite owner scope installed: "
-                        "Character::Render",
-                        "[2026-08-26 12:00:00.200] Creature sprite owner-scoped "
-                        "CVidPalette::Realize snapshot",
-                        "[2026-08-26 12:00:00.300] Creature sprite catalog shard 7 "
-                        "ready on demand for animation 0x6110, resref SAMEA1: "
-                        "1 resources, 1024 metadata bytes",
-                        "[2026-08-26 12:00:00.400] Creature sprite catalog animation "
-                        "0xE400 materialized:",
-                        "[2026-08-26 12:00:00.500] Creature sprite animation 0x6110 "
-                        "reached CGameAnimationTypeCharacter::Render",
-                        "[2026-08-26 12:00:00.600] Creature sprite animation 0xE400 "
-                        "reached CGameAnimationTypeCharacter::Render",
-                        "[2026-08-26 12:00:00.700] Composing creature sprite SAMEA1 "
-                        "animation=0x6110 frame 000 via transient replacement id 42 "
-                        "(NEAREST, delete-pending after queued draw)",
-                    )
-                ),
-                encoding="utf-8",
-            )
-            job = {
-                "_kind": "catalog",
-                "job_id": "shared-prefix-catalog",
-                "paths": {"game_root": str(game), "run_dir": str(run)},
-                "upscale": pipeline.direct_upscale_contract(2).method,
-                "qa": {"animations": []},
-            }
-            seal = {
-                "active_identity_matches_job": True,
-                "active_generation_is_sealed": True,
-                "active_generation_seal_errors": [],
-                "sealed_animation_qa_contract": [
-                    {
-                        "animation_id": "0x6110",
-                        "runtime_profile": "character-bg2ee-2.7.3.0",
-                        "bam_prefixes": ["SAME"],
-                    },
-                    {
-                        "animation_id": "0xE400",
-                        "runtime_profile": "character-bg2ee-2.7.3.0",
-                        "bam_prefixes": ["SAME"],
-                    },
-                ],
-            }
-            with (
-                mock.patch.object(
-                    pipeline,
-                    "sealed_catalog_generation_integrity",
-                    return_value=seal,
-                ),
-                mock.patch.object(
-                    pipeline,
-                    "installed_state_integrity",
-                    return_value={
-                        "installed_files_match": True,
-                        "installed_targets_checked": 1,
-                        "installed_integrity_errors": [],
-                    },
-                ),
-            ):
-                report = pipeline.catalog_qa_log_report(job, write_report=False)
-        animations = {
-            entry["animation_id"]: entry for entry in report["animation_results"]
-        }
-        self.assertTrue(animations["0x6110"]["all_prefixes_composed"])
-        self.assertTrue(animations["0x6110"]["payload_ready"])
-        self.assertFalse(animations["0x6110"]["materialized"])
-        self.assertEqual(animations["0x6110"]["on_demand_resrefs"], ["SAMEA1"])
-        self.assertTrue(animations["0xE400"]["payload_ready"])
-        self.assertFalse(animations["0xE400"]["all_prefixes_composed"])
-        self.assertEqual(report["composition_count"], 1)
-        self.assertFalse(report["technical_pass"])
-
-    def test_catalog_qa_requires_declared_representatives_not_every_character_prefix(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            game = root / "game"
-            run = root / "run"
-            game.mkdir()
-            pipeline.write_json(
-                run / "ingame-installation" / "active-test.json",
-                {"installed_at_utc": "2000-01-01T00:00:00+00:00"},
-            )
-            (game / "InfinityEngine-Enhancer.log").write_text(
-                "\n".join(
-                    (
-                        "[2026-08-26 12:00:00.000] Creature sprite xBR catalog ready: "
-                        "scale=x2, 1 animations, source=CreatureSprites-XN.catalog; filter=NEAREST",
-                        "[2026-08-26 12:00:00.100] Creature sprite owner scope installed: Character::Render",
-                        "[2026-08-26 12:00:00.200] Creature sprite owner-scoped CVidPalette::Realize snapshot",
-                        "[2026-08-26 12:00:00.300] Creature sprite catalog shard 7 ready on demand "
-                        "for animation 0x6110, resref CHFB1G17: 1 resources, 1024 metadata bytes",
-                        "[2026-08-26 12:00:00.400] Creature sprite animation 0x6110 reached "
-                        "CGameAnimationTypeCharacter::Render",
-                        "[2026-08-26 12:00:00.500] Composing creature sprite CHFB1 animation=0x6110 "
-                        "frame 000 via transient replacement id 42 "
-                        "(NEAREST, delete-pending after queued draw)",
-                    )
-                ),
-                encoding="utf-8",
-            )
-            job = {
-                "_kind": "catalog",
-                "job_id": "representative-catalog",
-                "paths": {"game_root": str(game), "run_dir": str(run)},
-                "upscale": pipeline.direct_upscale_contract(2).method,
-                "qa": {"animations": []},
-            }
-            seal = {
-                "active_identity_matches_job": True,
-                "active_generation_is_sealed": True,
-                "active_generation_seal_errors": [],
-                "sealed_animation_qa_contract": [
-                    {
-                        "animation_id": "0x6110",
-                        "runtime_profile": "character-bg2ee-2.7.3.0",
-                        "bam_prefixes": ["CHFB1", "WQNJ6"],
-                        "required_bam_prefixes": ["CHFB1"],
-                    }
-                ],
-            }
-            with (
-                mock.patch.object(
-                    pipeline, "sealed_catalog_generation_integrity", return_value=seal
-                ),
-                mock.patch.object(
-                    pipeline,
-                    "installed_state_integrity",
-                    return_value={
-                        "installed_files_match": True,
-                        "installed_targets_checked": 1,
-                        "installed_integrity_errors": [],
-                    },
-                ),
-            ):
-                report = pipeline.catalog_qa_log_report(job, write_report=False)
-        animation = report["animation_results"][0]
-        self.assertFalse(animation["all_prefixes_composed"])
-        self.assertTrue(animation["required_prefixes_composed"])
-        self.assertTrue(report["technical_pass"])
 
     def test_runtime_log_session_must_be_exact_and_post_install(self) -> None:
         text = "\n".join(
@@ -3046,10 +2897,7 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                 ),
                 encoding="utf-8",
             )
-            with mock.patch.object(
-                pipeline, "installed_catalog_state_contract_errors", return_value=[]
-            ):
-                integrity = pipeline.installed_state_integrity(state)
+            integrity = pipeline.installed_state_integrity(state)
             self.assertTrue(integrity["installed_files_match"])
             self.assertEqual(
                 integrity["installed_shared_file_drift"], [ini.name]
@@ -3062,10 +2910,7 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                 ),
                 encoding="utf-8",
             )
-            with mock.patch.object(
-                pipeline, "installed_catalog_state_contract_errors", return_value=[]
-            ):
-                changed = pipeline.installed_state_integrity(state)
+            changed = pipeline.installed_state_integrity(state)
             self.assertFalse(changed["installed_files_match"])
 
     def test_installed_state_integrity_rejects_reparse_before_hash(self) -> None:

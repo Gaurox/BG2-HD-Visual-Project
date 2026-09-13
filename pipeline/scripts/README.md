@@ -48,6 +48,9 @@ ses nouveaux `members`/`qa.animations`. `parent` épingle la génération accept
 un delta. Contrôle quotidien : `verify` (métadonnées). Scan de tous les shards, réservé à la
 finalisation : `verify --full-verify`.
 
+Créer le delta avec `generate_sprite_family_append.py catalog-append`; répéter `--member-job` pour
+grouper un lot. Le générateur lit seulement le pointeur/manifeste parent et les nouveaux jobs.
+
 ## Commandes communes
 
 ```powershell

@@ -68,15 +68,13 @@ python pipeline/scripts/run_creature_sprite_x2.py prepare-data --resume `
   --job <agregat-character>
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
   --job <catalogue>
-python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify `
-  --keep-going --job <catalogue>
-# Après correction :
-python pipeline/scripts/run_creature_sprite_x2.py verify --resume `
-  --keep-going --job <catalogue>
+python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify --job <catalogue>
 ```
 
-`prepare` produit par défaut `built-unverified`, directement installable pour la QA progressive.
-`--full-verify` est réservé au jalon final. Détails : `catalogs/creature-x2-nearest/README.md`.
+Un catalogue racine existant est immuable. Un nouveau lot est un delta : `prepare` ne vérifie et
+ne construit que ce lot ; le résultat est directement installable pour la QA progressive.
+`--full-verify` relit tout une seule fois au jalon final. Détails :
+`catalogs/creature-x2-nearest/README.md`.
 
 Ne pas utiliser `run_creature_sprite_x2.py extract` pour un nouveau workspace : ce chemin legacy
 duplique les BAM et génère des PNG source.

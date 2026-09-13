@@ -1,18 +1,15 @@
-"""Create immutable x2 sprite-family jobs and cumulative catalog append jobs.
+"""Create immutable x2 sprite-family jobs and catalog delta jobs.
 
 The command has two explicit phases:
 
 * ``member`` turns one canonical ``sprite_families.csv`` row into a leaf x2
   job.  It does not extract a BAM or dispatch xBR.
-* ``catalog-append`` turns one *already prepared* leaf job into a new,
-  versioned catalog descriptor.  It does not build, install, restore, or
-  launch the game.
+* ``catalog-append`` turns one or more *already prepared* jobs into a small,
+  versioned delta pinned to the accepted catalog generation.  It does not
+  build, install, restore, or launch the game.
 
-The inventory row is the identity source of truth.  The active catalog job is
-never edited: an append always writes a different file while retaining its
-``job_id`` and ``paths.run_dir`` so the existing LIFO restore chain stays
-valid.  The generated descriptors use the canonical runner schemas and are
-validated before publication.
+The inventory row is the identity source of truth.  The active catalog job and
+its generation are immutable; an append contains only the new members.
 
 The leaf member adapter covers MonsterIcewind ``body/base-resref`` families.
 Complete Character animations, including equipment, are produced by
@@ -23,7 +20,6 @@ catalog append phase.
 from __future__ import annotations
 
 import argparse
-import copy
 import csv
 import json
 import os
@@ -41,10 +37,12 @@ sys.path.insert(0, str(SCRIPT_DIR))
 
 from run_creature_sprite_x2 import (  # noqa: E402
     ARMOR_SET_SCHEMA,
+    CATALOG_BUILD_SCHEMA,
+    CATALOG_DELTA_SCHEMA,
     CATALOG_JOB_SCHEMA,
+    CATALOG_POINTER_SCHEMA,
     JOB_SCHEMA,
     SUPPORTED_RUNTIME_PROFILES,
-    character_layer_config,
     direct_upscale_contract,
     load_catalog_job,
     load_armor_set,
@@ -52,6 +50,7 @@ from run_creature_sprite_x2 import (  # noqa: E402
     read_json,
     relative_project_path,
     resolve_path,
+    sha256_file,
     upscale_contract,
     verify_all,
     verify_armor_set,
@@ -62,7 +61,6 @@ from sprite_layout import family_directory as canonical_family_directory  # noqa
 
 DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
 VALIDATION_DIR = PROJECT_ROOT / "sprite" / ".work" / "validation"
-CATALOG_ENGINE_BUILD_ROOT = "sprite/.work/cmake/catalog"
 FAMILIES_ROOT = PROJECT_ROOT / "sprite" / "families"
 CATALOG_JOBS_ROOT = PROJECT_ROOT / "sprite" / "catalogs" / "creature-x2-nearest" / "jobs"
 JOB_ID_RE = re.compile(r"[a-z0-9][a-z0-9-]{1,63}")
@@ -70,9 +68,7 @@ RESREF_RE = re.compile(r"[A-Z0-9_]{1,8}")
 ANIMATION_ID_RE = re.compile(r"0x[0-9A-Fa-f]{4}")
 DIRECT_X2_METHOD = direct_upscale_contract(2).method
 MEMBER_JOB_FILE_RE = re.compile(r"x2-nearest-v[1-9][0-9]*\.json")
-CATALOG_APPEND_FILE_RE = re.compile(
-    r"(?:append|qa-refresh)-[a-z0-9][a-z0-9-]*-v[1-9][0-9]*\.json"
-)
+CATALOG_APPEND_FILE_RE = re.compile(r"append-[a-z0-9][a-z0-9-]*-v[1-9][0-9]*\.json")
 
 @dataclass(frozen=True)
 class InventoryFamily:
@@ -440,72 +436,48 @@ def validate_member_against_inventory(member: dict[str, Any], family: InventoryF
         raise RuntimeError("member must use the explicit xBR/x2 NEAREST contract")
 
 
-def representative_bam_prefixes(member: dict[str, Any]) -> list[str]:
-    leaves = (
-        list(member["_members"])
-        if member.get("_kind") == "armor-set"
-        else [member]
+def accepted_catalog_parent(raw_catalog: dict[str, Any]) -> tuple[dict[str, str], set[str]]:
+    paths = raw_catalog.get("paths")
+    if not isinstance(paths, dict) or not paths.get("run_dir"):
+        raise RuntimeError("base catalog requires paths.run_dir")
+    pointer_path = resolve_path(paths["run_dir"]) / "current-generation.json"
+    pointer = read_json(pointer_path)
+    if pointer.get("schema") != CATALOG_POINTER_SCHEMA:
+        raise RuntimeError("base catalog has no accepted current generation")
+    generation_dir = resolve_path(str(pointer.get("generation_dir", "")))
+    manifest_path = generation_dir / str(pointer.get("build_manifest", ""))
+    expected_manifest_sha256 = str(pointer.get("build_manifest_sha256", "")).upper()
+    if not manifest_path.is_file() or sha256_file(manifest_path) != expected_manifest_sha256:
+        raise RuntimeError("base catalog current build manifest changed")
+    manifest = read_json(manifest_path)
+    contract = upscale_contract(raw_catalog)
+    catalog_path = manifest_path.parent / str(manifest.get("registry_catalog", ""))
+    catalog_sha256 = str(manifest.get("registry_catalog_sha256", "")).upper()
+    if (
+        manifest.get("schema") != CATALOG_BUILD_SCHEMA
+        or manifest.get("status") != "built-pending-ingame-qa"
+        or manifest.get("method") != contract.method
+        or manifest.get("registry_scale") != contract.scale
+        or manifest.get("locks", {}).get("baldur_real_sha256")
+        != str(raw_catalog.get("compatibility", {}).get("baldur_real_sha256", "")).upper()
+        or not catalog_path.is_file()
+        or re.fullmatch(r"[0-9A-F]{64}", catalog_sha256) is None
+    ):
+        raise RuntimeError("base catalog current generation is incompatible")
+    animation_ids = manifest.get("animation_ids")
+    if not isinstance(animation_ids, list) or not all(
+        isinstance(value, str) and ANIMATION_ID_RE.fullmatch(value)
+        for value in animation_ids
+    ):
+        raise RuntimeError("base catalog current manifest has invalid animation_ids")
+    return (
+        {
+            "build_manifest": relative_project_path(manifest_path),
+            "build_manifest_sha256": expected_manifest_sha256,
+            "catalog_sha256": catalog_sha256,
+        },
+        {f"0x{int(value, 16):04X}" for value in animation_ids},
     )
-    if member["animation"].get("runtime_profile") != "character-bg2ee-2.7.3.0":
-        return [str(leaf["animation"]["bam_prefix"]).upper() for leaf in leaves]
-    required = [
-        str(leaf["animation"]["bam_prefix"]).upper()
-        for leaf in leaves
-        if character_layer_config(leaf)["kind"] == "body"
-    ]
-    for kind in ("helmet", "shield", "weapon"):
-        representative = next(
-            (
-                leaf
-                for leaf in leaves
-                if character_layer_config(leaf)["kind"] == kind
-            ),
-            None,
-        )
-        if representative is not None:
-            required.append(str(representative["animation"]["bam_prefix"]).upper())
-    if not required:
-        raise RuntimeError("Character aggregate has no representative QA prefixes")
-    return required
-
-
-def refresh_catalog_qa_payload(
-    raw_catalog: dict[str, Any], loaded_catalog: dict[str, Any], name: str
-) -> dict[str, Any]:
-    payload = copy.deepcopy(raw_catalog)
-    payload["name"] = name
-    paths = payload.get("paths")
-    if not isinstance(paths, dict):
-        raise RuntimeError("base catalog requires paths")
-    # Every catalog runtime build adds a 64-character generation id.  Do not
-    # carry the longer historical .cmake-catalog migration target into newly
-    # generated descriptors: Visual Studio 2019 FileTracker rejects it on the
-    # canonical Windows workspace before CMake can configure the build.
-    paths["engine_build"] = CATALOG_ENGINE_BUILD_ROOT
-    paths["game_root"] = portable_path_reference("bg2ee_game_root")
-    if "scalepix" in paths:
-        paths["scalepix"] = portable_path_reference("mmpx_scalepix")
-    qa = payload.get("qa")
-    scenarios = qa.get("animations") if isinstance(qa, dict) else None
-    if not isinstance(scenarios, list) or not scenarios:
-        raise RuntimeError("base catalog requires qa.animations")
-    members_by_id = {
-        f"0x{int(str(member['animation']['id']), 16):04X}": member
-        for member in loaded_catalog["_catalog_members"]
-    }
-    for scenario in scenarios:
-        if not isinstance(scenario, dict):
-            raise RuntimeError("base catalog QA animation must be an object")
-        try:
-            animation_id = f"0x{int(str(scenario.get('animation_id', '')), 16):04X}"
-        except ValueError as error:
-            raise RuntimeError("base catalog QA animation id is invalid") from error
-        member = members_by_id.get(animation_id)
-        if member is None:
-            raise RuntimeError("base catalog QA scenarios differ from members")
-        if "required_bam_prefixes" not in scenario:
-            scenario["required_bam_prefixes"] = representative_bam_prefixes(member)
-    return payload
 
 
 def append_members_payload(
@@ -522,8 +494,10 @@ def append_members_payload(
     destination = require_new_catalog_job_path(destination, "--job")
     if destination == base_catalog_path:
         raise RuntimeError("append destination must differ from the active catalog job")
-    base = load_catalog_job(base_catalog_path)
-    catalog_contract = upscale_contract(base)
+    raw_base = read_json(base_catalog_path)
+    if raw_base.get("schema") not in {CATALOG_JOB_SCHEMA, CATALOG_DELTA_SCHEMA}:
+        raise RuntimeError("base catalog schema is unsupported")
+    catalog_contract = upscale_contract(raw_base)
     if catalog_contract.scale != 2 or catalog_contract.method != DIRECT_X2_METHOD:
         raise RuntimeError("base catalog must use the explicit xBR/x2 NEAREST contract")
     resolved_members = [
@@ -532,24 +506,28 @@ def append_members_payload(
     ]
     if not resolved_members:
         raise RuntimeError("at least one --member-job is required")
-    existing_paths = {
-        Path(item["_job_file"]).resolve() for item in base["_catalog_members"]
-    }
-    existing_animation_ids = {
-        f"0x{int(str(item['animation']['id']), 16):04X}"
-        for item in base["_catalog_members"]
-    }
+    parent, existing_animation_ids = accepted_catalog_parent(raw_base)
     families_path = resolve_path(families_path)
-    raw_base = read_json(base_catalog_path)
-    payload = refresh_catalog_qa_payload(raw_base, base, name)
-    payload["members"] = list(raw_base["members"])
-    qa = payload.get("qa")
-    if not isinstance(qa, dict):
-        raise RuntimeError("base catalog requires qa.animations")
-    animations = qa.get("animations")
-    if not isinstance(animations, list) or not animations:
-        raise RuntimeError("base catalog requires a non-empty qa.animations list")
-    qa["animations"] = list(animations)
+    paths = raw_base.get("paths")
+    compatibility = raw_base.get("compatibility")
+    if not isinstance(paths, dict) or not isinstance(compatibility, dict):
+        raise RuntimeError("base catalog requires paths and compatibility")
+    payload: dict[str, Any] = {
+        "schema": CATALOG_DELTA_SCHEMA,
+        "job_id": raw_base.get("job_id"),
+        "name": name,
+        "members": [],
+        "parent": parent,
+        "paths": dict(paths),
+        "compatibility": dict(compatibility),
+        "upscale": dict(catalog_contract.method),
+        "qa": {"animations": []},
+    }
+    for optional in ("runtime", "tools"):
+        if optional in raw_base:
+            payload[optional] = raw_base[optional]
+    qa = payload["qa"]
+    existing_paths: set[Path] = set()
     additions: list[tuple[dict[str, Any], InventoryFamily | None]] = []
     for member_path in resolved_members:
         member_schema = read_json(member_path).get("schema")
@@ -766,44 +744,6 @@ def generate_catalog_batch_append(
     }
 
 
-def generate_catalog_qa_refresh(
-    *,
-    destination: Path,
-    base_catalog_path: Path,
-    name: str,
-    dry_run: bool,
-) -> dict[str, Any]:
-    base_catalog_path = require_existing_job_path(
-        resolve_path(base_catalog_path), "--catalog-job"
-    )
-    destination = require_new_catalog_job_path(destination, "--job")
-    if destination == base_catalog_path:
-        raise RuntimeError("QA refresh destination must differ from the active catalog job")
-    base = load_catalog_job(base_catalog_path)
-    payload = refresh_catalog_qa_payload(read_json(base_catalog_path), base, name)
-    before = read_json(base_catalog_path).get("qa", {}).get("animations")
-    after = payload.get("qa", {}).get("animations")
-    if before == after:
-        raise RuntimeError("catalog QA contract is already explicit; refresh is unnecessary")
-    validate_payload_as_catalog(destination, payload)
-    if not dry_run:
-        atomic_write_json(destination, payload)
-        load_catalog_job(destination)
-    return {
-        "status": "catalog-qa-refresh-planned" if dry_run else "catalog-qa-refresh-created",
-        "catalog_job": relative_project_path(destination),
-        "job_id": payload["job_id"],
-        "run_dir": payload["paths"]["run_dir"],
-        "animation_count": len(after),
-        "pixels_produced": False,
-        "release_manifest_modified": False,
-        "next": (
-            "python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job "
-            f"{relative_project_path(destination)}"
-        ),
-    }
-
-
 def make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -838,14 +778,6 @@ def make_parser() -> argparse.ArgumentParser:
     append.add_argument("--name", required=True)
     append.add_argument("--require-prepared", action="store_true")
     append.add_argument("--dry-run", action="store_true")
-    refresh = commands.add_parser(
-        "catalog-qa-refresh",
-        help="create an immutable catalog descriptor with explicit representative QA prefixes",
-    )
-    refresh.add_argument("--job", type=Path, required=True)
-    refresh.add_argument("--catalog-job", type=Path, required=True)
-    refresh.add_argument("--name", required=True)
-    refresh.add_argument("--dry-run", action="store_true")
     return parser
 
 
@@ -895,13 +827,6 @@ def main(argv: Iterable[str] | None = None) -> None:
                 require_prepared=args.require_prepared,
                 dry_run=args.dry_run,
             )
-    else:
-        result = generate_catalog_qa_refresh(
-            destination=args.job,
-            base_catalog_path=args.catalog_job,
-            name=args.name,
-            dry_run=args.dry_run,
-        )
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

@@ -28,7 +28,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             / "e4xx-goblins"
             / "e410-mgo2-goblin-bow"
             / "jobs"
-            / "x2-nearest-v1.json"
+            / "x2-nearest-v999999.json"
         )
         self.generic_monster_member = (
             generator.FAMILIES_ROOT
@@ -189,6 +189,43 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             writer.writeheader()
             writer.writerows(rows)
 
+    def _write_parent_generation(
+        self, base: dict[str, object], animation_ids: list[str]
+    ) -> dict[str, str]:
+        run_dir = generator.resolve_path(base["paths"]["run_dir"])
+        generation_dir = run_dir / "generations" / "accepted"
+        generation_dir.mkdir(parents=True, exist_ok=True)
+        catalog_path = generation_dir / "registry.bin"
+        catalog_path.write_bytes(b"accepted-catalog-fixture")
+        catalog_sha256 = hashlib.sha256(catalog_path.read_bytes()).hexdigest().upper()
+        manifest = {
+            "schema": generator.CATALOG_BUILD_SCHEMA,
+            "status": "built-pending-ingame-qa",
+            "method": dict(generator.DIRECT_X2_METHOD),
+            "registry_scale": 2,
+            "registry_catalog": catalog_path.name,
+            "registry_catalog_sha256": catalog_sha256,
+            "animation_ids": animation_ids,
+            "locks": {"baldur_real_sha256": "A" * 64},
+        }
+        manifest_path = generation_dir / "build-manifest.json"
+        self._write_json(manifest_path, manifest)
+        manifest_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest().upper()
+        self._write_json(
+            run_dir / "current-generation.json",
+            {
+                "schema": generator.CATALOG_POINTER_SCHEMA,
+                "generation_dir": self._relative(generation_dir),
+                "build_manifest": manifest_path.name,
+                "build_manifest_sha256": manifest_sha256,
+            },
+        )
+        return {
+            "build_manifest": self._relative(manifest_path),
+            "build_manifest_sha256": manifest_sha256,
+            "catalog_sha256": catalog_sha256,
+        }
+
     def test_member_comes_from_exact_ready_inventory_family(self) -> None:
         result = generator.generate_member(
             destination=self.member,
@@ -216,7 +253,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         )
         self.assertEqual(
             member["paths"]["run_dir"],
-            "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow/runs/x2-nearest-v1",
+            "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow/runs/x2-nearest-v999999",
         )
         self.assertEqual(
             member["qa"],
@@ -332,6 +369,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             },
         }
         self._write_json(self.catalog, base)
+        parent = self._write_parent_generation(base, ["0xE400"])
 
         result = generator.generate_catalog_append(
             destination=self.append,
@@ -349,14 +387,13 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertEqual(appended["job_id"], base["job_id"])
         self.assertEqual(appended["paths"]["run_dir"], base["paths"]["run_dir"])
         self.assertEqual(appended["paths"]["game_root"], "config://bg2ee_game_root")
+        self.assertEqual(appended["schema"], generator.CATALOG_DELTA_SCHEMA)
+        self.assertEqual(appended["parent"], parent)
+        self.assertEqual(appended["members"], [self._relative(self.member)])
+        self.assertEqual(len(appended["qa"]["animations"]), 1)
+        self.assertEqual(appended["qa"]["animations"][0]["animation_id"], "0xE410")
         self.assertEqual(
-            appended["paths"]["engine_build"],
-            generator.CATALOG_ENGINE_BUILD_ROOT,
-        )
-        self.assertEqual(appended["members"], [self._relative(self.template), self._relative(self.member)])
-        self.assertEqual(appended["qa"]["animations"][-1]["animation_id"], "0xE410")
-        self.assertEqual(
-            appended["qa"]["animations"][-1]["required_bam_prefixes"],
+            appended["qa"]["animations"][0]["required_bam_prefixes"],
             ["MGO2"],
         )
         self.assertEqual(json.loads(self.catalog.read_text(encoding="utf-8")), base)
@@ -407,6 +444,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             },
         }
         self._write_json(self.catalog, base)
+        self._write_parent_generation(base, ["0xE400"])
 
         result = generator.generate_catalog_batch_append(
             destination=self.append,
@@ -424,14 +462,13 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertEqual(
             appended["members"],
             [
-                self._relative(self.template),
                 self._relative(self.member),
                 self._relative(member_two),
             ],
         )
         self.assertEqual(
             [item["animation_id"] for item in appended["qa"]["animations"]],
-            ["0xE400", "0xE410", "0xE420"],
+            ["0xE410", "0xE420"],
         )
 
     def test_catalog_append_accepts_inventory_sealed_character_aggregate(self) -> None:
@@ -510,6 +547,7 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             },
         }
         self._write_json(self.catalog, base)
+        self._write_parent_generation(base, ["0xE400"])
 
         result = generator.generate_catalog_append(
             destination=self.append,
@@ -525,59 +563,8 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertIsNone(result["added_family_id"])
         appended = json.loads(self.append.read_text(encoding="utf-8"))
         self.assertEqual(
-            appended["qa"]["animations"][-1]["required_bam_prefixes"],
+            appended["qa"]["animations"][0]["required_bam_prefixes"],
             ["CHFB1"],
-        )
-
-    def test_catalog_qa_refresh_makes_legacy_requirements_explicit(self) -> None:
-        base = {
-            "schema": generator.CATALOG_JOB_SCHEMA,
-            "job_id": "test-catalog-xbr2x",
-            "name": "Legacy QA catalog",
-            "members": [self._relative(self.template)],
-            "paths": {
-                "game_root": "config://bg2ee_game_root",
-                "run_dir": f"pipeline/tests/{self.root.name}/catalog/runs/xbr2x-x2",
-                "engine_source": f"pipeline/tests/{self.root.name}/engine/source",
-                "engine_build": f"pipeline/tests/{self.root.name}/engine/build",
-            },
-            "compatibility": {"baldur_real_sha256": "A" * 64},
-            "runtime": {"cmake_generator": "Visual Studio 16 2019", "cmake_arch": "x64"},
-            "upscale": dict(generator.DIRECT_X2_METHOD),
-            "qa": {
-                "animations": [
-                    {
-                        "animation_id": "0xE400",
-                        "name": "Gobelin hache",
-                        "areas": ["AR0602"],
-                        "creatures": ["ICGOB03"],
-                    }
-                ]
-            },
-        }
-        self._write_json(self.catalog, base)
-        refresh = (
-            generator.CATALOG_JOBS_ROOT
-            / f"qa-refresh-test-{self.token}-v1.json"
-        )
-        self.addCleanup(refresh.unlink, missing_ok=True)
-
-        result = generator.generate_catalog_qa_refresh(
-            destination=refresh,
-            base_catalog_path=self.catalog,
-            name="Explicit QA catalog",
-            dry_run=False,
-        )
-
-        self.assertEqual(result["status"], "catalog-qa-refresh-created")
-        payload = json.loads(refresh.read_text(encoding="utf-8"))
-        self.assertEqual(
-            payload["qa"]["animations"][0]["required_bam_prefixes"],
-            ["MGO1"],
-        )
-        self.assertEqual(
-            payload["paths"]["engine_build"],
-            generator.CATALOG_ENGINE_BUILD_ROOT,
         )
 
 

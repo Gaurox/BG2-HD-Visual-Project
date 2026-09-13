@@ -128,9 +128,6 @@ MAX_REGISTRY_CATALOG_RESOURCES = 32_768
 MAX_REGISTRY_CATALOG_FRAMES = 4_194_304
 MAX_REGISTRY_CATALOG_BYTES = 128 * 1024 * 1024 * 1024
 MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES = 1_048_576
-# Visual Studio 2019 FileTracker adds long TryCompile/tlog suffixes and still
-# fails above MAX_PATH even when Windows long paths are enabled.
-MAX_WINDOWS_CMAKE_BUILD_ROOT_CHARS = 120
 ENGINE_SOURCE_CONTRACT_FILES = (
     "CMakeLists.txt",
     "src/iee/hooks.cpp",
@@ -1118,22 +1115,6 @@ def catalog_leaf_payload_paths(
     return ordered
 
 
-def catalog_builder_lock(catalog: dict[str, Any]) -> tuple[Path, str]:
-    sealed = catalog.get("_catalog_sealed_input_lock")
-    if isinstance(sealed, dict):
-        legacy_path = str(sealed.get("catalog_builder", ""))
-        legacy_sha256 = str(sealed.get("catalog_builder_sha256", "")).upper()
-        contract = read_json(CATALOG_BUILDER_CONTRACT)
-        compatible = contract.get("compatible_legacy_runner_sha256", [])
-        if (
-            legacy_path == relative_project_path(Path(__file__))
-            and legacy_sha256 in compatible
-        ):
-            # The sealed build predates separation of build and verification code.
-            return Path(__file__), legacy_sha256
-    return CATALOG_BUILDER_CONTRACT, sha256_file(CATALOG_BUILDER_CONTRACT)
-
-
 def catalog_payload_fingerprint(
     path: Path, catalog: dict[str, Any] | None = None, *, scope: str = "catalog"
 ) -> dict[str, Any]:
@@ -1173,155 +1154,59 @@ def catalog_payload_fingerprint(
 def catalog_input_lock(
     catalog: dict[str, Any], *, refresh: bool = False
 ) -> dict[str, Any]:
-    if catalog.get("_kind") != "catalog":
-        raise RuntimeError("catalog input lock requires a catalog job")
     cached = catalog.get("_catalog_input_lock")
     if not refresh and isinstance(cached, dict):
         return cached
-
     parent = catalog.get("_catalog_parent")
-    if isinstance(parent, dict):
-        members = []
-        for member in catalog["_catalog_members"]:
-            member_manifest = build_dir(member) / "build-manifest.json"
-            leafs = []
-            for leaf in catalog_member_leaf_jobs(member):
-                leaf_manifest = build_dir(leaf) / "build-manifest.json"
-                leaf_manifest_value = read_json(leaf_manifest)
-                leafs.append(
-                    {
-                        "job_file": relative_project_path(Path(leaf["_job_file"])),
-                        "job_sha256": sha256_file(Path(leaf["_job_file"])),
-                        "build_manifest": relative_project_path(leaf_manifest),
-                        "build_manifest_sha256": sha256_file(leaf_manifest),
-                        "payloads": [
-                            catalog_payload_fingerprint(path)
-                            for path in catalog_leaf_payload_paths(
-                                build_dir(leaf), leaf_manifest_value
-                            )
-                        ],
-                    }
-                )
-            members.append(
-                {
-                    "job_file": relative_project_path(Path(member["_job_file"])),
-                    "job_sha256": sha256_file(Path(member["_job_file"])),
-                    "build_manifest": relative_project_path(member_manifest),
-                    "build_manifest_sha256": sha256_file(member_manifest),
-                    "leafs": leafs,
-                }
-            )
-        result = {
-            "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-input-v1",
-            "job_file": relative_project_path(Path(catalog["_job_file"])),
-            "job_sha256": sha256_file(Path(catalog["_job_file"])),
-            "method": upscale_contract(catalog).method,
-            "baldur_real_sha256": catalog["compatibility"][
-                "baldur_real_sha256"
-            ].upper(),
-            "parent": {
-                "build_manifest": relative_project_path(parent["manifest_path"]),
-                "build_manifest_sha256": parent["manifest_sha256"],
-                "catalog_sha256": parent["catalog_sha256"],
-                "generation_id": parent["manifest"]["generation_id"],
-            },
-            "members": members,
-        }
-        catalog["_catalog_input_lock"] = result
-        return result
-
-    def locked_sha256(path: Path, scope: str) -> str:
-        del scope
-        return sha256_file(path)
-
-    game_exe = job_path(catalog, "game_root") / "BaldurReal.exe"
-    expected_exe = catalog["compatibility"]["baldur_real_sha256"].upper()
-    if not game_exe.is_file() or locked_sha256(game_exe, "game-runtime") != expected_exe:
-        raise RuntimeError("BaldurReal.exe is incompatible with the catalog job")
-    source = job_path(catalog, "engine_source")
-    members: list[dict[str, Any]] = []
-    leaf_jobs: list[dict[str, Any]] = []
-    seen_leaf_files: set[str] = set()
+    if not isinstance(parent, dict):
+        raise RuntimeError(
+            "the root catalog is immutable; create a parent-plus-delta job"
+        )
+    members = []
     for member in catalog["_catalog_members"]:
-        member_file = Path(member["_job_file"])
         member_manifest = build_dir(member) / "build-manifest.json"
-        if not member_manifest.is_file():
-            raise RuntimeError(
-                f"catalog member build manifest is missing: {member_manifest}"
-            )
-        member_entry = {
-            "job_file": relative_project_path(member_file),
-            "job_sha256": locked_sha256(member_file, f"member:{member['job_id']}"),
-            "job_id": member["job_id"],
-            "build_manifest": relative_project_path(member_manifest),
-            "build_manifest_sha256": locked_sha256(
-                member_manifest, f"member:{member['job_id']}"
-            ),
-        }
-        members.append(member_entry)
+        leafs = []
         for leaf in catalog_member_leaf_jobs(member):
-            leaf_file = Path(leaf["_job_file"])
-            leaf_file_key = str(leaf_file.resolve()).casefold()
-            if leaf_file_key in seen_leaf_files:
-                raise RuntimeError("catalog repeats a leaf job across members")
-            seen_leaf_files.add(leaf_file_key)
-            source_manifest = source_manifest_path(leaf)
             leaf_manifest = build_dir(leaf) / "build-manifest.json"
-            if not source_manifest.is_file() or not leaf_manifest.is_file():
-                raise RuntimeError(
-                    f"catalog leaf source/build is incomplete: {leaf['job_id']}"
-                )
             leaf_manifest_value = read_json(leaf_manifest)
-            leaf_jobs.append(
+            leafs.append(
                 {
-                    "job_file": relative_project_path(leaf_file),
-                    "job_sha256": locked_sha256(
-                        leaf_file, f"leaf:{leaf['job_id']}"
-                    ),
-                    "job_id": leaf["job_id"],
-                    "source_manifest": relative_project_path(source_manifest),
-                    "source_manifest_sha256": locked_sha256(
-                        source_manifest, f"leaf:{leaf['job_id']}"
-                    ),
+                    "job_file": relative_project_path(Path(leaf["_job_file"])),
+                    "job_sha256": sha256_file(Path(leaf["_job_file"])),
                     "build_manifest": relative_project_path(leaf_manifest),
-                    "build_manifest_sha256": locked_sha256(
-                        leaf_manifest, f"leaf:{leaf['job_id']}"
-                    ),
+                    "build_manifest_sha256": sha256_file(leaf_manifest),
                     "payloads": [
-                        catalog_payload_fingerprint(
-                            path, catalog, scope=f"leaf:{leaf['job_id']}"
-                        )
+                        catalog_payload_fingerprint(path)
                         for path in catalog_leaf_payload_paths(
                             build_dir(leaf), leaf_manifest_value
                         )
                     ],
                 }
             )
-    builder_path, builder_sha256 = catalog_builder_lock(catalog)
-    engine_contract_expected = None
-    sealed = catalog.get("_catalog_sealed_input_lock")
-    if isinstance(sealed, dict):
-        engine_contract_expected = str(
-            sealed.get("engine_source_contract_sha256", "")
-        ).upper()
-    if re.fullmatch(r"[0-9A-F]{64}", engine_contract_expected or ""):
-        if source_tree_hash(source) != engine_contract_expected:
-            raise RuntimeError("catalog engine source contract changed")
-        engine_contract_sha256 = engine_contract_expected
-    else:
-        engine_contract_sha256 = source_tree_hash(source)
+        members.append(
+            {
+                "job_file": relative_project_path(Path(member["_job_file"])),
+                "job_sha256": sha256_file(Path(member["_job_file"])),
+                "build_manifest": relative_project_path(member_manifest),
+                "build_manifest_sha256": sha256_file(member_manifest),
+                "leafs": leafs,
+            }
+        )
     result = {
-        "schema": "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1",
+        "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-input-v1",
         "job_file": relative_project_path(Path(catalog["_job_file"])),
-        "job_sha256": locked_sha256(Path(catalog["_job_file"]), "catalog-job"),
+        "job_sha256": sha256_file(Path(catalog["_job_file"])),
         "method": upscale_contract(catalog).method,
-        "baldur_real_sha256": expected_exe,
-        "engine_source": relative_project_path(source),
-        "engine_source_contract_sha256": engine_contract_sha256,
-        "catalog_builder": relative_project_path(builder_path),
-        "catalog_builder_sha256": builder_sha256,
+        "baldur_real_sha256": catalog["compatibility"][
+            "baldur_real_sha256"
+        ].upper(),
+        "parent": {
+            "build_manifest": relative_project_path(parent["manifest_path"]),
+            "build_manifest_sha256": parent["manifest_sha256"],
+            "catalog_sha256": parent["catalog_sha256"],
+            "generation_id": parent["manifest"]["generation_id"],
+        },
         "members": members,
-        "leaf_jobs": leaf_jobs,
     }
     catalog["_catalog_input_lock"] = result
     return result
@@ -5499,93 +5384,36 @@ def run_checked(command: list[str], cwd: Path | None = None) -> None:
     subprocess.run(command, cwd=cwd, check=True)
 
 
-def assert_cmake_build_root_supported(build: Path) -> None:
-    if os.name == "nt" and len(str(build)) > MAX_WINDOWS_CMAKE_BUILD_ROOT_CHARS:
-        raise RuntimeError(
-            "catalog CMake build root is too long for Visual Studio 2019 "
-            f"FileTracker ({len(str(build))} > "
-            f"{MAX_WINDOWS_CMAKE_BUILD_ROOT_CHARS} characters): {build}"
-        )
-
-
-def catalog_provisional_runtime_info(
-    job: dict[str, Any], catalog_info: dict[str, Any]
-) -> dict[str, Any]:
-    manifest_path = runtime_dir(job) / "runtime-manifest.json"
-    manifest = read_json(manifest_path)
-    generation_id = catalog_generation_id(job)
-    dll = manifest_path.parent / str(manifest.get("dll", ""))
-    if (
-        manifest.get("schema") != RUNTIME_SCHEMA
-        or manifest.get("status") != "built-tested"
-        or manifest.get("tests_status") != "passed"
-        or manifest.get("bridge_worker_tests_status") != "passed"
-        or manifest.get("job_id") != job["job_id"]
-        or manifest.get("generation_id") != generation_id
-        or manifest.get("method") != upscale_contract(job).method
-        or manifest.get("runtime_profiles") != runtime_profiles_for_work_item(job)
-        or manifest.get("catalog_directory_count")
-        != catalog_info["directory_count"]
-        or manifest.get("catalog_directory_sha256")
-        != catalog_info["directory_sha256"]
-        or manifest.get("catalog_logical_content_sha256")
-        != catalog_info["logical_content_sha256"]
-        or not dll.is_file()
-    ):
-        raise RuntimeError("provisional catalog runtime differs from the generation")
-    if sha256_file(dll) != manifest.get("dll_sha256"):
-        raise RuntimeError("provisional catalog runtime DLL hash differs")
-    return manifest
-
-
 def build_runtime(
     job: dict[str, Any], *, defer_catalog_verify: bool = False
 ) -> dict[str, Any]:
+    del defer_catalog_verify
+    if job.get("_kind") == "catalog":
+        raise RuntimeError(
+            "catalog runtime builds were retired; use the stable runtime manifest"
+        )
     require_runtime_profile(job)
     if os.name != "nt":
         raise RuntimeError("Windows is required for the BG2EE runtime DLL")
     source = job_path(job, "engine_source")
-    catalog_job = job.get("_kind") == "catalog"
-    if catalog_job:
-        catalog_info = (
-            catalog_provisional_build_info(job)
-            if defer_catalog_verify
-            else verify_catalog_build(job)
-        )
-        generation_id = catalog_generation_id(job)
-        build = job_path(job, "engine_build") / generation_id.lower()
-        assert_cmake_build_root_supported(build)
-        destination = runtime_dir(job)
-        if destination.exists():
-            if defer_catalog_verify:
-                catalog_provisional_runtime_info(job, catalog_info)
-            else:
-                verify_runtime(job)
-            write_catalog_pointer(job)
-            return read_json(destination / "runtime-manifest.json")
-    else:
-        build = job_path(job, "engine_build")
-        destination = runtime_dir(job)
+    build = job_path(job, "engine_build")
+    destination = runtime_dir(job)
     cmake = str(job.get("tools", {}).get("cmake", "cmake"))
     runtime = job.get("runtime", {})
     if not (build / "CMakeCache.txt").is_file():
         generator = str(runtime.get("cmake_generator", "Visual Studio 16 2019"))
         architecture = str(runtime.get("cmake_arch", "x64"))
         build.parent.mkdir(parents=True, exist_ok=True)
-        run_checked([cmake, "-S", str(source), "-B", str(build), "-G", generator, "-A", architecture, "-DIEE_BUILD_WINDOWS_DLL=ON", "-DBUILD_TESTING=ON"])
+        run_checked([
+            cmake, "-S", str(source), "-B", str(build), "-G", generator,
+            "-A", architecture, "-DIEE_BUILD_WINDOWS_DLL=ON", "-DBUILD_TESTING=ON",
+        ])
     run_checked([cmake, "--build", str(build), "--config", "Release", "--target", "release_bundle"])
     run_checked([cmake, "--build", str(build), "--config", "Release", "--target", "iee_tests"])
-    run_checked(
-        [
-            cmake,
-            "--build",
-            str(build),
-            "--config",
-            "Release",
-            "--target",
-            "iee_bridge_worker_tests",
-        ]
-    )
+    run_checked([
+        cmake, "--build", str(build), "--config", "Release",
+        "--target", "iee_bridge_worker_tests",
+    ])
     tests = build / "Release" / "iee_tests.exe"
     if not tests.is_file():
         tests = build / "iee_tests.exe"
@@ -5599,16 +5427,8 @@ def build_runtime(
     source_dll = build / "release-bundle" / "InfinityEngine-Enhancer.dll"
     if not source_dll.is_file():
         raise RuntimeError(f"release DLL missing: {source_dll}")
-    runtime_output = destination
-    if catalog_job:
-        if catalog_generation_id(job, refresh=True) != generation_id:
-            raise RuntimeError("catalog inputs changed while building the runtime")
-        runtime_output = Path(
-            tempfile.mkdtemp(prefix="runtime-", dir=destination.parent)
-        )
-    else:
-        destination.mkdir(parents=True, exist_ok=True)
-    dll = runtime_output / "InfinityEngine-Enhancer.dll"
+    destination.mkdir(parents=True, exist_ok=True)
+    dll = destination / "InfinityEngine-Enhancer.dll"
     shutil.copy2(source_dll, dll)
     manifest = {
         "schema": RUNTIME_SCHEMA,
@@ -5624,66 +5444,9 @@ def build_runtime(
         "bridge_worker_tests": str(bridge_worker_tests),
         "bridge_worker_tests_status": "passed",
         "tests_status": "passed",
+        "runtime_profile": job["animation"]["runtime_profile"],
     }
-    if catalog_job:
-        contract = upscale_contract(job)
-        manifest.update(
-            {
-                "generation_id": generation_id,
-                "job_sha256": sha256_file(Path(job["_job_file"])),
-                "method": contract.method,
-                "runtime_profiles": runtime_profiles_for_work_item(job),
-                "catalog_magic": registry_magic_name(
-                    XN_REGISTRY_CATALOG_MAGIC
-                ),
-                "catalog_version": XN_REGISTRY_CATALOG_VERSION,
-                "catalog_directory_count": catalog_info["directory_count"],
-                "catalog_directory_entry_bytes": catalog_info[
-                    "directory_entry_bytes"
-                ],
-                "catalog_directory_sha256": catalog_info["directory_sha256"],
-                "catalog_logical_content_sha256": catalog_info[
-                    "logical_content_sha256"
-                ],
-                "catalog_shard_registry_magic": registry_magic_name(
-                    XN_REGISTRY_MAGIC
-                ),
-                "catalog_shard_registry_version": (
-                    CATALOG_SHARD_REGISTRY_VERSION
-                ),
-                "catalog_frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
-                "catalog_shard_animation_id_sentinel": "0xFFFF",
-                "catalog_limits": {
-                    "maximum_animations": MAX_REGISTRY_CATALOG_ANIMATIONS,
-                    "maximum_components": MAX_REGISTRY_CATALOG_COMPONENTS,
-                    "maximum_memberships": MAX_REGISTRY_CATALOG_MEMBERSHIPS,
-                    "maximum_shards": MAX_REGISTRY_CATALOG_SHARDS,
-                    "maximum_physical_resources": MAX_REGISTRY_CATALOG_RESOURCES,
-                    "maximum_frames": MAX_REGISTRY_CATALOG_FRAMES,
-                    "maximum_registry_bytes": MAX_REGISTRY_CATALOG_BYTES,
-                    "maximum_resources_per_shard": MAX_RESOURCES,
-                    "maximum_frames_per_resource": MAX_FRAMES_PER_RESOURCE,
-                    "maximum_lazy_frame_index_bytes": MAX_LAZY_FRAME_INDEX_BYTES,
-                    "maximum_directory_entries": (
-                        MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES
-                    ),
-                    "maximum_x2_shard_bytes": maximum_registry_bytes(2),
-                    "maximum_x4_shard_bytes": maximum_registry_bytes(4),
-                },
-            }
-        )
-    else:
-        manifest["runtime_profile"] = job["animation"]["runtime_profile"]
-    write_json(runtime_output / "runtime-manifest.json", manifest)
-    if catalog_job:
-        try:
-            if destination.exists():
-                raise RuntimeError("catalog runtime appeared during generation")
-            runtime_output.replace(destination)
-        except Exception:
-            shutil.rmtree(runtime_output, ignore_errors=True)
-            raise
-        write_catalog_pointer(job)
+    write_json(destination / "runtime-manifest.json", manifest)
     return manifest
 
 
@@ -5873,6 +5636,11 @@ def verify_build(
 def verify_runtime(
     job: dict[str, Any], *, catalog_info: dict[str, Any] | None = None
 ) -> dict[str, Any]:
+    del catalog_info
+    if job.get("_kind") == "catalog":
+        raise RuntimeError(
+            "catalog runtimes are verified through their stable capability manifest"
+        )
     require_runtime_profile(job)
     manifest = read_json(runtime_dir(job) / "runtime-manifest.json")
     if (
@@ -5883,54 +5651,7 @@ def verify_runtime(
         raise RuntimeError("runtime is not built and tested")
     if manifest.get("job_id") != job["job_id"]:
         raise RuntimeError("runtime manifest job id differs from job")
-    if job.get("_kind") == "catalog":
-        generation_id = catalog_generation_id(job)
-        contract = upscale_contract(job)
-        catalog_info = catalog_info or verify_catalog_build(job)
-        expected_limits = {
-            "maximum_animations": MAX_REGISTRY_CATALOG_ANIMATIONS,
-            "maximum_components": MAX_REGISTRY_CATALOG_COMPONENTS,
-            "maximum_memberships": MAX_REGISTRY_CATALOG_MEMBERSHIPS,
-            "maximum_shards": MAX_REGISTRY_CATALOG_SHARDS,
-            "maximum_physical_resources": MAX_REGISTRY_CATALOG_RESOURCES,
-            "maximum_frames": MAX_REGISTRY_CATALOG_FRAMES,
-            "maximum_registry_bytes": MAX_REGISTRY_CATALOG_BYTES,
-            "maximum_resources_per_shard": MAX_RESOURCES,
-            "maximum_frames_per_resource": MAX_FRAMES_PER_RESOURCE,
-            "maximum_lazy_frame_index_bytes": MAX_LAZY_FRAME_INDEX_BYTES,
-            "maximum_directory_entries": MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES,
-            "maximum_x2_shard_bytes": maximum_registry_bytes(2),
-            "maximum_x4_shard_bytes": maximum_registry_bytes(4),
-        }
-        if (
-            manifest.get("generation_id") != generation_id
-            or manifest.get("job_sha256")
-            != sha256_file(Path(job["_job_file"]))
-            or manifest.get("method") != contract.method
-            or manifest.get("runtime_profiles")
-            != runtime_profiles_for_work_item(job)
-            or manifest.get("catalog_magic")
-            != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-            or manifest.get("catalog_version") != XN_REGISTRY_CATALOG_VERSION
-            or manifest.get("catalog_directory_count")
-            != catalog_info["directory_count"]
-            or manifest.get("catalog_directory_entry_bytes")
-            != catalog_info["directory_entry_bytes"]
-            or manifest.get("catalog_directory_sha256")
-            != catalog_info["directory_sha256"]
-            or manifest.get("catalog_logical_content_sha256")
-            != catalog_info["logical_content_sha256"]
-            or manifest.get("catalog_shard_registry_magic")
-            != registry_magic_name(XN_REGISTRY_MAGIC)
-            or manifest.get("catalog_shard_registry_version")
-            != catalog_info["shard_registry_version"]
-            or manifest.get("catalog_frame_storage")
-            != "XPRESS_HUFF-or-raw-per-frame-v1"
-            or manifest.get("catalog_shard_animation_id_sentinel") != "0xFFFF"
-            or manifest.get("catalog_limits") != expected_limits
-        ):
-            raise RuntimeError("catalog runtime manifest differs from catalog contract")
-    elif manifest.get("runtime_profile") != job["animation"].get(
+    if manifest.get("runtime_profile") != job["animation"].get(
         "runtime_profile"
     ):
         raise RuntimeError("runtime manifest profile differs from job")
@@ -6823,21 +6544,6 @@ def catalog_source_component_sha256(
     return digest.hexdigest().upper()
 
 
-def verify_catalog_component_copy(
-    scale: int, expected_source_digest: str, shard_paths: list[Path]
-) -> None:
-    records: list[dict[str, Any]] = []
-    for shard_path in shard_paths:
-        info = inspect_registry(shard_path, include_resource_records=True)
-        records.extend(info["resource_records"])
-    records.sort(key=lambda item: str(item["resref"]))
-    actual = catalog_source_component_sha256(scale, records)
-    if actual != expected_source_digest:
-        raise RuntimeError(
-            "catalog component output differs from its locked source records"
-        )
-
-
 def catalog_source_collection(
     catalog: dict[str, Any],
     *,
@@ -7101,36 +6807,6 @@ def catalog_override_collisions(
     )
 
 
-def catalog_build_validation(
-    collection: dict[str, Any], scale: int
-) -> dict[str, Any]:
-    return {
-        "records_copied_without_xbr": True,
-        "logical_records_preserved_after_lossless_storage_repack": True,
-        "catalog_shard_registry_version": CATALOG_SHARD_REGISTRY_VERSION,
-        "frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
-        "resource_records_sha256_verified": collection[
-            "resource_records_verified"
-        ],
-        "palette_frames_exactly_remapped": collection["palette_frames"],
-        "partial_alpha_pixels": 0,
-        "new_colors": 0,
-        "override_collisions": 0,
-        "maximum_animations": MAX_REGISTRY_CATALOG_ANIMATIONS,
-        "maximum_components": MAX_REGISTRY_CATALOG_COMPONENTS,
-        "maximum_memberships": MAX_REGISTRY_CATALOG_MEMBERSHIPS,
-        "maximum_shards": MAX_REGISTRY_CATALOG_SHARDS,
-        "maximum_physical_resources": MAX_REGISTRY_CATALOG_RESOURCES,
-        "maximum_frames": MAX_REGISTRY_CATALOG_FRAMES,
-        "maximum_registry_bytes": MAX_REGISTRY_CATALOG_BYTES,
-        "maximum_resources_per_shard": MAX_RESOURCES,
-        "maximum_directory_entries": MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES,
-        "maximum_shard_bytes": maximum_registry_bytes(scale),
-        "game_launch_is_never_automatic": True,
-        "release_manifest_is_out_of_scope": True,
-    }
-
-
 def write_catalog_build_pointer(catalog: dict[str, Any], manifest_path: Path) -> dict[str, Any]:
     generation_id = catalog_generation_id(catalog)
     value = {
@@ -7389,512 +7065,21 @@ def build_catalog(
     *,
     defer_full_verify: bool = False,
 ) -> dict[str, Any]:
+    del defer_full_verify
     if isinstance(catalog.get("_catalog_parent"), dict):
         if force:
             raise RuntimeError("catalog generations are immutable; use --resume")
-        return build_catalog_delta(
-            catalog, resume=resume, verify_members=not defer_full_verify
-        )
-    if force:
-        raise RuntimeError(
-            "catalog generations are immutable; change inputs or use --resume"
-        )
+        return build_catalog_delta(catalog, resume=resume, verify_members=True)
     if resume and catalog_pointer_path(catalog).is_file():
-        verified = verify_catalog(catalog)
-        return {"status": "reused", **verified["build"]}
-    output = build_dir(catalog)
-    if output.exists():
-        if not resume:
-            raise RuntimeError(f"catalog build exists; use --resume: {output}")
-        return {"status": "reused", **read_json(output / "build-manifest.json")}
-    collisions = catalog_override_collisions(catalog)
-    if collisions:
-        raise RuntimeError(f"override collision: {', '.join(collisions)}")
-    collection = catalog_source_collection(
-        catalog, verify_members=not defer_full_verify
+        current = catalog_generation_snapshot(catalog, full_verify=False)
+        return {
+            "status": "reused-immutable-root",
+            "generation_id": current["generation_id"],
+            "animation_ids": current["animation_ids"],
+        }
+    raise RuntimeError(
+        "the root catalog is immutable; create a parent-plus-delta job"
     )
-    generation_id = collection["generation_id"]
-    contract = upscale_contract(catalog)
-    generation = catalog_generation_dir(catalog)
-    assert_workspace_child(generation, "catalog generation")
-    generation.mkdir(parents=True, exist_ok=True)
-    temporary = Path(tempfile.mkdtemp(prefix="build-", dir=generation))
-    try:
-        pack_dir = temporary / "iee-assets" / "creature-sprites"
-        pack_dir.mkdir(parents=True)
-        shards: list[dict[str, Any]] = []
-        output_components: list[dict[str, Any]] = []
-        source_indices: dict[str, int] = {}
-        seen_shard_hashes: set[str] = set()
-        for component_index, component in enumerate(collection["components"]):
-            source_indices[component["source_digest"]] = component_index
-            partitions = partition_registry_resources(
-                component["records"],
-                maximum_resources=MAX_RESOURCES,
-                maximum_bytes=maximum_registry_bytes(contract.scale),
-                maximum_shards=MAX_REGISTRY_SET_SHARDS,
-            )
-            shard_start = len(shards)
-            raw_entries: list[bytes] = []
-            for local_index, records in enumerate(partitions):
-                scratch = pack_dir / f".component-{component_index:05d}-{local_index:04d}.tmp"
-                info = write_compressed_catalog_registry_records(
-                    scratch,
-                    contract.scale,
-                    records,
-                )
-                if info["sha256"] in seen_shard_hashes:
-                    raise RuntimeError(
-                        "catalog shard is shared by nonidentical components"
-                    )
-                seen_shard_hashes.add(info["sha256"])
-                final_path = pack_dir / catalog_shard_filename(info["sha256"])
-                if final_path.exists():
-                    raise RuntimeError("catalog content-addressed shard already exists")
-                object_path = publish_catalog_shard_object(
-                    catalog, scratch, final_path, info["sha256"]
-                )
-                shard = {
-                    "index": len(shards),
-                    "path": final_path,
-                    "object_path": object_path,
-                    **info,
-                }
-                shards.append(shard)
-                raw_entries.append(catalog_shard_entry_bytes(info, final_path))
-            verify_catalog_component_copy(
-                contract.scale,
-                component["source_digest"],
-                [Path(shard["path"]) for shard in shards[shard_start:]],
-            )
-            output_components.append(
-                {
-                    "index": component_index,
-                    "digest": catalog_component_digest(contract.scale, raw_entries),
-                    "shard_start": shard_start,
-                    "shard_count": len(partitions),
-                    "resource_count": sum(
-                        int(shard["resource_count"])
-                        for shard in shards[shard_start:]
-                    ),
-                    "frame_count": sum(
-                        int(shard["frame_count"])
-                        for shard in shards[shard_start:]
-                    ),
-                    "index_bytes": sum(
-                        int(shard["index_bytes"])
-                        for shard in shards[shard_start:]
-                    ),
-                    "registry_bytes": sum(
-                        int(shard["registry_bytes"])
-                        for shard in shards[shard_start:]
-                    ),
-                }
-            )
-        if len(shards) > MAX_REGISTRY_CATALOG_SHARDS:
-            raise RuntimeError("catalog shard count exceeds the format limit")
-        manifest_animations = catalog_manifest_animations(
-            collection, source_indices
-        )
-        binary_animations = [
-            {
-                "animation_id": animation["animation_id"],
-                "owner": catalog_owner_for_profile(animation["runtime_profile"]),
-                "component_indices": animation["component_indices"],
-            }
-            for animation in manifest_animations
-        ]
-        catalog_path = pack_dir / XN_REGISTRY_CATALOG_FILENAME
-        info = write_registry_catalog(
-            catalog_path,
-            contract.scale,
-            binary_animations,
-            output_components,
-            shards,
-        )
-        input_lock = catalog_input_lock(catalog, refresh=True)
-        if canonical_json_sha256(input_lock) != generation_id:
-            raise RuntimeError("catalog inputs changed during generation")
-        source_members = catalog_manifest_source_members(
-            collection, source_indices
-        )
-        job_file = Path(catalog["_job_file"])
-        job_sha256 = sha256_file(job_file)
-        job_snapshot_relative = "provenance/job.json"
-        job_snapshot_path = temporary / Path(job_snapshot_relative)
-        job_snapshot_path.parent.mkdir(parents=True)
-        shutil.copyfile(job_file, job_snapshot_path)
-        if sha256_file(job_snapshot_path) != job_sha256:
-            raise RuntimeError("catalog job snapshot differs from its source")
-        report = {
-            "schema": CATALOG_BUILD_SCHEMA,
-            "status": "built-pending-ingame-qa",
-            "created_at_utc": utc_now(),
-            "job_file": relative_project_path(Path(catalog["_job_file"])),
-            "job_sha256": job_sha256,
-            "job_snapshot": job_snapshot_relative,
-            "job_snapshot_sha256": job_sha256,
-            "job_id": catalog["job_id"],
-            "generation_id": generation_id,
-            "method": contract.method,
-            "registry_layout": "catalog",
-            "animation_ids": [
-                animation["animation_id"] for animation in manifest_animations
-            ],
-            "runtime_profiles": runtime_profiles_for_work_item(catalog),
-            "registry_catalog": (
-                "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME
-            ),
-            "registry_catalog_magic": registry_magic_name(
-                XN_REGISTRY_CATALOG_MAGIC
-            ),
-            "registry_catalog_version": XN_REGISTRY_CATALOG_VERSION,
-            "registry_catalog_shard_version": info[
-                "shard_registry_version"
-            ],
-            "registry_catalog_frame_storage": (
-                "XPRESS_HUFF-or-raw-per-frame-v1"
-                if info["shard_registry_version"]
-                == XN_COMPRESSED_REGISTRY_VERSION
-                else "raw-v3"
-            ),
-            "shard_object_store": relative_project_path(
-                catalog_object_store_dir(catalog)
-            ),
-            "shards_hardlinked_from_object_store": True,
-            "registry_scale": contract.scale,
-            "registry_catalog_sha256": info["sha256"],
-            "registry_catalog_bytes": info["registry_catalog_bytes"],
-            "registry_catalog_directory_count": info["directory_count"],
-            "registry_catalog_directory_entry_bytes": info[
-                "directory_entry_bytes"
-            ],
-            "registry_catalog_directory_sha256": info["directory_sha256"],
-            "registry_catalog_logical_component_digests": info[
-                "logical_component_digests"
-            ],
-            "registry_catalog_logical_content_sha256": info[
-                "logical_content_sha256"
-            ],
-            "animations": manifest_animations,
-            "components": info["components"],
-            "shards": info["shards"],
-            "totals": {
-                "total_resources": info["total_resources"],
-                "total_frames": info["total_frames"],
-                "total_index_bytes": info["total_index_bytes"],
-                "total_registry_bytes": info["total_registry_bytes"],
-            },
-            "storage": {
-                "shard_registry_version": info["shard_registry_version"],
-                "frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
-                "stored_index_bytes": info["stored_index_bytes"],
-                "compressed_frame_count": info["compressed_frame_count"],
-                "raw_frame_count": info["raw_frame_count"],
-                "index_storage_ratio": info["index_storage_ratio"],
-            },
-            "source_members": source_members,
-            "locks": {
-                "input_lock_sha256": generation_id,
-                "engine_source_contract_sha256": input_lock[
-                    "engine_source_contract_sha256"
-                ],
-                "baldur_real_sha256": input_lock["baldur_real_sha256"],
-                "member_count": len(source_members),
-                "leaf_job_count": len(input_lock["leaf_jobs"]),
-                "input_lock": input_lock,
-            },
-            "validation": catalog_build_validation(collection, contract.scale),
-        }
-        write_json(temporary / "build-manifest.json", report)
-        if output.exists():
-            raise RuntimeError("catalog build appeared during generation")
-        temporary.replace(output)
-        write_catalog_build_pointer(catalog, output / "build-manifest.json")
-        return {"status": "built", "generation_id": generation_id, **info}
-    except Exception:
-        shutil.rmtree(temporary, ignore_errors=True)
-        raise
-
-
-def catalog_provisional_build_info(catalog: dict[str, Any]) -> dict[str, Any]:
-    """Validate only the immutable shape needed before the final full scan."""
-
-    generation_id = catalog_generation_id(catalog)
-    manifest_path = build_dir(catalog) / "build-manifest.json"
-    manifest = read_json(manifest_path)
-    lock = manifest.get("locks", {}).get("input_lock")
-    contract = upscale_contract(catalog)
-    job_sha256 = sha256_file(Path(catalog["_job_file"]))
-    if (
-        manifest.get("schema") != CATALOG_BUILD_SCHEMA
-        or manifest.get("status") != "built-pending-ingame-qa"
-        or manifest.get("job_id") != catalog["job_id"]
-        or manifest.get("job_sha256") != job_sha256
-        or manifest.get("generation_id") != generation_id
-        or manifest.get("method") != contract.method
-        or manifest.get("registry_layout") != "catalog"
-        or manifest.get("runtime_profiles")
-        != runtime_profiles_for_work_item(catalog)
-        or manifest.get("registry_catalog")
-        != "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME
-        or manifest.get("registry_catalog_magic")
-        != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-        or manifest.get("registry_catalog_version") != XN_REGISTRY_CATALOG_VERSION
-        or manifest.get("registry_catalog_shard_version")
-        != CATALOG_SHARD_REGISTRY_VERSION
-        or manifest.get("registry_scale") != contract.scale
-        or not isinstance(lock, dict)
-        or canonical_json_sha256(lock) != generation_id
-        or manifest.get("locks", {}).get("input_lock_sha256") != generation_id
-    ):
-        raise RuntimeError("provisional catalog manifest differs from its inputs")
-    catalog_path = manifest_path.parent / str(manifest["registry_catalog"])
-    if (
-        not catalog_path.is_file()
-        or catalog_path.stat().st_size != int(manifest.get("registry_catalog_bytes", -1))
-    ):
-        raise RuntimeError("provisional catalog index is missing or has the wrong size")
-    shards = manifest.get("shards")
-    if not isinstance(shards, list) or not shards:
-        raise RuntimeError("provisional catalog shard list is invalid")
-    object_store = catalog_object_store_dir(catalog)
-    for index, shard in enumerate(shards):
-        if not isinstance(shard, dict) or int(shard.get("index", -1)) != index:
-            raise RuntimeError("provisional catalog shard entry is invalid")
-        filename = Path(str(shard.get("registry", ""))).name
-        generation_shard = catalog_path.parent / filename
-        object_shard = object_store / filename
-        if (
-            not generation_shard.is_file()
-            or not object_shard.is_file()
-            or not os.path.samefile(generation_shard, object_shard)
-            or generation_shard.stat().st_size
-            != int(shard.get("registry_bytes", -1))
-        ):
-            raise RuntimeError(f"provisional catalog shard is invalid: {index}")
-    return {
-        "generation_id": generation_id,
-        "registry_catalog": str(catalog_path),
-        "directory_count": manifest.get("registry_catalog_directory_count"),
-        "directory_entry_bytes": manifest.get(
-            "registry_catalog_directory_entry_bytes"
-        ),
-        "directory_sha256": manifest.get("registry_catalog_directory_sha256"),
-        "logical_content_sha256": manifest.get(
-            "registry_catalog_logical_content_sha256"
-        ),
-        "shards": shards,
-        "deferred_full_verification": True,
-    }
-
-
-def verify_catalog_build(
-    catalog: dict[str, Any],
-    *,
-    collection: dict[str, Any] | None = None,
-    catalog_info: dict[str, Any] | None = None,
-    verify_shard_hashes: bool = True,
-) -> dict[str, Any]:
-    collection = collection or catalog_source_collection(catalog)
-    generation_id = collection["generation_id"]
-    manifest_path = build_dir(catalog) / "build-manifest.json"
-    manifest = read_json(manifest_path)
-    contract = upscale_contract(catalog)
-    job_file = Path(catalog["_job_file"])
-    job_sha256 = sha256_file(job_file)
-    job_snapshot_relative = manifest.get("job_snapshot")
-    job_snapshot_sha256 = manifest.get("job_snapshot_sha256")
-    if job_snapshot_relative is not None or job_snapshot_sha256 is not None:
-        if (
-            job_snapshot_relative != "provenance/job.json"
-            or job_snapshot_sha256 != job_sha256
-        ):
-            raise RuntimeError("catalog job snapshot declaration is invalid")
-        job_snapshot_path = manifest_path.parent / Path(job_snapshot_relative)
-        if (
-            not job_snapshot_path.is_file()
-            or sha256_file(job_snapshot_path) != job_sha256
-        ):
-            raise RuntimeError("catalog job snapshot differs from the catalog job")
-        job_snapshot = read_json(job_snapshot_path)
-        if (
-            job_snapshot.get("schema") != CATALOG_JOB_SCHEMA
-            or job_snapshot.get("job_id") != catalog["job_id"]
-        ):
-            raise RuntimeError("catalog job snapshot identity is invalid")
-    if (
-        manifest.get("schema") != CATALOG_BUILD_SCHEMA
-        or manifest.get("status") != "built-pending-ingame-qa"
-        or manifest.get("job_id") != catalog["job_id"]
-        or manifest.get("job_file")
-        != relative_project_path(Path(catalog["_job_file"]))
-        or manifest.get("job_sha256") != job_sha256
-        or manifest.get("generation_id") != generation_id
-        or manifest.get("method") != contract.method
-        or manifest.get("registry_layout") != "catalog"
-        or manifest.get("runtime_profiles")
-        != runtime_profiles_for_work_item(catalog)
-        or manifest.get("registry_catalog")
-        != "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME
-        or manifest.get("registry_catalog_magic")
-        != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-        or manifest.get("registry_catalog_version")
-        != XN_REGISTRY_CATALOG_VERSION
-        or manifest.get("registry_catalog_shard_version")
-        != CATALOG_SHARD_REGISTRY_VERSION
-        or manifest.get("registry_catalog_frame_storage")
-        != "XPRESS_HUFF-or-raw-per-frame-v1"
-        or manifest.get("shard_object_store")
-        != relative_project_path(catalog_object_store_dir(catalog))
-        or manifest.get("shards_hardlinked_from_object_store") is not True
-        or manifest.get("registry_scale") != contract.scale
-    ):
-        raise RuntimeError("catalog build manifest differs from the catalog job")
-    catalog_path = build_dir(catalog) / str(manifest["registry_catalog"])
-    info = catalog_info or inspect_registry_catalog(catalog_path)
-    object_store = catalog_object_store_dir(catalog)
-    for shard in info["shards"]:
-        filename = Path(str(shard["registry"])).name
-        generation_shard = catalog_path.parent / filename
-        object_shard = object_store / filename
-        if (
-            not object_shard.is_file()
-            or not generation_shard.is_file()
-            or not os.path.samefile(object_shard, generation_shard)
-            or (
-                verify_shard_hashes
-                and sha256_file(object_shard) != shard["sha256"]
-            )
-        ):
-            raise RuntimeError("catalog generation shard differs from shared CAS")
-    if (
-        info["sha256"] != manifest.get("registry_catalog_sha256")
-        or info["registry_catalog_bytes"]
-        != manifest.get("registry_catalog_bytes")
-        or info["directory_count"]
-        != manifest.get("registry_catalog_directory_count")
-        or info["directory_entry_bytes"]
-        != manifest.get("registry_catalog_directory_entry_bytes")
-        or info["directory_sha256"]
-        != manifest.get("registry_catalog_directory_sha256")
-        or info["logical_component_digests"]
-        != manifest.get("registry_catalog_logical_component_digests")
-        or info["logical_content_sha256"]
-        != manifest.get("registry_catalog_logical_content_sha256")
-        or info["scale"] != contract.scale
-        or info["version"] != XN_REGISTRY_CATALOG_VERSION
-        or info["shard_registry_version"]
-        != manifest.get("registry_catalog_shard_version")
-    ):
-        raise RuntimeError("catalog index differs from build manifest")
-    source_indices = {
-        component["source_digest"]: index
-        for index, component in enumerate(collection["components"])
-    }
-    expected_animations = catalog_manifest_animations(collection, source_indices)
-    expected_binary_animations = [
-        {
-            "animation_id": animation["animation_id"],
-            "owner": catalog_owner_for_profile(animation["runtime_profile"]),
-            "membership_start": info["animations"][index]["membership_start"],
-            "membership_count": len(animation["component_indices"]),
-            "component_indices": animation["component_indices"],
-        }
-        for index, animation in enumerate(expected_animations)
-    ]
-    if (
-        manifest.get("animation_ids")
-        != [entry["animation_id"] for entry in expected_animations]
-        or manifest.get("animations") != expected_animations
-        or info["animations"] != expected_binary_animations
-        or manifest.get("components") != info["components"]
-        or manifest.get("shards") != info["shards"]
-        or manifest.get("totals")
-        != {
-            "total_resources": info["total_resources"],
-            "total_frames": info["total_frames"],
-            "total_index_bytes": info["total_index_bytes"],
-            "total_registry_bytes": info["total_registry_bytes"],
-        }
-        or manifest.get("storage")
-        != {
-            "shard_registry_version": info["shard_registry_version"],
-            "frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
-            "stored_index_bytes": info["stored_index_bytes"],
-            "compressed_frame_count": info["compressed_frame_count"],
-            "raw_frame_count": info["raw_frame_count"],
-            "index_storage_ratio": info["index_storage_ratio"],
-        }
-        or manifest.get("source_members")
-        != catalog_manifest_source_members(collection, source_indices)
-    ):
-        raise RuntimeError("catalog manifest mappings differ from indexed payload")
-    input_lock = catalog_input_lock(catalog, refresh=True)
-    if canonical_json_sha256(input_lock) != generation_id:
-        raise RuntimeError("catalog inputs changed while verifying the generation")
-    expected_locks = {
-        "input_lock_sha256": generation_id,
-        "engine_source_contract_sha256": input_lock[
-            "engine_source_contract_sha256"
-        ],
-        "baldur_real_sha256": input_lock["baldur_real_sha256"],
-        "member_count": len(collection["source_members"]),
-        "leaf_job_count": len(input_lock["leaf_jobs"]),
-        "input_lock": input_lock,
-    }
-    if manifest.get("locks") != expected_locks or manifest.get(
-        "validation"
-    ) != catalog_build_validation(collection, contract.scale):
-        raise RuntimeError("catalog build locks or validation gates differ")
-    resources = {
-        resref
-        for values in info["animation_resources"].values()
-        for resref in values
-    }
-    collisions = catalog_override_collisions(catalog, resources)
-    if collisions:
-        raise RuntimeError(f"override collision: {', '.join(collisions)}")
-    return {
-        "generation_id": generation_id,
-        "registry_catalog": str(catalog_path),
-        **info,
-    }
-
-
-def catalog_pointer_value(catalog: dict[str, Any]) -> dict[str, Any]:
-    generation = catalog_generation_dir(catalog)
-    build_manifest = generation / "build" / "build-manifest.json"
-    runtime_manifest = generation / "runtime" / "runtime-manifest.json"
-    if not build_manifest.is_file() or not runtime_manifest.is_file():
-        raise RuntimeError("catalog generation is missing build or runtime manifest")
-    return {
-        "schema": CATALOG_POINTER_SCHEMA,
-        "generation_id": catalog_generation_id(catalog),
-        "job_sha256": sha256_file(Path(catalog["_job_file"])),
-        "generation_dir": relative_project_path(generation),
-        "build_manifest": "build/build-manifest.json",
-        "build_manifest_sha256": sha256_file(build_manifest),
-        "runtime_manifest": "runtime/runtime-manifest.json",
-        "runtime_manifest_sha256": sha256_file(runtime_manifest),
-    }
-
-
-def write_catalog_pointer(catalog: dict[str, Any]) -> dict[str, Any]:
-    value = catalog_pointer_value(catalog)
-    pointer = catalog_pointer_path(catalog)
-    assert_workspace_child(pointer, "catalog generation pointer")
-    write_json(pointer, value)
-    return value
-
-
-def verify_catalog_pointer(catalog: dict[str, Any]) -> dict[str, Any]:
-    pointer = catalog_pointer_path(catalog)
-    value = read_json(pointer)
-    expected = catalog_pointer_value(catalog)
-    if value != expected:
-        raise RuntimeError("catalog current-generation pointer differs from inputs")
-    return value
 
 
 class CatalogInputsChanged(RuntimeError):
@@ -8112,8 +7297,22 @@ def catalog_generation_snapshot(catalog: dict[str, Any], *, full_verify: bool) -
 def plan_catalog(
     catalog: dict[str, Any], *, full_verify: bool = False
 ) -> dict[str, Any]:
-    generation_id = catalog_generation_id(catalog)
-    generation = catalog_generation_dir(catalog)
+    delta = "_catalog_parent" in catalog
+    pointer = (
+        read_json(catalog_pointer_path(catalog))
+        if not delta and catalog_pointer_path(catalog).is_file()
+        else None
+    )
+    generation_id = (
+        catalog_generation_id(catalog) if delta else pointer.get("generation_id") if pointer else None
+    )
+    generation = (
+        catalog_generation_dir(catalog)
+        if delta
+        else resolve_path(str(pointer["generation_dir"]))
+        if pointer
+        else None
+    )
     current = None
     error = None
     if catalog_pointer_path(catalog).is_file():
@@ -8124,7 +7323,7 @@ def plan_catalog(
     return {
         "job_id": catalog["job_id"],
         "method": upscale_method_description(upscale_contract(catalog)),
-        "mode": "parent-plus-delta" if "_catalog_parent" in catalog else "legacy-full",
+        "mode": "parent-plus-delta" if delta else "immutable-root",
         "delta_animation_ids": [
             member["animation"]["id"] for member in catalog["_catalog_members"]
         ],
@@ -8426,264 +7625,6 @@ def installed_xn_state_contract_errors(
     return errors
 
 
-def installed_catalog_state_contract_errors(
-    state: dict[str, Any], targets_by_path: dict[str, dict[str, Any]]
-) -> list[str]:
-    errors: list[str] = []
-
-    def path_key(value: Any) -> str:
-        return str(value).replace("\\", "/").casefold()
-
-    def require_role(role: str) -> dict[str, Any] | None:
-        matches = [target for target in targets_by_path.values() if target.get("role") == role]
-        if len(matches) != 1:
-            errors.append(f"catalog installation requires exactly one {role} target")
-            return None
-        return matches[0]
-
-    if state.get("schema") != XN_CATALOG_INSTALL_STATE_SCHEMA:
-        errors.append("catalog installation state schema is invalid")
-        return errors
-    scale = state.get("catalog_scale")
-    catalog_version = state.get("catalog_version")
-    if (
-        state.get("registry_layout") != "catalog"
-        or state.get("catalog_magic")
-        != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-        or catalog_version
-        not in {
-            LEGACY_XN_REGISTRY_CATALOG_VERSION,
-            XN_REGISTRY_CATALOG_VERSION,
-        }
-        or isinstance(scale, bool)
-        or scale not in {2, 4}
-    ):
-        errors.append("catalog installation binary contract is invalid")
-    if catalog_version == XN_REGISTRY_CATALOG_VERSION:
-        directory_count = state.get("directory_count")
-        directory_entry_bytes = state.get("directory_entry_bytes")
-        directory_sha256 = str(state.get("directory_sha256", "")).upper()
-        if (
-            isinstance(directory_count, bool)
-            or not isinstance(directory_count, int)
-            or not 1 <= directory_count <= MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES
-            or directory_entry_bytes != REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES
-            or re.fullmatch(r"[0-9A-F]{64}", directory_sha256) is None
-        ):
-            errors.append("catalog installation v2 directory contract is invalid")
-        if state.get("shard_registry_version") not in {
-            XN_REGISTRY_VERSION,
-            XN_COMPRESSED_REGISTRY_VERSION,
-        }:
-            errors.append("catalog installation shard storage version is invalid")
-        if (
-            re.fullmatch(
-                r"[0-9A-F]{64}",
-                str(state.get("logical_content_sha256", "")).upper(),
-            )
-            is None
-        ):
-            errors.append("catalog installation logical content digest is invalid")
-    for integer_field, maximum in (
-        ("animation_count", MAX_REGISTRY_CATALOG_ANIMATIONS),
-        ("component_count", MAX_REGISTRY_CATALOG_COMPONENTS),
-        ("membership_count", MAX_REGISTRY_CATALOG_MEMBERSHIPS),
-        ("shard_count", MAX_REGISTRY_CATALOG_SHARDS),
-        ("total_resources", MAX_REGISTRY_CATALOG_RESOURCES),
-        ("total_frames", MAX_REGISTRY_CATALOG_FRAMES),
-        ("total_index_bytes", MAX_REGISTRY_CATALOG_BYTES),
-        ("total_registry_bytes", MAX_REGISTRY_CATALOG_BYTES),
-    ):
-        value = state.get(integer_field)
-        if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= maximum:
-            errors.append(f"catalog installation counter is invalid: {integer_field}")
-    animation_ids = state.get("animation_ids")
-    if (
-        not isinstance(animation_ids, list)
-        or not animation_ids
-        or animation_ids != sorted(set(animation_ids))
-        or any(re.fullmatch(r"0x[0-9A-F]{4}", str(value)) is None for value in animation_ids)
-    ):
-        errors.append("catalog installation animation ids are invalid")
-    runtime_profiles = state.get("runtime_profiles")
-    if (
-        not isinstance(runtime_profiles, list)
-        or not runtime_profiles
-        or runtime_profiles != sorted(set(runtime_profiles))
-        or set(runtime_profiles) - SUPPORTED_RUNTIME_PROFILES
-    ):
-        errors.append("catalog installation runtime profiles are invalid")
-
-    catalog_target = require_role("catalog")
-    owner_target = require_role("catalog-owner")
-    require_role("runtime-dll")
-    require_role("runtime-ini")
-    shard_targets = [
-        target
-        for target in targets_by_path.values()
-        if target.get("role") == "content-addressed-shard"
-    ]
-    retired_shard_targets = [
-        target
-        for target in targets_by_path.values()
-        if target.get("role") == "retired-content-addressed-shard"
-    ]
-    if len(shard_targets) != state.get("shard_count"):
-        errors.append("catalog installation shard target count differs")
-    if retired_shard_targets and state.get("installation_mode") != "storage-repack":
-        errors.append("retired catalog shards require a storage-repack state")
-    allowed_roles = {
-        "catalog",
-        "catalog-owner",
-        "runtime-dll",
-        "runtime-ini",
-        "content-addressed-shard",
-        "retired-content-addressed-shard",
-    }
-    for relative, target in targets_by_path.items():
-        role = target.get("role")
-        if role not in allowed_roles:
-            errors.append(f"catalog installation target role is invalid: {relative}")
-        if not isinstance(target.get("immutable_noop"), bool):
-            errors.append(f"catalog immutable target flag is invalid: {relative}")
-        if role == "retired-content-addressed-shard":
-            retired_match = re.fullmatch(
-                r"iee-assets/creature-sprites/creaturesprites-xn-([0-9a-f]{64})\.registry",
-                relative,
-            )
-            original_sha256 = str(target.get("original_sha256", "")).upper()
-            restore_sha256 = str(target.get("restore_source_sha256", "")).upper()
-            restore_text = str(target.get("restore_source_path", ""))
-            restore_path = Path(restore_text.replace("\\", "/"))
-            if (
-                target.get("immutable_noop") is not False
-                or target.get("existed_before") is not True
-                or target.get("installed_present") is not False
-                or target.get("installed_sha256") is not None
-                or retired_match is None
-                or original_sha256 != restore_sha256
-                or re.fullmatch(r"[0-9A-F]{64}", original_sha256) is None
-                or (
-                    retired_match is not None
-                    and retired_match.group(1).upper() != original_sha256
-                )
-                or not restore_text
-                or restore_path.is_absolute()
-                or ".." in restore_path.parts
-            ):
-                errors.append(f"retired catalog shard contract is invalid: {relative}")
-        elif target.get("installed_present") is not True:
-            errors.append(f"catalog target is not installed: {relative}")
-        if role == "content-addressed-shard" and re.fullmatch(
-            r"iee-assets/creature-sprites/creaturesprites-xn-[0-9a-f]{64}\.registry",
-            relative,
-        ) is None:
-            errors.append(f"catalog shard target name is invalid: {relative}")
-
-    catalog_relative = path_key(state.get("catalog_relative_path", ""))
-    expected_catalog_relative = path_key(
-        "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME
-    )
-    catalog_sha = str(state.get("catalog_sha256", "")).upper()
-    if (
-        catalog_relative != expected_catalog_relative
-        or re.fullmatch(r"[0-9A-F]{64}", catalog_sha) is None
-        or catalog_target is None
-        or path_key(catalog_target.get("relative_path", "")) != catalog_relative
-        or str(catalog_target.get("installed_sha256", "")).upper() != catalog_sha
-    ):
-        errors.append("catalog installation primary target differs")
-
-    game_root = Path(str(state.get("game_root", ""))).resolve()
-    catalog_path = game_root / Path(
-        str(state.get("catalog_relative_path", "")).replace("\\", "/")
-    )
-    if catalog_path.is_file():
-        try:
-            info = inspect_registry_catalog(catalog_path, require_exact_shards=False)
-            if (
-                info["sha256"] != catalog_sha
-                or info["version"] != catalog_version
-                or info["shard_registry_version"]
-                != state.get("shard_registry_version", XN_REGISTRY_VERSION)
-                or (
-                    catalog_version == XN_REGISTRY_CATALOG_VERSION
-                    and info["logical_content_sha256"]
-                    != state.get("logical_content_sha256")
-                )
-                or info["scale"] != scale
-                or info["animation_count"] != state.get("animation_count")
-                or info["component_count"] != state.get("component_count")
-                or info["membership_count"] != state.get("membership_count")
-                or info["shard_count"] != state.get("shard_count")
-                or info["total_resources"] != state.get("total_resources")
-                or info["total_frames"] != state.get("total_frames")
-                or info["total_index_bytes"] != state.get("total_index_bytes")
-                or info["total_registry_bytes"] != state.get("total_registry_bytes")
-                or (
-                    catalog_version == XN_REGISTRY_CATALOG_VERSION
-                    and (
-                        info["directory_count"] != state.get("directory_count")
-                        or info["directory_entry_bytes"]
-                        != state.get("directory_entry_bytes")
-                        or info["directory_sha256"] != state.get("directory_sha256")
-                    )
-                )
-                or [entry["animation_id"] for entry in info["animations"]]
-                != animation_ids
-            ):
-                errors.append("installed catalog counters or mappings differ")
-            indexed_shards = {
-                path_key(shard["registry"]): shard["sha256"]
-                for shard in info["shards"]
-            }
-            target_shards = {
-                path_key(target["relative_path"]): str(
-                    target.get("installed_sha256", "")
-                ).upper()
-                for target in shard_targets
-            }
-            if indexed_shards != target_shards:
-                errors.append("installed catalog shard targets differ from index")
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            errors.append(f"installed catalog validation failed: {error}")
-
-    owner_relative = path_key(
-        "iee-assets/creature-sprites/CreatureSprites-XN.catalog-owner.json"
-    )
-    if owner_target is None or path_key(
-        owner_target.get("relative_path", "")
-    ) != owner_relative:
-        errors.append("catalog owner target path is invalid")
-    else:
-        owner_path = game_root / Path(
-            str(owner_target["relative_path"]).replace("\\", "/")
-        )
-        try:
-            owner = read_json(owner_path)
-            if (
-                owner.get("schema")
-                != "bg2-upscale-creature-sprite-xn-catalog-owner-v1"
-                or owner.get("status") != "active"
-                or owner.get("transaction_id") != state.get("transaction_id")
-                or owner.get("generation_id") != state.get("generation_id")
-                or owner.get("job_id") != state.get("job_id")
-                or owner.get("job_sha256") != state.get("job_sha256")
-                or path_key(owner.get("catalog_relative_path", ""))
-                != catalog_relative
-                or owner.get("catalog_sha256") != catalog_sha
-                or owner.get("catalog_bytes") != state.get("catalog_bytes")
-                or owner.get("animation_ids") != animation_ids
-                or owner.get("method") != state.get("method")
-                or str(owner.get("game_root", "")).casefold()
-                != str(state.get("game_root", "")).casefold()
-            ):
-                errors.append("catalog owner metadata differs from active state")
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-            errors.append(f"catalog owner metadata is invalid: {error}")
-    return errors
-
-
 def first_installed_target_reparse_component(
     game_root: Path, relative: Path
 ) -> Path | None:
@@ -8827,11 +7768,7 @@ def installed_state_integrity(
                     continue
         checked += 1
     if contract_paths_safe:
-        if state.get("schema") == XN_CATALOG_INSTALL_STATE_SCHEMA:
-            errors.extend(
-                installed_catalog_state_contract_errors(state, targets_by_path)
-            )
-        elif expected_scale is not None or state.get("registry_layout") is not None:
+        if expected_scale is not None or state.get("registry_layout") is not None:
             errors.extend(
                 installed_xn_state_contract_errors(
                     state, targets_by_path, expected_scale
@@ -8858,730 +7795,6 @@ def state_path_matches_exact_file(value: Any, expected: Path) -> bool:
     )
 
 
-def read_sealed_json(
-    path: Path, expected_sha256: Any, label: str
-) -> dict[str, Any]:
-    expected = str(expected_sha256 or "").upper()
-    if re.fullmatch(r"[0-9A-F]{64}", expected) is None:
-        raise RuntimeError(f"{label} sealed SHA-256 is invalid")
-    metadata = path.stat()
-    if not (1 <= metadata.st_size <= 64 * 1024 * 1024):
-        raise RuntimeError(f"{label} sealed JSON size is invalid")
-    raw = path.read_bytes()
-    actual = hashlib.sha256(raw).hexdigest().upper()
-    if actual != expected:
-        raise RuntimeError(f"{label} differs from its sealed SHA-256")
-    try:
-        value = json.loads(raw.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise RuntimeError(f"{label} sealed JSON is invalid: {error}") from error
-    if not isinstance(value, dict):
-        raise RuntimeError(f"{label} sealed JSON must be an object")
-    return value
-
-
-def sealed_catalog_generation_integrity(
-    catalog: dict[str, Any], state: dict[str, Any]
-) -> dict[str, Any]:
-    """Verify an installed catalog generation without consulting live inputs.
-
-    The active state selects immutable build/runtime manifests by exact path and
-    hash.  Their recorded input lock seals the generation id; catalog shards and
-    the DLL are then verified from that generation.  No current engine tree,
-    member/leaf build, runner hash, or current-generation pointer participates.
-    """
-
-    errors: list[str] = []
-    has_live_qa_contract = "_qa_contract" in catalog
-    live_qa_by_animation = {
-        entry["animation_id"]: entry
-        for entry in catalog.get("_qa_contract", [])
-        if isinstance(entry, dict) and isinstance(entry.get("animation_id"), str)
-    }
-    job_file = Path(str(catalog.get("_job_file", "")))
-    current_job_sha256 = ""
-    current_job_hash_error: OSError | None = None
-    try:
-        current_job_sha256 = sha256_file(job_file)
-    except OSError as error:
-        current_job_hash_error = error
-    live_job_identity_matches = bool(
-        current_job_sha256
-        and state.get("job_id") == catalog.get("job_id")
-        and str(state.get("job_sha256", "")).upper() == current_job_sha256
-    )
-    active_identity_matches_job = live_job_identity_matches
-    if state.get("schema") != XN_CATALOG_INSTALL_STATE_SCHEMA:
-        errors.append("active catalog installation schema is invalid")
-    if not state_path_matches_exact_file(state.get("job_file"), job_file):
-        errors.append("active state job_file differs from the catalog job")
-    sealed_catalog_version = state.get("catalog_version")
-    if sealed_catalog_version not in {
-        LEGACY_XN_REGISTRY_CATALOG_VERSION,
-        XN_REGISTRY_CATALOG_VERSION,
-    }:
-        errors.append("active catalog binary version is unsupported")
-
-    generation_id = str(state.get("generation_id", ""))
-    if re.fullmatch(r"[0-9A-F]{64}", generation_id) is None:
-        errors.append("active catalog generation_id is invalid")
-        return {
-            "active_identity_matches_job": active_identity_matches_job,
-            "active_generation_is_sealed": False,
-            "active_generation_seal_errors": errors,
-        }
-
-    try:
-        run_root = job_path(catalog, "run_dir")
-    except (KeyError, OSError, RuntimeError, ValueError) as error:
-        errors.append(f"catalog run_dir is invalid: {error}")
-        return {
-            "active_identity_matches_job": active_identity_matches_job,
-            "active_generation_is_sealed": False,
-            "active_generation_seal_errors": errors,
-        }
-    generation_relative = Path("generations") / generation_id.lower()
-    generation_root = run_root / generation_relative
-    build_manifest_path = generation_root / "build" / "build-manifest.json"
-    runtime_manifest_path = generation_root / "runtime" / "runtime-manifest.json"
-
-    manifest_specs = (
-        (
-            "build manifest",
-            "build_manifest",
-            "build_manifest_sha256",
-            build_manifest_path,
-        ),
-        (
-            "runtime manifest",
-            "runtime_manifest",
-            "runtime_manifest_sha256",
-            runtime_manifest_path,
-        ),
-    )
-    manifests: dict[str, dict[str, Any]] = {}
-    for label, path_field, hash_field, expected_path in manifest_specs:
-        if not state_path_matches_exact_file(state.get(path_field), expected_path):
-            errors.append(f"active state {path_field} is outside the sealed generation")
-            continue
-        try:
-            relative = expected_path.relative_to(run_root)
-            reparse_component = first_installed_target_reparse_component(
-                run_root, relative
-            )
-            if reparse_component is not None:
-                raise RuntimeError(
-                    f"path crosses a reparse point: {reparse_component}"
-                )
-            manifests[path_field] = read_sealed_json(
-                expected_path, state.get(hash_field), label
-            )
-        except (OSError, RuntimeError, ValueError) as error:
-            errors.append(f"sealed {label} is invalid: {error}")
-
-    build = manifests.get("build_manifest")
-    runtime = manifests.get("runtime_manifest")
-    sealed_job_snapshot_matches = False
-    if build is not None and (
-        build.get("job_snapshot") is not None
-        or build.get("job_snapshot_sha256") is not None
-    ):
-        job_snapshot_relative = build.get("job_snapshot")
-        job_snapshot_sha256 = str(
-            build.get("job_snapshot_sha256", "")
-        ).upper()
-        job_snapshot_path = generation_root / "build" / Path(
-            str(job_snapshot_relative)
-        )
-        try:
-            if job_snapshot_relative != "provenance/job.json":
-                raise RuntimeError("path is not provenance/job.json")
-            relative = job_snapshot_path.relative_to(run_root)
-            reparse_component = first_installed_target_reparse_component(
-                run_root, relative
-            )
-            if reparse_component is not None:
-                raise RuntimeError(
-                    f"path crosses a reparse point: {reparse_component}"
-                )
-            snapshot_sha256 = sha256_file(job_snapshot_path)
-            snapshot = read_json(job_snapshot_path)
-            sealed_job_snapshot_matches = bool(
-                job_snapshot_sha256
-                and job_snapshot_sha256 == snapshot_sha256
-                and job_snapshot_sha256
-                == str(state.get("job_sha256", "")).upper()
-                and snapshot.get("schema") == CATALOG_JOB_SCHEMA
-                and snapshot.get("job_id") == state.get("job_id")
-            )
-            if not sealed_job_snapshot_matches:
-                raise RuntimeError("identity or SHA-256 differs from active state")
-        except (OSError, RuntimeError, ValueError) as error:
-            errors.append(f"sealed catalog job snapshot is invalid: {error}")
-    active_identity_matches_job = bool(
-        live_job_identity_matches or sealed_job_snapshot_matches
-    )
-    if not active_identity_matches_job:
-        if current_job_hash_error is not None:
-            errors.append(
-                f"current catalog job cannot be hashed: {current_job_hash_error}"
-            )
-        errors.append(
-            "active state job_id/job_sha256 differs from the live job and no sealed job snapshot proves it"
-        )
-    state_method = state.get("method")
-    build_method: dict[str, Any] | None = None
-    if not isinstance(state_method, dict) or set(state_method) != {
-        "algorithm",
-        "scale",
-        "passes",
-        "antialias",
-        "xbr_blend",
-        "sampling",
-    }:
-        errors.append("active state upscale method is invalid")
-    elif state_method.get("sampling") != "NEAREST":
-        errors.append("active state sampling is not NEAREST")
-    else:
-        build_method = {
-            key: state_method[key]
-            for key in ("algorithm", "scale", "passes", "antialias", "xbr_blend")
-        }
-
-    catalog_info: dict[str, Any] | None = None
-    sealed_animation_qa_contract: list[dict[str, Any]] = []
-    if build is not None:
-        identity_fields_match = bool(
-            build.get("schema") == CATALOG_BUILD_SCHEMA
-            and build.get("status") == "built-pending-ingame-qa"
-            and build.get("job_id") == state.get("job_id")
-            and str(build.get("job_sha256", "")).upper()
-            == str(state.get("job_sha256", "")).upper()
-            and build.get("generation_id") == generation_id
-            and state_path_matches_exact_file(build.get("job_file"), job_file)
-            and build.get("registry_layout") == "catalog"
-            and build.get("method") == build_method
-        )
-        if not identity_fields_match:
-            errors.append("sealed build manifest identity or method differs")
-        locks = build.get("locks")
-        input_lock = locks.get("input_lock") if isinstance(locks, dict) else None
-        if (
-            not isinstance(locks, dict)
-            or not isinstance(input_lock, dict)
-            or locks.get("input_lock_sha256") != generation_id
-            or canonical_json_sha256(input_lock) != generation_id
-            or input_lock.get("schema")
-            != "bg2-upscale-creature-sprite-xn-catalog-input-lock-v1"
-            or str(input_lock.get("job_sha256", "")).upper()
-            != str(state.get("job_sha256", "")).upper()
-            or not state_path_matches_exact_file(input_lock.get("job_file"), job_file)
-            or input_lock.get("method") != build_method
-        ):
-            errors.append("sealed build input lock does not prove generation_id")
-
-        catalog_relative = str(build.get("registry_catalog", "")).replace(
-            "\\", "/"
-        )
-        expected_catalog_relative = (
-            "iee-assets/creature-sprites/" + XN_REGISTRY_CATALOG_FILENAME
-        )
-        source_catalog = generation_root / "build" / Path(catalog_relative)
-        manifest_shards = build.get("shards")
-        payload_paths_safe = catalog_relative == expected_catalog_relative
-        if not payload_paths_safe:
-            errors.append("sealed build catalog path is invalid")
-        if not isinstance(manifest_shards, list) or not manifest_shards:
-            payload_paths_safe = False
-            errors.append("sealed build shard inventory is invalid")
-        if payload_paths_safe:
-            payload_paths = [source_catalog]
-            seen_shard_paths: set[str] = set()
-            for shard in manifest_shards:
-                registry = (
-                    str(shard.get("registry", "")).replace("\\", "/")
-                    if isinstance(shard, dict)
-                    else ""
-                )
-                if re.fullmatch(
-                    r"iee-assets/creature-sprites/CreatureSprites-XN-[0-9A-F]{64}\.registry",
-                    registry,
-                ) is None or registry in seen_shard_paths:
-                    payload_paths_safe = False
-                    errors.append("sealed build shard path inventory is invalid")
-                    break
-                seen_shard_paths.add(registry)
-                payload_paths.append(generation_root / "build" / Path(registry))
-            if payload_paths_safe:
-                for payload_path in payload_paths:
-                    try:
-                        relative = payload_path.relative_to(run_root)
-                        reparse_component = first_installed_target_reparse_component(
-                            run_root, relative
-                        )
-                    except (OSError, ValueError) as error:
-                        payload_paths_safe = False
-                        errors.append(f"cannot inspect sealed payload path: {error}")
-                        break
-                    if reparse_component is not None:
-                        payload_paths_safe = False
-                        errors.append(
-                            "sealed catalog payload crosses a reparse point: "
-                            f"{reparse_component}"
-                        )
-                        break
-        if payload_paths_safe:
-            try:
-                catalog_info = inspect_registry_catalog(source_catalog)
-            except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
-                errors.append(f"sealed catalog payload is invalid: {error}")
-
-        if catalog_info is not None:
-            totals = {
-                "total_resources": catalog_info["total_resources"],
-                "total_frames": catalog_info["total_frames"],
-                "total_index_bytes": catalog_info["total_index_bytes"],
-                "total_registry_bytes": catalog_info["total_registry_bytes"],
-            }
-            state_animation_ids = state.get("animation_ids")
-            manifest_animations = build.get("animations")
-            manifest_animation_matches = isinstance(manifest_animations, list) and len(
-                manifest_animations
-            ) == len(catalog_info["animations"])
-            if manifest_animation_matches:
-                owner_names = {
-                    CATALOG_OWNER_CHARACTER: "Character",
-                    CATALOG_OWNER_MONSTER_ICEWIND: "MonsterIcewind",
-                    CATALOG_OWNER_MONSTER: "Monster",
-                }
-                for manifest_animation, binary_animation in zip(
-                    manifest_animations, catalog_info["animations"]
-                ):
-                    if not isinstance(manifest_animation, dict) or (
-                        manifest_animation.get("animation_id")
-                        != binary_animation["animation_id"]
-                        or manifest_animation.get("owner")
-                        != owner_names.get(binary_animation["owner"])
-                        or manifest_animation.get("component_indices")
-                        != binary_animation["component_indices"]
-                        or manifest_animation.get("runtime_profile")
-                        not in SUPPORTED_RUNTIME_PROFILES
-                        or catalog_owner_for_profile(
-                            str(manifest_animation.get("runtime_profile"))
-                        )
-                        != binary_animation["owner"]
-                    ):
-                        manifest_animation_matches = False
-                        break
-            source_members = build.get("source_members")
-            source_member_matches = (
-                manifest_animation_matches
-                and isinstance(source_members, list)
-                and len(source_members) == len(manifest_animations)
-            )
-            if source_member_matches:
-                animations_by_id = {
-                    entry["animation_id"]: entry for entry in manifest_animations
-                }
-                previous_animation_id = -1
-                for member in source_members:
-                    animation_id = (
-                        str(member.get("animation_id", ""))
-                        if isinstance(member, dict)
-                        else ""
-                    )
-                    animation = animations_by_id.get(animation_id)
-                    prefixes = member.get("bam_prefixes") if isinstance(member, dict) else None
-                    live_qa = live_qa_by_animation.get(animation_id)
-                    try:
-                        numeric_animation_id = int(animation_id, 16)
-                    except ValueError:
-                        numeric_animation_id = -1
-                    if (
-                        animation is None
-                        or numeric_animation_id <= previous_animation_id
-                        or member.get("runtime_profile")
-                        != animation.get("runtime_profile")
-                        or member.get("component_indices")
-                        != animation.get("component_indices")
-                        or not isinstance(prefixes, list)
-                        or not prefixes
-                        or any(
-                            not isinstance(prefix, str)
-                            or re.fullmatch(r"[A-Z0-9_]{1,8}", prefix) is None
-                            for prefix in prefixes
-                        )
-                        or len(prefixes) != len(set(prefixes))
-                        or (
-                            has_live_qa_contract
-                            and (
-                                live_qa is None
-                                or live_qa.get("runtime_profile")
-                                != animation.get("runtime_profile")
-                                or live_qa.get("bam_prefixes") != prefixes
-                            )
-                        )
-                    ):
-                        source_member_matches = False
-                        break
-                    sealed_animation_qa_contract.append(
-                        {
-                            "animation_id": animation_id,
-                            "runtime_profile": animation["runtime_profile"],
-                            "bam_prefixes": prefixes,
-                            "required_bam_prefixes": (
-                                live_qa["required_bam_prefixes"]
-                                if live_qa is not None
-                                else prefixes
-                            ),
-                        }
-                    )
-                    previous_animation_id = numeric_animation_id
-            if not source_member_matches:
-                sealed_animation_qa_contract.clear()
-            if (
-                catalog_info["sha256"]
-                != str(build.get("registry_catalog_sha256", "")).upper()
-                or catalog_info["sha256"]
-                != str(state.get("catalog_sha256", "")).upper()
-                or catalog_info["registry_catalog_bytes"]
-                != build.get("registry_catalog_bytes")
-                or catalog_info["registry_catalog_bytes"]
-                != state.get("catalog_bytes")
-                or catalog_info["registry_magic"]
-                != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-                or catalog_info["version"] != sealed_catalog_version
-                or catalog_info["scale"] != state.get("catalog_scale")
-                or build.get("registry_scale") != catalog_info["scale"]
-                or build.get("registry_catalog_magic")
-                != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-                or build.get("registry_catalog_version")
-                != sealed_catalog_version
-                or build.get(
-                    "registry_catalog_shard_version", XN_REGISTRY_VERSION
-                )
-                != catalog_info["shard_registry_version"]
-                or (
-                    catalog_info["shard_registry_version"]
-                    == XN_COMPRESSED_REGISTRY_VERSION
-                    and build.get("registry_catalog_frame_storage")
-                    != "XPRESS_HUFF-or-raw-per-frame-v1"
-                )
-                or (
-                    catalog_info["shard_registry_version"]
-                    == XN_COMPRESSED_REGISTRY_VERSION
-                    and (
-                        build.get("registry_catalog_logical_component_digests")
-                        != catalog_info["logical_component_digests"]
-                        or build.get("registry_catalog_logical_content_sha256")
-                        != catalog_info["logical_content_sha256"]
-                    )
-                )
-                or (
-                    sealed_catalog_version == XN_REGISTRY_CATALOG_VERSION
-                    and (
-                        catalog_info["directory_count"]
-                        != build.get("registry_catalog_directory_count")
-                        or catalog_info["directory_entry_bytes"]
-                        != build.get("registry_catalog_directory_entry_bytes")
-                        or catalog_info["directory_sha256"]
-                        != build.get("registry_catalog_directory_sha256")
-                        or catalog_info["directory_count"]
-                        != state.get("directory_count")
-                        or catalog_info["directory_entry_bytes"]
-                        != state.get("directory_entry_bytes")
-                        or catalog_info["directory_sha256"]
-                        != state.get("directory_sha256")
-                    )
-                )
-                or build.get("animation_ids") != state_animation_ids
-                or state_animation_ids
-                != [entry["animation_id"] for entry in catalog_info["animations"]]
-                or build.get("components") != catalog_info["components"]
-                or build.get("shards") != catalog_info["shards"]
-                or build.get("totals") != totals
-                or (
-                    catalog_info["shard_registry_version"]
-                    == XN_COMPRESSED_REGISTRY_VERSION
-                    and build.get("storage")
-                    != {
-                        "shard_registry_version": catalog_info[
-                            "shard_registry_version"
-                        ],
-                        "frame_storage": "XPRESS_HUFF-or-raw-per-frame-v1",
-                        "stored_index_bytes": catalog_info["stored_index_bytes"],
-                        "compressed_frame_count": catalog_info[
-                            "compressed_frame_count"
-                        ],
-                        "raw_frame_count": catalog_info["raw_frame_count"],
-                        "index_storage_ratio": catalog_info[
-                            "index_storage_ratio"
-                        ],
-                    }
-                )
-                or state.get("animation_count") != catalog_info["animation_count"]
-                or state.get("component_count") != catalog_info["component_count"]
-                or state.get("membership_count") != catalog_info["membership_count"]
-                or state.get("shard_count") != catalog_info["shard_count"]
-                or state.get("total_resources") != totals["total_resources"]
-                or state.get("total_frames") != totals["total_frames"]
-                or state.get("total_index_bytes") != totals["total_index_bytes"]
-                or state.get("total_registry_bytes") != totals["total_registry_bytes"]
-                or not manifest_animation_matches
-                or not source_member_matches
-                or build.get("runtime_profiles")
-                != sorted(
-                    {
-                        entry["runtime_profile"]
-                        for entry in sealed_animation_qa_contract
-                    }
-                )
-                or build.get("runtime_profiles") != state.get("runtime_profiles")
-            ):
-                errors.append("sealed build catalog metadata differs from its payload")
-
-    if runtime is not None:
-        if (
-            runtime.get("schema") != RUNTIME_SCHEMA
-            or runtime.get("status") != "built-tested"
-            or runtime.get("tests_status") != "passed"
-            or (
-                sealed_catalog_version == XN_REGISTRY_CATALOG_VERSION
-                and runtime.get("bridge_worker_tests_status") != "passed"
-            )
-            or runtime.get("job_id") != state.get("job_id")
-            or str(runtime.get("job_sha256", "")).upper()
-            != str(state.get("job_sha256", "")).upper()
-            or runtime.get("generation_id") != generation_id
-            or runtime.get("method") != build_method
-            or runtime.get("runtime_profiles") != state.get("runtime_profiles")
-            or (build is not None and runtime.get("runtime_profiles") != build.get("runtime_profiles"))
-            or runtime.get("catalog_magic")
-            != registry_magic_name(XN_REGISTRY_CATALOG_MAGIC)
-            or runtime.get("catalog_version") != sealed_catalog_version
-            or (
-                sealed_catalog_version == XN_REGISTRY_CATALOG_VERSION
-                and build is not None
-                and (
-                    runtime.get("catalog_directory_count")
-                    != build.get("registry_catalog_directory_count")
-                    or runtime.get("catalog_directory_entry_bytes")
-                    != build.get("registry_catalog_directory_entry_bytes")
-                    or runtime.get("catalog_directory_sha256")
-                    != build.get("registry_catalog_directory_sha256")
-                )
-            )
-            or runtime.get("catalog_shard_registry_magic")
-            != registry_magic_name(XN_REGISTRY_MAGIC)
-            or runtime.get("catalog_shard_registry_version")
-            != (
-                build.get("registry_catalog_shard_version", XN_REGISTRY_VERSION)
-                if build is not None
-                else XN_REGISTRY_VERSION
-            )
-            or (
-                build is not None
-                and build.get("registry_catalog_shard_version")
-                == XN_COMPRESSED_REGISTRY_VERSION
-                and runtime.get("catalog_frame_storage")
-                != build.get("registry_catalog_frame_storage")
-            )
-            or runtime.get("catalog_shard_animation_id_sentinel") != "0xFFFF"
-            or runtime.get("dll") != "InfinityEngine-Enhancer.dll"
-        ):
-            errors.append("sealed runtime manifest identity or contract differs")
-        runtime_dll = generation_root / "runtime" / "InfinityEngine-Enhancer.dll"
-        try:
-            relative = runtime_dll.relative_to(run_root)
-            reparse_component = first_installed_target_reparse_component(
-                run_root, relative
-            )
-            if reparse_component is not None:
-                raise RuntimeError(
-                    f"path crosses a reparse point: {reparse_component}"
-                )
-            dll_sha256 = sha256_file(runtime_dll)
-            if (
-                dll_sha256 != str(runtime.get("dll_sha256", "")).upper()
-                or dll_sha256 != str(state.get("source_dll_sha256", "")).upper()
-            ):
-                raise RuntimeError("DLL differs from its sealed SHA-256")
-        except (OSError, RuntimeError, ValueError) as error:
-            errors.append(f"sealed runtime DLL is invalid: {error}")
-
-    return {
-        "active_identity_matches_job": active_identity_matches_job,
-        "active_identity_matches_live_job": live_job_identity_matches,
-        "sealed_job_snapshot_matches": sealed_job_snapshot_matches,
-        "active_generation_is_sealed": bool(
-            active_identity_matches_job
-            and build is not None
-            and runtime is not None
-            and catalog_info is not None
-            and not errors
-        ),
-        "active_generation_seal_errors": errors,
-        "sealed_generation_root": str(generation_root),
-        "sealed_build_manifest": str(build_manifest_path),
-        "sealed_runtime_manifest": str(runtime_manifest_path),
-        "sealed_animation_qa_contract": sealed_animation_qa_contract,
-    }
-
-
-def catalog_qa_log_report(
-    catalog: dict[str, Any], write_report: bool
-) -> dict[str, Any]:
-    log_path = job_path(catalog, "game_root") / "InfinityEngine-Enhancer.log"
-    text = log_path.read_text(encoding="utf-8", errors="replace")
-    state_path = active_state_path(catalog)
-    state = read_json(state_path) if state_path.is_file() else {}
-    seal = sealed_catalog_generation_integrity(catalog, state)
-    contract = upscale_contract(catalog)
-    ready_marker = "Creature sprite xBR catalog ready:"
-    session = runtime_log_session_after_install(
-        text, ready_marker, str(state.get("installed_at_utc", ""))
-    )
-    session_lower = session.lower()
-    animation_reports: list[dict[str, Any]] = []
-    all_composition_by_animation_prefix: dict[
-        tuple[str, str], list[str]
-    ] = {}
-    owner_scope_by_profile: dict[str, bool] = {}
-    runtime_health_by_profile: dict[str, dict[str, Any]] = {}
-    for animation_contract in seal.get("sealed_animation_qa_contract", []):
-        animation_id = animation_contract["animation_id"]
-        profile = animation_contract["runtime_profile"]
-        owner, render_owner = runtime_owner_labels(profile)
-        prefixes = animation_contract["bam_prefixes"]
-        required_prefixes = animation_contract.get(
-            "required_bam_prefixes", prefixes
-        )
-        composition_by_prefix = {
-            prefix: animation_composition_lines(session, animation_id, prefix)
-            for prefix in prefixes
-        }
-        for prefix, lines in composition_by_prefix.items():
-            all_composition_by_animation_prefix[(animation_id, prefix)] = lines
-        owner_scope = (
-            f"owner scope installed: {owner}".lower() in session_lower
-        )
-        owner_scope_by_profile[profile] = owner_scope
-        reached = (
-            f"Creature sprite animation {animation_id} reached {render_owner}".lower()
-            in session_lower
-        )
-        materialized = (
-            f"Creature sprite catalog animation {animation_id} materialized:".lower()
-            in session_lower
-        )
-        on_demand_pattern = re.compile(
-            r"Creature sprite catalog shard \d+ ready on demand for animation "
-            + re.escape(animation_id)
-            + r", resref ([A-Z0-9_]{1,8}):",
-            re.IGNORECASE,
-        )
-        on_demand_resrefs = sorted(
-            {match.upper() for match in on_demand_pattern.findall(session)}
-        )
-        payload_ready = materialized or bool(on_demand_resrefs)
-        animation_reports.append(
-            {
-                "animation_id": animation_id,
-                "runtime_profile": profile,
-                "owner_scope": owner_scope,
-                "materialized": materialized,
-                "on_demand_resrefs": on_demand_resrefs,
-                "payload_ready": payload_ready,
-                "animation_reached": reached,
-                "bam_prefixes": prefixes,
-                "required_bam_prefixes": required_prefixes,
-                "composition_by_prefix": {
-                    prefix: len(lines)
-                    for prefix, lines in composition_by_prefix.items()
-                },
-                "all_prefixes_composed": all(composition_by_prefix.values()),
-                "required_prefixes_composed": all(
-                    composition_by_prefix[prefix] for prefix in required_prefixes
-                ),
-            }
-        )
-    for profile in sorted({report["runtime_profile"] for report in animation_reports}):
-        profile_compositions = {
-            f"{report['animation_id']}:{prefix}": (
-                all_composition_by_animation_prefix[
-                    (report["animation_id"], prefix)
-                ]
-            )
-            for report in animation_reports
-            if report["runtime_profile"] == profile
-            for prefix in report["required_bam_prefixes"]
-        }
-        runtime_health_by_profile[profile] = runtime_session_health(
-            session, profile, profile_compositions
-        )
-    ready_line = next(
-        (line for line in session.splitlines() if ready_marker in line), ""
-    )
-    pack_ready = bool(
-        ready_line
-        and f"scale=x{contract.scale}," in ready_line
-        and f"{len(animation_reports)} animations," in ready_line
-        and f"source={XN_REGISTRY_CATALOG_FILENAME};" in ready_line
-        and "filter=NEAREST" in ready_line
-    )
-    integrity = installed_state_integrity(state)
-    report = {
-        "schema": "bg2-upscale-creature-sprite-catalog-technical-qa-v1",
-        "created_at_utc": utc_now(),
-        "job_id": catalog["job_id"],
-        "generation_id": state.get("generation_id"),
-        "log": str(log_path),
-        "session_after_install": bool(session),
-        "pack_ready": pack_ready,
-        "registry_layout": state.get("registry_layout"),
-        "registry_scale": state.get("catalog_scale"),
-        "owner_palette_snapshot": (
-            "owner-scoped CVidPalette::Realize snapshot" in session
-        ),
-        "animation_results": animation_reports,
-        "owner_scope_by_profile": owner_scope_by_profile,
-        "composition_count": sum(
-            len(lines)
-            for lines in all_composition_by_animation_prefix.values()
-        ),
-        "runtime_health_by_profile": runtime_health_by_profile,
-        "qa_scenarios": catalog.get("qa", {}).get("animations", []),
-        **seal,
-        **integrity,
-    }
-    report["technical_pass"] = bool(
-        report["session_after_install"]
-        and report["pack_ready"]
-        and report["active_identity_matches_job"]
-        and report["active_generation_is_sealed"]
-        and report["owner_palette_snapshot"]
-        and report["installed_files_match"]
-        and all(owner_scope_by_profile.values())
-        and all(
-            animation["payload_ready"]
-            and animation["animation_reached"]
-            and animation["required_prefixes_composed"]
-            for animation in animation_reports
-        )
-        and all(
-            health["runtime_health_pass"]
-            for health in runtime_health_by_profile.values()
-        )
-        and "Creature sprite xBR pack disabled:" not in session
-    )
-    if write_report:
-        write_json(
-            job_path(catalog, "run_dir") / "qa" / "technical-log.json",
-            report,
-        )
-    return report
-
-
 def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     if job.get("_kind") == "catalog":
         state_path = active_state_path(job)
@@ -9599,7 +7812,9 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
             if write_report:
                 write_json(job_path(job, "run_dir") / "qa" / "technical-log.json", report)
             return report
-        return catalog_qa_log_report(job, write_report)
+        raise RuntimeError(
+            "legacy catalog QA states are read-only; reinstall with the thin installer"
+        )
     log_path = job_path(job, "game_root") / "InfinityEngine-Enhancer.log"
     text = log_path.read_text(encoding="utf-8", errors="replace")
     state_path = active_state_path(job)
@@ -9726,12 +7941,9 @@ def record_qa(job: dict[str, Any], result: str, note: str) -> dict[str, Any]:
         }
     else:
         if job.get("_kind") == "catalog":
-            seal = sealed_catalog_generation_integrity(job, state)
-            if not seal["active_identity_matches_job"]:
-                raise RuntimeError("active catalog identity differs from the catalog job")
-            if not seal["active_generation_is_sealed"]:
-                details = "; ".join(seal["active_generation_seal_errors"])
-                raise RuntimeError(f"active catalog generation is not sealed: {details}")
+            raise RuntimeError(
+                "legacy catalog QA states are read-only; reinstall with the thin installer"
+            )
         technical = qa_log_report(job, write_report=True)
     if result == "pass" and not technical["technical_pass"]:
         raise RuntimeError("cannot validate: runtime log does not prove sprite composition")
