@@ -1,0 +1,422 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T12:06:16.6677027Z",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monster-icewind",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0",
+    "catalog_generation": "E088407784AAF7AAC7D91E74E0BC56E2C22F2ACBAB4C9EA707ABCC8DCC4651B6"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "note": "Toutes les creatures Icewind testees non citees comme anomalie ont ete validees explicitement par utilisateur le 2026-09-13."
+  },
+  "exclusions": [
+    {
+      "animation_ids": [
+        "0xE060",
+        "0xE0D0",
+        "0xE261",
+        "0xE262"
+      ],
+      "state": "test-invalid",
+      "reason": "IDs MonsterIcewind non utilises par les CRE stock; ressources au layout Monster 7000; aliases jouables 0x7F0D, 0x7F11, 0x7F09, 0x7F23."
+    },
+    {
+      "animation_ids": [
+        "0xE700",
+        "0xE720",
+        "0xE800"
+      ],
+      "state": "pending-palette-review",
+      "reason": "Couleurs violettes signalees; comparaison vanilla demandee."
+    },
+    {
+      "animation_ids": [
+        "0xEB00",
+        "0xEB10",
+        "0xED00",
+        "0xED10"
+      ],
+      "state": "qa-failed",
+      "reason": "Flou ingame signale; variante xBR2x a remplacer ou corriger."
+    }
+  ],
+  "entries": [
+    {
+      "animation_id": "0xE010",
+      "name": "Ettin — METN",
+      "bam_prefix": "METN",
+      "creatures": [
+        "OHNETTIN"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e010-metn-ettin/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e010-metn-ettin/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "5D36CB882F6C45BD98FD67A0937C5254805F0432D3F6FBAB369F44DBADA727E1",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE050",
+      "name": "Lich Black — MLER",
+      "bam_prefix": "MLER",
+      "creatures": [
+        "DEMMAU01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e050-mler-lich-black/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e050-mler-lich-black/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C8D4FCA5D72016F17DBD4F54D3E7C2E2F533DD8BC111E6EBA58D38E3212ABAB4",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE070",
+      "name": "Minotaur — MMIN",
+      "bam_prefix": "MMIN",
+      "creatures": [
+        "AMMINOT"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e070-mmin-minotaur/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e070-mmin-minotaur/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "639EFDFE5039992A2479D50B0D3EF0F23378F5BCDC0088D4602693602CD7BDE2",
+      "comparison_sheet_count": 34
+    },
+    {
+      "animation_id": "0xE080",
+      "name": "Mummy — MMUM",
+      "bam_prefix": "MMUM",
+      "creatures": [
+        "FSMUMM"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e080-mmum-mummy/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e080-mmum-mummy/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "0408B661C75867DF616175DEEA84C4077FF3532747EA3042084497674C0B13A6",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE090",
+      "name": "Marilith — MTAN",
+      "bam_prefix": "MTAN",
+      "creatures": [
+        "DEMOSUM1"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e090-mtan-marilith/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e090-mtan-marilith/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "72521139541F847CF425F1D87DD7D460E6195B787F58742366F6FB99F75BBF5E",
+      "comparison_sheet_count": 50
+    },
+    {
+      "animation_id": "0xE0B0",
+      "name": "Troll Blue — MTRO",
+      "bam_prefix": "MTRO",
+      "creatures": [
+        "ROGTRO01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e0b0-mtro-troll-blue/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e0b0-mtro-troll-blue/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "D1AE4007BDAE3C33098EAB14C2E37C5696ADD974E9300F8218F938B04E2CEDA1",
+      "comparison_sheet_count": 34
+    },
+    {
+      "animation_id": "0xE0E0",
+      "name": "Cornugon — MCOR",
+      "bam_prefix": "MCOR",
+      "creatures": [
+        "ABISRED1"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e0e0-mcor-cornugon/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e0e0-mcor-cornugon/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "026CF92763FBCF4183A257990022C962450005579DC9C8E8A65FC20531AAC4D6",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE0F1",
+      "name": "Glabrezu — MGLA",
+      "bam_prefix": "MGLA",
+      "creatures": [
+        "DEMGLA01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f1-mgla-glabrezu/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f1-mgla-glabrezu/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C0DD2E78CA776731D23291873E1CE90F3F09A851FFD6CB16FB96CBF8EEF211BC",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE0F2",
+      "name": "Wailing Virgin — MWAV",
+      "bam_prefix": "MWAV",
+      "creatures": [
+        "BANSHE01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f2-mwav-wailing-virgin/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e0xx-classic-monsters/e0f2-mwav-wailing-virgin/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "B620E7D536541E27B92926471AD4BA90690E58C0FC00AB92685898E6AA416081",
+      "comparison_sheet_count": 26
+    },
+    {
+      "animation_id": "0xE265",
+      "name": "Boar Arctic — MBOA",
+      "bam_prefix": "MBOA",
+      "creatures": [
+        "BDSHA06C"
+      ],
+      "job_file": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e265-mboa-boar-arctic/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e265-mboa-boar-arctic/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C8B1FEF11EF6E470FD2C3789AFEC30C0DE33A00EED114F93C260B925E0809EEF",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE27F",
+      "name": "Boar Wild — MBOA",
+      "bam_prefix": "MBOA",
+      "creatures": [
+        "QABOAR"
+      ],
+      "job_file": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e27f-mboa-boar-wild/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e27f-mboa-boar-wild/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "3CB1C108C05AFCC38A7DBBB6D37DF76CE7D820EC411195C7C55F879C04229887",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE28A",
+      "name": "Troll Spectral — MTRO",
+      "bam_prefix": "MTRO",
+      "creatures": [
+        "QATROL"
+      ],
+      "job_file": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e28a-mtro-troll-spectral/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e28a-mtro-troll-spectral/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "BFB23F5D02FE0DECCCE78647B43E34D5C2C6C84C67AC37505776BC67AD1D7817",
+      "comparison_sheet_count": 34
+    },
+    {
+      "animation_id": "0xE292",
+      "name": "Ettin Ghost — METN",
+      "bam_prefix": "METN",
+      "creatures": [
+        "QAETTI"
+      ],
+      "job_file": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e292-metn-ettin-ghost/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e2xx-iwd-mixed-creatures/e292-metn-ettin-ghost/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "0BBCD0CD3CFEB63285189113B929240C2100B6315DA98293F04F5F2339FBC01C",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE410",
+      "name": "Goblin Bow — MGO2",
+      "bam_prefix": "MGO2",
+      "creatures": [
+        "ELEHOB01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e4xx-goblins/e410-mgo2-goblin-bow/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "0ED818DCE6CDCE63D1009E231F617B6CA2A19CC47EDE6269F524A04C03CC0949",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE420",
+      "name": "Goblin Elite Axe — MGO3",
+      "bam_prefix": "MGO3",
+      "creatures": [
+        "FSHORDE1"
+      ],
+      "job_file": "sprite/families/monster-icewind/e4xx-goblins/e420-mgo3-goblin-elite-axe/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e4xx-goblins/e420-mgo3-goblin-elite-axe/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C9C56C5B09D9D058EC1D9D6578A0A1B4D1288A63020589DAD31948F1D321FDD3",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE430",
+      "name": "Goblin Elite Bow — MGO4",
+      "bam_prefix": "MGO4",
+      "creatures": [
+        "ICGOB02"
+      ],
+      "job_file": "sprite/families/monster-icewind/e4xx-goblins/e430-mgo4-goblin-elite-bow/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e4xx-goblins/e430-mgo4-goblin-elite-bow/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "13854AA7E11752CA89FFEA0F83A5314A092EB268A3655C4B04D34DCD94D62786",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE500",
+      "name": "Lizard Man Elite — MLIZ",
+      "bam_prefix": "MLIZ",
+      "creatures": [
+        "BAZLIZ01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e5xx-lizardfolk/e500-mliz-lizard-man-elite/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e5xx-lizardfolk/e500-mliz-lizard-man-elite/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C10E654ED26FCC6094B1EC5ADADACDBDDDB399476C23D908C1246E51A4BDF610",
+      "comparison_sheet_count": 84
+    },
+    {
+      "animation_id": "0xE600",
+      "name": "Myconid Red — MMYC",
+      "bam_prefix": "MMYC",
+      "creatures": [
+        "ICMYC01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e6xx-myconids/e600-mmyc-myconid-red/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e6xx-myconids/e600-mmyc-myconid-red/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "9756404A6EFA91DA8880B65BE8F0374A66A69E53E713F9E051A18274601B4AF4",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE610",
+      "name": "Myconid Blue — MMY2",
+      "bam_prefix": "MMY2",
+      "creatures": [
+        "ICMYC02"
+      ],
+      "job_file": "sprite/families/monster-icewind/e6xx-myconids/e610-mmy2-myconid-blue/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e6xx-myconids/e610-mmy2-myconid-blue/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C97BA2B8F23E05ECB2E32DC98A0AFE9ACB58172CB017B354E28459F3ADC82502",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE710",
+      "name": "Orog Elite — MNO2",
+      "bam_prefix": "MNO2",
+      "creatures": [
+        "AR18FIG"
+      ],
+      "job_file": "sprite/families/monster-icewind/e7xx-orogs/e710-mno2-orog-elite/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e7xx-orogs/e710-mno2-orog-elite/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "50C8E4710569F1CCF6A529D9395DF37661E59C1570FFD3E801A6194C043FBEB8",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE810",
+      "name": "Orc Range — MOR2",
+      "bam_prefix": "MOR2",
+      "creatures": [
+        "SEWARC01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e8xx-orcs/e810-mor2-orc-range/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e8xx-orcs/e810-mor2-orc-range/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "F9691B8FFB558F0CFA14092F011EC61B509E99D0CE3AC1855D30EDE8ABB9AA43",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE820",
+      "name": "Orc Elite Melee — MOR3",
+      "bam_prefix": "MOR3",
+      "creatures": [
+        "FIRORC03"
+      ],
+      "job_file": "sprite/families/monster-icewind/e8xx-orcs/e820-mor3-orc-elite-melee/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e8xx-orcs/e820-mor3-orc-elite-melee/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "71F017FE204AF18C802FEB5D0150D26515136928A016042957610A8D10D2E193",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE830",
+      "name": "Orc Elite Range — MOR4",
+      "bam_prefix": "MOR4",
+      "creatures": [
+        "FIRARC01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e8xx-orcs/e830-mor4-orc-elite-range/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e8xx-orcs/e830-mor4-orc-elite-range/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "2B8A07CE5A235CA16CCC98813B065F05E9F81FE84585BEAEC9CA5A2A3CC5BD1B",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xE840",
+      "name": "Orc Shaman — MOR5",
+      "bam_prefix": "MOR5",
+      "creatures": [
+        "FSHORDE5"
+      ],
+      "job_file": "sprite/families/monster-icewind/e8xx-orcs/e840-mor5-orc-shaman/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e8xx-orcs/e840-mor5-orc-shaman/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "02177E48BDE9109169DBD505B290815446F3DB0A3238791158FB9971DC882982",
+      "comparison_sheet_count": 24
+    },
+    {
+      "animation_id": "0xE900",
+      "name": "Salamander Fire — MSAL",
+      "bam_prefix": "MSAL",
+      "creatures": [
+        "HGSAL01"
+      ],
+      "job_file": "sprite/families/monster-icewind/e9xx-salamanders/e900-msal-salamander-fire/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e9xx-salamanders/e900-msal-salamander-fire/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "B732560868604719750A15024D7855C4DD2DE2FF54F049AD060EBF919CE59E3E",
+      "comparison_sheet_count": 21
+    },
+    {
+      "animation_id": "0xE910",
+      "name": "Salamander Frost — MSA2",
+      "bam_prefix": "MSA2",
+      "creatures": [
+        "GORDEM2"
+      ],
+      "job_file": "sprite/families/monster-icewind/e9xx-salamanders/e910-msa2-salamander-frost/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e9xx-salamanders/e910-msa2-salamander-frost/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "756B95C40AE058FBF6636EEE49850780C759800C6F0EA8E9E7EED9EFDE751778",
+      "comparison_sheet_count": 20
+    },
+    {
+      "animation_id": "0xEA00",
+      "name": "Shrieker — MSHR",
+      "bam_prefix": "MSHR",
+      "creatures": [
+        "ICFUNG02"
+      ],
+      "job_file": "sprite/families/monster-icewind/eaxx-shriekers-and-shadows/ea00-mshr-shrieker/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/eaxx-shriekers-and-shadows/ea00-mshr-shrieker/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "5EB0F8095FD517F8782A76DC973FD07DAAAE356D25271E5E59B8C34750EC89A0",
+      "comparison_sheet_count": 22
+    },
+    {
+      "animation_id": "0xEB20",
+      "name": "Skeleton Fiend — MSKB",
+      "bam_prefix": "MSKB",
+      "creatures": [
+        "DBONEF01"
+      ],
+      "job_file": "sprite/families/monster-icewind/ebxx-skeletons/eb20-mskb-skeleton-fiend/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/ebxx-skeletons/eb20-mskb-skeleton-fiend/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "53BD578406583293F39A2374B6DFBB64F8E0061F2A7931F637EE2B182639F87D",
+      "comparison_sheet_count": 22
+    },
+    {
+      "animation_id": "0xED20",
+      "name": "Yuan-Ti Priest — MYU3",
+      "bam_prefix": "MYU3",
+      "creatures": [
+        "BOUNHA04"
+      ],
+      "job_file": "sprite/families/monster-icewind/edxx-yuan-ti/ed20-myu3-yuan-ti-priest/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/edxx-yuan-ti/ed20-myu3-yuan-ti-priest/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "A8D8F9CFE60B6DC577BB7861AF71D5721BCCD1DD9EC7C0BA15D642ADA891928D",
+      "comparison_sheet_count": 22
+    },
+    {
+      "animation_id": "0xEF10",
+      "name": "Water Weird — MWWE",
+      "bam_prefix": "MWWE",
+      "creatures": [
+        "ELEMHYDR"
+      ],
+      "job_file": "sprite/families/monster-icewind/efxx-water-weird/ef10-mwwe-water-weird/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/efxx-water-weird/ef10-mwwe-water-weird/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "47ACE7925CB4E920E18E33D3526C9A75139E145FEF811FF4C7B0D95DF54F84F8",
+      "comparison_sheet_count": 20
+    }
+  ],
+  "installation": {
+    "state": "installed-pending-qa",
+    "receipt": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json"
+  },
+  "prior_individual_acceptances": [
+    "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-e0f0-mgic-golem-ice-x2-nearest-v1.json",
+    "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-e400-mgo1-goblin-axe-x2-nearest-v1.json"
+  ],
+  "release_manifest_modified": false
+}
+

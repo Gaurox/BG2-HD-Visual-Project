@@ -1,0 +1,83 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T16:20:13.0196204Z",
+  "resolves_exclusions_in": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-monster-icewind-batch-x2-nearest-v1.json",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monsters",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "5CF74A1B01C06299241D871635A3A78754FB11A88C75F973A7BD13EAF041D220"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "note": "Les quatre creatures auparavant invisibles sont visibles avec leurs alias classiques 7F et explicitement validees ingame par l'utilisateur le 2026-09-13."
+  },
+  "entries": [
+    {
+      "animation_id": "0x7F0D",
+      "replaces_invalid_animation_id": "0xE060",
+      "name": "Lich — MLIC",
+      "bam_prefix": "MLIC",
+      "creature": "QALICW",
+      "job_file": "sprite/families/monsters/7fxx/7f0d-mlic-lich/jobs/x2-nearest-v1.json",
+      "job_sha256": "684B1299C835AE02B4E63B7529776FC05E9D78868448F51A54704B609FA856EE",
+      "source_manifest": "sprite/families/monsters/7fxx/7f0d-mlic-lich/source/stock/manifest.json",
+      "source_manifest_sha256": "E2851ACB3B5929B6E1EB4B74DF8126C355BD0E9369FA593E7EEF17822FDFE0FA",
+      "build_manifest": "sprite/families/monsters/7fxx/7f0d-mlic-lich/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "2EC4465D55E60BCFE45AD649F46C4183C1CE437C8AE909732F465CA520E06C6E"
+    },
+    {
+      "animation_id": "0x7F11",
+      "replaces_invalid_animation_id": "0xE0D0",
+      "name": "Umber Hulk — MUMB",
+      "bam_prefix": "MUMB",
+      "creature": "QAUMBE",
+      "job_file": "sprite/families/monsters/7fxx/7f11-mumb-umber-hulk/jobs/x2-nearest-v1.json",
+      "job_sha256": "634AB242234899FFBCA17E649C55A68CBA3BA789A81C418CD039FC72082419A6",
+      "source_manifest": "sprite/families/monsters/7fxx/7f11-mumb-umber-hulk/source/stock/manifest.json",
+      "source_manifest_sha256": "F149DEA90C19D02932A6D648F8E43C94D5826E48A8685E63B9FFE475F8A24CC7",
+      "build_manifest": "sprite/families/monsters/7fxx/7f11-mumb-umber-hulk/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "B0F4FA9F11E726090D9FDBDCDCA072B1CB239038E274D0CFD288F3C155A57300"
+    },
+    {
+      "animation_id": "0x7F09",
+      "replaces_invalid_animation_id": "0xE261",
+      "name": "Sahuagin — MSAH",
+      "bam_prefix": "MSAH",
+      "creature": "QASAH1",
+      "job_file": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/jobs/x2-nearest-v1.json",
+      "job_sha256": "35FB9C4B2985A77F8DFEE39BBE815B7C4A478D9FD376DD782F68AE8669365B0C",
+      "source_manifest": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/source/stock/manifest.json",
+      "source_manifest_sha256": "465412C1CF4F30B3C85919AACCAF9323E7F463ECEB722436634184A74F2E9DDB",
+      "build_manifest": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "E4B284B7C05EBFCEEE7370367A62713E683DDC900E6D4B5453F7026B8AAC88A2"
+    },
+    {
+      "animation_id": "0x7F23",
+      "replaces_invalid_animation_id": "0xE262",
+      "name": "Sahuagin Large — MSAT",
+      "bam_prefix": "MSAT",
+      "creature": "QASAH2",
+      "job_file": "sprite/families/monsters/7fxx/7f23-msat-sahuagin-large/jobs/x2-nearest-v1.json",
+      "job_sha256": "0CBB769D5C99D7857A5C408E1FF2720A8F013B8CECA462F730B58FA6773DF3B9",
+      "source_manifest": "sprite/families/monsters/7fxx/7f23-msat-sahuagin-large/source/stock/manifest.json",
+      "source_manifest_sha256": "9030FA140B89DD3476A695091F4690A159D233489613C4445C9E3904B8CAF56A",
+      "build_manifest": "sprite/families/monsters/7fxx/7f23-msat-sahuagin-large/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "240610CFADDD30F367E045A6260C1AE87802AE76ADE24675C225E86161BB85D3"
+    }
+  ],
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/correct-classic-aliases-7f-v1.json",
+    "job_sha256": "A0396BD0C7B0600F88F0943CB1ACF7A9471452FB565E64580191024F7005D849",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "3B0658A5D085CA2ECB35BFCD5CB4EFC975351303F3D2535AA257F9C6818ABEA7",
+    "installation_status": "installed-pending-qa"
+  },
+  "release_manifest_modified": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T09:13:50.1775998Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "asset_key": "sprites:family:0x7F04:body:base-resref:MIGO:MIGO:x2-nearest",
+    "family_id": "0x7F04:body:base-resref:MIGO:MIGO",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x7F04",
+    "bam_prefix": "MIGO",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "27519D9AFAC9627D19356A5D8367CA30346F0E343EFF4738CB5177B09C971418"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR3001",
+    "creature": "GORGRD01",
+    "name": "Golem de fer",
+    "filter": "Nearest",
+    "note": "QA ingame validée explicitement par l'utilisateur le 2026-09-13."
+  },
+  "automatic_evidence": {
+    "build_manifest": "sprite/families/monsters/7fxx/7f04-migo-golem-iron/runs/x2-nearest-v1/build/build-manifest.json",
+    "build_manifest_sha256": "C196672A298B6645CC8176F33C652308FDF034E81E9B065226D7B8D625E9A7A4",
+    "runtime_manifest": "sprite/families/monsters/7fxx/7f04-migo-golem-iron/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+    "runtime_manifest_sha256": "E9F4EE6B7C27FEA13CD1FE4D9A490DB0095F9C3E0EDAFDC7F3A33B68195A1DCA",
+    "comparison_sheet_count": 14,
+    "historical_installation_state": "installed",
+    "active_installation_status": "restored after the accepted ingame session"
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f04-migo-golem-iron/source/stock/manifest.json",
+    "source_manifest_sha256": "537674FCB80B76A7642066FE36E32D246B1F5A9D44E908DEB7499AA273ABF4A0",
+    "selected_run": "sprite/families/monsters/7fxx/7f04-migo-golem-iron/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "C196672A298B6645CC8176F33C652308FDF034E81E9B065226D7B8D625E9A7A4",
+    "job_file": "sprite/families/monsters/7fxx/7f04-migo-golem-iron/jobs/x2-nearest-v1.json",
+    "job_sha256": "15ECF1D27ABC54488669BA7DB845A8BF2AA55E0EFB9013F8E4736F2EF4C09BC4"
+  },
+  "release_manifest_modified": false
+}

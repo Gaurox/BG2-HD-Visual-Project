@@ -1,0 +1,79 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T12:17:41.928Z",
+  "supersedes_exclusions_in": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-monster-icewind-batch-x2-nearest-v1.json",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monster-icewind",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0",
+    "catalog_generation": "E088407784AAF7AAC7D91E74E0BC56E2C22F2ACBAB4C9EA707ABCC8DCC4651B6"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "note": "Les sept sprites précédemment signalés violets ou flous sont explicitement validés ingame par l'utilisateur le 2026-09-13."
+  },
+  "entries": [
+    {
+      "animation_id": "0xE700",
+      "name": "Orog — MNO1",
+      "creature": "FIRORC01",
+      "job_file": "sprite/families/monster-icewind/e7xx-orogs/e700-mno1-orog/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e7xx-orogs/e700-mno1-orog/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "8EBA68231F3DC99840BF4BB6C363F474C36E3DE33943B9C4068B342B0F4D8293"
+    },
+    {
+      "animation_id": "0xE720",
+      "name": "Orog Chieftain — MNO3",
+      "creature": "CHTAZ01",
+      "job_file": "sprite/families/monster-icewind/e7xx-orogs/e720-mno3-orog-chieftain/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e7xx-orogs/e720-mno3-orog-chieftain/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "12F101350568000AC3BBC35784EFA5CCD062EDE6C7DFE07B2000F8D7783A1A5D"
+    },
+    {
+      "animation_id": "0xE800",
+      "name": "Orc Melee — MOR1",
+      "creature": "ARMY01",
+      "job_file": "sprite/families/monster-icewind/e8xx-orcs/e800-mor1-orc-melee/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/e8xx-orcs/e800-mor1-orc-melee/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "B76A471BC19636C0CF65DBE8DEA3F1EA4A35B1C880C43586ADE3A89013BA7235"
+    },
+    {
+      "animation_id": "0xEB00",
+      "name": "Skeleton Monster — MSKT",
+      "creature": "GRTOMB01",
+      "job_file": "sprite/families/monster-icewind/ebxx-skeletons/eb00-mskt-skeleton-monster/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/ebxx-skeletons/eb00-mskt-skeleton-monster/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "DADE9CA2451F8D150318C89D8C63DE5C46AB4724DBA284AB6D09595F45493280"
+    },
+    {
+      "animation_id": "0xEB10",
+      "name": "Skeleton Warrior — MSKA",
+      "creature": "AR18SKEL",
+      "job_file": "sprite/families/monster-icewind/ebxx-skeletons/eb10-mska-skeleton-warrior/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/ebxx-skeletons/eb10-mska-skeleton-warrior/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "780CE2AD1225E41999803ED9CD96257615AC624AB97AE6DBD75AC6BCD8C8ACE9"
+    },
+    {
+      "animation_id": "0xED00",
+      "name": "Yuan-Ti — MYU1",
+      "creature": "ICYUAN01",
+      "job_file": "sprite/families/monster-icewind/edxx-yuan-ti/ed00-myu1-yuan-ti/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/edxx-yuan-ti/ed00-myu1-yuan-ti/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "4EFB3A0C1C4CFBAB6E3998306325F7FC1C10C587ADE4B4A12964B4CE62228A3A"
+    },
+    {
+      "animation_id": "0xED10",
+      "name": "Yuan-Ti Elite — MYU2",
+      "creature": "ICYUAN02",
+      "job_file": "sprite/families/monster-icewind/edxx-yuan-ti/ed10-myu2-yuan-ti-elite/jobs/x2-nearest-v1.json",
+      "build_manifest": "sprite/families/monster-icewind/edxx-yuan-ti/ed10-myu2-yuan-ti-elite/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "3DBD7F96F8A304272BB50E28CEE9B939770FBA81D7604E57CFEBC105F20605C0"
+    }
+  ],
+  "release_manifest_modified": false
+}

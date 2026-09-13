@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T09:13:50.1775998Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "asset_key": "sprites:family:0x7F40:body:base-resref:MGLM:MGLM:x2-nearest",
+    "family_id": "0x7F40:body:base-resref:MGLM:MGLM",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x7F40",
+    "bam_prefix": "MGLM",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "27519D9AFAC9627D19356A5D8367CA30346F0E343EFF4738CB5177B09C971418"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "creature": "OHBGOL03",
+    "name": "Mini-golem",
+    "filter": "Nearest",
+    "note": "QA ingame validée explicitement par l'utilisateur le 2026-09-13."
+  },
+  "automatic_evidence": {
+    "build_manifest": "sprite/families/monsters/7fxx/7f40-mglm-golem-mini/runs/x2-nearest-v1/build/build-manifest.json",
+    "build_manifest_sha256": "45A80E4E12911DAB3B824D35DE6AA65A2E5458241314B64ABFE41340B38A94D6",
+    "runtime_manifest": "sprite/families/monsters/7fxx/7f40-mglm-golem-mini/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+    "runtime_manifest_sha256": "BA974ADA2A56EE0BBCE8F25B3D669EDEEFCB01F158D65FA26CD9F8F97465CDBA",
+    "comparison_sheet_count": 13,
+    "historical_installation_state": "installed",
+    "active_installation_status": "restored after the accepted ingame session"
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f40-mglm-golem-mini/source/stock/manifest.json",
+    "source_manifest_sha256": "7703936D8EB6073A19F906787044CD1DE0BD7D258DEADD8346309DDE41713564",
+    "selected_run": "sprite/families/monsters/7fxx/7f40-mglm-golem-mini/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "45A80E4E12911DAB3B824D35DE6AA65A2E5458241314B64ABFE41340B38A94D6",
+    "job_file": "sprite/families/monsters/7fxx/7f40-mglm-golem-mini/jobs/x2-nearest-v1.json",
+    "job_sha256": "E394D73F677BB488CD904017F599E54710546C2D56A08DE269F7F432B55790FD"
+  },
+  "release_manifest_modified": false
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xbr2x-job-v1",
+  "job_id": "monster-icewind-e900-msal-salamander-fire-x2-v1",
+  "animation": {
+    "name": "Salamander Fire — MSAL",
+    "id": "0xE900",
+    "bam_prefix": "MSAL",
+    "runtime_profile": "monster-icewind-bg2ee-2.7.3.0"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_dir": "sprite/families/monster-icewind/e9xx-salamanders/e900-msal-salamander-fire/source/stock",
+    "run_dir": "sprite/families/monster-icewind/e9xx-salamanders/e900-msal-salamander-fire/runs/x2-nearest-v1",
+    "scalepix": "config://mmpx_scalepix",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/mi/e9/e900-msal-x2-nearest-v1"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  },
+  "qa": {
+    "areas": [
+      "AR0602"
+    ],
+    "creatures": [
+      "HGSAL01"
+    ],
+    "required_bam_prefixes": [
+      "MSAL"
+    ]
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  }
+}
