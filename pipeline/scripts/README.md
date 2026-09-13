@@ -49,7 +49,8 @@ un delta. Contrôle quotidien : `verify` (métadonnées). Scan de tous les shard
 finalisation : `verify --full-verify`.
 
 Créer le delta avec `generate_sprite_family_append.py catalog-append`; répéter `--member-job` pour
-grouper un lot. Le générateur lit seulement le pointeur/manifeste parent et les nouveaux jobs.
+grouper un lot. Sans `--catalog-job`, le générateur reprend le `current-generation.json` canonique
+et son job de provenance scellé. Il ne consulte jamais l'installation active.
 
 ## Commandes communes
 

@@ -109,7 +109,8 @@ ne pas coder ces offsets dans un nouveau hook. Employer l'API GL résolue ; tout
 moteur doit passer par `src/iee/game/build_manifest.*` et sa validation.
 
 État local observé en D0 : seul `override/fpSEAM.glsl` présent ; aucun `iee-shader-dumps/`.
-Catalogue actif : `CATALOG/current-generation.json` et `CATALOG/ingame-installation/active-test.json`.
+Production observée : `CATALOG/current-generation.json`. Installation locale distincte :
+`CATALOG/ingame-installation/active-test.json`, sans autorité QA.
 Génération observée `D55EFD6D1B342B1240AC2BBD222BC088B38F86D4503E6F46B03CB447A704B8F2` ;
 xBR2x, x2, `antialias=false`, `xbr_blend=false`, `sampling=NEAREST` ;
 animations `0x6102`, `0x6110`, `0xE400` ; `installed-pending-qa`. Relire les autorités à la reprise.

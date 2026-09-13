@@ -7059,9 +7059,11 @@ def catalog_generation_snapshot(catalog: dict[str, Any], *, full_verify: bool) -
         "status": "prepared-verified" if full_verify else "ready-for-ingame-qa",
         "generation_id": pointer["generation_id"],
         "animation_ids": manifest["animation_ids"],
+        "animation_count": len(manifest["animation_ids"]),
         "runtime_profiles": manifest["runtime_profiles"],
-        "build": manifest,
-        "pointer": pointer,
+        "build_manifest": str(manifest_path),
+        "build_manifest_sha256": pointer["build_manifest_sha256"],
+        "registry_catalog_sha256": manifest["registry_catalog_sha256"],
         "verification": verification,
     }
 
@@ -7070,6 +7072,11 @@ def plan_catalog(
     catalog: dict[str, Any], *, full_verify: bool = False
 ) -> dict[str, Any]:
     delta = "_catalog_parent" in catalog
+    delta_animation_ids = (
+        [member["animation"]["id"] for member in catalog["_catalog_members"]]
+        if delta
+        else []
+    )
     pointer = (
         read_json(catalog_pointer_path(catalog))
         if not delta and catalog_pointer_path(catalog).is_file()
@@ -7096,13 +7103,21 @@ def plan_catalog(
         "job_id": catalog["job_id"],
         "method": upscale_method_description(upscale_contract(catalog)),
         "mode": "parent-plus-delta" if delta else "immutable-root",
-        "delta_animation_ids": [
-            member["animation"]["id"] for member in catalog["_catalog_members"]
-        ],
+        "delta_animation_count": len(delta_animation_ids),
+        "delta_animation_ids": delta_animation_ids,
         "runtime_profiles": runtime_profiles_for_work_item(catalog),
         "generation_id": generation_id,
         "generation_dir": str(generation),
-        "current_generation": current,
+        "current_generation": (
+            {
+                "status": current["status"],
+                "generation_id": current["generation_id"],
+                "animation_count": current["animation_count"],
+                "verification": current["verification"],
+            }
+            if current
+            else None
+        ),
         "generation_error": error,
         "parent_shards_read": 0,
         "install_is_explicit": True,
@@ -7681,50 +7696,6 @@ def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     return report
 
 
-def record_qa(job: dict[str, Any], result: str, note: str) -> dict[str, Any]:
-    state_path = active_state_path(job)
-    state = read_json(state_path)
-    if state.get("status") != "installed-pending-qa":
-        raise RuntimeError(f"active state is not pending QA: {state.get('status')}")
-    if (
-        job.get("_kind") == "catalog"
-        and state.get("schema") == "bg2-upscale-creature-sprite-catalog-install-v2"
-    ):
-        pointer = read_json(catalog_pointer_path(job))
-        if pointer.get("generation_id") != state.get("generation_id"):
-            raise RuntimeError("active catalog differs from the current generation")
-        technical = {
-            "technical_pass": True,
-            "mode": "ingame-authority",
-            "final_audit_deferred": True,
-        }
-    else:
-        if job.get("_kind") == "catalog":
-            raise RuntimeError(
-                "legacy catalog QA states are read-only; reinstall with the thin installer"
-            )
-        technical = qa_log_report(job, write_report=True)
-    if result == "pass" and not technical["technical_pass"]:
-        raise RuntimeError("cannot validate: runtime log does not prove sprite composition")
-    state["status"] = "validated-installed" if result == "pass" else "qa-failed"
-    state["qa_recorded_at_utc"] = utc_now()
-    state["qa_note"] = note
-    write_json(state_path, state)
-    backup_root = state.get("backup_root")
-    if backup_root:
-        backup_root_path = (
-            resolve_path(str(backup_root))
-            if job.get("_kind") == "catalog"
-            else Path(str(backup_root))
-        )
-        backup_state = backup_root_path / "install-state.json"
-        if backup_state.parent.is_dir():
-            write_json(backup_state, state)
-    decision = {"schema": "bg2-upscale-creature-sprite-qa-decision-v1", "status": state["status"], "recorded_at_utc": state["qa_recorded_at_utc"], "job_id": job["job_id"], "user_note": note, "technical_qa": technical, "release_manifest_modified": False}
-    write_json(job_path(job, "run_dir") / "qa" / "qa-decision.json", decision)
-    return decision
-
-
 def powershell_script(
     script: Path, job: dict[str, Any], extra_arguments: list[str] | None = None
 ) -> None:
@@ -7801,7 +7772,6 @@ def make_parser() -> argparse.ArgumentParser:
             "restore",
             "status",
             "qa-log",
-            "record-qa",
         ),
     )
     parser.add_argument("--job", type=Path, required=True)
@@ -7842,8 +7812,6 @@ def make_parser() -> argparse.ArgumentParser:
         help="catalog only: final audit that reads every shard",
     )
     parser.add_argument("--write-report", action="store_true")
-    parser.add_argument("--result", choices=("pass", "fail"))
-    parser.add_argument("--note")
     return parser
 
 
@@ -7899,7 +7867,7 @@ def main() -> None:
         return
     job = (
         load_catalog_control_job(args.job)
-        if args.command in {"install", "restore", "status", "verify", "record-qa"}
+        if args.command in {"install", "restore", "status", "verify"}
         else None
     )
     if job is None:
@@ -8020,9 +7988,7 @@ def main() -> None:
             print(json.dumps(result, ensure_ascii=False, indent=2))
             raise SystemExit(2)
     else:
-        if args.result is None or not args.note:
-            raise RuntimeError("record-qa requires --result and --note")
-        result = record_qa(job, args.result, args.note)
+        raise RuntimeError(f"unsupported command: {args.command}")
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

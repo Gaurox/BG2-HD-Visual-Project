@@ -1,20 +1,21 @@
-# Traitement des sprites — runbook agent
+# Traitement des sprites — chemin court
 
-## Autorités
+## Autorités indépendantes
 
-| Décision | Source |
+| État | Source |
 |---|---|
-| identité, familles, BAM, ITM, éligibilité | `index/sprite_*.csv`, `index/manifest.json` |
-| classement | `index/family-groups.csv`, `sprite_layout.py` |
-| cycle de vie | `index/processing.csv` |
-| source native | `ressources/<RESREF>/sources/<sha>/` |
-| génération/test actifs | `current-generation.json`, `active-test.json` |
+| identité et éligibilité | `index/sprite_*.csv`, `index/manifest.json` |
+| production courante | `catalogs/.../current-generation.json` + `build-manifest.json` |
+| QA ingame | décision immuable sous `index/qa-decisions/` |
+| installation locale | `catalogs/.../ingame-installation/active-test.json` |
+| release | `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`, puis `content.json` |
 
-Ne jamais déduire identité, préfixe, équipement, QA ou release depuis un nom ou un dossier.
+Ne jamais propager un état entre ces sources. Une installation `pending` n'annule pas une QA
+existante. Une QA acceptée reste acquise tant que ses octets et son contrat runtime sont inchangés.
 
-## Conditions locales
+## Production locale
 
-Exiger pour chaque famille non vide :
+Une famille non vide est traitable si :
 
 ```text
 runtime_supported=yes
@@ -25,76 +26,34 @@ resource_count>0
 frame_count>0
 ```
 
-Une famille vide reste exclue avec son blocker ; ne pas créer de job vide.
-Profils automatisés actuels : `character-bg2ee-2.7.3.0`, `monster-bg2ee-2.7.3.0` et
-`monster-icewind-bg2ee-2.7.3.0`. Pour tout autre profil : inventaire seulement, arrêt.
+Profils automatisés : `character-bg2ee-2.7.3.0`, `monster-bg2ee-2.7.3.0`,
+`monster-icewind-bg2ee-2.7.3.0`.
 
-## Chaîne courante
-
-1. Lire les lignes cible dans `sprite_families.csv`, `sprite_resources.csv`, `sprite_items.csv` et
-   `processing.csv`.
-2. Planifier le job :
-   - Character complet : `generate_character_complete_x2_jobs.py`, voir `FAMILY_APPEND.md` ;
-   - Monster ou MonsterIcewind unitaire : `generate_sprite_family_append.py member`, voir
-     `FAMILY_APPEND.md`.
-3. Publier le job seulement après revue : `--run` pour Character ; retirer `--dry-run` pour membre.
-4. Planifier puis extraire les BAM une fois dans le store central :
+1. Lire seulement les lignes cible de `sprite_families.csv`, `sprite_resources.csv` et, si utile,
+   `sprite_items.csv`.
+2. Créer le membre ou agrégat avec `generate_sprite_family_append.py` ou
+   `generate_character_complete_x2_jobs.py`.
+3. Extraire et matérialiser uniquement sa portée :
 
 ```powershell
-python pipeline/scripts/extract_sprite_sources.py <sélecteur>
-python pipeline/scripts/extract_sprite_sources.py <sélecteur> --run
+python pipeline/scripts/extract_sprite_sources.py --family-id <family_id> --run
+python pipeline/scripts/materialize_sprite_sources.py --job <job> --run
+python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job>
 ```
 
-Sélecteurs usuels : `--animation-id 0xFFFF`, `--family-id <id>`, `--resref <BAM>`.
+4. Ajouter le lot au catalogue courant selon [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
+5. Installer et tester seulement le delta.
 
-5. Planifier puis créer les manifestes/liens physiques attendus par le runner :
+`prepare` vérifie le delta. `verify` quotidien lit les métadonnées. Le scan complet
+`verify --full-verify` appartient uniquement à la finalisation explicitement demandée.
 
-```powershell
-python pipeline/scripts/materialize_sprite_sources.py --job <job-ou-agregat>
-python pipeline/scripts/materialize_sprite_sources.py --job <job-ou-agregat> --run
-```
+## Enregistrement minimal
 
-6. Produire seulement sur demande explicite :
+- Production : le pointeur de génération et le manifeste scellé suffisent.
+- QA : un fichier immuable identifie la portée, la génération, les hashes, le verdict et la note
+  utilisateur. Ne jamais modifier une ancienne décision.
+- Installation : le reçu décrit seulement les fichiers actuellement installés et leur rollback.
+- Release : ajouter uniquement le candidat accepté ; différer TP2, staging, miroirs et package.
 
-```powershell
-python pipeline/scripts/run_creature_sprite_x2.py plan --job <job-ou-agregat>
-python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job-ou-agregat>
-```
-
-Pour un jalon final de catalogue seulement :
-
-```powershell
-python pipeline/scripts/run_creature_sprite_x2.py prepare-data --resume `
-  --job <agregat-character>
-python pipeline/scripts/run_creature_sprite_x2.py prepare --resume `
-  --job <catalogue>
-python pipeline/scripts/run_creature_sprite_x2.py verify --full-verify --job <catalogue>
-```
-
-Un catalogue racine existant est immuable. Un nouveau lot est un delta : `prepare` ne vérifie et
-ne construit que ce lot ; le résultat est directement installable pour la QA progressive.
-`--full-verify` relit tout une seule fois au jalon final. Détails :
-`catalogs/creature-x2-nearest/README.md`.
-
-Ne pas utiliser `run_creature_sprite_x2.py extract` pour un nouveau workspace : ce chemin legacy
-duplique les BAM et génère des PNG source.
-
-## Suivi
-
-- `sync_sprite_processing.py` : ajout conservateur de lignes, plan-only puis `--run` ; aucune
-  promotion d'état.
-- `index/extractions.csv` : projection écrite par l'extracteur ; ne pas éditer et ne pas confondre
-  extraction avec production.
-- Production : renseigner uniquement `production_*` depuis un build-manifest vérifié.
-- Sélection : renseigner `selected_*` par décision distincte.
-- QA, installation, release : renseigner uniquement depuis leur preuve explicite.
-- Un même agrégat Character peut prouver plusieurs lignes famille ; conserver le préfixe exact.
-
-## Interdictions
-
-- Ne jamais modifier un résultat accepté/scellé, un reçu final ou une décision QA. Les essais de
-  travail non sélectionnés peuvent être repris ou supprimés.
-- Ne jamais précréer tout l'inventaire ni copier un BAM partagé par famille.
-- Jeu et InfinityLoader fermés avant install/restore.
-- `pending-qa` n'est pas validé ; release après `validated-installed` et accord explicite.
-- Append catalogue, installation, QA et release : suivre `FAMILY_APPEND.md`.
+Les runs de travail non référencés restent jetables. Aucun registre global, synchronisation de
+cycle de vie ou réconciliation installation→QA n'est autorisé.

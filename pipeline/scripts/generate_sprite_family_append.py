@@ -8,8 +8,9 @@ The command has two explicit phases:
   versioned delta pinned to the accepted catalog generation.  It does not
   build, install, restore, or launch the game.
 
-The inventory row is the identity source of truth.  The active catalog job and
-its generation are immutable; an append contains only the new members.
+The inventory row is the identity source of truth.  The current generation,
+not the installed state, is the immutable parent; an append contains only the
+new members.
 
 The leaf member adapter covers MonsterIcewind ``body/base-resref`` families.
 Complete Character animations, including equipment, are produced by
@@ -63,6 +64,10 @@ DEFAULT_FAMILIES = PROJECT_ROOT / "sprite" / "index" / "sprite_families.csv"
 VALIDATION_DIR = PROJECT_ROOT / "sprite" / ".work" / "validation"
 FAMILIES_ROOT = PROJECT_ROOT / "sprite" / "families"
 CATALOG_JOBS_ROOT = PROJECT_ROOT / "sprite" / "catalogs" / "creature-x2-nearest" / "jobs"
+DEFAULT_CATALOG_POINTER = (
+    PROJECT_ROOT
+    / "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json"
+)
 JOB_ID_RE = re.compile(r"[a-z0-9][a-z0-9-]{1,63}")
 RESREF_RE = re.compile(r"[A-Z0-9_]{1,8}")
 ANIMATION_ID_RE = re.compile(r"0x[0-9A-Fa-f]{4}")
@@ -107,6 +112,37 @@ def require_existing_job_path(path: Path, label: str) -> Path:
     ):
         raise RuntimeError(f"{label} must be a JSON job below sprite/: {resolved}")
     return resolved
+
+
+def resolve_catalog_job(path: Path) -> Path:
+    """Resolve a catalog job or its current-generation pointer to sealed provenance."""
+    resolved = resolve_path(path)
+    raw = read_json(resolved)
+    if raw.get("schema") != CATALOG_POINTER_SCHEMA:
+        return require_existing_job_path(resolved, "--catalog-job")
+    generation_dir = resolve_path(str(raw.get("generation_dir", "")))
+    manifest_path = generation_dir / str(raw.get("build_manifest", ""))
+    if (
+        not manifest_path.is_file()
+        or sha256_file(manifest_path)
+        != str(raw.get("build_manifest_sha256", "")).upper()
+    ):
+        raise RuntimeError("current catalog build manifest changed")
+    manifest = read_json(manifest_path)
+    snapshot = manifest_path.parent / str(manifest.get("job_snapshot", ""))
+    expected = str(manifest.get("job_snapshot_sha256", "")).upper()
+    if (
+        manifest.get("schema") != CATALOG_BUILD_SCHEMA
+        or manifest.get("generation_id") != raw.get("generation_id")
+        or expected != str(raw.get("job_sha256", "")).upper()
+        or not snapshot.is_file()
+        or sha256_file(snapshot) != expected
+    ):
+        raise RuntimeError("current catalog provenance job is invalid")
+    snapshot = snapshot.resolve()
+    if snapshot.suffix.lower() != ".json" or PROJECT_ROOT not in snapshot.parents:
+        raise RuntimeError("current catalog provenance job must stay inside the project")
+    return snapshot
 
 
 def family_slug(family: InventoryFamily) -> str:
@@ -490,7 +526,7 @@ def append_members_payload(
 ) -> tuple[
     dict[str, Any], list[tuple[dict[str, Any], InventoryFamily | None]]
 ]:
-    base_catalog_path = require_existing_job_path(resolve_path(base_catalog_path), "--catalog-job")
+    base_catalog_path = resolve_catalog_job(base_catalog_path)
     destination = require_new_catalog_job_path(destination, "--job")
     if destination == base_catalog_path:
         raise RuntimeError("append destination must differ from the active catalog job")
@@ -766,7 +802,12 @@ def make_parser() -> argparse.ArgumentParser:
         "catalog-append", help="create one immutable catalog append descriptor"
     )
     append.add_argument("--job", type=Path, required=True)
-    append.add_argument("--catalog-job", type=Path, required=True)
+    append.add_argument(
+        "--catalog-job",
+        type=Path,
+        default=DEFAULT_CATALOG_POINTER,
+        help="catalog job or current-generation pointer; defaults to the current catalog",
+    )
     append.add_argument(
         "--member-job",
         type=Path,

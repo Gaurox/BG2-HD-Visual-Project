@@ -92,7 +92,8 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Source physique | un BAM stock par `sprite/ressources/<RESREF>/sources/<source-sha256>/`; `source/` runner le référence par liens physiques, sans copie par famille |
 | Groupes | `sprite/index/family-groups.csv` décide macro-dossier et bucket depuis `engine_section` |
 | Runs | sous la famille logique ; créer la feuille au premier job, jamais précréer tout l'inventaire |
-| Suivi | `sprite/index/processing.csv` sépare production, sélection, QA, installation et release |
+| Suivi | quatre autorités indépendantes : génération courante, décisions QA immuables, reçu d'installation, candidats release |
+| Pérennité QA | une acceptation reste acquise tant que les octets concernés et le contrat runtime ne changent pas ; réouverture explicite uniquement |
 | Legacy | conserver les `source/`, jobs, runs et catalogues existants ; aucun déplacement/réécriture d'artefact scellé |
 | Filtrage QA | `NEAREST`; `LINEAR` est seulement un A/B d'affichage |
 | Variantes | pipeline xN cumulatif ; AA/xBR4 direct restent archivés |

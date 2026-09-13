@@ -49,6 +49,10 @@ Chaque domaine conserve séparément les états `source`, `production`, `QA`, `i
 `release`. Les index de domaine et manifestes finaux indiqués ci-dessus font autorité ; un état ne
 permet jamais d'en déduire un autre.
 
+Pour les sprites : production = génération courante ; QA = décisions immuables ; installation =
+reçu actif ; release = candidats puis `content.json`. Aucun registre global ne réconcilie ces états.
+Une QA acceptée reste acquise tant que ses octets et son contrat runtime ne changent pas.
+
 ## Vérifications ciblées
 
 `python pipeline/scripts/test_changed.py --targeted --path <fichier> --run` sélectionne les tests

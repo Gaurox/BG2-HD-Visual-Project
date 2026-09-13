@@ -36,7 +36,7 @@ catalogs/
   cmake/                          # rebuildable caches; never a content source
 index/
   family-groups.csv               # engine_section -> macro/dossier/bucket
-  processing.csv                  # cycle de vie famille + variante
+  qa-decisions/                   # décisions ingame immuables
   extractions.csv                 # projection des sources matérialisées, si extraction exécutée
   sprite-layout.json              # current locations
   path-migrations.json            # legacy redirects for sealed artifacts

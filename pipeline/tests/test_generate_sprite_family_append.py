@@ -198,9 +198,16 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         catalog_path = generation_dir / "registry.bin"
         catalog_path.write_bytes(b"accepted-catalog-fixture")
         catalog_sha256 = hashlib.sha256(catalog_path.read_bytes()).hexdigest().upper()
+        snapshot = generation_dir / "provenance" / "job.json"
+        snapshot.parent.mkdir()
+        self._write_json(snapshot, base)
+        snapshot_sha256 = hashlib.sha256(snapshot.read_bytes()).hexdigest().upper()
         manifest = {
             "schema": generator.CATALOG_BUILD_SCHEMA,
             "status": "built-pending-ingame-qa",
+            "generation_id": "ACCEPTED",
+            "job_snapshot": "provenance/job.json",
+            "job_snapshot_sha256": snapshot_sha256,
             "method": dict(generator.DIRECT_X2_METHOD),
             "registry_scale": 2,
             "registry_catalog": catalog_path.name,
@@ -215,6 +222,8 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             run_dir / "current-generation.json",
             {
                 "schema": generator.CATALOG_POINTER_SCHEMA,
+                "generation_id": "ACCEPTED",
+                "job_sha256": snapshot_sha256,
                 "generation_dir": self._relative(generation_dir),
                 "build_manifest": manifest_path.name,
                 "build_manifest_sha256": manifest_sha256,
@@ -371,9 +380,14 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self._write_json(self.catalog, base)
         parent = self._write_parent_generation(base, ["0xE400"])
 
+        pointer = generator.resolve_path(base["paths"]["run_dir"]) / "current-generation.json"
+        self.assertEqual(
+            json.loads(generator.resolve_catalog_job(pointer).read_text(encoding="utf-8")),
+            base,
+        )
         result = generator.generate_catalog_append(
             destination=self.append,
-            base_catalog_path=self.catalog,
+            base_catalog_path=pointer,
             member_path=self.member,
             name="Catalogue test MGO1 et MGO2",
             families_path=self.families,

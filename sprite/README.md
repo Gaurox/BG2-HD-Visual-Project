@@ -10,12 +10,13 @@ palettes). Il ne dépend pas du pipeline maps.
 1. [`index/README.md`](index/README.md) : schema et requêtes.
 2. `index/manifest.json` : snapshot du jeu et de l'inventaire.
 3. `index/family-groups.csv` : macro-groupes et règles de rangement des familles.
-4. `index/processing.csv` : production, sélection, QA, installation et release par famille/variante.
-5. `index/sprite-layout.json` : matérialisations physiques existantes ;
+4. `index/sprite-layout.json` : matérialisations physiques existantes ;
    `index/path-migrations.json` : anciens chemins d'artefacts immuables.
-6. Les quatre CSV d'inventaire : animations, familles, ressources et items.
-7. `current-generation.json` et `active-test.json` du catalogue cumulatif.
-8. Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json` ; `approved` sélectionne,
+5. Les quatre CSV d'inventaire : animations, familles, ressources et items.
+6. Production : `current-generation.json` et son `build-manifest.json`.
+7. QA : décisions immuables sous `index/qa-decisions/`.
+8. Installation : `ingame-installation/active-test.json`, sans autorité sur la QA.
+9. Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json` ; `approved` sélectionne,
    seul `content.json` prouve `integrated`.
 
 `index/extractions.csv` est une projection des sources effectivement matérialisées. Son absence
@@ -55,7 +56,6 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 - Adaptateur de sources runner : `pipeline/scripts/materialize_sprite_sources.py` ; plan-only sans
   `--run`, puis manifeste local et liens physiques sans copie de BAM.
 - Rangement : `pipeline/scripts/sprite_layout.py` + `index/family-groups.csv`.
-- Suivi : `pipeline/scripts/sync_sprite_processing.py` ; ajout conservateur, aucune promotion.
 - Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
 - Traitement : [`PROCESSING.md`](PROCESSING.md) ; ajout catalogue :
   [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
@@ -72,7 +72,7 @@ mettre `[Shaders] EnableCreatureSpriteUpscaleTest=true`; conserver les deux clé
 Modifier seulement ces clés : l'INI est partagé avec les animations, effets et autres tests moteur.
 
 Le baseline QA utilise `NEAREST`. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
-preuve `validated-installed`. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
+preuve QA. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
 plus partie du pipeline courant.
 
 ## Organisation
@@ -113,16 +113,15 @@ selon leur contrat existant et ne doivent pas être réécrites pour l'ajouter.
 
 ## QA
 
-Jeu et InfinityLoader fermés avant install/restore. Après installation autorisée, tester chaque
-animation et préfixe représentatif du contrat QA : composition, palettes, équipement, orientations
-et transitions. N'enregistrer un pass qu'après réussite des gates automatiques et acceptation
-explicite de l'utilisateur.
+Jeu et InfinityLoader fermés avant install/restore. Après installation autorisée, tester les seuls
+nouveaux membres et préfixes représentatifs du contrat QA. Une acceptation explicite produit une
+décision immuable sous `index/qa-decisions/`. Elle reste acquise tant que les octets concernés et le
+contrat runtime ne changent pas ; toute réouverture doit être explicite.
 
 ## Tests légers
 
 ```powershell
 python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/sprite_layout.py `
-  --path pipeline/scripts/sync_sprite_processing.py `
   --path pipeline/scripts/extract_sprite_sources.py `
   --path pipeline/scripts/materialize_sprite_sources.py
 ```

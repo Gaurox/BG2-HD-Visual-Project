@@ -559,7 +559,7 @@ function xbr4x(source, width, height) {
             qa_sample_counts = []
             original_qa_renderer = pipeline.make_comparison_sheet_samples
 
-            def record_qa_samples(*args, **kwargs):
+            def capture_qa_samples(*args, **kwargs):
                 qa_sample_counts.append(len(args[1]))
                 return original_qa_renderer(*args, **kwargs)
 
@@ -580,7 +580,7 @@ function xbr4x(source, width, height) {
                 mock.patch.object(
                     pipeline,
                     "make_comparison_sheet_samples",
-                    side_effect=record_qa_samples,
+                    side_effect=capture_qa_samples,
                 ),
             ):
                 built = pipeline.build_pack(
