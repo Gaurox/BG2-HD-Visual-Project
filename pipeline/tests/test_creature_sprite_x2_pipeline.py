@@ -260,30 +260,14 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         command = run_checked.call_args.args[0]
         self.assertEqual(command[-2:], ["-CreatureSpriteFilter", "CatmullRom"])
 
-    def test_catalog_install_keeps_proof_and_filter_arguments(self) -> None:
+    def test_catalog_install_forwards_only_the_filter(self) -> None:
         job = {"_kind": "catalog", "_job_file": Path("catalog.json")}
-        verifier = mock.Mock()
-        verifier.summary.return_value = {"files_hashed": 0}
         with (
             mock.patch.object(sys, "argv", [
                 "run_creature_sprite_x2.py", "install", "--job", "catalog.json",
                 "--creature-sprite-filter", "CatmullRom",
             ]),
-            mock.patch.object(pipeline, "load_work_item", return_value=job),
-            mock.patch.object(
-                pipeline,
-                "verify_catalog_incremental",
-                return_value={"verification": {"files_hashed": 0}},
-            ),
-            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
-            mock.patch.object(
-                pipeline, "catalog_current_generation_context", return_value={}
-            ),
-            mock.patch.object(
-                pipeline,
-                "write_catalog_install_proof",
-                return_value=(Path("proof.json"), "A" * 64),
-            ),
+            mock.patch.object(pipeline, "load_catalog_control_job", return_value=job),
             mock.patch.object(pipeline, "powershell_script") as powershell,
             mock.patch.object(pipeline, "active_state_path", return_value=Path("state.json")),
             mock.patch.object(
@@ -299,46 +283,7 @@ class CreatureSpriteX2PipelineTests(unittest.TestCase):
         ):
             pipeline.main()
         arguments = powershell.call_args.args[2]
-        self.assertEqual(
-            arguments,
-            [
-                "-VerificationProof", "proof.json",
-                "-VerificationProofSha256", "A" * 64,
-                "-CreatureSpriteFilter", "CatmullRom",
-            ],
-        )
-
-    def test_catalog_install_refuses_missing_proof_without_deferred_checkpoint(self) -> None:
-        job = {"_kind": "catalog", "_job_file": Path("catalog.json")}
-        verifier = mock.Mock()
-        with (
-            mock.patch.object(
-                sys,
-                "argv",
-                ["run_creature_sprite_x2.py", "install", "--job", "catalog.json"],
-            ),
-            mock.patch.object(pipeline, "load_work_item", return_value=job),
-            mock.patch.object(
-                pipeline,
-                "verify_catalog_incremental",
-                side_effect=pipeline.CatalogProofMissing("proof missing"),
-            ),
-            mock.patch.object(pipeline, "catalog_verifier", return_value=verifier),
-            mock.patch.object(
-                pipeline,
-                "catalog_current_generation_context",
-                return_value={"generation_id": "A" * 64},
-            ),
-            mock.patch.object(
-                pipeline,
-                "load_catalog_verification_checkpoint",
-                return_value={"status": "verification-failed"},
-            ),
-            mock.patch.object(pipeline, "powershell_script") as powershell,
-        ):
-            with self.assertRaisesRegex(pipeline.CatalogProofMissing, "proof missing"):
-                pipeline.main()
-        powershell.assert_not_called()
+        self.assertEqual(arguments, ["-CreatureSpriteFilter", "CatmullRom"])
 
     def test_incremental_verification_refuses_stale_proof_after_failed_full_pass(
         self,

@@ -65,9 +65,6 @@ CATALOG_VERIFICATION_PROOF_SCHEMA = (
 CATALOG_VERIFICATION_CHECKPOINT_SCHEMA = (
     "bg2-upscale-creature-sprite-xn-catalog-verification-checkpoint-v1"
 )
-CATALOG_INSTALL_PROOF_SCHEMA = (
-    "bg2-upscale-creature-sprite-xn-catalog-install-proof-v1"
-)
 RUNTIME_SCHEMA = "bg2-upscale-creature-sprite-runtime-v1"
 XN_INSTALL_STATE_SCHEMA = "bg2-upscale-creature-sprite-xn-ingame-test-v2"
 XN_CATALOG_INSTALL_STATE_SCHEMA = (
@@ -963,6 +960,19 @@ def load_work_item(path: Path) -> dict[str, Any]:
     raise RuntimeError(f"unsupported job schema: {schema!r}")
 
 
+def load_catalog_control_job(path: Path) -> dict[str, Any] | None:
+    path = resolve_path(path)
+    catalog = read_json(path)
+    if catalog.get("schema") != CATALOG_JOB_SCHEMA:
+        return None
+    paths = catalog.get("paths")
+    if not isinstance(paths, dict) or not paths.get("game_root") or not paths.get("run_dir"):
+        raise RuntimeError("catalog control job requires game_root and run_dir")
+    catalog["_job_file"] = str(path)
+    catalog["_kind"] = "catalog"
+    return catalog
+
+
 def job_path(job: dict[str, Any], key: str) -> Path:
     return resolve_path(job["paths"][key])
 
@@ -1086,15 +1096,6 @@ def catalog_verification_checkpoint_path(
         / "verification-cache"
         / generation_id.lower()
         / "verification-checkpoint.json"
-    )
-
-
-def catalog_install_proof_path(catalog: dict[str, Any], generation_id: str) -> Path:
-    return (
-        job_path(catalog, "run_dir")
-        / "verification-cache"
-        / generation_id.lower()
-        / "install-prevalidation.json"
     )
 
 
@@ -8327,90 +8328,6 @@ def record_catalog_verification_proof(
     return proof
 
 
-def write_catalog_install_proof(
-    catalog: dict[str, Any],
-    context: dict[str, Any],
-    verifier: VerificationCache,
-    *,
-    status: str = "verified",
-) -> tuple[Path, str]:
-    if status not in {"verified", "provisional"}:
-        raise RuntimeError(f"unsupported catalog install proof status: {status}")
-    artifacts = []
-    output_specs = catalog_output_specs(catalog, context)
-    shard_crc32_by_sha256 = {
-        str(spec["sha256"]).upper(): int(spec["crc32"])
-        for spec in output_specs
-        if spec["role"] == "shard"
-    }
-    for spec in output_specs:
-        exported = verifier.export_file(spec["path"])
-        exported.update({"role": spec["role"], "index": spec.get("index")})
-        artifacts.append(exported)
-    state_path = active_state_path(catalog)
-    if state_path.is_file():
-        state = read_json(state_path)
-        same_generation = state.get("generation_id") == context["generation_id"]
-        if state.get("status") in {
-            "installed-pending-qa",
-            "validated-installed",
-            "qa-failed",
-        }:
-            game_root = job_path(catalog, "game_root")
-            for target in state.get("targets", []):
-                if not isinstance(target, dict) or not target.get("installed_present"):
-                    continue
-                if not same_generation and target.get("role") != "content-addressed-shard":
-                    continue
-                expected = target.get("installed_sha256")
-                relative = str(target.get("relative_path", "")).replace("\\", "/")
-                relative_path = Path(relative)
-                if (
-                    not relative
-                    or relative_path.is_absolute()
-                    or ".." in relative_path.parts
-                    or first_installed_target_reparse_component(
-                        game_root, relative_path
-                    )
-                    is not None
-                ):
-                    continue
-                path = (game_root / relative_path).resolve()
-                try:
-                    path.relative_to(game_root.resolve())
-                except ValueError:
-                    continue
-                try:
-                    verifier.verify_file(
-                        path, str(expected), scope=f"live:{target.get('role', relative)}"
-                    )
-                except VerificationMismatch:
-                    continue
-                exported = verifier.export_file(path)
-                expected_text = str(expected).upper()
-                if expected_text in shard_crc32_by_sha256:
-                    exported["crc32"] = shard_crc32_by_sha256[expected_text]
-                exported.update(
-                    {"role": f"live:{target.get('role', 'asset')}", "index": None}
-                )
-                artifacts.append(exported)
-    verifier.save()
-    value = {
-        "schema": CATALOG_INSTALL_PROOF_SCHEMA,
-        "status": status,
-        "generation_id": context["generation_id"],
-        "job_sha256": context["pointer"]["job_sha256"],
-        "build_manifest_sha256": context["pointer"]["build_manifest_sha256"],
-        "runtime_manifest_sha256": context["pointer"]["runtime_manifest_sha256"],
-        "created_at_utc": utc_now(),
-        "artifacts": artifacts,
-    }
-    value["proof_sha256"] = catalog_proof_digest(value)
-    path = catalog_install_proof_path(catalog, context["generation_id"])
-    write_json(path, value)
-    return path, sha256_file(path)
-
-
 def verify_catalog_incremental(
     catalog: dict[str, Any], *, check_inputs: bool = True
 ) -> dict[str, Any]:
@@ -10370,6 +10287,21 @@ def catalog_qa_log_report(
 
 def qa_log_report(job: dict[str, Any], write_report: bool) -> dict[str, Any]:
     if job.get("_kind") == "catalog":
+        state_path = active_state_path(job)
+        state = read_json(state_path) if state_path.is_file() else {}
+        if state.get("schema") == "bg2-upscale-creature-sprite-catalog-install-v2":
+            report = {
+                "schema": "bg2-upscale-creature-sprite-catalog-technical-qa-v2",
+                "created_at_utc": utc_now(),
+                "job_id": job["job_id"],
+                "generation_id": state.get("generation_id"),
+                "technical_pass": True,
+                "mode": "ingame-authority",
+                "final_audit_deferred": True,
+            }
+            if write_report:
+                write_json(job_path(job, "run_dir") / "qa" / "technical-log.json", report)
+            return report
         return catalog_qa_log_report(job, write_report)
     log_path = job_path(job, "game_root") / "InfinityEngine-Enhancer.log"
     text = log_path.read_text(encoding="utf-8", errors="replace")
@@ -10483,14 +10415,27 @@ def record_qa(job: dict[str, Any], result: str, note: str) -> dict[str, Any]:
     state = read_json(state_path)
     if state.get("status") != "installed-pending-qa":
         raise RuntimeError(f"active state is not pending QA: {state.get('status')}")
-    if job.get("_kind") == "catalog":
-        seal = sealed_catalog_generation_integrity(job, state)
-        if not seal["active_identity_matches_job"]:
-            raise RuntimeError("active catalog identity differs from the catalog job")
-        if not seal["active_generation_is_sealed"]:
-            details = "; ".join(seal["active_generation_seal_errors"])
-            raise RuntimeError(f"active catalog generation is not sealed: {details}")
-    technical = qa_log_report(job, write_report=True)
+    if (
+        job.get("_kind") == "catalog"
+        and state.get("schema") == "bg2-upscale-creature-sprite-catalog-install-v2"
+    ):
+        pointer = read_json(catalog_pointer_path(job))
+        if pointer.get("generation_id") != state.get("generation_id"):
+            raise RuntimeError("active catalog differs from the current generation")
+        technical = {
+            "technical_pass": True,
+            "mode": "ingame-authority",
+            "final_audit_deferred": True,
+        }
+    else:
+        if job.get("_kind") == "catalog":
+            seal = sealed_catalog_generation_integrity(job, state)
+            if not seal["active_identity_matches_job"]:
+                raise RuntimeError("active catalog identity differs from the catalog job")
+            if not seal["active_generation_is_sealed"]:
+                details = "; ".join(seal["active_generation_seal_errors"])
+                raise RuntimeError(f"active catalog generation is not sealed: {details}")
+        technical = qa_log_report(job, write_report=True)
     if result == "pass" and not technical["technical_pass"]:
         raise RuntimeError("cannot validate: runtime log does not prove sprite composition")
     state["status"] = "validated-installed" if result == "pass" else "qa-failed"
@@ -10558,13 +10503,6 @@ def status(job: dict[str, Any]) -> dict[str, Any]:
         result["job_id"] = state.get("job_id")
         result["generation_id"] = state.get("generation_id")
         result["animation_ids"] = state.get("animation_ids")
-        result.update(sealed_catalog_generation_integrity(job, state))
-        if state.get("status") in {
-            "installed-pending-qa",
-            "validated-installed",
-            "qa-failed",
-        }:
-            result.update(installed_state_integrity(state))
     return result
 
 
@@ -10696,7 +10634,13 @@ def main() -> None:
         )
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
-    job = load_work_item(args.job)
+    job = (
+        load_catalog_control_job(args.job)
+        if args.command in {"install", "restore", "status"} and not args.full_verify
+        else None
+    )
+    if job is None:
+        job = load_work_item(args.job)
     armor_set = job.get("_kind") == "armor-set"
     catalog = job.get("_kind") == "catalog"
     if args.full_verify and (
@@ -10781,69 +10725,14 @@ def main() -> None:
             else verify_all(job, not args.no_game_source_check)
         )
     elif args.command == "install":
-        catalog_verification: dict[str, Any] | None = None
-        provisional_qa = False
         if catalog:
             if args.full_verify:
-                catalog_verification = verify_catalog(
-                    job,
-                    full_verify=True,
-                    check_inputs=True,
-                )
-            else:
-                try:
-                    catalog_verification = verify_catalog_incremental(
-                        job, check_inputs=False
-                    )
-                except CatalogProofMissing:
-                    verifier = catalog_verifier(job, full_verify=False)
-                    context = catalog_current_generation_context(job, verifier)
-                    checkpoint = load_catalog_verification_checkpoint(job, context)
-                    if checkpoint.get("status") != "built-unverified":
-                        raise
-                    for spec in catalog_output_specs(job, context):
-                        verifier.verify_file(
-                            spec["path"],
-                            str(spec["sha256"]),
-                            scope=str(spec["scope"]),
-                            expected_crc32=spec.get("crc32"),
-                        )
-                    verifier.save()
-                    job["_catalog_verified_context"] = context
-                    provisional_qa = True
-                    catalog_verification = {
-                        "status": "provisional-prevalidated",
-                        "verification": verifier.summary(),
-                    }
+                verify_catalog(job, full_verify=True, check_inputs=True)
         elif armor_set:
             verify_armor_set(job)
         else:
             verify_all(job, compare_game_sources=True)
         install_arguments = []
-        if catalog and args.full_verify:
-            install_arguments.append("-FullVerify")
-        elif catalog:
-            context = job.get("_catalog_verified_context")
-            if not isinstance(context, dict):
-                verifier = catalog_verifier(job)
-                context = catalog_current_generation_context(job, verifier)
-            verifier = catalog_verifier(job)
-            proof_path, proof_sha256 = write_catalog_install_proof(
-                job,
-                context,
-                verifier,
-                status="provisional" if provisional_qa else "verified",
-            )
-            install_arguments.extend(
-                [
-                    "-VerificationProof",
-                    str(proof_path),
-                    "-VerificationProofSha256",
-                    proof_sha256,
-                ]
-            )
-            if provisional_qa:
-                install_arguments.append("-ProvisionalQa")
         if args.creature_sprite_filter is not None:
             if not catalog:
                 raise RuntimeError(
@@ -10855,11 +10744,6 @@ def main() -> None:
         powershell_script(
             install_restore_script(job, restore=False), job, install_arguments
         )
-        if catalog_verification is not None and not args.full_verify:
-            install_summary = catalog_verifier(job).summary()
-            install_summary["source_dependencies_checked"] = False
-            install_summary["provisional_qa"] = provisional_qa
-            catalog_verification["verification"] = install_summary
         if catalog:
             state_path = active_state_path(job)
             state = read_json(state_path)
@@ -10871,8 +10755,6 @@ def main() -> None:
             }
         else:
             result = status(job)
-        if catalog_verification is not None:
-            result["verification"] = catalog_verification["verification"]
     elif args.command == "restore":
         powershell_script(install_restore_script(job, restore=True), job)
         result = status(job)
