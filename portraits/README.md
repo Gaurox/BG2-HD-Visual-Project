@@ -21,7 +21,5 @@ python pipeline/scripts/extract_character_portraits.py --output portraits --prun
 | PNJ rencontrés | `portraits/pnj-rencontres/inventaire.csv` | occurrences CRE hors recrutables ; pas de nouveaux assets | `extract_encountered_portraits.py` |
 | Mod PPE | `portraits/mod-PPE/inventaire.csv` | corpus tiers non installé ; exclu du registre du patch | `organize_ppe_portraits.py` |
 
-`grands/`, `moyens/` et `petits/` sont des données extraites reconstructibles. Ne pas lancer
-`workspace.py ... --run` automatiquement après régénération. Les projections globales sont
-réservées à un besoin explicite ou à la finalisation ; voir
-[`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md).
+`grands/`, `moyens/` et `petits/` sont des données extraites reconstructibles. Leur régénération ne
+modifie aucun index d'un autre domaine ; voir [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md).

@@ -21,14 +21,12 @@
 Animations, sprites et cartes conservent leurs autorités propres ; voir [`../AGENTS.md`](../AGENTS.md).
 L'état de release provient exclusivement des manifestes sous `releases/BG2-HD-Upscale/manifests/`.
 
-## Régénération et lecture
+## Régénération explicite
 
 ```powershell
-python pipeline/scripts/workspace.py refresh --changed
+python pipeline/scripts/build_graphics_inventory.py --check
+python pipeline/scripts/build_graphics_inventory.py
 ```
 
-La commande planifie sans écrire. Exécuter `workspace.py refresh --scope graphics --run` seulement
-si une vue globale ou un consommateur la demande. `registry` et `integrity` restent indépendants.
-`--verify-determinism` double le coût et est réservé à un diagnostic explicite ou à la finalisation.
-Les quantités courantes se lisent dans `asset-tracking/coverage.json` ; elles ne sont pas recopiées
-ici.
+Exécuter le générateur uniquement lorsqu'un index de domaine le demande. `--check` n'écrit rien ;
+`--verify-determinism` est réservé à un diagnostic explicite ou à la finalisation.

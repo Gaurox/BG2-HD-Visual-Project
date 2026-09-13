@@ -166,8 +166,6 @@ ALL_PACKS = {
 CONTROL_PATHS = (
     "animations/index/animation_alpha_corrections.csv",
     "animations/index/animation_upscale_registry.csv",
-    "asset-tracking/runs.csv",
-    "asset-tracking/runs.json",
     "releases/BG2-HD-Upscale/bg2hd/manifests/animation-release-candidates.json",
     "releases/BG2-HD-Upscale/bg2hd/manifests/content.json",
     "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
@@ -554,7 +552,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--verify-p3-baseline",
         action="store_true",
-        help="Also require QA/release/run-index hashes to equal the values captured during P3.",
+        help="Also require the retained control hashes to equal the values captured during P3.",
     )
     args = parser.parse_args(argv)
     try:

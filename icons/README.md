@@ -74,7 +74,7 @@ release_candidate,notes
 ```
 
 `sync_icon_processing.py` conserve toute ligne existante, ajoute seulement les nouveaux assets et
-refuse les identités obsolètes. Les valeurs d'état suivent `../docs/ASSET_TRACKING_CONTRACT.md`.
+refuse les identités obsolètes. `icons/index/processing.csv` fait autorité pour ces états.
 
 ## Extraction
 

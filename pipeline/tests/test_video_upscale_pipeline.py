@@ -13,8 +13,6 @@ SCRIPTS = ROOT / "pipeline" / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-import audit_workspace_integrity as AUDIT
-
 SPEC = importlib.util.spec_from_file_location(
     "run_video_upscale", SCRIPTS / "run_video_upscale.py"
 )
@@ -96,75 +94,6 @@ class VideoUpscalePipelineTests(unittest.TestCase):
         self.assertTrue(descriptor["result"]["sealed"])
         self.assertNotIn("selection", descriptor)
         self.assertNotIn("qa", descriptor)
-
-    def test_workspace_audit_indexes_sealed_video_run(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            (root / "video/index").mkdir(parents=True)
-            (root / "video/index/resources.csv").write_text(
-                "asset_key\nmovie:default:FLYTHR03\n", encoding="utf-8"
-            )
-            (root / "docs").mkdir()
-            (root / "docs/workspace-cleanup-manifest.json").write_text(
-                '{"operations": []}\n', encoding="utf-8"
-            )
-            recipe = root / "pipeline/workflow.json"
-            recipe.parent.mkdir()
-            recipe.write_text("{}\n", encoding="utf-8")
-            source = root / "video/source.wbm"
-            output = root / "video/flythr03/runs/test/02_upscale/output.mp4"
-            output.parent.mkdir(parents=True)
-            source.write_bytes(b"source")
-            output.write_bytes(b"output")
-
-            def evidence(path: Path) -> dict[str, object]:
-                return {
-                    "path": path.relative_to(root).as_posix(),
-                    "sha256": MODULE.sha256_file(path),
-                    "bytes": path.stat().st_size,
-                }
-
-            descriptor = {
-                "$schema": "docs/workspace-run.schema.json",
-                "schema_version": 1,
-                "run_id": "test",
-                "domain": "videos",
-                "asset_ids": ["videos:movie-default-flythr03"],
-                "pipeline": {
-                    "id": MODULE.PIPELINE_ID,
-                    "recipe_path": "pipeline/workflow.json",
-                    "recipe_sha256": MODULE.sha256_file(recipe),
-                },
-                "inputs": [evidence(source)],
-                "outputs": [evidence(output)],
-                "result": {"status": "completed", "sealed": True},
-            }
-            (root / "video/flythr03/runs/test/run.json").write_text(
-                json.dumps(descriptor), encoding="utf-8"
-            )
-            (root / "video/index/processing.csv").write_text(
-                "asset_key,asset_id,asset_directory,upscale_run,upscale_state,"
-                "interpolation_run,interpolation_state,validation_scope,patch_run,"
-                "patch_output_role,patch_state,notes\n"
-                "movie:default:FLYTHR03,videos:movie-default-flythr03,video/flythr03,"
-                "test,validated,,,pipeline-method,,,not-integrated,test\n",
-                encoding="utf-8",
-            )
-            original_root = AUDIT.ROOT
-            try:
-                AUDIT.ROOT = root
-                issues: list[dict[str, object]] = []
-                runs: dict[str, dict[str, object]] = {}
-                summary = AUDIT.audit_video_runs(issues, runs)
-            finally:
-                AUDIT.ROOT = original_root
-            self.assertEqual(issues, [])
-            self.assertEqual(summary["physical_run_count"], 1)
-            self.assertEqual(runs["videos:test"]["provenance_state"], "verified")
-            self.assertEqual(runs["videos:test"]["selection_state"], "validated-upscale")
-            self.assertEqual(summary["method_validated_run_count"], 1)
-            self.assertEqual(summary["patch_selected_run_count"], 0)
-
 
 if __name__ == "__main__":
     unittest.main()

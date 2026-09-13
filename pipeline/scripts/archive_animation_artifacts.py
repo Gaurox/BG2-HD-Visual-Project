@@ -34,7 +34,6 @@ FAILED_RUNS = (
 )
 CURRENT_REFERENCE_FILES = (
     ROOT / "releases/BG2-HD-Upscale/manifests/animation-release-candidates.json",
-    ROOT / "asset-tracking/registry.json",
 )
 RETAINED_CLASSES = {
     "release-source",

@@ -7,7 +7,6 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 
 | Besoin | Script |
 |---|---|
-| Projections globales explicites | `workspace.py` |
 | Tests locaux par convention de nom | `test_changed.py` |
 | Inventaires graphiques | `build_graphics_inventory.py` |
 | Maîtres/préflight de carte | `validate_x1_masters.py`, `audit_area_preflight.py` |
@@ -38,9 +37,7 @@ python pipeline/scripts/test_changed.py --targeted --path pipeline/scripts/<scri
 ```
 
 La commande planifie sans `--run`, isole le lot courant et ne possède aucun fallback global.
-`workspace.py refresh --changed` est réservé aux jalons/projections/release. Contrats :
-[`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md) et
-[`../../docs/WORKSPACE_INTEGRITY.md`](../../docs/WORKSPACE_INTEGRITY.md).
+Contrat : [`../../docs/TEST_SELECTION.md`](../../docs/TEST_SELECTION.md).
 
 Les chemins externes viennent de `config/workspace-paths.json` via `workspace_paths.py` ou
 `WorkspacePaths.ps1`. Aucun nouveau chemin machine ne doit être codé dans un script ou un guide.

@@ -79,13 +79,13 @@ Le producteur écrit `00-frames-x1/`, `01-spatial-x4/`, `recipe.json` et `run.js
 ## Initialisation / extraction
 
 ```powershell
-python pipeline/scripts/workspace.py refresh --scope graphics --run
 python pipeline/scripts/build_graphics_inventory.py --extract-effects --run
 python pipeline/scripts/sync_effect_processing.py
 python pipeline/scripts/sync_effect_processing.py --run
 ```
 
-La première commande régénère l'inventaire. La seconde extrait seulement les contrôleurs et BAM d'effets. La dernière initialise ou complète `processing.csv` sans réécrire une ligne existante.
+La première commande régénère l'inventaire et extrait seulement les contrôleurs et BAM d'effets.
+La dernière initialise ou complète `processing.csv` sans réécrire une ligne existante.
 
 Deux BAM stock absents restent `blocked`; ne pas créer de `source.bam` fictif.
 

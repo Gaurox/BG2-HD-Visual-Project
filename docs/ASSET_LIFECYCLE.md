@@ -1,7 +1,7 @@
 # Cycle de vie et rangement des assets
 
 Convention progressive pour les nouveaux travaux. Aucun run historique n'est déplacé ni réécrit.
-Les autorités métier restent celles d'[`ASSET_TRACKING_CONTRACT.md`](ASSET_TRACKING_CONTRACT.md).
+Les index de domaine et décisions QA indiqués dans [`../AGENTS.md`](../AGENTS.md) font autorité.
 
 ## Invariants
 

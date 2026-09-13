@@ -22,7 +22,7 @@ Une commande de production ne doit pas déclencher implicitement une finalisatio
    un risque encore inconnu.
 3. Installer/restaurer transactionnellement si une QA ingame est utile.
 4. Après décision utilisateur, sceller le résultat retenu et ajouter son enregistrement candidat.
-5. S'arrêter. Ne pas régénérer `asset-tracking/*`, `content.json`, `components.json`, le TP2, les
+5. S'arrêter. Ne pas régénérer `content.json`, `components.json`, le TP2, les
    miroirs package, le staging ou une archive.
 
 ## États opérationnels

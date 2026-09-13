@@ -59,18 +59,6 @@ python pipeline/scripts/inject_build.py restore <backup-dir>
 Le dossier exact de sauvegarde et les hashes sont produits par le script ; ne pas maintenir une
 seconde procédure de copie manuelle dans la documentation.
 
-## Projections facultatives
-
-Préparer sans exécuter :
-
-```powershell
-python pipeline/scripts/workspace.py refresh --changed
-```
-
-Cette commande est utile seulement lorsqu'une projection est demandée ou consommée. Les scopes et
-commandes disponibles sont listés dans
-[`../docs/WORKSPACE_INTEGRITY.md`](../docs/WORKSPACE_INTEGRITY.md).
-
 ## Guides spécialisés
 
 | Besoin | Document |
