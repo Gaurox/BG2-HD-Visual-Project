@@ -368,14 +368,6 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest().upper()
 
 
-def crc32_file(path: Path) -> int:
-    checksum = 0
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            checksum = zlib.crc32(chunk, checksum)
-    return checksum & 0xFFFFFFFF
-
-
 def write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".tmp")
@@ -2463,12 +2455,6 @@ def run_xbr(
     return outputs
 
 
-def run_xbr2x(
-    frames: list[SourceFrame], scalepix: Path, node: str
-) -> list[tuple[int, int, bytes]]:
-    return run_xbr(frames, scalepix, node, LEGACY_UPSCALE)
-
-
 def projected_xbr_output_bytes(frame: SourceFrame, scale: int) -> int:
     index_bytes = int(frame.width) * int(frame.height) * scale * scale
     if index_bytes <= 0 or index_bytes > MAX_LAZY_FRAME_INDEX_BYTES:
@@ -2842,25 +2828,6 @@ def make_comparison_sheet_samples(
     canvas.save(destination)
 
 
-def make_comparison_sheet(
-    frames: list[SourceFrame],
-    outputs: list[tuple[int, int, bytes]],
-    destination: Path,
-    contract: UpscaleContract = LEGACY_UPSCALE,
-) -> None:
-    if len(outputs) != len(frames):
-        raise RuntimeError("comparison sheet output count differs from source frames")
-    make_comparison_sheet_samples(
-        frames,
-        {
-            position: outputs[position]
-            for position in comparison_sample_positions(len(frames))
-        },
-        destination,
-        contract,
-    )
-
-
 def preflight_registry_layout(
     resources: list[dict[str, Any]],
     scale: int,
@@ -2936,20 +2903,6 @@ def preflight_registry_layout(
 
 def registry_magic_name(magic: bytes) -> str:
     return magic.rstrip(b"\0").decode("ascii", errors="strict")
-
-
-def require_compatible_registry_infos(
-    infos: list[dict[str, Any]],
-) -> tuple[str, int, int]:
-    if not infos:
-        raise RuntimeError("registry aggregation requires at least one member")
-    identities = {
-        (str(info.get("registry_magic", "")), int(info["version"]), int(info["scale"]))
-        for info in infos
-    }
-    if len(identities) != 1:
-        raise RuntimeError("registry aggregation refuses mixed magic/version/scale")
-    return next(iter(identities))
 
 
 class WindowsXpressHuffCodec:
@@ -4425,187 +4378,6 @@ def inspect_registry_catalog(
         "directory": directory,
         "animation_resources": animation_resources,
     }
-
-
-def write_registry_catalog(
-    path: Path,
-    scale: int,
-    animations: list[dict[str, Any]],
-    components: list[dict[str, Any]],
-    shards: list[dict[str, Any]],
-) -> dict[str, Any]:
-    if path.name != XN_REGISTRY_CATALOG_FILENAME or scale not in {2, 4}:
-        raise RuntimeError("invalid registry catalog output path or scale")
-    animations = sorted(animations, key=lambda entry: int(entry["animation_id"], 16))
-    if not (1 <= len(animations) <= MAX_REGISTRY_CATALOG_ANIMATIONS):
-        raise RuntimeError("invalid registry catalog animation count")
-    if not (1 <= len(components) <= MAX_REGISTRY_CATALOG_COMPONENTS):
-        raise RuntimeError("invalid registry catalog component count")
-    if not (len(components) <= len(shards) <= MAX_REGISTRY_CATALOG_SHARDS):
-        raise RuntimeError("invalid registry catalog shard count")
-    memberships: list[int] = []
-    animation_bytes = bytearray()
-    animation_mappings: list[tuple[int, list[int]]] = []
-    seen_animation_ids: set[int] = set()
-    for animation in animations:
-        animation_id = int(str(animation["animation_id"]), 16)
-        owner = int(animation["owner"])
-        indices = sorted({int(value) for value in animation["component_indices"]})
-        if (
-            animation_id in seen_animation_ids
-            or animation_id in {0, CATALOG_SHARD_ANIMATION_SENTINEL}
-            or not indices
-            or any(index < 0 or index >= len(components) for index in indices)
-        ):
-            raise RuntimeError("invalid registry catalog animation mapping")
-        seen_animation_ids.add(animation_id)
-        start = len(memberships)
-        memberships.extend(indices)
-        animation_bytes.extend(struct.pack("<IIII", animation_id, owner, start, len(indices)))
-        animation_mappings.append((animation_id, indices))
-    if len(memberships) > MAX_REGISTRY_CATALOG_MEMBERSHIPS:
-        raise RuntimeError("registry catalog membership limit exceeded")
-
-    shard_bytes: list[bytes] = []
-    shard_infos: list[dict[str, Any]] = []
-    for index, shard in enumerate(shards):
-        path_value = Path(str(shard["path"]))
-        if path_value.parent != path.parent:
-            raise RuntimeError("catalog shard must be adjacent to catalog")
-        info = inspect_registry(path_value)
-        expected_name = catalog_shard_filename(info["sha256"])
-        if path_value.name != expected_name or int(shard.get("index", -1)) != index:
-            raise RuntimeError("catalog shard filename or index is not canonical")
-        shard_bytes.append(catalog_shard_entry_bytes(info, path_value))
-        shard_infos.append(info)
-
-    component_bytes = bytearray()
-    expected_start = 0
-    for index, component in enumerate(components):
-        start = int(component["shard_start"])
-        count = int(component["shard_count"])
-        if (
-            int(component.get("index", -1)) != index
-            or start != expected_start
-            or count <= 0
-            or start + count > len(shards)
-        ):
-            raise RuntimeError("catalog component shard range is invalid")
-        selected = shard_bytes[start : start + count]
-        digest = catalog_component_digest(scale, selected)
-        if str(component["digest"]).upper() != digest:
-            raise RuntimeError("catalog component digest differs from shards")
-        component_bytes.extend(
-            struct.pack(
-                "<32sIIIIQQQ",
-                bytes.fromhex(digest),
-                start,
-                count,
-                int(component["resource_count"]),
-                0,
-                int(component["frame_count"]),
-                int(component["index_bytes"]),
-                int(component["registry_bytes"]),
-            )
-        )
-        expected_start += count
-    if expected_start != len(shards):
-        raise RuntimeError("catalog components do not cover every shard")
-
-    total_resources = sum(int(item["resource_count"]) for item in components)
-    total_frames = sum(int(item["frame_count"]) for item in components)
-    total_index_bytes = sum(int(item["index_bytes"]) for item in components)
-    total_registry_bytes = sum(int(item["registry_bytes"]) for item in components)
-    if (
-        total_resources > MAX_REGISTRY_CATALOG_RESOURCES
-        or total_frames > MAX_REGISTRY_CATALOG_FRAMES
-        or total_index_bytes > MAX_REGISTRY_CATALOG_BYTES
-        or total_registry_bytes > MAX_REGISTRY_CATALOG_BYTES
-    ):
-        raise RuntimeError("registry catalog aggregate limit exceeded")
-
-    directory_routes: list[tuple[int, bytes, int, int, int]] = []
-    for animation_id, component_indices in animation_mappings:
-        seen_resrefs: set[bytes] = set()
-        for component_index in component_indices:
-            component = components[component_index]
-            shard_start = int(component["shard_start"])
-            shard_count = int(component["shard_count"])
-            for shard_index in range(shard_start, shard_start + shard_count):
-                for resource_ordinal, resref in enumerate(
-                    shard_infos[shard_index]["resources"]
-                ):
-                    resref_bytes = str(resref).encode("ascii").ljust(8, b"\0")
-                    if len(resref_bytes) != 8 or resref_bytes in seen_resrefs:
-                        raise RuntimeError(
-                            "duplicate or invalid resref in catalog animation directory"
-                        )
-                    seen_resrefs.add(resref_bytes)
-                    directory_routes.append(
-                        (
-                            animation_id,
-                            resref_bytes,
-                            component_index,
-                            shard_index,
-                            resource_ordinal,
-                        )
-                    )
-    directory_routes.sort(key=lambda entry: (entry[0], entry[1]))
-    if not (
-        1 <= len(directory_routes) <= MAX_REGISTRY_CATALOG_DIRECTORY_ENTRIES
-    ):
-        raise RuntimeError("registry catalog directory entry limit exceeded")
-    directory_bytes = bytearray()
-    previous_key: tuple[int, bytes] | None = None
-    for animation_id, resref, component_index, shard_index, ordinal in directory_routes:
-        key = (animation_id, resref)
-        if previous_key is not None and key <= previous_key:
-            raise RuntimeError("registry catalog directory order is not strict")
-        directory_bytes.extend(
-            struct.pack(
-                "<I8sIII",
-                animation_id,
-                resref,
-                component_index,
-                shard_index,
-                ordinal,
-            )
-        )
-        previous_key = key
-    directory_sha256 = catalog_directory_digest(scale, bytes(directory_bytes))
-    raw = bytearray(
-        struct.pack(
-            "<8sIIIIIIQQQQ",
-            XN_REGISTRY_CATALOG_MAGIC,
-            XN_REGISTRY_CATALOG_VERSION,
-            scale,
-            len(animations),
-            len(components),
-            len(memberships),
-            len(shards),
-            total_resources,
-            total_frames,
-            total_index_bytes,
-            total_registry_bytes,
-        )
-    )
-    raw.extend(
-        struct.pack(
-            "<II32s",
-            len(directory_routes),
-            REGISTRY_CATALOG_DIRECTORY_ENTRY_BYTES,
-            bytes.fromhex(directory_sha256),
-        )
-    )
-    raw.extend(animation_bytes)
-    if memberships:
-        raw.extend(struct.pack(f"<{len(memberships)}I", *memberships))
-    raw.extend(component_bytes)
-    for entry in shard_bytes:
-        raw.extend(entry)
-    raw.extend(directory_bytes)
-    path.write_bytes(raw)
-    return inspect_registry_catalog(path)
 
 
 def read_sealed_catalog_index(path: Path, expected_sha256: str) -> dict[str, Any]:
@@ -7414,19 +7186,6 @@ def runtime_owner_labels(profile: str) -> tuple[str, str]:
     if profile == "monster-bg2ee-2.7.3.0":
         return "Monster::Render", "CGameAnimationTypeMonster::Render"
     raise RuntimeError(f"unsupported runtime profile: {profile!r}")
-
-
-def animation_composition_lines(
-    session: str, animation_id: str, bam_prefix: str
-) -> list[str]:
-    canonical_id = f"0x{int(animation_id, 16):04X}"
-    prefix_marker = f"Composing creature sprite {bam_prefix}"
-    animation_marker = f" animation={canonical_id} "
-    return [
-        line
-        for line in session.splitlines()
-        if prefix_marker in line and animation_marker in line
-    ]
 
 
 def runtime_session_health(

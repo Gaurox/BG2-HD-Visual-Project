@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 from unittest import mock
 
@@ -317,7 +318,9 @@ function xbr4x(source, width, height) {
         with tempfile.TemporaryDirectory() as temporary:
             scalepix = Path(temporary) / "scalepix.html"
             scalepix.write_text(fake_scalepix, encoding="utf-8")
-            legacy = pipeline.run_xbr2x([frame], scalepix, "node")
+            legacy = pipeline.run_xbr(
+                [frame], scalepix, "node", pipeline.LEGACY_UPSCALE
+            )
             explicit = pipeline.run_xbr(
                 [frame], scalepix, "node", pipeline.direct_upscale_contract(4)
             )
@@ -1176,7 +1179,7 @@ function xbr4x(source, width, height) {
                             "index": 0,
                             "relative_path": shard_relative,
                             "sha256": pipeline.sha256_file(shard),
-                            "crc32": pipeline.crc32_file(shard),
+                            "crc32": zlib.crc32(shard.read_bytes()) & 0xFFFFFFFF,
                         }
                     ],
                     "targets": [
@@ -1523,20 +1526,6 @@ function xbr4x(source, width, height) {
         self.assertEqual(report["catalog_component_quarantine_count"], 1)
         self.assertFalse(report["runtime_health_pass"])
 
-    def test_catalog_composition_marker_is_scoped_by_animation_and_prefix(self) -> None:
-        session = (
-            "Composing creature sprite TESTA1 animation=0x6110 frame 000 via "
-            "transient replacement id 42 (NEAREST, delete-pending after queued draw)"
-        )
-        self.assertEqual(
-            len(pipeline.animation_composition_lines(session, "0x6110", "TEST")),
-            1,
-        )
-        self.assertEqual(
-            pipeline.animation_composition_lines(session, "0xE400", "TEST"),
-            [],
-        )
-
     def test_runtime_log_session_must_be_exact_and_post_install(self) -> None:
         text = "\n".join(
             (
@@ -1764,7 +1753,7 @@ Read-RegistryHeader '{quote(registry)}' | ConvertTo-Json -Compress
             expected = pipeline.write_registry_set_index(
                 set_path, 2, 0x6110, [shard_info]
             )
-            expected_crc32 = pipeline.crc32_file(shard_path)
+            expected_crc32 = zlib.crc32(shard_path.read_bytes()) & 0xFFFFFFFF
             quote = lambda value: str(value).replace("'", "''")
             command = f"""
 $tokens = $null
@@ -2281,21 +2270,6 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
                     )
                     with self.assertRaisesRegex(RuntimeError, "header"):
                         pipeline.inspect_registry(path)
-
-    def test_registry_aggregation_rejects_mixed_identity(self) -> None:
-        x4 = {"registry_magic": "IEECSXN", "version": 3, "scale": 4}
-        self.assertEqual(
-            pipeline.require_compatible_registry_infos([x4, dict(x4)]),
-            ("IEECSXN", 3, 4),
-        )
-        for mixed in (
-            {**x4, "scale": 2},
-            {**x4, "version": 2},
-            {**x4, "registry_magic": "IEECSX2"},
-        ):
-            with self.subTest(mixed=mixed):
-                with self.assertRaisesRegex(RuntimeError, "mixed magic/version/scale"):
-                    pipeline.require_compatible_registry_infos([x4, mixed])
 
     def test_explicit_x2_aggregate_promotes_legacy_and_mixed_member_formats(self) -> None:
         explicit_x2 = {"upscale": pipeline.direct_upscale_contract(2).method}

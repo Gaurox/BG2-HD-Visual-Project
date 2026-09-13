@@ -6,6 +6,7 @@ import struct
 import sys
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 from unittest import mock
 
@@ -107,24 +108,52 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
                 }
             )
         catalog = root / pipeline.XN_REGISTRY_CATALOG_FILENAME
-        info = pipeline.write_registry_catalog(
+        animations = [
+            {
+                "animation_id": "0x6102",
+                "owner": pipeline.CATALOG_OWNER_CHARACTER,
+                "component_indices": [0],
+            },
+            {
+                "animation_id": "0x6110",
+                "owner": pipeline.CATALOG_OWNER_CHARACTER,
+                "component_indices": [1],
+            },
+        ]
+        pipeline.write_registry_catalog_index(
             catalog,
             scale,
-            [
-                {
-                    "animation_id": "0x6102",
-                    "owner": pipeline.CATALOG_OWNER_CHARACTER,
-                    "component_indices": [0],
-                },
-                {
-                    "animation_id": "0x6110",
-                    "owner": pipeline.CATALOG_OWNER_CHARACTER,
-                    "component_indices": [1],
-                },
-            ],
+            animations,
             components,
             shards,
+            [
+                {
+                    "animation_id": animation["animation_id"],
+                    "resref": f"RES{chr(ord('A') + index)}",
+                    "component_index": index,
+                    "shard_index": index,
+                    "resource_ordinal": 0,
+                }
+                for index, animation in enumerate(animations)
+            ],
+            [component["digest"] for component in components],
+            {
+                "stored_index_bytes": sum(
+                    int(shard["stored_index_bytes"]) for shard in shards
+                ),
+                "compressed_frame_count": sum(
+                    int(shard["compressed_frame_count"]) for shard in shards
+                ),
+                "raw_frame_count": sum(
+                    int(shard["raw_frame_count"]) for shard in shards
+                ),
+                "index_storage_ratio": sum(
+                    int(shard["stored_index_bytes"]) for shard in shards
+                )
+                / sum(int(shard["index_bytes"]) for shard in shards),
+            },
         )
+        info = pipeline.inspect_registry_catalog(catalog)
         source_a.unlink()
         source_b.unlink()
         return catalog, info
@@ -559,7 +588,9 @@ class CreatureSpriteXnCatalogTests(unittest.TestCase):
             fingerprint = pipeline.catalog_payload_fingerprint(monolith)
             self.assertEqual(fingerprint["bytes"], len(b"monolith-payload"))
             self.assertEqual(fingerprint["sha256"], pipeline.sha256_file(monolith))
-            self.assertEqual(fingerprint["crc32"], pipeline.crc32_file(monolith))
+            self.assertEqual(
+                fingerprint["crc32"], zlib.crc32(monolith.read_bytes()) & 0xFFFFFFFF
+            )
 
             set_index = pack / pipeline.XN_REGISTRY_SET_FILENAME
             shard_zero = pack / pipeline.XN_REGISTRY_SHARD_FILENAME.format(index=0)
