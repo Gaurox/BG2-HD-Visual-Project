@@ -1,0 +1,70 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-13T19:07:41.0827132Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "asset_key": "sprites:family:0x7F03:body:base-resref:MIMP:MIMP:x2-nearest",
+    "family_id": "0x7F03:body:base-resref:MIMP:MIMP",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x7F03",
+    "bam_prefix": "MIMP",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "2233C1CF52C5800F3FF659AF99F680760151D4FA4BB93366D340D17863C53C8C"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "scenarios": [
+      {
+        "creature": "BOTSMITH",
+        "name": "Cespenar"
+      },
+      {
+        "creature": "GPFAM1",
+        "name": "Pitch"
+      },
+      {
+        "creature": "SEVPAT03",
+        "name": "Pooky"
+      }
+    ],
+    "note": "Les trois personnages de la famille MIMP ont été validés ingame explicitement par l'utilisateur le 2026-09-13."
+  },
+  "automatic_evidence": {
+    "build_manifest": "sprite/families/monsters/7fxx/7f03-mimp-imp/runs/x2-nearest-v1/build/build-manifest.json",
+    "build_manifest_sha256": "B2D71B61474AA27CECF42842DAC3B995E919F6B3621E74C1DBD40FB9F08C9900",
+    "runtime_manifest": "sprite/families/monsters/7fxx/7f03-mimp-imp/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+    "runtime_manifest_sha256": "ACB95264B03B7DD527D7F318C9C1AA142DF4DA55E7B2B1CB2D34283372DA1614",
+    "comparison_sheet_count": 13,
+    "historical_installation_state": "installed",
+    "active_installation_status": "installed-pending-qa"
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f03-mimp-imp/source/stock/manifest.json",
+    "source_manifest_sha256": "C522B92430E28231714624476CA412C85B1796C618B7B15F77AE8E9792B2D41F",
+    "selected_run": "sprite/families/monsters/7fxx/7f03-mimp-imp/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "B2D71B61474AA27CECF42842DAC3B995E919F6B3621E74C1DBD40FB9F08C9900",
+    "job_file": "sprite/families/monsters/7fxx/7f03-mimp-imp/jobs/x2-nearest-v1.json",
+    "job_sha256": "CD292EBCECD887398B0E6E0B71964532E010AFDE191CC399EA98F7AA459B16A1"
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-7f03-mimp-imp-v1.json",
+    "job_sha256": "D4A2DED0C3C7F39120032961F1C26308F6E7649F9C3EB615ABE397D4C786714D",
+    "current_generation": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "current_generation_sha256": "1EFAC0D6C0A7375496C3BD3F231B6C72DCAE10D5B02325DFDA0E583A39E08502",
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/2233c1cf52c5800f3ff659af99f680760151d4fa4bb93366d340d17863c53c8c/build/build-manifest.json",
+    "build_manifest_sha256": "9BF3208ED6D33A226439391CE4E6936021F578BF70424DE0645DAAC6B9ED0B8D",
+    "catalog_sha256": "4CC034F2B202C69CED519A892088A53D4F696C9CA6617B3083503B108EED75B6",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "4E0150B694A9AD58D7D323D2AEEF5BDCED13E78AFD1925376CB4C716E96CE5A5",
+    "installation_status": "installed-pending-qa",
+    "installed_runtime_manifest": "pipeline/runtime/manifests/iee-water-ar1000n-creature-catalog-v2-v1.json",
+    "installed_runtime_manifest_sha256": "E3E2E9C20DD5CC8EF62B799ECC1A5350ABF94DF3FA2BC7D381512EBDCB489B44",
+    "installed_runtime_dll_sha256": "ABBF3679F3A4D70D61EBD31864D9FCC9DDDBC76A46221CFDF4D587CA15C8F7D9"
+  },
+  "release_manifest_modified": false
+}
