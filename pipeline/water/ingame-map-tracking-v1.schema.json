@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bg2-water-ingame-map-tracking-v1.schema.json",
+  "title": "BG2EE liquid-map ingame QA tracking v1",
+  "type": "object",
+  "required": ["schema", "version", "updated", "inventory", "workflow", "maps"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema": {"const": "bg2-water-ingame-map-tracking-v1"},
+    "version": {"const": 1},
+    "updated": {"type": "string", "format": "date"},
+    "inventory": {
+      "type": "object",
+      "required": ["path", "sha256", "expected_maps", "expected_overlay_targets", "night_weds"],
+      "additionalProperties": false,
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+        "expected_maps": {"type": "integer", "minimum": 1},
+        "expected_overlay_targets": {"type": "integer", "minimum": 1},
+        "night_weds": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N$"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "required": ["mode", "active_map_id", "rule"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {"const": "one-map-at-a-time"},
+        "active_map_id": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"}
+          ]
+        },
+        "rule": {"type": "string", "minLength": 1}
+      }
+    },
+    "maps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/map"}
+    }
+  },
+  "$defs": {
+    "map": {
+      "type": "object",
+      "required": ["id", "area_id", "wed", "variant", "work_state", "preparation_state", "qa_state", "installation_state", "overlays", "release_target_ids", "qa_evidence_ids", "blockers"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"},
+        "area_id": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
+        "wed": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N?$"},
+        "variant": {"enum": ["day-or-unique", "night"]},
+        "work_state": {"enum": ["queued", "active", "blocked", "done"]},
+        "preparation_state": {"enum": ["candidate-available", "native-baseline", "installed", "blocked"]},
+        "qa_state": {"enum": ["validated-ingame", "validated-current-fallback", "session-accepted-variant-unresolved", "pending-ingame", "blocked-family-qa", "blocked-preparation"]},
+        "installation_state": {"enum": ["installed", "not-run"]},
+        "overlays": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/overlay"}
+        },
+        "release_target_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "qa_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "required": ["slot", "resref", "family", "candidate_state", "route2_strength", "reasons"],
+      "additionalProperties": false,
+      "properties": {
+        "slot": {"type": "integer", "minimum": 1},
+        "resref": {"type": "string", "pattern": "^[A-Z0-9_]{1,8}$"},
+        "family": {"type": "string", "minLength": 1},
+        "candidate_state": {"enum": ["corrected", "candidate-installable-pending-qa", "already-conform", "blocked"]},
+        "route2_strength": {"type": "number", "minimum": 0, "maximum": 1},
+        "reasons": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  }
+}

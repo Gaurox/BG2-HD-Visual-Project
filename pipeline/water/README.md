@@ -11,6 +11,7 @@ et ouvrir uniquement la référence utile.
 | Symptôme visuel ou crash | [`VALIDATED_WATER_RECIPES.md`](VALIDATED_WATER_RECIPES.md) |
 | Réparation TIS/PVRZ/WED | [`../WATER_REPAIR_RUNBOOK.md`](../WATER_REPAIR_RUNBOOK.md) |
 | Mouvement procédural/runtime | [`../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md) |
+| File QA ingame exhaustive, une carte à la fois | `ingame-map-tracking-v1.json` |
 | Sélection finale et QA | [`WATER_RELEASE_TRACKING.md`](WATER_RELEASE_TRACKING.md) |
 | Politique machine par famille | `family-policy-v1.json` |
 | Registre route2 | `route2-registry-v1.json` et registre v2 du moteur |
@@ -40,9 +41,11 @@ Références finales :
 
 ## État et sécurité
 
-`release-tracking-v1.json` est l'état machine courant. Son audit est facultatif :
+`ingame-map-tracking-v1.json` suit les 67 WED liquides, variantes nuit incluses, en regroupant les
+overlays par carte. `release-tracking-v1.json` conserve séparément les sélections finales. Audits :
 
 ```powershell
+python -B pipeline/scripts/audit_water_ingame_tracking.py --json
 python -B pipeline/scripts/audit_water_release_tracking.py --json
 ```
 

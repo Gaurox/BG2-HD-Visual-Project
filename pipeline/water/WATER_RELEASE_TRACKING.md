@@ -10,6 +10,7 @@ enregistrée une seule fois.
 | Objet | Emplacement |
 |---|---|
 | État général d'une map | `areas.csv` |
+| File exhaustive de QA ingame par WED/variante | `pipeline/water/ingame-map-tracking-v1.json` |
 | Décision QA eau exacte | `pipeline/water/manifests/*validated*.json` |
 | Sélection eau courante | `pipeline/water/release-tracking-v1.json` |
 | Recettes | `pipeline/water/VALIDATED_WATER_RECIPES.md` |
@@ -17,6 +18,19 @@ enregistrée une seule fois.
 | Release publiée | `releases/BG2-HD-Upscale/manifests/`, séparée de ce suivi |
 
 ## Structure du JSON
+
+`ingame-map-tracking-v1.json` :
+
+- `inventory` : matrice source hashée, 67 WED, 98 overlays et liste explicite des 7 nuits.
+- `workflow.active_map_id` : au plus une carte active ; `null` entre deux sessions.
+- `maps[]` : une entrée par WED/variante ; tous ses slots liquides restent groupés.
+- `work_state` : `queued`, `active`, `blocked` ou `done`.
+- `preparation_state`, `qa_state`, `installation_state` : états séparés, jamais déduits l'un de
+  l'autre.
+- `overlays[].candidate_state` et `route2_strength` : photographie de la matrice d'inventaire ; la
+  sélection courante reste référencée par `release_target_ids`.
+
+`release-tracking-v1.json` :
 
 - `evidence[]` : références et hashes des preuves retenues.
 - `artifact_sets[]` : groupes d'artefacts candidats.
@@ -50,11 +64,13 @@ L'autorité machine reste `release-tracking-v1.json` si cette synthèse devient 
 ## Audit facultatif
 
 ```powershell
+python -B pipeline/scripts/audit_water_ingame_tracking.py --json
 python -B pipeline/scripts/audit_water_release_tracking.py --json
 ```
 
-Cet audit est utile avant une intégration ou pour diagnostiquer une incohérence du suivi. Il n'est
-pas nécessaire pour chercher, produire ou installer une correction locale.
+Le premier audit exige l'égalité exacte avec la matrice liquide, vérifie les variantes nuit et les
+overlays multi-slots, calcule les compteurs et impose l'unicité de la carte active. Le second contrôle les sélections
+finales. Ils ne sont pas nécessaires pour chercher ou produire une correction locale.
 
 ## Enregistrement final, si utile
 

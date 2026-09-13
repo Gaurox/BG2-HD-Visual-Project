@@ -1,0 +1,2280 @@
+{
+  "$schema": "ingame-map-tracking-v1.schema.json",
+  "schema": "bg2-water-ingame-map-tracking-v1",
+  "version": 1,
+  "updated": "2026-09-13",
+  "inventory": {
+    "path": "pipeline/water/manifests/liquid-target-matrix-v1.json",
+    "sha256": "223538407EB6942B11F3F90D36C3B31704CB393942CBDB3B2679515056543C37",
+    "expected_maps": 67,
+    "expected_overlay_targets": 98,
+    "night_weds": [
+      "AR0046N",
+      "AR0300N",
+      "AR0500N",
+      "AR0700N",
+      "AR0900N",
+      "AR1000N",
+      "AR2000N"
+    ]
+  },
+  "workflow": {
+    "mode": "one-map-at-a-time",
+    "active_map_id": null,
+    "rule": "Sélectionner une seule carte queued, la passer active, installer et tester uniquement cette variante WED, puis enregistrer la preuve QA exacte avant de passer à la suivante."
+  },
+  "maps": [
+    {
+      "id": "liquid-map:AR0011",
+      "area_id": "AR0011",
+      "wed": "AR0011",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR0046",
+      "area_id": "AR0046",
+      "wed": "AR0046",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "installed",
+      "qa_state": "session-accepted-variant-unresolved",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0046:observed"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": [
+        "resolve whether observed WED was AR0046 or AR0046N; create variant-specific QA receipt"
+      ]
+    },
+    {
+      "id": "liquid-map:AR0046N",
+      "area_id": "AR0046",
+      "wed": "AR0046N",
+      "variant": "night",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0046N:night"
+      ],
+      "qa_evidence_ids": [
+        "ar0046n-water-tint-qa-v7"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0204",
+      "area_id": "AR0204",
+      "wed": "AR0204",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0204:day"
+      ],
+      "qa_evidence_ids": [
+        "ar0204-ar1600-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0300",
+      "area_id": "AR0300",
+      "wed": "AR0300",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "installed",
+      "qa_state": "pending-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0300:observed"
+      ],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "create variant-specific day QA receipt after WED relocation"
+      ]
+    },
+    {
+      "id": "liquid-map:AR0300N",
+      "area_id": "AR0300",
+      "wed": "AR0300N",
+      "variant": "night",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0300N:night"
+      ],
+      "qa_evidence_ids": [
+        "ar0300n-reflections-alpha160-qa-v10"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0310",
+      "area_id": "AR0310",
+      "wed": "AR0310",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0404",
+      "area_id": "AR0404",
+      "wed": "AR0404",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSEW",
+          "family": "sewage-wtsew",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0404:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtsew-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0408",
+      "area_id": "AR0408",
+      "wed": "AR0408",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0413",
+      "area_id": "AR0413",
+      "wed": "AR0413",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0500",
+      "area_id": "AR0500",
+      "wed": "AR0500",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0500N",
+      "area_id": "AR0500",
+      "wed": "AR0500N",
+      "variant": "night",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0503",
+      "area_id": "AR0503",
+      "wed": "AR0503",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0506",
+      "area_id": "AR0506",
+      "wed": "AR0506",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0512",
+      "area_id": "AR0512",
+      "wed": "AR0512",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "installed",
+      "qa_state": "blocked-family-qa",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "already-conform",
+          "route2_strength": 0.0,
+          "reasons": [
+            "native-composition-kept",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0512:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": [
+        "interior water profile rejected/deferred; dedicated material/QA required"
+      ]
+    },
+    {
+      "id": "liquid-map:AR0603",
+      "area_id": "AR0603",
+      "wed": "AR0603",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "native-baseline",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "already-conform",
+          "route2_strength": 0.0,
+          "reasons": [
+            "stock-overlay-native-q0",
+            "dedicated-route2-material-unapproved"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0604",
+      "area_id": "AR0604",
+      "wed": "AR0604",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0700",
+      "area_id": "AR0700",
+      "wed": "AR0700",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0700N",
+      "area_id": "AR0700",
+      "wed": "AR0700N",
+      "variant": "night",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0703",
+      "area_id": "AR0703",
+      "wed": "AR0703",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR0900",
+      "area_id": "AR0900",
+      "wed": "AR0900",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "installed",
+      "qa_state": "pending-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "corrected",
+          "route2_strength": 1.0,
+          "reasons": [
+            "validated-reference-route1-and-route2"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0900:day"
+      ],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "repeat day QA after WED relocation"
+      ]
+    },
+    {
+      "id": "liquid-map:AR0900N",
+      "area_id": "AR0900",
+      "wed": "AR0900N",
+      "variant": "night",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR0900N:night"
+      ],
+      "qa_evidence_ids": [
+        "ar0900-night-qa-v5"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1000",
+      "area_id": "AR1000",
+      "wed": "AR1000",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1000:day"
+      ],
+      "qa_evidence_ids": [
+        "ar1000-wtpool-route2-qa-v5"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1000N",
+      "area_id": "AR1000",
+      "wed": "AR1000N",
+      "variant": "night",
+      "work_state": "queued",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1000N:night"
+      ],
+      "qa_evidence_ids": [
+        "ar1000n-wtswam-route2-qa-v1"
+      ],
+      "blockers": [
+        "WSWPILR rain variant installed but not separately observed"
+      ]
+    },
+    {
+      "id": "liquid-map:AR1003",
+      "area_id": "AR1003",
+      "wed": "AR1003",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1004",
+      "area_id": "AR1004",
+      "wed": "AR1004",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1100",
+      "area_id": "AR1100",
+      "wed": "AR1100",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1106",
+      "area_id": "AR1106",
+      "wed": "AR1106",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1200",
+      "area_id": "AR1200",
+      "wed": "AR1200",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1200:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1201",
+      "area_id": "AR1201",
+      "wed": "AR1201",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1203",
+      "area_id": "AR1203",
+      "wed": "AR1203",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "native-baseline",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "already-conform",
+          "route2_strength": 0.0,
+          "reasons": [
+            "stock-overlay-native-q0",
+            "dedicated-route2-material-unapproved"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1401",
+      "area_id": "AR1401",
+      "wed": "AR1401",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR1403",
+      "area_id": "AR1403",
+      "wed": "AR1403",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1500",
+      "area_id": "AR1500",
+      "wed": "AR1500",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1600",
+      "area_id": "AR1600",
+      "wed": "AR1600",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1600:unique"
+      ],
+      "qa_evidence_ids": [
+        "ar0204-ar1600-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1601",
+      "area_id": "AR1601",
+      "wed": "AR1601",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1604",
+      "area_id": "AR1604",
+      "wed": "AR1604",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "installed",
+      "qa_state": "blocked-family-qa",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "already-conform",
+          "route2_strength": 0.0,
+          "reasons": [
+            "native-composition-kept",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1604:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": [
+        "interior water profile rejected/deferred; dedicated material/QA required"
+      ]
+    },
+    {
+      "id": "liquid-map:AR1607",
+      "area_id": "AR1607",
+      "wed": "AR1607",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1607:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtswam-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1700",
+      "area_id": "AR1700",
+      "wed": "AR1700",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1700:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1800",
+      "area_id": "AR1800",
+      "wed": "AR1800",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1800:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtswam-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR1901",
+      "area_id": "AR1901",
+      "wed": "AR1901",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR1901:unique"
+      ],
+      "qa_evidence_ids": [
+        "wtlake-session-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2000",
+      "area_id": "AR2000",
+      "wed": "AR2000",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2000N",
+      "area_id": "AR2000",
+      "wed": "AR2000N",
+      "variant": "night",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2011",
+      "area_id": "AR2011",
+      "wed": "AR2011",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2012",
+      "area_id": "AR2012",
+      "wed": "AR2012",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2100",
+      "area_id": "AR2100",
+      "wed": "AR2100",
+      "variant": "day-or-unique",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-current-fallback",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSEW",
+          "family": "sewage-wtsew",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR2100:fallback"
+      ],
+      "qa_evidence_ids": [
+        "wtsew-qa-v1"
+      ],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2102",
+      "area_id": "AR2102",
+      "wed": "AR2102",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2210",
+      "area_id": "AR2210",
+      "wed": "AR2210",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2300",
+      "area_id": "AR2300",
+      "wed": "AR2300",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "installed",
+      "qa_state": "pending-ingame",
+      "installation_state": "installed",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKE",
+          "family": "lake-wtlake",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "qualified-map-review-required",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [
+        "water:AR2300:unique"
+      ],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "independent map crash/incoherence issue remains open",
+        "repeat QA after WED relocation"
+      ]
+    },
+    {
+      "id": "liquid-map:AR2500",
+      "area_id": "AR2500",
+      "wed": "AR2500",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2600",
+      "area_id": "AR2600",
+      "wed": "AR2600",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2602",
+      "area_id": "AR2602",
+      "wed": "AR2602",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2700",
+      "area_id": "AR2700",
+      "wed": "AR2700",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2804",
+      "area_id": "AR2804",
+      "wed": "AR2804",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 2,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2805",
+      "area_id": "AR2805",
+      "wed": "AR2805",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR2903",
+      "area_id": "AR2903",
+      "wed": "AR2903",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR3000",
+      "area_id": "AR3000",
+      "wed": "AR3000",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKA",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAKB",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAKC",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAKD",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR3024",
+      "area_id": "AR3024",
+      "wed": "AR3024",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "native-baseline",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "family": "oil-wtoil",
+          "candidate_state": "already-conform",
+          "route2_strength": 0.0,
+          "reasons": [
+            "stock-overlay-native-q0",
+            "dedicated-route2-material-unapproved"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR3025",
+      "area_id": "AR3025",
+      "wed": "AR3025",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "route1-candidate-assembled",
+            "route2-unapproved-q0",
+            "family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR5000",
+      "area_id": "AR5000",
+      "wed": "AR5000",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WT5000A",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WT5000B",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WT5000C",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WT5000D",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-material-and-family-qa-required",
+        "liquid-classifier-unresolved"
+      ]
+    },
+    {
+      "id": "liquid-map:AR5010",
+      "area_id": "AR5010",
+      "wed": "AR5010",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "family": "pool-wtpool",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR5200",
+      "area_id": "AR5200",
+      "wed": "AR5200",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR5201",
+      "area_id": "AR5201",
+      "wed": "AR5201",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR5203",
+      "area_id": "AR5203",
+      "wed": "AR5203",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WT5000A",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WT5000B",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WT5000C",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WT5000D",
+          "family": "brown-flowing-wt5000",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "liquid-classifier-unresolved",
+            "dedicated-material-and-family-qa-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-material-and-family-qa-required",
+        "liquid-classifier-unresolved"
+      ]
+    },
+    {
+      "id": "liquid-map:AR5204",
+      "area_id": "AR5204",
+      "wed": "AR5204",
+      "variant": "day-or-unique",
+      "work_state": "blocked",
+      "preparation_state": "blocked",
+      "qa_state": "blocked-preparation",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "family": "lava-wtlava-d",
+          "candidate_state": "blocked",
+          "route2_strength": 0.0,
+          "reasons": [
+            "water-alpha128-forbidden",
+            "non-periodic-overlay",
+            "dedicated-emissive-route-required"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": [
+        "dedicated-emissive-route-required",
+        "non-periodic-overlay",
+        "water-alpha128-forbidden"
+      ]
+    },
+    {
+      "id": "liquid-map:AR6008",
+      "area_id": "AR6008",
+      "wed": "AR6008",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "family": "swamp-wtswam",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    },
+    {
+      "id": "liquid-map:AR6300",
+      "area_id": "AR6300",
+      "wed": "AR6300",
+      "variant": "day-or-unique",
+      "work_state": "queued",
+      "preparation_state": "candidate-available",
+      "qa_state": "pending-ingame",
+      "installation_state": "not-run",
+      "overlays": [
+        {
+          "slot": 1,
+          "resref": "WTLAKA",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAKB",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAKC",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAKD",
+          "family": "lake-teal-wtlaka-d",
+          "candidate_state": "candidate-installable-pending-qa",
+          "route2_strength": 0.0,
+          "reasons": [
+            "canonical-overlay-action-assembled",
+            "route2-unapproved-q0"
+          ]
+        }
+      ],
+      "release_target_ids": [],
+      "qa_evidence_ids": [],
+      "blockers": []
+    }
+  ]
+}
