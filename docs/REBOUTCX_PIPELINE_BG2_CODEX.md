@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P3 validées ; P4 technique installée, P5–P7 non exécutées.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. Prochaine phase : P6 offline.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -11,6 +11,7 @@
 - `source != production != QA != installation != release`. Réutiliser jobs/manifests, `current-generation.json`, `active-test.json`, `sprite/index/qa-decisions/` ; aucun suivi supplémentaire.
 - Acceptation offline ≠ QA ingame. Ne pas rouvrir la QA des composants dont octets et contrat runtime restent inchangés.
 - Jeu + InfinityLoader fermés avant install/restore. TP2/staging/payload release/`content.json`/archives/manifeste release hors périmètre sans demande distincte.
+- Annoncer les actions ; aucun contrôle GUI/clavier/souris ni lancement/fermeture du jeu sans autorisation. Les essais ingame sont effectués par l'utilisateur.
 - Chemins internes relatifs au dépôt ; outils externes via `config://`. Modèle/exécutables hors Git ; licence à vérifier avant toute redistribution.
 - Échec : pas de publication ; diagnostic dans le run ; restaurer l'état modifié seulement.
 
@@ -38,7 +39,7 @@ Contrats existants :
 - `upscale_contract`, `load_job`, `verify_build` imposent xBR/hashes. Matérialisation couplée à ces jobs : ReboutCX non accepté directement.
 - Catalogue : méthode commune parent/membres imposée ; delta = nouveaux IDs uniquement ; création d'une racine vierge refusée par `build_catalog`. **Append actuel ≠ remplacement.**
 - `prepare` feuille extrait, construit le pack **et le runtime** : ne pas l'utiliser pour le prototype offline.
-- Installation actuelle : copies atomiques par fichier, shards conservés ; `already-installed` ne vérifie pas le hash actif et `status` lit le reçu. A/B à renforcer en P4.
+- Installation : transaction/contrôle disque renforcés en P4 ; voir résultats P4.1–P4.5. Reçu de catalogue et reçu d'installation DLL restent distincts ; vérifier les octets actifs des deux.
 
 Pointeur canonique : résoudre `generate_sprite_family_append.py::DEFAULT_CATALOG_POINTER`, actuellement :
 
@@ -59,7 +60,7 @@ RGB cible + guide + classes autorisées → quantification → indices x2 → re
 
 - **`target_scale=2` obligatoire**, `2W × 2H`. Confirmer le modèle x4 (`4W × 4H`) en P0 ; autre échelle = recette à faire accepter, cible inchangée.
 - Réduction RGB **avant** quantification. Fixer filtre, espace couleur, arrondi, alignement, padding/crop et RGB sous transparence ; aucun auto-crop/déplacement des centres.
-- Frames indépendantes, aucune spritesheet/composition aplatie. Association `(resref, frame_index)` ordonnée ; nombre/identité/dimensions vérifiés.
+- Inférence par frame/calque, aucune spritesheet/composition aplatie. QA assemblée ensuite aux centres natifs, redimensionnement uniforme seulement ; association `(resref, frame_index)` vérifiée.
 - Guide xBR calculé sur RGBA original, RGB sous alpha nul compris ; reconstruire son RGBA et vérifier l'égalité avec la sortie xBR avant usage.
 - `alpha_mode=xbr2x-mask-v1` : masque `0/255` dérivé du guide. Masque offline seulement ; ombre/translucidité restent appliquées par la palette moteur.
 - **`false_color=0` ne suffit pas** : auditer INI complet, palette effective, indices ombre/réservés, substitutions et usages source. `Realize` ne documente pas à lui seul ces classes.
@@ -79,7 +80,7 @@ sinon :
 - `palette_reference` = palette BAM si absence de substitution confirmée ; sinon palette effective à identifier avant traitement. Adressage/indices moteur conservés.
 - OKLab euclidien v1 : conversion sRGB→linéaire→OKLab et précision versionnées ; **sans dithering** ; égalité départagée par indice croissant dans la classe. RGB identique ≠ classe identique. Pas de `PIL.quantize()` libre.
 - Frame transparente : court-circuit modèle. Dimensions nulles : auditer la normalisation du décodeur avant toute assertion de géométrie.
-- Invariants : `unique(out) ⊆ used`, classe du guide conservée, transparence exacte, représentants source valides, géométrie/cycles/ordre/identité BAM inchangés. Preview reconstruite depuis les indices finaux.
+- Invariants : `used` propre à la **frame source**, `unique(out) ⊆ used`, classe du guide conservée, transparence exacte, représentants source valides, géométrie/cycles/ordre/identité BAM inchangés. Preview reconstruite depuis les indices finaux ; ne pas élargir les candidats à toute l'animation pour masquer un scintillement.
 
 ### Recette / chemins
 
@@ -171,7 +172,7 @@ replacement = (animation_id, ancien composant/digest attendu, nouveau composant/
 derived = base - appartenances remplacées + composants ReboutCX
 ```
 
-- Unité : composant complet d'une animation ; mêmes resrefs/sources/hashes/frames/cycles/centres/profil propriétaire. ID/digest inconnu, doublon ou portée différente → rejet.
+- Unité visée : composant complet d'une animation ; mêmes resrefs/sources/hashes/frames/cycles/centres/profil propriétaire. **Code actuel : `load_replacement()` exige que ce composant soit l'unique appartenance de l'animation** ; adapter en P7 pour Character, pas de suppression du contrôle seule. ID/digest inconnu, doublon ou portée différente → rejet.
 - Préserver tous les IDs/composants hors remplacement. Composant partagé : modifier seulement les appartenances ciblées ; autres utilisateurs inchangés.
 - Une seule résolution par `(animation_id, resref)` ; mêmes resrefs dans des animations distinctes possibles selon contrat existant.
 - Réutiliser shards scellés inchangés ; construire seulement les nouveaux composants. Recalculer memberships/directory/digests/totaux ; aucun upscale/repack global du parent.
@@ -241,13 +242,69 @@ Transaction validée hors ligne ; exécution réelle différée à P4.4 :
 **Validation :** rendu accepté ingame, aucun défaut bloquant sur la portée.
 **Rollback :** rejet → xBR via P4 ; conserver P1–P4. P6 sur accord distinct.
 
+**Bilan P5 / reprise après `c1f55c78` (2026-09-14) :**
+
+- `BEHOLD01`/MBEH : rendu ReboutCX accepté. `BODHI`/NBOH : correcte, scintillements sur certaines animations. `CSJON`/NIRE : effet jugé discutable. Installation réussie ≠ acceptation générale des trois rendus ; conserver le choix xBR/ReboutCX par animation/composant dans le catalogue, sans hot-swap ingame ni sélection par instance CRE.
+- `FIRKRA02`/`0x1200/MDR1` : accepté après correction runtime + préchargement ; décision immuable `sprite/index/qa-decisions/multi-new/2026-09-14-accepted-1200-mdr1-firkraag-reboutcx-x2-v1.json`. Portée : rencontre testée, pas tous les dragons ni toutes les frames.
+- Reprise Firkraag : jobs `sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/jobs/reboutcx-{prototype,full}-v1.json` ; catalogue `sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-mdr1-test-v1.json`, génération `65566299...`, SHA catalogue `E43155A8...`, DLL `289E132B...`. Hashes complets et rollback : décision QA ; relire l'installation courante avant P7.
+- **INI/owner catalogue ≠ classe C++ ni preuve HD.** MDR1 sérialisé owner `5`, rendu réel `MonsterMulti` (`0x32F8D0`), 9 dessins sans bordure. Correctif x2 limité à `0x1200` ; ne pas le transposer à Character. Détails : `engine/InfinityEngine-Enhancer/source-patchee/docs/creature-sprite-0x1000.md`.
+- Diagnostic : établir sélection frame/palette, substitution effective, géométrie puis aspect visuel. `6/6` dessins HD parmi 9 parties enregistrées n'est pas un échec. Catalogue chargé/hook installé seuls ne prouvent pas une substitution.
+- Distinguer scintillement du modèle/quantification, attente de métadonnées et échec de dessin. MDR1 précharge ses 5 shards sur worker, sans précharger indices/textures ni modifier les budgets ; aucune généralisation de ce préchargement aux 65 composants Character.
+
 ## P6 — Character false-color : humain guerrier
 
 **But :** mêmes indices x2 sous plusieurs couleurs moteur ; body avant équipements.
 
-- Cible `0x6100/FIGHTER_MALE_HUMAN`, `character-bg2ee-2.7.3.0` ; famille/armure via index et `generate_character_complete_x2_jobs.py`. `6100-minsc` intact.
-- Auditer mapping profil/calque puis module de classes **unique et testé**. `Realize` fournit les couleurs réalisées, pas la sémantique complète.
-- Classes : réservés, plages simples, **combinaisons de couleurs**, comportement des rampes/interpolations. Pas seulement sept classes ; singleton si nécessaire ; inconnue → rejet.
+**P6.1 — Audit ciblé, sans inférence.** Cible `0x6100/FIGHTER_MALE_HUMAN`, profil `character-bg2ee-2.7.3.0`, racine `sprite/families/playable-characters/6100-human-male-fighter/`. Choisir un body/une armure via index/jobs existants ; `generate_character_complete_x2_jobs.py` sert de référence, ne pas lancer la génération complète. `6100-minsc` intact.
+
+- Démontrer mapping profil/calque : indices réservés, rampes simples, **combinaisons de couleurs et leurs poids/opérations**, effets de palette. Même ensemble de couleurs dépendantes ne suffit pas : mélanges de rapports différents à distinguer ; niveaux d'une même rampe regroupables si leur transfert de recoloration est démontré. Singleton si nécessaire ; inconnue → composant bloqué.
+- Ne pas recopier les classes MBEH `3..255=matière`, ni son `null_frame_marker=2`. Confirmer transparence/ombre/frames nulles sur Character ; adapter le court-circuit seulement au cas démontré.
+- `CVidPalette::Realize` donne la palette réalisée, pas sa sémantique. Référence indépendante à établir à partir du comportement moteur/documentation et de palettes témoins ; tests contre le seul nouveau mapping insuffisants. Pas de table/plage devinée.
+- Écart actuel : `reboutcx_batch.py::prepare_inference_rgb`, quantification et previews de `reboutcx_batch.py`/`reboutcx_full.py` utilisent `frame.palette` BAM. Pour Character, définir une palette effective de référence **fixe**, commune à l'entrée modèle et à la quantification ; conserver indices/BAM originaux et guide xBR de provenance.
+- Livrable minimal dans job/manifeste + tests : classes/version, référence palette, témoins de réalisation, règle frames nulles. Réutiliser `reboutcx_quantize.py`, sans fork des runners ; toute déduplication doit inclure profil/calque, recette/classes et palette de référence si ces données peuvent différer à BAM identique.
+
+**Résultat P6.1 — 2026-09-14, audit offline uniquement :**
+
+- Base code vérifiée : `c1f55c78`. Ajouts antérieurs non commités du guide conservés. Aucun contrôle GUI, lancement du jeu, modèle chargé, run produit, job xBR modifié, installation ou changement release.
+- Composant retenu : `0x6100:body:armor-code:1:CHMB1`, `character-bg2ee-2.7.3.0`. Référence existante : `6100-human-male-fighter/chmb1/jobs/human-male-fighter-chmb1-xbr2x.json` sous `sprite/families/playable-characters/`. Les autres armures/calques et `6100-minsc` restent hors portée.
+- Sources : `chmb1/source/manifest.json`, SHA256 `A8CECFE3FBA43A5CCD9927836B417CB0BAFD9F61136CFC2DC4556FE07966A26D` ; 23 BAM, 10 323 frames, 1 170 cycles. Hashes des 23 BAM canoniques **et** BAMC vérifiés contre ce manifeste ; aucun override BAM correspondant. `6100.INI`, `data/Patch2.bif`, locator `0x0BD00057`, SHA `EB9C3D7A65F8EFCD4738780392E0BED037FE98C0D7D26DE01F59EAF22762BA28`, sans override : `false_color=1`, `resref=CHMB`, armures B/B/B/F, `split_bams=1`.
+- 214 indices source utilisés, 31 classes utilisées sur 32 ; aucun indice non classé. Palette RGB BAM identique sur les 23 ressources, SHA des 768 octets RGB `49459680B1BBAE76D855AE41ED9D45C0752AA60BB85BF06A8BB120CC6E7FEFF3`. Cette palette d'auteur n'est pas la palette moteur : `2/3` orange, mélanges différents de ceux du moteur.
+
+**Sémantique démontrée (indices décimaux).** Référence principale : lecture/désassemblage statique de `config://bg2ee_game_root/BaldurReal.exe`, SHA `B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57`. Noms des fonctions ci-dessous identifiés par comportement ; RVAs propres à cet exécutable.
+
+| Indices | Contrat CHMB1 |
+|---|---|
+| `0` | Transparence, singleton. Octet RLE header = 0 et unique vert pur BAM à l'indice 0 dans les 23 BAM. Cette coïncidence est vérifiée ici, pas postulée pour tous les BAM. |
+| `1` | Ombre, singleton. RGB réservé noir ; alpha traité séparément du corps. Wrapper `0x42D2F0` : slot global initial 1, alpha `floor(128 * transparency / 255)` ; état effectif à capturer lors d'un essai moteur. |
+| `2`, `3` | Deux singletons réservés, RGB moteur noir (`SetType 0x422250`, constructeur `0x421010`), pas de recoloration de matière. `3` absent des frames CHMB1. Ne fusionner ni avec l'ombre, ni avec un noir de rampe. |
+| `4..87` | Sept classes de 12 nuances : métal `4..15`, mineure `16..27`, majeure `28..39`, peau `40..51`, cuir `52..63`, armure `64..75`, cheveux `76..87`. `SetRange 0x4221C0` copie les 12 pixels d'une ligne de palette vers `4+12*r`. |
+| `88..255` | 21 classes de 8 nuances, une par paire `(a,b)`, `0<=a<b<7`, ordre lexicographique. Classe distincte de chacune des deux rampes et de toute autre paire. |
+
+Formule native : `B[r,t] = gradient[color[r],t]`, puis `P[88+8*k+t] = floor((B[a,t+2]+B[b,t+2])/2)`, `t=0..7`, canal par canal sur les octets RGB ; aucun mélange en lumière linéaire. Boucle `RealizeRange 0x421F7B..0x42201D` : départ source `+0x18` = indice 6, destination `+0x160` = indice 88, incréments des rampes `+0x30`, addition entière puis `shr 1`. Aucun ratio variable ni mélange de trois couleurs dans cette boucle. Les niveaux d'une même rampe/paire sont regroupables ; aucun regroupement interpaire.
+
+- Effets : `Realize 0x421430` distingue palette ressource/type 0 et range/type 1 ; type 1 passe par `0x42D2F0 → 0x421450`. Transformations de range et globales appliquées aux 12 nuances **avant** les mélanges : tint, complément/multiplication pour add, lumière avec saturation, flags gris/effet coloré. Les opérations/arrondis ne commutent pas avec la moyenne. Branche `0x421EE0` : recalcul des mélanges si `flags & 0x0FFF0000` ou sous-plages invalides, sinon copie des sous-plages déjà calculées. L'absence d'effet définit la référence du prototype ; le helper RGB ne prétend pas émuler tous les flags, phases, gamma ou alpha.
+- Concordance indépendante : [iwd2-re `CVidPalette.cpp`, révision `87f97b4`](https://github.com/alexbatalov/iwd2-re/blob/87f97b4ee314d4b0ae829d01c2925291ac2b6672/src/CVidPalette.cpp), `CalculateSubRanges`/`SetRange` ; formule confrontée au binaire BG2EE, pas transposée sur confiance. Ordre des sept couleurs/calques : [IESDP opcode 7](https://gibberlings3.github.io/iesdp/opcodes/bgee.htm#op7).
+- **Faux oracle écarté :** [Near Infinity `SpriteUtils.interpolateColors`, révision `5e65c55`](https://github.com/Argent77/NearInfinity/blob/5e65c55ffcfc2776ee38f6e58e2059cd0f0e164c/src/org/infinity/resource/cre/decoder/util/SpriteUtils.java) prend les niveaux `floor(12*t/8) = 0,1,3,4,6,7,9,10`, au lieu de `2..9`. [GemRB `SetupPaperdollColours`, révision `8637952`](https://github.com/gemrb/gemrb/blob/8637952eaa12bec845cde2ca0ef8b4c7085558a0/gemrb/core/CharAnimations.cpp) copie des rampes pour ces sous-plages : pas un oracle BG2EE non plus.
+- Contre-exemple source concret : `156=204=220=(104,104,104)` dans la palette BAM ; classes respectives `mineure/cuir`, `majeure/cheveux`, `peau/armure`. Sous la référence ci-dessous : `(99,37,27)`, `(110,125,116)`, `(130,104,92)` ; fusion RGB interdite.
+
+**Frames de remplissage.** Zéro dimension brute nulle, zéro frame entièrement transparente. 7 578 frames ont exactement `(width,height,center_x,center_y,indices)=(1,1,0,0,[2])` ; 2 745 autres frames, dont 142 utilisent aussi l'indice 2. `reboutcx_batch.is_null_frame(frame,2)` est donc réutilisable **sur ce prédicat exact** : conserver l'indice 2 en `2×2`, aucune inférence, aucun remplacement par 0, aucun changement de géométrie. Ce prédicat n'affirme pas que le pixel est invisible ingame. `bam_export.decode_bam` normalise une dimension zéro en indice 0/centre 0 ; cas absent de CHMB1, aucune adaptation du décodeur nécessaire.
+
+**Référence fixe / témoins.** `RANGES12.BMP` = `MPALETTE.BMP` octet pour octet : `data/Default.bif`, locators `0x00000189` / `0x0000012E`, BMP RGB `12×256`, SHA `7A9A654D5CBC4CEE0CA211BE05D24FB54BF8298A781C074882000D5F829D66DD`, sans override. Lire les lignes dans l'ordre image haut→bas après décodage BMP. Couleurs résolues explicites, aucune entrée aléatoire `RANDCOLR.2DA` (`200..255`) dans les témoins.
+
+| Usage | Lignes `(métal,mineure,majeure,peau,cuir,armure,cheveux)` | SHA256 palette, 256×3 octets RGB ordre indices |
+|---|---|---|
+| Référence fixe v1 | `30,47,57,12,39,21,3` | `54A3141583B8395FB23B0792D9768857D08BAFECBDB94E583BA773F3F7CBB2EA` |
+| Témoin B | `21,57,47,8,66,30,0` | `2CC296F8479CD10EC38F5B95C72F88C8C3D545002B3DD788368EBAE0C0DFB10E` |
+| Témoin C | `19,63,66,15,39,26,4` | `1BB2918E8F7380603D25071AAE5E2637A51B8B81B5C5BFE247A45B2027D5B2F3` |
+
+Témoins **calculés offline, pas capturés ingame** : interprétation bornée des instructions du bloc natif `[0x421F7B,0x42201E)` (163 octets, SHA `C8E05C9238F186AA07D72AAC38CC793BFC74CDCA588FCD691271A6A5CCC645B4`), 3 557 instructions par cas ; aucun appel ni exécution du jeu. Précondition : scratch BGRA de 256 entrées, `0=vert`, `1..3=noir`, sept rampes copiées en `4..87`. Les trois palettes ci-dessus concordent avec le helper ; deux témoins synthétiques supplémentaires (rampes linéaires puis discontinues à sommes paires/impaires) sont figés dans les tests. La boucle constitue l'oracle des mélanges, pas celui de `Realize` complet.
+
+- Code préparatoire unique : `reboutcx_quantize.py::{character_chmb1_classes,character_chmb1_palette_rgb}` ; versions `bg2ee-2.7.3.0-character-chmb1-32-classes-v1` / `bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1`. Helpers purs, non branchés aux runners. Validation : `python -m unittest pipeline.tests.test_reboutcx_pipeline pipeline.tests.test_reboutcx_full` → **12 tests OK** ; témoins natifs, sept variations isolées, mélanges/arrondi/sommes sans débordement, doublons interclasses, mêmes indices sous trois palettes, déterminisme, candidats par frame et prédicat indice 2.
+- Intégration à faire seulement après accord P6.2 : nouveau job/manifeste ReboutCX ciblé, source/classes/palette épinglées ; même référence pour entrée modèle, quantification et previews, palette/RGBA BAM conservés pour le guide xBR. `reboutcx_batch.py` et `reboutcx_full.py` utilisent encore `frame.palette` ; rien ne rend aujourd'hui un job Character exécutable correctement. Déduplication full actuellement limitée au couple de SHA BAM/BAMC, à compléter si profil/calque/recette/classes/palette varient.
+- Restent non établis : gain visuel/scintillement après inférence ; palettes RGBA effectives avec éclairage/effets/translucidité et composition ingame (aucune capture dans cet audit). Aucun de ces états n'est déclaré validé.
+- Plus petit essai proposé, **non lancé** : P6.2 sur `CHMB1A1`, frames `0..5` (cycle 0) et `60..65` (cycle 4), soit 12 frames réellement référencées, deux directions. BAM SHA `86BBACFC9A799BC4DAA069B80F49DC15BCE41631558A1B962E15330ADC581C07`. Référence fixe à l'inférence/quantification une seule fois ; recolorer les mêmes indices avec B/C puis variations isolées. Sortie partielle offline non installable.
+
+**P6.2 — Petit body offline.** Courte séquence consécutive + directions/contours, recette x4→BOX x2 de P0, classes auditées ; composants partiels non installables.
 
 ```text
 G = guide xBR2x vérifié
@@ -256,9 +313,14 @@ allowed[p] = indices source utilisés de même classe, hors transparent
 out[p] = nearest contraint selon §2
 ```
 
-- Classe = même dépendance de recoloration, pas RGB similaire. Le guide impose classe/masque ; jamais nearest interclasses.
-- Petit body sous ≥3 palettes contrastées : modifier une couleur affecte uniquement ses indices dépendants, **classes combinées incluses**. Comparer à une réalisation de référence ; tester son propre mapping contre lui-même ne le valide pas.
-- Après acceptation body : arme, puis autres couches utiles séparément ; centres x1, composition moteur, jamais inférence aplatie. Produire ensuite tous les cycles/frames des seuls composants retenus ; réutiliser P1/P3.
+- Le guide impose classe/masque ; jamais nearest interclasses. RGB identiques sous une palette ne justifient aucune fusion d'indices.
+- Quantifier **une fois** ; reconstruire les mêmes indices sous ≥3 palettes contrastées, puis variations d'une couleur à la fois. Vérifier aussi les combinaisons, les couleurs égales puis séparées, les tons très sombres/clairs et les rampes. Comparer xBR/ReboutCX à palette réalisée identique ; ne pas réinférer/requantifier pour faire passer chaque témoin.
+- Vérifier temporalité à vitesse normale après quantification : changement de nuance/candidats d'une frame à l'autre peut scintiller malgré des classes correctes. Si bénéfice perdu ou recoloration fausse, corriger la recette sur ce prototype ; aucun lissage temporel ni assouplissement sémantique implicite.
+
+**P6.3 — Body + arme offline, puis complétude ciblée après accord.** Conserver les calques séparés, assembler uniquement les previews aux centres x1, à l'échelle uniforme ; aucune inférence aplatie. Comparer body ReboutCX + arme xBR puis body + arme ReboutCX. Produire tous les BAM/cycles/frames des seuls composants retenus avant P7.
+
+- Runtime existant : `hooks.cpp::detour_character_render` capture les palettes/calques dans l'ordre des `Realize` puis remplace **un dessin composite final** via `bind_composite_texture()`. Limite `kMaximumCompositeLayers=8` ; union des centres + bordure logique 1 pixel. Aucun chemin `Unbordered` ni boucle 9 parties MDR1.
+- Composition de référence : copie du pixel réalisé non nul, alpha conservé (`overwrite_nontransparent_pixel`), pas un alpha-blend RGBA générique. `reconstruct_rgba()` offline n'émule pas à lui seul ombre/translucidité moteur. Une couche native dessinée non enregistrée/capture invalide rend le composite incomplet et maintient le rendu natif ; garder les équipements xBR référencés même pour un test body ReboutCX.
 
 **Tests :** dépendances simples/combinées ; doublons interclasses ; source-only/transparence ; ≥3 palettes sans rebuild ; déterminisme ; centres/couverture/composition.
 **Validation :** body puis au moins body+arme convaincants offline, recoloration correcte. Guide trop contraignant → travail distinct, aucune classe relâchée silencieusement.
@@ -266,8 +328,10 @@ out[p] = nearest contraint selon §2
 
 ## P7 — Installation / QA Character
 
-- P3 : nouveau catalogue épinglé avec remplacements Character acceptés ; autres appartenances et candidats ReboutCX conservés selon sélection explicite.
-- P4 : même installation/switch/restore. QA : body/arme, actions/directions, armures/couches incluses, ≥3 couleurs joueur, changement sans rebuild/réinstallation, save/load, ombre/halo/flicker/alignement, retour xBR.
+- **P7.1 — Catalogue offline.** `reboutcx_catalog.py::load_replacement/assemble_catalog/validate_diff` à adapter après prototype accepté : `0x6100` possède 65 appartenances dans la génération `65566299...`, contre l'exigence actuelle d'une seule. Remplacer un composant complet identifié par digest/resrefs ; préserver les autres appartenances de `0x6100` et les utilisateurs des composants partagés. Tester deux remplacements dans le même ID, resref ambigu refusé, équipement xBR inchangé ; ne pas aplatir les 65 composants.
+- Nouveau catalogue épinglé : base xBR + sélection explicite de remplacements Character et créatures conservées ; aucun append dans le catalogue canonique. Réutiliser les composants ReboutCX scellés choisis, sans nouvelle inférence/repack du parent. Les décisions QA MBEH/Firkraag ne sont pas à refaire si leurs octets/contrats restent identiques.
+- **P7.2 — Installation/QA.** Réutiliser P4, `CreatureSpriteFilter=Nearest`, DLL/manifest de capacités réellement actifs vérifiés ; aucune nouvelle DLL si le runtime Character actuel suffit. Première invocation équipée : contrôler palettes capturées, composite HD effectif, attente des shards et temps de première frame avant de diagnostiquer le modèle.
+- QA : body/arme, actions/directions, armures/couches incluses, ≥3 couleurs joueur, changement sans rebuild/réinstallation, save/load, ombre/halo/flicker/alignement, retour xBR. Anciens shards inertes autorisés ; contrôle du hash du catalogue actif dans les deux sens.
 - Acceptation : décision QA immuable de portée exacte ; rejet : profil précédent vérifié. Retour xBR pur toujours disponible.
 
 **Validation :** Character accepté ingame, recoloration/composition et A/B corrects.

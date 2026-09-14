@@ -9,6 +9,60 @@ import numpy as np
 
 QUANTIZER_ID = "oklab-euclidean-f64-classed-no-dither-v1"
 
+# P6.1 only: 0x6100, Character body CHMB1, BG2EE 2.7.3.0.
+# Native SetRange RVA 0x4221C0 and RealizeRange mixing RVA 0x421F7B.
+# Audit, binary identity and independent witnesses: docs/REBOUTCX_PIPELINE_BG2_CODEX.md.
+# These helpers do not enable Character in either inference runner.
+CHARACTER_CHMB1_CLASSES_ID = "bg2ee-2.7.3.0-character-chmb1-32-classes-v1"
+CHARACTER_CHMB1_PALETTE_ID = "bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1"
+CHARACTER_CHMB1_REFERENCE_COLORS = (30, 47, 57, 12, 39, 21, 3)
+_CHARACTER_RANGES = ("metal", "minor", "major", "skin", "leather", "armor", "hair")
+_CHARACTER_PAIRS = tuple((a, b) for a in range(6) for b in range(a + 1, 7))
+
+
+def character_chmb1_classes() -> dict[str, list[int]]:
+    """Audited recoloration classes; reserved indices remain separate even if black."""
+    classes = {
+        "transparent": [0],
+        "shadow": [1],
+        "reserved_2": [2],
+        "reserved_3": [3],
+    }
+    for range_id, name in enumerate(_CHARACTER_RANGES):
+        start = 4 + 12 * range_id
+        classes[name] = list(range(start, start + 12))
+    for pair_id, (a, b) in enumerate(_CHARACTER_PAIRS):
+        start = 88 + 8 * pair_id
+        classes[f"mix_{_CHARACTER_RANGES[a]}_{_CHARACTER_RANGES[b]}_half"] = list(
+            range(start, start + 8)
+        )
+    return classes
+
+
+def character_chmb1_palette_rgb(ramps_rgb: np.ndarray) -> np.ndarray:
+    """Neutral reference RGB from seven resolved RANGES12 rows, in CRE color order.
+
+    No lighting, range effects, random color resolution or runtime alpha emulation.
+    Keep source BAM palette/RGBA separate: they still define the xBR provenance guide.
+    Native mixes use shades 2..9, not resampling of all 12 shades (Near Infinity).
+    """
+    ramps = np.asarray(ramps_rgb)
+    if (
+        ramps.shape != (7, 12, 3)
+        or not np.issubdtype(ramps.dtype, np.integer)
+        or np.any(ramps < 0)
+        or np.any(ramps > 255)
+    ):
+        raise RuntimeError("Character CHMB1 requires seven resolved 12-color RGB u8 ramps")
+    ramps = ramps.astype(np.uint16)
+    palette = np.zeros((256, 3), dtype=np.uint8)
+    palette[0] = (0, 255, 0)
+    palette[4:88] = ramps.reshape(84, 3)
+    for pair_id, (a, b) in enumerate(_CHARACTER_PAIRS):
+        start = 88 + 8 * pair_id
+        palette[start : start + 8] = (ramps[a, 2:10] + ramps[b, 2:10]) // 2
+    return palette
+
 
 def expand_index_spec(value: object) -> list[int]:
     if isinstance(value, list):
