@@ -1,0 +1,172 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T06:58:43.150542Z",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monsters",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "254966456E80B9AD40AAF55783C1EB8CEC3A0ED3FC4F0F3D40DE7ED7307E43F9"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "note": "Onze des treize familles produites dans ce lot sont validees ingame : ombre 0x7703, troll 0x7F00, demiliche 0x7F0E, troll des glaces 0x7F0F, rakshasa 0x7F10, vampire 0x7F12, epee dansante 0x7F19, familier dragon fee 0x7F2D, creature de brume 0x7F35, oeil flottant 0x7F38, forme gazeuse 0x7F39. Ceci ferme la section engine_section=monster a l'exception des deux familles exclues ci-dessous."
+  },
+  "entries": [
+    {
+      "animation_id": "0x7703",
+      "name": "Ombre — MSHD",
+      "bam_prefix": "MSHD",
+      "creature": "OHHSHAD",
+      "job_file": "sprite/families/monsters/77xx/7703-mshd-shadow/jobs/x2-nearest-v1.json",
+      "job_sha256": "E9AFE4F7B7304E36425289B556BDAED414B642FDD819C74B9497729708CA780F",
+      "source_manifest": "sprite/families/monsters/77xx/7703-mshd-shadow/source/stock/manifest.json",
+      "source_manifest_sha256": "3E7133BE206D8B7EBB54309BC948041B6125D792B96A05C762A4F5FB83A15AC2",
+      "build_manifest": "sprite/families/monsters/77xx/7703-mshd-shadow/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "2DF7B0129B0F035F6EC9504117177C3FD07D3AB8BD49790A4B2267C2060951E0"
+    },
+    {
+      "animation_id": "0x7F00",
+      "name": "Troll — MTRO",
+      "bam_prefix": "MTRO",
+      "creature": "DATROLL",
+      "job_file": "sprite/families/monsters/7fxx/7f00-mtro-troll/jobs/x2-nearest-v1.json",
+      "job_sha256": "6D28D5E7CA3BE28773FADE30F64198347429A17D0B8D3D72BAF38CF04E17ECA9",
+      "source_manifest": "sprite/families/monsters/7fxx/7f00-mtro-troll/source/stock/manifest.json",
+      "source_manifest_sha256": "FDE75FEF7D4702274B6B62B023DE37683BA2B1AB1736ADA6DC4E85A4C3657D24",
+      "build_manifest": "sprite/families/monsters/7fxx/7f00-mtro-troll/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "0C88946234E5898F85B69727B591DF9C2DA734A7FCB7FE4D7DB8DCA83BC72B53"
+    },
+    {
+      "animation_id": "0x7F0E",
+      "name": "Demi-liche — MDLI",
+      "bam_prefix": "MDLI",
+      "creature": "HLDEMI",
+      "job_file": "sprite/families/monsters/7fxx/7f0e-mdli-demilich/jobs/x2-nearest-v1.json",
+      "job_sha256": "4133917938C238572D1D74886FBC6CF4200EE1C6F5A3CC11672BCCB33CE42F91",
+      "source_manifest": "sprite/families/monsters/7fxx/7f0e-mdli-demilich/source/stock/manifest.json",
+      "source_manifest_sha256": "17643BCD374FAB50A8F23D8BE2632E2D526093E3778FD5A117328AF1946087C1",
+      "build_manifest": "sprite/families/monsters/7fxx/7f0e-mdli-demilich/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "7CE38166A3793D6E191C947FDE01201CBD3EE06001B5D0F7590B61D3A5BBD36B"
+    },
+    {
+      "animation_id": "0x7F0F",
+      "name": "Troll des glaces — MTRS",
+      "bam_prefix": "MTRS",
+      "creature": "TROLL03",
+      "job_file": "sprite/families/monsters/7fxx/7f0f-mtrs-troll-small/jobs/x2-nearest-v1.json",
+      "job_sha256": "24AC1144025BD9D6B226EB518F3926B85ABD40C352715047D9BA3C9F86EC90FD",
+      "source_manifest": "sprite/families/monsters/7fxx/7f0f-mtrs-troll-small/source/stock/manifest.json",
+      "source_manifest_sha256": "13D2AC0CCF9C550301B7E46529EE9B7018F3AF5C8CF859D0BA2ABEEE0AC342A5",
+      "build_manifest": "sprite/families/monsters/7fxx/7f0f-mtrs-troll-small/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "C57E389F45D5703A799347FDA28D00C2C15F2904088FB4DAFC8FFDDD948CA5DE"
+    },
+    {
+      "animation_id": "0x7F10",
+      "name": "Rakshasa — MRAK",
+      "bam_prefix": "MRAK",
+      "creature": "RAKMAH01",
+      "job_file": "sprite/families/monsters/7fxx/7f10-mrak-rakshasa/jobs/x2-nearest-v1.json",
+      "job_sha256": "F309DA2CAE08080D97C1533D66B5AFBB9C5DB875F91C69A6A8AE85D0A1221FFF",
+      "source_manifest": "sprite/families/monsters/7fxx/7f10-mrak-rakshasa/source/stock/manifest.json",
+      "source_manifest_sha256": "56E821D464AAF75D495EC72C71ACBD11C72DB087AEE26B5ABE0A8523128EEBE9",
+      "build_manifest": "sprite/families/monsters/7fxx/7f10-mrak-rakshasa/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "DD089443259A0F5CCB7FC1F1487ED01FDBACFDA0A7C979E29F8723115506048C"
+    },
+    {
+      "animation_id": "0x7F12",
+      "name": "Vampire — MVAM",
+      "bam_prefix": "MVAM",
+      "creature": "BODVAM01",
+      "job_file": "sprite/families/monsters/7fxx/7f12-mvam-vampire/jobs/x2-nearest-v1.json",
+      "job_sha256": "F8291116CAF1E46BAF3C71BA5420F6AFB1AB49F40C39C926D0FB34A54F499771",
+      "source_manifest": "sprite/families/monsters/7fxx/7f12-mvam-vampire/source/stock/manifest.json",
+      "source_manifest_sha256": "07BE344B56D272114C503A5ECCF484453D0F5C12015C62E7D1905BB16623A849",
+      "build_manifest": "sprite/families/monsters/7fxx/7f12-mvam-vampire/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "0568DB8C69D4D02DE58496D52D729E629C29350FCB04183C7F2D0B206CAF79DF"
+    },
+    {
+      "animation_id": "0x7F19",
+      "name": "Épée dansante — MDSW",
+      "bam_prefix": "MDSW",
+      "creature": "SWORD01",
+      "job_file": "sprite/families/monsters/7fxx/7f19-mdsw-dancing-sword/jobs/x2-nearest-v1.json",
+      "job_sha256": "FF2EA6043C6CCA0CD04DB3168217D405BDEABD94E90BB1359DEF3FE7597C4FBD",
+      "source_manifest": "sprite/families/monsters/7fxx/7f19-mdsw-dancing-sword/source/stock/manifest.json",
+      "source_manifest_sha256": "618D1C1AC09F9334A964CFF6EAB3C4823F3F407A88472FAB1B4F57348710ECDE",
+      "build_manifest": "sprite/families/monsters/7fxx/7f19-mdsw-dancing-sword/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "2DA69FF772FB7566C82DEE4C1DADB48D20D8577FCBD1DF1D3BA276060C406D09"
+    },
+    {
+      "animation_id": "0x7F2D",
+      "name": "Familier dragon fée — MWFM",
+      "bam_prefix": "MWFM",
+      "creature": "FAMFAIR",
+      "job_file": "sprite/families/monsters/7fxx/7f2d-mwfm-wyvern-familiar/jobs/x2-nearest-v1.json",
+      "job_sha256": "A9C436591150AE6F5D2F7A2478E57E20339E34E78780CB6E4684C5E23CD982D4",
+      "source_manifest": "sprite/families/monsters/7fxx/7f2d-mwfm-wyvern-familiar/source/stock/manifest.json",
+      "source_manifest_sha256": "E11187DE560216EF376FA1F07CA258D3E0588583065BF3D6F2E8DC38DB5BC661",
+      "build_manifest": "sprite/families/monsters/7fxx/7f2d-mwfm-wyvern-familiar/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "FBC489574637856E76CCE96CDFF25E98ECA2F87E71AD060C839AF887FF8E7A07"
+    },
+    {
+      "animation_id": "0x7F35",
+      "name": "Créature de brume — MMIS",
+      "bam_prefix": "MMIS",
+      "creature": "HAKSU",
+      "job_file": "sprite/families/monsters/7fxx/7f35-mmis-mist-creature/jobs/x2-nearest-v1.json",
+      "job_sha256": "44D5F7509B2CDA4268F14B73A8CBFEE7EF5AA0DDA8D7CB240F3021399D09E884",
+      "source_manifest": "sprite/families/monsters/7fxx/7f35-mmis-mist-creature/source/stock/manifest.json",
+      "source_manifest_sha256": "34138A120A376097D139166C61D0BE5D2F91F90E24EBEA63DF91F63C8C0B5ED0",
+      "build_manifest": "sprite/families/monsters/7fxx/7f35-mmis-mist-creature/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "A0BEBDEDB31F14B6EDD1260A454DD36639EA1BEB7031023B8F856FE86BE32396"
+    },
+    {
+      "animation_id": "0x7F38",
+      "name": "Œil flottant — MEYE",
+      "bam_prefix": "MEYE",
+      "creature": "EYEBHL01",
+      "job_file": "sprite/families/monsters/7fxx/7f38-meye-wizard-eye/jobs/x2-nearest-v1.json",
+      "job_sha256": "FC2BA4BF04D9E35C8CD0BFB35BE147D8011A16E9D4D9174497496A61AACD346F",
+      "source_manifest": "sprite/families/monsters/7fxx/7f38-meye-wizard-eye/source/stock/manifest.json",
+      "source_manifest_sha256": "D88765904765AC9D4DCF0BDF61A526530D9AE16E29EC76F7AF79FF188FA558AA",
+      "build_manifest": "sprite/families/monsters/7fxx/7f38-meye-wizard-eye/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "72FC6C0D50D00FB7FA2F4EB55B07F77211A72EC1E9B21B6DA189E8A4DB86FB85"
+    },
+    {
+      "animation_id": "0x7F39",
+      "name": "Forme gazeuse — MMST",
+      "bam_prefix": "MMST",
+      "creature": "BODMIST1",
+      "job_file": "sprite/families/monsters/7fxx/7f39-mmst-blob-mist-creature/jobs/x2-nearest-v1.json",
+      "job_sha256": "9542177D3173A54C0A4190643106A03D0CA62F2BF81041E1906549B4ED0AEB08",
+      "source_manifest": "sprite/families/monsters/7fxx/7f39-mmst-blob-mist-creature/source/stock/manifest.json",
+      "source_manifest_sha256": "80BFE5E380DCFCDACBA3D6914DC165DCDAC99BB4138DD65C067B5E308ECCB6E3",
+      "build_manifest": "sprite/families/monsters/7fxx/7f39-mmst-blob-mist-creature/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "1BBF90CFD66A67B7356E1442D3949D289C09165E668E8DDBA8DCB93448172E84"
+    }
+  ],
+  "exclusions": [
+    {
+      "animation_ids": [
+        "0x7F3B",
+        "0x7F3C"
+      ],
+      "state": "reserved-pending-different-treatment",
+      "reason": "Solaire (0x7F3B, temoin FINSOL01) et Deva dechu (0x7F3C, temoin DEVAEVIL) testes ingame le 2026-09-14 mais necessitent un traitement different de celui applique ici (xbr2x nearest standard) ; mis en reserve par decision utilisateur, aucune QA prononcee. Build present dans la generation 254966456E80B9AD40AAF55783C1EB8CEC3A0ED3FC4F0F3D40DE7ED7307E43F9 et dans l'installation active, mais hors de cette acceptation."
+    }
+  ],
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-monster-remaining-13-v1.json",
+    "job_sha256": "A20080AA8B2CD7BE104101C4BA4C5A0862A31BD0B88035E6698FD1A2E16B629B",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "48D87E23A8E3B903F47798C493B5DA6F042480BABFBCF0CD21EA1992662EDE9B",
+    "installation_status": "installed-pending-qa"
+  },
+  "release_manifest_modified": false
+}

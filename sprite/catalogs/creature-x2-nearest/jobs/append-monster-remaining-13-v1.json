@@ -1,0 +1,219 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif créatures x2 — ajout monstres restants (troll, vampire, rakshasa, solaires...)",
+  "members": [
+    "sprite/families/monsters/77xx/7703-mshd-shadow/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f00-mtro-troll/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f0e-mdli-demilich/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f0f-mtrs-troll-small/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f10-mrak-rakshasa/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f12-mvam-vampire/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f19-mdsw-dancing-sword/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f2d-mwfm-wyvern-familiar/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f35-mmis-mist-creature/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f38-meye-wizard-eye/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f39-mmst-blob-mist-creature/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3b-msog-solar/jobs/x2-nearest-v1.json",
+    "sprite/families/monsters/7fxx/7f3c-masg-deva-monadic/jobs/x2-nearest-v1.json"
+  ],
+  "parent": {
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/bdce4bf3413a20acc70e88e506225d17a2df902c8d86bfb45f31cd4e6040ebc1/build/build-manifest.json",
+    "build_manifest_sha256": "760A94DC77A0F11D4F2D8EEF6C2F0119BB2E77D0CA5DA5E605DB3D2FAF187B22",
+    "catalog_sha256": "5924C10B78AEB52F3654E22486D795C0932C6C08A0F03E69A5DFE670FF35C0CE"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "run_dir": "sprite/creature_sprites_progressive_xn_xbr2x/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x7703",
+        "name": "Ombre — MSHD",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "OHHSHAD"
+        ],
+        "required_bam_prefixes": [
+          "MSHD"
+        ]
+      },
+      {
+        "animation_id": "0x7F00",
+        "name": "Troll — MTRO",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DATROLL"
+        ],
+        "required_bam_prefixes": [
+          "MTRO"
+        ]
+      },
+      {
+        "animation_id": "0x7F0E",
+        "name": "Demi-liche — MDLI",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "HLDEMI"
+        ],
+        "required_bam_prefixes": [
+          "MDLI"
+        ]
+      },
+      {
+        "animation_id": "0x7F0F",
+        "name": "Troll des glaces — MTRS",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "TROLL03"
+        ],
+        "required_bam_prefixes": [
+          "MTRS"
+        ]
+      },
+      {
+        "animation_id": "0x7F10",
+        "name": "Rakshasa — MRAK",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "RAKMAH01"
+        ],
+        "required_bam_prefixes": [
+          "MRAK"
+        ]
+      },
+      {
+        "animation_id": "0x7F12",
+        "name": "Vampire — MVAM",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BODVAM01"
+        ],
+        "required_bam_prefixes": [
+          "MVAM"
+        ]
+      },
+      {
+        "animation_id": "0x7F19",
+        "name": "Épée dansante — MDSW",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "SWORD01"
+        ],
+        "required_bam_prefixes": [
+          "MDSW"
+        ]
+      },
+      {
+        "animation_id": "0x7F2D",
+        "name": "Familier dragon fée — MWFM",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "FAMFAIR"
+        ],
+        "required_bam_prefixes": [
+          "MWFM"
+        ]
+      },
+      {
+        "animation_id": "0x7F35",
+        "name": "Créature de brume — MMIS",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "HAKSU"
+        ],
+        "required_bam_prefixes": [
+          "MMIS"
+        ]
+      },
+      {
+        "animation_id": "0x7F38",
+        "name": "Œil flottant — MEYE",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "EYEBHL01"
+        ],
+        "required_bam_prefixes": [
+          "MEYE"
+        ]
+      },
+      {
+        "animation_id": "0x7F39",
+        "name": "Forme gazeuse — MMST",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "BODMIST1"
+        ],
+        "required_bam_prefixes": [
+          "MMST"
+        ]
+      },
+      {
+        "animation_id": "0x7F3B",
+        "name": "Solaire — MSOG",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "FINSOL01"
+        ],
+        "required_bam_prefixes": [
+          "MSOG"
+        ]
+      },
+      {
+        "animation_id": "0x7F3C",
+        "name": "Déva déchu — MASG",
+        "areas": [
+          "AR0602"
+        ],
+        "creatures": [
+          "DEVAEVIL"
+        ],
+        "required_bam_prefixes": [
+          "MASG"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  }
+}
