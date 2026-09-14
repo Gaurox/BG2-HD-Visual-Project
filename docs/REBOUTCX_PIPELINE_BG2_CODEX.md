@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P3 validées ; P4–P7 non exécutées.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P3 validées ; P4 technique installée, P5–P7 non exécutées.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -209,7 +209,7 @@ CreatureSpriteFilter=Nearest
 
 Dernière clé prioritaire sur l'ancien booléen. Modifier seulement ces quatre valeurs ; DLL/autres clés conservées.
 
-Transaction à implémenter :
+Transaction validée hors ligne ; exécution réelle différée à P4.4 :
 
 1. Jeu/InfinityLoader fermés, verrou d'installation. Hasher le catalogue actif, comparer reçu/base attendue ; divergence → arrêt.
 2. Vérifier build, catalogue cible, capacités et shards requis **même déjà présents**. Nom SHA ≠ contenu vérifié ; preuve d'intégrité réutilisable seulement selon son contrat.
@@ -221,6 +221,16 @@ Transaction à implémenter :
 
 **Tests :** xBR→ReboutCX→xBR, hashes initiaux retrouvés ; reçu périmé/autre profil ; shard absent/corrompu ; hash catalogue faux ; panne copie/commit et reprise ; restore répété ; autres clés intactes. Shards inertes conservés.
 **Validation :** switch bidirectionnel, état fondé sur disque, rollback exact ; installation technique seulement.
+
+**Checkpoint P4.1 :** l'installateur normalise jobs/pointeurs/manifests xBR et dérivés, épingle job/manifeste/catalogue ReboutCX puis remonte au job xBR parent pour `game_root`/compatibilité. `-VerifyOnly` testé sur faux jeu ; installation dérivée exige `-EnableDerivedInstall`. Runtime, installation réelle et reçu actif non lus/modifiés.
+
+**Checkpoint P4.2 :** xBR et dérivé résolvent l'unique reçu sous le run xBR parent ; manifeste runtime omis repris du reçu actif. `-VerifyOnly` hash catalogue source/actif, tous shards sources et tout shard cible déjà présent, DLL ; il lit les valeurs effectives `EnableCreatureSpriteUpscaleTest=true`, `EnableCreatureSpriteX2Test=false`, `EnableCreatureSpriteLinearFiltering=false`, `CreatureSpriteFilter=<reçu>`. `already-installed` exige génération + catalogue + filtre + tous shards conformes au disque. Corruptions catalogue/shards source/cible et INI divergente refusées.
+
+**Checkpoint P4.3 :** sauvegardes catalogue/INI/reçu précédent hashées avant publication ; catalogue/INI cibles revérifiés avant finalisation. Etat `installing` : `-VerifyOnly` reste sans écriture et signale la reprise ; prochain install jeu fermé restaure d'abord exactement la transaction. Restore limité au job/génération actifs, donc répétable sans dérouler le backup antérieur ; shards ajoutés conservés inertes. 16 tests sur faux jeu : xBR→ReboutCX→xBR octet exact, reçu partagé exact, restore répété, interruption/reprise, backup corrompu bloqué avant écriture, compatibilité xBR/legacy. Installation réelle/runtime/reçu réel non lus/modifiés.
+
+**Checkpoint P4.4 :** préflight réel `-VerifyOnly` réussi le 2026-09-14. Actif xBR génération `912AE8AE...`, catalogue `434E50C4...` ; cible ReboutCX génération `2A732E53...`. DLL, INI, catalogue actif et 452 shards sources vérifiés ; 449 shards cibles déjà présents/conformes, 3 absents attendus : `672272F9...`, `CE54CC2E...`, `AFB96C31...`. Aucune écriture/processus lancé ou fermé. P4.5 = switch réel court avec `-EnableDerivedInstall`, jeu/InfinityLoader fermés et autorisation explicite.
+
+**Résultat P4.5 :** switch réel autorisé/réussi le 2026-09-14 ; statut `installed-pending-qa`, génération `2A732E53...`, catalogue actif `CE6546CE...`, 3 shards copiés puis 452 sources/installés revérifiés. Runtime `iee-creature-multi-new-0x1200-firkraag-v1` inchangé ; `CreatureSpriteFilter=Nearest`. Transaction `20260914T114609.2463717Z-cc84ee3e7a6c49b4968e94b3b6109434` ; backup catalogue xBR `434E50C4...`, INI et reçu précédent hashés. Jeu non lancé ; restore réel non déclenché, chemin testé P4.3 disponible.
 
 ## P5 — QA ingame statique
 
