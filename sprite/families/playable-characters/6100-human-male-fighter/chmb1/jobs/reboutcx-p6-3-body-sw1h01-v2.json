@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-reboutcx-character-composite-job-v1",
+  "job_id": "character-6100-chmb1-sw1h01-reboutcx-p6-3-v2",
+  "installable": false,
+  "animation_id": "0x6100",
+  "paths": {
+    "run_dir": "sprite/families/playable-characters/6100-human-male-fighter/chmb1/runs/reboutcx-p6-3-body-sw1h01-v2"
+  },
+  "layers": [
+    {
+      "name": "body",
+      "resref": "CHMB1A1",
+      "job": "sprite/families/playable-characters/6100-human-male-fighter/chmb1/jobs/reboutcx-p6-2-v1.json",
+      "manifest_sha256": "8334EFD6320BB4158CD56B5FFD030020351C4AB67EE52CD16F718DEF567A925B"
+    },
+    {
+      "name": "weapon",
+      "resref": "WQLS0A1",
+      "job": "sprite/families/playable-characters/6100-human-male-fighter/sw1h01-wqls0/jobs/reboutcx-p6-3-v1.json",
+      "manifest_sha256": "47235B3543C40A22E1C8EDAE0B174355ED99D5C903D00265EA3989C764C0E8CB"
+    }
+  ],
+  "palette_profiles": [
+    "reference",
+    "contrast-b",
+    "contrast-c",
+    "metal-only-blue",
+    "leather-only-blue",
+    "armor-only-blue"
+  ],
+  "composition_reference": {
+    "runtime": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp::detour_vid_palette_realize/bind_composite_texture",
+    "corroboration": "https://github.com/gemrb/gemrb/blob/811ace66479e79d390f35ffe85c587d0b0f347c1/gemrb/core/CharAnimations.cpp",
+    "palette": "SetColors applies SetupColors to PAL_MAIN and PAL_WEAPON",
+    "z_order": "zOrder_Mirror16; body part 0, weapon part 1"
+  },
+  "groups": [
+    {
+      "name": "chmb1a1-wqls0a1-cycle0",
+      "frames": [0, 1, 2, 3, 4, 5],
+      "order": ["body", "weapon"],
+      "duration_ms": 100
+    },
+    {
+      "name": "chmb1a1-wqls0a1-cycle4",
+      "frames": [60, 61, 62, 63, 64, 65],
+      "order": ["weapon", "body"],
+      "duration_ms": 100
+    }
+  ]
+}

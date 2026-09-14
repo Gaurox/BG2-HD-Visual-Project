@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "pipeline" / "scripts"))
 
 import reboutcx_batch as batch  # noqa: E402
+import reboutcx_character_composite as composite  # noqa: E402
 import reboutcx_quantize as quantize  # noqa: E402
 from run_creature_sprite_x2 import SourceFrame  # noqa: E402
 
@@ -164,11 +165,55 @@ class ReboutCXBatchContractTests(unittest.TestCase):
             path = Path(temporary) / "CreatureSprites-XN.registry"
             info = batch.write_prototype_registry(path, animation_id=0x7F02, resources=resources)
             batch.verify_prototype_registry(path, resources)
+            decoded = composite.read_prototype_indices(
+                path,
+                {
+                    "animation_id": "0x7F02",
+                    "frames": [
+                        {
+                            "resref": "TEST",
+                            "source_frame": 7,
+                            "width": 2,
+                            "height": 1,
+                            "center_x": 1,
+                            "center_y": -2,
+                            "transparent_index": 0,
+                            "quantized_index_sha256": batch.sha256_pixels(mapped),
+                        }
+                    ],
+                },
+            )
         self.assertEqual(info["registry_magic"], "IEECSXN")
         self.assertEqual(info["version"], 3)
         self.assertEqual(info["scale"], 2)
         self.assertEqual(info["animation_id"], "0x7F02")
         self.assertEqual(info["frame_count"], 1)
+        np.testing.assert_array_equal(decoded[7], mapped)
+
+    def test_character_composite_uses_centers_transparency_and_layer_order(self) -> None:
+        body = source_frame(np.asarray([[3, 3]], dtype=np.uint8), self.palette, center=(1, 0))
+        weapon = source_frame(np.asarray([[4]], dtype=np.uint8), self.palette)
+        frames = {"body": body, "weapon": weapon}
+        indices = {
+            "body": np.asarray([[3, 3]], dtype=np.uint8),
+            "weapon": np.asarray([[4]], dtype=np.uint8),
+        }
+        bounds = composite.composite_bounds(list(frames.values()))
+        self.assertEqual(bounds, (-1, 0, 1, 1))
+        front = composite.compose_index_layers(
+            frames, indices, ["body", "weapon"], self.palette, bounds, scale=1
+        )
+        behind = composite.compose_index_layers(
+            frames, indices, ["weapon", "body"], self.palette, bounds, scale=1
+        )
+        np.testing.assert_array_equal(front[0, :, :3], [[255, 0, 0], [0, 0, 255]])
+        np.testing.assert_array_equal(behind[0, :, :3], [[255, 0, 0], [255, 0, 0]])
+        transparent_indices = dict(indices)
+        transparent_indices["weapon"] = np.asarray([[0]], dtype=np.uint8)
+        transparent = composite.compose_index_layers(
+            frames, transparent_indices, ["body", "weapon"], self.palette, bounds, scale=1
+        )
+        np.testing.assert_array_equal(transparent, behind)
 
 
 class ReboutCXCharacterAuditTests(unittest.TestCase):
