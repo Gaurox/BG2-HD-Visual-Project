@@ -1,0 +1,114 @@
+{
+  "schema": "bg2-upscale-reboutcx-p0-v1",
+  "job_id": "monster-7f02-mbeh-reboutcx-p0-v1",
+  "scope": "one-offline-frame",
+  "installable": false,
+  "animation": {
+    "id": "0x7F02",
+    "bam_prefix": "MBEH",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "false_color": 0,
+    "resources": 13,
+    "frames": 6831
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "source_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p0-v1",
+    "chainner_exe": "config://chainner_exe",
+    "reboutcx_model": "config://reboutcx_model",
+    "reboutcx_chain": "config://reboutcx_chain"
+  },
+  "xbr_baseline": {
+    "canonical_pointer": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "canonical_pointer_sha256": "71DE26627A7A06B3338242BD722AACA17F32022FE6108F78F33F680B682249EB",
+    "generation_id": "912AE8AE2B6E3D297F042FC972C6C6DB5C2B95752DCFEBD015B1CFD9433E45DD",
+    "build_manifest_sha256": "34A642C439E837C624D9D739ED1210832D2DEFC1DA082323F3E2C3E25DE36533",
+    "catalog_sha256": "434E50C478E0EC9409E3E4A37D8F1293E4C1E77AC186B1B271EE4B70AD5DE536",
+    "animation_count": 195,
+    "runtime_manifest": "pipeline/runtime/manifests/iee-creature-multi-new-0x1200-firkraag-v1.json",
+    "runtime_dll_sha256": "50F7A4F945E36444194BB1C71C72A87E96EE5C075B223F707B78184AF824D9DC",
+    "runtime_filter": "Nearest",
+    "installed_catalog_matches_canonical": true,
+    "installed_active_receipt_matches_canonical": true,
+    "installed_owner_sidecar_matches_canonical": false,
+    "installed_owner_sidecar_note": "Stale owner sidecar: generation 5CF74A1B..., catalog 1943F770..., 124 animations. P4 must repair transactionally; do not use it as active-catalog authority."
+  },
+  "source": {
+    "manifest_sha256": "C5AC8791F7AB55661D46C5AFF7FE1E84F3B1DB9B4D09D5E77B2287638CBFFB40",
+    "witness": {
+      "bam": "MBEHG1",
+      "bam_sha256": "3542D059F634323A75139A142F9B64349EF1BB5E3755619E9E3A63A7807B1878",
+      "frame": 166,
+      "width": 100,
+      "height": 180,
+      "center_x": 49,
+      "center_y": 137,
+      "transparent_index": 0
+    }
+  },
+  "palette_audit": {
+    "used_indices": "0..255",
+    "partial_alpha_pixels": 0,
+    "duplicate_used_rgba_entries": 0,
+    "palette_rgb_sha256_counts": {
+      "72F77FD5ADD7A4154CA9F889EA768A7B00D07F330621E8186855E1F35B22022D": 6,
+      "C4FB20B47822E335C9E19AF91BF071912032226BBBC852E8239E088583EF4695": 7
+    },
+    "classes": {
+      "transparent": [0],
+      "shadow_black": [1],
+      "null_frame_marker": [2],
+      "material": "3..255"
+    },
+    "evidence": {
+      "rle_and_header_transparency_match_all_resources": true,
+      "index_1_pixels": 4464381,
+      "index_2_frames": 5184,
+      "index_2_pixels": 5184,
+      "index_2_contract": "Exactly one index-2 pixel in every 1x1 center-(0,0) null frame; never quantize or upscale these frames."
+    }
+  },
+  "chainner": {
+    "version": "0.25.1",
+    "executable_sha256": "3FAC04892F70114C85A4AAB5C25DF2F098191014CF72CE1E41DB103842C23D97",
+    "python": "3.11.5",
+    "torch": "2.7.0+cu128",
+    "spandrel": "0.4.1",
+    "backend": "pytorch-cuda-gpu-0-fp16",
+    "chain_sha256": "E6CE2428C53A4901DFC5FE05E4AC4C8B29EFA4BB7387075AFBD056BF529FE6C9",
+    "chain_checksum_valid": true,
+    "cli": "chainner.exe run <chain.chn>",
+    "cli_exit_code": 0,
+    "gui_cli_file_identical": true
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "architecture": "ESRGAN-23nb-64nf-RGB-to-RGB",
+    "model_scale": 4,
+    "target_scale": 2,
+    "input": "RGB source; transparent pixels filled by scipy.ndimage.distance_transform_edt nearest opaque indices",
+    "upscale": "native model x4; tile auto; padding none",
+    "downscale": "50 percent; chaiNNer Auto resolves to BOX; RGB u8 PNG",
+    "alpha": "xBR2X x2 binary mask carried separately; no alpha inference"
+  },
+  "witness_outputs": {
+    "source_rgba_sha256": "F4CC673712789A6EDE0D01ABF92294C6ADA995A3A9EC1BACF43213AD4F32BB16",
+    "inference_rgb_sha256": "D9B77311ED17AB3452DF743733FE4142B75C968499EAD04A5A4FF4D04832D6D7",
+    "reboutcx_x4_sha256": "061121B2FCE6B590FA75A9BB4DA5259A37E5FC80D6D5AA44E49A9F9CE1E30ADD",
+    "reboutcx_box_x2_sha256": "82C21929EC6B0668AF775DE629598F79B2649BC0547AD1EA396807C13631F9FC",
+    "xbr_x2_sha256": "940BD0A83ADD81F05D6CF4E70298C914BBEAF3F796047642405BB7D3A8B4D8A4",
+    "xbr_mask_x2_sha256": "842171904A29E636DA6C56076C865D108C9D47121EAD6232B55644DF11E9E782",
+    "reboutcx_x2_with_xbr_mask_sha256": "EA2BAB733A126D6732C77B77811BA7607253C7464ADB63E28FF129B59D6B98D4",
+    "comparison_sha256": "A28099F5ACE7C7C408811A6DABDB8F78AD687966DAA6B154D5AD8FECC0EFAD42",
+    "repeated_cli_and_gui_outputs_identical": true
+  },
+  "p1_contract": {
+    "quantization": "deterministic; no dithering; per source-palette hash; constrain output indices by semantic guide class",
+    "null_frames": "copy index 2 and metadata exactly; bypass RGB inference",
+    "transparent_pixels": "index 0 only",
+    "shadow_pixels": "index 1 only",
+    "material_pixels": "indices 3..255 only",
+    "status": "pending human comparison of the P0 witness; no P1 production before explicit acceptance"
+  }
+}
