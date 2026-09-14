@@ -1,0 +1,74 @@
+{
+  "schema": "bg2-upscale-reboutcx-prototype-job-v1",
+  "job_id": "monster-7f02-mbeh-reboutcx-p1-v2",
+  "installable": false,
+  "animation_id": "0x7F02",
+  "source_inventory": [
+    {"name": "MBEHG1"},
+    {"name": "MBEHG2"},
+    {"name": "MBEHG11"}
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p1-v2",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "C5AC8791F7AB55661D46C5AFF7FE1E84F3B1DB9B4D09D5E77B2287638CBFFB40",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes": {
+    "transparent": [0],
+    "shadow_black": [1],
+    "null_frame_marker": [2],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reference": {
+    "resref": "MBEHG1",
+    "frame": 166,
+    "x4_pixel_sha256": "14FF37C9A953AE49842CFCF5A4D84192690582E2067CF08E99367794ABDF7C63",
+    "x2_pixel_sha256": "D39D949659388B24620FD60DEAFEE2E7386607D9FF2430E23F218C4023A0C1B1"
+  },
+  "sample": {
+    "groups": [
+      {
+        "name": "mbehg1-sequence",
+        "resref": "MBEHG1",
+        "frames": [164, 165, 166, 167, 168, 169],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg1-directions",
+        "resref": "MBEHG1",
+        "frames": [18, 92, 166, 240, 314, 388, 462, 536, 610],
+        "duration_ms": 500
+      },
+      {
+        "name": "mbehg2-sequence",
+        "resref": "MBEHG2",
+        "frames": [168, 169, 170, 171, 172, 173],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg11-state-directions",
+        "resref": "MBEHG11",
+        "frames": [5, 79, 153, 227, 301, 375, 449, 523, 597],
+        "duration_ms": 500
+      }
+    ]
+  }
+}

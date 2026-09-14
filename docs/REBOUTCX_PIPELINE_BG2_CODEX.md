@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0 exécutée, validation humaine en attente ; P1–P7 non exécutées.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0 validée ; P1 exécutée, validation humaine en attente ; P2–P7 non exécutées.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -98,9 +98,9 @@ Hashes ≠ déterminisme GPU. RGB fixé → indices identiques ; inférence rép
 ```text
 sprite/research/reboutcx/chains/                       # .chn communes
 sprite/families/monsters/7fxx/7f02-mbeh-beholder/
-  jobs/reboutcx-x2-v1.json                             # contrat propre, à créer
+  jobs/reboutcx-p1-v2.json                             # prototype P1
   research/reboutcx/                                  # témoins minimaux
-  runs/reboutcx-x2-v1/                                # distinct de x2-nearest-v1
+  runs/reboutcx-p1-v2/                                # distinct de x2-nearest-v1
 sprite/catalogs/creature-x2-reboutcx/
   jobs/                                              # base + remplacements
   runs/<run>/                                        # générations + current-generation.json
@@ -140,6 +140,8 @@ Sources : `sprite/ressources/` + manifests existants, sans duplication BAM. Runs
 **Tests :** déterminisme RGB fixé ; dimensions/alpha/représentants/classes ; doublons ; transparent/petites frames/bords ; sorties manquantes/dupliquées/tronquées ; changement de hash recette ; round-trip indices/métadonnées.
 **Validation :** quantifié x2 accepté, invariants vérifiés. Bénéfice perdu/flicker → nouvelle recette ou rejet, aucune palette custom/runtime alternatif implicite.
 **Rollback :** candidat isolé ; xBR intact. Généralisation seulement après ce prototype réel accepté.
+
+**Résultat P1 :** `jobs/reboutcx-p1-v2.json` ; `reboutcx_batch.py`, `reboutcx_quantize.py`, `test_reboutcx_pipeline.py`. 29 frames/3 BAM, deux runs indépendants identiques pixels/indices/registre/QA ; manifeste v2 vérifié, 123 fichiers ; registre V3 x2 brut non installable, round-trip exact, SHA `6B87F4B3...`. Quantification `oklab-euclidean-f64-classed-no-dither-v1`, moyenne `0,03655`, pire p95 `0,07785`. Séquences/directions animées dans `runs/reboutcx-p1-v2/qa/`. Validation humaine du bénéfice et du flicker requise avant P2.
 
 ## P2 — Animation complète + petit échantillon
 
