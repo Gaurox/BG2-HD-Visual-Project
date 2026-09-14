@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T17:45:38.4155968Z",
+  "scope": {
+    "kind": "installed-character-components",
+    "domain": "playable-characters",
+    "animation_id": "0x6100",
+    "bam_prefixes": ["CHMB1", "WQLS0"],
+    "variant_id": "reboutcx-x2",
+    "target_scale": 2,
+    "catalog_generation": "AF3B86681AEE3FF9D0BDBC3E52CEC81ADBA9A60901430F45BAB70CAED094E148",
+    "runtime_profile": "character-bg2ee-2.7.3.0"
+  },
+  "visual_qa": {
+    "result": "pass-noninferior",
+    "preference": "undecided",
+    "authority": "user",
+    "scenarios": ["CHMB1 seul", "CHMB1 + WQLS0", "comparaison ingame xBR puis ReboutCX"],
+    "user_statement": "ReboutCX est au moins aussi bon que XBR sur ce sprite. je ne veux pas trancher pour l'instant. on garde la philisophie pour l'instant de tout passer en reboutcx.",
+    "note": "Autorise la poursuite ReboutCX sur 0x6100 sans conclure à une supériorité visuelle ni étendre la QA aux 63 autres composants."
+  },
+  "provenance": {
+    "selected_runs": [
+      {
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmb1/runs/reboutcx-p6-3-full-v1/manifest.json",
+        "sha256": "667885EF8F6A9B7B4835E0EF8B7DE85A2D02670C089BF2C3FB67341619B7C486"
+      },
+      {
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/sw1h01-wqls0/runs/reboutcx-p6-3-full-v1/manifest.json",
+        "sha256": "8B999C72DF9C3BD0F0CAF5DB8DB849BEEEBC3B52F26C028F3A414C73618E1D6D"
+      }
+    ]
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-character-6100-test-v1.json",
+    "job_sha256": "F54DBA480F392F947BE8D852A73D349254873204010CED5358B42C79CDB93CFA",
+    "build_manifest_sha256": "696566D0DBD5C0FB8A39EEAA5DDCD2A3A7652625F295FA2F6D1632761DE65D3F",
+    "catalog_sha256": "EA923B4E3885093BEDC4E917527BB40FDA29BFFCD5CEF99AC82B8860AF1DEA4F"
+  },
+  "automatic_evidence": {
+    "reboutcx_shards": {"CHMB1": 450, "WQLS0": 449},
+    "xbr_comparison_generation": "65566299B484C244E1F45055C457457AE0934BA7AC405E6F795ED4CD16EA0A40",
+    "xbr_comparison_catalog_sha256": "E43155A80B589D574A7DCDC92D736B256462E2C6C921BA82385DD512F8A28BFF",
+    "xbr_shards": {"CHMB1": 152, "WQLS0": 66},
+    "final_install_transaction": "20260914T170543.0318116Z-3b8896d099a3468f975bd590c3b9d0ce",
+    "final_catalog_verified_shards": 454,
+    "runtime_manifest_sha256": "4ACACD618FBA96B1F864845C04C52B155B67C09FC9A9481AA2E611C978B5CE2D",
+    "runtime_dll_sha256": "289E132BB606D7D3A4F97E1EA95F69675C47379D399AB4C32AE85AD2B1B58F32",
+    "runtime_ini_sha256": "E5A737BEAAF4CDBECC2AEC440E80E641D56B76E3FDCBB68509054D844CB2A411"
+  },
+  "release_manifest_modified": false
+}
