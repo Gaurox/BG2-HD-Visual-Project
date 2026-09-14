@@ -1,0 +1,56 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-character-6100-firkraag-c1f55c78-v1",
+  "source_commit": "c1f55c78b58fcd601341cae65c88d1e20e72a5a1",
+  "source_contract_sha256": "E1C343AA682F10886C344D13C5881636D9551C7901910B421D52F26278F49F01",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "backups/renderer/20260914T134207197900Z-7c448e10/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "289E132BB606D7D3A4F97E1EA95F69675C47379D399AB4C32AE85AD2B1B58F32",
+    "bytes": 1824256
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_magic": "IEECSNC",
+      "catalog_versions": [1, 2],
+      "shard_registry_magic": "IEECSXN",
+      "shard_registry_versions": [3, 5],
+      "frame_storage": ["raw-v3", "XPRESS_HUFF-or-raw-per-frame-v1"],
+      "directory_v2_entry_bytes": 24
+    },
+    "character_composite": {
+      "owners": [1],
+      "animation_families": ["0x5000", "0x6000"],
+      "maximum_layers": 8,
+      "palette_mode": "CVidPalette::Realize-per-layer",
+      "composition": "overwrite-nontransparent-pixel-v1"
+    },
+    "water_route2": {
+      "storage": "compiled-registry",
+      "registry_version": 3,
+      "registry_path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+      "registry_sha256": "433AEC70EF6852D12648AA8F68D5D6AC0DAE408D0DD0BCCC3A17CDDB8501386E"
+    }
+  },
+  "evidence": [
+    {
+      "kind": "accepted-runtime-qa",
+      "path": "sprite/index/qa-decisions/multi-new/2026-09-14-accepted-1200-mdr1-firkraag-reboutcx-x2-v1.json",
+      "sha256": "D857CCDADBC2DE5DFC1D01824A162BD2DA81B63663CCE58F74730B3D7C56E3C3"
+    },
+    {
+      "kind": "renderer-installation-receipt",
+      "path": "backups/renderer/20260914T134207197900Z-7c448e10/renderer-install-receipt.json",
+      "sha256": "2748E62C393FCE128B70FA8CD862804CA1EC71827FD3BBBEAD8986FF09F88416"
+    },
+    {
+      "kind": "water-route2-registry",
+      "path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+      "sha256": "433AEC70EF6852D12648AA8F68D5D6AC0DAE408D0DD0BCCC3A17CDDB8501386E"
+    }
+  ]
+}

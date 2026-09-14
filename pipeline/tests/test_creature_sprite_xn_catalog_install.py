@@ -396,6 +396,65 @@ class ThinCatalogInstallTests(unittest.TestCase):
             (self.run / "ingame-installation/active-test.json").is_file()
         )
 
+    def test_explicit_manifest_adopts_matching_live_runtime(self) -> None:
+        derived_job, _manifest, _pointer = self.make_derived_job()
+        self.run_ps(
+            INSTALL,
+            "-JobFile", self.job,
+            "-RuntimeManifest", self.runtime_manifest,
+        )
+        state_path = self.run / "ingame-installation/active-test.json"
+        previous_state = state_path.read_bytes()
+
+        adopted_source = self.root / "adopted-runtime.dll"
+        adopted_source.write_bytes(b"adopted-runtime")
+        adopted_manifest = self.root / "adopted-runtime.json"
+        write_json(
+            adopted_manifest,
+            {
+                "schema": "bg2-upscale-runtime-capabilities-v1",
+                "runtime_id": "adopted-runtime-v1",
+                "game_profile": {
+                    "baldur_real_sha256": sha256(self.game / "BaldurReal.exe")
+                },
+                "dll": {
+                    "path": str(adopted_source),
+                    "sha256": sha256(adopted_source),
+                },
+                "capabilities": {
+                    "creature_sprite_xn_catalog": {
+                        "catalog_versions": [2],
+                        "shard_registry_versions": [5],
+                        "frame_storage": ["XPRESS_HUFF-or-raw-per-frame-v1"],
+                    }
+                },
+            },
+        )
+        live_dll = self.game / "InfinityEngine-Enhancer.dll"
+        live_dll.write_bytes(adopted_source.read_bytes())
+
+        verified = self.run_ps(
+            INSTALL,
+            "-JobFile", derived_job,
+            "-RuntimeManifest", adopted_manifest,
+            "-VerifyOnly",
+        )
+        self.assertIn("RuntimeAdoption", verified.stdout)
+        self.assertIn("True", verified.stdout)
+        self.assertEqual(state_path.read_bytes(), previous_state)
+
+        installed = self.run_ps(
+            INSTALL,
+            "-JobFile", derived_job,
+            "-RuntimeManifest", adopted_manifest,
+            "-EnableDerivedInstall",
+        )
+        self.assertIn("adopted-existing", installed.stdout)
+        self.assertEqual(live_dll.read_bytes(), b"adopted-runtime")
+        active = json.loads(state_path.read_text(encoding="utf-8"))
+        self.assertEqual(active["runtime_id"], "adopted-runtime-v1")
+        self.assertEqual(active["runtime_manifest"], str(adopted_manifest.resolve()))
+
     def test_already_installed_requires_live_catalog_hash(self) -> None:
         self.run_ps(
             INSTALL,

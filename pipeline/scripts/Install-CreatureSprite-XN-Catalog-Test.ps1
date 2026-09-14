@@ -189,6 +189,7 @@ if (-not $shards.Count) { throw 'Le catalogue ne référence aucun shard.' }
 $iniTarget = Resolve-ChildPath $game 'InfinityEngine-Enhancer.ini' -RequireExisting
 $activeCatalogSha256 = $null
 $targetActive = $false
+$runtimeAdoption = $false
 if ($active) {
     if ($active.schema -ne 'bg2-upscale-creature-sprite-catalog-install-v2' -or
         $active.status -notin @('installed-pending-qa', 'validated-installed', 'qa-failed')) {
@@ -207,7 +208,10 @@ if ($active) {
         throw 'Catalogue actif divergent du reçu.'
     }
     if ([string]$active.runtime_id -ne [string]$runtime.runtime_id) {
-        throw 'Runtime actif divergent du reçu catalogue.'
+        if (-not $PSBoundParameters.ContainsKey('RuntimeManifest')) {
+            throw 'Runtime actif divergent du reçu catalogue.'
+        }
+        $runtimeAdoption = $true
     }
     $activeFilter = [string]$active.creature_sprite_filter
     if ($activeFilter -notin @('Nearest', 'CatmullRom')) {
@@ -227,6 +231,7 @@ if ($active) {
         }
     }
     $targetActive = (
+        -not $runtimeAdoption -and
         [string]$active.generation_id -eq [string]$pointer.generation_id -and
         ([string]$active.catalog_sha256).ToUpperInvariant() -eq
         ([string]$build.registry_catalog_sha256).ToUpperInvariant() -and
@@ -252,7 +257,8 @@ if ($VerifyOnly) {
         Shards = $shards.Count; SourceShardsVerified = $shards.Count
         ActiveGenerationId = if ($active) { [string]$active.generation_id } else { $null }
         ActiveCatalogSha256 = $activeCatalogSha256; State = $statePath
-        TargetActive = $false
+        TargetActive = $false; RuntimeAdoption = $runtimeAdoption
+        RuntimeId = [string]$runtime.runtime_id
     }
     return
 }
@@ -337,5 +343,6 @@ try {
 }
 [pscustomobject]@{
     Status = 'installed-pending-qa'; GenerationId = $pointer.generation_id
-    Shards = $shards.Count; CopiedShards = $copied; RuntimeMode = 'independent'
+    Shards = $shards.Count; CopiedShards = $copied
+    RuntimeMode = if ($runtimeAdoption) { 'adopted-existing' } else { 'independent' }
 }
