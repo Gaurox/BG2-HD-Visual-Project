@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P2 validées ; P3–P7 non exécutées.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P3 validées ; P4–P7 non exécutées.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -163,7 +163,7 @@ Sources : `sprite/ressources/` + manifests existants, sans duplication BAM. Runs
 
 **But :** catalogue complet séparé ; aucune famille hors sélection ne perd son xBR.
 
-**À implémenter :** assembleur limité réutilisant le runner ; `catalog-append` insuffisant. Contrat runtime commun, provenance par composant ; adaptation minimale des lecteurs/validateurs, contrats xBR historiques inchangés.
+**Implémentation :** `reboutcx_catalog.py` réutilise lecteurs/écrivains du runner ; `catalog-append` reste réservé aux nouveaux IDs. Contrat runtime commun, provenance par composant, contrats xBR historiques inchangés.
 
 ```text
 base = génération xBR immuable + manifest/catalogue SHA
@@ -178,9 +178,18 @@ derived = base - appartenances remplacées + composants ReboutCX
 - Nouveau job/manifeste sous `creature-x2-reboutcx` : base, remplacements, provenance par composant, `scale=2`, hashes/snapshot du job. Ne pas étiqueter une recette mixte comme xBR/ReboutCX homogène.
 - Publier le pointeur ReboutCX après contrôles ; xBR canonique intact, noms runtime standards dans le pack.
 
+```powershell
+python pipeline/scripts/reboutcx_catalog.py build sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-validated-v1.json
+python pipeline/scripts/reboutcx_catalog.py verify sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-validated-v1.json
+```
+
+`build` refuse une génération existante ; `verify` est la reprise normale. Nouvelle sélection/entrée/code → nouveau job/run, jamais réécriture du run scellé.
+
 **Tests :** données hors remplacement identiques ; résolutions uniques ; sources/métadonnées égales ; mauvais ID/digest/resref refusé ; partage préservé ; lecture catalogue V2/shards V5 compatible ; déterminisme ; échec avant publication conserve le pointeur. Contrôler index/nouveaux payloads, réutiliser preuves scellées du parent, pas de scan global implicite.
 **Validation :** catalogue complet, diff limité aux remplacements, xBR intact. QA xBR non héritée par ReboutCX.
 **Rollback :** ancien pointeur expérimental si nécessaire ; aucune installation à restaurer.
+
+**Résultat P3 :** `reboutcx_catalog.py`, `test_reboutcx_catalog.py`. Prototype `catalog-reboutcx-mbeh-v1` : génération `D82D2182...`, catalogue `BFC8C633...`, 194/195 animations inchangées, 451 shards xBR hardlinkés + 1 ReboutCX. Catalogue validé `catalog-reboutcx-validated-v1` : génération `2A732E53...`, manifeste `2E083A69...`, catalogue `CE6546CE...`, contenu logique `55BD0105...` ; 195 animations/439 composants/452 shards/52 984 entrées, 192 animations inchangées, shards xBR 403/419/420 remplacés par `672272F9...`/`CE54CC2E...`/`AFB96C31...`, 449 autres hardlinkés. Contrats resrefs/sources/géométrie/centres/représentants/cycles identiques ; V2/V5, x2 et inventaire global vérifiés ; nouveaux shards relus intégralement, parent scellé réutilisé sans scan global. Pointeur xBR canonique SHA `71DE2662...` inchangé ; aucun fichier jeu/runtime/install/release modifié.
 
 ## P4 — Installation A/B réversible
 

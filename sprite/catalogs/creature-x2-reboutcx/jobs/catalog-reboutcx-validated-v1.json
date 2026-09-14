@@ -1,0 +1,112 @@
+{
+  "schema": "bg2-upscale-reboutcx-derived-catalog-job-v1",
+  "job_id": "catalog-reboutcx-validated-v1",
+  "installable": false,
+  "target_scale": 2,
+  "paths": {
+    "parent_pointer": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "run_dir": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-validated-v1"
+  },
+  "parent": {
+    "pointer_sha256": "71DE26627A7A06B3338242BD722AACA17F32022FE6108F78F33F680B682249EB",
+    "generation_id": "912AE8AE2B6E3D297F042FC972C6C6DB5C2B95752DCFEBD015B1CFD9433E45DD",
+    "build_manifest_sha256": "34A642C439E837C624D9D739ED1210832D2DEFC1DA082323F3E2C3E25DE36533",
+    "catalog_sha256": "434E50C478E0EC9409E3E4A37D8F1293E4C1E77AC186B1B271EE4B70AD5DE536",
+    "logical_content_sha256": "8E83C53526B0718B35B051ED4F212401F092064DAFBD89ECAAFD2AC5B1C263D7"
+  },
+  "replacements": [
+    {
+      "animation_id": "0x7F02",
+      "expected_owner": 3,
+      "expected_component_indices": [396],
+      "expected_component_digests": [
+        "A3ACEAB7C8C63C8447FCDA2081C0A66D1D18045F36137653D427A0D72E6C45DA"
+      ],
+      "expected_logical_component_digests": [
+        "1A31D38C402D0C915840DF8036B46EC006FFFC78661660EE268AF148AB77A917"
+      ],
+      "expected_shard_sha256s": [
+        "CF71BDF57C83ADD9ECAC12D649FD838B09C87A8F77A7BFB434112EA7B664EC24"
+      ],
+      "expected_resrefs": [
+        "MBEHG1",
+        "MBEHG11",
+        "MBEHG12",
+        "MBEHG13",
+        "MBEHG14",
+        "MBEHG15",
+        "MBEHG2",
+        "MBEHG21",
+        "MBEHG22",
+        "MBEHG23",
+        "MBEHG24",
+        "MBEHG25",
+        "MBEHG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/manifest.json",
+      "reboutcx_manifest_sha256": "9D88635B316B261C4B2CAC16E4972F17607A4234DFD25C2BFC70B3DB1B64D54B"
+    },
+    {
+      "animation_id": "0x7F30",
+      "expected_owner": 3,
+      "expected_component_indices": [412],
+      "expected_component_digests": [
+        "619DBA4D202E3F2BF26BD8FBD1623852AD34072A89725CE3E05363637A761FEA"
+      ],
+      "expected_logical_component_digests": [
+        "89FFA4223CF4C4BD7AB69FF79B7F47BEAC203692885747EB67ACA5A7D38D734A"
+      ],
+      "expected_shard_sha256s": [
+        "25D55A95D35856F46081D120566ACC7B647D1E96A68E737B2D5294DA6666B569"
+      ],
+      "expected_resrefs": [
+        "NBOHG1",
+        "NBOHG11",
+        "NBOHG12",
+        "NBOHG13",
+        "NBOHG14",
+        "NBOHG15",
+        "NBOHG2",
+        "NBOHG21",
+        "NBOHG22",
+        "NBOHG23",
+        "NBOHG24",
+        "NBOHG25",
+        "NBOHG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2A3ED34E9CD2DE2E89DDABDF36C61B49663430537E4B367DA6C8A96F7A8A92F9"
+    },
+    {
+      "animation_id": "0x7F37",
+      "expected_owner": 3,
+      "expected_component_indices": [413],
+      "expected_component_digests": [
+        "32DC2F57935322897A46646D2B893B89697A7D3E5A26D30750979A30AE237BC5"
+      ],
+      "expected_logical_component_digests": [
+        "8D5E52F83FBEFB9AE85471A8890C29D4F2A264526589E73CFE0F9A4FFBA07B39"
+      ],
+      "expected_shard_sha256s": [
+        "4573C97B7B36BFBDF4F3CA13504AF8F196060554D65B71B2B82BBE0244E2BF5B"
+      ],
+      "expected_resrefs": [
+        "NIREG1",
+        "NIREG11",
+        "NIREG12",
+        "NIREG13",
+        "NIREG14",
+        "NIREG15",
+        "NIREG2",
+        "NIREG21",
+        "NIREG22",
+        "NIREG23",
+        "NIREG24",
+        "NIREG25",
+        "NIREG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f37-nire-jon-irenicus/runs/reboutcx-p2-sample-v1/manifest.json",
+      "reboutcx_manifest_sha256": "3265A5C7CD9B5EB9DD0DDF3AF6B32326493BB39083C572D8DFFF232BC53F4A78"
+    }
+  ]
+}

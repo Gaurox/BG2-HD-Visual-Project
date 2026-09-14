@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-upscale-reboutcx-derived-catalog-job-v1",
+  "job_id": "catalog-reboutcx-mbeh-v1",
+  "installable": false,
+  "target_scale": 2,
+  "paths": {
+    "parent_pointer": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "run_dir": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-mbeh-v1"
+  },
+  "parent": {
+    "pointer_sha256": "71DE26627A7A06B3338242BD722AACA17F32022FE6108F78F33F680B682249EB",
+    "generation_id": "912AE8AE2B6E3D297F042FC972C6C6DB5C2B95752DCFEBD015B1CFD9433E45DD",
+    "build_manifest_sha256": "34A642C439E837C624D9D739ED1210832D2DEFC1DA082323F3E2C3E25DE36533",
+    "catalog_sha256": "434E50C478E0EC9409E3E4A37D8F1293E4C1E77AC186B1B271EE4B70AD5DE536",
+    "logical_content_sha256": "8E83C53526B0718B35B051ED4F212401F092064DAFBD89ECAAFD2AC5B1C263D7"
+  },
+  "replacements": [
+    {
+      "animation_id": "0x7F02",
+      "expected_owner": 3,
+      "expected_component_indices": [396],
+      "expected_component_digests": [
+        "A3ACEAB7C8C63C8447FCDA2081C0A66D1D18045F36137653D427A0D72E6C45DA"
+      ],
+      "expected_logical_component_digests": [
+        "1A31D38C402D0C915840DF8036B46EC006FFFC78661660EE268AF148AB77A917"
+      ],
+      "expected_shard_sha256s": [
+        "CF71BDF57C83ADD9ECAC12D649FD838B09C87A8F77A7BFB434112EA7B664EC24"
+      ],
+      "expected_resrefs": [
+        "MBEHG1",
+        "MBEHG11",
+        "MBEHG12",
+        "MBEHG13",
+        "MBEHG14",
+        "MBEHG15",
+        "MBEHG2",
+        "MBEHG21",
+        "MBEHG22",
+        "MBEHG23",
+        "MBEHG24",
+        "MBEHG25",
+        "MBEHG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/manifest.json",
+      "reboutcx_manifest_sha256": "9D88635B316B261C4B2CAC16E4972F17607A4234DFD25C2BFC70B3DB1B64D54B"
+    }
+  ]
+}
