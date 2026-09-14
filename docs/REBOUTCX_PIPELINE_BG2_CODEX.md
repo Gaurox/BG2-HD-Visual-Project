@@ -382,7 +382,8 @@ out[p] = nearest contraint selon §2
 - Orchestration bornée : `pipeline/scripts/reboutcx_character_family.py`, job `sprite/families/playable-characters/6100-human-male-fighter/family-runs/complete-reboutcx-p8-v1/jobs/human-male-fighter-complete-reboutcx-p8-v1.json`. Une famille source en mémoire à la fois ; production GPU future strictement sérielle.
 - Audit CPU `audit.json`, SHA `276F1B3803B5E6F9EFFDE2935F3F231AF6616D26C20C2F283D2129113D061E00` : 65 composants = 4 body + 18 helmet + 12 shield + 31 weapon ; 656 ressources/180 337 frames, 28 850 marqueurs exacts, 142 540 inférences restantes après CHMB1/WQLS0. Transparence 0 et couverture des 256 indices par le contrat Character vérifiées ; 12 palettes BAM sources restent guides xBR, palette réalisée RANGES12 fixe pour ReboutCX.
 - Les 65 composants xBR sont partagés avec d'autres animations : le catalogue final doit remplacer seulement `(0x6100, old_component_index)`. Estimation issue des deux runs validés : `86,7 min` de temps modèle restant, hors xBR/quantification/IO. Aucun GPU lancé à ce checkpoint.
-- Étape suivante : générer les 63 jobs avec témoins déterministes, exécuter les runs sériellement, vérifier chaque composant, puis assembler un catalogue dérivé 65/65. Annoncer le GPU avant lancement.
+- Stabilité Windows : les trois arbres `.BG2HD-Installer-Windows*.tmp/` (40 725 fichiers non suivis) déclenchaient les rescans Git de fond puis des crashs répétés de Git 2.54 en `0xc00000fd`. Exclusion durable commit `13717755` ; P8 lance un seul composant par processus, sortie enfant en fichier, zéro concurrence et libération RAM/VRAM entre composants.
+- Suite P8 : `prepare` génère les 63 jobs/témoins ; `build` reprend et vérifie chaque run dans un processus séparé ; `catalog` produit puis vérifie le catalogue dérivé 65/65 sans installation. Annoncer le GPU avant `prepare` et `build`.
 
 ## 3. Vérifications / reprise
 
