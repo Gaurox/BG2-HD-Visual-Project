@@ -6,7 +6,7 @@ Pendant la production, traiter et accepter des assets autonomes. Ne pas reconstr
 projet global. Compiler, revalider et optimiser l'ensemble uniquement pendant une finalisation
 explicitement demandée.
 
-## Deux modes exclusifs
+## Deux régimes de travail
 
 | Mode | But | Contrôles | Écritures |
 |---|---|---|---|

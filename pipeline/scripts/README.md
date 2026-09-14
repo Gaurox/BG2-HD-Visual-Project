@@ -26,11 +26,20 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Essai transactionnel d'animation par zone | `Install-AreaAnimation-AreaTest.ps1`, `Restore-AreaAnimation-AreaTest.ps1` ; cœur `../area-animation-area-test/` |
 | Migration d'un ARE embarqué dans une sauvegarde test | `patch_save_area_animation_resrefs.py` ; plan-only, sauvegarde complète obligatoire |
 | Correctifs alpha/RGB | `build_alpha_feather.py` (silhouette, canvas, radial, gaussien local haut), `build_spline_top_reconstructed_alpha.py` (Fit 1 + bande haute), `build_manual_alpha_mask_30fps_v2.py`, `build_per_frame_spline_alpha_30fps_v2.py`, `build_blended_rgb_neutral_pack.py`, `build_joint_animation_rgb_seam.py`, `build_fused_area_animation_carrier.py` |
-| Sprites | `run_creature_sprite_x2.py` (production), `Install-CreatureSprite-XN-Catalog-Test.ps1` / `Restore-CreatureSprite-XN-Catalog-Test.ps1` (catalogue léger), `xbr2x_batch.js` |
+| Sprites xBR | `run_creature_sprite_x2.py`, `generate_sprite_family_append.py`, `xbr2x_batch.js` |
+| Sprites ReboutCX | `reboutcx_full.py` (composant), `reboutcx_catalog.py` (catalogue dérivé) |
+| Installation sprites | `Install-CreatureSprite-XN-Catalog-Test.ps1`, `Restore-CreatureSprite-XN-Catalog-Test.ps1` |
 | Runtime de développement | `Install-IEE-Runtime-Test.ps1` ; indépendant des assets |
 | Finalisation release | `releases/BG2-HD-Upscale/tools/Compile-BG2HD-Release.ps1` |
 
-## Catalogue sprites : ajout incrémental
+## Catalogues sprites
+
+xBR est la base canonique. `generate_sprite_family_append.py catalog-append` ajoute de nouveaux IDs
+par delta. ReboutCX ne modifie pas cette base : `reboutcx_catalog.py` construit un catalogue complet
+dérivé et remplace seulement les couples `(animation_id, component_index)` déclarés. Les
+appartenances non ciblées restent xBR.
+
+### Ajout xBR incrémental
 
 Un nouveau lot utilise `bg2-upscale-creature-sprite-xn-catalog-delta-job-v1` et ne contient que
 ses nouveaux `members`/`qa.animations`. `parent` épingle la génération acceptée :

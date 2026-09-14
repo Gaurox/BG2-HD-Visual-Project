@@ -4,56 +4,74 @@
 
 | État | Source |
 |---|---|
-| identité et éligibilité | `index/sprite_*.csv`, `index/manifest.json` |
-| production courante | `catalogs/.../current-generation.json` + `build-manifest.json` |
+| identité/éligibilité | `index/sprite_*.csv`, `index/manifest.json` |
+| production xBR | `catalogs/creature-x2-nearest/**/current-generation.json` |
+| production ReboutCX | `catalogs/creature-x2-reboutcx/**/current-generation.json` |
 | QA ingame | décision immuable sous `index/qa-decisions/` |
-| installation locale | `catalogs/.../ingame-installation/active-test.json` |
-| release | `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`, puis `content.json` |
+| installation locale | unique `ingame-installation/active-test.json` du catalogue xBR parent |
+| release | `sprite-release-candidates.json`, puis `content.json` |
 
-Ne jamais propager un état entre ces sources. Une installation `pending` n'annule pas une QA
-existante. Une QA acceptée reste acquise tant que ses octets et son contrat runtime sont inchangés.
+Une installation ne vaut pas QA ; une QA ne vaut pas intégration release.
 
-## Production locale
+## Deux modes raster
 
-Une famille non vide est traitable si :
+| Mode | Usage | Sortie |
+|---|---|---|
+| xBR | nouvelle famille/animation ; repli sûr | catalogue canonique cumulatif |
+| ReboutCX | améliorer des composants xBR existants | catalogue dérivé complet : ReboutCX ciblé + xBR ailleurs |
 
-```text
-runtime_supported=yes
-pipeline_ready=yes
-blocker=<vide>
-override_collision=<vide>
-resource_count>0
-frame_count>0
-```
+Les deux modes conservent BAM, cycles, centres, palettes dynamiques et registre x2. ReboutCX n'est
+pas un second runtime et ne se sélectionne pas par instance ingame.
 
-Profils automatisés : `character-bg2ee-2.7.3.0`, `monster-bg2ee-2.7.3.0`,
-`monster-icewind-bg2ee-2.7.3.0`.
+## Préparer les sources
 
-1. Lire seulement les lignes cible de `sprite_families.csv`, `sprite_resources.csv` et, si utile,
-   `sprite_items.csv`.
-2. Créer le membre ou agrégat avec `generate_sprite_family_append.py` ou
-   `generate_character_complete_x2_jobs.py`.
-3. Extraire et matérialiser uniquement sa portée :
+La famille doit avoir `runtime_supported=yes`, `pipeline_ready=yes`, aucun `blocker` ni
+`override_collision`, et des ressources non vides.
 
 ```powershell
 python pipeline/scripts/extract_sprite_sources.py --family-id <family_id> --run
-python pipeline/scripts/materialize_sprite_sources.py --job <job> --run
-python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job>
+python pipeline/scripts/materialize_sprite_sources.py --job <job-xbr> --run
 ```
 
-4. Ajouter le lot au catalogue courant selon [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
-5. Installer et tester seulement le delta.
+## Produire
 
-`prepare` vérifie le delta. `verify` quotidien lit les métadonnées. Le scan complet
-`verify --full-verify` appartient uniquement à la finalisation explicitement demandée.
+### xBR
 
-## Enregistrement minimal
+```powershell
+python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job <job-xbr>
+```
 
-- Production : le pointeur de génération et le manifeste scellé suffisent.
-- QA : un fichier immuable identifie la portée, la génération, les hashes, le verdict et la note
-  utilisateur. Ne jamais modifier une ancienne décision.
-- Installation : le reçu décrit seulement les fichiers actuellement installés et leur rollback.
-- Release : ajouter uniquement le candidat accepté ; différer TP2, staging, miroirs et package.
+Publier ensuite l'ajout canonique selon [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
 
-Les runs de travail non référencés restent jetables. Aucun registre global, synchronisation de
-cycle de vie ou réconciliation installation→QA n'est autorisé.
+### ReboutCX
+
+Précondition : le composant complet existe dans le catalogue xBR parent et le job ReboutCX épingle
+un profil palette/classes déjà démontré pour ce type de calque. Toute inférence GPU doit être
+annoncée à l'utilisateur avant lancement.
+
+```powershell
+python pipeline/scripts/reboutcx_full.py run <job-reboutcx>
+python pipeline/scripts/reboutcx_full.py verify <job-reboutcx>
+python pipeline/scripts/reboutcx_catalog.py build <job-catalogue-reboutcx>
+python pipeline/scripts/reboutcx_catalog.py verify <job-catalogue-reboutcx>
+```
+
+`run` produit un composant complet ; `verify` reprend un run existant. Un changement de source,
+recette ou sélection crée un nouveau job/run. Le job de catalogue est cumulatif : il redéclare les
+remplacements ReboutCX antérieurs à conserver.
+
+Profils de référence :
+
+- Monster sans false-color :
+  `sprite/families/monsters/7fxx/7f02-mbeh-beholder/jobs/reboutcx-p2-mbeh-v2.json` ; réutiliser ses
+  classes seulement si la palette du nouveau cas est compatible.
+- Character false-color : `sprite/families/playable-characters/6100-human-male-fighter/chmb3/jobs/reboutcx-p8-full-v1.json` ; palette réalisée RANGES12 et
+  classes Character obligatoires pour body/arme/bouclier/casque.
+
+Détails raster : [`../docs/REBOUTCX_PIPELINE_BG2_CODEX.md`](../docs/REBOUTCX_PIPELINE_BG2_CODEX.md).
+
+## Installer et accepter
+
+Utiliser les commandes du mode choisi dans [`FAMILY_APPEND.md`](FAMILY_APPEND.md). Jeu et
+InfinityLoader doivent être fermés avant install/restore. Tester seulement le delta utile, puis
+enregistrer la décision QA exacte. Compilation globale et release restent différées.

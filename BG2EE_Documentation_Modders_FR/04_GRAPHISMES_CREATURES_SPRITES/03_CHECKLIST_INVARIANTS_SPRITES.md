@@ -3,6 +3,11 @@
 > **Statut :** Synthèse pratique fondée sur les formats  
 > **Dernière vérification :** 2026-08-27
 
+Pour le pipeline IEE actuel, BAM, cycles, dimensions et centres **logiques restent x1** ; seuls les
+indices/frames physiques du registre externe sont x2. Les règles de recalcul géométrique et de
+packing BAM V2/PVRZ ci-dessous concernent uniquement une reconstruction physique de BAM, pas les
+catalogues xBR/ReboutCX. Voir [`04_APPLICATION_UPSCALE_X2_X4.md`](04_APPLICATION_UPSCALE_X2_X4.md).
+
 ## Structure
 
 - même nombre de cycles, sauf conversion explicitement prévue ;

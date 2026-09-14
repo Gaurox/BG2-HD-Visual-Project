@@ -1,15 +1,11 @@
-# Ajouter un lot au catalogue sprites
+# Publier et installer un lot de sprites
 
-But : produire un delta installable sans relire ni reconstruire les générations déjà acceptées.
+Choisir le mode dans [`PROCESSING.md`](PROCESSING.md). xBR ajoute les nouvelles animations au
+catalogue canonique ; ReboutCX remplace des composants de cette base dans un catalogue dérivé.
 
-## 1. Créer et préparer les nouveaux membres
+## Mode xBR — ajout canonique
 
-Sélectionner le `family_id` exact dans `sprite/index/sprite_families.csv`.
-
-Exiger pour chaque famille : `runtime_supported=yes`, `pipeline_ready=yes`, `blocker` vide,
-`override_collision` vide et des ressources non vides.
-
-Monster/MonsterIcewind/MonsterQuadrant/MultiNew :
+Créer/préparer le membre ciblé. Pour Monster/MonsterIcewind/MonsterQuadrant/MultiNew :
 
 ```powershell
 $familyId = '<family_id>'
@@ -18,58 +14,79 @@ $layout = python pipeline/scripts/generate_sprite_family_append.py layout `
 $member = [string]$layout.member_job
 
 python pipeline/scripts/generate_sprite_family_append.py member `
-  --job $member --template-job <job-xbr2x-compatible> `
+  --job $member --template-job <job-xbr-compatible> `
   --family-id $familyId --qa-area <AREA> --qa-creature <CRE_RESREF>
 python pipeline/scripts/extract_sprite_sources.py --family-id $familyId --run
 python pipeline/scripts/materialize_sprite_sources.py --job $member --run
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $member
 ```
 
-Une famille MultiNew peut dépasser 128 ressources : le registre-set accepte jusqu'à 1024
-ressources et conserve la limite de 128 par shard.
+Pour Character, créer l'agrégat avec `generate_character_complete_x2_jobs.py`, puis extraire,
+matérialiser et exécuter `prepare-data --resume` sur son job. Une famille MultiNew peut utiliser
+plusieurs shards ; limite 128 ressources par shard.
 
-Character : produire l'agrégat complet avec `generate_character_complete_x2_jobs.py`, puis extraire,
-matérialiser et lancer `prepare-data --resume`. Ne jamais hériter la QA d'un autre Character.
-
-## 2. Créer le delta
-
-Le générateur prend automatiquement le `current-generation.json` canonique et son job de
-provenance scellé. Il ne consulte pas `active-test.json`.
+Créer le delta depuis le pointeur xBR canonique :
 
 ```powershell
 $append = "sprite/catalogs/creature-x2-nearest/jobs/append-$($layout.folder_slug)-v1.json"
 python pipeline/scripts/generate_sprite_family_append.py catalog-append `
   --job $append --member-job $member `
-  --name 'Catalogue progressif créatures x2 — ajout <lot>' `
-  --require-prepared
-```
-
-Répéter `--member-job` pour grouper plusieurs nouvelles animations dans un même delta. Le
-générateur refuse un ID déjà présent et épingle les hashes du parent. `--catalog-job` reste réservé
-à une reprise explicite depuis un autre job ou pointeur de génération.
-
-## 3. Installer et décider
-
-Fermer le jeu et InfinityLoader, puis :
-
-```powershell
+  --name 'Catalogue sprites x2 — ajout <lot>' --require-prepared
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $append
-python pipeline/scripts/run_creature_sprite_x2.py install --job $append `
-  --creature-sprite-filter Nearest
-python pipeline/scripts/run_creature_sprite_x2.py status --job $append
 ```
 
-Tester uniquement les nouveaux membres et leurs préfixes représentatifs. Après acceptation
-explicite, créer une décision immuable sous `sprite/index/qa-decisions/<groupe>/` qui épingle la
-génération, le manifeste, la portée et le verdict. Une décision acceptée n'est jamais rejouée sauf
-changement des octets/du runtime ou réouverture explicite.
+Répéter `--member-job` pour un lot. Un delta ajoute des IDs ; il ne remplace pas un ID parent.
 
-Ajouter ensuite seulement le candidat à
-`releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`. La compilation globale et
-`verify --full-verify` restent réservés à la finalisation du patch.
+## Mode ReboutCX — remplacement dérivé
 
-Test facultatif après modification du générateur :
+Le composant xBR cible doit déjà appartenir au parent canonique. Après le `run` et le `verify` de
+chaque job ReboutCX, créer un nouveau job sous `catalogs/creature-x2-reboutcx/jobs/` avec :
+
+- parent xBR épinglé par génération/hashes ;
+- remplacements cumulatifs à conserver ;
+- pour chaque remplacement : `animation_id`, owner, index/digests/shards/resrefs xBR exacts et
+  manifeste ReboutCX scellé ;
+- sélection par `(animation_id, component_index)` ; un composant partagé reste xBR pour les autres
+  animations.
 
 ```powershell
-python -m unittest pipeline.tests.test_generate_sprite_family_append
+python pipeline/scripts/reboutcx_catalog.py build <job-catalogue-reboutcx>
+python pipeline/scripts/reboutcx_catalog.py verify <job-catalogue-reboutcx>
 ```
+
+Ne jamais modifier le pointeur xBR. `build` refuse une génération existante ; utiliser `verify`
+pour la reprendre.
+
+## Installation et QA
+
+Fermer BG2EE et InfinityLoader.
+
+xBR :
+
+```powershell
+python pipeline/scripts/run_creature_sprite_x2.py install --job <job-catalogue-xbr> `
+  --creature-sprite-filter Nearest
+python pipeline/scripts/run_creature_sprite_x2.py status --job <job-catalogue-xbr>
+```
+
+ReboutCX :
+
+```powershell
+& pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 `
+  -JobFile <job-catalogue-reboutcx> -EnableDerivedInstall -VerifyOnly
+& pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 `
+  -JobFile <job-catalogue-reboutcx> -EnableDerivedInstall
+& pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 `
+  -JobFile <job-catalogue-reboutcx> -EnableDerivedInstall -VerifyOnly
+```
+
+Restauration du catalogue précédent, jeu et InfinityLoader fermés :
+
+```powershell
+& pipeline/scripts/Restore-CreatureSprite-XN-Catalog-Test.ps1 `
+  -JobFile <job-catalogue-actif>
+```
+
+Tester des préfixes/compositions représentatifs. Après verdict utilisateur, créer une décision
+immuable sous `sprite/index/qa-decisions/<groupe>/` limitée aux octets réellement testés. Ajouter un
+candidat release seulement sur demande ; aucun rebuild global, TP2, staging ou package ici.

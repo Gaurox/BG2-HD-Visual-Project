@@ -92,14 +92,13 @@ Les principales valeurs de `blocker` sont :
 - `resource-limit`, `per-resource-frame-limit` ou `registry-size-limit` : limite de registre ;
 - `*-override-collision` : une ressource de même identité existe dans `override`.
 
-`duplicate_used_rgba_frames` et ses exemples restent des diagnostics : le runner propage l'indice
-source selon les décisions xBR puis vérifie que cette provenance restitue exactement le RGBA xBR.
-Des indices distincts de même RGBA ne sont donc pas fusionnés et ne constituent plus un blocker.
+`duplicate_used_rgba_frames` et ses exemples restent des diagnostics. xBR propage la provenance
+d'indice ; ReboutCX quantifie dans la classe sémantique du guide xBR. Des indices de même RGB mais
+de classes différentes ne sont jamais fusionnés.
 
-Ne jamais traduire `pipeline_ready=yes` en validation ingame. Cette valeur couvre uniquement les
-prérequis automatisables connus. Exiger ensuite un job, une installation réversible et la QA décrite
-dans [`../README.md`](../README.md). Pour un ajout au catalogue cumulatif, appliquer exclusivement
-[`../FAMILY_APPEND.md`](../FAMILY_APPEND.md).
+Ne jamais traduire `pipeline_ready=yes` en validation ingame ni en profil ReboutCX démontré. Cette
+valeur couvre uniquement les prérequis automatisables communs. Utiliser ensuite le mode adapté dans
+[`../PROCESSING.md`](../PROCESSING.md) et [`../FAMILY_APPEND.md`](../FAMILY_APPEND.md).
 
 ## Extraction
 

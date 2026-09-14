@@ -1,7 +1,7 @@
 # Documentation BG2:EE pour développeurs et moddeurs - synthèse française
 
 > **Statut :** Index de l’archive ; contenu original de synthèse  
-> **Dernière vérification :** 2026-08-27
+> **Dernière vérification :** 2026-09-14
 
 Cette archive transforme la documentation technique disponible autour de **Baldur’s Gate II: Enhanced Edition** en une base Markdown structurée et exploitable par un humain, un LLM ou un agent de développement.
 
@@ -13,7 +13,7 @@ Cette archive transforme la documentation technique disponible autour de **Baldu
 - un inventaire du paquet officiel **Beamdog Creature Process** et des fichiers de debug mis à disposition ;
 - des annexes communautaires clairement séparées : IESDP, Near Infinity, DLTCEP et WeiDU ;
 - des procédures de travail, de test et de migration adaptées à un projet technique moderne ;
-- un chapitre spécifique aux sprites et à un pipeline d’upscale x2/x4.
+- un chapitre spécifique aux sprites et au pipeline x2 xBR/ReboutCX du projet.
 
 ## Nature du contenu
 

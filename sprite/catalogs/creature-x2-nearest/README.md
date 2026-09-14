@@ -1,4 +1,7 @@
-# Catalogue créatures x2 NEAREST
+# Catalogue xBR canonique x2
+
+Ce catalogue ajoute les nouvelles animations. Les remplacements ReboutCX vivent sous
+`../creature-x2-reboutcx/` et dérivent de ce pointeur sans le modifier.
 
 Les nouveaux descripteurs sont `jobs/append-<family>-vN.json`, au schéma
 `bg2-upscale-creature-sprite-xn-catalog-delta-job-v1`. Ils épinglent le manifeste et le petit index
@@ -13,7 +16,7 @@ python pipeline/scripts/run_creature_sprite_x2.py install --job <catalogue> --cr
 
 `prepare` vérifie le nouveau lot, crée ses shards, relie les shards parents sans les lire et publie
 le pointeur installable. Le runtime stable est installé séparément. `install` crée une installation
-provisoire restaurable ; aucun scan cumulatif n'est déclenché.
+restaurable et vérifie l'intégrité des shards référencés.
 
 ## Finalisation
 

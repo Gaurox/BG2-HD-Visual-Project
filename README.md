@@ -30,7 +30,7 @@ domaine seulement lorsqu'un repère manque pour la tâche courante.
 |---|---|
 | Maps | Area inventory, recipes, selections, and x4 render QA |
 | Animations | Frames, interpolation, alpha, occlusion, and per-area validation |
-| Sprites | Normalized inventory and xN rendering studies; still experimental |
+| Sprites | Validated x2 runtime with canonical xBR and derived ReboutCX catalogs |
 | Interface and graphics | Asset inventories, extraction data, and manifests |
 | Engine | Windows/EEex DLL source, shaders, and runtime validation |
 | Release | Manifests, installer scripts, and gates; no release is currently ready |

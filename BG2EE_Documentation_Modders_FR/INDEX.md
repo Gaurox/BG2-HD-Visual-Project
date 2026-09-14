@@ -56,7 +56,7 @@ Créatures, BAM/PVRZ et pipeline d’upscale.
 - [01_CE_QUE_BEAMDOG_DOCUMENTE.md](04_GRAPHISMES_CREATURES_SPRITES/01_CE_QUE_BEAMDOG_DOCUMENTE.md) — Ce que Beamdog documente officiellement sur les créatures et graphismes
 - [02_BAM_V1_V2_ET_PVRZ.md](04_GRAPHISMES_CREATURES_SPRITES/02_BAM_V1_V2_ET_PVRZ.md) — BAM V1, BAM V2 et PVRZ - notions indispensables
 - [03_CHECKLIST_INVARIANTS_SPRITES.md](04_GRAPHISMES_CREATURES_SPRITES/03_CHECKLIST_INVARIANTS_SPRITES.md) — Checklist des invariants d’un sprite compatible
-- [04_APPLICATION_UPSCALE_X2_X4.md](04_GRAPHISMES_CREATURES_SPRITES/04_APPLICATION_UPSCALE_X2_X4.md) — Application à un pipeline d’upscale x2 puis x4
+- [04_APPLICATION_UPSCALE_X2_X4.md](04_GRAPHISMES_CREATURES_SPRITES/04_APPLICATION_UPSCALE_X2_X4.md) — Pipeline sprites x2 : base xBR et remplacements ReboutCX
 - [README.md](04_GRAPHISMES_CREATURES_SPRITES/README.md) — Graphismes, créatures et sprites - parcours spécialisé
 
 ## 05_OUTILS_ET_FORMATS_COMMUNAUTAIRES

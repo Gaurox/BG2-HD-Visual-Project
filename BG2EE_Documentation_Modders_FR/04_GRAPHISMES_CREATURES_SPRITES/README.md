@@ -1,14 +1,14 @@
 # Graphismes, créatures et sprites - parcours spécialisé
 
 > **Statut :** Index thématique  
-> **Dernière vérification :** 2026-08-27
+> **Dernière vérification :** 2026-09-14
 
 Cette section distingue clairement :
 
 - ce que Beamdog a publié officiellement ;
 - ce que les formats communautaires permettent d’établir ;
 - les invariants à préserver pour modifier des sprites ;
-- une méthode adaptée à un pipeline d’upscale x2/x4.
+- l'architecture x2 actuelle : base xBR et remplacements ReboutCX.
 
 ## Ordre de lecture
 

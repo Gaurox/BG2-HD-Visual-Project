@@ -30,8 +30,17 @@ installation, ni une validation ingame.
 Voie quotidienne : [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md). Les documents
 ci-dessous sont des recettes conditionnelles, pas une chaîne universelle.
 
-Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Append catalogue, installation et QA :
-[`FAMILY_APPEND.md`](FAMILY_APPEND.md).
+Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Publication catalogue, installation et QA :
+[`FAMILY_APPEND.md`](FAMILY_APPEND.md). Spécificités ReboutCX :
+[`../docs/REBOUTCX_PIPELINE_BG2_CODEX.md`](../docs/REBOUTCX_PIPELINE_BG2_CODEX.md).
+
+| Mode raster | Rôle |
+|---|---|
+| xBR | base canonique déterministe ; ajoute les nouvelles familles/animations |
+| ReboutCX | remplacements explicites dans un catalogue dérivé de xBR |
+
+Un catalogue ReboutCX reste complet : composants ciblés en ReboutCX, tous les autres en xBR. Les
+deux modes produisent les mêmes contrats runtime x2 ; aucun choix par créature ou hot-swap ingame.
 
 ```text
 index normalisé
@@ -40,8 +49,8 @@ index normalisé
   → extraire chaque BAM une fois dans ressources/<RESREF>/sources/<sha>/
   → générer les jobs
   → matérialiser source/ par liens physiques vers ressources/
-  → run_creature_sprite_x2.py
-  → vérifier le catalogue cumulatif
+  → produire xBR ou ReboutCX
+  → publier le catalogue xBR canonique ou le dérivé ReboutCX
   → installer/restaurer transactionnellement
   → QA NEAREST
 ```
@@ -49,7 +58,8 @@ index normalisé
 Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `blocker` vide et
 `override_collision` vide.
 
-- Runner : `pipeline/scripts/run_creature_sprite_x2.py`.
+- Runners : `pipeline/scripts/run_creature_sprite_x2.py` (xBR),
+  `pipeline/scripts/reboutcx_full.py` (ReboutCX).
 - Inventaire : `pipeline/scripts/build_sprite_inventory.py`.
 - Extraction native dédupliquée : `pipeline/scripts/extract_sprite_sources.py` ; plan-only sans
   `--run`, aucun décodage PNG ni upscale.
@@ -59,17 +69,16 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
 - Génération Character : `pipeline/scripts/generate_character_complete_x2_jobs.py`.
 - Traitement : [`PROCESSING.md`](PROCESSING.md) ; ajout catalogue :
   [`FAMILY_APPEND.md`](FAMILY_APPEND.md).
-- Contrat raster xBR2x : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md).
+- Contrats raster : [`XBR2X_RASTER_CONTRACT.md`](XBR2X_RASTER_CONTRACT.md),
+  [`../docs/REBOUTCX_PIPELINE_BG2_CODEX.md`](../docs/REBOUTCX_PIPELINE_BG2_CODEX.md).
 - Catmull–Rom et suite graphique Dshaders : [`catmull-rom/README.md`](catmull-rom/README.md),
-  D0/D1 développés ; plan D2–D13 et couverture complète dans
+  D0–D6 terminés, D7 partiel ; plan/couverture dans
   [`catmull-rom/DSHADERS_SUITE.md`](catmull-rom/DSHADERS_SUITE.md), GPU/QA à réaliser.
 - Règles de placement : [`FOLDER_LAYOUT.md`](FOLDER_LAYOUT.md).
 - Installation courante : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
 
-Réactivation ingame : jeu et InfinityLoader fermés, sauvegarder `InfinityEngine-Enhancer.ini`, puis
-mettre `[Shaders] EnableCreatureSpriteUpscaleTest=true`; conserver les deux clés
-`EnableCreatureSpriteX2Test=false` et `EnableCreatureSpriteLinearFiltering=false`, puis redémarrer.
-Modifier seulement ces clés : l'INI est partagé avec les animations, effets et autres tests moteur.
+Activation ingame : jeu et InfinityLoader fermés, utiliser l'installateur transactionnel de
+[`FAMILY_APPEND.md`](FAMILY_APPEND.md). Ne pas éditer l'INI à la main.
 
 Le baseline QA utilise `NEAREST`. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
 preuve QA. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
@@ -86,9 +95,9 @@ sprite/
     runs/                             # artefacts immuables, ignorés
     research/                         # expérimental
     source/                           # manifeste runner + liens vers ressources/, non canonique
-  catalogs/creature-x2-nearest/
-    jobs/                             # transactions/générations
-    runs/                             # payloads cumulés, ignorés
+  catalogs/
+    creature-x2-nearest/jobs|runs/    # base xBR canonique
+    creature-x2-reboutcx/jobs|runs/   # dérivés, remplacements explicites
   .work/                              # cache CMake reconstruisible, ignoré
 ```
 
@@ -103,7 +112,7 @@ courant directement ; `path-migrations.json` n'est pas un substitut pour corrige
 Ne pas supprimer une génération encore citée par `current-generation`, `active-test` ou un backup
 de restauration.
 
-Le job `qa-refresh-current-catalog-v1.json` est la recette historique exacte de la génération
+Dans le catalogue xBR, le job `qa-refresh-current-catalog-v1.json` est la recette historique exacte de la génération
 active : son hash doit rester celui enregistré dans `current-generation.json`. La variante v2 est
 le job mutable au layout courant pour les générations suivantes. Toute nouvelle génération de
 catalogue embarque en outre les octets exacts de son job dans `build/provenance/job.json` et en

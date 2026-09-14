@@ -30,8 +30,9 @@ families/
     <id>-<character-type>/family-runs/<aggregate>/
 catalogs/
   creature-x2-nearest/
-    jobs/
-    runs/
+    jobs/ runs/                       # base xBR canonique
+  creature-x2-reboutcx/
+    jobs/ runs/                       # catalogues xBR + remplacements ReboutCX
 .work/
   cmake/                          # rebuildable caches; never a content source
 index/

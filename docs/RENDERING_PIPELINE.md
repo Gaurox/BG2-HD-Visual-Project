@@ -1,7 +1,9 @@
-# Pipeline de rendu BG2EE — état de connaissance
+# Pipeline de rendu BG2EE — instantané shader D0–D3
 
-Statut : référence vivante du chantier graphique. Dernière vérification : 2026-09-09 (D3 terminée ;
-huit overrides linkés, A/B neutre vérifié, transactions restaurées).
+Statut : historique technique daté du 2026-09-09. Les formulations « actuel » et « prochaine phase »
+ci-dessous décrivent cet instantané, pas l'état courant. Pour les sprites x2 xBR/ReboutCX, utiliser
+[`../sprite/README.md`](../sprite/README.md). Pour le shader courant, utiliser
+[`../sprite/catmull-rom/README.md`](../sprite/catmull-rom/README.md).
 
 ## Règle de maintenance
 
