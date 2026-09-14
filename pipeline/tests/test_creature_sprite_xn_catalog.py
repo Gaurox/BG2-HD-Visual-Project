@@ -20,6 +20,43 @@ import run_creature_sprite_x2 as pipeline  # noqa: E402
 
 
 class CreatureSpriteXnCatalogTests(unittest.TestCase):
+    def test_multipart_catalog_owners_use_exact_animation_sets(self) -> None:
+        self.assertTrue(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MONSTER_QUADRANT, 0x1000
+            )
+        )
+        self.assertTrue(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MONSTER_QUADRANT, 0x1105
+            )
+        )
+        self.assertTrue(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MULTI_NEW, 0x1200
+            )
+        )
+        self.assertTrue(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MULTI_NEW, 0x1300
+            )
+        )
+        self.assertFalse(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MONSTER_QUADRANT, 0x1001
+            )
+        )
+        self.assertFalse(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MONSTER_QUADRANT, 0x1200
+            )
+        )
+        self.assertFalse(
+            pipeline.catalog_owner_matches_animation(
+                pipeline.CATALOG_OWNER_MULTI_NEW, 0x1301
+            )
+        )
+
     @staticmethod
     def registry_bytes(
         resref: str,

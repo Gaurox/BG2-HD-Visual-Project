@@ -554,6 +554,33 @@ void test_manifest_loading() {
               "BG2EE monster animation-id offset should match the offline scan");
     expect_eq(bg2ee->get().areaAnimations.monsterCurrentCell, std::uintptr_t{0xCD8},
               "BG2EE monster current-cell offset should match the offline scan");
+    expect_eq(bg2ee->get().areaAnimations.monsterQuadrantRender,
+              std::uintptr_t{0x3305A0},
+              "BG2EE CGameAnimationTypeMonsterQuadrant::Render RVA should match the "
+              "vtable and offline scan");
+    expect_eq(bg2ee->get().areaAnimations.monsterQuadrantPartCount,
+              std::uintptr_t{0xD59},
+              "BG2EE MonsterQuadrant part-count offset should match its native loop");
+    expect_eq(bg2ee->get().areaAnimations.multiNewRender,
+              std::uintptr_t{0x32FD20},
+              "BG2EE CGameAnimationTypeMultiNew::Render RVA should match the vtable "
+              "and offline scan");
+    expect_eq(bg2ee->get().areaAnimations.multiNewPartCount,
+              std::uintptr_t{0xD35},
+              "BG2EE MultiNew part-count offset should match its native loop");
+    expect_eq(bg2ee->get().areaAnimations.multipartCurrentCells,
+              std::uintptr_t{0xCD8},
+              "BG2EE multipart current-cell array should match both native renderers");
+    expect_eq(bg2ee->get().areaAnimations.vidCellStride,
+              std::uintptr_t{0x138},
+              "BG2EE multipart CVidCell stride should match native pointer arithmetic");
+    expect_true(!bg2ee->get().areaAnimations.monsterQuadrantRenderSignature.empty() &&
+                    !bg2ee->get().areaAnimations.multiNewRenderSignature.empty(),
+                "BG2EE multipart Render methods should carry fail-closed signatures");
+    auto incompleteMultipart = bg2ee->get().areaAnimations;
+    incompleteMultipart.multiNewRenderSignature = {};
+    expect_true(!incompleteMultipart.validate(),
+                "Partial multipart creature evidence must fail validation");
     expect_eq(bg2ee->get().areaAnimations.characterRender, std::uintptr_t{0x32C240},
               "BG2EE CGameAnimationTypeCharacter::Render RVA should match the character "
               "factory vtable and offline scan");
@@ -3429,12 +3456,77 @@ void test_creature_sprite_registry_formats() {
                   !iee::creature_sprite_x2::animation_targets_monster(0x7F07),
               "Releasing a generic Monster catalog should clear its owner scope");
 
+  const std::vector<TestCatalogAnimation> multipartAnimations{
+      {0x1000, 4, {0}},
+      {0x1200, 5, {1}},
+      {0x1300, 5, {1}},
+  };
+  write_catalog_case(4, multipartAnimations,
+                     {catalogCharacter, catalogMonster});
+  expect_true(
+      iee::creature_sprite_x2::prepare(root) &&
+          iee::creature_sprite_x2::animation_targets_monster_quadrant(0x1000) &&
+          !iee::creature_sprite_x2::animation_targets_multi_new(0x1000) &&
+          iee::creature_sprite_x2::animation_targets_multi_new(0x1200) &&
+          iee::creature_sprite_x2::animation_targets_multi_new(0x1300) &&
+          !iee::creature_sprite_x2::animation_targets_monster_quadrant(0x1200) &&
+          iee::creature_sprite_x2::targets_monster_quadrant() &&
+          iee::creature_sprite_x2::targets_multi_new() &&
+          !iee::creature_sprite_x2::targets_character() &&
+          !iee::creature_sprite_x2::targets_monster() &&
+          !iee::creature_sprite_x2::targets_monster_icewind(),
+      "A 0x1000 catalog should keep MonsterQuadrant and MultiNew owner scopes distinct");
+  iee::creature_sprite_x2::release();
+  expect_true(!iee::creature_sprite_x2::targets_monster_quadrant() &&
+                  !iee::creature_sprite_x2::targets_multi_new() &&
+                  !iee::creature_sprite_x2::animation_targets_monster_quadrant(0x1000) &&
+                  !iee::creature_sprite_x2::animation_targets_multi_new(0x1200),
+              "Releasing a multipart catalog should clear both new owner scopes");
+
+  std::filesystem::remove(catalogPath, ec);
+  std::filesystem::remove(setPath, ec);
+  write_file(xnPath, make_registry(xnMagic, 3, 4, 0x1000));
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::targets_monster_quadrant() &&
+                  iee::creature_sprite_x2::animation_targets_monster_quadrant(0x1000) &&
+                  !iee::creature_sprite_x2::targets_multi_new(),
+              "A legacy monolithic 0x1000 pack should derive MonsterQuadrant ownership");
+  iee::creature_sprite_x2::release();
+  write_file(xnPath, make_registry(xnMagic, 3, 4, 0x1200));
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::targets_multi_new() &&
+                  iee::creature_sprite_x2::animation_targets_multi_new(0x1200) &&
+                  !iee::creature_sprite_x2::targets_monster_quadrant(),
+              "A legacy monolithic 0x1200 pack should derive MultiNew ownership");
+  iee::creature_sprite_x2::release();
+
   auto invalidOwner =
       make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});
-  overwrite_u32(invalidOwner, 64 + sizeof(std::uint32_t), 4);
+  overwrite_u32(invalidOwner, 64 + sizeof(std::uint32_t), 6);
   write_file(catalogPath, invalidOwner);
   expect_true(!iee::creature_sprite_x2::prepare(root),
               "An unknown catalog owner should fail closed");
+
+  const std::vector<TestCatalogAnimation> wrongMultipartClass{
+      {0x1200, 4, {0}},
+  };
+  write_catalog_case(4, wrongMultipartClass, {catalogCharacter});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "A MonsterQuadrant owner on a MultiNew animation should fail closed");
+
+  const std::vector<TestCatalogAnimation> unknownQuadrantId{
+      {0x1001, 4, {0}},
+  };
+  write_catalog_case(4, unknownQuadrantId, {catalogCharacter});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "MonsterQuadrant ownership must not accept the whole 0x1000 nibble");
+
+  const std::vector<TestCatalogAnimation> unknownMultiNewId{
+      {0x1301, 5, {0}},
+  };
+  write_catalog_case(4, unknownMultiNewId, {catalogCharacter});
+  expect_true(!iee::creature_sprite_x2::prepare(root),
+              "MultiNew ownership must not accept the whole 0x1000 nibble");
 
   auto wrongFamilyOwner =
       make_catalog(4, catalogAnimations, {catalogCharacter, catalogMonster});

@@ -216,9 +216,14 @@ void release() noexcept;
 [[nodiscard]] bool animation_targets_monster(std::uint16_t animationId) noexcept;
 [[nodiscard]] bool animation_targets_monster_icewind(
     std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_monster_quadrant(
+    std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_multi_new(std::uint16_t animationId) noexcept;
 [[nodiscard]] bool targets_character() noexcept;
 [[nodiscard]] bool targets_monster() noexcept;
 [[nodiscard]] bool targets_monster_icewind() noexcept;
+[[nodiscard]] bool targets_monster_quadrant() noexcept;
+[[nodiscard]] bool targets_multi_new() noexcept;
 [[nodiscard]] bool contains_resource(std::uint16_t animationId,
                                      const std::array<char, 8>& resref) noexcept;
 [[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;

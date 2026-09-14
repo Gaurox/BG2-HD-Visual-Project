@@ -380,6 +380,19 @@ def current_runtime(
         return "monster-bg2ee-2.7.3.0", section == "monster"
     if family == 0xE000 and animation_type == "E000":
         return "monster-icewind-bg2ee-2.7.3.0", section == "monster_icewind"
+    if (
+        animation_id in {0x1000, 0x1003, 0x1004, *range(0x1100, 0x1106)}
+        and animation_type == "1000"
+    ):
+        return (
+            "monster-quadrant-bg2ee-2.7.3.0",
+            section == "monster_quadrant",
+        )
+    if (
+        animation_id in {*range(0x1200, 0x1209), 0x1300}
+        and animation_type == "1000"
+    ):
+        return "multi-new-bg2ee-2.7.3.0", section == "multi_new"
     return "", False
 
 

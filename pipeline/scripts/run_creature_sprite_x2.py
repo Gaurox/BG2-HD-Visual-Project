@@ -156,6 +156,8 @@ CATALOG_SHARD_ANIMATION_SENTINEL = 0xFFFF
 CATALOG_OWNER_CHARACTER = 1
 CATALOG_OWNER_MONSTER_ICEWIND = 2
 CATALOG_OWNER_MONSTER = 3
+CATALOG_OWNER_MONSTER_QUADRANT = 4
+CATALOG_OWNER_MULTI_NEW = 5
 XBR_OUTPUT_BATCH_BUDGET_BYTES = 64 * 1024 * 1024
 # xBR2x calls with blend disabled are byte-compatible across these audited
 # adapter revisions. Preserve their sealed x2 components when appending a
@@ -211,8 +213,30 @@ SUPPORTED_RUNTIME_PROFILES = frozenset(
         "monster-bg2ee-2.7.3.0",
         "monster-icewind-bg2ee-2.7.3.0",
         "character-bg2ee-2.7.3.0",
+        "monster-quadrant-bg2ee-2.7.3.0",
+        "multi-new-bg2ee-2.7.3.0",
     }
 )
+MONSTER_QUADRANT_ANIMATION_IDS = frozenset(
+    {0x1000, 0x1003, 0x1004, *range(0x1100, 0x1106)}
+)
+MULTI_NEW_ANIMATION_IDS = frozenset({*range(0x1200, 0x1209), 0x1300})
+
+
+def catalog_owner_matches_animation(owner: int, animation_id: int) -> bool:
+    family = animation_id & 0xF000
+    return (
+        owner == CATALOG_OWNER_CHARACTER and family in {0x5000, 0x6000}
+    ) or (
+        owner == CATALOG_OWNER_MONSTER_ICEWIND and family == 0xE000
+    ) or (
+        owner == CATALOG_OWNER_MONSTER and family == 0x7000
+    ) or (
+        owner == CATALOG_OWNER_MONSTER_QUADRANT
+        and animation_id in MONSTER_QUADRANT_ANIMATION_IDS
+    ) or (
+        owner == CATALOG_OWNER_MULTI_NEW and animation_id in MULTI_NEW_ANIMATION_IDS
+    )
 
 
 def maximum_registry_bytes(scale: int) -> int:
@@ -567,7 +591,8 @@ def load_job(job_file: Path) -> dict[str, Any]:
     animation_id = str(animation.get("id", ""))
     if not re.fullmatch(r"0x[0-9A-Fa-f]{4}", animation_id):
         raise RuntimeError("animation.id must use 0xFFFF notation")
-    animation_family = int(animation_id, 16) & 0xF000
+    animation_value = int(animation_id, 16)
+    animation_family = animation_value & 0xF000
     runtime_profile = animation.get("runtime_profile")
     if animation_family in {0x5000, 0x6000} and runtime_profile != "character-bg2ee-2.7.3.0":
         raise RuntimeError("0x5000/0x6000 animations require the Character runtime profile")
@@ -579,6 +604,32 @@ def load_job(job_file: Path) -> dict[str, Any]:
         raise RuntimeError("Monster runtime profile requires a 0x7000 animation")
     if runtime_profile == "monster-icewind-bg2ee-2.7.3.0" and animation_family != 0xE000:
         raise RuntimeError("MonsterIcewind runtime profile requires a 0xE000 animation")
+    if (
+        animation_value in MONSTER_QUADRANT_ANIMATION_IDS
+        and runtime_profile != "monster-quadrant-bg2ee-2.7.3.0"
+    ):
+        raise RuntimeError(
+            "MonsterQuadrant animation requires the MonsterQuadrant runtime profile"
+        )
+    if (
+        runtime_profile == "monster-quadrant-bg2ee-2.7.3.0"
+        and animation_value not in MONSTER_QUADRANT_ANIMATION_IDS
+    ):
+        raise RuntimeError(
+            "MonsterQuadrant runtime profile requires an exact MonsterQuadrant animation id"
+        )
+    if (
+        animation_value in MULTI_NEW_ANIMATION_IDS
+        and runtime_profile != "multi-new-bg2ee-2.7.3.0"
+    ):
+        raise RuntimeError("MultiNew animation requires the MultiNew runtime profile")
+    if (
+        runtime_profile == "multi-new-bg2ee-2.7.3.0"
+        and animation_value not in MULTI_NEW_ANIMATION_IDS
+    ):
+        raise RuntimeError(
+            "MultiNew runtime profile requires an exact MultiNew animation id"
+        )
     if runtime_profile == "character-bg2ee-2.7.3.0":
         ids_symbol = str(animation.get("ids_symbol", "")).upper()
         if not re.fullmatch(r"[A-Z0-9_]{2,64}", ids_symbol):
@@ -3740,6 +3791,10 @@ def catalog_owner_for_profile(profile: str) -> int:
         return CATALOG_OWNER_MONSTER_ICEWIND
     if profile == "monster-bg2ee-2.7.3.0":
         return CATALOG_OWNER_MONSTER
+    if profile == "monster-quadrant-bg2ee-2.7.3.0":
+        return CATALOG_OWNER_MONSTER_QUADRANT
+    if profile == "multi-new-bg2ee-2.7.3.0":
+        return CATALOG_OWNER_MULTI_NEW
     raise RuntimeError(f"unsupported catalog runtime profile: {profile!r}")
 
 
@@ -4003,14 +4058,7 @@ def inspect_registry_catalog(
     for index in range(animation_count):
         offset = animation_offset + index * REGISTRY_CATALOG_ANIMATION_ENTRY_BYTES
         animation_id, owner, start, count = struct.unpack_from("<IIII", raw, offset)
-        family = animation_id & 0xF000
-        owner_matches = (
-            owner == CATALOG_OWNER_CHARACTER and family in {0x5000, 0x6000}
-        ) or (
-            owner == CATALOG_OWNER_MONSTER_ICEWIND and family == 0xE000
-        ) or (
-            owner == CATALOG_OWNER_MONSTER and family == 0x7000
-        )
+        owner_matches = catalog_owner_matches_animation(owner, animation_id)
         if (
             animation_id in {0, CATALOG_SHARD_ANIMATION_SENTINEL}
             or animation_id > 0xFFFF
@@ -6526,6 +6574,8 @@ def catalog_manifest_animations(
         CATALOG_OWNER_CHARACTER: "Character",
         CATALOG_OWNER_MONSTER_ICEWIND: "MonsterIcewind",
         CATALOG_OWNER_MONSTER: "Monster",
+        CATALOG_OWNER_MONSTER_QUADRANT: "MonsterQuadrant",
+        CATALOG_OWNER_MULTI_NEW: "MultiNew",
     }
     return [
         {
@@ -7233,6 +7283,13 @@ def runtime_owner_labels(profile: str) -> tuple[str, str]:
         return "MonsterIcewind::Render", "CGameAnimationTypeMonsterIcewind::Render"
     if profile == "monster-bg2ee-2.7.3.0":
         return "Monster::Render", "CGameAnimationTypeMonster::Render"
+    if profile == "monster-quadrant-bg2ee-2.7.3.0":
+        return (
+            "MonsterQuadrant::Render",
+            "CGameAnimationTypeMonsterQuadrant::Render",
+        )
+    if profile == "multi-new-bg2ee-2.7.3.0":
+        return "MultiNew::Render", "CGameAnimationTypeMultiNew::Render"
     raise RuntimeError(f"unsupported runtime profile: {profile!r}")
 
 

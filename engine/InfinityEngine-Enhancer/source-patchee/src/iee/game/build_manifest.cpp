@@ -288,6 +288,14 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x2F74050,
             0x42CB1B,
             "48 8D 05 ? ? ? ? 48 03 D8 44 8B 43 28 41 C1 E0 15",
+            0x3305A0,
+            "40 55 53 41 54 41 55 41 57 48 8D 6C 24 F9 48 81 EC D0 00 00 00 48 8B 05 ? ? ? ?",
+            0xD59,
+            0x32FD20,
+            "40 55 53 56 41 56 41 57 48 8D 6C 24 F9 48 81 EC C0 00 00 00 48 8B 05 ? ? ? ?",
+            0xD35,
+            0xCD8,
+            0x138,
         },
         {
             true,
@@ -440,6 +448,12 @@ static_assert([] {
   }
   return true;
 }(), "BG2EE 2.7.3 area-animation signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].areaAnimations.monsterQuadrantRenderSignature),
+              "BG2EE 2.7.3 MonsterQuadrant Render signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].areaAnimations.multiNewRenderSignature),
+              "BG2EE 2.7.3 MultiNew Render signature format is invalid");
 static_assert(
     validate_pattern_format(kKnownBuilds[2].worldOverlay.gameAreaRenderSignature),
     "BG2EE 2.7.3 CGameArea::Render signature format is invalid");

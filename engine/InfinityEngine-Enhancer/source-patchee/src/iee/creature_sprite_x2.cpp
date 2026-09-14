@@ -82,6 +82,8 @@ constexpr std::uint32_t kRegistryCatalogDirectoryVersion = 2;
 constexpr std::uint32_t kCatalogCharacterOwner = 1;
 constexpr std::uint32_t kCatalogMonsterIcewindOwner = 2;
 constexpr std::uint32_t kCatalogMonsterOwner = 3;
+constexpr std::uint32_t kCatalogMonsterQuadrantOwner = 4;
+constexpr std::uint32_t kCatalogMultiNewOwner = 5;
 constexpr std::uint16_t kCatalogShardAnimationSentinel = 0xFFFFu;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
 constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
@@ -388,6 +390,8 @@ std::atomic<std::uint32_t> g_loadedScale{0};
 std::atomic<bool> g_targetsCharacter{false};
 std::atomic<bool> g_targetsMonster{false};
 std::atomic<bool> g_targetsMonsterIcewind{false};
+std::atomic<bool> g_targetsMonsterQuadrant{false};
+std::atomic<bool> g_targetsMultiNew{false};
 std::atomic<core::CreatureSpriteFilterMode> g_filterMode{
     core::CreatureSpriteFilterMode::Nearest};
 std::vector<Resource> g_resources;
@@ -828,13 +832,27 @@ bool canonical_catalog_resref(const std::array<char, 8>& resref) noexcept {
   return hasCharacter;
 }
 
+constexpr bool is_monster_quadrant_animation(std::uint32_t animationId) noexcept {
+  return animationId == 0x1000u || animationId == 0x1003u ||
+         animationId == 0x1004u ||
+         (animationId >= 0x1100u && animationId <= 0x1105u);
+}
+
+constexpr bool is_multi_new_animation(std::uint32_t animationId) noexcept {
+  return (animationId >= 0x1200u && animationId <= 0x1208u) ||
+         animationId == 0x1300u;
+}
+
 bool catalog_owner_matches_animation(std::uint32_t owner,
                                      std::uint32_t animationId) noexcept {
   const auto family = animationId & 0xF000u;
   return (owner == kCatalogCharacterOwner &&
           (family == 0x5000u || family == 0x6000u)) ||
          (owner == kCatalogMonsterIcewindOwner && family == 0xE000u) ||
-         (owner == kCatalogMonsterOwner && family == 0x7000u);
+         (owner == kCatalogMonsterOwner && family == 0x7000u) ||
+         (owner == kCatalogMonsterQuadrantOwner &&
+          is_monster_quadrant_animation(animationId)) ||
+         (owner == kCatalogMultiNewOwner && is_multi_new_animation(animationId));
 }
 
 bool checked_physical_metrics(int logicalWidth, int logicalHeight,
@@ -1020,6 +1038,8 @@ void disable_lazy_pack_locked(const char* reason) noexcept {
   g_targetsCharacter.store(false, std::memory_order_release);
   g_targetsMonster.store(false, std::memory_order_release);
   g_targetsMonsterIcewind.store(false, std::memory_order_release);
+  g_targetsMonsterQuadrant.store(false, std::memory_order_release);
+  g_targetsMultiNew.store(false, std::memory_order_release);
   clear_texture_cache_locked();
   clear_lazy_index_cache_locked();
   close_frame_decompressor_locked();
@@ -2908,6 +2928,10 @@ std::uint32_t legacy_owner_for_animation(std::uint16_t animationId) noexcept {
   }
   if (family == 0xE000u) return kCatalogMonsterIcewindOwner;
   if (family == 0x7000u) return kCatalogMonsterOwner;
+  if (is_monster_quadrant_animation(animationId)) {
+    return kCatalogMonsterQuadrantOwner;
+  }
+  if (is_multi_new_animation(animationId)) return kCatalogMultiNewOwner;
   return 0;
 }
 
@@ -3531,12 +3555,25 @@ void activate_registry_catalog(CatalogState&& catalog) {
         [](const CatalogAnimation& animation) {
           return animation.owner == kCatalogMonsterOwner;
         });
+    const bool targetsMonsterQuadrant = std::any_of(
+        g_catalog.animations.begin(), g_catalog.animations.end(),
+        [](const CatalogAnimation& animation) {
+          return animation.owner == kCatalogMonsterQuadrantOwner;
+        });
+    const bool targetsMultiNew = std::any_of(
+        g_catalog.animations.begin(), g_catalog.animations.end(),
+        [](const CatalogAnimation& animation) {
+          return animation.owner == kCatalogMultiNewOwner;
+        });
     g_targetAnimationId.store(uniqueAnimationId, std::memory_order_release);
     g_loadedScale.store(g_catalog.scale, std::memory_order_release);
     g_targetsCharacter.store(targetsCharacter, std::memory_order_release);
     g_targetsMonster.store(targetsMonster, std::memory_order_release);
     g_targetsMonsterIcewind.store(targetsMonsterIcewind,
                                   std::memory_order_release);
+    g_targetsMonsterQuadrant.store(targetsMonsterQuadrant,
+                                   std::memory_order_release);
+    g_targetsMultiNew.store(targetsMultiNew, std::memory_order_release);
     g_ready.store(true, std::memory_order_release);
   }
   g_catalogWorker = std::jthread(catalog_worker_loop);
@@ -3578,6 +3615,13 @@ void activate_loaded_pack(LoadedPack&& loaded) {
   g_targetsMonsterIcewind.store(
       legacy_owner_for_animation(loaded.animationId) ==
           kCatalogMonsterIcewindOwner,
+      std::memory_order_release);
+  g_targetsMonsterQuadrant.store(
+      legacy_owner_for_animation(loaded.animationId) ==
+          kCatalogMonsterQuadrantOwner,
+      std::memory_order_release);
+  g_targetsMultiNew.store(
+      legacy_owner_for_animation(loaded.animationId) == kCatalogMultiNewOwner,
       std::memory_order_release);
   g_ready.store(true, std::memory_order_release);
 }
@@ -3674,6 +3718,8 @@ void release() noexcept {
   g_targetsCharacter.store(false, std::memory_order_release);
   g_targetsMonster.store(false, std::memory_order_release);
   g_targetsMonsterIcewind.store(false, std::memory_order_release);
+  g_targetsMonsterQuadrant.store(false, std::memory_order_release);
+  g_targetsMultiNew.store(false, std::memory_order_release);
   g_resources.clear();
   g_packAnimations.clear();
   g_catalog = {};
@@ -3768,6 +3814,40 @@ bool animation_targets_monster_icewind(std::uint16_t animationId) noexcept {
   }
 }
 
+bool animation_targets_monster_quadrant(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    const auto* animation = g_catalog.active
+                                ? find_catalog_animation_locked(animationId)
+                                : find_pack_animation_locked(animationId);
+    return animation && animation->owner == kCatalogMonsterQuadrantOwner;
+  } catch (...) {
+    return false;
+  }
+}
+
+bool animation_targets_multi_new(std::uint16_t animationId) noexcept {
+  if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !catalog_identity_matches_locked()) {
+      return false;
+    }
+    const auto* animation = g_catalog.active
+                                ? find_catalog_animation_locked(animationId)
+                                : find_pack_animation_locked(animationId);
+    return animation && animation->owner == kCatalogMultiNewOwner;
+  } catch (...) {
+    return false;
+  }
+}
+
 bool targets_character() noexcept {
   if (!g_ready.load(std::memory_order_acquire)) return false;
   try {
@@ -3799,6 +3879,30 @@ bool targets_monster_icewind() noexcept {
     return g_ready.load(std::memory_order_acquire) &&
            catalog_identity_matches_locked() &&
            g_targetsMonsterIcewind.load(std::memory_order_acquire);
+  } catch (...) {
+    return false;
+  }
+}
+
+bool targets_monster_quadrant() noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           catalog_identity_matches_locked() &&
+           g_targetsMonsterQuadrant.load(std::memory_order_acquire);
+  } catch (...) {
+    return false;
+  }
+}
+
+bool targets_multi_new() noexcept {
+  if (!g_ready.load(std::memory_order_acquire)) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    return g_ready.load(std::memory_order_acquire) &&
+           catalog_identity_matches_locked() &&
+           g_targetsMultiNew.load(std::memory_order_acquire);
   } catch (...) {
     return false;
   }

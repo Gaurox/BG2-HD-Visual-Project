@@ -854,6 +854,30 @@ function xbr4x(source, width, height) {
             ("Monster::Render", "CGameAnimationTypeMonster::Render"),
         )
 
+    def test_multipart_runtime_profiles_are_supported(self) -> None:
+        profiles = (
+            (
+                "monster-quadrant-bg2ee-2.7.3.0",
+                pipeline.CATALOG_OWNER_MONSTER_QUADRANT,
+                (
+                    "MonsterQuadrant::Render",
+                    "CGameAnimationTypeMonsterQuadrant::Render",
+                ),
+            ),
+            (
+                "multi-new-bg2ee-2.7.3.0",
+                pipeline.CATALOG_OWNER_MULTI_NEW,
+                ("MultiNew::Render", "CGameAnimationTypeMultiNew::Render"),
+            ),
+        )
+        for profile, owner, labels in profiles:
+            with self.subTest(profile=profile):
+                pipeline.require_runtime_profile(
+                    {"animation": {"runtime_profile": profile}}
+                )
+                self.assertEqual(pipeline.catalog_owner_for_profile(profile), owner)
+                self.assertEqual(pipeline.runtime_owner_labels(profile), labels)
+
     def test_unknown_runtime_profile_is_rejected(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "unsupported-runtime-profile"):
             pipeline.require_runtime_profile(

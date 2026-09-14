@@ -210,6 +210,17 @@ struct AreaAnimationRuntime {
   std::uintptr_t fxSurfacePool{};
   std::uintptr_t fxSurfacePoolReference{};
   std::string_view fxSurfacePoolReferenceSignature{};
+  // Optional multipart creature owners. Kept appended because this aggregate
+  // has positional initializers. Both classes expose a pointer to a contiguous
+  // CVidCell array and render one cell per native part.
+  std::uintptr_t monsterQuadrantRender{};
+  std::string_view monsterQuadrantRenderSignature{};
+  std::uintptr_t monsterQuadrantPartCount{};
+  std::uintptr_t multiNewRender{};
+  std::string_view multiNewRenderSignature{};
+  std::uintptr_t multiNewPartCount{};
+  std::uintptr_t multipartCurrentCells{};
+  std::uintptr_t vidCellStride{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -244,6 +255,19 @@ struct AreaAnimationRuntime {
     const bool hasCompleteFxSurfaceEvidence =
         fxSurfacePool && fxSurfacePoolReference && !fxSurfacePoolReferenceSignature.empty();
     if (hasAnyFxSurfaceEvidence && !hasCompleteFxSurfaceEvidence) return false;
+    const bool hasAnyMultipartCreatureEvidence =
+        monsterQuadrantRender || !monsterQuadrantRenderSignature.empty() ||
+        monsterQuadrantPartCount || multiNewRender ||
+        !multiNewRenderSignature.empty() || multiNewPartCount ||
+        multipartCurrentCells || vidCellStride;
+    const bool hasCompleteMultipartCreatureEvidence =
+        monsterQuadrantRender && !monsterQuadrantRenderSignature.empty() &&
+        monsterQuadrantPartCount && multiNewRender &&
+        !multiNewRenderSignature.empty() && multiNewPartCount &&
+        multipartCurrentCells && vidCellStride;
+    if (hasAnyMultipartCreatureEvidence && !hasCompleteMultipartCreatureEvidence) {
+      return false;
+    }
     return true;
   }
 };

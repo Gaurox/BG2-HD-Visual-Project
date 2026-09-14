@@ -64,6 +64,22 @@ class SpriteInventoryTests(unittest.TestCase):
             inventory.current_runtime(0x7F07, "7000", "monster"),
             ("monster-bg2ee-2.7.3.0", True),
         )
+        self.assertEqual(
+            inventory.current_runtime(0x1000, "1000", "monster_quadrant"),
+            ("monster-quadrant-bg2ee-2.7.3.0", True),
+        )
+        self.assertEqual(
+            inventory.current_runtime(0x1200, "1000", "multi_new"),
+            ("multi-new-bg2ee-2.7.3.0", True),
+        )
+        self.assertEqual(
+            inventory.current_runtime(0x1300, "1000", "multi_new"),
+            ("multi-new-bg2ee-2.7.3.0", True),
+        )
+        self.assertEqual(
+            inventory.current_runtime(0x1001, "1000", "monster_quadrant"),
+            ("", False),
+        )
 
     def test_generated_relations_are_closed(self) -> None:
         animations = rows("sprite_animations.csv")
