@@ -1,0 +1,90 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T20:12:13.2002188Z",
+  "scope": {
+    "kind": "installed-character-configurations",
+    "domain": "playable-characters",
+    "animation_id": "0x6100",
+    "actors": ["Minsc", "Anomen"],
+    "bam_prefixes": ["CHMB3", "WQLS2", "WQLWH", "WQLJ6", "WQLC3"],
+    "variant_id": "reboutcx-p8-x2",
+    "target_scale": 2,
+    "catalog_generation": "CB24B195ABABF62F29DAFE1543A178EC52F692789A9477B8E67390EF3E1F514D",
+    "runtime_profile": "character-bg2ee-2.7.3.0"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "scenarios": [
+      "Minsc : corps CHMB3 + arme deux mains WQLS2",
+      "Anomen : corps CHMB3 + calques WQLWH, WQLJ6 et WQLC3"
+    ],
+    "user_statement": "validé.",
+    "note": "Valide les deux compositions observées. Les 60 autres appartenances 0x6100 produites et installées ne sont pas déclarées individuellement vues ingame."
+  },
+  "provenance": {
+    "family_manifest": {
+      "path": "sprite/families/playable-characters/6100-human-male-fighter/family-runs/complete-reboutcx-p8-v1/runs/reboutcx-p8-v1/manifest.json",
+      "sha256": "617DD673CBB1566CFE9BFF54AB084565E62CE2BCB856888ECD1B097A397F75E3"
+    },
+    "selected_runs": [
+      {
+        "bam_prefix": "CHMB3",
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmb3/runs/reboutcx-p8-full-v1/manifest.json",
+        "sha256": "B814F067560C610EA9220179D2EA7AF56CAAAB10A5DFFBDB9BFD7FADC5C80FF8"
+      },
+      {
+        "bam_prefix": "WQLS2",
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdsw2h01-wqls2/runs/reboutcx-p8-full-v1/manifest.json",
+        "sha256": "0835A8A985C220D8535EFF78FDF0A03E91C07960B9B54FBB5AA53886680ABB39"
+      },
+      {
+        "bam_prefix": "WQLWH",
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/aegis-wqlwh/runs/reboutcx-p8-full-v1/manifest.json",
+        "sha256": "7722B03A39D0D30A1B70A115753EAD70C58F897C7A408E8B4080E719004CCD48"
+      },
+      {
+        "bam_prefix": "WQLJ6",
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm01-wqlj6/runs/reboutcx-p8-full-v1/manifest.json",
+        "sha256": "C21A06A44AFAC21F0082622F7B3E5E125C7325020EAF8A55760023A250D71E46"
+      },
+      {
+        "bam_prefix": "WQLC3",
+        "manifest": "sprite/families/playable-characters/6100-human-male-fighter/chalshld-wqlc3/runs/reboutcx-p8-full-v1/manifest.json",
+        "sha256": "6E6F6B3A93B36B294E307FA5994602D8D86896B083B1638A7DCFF8994675ADF9"
+      }
+    ]
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-character-6100-complete-p8-v1.json",
+    "job_sha256": "88741BB909F27DA36F693CDB32E4A790E3D7253E1F03753EECA9B363432A6BDC",
+    "build_manifest_sha256": "DB10752E8BFC02468AE475E0763E493F9752A12C77858F072C56D02A48C51C84",
+    "catalog_sha256": "EFCD5763901262458ED7E4154E3C2B24E37C4F093022B66B4594748BE269D121"
+  },
+  "automatic_evidence": {
+    "runtime_log_session": {
+      "catalog_ready_at": "2026-09-14 22:09:07.616",
+      "first_6100_replacement_at": "2026-09-14 22:09:15.198",
+      "last_6100_replacement_at": "2026-09-14 22:09:31.925",
+      "catalog_animations": 195,
+      "catalog_components": 504,
+      "catalog_resources": 7624,
+      "catalog_frames": 2279615,
+      "catalog_shards": 519,
+      "distinct_6100_instances": 2,
+      "instance_replacement_events": {"0x6FF4AE30": 115, "0x6FF56C80": 84},
+      "replacement_events": 199,
+      "nonreplacement_events": 0,
+      "initial_incomplete_events": 1,
+      "error_or_critical_events": 0,
+      "reboutcx_shards": {"CHMB3": 499, "WQLS2": 507, "WQLWH": 464, "WQLC3": 502, "WQLJ6": 515}
+    },
+    "install_transaction": "20260914T200432.6846015Z-9503bd1f85eb47f6beb79f427389255b",
+    "installed_shards_verified": 519,
+    "runtime_manifest_sha256": "4ACACD618FBA96B1F864845C04C52B155B67C09FC9A9481AA2E611C978B5CE2D",
+    "runtime_ini_sha256": "E5A737BEAAF4CDBECC2AEC440E80E641D56B76E3FDCBB68509054D844CB2A411"
+  },
+  "release_manifest_modified": false
+}
