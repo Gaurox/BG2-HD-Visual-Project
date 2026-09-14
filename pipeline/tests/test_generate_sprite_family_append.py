@@ -38,6 +38,15 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             / "jobs"
             / "x2-nearest-v99.json"
         )
+        self.multi_new_member = (
+            generator.FAMILIES_ROOT
+            / "composite-monsters"
+            / "multi-new"
+            / "12xx"
+            / "1200-mdr1-dragon-red"
+            / "jobs"
+            / "x2-nearest-v999999.json"
+        )
         self.catalog = self.jobs / f"test-{self.token}-catalog-base-xbr2x.json"
         self.append = (
             generator.CATALOG_JOBS_ROOT
@@ -47,7 +56,13 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self._write_families()
 
     def tearDown(self) -> None:
-        for path in (self.template, self.member, self.catalog, self.append):
+        for path in (
+            self.template,
+            self.member,
+            self.multi_new_member,
+            self.catalog,
+            self.append,
+        ):
             path.unlink(missing_ok=True)
         for directory in (
             self.member.parent,
@@ -115,6 +130,23 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
             "blocker",
         ]
         rows = [
+            {
+                "family_id": "0x1200:body:base-resref:MDR1:MDR1",
+                "animation_id": "0x1200",
+                "ids_symbol": "DRAGON_RED",
+                "engine_section": "multi_new",
+                "runtime_profile": "multi-new-bg2ee-2.7.3.0",
+                "layer_kind": "body",
+                "variant_kind": "base-resref",
+                "variant_value": "MDR1",
+                "bam_prefix": "MDR1",
+                "resource_count": "567",
+                "frame_count": "54675",
+                "pipeline_ready": "yes",
+                "runtime_supported": "yes",
+                "override_collision": "",
+                "blocker": "",
+            },
             {
                 "family_id": "0x7F07:body:base-resref:MGLC:MGLC",
                 "animation_id": "0x7F07",
@@ -310,6 +342,36 @@ class SpriteFamilyAppendGeneratorTests(unittest.TestCase):
         self.assertEqual(
             layout["engine_build"],
             "sprite/.work/cmake/monster/7f/7f07-mglc-x2-nearest-v99",
+        )
+
+    def test_multi_new_member_uses_exact_owner_profile_and_layout(self) -> None:
+        result = generator.generate_member(
+            destination=self.multi_new_member,
+            template_path=self.template,
+            families_path=self.families,
+            family_id="0x1200:body:base-resref:MDR1:MDR1",
+            name="Firkraag — dragon rouge",
+            qa_areas=["AR1203"],
+            qa_creatures=["FIRKRA02"],
+            dry_run=True,
+        )
+
+        self.assertEqual(result["status"], "family-member-job-planned")
+        self.assertEqual(result["job_id"], "multi-new-1200-mdr1-dragon-red-x2-v999999")
+        self.assertEqual(result["runtime_profile"], "multi-new-bg2ee-2.7.3.0")
+        layout = generator.member_layout(
+            generator.load_inventory_family(
+                self.families, "0x1200:body:base-resref:MDR1:MDR1"
+            ),
+            self.multi_new_member.name,
+        )
+        self.assertEqual(
+            layout["member_job"],
+            "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/jobs/x2-nearest-v999999.json",
+        )
+        self.assertEqual(
+            layout["engine_build"],
+            "sprite/.work/cmake/multi-new/12/1200-mdr1-x2-nearest-v999999",
         )
 
     def test_unready_inventory_family_is_rejected_before_publication(self) -> None:

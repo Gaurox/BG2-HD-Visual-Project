@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-creature-multi-new-0x1200-firkraag-v1",
+  "source_commit": "cfe9924cbcc3e55df16cde1dd9346a49c7a5c488",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/x2-nearest-v1/runtime/InfinityEngine-Enhancer.dll",
+    "sha256": "50F7A4F945E36444194BB1C71C72A87E96EE5C075B223F707B78184AF824D9DC",
+    "bytes": 1801216
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_magic": "IEECSNC",
+      "catalog_versions": [1, 2],
+      "shard_registry_magic": "IEECSXN",
+      "shard_registry_versions": [3, 5],
+      "frame_storage": ["raw-v3", "XPRESS_HUFF-or-raw-per-frame-v1"],
+      "directory_v2_entry_bytes": 24
+    },
+    "water_route2": {
+      "storage": "compiled-registry",
+      "registry_version": 3,
+      "registry_path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+      "registry_sha256": "433AEC70EF6852D12648AA8F68D5D6AC0DAE408D0DD0BCCC3A17CDDB8501386E"
+    }
+  },
+  "evidence": [
+    {
+      "kind": "water-route2-registry",
+      "path": "maps/water-batches/runs/ar1000n-wtswam-route2-q070-20260912-v1/registry-v3.json",
+      "sha256": "433AEC70EF6852D12648AA8F68D5D6AC0DAE408D0DD0BCCC3A17CDDB8501386E"
+    },
+    {
+      "kind": "water-installation-selection",
+      "path": "pipeline/water/manifests/ar1000n-wtswam-route2-installed-20260912-v1.json",
+      "sha256": "1F3B7B8B2A03A7D2917E3E5655FEF031842F444BE191A8D31E0003D0F6E12738"
+    },
+    {
+      "kind": "isolated-native-tests",
+      "path": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+      "sha256": "8B13AEB88D27B907A0389468346A676E1A71CAFBE11CD79C29CCAB804B86C0AD"
+    }
+  ]
+}

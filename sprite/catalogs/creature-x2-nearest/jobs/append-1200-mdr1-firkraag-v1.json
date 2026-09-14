@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-creature-sprite-xn-catalog-delta-job-v1",
+  "job_id": "creature-sprites-progressive-xn-xbr2x",
+  "name": "Catalogue progressif créatures x2 — ajout Firkraag 0x1200",
+  "members": [
+    "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/jobs/x2-nearest-v1.json"
+  ],
+  "parent": {
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/254966456e80b9ad40aaf55783c1eb8cec3a0ed3fc4f0f3d40de7ed7307e43f9/build/build-manifest.json",
+    "build_manifest_sha256": "DF3BE9D1B09F24A4678D4ACA6779AF9BCD59D4738B85CB5ACDC83E442824E8E3",
+    "catalog_sha256": "F2C5E999F4943D0C65B04CCB414F2AB4AB028EBA17792C0F8365C46B1391A69C"
+  },
+  "paths": {
+    "game_root": "config://bg2ee_game_root",
+    "run_dir": "sprite/creature_sprites_progressive_xn_xbr2x/runs/catalog-xbr2x-x2",
+    "engine_source": "engine/InfinityEngine-Enhancer/source-patchee",
+    "engine_build": "sprite/.work/cmake/catalog"
+  },
+  "compatibility": {
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "upscale": {
+    "algorithm": "XBR/xbr2X",
+    "scale": 2,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "qa": {
+    "animations": [
+      {
+        "animation_id": "0x1200",
+        "name": "Firkraag — dragon rouge",
+        "areas": [
+          "AR1203"
+        ],
+        "creatures": [
+          "FIRKRA02"
+        ],
+        "required_bam_prefixes": [
+          "MDR1"
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "cmake_generator": "Visual Studio 16 2019",
+    "cmake_arch": "x64",
+    "no_filter_comparison": true
+  }
+}

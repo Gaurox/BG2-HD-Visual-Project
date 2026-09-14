@@ -380,6 +380,14 @@ def effective_upscale_contract(work_item: dict[str, Any]) -> UpscaleContract:
     return upscale_contract(work_item)
 
 
+def maximum_leaf_resources(job: dict[str, Any]) -> int:
+    return (
+        MAX_REGISTRY_SET_RESOURCES
+        if upscale_contract(job).explicit
+        else MAX_RESOURCES
+    )
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -2116,7 +2124,7 @@ def source_provisional_info(job: dict[str, Any]) -> dict[str, Any]:
         or str(manifest.get("animation_id", "")).upper()
         != str(job["animation"]["id"]).upper()
         or not isinstance(resources, list)
-        or not (1 <= len(resources) <= MAX_RESOURCES)
+        or not (1 <= len(resources) <= maximum_leaf_resources(job))
     ):
         raise RuntimeError("provisional source manifest differs from the job")
     if job["animation"].get("runtime_profile") == "character-bg2ee-2.7.3.0" and (
@@ -2201,8 +2209,11 @@ def extract_sources(
         )
     if not resources:
         raise RuntimeError(f"no BAM resource starts with {prefix}")
-    if len(resources) > MAX_RESOURCES:
-        raise RuntimeError(f"{len(resources)} resources exceed runtime limit {MAX_RESOURCES}")
+    maximum_resources = maximum_leaf_resources(job)
+    if len(resources) > maximum_resources:
+        raise RuntimeError(
+            f"{len(resources)} resources exceed runtime limit {maximum_resources}"
+        )
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix=destination.name + ".tmp-", dir=destination.parent))
     try:
@@ -2308,7 +2319,11 @@ def verify_sources(job: dict[str, Any], compare_game: bool) -> dict[str, Any]:
         if manifest.get("layer", {"kind": "body"}) != character_layer_config(job):
             raise RuntimeError("source manifest Character layer differs from job")
     resources = manifest.get("bams")
-    if not isinstance(resources, list) or not resources or len(resources) > MAX_RESOURCES:
+    if (
+        not isinstance(resources, list)
+        or not resources
+        or len(resources) > maximum_leaf_resources(job)
+    ):
         raise RuntimeError("invalid source resource inventory")
     game_map = None
     key_index = None
@@ -2887,12 +2902,15 @@ def preflight_registry_layout(
     resources: list[dict[str, Any]],
     scale: int,
     maximum_bytes: int | None = None,
+    maximum_resources: int = MAX_RESOURCES,
 ) -> dict[str, Any]:
     if scale not in {2, 4}:
         raise RuntimeError("registry preflight scale must be 2 or 4")
     if maximum_bytes is None:
         maximum_bytes = maximum_registry_bytes(scale)
-    if not resources or len(resources) > MAX_RESOURCES:
+    if not (1 <= maximum_resources <= MAX_REGISTRY_SET_RESOURCES):
+        raise RuntimeError("invalid source resource limit")
+    if not resources or len(resources) > maximum_resources:
         raise RuntimeError("invalid source inventory")
     registry_bytes = REGISTRY_HEADER_BYTES
     index_bytes = 0
@@ -4807,7 +4825,7 @@ def build_pack(
     assert_workspace_child(output, "build output")
     manifest_path = source_manifest_path(job)
     frames, resources, source_manifest = load_source_frames(manifest_path)
-    if not frames or len(resources) > MAX_RESOURCES:
+    if not frames or len(resources) > maximum_leaf_resources(job):
         raise RuntimeError("invalid source inventory")
     contract = upscale_contract(job)
     preflight = preflight_registry_layout(
@@ -4817,6 +4835,9 @@ def build_pack(
             MAX_REGISTRY_SET_BYTES
             if contract.explicit
             else maximum_registry_bytes(contract.scale)
+        ),
+        maximum_resources=(
+            MAX_REGISTRY_SET_RESOURCES if contract.explicit else MAX_RESOURCES
         ),
     )
     if contract.explicit and preflight["frame_count"] > MAX_REGISTRY_SET_FRAMES:

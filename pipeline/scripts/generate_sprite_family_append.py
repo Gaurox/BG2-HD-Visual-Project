@@ -12,7 +12,7 @@ The inventory row is the identity source of truth.  The current generation,
 not the installed state, is the immutable parent; an append contains only the
 new members.
 
-The leaf member adapter covers MonsterIcewind ``body/base-resref`` families.
+The leaf member adapter covers owner-scoped ``body/base-resref`` families.
 Complete Character animations, including equipment, are produced by
 ``generate_character_complete_x2_jobs.py`` and accepted here directly by the
 catalog append phase.
@@ -172,12 +172,13 @@ def family_workspace(family: InventoryFamily) -> Path:
 
 
 def member_job_id(family: InventoryFamily, version: str) -> str:
-    if family.runtime_profile == "monster-icewind-bg2ee-2.7.3.0":
-        profile = "monster-icewind"
-    elif family.runtime_profile == "monster-bg2ee-2.7.3.0":
-        profile = "monster"
-    else:
-        profile = "character"
+    profile = {
+        "monster-icewind-bg2ee-2.7.3.0": "monster-icewind",
+        "monster-bg2ee-2.7.3.0": "monster",
+        "monster-quadrant-bg2ee-2.7.3.0": "monster-quadrant",
+        "multi-new-bg2ee-2.7.3.0": "multi-new",
+        "character-bg2ee-2.7.3.0": "character",
+    }[family.runtime_profile]
     value = f"{profile}-{family_slug(family)}-x2-{version}"
     if not JOB_ID_RE.fullmatch(value):
         raise RuntimeError(f"generated job_id is invalid or too long: {value}")
@@ -212,11 +213,13 @@ def member_layout(family: InventoryFamily, job_filename: str = "x2-nearest-v1.js
         raise RuntimeError("member job filename must use x2-nearest-vN.json")
     workspace = family_workspace(family)
     run_name = Path(job_filename).stem
-    profile_cache = (
-        "mi"
-        if family.runtime_profile == "monster-icewind-bg2ee-2.7.3.0"
-        else "monster"
-    )
+    profile_cache = {
+        "monster-icewind-bg2ee-2.7.3.0": "mi",
+        "monster-bg2ee-2.7.3.0": "monster",
+        "monster-quadrant-bg2ee-2.7.3.0": "monster-quadrant",
+        "multi-new-bg2ee-2.7.3.0": "multi-new",
+        "character-bg2ee-2.7.3.0": "character",
+    }[family.runtime_profile]
     return {
         "family_directory": relative_project_path(workspace),
         "member_job": relative_project_path(workspace / "jobs" / job_filename),
@@ -302,11 +305,13 @@ def assert_body_base_resref_adapter(family: InventoryFamily) -> None:
     supported = {
         ("monster-bg2ee-2.7.3.0", "monster"),
         ("monster-icewind-bg2ee-2.7.3.0", "monster_icewind"),
+        ("monster-quadrant-bg2ee-2.7.3.0", "monster_quadrant"),
+        ("multi-new-bg2ee-2.7.3.0", "multi_new"),
     }
     if (family.runtime_profile, family.engine_section) not in supported:
         raise RuntimeError(
-            "family-job supports Monster and MonsterIcewind leaves only; use the complete "
-            "Character generator for Character animations"
+            "family-job supports owner-scoped body leaves only; use the complete Character "
+            "generator for Character animations"
         )
     if family.layer_kind != "body" or family.variant_kind != "base-resref":
         raise RuntimeError(
@@ -322,8 +327,10 @@ def validate_member_template(template_path: Path, family: InventoryFamily) -> di
     if animation.get("runtime_profile") not in {
         "monster-bg2ee-2.7.3.0",
         "monster-icewind-bg2ee-2.7.3.0",
+        "monster-quadrant-bg2ee-2.7.3.0",
+        "multi-new-bg2ee-2.7.3.0",
     }:
-        raise RuntimeError("template must use a Monster or MonsterIcewind runtime profile")
+        raise RuntimeError("template must use an owner-scoped body runtime profile")
     contract = upscale_contract(template)
     if contract.scale != 2 or contract.method != DIRECT_X2_METHOD:
         raise RuntimeError("template must use an xBR/x2 NEAREST contract")

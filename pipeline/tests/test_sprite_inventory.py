@@ -184,18 +184,18 @@ class SpriteInventoryTests(unittest.TestCase):
             usage["without_bam_animation_ids"],
             ["0x0000", "0x0100", "0x7F2B", "0x7F33", "0x7F34", "0xE520"],
         )
-        self.assertEqual(usage["fully_pipeline_ready_animation_id_count"], 166)
-        self.assertEqual(usage["fully_pipeline_ready_cre_resource_count"], 3394)
+        self.assertEqual(usage["fully_pipeline_ready_animation_id_count"], 176)
+        self.assertEqual(usage["fully_pipeline_ready_cre_resource_count"], 3472)
         self.assertAlmostEqual(
-            usage["fully_pipeline_ready_cre_coverage_percent"], 71.679, places=3
+            usage["fully_pipeline_ready_cre_coverage_percent"], 73.326, places=3
         )
         self.assertEqual(
             usage["runtime_supported_without_bam_animation_ids"],
             ["0x7F2B", "0x7F33", "0x7F34", "0xE520"],
         )
         self.assertEqual(usage["runtime_supported_blocked_animation_id_count"], 0)
-        self.assertEqual(usage["runtime_unsupported_animation_id_count"], 109)
-        self.assertEqual(usage["runtime_unsupported_nonzero_animation_id_count"], 108)
+        self.assertEqual(usage["runtime_unsupported_animation_id_count"], 99)
+        self.assertEqual(usage["runtime_unsupported_nonzero_animation_id_count"], 98)
         self.assertIn("0x0000", usage["runtime_unsupported_animation_ids"])
         self.assertNotIn("0x0000", usage["runtime_unsupported_nonzero_animation_ids"])
         self.assertEqual(

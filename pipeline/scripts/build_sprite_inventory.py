@@ -1097,7 +1097,10 @@ def build_inventory(game_root: Path) -> tuple[list[dict[str, Any]], ...]:
         # Distinct used indices with identical RGBA remain diagnostic data.
         # The xBR runner now carries source-index provenance for those frames,
         # so the engine can still apply independent dynamic palette entries.
-        if not resource_limit:
+        # MAX_RESOURCES is the per-shard bound. An explicit XN registry set is
+        # valid above it when the deterministic partition and aggregate limits
+        # both pass.
+        if not resource_limit and len(family_partitions) <= 1:
             blockers.append("resource-limit")
         if not frame_limit:
             blockers.append("per-resource-frame-limit")

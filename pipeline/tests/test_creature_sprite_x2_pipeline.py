@@ -2807,6 +2807,26 @@ Read-RegistrySet '{quote(set_path)}' | ConvertTo-Json -Depth 6 -Compress
         partitions = pipeline.partition_registry_resources(records)
         self.assertEqual([len(shard) for shard in partitions], [128, 1])
 
+    def test_explicit_member_preflight_accepts_more_than_one_shard(self) -> None:
+        frame = self.make_frame()
+        resources = [
+            {
+                "source": {"name": f"R{index:07d}"},
+                "frames": [frame],
+                "cycles": [{"frame_indices": [0]}],
+            }
+            for index in range(129)
+        ]
+        with self.assertRaisesRegex(RuntimeError, "invalid source inventory"):
+            pipeline.preflight_registry_layout(resources, 2)
+        result = pipeline.preflight_registry_layout(
+            resources,
+            2,
+            maximum_bytes=pipeline.MAX_REGISTRY_SET_BYTES,
+            maximum_resources=pipeline.MAX_REGISTRY_SET_RESOURCES,
+        )
+        self.assertEqual(result["resource_count"], 129)
+
     def test_registry_inspectors_reject_oversized_files_before_reading(self) -> None:
         registry = mock.Mock()
         registry.stat.return_value.st_size = pipeline.MAX_REGISTRY_BYTES + 1

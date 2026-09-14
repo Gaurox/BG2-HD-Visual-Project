@@ -1,0 +1,79 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T09:08:14.8595106Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "domain": "multi-new",
+    "asset_key": "sprites:family:0x1200:body:base-resref:MDR1:MDR1:x2-nearest",
+    "family_id": "0x1200:body:base-resref:MDR1:MDR1",
+    "variant_id": "x2-nearest",
+    "animation_id": "0x1200",
+    "bam_prefix": "MDR1",
+    "runtime_profile": "multi-new-bg2ee-2.7.3.0",
+    "catalog_generation": "912AE8AE2B6E3D297F042FC972C6C6DB5C2B95752DCFEBD015B1CFD9433E45DD"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR1203",
+    "creature": "FIRKRA02",
+    "name": "Firkraag — dragon rouge",
+    "filter": "Nearest",
+    "scenarios": [
+      "rendu ingame de FIRKRA02",
+      "apparence visuelle",
+      "fonctionnement sans anomalie signalee"
+    ],
+    "note": "Firkraag 0x1200/MDR1 valide ingame explicitement par l'utilisateur le 2026-09-14."
+  },
+  "automatic_evidence": {
+    "build_manifest": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/x2-nearest-v1/build/build-manifest.json",
+    "build_manifest_sha256": "41A04D4E6A73BE39F4A29B4ADD9EC73EBFC8234C6408A34679A1DE0FD4E2FC43",
+    "runtime_manifest": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/x2-nearest-v1/runtime/runtime-manifest.json",
+    "runtime_manifest_sha256": "8B13AEB88D27B907A0389468346A676E1A71CAFBE11CD79C29CCAB804B86C0AD",
+    "runtime_capabilities_manifest": "pipeline/runtime/manifests/iee-creature-multi-new-0x1200-firkraag-v1.json",
+    "runtime_capabilities_manifest_sha256": "9881A7FEF7754A6A99741300632149537FF1B7A691A1585574C4CF8B79355FA1",
+    "runtime_dll_sha256": "50F7A4F945E36444194BB1C71C72A87E96EE5C075B223F707B78184AF824D9DC",
+    "registry_layout": "set",
+    "registry_set_sha256": "8C49091B1AAA9CE352BD006CF67D26024C5ED8A18A81E493AF108946400001E6",
+    "resource_count": 567,
+    "frame_count": 54675,
+    "multipart_cell_count": 9,
+    "native_tests_status": "passed"
+  },
+  "runtime_log_observation": {
+    "log_sha256_at_recording": "6B94FD0BA58AAFC1C527B18199DE535502D183FAF2AB4B8C534E004D303E5EC0",
+    "session_lines": [57138, 136030],
+    "catalog_ready_count": 1,
+    "multi_new_owner_scope_count": 1,
+    "target_animation_reached_count": 0,
+    "target_composition_count": 0,
+    "target_incomplete_replacement_count": 0,
+    "catalog_component_quarantine_count": 0,
+    "lazy_payload_failure_count": 0,
+    "note": "Le catalogue et le hook MultiNew sont confirmes au demarrage. Le marqueur diagnostic cible 0x1200 n'apparait pas dans ce journal ; cette telemetrie incomplete n'est pas presentee comme une validation automatique et ne remplace pas le verdict visuel utilisateur."
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/source/stock/manifest.json",
+    "source_manifest_sha256": "2D260239D1913601AE8BF2CE8BABD66646C6F3DD296C06A368AC948F50854A27",
+    "selected_run": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/x2-nearest-v1/build/build-manifest.json",
+    "selected_run_sha256": "41A04D4E6A73BE39F4A29B4ADD9EC73EBFC8234C6408A34679A1DE0FD4E2FC43",
+    "job_file": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/jobs/x2-nearest-v1.json",
+    "job_sha256": "90C0122BC1D12276BCD66B111E8BB5BD54B358D2E7CEF43DA104BF2BCAC43248"
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-1200-mdr1-firkraag-v1.json",
+    "job_sha256": "49D7F0BE08A21DD85E0FC30E9E69BBD43C2E64E9F5879A5ABE21E39D3D0B22E2",
+    "build_manifest": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/generations/912ae8ae2b6e3d297f042fc972c6c6db5c2b95752dcfebd015b1cfd9433e45dd/build/build-manifest.json",
+    "build_manifest_sha256": "34A642C439E837C624D9D739ED1210832D2DEFC1DA082323F3E2C3E25DE36533",
+    "catalog_sha256": "434E50C478E0EC9409E3E4A37D8F1293E4C1E77AC186B1B271EE4B70AD5DE536",
+    "component_digest": "0E83EF6A0A75E965D940F9E639077B7336614F80DBF84881688CDCD71BF6BDCB",
+    "component_shard_count": 5,
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "209A2209EED15E686182578A997CCAE551918FBA2E798F366167DAF0A5738BF4",
+    "installation_status": "validated-installed"
+  },
+  "release_manifest_modified": false
+}

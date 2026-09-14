@@ -4,10 +4,12 @@ But : produire un delta installable sans relire ni reconstruire les génération
 
 ## 1. Créer et préparer les nouveaux membres
 
+Sélectionner le `family_id` exact dans `sprite/index/sprite_families.csv`.
+
 Exiger pour chaque famille : `runtime_supported=yes`, `pipeline_ready=yes`, `blocker` vide,
 `override_collision` vide et des ressources non vides.
 
-Monster/MonsterIcewind :
+Monster/MonsterIcewind/MonsterQuadrant/MultiNew :
 
 ```powershell
 $familyId = '<family_id>'
@@ -22,6 +24,9 @@ python pipeline/scripts/extract_sprite_sources.py --family-id $familyId --run
 python pipeline/scripts/materialize_sprite_sources.py --job $member --run
 python pipeline/scripts/run_creature_sprite_x2.py prepare --resume --job $member
 ```
+
+Une famille MultiNew peut dépasser 128 ressources : le registre-set accepte jusqu'à 1024
+ressources et conserve la limite de 128 par shard.
 
 Character : produire l'agrégat complet avec `generate_character_complete_x2_jobs.py`, puis extraire,
 matérialiser et lancer `prepare-data --resume`. Ne jamais hériter la QA d'un autre Character.
