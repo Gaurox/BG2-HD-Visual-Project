@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0 validée ; P1 exécutée, validation humaine en attente ; P2–P7 non exécutées.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P2 validées ; P3–P7 non exécutées.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -99,8 +99,10 @@ Hashes ≠ déterminisme GPU. RGB fixé → indices identiques ; inférence rép
 sprite/research/reboutcx/chains/                       # .chn communes
 sprite/families/monsters/7fxx/7f02-mbeh-beholder/
   jobs/reboutcx-p1-v2.json                             # prototype P1
+  jobs/reboutcx-p2-mbeh-v2.json                        # famille complète P2
   research/reboutcx/                                  # témoins minimaux
   runs/reboutcx-p1-v2/                                # distinct de x2-nearest-v1
+  runs/reboutcx-p2-mbeh-v2/                           # composants/QA P2 non installables
 sprite/catalogs/creature-x2-reboutcx/
   jobs/                                              # base + remplacements
   runs/<run>/                                        # générations + current-generation.json
@@ -141,7 +143,7 @@ Sources : `sprite/ressources/` + manifests existants, sans duplication BAM. Runs
 **Validation :** quantifié x2 accepté, invariants vérifiés. Bénéfice perdu/flicker → nouvelle recette ou rejet, aucune palette custom/runtime alternatif implicite.
 **Rollback :** candidat isolé ; xBR intact. Généralisation seulement après ce prototype réel accepté.
 
-**Résultat P1 :** `jobs/reboutcx-p1-v2.json` ; `reboutcx_batch.py`, `reboutcx_quantize.py`, `test_reboutcx_pipeline.py`. 29 frames/3 BAM, deux runs indépendants identiques pixels/indices/registre/QA ; manifeste v2 vérifié, 123 fichiers ; registre V3 x2 brut non installable, round-trip exact, SHA `6B87F4B3...`. Quantification `oklab-euclidean-f64-classed-no-dither-v1`, moyenne `0,03655`, pire p95 `0,07785`. Séquences/directions animées dans `runs/reboutcx-p1-v2/qa/`. Validation humaine du bénéfice et du flicker requise avant P2.
+**Résultat P1 :** `jobs/reboutcx-p1-v2.json` ; `reboutcx_batch.py`, `reboutcx_quantize.py`, `test_reboutcx_pipeline.py`. 29 frames/3 BAM, deux runs indépendants identiques pixels/indices/registre/QA ; manifeste v2 vérifié, 123 fichiers ; registre V3 x2 brut non installable, round-trip exact, SHA `6B87F4B3...`. Quantification `oklab-euclidean-f64-classed-no-dither-v1`, moyenne `0,03655`, pire p95 `0,07785`. Séquences/directions animées dans `runs/reboutcx-p1-v2/qa/`. Accepté pour passage P2 le 2026-09-14.
 
 ## P2 — Animation complète + petit échantillon
 
@@ -152,6 +154,10 @@ Sources : `sprite/ressources/` + manifests existants, sans duplication BAM. Runs
 
 **Validation :** couverture complète vérifiée, MBEH + petit échantillon acceptés, défauts temporels tolérables.
 **Rollback :** runs isolés ; aucune installation ni modification du catalogue xBR.
+
+**Résultat P2 :** `reboutcx_full.py`, `test_reboutcx_full.py` ; traitement borné, cycles natifs exacts, composants V3 x2 bruts par resref sous la limite 128 MiB, doublons rendus une fois puis clonés/vérifiés. MBEH final : `jobs/reboutcx-p2-mbeh-v2.json`, `runs/reboutcx-p2-mbeh-v2/`, manifeste `9D88635B...` ; 13 BAM/6 831 frames/5 184 nulles/765 cycles/15 939 slots, 9 sources uniques/1 107 inférences, 13 composants/117 604 200 octets, 18 GIF ; second run identique composants/QA/couverture/métriques. Erreur pondérée `0,03540`, pire p95 `0,08823`.
+
+Échantillon complet : Bodhi `0x7F30/NBOH`, job/run `reboutcx-p2-sample-v1`, manifeste `2A3ED34E...` ; 13 BAM/8 100 frames, 17 286 400 octets, erreur `0,02877`, pire p95 `0,10139`, 10 GIF. Irenicus `0x7F37/NIRE`, job/run homonyme, manifeste `3265A5C7...` ; 13 BAM/7 776 frames, 17 781 704 octets, erreur `0,02363`, pire p95 `0,10154`, 10 GIF. Audit confirmé pour les deux : `0` transparent, `1` noir/ombre, `2` marqueur exclusif `1x1@(0,0)`, `3..255` matière. NIRO écarté : resrefs partagés avec `0x7F42/RED_WIZARD`, `new_palette=NIRO_RD`. Trois runs `verify` réussis ; rendu GIF MBEH/NBOH/NIRE validé humainement le 2026-09-14. Aucun catalogue/install/runtime modifié.
 
 ## P3 — Catalogue dérivé : base xBR + remplacements ReboutCX
 

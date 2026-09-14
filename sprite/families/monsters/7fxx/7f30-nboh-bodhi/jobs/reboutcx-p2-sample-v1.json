@@ -1,0 +1,329 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "monster-7f30-nboh-reboutcx-p2-sample-v1",
+  "installable": false,
+  "scope": "full-animation",
+  "animation_id": "0x7F30",
+  "source_inventory": [
+    {
+      "name": "NBOHG1"
+    },
+    {
+      "name": "NBOHG11"
+    },
+    {
+      "name": "NBOHG12"
+    },
+    {
+      "name": "NBOHG13"
+    },
+    {
+      "name": "NBOHG14"
+    },
+    {
+      "name": "NBOHG15"
+    },
+    {
+      "name": "NBOHG2"
+    },
+    {
+      "name": "NBOHG21"
+    },
+    {
+      "name": "NBOHG22"
+    },
+    {
+      "name": "NBOHG23"
+    },
+    {
+      "name": "NBOHG24"
+    },
+    {
+      "name": "NBOHG25"
+    },
+    {
+      "name": "NBOHG26"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "0EC0860CF0BBC4C4D3894200429FB9DA100AF375C2F009B13D03F36B29E0289E",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_audit": {
+    "false_color": 0,
+    "transparent": {
+      "index": 0,
+      "rgb": [
+        0,
+        255,
+        0
+      ]
+    },
+    "shadow_black": {
+      "index": 1,
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    },
+    "null_frame_marker": {
+      "index": 2,
+      "rgb": [
+        255,
+        128,
+        0
+      ],
+      "contract": "exclusive 1x1 center 0,0"
+    },
+    "material": "3..255",
+    "audited_frames": 8100
+  },
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "null_frame_marker": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reference": {
+    "resref": "NBOHG1",
+    "frame": 0,
+    "x4_pixel_sha256": "C924CACF6EDCCB564FBBCC1290ED2FB566CBC20FF62D0BAE13B192BA743FF26C",
+    "x2_pixel_sha256": "2BF6A7156E6F09DDBFB8D59B848886D2AB9466B8F609A511067ECAFEDFE6614B"
+  },
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "nbohg1-sequence",
+        "resref": "NBOHG1",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nbohg1-directions",
+        "resref": "NBOHG1",
+        "frames": [
+          0,
+          66,
+          132,
+          198,
+          264,
+          330,
+          396,
+          462,
+          528
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nbohg12-sequence",
+        "resref": "NBOHG12",
+        "frames": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nbohg12-directions",
+        "resref": "NBOHG12",
+        "frames": [
+          16,
+          82,
+          148,
+          214,
+          280,
+          346,
+          412,
+          478,
+          544
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nbohg14-sequence",
+        "resref": "NBOHG14",
+        "frames": [
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nbohg14-directions",
+        "resref": "NBOHG14",
+        "frames": [
+          46,
+          112,
+          178,
+          244,
+          310,
+          376,
+          442,
+          508,
+          574
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nbohg2-sequence",
+        "resref": "NBOHG2",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nbohg2-directions",
+        "resref": "NBOHG2",
+        "frames": [
+          0,
+          72,
+          144,
+          216,
+          288,
+          360,
+          432,
+          504,
+          576
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nbohg25-sequence",
+        "resref": "NBOHG25",
+        "frames": [
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nbohg25-directions",
+        "resref": "NBOHG25",
+        "frames": [
+          28,
+          100,
+          172,
+          244,
+          316,
+          388,
+          460,
+          532,
+          604
+        ],
+        "duration_ms": 400
+      }
+    ]
+  }
+}

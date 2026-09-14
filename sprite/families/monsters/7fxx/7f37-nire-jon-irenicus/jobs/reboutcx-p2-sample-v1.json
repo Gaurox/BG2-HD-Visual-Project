@@ -1,0 +1,323 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "monster-7f37-nire-reboutcx-p2-sample-v1",
+  "installable": false,
+  "scope": "full-animation",
+  "animation_id": "0x7F37",
+  "source_inventory": [
+    {
+      "name": "NIREG1"
+    },
+    {
+      "name": "NIREG11"
+    },
+    {
+      "name": "NIREG12"
+    },
+    {
+      "name": "NIREG13"
+    },
+    {
+      "name": "NIREG14"
+    },
+    {
+      "name": "NIREG15"
+    },
+    {
+      "name": "NIREG2"
+    },
+    {
+      "name": "NIREG21"
+    },
+    {
+      "name": "NIREG22"
+    },
+    {
+      "name": "NIREG23"
+    },
+    {
+      "name": "NIREG24"
+    },
+    {
+      "name": "NIREG25"
+    },
+    {
+      "name": "NIREG26"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f37-nire-jon-irenicus/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f37-nire-jon-irenicus/runs/reboutcx-p2-sample-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "F8542A0BDCFEC156411A76027E6A51564409471D93C9F4CF0CC49974E714FE59",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_audit": {
+    "false_color": 0,
+    "transparent": {
+      "index": 0,
+      "rgb": [
+        0,
+        255,
+        0
+      ]
+    },
+    "shadow_black": {
+      "index": 1,
+      "rgb": [
+        0,
+        0,
+        0
+      ]
+    },
+    "null_frame_marker": {
+      "index": 2,
+      "rgb": [
+        255,
+        128,
+        0
+      ],
+      "contract": "exclusive 1x1 center 0,0"
+    },
+    "material": "3..255",
+    "audited_frames": 7776
+  },
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "null_frame_marker": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reference": {
+    "resref": "NIREG1",
+    "frame": 50,
+    "x4_pixel_sha256": "6F1DBEC6D466DD51F2DFD57A5DB0D498EBC514E4AB359E51BD0DA7B4B0CAE4B7",
+    "x2_pixel_sha256": "F82CAFFBC26B729F10F1490EE56A284B4DD329C001B48D0B59C92CB13F317B43"
+  },
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "nireg1-sequence",
+        "resref": "NIREG1",
+        "frames": [
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nireg1-directions",
+        "resref": "NIREG1",
+        "frames": [
+          50,
+          110,
+          170,
+          230,
+          290,
+          350,
+          410,
+          470,
+          530
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nireg12-sequence",
+        "resref": "NIREG12",
+        "frames": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nireg12-directions",
+        "resref": "NIREG12",
+        "frames": [
+          20,
+          80,
+          140,
+          200,
+          260,
+          320,
+          380,
+          440,
+          500
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nireg14-sequence",
+        "resref": "NIREG14",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nireg14-directions",
+        "resref": "NIREG14",
+        "frames": [
+          0,
+          60,
+          120,
+          180,
+          240,
+          300,
+          360,
+          420,
+          480
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nireg2-sequence",
+        "resref": "NIREG2",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nireg2-directions",
+        "resref": "NIREG2",
+        "frames": [
+          0,
+          72,
+          144,
+          216,
+          288,
+          360,
+          432,
+          504,
+          576
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "nireg25-sequence",
+        "resref": "NIREG25",
+        "frames": [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "nireg25-directions",
+        "resref": "NIREG25",
+        "frames": [
+          42,
+          114,
+          186,
+          258,
+          330,
+          402,
+          474,
+          546,
+          618
+        ],
+        "duration_ms": 400
+      }
+    ]
+  }
+}

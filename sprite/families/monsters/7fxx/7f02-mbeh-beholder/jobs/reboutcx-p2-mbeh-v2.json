@@ -1,0 +1,424 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "monster-7f02-mbeh-reboutcx-p2-v2",
+  "installable": false,
+  "scope": "full-animation",
+  "animation_id": "0x7F02",
+  "source_inventory": [
+    {
+      "name": "MBEHG1"
+    },
+    {
+      "name": "MBEHG11"
+    },
+    {
+      "name": "MBEHG12"
+    },
+    {
+      "name": "MBEHG13"
+    },
+    {
+      "name": "MBEHG14"
+    },
+    {
+      "name": "MBEHG15"
+    },
+    {
+      "name": "MBEHG2"
+    },
+    {
+      "name": "MBEHG21"
+    },
+    {
+      "name": "MBEHG22"
+    },
+    {
+      "name": "MBEHG23"
+    },
+    {
+      "name": "MBEHG24"
+    },
+    {
+      "name": "MBEHG25"
+    },
+    {
+      "name": "MBEHG26"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "C5AC8791F7AB55661D46C5AFF7FE1E84F3B1DB9B4D09D5E77B2287638CBFFB40",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "null_frame_marker": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reference": {
+    "resref": "MBEHG1",
+    "frame": 166,
+    "x4_pixel_sha256": "14FF37C9A953AE49842CFCF5A4D84192690582E2067CF08E99367794ABDF7C63",
+    "x2_pixel_sha256": "D39D949659388B24620FD60DEAFEE2E7386607D9FF2430E23F218C4023A0C1B1"
+  },
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "mbehg1-sequence",
+        "resref": "MBEHG1",
+        "frames": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg1-directions",
+        "resref": "MBEHG1",
+        "frames": [
+          10,
+          84,
+          158,
+          232,
+          306,
+          380,
+          454,
+          528,
+          602
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg11-sequence",
+        "resref": "MBEHG11",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg11-directions",
+        "resref": "MBEHG11",
+        "frames": [
+          0,
+          74,
+          148,
+          222,
+          296,
+          370,
+          444,
+          518,
+          592
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg12-sequence",
+        "resref": "MBEHG12",
+        "frames": [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg12-directions",
+        "resref": "MBEHG12",
+        "frames": [
+          30,
+          104,
+          178,
+          252,
+          326,
+          400,
+          474,
+          548,
+          622
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg13-sequence",
+        "resref": "MBEHG13",
+        "frames": [
+          68,
+          69,
+          70,
+          71,
+          72,
+          73
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg13-directions",
+        "resref": "MBEHG13",
+        "frames": [
+          68,
+          142,
+          216,
+          290,
+          364,
+          438,
+          512,
+          586,
+          660
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg14-sequence",
+        "resref": "MBEHG14",
+        "frames": [
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg14-directions",
+        "resref": "MBEHG14",
+        "frames": [
+          50,
+          124,
+          198,
+          272,
+          346,
+          420,
+          494,
+          568,
+          642
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg15-sequence",
+        "resref": "MBEHG15",
+        "frames": [
+          65,
+          66,
+          67
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg15-directions",
+        "resref": "MBEHG15",
+        "frames": [
+          65,
+          139,
+          213,
+          287,
+          361,
+          435,
+          509,
+          583,
+          657
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg2-sequence",
+        "resref": "MBEHG2",
+        "frames": [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg2-directions",
+        "resref": "MBEHG2",
+        "frames": [
+          30,
+          75,
+          120,
+          165,
+          210,
+          255,
+          300,
+          345,
+          390
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg25-sequence",
+        "resref": "MBEHG25",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg25-directions",
+        "resref": "MBEHG25",
+        "frames": [
+          0,
+          45,
+          90,
+          135,
+          180,
+          225,
+          270,
+          315,
+          360
+        ],
+        "duration_ms": 400
+      },
+      {
+        "name": "mbehg26-sequence",
+        "resref": "MBEHG26",
+        "frames": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "mbehg26-directions",
+        "resref": "MBEHG26",
+        "frames": [
+          16,
+          61,
+          106,
+          151,
+          196,
+          241,
+          286,
+          331,
+          376
+        ],
+        "duration_ms": 400
+      }
+    ]
+  }
+}
