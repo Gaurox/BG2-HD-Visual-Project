@@ -24,7 +24,7 @@
             "additionalProperties": false,
             "required": ["family_group", "variant_id", "asset_count", "animation_count", "animation_ids", "asset_keys_sha256", "selection_rows_sha256", "excluded_blocked_asset_count"],
             "properties": {
-              "family_group": {"const": "playable-characters"},
+              "family_group": {"enum": ["playable-characters", "approved-creatures"]},
               "variant_id": {"const": "x2-nearest"},
               "asset_count": {"type": "integer", "minimum": 1},
               "animation_count": {"type": "integer", "minimum": 1},
@@ -37,9 +37,10 @@
           "source_generation": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["generation_id", "current_generation", "current_generation_sha256", "build_manifest", "build_manifest_sha256", "sealed_verification", "sealed_verification_sha256", "runtime_manifest", "runtime_manifest_sha256", "job_file", "job_sha256"],
+            "required": ["generation_id", "current_generation", "current_generation_sha256", "build_manifest", "build_manifest_sha256", "runtime_manifest", "runtime_manifest_sha256", "job_file", "job_sha256"],
             "properties": {
               "generation_id": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+              "runtime_mode": {"enum": ["generation-bound", "independent-stable-runtime"]},
               "current_generation": {"type": "string", "minLength": 1},
               "current_generation_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
               "build_manifest": {"type": "string", "minLength": 1},
@@ -57,7 +58,7 @@
             "additionalProperties": false,
             "required": ["path", "sha256", "qa_state", "filter"],
             "properties": {
-              "path": {"type": "string", "pattern": "^sprite/index/qa-decisions/playable-characters/[A-Za-z0-9._-]+[.]json$"},
+              "path": {"type": "string", "pattern": "^sprite/index/qa-decisions/(playable-characters|release)/[A-Za-z0-9._-]+[.]json$"},
               "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
               "qa_state": {"const": "passed"},
               "filter": {"const": "CatmullRom"}

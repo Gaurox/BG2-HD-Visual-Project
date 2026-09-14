@@ -1,0 +1,35 @@
+{
+  "schema": "bg2-upscale-creature-sprite-release-approval-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T01:53:00Z",
+  "scope": {
+    "kind": "release-catalogue-union",
+    "variant_id": "x2-nearest",
+    "release_filter": "CatmullRom",
+    "animation_count": 173,
+    "catalog_generation": "37A0E7782188D4A9092A2FF69D3F0A5BD3D19B28A0A6C248B0637C9FF34A52FA",
+    "catalog_sha256": "ED4CAAADA1B206761E4EA0BBDE581CF67EECCF1AAF157E0C76295A4DD57F1C13"
+  },
+  "approval": {
+    "authority": "user",
+    "decision": "accepted-for-release",
+    "note": "Union byte-pinned des 78 personnages jouables acceptés et des 95 monstres acceptés les 2026-09-13/14. Le filtre release reste CatmullRom, identique au composant installable existant."
+  },
+  "source_decisions": [
+    {"path": "sprite/index/qa-decisions/playable-characters/2026-09-11-accepted-playable-characters-x2-catmull-rom-v1.json", "sha256": "2C37BC1FAC8EA282CB26DB9D2448646FA157595E45E3B7574839C8DD150B9607"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-73xx-fire-elementals-x2-nearest-v1.json", "sha256": "C33BA04BF7BBD02C9D84946BC660200900E278046BC1C2C080F78597A38E2A57"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7f03-mimp-imp-x2-nearest-v1.json", "sha256": "F6F668C3E0307D2AA2026E711837E411884074C9F520C2A851B636CE5FD69C68"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7f04-migo-golem-iron-x2-nearest-v1.json", "sha256": "E871CB93F95A082FEBC79ED6EDF5224C63E50DC264BE7F97B0C618248E4E479E"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7f22-mvaf-vampire-female-x2-nearest-v1.json", "sha256": "7F6F03D22148C21077944F65A736AA80BB6955A32F9A33171FA2D126FBF9F2DE"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7f40-mglm-golem-mini-x2-nearest-v1.json", "sha256": "90AA66EC5A03DDC3AEA6076EF2A9746412911DA7A0F5FEF989A3BA4795549C15"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7fxx-underdark-x2-nearest-v1.json", "sha256": "E1BB0C114B833EFEBB093664F4731588A1C0C7BB4FB4D6DC5D1DFE650824C318"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-7fxx-wildlife-x2-nearest-v1.json", "sha256": "ACA79F5C2C62D57E3458A4C9191BC0A4B7ACD5BC7F724B1CACA81CD1F8177C1E"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-13-accepted-classic-aliases-7f-x2-nearest-v1.json", "sha256": "CC3D22E4D48F2A97E78807153AD750CB238C8FDA84283F2AB949F635965FFB0F"},
+    {"path": "sprite/index/qa-decisions/monsters/2026-09-14-accepted-7fxx-remaining-monsters-x2-nearest-v1.json", "sha256": "145CB00B22D67E9EA765D5578549628D601CE485ADB3E8D6685B041FEB18C906"},
+    {"path": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-e0f0-mgic-golem-ice-x2-nearest-v1.json", "sha256": "36EE7BF6ECD96163F37E62507D09D37E41770760E5035D8653BDE3DEAE533382"},
+    {"path": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-e400-mgo1-goblin-axe-x2-nearest-v1.json", "sha256": "99177C86B8D0C3A3DC60EBF8AA995FC2809A60738E6829CE3241CEA0221F3B12"},
+    {"path": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-monster-icewind-batch-x2-nearest-v1.json", "sha256": "7218C065DFF9118AF762C7A1DFC8F0A38587A10A6164BB18F97286F79D15D4F1"},
+    {"path": "sprite/index/qa-decisions/monster-icewind/2026-09-13-accepted-purple-blur-followup-x2-nearest-v1.json", "sha256": "8241A3B0CDE522CF55A4A2E624A58C570C9E90F458237A928E407A899ED4368C"}
+  ]
+}

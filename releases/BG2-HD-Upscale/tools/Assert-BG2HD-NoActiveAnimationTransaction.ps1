@@ -61,7 +61,7 @@ function Enter-BG2HDAnimationAuthorityLock {
 
     $workspace = (Resolve-Path -LiteralPath $WorkspaceRoot).Path
     if ($null -ne $global:BG2HDAnimationAuthorityLockLease) {
-        if ([string]$global:BG2HDAnimationAuthorityLockLease.Workspace -cne $workspace) {
+        if (([IO.Path]::GetFullPath([string]$global:BG2HDAnimationAuthorityLockLease.Workspace).TrimEnd('\\')) -ine ([IO.Path]::GetFullPath($workspace).TrimEnd('\\'))) {
             throw 'Un verrou animation est deja tenu pour un autre workspace dans ce processus PowerShell.'
         }
         Assert-BG2HDNoActiveAnimationJournal -Workspace $workspace -AllowPackageMetadataSyncRecovery:$AllowPackageMetadataSyncRecovery

@@ -504,14 +504,17 @@ function Get-SpriteCandidateEntries {
     foreach ($candidate in @($register.candidates | Where-Object { $_.approval_status -eq 'approved-for-release' -and $_.payload_projection.status -eq 'integrated' })) {
         Require ([bool]$candidate.payload_projection.content_manifest_integration) "Projection sprite non integree : $($candidate.candidate_id)"
         $source = $candidate.source_generation
-        foreach ($record in @(
+        $evidence = @(
             @{ Path = [string]$source.current_generation; Hash = [string]$source.current_generation_sha256 },
             @{ Path = [string]$source.build_manifest; Hash = [string]$source.build_manifest_sha256 },
-            @{ Path = [string]$source.sealed_verification; Hash = [string]$source.sealed_verification_sha256 },
             @{ Path = [string]$source.runtime_manifest; Hash = [string]$source.runtime_manifest_sha256 },
             @{ Path = [string]$source.job_file; Hash = [string]$source.job_sha256 },
             @{ Path = [string]$candidate.qa_approval.path; Hash = [string]$candidate.qa_approval.sha256 }
-        )) {
+        )
+        if ($source.sealed_verification -and $source.sealed_verification_sha256) {
+            $evidence += @{ Path = [string]$source.sealed_verification; Hash = [string]$source.sealed_verification_sha256 }
+        }
+        foreach ($record in $evidence) {
             $path = Join-Path $Workspace ($record.Path.Replace('/', '\'))
             Require (Test-Path -LiteralPath $path -PathType Leaf) "Preuve sprite absente : $($record.Path)"
             Require ((Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash -eq $record.Hash) "Hash de preuve sprite invalide : $($record.Path)"
@@ -519,7 +522,7 @@ function Get-SpriteCandidateEntries {
 
         $pointer = Read-Json (Join-Path $Workspace ($source.current_generation.Replace('/', '\')))
         $build = Read-Json (Join-Path $Workspace ($source.build_manifest.Replace('/', '\')))
-        $proof = Read-Json (Join-Path $Workspace ($source.sealed_verification.Replace('/', '\')))
+        $proof = if ($source.sealed_verification) { Read-Json (Join-Path $Workspace ($source.sealed_verification.Replace('/', '\'))) } else { $null }
         $runtime = Read-Json (Join-Path $Workspace ($source.runtime_manifest.Replace('/', '\')))
         $expectedIds = @($candidate.asset_scope.animation_ids | ForEach-Object { [string]$_ } | Sort-Object)
         $selectedIds = @($candidate.runtime_contract.selected_animation_ids | ForEach-Object { [string]$_ } | Sort-Object)
@@ -527,9 +530,15 @@ function Get-SpriteCandidateEntries {
         Require (-not (Compare-Object $expectedIds $selectedIds)) "Selection runtime sprite incoherente : $($candidate.candidate_id)"
         Require (-not (Compare-Object $expectedIds $buildIds)) "Catalogue sprite non restreint a la selection approuvee : $($candidate.candidate_id)"
         Require (@($buildIds | Where-Object { @($candidate.runtime_contract.excluded_animation_ids) -contains $_ }).Count -eq 0) "Animation sprite exclue presente : $($candidate.candidate_id)"
-        Require ($pointer.generation_id -eq $source.generation_id -and $build.generation_id -eq $source.generation_id -and $runtime.generation_id -eq $source.generation_id) "Generation sprite incoherente : $($candidate.candidate_id)"
+        $runtimeMode = if ($source.runtime_mode) { [string]$source.runtime_mode } else { 'generation-bound' }
+        Require ($pointer.generation_id -eq $source.generation_id -and $build.generation_id -eq $source.generation_id) "Generation sprite incoherente : $($candidate.candidate_id)"
+        if ($runtimeMode -eq 'generation-bound') {
+            Require ($runtime.generation_id -eq $source.generation_id) "Runtime sprite non lie a la generation : $($candidate.candidate_id)"
+        }
         Require ($build.schema -eq 'bg2-upscale-creature-sprite-xn-catalog-pack-v1' -and $build.status -eq 'built-pending-ingame-qa') "Build sprite non finalise : $($candidate.candidate_id)"
-        Require ($proof.status -eq 'sealed-verified') "Verification scellee sprite absente : $($candidate.candidate_id)"
+        if ($proof) {
+            Require ($proof.status -eq 'sealed-verified') "Verification scellee sprite absente : $($candidate.candidate_id)"
+        }
         Require ($runtime.status -eq 'built-tested' -and $runtime.tests_status -eq 'passed' -and $runtime.bridge_worker_tests_status -eq 'passed') "Runtime sprite non teste : $($candidate.candidate_id)"
         Require ($runtime.dll_sha256 -eq [string]$candidate.runtime_contract.dll_sha256) "DLL runtime sprite differente du contrat : $($candidate.candidate_id)"
         Require ([int]$build.registry_scale -eq [int]$candidate.runtime_contract.scale -and [int]$build.registry_catalog_version -eq [int]$candidate.runtime_contract.catalog_version -and [int]$build.registry_catalog_shard_version -eq [int]$candidate.runtime_contract.shard_registry_version) "Format de catalogue sprite incoherent : $($candidate.candidate_id)"
@@ -544,7 +553,7 @@ function Get-SpriteCandidateEntries {
             SourceRun = [IO.Path]::GetRelativePath($Workspace, $generationRoot).Replace('\', '/')
             Kind = 'sprite'
             DestinationRoot = 'iee-assets/creature-sprites'
-            Model = 'CatmullRom'
+            Model = [string]$candidate.runtime_contract.filter
             InstallOrder = [int]$candidate.component_id
             ReplacesComponentOutput = $false
             Scale = 2

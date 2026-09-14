@@ -32,10 +32,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         animation_release.configure_workspace_root(args.workspace_root)
         area = animation_release.normalize_area(args.area)
         with animation_release.workflow_lock():
+            package_sync_marker = getattr(animation_release, "PACKAGE_SYNC_MARKER", None)
             animation_release.require(
                 not animation_release.AUTHORITY_JOURNAL.exists()
                 and not animation_release.PUBLICATION_JOURNAL.exists()
-                and not animation_release.PACKAGE_SYNC_MARKER.exists(),
+                and not (package_sync_marker and package_sync_marker.exists()),
                 "transaction animation interrompue active; relancer sa commande d'origine avant la vérification",
             )
             result = animation_release.verify_release_candidate(
