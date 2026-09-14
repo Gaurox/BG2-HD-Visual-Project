@@ -568,6 +568,28 @@ void test_manifest_loading() {
     expect_eq(bg2ee->get().areaAnimations.multiNewPartCount,
               std::uintptr_t{0xD35},
               "BG2EE MultiNew part-count offset should match its native loop");
+    expect_eq(bg2ee->get().areaAnimations.monsterMultiRender,
+              std::uintptr_t{0x32F8D0},
+              "Firkraag's palette stack must route through native MonsterMulti");
+    expect_eq(bg2ee->get().areaAnimations.monsterMultiPartCount,
+              std::uintptr_t{0x12F9},
+              "MonsterMulti must use its own loop bound, not MultiNew's 0xD35");
+    auto incompleteMonsterMulti = bg2ee->get().areaAnimations;
+    incompleteMonsterMulti.monsterMultiRenderSignature = {};
+    expect_true(!incompleteMonsterMulti.validate(),
+                "MonsterMulti without executable signature evidence must fail closed");
+    incompleteMonsterMulti = bg2ee->get().areaAnimations;
+    incompleteMonsterMulti.monsterMultiPartCount = 0;
+    expect_true(!incompleteMonsterMulti.validate(),
+                "MonsterMulti without its native count offset must fail closed");
+    incompleteMonsterMulti = bg2ee->get().areaAnimations;
+    incompleteMonsterMulti.monsterMultiRender = 0;
+    expect_true(!incompleteMonsterMulti.validate(),
+                "MonsterMulti without its native entry point must fail closed");
+    incompleteMonsterMulti.monsterMultiPartCount = 0;
+    incompleteMonsterMulti.monsterMultiRenderSignature = {};
+    expect_true(incompleteMonsterMulti.validate(),
+                "Omitting optional MonsterMulti evidence must preserve older manifests");
     expect_eq(bg2ee->get().areaAnimations.multipartCurrentCells,
               std::uintptr_t{0xCD8},
               "BG2EE multipart current-cell array should match both native renderers");
@@ -2163,6 +2185,33 @@ void test_creature_sprite_xn_native_border_geometry() {
             "x2 content should begin after one scaled native logical border");
   expect_eq(physical_content_offset(4), std::int64_t{4},
             "x4 content should begin after one scaled native logical border");
+  // Regression: the live MDR12100 draw is 111x139, not 113x141. Its
+  // descriptor, backing and pixel origin must all obey the same contract.
+  constexpr auto unbordered = FrameTextureLayout::Unbordered;
+  expect_eq(logical_texture_extent(111, unbordered), 111,
+            "MonsterMulti's native width must remain exactly the BAM width");
+  expect_eq(logical_texture_extent(139, unbordered), 139,
+            "MonsterMulti's native height must remain exactly the BAM height");
+  expect_eq(physical_texture_extent(111, 2, unbordered), std::int64_t{222},
+            "MonsterMulti x2 backing must not gain four horizontal padding pixels");
+  expect_eq(physical_texture_extent(139, 2, unbordered), std::int64_t{278},
+            "MonsterMulti x2 backing must preserve the native aspect ratio");
+  expect_eq(physical_content_offset(2, unbordered), std::int64_t{0},
+            "Unbordered content must start at texture origin, without shifting UVs");
+  expect_eq(logical_texture_extent(111), 113,
+            "Existing callers must still require the native bordered width");
+  expect_eq(physical_texture_extent(139, 2), std::int64_t{282},
+            "Existing xBR callers must retain their bordered physical backing");
+  constexpr FrameHandle sharedFrame{.resourceIndex = 3, .frameIndex = 4,
+                                    .animationId = 0x1200};
+  constexpr FrameTextureCacheKey borderedKey{sharedFrame, 123};
+  constexpr FrameTextureCacheKey unborderedKey{sharedFrame, 123, unbordered};
+  expect_true(borderedKey != unborderedKey,
+              "Same frame/palette in different native layouts must not collide in the GPU cache");
+  expect_true(unborderedKey == FrameTextureCacheKey{sharedFrame, 123, unbordered},
+              "Repeated unbordered draws must reuse their own cached texture");
+  expect_true(unborderedKey != FrameTextureCacheKey{sharedFrame, 124, unbordered},
+              "Layout-aware cache must still distinguish realized palettes");
   expect_eq(kMaximumCompositeLayers, std::size_t{8},
             "Character composition should retain repeated ordered layer events");
 
@@ -2622,12 +2671,10 @@ void test_creature_sprite_registry_formats() {
     }
     return bytes;
   };
-  const auto make_catalog_v2 = [&] (
+  const auto add_catalog_v2_directory = [&] (
+      std::vector<std::byte> bytes,
       std::uint32_t scale,
-      const std::vector<TestCatalogAnimation>& animations,
-      const std::vector<TestShard>& components,
       const std::vector<TestCatalogDirectoryEntry>& directory) {
-    auto bytes = make_catalog(scale, animations, components);
     const std::uint32_t version = 2;
     std::memcpy(bytes.data() + 8, &version, sizeof(version));
     std::vector<std::byte> encodedDirectory;
@@ -2654,6 +2701,13 @@ void test_creature_sprite_registry_formats() {
     bytes.insert(bytes.begin() + 64, extension.begin(), extension.end());
     bytes.insert(bytes.end(), encodedDirectory.begin(), encodedDirectory.end());
     return bytes;
+  };
+  const auto make_catalog_v2 = [&] (
+      std::uint32_t scale,
+      const std::vector<TestCatalogAnimation>& animations,
+      const std::vector<TestShard>& components,
+      const std::vector<TestCatalogDirectoryEntry>& directory) {
+    return add_catalog_v2_directory(make_catalog(scale, animations, components), scale, directory);
   };
   const auto make_grouped_component_catalog = [&](std::uint32_t scale,
                                                    std::uint32_t animationId,
@@ -2975,6 +3029,100 @@ void test_creature_sprite_registry_formats() {
               "component is not a member of the animation");
   write_file(root / digest_filename(catalogCharacter.sha256),
              catalogCharacter.registry);
+
+  // Optional MDR1 startup hint: two lazy shards in one component, same contract
+  // as the real five-shard dragon. Reuse authenticated directory encoding.
+  const std::array<char, 8> mdrFirst{{'M', 'D', 'R', '1', '1', '1', '0', '0'}};
+  const std::array<char, 8> mdrSecond{{'M', 'D', 'R', '1', '2', '1', '0', '0'}};
+  const auto make_mdr_shard = [&](std::uint32_t scale, const std::array<char, 8>& resref) {
+    auto shard = make_shard(scale, 'M');
+    overwrite_u32(shard.registry, 20, 0xFFFFu);
+    std::memcpy(shard.registry.data() + 24, resref.data(), resref.size());
+    shard.sha256 = test_sha256(shard.registry);
+    return shard;
+  };
+  const auto mdrFirstShard = make_mdr_shard(2, mdrFirst);
+  const auto mdrSecondShard = make_mdr_shard(2, mdrSecond);
+  const std::vector<TestCatalogDirectoryEntry> mdrDirectory{
+      {0x1200, mdrFirst, 0, 0, 0}, {0x1200, mdrSecond, 0, 1, 0}};
+  const auto mdrCatalog = add_catalog_v2_directory(
+      make_grouped_component_catalog(2, 0x1200, 5, {mdrFirstShard, mdrSecondShard}),
+      2, mdrDirectory);
+  write_file(catalogPath, mdrCatalog);
+  write_file(root / digest_filename(mdrFirstShard.sha256), mdrFirstShard.registry);
+  write_file(root / digest_filename(mdrSecondShard.sha256), mdrSecondShard.registry);
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0 &&
+                  iee::creature_sprite_x2::prefetch_mdr1_metadata() == 2 &&
+                  iee::creature_sprite_x2::prefetch_mdr1_metadata() == 0 &&
+                  await([&] { return iee::creature_sprite_x2::pending_catalog_loads() == 0; }),
+              "MDR1 startup hint should queue each shard once and finish asynchronously");
+  iee::creature_sprite_x2::FrameHandle mdrFirstHandle{}, mdrSecondHandle{};
+  const auto prefetchedReads = iee::creature_sprite_x2::filesystem_access_count();
+  expect_true(iee::creature_sprite_x2::resolve_frame(0x1200, mdrFirst, 0, 0, mdrFirstHandle) &&
+                  iee::creature_sprite_x2::resolve_frame(0x1200, mdrSecond, 0, 0, mdrSecondHandle) &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() > 0 &&
+                  iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+                  iee::creature_sprite_x2::prefetch_mdr1_metadata() == 0 &&
+                  iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                  iee::creature_sprite_x2::filesystem_access_count() == prefetchedReads,
+              "Both MDR1 groups should resolve immediately with no payload inflation or repeated I/O");
+  iee::creature_sprite_x2::release();
+  expect_true(iee::creature_sprite_x2::prefetch_mdr1_metadata() == 0 &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0,
+              "Released packs must not accept prefetch work or retain metadata");
+
+  // An unrelated missing component must remain unopened by the startup hint.
+  auto unrelatedResref = target;
+  unrelatedResref[0] = 'U';
+  const auto unrelatedShard = make_mdr_shard(2, unrelatedResref);
+  write_file(catalogPath, make_catalog_v2(2, {{0x1200, 5, {0}}, {0x6110, 1, {1}}},
+      {mdrFirstShard, unrelatedShard},
+      {{0x1200, mdrFirst, 0, 0, 0}, {0x6110, unrelatedResref, 1, 1, 0}}));
+  std::filesystem::remove(root / digest_filename(unrelatedShard.sha256), ec);
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::prefetch_mdr1_metadata() == 1 &&
+                  await([&] { return iee::creature_sprite_x2::pending_catalog_loads() == 0; }) &&
+                  iee::creature_sprite_x2::resolve_frame(0x1200, mdrFirst, 0, 0, mdrFirstHandle),
+              "MDR1 prefetch should not depend on unrelated shard availability");
+  // Creating the previously absent shard after prefetch proves it was not
+  // opened/quarantined: its first explicit request must still succeed.
+  write_file(root / digest_filename(unrelatedShard.sha256), unrelatedShard.registry);
+  expect_true(await([&] {
+                return iee::creature_sprite_x2::resolve_frame(
+                    0x6110, unrelatedResref, 0, 0, v2MonsterHandle);
+              }), "MDR1 prefetch must leave unrelated missing components unprobed");
+  iee::creature_sprite_x2::release();
+
+  auto foreignPrefix = mdrSecond;
+  foreignPrefix[3] = '2';
+  const auto foreignShard = make_mdr_shard(2, foreignPrefix);
+  const std::vector<std::vector<std::byte>> rejectedPrefetchCatalogs{
+      make_grouped_component_catalog(2, 0x1200, 5, {mdrFirstShard}), // V1
+      make_catalog_v2(4, {{0x1200, 5, {0}}}, {make_mdr_shard(4, mdrFirst)},
+                      {{0x1200, mdrFirst, 0, 0, 0}}),
+      make_catalog_v2(2, {{0x6110, 1, {0}}}, {mdrFirstShard}, {{0x6110, mdrFirst, 0, 0, 0}}),
+      add_catalog_v2_directory(
+          make_grouped_component_catalog(2, 0x1200, 5, {mdrFirstShard, foreignShard}), 2,
+          {{0x1200, mdrFirst, 0, 0, 0}, {0x1200, foreignPrefix, 0, 1, 0}}),
+  };
+  for (const auto& catalog : rejectedPrefetchCatalogs) {
+    write_file(catalogPath, catalog);
+    expect_true(iee::creature_sprite_x2::prepare(root) &&
+                    iee::creature_sprite_x2::prefetch_mdr1_metadata() == 0 &&
+                    iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                    iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0,
+                "Startup hint must reject V1, x4, absent 0x1200 or a mixed MDR1/MDR2 component atomically");
+    iee::creature_sprite_x2::release();
+  }
+  write_file(catalogPath, mdrCatalog);
+  expect_true(iee::creature_sprite_x2::prepare(root) &&
+                  iee::creature_sprite_x2::prefetch_mdr1_metadata() == 2,
+              "A new pack epoch should accept fresh MDR1 prefetch work");
+  iee::creature_sprite_x2::release();
+  expect_true(iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                  iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0,
+              "Release must join/cancel in-flight prefetch without retaining the old pack");
 
   // V5 keeps V3's metadata layout but stores each frame independently. The
   // authenticated V2 directory routes directly to a shard, so startup and

@@ -1,0 +1,52 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T13:46:05.619467+00:00",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "domain": "multi-new",
+    "animation_id": "0x1200",
+    "bam_prefix": "MDR1",
+    "variant_id": "reboutcx-x2",
+    "target_scale": 2,
+    "resource_count": 567,
+    "multipart_cell_count": 9,
+    "catalog_generation": "65566299B484C244E1F45055C457457AE0934BA7AC405E6F795ED4CD16EA0A40",
+    "runtime_profile": "MonsterMulti-0x1200-unbordered-x2-metadata-prefetch"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "creature": "FIRKRA02",
+    "name": "Firkraag — dragon rouge",
+    "filter": "Nearest",
+    "scenarios": [
+      "rendu ingame après correction MonsterMulti et préchargement MDR1"
+    ],
+    "user_statement": "c'est tout bon ! valide et commite",
+    "note": "Acceptation du rendu testé par l’utilisateur ; aucune couverture exhaustive des frames/actions ni extension aux autres dragons déduite."
+  },
+  "provenance": {
+    "selected_run": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/reboutcx-full-v1/manifest.json",
+    "selected_run_sha256": "BB4E3CB8088F96834FDC81A49AEC329B67BF693D5E617E126C535D7F118F5CB3",
+    "job_file": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/jobs/reboutcx-full-v1.json"
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-mdr1-test-v1.json",
+    "job_sha256": "73E04E614FD5ED1CE45613B007570C830FEEF3E17BF27E2E144C9BB426B85E13",
+    "build_manifest": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-mdr1-test-v1/generations/65566299b484c244e1f45055c457457ae0934ba7ac405e6f795ed4cd16ea0a40/build/build-manifest.json",
+    "build_manifest_sha256": "EA72F5097B486D1BDBA6B02B6643331F37A1626C1CBEA6C7500C689AF560A1F0",
+    "catalog_sha256": "E43155A80B589D574A7DCDC92D736B256462E2C6C921BA82385DD512F8A28BFF"
+  },
+  "automatic_evidence": {
+    "runtime_dll_sha256": "289E132BB606D7D3A4F97E1EA95F69675C47379D399AB4C32AE85AD2B1B58F32",
+    "runtime_ini_sha256": "E5A737BEAAF4CDBECC2AEC440E80E641D56B76E3FDCBB68509054D844CB2A411",
+    "renderer_install_receipt": "backups/renderer/20260914T134207197900Z-7c448e10/renderer-install-receipt.json",
+    "renderer_install_receipt_sha256": "2748E62C393FCE128B70FA8CD862804CA1EC71827FD3BBBEAD8986FF09F88416",
+    "native_tests_status": "passed",
+    "native_tests": "Release build + iee_tests; tested before installation",
+    "multipart_qa_tests": "2 passed"
+  },
+  "release_manifest_modified": false
+}

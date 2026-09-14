@@ -1,7 +1,8 @@
 # Creature sprites `0x1000`: structure and engine plan
 
 Status: static investigation and initial engine implementation complete; isolated build/tests pass.
-Generated owner-4/5 catalogs and in-game validation remain pending. No game installation implied.
+Firkraag `0x1200` / MDR1 ReboutCX x2 installed and accepted by the user on 2026-09-14.
+Other owner-4/5 families are outside this validation.
 
 ## Scope
 
@@ -12,6 +13,11 @@ Only BG2EE `animation_type=1000` instances in these native subclasses:
 | `monster_quadrant` | `1000`, `1003`, `1004`, `1100`-`1105` | 4 |
 | `multi_new` | `1200`-`1208` | 9 |
 | `multi_new` | `1300` | 4 |
+
+INI section/catalog owner is not proof of the native C++ class: Firkraag `0x1200`
+uses `MonsterMulti` in game (2026-09-14 trace). Owner `5` remains the serialized
+contract; add a separate native hook restricted to `0x1200`. Other IDs remain on
+their existing routes until tested; never replace the `MultiNew` hook globally.
 
 Do not route the whole high nibble as one class. Do not extend any other nibble.
 
@@ -59,6 +65,49 @@ Executable:
 Common validated `CVidCell` fields remain applicable: palette `+0x08`, resref `+0x110`, frame
 `+0x118`, sequence `+0x11A`. The existing `CVidPalette::Realize` capture and
 `CVidCell::RenderTexture` replacement boundary can therefore be reused.
+
+`CGameAnimationTypeMonsterMulti::Render` — Firkraag correction:
+
+- entry RVA `0x32F8D0`; signature
+  `40 55 53 56 57 41 54 41 55 41 57 48 8D 6C 24 F9 48 81 EC D0 00 00 00 48 8B 05 ? ? ? ?`;
+- vtable Render slot `0x5AA3A0`; same vtable parser slot `0x5AA458` → function
+  `0x340890` → `[monster_multi]` reference at `0x340948`;
+- current cells `+0xCD8`, count byte `+0x12F9`, stride `0x138`; native loop bound
+  reads at `0x32F9A7` / `0x32FCDF`; 14-argument Render ABI, native geometry retained;
+- session `2026-09-14 15:04:34–15:05:02`: palette stack
+  `0x4242D3 ← 0x41D685 ← 0x29E459 ← 0x32FC10`; chained unwind maps `0x32FC10`
+  to entry `0x32F8D0`; nine cells `MDR12100`…`MDR12900`, sequence `0`, slot `1`;
+- `0x32FD20` / count `+0xD35` describe a different class; retain that hook.
+  The earlier sequence-63 warning belonged to Character `0x6100`; remove the
+  inferred inactive-cell exception. All nine frames must resolve before HD selection;
+- session `15:17:52–15:18:29`: owner/frame/palette selection succeeds, `0/9` replacements;
+  native packed extent `111x139` vs binder's bordered `113x141`. `MonsterMulti` must
+  explicitly request `FrameTextureLayout::Unbordered` (restricted to `0x1200`, x2):
+  descriptor = BAM `W×H`, GPU backing = `2W×2H`, content offset = `0`; preserve native
+  draw/clip/UV arguments. Layout is part of the GPU cache key and byte accounting.
+  All existing callers default to `Bordered`; Character/composite remains unchanged;
+- session `15:28:30–15:29:27`: `9/9` replacements confirmed, 117 unique MDR1
+  compositions x2/unbordered; user reports correct rendering except isolated frames.
+  Shards `444/445` loaded at first appearance; `446/447/448` loaded on action changes;
+- optimization: after installing the MonsterMulti hook, `prefetch_mdr1_metadata()`
+  queues one directory resref per shard through the existing worker. Scope: V2/x2,
+  `0x1200`, owner `5`, one component, all resrefs `MDR1*`, at most 8 shards (current: 5).
+  SHA/identity/quarantine/epoch checks and metadata budget unchanged; no pinning,
+  synchronous shard I/O, index inflation or GPU upload. Eviction can still cause later
+  lazy loading; this targets metadata latency, not model flicker or every cold-frame cost;
+- diagnostic v3: count actual `RenderTexture` submissions independently of successful
+  palette capture. `6` submitted / `6` replaced / `9` registered is INFO, not failure.
+  WARN only on observed native fallback or uncorrelated draws; do not infer clipping.
+  Samples report `submittedDraws`, `nativeFallbackDraws`, `uncorrelatedDraws`;
+- validation: Release build + `iee_tests` (multi-shard prefetch, deduplication, lazy
+  payloads, unrelated component isolation, unsupported scope, release/cancellation).
+  Runtime markers for `C:CreateCreature("FIRKRA02")`: startup `prefetch queued: 5 shards`,
+  all five ready before first appearance; `9/9` replacements or all submitted draws HD.
+  User accepted the optimized installed rendering on 2026-09-14: "c'est tout bon ! valide et commite".
+  Scope is the user's tested encounter, not exhaustive frame/action coverage. Immutable decision:
+  `sprite/index/qa-decisions/multi-new/2026-09-14-accepted-1200-mdr1-firkraag-reboutcx-x2-v1.json`;
+- install via `tools/install_renderer_candidate.py`; preserve INI/catalog hashes;
+  rollback via that install receipt's `restore`. No asset rebuild/catalog migration.
 
 Decision: preserve the native 4/9 independent draw calls and replace each registered cell directly.
 Never send these owners through `bind_composite_texture`.
@@ -170,6 +219,8 @@ Scanner/catalog rules must follow native resource grammar, not prefix alone:
    - first proof pack: one stock-present quadrant base family (`1000` is the smallest useful path),
      then `1100`; defer bulk generation.
 6. [ ] **Game validation (separate authorization)**
+   - `0x1200` / MDR1 ReboutCX x2: installed and user-accepted 2026-09-14 (decision above);
+     other families remain unvalidated by this trial;
    - only after explicit confirmation: confirm game and InfinityLoader are closed, install one test
      DLL/catalog, launch one controlled encounter, inspect logs/render, then restore or promote.
 

@@ -15,6 +15,7 @@ enum class NativeOcclusionOwner : std::uint8_t {
   Character,
   MonsterQuadrant,
   MultiNew,
+  MonsterMulti,
 };
 
 enum class NativeOcclusionReplacement : std::uint8_t {

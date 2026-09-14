@@ -221,6 +221,11 @@ struct AreaAnimationRuntime {
   std::uintptr_t multiNewPartCount{};
   std::uintptr_t multipartCurrentCells{};
   std::uintptr_t vidCellStride{};
+  // Firkraag uses native MonsterMulti despite its INI/catalog MultiNew label.
+  // Separate evidence: do not replace MultiNew's distinct Render/layout.
+  std::uintptr_t monsterMultiRender{};
+  std::string_view monsterMultiRenderSignature{};
+  std::uintptr_t monsterMultiPartCount{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -268,6 +273,12 @@ struct AreaAnimationRuntime {
     if (hasAnyMultipartCreatureEvidence && !hasCompleteMultipartCreatureEvidence) {
       return false;
     }
+    const bool hasAnyMonsterMultiEvidence = monsterMultiRender ||
+        !monsterMultiRenderSignature.empty() || monsterMultiPartCount;
+    const bool hasCompleteMonsterMultiEvidence = monsterMultiRender &&
+        !monsterMultiRenderSignature.empty() && monsterMultiPartCount &&
+        multipartCurrentCells && vidCellStride;
+    if (hasAnyMonsterMultiEvidence && !hasCompleteMonsterMultiEvidence) return false;
     return true;
   }
 };

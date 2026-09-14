@@ -178,8 +178,7 @@ struct Resource {
 };
 
 struct TextureCacheEntry {
-  FrameHandle handle{};
-  std::uint64_t paletteFingerprint{};
+  FrameTextureCacheKey key{};
   int textureId{};
   std::uint64_t physicalBytes{};
   std::uint64_t lastUse{};
@@ -1449,15 +1448,15 @@ bool upload_frame_locked(const Frame& frame,
                          const std::array<std::uint32_t, 256>& realized,
                          NativePixelEncoding encoding, std::uint32_t physicalScale,
                          int textureId, int previousTextureId,
-                         const EngineTextureApi& api) {
+                         const EngineTextureApi& api, FrameTextureLayout layout) {
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
       !gl.glGetError) {
     return false;
   }
-  const int textureLogicalWidth = logical_texture_extent(frame.logicalWidth);
-  const int textureLogicalHeight = logical_texture_extent(frame.logicalHeight);
+  const int textureLogicalWidth = logical_texture_extent(frame.logicalWidth, layout);
+  const int textureLogicalHeight = logical_texture_extent(frame.logicalHeight, layout);
   int contentPhysicalWidth = 0;
   int contentPhysicalHeight = 0;
   std::uint64_t expectedContentPixels = 0;
@@ -1477,7 +1476,7 @@ bool upload_frame_locked(const Frame& frame,
     return false;
   }
   std::vector<std::uint32_t> replacement(static_cast<std::size_t>(texturePixels), 0);
-  const auto contentOffset = static_cast<std::size_t>(physical_content_offset(physicalScale));
+  const auto contentOffset = static_cast<std::size_t>(physical_content_offset(physicalScale, layout));
   for (int y = 0; y < contentPhysicalHeight; ++y) {
     const auto sourceRow = static_cast<std::size_t>(y) * contentPhysicalWidth;
     const auto destinationRow = (static_cast<std::size_t>(y) + contentOffset) * physicalWidth +
@@ -1775,7 +1774,8 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
 bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 256>& realized,
                             NativePixelEncoding encoding, std::uint64_t fingerprint,
                             std::uint32_t physicalScale, int previousTextureId,
-                            const EngineTextureApi& api, int& textureId) {
+                            const EngineTextureApi& api, int& textureId,
+                            FrameTextureLayout layout) {
   textureId = 0;
   if (!validate_lazy_frame_source_locked(handle)) return false;
   const auto* resource = resource_for_handle_locked(handle);
@@ -1785,17 +1785,17 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
   int physicalHeight = 0;
   std::uint64_t physicalPixels = 0;
   std::uint64_t physicalBytes = 0;
-  if (!checked_physical_metrics(logical_texture_extent(frame.logicalWidth),
-                                logical_texture_extent(frame.logicalHeight),
+  if (!checked_physical_metrics(logical_texture_extent(frame.logicalWidth, layout),
+                                logical_texture_extent(frame.logicalHeight, layout),
                                 physicalScale, physicalWidth, physicalHeight,
                                 physicalPixels, physicalBytes) ||
       physicalBytes > kTextureCacheBudgetBytes) {
     return false;
   }
+  const FrameTextureCacheKey key{handle, fingerprint, layout};
   auto existing = std::find_if(g_textureCache.begin(), g_textureCache.end(),
                                [&](const TextureCacheEntry& entry) {
-                                 return entry.handle == handle &&
-                                        entry.paletteFingerprint == fingerprint;
+                                 return entry.key == key;
                                });
   if (existing != g_textureCache.end()) {
     existing->lastUse = ++g_textureUseCounter;
@@ -1814,8 +1814,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
   if (newTexture) {
     const int generated = api.DrawGenTexture(sampling_filter(), 0, 0, 0);
     if (generated <= 0) return false;
-    g_textureCache.push_back({.handle = handle,
-                              .paletteFingerprint = fingerprint,
+    g_textureCache.push_back({.key = key,
                               .textureId = generated,
                               .physicalBytes = physicalBytes});
     entryIndex = g_textureCache.size() - 1;
@@ -1852,13 +1851,12 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
     }
     if (!replacementFits()) return false;
     auto& replacement = g_textureCache[entryIndex];
-    replacement.handle = handle;
-    replacement.paletteFingerprint = fingerprint;
+    replacement.key = key;
     replacement.physicalBytes = physicalBytes;
   }
   auto& entry = g_textureCache[entryIndex];
   if (!upload_frame_locked(frame, *indices, realized, encoding, physicalScale, entry.textureId,
-                           previousTextureId, api)) {
+                           previousTextureId, api, layout)) {
     delete_texture_entry_locked(api, entryIndex);
     api.DrawBindTexture(previousTextureId);
     return false;
@@ -3012,7 +3010,7 @@ void invalidate_catalog_shard_caches_locked(
   // old generation makes them impossible cache hits; put only victim entries
   // at the front of the reuse LRU and preserve every unrelated live entry.
   for (auto& entry : g_textureCache) {
-    if (entry.handle.catalogShardIndex == shardIndex) entry.lastUse = 0;
+    if (entry.key.frame.catalogShardIndex == shardIndex) entry.lastUse = 0;
   }
 }
 
@@ -4103,13 +4101,65 @@ std::size_t pending_catalog_loads() noexcept {
   }
 }
 
+std::size_t prefetch_mdr1_metadata() noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    constexpr std::uint16_t animationId = 0x1200;
+    constexpr std::size_t maximumShards = 8;
+    if (!g_ready.load(std::memory_order_acquire) || !g_catalog.active ||
+        g_catalog.version != kRegistryCatalogDirectoryVersion || g_catalog.scale != 2) {
+      return 0;
+    }
+    const auto* animation = find_catalog_animation_locked(animationId);
+    if (!animation || animation->owner != 5 || animation->membershipCount != 1 ||
+        animation->membershipStart >= g_catalog.memberships.size()) return 0;
+    const auto componentIndex = g_catalog.memberships[animation->membershipStart];
+    if (componentIndex >= g_catalog.components.size()) return 0;
+    const auto& component = g_catalog.components[componentIndex];
+    if (component.quarantined || component.shardCount == 0 ||
+        component.shardCount > maximumShards ||
+        component.shardStart > g_catalog.shards.size() ||
+        component.shardCount > g_catalog.shards.size() - component.shardStart) return 0;
+
+    // Validate the whole target before queueing anything. A representative per
+    // shard avoids 567 resref requests; the worker retains identity/hash checks.
+    std::array<std::array<char, 8>, maximumShards> representatives{};
+    std::array<bool, maximumShards> found{};
+    for (const auto& entry : g_catalog.directory) {
+      if (entry.animationId < animationId) continue;
+      if (entry.animationId > animationId) break;
+      if (entry.componentIndex != componentIndex || entry.shardIndex < component.shardStart ||
+          entry.shardIndex - component.shardStart >= component.shardCount ||
+          entry.resref[0] != 'M' || entry.resref[1] != 'D' ||
+          entry.resref[2] != 'R' || entry.resref[3] != '1') return 0;
+      const auto offset = entry.shardIndex - component.shardStart;
+      if (!found[offset]) representatives[offset] = entry.resref;
+      found[offset] = true;
+    }
+    for (std::size_t offset = 0; offset < component.shardCount; ++offset) {
+      if (!found[offset]) return 0;
+    }
+    const auto before = g_catalogLoadQueue.size();
+    for (std::size_t offset = 0; offset < component.shardCount; ++offset) {
+      const auto status = g_catalog.shards[component.shardStart + offset].status;
+      if (status == CatalogShardEntry::Status::Resident ||
+          status == CatalogShardEntry::Status::Loading ||
+          status == CatalogShardEntry::Status::Quarantined) continue;
+      queue_catalog_load_locked(animationId, representatives[offset]);
+    }
+    return g_catalogLoadQueue.size() - before;
+  } catch (...) {
+    return 0;  // An optional hint must not disable normal lazy rendering.
+  }
+}
+
 std::uint64_t filesystem_access_count() noexcept {
   return g_filesystemAccessCounter.load(std::memory_order_relaxed);
 }
 
 bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
                         const PaletteSnapshot& palette, const EngineTextureApi& api,
-                        int& previousTextureId) noexcept {
+                        int& previousTextureId, FrameTextureLayout layout) noexcept {
   previousTextureId = 0;
   if (!g_ready.load(std::memory_order_acquire) || !api.DrawGenTexture ||
       !api.DrawBindTexture || !api.DrawDeleteTexture || !api.TexImage ||
@@ -4126,16 +4176,21 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     }
     const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
     if (!supported_physical_scale(physicalScale)) return false;
+    if (layout != FrameTextureLayout::Bordered &&
+        (layout != FrameTextureLayout::Unbordered || handle.animationId != 0x1200u ||
+         physicalScale != 2)) return false;
     const auto& frame = resource->frames[handle.frameIndex];
-    const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth);
-    const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight);
+    const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth, layout);
+    const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight, layout);
     if (logicalWidth != expectedLogicalWidth || logicalHeight != expectedLogicalHeight) {
       if (!g_dimensionMismatchLogged) {
         g_dimensionMismatchLogged = true;
         LOG_WARN(
             "Creature sprite xBR2x skipped: RenderTexture packed argument is {}x{}, "
-            "expected native bordered texture {}x{} for BAM frame {}x{}",
-            logicalWidth, logicalHeight, expectedLogicalWidth, expectedLogicalHeight,
+            "expected native {} texture {}x{} for BAM frame {}x{}",
+            logicalWidth, logicalHeight,
+            layout == FrameTextureLayout::Bordered ? "bordered" : "unbordered",
+            expectedLogicalWidth, expectedLogicalHeight,
             frame.logicalWidth, frame.logicalHeight);
       }
       return false;
@@ -4178,7 +4233,7 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     int replacementTexture = 0;
     if (!ensure_texture_locked(handle, realized, palette.encoding, fingerprint,
                                physicalScale, previousTextureId, api,
-                               replacementTexture)) {
+                               replacementTexture, layout)) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
         LOG_WARN("Creature sprite xBR2x texture creation failed; using native BAM rendering");
@@ -4190,14 +4245,15 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
       LOG_INFO(
           "Composing creature sprite {} animation=0x{:04X} frame {:03}: scale=x{}, "
           "BAM logical {}x{}, "
-          "upscaled content {}x{}, bordered texture {}x{} ({})",
+          "upscaled content {}x{}, {} texture {}x{} ({})",
           resref_name(resource->resref), handle.animationId, handle.frameIndex,
           physicalScale,
           frame.logicalWidth, frame.logicalHeight,
           static_cast<std::int64_t>(frame.logicalWidth) * physicalScale,
           static_cast<std::int64_t>(frame.logicalHeight) * physicalScale,
-          physical_texture_extent(frame.logicalWidth, physicalScale),
-          physical_texture_extent(frame.logicalHeight, physicalScale), sampling_filter_name());
+          layout == FrameTextureLayout::Bordered ? "bordered" : "unbordered",
+          physical_texture_extent(frame.logicalWidth, physicalScale, layout),
+          physical_texture_extent(frame.logicalHeight, physicalScale, layout), sampling_filter_name());
     }
     return true;
   } catch (const std::exception& error) {

@@ -64,21 +64,26 @@ inline constexpr std::uint64_t kMaximumCatalogRegistryBytes =
                     : (scale == 4 ? kMaximumX4RegistryBytes : 0);
 }
 
-// CVidCell allocates one transparent logical pixel on every side of a BAM
-// frame. The replacement backing scales that complete native texture, not
-// only the visible BAM payload.
-[[nodiscard]] constexpr int logical_texture_extent(int frameExtent) noexcept {
-  return frameExtent + 2 * kNativeLogicalBorder;
+// Ordinary CVidCell frames have a transparent logical pixel on every side.
+// Native MonsterMulti uses the BAM extent directly. The owning hook selects
+// the contract explicitly; a dimension mismatch must never select it implicitly.
+enum class FrameTextureLayout : std::uint8_t { Bordered, Unbordered };
+
+[[nodiscard]] constexpr int logical_texture_extent(
+    int frameExtent, FrameTextureLayout layout = FrameTextureLayout::Bordered) noexcept {
+  return frameExtent + (layout == FrameTextureLayout::Unbordered ? 0 : 2 * kNativeLogicalBorder);
 }
 
 [[nodiscard]] constexpr std::int64_t physical_texture_extent(
-    int frameExtent, std::uint32_t scale) noexcept {
-  return static_cast<std::int64_t>(logical_texture_extent(frameExtent)) * scale;
+    int frameExtent, std::uint32_t scale,
+    FrameTextureLayout layout = FrameTextureLayout::Bordered) noexcept {
+  return static_cast<std::int64_t>(logical_texture_extent(frameExtent, layout)) * scale;
 }
 
 [[nodiscard]] constexpr std::int64_t physical_content_offset(
-    std::uint32_t scale) noexcept {
-  return static_cast<std::int64_t>(kNativeLogicalBorder) * scale;
+    std::uint32_t scale, FrameTextureLayout layout = FrameTextureLayout::Bordered) noexcept {
+  return layout == FrameTextureLayout::Unbordered
+             ? 0 : static_cast<std::int64_t>(kNativeLogicalBorder) * scale;
 }
 
 [[nodiscard]] constexpr std::int64_t physical_layer_offset(
@@ -101,6 +106,16 @@ struct FrameHandle {
   std::uint64_t catalogGeneration{};
 
   [[nodiscard]] constexpr bool operator==(const FrameHandle&) const noexcept = default;
+};
+
+// The same indexed frame/palette can be drawn by distinct native paths.
+// Their padded/unpadded GPU backings must never share a cache entry.
+struct FrameTextureCacheKey {
+  FrameHandle frame{};
+  std::uint64_t paletteFingerprint{};
+  FrameTextureLayout layout{FrameTextureLayout::Bordered};
+
+  [[nodiscard]] constexpr bool operator==(const FrameTextureCacheKey&) const noexcept = default;
 };
 
 using EngineTextureApi = area_animation_x4::EngineTextureApi;
@@ -246,18 +261,24 @@ bool ensure_frame_payload_available(FrameHandle handle) noexcept;
 [[nodiscard]] std::uint64_t resident_index_bytes() noexcept;
 [[nodiscard]] std::uint64_t resident_catalog_metadata_bytes() noexcept;
 [[nodiscard]] std::size_t pending_catalog_loads() noexcept;
+// Optional startup hint after installing the 0x1200 hook: queue at most eight
+// MDR1 shards from a V2 x2 catalog. Uses the existing worker/budgets; no payload
+// inflation, GL calls, pinning, or synchronous shard I/O. Returns newly queued work.
+[[nodiscard]] std::size_t prefetch_mdr1_metadata() noexcept;
 // Monotonic diagnostic used by native tests/QA to prove that cache-hit draws
 // do not reopen, stat, or reread catalog/shard files.
 [[nodiscard]] std::uint64_t filesystem_access_count() noexcept;
 
 // Reuses the synchronous CVidPalette::Realize output, reconstructs the upscaled
 // frame from its current palette colors, and binds a physical x2/x4 backing
-// while retaining the engine's native bordered logical texture descriptor.
+// while retaining the engine's native logical texture descriptor. The default
+// keeps the established border; Unbordered is restricted to the x2 0x1200 trial.
 bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineTextureApi& api,
                               PaletteSnapshot& out) noexcept;
 bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
                         const PaletteSnapshot& palette, const EngineTextureApi& api,
-                        int& previousTextureId) noexcept;
+                        int& previousTextureId,
+                        FrameTextureLayout layout = FrameTextureLayout::Bordered) noexcept;
 bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount,
                             int logicalWidth, int logicalHeight,
                             const EngineTextureApi& api,

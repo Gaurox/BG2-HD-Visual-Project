@@ -88,6 +88,7 @@ using MonsterRenderFn = MonsterIcewindRenderFn;
 using CharacterRenderFn = MonsterIcewindRenderFn;
 using MonsterQuadrantRenderFn = MonsterIcewindRenderFn;
 using MultiNewRenderFn = MonsterIcewindRenderFn;
+using MonsterMultiRenderFn = MonsterIcewindRenderFn;
 using GameAreaRenderFn = void (*)(void*, void*);
 using DrawFlushGlFn = void (*)();
 using CResPvrDemandFn = void* (*)(void*);
@@ -116,6 +117,7 @@ static core::Hook<MonsterIcewindRenderFn> g_monsterIcewindRenderHook;
 static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<MonsterQuadrantRenderFn> g_monsterQuadrantRenderHook;
 static core::Hook<MultiNewRenderFn> g_multiNewRenderHook;
+static core::Hook<MonsterMultiRenderFn> g_monsterMultiRenderHook;
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
 static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
 static core::Hook<CResPvrDemandFn> g_resDemandDiagnosticHook;
@@ -261,6 +263,7 @@ enum class CreatureSpriteOwner : std::uint8_t {
   Character,
   MonsterQuadrant,
   MultiNew,
+  MonsterMulti,
 };
 
 struct CreatureSpriteLayer {
@@ -272,6 +275,7 @@ struct CreatureSpriteLayer {
   void* capturedOwner{};
   bool captureValid{};
   bool replacementDone{};
+  bool nativeDrawObserved{};
 };
 
 struct CreatureSpriteScope {
@@ -284,6 +288,7 @@ struct CreatureSpriteScope {
   std::size_t compositionCount{};
   std::size_t unregisteredPaletteOwnerCount{};
   std::size_t pendingLayer{kNoCreatureSpriteLayer};
+  std::size_t nativeDrawLayer{kNoCreatureSpriteLayer};
   std::uint64_t generation{};
   std::uint16_t animationId{};
   CreatureSpriteOwner owner{CreatureSpriteOwner::None};
@@ -291,6 +296,9 @@ struct CreatureSpriteScope {
   std::uint32_t foreignRealizes{};
   std::uint32_t unregisteredLayerRealizes{};
   std::uint32_t replacements{};
+  std::uint32_t submittedNativeDraws{};
+  std::uint32_t unreplacedNativeDraws{};
+  std::uint32_t uncorrelatedNativeDraws{};
   bool compositionIncomplete{};
   bool compositeReplacementDone{};
 };
@@ -303,6 +311,7 @@ bool g_creatureSpriteMonsterHookEnabled = false;
 bool g_creatureSpriteMonsterIcewindHookEnabled = false;
 bool g_creatureSpriteMonsterQuadrantHookEnabled = false;
 bool g_creatureSpriteMultiNewHookEnabled = false;
+bool g_creatureSpriteMonsterMultiHookEnabled = false;
 bool g_effectAnimationHooksEnabled = false;
 std::uintptr_t g_creatureSpritePaletteReturn{};
 
@@ -388,6 +397,8 @@ std::string_view native_occlusion_owner_label(core::NativeOcclusionOwner owner) 
       return "MonsterQuadrant";
     case Owner::MultiNew:
       return "MultiNew";
+    case Owner::MonsterMulti:
+      return "MonsterMulti";
     default:
       return "None";
   }
@@ -735,6 +746,8 @@ const char* creature_sprite_owner_label(CreatureSpriteOwner owner) noexcept {
       return "CGameAnimationTypeMonsterQuadrant";
     case CreatureSpriteOwner::MultiNew:
       return "CGameAnimationTypeMultiNew";
+    case CreatureSpriteOwner::MonsterMulti:
+      return "CGameAnimationTypeMonsterMulti";
     default:
       return "unknown creature owner";
   }
@@ -743,6 +756,7 @@ const char* creature_sprite_owner_label(CreatureSpriteOwner owner) noexcept {
 std::size_t expected_multipart_part_count(CreatureSpriteOwner owner,
                                           std::uint16_t animationId) noexcept {
   if (owner == CreatureSpriteOwner::MonsterQuadrant) return 4;
+  if (owner == CreatureSpriteOwner::MonsterMulti) return animationId == 0x1200u ? 9 : 0;
   if (owner != CreatureSpriteOwner::MultiNew) return 0;
   if (animationId >= 0x1200u && animationId <= 0x1208u) return 9;
   if (animationId == 0x1300u) return 4;
@@ -773,8 +787,124 @@ bool is_target_creature_animation(void* animation, CreatureSpriteOwner owner,
       return creature_sprite_x2::animation_targets_monster_quadrant(animationId);
     case CreatureSpriteOwner::MultiNew:
       return creature_sprite_x2::animation_targets_multi_new(animationId);
+    case CreatureSpriteOwner::MonsterMulti:
+      // Proven by the MDR1 runtime stack. Keep the catalog's existing owner 5;
+      // do not generalize other MonsterMulti identities before an in-game test.
+      return animationId == 0x1200u &&
+             creature_sprite_x2::animation_targets_multi_new(animationId);
     default:
       return false;
+  }
+}
+
+// Temporary MDR1 diagnostics: observe selection without resolving resources or
+// changing render state. Sample startup and later calls; never log every frame.
+std::uint32_t trace_multipart_entry(void* animation, std::uintptr_t caller,
+                                   CreatureSpriteOwner owner) noexcept {
+  if (!g_ctx || !g_ctx->manifest || !g_ctx->cfg.enablePerformanceLogging) return 0;
+  static std::array<std::atomic<std::uint32_t>, 2> ownerCalls{};
+  auto& calls = ownerCalls[owner == CreatureSpriteOwner::MonsterMulti ? 1 : 0];
+  if (calls.load(std::memory_order_relaxed) >= 512) return 0;
+  const auto sample = calls.fetch_add(1, std::memory_order_relaxed) + 1;
+  if (sample > 3 && sample != 32 && sample != 128 && sample != 512) return 0;
+  const auto& runtime = g_ctx->manifest->areaAnimations;
+  const auto base = reinterpret_cast<std::uintptr_t>(animation);
+  std::uint16_t animationId = 0;
+  std::uintptr_t vtable = 0;
+  std::uint8_t count = 0;
+  void* cells = nullptr;
+  const auto countOffset = owner == CreatureSpriteOwner::MonsterMulti
+                               ? runtime.monsterMultiPartCount : runtime.multiNewPartCount;
+  const bool idRead = animation && core::safe_read(
+      reinterpret_cast<const void*>(base + runtime.monsterAnimationId), animationId);
+  const bool vtableRead = animation && core::safe_read(animation, vtable);
+  const bool countRead = animation && core::safe_read(
+      reinterpret_cast<const void*>(base + countOffset), count);
+  const bool cellsRead = animation && core::safe_read(
+      reinterpret_cast<const void*>(base + runtime.multipartCurrentCells), cells);
+  LOG_INFO(
+      "MDR1 diagnostic v2 {} entry: call={}, this={}, caller=0x{:X}, "
+      "vtable=0x{:X}, vtableRead={}, animation=0x{:04X}, idRead={}, "
+      "hooks={}, runtime={}, registryReady={}, catalogMember={}, ownerMatches={}, "
+      "nativeParts={}, countRead={}, cells={}, cellsRead={}",
+      creature_sprite_owner_label(owner), sample, animation, caller, vtable,
+      vtableRead, animationId, idRead,
+      g_creatureSpriteHooksEnabled, runtime.enabled, creature_sprite_x2::ready(),
+      idRead && creature_sprite_x2::contains_animation(animationId),
+      idRead && (owner != CreatureSpriteOwner::MonsterMulti || animationId == 0x1200u) &&
+          creature_sprite_x2::animation_targets_multi_new(animationId),
+      count, countRead, cells, cellsRead);
+  if (!countRead || !cellsRead || !cells || count > kMaximumCreatureSpriteLayers ||
+      runtime.vidCellStride == 0) return sample;
+  const auto cellsBase = reinterpret_cast<std::uintptr_t>(cells);
+  for (std::size_t index = 0; index < count; ++index) {
+    if (index > ((std::numeric_limits<std::uintptr_t>::max)() - cellsBase) /
+                    runtime.vidCellStride) break;
+    const auto cellBase = cellsBase + index * runtime.vidCellStride;
+    std::array<char, 8> resref{};
+    std::uint16_t sequence = 0;
+    std::int16_t slot = -1;
+    const bool metadataRead = core::safe_read(
+        reinterpret_cast<const void*>(cellBase + runtime.vidCellResref), resref) &&
+        core::safe_read(reinterpret_cast<const void*>(
+            cellBase + runtime.vidCellCurrentSequence), sequence) &&
+        core::safe_read(reinterpret_cast<const void*>(
+            cellBase + runtime.vidCellCurrentFrame), slot);
+    LOG_INFO(
+        "MDR1 diagnostic v2 {} cell: call={}, part={}/{}, cell=0x{:X}, "
+        "metadataRead={}, resref={}, sequence={}, slot={}",
+        creature_sprite_owner_label(owner), sample, index + 1, count, cellBase, metadataRead,
+        effect_animation_resref_name(resref), sequence, slot);
+  }
+  return sample;
+}
+
+// Independent of owner selection: MDR1 can reach native CVidCell rendering
+// without reaching our MultiNew detour. Trace only actual MDR1 cells, with a
+// separate finite budget at each existing hook and one stack per hook.
+void trace_mdr1_native_cell(void* cell, std::uintptr_t caller,
+                            bool paletteStage) noexcept {
+  if (!g_ctx || !g_ctx->manifest || !g_ctx->cfg.enablePerformanceLogging ||
+      !g_creatureSpriteMultiNewHookEnabled || !cell) return;
+  static std::array<std::atomic<std::uint32_t>, 2> samples{};
+  auto& counter = samples[paletteStage ? 1 : 0];
+  if (counter.load(std::memory_order_relaxed) >= 18) return;
+  const auto& runtime = g_ctx->manifest->areaAnimations;
+  const auto base = reinterpret_cast<std::uintptr_t>(cell);
+  std::array<char, 8> resref{};
+  if (!core::safe_read(reinterpret_cast<const void*>(base + runtime.vidCellResref),
+                       resref) || std::memcmp(resref.data(), "MDR1", 4) != 0) return;
+  const auto sample = counter.fetch_add(1, std::memory_order_relaxed) + 1;
+  if (sample > 18) return;
+  std::uint16_t sequence = 0;
+  std::int16_t slot = -1;
+  const bool frameRead = core::safe_read(
+      reinterpret_cast<const void*>(base + runtime.vidCellCurrentSequence), sequence) &&
+      core::safe_read(reinterpret_cast<const void*>(base + runtime.vidCellCurrentFrame), slot);
+  const auto* scope = g_creatureSpriteScope;
+  const auto stage = paletteStage ? "palette" : "CVidCell::Render";
+  LOG_INFO(
+      "MDR1 diagnostic v1 native cell: stage={}, sample={}/18, cell={}, "
+      "caller=0x{:X}, resref={}, frameRead={}, sequence={}, slot={}, scope={}, "
+      "scopeAnimation=0x{:04X}, layers={}, generation={}",
+      stage, sample, cell, caller, effect_animation_resref_name(resref),
+      frameRead, sequence, slot,
+      creature_sprite_owner_label(scope ? scope->owner : CreatureSpriteOwner::None),
+      scope ? scope->animationId : 0, scope ? scope->layerCount : 0,
+      scope ? scope->generation : 0);
+  if (sample != 1) return;
+  std::array<void*, 12> stack{};
+  const auto depth = CaptureStackBackTrace(0, static_cast<DWORD>(stack.size()),
+                                          stack.data(), nullptr);
+  const auto module = core::get_module_span(nullptr);
+  const auto moduleBase = module ? reinterpret_cast<std::uintptr_t>(module->base) : 0;
+  for (USHORT index = 0; index < depth; ++index) {
+    const auto address = reinterpret_cast<std::uintptr_t>(stack[index]);
+    const bool inGame = module && address >= moduleBase &&
+                       address - moduleBase < module->size;
+    LOG_INFO("MDR1 diagnostic v1 stack: stage={}, frame={}, address=0x{:X}, "
+             "inGame={}, gameRva=0x{:X}",
+             stage, index, address, inGame, inGame ? address - moduleBase : 0);
   }
 }
 
@@ -803,9 +933,12 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                                          currentFrame, resolved.handle)) {
     static std::atomic<bool> unresolvedFrameLogged{false};
     if (!unresolvedFrameLogged.exchange(true, std::memory_order_relaxed)) {
-      LOG_WARN("Registered creature CVidCell frame could not be resolved: sequence={}, slot={}; "
-               "native rendering retained",
-               currentSequence, currentFrame);
+      LOG_WARN(
+          "Registered creature CVidCell frame could not be resolved: owner={}, "
+          "animation=0x{:04X}, resref={}, sequence={}, slot={}; native rendering "
+          "retained",
+          ownerLabel, animationId, effect_animation_resref_name(resref),
+          currentSequence, currentFrame);
     }
     return false;
   }
@@ -878,7 +1011,9 @@ bool read_multipart_creature_sprite_scope(void* animation,
   const auto expectedCount = expected_multipart_part_count(owner, animationId);
   const auto partCountOffset = owner == CreatureSpriteOwner::MonsterQuadrant
                                    ? runtime.monsterQuadrantPartCount
-                                   : runtime.multiNewPartCount;
+                                   : owner == CreatureSpriteOwner::MonsterMulti
+                                         ? runtime.monsterMultiPartCount
+                                         : runtime.multiNewPartCount;
   std::uint8_t nativeCount = 0;
   void* cells = nullptr;
   if (expectedCount == 0 || expectedCount > scope.layers.size() ||
@@ -914,11 +1049,45 @@ bool read_multipart_creature_sprite_scope(void* animation,
       return false;
     }
     auto* cell = reinterpret_cast<void*>(cellsBase + byteOffset);
+    std::array<char, 8> resref{};
+    std::int16_t currentFrame = -1;
+    std::uint16_t currentSequence = 0;
+    const auto cellBase = reinterpret_cast<std::uintptr_t>(cell);
+    if (!core::safe_read(
+            reinterpret_cast<const void*>(cellBase + runtime.vidCellResref),
+            resref) ||
+        !core::safe_read(
+            reinterpret_cast<const void*>(cellBase + runtime.vidCellCurrentFrame),
+            currentFrame) ||
+        !core::safe_read(reinterpret_cast<const void*>(
+                             cellBase + runtime.vidCellCurrentSequence),
+                         currentSequence)) {
+      static std::array<std::atomic<bool>, 65'536> unreadablePartLogged{};
+      if (!unreadablePartLogged[animationId].exchange(
+              true, std::memory_order_relaxed)) {
+        LOG_WARN(
+            "Multipart creature preflight could not read owner={}, "
+            "animation=0x{:04X}, part={}/{}; all parts remain native",
+            creature_sprite_owner_label(owner), animationId, index + 1,
+            expectedCount);
+      }
+      return false;
+    }
     if (!read_registered_creature_cell(animationId, cell,
                                        creature_sprite_owner_label(owner),
                                        resolved[index]) ||
         !creature_sprite_x2::ensure_frame_payload_available(
             resolved[index].handle)) {
+      static std::array<std::atomic<bool>, 65'536> unresolvedPartLogged{};
+      if (!unresolvedPartLogged[animationId].exchange(
+              true, std::memory_order_relaxed)) {
+        LOG_WARN(
+            "Multipart creature preflight failed: owner={}, animation=0x{:04X}, "
+            "part={}/{}, resref={}, sequence={}, slot={}; all parts remain native",
+            creature_sprite_owner_label(owner), animationId, index + 1,
+            expectedCount, effect_animation_resref_name(resref), currentSequence,
+            currentFrame);
+      }
       return false;
     }
   }
@@ -926,13 +1095,15 @@ bool read_multipart_creature_sprite_scope(void* animation,
   for (std::size_t index = 0; index < expectedCount; ++index) {
     if (!append_creature_sprite_layer(scope, resolved[index])) return false;
   }
+  if (scope.layerCount == 0) return false;
   static std::array<std::atomic<bool>, 65'536> animationReachedLogged{};
   if (!animationReachedLogged[animationId].exchange(true,
                                                      std::memory_order_relaxed)) {
     LOG_INFO(
-        "Creature sprite animation 0x{:04X} reached {}::Render with {} registered "
-        "multipart CVidCells",
-        animationId, creature_sprite_owner_label(owner), expectedCount);
+        "Creature sprite animation 0x{:04X} reached {}::Render with {}/{} "
+        "registered multipart CVidCells",
+        animationId, creature_sprite_owner_label(owner), scope.layerCount,
+        expectedCount);
   }
   return scope.layerCount == expectedCount;
 }
@@ -1548,6 +1719,7 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_creatureSpriteMonsterQuadrantHookEnabled = false;
   g_creatureSpriteMultiNewHookEnabled = false;
+  g_creatureSpriteMonsterMultiHookEnabled = false;
   g_creatureSpritePaletteReturn = 0;
   if (!ctx.cfg.creature_sprite_upscale_enabled() || !creature_sprite_x2::ready()) return false;
   if (!validate_area_animation_runtime(ctx, "Creature sprite xN")) return false;
@@ -1562,6 +1734,7 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   const bool targetsMonsterQuadrant =
       creature_sprite_x2::targets_monster_quadrant();
   const bool targetsMultiNew = creature_sprite_x2::targets_multi_new();
+  const bool targetsMonsterMulti = creature_sprite_x2::animation_targets_multi_new(0x1200u);
   if (!targetsCharacter && !targetsMonster && !targetsMonsterIcewind &&
       !targetsMonsterQuadrant && !targetsMultiNew) {
     LOG_WARN("Creature sprite xN hook skipped: pack has no validated owner scope");
@@ -1617,6 +1790,16 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
         runtime.multiNewRender);
     return false;
   }
+  if (targetsMonsterMulti &&
+      (!runtime.monsterMultiRender || !runtime.monsterMultiPartCount ||
+       !runtime.multipartCurrentCells || !runtime.vidCellStride ||
+       !matches_pattern_at_rva(*module, runtime.monsterMultiRender,
+                               runtime.monsterMultiRenderSignature))) {
+    LOG_WARN("Creature sprite xN hook skipped: CGameAnimationTypeMonsterMulti "
+             "layout/signature evidence is unavailable or differs at RVA 0x{:X}",
+             runtime.monsterMultiRender);
+    return false;
+  }
   const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
   g_creatureSpritePaletteReturn =
       moduleBase + runtime.vidPaletteRealizeCallsite + 18;
@@ -1650,6 +1833,7 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   g_creatureSpriteMonsterIcewindHookEnabled = targetsMonsterIcewind;
   g_creatureSpriteMonsterQuadrantHookEnabled = targetsMonsterQuadrant;
   g_creatureSpriteMultiNewHookEnabled = targetsMultiNew;
+  g_creatureSpriteMonsterMultiHookEnabled = targetsMonsterMulti;
   return true;
 }
 
@@ -2494,6 +2678,8 @@ static void detour_multi_new_render(
     std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
     std::uintptr_t a9, std::uintptr_t a10, std::uintptr_t a11, std::uintptr_t a12,
     std::uintptr_t a13, std::uintptr_t a14) {
+  const auto diagnosticSample = trace_multipart_entry(
+      thisPtr, reinterpret_cast<std::uintptr_t>(_ReturnAddress()), CreatureSpriteOwner::MultiNew);
   CreatureSpriteScope scope{};
   const bool target =
       g_creatureSpriteHooksEnabled &&
@@ -2518,6 +2704,14 @@ static void detour_multi_new_render(
   g_multiNewRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9,
                                   a10, a11, a12, a13, a14);
 
+  if (diagnosticSample != 0) {
+    LOG_INFO(
+        "MDR1 diagnostic v1 MultiNew result: call={}, selected={}, "
+        "animation=0x{:04X}, layers={}, replacements={}, targetRealizes={}, "
+        "foreignRealizes={}",
+        diagnosticSample, target, scope.animationId, scope.layerCount,
+        scope.replacements, scope.targetRealizes, scope.foreignRealizes);
+  }
   if (target && scope.replacements != scope.layerCount) {
     static std::array<std::atomic<bool>, 65'536> incompleteReplacementLogged{};
     if (!incompleteReplacementLogged[scope.animationId].exchange(
@@ -2527,6 +2721,74 @@ static void detour_multi_new_render(
           "(target Realize={}, foreign Realize={}); unresolved draws remained native",
           scope.animationId, scope.replacements, scope.layerCount,
           scope.targetRealizes, scope.foreignRealizes);
+    }
+  }
+}
+
+static void detour_monster_multi_render(
+    void* thisPtr, std::uintptr_t a2, std::uintptr_t a3, std::uintptr_t a4,
+    std::uintptr_t a5, std::uintptr_t a6, std::uintptr_t a7, std::uintptr_t a8,
+    std::uintptr_t a9, std::uintptr_t a10, std::uintptr_t a11, std::uintptr_t a12,
+    std::uintptr_t a13, std::uintptr_t a14) {
+  const auto diagnosticSample = trace_multipart_entry(
+      thisPtr, reinterpret_cast<std::uintptr_t>(_ReturnAddress()), CreatureSpriteOwner::MonsterMulti);
+  CreatureSpriteScope scope{};
+  const bool target = g_creatureSpriteHooksEnabled &&
+      read_multipart_creature_sprite_scope(thisPtr, CreatureSpriteOwner::MonsterMulti, scope);
+  const bool shaderScoped = g_spriteShaderScopeActive;
+  if (target || shaderScoped) scope.owner = CreatureSpriteOwner::MonsterMulti;
+  if (target) scope.generation = next_creature_sprite_generation();
+  // Preserve the native nine draws, centers, clipping and ordering. A rejected
+  // invocation masks any outer scope and never borrows its HD palette/frame.
+  CreatureSpriteScopeOverride scopeOverride(target || shaderScoped ? &scope : nullptr);
+  core::NativeOcclusionCorrelation nativeOcclusion{
+      target ? core::NativeOcclusionOwner::MonsterMulti : core::NativeOcclusionOwner::None,
+      reinterpret_cast<std::uintptr_t>(thisPtr), scope.animationId};
+  NativeOcclusionCorrelationOverride nativeOcclusionOverride(
+      g_nativeOcclusionProbeHookEnabled && target ? &nativeOcclusion : nullptr);
+  core::NativeOcclusionMaskCapture nativeOcclusionMask{};
+  NativeOcclusionMaskCaptureOverride nativeOcclusionMaskOverride(
+      g_nativeOcclusionBridgeEnabled && target ? &nativeOcclusionMask : nullptr);
+
+  g_monsterMultiRenderHook.original()(thisPtr, a2, a3, a4, a5, a6, a7, a8, a9,
+                                      a10, a11, a12, a13, a14);
+
+  if (diagnosticSample != 0) {
+    LOG_INFO("MDR1 diagnostic v3 MonsterMulti result: call={}, selected={}, "
+             "animation=0x{:04X}, layers={}, replacements={}, targetRealizes={}, foreignRealizes={}, "
+             "submittedDraws={}, nativeFallbackDraws={}, uncorrelatedDraws={}",
+             diagnosticSample, target, scope.animationId, scope.layerCount,
+             scope.replacements, scope.targetRealizes, scope.foreignRealizes,
+             scope.submittedNativeDraws, scope.unreplacedNativeDraws,
+             scope.uncorrelatedNativeDraws);
+  }
+  if (!target) return;
+  const auto observedParts = static_cast<std::size_t>(std::count_if(
+      scope.layers.begin(), scope.layers.begin() + scope.layerCount,
+      [](const auto& layer) { return layer.nativeDrawObserved; }));
+  if (scope.unreplacedNativeDraws != 0 || scope.uncorrelatedNativeDraws != 0) {
+    static std::atomic<bool> incompleteLogged{false};
+    if (!incompleteLogged.exchange(true, std::memory_order_relaxed)) {
+      LOG_WARN("Registered MonsterMulti animation 0x{:04X}: {} submitted draws, "
+               "{} native fallback draws, {} uncorrelated draws, {}/{} parts observed "
+               "(target Realize={}, foreign Realize={})",
+               scope.animationId, scope.submittedNativeDraws, scope.unreplacedNativeDraws,
+               scope.uncorrelatedNativeDraws, observedParts, scope.layerCount,
+               scope.targetRealizes, scope.foreignRealizes);
+    }
+  } else if (observedParts == scope.layerCount) {
+    static std::atomic<bool> completeLogged{false};
+    if (!completeLogged.exchange(true, std::memory_order_relaxed)) {
+      LOG_INFO("Registered MonsterMulti animation 0x{:04X} replaced {}/{} native parts",
+               scope.animationId, scope.replacements, scope.layerCount);
+    }
+  } else if (scope.submittedNativeDraws != 0) {
+    static std::atomic<bool> partialLogged{false};
+    if (!partialLogged.exchange(true, std::memory_order_relaxed)) {
+      LOG_INFO("Registered MonsterMulti animation 0x{:04X}: all {} submitted draws HD; "
+               "{}/{} registered parts not submitted (not a replacement failure)",
+               scope.animationId, scope.submittedNativeDraws,
+               scope.layerCount - observedParts, scope.layerCount);
     }
   }
 }
@@ -2614,11 +2876,20 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   auto* scope = g_creatureSpriteScope;
   const auto generation = scope ? scope->generation : 0;
   const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
+  if (caller == g_creatureSpritePaletteReturn && g_ctx && g_ctx->manifest) {
+    const auto paletteBase = reinterpret_cast<std::uintptr_t>(paletteThis);
+    const auto paletteOffset = g_ctx->manifest->areaAnimations.vidCellPalette;
+    if (paletteBase >= paletteOffset) {
+      trace_mdr1_native_cell(reinterpret_cast<void*>(paletteBase - paletteOffset),
+                             caller, true);
+    }
+  }
   bool ownerCandidate = false;
   std::size_t ownerLayer = kNoCreatureSpriteLayer;
   bool unregisteredOwner = false;
   if (scope) {
     scope->pendingLayer = kNoCreatureSpriteLayer;
+    scope->nativeDrawLayer = kNoCreatureSpriteLayer;
     for (std::size_t index = 0; index < scope->layerCount; ++index) {
       if (paletteThis == scope->layers[index].paletteOwner) {
         ownerLayer = index;
@@ -2636,6 +2907,8 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
     const bool targetCallsite = caller == g_creatureSpritePaletteReturn;
     if (ownerLayer != kNoCreatureSpriteLayer && targetCallsite) {
       ++scope->targetRealizes;
+      // Track native submission independently of palette capture success.
+      scope->nativeDrawLayer = ownerLayer;
       scope->layers[ownerLayer].captureValid = false;
       std::uint16_t paletteKind = 0xFFFF;
       ownerCandidate = core::safe_read(reinterpret_cast<const std::byte*>(paletteThis) + 0x20,
@@ -2701,6 +2974,7 @@ static int detour_item_vid_cell_render(void* cell, std::uintptr_t arg2,
                                        std::uintptr_t arg9) {
   const auto original = g_itemVidCellRenderHook.original();
   const auto caller = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
+  trace_mdr1_native_cell(cell, caller, false);
   const bool spriteRoutingOwned =
       g_spriteShaderScopeActive && caller == g_groundItemVidCellRenderReturn;
   if ((!g_itemIconHooksEnabled && !spriteRoutingOwned) || !cell) {
@@ -2863,6 +3137,16 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         replacement = ReplacementKind::CreatureSprite;
       }
     } else {
+      if (creatureScope->owner == CreatureSpriteOwner::MonsterMulti) {
+        ++creatureScope->submittedNativeDraws;
+        const auto observedLayer = creatureScope->nativeDrawLayer;
+        creatureScope->nativeDrawLayer = kNoCreatureSpriteLayer;
+        if (observedLayer < creatureScope->layerCount) {
+          creatureScope->layers[observedLayer].nativeDrawObserved = true;
+        } else {
+          ++creatureScope->uncorrelatedNativeDraws;
+        }
+      }
       const auto layerIndex = creatureScope->pendingLayer;
       creatureScope->pendingLayer = kNoCreatureSpriteLayer;
       if (layerIndex < creatureScope->layerCount) {
@@ -2872,12 +3156,19 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
             layer.capturedGeneration == creatureScope->generation) {
           if (creature_sprite_x2::bind_frame_texture(
                   layer.frame, logicalWidth, logicalHeight, layer.palette,
-                  g_creatureSpriteTextureApi, previousTextureId)) {
+                  g_creatureSpriteTextureApi, previousTextureId,
+                  creatureScope->owner == CreatureSpriteOwner::MonsterMulti
+                      ? creature_sprite_x2::FrameTextureLayout::Unbordered
+                      : creature_sprite_x2::FrameTextureLayout::Bordered)) {
             layer.replacementDone = true;
             ++creatureScope->replacements;
             replacement = ReplacementKind::CreatureSprite;
           }
         }
+      }
+      if (creatureScope->owner == CreatureSpriteOwner::MonsterMulti &&
+          replacement != ReplacementKind::CreatureSprite) {
+        ++creatureScope->unreplacedNativeDraws;
       }
     }
   } else if (g_effectAnimationHooksEnabled && g_effectAnimationRenderDepth > 0 &&
@@ -4255,6 +4546,22 @@ bool install_all(AppContext& ctx) {
               "cells +0x{:X}, count +0x{:X}, stride 0x{:X}",
               runtime.multiNewRender, runtime.multipartCurrentCells,
               runtime.multiNewPartCount, runtime.vidCellStride);
+          LOG_INFO("MDR1 diagnostic v1 armed: performanceLogging={}, "
+                   "MultiNew entry calls=1,2,3,32,128,512; native cell samples=18 "
+                   "per CVidCell/palette hook; first stack depth<=12",
+                   ctx.cfg.enablePerformanceLogging);
+        }
+        if (g_creatureSpriteMonsterMultiHookEnabled) {
+          g_monsterMultiRenderHook.create(
+              reinterpret_cast<void*>(moduleBase + runtime.monsterMultiRender),
+              reinterpret_cast<void*>(&detour_monster_multi_render));
+          g_monsterMultiRenderHook.enable();
+          LOG_INFO("Creature MonsterMulti owner scope installed: Render RVA 0x{:X}, "
+                   "cells +0x{:X}, count +0x{:X}, stride 0x{:X}; target=0x1200, catalog-owner=5",
+                   runtime.monsterMultiRender, runtime.multipartCurrentCells,
+                   runtime.monsterMultiPartCount, runtime.vidCellStride);
+          LOG_INFO("MDR1 metadata prefetch queued: {} shards; frame payloads remain lazy",
+                   creature_sprite_x2::prefetch_mdr1_metadata());
         }
         LOG_INFO("CVidCell high-level composition dispatcher installed");
       } catch (const std::exception& error) {
@@ -4263,6 +4570,7 @@ bool install_all(AppContext& ctx) {
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_monsterQuadrantRenderHook.remove();
         (void)g_multiNewRenderHook.remove();
+        (void)g_monsterMultiRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
         (void)g_vvcVidCellRenderHook.remove();
         (void)g_projectileFxRenderHook.remove();
@@ -4282,6 +4590,7 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpriteMonsterQuadrantHookEnabled = false;
         g_creatureSpriteMultiNewHookEnabled = false;
+        g_creatureSpriteMonsterMultiHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
         g_itemIconHooksEnabled = false;
         g_spriteShaderScopePrepared = false;
@@ -4300,6 +4609,7 @@ bool install_all(AppContext& ctx) {
         (void)g_monsterIcewindRenderHook.remove();
         (void)g_monsterQuadrantRenderHook.remove();
         (void)g_multiNewRenderHook.remove();
+        (void)g_monsterMultiRenderHook.remove();
         (void)g_projectileBamRenderHook.remove();
         (void)g_vvcVidCellRenderHook.remove();
         (void)g_projectileFxRenderHook.remove();
@@ -4319,6 +4629,7 @@ bool install_all(AppContext& ctx) {
         g_creatureSpriteMonsterIcewindHookEnabled = false;
         g_creatureSpriteMonsterQuadrantHookEnabled = false;
         g_creatureSpriteMultiNewHookEnabled = false;
+        g_creatureSpriteMonsterMultiHookEnabled = false;
         g_effectAnimationHooksEnabled = false;
         g_itemIconHooksEnabled = false;
         g_spriteShaderScopePrepared = false;
@@ -4507,6 +4818,7 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_monsterQuadrantRenderHook.remove();
     (void)g_multiNewRenderHook.remove();
+    (void)g_monsterMultiRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
     (void)g_vvcVidCellRenderHook.remove();
     (void)g_projectileFxRenderHook.remove();
@@ -4543,6 +4855,7 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_creatureSpriteMonsterQuadrantHookEnabled = false;
     g_creatureSpriteMultiNewHookEnabled = false;
+    g_creatureSpriteMonsterMultiHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
     g_itemIconHooksEnabled = false;
     g_spriteShaderScopePrepared = false;
@@ -4564,6 +4877,7 @@ bool install_all(AppContext& ctx) {
     (void)g_monsterIcewindRenderHook.remove();
     (void)g_monsterQuadrantRenderHook.remove();
     (void)g_multiNewRenderHook.remove();
+    (void)g_monsterMultiRenderHook.remove();
     (void)g_projectileBamRenderHook.remove();
     (void)g_vvcVidCellRenderHook.remove();
     (void)g_projectileFxRenderHook.remove();
@@ -4600,6 +4914,7 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteMonsterIcewindHookEnabled = false;
     g_creatureSpriteMonsterQuadrantHookEnabled = false;
     g_creatureSpriteMultiNewHookEnabled = false;
+    g_creatureSpriteMonsterMultiHookEnabled = false;
     g_effectAnimationHooksEnabled = false;
     g_itemIconHooksEnabled = false;
     g_spriteShaderScopePrepared = false;
@@ -4628,6 +4943,7 @@ void uninstall_all() noexcept {
   (void)g_monsterIcewindRenderHook.remove();
   (void)g_monsterQuadrantRenderHook.remove();
   (void)g_multiNewRenderHook.remove();
+  (void)g_monsterMultiRenderHook.remove();
   (void)g_projectileBamRenderHook.remove();
   (void)g_vvcVidCellRenderHook.remove();
   (void)g_projectileFxRenderHook.remove();
@@ -4664,6 +4980,7 @@ void uninstall_all() noexcept {
   g_creatureSpriteMonsterIcewindHookEnabled = false;
   g_creatureSpriteMonsterQuadrantHookEnabled = false;
   g_creatureSpriteMultiNewHookEnabled = false;
+  g_creatureSpriteMonsterMultiHookEnabled = false;
   g_effectAnimationHooksEnabled = false;
   g_itemIconHooksEnabled = false;
   g_spriteShaderScopePrepared = false;
@@ -4703,6 +5020,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_monsterIcewindRenderHook.disable();
   (void)g_monsterQuadrantRenderHook.disable();
   (void)g_multiNewRenderHook.disable();
+  (void)g_monsterMultiRenderHook.disable();
   (void)g_projectileBamRenderHook.disable();
   (void)g_vvcVidCellRenderHook.disable();
   (void)g_projectileFxRenderHook.disable();

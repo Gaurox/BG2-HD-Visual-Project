@@ -1,0 +1,768 @@
+{
+  "schema": "bg2-upscale-reboutcx-prototype-job-v1",
+  "job_id": "multi-new-1200-mdr1-reboutcx-prototype-v1",
+  "installable": false,
+  "animation_id": "0x1200",
+  "source_inventory": [
+    {
+      "name": "MDR11100"
+    },
+    {
+      "name": "MDR11200"
+    },
+    {
+      "name": "MDR11300"
+    },
+    {
+      "name": "MDR11400"
+    },
+    {
+      "name": "MDR11500"
+    },
+    {
+      "name": "MDR11600"
+    },
+    {
+      "name": "MDR11700"
+    },
+    {
+      "name": "MDR11800"
+    },
+    {
+      "name": "MDR11900"
+    },
+    {
+      "name": "MDR11104"
+    },
+    {
+      "name": "MDR11204"
+    },
+    {
+      "name": "MDR11304"
+    },
+    {
+      "name": "MDR11404"
+    },
+    {
+      "name": "MDR11504"
+    },
+    {
+      "name": "MDR11604"
+    },
+    {
+      "name": "MDR11704"
+    },
+    {
+      "name": "MDR11804"
+    },
+    {
+      "name": "MDR11904"
+    },
+    {
+      "name": "MDR11108"
+    },
+    {
+      "name": "MDR11208"
+    },
+    {
+      "name": "MDR11308"
+    },
+    {
+      "name": "MDR11408"
+    },
+    {
+      "name": "MDR11508"
+    },
+    {
+      "name": "MDR11608"
+    },
+    {
+      "name": "MDR11708"
+    },
+    {
+      "name": "MDR11808"
+    },
+    {
+      "name": "MDR11908"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/source/stock/manifest.json",
+    "run_dir": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/reboutcx-prototype-v1",
+    "multipart_qa_run_dir": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/reboutcx-prototype-v1-multipart-qa",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "2D260239D1913601AE8BF2CE8BABD66646C6F3DD296C06A368AC948F50854A27",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_audit": {
+    "animation_ini": {
+      "false_color": 0,
+      "new_palette": null,
+      "quadrants": 9,
+      "split_bams": 1
+    },
+    "audited_resources": 567,
+    "audited_frames": 54675,
+    "distinct_palettes": 5,
+    "transparent": {
+      "index": 0,
+      "rgb": [
+        0,
+        255,
+        0
+      ]
+    },
+    "shadow_black": {
+      "index": 1,
+      "rgb": [
+        0,
+        0,
+        0
+      ],
+      "non_null_frames_using_index": 2716
+    },
+    "index_2": {
+      "null_frame_count": 50058,
+      "null_contract": "exclusive 1x1 center 0,0",
+      "non_null_frames_using_index": 2975,
+      "contract": "singleton class; never interchangeable with material indices"
+    },
+    "material": "3..255"
+  },
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "reserved_index_2": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reference": {
+    "resref": "MDR11500",
+    "frame": 4,
+    "x4_pixel_sha256": "E3DA1E16F7847DBAB1A82F59726E91CAFD117AC2F6EBDFF6D9CF79BB16A754C8",
+    "x2_pixel_sha256": "A9175B671239E6A5AA62929A3BD7F2031F66E590627A452453F6389CA26524D3"
+  },
+  "sample": {
+    "groups": [
+      {
+        "name": "part-1-direction-0",
+        "resref": "MDR11100",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-2-direction-0",
+        "resref": "MDR11200",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-3-direction-0",
+        "resref": "MDR11300",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-4-direction-0",
+        "resref": "MDR11400",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-5-direction-0",
+        "resref": "MDR11500",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-6-direction-0",
+        "resref": "MDR11600",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-7-direction-0",
+        "resref": "MDR11700",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-8-direction-0",
+        "resref": "MDR11800",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-9-direction-0",
+        "resref": "MDR11900",
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-1-direction-4",
+        "resref": "MDR11104",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-2-direction-4",
+        "resref": "MDR11204",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-3-direction-4",
+        "resref": "MDR11304",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-4-direction-4",
+        "resref": "MDR11404",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-5-direction-4",
+        "resref": "MDR11504",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-6-direction-4",
+        "resref": "MDR11604",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-7-direction-4",
+        "resref": "MDR11704",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-8-direction-4",
+        "resref": "MDR11804",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-9-direction-4",
+        "resref": "MDR11904",
+        "frames": [
+          48
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-1-direction-8",
+        "resref": "MDR11108",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-2-direction-8",
+        "resref": "MDR11208",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-3-direction-8",
+        "resref": "MDR11308",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-4-direction-8",
+        "resref": "MDR11408",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-5-direction-8",
+        "resref": "MDR11508",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-6-direction-8",
+        "resref": "MDR11608",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-7-direction-8",
+        "resref": "MDR11708",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-8-direction-8",
+        "resref": "MDR11808",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      },
+      {
+        "name": "part-9-direction-8",
+        "resref": "MDR11908",
+        "frames": [
+          96
+        ],
+        "duration_ms": 100
+      }
+    ]
+  },
+  "multipart_qa": {
+    "compositions": [
+      {
+        "name": "firkraag-direction-0-sequence",
+        "part_count": 9,
+        "duration_ms": 100,
+        "steps": [
+          {
+            "label": "direction 0 - frame 0",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 0
+              }
+            ]
+          },
+          {
+            "label": "direction 0 - frame 1",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 1
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 1
+              }
+            ]
+          },
+          {
+            "label": "direction 0 - frame 2",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 2
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 2
+              }
+            ]
+          },
+          {
+            "label": "direction 0 - frame 3",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 3
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 3
+              }
+            ]
+          },
+          {
+            "label": "direction 0 - frame 4",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 4
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "firkraag-directions",
+        "part_count": 9,
+        "duration_ms": 500,
+        "steps": [
+          {
+            "label": "direction 0 - frame 0",
+            "parts": [
+              {
+                "resref": "MDR11100",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11200",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11300",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11400",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11500",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11600",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11700",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11800",
+                "frame": 0
+              },
+              {
+                "resref": "MDR11900",
+                "frame": 0
+              }
+            ]
+          },
+          {
+            "label": "direction 4 - frame 48",
+            "parts": [
+              {
+                "resref": "MDR11104",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11204",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11304",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11404",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11504",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11604",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11704",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11804",
+                "frame": 48
+              },
+              {
+                "resref": "MDR11904",
+                "frame": 48
+              }
+            ]
+          },
+          {
+            "label": "direction 8 - frame 96",
+            "parts": [
+              {
+                "resref": "MDR11108",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11208",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11308",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11408",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11508",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11608",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11708",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11808",
+                "frame": 96
+              },
+              {
+                "resref": "MDR11908",
+                "frame": 96
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

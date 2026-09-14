@@ -296,6 +296,9 @@ constexpr BuildManifest kKnownBuilds[] = {
             0xD35,
             0xCD8,
             0x138,
+            0x32F8D0,
+            "40 55 53 56 57 41 54 41 55 41 57 48 8D 6C 24 F9 48 81 EC D0 00 00 00 48 8B 05 ? ? ? ?",
+            0x12F9,
         },
         {
             true,
@@ -454,6 +457,9 @@ static_assert(validate_pattern_format(
 static_assert(validate_pattern_format(
                   kKnownBuilds[2].areaAnimations.multiNewRenderSignature),
               "BG2EE 2.7.3 MultiNew Render signature format is invalid");
+static_assert(validate_pattern_format(
+                  kKnownBuilds[2].areaAnimations.monsterMultiRenderSignature),
+              "BG2EE 2.7.3 MonsterMulti Render signature format is invalid");
 static_assert(
     validate_pattern_format(kKnownBuilds[2].worldOverlay.gameAreaRenderSignature),
     "BG2EE 2.7.3 CGameArea::Render signature format is invalid");
