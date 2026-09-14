@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P7.2 Character installée, QA humaine en cours.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P7.2 Character retenue non inférieure ; audit P8 `0x6100` terminé.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -375,6 +375,14 @@ out[p] = nearest contraint selon §2
 
 **Validation :** Character accepté ingame, recoloration/composition et A/B corrects.
 **Hors périmètre :** extension, Recommended, choix menu/INI, hot-swap, release : demande distincte.
+
+## P8 — Couverture ReboutCX complète de `0x6100`
+
+- Portée autorisée : terminer les 65 appartenances de l'humain guerrier avant toute extension globale. Conserver xBR canonique et les composants CHMB1/WQLS0 scellés ; aucune modification des autres animations, installation ou release pendant la production offline.
+- Orchestration bornée : `pipeline/scripts/reboutcx_character_family.py`, job `sprite/families/playable-characters/6100-human-male-fighter/family-runs/complete-reboutcx-p8-v1/jobs/human-male-fighter-complete-reboutcx-p8-v1.json`. Une famille source en mémoire à la fois ; production GPU future strictement sérielle.
+- Audit CPU `audit.json`, SHA `276F1B3803B5E6F9EFFDE2935F3F231AF6616D26C20C2F283D2129113D061E00` : 65 composants = 4 body + 18 helmet + 12 shield + 31 weapon ; 656 ressources/180 337 frames, 28 850 marqueurs exacts, 142 540 inférences restantes après CHMB1/WQLS0. Transparence 0 et couverture des 256 indices par le contrat Character vérifiées ; 12 palettes BAM sources restent guides xBR, palette réalisée RANGES12 fixe pour ReboutCX.
+- Les 65 composants xBR sont partagés avec d'autres animations : le catalogue final doit remplacer seulement `(0x6100, old_component_index)`. Estimation issue des deux runs validés : `86,7 min` de temps modèle restant, hors xBR/quantification/IO. Aucun GPU lancé à ce checkpoint.
+- Étape suivante : générer les 63 jobs avec témoins déterministes, exécuter les runs sériellement, vérifier chaque composant, puis assembler un catalogue dérivé 65/65. Annoncer le GPU avant lancement.
 
 ## 3. Vérifications / reprise
 
