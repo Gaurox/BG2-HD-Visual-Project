@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -26,7 +27,7 @@ from reboutcx_batch import (
     prepare_inference_rgb,
 )
 from reboutcx_quantize import semantic_classes_for_job
-from run_creature_sprite_x2 import load_source_frames
+from run_creature_sprite_x2 import CATALOG_OWNER_CHARACTER, load_source_frames
 from workspace_paths import resolve_path_reference
 
 
@@ -407,7 +408,85 @@ def run_logged(command: list[str], log_path: Path) -> None:
         raise RuntimeError(f"child process failed; inspect {relative(log_path)}")
 
 
-def build_family(job_path: Path) -> dict[str, Any]:
+def build_component(
+    record: dict[str, Any],
+    *,
+    position: int,
+    count: int,
+    chainner_python: Path,
+    full_script: Path,
+    logs: Path,
+) -> dict[str, Any]:
+    prefix = record["bam_prefix"]
+    component_path = resolve_path_reference(record["job"], required=True, root=PROJECT_ROOT)
+    require_hash(component_path, record["job_sha256"], f"{prefix} prepared job")
+    component_job = read_json(component_path)
+    component_run = resolve_path_reference(component_job["paths"]["run_dir"], root=PROJECT_ROOT)
+    component_manifest_path = component_run / "manifest.json"
+    started = time.perf_counter()
+    print(f"[{position}/{count}] {prefix} start", flush=True)
+    if not component_manifest_path.exists():
+        run_logged(
+            [str(chainner_python), str(full_script), "_execute", str(component_path)],
+            logs / f"{prefix.lower()}.run.log",
+        )
+    run_logged(
+        [sys.executable, str(full_script), "verify", str(component_path)],
+        logs / f"{prefix.lower()}.verify.log",
+    )
+    component_manifest = read_json(component_manifest_path)
+    if (
+        component_manifest.get("schema") != FULL_RUN_SCHEMA
+        or component_manifest.get("status") != "completed-pending-human-review"
+        or component_manifest.get("job_sha256") != sha256_file(component_path)
+    ):
+        raise RuntimeError(f"{prefix}: invalid verified component manifest")
+    result = {
+        "bam_prefix": prefix,
+        "component_index": record["component_index"],
+        "job": record["job"],
+        "job_sha256": record["job_sha256"],
+        "manifest": relative(component_manifest_path),
+        "manifest_sha256": sha256_file(component_manifest_path),
+        "resources": component_manifest["coverage"]["resources"],
+        "frames": component_manifest["coverage"]["frames"],
+        "model_frames": component_manifest["coverage"]["unique_model_frames"],
+    }
+    print(
+        f"[{position}/{count}] {prefix} verified {time.perf_counter() - started:.1f}s",
+        flush=True,
+    )
+    return result
+
+
+def assign_exact_component_indices(
+    results: list[dict[str, Any]], animation_id: str
+) -> None:
+    from reboutcx_catalog import animation_component_resrefs, parent_context
+
+    parent = parent_context(read_json(CATALOG_SEED_JOB))
+    component_by_resrefs = {
+        frozenset(resrefs): index
+        for index, resrefs in animation_component_resrefs(parent, animation_id).items()
+    }
+    if len(component_by_resrefs) != 65:
+        raise RuntimeError("0x6100 parent component RESREF sets are not unique")
+    assigned: set[int] = set()
+    for result in results:
+        manifest = read_json(
+            resolve_path_reference(result["manifest"], required=True, root=PROJECT_ROOT)
+        )
+        signature = frozenset(item["resref"] for item in manifest["resources"])
+        component_index = component_by_resrefs.get(signature)
+        if component_index is None or component_index in assigned:
+            raise RuntimeError(f"{result['bam_prefix']}: exact component mapping differs")
+        result["component_index"] = component_index
+        assigned.add(component_index)
+
+
+def build_family(job_path: Path, *, workers: int = 1) -> dict[str, Any]:
+    if workers < 1 or workers > 32:
+        raise RuntimeError("workers must be between 1 and 32")
     job = load_family_job(job_path)
     audit_report = load_audit(job_path, job)
     _template_path, template = load_template(job)
@@ -442,50 +521,36 @@ def build_family(job_path: Path) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     started_family = time.perf_counter()
     count = len(preparation["members"])
-    for position, record in enumerate(preparation["members"], start=1):
-        prefix = record["bam_prefix"]
-        component_path = resolve_path_reference(record["job"], required=True, root=PROJECT_ROOT)
-        require_hash(component_path, record["job_sha256"], f"{prefix} prepared job")
-        component_job = read_json(component_path)
-        component_run = resolve_path_reference(component_job["paths"]["run_dir"], root=PROJECT_ROOT)
-        component_manifest_path = component_run / "manifest.json"
-        started = time.perf_counter()
-        print(f"[{position}/{count}] {prefix} start", flush=True)
-        if not component_manifest_path.exists():
-            run_logged(
-                [str(chainner_python), str(full_script), "_execute", str(component_path)],
-                logs / f"{prefix.lower()}.run.log",
-            )
-        run_logged(
-            [sys.executable, str(full_script), "verify", str(component_path)],
-            logs / f"{prefix.lower()}.verify.log",
+    indexed = list(enumerate(preparation["members"], start=1))
+    existing: list[tuple[int, dict[str, Any]]] = []
+    pending: list[tuple[int, dict[str, Any]]] = []
+    for item in indexed:
+        component_job = read_json(
+            resolve_path_reference(item[1]["job"], required=True, root=PROJECT_ROOT)
         )
-        component_manifest = read_json(component_manifest_path)
-        if (
-            component_manifest.get("schema") != FULL_RUN_SCHEMA
-            or component_manifest.get("status") != "completed-pending-human-review"
-            or component_manifest.get("job_sha256") != sha256_file(component_path)
-        ):
-            raise RuntimeError(f"{prefix}: invalid verified component manifest")
-        results.append(
-            {
-                "bam_prefix": prefix,
-                "component_index": record["component_index"],
-                "job": record["job"],
-                "job_sha256": record["job_sha256"],
-                "manifest": relative(component_manifest_path),
-                "manifest_sha256": sha256_file(component_manifest_path),
-                "resources": component_manifest["coverage"]["resources"],
-                "frames": component_manifest["coverage"]["frames"],
-                "model_frames": component_manifest["coverage"]["unique_model_frames"],
-            }
+        component_run = resolve_path_reference(
+            component_job["paths"]["run_dir"], root=PROJECT_ROOT
         )
-        print(
-            f"[{position}/{count}] {prefix} verified {time.perf_counter() - started:.1f}s",
-            flush=True,
-        )
-        del component_manifest
-        gc.collect()
+        (existing if (component_run / "manifest.json").exists() else pending).append(item)
+    for queue in (existing, pending):
+        for start in range(0, len(queue), workers):
+            batch = queue[start : start + workers]
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = [
+                    pool.submit(
+                        build_component,
+                        record,
+                        position=position,
+                        count=count,
+                        chainner_python=chainner_python,
+                        full_script=full_script,
+                        logs=logs,
+                    )
+                    for position, record in batch
+                ]
+                for future in as_completed(futures):
+                    results.append(future.result())
+            gc.collect()
 
     completed = completed_members(job)
     audit_by_prefix = {item["bam_prefix"]: item for item in audit_report["members"]}
@@ -501,6 +566,7 @@ def build_family(job_path: Path) -> dict[str, Any]:
                 "sealed_completed_member": True,
             }
         )
+    assign_exact_component_indices(results, job["animation_id"])
     results.sort(key=lambda item: int(item["component_index"]))
     manifest = {
         "schema": RUN_SCHEMA,
@@ -550,7 +616,7 @@ def catalog_replacement(
 ) -> dict[str, Any]:
     return {
         "animation_id": animation["animation_id"],
-        "expected_owner": int(animation["owner"]),
+        "expected_owner": CATALOG_OWNER_CHARACTER,
         "expected_component_indices": [int(component["index"])],
         "expected_component_digests": [component["digest"]],
         "expected_logical_component_digests": [logical_digest],
@@ -576,28 +642,31 @@ def catalog_family(job_path: Path) -> dict[str, Any]:
     seed = read_json(CATALOG_SEED_JOB)
     if seed.get("schema") != CATALOG_JOB_SCHEMA or seed.get("installable") is not False:
         raise RuntimeError("invalid derived catalog seed job")
-    pointer_path = resolve_path_reference(
-        seed["paths"]["parent_pointer"], required=True, root=PROJECT_ROOT
-    )
-    require_hash(pointer_path, seed["parent"]["pointer_sha256"], "catalog parent pointer")
-    pointer = read_json(pointer_path)
-    parent_build_path = resolve_path_reference(pointer["generation_dir"], root=PROJECT_ROOT) / pointer["build_manifest"]
-    require_hash(parent_build_path, seed["parent"]["build_manifest_sha256"], "catalog parent build")
-    parent = read_json(parent_build_path)
+    from reboutcx_catalog import animation_component_resrefs, parent_context
+
+    parent = parent_context(seed)
     animation = next(
-        item for item in parent["animations"] if item["animation_id"] == job["animation_id"]
+        item
+        for item in parent["index"]["animations"]
+        if item["animation_id"] == job["animation_id"]
     )
-    components = {int(item["index"]): item for item in parent["components"]}
-    logical_digests = parent["registry_catalog_logical_component_digests"]
+    if int(animation.get("owner", -1)) != CATALOG_OWNER_CHARACTER:
+        raise RuntimeError("0x6100 parent owner is not Character")
+    components = {int(item["index"]): item for item in parent["index"]["components"]}
+    logical_digests = parent["logical_digests"]
+    parent_resrefs = animation_component_resrefs(parent, job["animation_id"])
+    component_by_resrefs: dict[frozenset[str], int] = {}
+    for index, resrefs in parent_resrefs.items():
+        signature = frozenset(resrefs)
+        if signature in component_by_resrefs:
+            raise RuntimeError("0x6100 parent has duplicate component RESREF sets")
+        component_by_resrefs[signature] = index
     replacements = {
         (item["animation_id"], int(item["expected_component_indices"][0])): copy.deepcopy(item)
         for item in seed["replacements"]
     }
     family_targets: set[tuple[str, int]] = set()
     for member in family_manifest["members"]:
-        component_index = int(member["component_index"])
-        if component_index not in animation["component_indices"]:
-            raise RuntimeError(f"{member['bam_prefix']}: component absent from 0x6100")
         manifest_path = resolve_path_reference(
             member["manifest"], required=True, root=PROJECT_ROOT
         )
@@ -609,9 +678,13 @@ def catalog_family(job_path: Path) -> dict[str, Any]:
             or component_manifest.get("animation_id") != job["animation_id"]
         ):
             raise RuntimeError(f"{member['bam_prefix']}: invalid catalog component manifest")
+        signature = frozenset(item["resref"] for item in component_manifest["resources"])
+        component_index = component_by_resrefs.get(signature)
+        if component_index is None:
+            raise RuntimeError(f"{member['bam_prefix']}: component absent from 0x6100")
         component = components[component_index]
         start = int(component["shard_start"])
-        shards = parent["shards"][start : start + int(component["shard_count"])]
+        shards = parent["index"]["shards"][start : start + int(component["shard_count"])]
         target = (job["animation_id"], component_index)
         replacements[target] = catalog_replacement(
             animation=animation,
@@ -742,6 +815,22 @@ def audit(job_path: Path) -> dict[str, Any]:
         item["animation_id"]: {int(value) for value in item["component_indices"]}
         for item in build["animations"]
     }
+    from reboutcx_catalog import animation_component_resrefs, parent_context
+
+    seed = read_json(CATALOG_SEED_JOB)
+    if (
+        seed["paths"]["parent_pointer"] != job["parent_catalog_pointer"]
+        or seed["parent"]["pointer_sha256"] != job["parent_catalog_pointer_sha256"]
+    ):
+        raise RuntimeError("Character catalog seed parent differs")
+    parent_resrefs = animation_component_resrefs(
+        parent_context(seed), job["animation_id"]
+    )
+    component_by_resrefs = {
+        frozenset(resrefs): index for index, resrefs in parent_resrefs.items()
+    }
+    if len(component_by_resrefs) != len(prefixes):
+        raise RuntimeError("Character parent component RESREF sets are not unique")
 
     reports: list[dict[str, Any]] = []
     layer_counts: Counter[str] = Counter()
@@ -749,7 +838,7 @@ def audit(job_path: Path) -> dict[str, Any]:
     total_resources = total_frames = total_null = total_model_frames = 0
     total_model_pixels = 0
 
-    for member_ref, prefix, component_index in zip(members, prefixes, component_indices):
+    for member_ref, prefix in zip(members, prefixes, strict=True):
         member_path = resolve_path_reference(member_ref, required=True, root=PROJECT_ROOT)
         member_job = read_json(member_path)
         if str(member_job["animation"]["bam_prefix"]).upper() != prefix:
@@ -767,6 +856,11 @@ def audit(job_path: Path) -> dict[str, Any]:
             or source_manifest["layer"]["kind"] != layer
         ):
             raise RuntimeError(f"{prefix}: source contract differs")
+        component_index = component_by_resrefs.get(
+            frozenset(str(resource["source"]["name"]).upper() for resource in resources)
+        )
+        if component_index is None:
+            raise RuntimeError(f"{prefix}: source resources absent from parent component")
 
         seen_payloads: set[tuple[str, str]] = set()
         model_frames = model_pixels = 0
@@ -783,7 +877,9 @@ def audit(job_path: Path) -> dict[str, Any]:
                 continue
             seen_payloads.add(payload)
             for frame in resource["frames"]:
-                if not is_null_frame(frame, 2):
+                if not is_null_frame(frame, 2) and np.any(
+                    frame.indices != frame.transparent
+                ):
                     model_frames += 1
                     model_pixels += int(frame.width) * int(frame.height)
         invalid_indices = [int(value) for value in np.flatnonzero(used) if value not in classified]
@@ -894,6 +990,7 @@ def main() -> int:
         "command", choices=("audit", "prepare", "_prepare", "build", "catalog")
     )
     parser.add_argument("job", type=Path)
+    parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
     job_path = args.job.resolve()
     if args.command == "audit":
@@ -903,7 +1000,7 @@ def main() -> int:
     elif args.command == "_prepare":
         prepare_execute(job_path)
     elif args.command == "build":
-        build_family(job_path)
+        build_family(job_path, workers=args.workers)
     else:
         catalog_family(job_path)
     return 0
