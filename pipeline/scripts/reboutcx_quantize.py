@@ -39,6 +39,22 @@ def character_chmb1_classes() -> dict[str, list[int]]:
     return classes
 
 
+def semantic_classes_for_job(job: Mapping[str, Any]) -> tuple[dict[str, list[int]], str | None]:
+    """Resolve a versioned built-in profile or an existing explicit class mapping."""
+    profile = job.get("semantic_classes_id")
+    explicit = job.get("semantic_classes")
+    if profile is None:
+        if not isinstance(explicit, Mapping):
+            raise RuntimeError("job has no semantic palette classes")
+        return expand_classes(explicit), None
+    if profile != CHARACTER_CHMB1_CLASSES_ID:
+        raise RuntimeError(f"unknown semantic palette classes: {profile}")
+    classes = character_chmb1_classes()
+    if explicit is not None and expand_classes(explicit) != classes:
+        raise RuntimeError("explicit semantic classes differ from the versioned profile")
+    return classes, str(profile)
+
+
 def character_chmb1_palette_rgb(ramps_rgb: np.ndarray) -> np.ndarray:
     """Neutral reference RGB from seven resolved RANGES12 rows, in CRE color order.
 

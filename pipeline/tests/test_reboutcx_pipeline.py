@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -126,6 +129,17 @@ class ReboutCXBatchContractTests(unittest.TestCase):
             np.asarray([[[255, 0, 0], [255, 0, 0], [0, 0, 255], [0, 0, 255]]], dtype=np.uint8),
         )
 
+    def test_inference_can_use_an_effective_character_palette(self) -> None:
+        frame = source_frame(np.asarray([[3, 0, 4]], dtype=np.uint8), self.palette)
+        effective = self.palette.copy()
+        effective[3] = (12, 34, 56)
+        effective[4] = (78, 90, 123)
+        filled = batch.prepare_inference_rgb(frame, effective)
+        np.testing.assert_array_equal(
+            filled,
+            np.asarray([[[12, 34, 56], [12, 34, 56], [78, 90, 123]]], dtype=np.uint8),
+        )
+
     def test_null_frame_contract_is_exact(self) -> None:
         frame = source_frame(np.asarray([[2]], dtype=np.uint8), self.palette)
         self.assertTrue(batch.is_null_frame(frame, 2))
@@ -210,6 +224,59 @@ class ReboutCXCharacterAuditTests(unittest.TestCase):
                 self.assertEqual(len(set(table[start : start + 8].tolist())), 1)
             changed = set(np.flatnonzero(np.any(palette != baseline, axis=1)).tolist())
             self.assertEqual(changed, expected)
+
+    def test_versioned_class_profile_is_fail_closed(self) -> None:
+        classes, profile = quantize.semantic_classes_for_job(
+            {"semantic_classes_id": quantize.CHARACTER_CHMB1_CLASSES_ID}
+        )
+        self.assertEqual(classes, quantize.character_chmb1_classes())
+        self.assertEqual(profile, quantize.CHARACTER_CHMB1_CLASSES_ID)
+        with self.assertRaisesRegex(RuntimeError, "unknown semantic palette classes"):
+            quantize.semantic_classes_for_job({"semantic_classes_id": "unknown"})
+        with self.assertRaisesRegex(RuntimeError, "differ from the versioned profile"):
+            quantize.semantic_classes_for_job(
+                {
+                    "semantic_classes_id": quantize.CHARACTER_CHMB1_CLASSES_ID,
+                    "semantic_classes": {"all": "0..255"},
+                }
+            )
+
+    def test_palette_profiles_are_derived_from_pinned_ranges12_bytes(self) -> None:
+        gradients = np.arange(12 * 256 * 3, dtype=np.uint32).reshape(256, 12, 3)
+        gradients = ((gradients * 29 + 7) % 256).astype(np.uint8)
+        buffer = io.BytesIO()
+        Image.fromarray(gradients, mode="RGB").save(buffer, format="BMP")
+        raw = buffer.getvalue()
+        rows = [3, 9, 17, 31, 63, 127, 255]
+        palette = quantize.character_chmb1_palette_rgb(gradients[rows])
+        job = {
+            "semantic_classes_id": quantize.CHARACTER_CHMB1_CLASSES_ID,
+            "palette_reference": {
+                "id": quantize.CHARACTER_CHMB1_PALETTE_ID,
+                "source": {
+                    "resource": "RANGES12",
+                    "type": 1,
+                    "locator": "0x00000189",
+                    "bif": "data/Default.bif",
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                },
+                "profiles": [
+                    {
+                        "name": "reference",
+                        "colors": rows,
+                        "palette_rgb_sha256": hashlib.sha256(palette.tobytes()).hexdigest(),
+                    }
+                ],
+            },
+        }
+        with (
+            mock.patch.object(batch, "load_key", return_value=(["unused"], [("RANGES12", 1, 0x189)])),
+            mock.patch.object(batch, "resolve_resource", return_value=(raw, "data/Default.bif")),
+        ):
+            profiles, evidence = batch.load_palette_profiles(job)
+        np.testing.assert_array_equal(profiles[0]["palette"], palette)
+        self.assertEqual(evidence["source"]["locator"], "0x00000189")
+        self.assertEqual(evidence["source"]["dimensions"], [12, 256])
 
     def test_equal_colors_do_not_merge_classes_and_indices_recolor_without_requantizing(self) -> None:
         classes = quantize.character_chmb1_classes()

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import struct
@@ -20,12 +21,16 @@ from PIL import Image, ImageDraw
 from scipy.ndimage import distance_transform_edt
 
 from reboutcx_quantize import (
+    CHARACTER_CHMB1_CLASSES_ID,
+    CHARACTER_CHMB1_PALETTE_ID,
     QUANTIZER_ID,
-    expand_classes,
+    character_chmb1_palette_rgb,
     quantize_classed_oklab,
     reconstruct_rgba,
+    semantic_classes_for_job,
     source_representatives,
 )
+from bg2lib import load_key, resolve_resource
 from run_creature_sprite_x2 import (
     LEGACY_UPSCALE,
     REGISTRY_FRAME_HEADER_BYTES,
@@ -80,8 +85,13 @@ def is_null_frame(frame: SourceFrame, marker_index: int) -> bool:
     )
 
 
-def prepare_inference_rgb(frame: SourceFrame) -> np.ndarray | None:
-    rgb = np.asarray(frame.palette[frame.indices], dtype=np.uint8)
+def prepare_inference_rgb(
+    frame: SourceFrame, palette_rgb: np.ndarray | None = None
+) -> np.ndarray | None:
+    palette = frame.palette if palette_rgb is None else np.asarray(palette_rgb, dtype=np.uint8)
+    if palette.shape != (256, 3):
+        raise RuntimeError("inference palette must contain 256 RGB entries")
+    rgb = np.asarray(palette[frame.indices], dtype=np.uint8)
     opaque = frame.indices != frame.transparent
     if not np.any(opaque):
         return None
@@ -94,6 +104,72 @@ def prepare_inference_rgb(frame: SourceFrame) -> np.ndarray | None:
     if not np.array_equal(filled[opaque], rgb[opaque]):
         raise RuntimeError(f"{frame.resref} frame {frame.index}: opaque RGB changed during fill")
     return np.asarray(filled, dtype=np.uint8)
+
+
+def load_palette_profiles(job: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
+    """Load a pinned native Character palette resource; absent means legacy BAM RGB."""
+    specification = job.get("palette_reference")
+    if specification is None:
+        return [], None
+    if (
+        specification.get("id") != CHARACTER_CHMB1_PALETTE_ID
+        or job.get("semantic_classes_id") != CHARACTER_CHMB1_CLASSES_ID
+    ):
+        raise RuntimeError("Character palette reference/profile mismatch")
+    source = specification.get("source")
+    if not isinstance(source, dict) or str(source.get("resource", "")).upper() != "RANGES12":
+        raise RuntimeError("Character palette reference requires RANGES12")
+    bifs, resources = load_key()
+    matches = [
+        entry
+        for entry in resources
+        if entry[0].upper() == "RANGES12" and int(entry[1]) == int(source.get("type", 1))
+    ]
+    if len(matches) != 1:
+        raise RuntimeError("RANGES12 resource identity is ambiguous")
+    entry = matches[0]
+    raw, bif_name = resolve_resource(bifs, entry[2])
+    if (
+        f"0x{entry[2]:08X}".upper() != str(source.get("locator", "")).upper()
+        or bif_name.replace("\\", "/").lower() != str(source.get("bif", "")).lower()
+        or hashlib.sha256(raw).hexdigest().upper() != str(source.get("sha256", "")).upper()
+    ):
+        raise RuntimeError("RANGES12 resource provenance differs")
+    image = Image.open(io.BytesIO(raw)).convert("RGB")
+    if image.size != (12, 256):
+        raise RuntimeError("RANGES12 dimensions differ")
+    gradients = np.asarray(image, dtype=np.uint8)
+    profiles = []
+    seen: set[str] = set()
+    for record in specification.get("profiles", []):
+        name = str(record.get("name", ""))
+        rows = tuple(int(value) for value in record.get("colors", []))
+        if not name or name in seen or len(rows) != 7 or any(not 0 <= value < 256 for value in rows):
+            raise RuntimeError("invalid Character palette profile")
+        seen.add(name)
+        palette = character_chmb1_palette_rgb(gradients[list(rows)])
+        digest = sha256_pixels(palette)
+        if digest != str(record.get("palette_rgb_sha256", "")).upper():
+            raise RuntimeError(f"Character palette profile differs: {name}")
+        profiles.append({"name": name, "colors": list(rows), "palette": palette, "sha256": digest})
+    if not profiles or profiles[0]["name"] != "reference":
+        raise RuntimeError("first Character palette profile must be reference")
+    evidence = {
+        "id": specification["id"],
+        "source": {
+            "resource": "RANGES12",
+            "type": int(entry[1]),
+            "locator": f"0x{entry[2]:08X}",
+            "bif": bif_name.replace("\\", "/"),
+            "sha256": hashlib.sha256(raw).hexdigest().upper(),
+            "dimensions": [image.width, image.height],
+        },
+        "profiles": [
+            {"name": item["name"], "colors": item["colors"], "palette_rgb_sha256": item["sha256"]}
+            for item in profiles
+        ],
+    }
+    return profiles, evidence
 
 
 def load_model(model_path: Path, *, device: str, fp16: bool) -> tuple[Any, dict[str, str]]:
@@ -267,6 +343,71 @@ def make_group_comparison(
     }
 
 
+def make_palette_comparison(
+    name: str,
+    keys: list[tuple[str, int]],
+    results: dict[tuple[str, int], dict[str, Any]],
+    destination: Path,
+    *,
+    palette_name: str,
+    duration_ms: int,
+) -> dict[str, Any]:
+    records = [results[key] for key in keys]
+    scale = 2
+    left = min(-record["frame"].center_x * scale for record in records)
+    top = min(-record["frame"].center_y * scale for record in records)
+    right = max(
+        -record["frame"].center_x * scale + record["frame"].width * scale
+        for record in records
+    )
+    bottom = max(
+        -record["frame"].center_y * scale + record["frame"].height * scale
+        for record in records
+    )
+    panel_width, panel_height = right - left, bottom - top
+    margin, label_height = 12, 28
+    animation: list[Image.Image] = []
+    for record in records:
+        frame: SourceFrame = record["frame"]
+        recolored = record["palette_previews"][palette_name]
+        canvas = Image.new(
+            "RGBA",
+            ((panel_width + margin) * 2 + margin, panel_height + label_height + margin),
+            (24, 26, 30, 255),
+        )
+        draw = ImageDraw.Draw(canvas)
+        x = -frame.center_x * scale - left
+        y = -frame.center_y * scale - top
+        for column, (label, pixels) in enumerate(
+            (("xBR2X", recolored["xbr_rgba"]), ("ReboutCX indexe", recolored["quantized_rgba"]))
+        ):
+            origin_x = margin + column * (panel_width + margin)
+            draw.text((origin_x + 3, 7), f"{label} / {palette_name}", fill="white")
+            background = checkerboard(panel_width, panel_height)
+            background.alpha_composite(Image.fromarray(pixels, "RGBA"), (x, y))
+            canvas.alpha_composite(background, (origin_x, label_height))
+        draw.text((margin, panel_height + label_height), f"{frame.resref} frame {frame.index}", fill="white")
+        animation.append(canvas.convert("RGB"))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    animation[0].save(
+        destination,
+        save_all=True,
+        append_images=animation[1:],
+        duration=duration_ms,
+        loop=0,
+        disposal=2,
+        optimize=False,
+    )
+    return {
+        "name": name,
+        "palette": palette_name,
+        "path": relative(destination),
+        "sha256": sha256_file(destination),
+        "frames": len(animation),
+        "duration_ms": duration_ms,
+    }
+
+
 def write_prototype_registry(
     path: Path,
     *,
@@ -383,7 +524,9 @@ def execute(job_path: Path) -> dict[str, Any]:
     if int(source_manifest["animation_id"], 16) != int(job["animation_id"], 16):
         raise RuntimeError("source animation id differs")
     selected, groups = selected_frames(job, frames)
-    classes = expand_classes(job["semantic_classes"])
+    classes, classes_id = semantic_classes_for_job(job)
+    palette_profiles, palette_evidence = load_palette_profiles(job)
+    reference_palette = palette_profiles[0]["palette"] if palette_profiles else None
     marker_index = int(job["null_frame_marker"])
 
     xbr_started = time.perf_counter()
@@ -406,17 +549,27 @@ def execute(job_path: Path) -> dict[str, Any]:
         provenance = xbr_provenance_indices(frame, 2) if has_duplicate_used_rgba_indices(frame) else None
         guide_flat, _representatives = map_output(frame, xbr_bytes, provenance)
         guide = guide_flat.reshape(scaled_height, scaled_width)
-        xbr_rgba = np.frombuffer(xbr_bytes, dtype=np.uint8).reshape(scaled_height, scaled_width, 4).copy()
-        native_rgba = np.asarray(
-            Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize(
-                (scaled_width, scaled_height), Image.Resampling.NEAREST
-            ),
-            dtype=np.uint8,
-        )
+        source_xbr_rgba = np.frombuffer(xbr_bytes, dtype=np.uint8).reshape(
+            scaled_height, scaled_width, 4
+        ).copy()
+        if reference_palette is None:
+            xbr_rgba = source_xbr_rgba
+            native_rgba = np.asarray(
+                Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize(
+                    (scaled_width, scaled_height), Image.Resampling.NEAREST
+                ),
+                dtype=np.uint8,
+            )
+            quantization_palette = frame.palette
+        else:
+            xbr_rgba = reconstruct_rgba(guide, reference_palette, frame.transparent)
+            native_indices = np.repeat(np.repeat(frame.indices, 2, axis=0), 2, axis=1)
+            native_rgba = reconstruct_rgba(native_indices, reference_palette, frame.transparent)
+            quantization_palette = reference_palette
 
         if is_null_frame(frame, marker_index):
-            x4 = np.full((4, 4, 3), frame.palette[marker_index], dtype=np.uint8)
-            target_rgb = np.full((2, 2, 3), frame.palette[marker_index], dtype=np.uint8)
+            x4 = np.full((4, 4, 3), quantization_palette[marker_index], dtype=np.uint8)
+            target_rgb = np.full((2, 2, 3), quantization_palette[marker_index], dtype=np.uint8)
             quantized = np.full((2, 2), marker_index, dtype=np.uint8)
             metrics = {
                 "quantizer": QUANTIZER_ID,
@@ -430,10 +583,10 @@ def execute(job_path: Path) -> dict[str, Any]:
                 "model_bypassed": True,
             }
         else:
-            inference_rgb = prepare_inference_rgb(frame)
+            inference_rgb = prepare_inference_rgb(frame, quantization_palette)
             if inference_rgb is None:
-                x4 = np.repeat(np.repeat(frame.palette[frame.transparent][None, None, :], frame.height * 4, axis=0), frame.width * 4, axis=1)
-                target_rgb = np.repeat(np.repeat(frame.palette[frame.transparent][None, None, :], frame.height * 2, axis=0), frame.width * 2, axis=1)
+                x4 = np.repeat(np.repeat(quantization_palette[frame.transparent][None, None, :], frame.height * 4, axis=0), frame.width * 4, axis=1)
+                target_rgb = np.repeat(np.repeat(quantization_palette[frame.transparent][None, None, :], frame.height * 2, axis=0), frame.width * 2, axis=1)
             else:
                 started = time.perf_counter()
                 x4, target_rgb = infer_x4_box_x2(
@@ -445,7 +598,7 @@ def execute(job_path: Path) -> dict[str, Any]:
             quantized, metrics = quantize_classed_oklab(
                 target_rgb,
                 guide,
-                frame.palette,
+                quantization_palette,
                 used,
                 classes,
                 transparent_index=frame.transparent,
@@ -453,7 +606,7 @@ def execute(job_path: Path) -> dict[str, Any]:
             repeated, _repeat_metrics = quantize_classed_oklab(
                 target_rgb,
                 guide,
-                frame.palette,
+                quantization_palette,
                 used,
                 classes,
                 transparent_index=frame.transparent,
@@ -462,7 +615,7 @@ def execute(job_path: Path) -> dict[str, Any]:
             if not np.array_equal(quantized, repeated):
                 raise RuntimeError(f"{frame.resref} frame {frame.index}: quantizer is not deterministic")
 
-        quantized_rgba = reconstruct_rgba(quantized, frame.palette, frame.transparent)
+        quantized_rgba = reconstruct_rgba(quantized, quantization_palette, frame.transparent)
         raw_masked_rgba = np.dstack(
             (target_rgb, np.where(guide == frame.transparent, 0, 255).astype(np.uint8))
         )
@@ -473,15 +626,28 @@ def execute(job_path: Path) -> dict[str, Any]:
             "reboutcx_raw_x2": save_image(frame_dir / "reboutcx-raw-x2.png", raw_masked_rgba, "RGBA"),
             "reboutcx_quantized_x2": save_image(frame_dir / "reboutcx-quantized-x2.png", quantized_rgba, "RGBA"),
         }
+        if reference_palette is not None:
+            files["xbr_source_palette_x2"] = save_image(
+                frame_dir / "xbr-source-palette-x2.png", source_xbr_rgba, "RGBA"
+            )
         if (frame.resref, frame.index) == (
             str(job["reference"]["resref"]),
             int(job["reference"]["frame"]),
         ):
-            if sha256_pixels(x4) != str(job["reference"]["x4_pixel_sha256"]):
+            if job["reference"].get("x4_pixel_sha256") and sha256_pixels(x4) != str(job["reference"]["x4_pixel_sha256"]):
                 raise RuntimeError("P0 witness x4 pixels differ")
-            if sha256_pixels(target_rgb) != str(job["reference"]["x2_pixel_sha256"]):
+            if job["reference"].get("x2_pixel_sha256") and sha256_pixels(target_rgb) != str(job["reference"]["x2_pixel_sha256"]):
                 raise RuntimeError("P0 witness BOX x2 pixels differ")
             files["reboutcx_x4"] = save_image(frame_dir / "reboutcx-x4.png", x4, "RGB")
+        palette_previews = {
+            profile["name"]: {
+                "xbr_rgba": reconstruct_rgba(guide, profile["palette"], frame.transparent),
+                "quantized_rgba": reconstruct_rgba(
+                    quantized, profile["palette"], frame.transparent
+                ),
+            }
+            for profile in palette_profiles
+        }
         record = {
             "frame": frame,
             "native_rgba": native_rgba,
@@ -489,6 +655,7 @@ def execute(job_path: Path) -> dict[str, Any]:
             "raw_masked_rgba": raw_masked_rgba,
             "quantized_rgba": quantized_rgba,
             "quantized_indices": quantized,
+            "palette_previews": palette_previews,
         }
         results[(frame.resref, frame.index)] = record
         frame_manifest.append(
@@ -501,6 +668,8 @@ def execute(job_path: Path) -> dict[str, Any]:
                 "center_y": frame.center_y,
                 "transparent_index": frame.transparent,
                 "guide_indices": [int(value) for value in np.unique(guide)],
+                "guide_index_sha256": sha256_pixels(guide),
+                "xbr_source_rgba_pixel_sha256": sha256_pixels(source_xbr_rgba),
                 "quantized_index_sha256": sha256_pixels(quantized),
                 "metrics": metrics,
                 "files": files,
@@ -520,6 +689,17 @@ def execute(job_path: Path) -> dict[str, Any]:
                 duration_ms=int(group["duration_ms"]),
             )
         )
+        for profile_index, profile in enumerate(palette_profiles):
+            qa.append(
+                make_palette_comparison(
+                    name,
+                    keys,
+                    results,
+                    temporary / "qa" / f"{name}-palette-{profile_index:02d}.gif",
+                    palette_name=profile["name"],
+                    duration_ms=int(group["duration_ms"]),
+                )
+            )
 
     source_by_resref = {str(item["source"]["name"]).upper(): item for item in resources}
     registry_resources = []
@@ -558,6 +738,9 @@ def execute(job_path: Path) -> dict[str, Any]:
         "model_sha256": sha256_file(model_path),
         "target_scale": 2,
         "versions": versions,
+        "semantic_classes_id": classes_id,
+        "semantic_classes": classes,
+        "palette_reference": palette_evidence,
         "code": {
             "reboutcx_batch": {
                 "path": relative(Path(__file__)),
@@ -599,6 +782,9 @@ def execute(job_path: Path) -> dict[str, Any]:
             "rgb_under_transparency": "scipy distance_transform_edt nearest opaque",
             "alpha": "xbr2x-mask-v1",
             "quantizer": QUANTIZER_ID,
+            "palette_rgb": (
+                CHARACTER_CHMB1_PALETTE_ID if reference_palette is not None else "source-bam"
+            ),
             "dither": False,
         },
         "sample_groups": job["sample"]["groups"],

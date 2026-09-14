@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. Prochaine phase : P6 offline.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P6.2 produite, revue humaine offline en attente.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -300,9 +300,9 @@ Formule native : `B[r,t] = gradient[color[r],t]`, puis `P[88+8*k+t] = floor((B[a
 Témoins **calculés offline, pas capturés ingame** : interprétation bornée des instructions du bloc natif `[0x421F7B,0x42201E)` (163 octets, SHA `C8E05C9238F186AA07D72AAC38CC793BFC74CDCA588FCD691271A6A5CCC645B4`), 3 557 instructions par cas ; aucun appel ni exécution du jeu. Précondition : scratch BGRA de 256 entrées, `0=vert`, `1..3=noir`, sept rampes copiées en `4..87`. Les trois palettes ci-dessus concordent avec le helper ; deux témoins synthétiques supplémentaires (rampes linéaires puis discontinues à sommes paires/impaires) sont figés dans les tests. La boucle constitue l'oracle des mélanges, pas celui de `Realize` complet.
 
 - Code préparatoire unique : `reboutcx_quantize.py::{character_chmb1_classes,character_chmb1_palette_rgb}` ; versions `bg2ee-2.7.3.0-character-chmb1-32-classes-v1` / `bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1`. Helpers purs, non branchés aux runners. Validation : `python -m unittest pipeline.tests.test_reboutcx_pipeline pipeline.tests.test_reboutcx_full` → **12 tests OK** ; témoins natifs, sept variations isolées, mélanges/arrondi/sommes sans débordement, doublons interclasses, mêmes indices sous trois palettes, déterminisme, candidats par frame et prédicat indice 2.
-- Intégration à faire seulement après accord P6.2 : nouveau job/manifeste ReboutCX ciblé, source/classes/palette épinglées ; même référence pour entrée modèle, quantification et previews, palette/RGBA BAM conservés pour le guide xBR. `reboutcx_batch.py` et `reboutcx_full.py` utilisent encore `frame.palette` ; rien ne rend aujourd'hui un job Character exécutable correctement. Déduplication full actuellement limitée au couple de SHA BAM/BAMC, à compléter si profil/calque/recette/classes/palette varient.
+- Intégration P6.2 : `reboutcx_batch.py` accepte maintenant le profil Character épinglé ; même référence pour entrée modèle, quantification et previews, palette/RGBA BAM conservés pour le guide xBR. `reboutcx_full.py` reste volontairement inchangé avant P6.3. Déduplication full actuellement limitée au couple de SHA BAM/BAMC, à compléter si profil/calque/recette/classes/palette varient.
 - Restent non établis : gain visuel/scintillement après inférence ; palettes RGBA effectives avec éclairage/effets/translucidité et composition ingame (aucune capture dans cet audit). Aucun de ces états n'est déclaré validé.
-- Plus petit essai proposé, **non lancé** : P6.2 sur `CHMB1A1`, frames `0..5` (cycle 0) et `60..65` (cycle 4), soit 12 frames réellement référencées, deux directions. BAM SHA `86BBACFC9A799BC4DAA069B80F49DC15BCE41631558A1B962E15330ADC581C07`. Référence fixe à l'inférence/quantification une seule fois ; recolorer les mêmes indices avec B/C puis variations isolées. Sortie partielle offline non installable.
+- Essai P6.2 autorisé et exécuté ci-dessous : `CHMB1A1`, frames `0..5` (cycle 0) et `60..65` (cycle 4), soit 12 frames réellement référencées, deux directions. BAM SHA `86BBACFC9A799BC4DAA069B80F49DC15BCE41631558A1B962E15330ADC581C07`. Sortie partielle offline non installable.
 
 **P6.2 — Petit body offline.** Courte séquence consécutive + directions/contours, recette x4→BOX x2 de P0, classes auditées ; composants partiels non installables.
 
@@ -316,6 +316,14 @@ out[p] = nearest contraint selon §2
 - Le guide impose classe/masque ; jamais nearest interclasses. RGB identiques sous une palette ne justifient aucune fusion d'indices.
 - Quantifier **une fois** ; reconstruire les mêmes indices sous ≥3 palettes contrastées, puis variations d'une couleur à la fois. Vérifier aussi les combinaisons, les couleurs égales puis séparées, les tons très sombres/clairs et les rampes. Comparer xBR/ReboutCX à palette réalisée identique ; ne pas réinférer/requantifier pour faire passer chaque témoin.
 - Vérifier temporalité à vitesse normale après quantification : changement de nuance/candidats d'une frame à l'autre peut scintiller malgré des classes correctes. Si bénéfice perdu ou recoloration fausse, corriger la recette sur ce prototype ; aucun lissage temporel ni assouplissement sémantique implicite.
+
+**Résultat P6.2 — 2026-09-14, en attente de revue humaine :**
+
+- Job : `6100-human-male-fighter/chmb1/jobs/reboutcx-p6-2-v1.json` sous `sprite/families/playable-characters/` ; run local scellé `chmb1/runs/reboutcx-p6-2-v1/`, manifeste `8334EFD6320BB4158CD56B5FFD030020351C4AB67EE52CD16F718DEF567A925B`. Statut `completed-pending-human-review`, `installable=false` ; aucune installation, lancement du jeu, modification xBR/full/release ni contrôle GUI.
+- `12` frames (`0..5`, `60..65`) inférées une fois sous la référence fixe puis quantifiées une fois. Les mêmes indices reconstruisent référence, B, C et sept variations isolées ; `22` GIF à `100 ms/frame`. Guide xBR source conservé séparément ; comparaisons xBR/ReboutCX utilisent la même palette réalisée. Vérification : `85` fichiers et registre partiel `D8B97C54A08204C46F7757E3A2BDC61C6A66949C34BB3E9EF0351887E7B0E726` conformes.
+- Contraintes respectées : aucune sortie interclasse, hashes des indices guide/sortie consignés, répétition de quantification identique. Erreur OKLab par frame : moyenne `0,03173..0,03579`, p95 `0,08823..0,09166` ; métrique descriptive, pas seuil d'acceptation visuelle. Tests : **15 OK**.
+- Couverture : `27/32` classes présentes. Absentes de cet échantillon : `reserved_3`, `mix_metal_armor_half`, `mix_metal_hair_half`, `mix_major_hair_half`, `mix_leather_hair_half`. Les sept couleurs simples et leurs mélanges présents réagissent aux variations isolées ; la revue humaine doit encore juger gain, contours et scintillement aux vitesses fournies.
+- Prochaine étape minimale : visionner les deux GIF principaux puis B/C et les sept variations ; consigner acceptation P6.2 ou défauts précis. P6.3 reste interdite sans accord.
 
 **P6.3 — Body + arme offline, puis complétude ciblée après accord.** Conserver les calques séparés, assembler uniquement les previews aux centres x1, à l'échelle uniforme ; aucune inférence aplatie. Comparer body ReboutCX + arme xBR puis body + arme ReboutCX. Produire tous les BAM/cycles/frames des seuls composants retenus avant P7.
 
