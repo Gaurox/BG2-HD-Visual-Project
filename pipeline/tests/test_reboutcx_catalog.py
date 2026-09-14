@@ -89,6 +89,71 @@ def replacement() -> dict[str, object]:
     }
 
 
+def multi_component_parent(*, ambiguous: bool = False) -> dict[str, object]:
+    weapon_resref = "BODY" if ambiguous else "WEAPON"
+    animations = [
+        {"animation_id": "0x0001", "owner": 3, "component_indices": [0]},
+        {"animation_id": "0x0002", "owner": 1, "component_indices": [1, 2]},
+        {"animation_id": "0x0003", "owner": 2, "component_indices": [2]},
+    ]
+    directory = [
+        {
+            "animation_id": "0x0001",
+            "resref": "BASE",
+            "component_index": 0,
+            "shard_index": 0,
+            "resource_ordinal": 0,
+        },
+        {
+            "animation_id": "0x0002",
+            "resref": "BODY",
+            "component_index": 1,
+            "shard_index": 1,
+            "resource_ordinal": 0,
+        },
+        {
+            "animation_id": "0x0002",
+            "resref": weapon_resref,
+            "component_index": 2,
+            "shard_index": 2,
+            "resource_ordinal": 0,
+        },
+        {
+            "animation_id": "0x0003",
+            "resref": weapon_resref,
+            "component_index": 2,
+            "shard_index": 2,
+            "resource_ordinal": 0,
+        },
+    ]
+    return {
+        "index": {
+            "animations": animations,
+            "components": [component(index) for index in range(3)],
+            "shards": [
+                shard(0, "BASE"),
+                shard(1, "BODY"),
+                shard(2, weapon_resref),
+            ],
+            "directory": directory,
+        },
+        "logical_digests": [f"{index + 21:064X}" for index in range(3)],
+    }
+
+
+def component_replacement(index: int, resref: str) -> dict[str, object]:
+    new_shard = shard(index + 9, resref)
+    new_shard["resources"] = [resref]
+    return {
+        "animation_id": "0x0002",
+        "old_component_index": index,
+        "new_component_digest": f"{index + 99:064X}",
+        "new_shards": [new_shard],
+        "new_shard_resources": [[resref]],
+        "logical_digest": f"{index + 199:064X}",
+    }
+
+
 def make_frame() -> SourceFrame:
     palette = np.zeros((256, 3), dtype=np.uint8)
     palette[0] = (0, 255, 0)
@@ -130,6 +195,36 @@ class ReboutCXCatalogTests(unittest.TestCase):
         }
         self.assertEqual(mappings, {"0x0001": [0], "0x0002": [2], "0x0003": [1]})
         catalog.validate_diff(value, assembled, [replacement()])
+
+    def test_two_components_of_one_animation_are_replaced_without_flattening(self) -> None:
+        value = multi_component_parent()
+        replacements = [
+            component_replacement(1, "BODY"),
+            component_replacement(2, "WEAPON"),
+        ]
+        assembled = catalog.assemble_catalog(value, replacements)
+        mappings = {
+            item["animation_id"]: item["component_indices"]
+            for item in assembled["animations"]
+        }
+        self.assertEqual(mappings, {"0x0001": [0], "0x0002": [2, 3], "0x0003": [1]})
+        self.assertEqual(len(mappings["0x0002"]), 2)
+        self.assertEqual(assembled["dropped_components"], [1])
+        result = catalog.validate_diff(value, assembled, replacements)
+        self.assertEqual(result["targeted_component_memberships_replaced"], 2)
+        self.assertEqual(result["untargeted_component_memberships_preserved"], 2)
+
+    def test_ambiguous_resref_across_animation_components_is_refused(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "ambiguous replacement resref"):
+            catalog.validate_component_selection(
+                multi_component_parent(ambiguous=True), "0x0002", 1, ["BODY"]
+            )
+
+    def test_duplicate_component_target_is_refused(self) -> None:
+        value = multi_component_parent()
+        target = component_replacement(1, "BODY")
+        with self.assertRaisesRegex(RuntimeError, "duplicate replacement component target"):
+            catalog.assemble_catalog(value, [target, dict(target)])
 
     def test_resource_contract_ignores_indices_but_pins_metadata(self) -> None:
         frame = make_frame()

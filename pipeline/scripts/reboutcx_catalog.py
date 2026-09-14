@@ -258,6 +258,46 @@ def inspect_component_records(
     return records, infos
 
 
+def animation_component_resrefs(
+    parent: dict[str, Any], animation_id: str
+) -> dict[int, set[str]]:
+    animation = next(
+        value
+        for value in parent["index"]["animations"]
+        if value["animation_id"] == animation_id
+    )
+    result = {int(index): set() for index in animation["component_indices"]}
+    for entry in parent["index"]["directory"]:
+        if entry["animation_id"] != animation_id:
+            continue
+        component_index = int(entry["component_index"])
+        if component_index not in result:
+            raise RuntimeError(f"directory component is not a membership: {animation_id}")
+        result[component_index].add(str(entry["resref"]).upper())
+    if any(not values for values in result.values()):
+        raise RuntimeError(f"animation component has no resources: {animation_id}")
+    return result
+
+
+def validate_component_selection(
+    parent: dict[str, Any],
+    animation_id: str,
+    component_index: int,
+    expected_resrefs: list[str],
+) -> None:
+    component_resrefs = animation_component_resrefs(parent, animation_id)
+    normalized = [str(value).upper() for value in expected_resrefs]
+    if (
+        len(normalized) != len(set(normalized))
+        or component_resrefs.get(component_index) != set(normalized)
+    ):
+        raise RuntimeError(f"parent component resrefs differ: {animation_id}")
+    for resref in normalized:
+        matches = [index for index, values in component_resrefs.items() if resref in values]
+        if matches != [component_index]:
+            raise RuntimeError(f"ambiguous replacement resref: {animation_id} {resref}")
+
+
 def load_replacement(
     specification: dict[str, Any], parent: dict[str, Any]
 ) -> dict[str, Any]:
@@ -278,16 +318,22 @@ def load_replacement(
         require_sha256(value, "expected logical component")
         for value in specification["expected_logical_component_digests"]
     ]
+    expected_resrefs = [str(value).upper() for value in specification["expected_resrefs"]]
     if (
         int(parent_animation["owner"]) != expected_owner
-        or parent_animation["component_indices"] != expected_indices
         or len(expected_indices) != 1
+        or expected_indices[0] not in parent_animation["component_indices"]
+        or len(expected_digests) != 1
+        or len(expected_logical) != 1
         or [parent["index"]["components"][index]["digest"] for index in expected_indices]
         != expected_digests
         or [parent["logical_digests"][index] for index in expected_indices]
         != expected_logical
     ):
         raise RuntimeError(f"parent component contract differs: {animation_id}")
+    validate_component_selection(
+        parent, animation_id, expected_indices[0], expected_resrefs
+    )
     old_component = parent["index"]["components"][expected_indices[0]]
     old_shards = parent["index"]["shards"][
         old_component["shard_start"] : old_component["shard_start"]
@@ -317,10 +363,18 @@ def load_replacement(
         or normalize_animation_id(manifest.get("animation_id", "")) != animation_id
     ):
         raise RuntimeError(f"invalid P2 manifest: {animation_id}")
+    code_evidence = []
     for evidence in manifest["code"].values():
         path = resolve_path_reference(evidence["path"], required=True, root=PROJECT_ROOT)
-        if sha256_file(path) != str(evidence["sha256"]):
-            raise RuntimeError(f"P2 code/input changed: {evidence['path']}")
+        current_sha256 = sha256_file(path)
+        code_evidence.append(
+            {
+                "path": str(evidence["path"]),
+                "sealed_sha256": str(evidence["sha256"]),
+                "current_sha256": current_sha256,
+                "current_matches_sealed": current_sha256 == str(evidence["sha256"]),
+            }
+        )
     component_paths: list[Path] = []
     for resource in manifest["resources"]:
         evidence = resource["component"]
@@ -357,7 +411,6 @@ def load_replacement(
         if old_contract != new_contract:
             raise RuntimeError(f"replacement metadata differs from xBR: {animation_id} {resref}")
         contract_digests[resref] = new_contract
-    expected_resrefs = [str(value).upper() for value in specification["expected_resrefs"]]
     if sorted(expected_resrefs) != sorted(new_by_resref):
         raise RuntimeError(f"replacement expected resrefs differ: {animation_id}")
     logical_digest = catalog_source_component_sha256(2, new_records)
@@ -373,6 +426,7 @@ def load_replacement(
         "old_logical_digest": expected_logical[0],
         "p2_manifest": manifest_path,
         "p2_manifest_sha256": expected_manifest_sha,
+        "code_evidence": code_evidence,
         "records": new_records,
         "resrefs": sorted(new_by_resref),
         "resource_contract_digests": contract_digests,
@@ -393,7 +447,10 @@ def emit_replacement_shards(
     resources: list[list[str]] = []
     raw_entries: list[bytes] = []
     for index, records in enumerate(partitions):
-        scratch = pack_dir / f".replacement-{replacement['animation_id'][2:]}-{index:02d}.tmp"
+        scratch = pack_dir / (
+            f".replacement-{replacement['animation_id'][2:]}-"
+            f"{replacement['old_component_index']:04d}-{index:02d}.tmp"
+        )
         info = write_compressed_catalog_registry_records(scratch, 2, records)
         destination = pack_dir / catalog_shard_filename(info["sha256"])
         if destination.exists():
@@ -412,15 +469,18 @@ def assemble_catalog(
     parent: dict[str, Any], replacements: list[dict[str, Any]]
 ) -> dict[str, Any]:
     parent_index = parent["index"]
-    replacement_by_id = {value["animation_id"]: value for value in replacements}
-    if len(replacement_by_id) != len(replacements):
-        raise RuntimeError("duplicate replacement animation")
+    replacement_by_target = {
+        (value["animation_id"], int(value["old_component_index"])): value
+        for value in replacements
+    }
+    if len(replacement_by_target) != len(replacements):
+        raise RuntimeError("duplicate replacement component target")
     replaced_components = {int(value["old_component_index"]) for value in replacements}
     references_after = {
         index
         for animation in parent_index["animations"]
-        if animation["animation_id"] not in replacement_by_id
         for index in animation["component_indices"]
+        if (animation["animation_id"], int(index)) not in replacement_by_target
     }
     dropped_components = replaced_components - references_after
     kept_component_indices = [
@@ -470,8 +530,11 @@ def assemble_catalog(
         value["shard_start"] = mapped[0]
         components.append(value)
         logical_digests.append(parent["logical_digests"][old_index])
-    new_component_by_animation: dict[str, int] = {}
-    for replacement in sorted(replacements, key=lambda value: int(value["animation_id"], 16)):
+    new_component_by_target: dict[tuple[str, int], int] = {}
+    for replacement in sorted(
+        replacements,
+        key=lambda value: (int(value["animation_id"], 16), int(value["old_component_index"])),
+    ):
         shard_start = len(shards)
         for info, resources in zip(
             replacement["new_shards"], replacement["new_shard_resources"], strict=True
@@ -484,7 +547,8 @@ def assemble_catalog(
             shards.append(value)
             shard_resources.append(resources)
         component_index = len(components)
-        new_component_by_animation[replacement["animation_id"]] = component_index
+        target = (replacement["animation_id"], int(replacement["old_component_index"]))
+        new_component_by_target[target] = component_index
         component_shards = shards[shard_start:]
         components.append(
             {
@@ -502,11 +566,14 @@ def assemble_catalog(
     animations = []
     for animation in parent_index["animations"]:
         animation_id = animation["animation_id"]
-        indices = (
-            [new_component_by_animation[animation_id]]
-            if animation_id in replacement_by_id
-            else [component_map[int(index)] for index in animation["component_indices"]]
-        )
+        indices = []
+        for index in animation["component_indices"]:
+            target = (animation_id, int(index))
+            indices.append(
+                new_component_by_target[target]
+                if target in new_component_by_target
+                else component_map[int(index)]
+            )
         animations.append(
             {
                 "animation_id": animation_id,
@@ -543,7 +610,7 @@ def assemble_catalog(
         "kept_shard_indices": kept_shard_indices,
         "component_map": component_map,
         "shard_map": shard_map,
-        "new_component_by_animation": new_component_by_animation,
+        "new_component_by_target": new_component_by_target,
         "dropped_components": sorted(dropped_components),
     }
 
@@ -584,20 +651,36 @@ def calculate_storage(
 def validate_diff(
     parent: dict[str, Any], assembled: dict[str, Any], replacements: list[dict[str, Any]]
 ) -> dict[str, Any]:
-    targets = {value["animation_id"] for value in replacements}
+    target_by_key = {
+        (value["animation_id"], int(value["old_component_index"])): value
+        for value in replacements
+    }
+    targets = {animation_id for animation_id, _index in target_by_key}
     old_animations = {value["animation_id"]: value for value in parent["index"]["animations"]}
     new_animations = {value["animation_id"]: value for value in assembled["animations"]}
     if old_animations.keys() != new_animations.keys():
         raise RuntimeError("derived animation inventory differs")
     unchanged = 0
+    targeted_memberships = 0
+    preserved_memberships = 0
     for animation_id, old in old_animations.items():
         new = new_animations[animation_id]
         if int(old["owner"]) != int(new["owner"]):
             raise RuntimeError(f"derived owner differs: {animation_id}")
+        expected = []
+        for index in old["component_indices"]:
+            key = (animation_id, int(index))
+            if key in target_by_key:
+                expected.append(assembled["new_component_by_target"][key])
+                targeted_memberships += 1
+            else:
+                expected.append(assembled["component_map"][int(index)])
+                preserved_memberships += 1
+        if new["component_indices"] != expected or len(new["component_indices"]) != len(
+            old["component_indices"]
+        ):
+            raise RuntimeError(f"derived component memberships differ: {animation_id}")
         if animation_id not in targets:
-            expected = [assembled["component_map"][int(index)] for index in old["component_indices"]]
-            if new["component_indices"] != expected:
-                raise RuntimeError(f"unrelated animation mapping differs: {animation_id}")
             unchanged += 1
     old_directory = parent["index"]["directory"]
     new_directory = assembled["directory"]
@@ -615,8 +698,11 @@ def validate_diff(
         "unchanged_animations": unchanged,
         "replaced_animations": sorted(targets),
         "animation_resources_identical": True,
+        "animation_membership_counts_identical": True,
         "owners_identical": True,
         "unrelated_component_mappings_preserved": True,
+        "untargeted_component_memberships_preserved": preserved_memberships,
+        "targeted_component_memberships_replaced": targeted_memberships,
     }
 
 
@@ -635,6 +721,9 @@ def input_lock(job_path: Path, job: dict[str, Any], parent: dict[str, Any]) -> d
         "replacements": [
             {
                 "animation_id": value["animation_id"],
+                "expected_component_indices": [
+                    int(index) for index in value["expected_component_indices"]
+                ],
                 "reboutcx_manifest_sha256": value["reboutcx_manifest_sha256"],
             }
             for value in job["replacements"]
@@ -713,11 +802,16 @@ def build(job_path: Path) -> dict[str, Any]:
         for replacement in replacements:
             shutil.copyfile(
                 replacement["p2_manifest"],
-                provenance / f"reboutcx-{replacement['animation_id'][2:].lower()}-manifest.json",
+                provenance
+                / (
+                    f"reboutcx-{replacement['animation_id'][2:].lower()}-"
+                    f"component-{replacement['old_component_index']:04d}-manifest.json"
+                ),
             )
         replacement_reports = []
         for replacement in replacements:
-            new_index = assembled["new_component_by_animation"][replacement["animation_id"]]
+            target = (replacement["animation_id"], int(replacement["old_component_index"]))
+            new_index = assembled["new_component_by_target"][target]
             new_component = assembled["components"][new_index]
             replacement_reports.append(
                 {
@@ -734,6 +828,10 @@ def build(job_path: Path) -> dict[str, Any]:
                     "resource_contract_digests": replacement["resource_contract_digests"],
                     "reboutcx_manifest": relative(replacement["p2_manifest"]),
                     "reboutcx_manifest_sha256": replacement["p2_manifest_sha256"],
+                    "sealed_code_matches_current": all(
+                        item["current_matches_sealed"] for item in replacement["code_evidence"]
+                    ),
+                    "code_evidence": replacement["code_evidence"],
                 }
             )
         manifest = {
@@ -820,7 +918,13 @@ def build(job_path: Path) -> dict[str, Any]:
             "generation_id": generation_id,
             "run": relative(run_dir),
             "catalog_sha256": info["sha256"],
-            "replacements": [value["animation_id"] for value in replacements],
+            "replacements": [
+                {
+                    "animation_id": value["animation_id"],
+                    "old_component_index": int(value["old_component_index"]),
+                }
+                for value in replacements
+            ],
             "parent_shards_reused": len(assembled["kept_shard_indices"]),
             "replacement_shards": sum(len(value["new_shards"]) for value in replacements),
         }
@@ -912,7 +1016,13 @@ def verify(job_path: Path) -> dict[str, Any]:
             if path.stat().st_size != int(shard["registry_bytes"]):
                 raise RuntimeError(f"parent shard size differs: {shard['sha256']}")
             checked_parent_links += 1
-    targets = {value["animation_id"] for value in manifest["replacements"]}
+    target_by_key = {
+        (value["animation_id"], int(value["old_component_index"])): value
+        for value in manifest["replacements"]
+    }
+    if len(target_by_key) != len(manifest["replacements"]):
+        raise RuntimeError("verified duplicate replacement component target")
+    target_animations = {animation_id for animation_id, _index in target_by_key}
     old_resources = {}
     new_resources = {}
     for entry in parent["index"]["directory"]:
@@ -927,16 +1037,47 @@ def verify(job_path: Path) -> dict[str, Any]:
     new_animations = {value["animation_id"]: value for value in index["animations"]}
     old_logical = parent["logical_digests"]
     new_logical = manifest["registry_catalog_logical_component_digests"]
-    changed_logical = 0
+    old_components = parent["index"]["components"]
+    new_components = manifest["components"]
+    visited_targets: set[tuple[str, int]] = set()
+    preserved_memberships = 0
     for animation_id, old in old_animations.items():
-        if animation_id in targets:
-            changed_logical += 1
-            continue
-        old_values = [old_logical[index] for index in old["component_indices"]]
-        new_values = [new_logical[index] for index in new_animations[animation_id]["component_indices"]]
-        if old_values != new_values:
-            raise RuntimeError(f"unrelated logical component changed: {animation_id}")
-    if changed_logical != len(targets):
+        new = new_animations[animation_id]
+        if int(old["owner"]) != int(new["owner"]):
+            raise RuntimeError(f"verified owner differs: {animation_id}")
+        if len(old["component_indices"]) != len(new["component_indices"]):
+            raise RuntimeError(f"verified membership count differs: {animation_id}")
+        expected_logical = []
+        expected_components = []
+        for old_index in old["component_indices"]:
+            key = (animation_id, int(old_index))
+            replacement = target_by_key.get(key)
+            if replacement is None:
+                expected_logical.append(old_logical[int(old_index)])
+                expected_components.append(old_components[int(old_index)]["digest"])
+                preserved_memberships += 1
+                continue
+            new_index = int(replacement["new_component_index"])
+            if (
+                replacement["old_logical_digest"] != old_logical[int(old_index)]
+                or replacement["old_component_digest"]
+                != old_components[int(old_index)]["digest"]
+                or new_index not in new["component_indices"]
+                or replacement["new_logical_digest"] != new_logical[new_index]
+                or replacement["new_component_digest"] != new_components[new_index]["digest"]
+            ):
+                raise RuntimeError(f"verified replacement contract differs: {animation_id}")
+            expected_logical.append(replacement["new_logical_digest"])
+            expected_components.append(replacement["new_component_digest"])
+            visited_targets.add(key)
+        actual_logical = [new_logical[int(value)] for value in new["component_indices"]]
+        actual_components = [new_components[int(value)]["digest"] for value in new["component_indices"]]
+        if (
+            sorted(expected_logical) != sorted(actual_logical)
+            or sorted(expected_components) != sorted(actual_components)
+        ):
+            raise RuntimeError(f"verified logical memberships differ: {animation_id}")
+    if visited_targets != set(target_by_key):
         raise RuntimeError("replacement logical coverage differs")
     if sha256_file(parent["pointer_path"]) != job["parent"]["pointer_sha256"]:
         raise RuntimeError("canonical xBR pointer changed during verification")
@@ -945,8 +1086,13 @@ def verify(job_path: Path) -> dict[str, Any]:
         "generation_id": generation_id,
         "catalog_sha256": manifest["registry_catalog_sha256"],
         "animations": len(index["animations"]),
-        "unchanged_animations": len(index["animations"]) - len(targets),
-        "replacements": sorted(targets),
+        "unchanged_animations": len(index["animations"]) - len(target_animations),
+        "replacements": [
+            {"animation_id": animation_id, "old_component_index": component_index}
+            for animation_id, component_index in sorted(target_by_key)
+        ],
+        "targeted_component_memberships_verified": len(visited_targets),
+        "untargeted_component_memberships_verified": preserved_memberships,
         "parent_shards_hardlinked": checked_parent_links,
         "replacement_shards_verified": checked_new,
         "canonical_xbr_pointer_unchanged": True,

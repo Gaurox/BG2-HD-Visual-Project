@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P6.3 body + arme complète offline, revue humaine des runs complets en attente.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P7.1 catalogue Character offline vérifié ; P7.2 non commencée.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -355,6 +355,15 @@ out[p] = nearest contraint selon §2
 
 - **P7.1 — Catalogue offline.** `reboutcx_catalog.py::load_replacement/assemble_catalog/validate_diff` à adapter après prototype accepté : `0x6100` possède 65 appartenances dans la génération `65566299...`, contre l'exigence actuelle d'une seule. Remplacer un composant complet identifié par digest/resrefs ; préserver les autres appartenances de `0x6100` et les utilisateurs des composants partagés. Tester deux remplacements dans le même ID, resref ambigu refusé, équipement xBR inchangé ; ne pas aplatir les 65 composants.
 - Nouveau catalogue épinglé : base xBR + sélection explicite de remplacements Character et créatures conservées ; aucun append dans le catalogue canonique. Réutiliser les composants ReboutCX scellés choisis, sans nouvelle inférence/repack du parent. Les décisions QA MBEH/Firkraag ne sont pas à refaire si leurs octets/contrats restent identiques.
+
+**Résultat P7.1 — 2026-09-14 :**
+
+- Sélection indexée par `(animation_id, old_component_index)` ; contrat parent = owner + digest physique/logique + shards + resrefs exacts. Un resref présent dans deux composants du même ID est refusé. Les hashes de code historiques sont conservés comme preuves scellées avec état de correspondance courant ; composants, géométrie/cycles et contrats restent revérifiés octet par octet.
+- Job `sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-character-6100-test-v1.json` : parent xBR canonique `912AE8AE...`, pointeur `71DE2662...`, plus MBEH/Bodhi/Irenicus/Firkraag explicitement reconduits. Génération `AF3B86681AEE3FF9D0BDBC3E52CEC81ADBA9A60901430F45BAB70CAED094E148`, catalogue `EA923B4E3885093BEDC4E917527BB40FDA29BFFCD5CEF99AC82B8860AF1DEA4F`.
+- `0x6100` reste à `65` appartenances : WQLS0 `66→436` (11 resrefs), CHMB1 `151→437` (23 resrefs), `63` appartenances xBR inchangées. Vérification globale : `6` remplacements/5 animations, `5 007` appartenances non ciblées préservées, `444` shards parent hardlinkés, `10` shards ReboutCX vérifiés ; inventaire resrefs, owners, métadonnées et round-trip catalogue exacts, pointeur xBR inchangé.
+- Tests unitaires : deux composants d'un même ID, composant partagé, appartenance équipement non ciblée, cible dupliquée et resref ambigu ; `7` tests catalogue OK. Construction CPU uniquement, aucune inférence/GPU, installation, jeu, GUI, xBR canonique ou release modifiés.
+- Ingame encore impossible : P7.2 doit installer transactionnellement cette génération après accord explicite et fermeture manuelle du jeu/InfinityLoader.
+
 - **P7.2 — Installation/QA.** Réutiliser P4, `CreatureSpriteFilter=Nearest`, DLL/manifest de capacités réellement actifs vérifiés ; aucune nouvelle DLL si le runtime Character actuel suffit. Première invocation équipée : contrôler palettes capturées, composite HD effectif, attente des shards et temps de première frame avant de diagnostiquer le modèle.
 - QA : body/arme, actions/directions, armures/couches incluses, ≥3 couleurs joueur, changement sans rebuild/réinstallation, save/load, ombre/halo/flicker/alignement, retour xBR. Anciens shards inertes autorisés ; contrôle du hash du catalogue actif dans les deux sens.
 - Acceptation : décision QA immuable de portée exacte ; rejet : profil précédent vérifié. Retour xBR pur toujours disponible.
