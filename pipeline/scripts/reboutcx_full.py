@@ -22,14 +22,15 @@ from PIL import Image, ImageDraw
 from reboutcx_batch import (
     infer_x4_box_x2,
     is_null_frame,
+    load_palette_profiles,
     load_model,
     prepare_inference_rgb,
 )
 from reboutcx_quantize import (
     QUANTIZER_ID,
-    expand_classes,
     quantize_classed_oklab,
     reconstruct_rgba,
+    semantic_classes_for_job,
     source_representatives,
 )
 from run_creature_sprite_x2 import (
@@ -79,6 +80,30 @@ def relative(path: Path) -> str:
         return path.resolve().relative_to(PROJECT_ROOT).as_posix()
     except ValueError:
         return str(path.resolve())
+
+
+def render_contract_digest(
+    job: dict[str, Any],
+    classes: dict[str, list[int]],
+    palette_evidence: dict[str, Any] | None,
+) -> str:
+    """Pin every job-level input that can change rendered indices."""
+    contract = {
+        "runtime_profile": job.get("runtime_profile"),
+        "layer": job.get("layer"),
+        "armor_code": job.get("armor_code"),
+        "item_resref": job.get("item_resref"),
+        "semantic_classes_id": job.get("semantic_classes_id"),
+        "semantic_classes": classes,
+        "palette_reference": palette_evidence,
+        "null_frame_marker": int(job["null_frame_marker"]),
+        "reboutcx": job["reboutcx"],
+        "quantizer": QUANTIZER_ID,
+        "alpha": "xbr2x-mask-v1",
+        "rgb_under_transparency": "scipy distance_transform_edt nearest opaque",
+    }
+    payload = json.dumps(contract, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest().upper()
 
 
 def read_exact(stream: BinaryIO, size: int, label: str) -> bytes:
@@ -366,6 +391,7 @@ def render_resource(
     node: str,
     classes: dict[str, list[int]],
     marker_index: int,
+    reference_palette: np.ndarray | None,
     qa_indices: set[int],
     reference: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], dict[int, dict[str, Any]], dict[str, float | int]]:
@@ -394,13 +420,27 @@ def render_resource(
             cycle_count=len(cycles),
         )
         for frame in frames:
+            quantization_palette = (
+                frame.palette if reference_palette is None else reference_palette
+            )
             if is_null_frame(frame, marker_index):
                 guide = np.full((2, 2), marker_index, dtype=np.uint8)
-                target_rgb = np.full((2, 2, 3), frame.palette[marker_index], dtype=np.uint8)
+                target_rgb = np.full(
+                    (2, 2, 3), quantization_palette[marker_index], dtype=np.uint8
+                )
                 quantized = guide.copy()
-                xbr_rgba = reconstruct_rgba(guide, frame.palette, frame.transparent)
+                xbr_rgba = reconstruct_rgba(
+                    guide, quantization_palette, frame.transparent
+                )
+                marker_classes = [
+                    name for name, indices in classes.items() if marker_index in indices
+                ]
+                if len(marker_classes) != 1:
+                    raise RuntimeError("null marker must belong to exactly one semantic class")
+                visible_pixels = 4 if reference_palette is not None else 0
                 metrics = {
-                    "visible_pixels": 0,
+                    "visible_pixels": visible_pixels,
+                    "class_pixels": {marker_classes[0]: 4},
                     "oklab_error_mean": 0.0,
                     "oklab_error_p95": 0.0,
                     "oklab_error_max": 0.0,
@@ -423,14 +463,19 @@ def render_resource(
                 )
                 guide_flat, _representatives = map_output(frame, xbr_bytes, provenance)
                 guide = guide_flat.reshape(scaled_height, scaled_width)
-                xbr_rgba = np.frombuffer(xbr_bytes, dtype=np.uint8).reshape(
+                source_xbr_rgba = np.frombuffer(xbr_bytes, dtype=np.uint8).reshape(
                     scaled_height, scaled_width, 4
                 )
-                inference_rgb = prepare_inference_rgb(frame)
+                xbr_rgba = (
+                    source_xbr_rgba
+                    if reference_palette is None
+                    else reconstruct_rgba(guide, quantization_palette, frame.transparent)
+                )
+                inference_rgb = prepare_inference_rgb(frame, quantization_palette)
                 if inference_rgb is None:
                     target_rgb = np.full(
                         (scaled_height, scaled_width, 3),
-                        frame.palette[frame.transparent],
+                        quantization_palette[frame.transparent],
                         dtype=np.uint8,
                     )
                     x4 = np.repeat(np.repeat(target_rgb, 2, axis=0), 2, axis=1)
@@ -443,7 +488,7 @@ def render_resource(
                 quantized, metrics = quantize_classed_oklab(
                     target_rgb,
                     guide,
-                    frame.palette,
+                    quantization_palette,
                     np.unique(frame.indices),
                     classes,
                     transparent_index=frame.transparent,
@@ -476,12 +521,20 @@ def render_resource(
                 }
             )
             if frame.index in qa_indices:
-                native_rgba = np.asarray(
-                    Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize(
-                        (frame.width * 2, frame.height * 2), Image.Resampling.NEAREST
-                    ),
-                    dtype=np.uint8,
-                )
+                if reference_palette is None:
+                    native_rgba = np.asarray(
+                        Image.frombytes("RGBA", (frame.width, frame.height), frame.rgba).resize(
+                            (frame.width * 2, frame.height * 2), Image.Resampling.NEAREST
+                        ),
+                        dtype=np.uint8,
+                    )
+                else:
+                    native_indices = np.repeat(
+                        np.repeat(frame.indices, 2, axis=0), 2, axis=1
+                    )
+                    native_rgba = reconstruct_rgba(
+                        native_indices, quantization_palette, frame.transparent
+                    )
                 qa_records[frame.index] = {
                     "frame": frame,
                     "native_rgba": native_rgba,
@@ -493,7 +546,7 @@ def render_resource(
                         )
                     ),
                     "quantized_rgba": reconstruct_rgba(
-                        quantized, frame.palette, frame.transparent
+                        quantized, quantization_palette, frame.transparent
                     ),
                 }
         try:
@@ -541,26 +594,38 @@ def execute(job_path: Path) -> dict[str, Any]:
     animation_id = int(job["animation_id"], 16)
     if int(source_manifest["animation_id"], 16) != animation_id:
         raise RuntimeError("source animation id differs")
+    if job.get("runtime_profile") is not None and source_manifest.get(
+        "runtime_profile"
+    ) != job.get("runtime_profile"):
+        raise RuntimeError("source runtime profile differs")
+    source_layer = source_manifest.get("layer", {}).get("kind")
+    if job.get("layer") is not None and source_layer != job.get("layer"):
+        raise RuntimeError("source layer differs")
     actual_inventory = [str(item["source"]["name"]).upper() for item in resources]
     requested_inventory = [str(item["name"]).upper() for item in job["source_inventory"]]
     if actual_inventory != requested_inventory:
         raise RuntimeError("source inventory differs from full job")
 
+    classes, classes_id = semantic_classes_for_job(job)
+    palette_profiles, palette_evidence = load_palette_profiles(job)
+    reference_palette = palette_profiles[0]["palette"] if palette_profiles else None
+    contract_digest = render_contract_digest(job, classes, palette_evidence)
     resource_by_resref = {
         str(resource["source"]["name"]).upper(): resource for resource in resources
     }
-    reuse_keys: dict[str, tuple[str, str]] = {}
-    canonical_by_key: dict[tuple[str, str], str] = {}
+    canonical_by_key: dict[tuple[str, str, str], str] = {}
     canonical_by_resref: dict[str, str] = {}
     for resref in actual_inventory:
         resource = resource_by_resref[resref]
-        key = (sha256_file(resource["bam_path"]), sha256_file(resource["source_path"]))
-        reuse_keys[resref] = key
+        key = (
+            sha256_file(resource["bam_path"]),
+            sha256_file(resource["source_path"]),
+            contract_digest,
+        )
         canonical = canonical_by_key.setdefault(key, resref)
         canonical_by_resref[resref] = canonical
 
     groups, required_qa = qa_contract(job, resources, canonical_by_resref)
-    classes = expand_classes(job["semantic_classes"])
     marker_index = int(job["null_frame_marker"])
     descriptor, versions = load_model(
         model_path,
@@ -591,6 +656,7 @@ def execute(job_path: Path) -> dict[str, Any]:
                 node=str(job["tools"].get("node", "node")),
                 classes=classes,
                 marker_index=marker_index,
+                reference_palette=reference_palette,
                 qa_indices=required_qa.get(resref, set()),
                 reference=job["reference"],
             )
@@ -654,9 +720,11 @@ def execute(job_path: Path) -> dict[str, Any]:
 
     all_records = [record for report in resource_reports for record in report["frame_records"]]
     visible = sum(int(record["visible_pixels"]) for record in all_records)
+    evaluated_records = [record for record in all_records if not record["model_bypassed"]]
+    evaluated_visible = sum(int(record["visible_pixels"]) for record in evaluated_records)
     weighted_error = sum(
         float(record["oklab_error_mean"]) * int(record["visible_pixels"])
-        for record in all_records
+        for record in evaluated_records
     )
     manifest = {
         "schema": RUN_SCHEMA,
@@ -668,9 +736,15 @@ def execute(job_path: Path) -> dict[str, Any]:
         "source_manifest": relative(source_manifest_path),
         "source_manifest_sha256": sha256_file(source_manifest_path),
         "animation_id": job["animation_id"],
+        "runtime_profile": job.get("runtime_profile"),
+        "layer": job.get("layer"),
         "model_sha256": sha256_file(model_path),
         "target_scale": 2,
         "versions": versions,
+        "semantic_classes_id": classes_id,
+        "semantic_classes": classes,
+        "palette_reference": palette_evidence,
+        "render_contract_sha256": contract_digest,
         "code": {
             "reboutcx_full": {"path": relative(Path(__file__)), "sha256": sha256_file(Path(__file__))},
             "reboutcx_batch": {"path": relative(SCRIPT_DIR / "reboutcx_batch.py"), "sha256": sha256_file(SCRIPT_DIR / "reboutcx_batch.py")},
@@ -692,8 +766,14 @@ def execute(job_path: Path) -> dict[str, Any]:
             "rgb_under_transparency": "scipy distance_transform_edt nearest opaque",
             "alpha": "xbr2x-mask-v1",
             "quantizer": QUANTIZER_ID,
+            "palette_rgb": (
+                palette_evidence["id"] if palette_evidence is not None else "source-bam"
+            ),
             "dither": False,
-            "duplicate_source_policy": "render once; clone component payload; verify each resref",
+            "duplicate_source_policy": (
+                "render once per BAM/BAMC/render-contract digest; clone component payload; "
+                "verify each resref"
+            ),
         },
         "coverage": {
             "resources": len(resources),
@@ -715,9 +795,18 @@ def execute(job_path: Path) -> dict[str, Any]:
         },
         "metrics": {
             "visible_pixels": visible,
-            "weighted_oklab_error_mean": weighted_error / visible if visible else 0.0,
-            "worst_frame_p95": max((float(record["oklab_error_p95"]) for record in all_records), default=0.0),
-            "worst_frame_max": max((float(record["oklab_error_max"]) for record in all_records), default=0.0),
+            "model_evaluated_visible_pixels": evaluated_visible,
+            "weighted_oklab_error_mean": (
+                weighted_error / evaluated_visible if evaluated_visible else 0.0
+            ),
+            "worst_frame_p95": max(
+                (float(record["oklab_error_p95"]) for record in evaluated_records),
+                default=0.0,
+            ),
+            "worst_frame_max": max(
+                (float(record["oklab_error_max"]) for record in evaluated_records),
+                default=0.0,
+            ),
         },
         "qa_contract": job["qa"],
         "qa": qa,
@@ -771,6 +860,17 @@ def verify(job_path: Path) -> dict[str, Any]:
         resolve_path_reference(job["paths"]["source_manifest"], required=True, root=PROJECT_ROOT)
     ):
         raise RuntimeError("source manifest hash differs")
+    classes, classes_id = semantic_classes_for_job(job)
+    _palette_profiles, palette_evidence = load_palette_profiles(job)
+    if classes_id is not None:
+        if (
+            manifest.get("semantic_classes_id") != classes_id
+            or manifest.get("semantic_classes") != classes
+            or manifest.get("palette_reference") != palette_evidence
+            or manifest.get("render_contract_sha256")
+            != render_contract_digest(job, classes, palette_evidence)
+        ):
+            raise RuntimeError("Character render contract differs")
     for evidence in manifest["code"].values():
         path = resolve_path_reference(evidence["path"], required=True, root=PROJECT_ROOT)
         if sha256_file(path) != str(evidence["sha256"]):

@@ -28,6 +28,26 @@ def make_frame(resref: str) -> SourceFrame:
 
 
 class ReboutCXFullRegistryTests(unittest.TestCase):
+    def test_render_contract_digest_separates_character_layers_and_palettes(self) -> None:
+        classes = {"transparent": [0], "material": list(range(1, 256))}
+        base = {
+            "runtime_profile": "character-bg2ee-2.7.3.0",
+            "layer": "body",
+            "null_frame_marker": 2,
+            "reboutcx": {"model_sha256": "A", "target_scale": 2},
+        }
+        palette = {"id": "fixed", "profiles": [{"name": "reference", "sha256": "B"}]}
+        body = full.render_contract_digest(base, classes, palette)
+        weapon = full.render_contract_digest({**base, "layer": "weapon"}, classes, palette)
+        changed_palette = full.render_contract_digest(
+            base,
+            classes,
+            {"id": "fixed", "profiles": [{"name": "reference", "sha256": "C"}]},
+        )
+        self.assertNotEqual(body, weapon)
+        self.assertNotEqual(body, changed_palette)
+        self.assertEqual(body, full.render_contract_digest(base, classes, palette))
+
     def test_component_preserves_native_cycles_and_can_be_cloned_by_resref(self) -> None:
         payload = np.asarray([[0, 0, 3, 3], [0, 0, 3, 3]], dtype=np.uint8)
         evidence = [{"indices_sha256": hashlib.sha256(payload.tobytes()).hexdigest().upper()}]

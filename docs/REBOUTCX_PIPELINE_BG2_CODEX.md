@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. Prototype P6.3 body + arme produit, revue humaine offline en attente.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P6.3 body + arme complète offline, revue humaine des runs complets en attente.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -342,6 +342,14 @@ out[p] = nearest contraint selon §2
 - Composition CPU : `reboutcx_character_composite.py` relit les deux registres partiels scellés, revérifie les guides xBR, reconstruit les palettes sans réinférence/requantification et produit trois panneaux : xBR+xBR, ReboutCX body+xBR arme, ReboutCX+ReboutCX. Le run v1 est conservé mais remplacé pour la revue : son cadrage par frame masquait le diagnostic temporel. Candidat v2 : job `chmb1/jobs/reboutcx-p6-3-body-sw1h01-v2.json`, run `chmb1/runs/reboutcx-p6-3-body-sw1h01-v2/`, manifeste `73F4815B7FB927746275F45C12FE50C0854B0561835E983F275D23434CAC1ABE`, 12 GIF (2 directions × référence/B/C/métal/cuir/armure), bornes fixes par séquence. Les 12 poses contrôlées montrent centres stables, arme devant au cycle 0 et derrière au cycle 4, recoloration cohérente ; le gain sur l'arme fine reste subtil.
 - Vérification : deux runs enfants et composition v2 relus par hashes ; **16 tests OK** couvrant indices/centres/transparence/ordre de couche. Statut `completed-pending-human-review`, `installable=false`. Limites : alpha/ombre/éclairage/effets et ordre réellement capturé restent à confirmer ingame ; autres cycles, composants complets, offhand/helmet et 24 classes absentes du composant arme complet non couverts. Aucune installation, jeu, GUI, xBR/full/catalogue/release modifiés.
 - Prochaine étape minimale : visionner les GIF v2 cycle 0/4, puis B/C et profils isolés. Après acceptation explicite, produire les composants complets CHMB1 + WQLS0 (inférence lourde, GPU annoncé avant lancement), puis P7.1. Vérification ingame possible seulement après catalogue P7.1 validé et installation transactionnelle P7.2 explicitement autorisée, jeu et InfinityLoader fermés manuellement.
+
+**Complétude P6.3 — 2026-09-14, autorisée après le prototype :**
+
+- `reboutcx_full.py` accepte le contrat Character versionné : palette RANGES12 de référence pour entrée modèle/quantification/QA, guide xBR issu de la palette BAM conservé, profil et calque source vérifiés. La déduplication inclut désormais un digest profil/calque/classes/palette/recette ; aucun partage par seuls hashes BAM/BAMC entre contrats différents.
+- Body : `chmb1/jobs/reboutcx-p6-3-full-v1.json` → `chmb1/runs/reboutcx-p6-3-full-v1/`, manifeste `667885EF8F6A9B7B4835E0EF8B7DE85A2D02670C089BF2C3FB67341619B7C486`. Couverture exacte : 23 BAM, 10 323 frames, 1 170 cycles/29 808 slots, 7 578 marqueurs court-circuités, 2 610 inférences uniques, 23 composants/25 753 204 octets. Erreur pondérée hors frames court-circuitées `0,03382`, pire p95 `0,11846`.
+- Arme : `sw1h01-wqls0/jobs/reboutcx-p6-3-full-v1.json` → `sw1h01-wqls0/runs/reboutcx-p6-3-full-v1/`, manifeste `8B999C72DF9C3BD0F0CAF5DB8DB849BEEEBC3B52F26C028F3A414C73618E1D6D`. Couverture exacte : 11 BAM, 2 907 frames, 279 cycles/6 354 slots, 2 749 inférences uniques, 11 composants/4 029 872 octets. Erreur pondérée `0,02451`, pire p95 `0,31578` sur une frame de 48 pixels visibles ; inspection des principaux outliers : écarts localisés aux bords/petites armes, aucune rupture de silhouette observée.
+- Les 12 frames CHMB1A1 et 12 WQLS0A1 des prototypes sont identiques octet pour octet dans les composants complets. Les deux `verify` relisent géométrie, centres, représentants, indices et cycles natifs : 31 + 21 fichiers vérifiés ; **17 tests OK**. Les deux exécutions CUDA/FP16 ont été annoncées avant lancement (`96,95 s` body + `98,55 s` arme de temps modèle), puis GPU libéré. Statut `completed-pending-human-review`, `installable=false` ; aucune installation, jeu, GUI, xBR/catalogue/release modifiés.
+- Restent inconnus avant ingame : alpha/ombre/éclairage/effets réalisés, ordre effectivement capturé par BG2EE et jugement temporel humain sur toutes les actions. Étape suivante minimale : revue des GIF full body/arme ; accord distinct requis avant P7.1. L'essai ingame ne devient possible qu'après P7.1 puis installation P7.2 explicitement autorisée.
 
 ## P7 — Installation / QA Character
 
