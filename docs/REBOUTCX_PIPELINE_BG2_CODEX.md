@@ -1,6 +1,6 @@
 # ReboutCX — runbook sprites BG2EE
 
-> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P7.1 catalogue Character offline vérifié ; préflight P7.2 validé.
+> Projet : `Gaurox/BG2-HD-Visual-Project`. P0–P4 réalisées ; P5 testée sur sélection, réserves ci-dessous. P7.2 Character installée, QA humaine en cours.
 > Alternative ReboutCX **x2**, xBR récupérable, runtime indexé existant, validation par phase.
 
 ## 0. Règles
@@ -366,6 +366,7 @@ out[p] = nearest contraint selon §2
 
 - **P7.2 — Installation/QA.** Réutiliser P4, `CreatureSpriteFilter=Nearest`, DLL/manifest de capacités réellement actifs vérifiés ; aucune nouvelle DLL si le runtime Character actuel suffit. Première invocation équipée : contrôler palettes capturées, composite HD effectif, attente des shards et temps de première frame avant de diagnostiquer le modèle.
 - Préflight P7.2 : actif `65566299...`/`E43155A8...`, INI `Nearest`, DLL réellement active et acceptée `289E132B...` issue de `c1f55c78`. Le reçu catalogue conservait l'ancien runtime `50F7A4F9...` ; `Install-CreatureSprite-XN-Catalog-Test.ps1` accepte désormais l'adoption d'un runtime différent seulement avec `-RuntimeManifest` explicite et hash de la DLL active exact, sans copier la DLL. Manifeste `pipeline/runtime/manifests/iee-character-6100-firkraag-c1f55c78-v1.json` ; 17 tests transactionnels OK. `-VerifyOnly` réel : 454/454 shards sources, cible `AF3B8668...`/`EA923B4E...`, deux shards Character absents attendus (`298033FD...`, `F77CFEDA...`).
+- Installation réelle autorisée : transaction `20260914T163442.1930540Z-e0ff51955ad44bfab7dc34db3f942dfe`, deux shards copiés, 454/454 sources et fichiers actifs revérifiés, statut `installed-pending-qa`. Catalogue précédent `E43155A8...`, INI `E5A737BE...` et reçu précédent `EF9DFDD1...` sauvegardés ; DLL inchangée, runtime adopté `iee-character-6100-firkraag-c1f55c78-v1`. Jeu non lancé par l'agent.
 - QA : body/arme, actions/directions, armures/couches incluses, ≥3 couleurs joueur, changement sans rebuild/réinstallation, save/load, ombre/halo/flicker/alignement, retour xBR. Anciens shards inertes autorisés ; contrôle du hash du catalogue actif dans les deux sens.
 - Acceptation : décision QA immuable de portée exacte ; rejet : profil précédent vérifié. Retour xBR pur toujours disponible.
 
