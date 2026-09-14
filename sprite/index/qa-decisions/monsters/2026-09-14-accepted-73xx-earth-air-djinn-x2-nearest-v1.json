@@ -1,0 +1,114 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-batch-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-14T06:15:25.276796Z",
+  "scope": {
+    "kind": "installed-sprite-family-batch",
+    "domain": "monsters",
+    "variant_id": "x2-nearest",
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "catalog_generation": "BDCE4BF3413A20ACC70E88E506225D17A2DF902C8D86BFB45F31CD4E6040EBC1"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "area": "AR0602",
+    "filter": "Nearest",
+    "note": "Les sept familles du lot sont valides ingame : elementaires de terre 0x7300/0x7301, tertre errant 0x7302, elementaires d'air 0x7320/0x7321, genies 0x7F05/0x7F06. Le bucket 0x73xx est complet (terre, feu, air). MAIR couvre aussi les fantomes FSGHOS/FSSPIR* et les princes Chan et Yan-C-Bin ; MEAE couvre Ogremoch, Sunnis et l'Avatar de Rillifane. Octets source MDJL de 0x7F06 strictement identiques a 0x7F41 deja accepte."
+  },
+  "entries": [
+    {
+      "animation_id": "0x7300",
+      "name": "Élémentaire de terre — MEAE",
+      "bam_prefix": "MEAE",
+      "creature": "ELEAR01",
+      "job_file": "sprite/families/monsters/73xx/7300-meae-elemental-earth/jobs/x2-nearest-v1.json",
+      "job_sha256": "DCEAD2025FB0DC56FDB92E831BAE8DC13D99A5ADCD9F8DBEDB1679D29811480B",
+      "source_manifest": "sprite/families/monsters/73xx/7300-meae-elemental-earth/source/stock/manifest.json",
+      "source_manifest_sha256": "2BB79EA2554A5DB4D4A55E9545A24A0C5EE4986E38CF5382EB63F2D1DF69477F",
+      "build_manifest": "sprite/families/monsters/73xx/7300-meae-elemental-earth/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "6633833D8752F7A43A2F90CDE8F942D723A4FC5F11559F9D4E7C3FA7786E80D1"
+    },
+    {
+      "animation_id": "0x7301",
+      "name": "Élémentaire de terre mineur — MEAS",
+      "bam_prefix": "MEAS",
+      "creature": "ELEARL01",
+      "job_file": "sprite/families/monsters/73xx/7301-meas-elemental-earth-small/jobs/x2-nearest-v1.json",
+      "job_sha256": "5E2BE11B28B0315F6AD77EE3C59AF8082763D85AC920B23F8FF238E614D7564A",
+      "source_manifest": "sprite/families/monsters/73xx/7301-meas-elemental-earth-small/source/stock/manifest.json",
+      "source_manifest_sha256": "15CE20E416CE6AFD10AB81193A7214C945D4620CA09C73C688AD4B406E8B9036",
+      "build_manifest": "sprite/families/monsters/73xx/7301-meas-elemental-earth-small/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "84A0210DEF3481CB9F0F6702D66767D430A6771DEA2EA51984F403DC2A9E8A9E"
+    },
+    {
+      "animation_id": "0x7302",
+      "name": "Tertre errant — MEAE",
+      "bam_prefix": "MEAE",
+      "creature": "SMOUND01",
+      "job_file": "sprite/families/monsters/73xx/7302-meae-shambling-mound/jobs/x2-nearest-v1.json",
+      "job_sha256": "19CA87D311A88509EF3B15683B482EA8AD00A5B82FAF930213E14AD77DC2C77D",
+      "source_manifest": "sprite/families/monsters/73xx/7302-meae-shambling-mound/source/stock/manifest.json",
+      "source_manifest_sha256": "DF9A3A9AAFD6DA98C1E6AB08925AFB45246A6E4F5C351EC8E52821B0A360FEAE",
+      "build_manifest": "sprite/families/monsters/73xx/7302-meae-shambling-mound/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "05D0BDE470FD08CC53B3FAAB47C084A6654082D397598AF6AB58A672667F5DEF"
+    },
+    {
+      "animation_id": "0x7320",
+      "name": "Élémentaire d'air — MAIR",
+      "bam_prefix": "MAIR",
+      "creature": "ELAIR01",
+      "job_file": "sprite/families/monsters/73xx/7320-mair-elemental-air/jobs/x2-nearest-v1.json",
+      "job_sha256": "0656F1A5DDFD277EDF9C8E340436776F7134D7B2711D4BD06AA2548C3FE19E7D",
+      "source_manifest": "sprite/families/monsters/73xx/7320-mair-elemental-air/source/stock/manifest.json",
+      "source_manifest_sha256": "F0020934115368C6CA36F80CD91F628F57A93C196DB5589121800F92420403BA",
+      "build_manifest": "sprite/families/monsters/73xx/7320-mair-elemental-air/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "27283EA7170046A9C96C7293DB10F4ED3BCDDF34FD6B656B65E6A3D50AFE5AA0"
+    },
+    {
+      "animation_id": "0x7321",
+      "name": "Élémentaire d'air mineur — MAIS",
+      "bam_prefix": "MAIS",
+      "creature": "ELAIRL01",
+      "job_file": "sprite/families/monsters/73xx/7321-mais-elemental-air-small/jobs/x2-nearest-v1.json",
+      "job_sha256": "0560628401F65A5F868AECD579430E8F9E970F86C7F76D5D3C3B6E893D54D804",
+      "source_manifest": "sprite/families/monsters/73xx/7321-mais-elemental-air-small/source/stock/manifest.json",
+      "source_manifest_sha256": "BE3954A3E8986363518B59CBCF968C47399869D3FEB18E74364664B7A8DC7011",
+      "build_manifest": "sprite/families/monsters/73xx/7321-mais-elemental-air-small/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "3CD867E8F31800CC4765178C0CC83BE2ECA21685F27F6BB488706260106C3391"
+    },
+    {
+      "animation_id": "0x7F05",
+      "name": "Djinn — MDJI",
+      "bam_prefix": "MDJI",
+      "creature": "GENDJI01",
+      "job_file": "sprite/families/monsters/7fxx/7f05-mdji-djinni/jobs/x2-nearest-v1.json",
+      "job_sha256": "AA8993565AFE753496E3ECCCA1C9FAE71540E0B8E8E671A787DD6807B74456C6",
+      "source_manifest": "sprite/families/monsters/7fxx/7f05-mdji-djinni/source/stock/manifest.json",
+      "source_manifest_sha256": "750CAA9A181FFAC210802CAEF3ED989122080FA0E17DF942A5446FC19CE775D2",
+      "build_manifest": "sprite/families/monsters/7fxx/7f05-mdji-djinni/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "CCA27E7E777E5FAA82533A7ACFE9CFE92A15781A044F28414C41D395BC458F9B"
+    },
+    {
+      "animation_id": "0x7F06",
+      "name": "Djinn jambes — MDJL",
+      "bam_prefix": "MDJL",
+      "creature": "GENIE02",
+      "job_file": "sprite/families/monsters/7fxx/7f06-mdjl-djinni-legs/jobs/x2-nearest-v1.json",
+      "job_sha256": "C396DBC0A5BC8087C99601C60B618D9CB5374DB3A8A9C3BE0F6375C781296DB0",
+      "source_manifest": "sprite/families/monsters/7fxx/7f06-mdjl-djinni-legs/source/stock/manifest.json",
+      "source_manifest_sha256": "F8BBABD9591F16FA31354CF6C8ABB0D6C32B7F9997B82566654250832F65DF77",
+      "build_manifest": "sprite/families/monsters/7fxx/7f06-mdjl-djinni-legs/runs/x2-nearest-v1/build/build-manifest.json",
+      "build_manifest_sha256": "9FE632267C9EE8CFC2C975B63385D314D2409ED75DF2476803A2094828CEAB91"
+    }
+  ],
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-nearest/jobs/append-73xx-earth-air-djinn-v1.json",
+    "job_sha256": "A5EF5E702A623B2F414908F2C3C52C59F9E407D4CC215C43DB20623C408807F9",
+    "installation_state": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/ingame-installation/active-test.json",
+    "installation_state_sha256": "8A3222BFDE90F0C87394563A43933EDFE50AB4F61D133B9FAB92E86C6F55ECC4",
+    "installation_status": "installed-pending-qa"
+  },
+  "release_manifest_modified": false
+}
