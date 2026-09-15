@@ -1,0 +1,65 @@
+{
+  "animation_id": "0x5302",
+  "family": "sprite/families/playable-characters/5302-dwarf-male-thief-low",
+  "components": 65,
+  "source_frames": 178357,
+  "logical_model_frames": 145189,
+  "computed_model_frames": 93869,
+  "avoided_model_frames": 51320,
+  "wall_through_verification_seconds": 275.3812348842621,
+  "logical_model_frames_per_second": 527.2290977307165,
+  "cache_peak_bytes": 80001476,
+  "cache_evictions": 0,
+  "cache_plan_seconds": 10.873507899999822,
+  "session": "sprite/.work/reboutcx-p12-production/session-1789462285700493000.jsonl",
+  "session_sha256": "93F708F27B677244E320CB7AB1459E34E09FB01830DBDA97086BB2DFAE2C4D00",
+  "attempts": [
+    {
+      "session": "sprite/.work/reboutcx-p12-production/session-1789462285700493000.jsonl",
+      "sha256": "93F708F27B677244E320CB7AB1459E34E09FB01830DBDA97086BB2DFAE2C4D00",
+      "terminal_event": {
+        "event": "complete",
+        "elapsed_seconds": 275.38156340000023,
+        "completed": 65,
+        "new_model_frames": 93869,
+        "wall_through_verification_seconds": 275.3812347999992,
+        "actual_model_frames_per_second": 340.8692682643177,
+        "logical_model_frames": 145189,
+        "logical_model_frames_per_second": 527.2290978920413,
+        "source_frames": 178357,
+        "source_frames_per_second": 647.6730345462178,
+        "gpu_slots": 103200,
+        "gpu_filler_frames": 9331,
+        "cache": {
+          "planned_repeated_keys": 28116,
+          "requests": 146892,
+          "misses": 93942,
+          "inflight_hits": 27028,
+          "not_retained": 80012,
+          "ready_hits": 25922,
+          "retained_bytes": 0,
+          "peak_retained_bytes": 80001476,
+          "limit_bytes": 1073741824,
+          "ready_entries": 0,
+          "inflight_entries": 0,
+          "plan_reserved_bytes": 0,
+          "remaining_plan_keys": 0
+        },
+        "cache_plan": {
+          "seconds": 10.873507899999822,
+          "resources": 627,
+          "cache_eligible_frames": 146892,
+          "unique_frames": 93942,
+          "repeated_keys": 28116,
+          "duplicate_frames": 52950,
+          "count_storage": "session-RAM-only"
+        },
+        "model_load_seconds_once": 3.1936825000011595,
+        "peak_reserved_resource_bytes": 3024928256,
+        "log": "sprite/.work/reboutcx-p12-production/session-1789462285700493000.jsonl"
+      }
+    }
+  ],
+  "last_session_existing_components": 0,
+  "time_note": "family wall includes recovery gaps; cache peak and admission timing refer to final session"
+}

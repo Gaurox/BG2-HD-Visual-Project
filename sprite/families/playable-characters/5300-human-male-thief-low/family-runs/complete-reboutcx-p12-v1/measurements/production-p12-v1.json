@@ -1,0 +1,75 @@
+{
+  "animation_id": "0x5300",
+  "family": "sprite/families/playable-characters/5300-human-male-thief-low",
+  "components": 65,
+  "source_frames": 180337,
+  "logical_model_frames": 153651,
+  "computed_model_frames": 95027,
+  "avoided_model_frames": 58624,
+  "wall_through_verification_seconds": 473.91187500953674,
+  "logical_model_frames_per_second": 324.2185058074521,
+  "cache_peak_bytes": 156959742,
+  "cache_evictions": 0,
+  "cache_plan_seconds": 5.140333699999246,
+  "session": "sprite/.work/reboutcx-p12-production/session-1789461877443981600.jsonl",
+  "session_sha256": "5FA8EA4D0D2E9016C2DD61062F987AC153B9884A75B624D9F00298A6B40DBAD9",
+  "attempts": [
+    {
+      "session": "sprite/.work/reboutcx-p12-production/session-1789461527898816200.jsonl",
+      "sha256": "1B97D9547778E247B24745332CE082D06245705F37AB699F9341589F3CB238D7",
+      "terminal_event": {
+        "event": "failed",
+        "elapsed_seconds": 193.96016300000065,
+        "error": "[WinError 5] Acc\u00e8s refus\u00e9: 'G:\\\\AI\\\\BG2_Upscale\\\\sprite\\\\families\\\\playable-characters\\\\5300-human-male-thief-low\\\\helm13-wqlj5\\\\runs\\\\.reboutcx-p12-cache86-v1.tmp-11712' -> 'G:\\\\AI\\\\BG2_Upscale\\\\sprite\\\\families\\\\playable-characters\\\\5300-human-male-thief-low\\\\helm13-wqlj5\\\\runs\\\\reboutcx-p12-cache86-v1'",
+        "completed": 12
+      }
+    },
+    {
+      "session": "sprite/.work/reboutcx-p12-production/session-1789461877443981600.jsonl",
+      "sha256": "5FA8EA4D0D2E9016C2DD61062F987AC153B9884A75B624D9F00298A6B40DBAD9",
+      "terminal_event": {
+        "event": "complete",
+        "elapsed_seconds": 124.36692909999874,
+        "completed": 65,
+        "new_model_frames": 62537,
+        "wall_through_verification_seconds": 124.36670959999901,
+        "actual_model_frames_per_second": 502.843568034709,
+        "logical_model_frames": 100869,
+        "logical_model_frames_per_second": 811.0610976556768,
+        "source_frames": 105590,
+        "source_frames_per_second": 849.0214169017529,
+        "gpu_slots": 68284,
+        "gpu_filler_frames": 5747,
+        "cache": {
+          "planned_repeated_keys": 19884,
+          "requests": 102263,
+          "misses": 62590,
+          "inflight_hits": 19194,
+          "not_retained": 52757,
+          "ready_hits": 20479,
+          "retained_bytes": 0,
+          "peak_retained_bytes": 156959742,
+          "limit_bytes": 1073741824,
+          "ready_entries": 0,
+          "inflight_entries": 0,
+          "plan_reserved_bytes": 0,
+          "remaining_plan_keys": 0
+        },
+        "cache_plan": {
+          "seconds": 5.140333699999246,
+          "resources": 380,
+          "cache_eligible_frames": 102263,
+          "unique_frames": 62590,
+          "repeated_keys": 19884,
+          "duplicate_frames": 39673,
+          "count_storage": "session-RAM-only"
+        },
+        "model_load_seconds_once": 3.0771542999991652,
+        "peak_reserved_resource_bytes": 2643784608,
+        "log": "sprite/.work/reboutcx-p12-production/session-1789461877443981600.jsonl"
+      }
+    }
+  ],
+  "last_session_existing_components": 15,
+  "time_note": "family wall includes recovery gaps; cache peak and admission timing refer to final session"
+}

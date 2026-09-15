@@ -92,15 +92,19 @@ conserver. Le pointeur xBR canonique reste intact.
 
 ## Suivi des personnages jouables
 
-`sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p9-v1.json`
-épingle les 23 familles complètes/1 471 composants ReboutCX par manifeste+SHA-256. C'est un
-instantané de production vérifiée, **pas** un catalogue dérivé, une QA, une installation ou une
-release : des familles partagent des RESREF xBR alors que leurs sorties ReboutCX diffèrent. Créer
-un nouvel instantané versionné après reprise :
+Courant : `sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p12-v1.json`
+épingle **33/78 familles complètes, 2 109 composants ; 45 familles restantes**, par manifeste+SHA-256.
+Historique immuable : `playable-characters-reboutcx-progress-p9-v1.json` (23 familles/1 471 composants).
+Le P12-v1 ajoute dix familles et référence la mesure P12 déjà scellée de `0x5211`.
+Mesure/reprise : [REBOUTCX_P12_DIX_FAMILLES_20260915.md](REBOUTCX_P12_DIX_FAMILLES_20260915.md).
 
-```powershell
-python pipeline/scripts/reboutcx_playable_catalog_progress.py write-status --snapshot-id p9-v2
-```
+Instantanés de production vérifiée, **pas** des catalogues dérivés, une QA, une installation ou une
+release : des familles partagent des RESREF xBR alors que leurs sorties ReboutCX diffèrent.
+Après reprise, créer une nouvelle version ; conserver les instantanés antérieurs.
+
+Décompte : une famille = ID d'animation (race/sexe/apparence/variante LOW), pas un personnage nommé.
+L'ancien job xBR référence 76 familles sous `playable-characters` et deux entrées historiques sous
+`sprite/jobs` (`0x6102`, `0x6110`), soit **78**. Répartition : 30 LOW, 46 ordinaires, 2 moines.
 
 ## Références validées
 

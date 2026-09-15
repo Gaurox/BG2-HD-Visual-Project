@@ -1,0 +1,65 @@
+{
+  "animation_id": "0x5310",
+  "family": "sprite/families/playable-characters/5310-human-female-thief-low",
+  "components": 65,
+  "source_frames": 178359,
+  "logical_model_frames": 157208,
+  "computed_model_frames": 93491,
+  "avoided_model_frames": 63717,
+  "wall_through_verification_seconds": 298.65820026397705,
+  "logical_model_frames_per_second": 526.380992924512,
+  "cache_peak_bytes": 84368038,
+  "cache_evictions": 0,
+  "cache_plan_seconds": 16.025174999998853,
+  "session": "sprite/.work/reboutcx-p12-production/session-1789462822420987200.jsonl",
+  "session_sha256": "A2A6E28456E3E0337FF4823E482C11FD6ED38D9305071E2BF3D44E5D2C23E2A4",
+  "attempts": [
+    {
+      "session": "sprite/.work/reboutcx-p12-production/session-1789462822420987200.jsonl",
+      "sha256": "A2A6E28456E3E0337FF4823E482C11FD6ED38D9305071E2BF3D44E5D2C23E2A4",
+      "terminal_event": {
+        "event": "complete",
+        "elapsed_seconds": 298.6584925999996,
+        "completed": 65,
+        "new_model_frames": 93491,
+        "wall_through_verification_seconds": 298.65820019999956,
+        "actual_model_frames_per_second": 313.03677560968623,
+        "logical_model_frames": 157208,
+        "logical_model_frames_per_second": 526.3809930372715,
+        "source_frames": 178359,
+        "source_frames_per_second": 597.2010809700188,
+        "gpu_slots": 105264,
+        "gpu_filler_frames": 11773,
+        "cache": {
+          "planned_repeated_keys": 28244,
+          "requests": 161262,
+          "misses": 93573,
+          "inflight_hits": 34278,
+          "not_retained": 80757,
+          "ready_hits": 33411,
+          "retained_bytes": 0,
+          "peak_retained_bytes": 84368038,
+          "limit_bytes": 1073741824,
+          "ready_entries": 0,
+          "inflight_entries": 0,
+          "plan_reserved_bytes": 0,
+          "remaining_plan_keys": 0
+        },
+        "cache_plan": {
+          "seconds": 16.025174999998853,
+          "resources": 628,
+          "cache_eligible_frames": 161262,
+          "unique_frames": 93573,
+          "repeated_keys": 28244,
+          "duplicate_frames": 67689,
+          "count_storage": "session-RAM-only"
+        },
+        "model_load_seconds_once": 3.22624850000102,
+        "peak_reserved_resource_bytes": 3812444688,
+        "log": "sprite/.work/reboutcx-p12-production/session-1789462822420987200.jsonl"
+      }
+    }
+  ],
+  "last_session_existing_components": 0,
+  "time_note": "family wall includes recovery gaps; cache peak and admission timing refer to final session"
+}

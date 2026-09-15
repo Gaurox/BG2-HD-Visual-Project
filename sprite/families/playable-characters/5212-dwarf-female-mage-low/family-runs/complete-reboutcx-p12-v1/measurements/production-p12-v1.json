@@ -1,0 +1,65 @@
+{
+  "animation_id": "0x5212",
+  "family": "sprite/families/playable-characters/5212-dwarf-female-mage-low",
+  "components": 65,
+  "source_frames": 178357,
+  "logical_model_frames": 146953,
+  "computed_model_frames": 94668,
+  "avoided_model_frames": 52285,
+  "wall_through_verification_seconds": 285.8376069999995,
+  "logical_model_frames_per_second": 514.1135959761945,
+  "cache_peak_bytes": 153837066,
+  "cache_evictions": 0,
+  "cache_plan_seconds": 15.350971999999274,
+  "session": "sprite/.work/reboutcx-p12-production/session-1789461241050446400.jsonl",
+  "session_sha256": "C4DC2109889464F66BF302B2579344581D58293824D2962663E32592B08680A2",
+  "attempts": [
+    {
+      "session": "sprite/.work/reboutcx-p12-production/session-1789461241050446400.jsonl",
+      "sha256": "C4DC2109889464F66BF302B2579344581D58293824D2962663E32592B08680A2",
+      "terminal_event": {
+        "event": "complete",
+        "elapsed_seconds": 285.83780019999995,
+        "completed": 65,
+        "new_model_frames": 94668,
+        "wall_through_verification_seconds": 285.8376069999995,
+        "actual_model_frames_per_second": 331.1950481029607,
+        "logical_model_frames": 146953,
+        "logical_model_frames_per_second": 514.1135959761945,
+        "source_frames": 178357,
+        "source_frames_per_second": 623.9801748690134,
+        "gpu_slots": 104834,
+        "gpu_filler_frames": 10166,
+        "cache": {
+          "planned_repeated_keys": 27915,
+          "requests": 148656,
+          "misses": 94741,
+          "inflight_hits": 26011,
+          "not_retained": 78789,
+          "ready_hits": 27904,
+          "retained_bytes": 0,
+          "peak_retained_bytes": 153837066,
+          "limit_bytes": 1073741824,
+          "ready_entries": 0,
+          "inflight_entries": 0,
+          "plan_reserved_bytes": 0,
+          "remaining_plan_keys": 0
+        },
+        "cache_plan": {
+          "seconds": 15.350971999999274,
+          "resources": 629,
+          "cache_eligible_frames": 148656,
+          "unique_frames": 94741,
+          "repeated_keys": 27915,
+          "duplicate_frames": 53915,
+          "count_storage": "session-RAM-only"
+        },
+        "model_load_seconds_once": 3.2818237999999837,
+        "peak_reserved_resource_bytes": 3252038192,
+        "log": "sprite/.work/reboutcx-p12-production/session-1789461241050446400.jsonl"
+      }
+    }
+  ],
+  "last_session_existing_components": 0,
+  "time_note": "family wall includes recovery gaps; cache peak and admission timing refer to final session"
+}
