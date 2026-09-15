@@ -1,0 +1,50 @@
+{
+  "components": 65,
+  "resources": 630,
+  "groups": 113,
+  "logical_model_frames": 146066,
+  "p11_padded_pixels": 403672064,
+  "unique_pixel_keys": 97831,
+  "duplicate_frames": 48235,
+  "scenarios": {
+    "component_order": {
+      "computed_frames": 97831,
+      "useful_padded_pixels": 291731456,
+      "gpu_slots": 109478,
+      "gpu_slot_pixels": 338518016,
+      "filler_frames": 11647,
+      "pixel_ratio_to_p11": 0.8385965891362748,
+      "estimated_peak_ready_bytes": 820513044,
+      "gpu_only_wall_model_seconds": 291.4419845598322,
+      "assumption": "unlimited retention, selected group order, linear pixel cost; excludes admission and scheduling overhead"
+    },
+    "reverse_components": {
+      "computed_frames": 97831,
+      "useful_padded_pixels": 291731456,
+      "gpu_slots": 109306,
+      "gpu_slot_pixels": 337989632,
+      "filler_frames": 11475,
+      "pixel_ratio_to_p11": 0.8372876454487571,
+      "estimated_peak_ready_bytes": 820513044,
+      "gpu_only_wall_model_seconds": 291.13226483991565,
+      "assumption": "unlimited retention, selected group order, linear pixel cost; excludes admission and scheduling overhead"
+    },
+    "interleaved_groups": {
+      "computed_frames": 97831,
+      "useful_padded_pixels": 291731456,
+      "gpu_slots": 109478,
+      "gpu_slot_pixels": 338518016,
+      "filler_frames": 11647,
+      "pixel_ratio_to_p11": 0.8385965891362748,
+      "estimated_peak_ready_bytes": 506394184,
+      "gpu_only_wall_model_seconds": 291.4419845598322,
+      "assumption": "unlimited retention, selected group order, linear pixel cost; excludes admission and scheduling overhead"
+    }
+  },
+  "seconds": 3.9200479000000996,
+  "production_runs": 0,
+  "cuda_calls": 0,
+  "temporary_files": 0,
+  "note": "Sensitivity scenarios, not a simulation of the three actual concurrent renderers or a measured speedup.",
+  "subprocess_seconds": 4.194367000000057
+}
