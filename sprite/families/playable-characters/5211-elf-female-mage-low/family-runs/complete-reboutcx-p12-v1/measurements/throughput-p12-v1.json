@@ -1,0 +1,709 @@
+{
+  "schema": "reboutcx-family-throughput-measurement-v3",
+  "animation_id": "0x5211",
+  "status": "65-components-produced-and-technically-verified-pending-human-review",
+  "scope": "one-family-only; no-derived-catalog-install-release",
+  "implementation_commit": "37701d48cc5832eafe4975e26b22e5d95a38a66f",
+  "components": 65,
+  "source_frames": 180494,
+  "logical_model_frames": 146066,
+  "computed_model_frames": 97831,
+  "avoided_model_frames": 48235,
+  "avoided_model_frames_percent": 33.02274314351047,
+  "changed_frame_index_hashes_vs_p11": 31,
+  "p11_wall_seconds": 329.63294699999983,
+  "p12_wall_seconds": 297.95015760000024,
+  "speedup_vs_p11": 1.106335870587234,
+  "throughput_gain_vs_p11_percent": 10.633587058723393,
+  "time_reduction_vs_p11_percent": 9.611536009475296,
+  "seconds_saved_vs_p11": 31.682789399999592,
+  "p11_logical_model_frames_per_second": 443.11711353295055,
+  "p12_logical_model_frames_per_second": 490.23635757257904,
+  "gpu_slots": 109478,
+  "gpu_filler_frames": 11647,
+  "cache": {
+    "planned_repeated_keys": 27703,
+    "requests": 146780,
+    "misses": 97892,
+    "inflight_hits": 15620,
+    "not_retained": 78615,
+    "ready_hits": 33268,
+    "retained_bytes": 0,
+    "peak_retained_bytes": 681944932,
+    "limit_bytes": 1073741824,
+    "ready_entries": 0,
+    "inflight_entries": 0,
+    "plan_reserved_bytes": 0,
+    "remaining_plan_keys": 0
+  },
+  "cache_plan": {
+    "seconds": 10.211330099999941,
+    "resources": 630,
+    "cache_eligible_frames": 146780,
+    "unique_frames": 97892,
+    "repeated_keys": 27703,
+    "duplicate_frames": 48888,
+    "count_storage": "session-RAM-only"
+  },
+  "model_load_seconds_once": 3.18180989999928,
+  "peak_reserved_resource_bytes": 3451445216,
+  "stage_seconds_sums": {
+    "cache_requests": 146780.0,
+    "cache_miss": 97892.0,
+    "cache_inflight": 15620.0,
+    "cache_key_and_claim_seconds": 5.557247299997471,
+    "xbr": 122.74445169981118,
+    "mapping_seconds": 67.02539049979805,
+    "rgb_fill_seconds": 9.864537700093933,
+    "prepare_wall_seconds": 200.17491420000442,
+    "prepare_process_cpu_seconds": 83.109375,
+    "prepare_queue_ipc_and_wait_seconds": 698.0670392000011,
+    "pack_seconds": 9.97568160002993,
+    "h2d_submit_seconds": 9.286365099997965,
+    "model_cuda_seconds": 202.0402974739075,
+    "model_wait_and_d2h_seconds": 206.97177659997487,
+    "crop_seconds": 6.1480025000228125,
+    "dispatch_wall_seconds": 232.38213680002627,
+    "gpu_slots": 109478.0,
+    "gpu_filler_frames": 11647.0,
+    "gpu_queue_wait_seconds": 239.80250800000067,
+    "reboutcx": 232.38213680002627,
+    "model_frames": 97831.0,
+    "batches": 1273.0,
+    "full_batches": 1049.0,
+    "cross_resource_batches": 513.0,
+    "padded_model_pixels": 291731456.0,
+    "gpu_slot_pixels": 338606080.0,
+    "native_model_pixels": 169068759.0,
+    "post_wait_seconds": 20.203754900001513,
+    "box_and_round_seconds": 20.749924999910036,
+    "quantization": 165.2795418000578,
+    "post_wall_seconds": 186.16068759998507,
+    "post_process_cpu_seconds": 344.890625,
+    "logical_model_frames": 146066.0,
+    "cache_wait_and_hydrate_seconds": 25.957822299996224,
+    "resource_groups": 113.0,
+    "write_and_frame_metadata_seconds": 15.874868200008677,
+    "internal_verification_seconds": 39.29185590001089,
+    "null_frames": 30204.0,
+    "cache_ready": 33268.0,
+    "source_decode_seconds": 15.82852410000487,
+    "execute_before_manifest_seconds": 854.0040870999983
+  },
+  "parameters": {
+    "components": 3,
+    "pre_workers": 2,
+    "post_workers": 3,
+    "memory_mib": 4096,
+    "cache_mib": 1024
+  },
+  "queue": "sprite/families/playable-characters/5211-elf-female-mage-low/family-runs/complete-reboutcx-p12-v1/jobs/elf-female-mage-low-p12-v1.json",
+  "queue_sha256": "F922F637B6C2D2881BED6B9E509061628A58AB818D0BF217B7E514E97F22136A",
+  "session": "sprite/.work/reboutcx-p12-production/session-1789459882943484900.jsonl",
+  "session_sha256": "5C978D914F8A535696D35F5AD308113392E95CB538FCEC7CA9B8796B241D0C87",
+  "comparability": {
+    "source_model_palette_classes_coverage_and_all_guides_equal": true,
+    "previous_manifests_unchanged": 195,
+    "p12_pinned_code_hashes_unchanged": true,
+    "clocks": "perf_counter through last independent verification, P12 admission included; queue preparation/sorting excluded",
+    "limitations": "one family against historical P11, no repeated A/B; concurrent stage sums are not additive; fixed N=86 may change numerical results"
+  },
+  "sample_contract_comparison": {
+    "resources": 126,
+    "frames": 1008,
+    "pixels": 5004716,
+    "visible_pixels": 639953,
+    "changed_visible_indices": 1,
+    "changed_visible_indices_percent": 0.0001562614754521035,
+    "alpha_classes_geometry_cycles_and_source_representatives_equal": true,
+    "selection": "first canonical and largest-native-pixel canonical per component; 8 evenly spaced frames each"
+  },
+  "members": [
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw4/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw4/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "9BA1C8C491311ED6D4096F25F983FF77241AE10280ADAA8062DC09543E668D30",
+      "verified_at_seconds": 86.1101961000004,
+      "source_frames": 10323,
+      "logical_model_frames": 2772,
+      "computed_model_frames": 2706
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "8372A50F17F50D2254576F11A3F47A6FCBFB14C8558CBDEB1E650F4D743805A9",
+      "verified_at_seconds": 87.66210169999977,
+      "source_frames": 10323,
+      "logical_model_frames": 2772,
+      "computed_model_frames": 2709
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "8825116C7ACB4B52C4427E0D16F3ADEF8A573925998604B89F1F08FCCDD3B8D9",
+      "verified_at_seconds": 137.49156099999982,
+      "source_frames": 10323,
+      "logical_model_frames": 2637,
+      "computed_model_frames": 2330
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/npsw06-wqmf2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/npsw06-wqmf2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "37AA77C3AB174A15AA71E113EBC029E01D2D960C7A982F5E48592BA0A67D38DF",
+      "verified_at_seconds": 142.8918577000004,
+      "source_frames": 5377,
+      "logical_model_frames": 5335,
+      "computed_model_frames": 5203
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/comps39-wqmfs/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/comps39-wqmfs/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "70412B5F8BB87E7E746F31C17160F146A320B8460E3E5A2BB7B85751AD73FE76",
+      "verified_at_seconds": 146.0613067000004,
+      "source_frames": 5377,
+      "logical_model_frames": 5362,
+      "computed_model_frames": 5334
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bearspir-wqmh6/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bearspir-wqmh6/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "B8D5AC3DC70065153214A6CB71CA1F65C2AF7234D2899F792DCE7E8034A7813F",
+      "verified_at_seconds": 163.24413060000006,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2479
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "AFEAC8C9232921FAFF040D13090C82691590D446A3CBE91973B8AB2EC2DF5938",
+      "verified_at_seconds": 164.00439910000023,
+      "source_frames": 10323,
+      "logical_model_frames": 2772,
+      "computed_model_frames": 2699
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm15-wqmj0/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm15-wqmj0/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "1CDE7713C1569FFAC69EFB02C8894ED1459631CF38735EA440D8729979BB3496",
+      "verified_at_seconds": 164.5562602,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2414
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/ihelm10-wqmh5/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ihelm10-wqmh5/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "1054975EEF868C075BEF4940DA7CC835FD76B2CE2761EB0D4918F003BC494B30",
+      "verified_at_seconds": 183.27161780000006,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2297
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm09-wqmh0/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm09-wqmh0/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "470FA0BF70B27D7CF0AC52E01CD563492A75C0AC237FD241A8F200A24320E643",
+      "verified_at_seconds": 185.52677820000008,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm21-wqmj2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm21-wqmj2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "069F551240128D619B143F3EFEC3823A3D4A3A43632A430D36D27421077EB96C",
+      "verified_at_seconds": 187.35470480000004,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2342
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/chalhelm-wqmj1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalhelm-wqmj1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "DEF1AA3F2F8852CD378496E1DA383B26716F2EF7AB26EFEF88E3ECCE902A0183",
+      "verified_at_seconds": 187.84061089999977,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2305
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dhelm01-wqmh2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dhelm01-wqmh2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "A2098EC1AB0DF744057B4F50036A216705D2D0F5012E945EF3D17BD9367DAC6C",
+      "verified_at_seconds": 188.8478084999997,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9p-wqmh1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9p-wqmh1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "004523BB546A38D60D193F1251FF7EE34E3A915D9F76018D842ED6C47B96C690",
+      "verified_at_seconds": 190.65617380000003,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm13-wqmj5/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm13-wqmj5/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "AB2A2ACF154A791C1CCFD8E23F34242F40E792BD601465747695A484D7080C86",
+      "verified_at_seconds": 192.70993369999997,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm02-wqmj3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm02-wqmj3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "6E71187B22B4AC00304E042BD705B5DF30319FF6204E9E685DE59C14966A9BE7",
+      "verified_at_seconds": 207.29671700000017,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2299
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm07-wqmj7/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm07-wqmj7/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "A1E782A527CCCB58981ADD0955EF1F07757DA8ECC3CCCC31D372DFF191B474AB",
+      "verified_at_seconds": 209.37057040000036,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm16-wqmj4/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm16-wqmj4/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "1DD0D019D26224245D71CAD897AD476FEC2B1A85C881B5FEF2118F8FE3F12921",
+      "verified_at_seconds": 211.4254520000004,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2463
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/compon05-wqmj9/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/compon05-wqmj9/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "66BCBB29B564B0C37D35AE8AA44D1439A8A9D2E1562CC85CC414E6106EBC2947",
+      "verified_at_seconds": 214.43041580000045,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2479
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm05-wqmja/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm05-wqmja/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "3412F500A316FE0F4ADFE5F3D9D9A291E957CDEC0324122A95BBF31FE1D28048",
+      "verified_at_seconds": 228.8251538000004,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2501
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm12-wqmjc/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm12-wqmjc/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "FC5010F0D1377773AD6C93F4A3EAA6F20DC2964BE27A89AEA6B2E2FA51CAE32F",
+      "verified_at_seconds": 230.31855460000043,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 27
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm03-wqmj8/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm03-wqmj8/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "A5CF8FEA0B6EF15AB86FD9BFAA2499B014C911506E0012024B7B3BEC015E13EA",
+      "verified_at_seconds": 230.88170499999978,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2422
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun12-wqmm2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun12-wqmm2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "B3A9E1AED23DE38B7ECFF8A28B09763CD226EBAE4404DA440D91A81CC4F6F428",
+      "verified_at_seconds": 234.02877309999985,
+      "source_frames": 2907,
+      "logical_model_frames": 2766,
+      "computed_model_frames": 2543
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun06-wqmms/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun06-wqmms/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "02FD4A146D5FF7E4A16B0834F7D46D0020E659A3F69F88DDB4B6D5111776D8EE",
+      "verified_at_seconds": 234.27999249999993,
+      "source_frames": 2907,
+      "logical_model_frames": 2766,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/helm01-wqmj6/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm01-wqmj6/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "7A2D9E65BD4B6081F8DF95F12910516447E2E5FAF9A4E7ADB2EC09F7B6CEC5E3",
+      "verified_at_seconds": 235.85839540000052,
+      "source_frames": 2709,
+      "logical_model_frames": 2709,
+      "computed_model_frames": 2496
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun01-wqmcl/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun01-wqmcl/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "4073C8F7E261890A5B15A1DA4E4C6AF23DF78A1404B2A7C69D54351CA052384B",
+      "verified_at_seconds": 238.59842500000013,
+      "source_frames": 2907,
+      "logical_model_frames": 2766,
+      "computed_model_frames": 475
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun04-wqmmc/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun04-wqmmc/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "E6092C5CF9B6A87943A246B4B9D0FC72F8D75FD0A39B9025A4497B82CD31E70E",
+      "verified_at_seconds": 239.54329359999974,
+      "source_frames": 2907,
+      "logical_model_frames": 2766,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "B4B57E7635DAEB8974FE4923C62DE02D8677FE8BD11E52B7C7AF2CA16331923A",
+      "verified_at_seconds": 240.58311049999975,
+      "source_frames": 2907,
+      "logical_model_frames": 2900,
+      "computed_model_frames": 2567
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/wings01-wqmzw/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/wings01-wqmzw/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "1E82FD2A73AECE067D88050BDA183F910C8BAD12D7E22443AC9A546E1D10B509",
+      "verified_at_seconds": 250.43875930000013,
+      "source_frames": 2709,
+      "logical_model_frames": 2574,
+      "computed_model_frames": 2472
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm16-wqmjb/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm16-wqmjb/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "5ED4E0833DD011B1E67F132BA5CD87FBC0F5FE6A55901ED3D7261B99491B88B9",
+      "verified_at_seconds": 252.19831040000008,
+      "source_frames": 2709,
+      "logical_model_frames": 2411,
+      "computed_model_frames": 2021
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14-wqmf3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14-wqmf3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "200C09083EDACFC018A1D50D54F3233E29C759D4CCDD13899DDAF56985C47BD5",
+      "verified_at_seconds": 253.02789910000047,
+      "source_frames": 2907,
+      "logical_model_frames": 2613,
+      "computed_model_frames": 2538
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun13-wqmf0/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun13-wqmf0/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "36BB2C4DB6A7AD04A75045CD9A92803C6A322FB7F4781C5982A51214A9FDF81D",
+      "verified_at_seconds": 253.8613591000003,
+      "source_frames": 2907,
+      "logical_model_frames": 2613,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14d-wqmf1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14d-wqmf1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "E5B7F66770DB83FDE5D9C5D7E532D0588842F181979E0D4ED01870DB0710D354",
+      "verified_at_seconds": 254.89816969999993,
+      "source_frames": 2907,
+      "logical_model_frames": 2613,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/ax1h01-wqmax/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ax1h01-wqmax/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "2A858A7BFA4F4B8DAE8D0398461EC771C7B61D2C132FFF654196C28A2BEE95E1",
+      "verified_at_seconds": 257.1949894999998,
+      "source_frames": 2907,
+      "logical_model_frames": 2892,
+      "computed_model_frames": 2545
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/barlfl-wqmfl/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/barlfl-wqmfl/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "CF270429CA0F3F67FFB2A4BBCE80A058D01F27F25A3625AE97FF625D77382A2E",
+      "verified_at_seconds": 258.0020411000005,
+      "source_frames": 2907,
+      "logical_model_frames": 2613,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsw1h01-wqmsc/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsw1h01-wqmsc/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "537768EC6F55B90C10156188DBED2C6EB0D13080279E6C4223B1924B0DA06F27",
+      "verified_at_seconds": 259.74976080000033,
+      "source_frames": 2907,
+      "logical_model_frames": 2630,
+      "computed_model_frames": 2413
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9q-wqms3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9q-wqms3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "40EC7F4D4301518B2B79B1322CD74C0C1C1BD2E31E4BD6C89FCDD50D32A91018",
+      "verified_at_seconds": 262.5270623000006,
+      "source_frames": 2907,
+      "logical_model_frames": 2626,
+      "computed_model_frames": 2461
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/cdnebdag-wqmdd/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cdnebdag-wqmdd/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "91E6D9B3F17C9E6EFC401E2A2E036A20AC4EAE703914B84C6615F37919D571AE",
+      "verified_at_seconds": 263.285699,
+      "source_frames": 2907,
+      "logical_model_frames": 2574,
+      "computed_model_frames": 2368
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/chalcy1-wqmss/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalcy1-wqmss/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "05A9F92A152AD6BCCD36D432B0FB627BF9E2C6DEF6C3A5C21D9EFA9036FE4425",
+      "verified_at_seconds": 264.9003683000001,
+      "source_frames": 2907,
+      "logical_model_frames": 2611,
+      "computed_model_frames": 2396
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw1h06-wqms1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw1h06-wqms1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "E0A9D710F6B67FDA5192C68C3FF1B908791B0DB4A0761EAF9758919B886FD9A9",
+      "verified_at_seconds": 267.5153256000003,
+      "source_frames": 2907,
+      "logical_model_frames": 2627,
+      "computed_model_frames": 80
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/sw1h01-wqms0/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/sw1h01-wqms0/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "AECBA45FA76254D95B7237EBB55D2FAF745490435BC5C6C9CC6652CA52915C5B",
+      "verified_at_seconds": 267.7526588999999,
+      "source_frames": 2907,
+      "logical_model_frames": 2627,
+      "computed_model_frames": 2344
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dwshld01-wqmc7/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwshld01-wqmc7/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "07466A30118DD4E7BB8549D7A238414535A549EA5F39BEB62D577907511C9C35",
+      "verified_at_seconds": 268.4666698000001,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1330
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05-wqmc2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05-wqmc2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "246864D73671F6927676257BB459647BBC2751C79FC699E0CA4572434EE7E959",
+      "verified_at_seconds": 271.66615720000027,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1303
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/chalshld-wqmc3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalshld-wqmc3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "32EF079F33D4742F15DE79926E73E2FFE4481297AF87D6F87C6A57CF3D52279F",
+      "verified_at_seconds": 272.81735019999996,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1326
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld03-wqmc1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld03-wqmc1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "5E7525F626985B35A9D09F78D10F73409EBB7D0022767FDB9BF15909D3416F0B",
+      "verified_at_seconds": 272.99371840000003,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/ishld03-wqmd3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ishld03-wqmd3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "51A3A75814F620D249C44717E1C5CDA21B6DA3076165BC34297D43DDE91E98C3",
+      "verified_at_seconds": 275.1694927999997,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1320
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dshld01-wqmd2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dshld01-wqmd2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "7CA41365966FB953173BAFAC8B76A20EB0C625489227CE1A4689120557103700",
+      "verified_at_seconds": 276.103016,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1309
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05a-wqmd4/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05a-wqmd4/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "DA72544AA93CDFD78F988482657E0B4D3E1AD92118873083A0945182386F6608",
+      "verified_at_seconds": 280.2260339000004,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1325
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld07-wqmc6/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld07-wqmc6/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "ABB7CB587FFF8D0A9ECBD7724E6688061E9095CB00DABA1811D34F79F82BDF4D",
+      "verified_at_seconds": 281.2978957000005,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1284
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/staf11-wqmgs/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf11-wqmgs/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "31E198AAF45050CAD19161305A7A65861469E24CC021B27FF79E8698DF25AA9F",
+      "verified_at_seconds": 282.6426212000006,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 1241
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/staf09-wqmq4/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf09-wqmq4/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "DA24B537A1436A5E525689553032B272E7116F71B846A088A22908703AAC16AB",
+      "verified_at_seconds": 284.34271609999996,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 1240
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/misc5t-wqmq3/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc5t-wqmq3/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "8DDFA890E4640240D9FD3072F9981A719D8EECE5C36354C9B146F4E56FB84EDC",
+      "verified_at_seconds": 284.4456895000003,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/staf02-wqmq2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf02-wqmq2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "CFA2013E0AB993E3D929CEAE0ACCD18E4310FE6CF5F8958466DCD77364E1E31C",
+      "verified_at_seconds": 284.6485681000004,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld26-wqmc5/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld26-wqmc5/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "47AC6C4175C9803B9616CDBA6C8B4B230BC7D56933F4181A9A1041AA32CB66C9",
+      "verified_at_seconds": 288.3071980000004,
+      "source_frames": 1386,
+      "logical_model_frames": 1380,
+      "computed_model_frames": 1279
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/ohshld50-wqmc4/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ohshld50-wqmc4/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "A3A17A75A31DE0DC18B2403BF2C7D54396F1101EFF1B8ECFAEE1DDBC1AA64D47",
+      "verified_at_seconds": 289.00802980000026,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1309
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/shld01-wqmc0/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld01-wqmc0/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "8F08612A964A48E8DB06A832659AC1501F05FA0DACC2D44EA6855F033265D507",
+      "verified_at_seconds": 289.6298834999998,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1336
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsper01-wqmsp/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsper01-wqmsp/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "DCAFDECC0B6D05F3E8C4DEB59258CC7CA0C35A81D1DE3174988CEF82F2AE78ED",
+      "verified_at_seconds": 292.44610830000056,
+      "source_frames": 1242,
+      "logical_model_frames": 1241,
+      "computed_model_frames": 1151
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/enstaff-wqmqs/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/enstaff-wqmqs/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "100F1B60F8E69329528537352F315B54096C8A133626864CDF50C6B6FC9AF0A6",
+      "verified_at_seconds": 292.99351600000045,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdshld01-wqmd1/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdshld01-wqmd1/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "637FFA09678EF455DA2391FC5F74815B4BD8A773A9BB707CA73D95A0BF0AAF08",
+      "verified_at_seconds": 294.0862317000001,
+      "source_frames": 1386,
+      "logical_model_frames": 1386,
+      "computed_model_frames": 1320
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dwhalb01-wqmhb/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwhalb01-wqmhb/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "230231E7AE082EC7538A6C495E97AD44DDEAA50AF22D635076E44A354035DED6",
+      "verified_at_seconds": 294.3049596000001,
+      "source_frames": 1242,
+      "logical_model_frames": 1242,
+      "computed_model_frames": 1161
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw2h01-wqms2/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw2h01-wqms2/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "23D7DEFBE6D67317ED2EC1C521039E4A10C95F27D66D43078FD536CDB997CED4",
+      "verified_at_seconds": 296.0647976999999,
+      "source_frames": 1242,
+      "logical_model_frames": 1238,
+      "computed_model_frames": 1158
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/arropheo-wqmbw/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/arropheo-wqmbw/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "98D582EDC2F4B0F399D772985BD5CD5239DF302BB672C0EDAE548D09F4CF6A4F",
+      "verified_at_seconds": 296.51365559999977,
+      "source_frames": 972,
+      "logical_model_frames": 972,
+      "computed_model_frames": 909
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bow05-wqmbs/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bow05-wqmbs/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "5A370C47ADF64A80492B504E758312692627774F76473FCEC5A5EFCFDA168994",
+      "verified_at_seconds": 296.6269530999998,
+      "source_frames": 972,
+      "logical_model_frames": 972,
+      "computed_model_frames": 0
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/dwxbow01-wqmcb/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwxbow01-wqmcb/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "38B154E07D835E6BFB421CD3158723417C18716744CBC1D4AD68E036F6AC14C0",
+      "verified_at_seconds": 297.86821280000004,
+      "source_frames": 972,
+      "logical_model_frames": 972,
+      "computed_model_frames": 936
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/ohnslng1-wqmsl/jobs/reboutcx-p12-cache86-v1.json",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ohnslng1-wqmsl/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "manifest_sha256": "98DE50E57F647B320090E7B9D46333A9E20CF6B00E717A381812B245AE911C50",
+      "verified_at_seconds": 297.95012140000017,
+      "source_frames": 981,
+      "logical_model_frames": 902,
+      "computed_model_frames": 866
+    }
+  ],
+  "measurement_seconds": 1.8140057000000525
+}
