@@ -38,7 +38,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
+from scipy.ndimage import distance_transform_edt
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
@@ -144,12 +145,35 @@ def nearest_x2(rgba: np.ndarray) -> np.ndarray:
     return rgba.repeat(2, axis=0).repeat(2, axis=1)
 
 
+def gaussian_rgb_x2(rgba: np.ndarray, sigma: float) -> np.ndarray:
+    """Blur RGB lightly at x2 without spreading hidden transparent chroma."""
+    if sigma <= 0:
+        return rgba
+    opaque = rgba[:, :, 3] > 0
+    result = rgba.copy()
+    if np.any(opaque):
+        nearest = distance_transform_edt(~opaque, return_distances=False, return_indices=True)
+        filled_rgb = rgba[:, :, :3][tuple(nearest)]
+    else:
+        filled_rgb = np.zeros_like(rgba[:, :, :3])
+    result[:, :, :3] = np.asarray(
+        Image.fromarray(filled_rgb, "RGB").filter(ImageFilter.GaussianBlur(radius=sigma)),
+        dtype=np.uint8,
+    )
+    return result
+
+
 def build(
     run_root: Path, resref: str, node: str, resume: bool, second_pass: str,
-    xbr_blend: bool = False,
+    xbr_blend: bool = False, gaussian_sigma_x2: float = 0.0,
+    alpha_second_pass_xbr2x: bool = False,
 ) -> Path:
     recipe = SECOND_PASS_MODES[second_pass]
     stage_name = recipe["stage"]
+    if gaussian_sigma_x2 > 0:
+        stage_name += f"_gaussian{gaussian_sigma_x2:g}".replace(".", "p")
+    if alpha_second_pass_xbr2x:
+        stage_name += "_alpha_xbr2x_twice"
 
     resource_root = run_root / "resources" / resref
     frames_x1 = resource_root / "01_frames_x1"
@@ -173,11 +197,16 @@ def build(
         image = Image.open(path).convert("RGBA")
         sources.append(np.asarray(image, dtype=np.uint8))
 
-    doubled = run_xbr2x(sources, scalepix, node, xbr_blend)
+    doubled_raw = run_xbr2x(sources, scalepix, node, xbr_blend)
+    doubled = [gaussian_rgb_x2(frame, gaussian_sigma_x2) for frame in doubled_raw]
     if second_pass == "xbr2x":
         quadrupled = run_xbr2x(doubled, scalepix, node, xbr_blend)
     else:
         quadrupled = [nearest_x2(frame) for frame in doubled]
+    if alpha_second_pass_xbr2x:
+        alpha_x4 = run_xbr2x(doubled_raw, scalepix, node, xbr_blend)
+        for index in range(len(quadrupled)):
+            quadrupled[index][:, :, 3] = alpha_x4[index][:, :, 3]
 
     canvas_w, canvas_h = manifest_x1["aligned_canvas_size"]
     frames_out = []
@@ -261,14 +290,17 @@ def build(
             "xbr_blend": xbr_blend,
             "post_scale": 2,
             "post_scale_method": recipe["post_scale_method"],
+            "gaussian_sigma_x2": gaussian_sigma_x2,
+            "alpha_second_pass": "xbr2x" if alpha_second_pass_xbr2x else None,
         },
         "scale": 4,
         "padding_x1": 0,
         "aligned_canvas_size_x1": [canvas_w, canvas_h],
         "geometry_mode": manifest_x1.get("geometry_mode", "per-frame"),
         "alpha_policy": (
-            recipe["alpha_policy"] + "; xbr_blend=true grades edge alpha, no longer binary"
-            if xbr_blend else recipe["alpha_policy"]
+            recipe["alpha_policy"]
+            + ("; alpha enlarged by two successive xBR2x passes" if alpha_second_pass_xbr2x else "")
+            + ("; xbr_blend=true grades edge alpha, no longer binary" if xbr_blend else "")
         ),
         "raw_rgba_layout": "RGBA8, tightly packed, top-to-bottom rows",
         "frames": frames_out,
@@ -316,10 +348,18 @@ def main() -> None:
                         help="active l'antialiasing xBR (blendColors) sur chaque passe xBR2x ; "
                              "variante hors recette figée (BUTRFLY impose blend=false), grade "
                              "l'alpha de bord (non binaire) et exige --mode premultiply en aval")
+    parser.add_argument("--gaussian-sigma-x2", type=float, default=0.0,
+                        help="leger flou gaussien RGB au stade x2; alpha inchange")
+    parser.add_argument("--alpha-second-pass-xbr2x", action="store_true",
+                        help="agrandit le masque alpha par deux passes xBR2x, recette FPIT1S")
     args = parser.parse_args()
 
+    if args.gaussian_sigma_x2 < 0:
+        raise SystemExit("--gaussian-sigma-x2 doit etre positif ou nul")
+
     path = build(args.run_root.resolve(), args.resref.upper(), args.node, args.resume,
-                 args.second_pass, args.xbr_blend)
+                 args.second_pass, args.xbr_blend, args.gaussian_sigma_x2,
+                 args.alpha_second_pass_xbr2x)
     print(json.dumps({"status": "completed", "manifest": str(path)}, ensure_ascii=False))
 
 

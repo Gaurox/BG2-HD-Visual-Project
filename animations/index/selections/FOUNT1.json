@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FOUNT1",
+  "correction_id": "fount1-xbr2x-gaussian045-30fps-contour-aura-20260915",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-base-20260915/manifest.json",
+        "manifest_sha256": "99D9412B826347FEC59E5B9C92810B552BDB2E0F4DBBFE59A5865ACD610582D0",
+        "path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-base-20260915",
+        "schema": "bg2-upscale-area-animation-pack-index-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-nearest2-x4-alpha-xbr2-20260915/03_runtime_pack/manifest.json",
+        "manifest_sha256": "8894D7A75F402BDA3C6E1270CFA4E30D92F1D7942CA0B1919A0AF10C84ADA386",
+        "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-nearest2-x4-alpha-xbr2-20260915/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-x4-30fps-20260915/03_runtime_pack/manifest.json",
+        "manifest_sha256": "5AF6111D69A7C4C4A2411A2D8D950DB2C6FBA52A14B8E32A2905D9980F63DA03",
+        "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-x4-30fps-20260915/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-nearest2-x4-alpha-xbr2-20260915/manifest.json",
+        "manifest_sha256": "C1B31A25F5BC98B0E6AA95F7CC6E1855D8BDEC4B982DA540792A879D1224CC1B",
+        "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-nearest2-x4-alpha-xbr2-20260915",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-x4-30fps-20260915/manifest.json",
+        "manifest_sha256": "AE7293189FB51C617DCC70670F68E94735236E3BF4D360C7EA219890D6138465",
+        "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-x4-30fps-20260915",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-16",
+    "path": "animations/index/qa-decisions/FOUNT1/2026-09-16-accepted-fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915.json",
+    "sha256": "5E43B85DBAF2FD29C114E3F043F9F9C9D184A919EF3477195B4491A80FBA9BFA",
+    "status": "accepted"
+  },
+  "recipe_id": "fount1-xbr2x-gaussian045-30fps-contour-aura",
+  "resref": "FOUNT1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915/manifest.json",
+    "manifest_sha256": "1E8D4588F42F2B6DCF46C5C3C4301309086CD4611C902C371A8490CE1B63A232",
+    "path": "animations/ressources/FOUNT1/runs/fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915",
+    "schema": "bg2-upscale-blended-rgb-neutral-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1000",
+        "manifest_path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-contour-aura-20260915/AR1000/manifest.json",
+        "manifest_sha256": "2B572B2289C51B4F9E54DA114A4828C25FCC63238697E5397C85AF9F525CCCFD",
+        "path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-contour-aura-20260915/AR1000",
+        "registry_sha256": "A89F3FC237429EE56F0412576996DDF499C63C7F9FDFDE13A3E2012642672DAA",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-contour-aura-20260915/manifest.json",
+    "manifest_sha256": "94A82C931832CCCACFFB0A37F38F741FB81629540FD5DF1C43867A588F1FDB11",
+    "path": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-contour-aura-20260915",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1000"
+  ],
+  "updated_at_utc": "2026-09-15T22:01:09Z"
+}
