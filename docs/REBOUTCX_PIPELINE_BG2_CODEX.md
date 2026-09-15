@@ -106,6 +106,10 @@ Décompte : une famille = ID d'animation (race/sexe/apparence/variante LOW), pas
 L'ancien job xBR référence 76 familles sous `playable-characters` et deux entrées historiques sous
 `sprite/jobs` (`0x6102`, `0x6110`), soit **78**. Répartition : 30 LOW, 46 ordinaires, 2 moines.
 
+Recherche des doublons restants : [groupes de frames inter-familles](REBOUTCX_GROUPES_FRAMES_RESTANTES_20260915.md).
+43 familles restantes du lot historique de 76 : **3 338 364 inférences supplémentaires évitables**
+avec partage des pixels entre familles ; inventaire documenté, optimisation non appliquée.
+
 ## Références validées
 
 | Cas | Référence |

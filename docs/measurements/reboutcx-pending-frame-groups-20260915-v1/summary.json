@@ -1,0 +1,89 @@
+{
+  "schema": "reboutcx-pending-frame-groups-analysis-v1",
+  "status": "source-inventory-only",
+  "baseline_commit": "88a8da998250c0802b2783214843f464c298535e",
+  "progress_snapshot": "sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p12-v1.json",
+  "progress_sha256": "5BCC6548312A5B086908471F84FDDE67A27D52B4C4F4940FE7A0455CE2006DCD",
+  "scopes": {
+    "pending_in_76": {
+      "unique_cache_frames": 566120,
+      "unique_model_frames": 565944,
+      "unique_model_native_pixels": 961112770,
+      "unique_model_q32_pixels": 1658697728,
+      "family_unique_model_frames": 3904308,
+      "family_unique_model_native_pixels": 7089540827,
+      "family_unique_model_q32_pixels": 12044839936,
+      "cross_family_groups": 488131,
+      "cross_family_model_groups": 487956,
+      "additional_model_frames_avoided": 3338364,
+      "additional_native_pixels_avoided": 6128428057,
+      "additional_q32_pixels_avoided": 10386142208,
+      "shared_dense_payload_bytes": 16751237260,
+      "families": 43,
+      "components": 2657,
+      "source_frames": 7453473,
+      "source_resources": 27410,
+      "canonical_resources": 26167,
+      "logical_model_frames": 6128361,
+      "logical_q32_pixels": 16999758848,
+      "within_family_model_frames_avoided": 2224053,
+      "sequential_family_boundary_payload_peak_bytes": 14139738640,
+      "additional_model_reduction_fraction": 0.8550462719641996,
+      "additional_q32_reduction_fraction": 0.8622897658405213
+    },
+    "all_pending_78": {
+      "unique_cache_frames": 566120,
+      "unique_model_frames": 565944,
+      "unique_model_native_pixels": 961112770,
+      "unique_model_q32_pixels": 1658697728,
+      "family_unique_model_frames": 4092156,
+      "family_unique_model_native_pixels": 7422445754,
+      "family_unique_model_q32_pixels": 12609944576,
+      "cross_family_groups": 488131,
+      "cross_family_model_groups": 487956,
+      "additional_model_frames_avoided": 3526212,
+      "additional_native_pixels_avoided": 6461332984,
+      "additional_q32_pixels_avoided": 10951246848,
+      "shared_dense_payload_bytes": 16751237260,
+      "families": 45,
+      "components": 2787,
+      "source_frames": 7810190,
+      "source_resources": 28722,
+      "canonical_resources": 27421,
+      "logical_model_frames": 6418752,
+      "logical_q32_pixels": 17795237888,
+      "within_family_model_frames_avoided": 2326596,
+      "sequential_family_boundary_payload_peak_bytes": 14139738640,
+      "additional_model_reduction_fraction": 0.8617002870858296,
+      "additional_q32_reduction_fraction": 0.8684611404909002
+    }
+  },
+  "resource_templates_decoded": 3495,
+  "pixel_groups": 566120,
+  "payload_files_hash_checked": 57043,
+  "metadata_seconds": 58.33598279999933,
+  "scan_seconds": 52.22737360000065,
+  "total_seconds": 124.83725929999855,
+  "artifacts": {
+    "frame-groups.jsonl.gz": {
+      "sha256": "312D0F01695A2990773D69C01CD4F94C53F1A1BBA0EA31DB763B1BAA677DEF94",
+      "bytes": 31251498
+    },
+    "sharing-cohorts.json": {
+      "sha256": "CAD1AD145FB6B29300B9E3474752751F9DC2E0FB603C3902E810CCB9841B6093",
+      "bytes": 61367
+    },
+    "source-inventory.json": {
+      "sha256": "AAE99B550610BC8E62A499890D39EFD05C564655614FBD4EB1D029F6A2CB5EF8",
+      "bytes": 9789658
+    }
+  },
+  "limits": [
+    "No inference or output-equivalence measurement; sufficient source identity only.",
+    "Family-cache baseline assumes no eviction; cross-family savings are additional to intra-family reuse.",
+    "No reuse from completed families counted.",
+    "q32 pixels exclude N=86 filler slots; not an end-to-end speedup.",
+    "Dense cache payload omits metrics, representatives, Python overhead and active buffers.",
+    "0x6102/0x6110 are outside original 76 and projected using the common pinned template."
+  ]
+}
