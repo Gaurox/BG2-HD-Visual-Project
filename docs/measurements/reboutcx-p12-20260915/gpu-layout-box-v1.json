@@ -1,0 +1,120 @@
+{
+  "kind": "short-steady-layout-and-box-probe",
+  "cases": [
+    {
+      "canvas": [
+        32,
+        32
+      ],
+      "batch": 86,
+      "input_already_channels_last": true,
+      "variants": [
+        {
+          "variant": "p11",
+          "model_seconds": [
+            0.04077481460571289,
+            0.046897247314453126
+          ],
+          "mean_seconds": 0.04383603096008301,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "829f051d215136a0b59bd8b55cf4f0d274af8f9595d69af93bf97c8f2a0a0f46"
+        },
+        {
+          "variant": "channels_last_weights",
+          "model_seconds": [
+            0.03305916976928711,
+            0.03305564880371094
+          ],
+          "mean_seconds": 0.03305740928649903,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "829f051d215136a0b59bd8b55cf4f0d274af8f9595d69af93bf97c8f2a0a0f46"
+        },
+        {
+          "variant": "contiguous_input",
+          "model_seconds": [
+            0.04391439819335938,
+            0.04327385711669922
+          ],
+          "mean_seconds": 0.0435941276550293,
+          "crop_max_absolute_difference": 0.00048828125,
+          "quantized_sha256": "829f051d215136a0b59bd8b55cf4f0d274af8f9595d69af93bf97c8f2a0a0f46"
+        },
+        {
+          "variant": "p11_repeat",
+          "model_seconds": [
+            0.03527347183227539,
+            0.03488118362426758
+          ],
+          "mean_seconds": 0.03507732772827148,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "829f051d215136a0b59bd8b55cf4f0d274af8f9595d69af93bf97c8f2a0a0f46"
+        }
+      ],
+      "gpu_box_and_transfer_seconds": 0.020641300000079355,
+      "gpu_box_changed_u8_channels": 0,
+      "gpu_box_max_u8_difference": 0
+    },
+    {
+      "canvas": [
+        64,
+        64
+      ],
+      "batch": 86,
+      "input_already_channels_last": true,
+      "variants": [
+        {
+          "variant": "p11",
+          "model_seconds": [
+            0.1549144287109375,
+            0.15732754516601563
+          ],
+          "mean_seconds": 0.15612098693847656,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "ef1484b4f13361783a60adaed46e648e24b32d9f7834f25f2b67e060ae54a9e4"
+        },
+        {
+          "variant": "channels_last_weights",
+          "model_seconds": [
+            0.15644837951660157,
+            0.15656422424316407
+          ],
+          "mean_seconds": 0.15650630187988282,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "ef1484b4f13361783a60adaed46e648e24b32d9f7834f25f2b67e060ae54a9e4"
+        },
+        {
+          "variant": "contiguous_input",
+          "model_seconds": [
+            0.19474195861816407,
+            0.19720693969726563
+          ],
+          "mean_seconds": 0.19597444915771484,
+          "crop_max_absolute_difference": 0.00146484375,
+          "quantized_sha256": "ef1484b4f13361783a60adaed46e648e24b32d9f7834f25f2b67e060ae54a9e4"
+        },
+        {
+          "variant": "p11_repeat",
+          "model_seconds": [
+            0.15769558715820312,
+            0.157949951171875
+          ],
+          "mean_seconds": 0.15782276916503907,
+          "crop_max_absolute_difference": 0.0,
+          "quantized_sha256": "ef1484b4f13361783a60adaed46e648e24b32d9f7834f25f2b67e060ae54a9e4"
+        }
+      ],
+      "gpu_box_and_transfer_seconds": 0.00608990000000631,
+      "gpu_box_changed_u8_channels": 0,
+      "gpu_box_max_u8_difference": 0
+    }
+  ],
+  "seconds": 6.208659600000374,
+  "torch": "2.7.0+cu128",
+  "cudnn": 90701,
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "model_load_seconds": 1.743201400000089,
+  "production_runs": 0,
+  "files_created": 0,
+  "note": "Two real inputs repeated to 86; one warm and two timed batches per variant; no family throughput extrapolation from two shapes.",
+  "subprocess_seconds": 6.848706199999924
+}
