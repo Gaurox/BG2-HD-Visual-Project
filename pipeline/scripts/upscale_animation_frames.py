@@ -68,6 +68,11 @@ def parse_args(argv: list[str] | None = None, default_scale: int = 4) -> argpars
         default="lab",
         help="mode SeedVR2 de correction couleur, appliqué en mémoire au workflow",
     )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        help="seed KSampler explicite, injecté en mémoire sans modifier le workflow approuvé",
+    )
     parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument("--pad", type=int, default=32, help="marge x1 autour du canvas aligné")
     parser.add_argument("--poll-seconds", type=float, default=2.0)
@@ -312,6 +317,9 @@ def main(argv: list[str] | None = None, default_scale: int = 4) -> None:
     post_id = find_single_node(prompt_template, "SeedVR2PostProcessing")
     prompt_template[resize_id]["inputs"]["resize_type.multiplier"] = args.scale
     prompt_template[post_id]["inputs"]["color_correction_method"] = args.color_correction_method
+    if args.seed is not None:
+        sampler_id = find_single_node(prompt_template, "KSampler")
+        prompt_template[sampler_id]["inputs"]["seed"] = args.seed
     baseline = workflow_summary(prompt_template)
     if args.color_correction_method == "lab" and workflow_hash.lower() == APPROVED_7B_SHA256:
         validate_approved_7b_settings(baseline)
@@ -340,6 +348,7 @@ def main(argv: list[str] | None = None, default_scale: int = 4) -> None:
         "padding_x1": args.pad,
         "workflow_sha256": workflow_hash,
         "color_correction_method": args.color_correction_method,
+        "seed": args.seed,
         "frame_manifest_sha256": geometry_hash,
         "sources": source_records,
     }

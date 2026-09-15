@@ -73,6 +73,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--scale", type=int, choices=(2, 4), default=4)
     parser.add_argument("--pad", type=int, default=32)
+    parser.add_argument(
+        "--seed",
+        type=int,
+        help="seed KSampler explicite, propagé au producteur SeedVR sans modifier le workflow",
+    )
     parser.add_argument("--workflow", type=Path, default=DEFAULT_WORKFLOW)
     parser.add_argument("--server", default=get_service("comfyui_url"))
     parser.add_argument("--poll-seconds", type=float, default=2.0)
@@ -390,6 +395,8 @@ def run_upscale(
         "--upload-folder",
         f"BG2_Upscale/animation-runs/{args.run}/{resref}/x{args.scale}",
     ]
+    if args.seed is not None:
+        command.extend(["--seed", str(args.seed)])
     if args.resume:
         command.append("--resume")
     subprocess.run(command, cwd=PROJECT_ROOT, check=True)
@@ -456,6 +463,7 @@ def main() -> None:
         "sources": {item["resref"]: item["source_sha256"] for item in selected},
         "scale": args.scale,
         "padding_x1": args.pad,
+        "seed": args.seed,
         "workflow_sha256": workflow_hash,
     }
     signature = signature_for(request)
