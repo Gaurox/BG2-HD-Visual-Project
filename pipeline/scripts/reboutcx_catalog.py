@@ -454,8 +454,13 @@ def emit_replacement_shards(
         info = write_compressed_catalog_registry_records(scratch, 2, records)
         destination = pack_dir / catalog_shard_filename(info["sha256"])
         if destination.exists():
-            raise RuntimeError("replacement shard filename collision")
-        scratch.replace(destination)
+            # Shard names are content addressed: an existing name is the same bytes, emitted by
+            # another animation that shares this parent component. Reuse it instead of colliding.
+            if sha256_file(destination) != info["sha256"]:
+                raise RuntimeError("replacement shard filename collision")
+            scratch.unlink()
+        else:
+            scratch.replace(destination)
         info["registry"] = "iee-assets/creature-sprites/" + destination.name
         infos.append(info)
         resources.append(list(info["resources"]))
@@ -531,10 +536,20 @@ def assemble_catalog(
         components.append(value)
         logical_digests.append(parent["logical_digests"][old_index])
     new_component_by_target: dict[tuple[str, int], int] = {}
+    component_by_content: dict[tuple[str, str], int] = {}
     for replacement in sorted(
         replacements,
         key=lambda value: (int(value["animation_id"], 16), int(value["old_component_index"])),
     ):
+        # Animations sharing a parent component produce identical content; share the new component
+        # too, as the parent does for most of its own components.
+        content = (replacement["logical_digest"], replacement["new_component_digest"])
+        shared = component_by_content.get(content)
+        if shared is not None:
+            new_component_by_target[
+                (replacement["animation_id"], int(replacement["old_component_index"]))
+            ] = shared
+            continue
         shard_start = len(shards)
         for info, resources in zip(
             replacement["new_shards"], replacement["new_shard_resources"], strict=True
@@ -549,6 +564,7 @@ def assemble_catalog(
         component_index = len(components)
         target = (replacement["animation_id"], int(replacement["old_component_index"]))
         new_component_by_target[target] = component_index
+        component_by_content[content] = component_index
         component_shards = shards[shard_start:]
         components.append(
             {
@@ -629,7 +645,13 @@ def calculate_storage(
             inspected_old[int(component["shard_start"]) + offset] = info
     if not dropped_shards.issubset(inspected_old):
         raise RuntimeError("storage proof missing for dropped parent shard")
-    new_infos = [info for replacement in replacements for info in replacement["new_shards"]]
+    new_infos = list(
+        {
+            info["sha256"]: info
+            for replacement in replacements
+            for info in replacement["new_shards"]
+        }.values()
+    )
     stored = int(storage["stored_index_bytes"]) - sum(
         int(inspected_old[index]["stored_index_bytes"]) for index in dropped_shards
     ) + sum(int(info["stored_index_bytes"]) for info in new_infos)
@@ -887,7 +909,7 @@ def build(job_path: Path) -> dict[str, Any]:
                     set(range(len(parent["index"]["shards"])))
                     - set(assembled["kept_shard_indices"])
                 ),
-                "replacement_shards_verified": sum(len(value["new_shards"]) for value in replacements),
+                "replacement_shards_verified": len({info["sha256"] for value in replacements for info in value["new_shards"]}),
                 "resource_contracts_identical": True,
                 "catalog_binary_round_trip_exact": True,
                 "parent_full_rescan_deferred": True,
@@ -926,7 +948,7 @@ def build(job_path: Path) -> dict[str, Any]:
                 for value in replacements
             ],
             "parent_shards_reused": len(assembled["kept_shard_indices"]),
-            "replacement_shards": sum(len(value["new_shards"]) for value in replacements),
+            "replacement_shards": len({info["sha256"] for value in replacements for info in value["new_shards"]}),
         }
         print(json.dumps(result, indent=2))
         return result

@@ -1,0 +1,126 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "monster-7f17-arab-reboutcx-p12-cache86-v1",
+  "installable": false,
+  "scope": "full-animation",
+  "animation_id": "0x7F17",
+  "runtime_profile": "monster-bg2ee-2.7.3.0",
+  "source_inventory": [
+    {
+      "name": "ARABG1"
+    },
+    {
+      "name": "ARABG11"
+    },
+    {
+      "name": "ARABG12"
+    },
+    {
+      "name": "ARABG13"
+    },
+    {
+      "name": "ARABG14"
+    },
+    {
+      "name": "ARABG15"
+    },
+    {
+      "name": "ARABG2"
+    },
+    {
+      "name": "ARABG21"
+    },
+    {
+      "name": "ARABG22"
+    },
+    {
+      "name": "ARABG23"
+    },
+    {
+      "name": "ARABG24"
+    },
+    {
+      "name": "ARABG25"
+    },
+    {
+      "name": "ARABG26"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f17-arab-rabbit/source/stock/manifest.json",
+    "run_dir": "sprite/families/monsters/7fxx/7f17-arab-rabbit/runs/reboutcx-p12-cache86-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "558B90EA2F22E6771D671A75DD30801D6E5CC166FEC36848874F09E0D1293D62",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "null_frame_marker": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "null_frame_marker": 2,
+  "reboutcx_batch": {
+    "id": "p12-cached-fixed86-q32-v1",
+    "max_frames": 86,
+    "canvas_quantum": 32,
+    "input": "uint8-to-float32-div255-before-fp16",
+    "padding": "zero-top-left-before-model; crop-to-source-after-model",
+    "grouping": "canonical-resource-order; bounded-groups; geometry-buckets; no-duplicates",
+    "group_max_resources": 8,
+    "group_native_pixel_cap": 8000000,
+    "oversize_resource": "single-resource-group",
+    "pixel_cache": {
+      "id": "p12-frame-cache-fixed86-q32-v1",
+      "batch_size": 86,
+      "canvas_quantum": 32,
+      "input": "uint8-float32-div255-fp16; zero-pad-bottom-right",
+      "tail": "zero-filled-to-86; discard-fillers-before-CPU",
+      "alpha": "xbr2x-mask-v1",
+      "rgb_fill": "scipy-distance-transform-nearest-opaque",
+      "downscale": "chainner_ext-box-float32-before-u8-rounding",
+      "quantizer": "reboutcx_cpu_p10.quantize_classed_oklab",
+      "deterministic_algorithms": true
+    },
+    "fixed_gpu_batch": 86,
+    "downscale": "chainner_ext-box-float32-v1",
+    "deterministic_algorithms": true
+  },
+  "preparation": {
+    "reference_inference": "not-required-by-P12; comparison frame selected from native source"
+  },
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "arab-reference",
+        "resref": "ARABG1",
+        "frames": [
+          9
+        ],
+        "duration_ms": 400
+      }
+    ]
+  }
+}

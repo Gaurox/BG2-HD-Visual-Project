@@ -194,7 +194,7 @@ def _execute_payload(job_path: Path, runtime: Runtime, windows: list) -> dict[st
         "runtime_profile"
     ) != job.get("runtime_profile"):
         raise RuntimeError("source runtime profile differs")
-    source_layer = source_manifest.get("layer", {}).get("kind")
+    source_layer = (source_manifest.get("layer") or {}).get("kind")
     if job.get("layer") is not None and source_layer != job.get("layer"):
         raise RuntimeError("source layer differs")
     actual_inventory = [str(item["source"]["name"]).upper() for item in resources]

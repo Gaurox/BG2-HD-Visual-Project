@@ -68,6 +68,15 @@ ne sont pas réconciliés par une décision explicite.
 - AR0204 BRIDGE01 a0polygone : offset incohérent corrigé, pas de crash prouvé associé.
 - Preuves, reçus et QA : [`water/AR0204_AR1600_REPAIR_20260912.md`](water/AR0204_AR1600_REPAIR_20260912.md).
 
+## WATER-004 — AR5200 : partie eau restante hors overlays lave
+
+- QA ingame du 2026-09-15 : `AR5200` validée avec réserve sur une partie eau distincte des
+  overlays lave `WTLAVA/B/C/D` (déjà audités `keep-stock`, sans composition native — voir
+  `maps/AR5200/runs/seedvr2-7b-int8-none-grid-2x2-x4/00_water_audit/AR5200-water-audit.json`).
+- Traitement reporté ; identifier le resref/la cellule concernée avant toute nouvelle passe.
+- `areas.csv` reste `validated-installed` pour AR5200 (le reste de la zone est accepté) ; ne pas
+  clore cette entrée sans preuve de la correction de la partie eau signalée.
+
 ## WTPOOL-001 — Piscines x4
 
 - Limite observée : certaines petites piscines dépassent le coût visuel acceptable après
