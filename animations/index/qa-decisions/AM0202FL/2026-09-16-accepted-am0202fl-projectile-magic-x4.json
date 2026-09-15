@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0202FL",
+  "correction_id": "am0202fl-opacity70-gaussian06-edgefade8-20260916",
+  "decision": "Validé ingame dans AR0202 : projectile magique à 70 % d'opacité, léger flou gaussien et fondu de bord.",
+  "decision_date": "2026-09-16",
+  "decision_id": "2026-09-16-accepted-am0202fl-projectile-magic-x4",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916/manifest.json",
+    "manifest_sha256": "34DB608BEF84543D222E1F585033DD5B77E732C69A52FA160536A21713679BEE",
+    "path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202/manifest.json",
+        "manifest_sha256": "024D762C3BA3B926981105537841641191A1802FF40241DD95B168088DFD7ABC",
+        "path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "projectile-magic-apo8-x4-30fps",
+  "recorded_at_utc": "2026-09-15T23:21:34Z",
+  "resref": "AM0202FL",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0202",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202/manifest.json",
+        "manifest_sha256": "F568A55B118F574520ED4BE108D8A6D674DBE93F30A3ACC6BEDAFC0A5C498543",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202",
+        "registry_sha256": "FFC4C31097A41371232D2CE3EC8DDE3888B87D9E345264F214D981F7B25F654F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0331",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0331/manifest.json",
+        "manifest_sha256": "2E7D351C7806536B4E41AA273539FBD0FB4F1019661E0BD1DC6DF1D7146F5344",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0331",
+        "registry_sha256": "49E9CF36FAAD186F587B263745F3F5AE77ED68E4F042C61C7E1D20C41E792F2B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0526",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0526/manifest.json",
+        "manifest_sha256": "99FED696DBAF584F27BDAD37432FF818673CA3DAC8BE04F83BA6D3D9F6E81B20",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0526",
+        "registry_sha256": "49E9CF36FAAD186F587B263745F3F5AE77ED68E4F042C61C7E1D20C41E792F2B",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/manifest.json",
+    "manifest_sha256": "505757D55EBE6D2107942681AB3604A208B8D6B03C0A859A5B5862F31B7674B5",
+    "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0202",
+    "AR0331",
+    "AR0526"
+  ]
+}

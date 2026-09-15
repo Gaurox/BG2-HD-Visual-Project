@@ -8,7 +8,6 @@ Blended resource are rewritten, then the asset hashes and V2 registry are rebuil
 from __future__ import annotations
 
 import argparse
-import copy
 import shutil
 import sys
 from pathlib import Path
@@ -29,7 +28,25 @@ def parse_frame_map(values: list[str]) -> dict[int, int]:
         target, donor = int(left), int(right)
         v2.require(target != donor, f"remplacement identique : {value}")
         result[target] = donor
-    v2.require(result, "au moins un remplacement est requis")
+    return result
+
+
+def parse_frame_interpolations(values: list[str]) -> dict[int, tuple[int, int, float]]:
+    result: dict[int, tuple[int, int, float]] = {}
+    for value in values:
+        target_text, separator, specification = value.partition("=")
+        parts = specification.split(":")
+        v2.require(separator == "=" and target_text.isdigit() and len(parts) == 3 and
+                   parts[0].isdigit() and parts[1].isdigit(),
+                   f"interpolation invalide : {value} (attendu N=GAUCHE:DROITE:T)")
+        target, left, right = int(target_text), int(parts[0]), int(parts[1])
+        try:
+            factor = float(parts[2])
+        except ValueError as exc:
+            raise RuntimeError(f"facteur d'interpolation invalide : {value}") from exc
+        v2.require(target not in (left, right) and left != right and 0.0 < factor < 1.0,
+                   f"interpolation hors contrat : {value}")
+        result[target] = (left, right, factor)
     return result
 
 
@@ -46,6 +63,38 @@ def update_asset_record(resource: dict[str, Any], asset_name: str, path: Path) -
     records[0]["sha256"] = v2.sha256_file(path)
 
 
+def project_frame(pack: Path, source: dict[str, Any], target: dict[str, Any]) -> np.ndarray:
+    target_width, target_height = map(int, target["physical_size_x4"])
+    source_width, source_height = map(int, source["physical_size_x4"])
+    source_rgba = np.frombuffer(
+        (pack / str(source["asset"])).read_bytes(), dtype=np.uint8).reshape(
+            (source_height, source_width, 4))
+    projected = np.zeros((target_height, target_width, 4), dtype=np.uint8)
+    target_centre = np.array(target["centre_x1"], dtype=int) * 4
+    source_centre = np.array(source["centre_x1"], dtype=int) * 4
+    offset_x, offset_y = (target_centre - source_centre).tolist()
+    destination_left, destination_top = max(offset_x, 0), max(offset_y, 0)
+    source_left, source_top = max(-offset_x, 0), max(-offset_y, 0)
+    copy_width = min(source_width - source_left, target_width - destination_left)
+    copy_height = min(source_height - source_top, target_height - destination_top)
+    v2.require(copy_width > 0 and copy_height > 0,
+               f"aucun recouvrement entre les frames {source['frame']} et {target['frame']}")
+    projected[destination_top:destination_top + copy_height,
+              destination_left:destination_left + copy_width] = source_rgba[
+                  source_top:source_top + copy_height,
+                  source_left:source_left + copy_width]
+    return projected
+
+
+def write_frame_payload(pack: Path, resource: dict[str, Any], frame: dict[str, Any],
+                        rgba: np.ndarray) -> None:
+    path = pack / str(frame["asset"])
+    path.write_bytes(rgba.tobytes())
+    frame["bytes"] = path.stat().st_size
+    frame["sha256"] = v2.sha256_file(path)
+    update_asset_record(resource, str(frame["asset"]), path)
+
+
 def replace_frames(pack: Path, resource: dict[str, Any], replacements: dict[int, int]) -> None:
     frame_by_number = {int(item["frame"]): item for item in resource["frames"]}
     v2.require(len(frame_by_number) == len(resource["frames"]),
@@ -55,18 +104,61 @@ def replace_frames(pack: Path, resource: dict[str, Any], replacements: dict[int,
                    f"{resource['resref']}: frame hors séquence : {target_number}={donor_number}")
         target = frame_by_number[target_number]
         donor = frame_by_number[donor_number]
-        target_asset = str(target["asset"])
-        donor_asset = str(donor["asset"])
-        shutil.copyfile(pack / donor_asset, pack / target_asset)
-        replacement = copy.deepcopy(donor)
-        replacement["frame"] = target_number
-        replacement["asset"] = target_asset
-        replacement["bytes"] = (pack / target_asset).stat().st_size
-        replacement["sha256"] = v2.sha256_file(pack / target_asset)
-        index = resource["frames"].index(target)
-        resource["frames"][index] = replacement
-        frame_by_number[target_number] = replacement
-        update_asset_record(resource, target_asset, pack / target_asset)
+        # Registry lookup first matches the native frame geometry.  Keep every
+        # target geometry field intact; only its pixel payload is substituted.
+        write_frame_payload(pack, resource, target, project_frame(pack, donor, target))
+
+
+def interpolate_frames(pack: Path, resource: dict[str, Any],
+                       interpolations: dict[int, tuple[int, int, float]]) -> None:
+    frame_by_number = {int(item["frame"]): item for item in resource["frames"]}
+    v2.require(len(frame_by_number) == len(resource["frames"]),
+               f"{resource['resref']}: frames dupliquées")
+    source_payloads = {
+        number: np.frombuffer(
+            (pack / str(frame["asset"])).read_bytes(), dtype=np.uint8).copy()
+        for number, frame in frame_by_number.items()
+    }
+    for target_number, (left_number, right_number, factor) in sorted(interpolations.items()):
+        v2.require(target_number in frame_by_number and left_number in frame_by_number and
+                   right_number in frame_by_number,
+                   f"{resource['resref']}: frame d'interpolation hors séquence")
+        target = frame_by_number[target_number]
+        # Restore immutable source payloads before projection so interpolation order
+        # cannot make one generated phase feed the next one.
+        for number in (left_number, right_number):
+            frame = frame_by_number[number]
+            (pack / str(frame["asset"])).write_bytes(source_payloads[number].tobytes())
+        left = project_frame(pack, frame_by_number[left_number], target)
+        right = project_frame(pack, frame_by_number[right_number], target)
+        target_width, target_height = map(int, target["physical_size_x4"])
+        target_rgba = source_payloads[target_number].reshape((target_height, target_width, 4))
+        target_alpha = target_rgba[:, :, 3].copy()
+        target_mask = target_alpha > 0
+
+        def straight_rgb_field(projected: np.ndarray) -> np.ndarray:
+            alpha = projected[:, :, 3].astype(np.float32)
+            donor_mask = alpha > 0
+            v2.require(np.any(donor_mask),
+                       f"{resource['resref']}: donneur vide pour la frame {target_number}")
+            straight = np.zeros_like(projected[:, :, :3], dtype=np.float32)
+            straight[donor_mask] = (projected[:, :, :3][donor_mask].astype(np.float32) *
+                                    (255.0 / alpha[donor_mask, None]))
+            missing = target_mask & ~donor_mask
+            if np.any(missing):
+                _, nearest = distance_transform_edt(~donor_mask, return_indices=True)
+                straight[missing] = straight[nearest[0][missing], nearest[1][missing]]
+            return straight
+
+        # Preserve the authored per-frame silhouette exactly.  Only straight RGB is
+        # interpolated; repremultiplication restores the Blended runtime contract.
+        straight = (straight_rgb_field(left) * (1.0 - factor) +
+                    straight_rgb_field(right) * factor)
+        blended = np.zeros_like(target_rgba)
+        blended[:, :, :3] = np.clip(
+            np.rint(straight * (target_alpha[:, :, None] / 255.0)), 0, 255).astype(np.uint8)
+        blended[:, :, 3] = target_alpha
+        write_frame_payload(pack, resource, target, blended)
 
 
 def blur_and_dim_blended(pack: Path, resource: dict[str, Any], opacity: float, sigma: float) -> None:
@@ -147,6 +239,8 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True, help="pack leaf destination")
     parser.add_argument("--fire-resref", default="FIRE_3")
     parser.add_argument("--replace-frame", action="append", default=[], metavar="TARGET=DONOR")
+    parser.add_argument("--interpolate-frame", action="append", default=[],
+                        metavar="TARGET=LEFT:RIGHT:T")
     parser.add_argument("--effect-resref", default="AM0202FL")
     parser.add_argument("--opacity", type=float, default=0.70)
     parser.add_argument("--gaussian-sigma-x4", type=float, default=0.60)
@@ -158,17 +252,26 @@ def main() -> int:
     v2.validate_v2_pack(source)
     v2.require(not output.exists(), f"sortie déjà existante : {output}")
     replacements = parse_frame_map(args.replace_frame)
+    interpolations = parse_frame_interpolations(args.interpolate_frame)
+    v2.require(replacements or interpolations, "au moins une transformation de frame est requise")
+    v2.require(not (set(replacements) & set(interpolations)),
+               "une frame ne peut pas être remplacée et interpolée simultanément")
     shutil.copytree(source, output)
     manifest = v2.load_json(output / "manifest.json")
     fire = resource_by_resref(manifest["resources"], v2.normalise_resref(args.fire_resref))
     effect = resource_by_resref(manifest["resources"], v2.normalise_resref(args.effect_resref))
     replace_frames(output, fire, replacements)
+    interpolate_frames(output, fire, interpolations)
     if args.opacity != 1.0 or args.gaussian_sigma_x4 != 0.0:
         blur_and_dim_blended(output, effect, args.opacity, args.gaussian_sigma_x4)
     faded_frames = fade_blended_edges(output, effect, args.edge_fade_x4)
     manifest["derived_from"] = str(source)
     manifest["derivation"] = {
         "fire_frame_replacements": {str(key): value for key, value in sorted(replacements.items())},
+        "fire_frame_interpolations": {
+            str(key): {"left": value[0], "right": value[1], "factor": value[2]}
+            for key, value in sorted(interpolations.items())
+        },
         "effect": {"resref": effect["resref"], "opacity": args.opacity,
                    "gaussian_sigma_x4": args.gaussian_sigma_x4,
                    "edge_fade_x4": args.edge_fade_x4,
@@ -177,7 +280,11 @@ def main() -> int:
     rebuild_manifest(output, manifest)
     v2.validate_v2_pack(output)
     print(f"Pack dérivé validé : {output}")
-    print("FIRE replacements : " + ", ".join(f"{k}={v}" for k, v in sorted(replacements.items())))
+    if replacements:
+        print("FIRE replacements : " + ", ".join(f"{k}={v}" for k, v in sorted(replacements.items())))
+    if interpolations:
+        print("FIRE interpolations : " + ", ".join(
+            f"{k}={v[0]}:{v[1]}:{v[2]:.3f}" for k, v in sorted(interpolations.items())))
     print(f"{effect['resref']} : opacity={args.opacity:.2f}, gaussian sigma={args.gaussian_sigma_x4:.2f} x4, "
           f"edge fade={args.edge_fade_x4:.2f} x4 ({faded_frames} frames)")
     return 0

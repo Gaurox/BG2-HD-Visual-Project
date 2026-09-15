@@ -1,0 +1,748 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FIRE_4",
+  "correction_id": "fire4-feather2-premultiplied-20260916",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202/manifest.json",
+        "manifest_sha256": "024D762C3BA3B926981105537841641191A1802FF40241DD95B168088DFD7ABC",
+        "path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-16",
+    "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+    "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+    "status": "accepted"
+  },
+  "recipe_id": "fire-seedvr7b-x4",
+  "resref": "FIRE_4",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916/manifest.json",
+    "manifest_sha256": "34DB608BEF84543D222E1F585033DD5B77E732C69A52FA160536A21713679BEE",
+    "path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0201",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0201/manifest.json",
+        "manifest_sha256": "E383AF03B6975F7133F77439DBA05CEDCC47D85D2ADD9FF7B0529363882AF944",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0201",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0202",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202/manifest.json",
+        "manifest_sha256": "F568A55B118F574520ED4BE108D8A6D674DBE93F30A3ACC6BEDAFC0A5C498543",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202",
+        "registry_sha256": "FFC4C31097A41371232D2CE3EC8DDE3888B87D9E345264F214D981F7B25F654F",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0300",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0300/manifest.json",
+        "manifest_sha256": "06210F1AEA3BB38649223E3B3D4FA903CF53C4282524A0E03621892D14EFCD60",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0300",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0307/manifest.json",
+        "manifest_sha256": "29F682C82A99C4DA03EADC5C9F75D46B7CC54A1AF48A4E04A82D9DC0E2586C08",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0307",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0309",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0309/manifest.json",
+        "manifest_sha256": "77824E44CA91BD10A8F6F2F91397959AA68A9DDBFA8481F49B158F7C07773895",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0309",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0329/manifest.json",
+        "manifest_sha256": "753938D5DED4675DE787A2CDADAA960639FDFFA4453650C9B7E84A1EFED5D432",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0329",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0331",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0331/manifest.json",
+        "manifest_sha256": "2E7D351C7806536B4E41AA273539FBD0FB4F1019661E0BD1DC6DF1D7146F5344",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0331",
+        "registry_sha256": "49E9CF36FAAD186F587B263745F3F5AE77ED68E4F042C61C7E1D20C41E792F2B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0334",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0334/manifest.json",
+        "manifest_sha256": "255CDE0D0334071D9A2ED6AAC7843729B811F5BA0FDBE5BF17F299C0BBA8BD1E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0334",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0400",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0400/manifest.json",
+        "manifest_sha256": "FA4C81025D9C51C58D347FF05B8927EA1494E14F4948DC1E4A76BF0723CBFAFF",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0400",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0405",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0405/manifest.json",
+        "manifest_sha256": "F1EE8FEBFD28A12E1F19C583523828DDBB26371099878A771C6C2C34720F94F5",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0405",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0406",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0406/manifest.json",
+        "manifest_sha256": "883AE3FF5F19EEFE3ACE1B493EA5D8F7A01109052BE228AE40B58D09EFE9CD5B",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0406",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0504",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0504/manifest.json",
+        "manifest_sha256": "4D210919756CBB69ADC8D2F185004DAD6464BCC3F2F2CB94D6AA50A4EE7FF8DC",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0504",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0509",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0509/manifest.json",
+        "manifest_sha256": "1D89663B40A3324525ECD6BE127096DAAFB9E19FECC8F7E929B00DD8CCF3B0F1",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0509",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0511",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0511/manifest.json",
+        "manifest_sha256": "22DF45A4FB18A00FDBD70E3EBA0E5C07D59941FF79FB4FDD4FFC9FD419A455E0",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0511",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0522",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0522/manifest.json",
+        "manifest_sha256": "2D2875839165C09CF7EBEED7B231360BB1D5673B5CCCD1C72B6D78762C2A7180",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0522",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0526",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0526/manifest.json",
+        "manifest_sha256": "99FED696DBAF584F27BDAD37432FF818673CA3DAC8BE04F83BA6D3D9F6E81B20",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0526",
+        "registry_sha256": "49E9CF36FAAD186F587B263745F3F5AE77ED68E4F042C61C7E1D20C41E792F2B",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0529",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0529/manifest.json",
+        "manifest_sha256": "D6137C74F665C556CE4E1C8BF846BA9ABFEA12021859F04CA64A463F1ABF95D1",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0529",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0700",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0700/manifest.json",
+        "manifest_sha256": "67DA78819A51A661ADFAC5C165BD570CB444A240BB656205031611A84F5CA86B",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0700",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0704",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0704/manifest.json",
+        "manifest_sha256": "481E2B1747ACE36ED8431C6AB4AA36E0EA89C6CA36D6DD032F2B476ED9FA5E56",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0704",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0706",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0706/manifest.json",
+        "manifest_sha256": "4B94FD57084FB64F1D71B77D624F72AFA5A447183DEAE8FEA15236F271FD9674",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0706",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0709",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0709/manifest.json",
+        "manifest_sha256": "EF4D09DD47B2D521B39A7CAC2F4E441C5F341F3BBA4E1A00F87D16C7956CC1D2",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0709",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0800",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0800/manifest.json",
+        "manifest_sha256": "F6E337037F8C85930E9B89BA693E06C420E5234286F42BA1B7D9E2A10C6A9517",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0800",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0801",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0801/manifest.json",
+        "manifest_sha256": "313EABE65CD25AEEDD4E3C32D72188AE55294CA49BD1739661D4928809C53AFD",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0801",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0802",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0802/manifest.json",
+        "manifest_sha256": "922A5033ACF419F671FD89199CDF5A83A7EF68D2977D6EEF79BCD36BEB18A14C",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0802",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0803",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0803/manifest.json",
+        "manifest_sha256": "AA917A9941A23E246313088E3AC0587A33BAF2FC5A9ECFBD1AC8AC846066E884",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0803",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0808",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0808/manifest.json",
+        "manifest_sha256": "29980A3C0DEF6D55F5E8198E7D0D5AE927BDEE632E4B1D049993A74D3BB08227",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0808",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0809",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0809/manifest.json",
+        "manifest_sha256": "ABCC37BED3E8BF74B2FADE8A08AE36FC3C1969BBC8F5380DBC27BD65B67AD4E3",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0809",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0904",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0904/manifest.json",
+        "manifest_sha256": "AB3F85B4524DC970C7D1C6B2A7E13DCA346FACF9DADFAA82352DD4C1AD2DCF49",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0904",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0906",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0906/manifest.json",
+        "manifest_sha256": "083E607E14874931C8A69DF73E1A08E79BB928B555FB1EB77DD106542E40FFAA",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0906",
+        "registry_sha256": "8E4CE2655F89108E1413DC5A7F0CB9643849E1DB782CDE4D1757BE3F67D7AC97",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0907",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0907/manifest.json",
+        "manifest_sha256": "DDFAEDDDB77FF638C307421D41030947809EA2A57EB022D01D2E0C9DC238E06A",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0907",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1002",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1002/manifest.json",
+        "manifest_sha256": "A6F84A4A75A4BD322E610A23AB61E5F50B80DB146DA15FB3E4936BDEDF1719A6",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1002",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1005",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1005/manifest.json",
+        "manifest_sha256": "691D8FD654D022B3DE5C0E4236239FD6A1D8CCA10BF12BDADEC77EC2A84DB675",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1005",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1010",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1010/manifest.json",
+        "manifest_sha256": "71CC66B5C583B8E4C9992238D27D0AAFD0A5DE085ED6B74C6DCF2B49675D0390",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1010",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1103",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1103/manifest.json",
+        "manifest_sha256": "205EBE6265A4F437D8180BA320044728F67601B079171228E20B302D87702BE2",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1103",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1104",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1104/manifest.json",
+        "manifest_sha256": "CAF0EA8DE4510988F23C1E3A0E7C5F84430EB1E2CB3AADD9B92A76554AF0D962",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1104",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1105",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1105/manifest.json",
+        "manifest_sha256": "A449D897C4F671E3CAFD8C61440080767C88619B814E18EDB24C9418623CE6EC",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1105",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1107",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1107/manifest.json",
+        "manifest_sha256": "1D0CDB0989050C50E0FD0B22017405B9F3D4B6F55539394B01994AB28C0E6D49",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1107",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1201",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1201/manifest.json",
+        "manifest_sha256": "E4C03CAE91184AC4BE2F5CE83C7B036F45C8E6FD5F7C719F6FCBA51284370562",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1201",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1202",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1202/manifest.json",
+        "manifest_sha256": "79148DE53E26EAA42568F4EBF728CBAF9BDF3BD4B31FB9A05515243F19AFF7A2",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1202",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1204",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1204/manifest.json",
+        "manifest_sha256": "50325566F244BE984FE4CB329BA14489E66BAFC565C71EC749A4BED74C92D10E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1204",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1301",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1301/manifest.json",
+        "manifest_sha256": "6C7AC5FAA8F141A81493A24DF5ECD55ED84CF61CB2EFDE177F64B6D40FE7959E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1301",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1302",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1302/manifest.json",
+        "manifest_sha256": "6A5E83CF4A8717C8E3D2C96E177CF75C590A758C99D3292FFCAD7CDC17C15912",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1302",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1306",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1306/manifest.json",
+        "manifest_sha256": "7ABD997BA250E1F7902228BA11B4556B69A4A8B6E5FBD92D871E69911EF17ECB",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1306",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1401",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1401/manifest.json",
+        "manifest_sha256": "2C4369210E9B8D2981F16650CF45397B933D1289093B6B4D068E8AA506F09E76",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1401",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1511",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1511/manifest.json",
+        "manifest_sha256": "1C1786C883A8521AC2B9601EDD604704370FC132A7CB0E8DEACF5F17D108D080",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1511",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1512",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1512/manifest.json",
+        "manifest_sha256": "FE3CEC220B1CAEF845664E6BCB45AE43498D6AC0A14DA069DB9E51C7F33585A2",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1512",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1513",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1513/manifest.json",
+        "manifest_sha256": "86866B17B997F8E4DF013ED355BAD4ACAB4B369967C4A49405150BCB94C9164E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1513",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1514",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1514/manifest.json",
+        "manifest_sha256": "8DBB06CD3FBF1006B27E89BEDB2FEC06BF843BBECC0BF40575D2F11E8E29570E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1514",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1516",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1516/manifest.json",
+        "manifest_sha256": "3FA75299FCCC94DFCEBDE461E2618E164920AA76FFCEFD255C79665AA0137D19",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1516",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1603",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1603/manifest.json",
+        "manifest_sha256": "8A4F4680B8114F8C5871D3512D15D68C266E2915C1CFDA97944E6548E2198402",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1603",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1604",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1604/manifest.json",
+        "manifest_sha256": "06DECE8EC0DA769A0E989C9A8F100A0A099A8F76104F91C6D19E8CE76DD290D9",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1604",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1606",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1606/manifest.json",
+        "manifest_sha256": "37BED0F5C8D6CB8FC832936947BC2347454CF2AA3F777AA5F5313A80D30AFB32",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1606",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1608",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1608/manifest.json",
+        "manifest_sha256": "27EA9A6610108B7643CD615D7A342C293A457A0673CA44320A4E8B6F4CC94675",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1608",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1613",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1613/manifest.json",
+        "manifest_sha256": "527848164748F58ED819FD8F3BD6BEB0CB8C57B39274F3962FFFBBE641CB1618",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR1613",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2001",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2001/manifest.json",
+        "manifest_sha256": "2028FAE561AF6E7BE3DF422E8EF63E1B5824F3A25E34D254AEAB8E2B20B6172F",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2001",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2002",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2002/manifest.json",
+        "manifest_sha256": "349348B8EFEE1F7F6B094F6BF7B00D90D7CF12D8AF7C9A47DCB474799BD2F1B0",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2002",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2007",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2007/manifest.json",
+        "manifest_sha256": "78138A8023A4118CE71374FDE969538150989BA024CB98EC1CD5BB951D85615E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2007",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2008",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2008/manifest.json",
+        "manifest_sha256": "AD1988E51392C117C5009656B18FC397CDF239F8BB44B1952C694558C24A3369",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2008",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2009",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2009/manifest.json",
+        "manifest_sha256": "31EE671C12059EF90C562FD45B482AF2D547570C4EBD1995BEE1244E971C2014",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2009",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2208",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2208/manifest.json",
+        "manifest_sha256": "28D36CB5B91D114831B11D935D66EA9DEF5FC6A58A36DE88E4BDACC45AC04B8E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR2208",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000/manifest.json",
+        "manifest_sha256": "54B09F50A8ED94A40EFE5A5A9257BFB50F23325C55B3D6DAB65B76D788D423D8",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000",
+        "registry_sha256": "8E4CE2655F89108E1413DC5A7F0CB9643849E1DB782CDE4D1757BE3F67D7AC97",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5006",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5006/manifest.json",
+        "manifest_sha256": "67E5E64C44AE494EFCDE3BDA5A79CCDD541F021D15DA20A6B3775A812AA82D83",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5006",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5007",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5007/manifest.json",
+        "manifest_sha256": "B4DF085BC74698DF0F23F1BF16355ECAA8D0A2A9BDCA89E0EC3598B054495AED",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5007",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5012",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5012/manifest.json",
+        "manifest_sha256": "AF3CBB6D81E6D0000875CE5834D2C0FA5E7EDF71102FA67776BD86D715BFF624",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5012",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5016",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5016/manifest.json",
+        "manifest_sha256": "6E6AB72E0B76A9B17CDD5AD99CE831434B707902DBD5149DCCF40839221F54BC",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5016",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5202",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5202/manifest.json",
+        "manifest_sha256": "D2773F3CB6604F43AFAFF2C84A47DBB088852612A73186F267CAD72886A3567C",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5202",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5503",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5503/manifest.json",
+        "manifest_sha256": "A78F8E732639ABEB4FD21EAA657047C9941D7493B1606D0874641CA7718688F0",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5503",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4210/manifest.json",
+        "manifest_sha256": "4BC20B6F091718FA857F1451B9169D61CBD60E75F351F75060A102D549EC1917",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4210",
+        "registry_sha256": "8E4CE2655F89108E1413DC5A7F0CB9643849E1DB782CDE4D1757BE3F67D7AC97",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5300",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH5300/manifest.json",
+        "manifest_sha256": "DCA3AE8AFB3138B345FF55580CD6721FF3BCFEF9D38EAFD2EE25F7F940747035",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH5300",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6100",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6100/manifest.json",
+        "manifest_sha256": "3988CB0357A89A875E576423C5BE8EB6D0F36B4DCE28C3775046C5A8446F4394",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6100",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6200",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6200/manifest.json",
+        "manifest_sha256": "CC8B81B71CE802F6749A218499A8ABC8AF3392A099A0082E43B0383A179F478D",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6200",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6450",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6450/manifest.json",
+        "manifest_sha256": "65BACD0776713CACAFAE8268E951F5FC3562065A29B243F116B798354928CAD5",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6450",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6460",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6460/manifest.json",
+        "manifest_sha256": "5C70392FAA15F48EE13E36B6D23D3C6CD59F783AB02058D6C6183581B32B740C",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6460",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH8100",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8100/manifest.json",
+        "manifest_sha256": "1467BF805FDD0719B1D2A6F819008C15CE5357AFB9A57F3F43FE7EFA9A32FC69",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8100",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH8200",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8200/manifest.json",
+        "manifest_sha256": "2C0031900A6F7530E9EF1199E48E900788BC6DFD523F374AEF1ADD5CC5585C0B",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8200",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH8300",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8300/manifest.json",
+        "manifest_sha256": "D5E6630461C4029B810FC3E65C55D8E753EDF2785D439EED4EEC0AD869BEA17E",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8300",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH8400",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8400/manifest.json",
+        "manifest_sha256": "37C76638A5613137F54A537008A21CC27D2BC2819658855C2BB8CA30F9DA2FF7",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH8400",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH9000",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH9000/manifest.json",
+        "manifest_sha256": "E87582826600B85661ACE19E66965409E1F60E518E7A595F7FA0EBF00A789C52",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH9000",
+        "registry_sha256": "E4F4928D1C707CEA6843070AC30861834C9C16D98D8A620BCFBDD8EFBF47EC06",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/manifest.json",
+    "manifest_sha256": "505757D55EBE6D2107942681AB3604A208B8D6B03C0A859A5B5862F31B7674B5",
+    "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0201",
+    "AR0202",
+    "AR0300",
+    "AR0307",
+    "AR0309",
+    "AR0329",
+    "AR0331",
+    "AR0334",
+    "AR0400",
+    "AR0405",
+    "AR0406",
+    "AR0504",
+    "AR0509",
+    "AR0511",
+    "AR0522",
+    "AR0526",
+    "AR0529",
+    "AR0700",
+    "AR0704",
+    "AR0706",
+    "AR0709",
+    "AR0800",
+    "AR0801",
+    "AR0802",
+    "AR0803",
+    "AR0808",
+    "AR0809",
+    "AR0904",
+    "AR0906",
+    "AR0907",
+    "AR1002",
+    "AR1005",
+    "AR1010",
+    "AR1103",
+    "AR1104",
+    "AR1105",
+    "AR1107",
+    "AR1201",
+    "AR1202",
+    "AR1204",
+    "AR1301",
+    "AR1302",
+    "AR1306",
+    "AR1401",
+    "AR1511",
+    "AR1512",
+    "AR1513",
+    "AR1514",
+    "AR1516",
+    "AR1603",
+    "AR1604",
+    "AR1606",
+    "AR1608",
+    "AR1613",
+    "AR2001",
+    "AR2002",
+    "AR2007",
+    "AR2008",
+    "AR2009",
+    "AR2208",
+    "AR5000",
+    "AR5006",
+    "AR5007",
+    "AR5012",
+    "AR5016",
+    "AR5202",
+    "AR5503",
+    "OH4210",
+    "OH5300",
+    "OH6100",
+    "OH6200",
+    "OH6450",
+    "OH6460",
+    "OH8100",
+    "OH8200",
+    "OH8300",
+    "OH8400",
+    "OH9000"
+  ],
+  "updated_at_utc": "2026-09-15T23:21:38Z"
+}

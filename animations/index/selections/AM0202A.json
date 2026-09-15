@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0202A",
+  "correction_id": "am0202a-classic-seedvr7b-x4-20260916",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202/manifest.json",
+        "manifest_sha256": "024D762C3BA3B926981105537841641191A1802FF40241DD95B168088DFD7ABC",
+        "path": "animations/packs-par-zone/combined-20260916-ar0202-fire3-vanilla-silhouette-temporal-rgb-effect-edgefade8/AR0202",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-16",
+    "path": "animations/index/qa-decisions/AM0202A/2026-09-16-accepted-am0202a-ar0202-classic-x4.json",
+    "sha256": "E37B75ECFA5089CDA7231811FAA86A66F79E2B181EF6A313160BC869E16B1DA9",
+    "status": "accepted"
+  },
+  "recipe_id": "classic-seedvr7b-x4",
+  "resref": "AM0202A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916/manifest.json",
+    "manifest_sha256": "34DB608BEF84543D222E1F585033DD5B77E732C69A52FA160536A21713679BEE",
+    "path": "animations/batches/soa-ar0202-lot4-selection-accepted-reserve-fire3-20260916",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0202",
+        "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202/manifest.json",
+        "manifest_sha256": "F568A55B118F574520ED4BE108D8A6D674DBE93F30A3ACC6BEDAFC0A5C498543",
+        "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202",
+        "registry_sha256": "FFC4C31097A41371232D2CE3EC8DDE3888B87D9E345264F214D981F7B25F654F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/manifest.json",
+    "manifest_sha256": "505757D55EBE6D2107942681AB3604A208B8D6B03C0A859A5B5862F31B7674B5",
+    "path": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0202"
+  ],
+  "updated_at_utc": "2026-09-15T23:21:33Z"
+}
