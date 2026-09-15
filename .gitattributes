@@ -37,3 +37,11 @@ CMakeLists.txt text eol=lf
 # Preserve the imported upstream readme byte-for-byte; its historic trailing
 # spaces are not repository formatting errors.
 portraits/mod-PPE/Readme-PPE-original.txt -text -whitespace
+
+# P10/P11 production manifests pin these exact bytes, including line endings.
+pipeline/scripts/reboutcx_*_p10.py -text whitespace=cr-at-eol
+pipeline/scripts/reboutcx_*_p11.py -text whitespace=cr-at-eol
+sprite/families/playable-characters/5211-elf-female-mage-low/*/jobs/reboutcx-p10-stream86-v1.json -text whitespace=cr-at-eol
+sprite/families/playable-characters/5211-elf-female-mage-low/*/jobs/reboutcx-p11-q32-group86-v1.json -text whitespace=cr-at-eol
+sprite/families/playable-characters/5211-elf-female-mage-low/family-runs/complete-reboutcx-p10-v1/** -text whitespace=cr-at-eol
+sprite/families/playable-characters/5211-elf-female-mage-low/family-runs/complete-reboutcx-p11-v1/** -text whitespace=cr-at-eol

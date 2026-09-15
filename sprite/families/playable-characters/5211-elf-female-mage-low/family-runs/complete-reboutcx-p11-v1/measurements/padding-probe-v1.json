@@ -1,0 +1,390 @@
+{
+  "status": "padding-probe-contracts-passed",
+  "cases": [
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm09-wqmh0/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMH0A1",
+      "frame": 0,
+      "native_shape": [
+        52,
+        50
+      ],
+      "shape_family_frames": 43710,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.0013662000001204433,
+          "h2d_submit_seconds": 0.000396499999851585,
+          "model_cuda_seconds": 0.162972412109375,
+          "model_wait_and_d2h_seconds": 0.16856810000012956,
+          "crop_seconds": 0.00892640000006395,
+          "dispatch_wall_seconds": 0.1792573000000175,
+          "gpu_queue_wait_seconds": 2.800000015668047e-05
+        },
+        "32": {
+          "pack_seconds": 0.0013662000001204433,
+          "h2d_submit_seconds": 0.000396499999851585,
+          "model_cuda_seconds": 0.162972412109375,
+          "model_wait_and_d2h_seconds": 0.16856810000012956,
+          "crop_seconds": 0.00892640000006395,
+          "dispatch_wall_seconds": 0.1792573000000175,
+          "gpu_queue_wait_seconds": 2.800000015668047e-05
+        },
+        "16": {
+          "pack_seconds": 0.0013662000001204433,
+          "h2d_submit_seconds": 0.000396499999851585,
+          "model_cuda_seconds": 0.162972412109375,
+          "model_wait_and_d2h_seconds": 0.16856810000012956,
+          "crop_seconds": 0.00892640000006395,
+          "dispatch_wall_seconds": 0.1792573000000175,
+          "gpu_queue_wait_seconds": 2.800000015668047e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 262,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 262,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "16": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 262,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        }
+      }
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMWHA1",
+      "frame": 0,
+      "native_shape": [
+        11,
+        11
+      ],
+      "shape_family_frames": 23687,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.0011904000000413362,
+          "h2d_submit_seconds": 0.00030479999986710027,
+          "model_cuda_seconds": 0.153104736328125,
+          "model_wait_and_d2h_seconds": 0.15763379999998506,
+          "crop_seconds": 0.0006453000000874454,
+          "dispatch_wall_seconds": 0.15977449999991222,
+          "gpu_queue_wait_seconds": 2.3599999849466258e-05
+        },
+        "32": {
+          "pack_seconds": 0.0003602000001592387,
+          "h2d_submit_seconds": 0.00017170000000987784,
+          "model_cuda_seconds": 0.04248214340209961,
+          "model_wait_and_d2h_seconds": 0.04380859999992026,
+          "crop_seconds": 0.0006542000000990811,
+          "dispatch_wall_seconds": 0.04499490000011974,
+          "gpu_queue_wait_seconds": 2.6400000024295878e-05
+        },
+        "16": {
+          "pack_seconds": 9.990000012294331e-05,
+          "h2d_submit_seconds": 0.00018320000003768655,
+          "model_cuda_seconds": 0.06188816070556641,
+          "model_wait_and_d2h_seconds": 0.06263139999987288,
+          "crop_seconds": 0.00026010000010501244,
+          "dispatch_wall_seconds": 0.06317480000006981,
+          "gpu_queue_wait_seconds": 2.1600000081889448e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 285,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 285,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.007017543859649123,
+          "visible_rgb_absolute_delta_max_u8": 1
+        },
+        "16": {
+          "changed_visible_indices": 3,
+          "visible_pixels": 285,
+          "changed_bottom_right_border_indices": 2,
+          "visible_rgb_absolute_delta_mean_u8": 0.24561403508771928,
+          "visible_rgb_absolute_delta_max_u8": 6
+        }
+      }
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMWHA1",
+      "frame": 1,
+      "native_shape": [
+        28,
+        11
+      ],
+      "shape_family_frames": 18132,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.0011070999998992193,
+          "h2d_submit_seconds": 0.000461399999949208,
+          "model_cuda_seconds": 0.1536550750732422,
+          "model_wait_and_d2h_seconds": 0.15812490000007529,
+          "crop_seconds": 0.0010133000000678294,
+          "dispatch_wall_seconds": 0.16070689999992283,
+          "gpu_queue_wait_seconds": 2.1399999923232826e-05
+        },
+        "32": {
+          "pack_seconds": 0.00030839999999443535,
+          "h2d_submit_seconds": 0.0001495999999860942,
+          "model_cuda_seconds": 0.03481187057495117,
+          "model_wait_and_d2h_seconds": 0.036114399999860325,
+          "crop_seconds": 0.0005608999999822117,
+          "dispatch_wall_seconds": 0.03713349999998172,
+          "gpu_queue_wait_seconds": 2.2099999796409975e-05
+        },
+        "16": {
+          "pack_seconds": 0.00012349999997240957,
+          "h2d_submit_seconds": 0.00015159999998104468,
+          "model_cuda_seconds": 0.04503696060180664,
+          "model_wait_and_d2h_seconds": 0.04611750000003667,
+          "crop_seconds": 0.0008940999998685584,
+          "dispatch_wall_seconds": 0.04728690000001734,
+          "gpu_queue_wait_seconds": 4.279999984646565e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 351,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 3,
+          "visible_pixels": 351,
+          "changed_bottom_right_border_indices": 3,
+          "visible_rgb_absolute_delta_mean_u8": 0.08736942070275404,
+          "visible_rgb_absolute_delta_max_u8": 3
+        },
+        "16": {
+          "changed_visible_indices": 4,
+          "visible_pixels": 351,
+          "changed_bottom_right_border_indices": 3,
+          "visible_rgb_absolute_delta_mean_u8": 0.16334283000949668,
+          "visible_rgb_absolute_delta_max_u8": 3
+        }
+      }
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMWHA1",
+      "frame": 10,
+      "native_shape": [
+        14,
+        20
+      ],
+      "shape_family_frames": 13216,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.001129199999923003,
+          "h2d_submit_seconds": 0.00043380000010984077,
+          "model_cuda_seconds": 0.1532737274169922,
+          "model_wait_and_d2h_seconds": 0.15784979999989446,
+          "crop_seconds": 0.0005278999999518419,
+          "dispatch_wall_seconds": 0.15994099999988975,
+          "gpu_queue_wait_seconds": 2.0599999970727367e-05
+        },
+        "32": {
+          "pack_seconds": 0.00034979999986717303,
+          "h2d_submit_seconds": 0.0002266000001327484,
+          "model_cuda_seconds": 0.03792115020751953,
+          "model_wait_and_d2h_seconds": 0.0395739999999023,
+          "crop_seconds": 0.0005310999999892374,
+          "dispatch_wall_seconds": 0.040681599999970786,
+          "gpu_queue_wait_seconds": 2.1500000002561137e-05
+        },
+        "16": {
+          "pack_seconds": 0.00012360000005173788,
+          "h2d_submit_seconds": 0.00013420000004771282,
+          "model_cuda_seconds": 0.03231027221679687,
+          "model_wait_and_d2h_seconds": 0.033326399999850764,
+          "crop_seconds": 0.00046400000019275467,
+          "dispatch_wall_seconds": 0.034048299999994924,
+          "gpu_queue_wait_seconds": 2.189999986512703e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 301,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 301,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.024363233665559248,
+          "visible_rgb_absolute_delta_max_u8": 1
+        },
+        "16": {
+          "changed_visible_indices": 5,
+          "visible_pixels": 301,
+          "changed_bottom_right_border_indices": 2,
+          "visible_rgb_absolute_delta_mean_u8": 0.36212624584717606,
+          "visible_rgb_absolute_delta_max_u8": 6
+        }
+      }
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMWHA1",
+      "frame": 12,
+      "native_shape": [
+        17,
+        22
+      ],
+      "shape_family_frames": 10891,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.0011832000000140397,
+          "h2d_submit_seconds": 0.00027769999996962724,
+          "model_cuda_seconds": 0.1533622131347656,
+          "model_wait_and_d2h_seconds": 0.15895629999999983,
+          "crop_seconds": 0.0007921000001260836,
+          "dispatch_wall_seconds": 0.16120950000004086,
+          "gpu_queue_wait_seconds": 3.0100000003585592e-05
+        },
+        "32": {
+          "pack_seconds": 0.0003600000000005821,
+          "h2d_submit_seconds": 0.0002589000000625674,
+          "model_cuda_seconds": 0.040049121856689456,
+          "model_wait_and_d2h_seconds": 0.04155579999996917,
+          "crop_seconds": 0.0005693999999039079,
+          "dispatch_wall_seconds": 0.04274420000001555,
+          "gpu_queue_wait_seconds": 2.1399999923232826e-05
+        },
+        "16": {
+          "pack_seconds": 0.0003600000000005821,
+          "h2d_submit_seconds": 0.0002589000000625674,
+          "model_cuda_seconds": 0.040049121856689456,
+          "model_wait_and_d2h_seconds": 0.04155579999996917,
+          "crop_seconds": 0.0005693999999039079,
+          "dispatch_wall_seconds": 0.04274420000001555,
+          "gpu_queue_wait_seconds": 2.1399999923232826e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 224,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 224,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.03720238095238095,
+          "visible_rgb_absolute_delta_max_u8": 1
+        },
+        "16": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 224,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.03720238095238095,
+          "visible_rgb_absolute_delta_max_u8": 1
+        }
+      }
+    },
+    {
+      "job": "sprite/families/playable-characters/5211-elf-female-mage-low/bdshld01-wqmd1/jobs/reboutcx-p10-stream86-v1.json",
+      "resref": "WQMD1A1",
+      "frame": 14,
+      "native_shape": [
+        54,
+        23
+      ],
+      "shape_family_frames": 6859,
+      "batch_size": 86,
+      "timings": {
+        "64": {
+          "pack_seconds": 0.0012030999998842162,
+          "h2d_submit_seconds": 0.00040919999992183875,
+          "model_cuda_seconds": 0.15337794494628906,
+          "model_wait_and_d2h_seconds": 0.15905220000013287,
+          "crop_seconds": 0.00431550000007519,
+          "dispatch_wall_seconds": 0.16498030000002473,
+          "gpu_queue_wait_seconds": 2.1599999854515772e-05
+        },
+        "32": {
+          "pack_seconds": 0.000465200000007826,
+          "h2d_submit_seconds": 0.00018549999981587462,
+          "model_cuda_seconds": 0.07555955505371094,
+          "model_wait_and_d2h_seconds": 0.07844220000015412,
+          "crop_seconds": 0.002334699999892109,
+          "dispatch_wall_seconds": 0.08142769999994925,
+          "gpu_queue_wait_seconds": 2.3499999997511622e-05
+        },
+        "16": {
+          "pack_seconds": 0.000465200000007826,
+          "h2d_submit_seconds": 0.00018549999981587462,
+          "model_cuda_seconds": 0.07555955505371094,
+          "model_wait_and_d2h_seconds": 0.07844220000015412,
+          "crop_seconds": 0.002334699999892109,
+          "dispatch_wall_seconds": 0.08142769999994925,
+          "gpu_queue_wait_seconds": 2.3499999997511622e-05
+        }
+      },
+      "differences_from_p10_padding": {
+        "64": {
+          "changed_visible_indices": 0,
+          "visible_pixels": 2533,
+          "changed_bottom_right_border_indices": 0,
+          "visible_rgb_absolute_delta_mean_u8": 0.0,
+          "visible_rgb_absolute_delta_max_u8": 0
+        },
+        "32": {
+          "changed_visible_indices": 7,
+          "visible_pixels": 2533,
+          "changed_bottom_right_border_indices": 3,
+          "visible_rgb_absolute_delta_mean_u8": 0.03934728253717595,
+          "visible_rgb_absolute_delta_max_u8": 1
+        },
+        "16": {
+          "changed_visible_indices": 7,
+          "visible_pixels": 2533,
+          "changed_bottom_right_border_indices": 3,
+          "visible_rgb_absolute_delta_mean_u8": 0.03934728253717595,
+          "visible_rgb_absolute_delta_max_u8": 1
+        }
+      }
+    }
+  ],
+  "sampled_shape_family_frames": 116495,
+  "total_family_model_frames": 146066,
+  "model_load_seconds": 3.1632524000001467,
+  "total_seconds": 6.399764199999936,
+  "temporary_files_created": 0,
+  "production_runs": 0,
+  "subprocess_wall_seconds": 7.43335060000004
+}

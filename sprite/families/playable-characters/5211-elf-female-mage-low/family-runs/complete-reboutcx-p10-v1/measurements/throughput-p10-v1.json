@@ -1,0 +1,659 @@
+{
+  "schema": "reboutcx-family-throughput-measurement-v1",
+  "animation_id": "0x5211",
+  "family": "sprite/families/playable-characters/5211-elf-female-mage-low",
+  "status": "65-components-produced-and-verified-pending-human-review",
+  "scope": "one-family-only; no-derived-catalog-install-release",
+  "queue": "sprite/families/playable-characters/5211-elf-female-mage-low/family-runs/complete-reboutcx-p10-v1/jobs/elf-female-mage-low-p10-throughput-v1.json",
+  "queue_sha256": "C7ED47F817D55D1E03E7804DF1F8E5CB872194C25A2974306EBA695AC1D3AA64",
+  "p9_reference": "sprite/families/playable-characters/5211-elf-female-mage-low/family-runs/complete-reboutcx-p10-v1/measurements/p9-reference-v1.json",
+  "p9_reference_sha256": "AD319FC5D8DB1D62ED30ED664A42E867D2C0BA6A6B2CFF1D87E2A32C62895698",
+  "p10_session_log": "sprite/.work/reboutcx-p10-production/session-1789453658358315600.jsonl",
+  "p10_session_sha256": "1363EEE0A60D192AA1A3441D552DCE838957A24E094A9D6985DB3CB06869D1C4",
+  "components": 65,
+  "source_frames": 180494,
+  "unique_model_frames": 146066,
+  "p9_wall_seconds": 804.9805359840393,
+  "p10_wall_seconds": 437.26085620000003,
+  "speedup": 1.840961807054247,
+  "time_reduction_percent": 45.680567833174315,
+  "seconds_saved": 367.7196797840393,
+  "p9_model_frames_per_second": 181.45283453523913,
+  "p10_model_frames_per_second": 334.0477381611091,
+  "parameters": {
+    "components": 3,
+    "pre_workers": 2,
+    "post_workers": 3,
+    "memory_mib": 4096,
+    "batch_size_cap": 86,
+    "canvas_quantum": 64
+  },
+  "model_load_seconds_once": 8.35794850000002,
+  "peak_reserved_resource_bytes": 4283785712,
+  "stage_seconds_sums": {
+    "xbr": 161.41932750002405,
+    "mapping_seconds": 80.47576459997799,
+    "rgb_fill_seconds": 13.628968400001497,
+    "prepare_wall_seconds": 256.1354262000015,
+    "prepare_process_cpu_seconds": 103.046875,
+    "prepare_queue_ipc_and_wait_seconds": 956.3904861999993,
+    "pack_seconds": 29.788369400003546,
+    "h2d_submit_seconds": 10.814326099999562,
+    "model_cuda_seconds": 347.6062990150452,
+    "model_wait_and_d2h_seconds": 358.15130829999697,
+    "crop_seconds": 7.743556100003275,
+    "dispatch_wall_seconds": 406.49803740000266,
+    "gpu_queue_wait_seconds": 613.7716508999986,
+    "reboutcx": 406.49803740000266,
+    "model_frames": 146066.0,
+    "batches": 2066.0,
+    "full_batches": 1337.0,
+    "post_wait_seconds": 83.2974821000015,
+    "box_and_round_seconds": 29.72017630002142,
+    "quantization": 227.45299409999427,
+    "post_wall_seconds": 257.3597890000013,
+    "post_process_cpu_seconds": 477.9375,
+    "write_and_frame_metadata_seconds": 12.462886000000935,
+    "internal_verification_seconds": 30.393095700001652,
+    "null_frames": 30204.0,
+    "source_decode_seconds": 20.28936020000043,
+    "execute_before_manifest_seconds": 1303.4938664000006
+  },
+  "comparability": {
+    "source_manifest_hashes_and_resource_inventories_match": true,
+    "source_and_model_frame_counts_match": true,
+    "p9_manifests_unchanged": true,
+    "p9_clock": "reconstructed from historical logs, approximately one-second precision",
+    "p10_clock": "perf_counter through final verification; job preparation and queue sorting excluded",
+    "pixel_equivalence": false,
+    "pixel_difference_reason": "P10 normalizes RGB to 0..1; P9 omitted division by 255",
+    "limitations": "single family; historical baseline, not a repeated controlled A/B; concurrent stage sums are not additive wall time"
+  },
+  "members": [
+    {
+      "component": "CEFW1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "87EAEBF0110A826F180CEDD1D0EC8AA0D9E881018EDA96BE78023E10C9A7E267",
+      "source_manifest_sha256": "1769F9E2A0FF19A4471BE58C1EE209D6BCC43155F5E835612A1E4EE079DDB8F0",
+      "frames": 10323,
+      "model_frames": 2772,
+      "verification_event_seconds": 154.56161200000003
+    },
+    {
+      "component": "CEFW2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "479E1BC59FB8C38170E76D4040600013276F9213AD4358647255C9467552D951",
+      "source_manifest_sha256": "21F856D70BFAE0F981C8633BCF163FDDCA6106753BFFC395B19D6F5D4D31C4F3",
+      "frames": 10323,
+      "model_frames": 2637,
+      "verification_event_seconds": 126.06329190000002
+    },
+    {
+      "component": "CEFW3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "DFCE42035D4D0992985CC873644649F15A11D5069500CA5DB6DA55F337AF51BE",
+      "source_manifest_sha256": "EF2DE6A681332EB03FC9F85E0560FA0E5D0AFA1289E4A4BB402CC42AA770F6EE",
+      "frames": 10323,
+      "model_frames": 2772,
+      "verification_event_seconds": 77.14452940000001
+    },
+    {
+      "component": "CEFW4",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cefw4/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "A9897549332176226F33A9CFA17FCBB31A3AF8BBFDEC7D1955407087AD812A86",
+      "source_manifest_sha256": "19065892F6A16FF9F9C1810B9AC788C5C650F28E6C1400B948676102E4696595",
+      "frames": 10323,
+      "model_frames": 2772,
+      "verification_event_seconds": 68.5304797
+    },
+    {
+      "component": "WQMH0",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm09-wqmh0/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "386CFDE81F1C2B6B217AAA5FA806E6739222C7B26FD6CED2C05C2E8E8F6770C5",
+      "source_manifest_sha256": "1562FD2AAF294D5A26FE8404F7F28B439E39DDB4B55C9BC6544FBC30BFA37958",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 200.5577626
+    },
+    {
+      "component": "WQMH1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9p-wqmh1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "D13D60D8F9513654489C058ADBDC59D6B809D19213DB22BBF730CD6ABA4887F3",
+      "source_manifest_sha256": "E5D3C7D228E1A2498D3525F4D1A693A3E5CD3B5BAF973BF72D8FCA0362026407",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 223.93405890000003
+    },
+    {
+      "component": "WQMH2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dhelm01-wqmh2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "69BAE7A8A956B4D5DBF85C1662FD89CE8850EE280A6BCE1015B45D09C4C415B7",
+      "source_manifest_sha256": "446B11B07EECE62B5858B58237F9EEEE2723853E3763C440A6B13637520F349E",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 201.95490510000002
+    },
+    {
+      "component": "WQMH5",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ihelm10-wqmh5/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "6D0A4636867D415572BC6754A1A3B93A4C1FB0EE792D337A5D1BFAD30457068F",
+      "source_manifest_sha256": "63D72EE9BBD668557BAD2618305CD25CD538556531E3475F902C036C0A542230",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 176.85264469999998
+    },
+    {
+      "component": "WQMJ0",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm15-wqmj0/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "A62025A8F3253E32B81529EEF83D96D457E81DD227C331900A90B3557A412CC6",
+      "source_manifest_sha256": "738F9974A738E5E0EA84FE0A48B253DFCAB79E11F807BACAF7577E967CF91DB5",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 162.2999636
+    },
+    {
+      "component": "WQMJ1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalhelm-wqmj1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "3D82B547FF5CB0039E36C652F22E1A3A897064D6B9A765951837195A7520FB42",
+      "source_manifest_sha256": "73500C328F0861049391466477CB45FA71662E4C47ECAC8B9D1DB83F771F1F53",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 186.99804240000003
+    },
+    {
+      "component": "WQMJ2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm21-wqmj2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "440C85DE7A59A6E0EFAFC3C3192AEEF1EC5AF86B2EAC5EDADD8E3BBA7703D5CB",
+      "source_manifest_sha256": "65E1BE9F947DF0CB90C1443A99F6E0E2E472611E7B9D2309ED63CE26F74899A6",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 178.31557550000002
+    },
+    {
+      "component": "WQMJ3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm02-wqmj3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "8356C6FCAF077C2A412F836BB98EA70D749DA152DCA90F84F924B700AF169DAE",
+      "source_manifest_sha256": "4AA8F55B74B4A488AB0181323634DDF8A46A4BD4DBD8714320BF463248E4522D",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 210.9946286
+    },
+    {
+      "component": "WQMJ4",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm16-wqmj4/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "071FED1E5E2E8ABC8F98529D64CF23C55E4BC94170A9B8C31C2B4BDDFA52920A",
+      "source_manifest_sha256": "123C8AD3DE3EE4CE8FBD138A4E773445703425026CAC8DB028FB08F2BEE818F0",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 225.2925287
+    },
+    {
+      "component": "WQMJ5",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm13-wqmj5/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "33E0CA85707D7ACF018A309FA5C6706E6BEBA80C55C8F37891069308A2E07B48",
+      "source_manifest_sha256": "9AA91070BA82EE6F207303A2BEAF4449813D110BC1C803B1A1603E30693393AE",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 233.90677650000003
+    },
+    {
+      "component": "WQMJ6",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm01-wqmj6/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "BB50A617BDBD3F8638EBF5029D75219D4B28FE76E59F8BB9DA8A92525AE75DA2",
+      "source_manifest_sha256": "2F8213E5C9D6C4112E5D0FABF6C2F6812950C0C7E9A646F9114173D70D08BFFB",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 286.31593369999996
+    },
+    {
+      "component": "WQMJ7",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm07-wqmj7/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "A0C1E90DDCA0A5783BAFC21EB6AEF3D9F15AD025A1FDDC7E88B2EB3F26D8570C",
+      "source_manifest_sha256": "F6E3F3C5096B3F80F9E271A8549558C0F9859C870990B633E1805567B67E8979",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 248.60538800000006
+    },
+    {
+      "component": "WQMJ8",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm03-wqmj8/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "D0F4885672D8426406250430AB3BC7F3E0EE267AB4729CEA1BC9DCAC805BC6DF",
+      "source_manifest_sha256": "2A67226BB613DDEF7A709AD03C566357EE636D6BF52E638EC9FC27545DBDAF5D",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 269.2970544
+    },
+    {
+      "component": "WQMJ9",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/compon05-wqmj9/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "95EBD27F9EE537329196A51AE1A84815CC2B51CFFF6AC4203971F8F4B1F08C5B",
+      "source_manifest_sha256": "A36E260EB142A048917EB65984B103F2BB2F0DBFD2BF71F0583F61B915429343",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 246.62106970000002
+    },
+    {
+      "component": "WQMJA",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm05-wqmja/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "EDCB295E62A6F566DBFEE472396D8D289B6207D9BDD474603E5622EFFEC634F2",
+      "source_manifest_sha256": "20EACFE8DE4CB0F6A3B9578153827226F9F4D576F938EA69CE7C5F05F38760DC",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 258.5576992
+    },
+    {
+      "component": "WQMJB",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdhelm16-wqmjb/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "C73B52ED8FD847B1351C49819AC43063DCD008721B7FF1C8913004D29B47FCD0",
+      "source_manifest_sha256": "256DAFF11C204DE6764B2B3476FE01174993DCEC669D7D28685ECE6CA62E5718",
+      "frames": 2709,
+      "model_frames": 2411,
+      "verification_event_seconds": 322.98175949999995
+    },
+    {
+      "component": "WQMJC",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/helm12-wqmjc/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "9FA5FB059D38A83FA1A58A4EE93BF4BCB00D032D86CA68B3A7307630CFF9CE44",
+      "source_manifest_sha256": "DE563914FEF97BC7D07E5225BBE8A107A0113ED17E99A26DEA648C5F0B376AB1",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 270.9535548
+    },
+    {
+      "component": "WQMZW",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/wings01-wqmzw/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "BACB39067BBA21FF31CAFA75303A438B79414C70407E10425C3A0BF829670103",
+      "source_manifest_sha256": "CA6B2933B285DAD9C31A22FA5BEAB7430A5860C508E3FED1B631BEA656E434DB",
+      "frames": 2709,
+      "model_frames": 2574,
+      "verification_event_seconds": 304.15295560000004
+    },
+    {
+      "component": "WQMC0",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld01-wqmc0/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "72BB40FE02582723E8491A7DB4722897DB6C6C09216BCBE8DB01CFC390EA2B14",
+      "source_manifest_sha256": "EE73BD261E6BFC7E9FC3BA1344F45E652C66B94F741958A595C71D70E873E425",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 419.95552069999997
+    },
+    {
+      "component": "WQMC1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld03-wqmc1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "6CFB53323E450EA64517D61A8955868BD48D9953C86C8D71FAE5A1726C2E069C",
+      "source_manifest_sha256": "0F33641D17FCE4553787F468E11244BCC158AF9D38FB41BB9392C9A113C0D2D2",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 386.5047561
+    },
+    {
+      "component": "WQMC2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05-wqmc2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "4F4E84D532FE34910EC96C7AE9947D11618CB392C0CC05D0DF706B3CB6EE67EB",
+      "source_manifest_sha256": "80C614DF6CCC3DBF708EE6D044B3D79931E984A401300C15C22C7A84829E550F",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 379.834019
+    },
+    {
+      "component": "WQMC3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalshld-wqmc3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "4492674509E253CB794D697E0C12BD1234762F1EE196024046B1239A47D1538F",
+      "source_manifest_sha256": "9E82795631E48BB9FB7C744579755CCB0CE0183C8236B24CB4E3909F8017815D",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 384.88590880000004
+    },
+    {
+      "component": "WQMC4",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ohshld50-wqmc4/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "61F2E84EE423E1E81380051F0999814BB5B9E1F8E78C2AA83871D2E9C62B0C04",
+      "source_manifest_sha256": "4CF632C22B92AA503C956AFA917B32449DB0C2896DA88226D9BFF81F0342CB5B",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 414.09025729999996
+    },
+    {
+      "component": "WQMC5",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld26-wqmc5/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "8FD1D4CF42A397B0AAD516177BA42CFDE9A2B37187D26154CF812F8BF9716011",
+      "source_manifest_sha256": "AE59DBDD10AA5001F35FB7B995B935614920F3998BCD9BEF86EC5D0C5ACF76A5",
+      "frames": 1386,
+      "model_frames": 1380,
+      "verification_event_seconds": 412.47972089999996
+    },
+    {
+      "component": "WQMC6",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld07-wqmc6/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "12C9D6BB211F9C5E20CAAEF5FA2AF066B168F5FF3BB248EBC050308077709C9C",
+      "source_manifest_sha256": "13D3BA978D659C29E15D83A3D4658BF542EA35555D677A6DFBCBF52EBCD97966",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 397.1516905
+    },
+    {
+      "component": "WQMC7",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwshld01-wqmc7/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "245AB2F45E76DC463532D48AFFF681899B794FCB99981AF6344581679D65DD72",
+      "source_manifest_sha256": "26EE2DBB79D5827524C767FC9B2015ABCFD5C72E22065186EC0B9E23DBE2165D",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 376.926833
+    },
+    {
+      "component": "WQMD1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdshld01-wqmd1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "A429F591B6951E559846718A5860DC88F2961953865A087D42D3E1D18D3CB19A",
+      "source_manifest_sha256": "C2753D7B089AF86FF4EE115FAA6148903CFDA17079B4D0EF5D9B02670371F6D2",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 428.3969128
+    },
+    {
+      "component": "WQMD2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dshld01-wqmd2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "E52E292B324208A0266F5934DD3B30DF8677B71FD20FE70CA51674D3E6A146DE",
+      "source_manifest_sha256": "C9EE961DA66A187D2AF645ABDE1131DC9CEAF36B80BE3893900E579409861394",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 395.0841501
+    },
+    {
+      "component": "WQMD3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ishld03-wqmd3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "0CBF451153AE02A9D8C32CCE0E43C1B2985EFCC0DF0552352FB37AB2511F8C4F",
+      "source_manifest_sha256": "9D8A2A1F2010BA0C6998A6CFDCF1BC2E27312A9EC89883DFB2E7F42920DEB339",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 388.17739389999997
+    },
+    {
+      "component": "WQMD4",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/shld05a-wqmd4/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "ACE7D9534FF14BFCE1DAE7E6BD5E2F2E3F98CA6F4B80B6A302654A7554AF3C81",
+      "source_manifest_sha256": "05FAD1BA7D6360DF98773C4092C51A107A821A0E57A8603F13B77CBE7BF43562",
+      "frames": 1386,
+      "model_frames": 1386,
+      "verification_event_seconds": 394.1376973
+    },
+    {
+      "component": "WQMAX",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ax1h01-wqmax/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "0C3BE5473740FBA278FD6C88E4CEE3C249084E39A55BCAA820833A8EDB4748AE",
+      "source_manifest_sha256": "D22ADB9334A512C8B878634BDB4A6450A4AFC2CEFE20D91AF20669DD87D82FE1",
+      "frames": 2907,
+      "model_frames": 2892,
+      "verification_event_seconds": 328.48993310000003
+    },
+    {
+      "component": "WQMBS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bow05-wqmbs/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "1EE87F6D84EE9E58307A4A0276F0BFDA01F252C252C49A03D3B65A117761FD3F",
+      "source_manifest_sha256": "5280975D7E88267DA17F969F1FDBAB27FACFF9A2E752D4095F8A6EAA3974B85E",
+      "frames": 972,
+      "model_frames": 972,
+      "verification_event_seconds": 435.056008
+    },
+    {
+      "component": "WQMBW",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/arropheo-wqmbw/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "C66D00E57FC2D964FC50A67B7B6C26717816456BA40B2F3549BB696B406AA937",
+      "source_manifest_sha256": "AAE67F1A39A0154CD1B064EE441D3A5659D4233C9D80466D0F2BC228009A4F5C",
+      "frames": 972,
+      "model_frames": 972,
+      "verification_event_seconds": 434.51180309999995
+    },
+    {
+      "component": "WQMCB",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwxbow01-wqmcb/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "0D5C26AAD6E9EB8FE8608966867C1119DC25C056D6E19049AB24E0743423181C",
+      "source_manifest_sha256": "07F2CF83142F57DE8EDB3F15AA6C229A7D1B2BD8A5E86C1B6A0FF88123E4AD53",
+      "frames": 972,
+      "model_frames": 972,
+      "verification_event_seconds": 435.99585509999997
+    },
+    {
+      "component": "WQMCL",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun01-wqmcl/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "9E934DF642DC8BD090094021581FE6BDA3A5EDE7E3EBC19B40DE7AA6F6A303A4",
+      "source_manifest_sha256": "BB58E821D5B90061E205D7B33E16BE799B7DE42AA0AA4888D8C7E954B0D10AB1",
+      "frames": 2907,
+      "model_frames": 2766,
+      "verification_event_seconds": 304.41332739999996
+    },
+    {
+      "component": "WQMDD",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/cdnebdag-wqmdd/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "7DADAA6FF816149156AA60FF122BF2EAFD5079C9042354965D3579738B76E5DA",
+      "source_manifest_sha256": "13A587DF419137D5E2F955E0A9F747A61BD76BB58E77CC13A54D1217C905601A",
+      "frames": 2907,
+      "model_frames": 2574,
+      "verification_event_seconds": 359.9889187
+    },
+    {
+      "component": "WQMF0",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun13-wqmf0/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "1D83D802C7435E5605786F2983770B76DE9FC0AD2C4B5022C68186EF4AE650B1",
+      "source_manifest_sha256": "52B98C79D7766A70959EADC0BC88B8EC1403436B6A435ECD8A2AAFDC250A1FF0",
+      "frames": 2907,
+      "model_frames": 2613,
+      "verification_event_seconds": 338.9266335
+    },
+    {
+      "component": "WQMF1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14d-wqmf1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "5C41B6E284D8111EFBBD25F96A86CB483AC439B1DE3B179BCA52815C97F5FE73",
+      "source_manifest_sha256": "42AD5D27088F454B2DDF609469AC98C5129033BEB3AA1CF030194435F2CDD430",
+      "frames": 2907,
+      "model_frames": 2613,
+      "verification_event_seconds": 344.3241884
+    },
+    {
+      "component": "WQMF2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/npsw06-wqmf2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "63C0D5F267CB654F954756EFC90E94F4448395F1F727671285FE8B050F2B91E5",
+      "source_manifest_sha256": "C14FF1CE08DAC2924227D8ECAA9976D09099A28FCD03BAC4B684618DC2CE5108",
+      "frames": 5377,
+      "model_frames": 5335,
+      "verification_event_seconds": 119.23051290000001
+    },
+    {
+      "component": "WQMF3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun14-wqmf3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "7DE81144705BA42A5BC88FEF54BA7107322223351AC00E0BBE8AEB4C661FF602",
+      "source_manifest_sha256": "9EFCB83DB38DCB27ACAE1D57211E5B659F4E4560E3A63DEDD58EFFAF1F3588DB",
+      "frames": 2907,
+      "model_frames": 2613,
+      "verification_event_seconds": 320.78310180000005
+    },
+    {
+      "component": "WQMFL",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/barlfl-wqmfl/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "DFCA11302C8804E2B3903525D6DF2AADAC46C37506DC671904758749F2FAC6FB",
+      "source_manifest_sha256": "D2DE851B417A8E9561C2A542089BEB8EF5567E924B32C4E999C6AD5EDFE2628D",
+      "frames": 2907,
+      "model_frames": 2613,
+      "verification_event_seconds": 354.92295690000003
+    },
+    {
+      "component": "WQMFS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/comps39-wqmfs/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "C204C1EEDD6458CB6406AE6E999C75A18007CEE0BF66D009266AF9A8D8BFB6F7",
+      "source_manifest_sha256": "479D4A4B1AB4DA38B49CB61568B047432AC74D25E1599E474C80FDB2EAC8114E",
+      "frames": 5377,
+      "model_frames": 5362,
+      "verification_event_seconds": 142.2546431
+    },
+    {
+      "component": "WQMGS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf11-wqmgs/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "65EDC92538B50C91CB784130A19F1EFB94E40A348DBBDD89B80574CB603D26A1",
+      "source_manifest_sha256": "684193937216A83E7B3049A88CE3E66F38157046812B735DC9BD25AA8277C0FA",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 403.365679
+    },
+    {
+      "component": "WQMH6",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bearspir-wqmh6/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "063361910C7ECBE972D60267BBF840C6B03DCC8DB626B7061FE986A3A13B48B9",
+      "source_manifest_sha256": "8B04531EBBDE3F81E91AE052C09F532EFDBA03E2E210E66356F46A2774E78519",
+      "frames": 2709,
+      "model_frames": 2709,
+      "verification_event_seconds": 152.55866559999998
+    },
+    {
+      "component": "WQMHB",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwhalb01-wqmhb/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "E5A5A499ABF070ABF92AA042CC2206936C6B2B9619C054A41686987C52B926DF",
+      "source_manifest_sha256": "6C8D35D136DF4B1E5C2524CD00E997AE45E46127936214412A7DF648C4595FFD",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 422.5397028
+    },
+    {
+      "component": "WQMM2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun12-wqmm2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "57432EE528BCEA4A8209FD5B0CE58CF35705DE1245584BBFA4ECD7E0AEE9293D",
+      "source_manifest_sha256": "2AF4D69C60F02553500E7500B78BDEAA51559CE3CBF0EEE2F3625F2AF2E7E39F",
+      "frames": 2907,
+      "model_frames": 2766,
+      "verification_event_seconds": 276.522703
+    },
+    {
+      "component": "WQMMC",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun04-wqmmc/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "AD5BB2BD95D72294C5A80ABE3DD030C74CF34ECC88D81FCD016AC6A1B8194996",
+      "source_manifest_sha256": "827738D3AC18C8233E366BDBE198966A9731B553352B0B5A3195B09023CB4BDC",
+      "frames": 2907,
+      "model_frames": 2766,
+      "verification_event_seconds": 310.5023569
+    },
+    {
+      "component": "WQMMS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/blun06-wqmms/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "5D6BE5201047CE57DB121370BDE00343CDB2CA6042726FE0F91CAADD6DB8DDC8",
+      "source_manifest_sha256": "F3727F684451CCB918B5B23B5CAA1161F93D94622A1C5C7C017865A162F3E2A5",
+      "frames": 2907,
+      "model_frames": 2766,
+      "verification_event_seconds": 287.0105555
+    },
+    {
+      "component": "WQMQ2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf02-wqmq2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "C7FCDC1242C8BAD07A29F59423D4833DF69C87113DF9B7BBF10A1C362C5859C7",
+      "source_manifest_sha256": "17BB54A58E3A322970942E49F4B20A57966D337B0758C878933EC3E9B199A0EE",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 405.76320499999997
+    },
+    {
+      "component": "WQMQ3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc5t-wqmq3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "3FEADD69667DBDFFD4FD68D0E65B27254180FC416C77361F70C94E8BF891915D",
+      "source_manifest_sha256": "221E3B404B61D3C1ED4B0EE751E0790A5EF03698E0BB9055C05644F7CFDCBDEC",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 411.23783230000004
+    },
+    {
+      "component": "WQMQ4",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/staf09-wqmq4/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "7DA33FCC1D16DFE85BA111C84F8222012FF6B62AACFBF89999C574CA7CB592A0",
+      "source_manifest_sha256": "EEA4AC685BE600DB99D4096CABCAE8160FD397E8D39B482E3BECCB077778B899",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 402.9779979
+    },
+    {
+      "component": "WQMQS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/enstaff-wqmqs/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "81414E682ED7D407DCAA8A31F5AF83D3DA4ABCC51CD0306E60F483D81833DDE9",
+      "source_manifest_sha256": "CEAE7E5CD0201AE433CAC68110C3CD1A6BE89B98D2347FE3A14342BF7012FB80",
+      "frames": 1242,
+      "model_frames": 1242,
+      "verification_event_seconds": 428.88720820000003
+    },
+    {
+      "component": "WQMS0",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/sw1h01-wqms0/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "7599627DB162DFB5067F5EC85A0D6B0146B1BD340A37DE7C99902CE16AF64071",
+      "source_manifest_sha256": "476585417213E2B801120EFFDAFDA69DFE6875062028EDE6C75A67E8EFC9148A",
+      "frames": 2907,
+      "model_frames": 2627,
+      "verification_event_seconds": 370.89820110000005
+    },
+    {
+      "component": "WQMS1",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw1h06-wqms1/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "0D61CE5A263AC5A3E148DCA53D5ED0AF4DFA622674B319F4DFD9A45E5A43782A",
+      "source_manifest_sha256": "2B8A48C44B93FFDC19133CA0282AFFD77CBA76CA82C6942322D8FF33564642B2",
+      "frames": 2907,
+      "model_frames": 2627,
+      "verification_event_seconds": 376.4469299
+    },
+    {
+      "component": "WQMS2",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/bdsw2h01-wqms2/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "83FCDB21A9B09B7F04FB1D7D9E104901599207752DA0F0DDB8C474876DAC946B",
+      "source_manifest_sha256": "1E20D1838F8B1CC1C98261A6F71AE371A0977960E006EDE2F2867AD33C4D75A0",
+      "frames": 1242,
+      "model_frames": 1238,
+      "verification_event_seconds": 429.7678578
+    },
+    {
+      "component": "WQMS3",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/misc9q-wqms3/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "7CC1C66FA2A5375CACBBDB1DB7E9DA878E8216905C04D0FEED7AF2F7B386F066",
+      "source_manifest_sha256": "D4B55DD98CD59EEAC1A73BF65D8E8D669236271EFC8E77ABA44E59A9E9BA9BA7",
+      "frames": 2907,
+      "model_frames": 2626,
+      "verification_event_seconds": 352.51049390000003
+    },
+    {
+      "component": "WQMSC",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsw1h01-wqmsc/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "F0B707D727FFAD2627FFC3A69F3C5FF1D20CD31BEAA80E625341C77D15CA5E4A",
+      "source_manifest_sha256": "3F62250B948D2D6F4218BB16F66984D1F18291FA8F0D136C94D729B1A015510E",
+      "frames": 2907,
+      "model_frames": 2630,
+      "verification_event_seconds": 336.7829881
+    },
+    {
+      "component": "WQMSL",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/ohnslng1-wqmsl/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "977F882B046E6D3B11BE33F8B5814AF8A32B90D31CABC19660AAB7FB145FC4AE",
+      "source_manifest_sha256": "5A65C088E7D42A1BA674D81ADDA34031D4CD80418CE550D072BAE06710220A1D",
+      "frames": 981,
+      "model_frames": 902,
+      "verification_event_seconds": 437.26081569999997
+    },
+    {
+      "component": "WQMSP",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/dwsper01-wqmsp/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "206C712D8E898576136579CF45C740FA6CA0B17A5E891F202B2C76D491EB022B",
+      "source_manifest_sha256": "5A5C6D55B31ACB098128F3E88431324FA40B1F4494576C4935F54C62E81BC1E8",
+      "frames": 1242,
+      "model_frames": 1241,
+      "verification_event_seconds": 420.3534889
+    },
+    {
+      "component": "WQMSS",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/chalcy1-wqmss/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "50AF0675FB2A6A2DF96D8836328358ACD9B61D49D7655FE8387294251B0A82EC",
+      "source_manifest_sha256": "87FDB9AE91C9523F32E563B4C9F0D7C353A047DF04F5D3D57AB8CBE8E5E934CE",
+      "frames": 2907,
+      "model_frames": 2611,
+      "verification_event_seconds": 368.0910464
+    },
+    {
+      "component": "WQMWH",
+      "manifest": "sprite/families/playable-characters/5211-elf-female-mage-low/aegis-wqmwh/runs/reboutcx-p10-stream86-v1/manifest.json",
+      "manifest_sha256": "C2C64DF7E8ADC27A13DBAB2635AE978B8DB8C84CBF446A586EF17359FEC77CE5",
+      "source_manifest_sha256": "02BFF9A79EF1DC5EC2DD84043C52308E8CC409CABEF049E4BA59548BCC1F729C",
+      "frames": 2907,
+      "model_frames": 2900,
+      "verification_event_seconds": 294.1924182
+    }
+  ]
+}
