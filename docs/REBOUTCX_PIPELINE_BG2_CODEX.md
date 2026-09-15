@@ -43,6 +43,21 @@ python pipeline/scripts/reboutcx_catalog.py verify <job-catalogue-reboutcx>
 `reboutcx_full.py run` est la seule étape GPU. Vérification, catalogue et installation sont CPU.
 Une source, recette ou sélection modifiée exige un nouveau job/run ; `verify` reprend un run scellé.
 
+## GPU — micro-lots Character (mesure 2026-09-15)
+
+- Stratégie cible : **un processus modèle GPU**, file de frames réelles regroupées par géométrie, puis
+  micro-lots de **86** au plus. Ne jamais ajouter de doublon en production ; le dernier lot peut être
+  inférieur à 86.
+- Mesure RTX 5090 sur 60 frames réelles `0x5000/CHMB1`, `60x26` (répétitions uniquement pour saturer
+  le benchmark) : `86 = 1 008 img/s, 557 Mio`; `84 = 1 001`; `88 = 997`; `90 = 949`.
+  `128/256/512` sont viables mais moins rapides et consomment davantage de VRAM.
+- Le mode historique *un processus par composant* est à éviter : 32 processus a échoué avec
+  `CUDNN_STATUS_INTERNAL_ERROR_HOST_ALLOCATION_FAILED`; 16 processus donne un débit global très
+  inférieur au micro-lot.
+- Le calcul par lot varie de 1–2 niveaux RGB bruts par rapport à un appel unitaire. Il exige donc un
+  **nouveau job/run versionné** et une vérification des indices quantifiés/classes/palette et QA avant
+  production. Les runs P8 scellés restent immuables.
+
 ## Contrat raster
 
 ```text
@@ -74,6 +89,18 @@ Sélectionner par `(animation_id, component_index)`. Un composant xBR partagé p
 une animation et conservé pour les autres. Mapper les ensembles RESREF exacts ; ne jamais associer
 préfixes et indices par position. Le job dérivé redéclare tous les remplacements antérieurs à
 conserver. Le pointeur xBR canonique reste intact.
+
+## Suivi des personnages jouables
+
+`sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p9-v1.json`
+épingle les 23 familles complètes/1 471 composants ReboutCX par manifeste+SHA-256. C'est un
+instantané de production vérifiée, **pas** un catalogue dérivé, une QA, une installation ou une
+release : des familles partagent des RESREF xBR alors que leurs sorties ReboutCX diffèrent. Créer
+un nouvel instantané versionné après reprise :
+
+```powershell
+python pipeline/scripts/reboutcx_playable_catalog_progress.py write-status --snapshot-id p9-v2
+```
 
 ## Références validées
 

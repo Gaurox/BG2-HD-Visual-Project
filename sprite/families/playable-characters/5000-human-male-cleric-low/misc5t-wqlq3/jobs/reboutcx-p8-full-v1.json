@@ -1,0 +1,209 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "character-5000-misc5t-wqlq3-wqlq3-reboutcx-p8-full-v1",
+  "installable": false,
+  "animation_id": "0x5000",
+  "runtime_profile": "character-bg2ee-2.7.3.0",
+  "layer": "weapon",
+  "source_inventory": [
+    {
+      "name": "WQLQ3A2"
+    },
+    {
+      "name": "WQLQ3A4"
+    },
+    {
+      "name": "WQLQ3A6"
+    },
+    {
+      "name": "WQLQ3G1"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/playable-characters/5000-human-male-cleric-low/misc5t-wqlq3/source/manifest.json",
+    "run_dir": "sprite/families/playable-characters/5000-human-male-cleric-low/misc5t-wqlq3/runs/reboutcx-p8-full-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "CE210619963A3EBB6397DDB6996B576E40847F2D47A67263BA8E0020973CDCCC",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes_id": "bg2ee-2.7.3.0-character-chmb1-32-classes-v1",
+  "null_frame_marker": 2,
+  "palette_reference": {
+    "id": "bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1",
+    "source": {
+      "resource": "RANGES12",
+      "type": 1,
+      "locator": "0x00000189",
+      "bif": "data/Default.bif",
+      "sha256": "7A9A654D5CBC4CEE0CA211BE05D24FB54BF8298A781C074882000D5F829D66DD"
+    },
+    "profiles": [
+      {
+        "name": "reference",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "54A3141583B8395FB23B0792D9768857D08BAFECBDB94E583BA773F3F7CBB2EA"
+      },
+      {
+        "name": "contrast-b",
+        "colors": [
+          21,
+          57,
+          47,
+          8,
+          66,
+          30,
+          0
+        ],
+        "palette_rgb_sha256": "2CC296F8479CD10EC38F5B95C72F88C8C3D545002B3DD788368EBAE0C0DFB10E"
+      },
+      {
+        "name": "contrast-c",
+        "colors": [
+          19,
+          63,
+          66,
+          15,
+          39,
+          26,
+          4
+        ],
+        "palette_rgb_sha256": "1BB2918E8F7380603D25071AAE5E2637A51B8B81B5C5BFE247A45B2027D5B2F3"
+      },
+      {
+        "name": "metal-only-blue",
+        "colors": [
+          68,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "514F4AF73C94AA4DDA55F70701822C3E5524B3187BA7F6967D8A9E91E54AAA26"
+      },
+      {
+        "name": "minor-only-blue",
+        "colors": [
+          30,
+          68,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "87666A09980FE10D799C69ADB3C0A5584C2F1A429EE80BCB65165DCE95E5D0DF"
+      },
+      {
+        "name": "major-only-blue",
+        "colors": [
+          30,
+          47,
+          68,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "F247928931B7CFDAD46605F7FFE6F0B9D729E6B78622791C1A96ED88A0DD8876"
+      },
+      {
+        "name": "skin-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          68,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "AE1941E8E73E614DA39F7D86E24E950C76585C825B05A3C029A1601EA47E195F"
+      },
+      {
+        "name": "leather-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          68,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "B15FF79D907C53EEEC24533C4E59E7B4D28906E4494F0727953CE5DBAD8CB43A"
+      },
+      {
+        "name": "armor-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          68,
+          3
+        ],
+        "palette_rgb_sha256": "51877166E2CBB4203B614319687AB114FE8A9DFC9A2A5ECCBA54314E27395A63"
+      },
+      {
+        "name": "hair-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          68
+        ],
+        "palette_rgb_sha256": "E2FA99FEC499E02ECB0C2F0038A584458091197E5A154FE8520A341C3148AFEF"
+      }
+    ]
+  },
+  "reference": {
+    "resref": "WQLQ3A2",
+    "frame": 0,
+    "x4_pixel_sha256": "C540B3353365E448DC8214A07A678DB07FD837F667648F129A20B5F642DCCB4D",
+    "x2_pixel_sha256": "07D5797A9422FC0A8D6D0DBD3DCFE14459B10D338B6557C2B38A5EB0AD16F40D"
+  },
+  "scope": "full-animation",
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "wqlq3-reference",
+        "resref": "WQLQ3A2",
+        "frames": [
+          0
+        ],
+        "duration_ms": 400
+      }
+    ]
+  },
+  "item_resref": "MISC5T"
+}

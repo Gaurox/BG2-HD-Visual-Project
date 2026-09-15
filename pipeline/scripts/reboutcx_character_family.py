@@ -44,6 +44,8 @@ CATALOG_JOB_SCHEMA = "bg2-upscale-reboutcx-derived-catalog-job-v1"
 CATALOG_SEED_JOB = PROJECT_ROOT / "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-character-6100-test-v1.json"
 CATALOG_OUTPUT_JOB = PROJECT_ROOT / "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-character-6100-complete-p8-v1.json"
 CATALOG_RUN_DIR = PROJECT_ROOT / "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-character-6100-complete-p8-v1"
+DEFAULT_TEMPLATE_JOB = PROJECT_ROOT / "sprite/families/playable-characters/6100-human-male-fighter/chmb3/jobs/reboutcx-p8-full-v1.json"
+MAX_WORKERS = 64
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -56,6 +58,11 @@ def sha256_file(path: Path) -> str:
         while chunk := stream.read(1024 * 1024):
             digest.update(chunk)
     return digest.hexdigest().upper()
+
+
+def canonical_json_sha256(value: object) -> str:
+    raw = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest().upper()
 
 
 def sha256_array(value: np.ndarray) -> str:
@@ -105,6 +112,38 @@ def load_family_job(job_path: Path) -> dict[str, Any]:
     return job
 
 
+def normalized_animation_id(value: object) -> str:
+    try:
+        number = int(str(value), 16)
+    except ValueError as error:
+        raise RuntimeError("invalid Character animation id") from error
+    if not 0 <= number <= 0xFFFF:
+        raise RuntimeError("invalid Character animation id")
+    return f"0x{number:04X}"
+
+
+def parent_context_for_family(job: dict[str, Any]) -> dict[str, Any]:
+    """Resolve the pinned xBR parent for current and legacy Character jobs."""
+
+    from reboutcx_catalog import parent_context
+
+    parent = job.get("parent")
+    if isinstance(parent, dict):
+        return parent_context(
+            {
+                "paths": {"parent_pointer": job["parent_catalog_pointer"]},
+                "parent": parent,
+            }
+        )
+    seed = read_json(CATALOG_SEED_JOB)
+    if (
+        seed["paths"]["parent_pointer"] != job["parent_catalog_pointer"]
+        or seed["parent"]["pointer_sha256"] != job["parent_catalog_pointer_sha256"]
+    ):
+        raise RuntimeError("Character catalog seed parent differs")
+    return parent_context(seed)
+
+
 def load_template(job: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
     path = resolve_path_reference(
         job["contract_template_job"], required=True, root=PROJECT_ROOT
@@ -131,6 +170,7 @@ def validate_component_job(
     component_job: dict[str, Any],
     member: dict[str, Any],
     template: dict[str, Any],
+    animation_id: str,
 ) -> None:
     expected_paths = {
         "source_manifest": member["source_manifest"],
@@ -154,7 +194,7 @@ def validate_component_job(
         component_job.get("schema") != FULL_JOB_SCHEMA
         or component_job.get("installable") is not False
         or component_job.get("scope") != "full-animation"
-        or component_job.get("animation_id") != "0x6100"
+        or component_job.get("animation_id") != animation_id
         or component_job.get("runtime_profile") != "character-bg2ee-2.7.3.0"
         or component_job.get("layer") != member["layer"]
         or component_job.get("source_manifest_sha256")
@@ -189,6 +229,7 @@ def make_component_job(
     template: dict[str, Any],
     descriptor: Any,
     reference_palette: np.ndarray,
+    animation_id: str,
 ) -> dict[str, Any]:
     source_manifest_path = resolve_path_reference(
         member["source_manifest"], required=True, root=PROJECT_ROOT
@@ -213,9 +254,9 @@ def make_component_job(
     component_root = source_manifest_path.parent.parent
     component_job: dict[str, Any] = {
         "schema": FULL_JOB_SCHEMA,
-        "job_id": f"character-6100-{component_root.name}-{member['bam_prefix'].lower()}-{FULL_RUN_NAME}",
+        "job_id": f"character-{animation_id[2:].lower()}-{component_root.name}-{member['bam_prefix'].lower()}-{FULL_RUN_NAME}",
         "installable": False,
-        "animation_id": "0x6100",
+        "animation_id": animation_id,
         "runtime_profile": "character-bg2ee-2.7.3.0",
         "layer": member["layer"],
         "source_inventory": [
@@ -299,7 +340,9 @@ def validate_prepared(
             raise RuntimeError("prepared Character member differs from audit")
         component_path = resolve_path_reference(record["job"], required=True, root=PROJECT_ROOT)
         require_hash(component_path, record["job_sha256"], f"{record['bam_prefix']} job")
-        validate_component_job(read_json(component_path), member, template)
+        validate_component_job(
+            read_json(component_path), member, template, audit_report["animation_id"]
+        )
 
 
 def prepare_execute(job_path: Path) -> dict[str, Any]:
@@ -329,7 +372,7 @@ def prepare_execute(job_path: Path) -> dict[str, Any]:
         path = component_job_path(member)
         if path.exists():
             component_job = read_json(path)
-            validate_component_job(component_job, member, template)
+            validate_component_job(component_job, member, template, job["animation_id"])
         else:
             if descriptor is None:
                 descriptor, versions = load_model(
@@ -338,9 +381,9 @@ def prepare_execute(job_path: Path) -> dict[str, Any]:
                     fp16=bool(template["reboutcx"]["fp16"]),
                 )
             component_job = make_component_job(
-                member, template, descriptor, reference_palette
+                member, template, descriptor, reference_palette, job["animation_id"]
             )
-            validate_component_job(component_job, member, template)
+            validate_component_job(component_job, member, template, job["animation_id"])
             write_json_atomic(path, component_job)
             created_jobs += 1
         records.append(
@@ -460,17 +503,18 @@ def build_component(
 
 
 def assign_exact_component_indices(
-    results: list[dict[str, Any]], animation_id: str
+    results: list[dict[str, Any]], job: dict[str, Any]
 ) -> None:
-    from reboutcx_catalog import animation_component_resrefs, parent_context
+    from reboutcx_catalog import animation_component_resrefs
 
-    parent = parent_context(read_json(CATALOG_SEED_JOB))
+    animation_id = job["animation_id"]
+    parent = parent_context_for_family(job)
     component_by_resrefs = {
         frozenset(resrefs): index
         for index, resrefs in animation_component_resrefs(parent, animation_id).items()
     }
-    if len(component_by_resrefs) != 65:
-        raise RuntimeError("0x6100 parent component RESREF sets are not unique")
+    if len(component_by_resrefs) != len(results):
+        raise RuntimeError(f"{animation_id} parent component RESREF sets are not unique")
     assigned: set[int] = set()
     for result in results:
         manifest = read_json(
@@ -485,8 +529,8 @@ def assign_exact_component_indices(
 
 
 def build_family(job_path: Path, *, workers: int = 1) -> dict[str, Any]:
-    if workers < 1 or workers > 32:
-        raise RuntimeError("workers must be between 1 and 32")
+    if workers < 1 or workers > MAX_WORKERS:
+        raise RuntimeError(f"workers must be between 1 and {MAX_WORKERS}")
     job = load_family_job(job_path)
     audit_report = load_audit(job_path, job)
     _template_path, template = load_template(job)
@@ -566,7 +610,7 @@ def build_family(job_path: Path, *, workers: int = 1) -> dict[str, Any]:
                 "sealed_completed_member": True,
             }
         )
-    assign_exact_component_indices(results, job["animation_id"])
+    assign_exact_component_indices(results, job)
     results.sort(key=lambda item: int(item["component_index"]))
     manifest = {
         "schema": RUN_SCHEMA,
@@ -773,6 +817,98 @@ def completed_members(job: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return result
 
 
+def bootstrap_family(
+    source_family_job_path: Path,
+    *,
+    template_path: Path,
+    run: bool,
+) -> dict[str, Any]:
+    """Plan or create a versioned ReboutCX family job from one xBR aggregate."""
+
+    source_family_job_path = source_family_job_path.resolve()
+    source = read_json(source_family_job_path)
+    animation = source.get("animation")
+    if not isinstance(animation, dict):
+        raise RuntimeError("source aggregate has no Character animation")
+    animation_id = normalized_animation_id(animation.get("id"))
+    if animation.get("runtime_profile") != "character-bg2ee-2.7.3.0":
+        raise RuntimeError("source aggregate is not a supported Character family")
+    if not isinstance(source.get("members"), list) or not source["members"]:
+        raise RuntimeError("source aggregate has no members")
+    if len(source_family_job_path.parents) < 4:
+        raise RuntimeError("source aggregate is not in a Character family workspace")
+    family_root = source_family_job_path.parents[3]
+    if family_root.parent.name != "playable-characters":
+        raise RuntimeError("source aggregate is outside playable-characters")
+
+    template_path = template_path.resolve()
+    template = read_json(template_path)
+    if (
+        template.get("schema") != FULL_JOB_SCHEMA
+        or template.get("runtime_profile") != "character-bg2ee-2.7.3.0"
+    ):
+        raise RuntimeError("template is not a Character ReboutCX full job")
+
+    pointer_path = PROJECT_ROOT / "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json"
+    pointer = read_json(pointer_path)
+    build_path = resolve_path_reference(pointer["generation_dir"], root=PROJECT_ROOT) / str(
+        pointer["build_manifest"]
+    )
+    build = read_json(build_path)
+    if not any(item["animation_id"] == animation_id for item in build["source_members"]):
+        raise RuntimeError(f"{animation_id} is absent from the current xBR catalog")
+
+    stem = str(source.get("job_id", "")).removesuffix("-complete-xn-xbr2x")
+    if not stem:
+        raise RuntimeError("source aggregate has no usable job id")
+    aggregate_name = "complete-reboutcx-p8-v1"
+    job_path = family_root / "family-runs" / aggregate_name / "jobs" / f"{stem}-{aggregate_name}.json"
+    family_job = {
+        "schema": JOB_SCHEMA,
+        "job_id": f"{stem}-{aggregate_name}",
+        "installable": False,
+        "animation_id": animation_id,
+        "runtime_profile": "character-bg2ee-2.7.3.0",
+        "source_family_job": relative(source_family_job_path),
+        "source_family_job_sha256": sha256_file(source_family_job_path),
+        "parent_catalog_pointer": relative(pointer_path),
+        "parent_catalog_pointer_sha256": sha256_file(pointer_path),
+        "parent": {
+            "pointer_sha256": sha256_file(pointer_path),
+            "generation_id": pointer["generation_id"],
+            "build_manifest_sha256": pointer["build_manifest_sha256"],
+            "catalog_sha256": build["registry_catalog_sha256"],
+            "logical_content_sha256": build["registry_catalog_logical_content_sha256"],
+        },
+        "contract_template_job": relative(template_path),
+        "contract_template_job_sha256": sha256_file(template_path),
+        "completed_members": [],
+        "paths": {
+            "run_dir": relative(
+                family_root / "family-runs" / aggregate_name / "runs" / FULL_RUN_NAME
+            )
+        },
+    }
+    result = {
+        "status": "planned" if not run else "created",
+        "animation_id": animation_id,
+        "members": len(source["members"]),
+        "job": relative(job_path),
+        "job_sha256": canonical_json_sha256(family_job),
+    }
+    if not run:
+        print(json.dumps(result, separators=(",", ":")), flush=True)
+        return family_job
+    if job_path.exists():
+        if read_json(job_path) != family_job:
+            raise RuntimeError(f"existing family job differs: {relative(job_path)}")
+    else:
+        write_json_atomic(job_path, family_job)
+    result["job_sha256"] = sha256_file(job_path)
+    print(json.dumps(result, separators=(",", ":")), flush=True)
+    return family_job
+
+
 def audit(job_path: Path) -> dict[str, Any]:
     job = read_json(job_path)
     if job.get("schema") != JOB_SCHEMA or job.get("installable") is not False:
@@ -807,7 +943,8 @@ def audit(job_path: Path) -> dict[str, Any]:
         job["contract_template_job"], required=True, root=PROJECT_ROOT
     )
     require_hash(template_path, str(job["contract_template_job_sha256"]), "contract template")
-    classes, classes_id = semantic_classes_for_job(read_json(template_path))
+    template = read_json(template_path)
+    classes, classes_id = semantic_classes_for_job(template)
     classified = {index for indices in classes.values() for index in indices}
     completed = completed_members(job)
     components = {int(item["index"]): item for item in build["components"]}
@@ -815,16 +952,10 @@ def audit(job_path: Path) -> dict[str, Any]:
         item["animation_id"]: {int(value) for value in item["component_indices"]}
         for item in build["animations"]
     }
-    from reboutcx_catalog import animation_component_resrefs, parent_context
+    from reboutcx_catalog import animation_component_resrefs
 
-    seed = read_json(CATALOG_SEED_JOB)
-    if (
-        seed["paths"]["parent_pointer"] != job["parent_catalog_pointer"]
-        or seed["parent"]["pointer_sha256"] != job["parent_catalog_pointer_sha256"]
-    ):
-        raise RuntimeError("Character catalog seed parent differs")
     parent_resrefs = animation_component_resrefs(
-        parent_context(seed), job["animation_id"]
+        parent_context_for_family(job), job["animation_id"]
     )
     component_by_resrefs = {
         frozenset(resrefs): index for index, resrefs in parent_resrefs.items()
@@ -927,9 +1058,22 @@ def audit(job_path: Path) -> dict[str, Any]:
     completed_model_frames = sum(
         item["unique_model_frames"] for item in reports if item["reboutcx_status"] == "completed"
     )
-    reference_manifests = [read_json(resolve_path_reference(item["manifest"], root=PROJECT_ROOT)) for item in completed.values()]
+    reference_manifests = [
+        read_json(resolve_path_reference(item["manifest"], root=PROJECT_ROOT))
+        for item in completed.values()
+    ]
+    if not reference_manifests:
+        template_run = resolve_path_reference(
+            template["paths"]["run_dir"], required=True, root=PROJECT_ROOT
+        ) / "manifest.json"
+        require_hash(template_path, str(job["contract_template_job_sha256"]), "contract template")
+        if not template_run.is_file():
+            raise RuntimeError("no completed ReboutCX reference is available for estimation")
+        reference_manifests.append(read_json(template_run))
     reference_seconds = sum(float(item["timing_seconds"]["reboutcx"]) for item in reference_manifests)
     reference_frames = sum(int(item["coverage"]["unique_model_frames"]) for item in reference_manifests)
+    if reference_frames <= 0:
+        raise RuntimeError("ReboutCX reference has no model frames")
     seconds_per_frame = reference_seconds / reference_frames
     pending_model_frames = total_model_frames - completed_model_frames
 
@@ -987,13 +1131,17 @@ def audit(job_path: Path) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "command", choices=("audit", "prepare", "_prepare", "build", "catalog")
+        "command", choices=("audit", "prepare", "_prepare", "build", "catalog", "bootstrap")
     )
     parser.add_argument("job", type=Path)
     parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument("--template-job", type=Path, default=DEFAULT_TEMPLATE_JOB)
+    parser.add_argument("--run", action="store_true")
     args = parser.parse_args()
     job_path = args.job.resolve()
-    if args.command == "audit":
+    if args.command == "bootstrap":
+        bootstrap_family(job_path, template_path=args.template_job, run=args.run)
+    elif args.command == "audit":
         audit(job_path)
     elif args.command == "prepare":
         return prepare_via_configured_python(job_path)

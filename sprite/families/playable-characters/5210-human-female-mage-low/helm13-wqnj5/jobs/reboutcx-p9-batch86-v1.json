@@ -1,0 +1,245 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "character-5210-helm13-wqnj5-wqnj5-reboutcx-p9-batch86-v1",
+  "installable": false,
+  "animation_id": "0x5210",
+  "runtime_profile": "character-bg2ee-2.7.3.0",
+  "layer": "helmet",
+  "source_inventory": [
+    {
+      "name": "WQNJ5A1"
+    },
+    {
+      "name": "WQNJ5A2"
+    },
+    {
+      "name": "WQNJ5A3"
+    },
+    {
+      "name": "WQNJ5A4"
+    },
+    {
+      "name": "WQNJ5A5"
+    },
+    {
+      "name": "WQNJ5A6"
+    },
+    {
+      "name": "WQNJ5A7"
+    },
+    {
+      "name": "WQNJ5A8"
+    },
+    {
+      "name": "WQNJ5A9"
+    },
+    {
+      "name": "WQNJ5CA"
+    },
+    {
+      "name": "WQNJ5G1"
+    },
+    {
+      "name": "WQNJ5SA"
+    },
+    {
+      "name": "WQNJ5SS"
+    },
+    {
+      "name": "WQNJ5SX"
+    }
+  ],
+  "paths": {
+    "source_manifest": "sprite/families/playable-characters/5210-human-female-mage-low/helm13-wqnj5/source/manifest.json",
+    "run_dir": "sprite/families/playable-characters/5210-human-female-mage-low/helm13-wqnj5/runs/reboutcx-p9-batch86-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "source_manifest_sha256": "A3A9B249909EDB5F444106059286FB071A2CEC88F06890E39AE173ADD390D778",
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes_id": "bg2ee-2.7.3.0-character-chmb1-32-classes-v1",
+  "null_frame_marker": 2,
+  "palette_reference": {
+    "id": "bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1",
+    "source": {
+      "resource": "RANGES12",
+      "type": 1,
+      "locator": "0x00000189",
+      "bif": "data/Default.bif",
+      "sha256": "7A9A654D5CBC4CEE0CA211BE05D24FB54BF8298A781C074882000D5F829D66DD"
+    },
+    "profiles": [
+      {
+        "name": "reference",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "54A3141583B8395FB23B0792D9768857D08BAFECBDB94E583BA773F3F7CBB2EA"
+      },
+      {
+        "name": "contrast-b",
+        "colors": [
+          21,
+          57,
+          47,
+          8,
+          66,
+          30,
+          0
+        ],
+        "palette_rgb_sha256": "2CC296F8479CD10EC38F5B95C72F88C8C3D545002B3DD788368EBAE0C0DFB10E"
+      },
+      {
+        "name": "contrast-c",
+        "colors": [
+          19,
+          63,
+          66,
+          15,
+          39,
+          26,
+          4
+        ],
+        "palette_rgb_sha256": "1BB2918E8F7380603D25071AAE5E2637A51B8B81B5C5BFE247A45B2027D5B2F3"
+      },
+      {
+        "name": "metal-only-blue",
+        "colors": [
+          68,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "514F4AF73C94AA4DDA55F70701822C3E5524B3187BA7F6967D8A9E91E54AAA26"
+      },
+      {
+        "name": "minor-only-blue",
+        "colors": [
+          30,
+          68,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "87666A09980FE10D799C69ADB3C0A5584C2F1A429EE80BCB65165DCE95E5D0DF"
+      },
+      {
+        "name": "major-only-blue",
+        "colors": [
+          30,
+          47,
+          68,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "F247928931B7CFDAD46605F7FFE6F0B9D729E6B78622791C1A96ED88A0DD8876"
+      },
+      {
+        "name": "skin-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          68,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "AE1941E8E73E614DA39F7D86E24E950C76585C825B05A3C029A1601EA47E195F"
+      },
+      {
+        "name": "leather-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          68,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "B15FF79D907C53EEEC24533C4E59E7B4D28906E4494F0727953CE5DBAD8CB43A"
+      },
+      {
+        "name": "armor-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          68,
+          3
+        ],
+        "palette_rgb_sha256": "51877166E2CBB4203B614319687AB114FE8A9DFC9A2A5ECCBA54314E27395A63"
+      },
+      {
+        "name": "hair-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          68
+        ],
+        "palette_rgb_sha256": "E2FA99FEC499E02ECB0C2F0038A584458091197E5A154FE8520A341C3148AFEF"
+      }
+    ]
+  },
+  "reference": {
+    "resref": "WQNJ5A1",
+    "frame": 0,
+    "x4_pixel_sha256": "CA55D5B6A327F5F4596CA5DFE7ADF31DAAFAF06E9CDC92BC9D86F773AC330C42",
+    "x2_pixel_sha256": "0A132F581B6A8A706DCCA9C429D913BEC62D0527706303B31ACEA46DDA5A3445"
+  },
+  "scope": "full-animation",
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "wqnj5-reference",
+        "resref": "WQNJ5A1",
+        "frames": [
+          0
+        ],
+        "duration_ms": 400
+      }
+    ]
+  },
+  "item_resref": "HELM13",
+  "reboutcx_batch": {
+    "id": "p9-cuda-padded-microbatch-v1",
+    "max_frames": 86,
+    "canvas_quantum": 64,
+    "cpu_quantization_workers": 3
+  }
+}
