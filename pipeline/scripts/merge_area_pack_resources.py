@@ -1,5 +1,6 @@
 """Merge area-pack resources, binding variants to exact world positions.
 
+`PATH::RESREF` selects one unbound resource from a multi-resource pack.
 `PATH::X,Y` binds the input resource to the occurrence at the raw ARE coordinates `(X,Y)`.
 `PATH::RESREF::X,Y` selects one resource from a multi-resource pack before binding it.
 Several inputs may keep the same resref: registry v3 distinguishes their assets with a stable
@@ -49,12 +50,16 @@ def load_area_pack(spec: str) -> tuple[list[tuple[dict[str, Any], dict[str, Path
     """Load an area pack, optionally selecting one resource before position binding."""
     parts = spec.split("::")
     v2.require(1 <= len(parts) <= 3 and parts[0],
-               f"pack attendu sous la forme PATH, PATH::X,Y ou PATH::RESREF::X,Y : {spec}")
+               f"pack attendu sous la forme PATH, PATH::RESREF, PATH::X,Y "
+               f"ou PATH::RESREF::X,Y : {spec}")
     path_text = parts[0]
     selected_resref: str | None = None
     position_text: str | None = None
     if len(parts) == 2:
-        position_text = parts[1]
+        if "," in parts[1]:
+            position_text = parts[1]
+        else:
+            selected_resref = v2.normalise_resref(parts[1])
     elif len(parts) == 3:
         selected_resref = v2.normalise_resref(parts[1])
         position_text = parts[2]
@@ -194,7 +199,9 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pack", action="append", required=True, dest="packs",
-                        help="pack ; `CHEMIN::X,Y` lie un mono-ressource, `CHEMIN::RESREF::X,Y` sélectionne puis lie")
+                        help="pack ; `CHEMIN::RESREF` sélectionne sans liaison, "
+                             "`CHEMIN::X,Y` lie un mono-ressource, "
+                             "`CHEMIN::RESREF::X,Y` sélectionne puis lie")
     parser.add_argument("--area", required=True, help="identifiant de zone, ex. AR0900")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")

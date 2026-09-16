@@ -33,6 +33,7 @@ Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut
 | Besoin | Guide |
 |---|---|
 | Upscale spatial | [`../pipeline/ANIMATION_UPSCALE_PIPELINE.md`](../pipeline/ANIMATION_UPSCALE_PIPELINE.md) |
+| Choix d'une recette par type d'asset | [`ANIMATION_RECIPE_CATALOG.md`](ANIMATION_RECIPE_CATALOG.md) |
 | Petits sujets pixelisés xBR2 / 30 fps | [`../pipeline/ANIMATION_SMALL_SUBJECT_XBR2_30FPS.md`](../pipeline/ANIMATION_SMALL_SUBJECT_XBR2_30FPS.md) |
 | Timeline 30 fps pause-aware | [`../pipeline/ANIMATION_UPSCALE_30FPS_V2.md`](../pipeline/ANIMATION_UPSCALE_30FPS_V2.md) |
 | Interpolation mono-cycle | [`../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md`](../pipeline/ANIMATION_INTERPOLATION_PIPELINE.md) |

@@ -49,8 +49,8 @@ python pipeline/scripts/merge_area_pack_resources.py `
   --output <split-root-fusionne>
 ```
 
-Pour sélectionner une seule ressource dans un pack multi-ressource avant son lien ARE :
-`--pack <pack>::<RESREF>::X,Y`.
+Pour sélectionner une seule ressource d'un pack multi-ressource :
+`--pack <pack>::<RESREF>` sans liaison, ou `--pack <pack>::<RESREF>::X,Y` avec liaison ARE.
 
 Pour étendre un pack v2/v3 multi-ressource avec un pack v1 sans collision :
 
