@@ -161,6 +161,41 @@ def interpolate_frames(pack: Path, resource: dict[str, Any],
         write_frame_payload(pack, resource, target, blended)
 
 
+def interpolate_rgba_frames(pack: Path, resource: dict[str, Any],
+                            interpolations: dict[int, tuple[int, int, float]]) -> None:
+    """Rebuild target poses between adjacent premultiplied RGBA phases."""
+    frame_by_number = {int(item["frame"]): item for item in resource["frames"]}
+    v2.require(len(frame_by_number) == len(resource["frames"]),
+               f"{resource['resref']}: frames dupliquées")
+    source_payloads = {
+        number: (pack / str(frame["asset"])).read_bytes()
+        for number, frame in frame_by_number.items()
+    }
+    for target_number, (left_number, right_number, factor) in sorted(interpolations.items()):
+        v2.require(target_number in frame_by_number and left_number in frame_by_number and
+                   right_number in frame_by_number,
+                   f"{resource['resref']}: frame d'interpolation RGBA hors séquence")
+        for number in (left_number, right_number):
+            frame = frame_by_number[number]
+            (pack / str(frame["asset"])).write_bytes(source_payloads[number])
+        target = frame_by_number[target_number]
+        target_width, target_height = map(int, target["physical_size_x4"])
+
+        def project_or_transparent(number: int) -> np.ndarray:
+            frame = frame_by_number[number]
+            width, height = map(int, frame["physical_size_x4"])
+            rgba = np.frombuffer(source_payloads[number], dtype=np.uint8).reshape(
+                (height, width, 4))
+            if not np.any(rgba[:, :, 3]):
+                return np.zeros((target_height, target_width, 4), dtype=np.uint8)
+            return project_frame(pack, frame, target)
+
+        left = project_or_transparent(left_number).astype(np.float32)
+        right = project_or_transparent(right_number).astype(np.float32)
+        blended = np.clip(np.rint(left * (1.0 - factor) + right * factor), 0, 255).astype(np.uint8)
+        write_frame_payload(pack, resource, target, blended)
+
+
 def blur_and_dim_blended(pack: Path, resource: dict[str, Any], opacity: float, sigma: float) -> None:
     v2.require(0.0 < opacity <= 1.0, "opacité hors intervalle (0, 1]")
     v2.require(0.0 <= sigma <= 4.0, "sigma gaussien hors intervalle [0, 4]")
@@ -241,6 +276,9 @@ def main() -> int:
     parser.add_argument("--replace-frame", action="append", default=[], metavar="TARGET=DONOR")
     parser.add_argument("--interpolate-frame", action="append", default=[],
                         metavar="TARGET=LEFT:RIGHT:T")
+    parser.add_argument("--interpolate-rgba-frame", action="append", default=[],
+                        metavar="TARGET=LEFT:RIGHT:T",
+                        help="interpoler le payload RGBA prémultiplié complet")
     parser.add_argument("--effect-resref", default="AM0202FL")
     parser.add_argument("--opacity", type=float, default=0.70)
     parser.add_argument("--gaussian-sigma-x4", type=float, default=0.60)
@@ -253,8 +291,12 @@ def main() -> int:
     v2.require(not output.exists(), f"sortie déjà existante : {output}")
     replacements = parse_frame_map(args.replace_frame)
     interpolations = parse_frame_interpolations(args.interpolate_frame)
-    v2.require(replacements or interpolations, "au moins une transformation de frame est requise")
-    v2.require(not (set(replacements) & set(interpolations)),
+    rgba_interpolations = parse_frame_interpolations(args.interpolate_rgba_frame)
+    v2.require(replacements or interpolations or rgba_interpolations,
+               "au moins une transformation de frame est requise")
+    transformed = set(replacements) | set(interpolations) | set(rgba_interpolations)
+    v2.require(len(transformed) == len(replacements) + len(interpolations) +
+               len(rgba_interpolations),
                "une frame ne peut pas être remplacée et interpolée simultanément")
     shutil.copytree(source, output)
     manifest = v2.load_json(output / "manifest.json")
@@ -262,6 +304,7 @@ def main() -> int:
     effect = resource_by_resref(manifest["resources"], v2.normalise_resref(args.effect_resref))
     replace_frames(output, fire, replacements)
     interpolate_frames(output, fire, interpolations)
+    interpolate_rgba_frames(output, fire, rgba_interpolations)
     if args.opacity != 1.0 or args.gaussian_sigma_x4 != 0.0:
         blur_and_dim_blended(output, effect, args.opacity, args.gaussian_sigma_x4)
     faded_frames = fade_blended_edges(output, effect, args.edge_fade_x4)
@@ -271,6 +314,10 @@ def main() -> int:
         "fire_frame_interpolations": {
             str(key): {"left": value[0], "right": value[1], "factor": value[2]}
             for key, value in sorted(interpolations.items())
+        },
+        "fire_frame_rgba_interpolations": {
+            str(key): {"left": value[0], "right": value[1], "factor": value[2]}
+            for key, value in sorted(rgba_interpolations.items())
         },
         "effect": {"resref": effect["resref"], "opacity": args.opacity,
                    "gaussian_sigma_x4": args.gaussian_sigma_x4,
@@ -285,6 +332,10 @@ def main() -> int:
     if interpolations:
         print("FIRE interpolations : " + ", ".join(
             f"{k}={v[0]}:{v[1]}:{v[2]:.3f}" for k, v in sorted(interpolations.items())))
+    if rgba_interpolations:
+        print("FIRE RGBA interpolations : " + ", ".join(
+            f"{k}={v[0]}:{v[1]}:{v[2]:.3f}"
+            for k, v in sorted(rgba_interpolations.items())))
     print(f"{effect['resref']} : opacity={args.opacity:.2f}, gaussian sigma={args.gaussian_sigma_x4:.2f} x4, "
           f"edge fade={args.edge_fade_x4:.2f} x4 ({faded_frames} frames)")
     return 0

@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3016R",
+  "lineage": {
+    "source_packs": [],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-16",
+    "path": "animations/index/qa-decisions/AM3016R/2026-09-16-accepted-ar3016-x4.json",
+    "sha256": "05F7EC7BC58664F1D6103429B8EF11E2262522E7A6FFEEFAEEE0C412F62C9DD1",
+    "status": "accepted"
+  },
+  "resref": "AM3016R",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar3016-qa-finalization-x4-20260916/manifest.json",
+    "manifest_sha256": "4925A791446D680C85BBD140C1361BCC29310582E9AB2585A20EC33E8A233406",
+    "path": "animations/batches/ar3016-qa-finalization-x4-20260916",
+    "schema": "bg2-upscale-animation-qa-finalization-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3016",
+        "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016/manifest.json",
+        "manifest_sha256": "4C0C463780CAD3830C929EAD8EA304DE5D996CF6BF703252065BF18FC2022EBB",
+        "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/AR3016",
+        "registry_sha256": "3BB894CBD4815EA3A07CBB4B911FAC3E582BD1338A39A6B0DAE5D3ACE8C0A1C0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916/manifest.json",
+    "manifest_sha256": "6070E7E268152F6E9A3B18A4059DBA25C14AAB2F296942A1DB3404F2B3C67179",
+    "path": "animations/packs-par-zone/ar3016-complete-seedvr-flame-anchor-repair-v5-20260916",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3016"
+  ],
+  "updated_at_utc": "2026-09-16T20:30:28Z"
+}
