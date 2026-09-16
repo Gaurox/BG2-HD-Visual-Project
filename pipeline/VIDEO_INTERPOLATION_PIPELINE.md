@@ -15,6 +15,10 @@
 | Recette | `topaz/recipes/Video-Interpolation-Apollo8-30fps-v1.json` |
 | SHA-256 | `E707DD23CB5FE789B2D0AE14DE53392AB107C51B54A986771015E106ABB47D5E` |
 
+La suppression MD5 ci-dessus nettoie les doublons produits par Topaz. Elle ne remplace pas la
+condensation des maintiens BAM : celle-ci se fait avant interpolation, depuis le lookup, selon
+[`ANIMATION_UPSCALE_30FPS_V2.md`](ANIMATION_UPSCALE_30FPS_V2.md).
+
 ## Exécution
 
 ```powershell

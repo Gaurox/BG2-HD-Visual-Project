@@ -127,6 +127,12 @@ class AnimationInterpolationPipelineTests(unittest.TestCase):
             self.assertEqual(plan["recommendation"]["interpolated_frame_count"], 4)
             self.assertEqual(plan["source_video"]["frame_count"], 2)
             self.assertEqual(plan["source_video"]["fps"], 6)
+            self.assertEqual(
+                plan["temporal_preparation"]["strategy"],
+                "collapse-uniform-duplicate-holds",
+            )
+            self.assertEqual(plan["temporal_preparation"]["uniform_hold_slots"], 2)
+            self.assertEqual(plan["temporal_preparation"]["duration_seconds"], 4 / 12)
 
             work = root / "work"
             work.mkdir()
@@ -167,6 +173,17 @@ class AnimationInterpolationPipelineTests(unittest.TestCase):
         self.assertEqual(interpolation.rate_text(15), "15")
         self.assertEqual(interpolation.rate_text(5.0), "5")
         self.assertEqual(interpolation.rate_text(7.5), "15/2")
+
+    def test_duplicate_hold_analysis_refuses_cycle_seam_and_reused_frame(self) -> None:
+        seam = interpolation.analyse_duplicate_holds([0, 0, 1, 1, 0, 0])
+        self.assertTrue(seam["crosses_cycle_seam"])
+        self.assertTrue(seam["reuses_frame_in_multiple_runs"])
+        self.assertFalse(seam["collapse_eligible"])
+
+        reused = interpolation.analyse_duplicate_holds([0, 0, 1, 1, 0, 0, 2, 2])
+        self.assertFalse(reused["crosses_cycle_seam"])
+        self.assertTrue(reused["reuses_frame_in_multiple_runs"])
+        self.assertFalse(reused["collapse_eligible"])
 
     def test_alpha_phase_map_rounds_to_nearest_and_wraps(self) -> None:
         context = {"source_video_indices": list(range(9)), "target_frame_count": 27}

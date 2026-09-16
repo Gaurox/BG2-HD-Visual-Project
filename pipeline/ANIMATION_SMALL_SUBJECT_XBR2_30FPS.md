@@ -32,7 +32,11 @@
    Exception qualifiée : `BUBBLES2` utilise `--xbr-blend`; son alpha de bord devient non binaire et
    impose la prémultiplication RGB finale. Ne pas reporter cette exception sur un autre resref sans
    QA dédiée.
-3. Construire le pack x4 puis exécuter TimedTimeline v2 à 30 fps depuis ce pack :
+3. Auditer les runs du lookup BAM. Si chaque pose est répétée uniformément et si
+   `duplicate_hold_analysis.collapse_eligible=true`, condenser la base à durée constante. Sinon,
+   conserver les pauses ou arrêter pour une spécification par segment.
+4. Construire le pack x4 puis exécuter TimedTimeline v2 à 30 fps depuis ce pack. En cas de
+   condensation, ajouter `--collapse-uniform-duplicate-holds` aux deux commandes :
 
 ```powershell
 python pipeline/scripts/run_animation_upscale_30fps_v2.py plan `
@@ -49,7 +53,7 @@ python pipeline/scripts/run_animation_upscale_30fps_v2.py build `
   --model apo-8
 ```
 
-4. Split par zone, fusionner dans un split-root complet, puis neutraliser les ressources `Blended` :
+5. Split par zone, fusionner dans un split-root complet, puis neutraliser les ressources `Blended` :
 
 ```powershell
 python pipeline/scripts/build_blended_rgb_neutral_pack.py `
@@ -57,9 +61,9 @@ python pipeline/scripts/build_blended_rgb_neutral_pack.py `
   --resref <RESREF> --mode <zero|premultiply>
 ```
 
-5. Contrôler frame source/xBR/30 fps, boucle, pause/reprise, toutes les occurrences, fond clair et
-   sombre. Après décision utilisateur seulement : créer `qa-approval.json`, installer réversiblement,
-   inscrire le registre/alpha catalogue et décider séparément l'entrée release.
+6. Contrôler frame source/xBR/30 fps, durée, ancres, boucle, pause/reprise, toutes les occurrences,
+   fond clair et sombre. Après décision utilisateur seulement : créer `qa-approval.json`, installer
+   réversiblement, inscrire le registre/alpha catalogue et décider séparément l'entrée release.
 
 ## Invariants
 

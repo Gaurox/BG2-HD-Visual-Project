@@ -213,6 +213,30 @@ def grouped_runs(values: list[int]) -> list[tuple[int, int]]:
     return runs
 
 
+def analyse_duplicate_holds(lookup: list[int]) -> dict[str, Any]:
+    runs = grouped_runs(lookup)
+    run_lengths = {count for _frame, count in runs}
+    hold_slots = runs[0][1] if len(run_lengths) == 1 else None
+    has_duplicates = len(runs) < len(lookup)
+    crosses_cycle_seam = len(runs) == 1 or runs[0][0] == runs[-1][0]
+    reuses_frame = len({frame for frame, _count in runs}) != len(runs)
+    collapse_eligible = bool(
+        has_duplicates
+        and hold_slots is not None
+        and hold_slots >= 2
+        and not crosses_cycle_seam
+        and not reuses_frame
+    )
+    return {
+        "runs": runs,
+        "has_duplicate_holds": has_duplicates,
+        "uniform_hold_slots": hold_slots,
+        "crosses_cycle_seam": crosses_cycle_seam,
+        "reuses_frame_in_multiple_runs": reuses_frame,
+        "collapse_eligible": collapse_eligible,
+    }
+
+
 def image_mae(left: Image.Image, right: Image.Image) -> float:
     difference = ImageChops.difference(left.convert("RGB"), right.convert("RGB"))
     return sum(ImageStat.Stat(difference).mean) / 3.0
@@ -339,10 +363,21 @@ def load_context(
     require(len(base_cycles) == 1 and [int(value) for value in base_cycles[0].get("frame_indices") or []] == lookup,
             f"{resref}: cycle du pack de base différent de la source")
 
-    runs = grouped_runs(lookup)
-    run_lengths = {count for _, count in runs}
-    source_video_indices = [index for index, _ in runs] if len(run_lengths) == 1 else lookup
-    source_fps = slot_fps / next(iter(run_lengths)) if len(run_lengths) == 1 else slot_fps
+    hold_analysis = analyse_duplicate_holds(lookup)
+    runs = hold_analysis["runs"]
+    if hold_analysis["collapse_eligible"]:
+        hold_slots = int(hold_analysis["uniform_hold_slots"])
+        source_video_indices = [index for index, _count in runs]
+        source_fps = slot_fps / hold_slots
+        source_video_mode = "compressed-uniform-holds"
+    elif not hold_analysis["has_duplicate_holds"]:
+        source_video_indices = lookup
+        source_fps = slot_fps
+        source_video_mode = "native-unique-slots"
+    else:
+        source_video_indices = lookup
+        source_fps = slot_fps
+        source_video_mode = "unsupported-native-slot-sequence"
     target_count = len(lookup)
     return {
         "resref": resref,
@@ -353,9 +388,14 @@ def load_context(
         "target_frame_count": target_count,
         "source_lookup": lookup,
         "source_runs": [{"frame": index, "slots": count} for index, count in runs],
+        "uniform_hold_slots": hold_analysis["uniform_hold_slots"],
+        "has_duplicate_holds": hold_analysis["has_duplicate_holds"],
+        "crosses_cycle_seam": hold_analysis["crosses_cycle_seam"],
+        "reuses_frame_in_multiple_runs": hold_analysis["reuses_frame_in_multiple_runs"],
+        "collapse_eligible": hold_analysis["collapse_eligible"],
         "source_video_indices": source_video_indices,
         "source_video_fps": source_fps,
-        "source_video_mode": "compressed-uniform-holds" if len(run_lengths) == 1 else "native-slot-sequence",
+        "source_video_mode": source_video_mode,
         "geometry_mode": "uniform" if uniform else "per-frame",
         "video_size_x4": video_size,
         "frames_manifest": frames_manifest_path,
@@ -371,6 +411,12 @@ def load_context(
 
 
 def public_plan(context: dict[str, Any]) -> dict[str, Any]:
+    if context["source_video_mode"] == "unsupported-native-slot-sequence":
+        preparation_strategy = "unsupported-nonuniform-holds"
+    elif context["has_duplicate_holds"]:
+        preparation_strategy = "collapse-uniform-duplicate-holds"
+    else:
+        preparation_strategy = "native-unique-slots"
     return {
         "resref": context["resref"],
         "geometry_mode": context["geometry_mode"],
@@ -392,6 +438,19 @@ def public_plan(context: dict[str, Any]) -> dict[str, Any]:
             "duration_seconds": context["duration_seconds"],
             "size_x4": context["video_size_x4"],
             "mode": context["source_video_mode"],
+        },
+        "temporal_preparation": {
+            "strategy": preparation_strategy,
+            "runs": context["source_runs"],
+            "uniform_hold_slots": context["uniform_hold_slots"],
+            "crosses_cycle_seam": context["crosses_cycle_seam"],
+            "reuses_frame_in_multiple_runs": context["reuses_frame_in_multiple_runs"],
+            "collapse_eligible": context["collapse_eligible"],
+            "input_frame_count": len(context["source_video_indices"]),
+            "input_fps": context["source_video_fps"],
+            "output_frame_count": context["target_frame_count"],
+            "output_fps": context["slot_fps"],
+            "duration_seconds": context["duration_seconds"],
         },
         "return_contract": {
             "png_count": context["target_frame_count"],
@@ -724,8 +783,8 @@ def interpolate_frames(
     context = context_from_handoff(handoff)
     require(oversample >= 1, "--oversample doit valoir au moins 1")
     require(
-        context["source_video_mode"] == "compressed-uniform-holds",
-        "répétitions non uniformes : écrire une spécification par segment avant d'interpoler",
+        context["source_video_mode"] in {"compressed-uniform-holds", "native-unique-slots"},
+        "maintien non condensable : écrire une spécification par segment avant d'interpoler",
     )
     require(bool(re.fullmatch(r"[a-z]{2,4}-\d{1,2}", model)), f"modèle invalide : {model}")
     require(bool(re.fullmatch(r"-?\d+(\.\d+)*", device)), f"device invalide : {device}")

@@ -18,7 +18,7 @@ restent stables. Utiliser `--help` comme référence lorsqu'il est disponible.
 | Eau et overlays | `orchestrate_water_batch.py` (plan-only), `build_water_route1_batch.py`, `repair_water_secondary_alpha_seams.py`, `assemble_water_qa_batches.py`, `audit_water_area.py`, `audit_water_ingame_tracking.py`, `build_spline_map_alpha.py`, `render_liquid_overlay_mask.py`, `build_water_contour_feather.py` |
 | Installation/restauration | `inject_build.py` |
 | Inventaire animations | `extract_area_animations.py`, `list_animations.py` |
-| Upscale animations | `run_animation_upscale.py`, `run_animation_upscale_30fps_v2.py` |
+| Upscale animations | `run_animation_upscale.py` ; `run_animation_upscale_30fps_v2.py` audite les runs et `--collapse-uniform-duplicate-holds` condense seulement les maintiens uniformes, à durée constante |
 | Suivi animation, QA et sélection | `animation_workflow.py` |
 | Acceptation candidat animation | `animation_release.py` ; projections différées par défaut |
 | Interpolation | `run_animation_interpolation.py` |

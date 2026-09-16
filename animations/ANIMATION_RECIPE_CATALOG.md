@@ -16,7 +16,9 @@ Une ressemblance de couleur seule ne suffit pas.
 - `Blended` : neutraliser le RGB transparent et prémultiplier par l'alpha final.
 - Détails fins/branches/rayons : préférer xBR ou alpha nearest ; éviter une spline destructrice.
 - Silhouette organique fermée : Spline Fit 1 + feather.
-- Pauses, doublons et frames vides : TimedTimeline v2 doit suivre les lookups BAM, jamais l'ordre brut des frames.
+- Timeline : grouper les indices consécutifs du lookup BAM ; ne jamais partir de l'ordre brut des frames.
+- Maintiens uniformes : dédupliquer la base, réduire sa cadence pour garder la même durée, puis interpoler.
+- Pauses asymétriques/intentionnelles, frames réutilisées ou maintien à la couture : conserver ou spécifier par segment.
 - Bord du canvas touché : ajouter un fade/canvas seulement si la coupure est visible.
 - `AMWRPGT1` : variante candidate `Safe Boundary 8/6 + Gaussian 3`; non validée. Le défaut cyan connu vient du PVRZ BC1, pas de l'asset.
 

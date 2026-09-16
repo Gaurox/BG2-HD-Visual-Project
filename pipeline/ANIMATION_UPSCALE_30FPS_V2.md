@@ -3,6 +3,42 @@
 TimedTimeline double les positions temporelles sans accélérer le cycle et conserve la pause/reprise.
 La QA vidéo et la QA ingame sont obligatoires.
 
+## Préparation temporelle
+
+Source de vérité : lookup de chaque cycle BAM, pas l'ordre ni le nombre brut des fichiers.
+
+1. Dérouler `native_frame_indices` et grouper les indices consécutifs identiques en
+   `(frame_index, slot_count)`.
+2. Classer le cycle :
+   - tous les groupes à `1` slot : interpolation directe ;
+   - tous les groupes à `k >= 2` slots, une frame par groupe, aucun maintien à la couture :
+     condensation autorisée ;
+   - longueurs différentes, frame réutilisée dans plusieurs groupes ou maintien à la couture :
+     ne pas condenser ; conserver les pauses ou écrire une spécification par segment.
+3. Pour une condensation autorisée, ajouter `--collapse-uniform-duplicate-holds` au plan **et** au
+   build. Seule la base d'interpolation est dédupliquée ; le lookup BAM natif reste inchangé.
+4. Fermer la base par sa première pose afin d'interpoler aussi la transition dernière → première.
+
+Le plan expose `duplicate_hold_analysis`. Exiger `collapse_eligible: true` avant d'activer l'option.
+Le mode automatique reconnaît uniquement les répétitions du même indice de lookup. Deux indices
+différents visuellement identiques exigent une vérification RGBA, dimensions, centre et rôle ; ne
+pas les fusionner automatiquement.
+
+### Conservation de la durée
+
+Pour `S` slots à `Fn` fps, répétés uniformément `k` fois, vers `Ft` fps :
+
+```text
+durée = S / Fn
+poses de base = S / k
+cadence de base = Fn / k
+phases finales = S * Ft / Fn
+phases par transition = k * Ft / Fn   # entier obligatoire
+```
+
+Exemple `AM3016E` : `24 / 15 = 1,6 s` ; base `12` poses à `7,5 fps` ; sortie `48` phases à
+`30 fps`, toujours `1,6 s`.
+
 ## Plan
 
 ```powershell
@@ -16,8 +52,9 @@ Pour un asset x4/15 fps déjà présent avec ancres homogènes, remplacer `--sou
 `--collapse-uniform-duplicate-holds` qu'après constat de maintiens uniformes ; le plan et le build
 doivent porter exactement la même option.
 
-Vérifier resrefs, cycles, nombre de phases, durée, bytes ajoutés, base pack et `plan_sha256`. Un
-pack partiel ou une cible déjà TimedTimeline est bloquant.
+Vérifier resrefs, cycles, `duplicate_hold_analysis`, poses d'entrée, cadence d'entrée, phases par
+transition, durée, bytes ajoutés, base pack et `plan_sha256`. Un pack partiel ou une cible déjà
+TimedTimeline est bloquant.
 
 ## Build immuable
 
@@ -54,6 +91,11 @@ enregistré dans le run. QA visuelle obligatoire ; ne pas l'utiliser sans contam
 
 Afficher chaque `review-30fps-loop-4s.mp4`, puis contrôler la review exacte pour la couture. Après
 acceptation explicite de tous les cycles :
+
+- durée et nombre de phases conformes au plan ;
+- chaque ancre native conservée au bon instant ;
+- mouvement continu entre poses, sans maintien résiduel ni accélération ;
+- couture dernière → première, alpha, centre et géométrie stables.
 
 ```powershell
 $run = 'animations/ressources/<RESREF>/runs/<nouveau-run>'

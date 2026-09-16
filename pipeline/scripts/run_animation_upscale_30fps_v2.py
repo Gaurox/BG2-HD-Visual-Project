@@ -631,25 +631,53 @@ def validate_target_compatibility(base_root: Path, resource: dict[str, Any],
     require(base_cycles == context["cycles"], f"{resref}: cycles base/run divergents")
 
 
-def collapse_uniform_duplicate_hold_slots(lookup: list[int]) -> tuple[list[int], int]:
-    require(len(lookup) >= 2, "cycle trop court pour supprimer des maintiens")
+def analyse_duplicate_hold_slots(lookup: list[int]) -> dict[str, Any]:
+    require(lookup, "cycle vide")
     runs: list[tuple[int, int]] = []
     for frame_index in lookup:
         if runs and runs[-1][0] == frame_index:
             runs[-1] = (frame_index, runs[-1][1] + 1)
         else:
             runs.append((frame_index, 1))
-    require(len(runs) < len(lookup),
+    counts = {count for _frame, count in runs}
+    hold_slots = runs[0][1] if len(counts) == 1 else None
+    consecutive_duplicates = len(runs) < len(lookup)
+    crosses_cycle_seam = len(runs) == 1 or runs[0][0] == runs[-1][0]
+    reuses_frame = len({frame for frame, _count in runs}) != len(runs)
+    eligible = bool(
+        consecutive_duplicates
+        and hold_slots is not None
+        and hold_slots >= 2
+        and not crosses_cycle_seam
+        and not reuses_frame
+    )
+    return {
+        "runs": [{"frame_index": frame, "slot_count": count} for frame, count in runs],
+        "has_consecutive_duplicates": consecutive_duplicates,
+        "uniform_run_lengths": len(counts) == 1,
+        "hold_slots": hold_slots,
+        "crosses_cycle_seam": crosses_cycle_seam,
+        "reuses_frame_in_multiple_runs": reuses_frame,
+        "collapse_eligible": eligible,
+    }
+
+
+def collapse_uniform_duplicate_hold_slots(lookup: list[int]) -> tuple[list[int], int]:
+    require(len(lookup) >= 2, "cycle trop court pour supprimer des maintiens")
+    analysis = analyse_duplicate_hold_slots(lookup)
+    runs = [(int(item["frame_index"]), int(item["slot_count"]))
+            for item in analysis["runs"]]
+    require(analysis["has_consecutive_duplicates"],
             "la suppression des maintiens exige des slots natifs consécutifs dupliqués")
-    require(runs[0][0] != runs[-1][0],
+    require(not analysis["crosses_cycle_seam"],
             "la suppression des maintiens refuse un maintien qui traverse la couture cyclique")
-    hold_slots = runs[0][1]
-    require(hold_slots >= 2 and all(count == hold_slots for _frame, count in runs),
+    hold_slots = analysis["hold_slots"]
+    require(hold_slots is not None and hold_slots >= 2,
             "la suppression des maintiens exige des répétitions consécutives uniformes (>= 2)")
     unique = [frame for frame, _count in runs]
-    require(len(set(unique)) == len(unique),
+    require(not analysis["reuses_frame_in_multiple_runs"],
             "la suppression des maintiens refuse une frame réutilisée dans plusieurs maintiens")
-    return unique, hold_slots
+    return unique, int(hold_slots)
 
 
 def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
@@ -679,6 +707,7 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
         cycle_plans = []
         added_bytes = 0
         for cycle_index, lookup in enumerate(context["cycles"]):
+            hold_analysis = analyse_duplicate_hold_slots(lookup)
             if collapse_uniform_duplicate_holds:
                 input_lookup, hold_slots = collapse_uniform_duplicate_hold_slots(lookup)
                 phases_per_transition = hold_slots * TARGET_FPS[0] // NATIVE_FPS[0]
@@ -707,6 +736,7 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                 cycle_plans.append({
                     "cycle": cycle_index,
                     "timing_strategy": "collapse-uniform-duplicate-holds",
+                    "duplicate_hold_analysis": hold_analysis,
                     "native_frame_indices": lookup,
                     "interpolation_input_frame_indices": input_lookup,
                     "hold_slots": hold_slots,
@@ -728,6 +758,7 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                     added_bytes += physical[0] * physical[1] * 4
                 cycle_plans.append({
                     "cycle": cycle_index,
+                    "duplicate_hold_analysis": hold_analysis,
                     "native_frame_indices": lookup,
                     "intermediate_frame_indices": intermediate,
                     "timeline_frame_indices": timeline,
@@ -1542,7 +1573,8 @@ def add_common_source_arguments(parser: argparse.ArgumentParser) -> None:
                         default="preserve-hidden-rgb",
                         help="RGB fourni à Topaz sous alpha nul")
     parser.add_argument("--collapse-uniform-duplicate-holds", action="store_true",
-                        help="interpoler les poses uniques d'un cycle à maintiens uniformes")
+                        help="retirer de la base d'interpolation les répétitions consécutives "
+                             "uniformes, sans changer la durée ni le lookup BAM natif")
     parser.add_argument("--authoring-pack-for-area-split", action="store_true",
                         help="produire un pack d'auteur exempté du budget runtime de 512 MiB ; "
                              "il devra être découpé par zone avec split_animation_pack_by_area.py "

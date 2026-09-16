@@ -85,5 +85,10 @@ contrat : régénérer le pack depuis les runs terminés, sans modifier son mani
 5. QA = décision utilisateur, puis mise à jour du registre canonique ;
 6. release = décision séparée dans `animation-release-candidates.json`.
 
-Pour une timeline 30 fps, partir du pack spatial achevé et suivre
+Avant une timeline 30 fps, auditer le lookup BAM. Ne jamais envoyer directement à l'interpolateur
+des slots répétés uniformément : construire une base sans répétitions à durée identique. Conserver
+les pauses asymétriques ou intentionnelles ; ne pas fusionner des indices distincts sur leur seule
+apparence.
+
+Partir du pack spatial achevé et suivre
 [`ANIMATION_UPSCALE_30FPS_V2.md`](ANIMATION_UPSCALE_30FPS_V2.md).

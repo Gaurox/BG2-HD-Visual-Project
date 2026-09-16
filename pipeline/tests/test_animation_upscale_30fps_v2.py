@@ -300,6 +300,7 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
             target = plan["targets"][0]
             cycle = target["cycles"][0]
             self.assertEqual(cycle["timing_strategy"], "collapse-uniform-duplicate-holds")
+            self.assertTrue(cycle["duplicate_hold_analysis"]["collapse_eligible"])
             self.assertEqual(cycle["interpolation_input_frame_indices"], [0, 1])
             self.assertEqual(cycle["hold_slots"], 2)
             self.assertEqual(cycle["phases_per_transition"], 4)
@@ -332,6 +333,33 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
             self.assertEqual([item["subphase"] for item in report["intermediate_frames"]],
                              [1, 2, 3, 1, 2, 3])
             self.assertEqual(manifest["timed_resources"], ["TESTA"])
+
+    def test_duplicate_hold_audit_is_visible_without_collapse(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 1, 1])
+            plan = pipeline.build_plan(source_run, base_pack, ["TESTA"])
+            analysis = plan["targets"][0]["cycles"][0]["duplicate_hold_analysis"]
+            self.assertTrue(analysis["has_consecutive_duplicates"])
+            self.assertTrue(analysis["uniform_run_lengths"])
+            self.assertEqual(analysis["hold_slots"], 2)
+            self.assertTrue(analysis["collapse_eligible"])
+
+    def test_duplicate_hold_collapse_rejects_nonuniform_runs(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 1])
+            with self.assertRaisesRegex(RuntimeError, "répétitions consécutives uniformes"):
+                pipeline.build_plan(
+                    source_run, base_pack, ["TESTA"],
+                    collapse_uniform_duplicate_holds=True,
+                )
+
+    def test_duplicate_hold_collapse_rejects_seam_and_reused_frame(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "couture cyclique"):
+            pipeline.collapse_uniform_duplicate_hold_slots([0, 0, 1, 1, 0, 0])
+        with self.assertRaisesRegex(RuntimeError, "réutilisée"):
+            pipeline.collapse_uniform_duplicate_hold_slots([0, 0, 1, 1, 0, 0, 2, 2])
 
     def test_temporises_every_v3_variant_of_one_resref(self) -> None:
         """A resref selection must retain every position-bound resource variant.

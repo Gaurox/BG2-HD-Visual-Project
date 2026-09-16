@@ -13,6 +13,24 @@ refusées. Pour un pack complet pause-aware, préférer
 - toute proposition, entrée, sortie et décision est hashée ;
 - le script ne touche jamais au jeu.
 
+## Préparation des répétitions
+
+Lire le lookup du cycle et grouper les indices consécutifs identiques. Le plan expose
+`temporal_preparation`.
+
+| Cas | Stratégie |
+|---|---|
+| aucun doublon consécutif | `native-unique-slots` |
+| chaque pose répétée `k >= 2` fois, uniformément | `collapse-uniform-duplicate-holds` |
+| pauses asymétriques, frame réutilisée, maintien à la couture | arrêt ; spécification par segment |
+
+La condensation retire les répétitions de la base vidéo, divise sa cadence par `k`, conserve la
+durée `slots / slot_fps`, puis interpole vers le nombre de slots cible. La première pose est ajoutée
+en fermeture pour calculer dernière → première. Le lookup BAM source n'est jamais réécrit.
+
+Ne pas déduire un doublon de la seule apparence. Des indices distincts ne sont fusionnables qu'après
+contrôle RGBA, dimensions, centre et rôle temporel ; le pipeline ne le fait pas automatiquement.
+
 ## Chaîne
 
 ```powershell
@@ -41,7 +59,8 @@ sortie identique.
 
 ## Gates
 
-1. Le plan décrit cadence, durée, phases, base pack et boucle ; obtenir l'accord avant calcul.
+1. Le plan décrit runs, stratégie temporelle, cadence, durée, phases, base pack et boucle ; toute
+   stratégie `unsupported-*` bloque le calcul.
 2. Le MP4 source contient la frame de fermeture et le contrat de retour.
 3. `ingest-frames` vérifie nombre, ordre, dimensions et hashes des PNG.
 4. Le patch différentiel contient registre cible, nouvelles phases et hashes de base.
