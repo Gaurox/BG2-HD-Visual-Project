@@ -361,6 +361,142 @@ class AnimationUpscale30FpsV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "réutilisée"):
             pipeline.collapse_uniform_duplicate_hold_slots([0, 0, 1, 1, 0, 0, 2, 2])
 
+    def test_preserves_nonuniform_duplicate_holds_by_segments(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 0, 1, 1, 0])
+            plan = pipeline.build_plan(
+                source_run, base_pack, ["TESTA"], preserve_segmented_holds=True,
+            )
+            target = plan["targets"][0]
+            cycle = target["cycles"][0]
+            self.assertEqual(cycle["timing_strategy"], "preserve-segmented-holds")
+            self.assertEqual(cycle["interpolation_input_frame_indices"], [0, 1, 0])
+            self.assertEqual(cycle["interpolation_path_mode"], "linear-repeated-endpoint")
+            self.assertEqual(cycle["exact_hold_boundary_count"], 4)
+            self.assertEqual(target["added_intermediate_frames"], 2)
+            self.assertEqual(target["output_frame_count"], 4)
+            self.assertEqual(
+                cycle["timeline_frame_indices"],
+                [0, 0, 0, 0, 0, 2, 1, 1, 1, 3, 0, 0],
+            )
+
+            fake_topaz = root / "fake-topaz.exe"
+            fake_topaz.write_bytes(b"test")
+            model_dir = root / "models"
+            model_dir.mkdir()
+            (model_dir / "apo-8.json").write_text("{}", encoding="utf-8")
+            output = root / "segmented-run"
+            with mock.patch.object(pipeline, "run_checked", side_effect=self.fake_external_command):
+                pipeline.build_run(
+                    source_run, base_pack, output, ["TESTA"], plan["plan_sha256"],
+                    fake_topaz, model_dir, "apo-8", "-2", "ffmpeg", False,
+                    preserve_segmented_holds=True,
+                )
+
+            _pack_manifest, resources = pipeline.validate_v2_pack(output / "03_runtime_pack")
+            self.assertEqual(resources[0]["frame_count"], 4)
+            self.assertEqual(
+                resources[0]["cycles"][0]["timeline_frame_indices"],
+                [0, 0, 0, 0, 0, 2, 1, 1, 1, 3, 0, 0],
+            )
+            report = json.loads(
+                (output / "work" / "TESTA-v0" / "cycle_000" / "cycle.json").read_text()
+            )
+            self.assertEqual(report["interpolation_input_frame_indices"], [0, 1, 0])
+            self.assertEqual(len(report["intermediate_frames"]), 2)
+
+    def test_interpolates_declared_segment_transition_phases(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 0, 1, 1, 0])
+            specification = {"TESTA": [4, 4, 0]}
+            plan = pipeline.build_plan(
+                source_run, base_pack, ["TESTA"],
+                segment_transition_phases=specification,
+            )
+            target = plan["targets"][0]
+            cycle = target["cycles"][0]
+            self.assertEqual(cycle["timing_strategy"], "segment-transition-phases")
+            self.assertEqual(cycle["run_transition_phases"], [4, 4, 0])
+            self.assertEqual(cycle["static_timeline_phases"], 4)
+            self.assertEqual(cycle["moving_timeline_phases"], 8)
+            self.assertEqual(target["added_intermediate_frames"], 6)
+            self.assertEqual(
+                cycle["timeline_frame_indices"],
+                [0, 0, 0, 2, 3, 4, 1, 5, 6, 7, 0, 0],
+            )
+
+            fake_topaz = root / "fake-topaz.exe"
+            fake_topaz.write_bytes(b"test")
+            model_dir = root / "models"
+            model_dir.mkdir()
+            (model_dir / "apo-8.json").write_text("{}", encoding="utf-8")
+            output = root / "variable-segment-run"
+            with mock.patch.object(pipeline, "run_checked", side_effect=self.fake_external_command):
+                pipeline.build_run(
+                    source_run, base_pack, output, ["TESTA"], plan["plan_sha256"],
+                    fake_topaz, model_dir, "apo-8", "-2", "ffmpeg", False,
+                    segment_transition_phases=specification,
+                )
+
+            _pack_manifest, resources = pipeline.validate_v2_pack(output / "03_runtime_pack")
+            self.assertEqual(resources[0]["frame_count"], 8)
+            report = json.loads(
+                (output / "work" / "TESTA-v0" / "cycle_000" / "cycle.json").read_text()
+            )
+            self.assertEqual(report["topaz"]["input_framerate"],
+                             "per-segment-variable-rate")
+            self.assertEqual(report["topaz"]["segment_input_framerates"][0]
+                             ["input_framerate"], "15/2")
+            self.assertEqual(len(report["intermediate_frames"]), 6)
+
+    def test_builds_custom_cycle_keyframes_at_original_duration(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 1])
+            keyframes = {"TESTA": [(0, 0), (1, 2), (0, 4), (0, 5)]}
+            plan = pipeline.build_plan(
+                source_run, base_pack, ["TESTA"], custom_cycle_keyframes=keyframes,
+            )
+            target = plan["targets"][0]
+            cycle = target["cycles"][0]
+            self.assertEqual(cycle["timing_strategy"], "custom-cycle-keyframes")
+            self.assertEqual(cycle["timeline_phases"], 6)
+            self.assertEqual(cycle["moving_timeline_phases"], 4)
+            self.assertEqual(cycle["static_timeline_phases"], 2)
+            self.assertEqual(cycle["timeline_frame_indices"], [0, 2, 1, 3, 0, 0])
+
+            fake_topaz = root / "fake-topaz.exe"
+            fake_topaz.write_bytes(b"test")
+            model_dir = root / "models"
+            model_dir.mkdir()
+            (model_dir / "apo-8.json").write_text("{}", encoding="utf-8")
+            output = root / "custom-cycle-run"
+            with mock.patch.object(pipeline, "run_checked", side_effect=self.fake_external_command):
+                pipeline.build_run(
+                    source_run, base_pack, output, ["TESTA"], plan["plan_sha256"],
+                    fake_topaz, model_dir, "apo-8", "-2", "ffmpeg", False,
+                    custom_cycle_keyframes=keyframes,
+                )
+            _pack_manifest, resources = pipeline.validate_v2_pack(output / "03_runtime_pack")
+            self.assertEqual(resources[0]["cycles"][0]["timeline_frame_indices"],
+                             [0, 2, 1, 3, 0, 0])
+
+    def test_custom_cycle_reuses_identical_blink_transitions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_run, base_pack = self.make_fixture(root, [0, 0, 1, 1])
+            plan = pipeline.build_plan(
+                source_run, base_pack, ["TESTA"],
+                custom_cycle_keyframes={"TESTA": [(0, 0), (1, 2), (0, 4), (1, 6)]},
+            )
+            target = plan["targets"][0]
+            cycle = target["cycles"][0]
+            self.assertEqual(cycle["reused_transition_segments"], 2)
+            self.assertEqual(target["added_intermediate_frames"], 2)
+            self.assertEqual(cycle["timeline_frame_indices"], [0, 2, 1, 3, 0, 2, 1, 3])
+
     def test_temporises_every_v3_variant_of_one_resref(self) -> None:
         """A resref selection must retain every position-bound resource variant.
 

@@ -19,6 +19,7 @@ import subprocess
 import sys
 from collections import deque
 from datetime import datetime, timezone
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -680,8 +681,55 @@ def collapse_uniform_duplicate_hold_slots(lookup: list[int]) -> tuple[list[int],
     return unique, int(hold_slots)
 
 
+def parse_segment_transition_phases(values: list[str] | None) -> dict[str, list[int]] | None:
+    if not values:
+        return None
+    parsed: dict[str, list[int]] = {}
+    for value in values:
+        name, separator, phase_text = value.partition("=")
+        require(bool(separator),
+                "spécification segmentée attendue : RESREF=phases,phases,...")
+        resref = normalise_resref(name)
+        require(resref not in parsed, f"spécification segmentée dupliquée : {resref}")
+        try:
+            phases = [int(item) for item in phase_text.split(",")]
+        except ValueError as error:
+            raise RuntimeError(f"phases segmentées invalides : {value}") from error
+        require(phases and all(item >= 0 for item in phases),
+                f"phases segmentées invalides : {value}")
+        parsed[resref] = phases
+    return parsed
+
+
+def parse_custom_cycle_keyframes(
+        values: list[str] | None) -> dict[str, list[tuple[int, int]]] | None:
+    if not values:
+        return None
+    parsed: dict[str, list[tuple[int, int]]] = {}
+    for value in values:
+        name, separator, keyframe_text = value.partition("=")
+        require(bool(separator),
+                "cycle personnalisé attendu : RESREF=frame@phase,frame@phase,...")
+        resref = normalise_resref(name)
+        require(resref not in parsed, f"cycle personnalisé dupliqué : {resref}")
+        keyframes = []
+        try:
+            for item in keyframe_text.split(","):
+                frame_text, marker, phase_text = item.partition("@")
+                require(bool(marker), f"keyframe personnalisé invalide : {item}")
+                keyframes.append((int(frame_text), int(phase_text)))
+        except ValueError as error:
+            raise RuntimeError(f"cycle personnalisé invalide : {value}") from error
+        require(len(keyframes) >= 2, f"cycle personnalisé trop court : {resref}")
+        parsed[resref] = keyframes
+    return parsed
+
+
 def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                model: str = DEFAULT_MODEL, collapse_uniform_duplicate_holds: bool = False,
+               preserve_segmented_holds: bool = False,
+               segment_transition_phases: dict[str, list[int]] | None = None,
+               custom_cycle_keyframes: dict[str, list[tuple[int, int]]] | None = None,
                authoring_for_area_split: bool = False,
                transparent_rgb_mode: str = "preserve-hidden-rgb") -> dict[str, Any]:
     if source_run is not None:
@@ -691,6 +739,30 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
     require(selected, "sélection V2 vide")
     require(transparent_rgb_mode in TRANSPARENT_RGB_MODES,
             f"mode RGB transparent inconnu : {transparent_rgb_mode}")
+    fixed_strategies = sum(bool(value) for value in (
+        collapse_uniform_duplicate_holds,
+        preserve_segmented_holds,
+    ))
+    require(fixed_strategies <= 1, "les stratégies temporelles sont exclusives")
+    require(not (fixed_strategies and (segment_transition_phases or custom_cycle_keyframes)),
+            "les stratégies globales et les spécifications par resref sont exclusives")
+    if segment_transition_phases:
+        segment_transition_phases = {
+            normalise_resref(key): [int(value) for value in phases]
+            for key, phases in segment_transition_phases.items()
+        }
+    if custom_cycle_keyframes:
+        custom_cycle_keyframes = {
+            normalise_resref(key): [(int(frame), int(phase)) for frame, phase in keyframes]
+            for key, keyframes in custom_cycle_keyframes.items()
+        }
+    if segment_transition_phases or custom_cycle_keyframes:
+        phase_resrefs = set(segment_transition_phases or {})
+        custom_resrefs = set(custom_cycle_keyframes or {})
+        require(not (phase_resrefs & custom_resrefs),
+                "un resref ne peut pas combiner deux spécifications temporelles")
+        require(phase_resrefs | custom_resrefs == set(selected),
+                "une spécification temporelle est requise pour chaque resref sélectionné")
     base_manifest, resources, _sources = load_base_pack(base_pack)
     targets = []
     target_resources = [resource for resource in resources
@@ -743,6 +815,224 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
                     "phases_per_transition": phases_per_transition,
                     "intermediate_frame_indices": intermediate,
                     "interpolation_segments": segments,
+                    "timeline_frame_indices": timeline,
+                    "native_slots": len(lookup),
+                    "timeline_phases": len(timeline),
+                    "duration_seconds": len(lookup) / NATIVE_FPS[0],
+                })
+            elif segment_transition_phases and resref in segment_transition_phases:
+                require(len(context["cycles"]) == 1,
+                        f"{resref}: spécification segmentée réservée aux assets monocycle")
+                runs = [
+                    (int(item["frame_index"]), int(item["slot_count"]))
+                    for item in hold_analysis["runs"]
+                ]
+                requested = segment_transition_phases[resref]
+                require(len(requested) == len(runs),
+                        f"{resref}: {len(requested)} durées pour {len(runs)} groupes lookup")
+                timeline = []
+                transitions = []
+                intermediate = []
+                static_phases = 0
+                slot_offset = 0
+                for run_index, ((native_index, slot_count), moving_phases) in enumerate(
+                        zip(runs, requested, strict=True)):
+                    right_native = runs[(run_index + 1) % len(runs)][0]
+                    phase_budget = slot_count * TARGET_FPS[0] // NATIVE_FPS[0]
+                    require(phase_budget * NATIVE_FPS[0] == slot_count * TARGET_FPS[0],
+                            f"{resref}: budget de phases non entier")
+                    if native_index == right_native:
+                        require(moving_phases == 0,
+                                f"{resref}: une frontière identique doit avoir 0 phase mobile")
+                        timeline.extend([native_index] * phase_budget)
+                        static_phases += phase_budget
+                    else:
+                        require(2 <= moving_phases <= phase_budget,
+                                f"{resref}: transition {run_index} hors budget "
+                                f"({moving_phases}/{phase_budget})")
+                        outputs = list(range(next_frame, next_frame + moving_phases - 1))
+                        next_frame += len(outputs)
+                        intermediate.extend(outputs)
+                        still = phase_budget - moving_phases
+                        static_phases += still
+                        timeline.extend([native_index] * (still + 1))
+                        timeline.extend(outputs)
+                        transitions.append({
+                            "segment": len(transitions),
+                            "run": run_index,
+                            "slot": slot_offset + slot_count - 1,
+                            "left_native_frame": native_index,
+                            "right_native_frame": right_native,
+                            "transition_phases": moving_phases,
+                            "phase_budget": phase_budget,
+                            "static_phases_before_transition": still,
+                            "intermediate_frame_indices": outputs,
+                        })
+                        physical = context["frames"][native_index]["physical_size_x4"]
+                        added_bytes += physical[0] * physical[1] * 4 * len(outputs)
+                    slot_offset += slot_count
+                require(len(timeline) == len(lookup) * TARGET_FPS[0] // NATIVE_FPS[0],
+                        f"{resref}: timeline segmentée de longueur incorrecte")
+                cycle_plans.append({
+                    "cycle": cycle_index,
+                    "timing_strategy": "segment-transition-phases",
+                    "duplicate_hold_analysis": hold_analysis,
+                    "native_frame_indices": lookup,
+                    "interpolation_input_frame_indices": [
+                        value
+                        for item in transitions
+                        for value in (item["left_native_frame"], item["right_native_frame"])
+                    ],
+                    "interpolation_path_mode": "per-segment-variable-rate",
+                    "run_transition_phases": requested,
+                    "intermediate_frame_indices": intermediate,
+                    "interpolation_segments": transitions,
+                    "static_timeline_phases": static_phases,
+                    "moving_timeline_phases": len(timeline) - static_phases,
+                    "timeline_frame_indices": timeline,
+                    "native_slots": len(lookup),
+                    "timeline_phases": len(timeline),
+                    "duration_seconds": len(lookup) / NATIVE_FPS[0],
+                })
+            elif custom_cycle_keyframes and resref in custom_cycle_keyframes:
+                require(len(context["cycles"]) == 1,
+                        f"{resref}: cycle personnalisé réservé aux assets monocycle")
+                total_phases = len(lookup) * TARGET_FPS[0] // NATIVE_FPS[0]
+                keyframes = custom_cycle_keyframes[resref]
+                require(keyframes[0][1] == 0,
+                        f"{resref}: le cycle personnalisé doit commencer à la phase 0")
+                require([phase for _frame, phase in keyframes] ==
+                        sorted({phase for _frame, phase in keyframes}),
+                        f"{resref}: phases personnalisées non strictement croissantes")
+                require(all(0 <= frame < base_frame_count and 0 <= phase < total_phases
+                            for frame, phase in keyframes),
+                        f"{resref}: keyframe personnalisé hors limites")
+                timeline = []
+                transitions = []
+                intermediate = []
+                static_phases = 0
+                transition_cache: dict[tuple[int, int, int], list[int]] = {}
+                reused_transition_segments = 0
+                for keyframe_index, (native_index, phase) in enumerate(keyframes):
+                    if keyframe_index + 1 < len(keyframes):
+                        right_native, next_phase = keyframes[keyframe_index + 1]
+                    else:
+                        right_native, next_phase = keyframes[0][0], total_phases
+                    phase_budget = next_phase - phase
+                    require(phase_budget >= 1,
+                            f"{resref}: intervalle personnalisé vide à la phase {phase}")
+                    if native_index == right_native:
+                        timeline.extend([native_index] * phase_budget)
+                        static_phases += phase_budget
+                        continue
+                    require(phase_budget >= 2,
+                            f"{resref}: transition personnalisée trop courte à la phase {phase}")
+                    transition_key = (native_index, right_native, phase_budget)
+                    outputs = transition_cache.get(transition_key)
+                    if outputs is None:
+                        outputs = list(range(next_frame, next_frame + phase_budget - 1))
+                        next_frame += len(outputs)
+                        intermediate.extend(outputs)
+                        transition_cache[transition_key] = outputs
+                        transitions.append({
+                            "segment": len(transitions),
+                            "run": keyframe_index,
+                            "slot": phase,
+                            "left_native_frame": native_index,
+                            "right_native_frame": right_native,
+                            "transition_phases": phase_budget,
+                            "phase_budget": phase_budget,
+                            "static_phases_before_transition": 0,
+                            "intermediate_frame_indices": outputs,
+                        })
+                        physical = context["frames"][native_index]["physical_size_x4"]
+                        added_bytes += physical[0] * physical[1] * 4 * len(outputs)
+                    else:
+                        reused_transition_segments += 1
+                    timeline.append(native_index)
+                    timeline.extend(outputs)
+                require(len(timeline) == total_phases,
+                        f"{resref}: timeline personnalisée de longueur incorrecte")
+                cycle_plans.append({
+                    "cycle": cycle_index,
+                    "timing_strategy": "custom-cycle-keyframes",
+                    "duplicate_hold_analysis": hold_analysis,
+                    "native_frame_indices": lookup,
+                    "custom_cycle_keyframes": [
+                        {"frame_index": frame, "phase": phase}
+                        for frame, phase in keyframes
+                    ],
+                    "interpolation_input_frame_indices": [
+                        value
+                        for item in transitions
+                        for value in (item["left_native_frame"], item["right_native_frame"])
+                    ],
+                    "interpolation_path_mode": "custom-keyframes-per-segment-control-lattice",
+                    "intermediate_frame_indices": intermediate,
+                    "interpolation_segments": transitions,
+                    "reused_transition_segments": reused_transition_segments,
+                    "static_timeline_phases": static_phases,
+                    "moving_timeline_phases": total_phases - static_phases,
+                    "timeline_frame_indices": timeline,
+                    "native_slots": len(lookup),
+                    "timeline_phases": len(timeline),
+                    "duration_seconds": len(lookup) / NATIVE_FPS[0],
+                })
+            elif preserve_segmented_holds:
+                require(hold_analysis["has_consecutive_duplicates"],
+                        "la préservation segmentée exige au moins un maintien dupliqué")
+                runs = [int(item["frame_index"]) for item in hold_analysis["runs"]]
+                linear_path = len(runs) >= 2 and runs[0] == runs[-1]
+                video_lookup = runs if linear_path else runs + [runs[0]]
+                require(all(left != right for left, right in zip(video_lookup, video_lookup[1:])),
+                        "la base segmentée contient encore une paire dupliquée")
+                transitions = []
+                transition_by_slot = {}
+                for slot, native_index in enumerate(lookup):
+                    right_native = lookup[(slot + 1) % len(lookup)]
+                    if native_index == right_native:
+                        continue
+                    output_index = next_frame
+                    next_frame += 1
+                    transition_by_slot[slot] = output_index
+                    transitions.append({
+                        "segment": len(transitions),
+                        "slot": slot,
+                        "left_native_frame": native_index,
+                        "right_native_frame": right_native,
+                        "intermediate_frame_indices": [output_index],
+                    })
+                    physical = context["frames"][native_index]["physical_size_x4"]
+                    added_bytes += physical[0] * physical[1] * 4
+                require(len(transitions) == len(video_lookup) - 1,
+                        "le chemin segmenté ne couvre pas exactement les transitions du cycle")
+                for segment, specification in enumerate(transitions):
+                    require(
+                        int(specification["left_native_frame"]) == video_lookup[segment]
+                        and int(specification["right_native_frame"]) == video_lookup[segment + 1],
+                        "ordre des transitions segmentées incohérent",
+                    )
+                timeline = []
+                for slot, native_index in enumerate(lookup):
+                    timeline.append(native_index)
+                    timeline.append(transition_by_slot.get(slot, native_index))
+                intermediate = [
+                    int(specification["intermediate_frame_indices"][0])
+                    for specification in transitions
+                ]
+                cycle_plans.append({
+                    "cycle": cycle_index,
+                    "timing_strategy": "preserve-segmented-holds",
+                    "duplicate_hold_analysis": hold_analysis,
+                    "native_frame_indices": lookup,
+                    "interpolation_input_frame_indices": video_lookup,
+                    "interpolation_path_mode": (
+                        "linear-repeated-endpoint" if linear_path else "cyclic-append-first"
+                    ),
+                    "phases_per_transition": 2,
+                    "intermediate_frame_indices": intermediate,
+                    "interpolation_segments": transitions,
+                    "exact_hold_boundary_count": len(lookup) - len(transitions),
                     "timeline_frame_indices": timeline,
                     "native_slots": len(lookup),
                     "timeline_phases": len(timeline),
@@ -829,6 +1119,21 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
         payload["duplicate_hold_strategy"] = (
             "collapse contiguous uniform duplicate slots; preserve duration; "
             "interpolate unique poses at the target cadence"
+        )
+    if preserve_segmented_holds:
+        payload["duplicate_hold_strategy"] = (
+            "interpolate only unequal-index boundaries; preserve every native slot and duration; "
+            "reuse exact anchors for duplicate holds"
+        )
+    if segment_transition_phases:
+        payload["duplicate_hold_strategy"] = (
+            "preserve declared static phases; interpolate each unequal-index segment at its "
+            "declared target-phase duration; never submit duplicate pairs"
+        )
+    if custom_cycle_keyframes:
+        payload["custom_cycle_strategy"] = (
+            "replace native lookup timing with declared cyclic keyframes; preserve total duration; "
+            "interpolate unequal anchors from a duplicate-free four-phase control lattice"
         )
     if authoring_for_area_split:
         payload["authoring_pack_for_area_split"] = True
@@ -1009,44 +1314,205 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
         require([entry["output_index"] for entry in interpolation_entries] ==
                 [int(value) for value in cycle_plan["intermediate_frame_indices"]],
                 f"{context['resref']} cycle {cycle_plan['cycle']}: indices intermédiaires divergents")
+    elif strategy == "preserve-segmented-holds":
+        input_lookup = [int(value) for value in cycle_plan["interpolation_input_frame_indices"]]
+        phases_per_transition = 2
+        input_framerate = "15"
+        segments = cycle_plan.get("interpolation_segments") or []
+        require(len(input_lookup) == len(segments) + 1,
+                f"{context['resref']} cycle {cycle_plan['cycle']}: chemin segmenté invalide")
+        require(all(left != right for left, right in zip(input_lookup, input_lookup[1:])),
+                f"{context['resref']} cycle {cycle_plan['cycle']}: doublon livré à l'interpolateur")
+        interpolation_entries = []
+        for segment, specification in enumerate(segments):
+            left_native = int(specification["left_native_frame"])
+            right_native = int(specification["right_native_frame"])
+            outputs = [int(value) for value in specification["intermediate_frame_indices"]]
+            require(
+                left_native == input_lookup[segment]
+                and right_native == input_lookup[segment + 1]
+                and len(outputs) == 1,
+                f"{context['resref']} cycle {cycle_plan['cycle']}: segment préservé divergent",
+            )
+            interpolation_entries.append({
+                "slot": int(specification["slot"]),
+                "input_position": segment,
+                "subphase": 1,
+                "left_native_frame": left_native,
+                "right_native_frame": right_native,
+                "output_index": outputs[0],
+                "raw_index": segment * 2 + 1,
+                "anchor_raw_index": segment * 2,
+            })
+        require([entry["output_index"] for entry in interpolation_entries] ==
+                [int(value) for value in cycle_plan["intermediate_frame_indices"]],
+                f"{context['resref']} cycle {cycle_plan['cycle']}: sorties segmentées divergentes")
+    elif strategy in ("segment-transition-phases", "custom-cycle-keyframes"):
+        input_lookup = [int(value) for value in cycle_plan["interpolation_input_frame_indices"]]
+        input_framerate = "per-segment-variable-rate"
+        segments = cycle_plan.get("interpolation_segments") or []
+        require(segments, f"{context['resref']} cycle {cycle_plan['cycle']}: segments absents")
+        interpolation_entries = []
+        segment_groups = []
+        for specification in segments:
+            run_index = int(specification["run"])
+            transition_phases = int(specification["transition_phases"])
+            outputs = [int(value) for value in specification["intermediate_frame_indices"]]
+            require(len(outputs) == transition_phases - 1,
+                    f"{context['resref']} cycle {cycle_plan['cycle']}: sorties variables invalides")
+            if (not segment_groups
+                    or int(segment_groups[-1]["last_run"]) + 1 != run_index):
+                segment_groups.append({
+                    "first_run": run_index,
+                    "last_run": run_index,
+                    "segments": [],
+                })
+            group = segment_groups[-1]
+            group["last_run"] = run_index
+            group["segments"].append(specification)
+        for group_index, group in enumerate(segment_groups):
+            for position, specification in enumerate(group["segments"]):
+                left_native = int(specification["left_native_frame"])
+                right_native = int(specification["right_native_frame"])
+                phase_count = int(specification["transition_phases"])
+                outputs = [int(value) for value in specification["intermediate_frame_indices"]]
+                require(left_native != right_native,
+                        f"{context['resref']} cycle {cycle_plan['cycle']}: doublon variable")
+                for subphase, output_index in enumerate(outputs, start=1):
+                    interpolation_entries.append({
+                        "slot": int(specification["slot"]),
+                        "input_position": position,
+                        "subphase": subphase,
+                        "left_native_frame": left_native,
+                        "right_native_frame": right_native,
+                        "output_index": output_index,
+                        "group_index": group_index,
+                        "group_segment_position": position,
+                        "transition_phases": phase_count,
+                    })
+        require([entry["output_index"] for entry in interpolation_entries] ==
+                [int(value) for value in cycle_plan["intermediate_frame_indices"]],
+                f"{context['resref']} cycle {cycle_plan['cycle']}: indices variables divergents")
     else:
         raise RuntimeError(f"{context['resref']} cycle {cycle_plan['cycle']}: stratégie temporelle inconnue")
 
     input_hidden_rgb_replaced = []
-    for position, frame_index in enumerate(input_lookup + [input_lookup[0]]):
-        replaced = save_input_rgb(base_pack, context, frame_index,
-                                  input_dir / f"in_{position:04d}.png", transparent_rgb_mode)
-        input_hidden_rgb_replaced.append(replaced)
     filter_text = f"tvai_fi=model={model}:fps=30:rdt=-0.01:device={device}"
     environment = dict(os.environ)
     environment["TVAI_MODEL_DIR"] = str(model_dir)
     environment["TVAI_MODEL_DATA_DIR"] = str(model_dir)
-    run_checked([
-        str(tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
-        "-framerate", input_framerate, "-i", str(input_dir / "in_%04d.png"),
-        "-vf", filter_text, "-pix_fmt", "rgb24", str(raw_dir / "out_%04d.png"),
-    ], environment=environment)
-    raw = sorted(raw_dir.glob("out_*.png"))
-    expected_raw = len(input_lookup) * phases_per_transition + 1
-    require(len(raw) in (expected_raw, expected_raw - 1),
-            f"{context['resref']} cycle {cycle_plan['cycle']}: Topaz a produit {len(raw)} "
-            f"frames, attendu {expected_raw} ou {expected_raw - 1}")
+    segment_rates = []
+    if strategy in ("segment-transition-phases", "custom-cycle-keyframes"):
+        raw = []
+        expected_raw = 0
+        resampled_dir = raw_dir / "resampled"
+        resampled_dir.mkdir()
+        for group_index, group in enumerate(segment_groups):
+            control_phases = 4
+            rate = Fraction(TARGET_FPS[0], control_phases)
+            rate_text = f"{rate.numerator}/{rate.denominator}"
+            group_input = input_dir / f"group_{group_index:03d}"
+            group_raw = raw_dir / f"group_{group_index:03d}"
+            group_input.mkdir()
+            group_raw.mkdir()
+            group_segments = group["segments"]
+            group_lookup = [int(item["left_native_frame"]) for item in group_segments]
+            group_lookup.append(int(group_segments[-1]["right_native_frame"]))
+            for position, frame_index in enumerate(group_lookup):
+                destination = group_input / f"in_{position:04d}.png"
+                input_hidden_rgb_replaced.append(save_input_rgb(
+                    base_pack, context, frame_index, destination, transparent_rgb_mode))
+            run_checked([
+                str(tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
+                "-framerate", rate_text, "-i", str(group_input / "in_%04d.png"),
+                "-vf", filter_text, "-pix_fmt", "rgb24", str(group_raw / "out_%04d.png"),
+            ], environment=environment)
+            group_outputs = sorted(group_raw.glob("out_*.png"))
+            group_expected = len(group_segments) * control_phases + 1
+            require(len(group_outputs) in (group_expected, group_expected - 1),
+                    f"{context['resref']} cycle {cycle_plan['cycle']} groupe {group_index}: "
+                    f"Topaz a produit {len(group_outputs)} frames, attendu {group_expected} "
+                    f"ou {group_expected - 1}")
+            raw.extend(group_outputs)
+            expected_raw += group_expected
+            segment_rates.append({
+                "group": group_index,
+                "control_phases": control_phases,
+                "declared_transition_phases": [
+                    int(item["transition_phases"]) for item in group_segments
+                ],
+                "input_framerate": rate_text,
+                "segment_count": len(group_segments),
+                "raw_frame_count": len(group_outputs),
+                "expected_raw_frame_count": group_expected,
+            })
+            for entry in interpolation_entries:
+                if int(entry["group_index"]) != group_index:
+                    continue
+                position = int(entry["group_segment_position"])
+                transition_phases = int(entry["transition_phases"])
+                subphase = int(entry["subphase"])
+                control_position = Fraction(subphase * control_phases, transition_phases)
+                control_left = control_position.numerator // control_position.denominator
+                control_fraction = control_position - control_left
+                raw_left = group_outputs[position * control_phases + control_left]
+                if control_fraction == 0:
+                    sample_path = raw_left
+                else:
+                    raw_right = group_outputs[position * control_phases + control_left + 1]
+                    sample_path = resampled_dir / (
+                        f"group_{group_index:03d}_segment_{position:03d}_"
+                        f"phase_{subphase:03d}-of-{transition_phases:03d}.png"
+                    )
+                    with Image.open(raw_left) as left_opened, Image.open(raw_right) as right_opened:
+                        Image.blend(
+                            left_opened.convert("RGB"), right_opened.convert("RGB"),
+                            float(control_fraction),
+                        ).save(sample_path)
+                entry["raw_path"] = sample_path
+                entry["anchor_raw_path"] = group_outputs[position * control_phases]
+                entry["input_path"] = group_input / f"in_{int(entry['input_position']):04d}.png"
+    else:
+        video_lookup = (
+            input_lookup if strategy == "preserve-segmented-holds"
+            else input_lookup + [input_lookup[0]]
+        )
+        for position, frame_index in enumerate(video_lookup):
+            replaced = save_input_rgb(base_pack, context, frame_index,
+                                      input_dir / f"in_{position:04d}.png", transparent_rgb_mode)
+            input_hidden_rgb_replaced.append(replaced)
+        run_checked([
+            str(tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
+            "-framerate", input_framerate, "-i", str(input_dir / "in_%04d.png"),
+            "-vf", filter_text, "-pix_fmt", "rgb24", str(raw_dir / "out_%04d.png"),
+        ], environment=environment)
+        raw = sorted(raw_dir.glob("out_*.png"))
+        expected_raw = (len(video_lookup) - 1) * phases_per_transition + 1
+        require(len(raw) in (expected_raw, expected_raw - 1),
+                f"{context['resref']} cycle {cycle_plan['cycle']}: Topaz a produit {len(raw)} "
+                f"frames, attendu {expected_raw} ou {expected_raw - 1}")
 
     base_frames = sorted(base_resource["frames"], key=lambda item: int(item["frame"]))
     intermediates = []
     raw_anchor_mae = []
     for entry in interpolation_entries:
         slot = int(entry["slot"])
+        input_position = int(entry.get("input_position", slot))
         native_index = int(entry["left_native_frame"])
         right_native = int(entry["right_native_frame"])
         output_index = int(entry["output_index"])
         source = context["frames"][native_index]
         base_frame = base_frames[native_index]
+        raw_path = (Path(entry["raw_path"]) if "raw_path" in entry
+                    else raw[int(entry["raw_index"])])
+        anchor_raw_path = (Path(entry["anchor_raw_path"]) if "anchor_raw_path" in entry
+                           else raw[int(entry["anchor_raw_index"])])
+        anchor_input_path = (Path(entry["input_path"]) if "input_path" in entry
+                             else input_dir / f"in_{input_position:04d}.png")
         if int(entry["subphase"]) == 1:
-            with Image.open(raw[int(entry["anchor_raw_index"])]) as topaz_anchor, Image.open(
-                    input_dir / f"in_{slot:04d}.png") as anchor:
+            with Image.open(anchor_raw_path) as topaz_anchor, Image.open(anchor_input_path) as anchor:
                 raw_anchor_mae.append(image_mae(topaz_anchor.convert("RGB"), anchor.convert("RGB")))
-        with Image.open(raw[int(entry["raw_index"])]) as topaz_middle:
+        with Image.open(raw_path) as topaz_middle:
             rgb = topaz_middle.convert("RGB").crop(tuple(source["crop_box_x4"]))
         base_raw = base_pack / str(base_frame["asset"])
         alpha = rgba_from_raw(base_raw, source["physical_size_x4"]).getchannel("A")
@@ -1115,6 +1581,7 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
         "topaz": {"model": model, "filter": filter_text, "raw_frame_count": len(raw),
                   "expected_raw_frame_count": expected_raw,
                   "input_framerate": input_framerate,
+                  "segment_input_framerates": segment_rates,
                   "transparent_rgb_mode": transparent_rgb_mode,
                   "input_hidden_rgb_replaced": input_hidden_rgb_replaced,
                   "raw_anchor_rgb_mae": [round(value, 6) for value in raw_anchor_mae]},
@@ -1423,9 +1890,14 @@ def build_run(source_run: Path | None, base_pack: Path, output: Path, resrefs: l
               approved_plan_sha256: str, tvai_ffmpeg: Path, model_dir: Path, model: str,
               device: str, review_ffmpeg: str, resume: bool,
               collapse_uniform_duplicate_holds: bool = False,
+              preserve_segmented_holds: bool = False,
+              segment_transition_phases: dict[str, list[int]] | None = None,
+              custom_cycle_keyframes: dict[str, list[tuple[int, int]]] | None = None,
               authoring_for_area_split: bool = False,
               transparent_rgb_mode: str = "preserve-hidden-rgb") -> dict[str, Any]:
     plan = build_plan(source_run, base_pack, resrefs, model, collapse_uniform_duplicate_holds,
+                      preserve_segmented_holds, segment_transition_phases,
+                      custom_cycle_keyframes,
                       authoring_for_area_split, transparent_rgb_mode)
     require(plan["plan_sha256"] == approved_plan_sha256,
             "hash de plan non approuvé ou plan modifié depuis la proposition")
@@ -1575,6 +2047,18 @@ def add_common_source_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--collapse-uniform-duplicate-holds", action="store_true",
                         help="retirer de la base d'interpolation les répétitions consécutives "
                              "uniformes, sans changer la durée ni le lookup BAM natif")
+    parser.add_argument("--preserve-segmented-holds", action="store_true",
+                        help="interpoler seulement les frontières de poses distinctes et "
+                             "référencer exactement les maintiens dupliqués")
+    parser.add_argument(
+        "--segment-transition-phases", action="append", metavar="RESREF=P1,P2,...",
+        help="durée mobile de chaque groupe lookup ; 0 seulement pour une frontière identique",
+    )
+    parser.add_argument(
+        "--custom-cycle-keyframes", action="append",
+        metavar="RESREF=FRAME@PHASE,FRAME@PHASE,...",
+        help="remplacer le timing du cycle par des poses exactes à des phases déclarées",
+    )
     parser.add_argument("--authoring-pack-for-area-split", action="store_true",
                         help="produire un pack d'auteur exempté du budget runtime de 512 MiB ; "
                              "il devra être découpé par zone avec split_animation_pack_by_area.py "
@@ -1656,6 +2140,10 @@ def main(argv: list[str] | None = None) -> None:
     approve_parser.add_argument("--resref", action="append", required=True)
 
     args = parser.parse_args(argv)
+    segment_transition_phases = parse_segment_transition_phases(
+        getattr(args, "segment_transition_phases", None))
+    custom_cycle_keyframes = parse_custom_cycle_keyframes(
+        getattr(args, "custom_cycle_keyframes", None))
     if args.command == "plan":
         validate_input_mode(args, plan_parser)
         source_run = resolve_source_run(args.source_run, args.resref)
@@ -1670,6 +2158,9 @@ def main(argv: list[str] | None = None) -> None:
         )
         result = build_plan(source_run, args.base_pack, args.resref, args.model,
                             args.collapse_uniform_duplicate_holds,
+                            args.preserve_segmented_holds,
+                            segment_transition_phases,
+                            custom_cycle_keyframes,
                             args.authoring_pack_for_area_split,
                             args.transparent_rgb_mode)
     elif args.command == "build":
@@ -1681,6 +2172,9 @@ def main(argv: list[str] | None = None) -> None:
                            args.tvai_model_dir.resolve(), args.model, args.device,
                            args.review_ffmpeg, args.resume,
                            args.collapse_uniform_duplicate_holds,
+                           args.preserve_segmented_holds,
+                           segment_transition_phases,
+                           custom_cycle_keyframes,
                            args.authoring_pack_for_area_split,
                            args.transparent_rgb_mode)
     elif args.command == "adopt-clock-patch":
