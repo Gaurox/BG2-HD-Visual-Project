@@ -3199,7 +3199,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
     bool resolved = false;
     if (g_areaAnimationResolution.timeline.enabled && g_areaAnimationTimelinePhase >= 0) {
       resolved = area_animation_x4::resolve_timeline_subframe(
-          g_areaAnimationResolution,
+          g_areaAnimationResolution, g_areaAnimationSequence,
           static_cast<std::uint32_t>(g_areaAnimationTimelinePhase), logicalWidth,
           logicalHeight, areaAnimationDrawFrame);
     } else {

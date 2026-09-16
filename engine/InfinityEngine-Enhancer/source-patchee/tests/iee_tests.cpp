@@ -4597,11 +4597,11 @@ void test_area_animation_registry_formats() {
                   timedCompositeResolution.timeline.enabled,
               "The timed root cycle should expose its shared timeline");
   expect_true(iee::area_animation_x4::resolve_timeline_subframe(
-                  timedCompositeResolution, 1, 4, 1, compositeSubframe) &&
+                  timedCompositeResolution, 0, 1, 4, 1, compositeSubframe) &&
                   compositeSubframe.frameIndex == 7,
               "A timed sibling cycle should resolve at the shared interpolated phase");
   expect_true(iee::area_animation_x4::resolve_timeline_subframe(
-                  timedCompositeResolution, 0, 3, 1, compositeSubframe) &&
+                  timedCompositeResolution, 0, 0, 3, 1, compositeSubframe) &&
                   compositeSubframe.frameIndex == 2,
               "A timed sibling cycle should resolve at a native anchor phase");
   expect_true(iee::area_animation_x4::resolve_native_subframe(
@@ -4609,8 +4609,50 @@ void test_area_animation_registry_formats() {
                   compositeSubframe.frameIndex == 3,
               "A timed resource should retain exact multi-cycle native fallback dispatch");
   expect_true(!iee::area_animation_x4::resolve_timeline_subframe(
-                  timedCompositeResolution, 1, 9, 1, compositeSubframe),
+                  timedCompositeResolution, 0, 1, 9, 1, compositeSubframe),
               "An unknown timed low-level dimension must fail closed to the native draw");
+  iee::area_animation_x4::release();
+
+  // Timed independent cycles may also share their geometry. Dispatch must retain the selected
+  // cycle instead of treating that legitimate duplicate as an ambiguous sibling component.
+  for (std::size_t index = 0; index < 4; ++index) {
+    write_file(root / (std::string{"AAX4-TESTA-frame00"} + std::to_string(index) + ".rgba"),
+               std::vector<std::byte>(4 * 4 * 4, std::byte{0x42}));
+  }
+  auto timedDuplicateGeometry = make_header(2);
+  append_raw(timedDuplicateGeometry, target.data(), target.size());
+  for (const auto value : std::array<std::uint32_t, 2>{{4, 2}}) {
+    append(timedDuplicateGeometry, value);
+  }
+  for (const auto value : std::array<std::uint32_t, 5>{{1, 15, 1, 30, 1}}) {
+    append(timedDuplicateGeometry, value);
+  }
+  for (const auto value : std::array<std::uint32_t, 8>{{1, 1, 1, 1, 1, 1, 1, 1}}) {
+    append(timedDuplicateGeometry, value);
+  }
+  for (const auto value : std::array<std::uint32_t, 10>{{1, 0, 2, 0, 2, 1, 1, 2, 1, 3}}) {
+    append(timedDuplicateGeometry, value);
+  }
+  write_file(root / "AreaAnimations-X4.registry", timedDuplicateGeometry);
+  expect_true(iee::area_animation_x4::prepare(root),
+              "A timed duplicate-geometry multi-cycle registry should prepare");
+  iee::area_animation_x4::FrameResolution timedDuplicateResolution{};
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 0, 0,
+                  timedDuplicateResolution) &&
+                  iee::area_animation_x4::resolve_timeline_subframe(
+                      timedDuplicateResolution, 0, 1, 1, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 2,
+              "The selected timed cycle must win when a sibling has identical geometry");
+  expect_true(iee::area_animation_x4::resolve_frame(
+                  target, iee::area_animation_x4::kAnyWorldPosition,
+                  iee::area_animation_x4::kAnyWorldPosition, 1, 0,
+                  timedDuplicateResolution) &&
+                  iee::area_animation_x4::resolve_timeline_subframe(
+                      timedDuplicateResolution, 1, 1, 1, 1, compositeSubframe) &&
+                  compositeSubframe.frameIndex == 3,
+              "A second selected timed cycle must retain its own identical-geometry frame");
   iee::area_animation_x4::release();
   write_file(root / "AAX4-TESTA-frame000.rgba", rgba);
   write_file(root / "AAX4-TESTA-frame001.rgba", rgba);

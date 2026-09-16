@@ -1018,10 +1018,10 @@ bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
   return false;
 }
 
-bool resolve_timeline_subframe(const FrameResolution& resolution, std::uint32_t phase,
-                               int logicalWidth, int logicalHeight,
+bool resolve_timeline_subframe(const FrameResolution& resolution, int sequence,
+                               std::uint32_t phase, int logicalWidth, int logicalHeight,
                                FrameHandle& out) noexcept {
-  if (!g_ready.load(std::memory_order_acquire) || !resolution.timeline.enabled ||
+  if (!g_ready.load(std::memory_order_acquire) || !resolution.timeline.enabled || sequence < 0 ||
       logicalWidth <= 0 || logicalHeight <= 0) {
     return false;
   }
@@ -1032,11 +1032,27 @@ bool resolve_timeline_subframe(const FrameResolution& resolution, std::uint32_t 
       return false;
     }
     const auto& resource = g_resources[resolution.nativeFrame.resourceIndex];
-    if (resource.playbackMode != PlaybackMode::TimedTimeline) return false;
+    if (resource.playbackMode != PlaybackMode::TimedTimeline ||
+        sequence >= static_cast<int>(resource.cycles.size())) {
+      return false;
+    }
+
+    const auto& selectedCycle = resource.cycles[static_cast<std::size_t>(sequence)];
+    if (phase >= selectedCycle.timelineFrames.size()) return false;
+    const auto selectedFrameIndex = selectedCycle.timelineFrames[phase];
+    if (selectedFrameIndex >= resource.frames.size()) return false;
+    const auto& selectedFrame = resource.frames[selectedFrameIndex];
+    if (selectedFrame.logicalWidth == logicalWidth && selectedFrame.logicalHeight == logicalHeight) {
+      out = {.resourceIndex = resolution.nativeFrame.resourceIndex,
+             .frameIndex = selectedFrameIndex};
+      return true;
+    }
 
     FrameHandle match{};
     bool found = false;
-    for (const auto& cycle : resource.cycles) {
+    for (std::size_t cycleIndex = 0; cycleIndex < resource.cycles.size(); ++cycleIndex) {
+      if (cycleIndex == static_cast<std::size_t>(sequence)) continue;
+      const auto& cycle = resource.cycles[cycleIndex];
       if (phase >= cycle.timelineFrames.size()) continue;
       const auto frameIndex = cycle.timelineFrames[phase];
       if (frameIndex >= resource.frames.size()) return false;

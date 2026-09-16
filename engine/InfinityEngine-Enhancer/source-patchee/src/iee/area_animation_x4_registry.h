@@ -168,10 +168,11 @@ bool resolve_timeline_frame(const FrameResolution& resolution, int sequence,
                             std::uint32_t phase, FrameHandle& out) noexcept;
 
 // A TimedTimeline resource may still fan out into several synchronised CVidCell
-// draws. Resolve the physical frame for the shared timeline phase whose native
-// dimensions match this low-level draw. Ambiguous or unknown dimensions fail closed.
-bool resolve_timeline_subframe(const FrameResolution& resolution, std::uint32_t phase,
-                               int logicalWidth, int logicalHeight,
+// draws. The selected cycle takes precedence at the shared phase when its native
+// dimensions match; otherwise select a unique sibling by dimensions. Ambiguous or
+// unknown sibling dimensions fail closed.
+bool resolve_timeline_subframe(const FrameResolution& resolution, int sequence,
+                               std::uint32_t phase, int logicalWidth, int logicalHeight,
                                FrameHandle& out) noexcept;
 
 // A native BAM frame can fan out into several CVidCell draws from synchronised
