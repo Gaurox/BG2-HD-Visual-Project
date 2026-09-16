@@ -26,7 +26,7 @@ constexpr std::array<char, 8> kRegistryMagic{{'I', 'E', 'E', 'A', 'A', 'X', '4',
 constexpr std::uint32_t kLegacyRegistryVersion = 1;
 constexpr std::uint32_t kRegistryVersion = 2;
 constexpr std::uint32_t kScale = 4;
-constexpr std::size_t kTextureCacheLimit = 64;
+constexpr std::size_t kTextureCacheLimit = 128;
 constexpr std::uint32_t kMaxResources = 512;
 constexpr std::uint32_t kMaxFramesPerResource = 4096;
 constexpr std::uint32_t kMaxCyclesPerResource = 256;

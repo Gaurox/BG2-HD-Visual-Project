@@ -4432,7 +4432,7 @@ void test_area_animation_registry_formats() {
       iee::area_animation_x4::texture_cache_telemetry_snapshot();
   expect_true(initialTextureCacheStats.active,
               "GPU cache telemetry should identify a resident animation pack");
-  expect_eq(initialTextureCacheStats.capacity, std::uint64_t{64},
+  expect_eq(initialTextureCacheStats.capacity, std::uint64_t{128},
             "GPU cache telemetry should expose the fixed LRU capacity");
   expect_eq(initialTextureCacheStats.requests, std::uint64_t{0},
             "Preparing a pack must not synthesize GPU cache requests");
@@ -4465,14 +4465,14 @@ void test_area_animation_registry_formats() {
             reloadStats.outgoingRawBytes + reloadStats.residentRawBytes,
             "Reload peak telemetry should include outgoing and incoming raw payloads");
   expect_true(reloadStats.outgoingTextureCache.active &&
-                  reloadStats.outgoingTextureCache.capacity == 64 &&
+                  reloadStats.outgoingTextureCache.capacity == 128 &&
                   reloadStats.outgoingTextureCache.requests == 0 &&
                   reloadStats.outgoingTextureCache.residentTextureNames == 0,
               "Reload telemetry should preserve the outgoing empty GPU cache snapshot");
   const auto reloadedTextureCacheStats =
       iee::area_animation_x4::texture_cache_telemetry_snapshot();
   expect_true(reloadedTextureCacheStats.active &&
-                  reloadedTextureCacheStats.capacity == 64 &&
+                  reloadedTextureCacheStats.capacity == 128 &&
                   reloadedTextureCacheStats.requests == 0,
               "A pack swap should reset cumulative GPU cache counters for the new area");
   iee::area_animation_x4::release();
@@ -4758,7 +4758,7 @@ void test_area_animation_registry_formats() {
   const auto releasedTextureCacheStats =
       iee::area_animation_x4::texture_cache_telemetry_snapshot();
   expect_true(!releasedTextureCacheStats.active &&
-                  releasedTextureCacheStats.capacity == 64 &&
+                  releasedTextureCacheStats.capacity == 128 &&
                   releasedTextureCacheStats.requests == 0 &&
                   releasedTextureCacheStats.residentTextureNames == 0,
               "Releasing an area pack should reset GPU cache telemetry and residency");
