@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM3017D",
+  "correction_id": "alpha-strict-innerfade36-straightrgb-dilate",
+  "decision": "QA ingame AR3017 validée par utilisateur : intégration du décor et contours acceptés après fade alpha strict 36 px x4, RGB droit préservé et dilaté sous alpha nul.",
+  "decision_date": "2026-09-17",
+  "decision_id": "2026-09-17-accepted-am3017d-ar3017-fade36-straightrgb",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar3017-decor-a-d-innerfade36-straightrgb-20260917/manifest.json",
+    "manifest_sha256": "D8045AC08A45F01748388046F01D35C313E2E99A3FD6C5B4914675CDD8C2BA5F",
+    "path": "animations/batches/ar3017-decor-a-d-innerfade36-straightrgb-20260917",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack/manifest.json",
+        "manifest_sha256": "930A9F18F21FA955A8C528F634DC4B3DA90D5B8041220EB2694416EEC52FADB7",
+        "path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "mecanique-seedvr7b-apo8-30fps-alpha-strict-fade36",
+  "recorded_at_utc": "2026-09-17T19:23:55Z",
+  "resref": "AM3017D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3017",
+        "manifest_path": "animations/packs-par-zone/ar3017-complete-straightrgb-fade-v5-20260917/AR3017/manifest.json",
+        "manifest_sha256": "A8B9209490CCA4BAAEF9FC875851492E0EAD6954EDD27A6B02B736BA5D5C0239",
+        "path": "animations/packs-par-zone/ar3017-complete-straightrgb-fade-v5-20260917/AR3017",
+        "registry_sha256": "5E4253C0AE2DB8A5C3755E2077B9A5F9F2C6BBD0124AE42B5BA6487036D9171D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3017-complete-straightrgb-fade-v5-20260917/manifest.json",
+    "manifest_sha256": "E3A43F5C9A12A87CEC4A5F705FF37CFA9F14F4E28EE85787BB01EEEDD49474DD",
+    "path": "animations/packs-par-zone/ar3017-complete-straightrgb-fade-v5-20260917",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3017"
+  ]
+}

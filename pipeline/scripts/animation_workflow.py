@@ -507,12 +507,16 @@ def _verify_declared_hash(path: Path, declared: Any, label: str) -> None:
 
 
 def _verify_embedded_pack(workspace_root: Path, manifest: Mapping[str, Any], manifest_path: Path) -> None:
-    pack_value = manifest.get("pack")
-    pack_hash = manifest.get("pack_manifest_sha256")
+    pack_value = manifest.get("pack", manifest.get("runtime_pack"))
+    pack_hash = manifest.get(
+        "pack_manifest_sha256", manifest.get("runtime_pack_manifest_sha256")
+    )
     if pack_value is None and pack_hash is None:
         return
     if not isinstance(pack_value, str) or not pack_value.strip() or not pack_hash:
-        raise WorkflowError(f"{manifest_path}: pack/pack_manifest_sha256 incomplets")
+        raise WorkflowError(
+            f"{manifest_path}: pack runtime et hash de manifeste incomplets"
+        )
     pack_path = _resolve_manifest_reference(workspace_root, manifest_path, pack_value)
     pack_manifest = _manifest_for_path(pack_path)
     _verify_declared_hash(pack_manifest, pack_hash, f"{manifest_path}: pack")
@@ -767,8 +771,10 @@ def _verify_pack_binding(
         resref,
     ):
         return
-    pack_value = final_manifest.get("pack")
-    pack_hash = final_manifest.get("pack_manifest_sha256")
+    pack_value = final_manifest.get("pack", final_manifest.get("runtime_pack"))
+    pack_hash = final_manifest.get(
+        "pack_manifest_sha256", final_manifest.get("runtime_pack_manifest_sha256")
+    )
     if not isinstance(pack_value, str) or not pack_value.strip() or not pack_hash:
         raise WorkflowError(
             f"{final_manifest_path}: filiation run final -> pack QA non démontrable"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive immutable runtime packs with canvas fade or light premultiplied RGBA blur.
+"""Derive immutable runtime packs with alpha masks, fades or light RGBA blur.
 
 The temporal timeline is copied verbatim.  Only selected resource payloads and,
 for Gaussian blur, their padded frame geometry are changed.  The result is a
@@ -35,6 +35,28 @@ def read_rgba(pack: Path, frame: dict[str, Any]) -> np.ndarray:
     return np.frombuffer(payload, dtype=np.uint8).reshape(height, width, 4).copy()
 
 
+def load_alpha_mask(path: Path, expected_size: tuple[int, int]) -> np.ndarray:
+    """Load one grayscale mask; black hides, white preserves, grey softens alpha."""
+    v2.require(path.is_file(), f"masque alpha absent : {path}")
+    with Image.open(path) as opened:
+        v2.require(opened.size == expected_size,
+                   f"masque alpha {path}: dimensions {opened.size}, attendu {expected_size}")
+        rgb = np.asarray(opened.convert("RGB"), dtype=np.uint8)
+    v2.require(np.array_equal(rgb[:, :, 0], rgb[:, :, 1])
+               and np.array_equal(rgb[:, :, 0], rgb[:, :, 2]),
+               f"masque alpha non monochrome : {path}")
+    return rgb[:, :, 0].copy()
+
+
+def apply_alpha_mask(rgba: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    """Multiply only alpha by a user-authored 8-bit grayscale mask."""
+    v2.require(mask.shape == rgba.shape[:2], "dimensions du masque alpha incohérentes")
+    output = rgba.copy()
+    alpha = rgba[:, :, 3].astype(np.uint16)
+    output[:, :, 3] = ((alpha * mask.astype(np.uint16) + 127) // 255).astype(np.uint8)
+    return output
+
+
 def smoothstep(value: np.ndarray) -> np.ndarray:
     clipped = np.clip(value, 0.0, 1.0)
     return clipped * clipped * (3.0 - 2.0 * clipped)
@@ -50,13 +72,59 @@ def apply_canvas_edge_fade(rgba: np.ndarray, fraction: float) -> tuple[np.ndarra
     return output, fade_width
 
 
-def apply_inner_contour_fade(rgba: np.ndarray, radius: float) -> np.ndarray:
+def dilate_rgb_under_transparency(rgba: np.ndarray) -> tuple[np.ndarray, int]:
+    """Fill hidden RGB from the nearest visible texel without changing alpha."""
+    transparent = rgba[:, :, 3] == 0
+    if not np.any(transparent):
+        return rgba.copy(), 0
+    output = rgba.copy()
+    if np.any(~transparent):
+        nearest = distance_transform_edt(
+            transparent, return_distances=False, return_indices=True
+        )
+        output[transparent, :3] = rgba[
+            nearest[0][transparent], nearest[1][transparent], :3
+        ]
+    else:
+        output[transparent, :3] = 0
+    changed = np.any(output[:, :, :3] != rgba[:, :, :3], axis=2)
+    return output, int(np.count_nonzero(changed))
+
+
+def apply_inner_contour_fade(
+    rgba: np.ndarray, radius: float, rgb_policy: str
+) -> tuple[np.ndarray, int]:
     """Fade strictly inside the alpha silhouette; canvas exterior is transparent."""
     inside = rgba[:, :, 3] > 0
     padded = np.pad(inside, 1, mode="constant", constant_values=False)
     distance = distance_transform_edt(padded)[1:-1, 1:-1]
     factor = smoothstep((distance - 1.0) / radius)
-    return np.rint(rgba.astype(np.float32) * factor[:, :, None]).astype(np.uint8)
+    if rgb_policy == "premultiplied":
+        return (
+            np.rint(rgba.astype(np.float32) * factor[:, :, None]).astype(np.uint8),
+            0,
+        )
+    output = rgba.copy()
+    output[:, :, 3] = np.clip(
+        np.rint(rgba[:, :, 3].astype(np.float32) * factor), 0, 255
+    ).astype(np.uint8)
+    return dilate_rgb_under_transparency(output)
+
+
+def apply_luminance_alpha(
+    rgba: np.ndarray, low: float, high: float
+) -> np.ndarray:
+    """Reconstruct soft alpha from baked dark RGB and premultiply for Blended."""
+    luminance = rgba[:, :, :3].astype(np.float32).mean(axis=2)
+    factor = smoothstep((luminance - low) / (high - low))
+    source_alpha = rgba[:, :, 3].astype(np.float32) / 255.0
+    alpha = source_alpha * factor
+    output = rgba.copy()
+    output[:, :, :3] = np.clip(
+        np.rint(rgba[:, :, :3].astype(np.float32) * alpha[:, :, None]), 0, 255
+    ).astype(np.uint8)
+    output[:, :, 3] = np.clip(np.rint(alpha * 255.0), 0, 255).astype(np.uint8)
+    return output
 
 
 def apply_premultiplied_gaussian(
@@ -237,12 +305,26 @@ def build(args: argparse.Namespace) -> Path:
     using_fade = args.canvas_edge_fade_fraction > 0.0
     using_inner_contour = args.inner_contour_fade_x4 > 0.0
     using_gaussian = args.gaussian_sigma_x4 > 0.0
-    v2.require(sum((using_fade, using_inner_contour, using_gaussian)) == 1,
-               "activer exactement un traitement : fade canvas, contour interne ou gaussien")
+    using_luminance = args.luminance_low is not None or args.luminance_high is not None
+    using_alpha_mask = bool(args.alpha_mask)
+    alpha_mask_paths = [path.resolve() for path in (args.alpha_mask or [])]
+    v2.require(not using_alpha_mask or len(alpha_mask_paths) == len(selected),
+               "fournir exactement un --alpha-mask par --resref, dans le même ordre")
+    v2.require(not using_luminance or (
+        args.luminance_low is not None and args.luminance_high is not None
+        and 0.0 <= args.luminance_low < args.luminance_high <= 255.0
+    ), "seuils de luminance invalides")
+    v2.require(sum((using_inner_contour, using_gaussian, using_luminance, using_alpha_mask)) == 1
+               or (using_fade and not using_inner_contour and not using_gaussian),
+               "activer un traitement principal ; le fade canvas peut compléter la luminance")
     v2.require(not using_fade or 0.0 < args.canvas_edge_fade_fraction < 0.5,
                "fraction de fade hors intervalle (0, 0.5)")
     v2.require(not using_inner_contour or args.inner_contour_fade_x4 <= 64.0,
                "rayon de fade contour hors intervalle (0, 64]")
+    v2.require(args.rgb_policy in {"premultiplied", "preserve"},
+               "politique RGB inconnue")
+    v2.require(args.rgb_policy != "preserve" or using_inner_contour or using_alpha_mask,
+               "RGB preserve est réservé aux traitements alpha stricts")
     v2.require(not using_gaussian or args.gaussian_sigma_x4 <= 8.0,
                "sigma gaussien hors intervalle (0, 8]")
     v2.require(not args.gaussian_preserve_geometry or using_gaussian,
@@ -260,6 +342,29 @@ def build(args: argparse.Namespace) -> Path:
     pack.mkdir(parents=True)
     resources = [copy.deepcopy(by_resref[resref]) for resref in selected]
     source_selected = [by_resref[resref] for resref in selected]
+    alpha_masks: dict[str, np.ndarray] = {}
+    alpha_mask_records: dict[str, dict[str, Any]] = {}
+    if using_alpha_mask:
+        sealed_root = partial / "manual-alpha-masks"
+        for resref, source_resource, mask_path in zip(
+            selected, source_selected, alpha_mask_paths, strict=True
+        ):
+            sizes = {
+                tuple(int(value) for value in frame["physical_size_x4"])
+                for frame in source_resource["frames"]
+            }
+            v2.require(len(sizes) == 1,
+                       f"{resref}: un masque répété exige une géométrie uniforme")
+            expected_size = next(iter(sizes))
+            alpha_masks[resref] = load_alpha_mask(mask_path, expected_size)
+            sealed = sealed_root / resref / "source.png"
+            sealed.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(mask_path, sealed)
+            alpha_mask_records[resref] = {
+                "source": str(sealed.relative_to(partial)).replace("\\", "/"),
+                "sha256": v2.sha256_file(sealed),
+                "size_x4": list(expected_size),
+            }
     source_asset_records = {
         str(asset["name"]): copy.deepcopy(asset)
         for resource in source_selected for asset in resource["assets"]
@@ -273,18 +378,31 @@ def build(args: argparse.Namespace) -> Path:
         fade_widths: list[float] = []
         alpha_before = 0
         alpha_after = 0
+        rgb_dilated_pixels = 0
         for frame in resource["frames"]:
             rgba = read_rgba(pack, frame)
             alpha_before += int(rgba[:, :, 3].sum(dtype=np.uint64))
-            if using_fade:
+            if using_alpha_mask:
+                treated = apply_alpha_mask(rgba, alpha_masks[resource["resref"]])
+            elif using_luminance:
+                treated = apply_luminance_alpha(
+                    rgba, args.luminance_low, args.luminance_high
+                )
+                if using_fade:
+                    treated, fade_width = apply_canvas_edge_fade(
+                        treated, args.canvas_edge_fade_fraction
+                    )
+                    fade_widths.append(fade_width)
+            elif using_fade:
                 treated, fade_width = apply_canvas_edge_fade(
                     rgba, args.canvas_edge_fade_fraction
                 )
                 fade_widths.append(fade_width)
             elif using_inner_contour:
-                treated = apply_inner_contour_fade(
-                    rgba, args.inner_contour_fade_x4
+                treated, dilated = apply_inner_contour_fade(
+                    rgba, args.inner_contour_fade_x4, args.rgb_policy
                 )
+                rgb_dilated_pixels += dilated
             elif np.any(rgba[:, :, 3]):
                 if args.gaussian_preserve_geometry:
                     treated = apply_geometry_preserving_rgb_gaussian(
@@ -316,8 +434,11 @@ def build(args: argparse.Namespace) -> Path:
             "inner_contour_radius_x4": (
                 args.inner_contour_fade_x4 if using_inner_contour else None
             ),
+            "rgb_policy": args.rgb_policy if using_inner_contour else None,
+            "rgb_dilated_pixels": rgb_dilated_pixels,
             "gaussian_padding_x4": padding if using_gaussian else 0,
             "geometry_preserved": bool(args.gaussian_preserve_geometry),
+            "alpha_mask": alpha_mask_records.get(resource["resref"]),
         }
 
     registry = v2.registry_v2_from_resources(resources, int(source_manifest["registry_version"]))
@@ -333,7 +454,26 @@ def build(args: argparse.Namespace) -> Path:
                 "expected_base_bytes": source["bytes"],
             })
     now = datetime.now(timezone.utc).isoformat()
-    if using_fade:
+    if using_alpha_mask:
+        treatment = {
+            "kind": "manual-grayscale-alpha-mask",
+            "alpha_formula": "alpha_final = alpha_source * grayscale_mask / 255",
+            "rgba_policy": "preserve-straight-rgb",
+            "mask_assignment": "one mask per resref, repeated on every native and interpolated frame",
+            "masks": alpha_mask_records,
+        }
+    elif using_luminance:
+        treatment = {
+            "kind": "luminance-alpha-with-canvas-edge-fade",
+            "luminance_low": args.luminance_low,
+            "luminance_high": args.luminance_high,
+            "curve": "smoothstep",
+            "canvas_edge_fade_fraction": (
+                args.canvas_edge_fade_fraction if using_fade else 0.0
+            ),
+            "rgba_policy": "reconstruct-alpha-and-premultiply-rgb",
+        }
+    elif using_fade:
         treatment = {
             "kind": "canvas-edge-fade", "curve": "smoothstep-min-distance",
             "fraction_of_min_dimension": args.canvas_edge_fade_fraction,
@@ -343,7 +483,11 @@ def build(args: argparse.Namespace) -> Path:
         treatment = {
             "kind": "inner-contour-fade", "curve": "smoothstep-distance-transform",
             "radius_x4": args.inner_contour_fade_x4,
-            "rgba_policy": "multiply-premultiplied-rgba",
+            "rgba_policy": (
+                "preserve-straight-rgb-dilate-under-zero-alpha"
+                if args.rgb_policy == "preserve"
+                else "multiply-premultiplied-rgba"
+            ),
             "alpha_constraint": "final<=source",
         }
     elif args.gaussian_preserve_geometry:
@@ -426,7 +570,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True, help="nouveau run dérivé")
     parser.add_argument("--resref", action="append", required=True)
     parser.add_argument("--canvas-edge-fade-fraction", type=float, default=0.0)
+    parser.add_argument("--luminance-low", type=float)
+    parser.add_argument("--luminance-high", type=float)
     parser.add_argument("--inner-contour-fade-x4", type=float, default=0.0)
+    parser.add_argument(
+        "--alpha-mask", type=Path, action="append",
+        help="masque PNG monochrome correspondant au --resref de même position",
+    )
+    parser.add_argument(
+        "--rgb-policy", choices=("premultiplied", "preserve"), default="premultiplied"
+    )
     parser.add_argument("--gaussian-sigma-x4", type=float, default=0.0)
     parser.add_argument("--gaussian-padding-x4", type=int)
     parser.add_argument("--gaussian-preserve-geometry", action="store_true")

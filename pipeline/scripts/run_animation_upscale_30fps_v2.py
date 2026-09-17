@@ -780,7 +780,25 @@ def build_plan(source_run: Path | None, base_pack: Path, resrefs: list[str],
         added_bytes = 0
         for cycle_index, lookup in enumerate(context["cycles"]):
             hold_analysis = analyse_duplicate_hold_slots(lookup)
-            if collapse_uniform_duplicate_holds:
+            if len(set(lookup)) == 1:
+                # A static cycle has no transition to synthesize.  Keep its
+                # exact duration at 30 fps by duplicating each native slot in
+                # the timeline instead of sending a zero-rate stream to Topaz.
+                timeline = [value for native_index in lookup
+                            for value in (native_index, native_index)]
+                cycle_plans.append({
+                    "cycle": cycle_index,
+                    "timing_strategy": "static-hold",
+                    "duplicate_hold_analysis": hold_analysis,
+                    "native_frame_indices": lookup,
+                    "interpolation_input_frame_indices": [lookup[0]],
+                    "intermediate_frame_indices": [],
+                    "timeline_frame_indices": timeline,
+                    "native_slots": len(lookup),
+                    "timeline_phases": len(timeline),
+                    "duration_seconds": len(lookup) / NATIVE_FPS[0],
+                })
+            elif collapse_uniform_duplicate_holds:
                 input_lookup, hold_slots = collapse_uniform_duplicate_hold_slots(lookup)
                 phases_per_transition = hold_slots * TARGET_FPS[0] // NATIVE_FPS[0]
                 require(phases_per_transition * NATIVE_FPS[0] == hold_slots * TARGET_FPS[0],
@@ -1262,7 +1280,15 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
 
     lookup = [int(value) for value in cycle_plan["native_frame_indices"]]
     strategy = str(cycle_plan.get("timing_strategy", "native-slots-x2"))
-    if strategy == "native-slots-x2":
+    if strategy == "static-hold":
+        input_lookup = [int(value) for value in
+                        cycle_plan["interpolation_input_frame_indices"]]
+        require(len(input_lookup) == 1 and not cycle_plan["intermediate_frame_indices"],
+                f"{context['resref']} cycle {cycle_plan['cycle']}: maintien statique invalide")
+        input_framerate = "not-applicable-static-hold"
+        phases_per_transition = 0
+        interpolation_entries = []
+    elif strategy == "native-slots-x2":
         input_lookup = lookup
         input_framerate = "15"
         phases_per_transition = 2
@@ -1402,7 +1428,10 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
     environment["TVAI_MODEL_DIR"] = str(model_dir)
     environment["TVAI_MODEL_DATA_DIR"] = str(model_dir)
     segment_rates = []
-    if strategy in ("segment-transition-phases", "custom-cycle-keyframes"):
+    if strategy == "static-hold":
+        raw = []
+        expected_raw = 0
+    elif strategy in ("segment-transition-phases", "custom-cycle-keyframes"):
         raw = []
         expected_raw = 0
         resampled_dir = raw_dir / "resampled"
