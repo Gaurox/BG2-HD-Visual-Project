@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0603D2",
+  "decision": "QA ingame AR0603 validée par l'utilisateur pour toutes les animations actives de la map ; upscale x4 et reconstruction 30 fps après condensation des maintiens acceptés.",
+  "decision_date": "2026-09-17",
+  "decision_id": "2026-09-17-accepted-am0603d2-ar0603-collapse-holds-apo8-30fps",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar0603-six-bam-apo8-x4-30fps-collapse-holds-20260916/manifest.json",
+    "manifest_sha256": "65847E51B1CF534E7021A873E58C2E918BBD57F5E29E24C78A80D6B4B9F2DEAC",
+    "path": "animations/batches/ar0603-six-bam-apo8-x4-30fps-collapse-holds-20260916",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4/04_v2_base_merged/03_runtime_pack/manifest.json",
+        "manifest_sha256": "EBBA356B824739198C9C4A4E569174F6F39BBED1D3B7B9F2659B0F2FC319304C",
+        "path": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4/04_v2_base_merged/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4/manifest.json",
+        "manifest_sha256": "110CD85D78F1DB02946BA44213785990BB1AEC79B441926D6A8844FC06B93866",
+        "path": "animations/runs/ar0603-all-bam-seedvr7b-lab-x4",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "seedvr7b-lab-x4-apo8-30fps-collapse-uniform-holds",
+  "recorded_at_utc": "2026-09-17T17:15:14Z",
+  "resref": "AM0603D2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0603",
+        "manifest_path": "animations/packs-par-zone/ar0603-active-plus-c1-c2-mechanical-native-alpha-apo8-30fps-test-20260917/AR0603/manifest.json",
+        "manifest_sha256": "01184E891FF7B8C2DF5B424F2377AE0AE962CA8D2459F18ECA4BB51FABBACAC6",
+        "path": "animations/packs-par-zone/ar0603-active-plus-c1-c2-mechanical-native-alpha-apo8-30fps-test-20260917/AR0603",
+        "registry_sha256": "DB99D6D32564E964190B4D093953364CA2198496C762A3A80C64E9DCB672795D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0603-active-plus-c1-c2-mechanical-native-alpha-apo8-30fps-test-20260917/manifest.json",
+    "manifest_sha256": "306BBD702E35BD58D1B7491F905A22367045E1764D85E65058F01A83F22A516A",
+    "path": "animations/packs-par-zone/ar0603-active-plus-c1-c2-mechanical-native-alpha-apo8-30fps-test-20260917",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0603"
+  ]
+}
