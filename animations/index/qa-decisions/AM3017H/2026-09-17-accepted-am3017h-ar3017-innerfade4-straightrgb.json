@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM3017H",
+  "correction_id": "alpha-strict-innerfade4-straightrgb-dilate",
+  "decision": "QA ingame AR3017 validée explicitement par utilisateur dans le pack complet v6.",
+  "decision_date": "2026-09-17",
+  "decision_id": "2026-09-17-accepted-am3017h-ar3017-innerfade4-straightrgb",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar3017-decor-e-h-innerfade4-straightrgb-20260917/manifest.json",
+    "manifest_sha256": "A4ACCC6DE3600B8F1D0662D97680C37F4468514E41CEF583B762FC2BEDB0652D",
+    "path": "animations/batches/ar3017-decor-e-h-innerfade4-straightrgb-20260917",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack/manifest.json",
+        "manifest_sha256": "930A9F18F21FA955A8C528F634DC4B3DA90D5B8041220EB2694416EEC52FADB7",
+        "path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "mecanique-seedvr7b-apo8-30fps-alpha-strict-fade4",
+  "recorded_at_utc": "2026-09-17T20:15:01Z",
+  "resref": "AM3017H",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3017",
+        "manifest_path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/AR3017/manifest.json",
+        "manifest_sha256": "1874B306A73A48BAC5B97BAA64B30007C4E96F46A395C267F7F9DB5263F86911",
+        "path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/AR3017",
+        "registry_sha256": "5E4253C0AE2DB8A5C3755E2077B9A5F9F2C6BBD0124AE42B5BA6487036D9171D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/manifest.json",
+    "manifest_sha256": "130B772C07D6542F8A8E4099B0130CBD4269843E70F8492ACF6DC13D8DC1AB30",
+    "path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR3017"
+  ]
+}

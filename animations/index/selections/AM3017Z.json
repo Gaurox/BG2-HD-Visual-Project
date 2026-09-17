@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3017Z",
+  "correction_id": "spline-fit1-innerfeather4",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917/03_runtime_pack/manifest.json",
+        "manifest_sha256": "005DF6060B3BB7AEC2C6066609DE5C258BE8A684E0EB3226B9237C05D671692B",
+        "path": "animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack/manifest.json",
+        "manifest_sha256": "930A9F18F21FA955A8C528F634DC4B3DA90D5B8041220EB2694416EEC52FADB7",
+        "path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917/manifest.json",
+        "manifest_sha256": "92786908E40FEF76799649565DEFE9337AF26B598DB173DB4B44CCF31054CD5F",
+        "path": "animations/batches/ar3017-complete-seedvr7b-lab-x4-20260917",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917/manifest.json",
+        "manifest_sha256": "5ED52833D7450BF67DE3E269AC7FE9A1DCBFF5B87589F5181243D9E10800EA1F",
+        "path": "animations/batches/ar3017-main-apo8-x4-30fps-v2-20260917",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-17",
+    "path": "animations/index/qa-decisions/AM3017Z/2026-09-17-accepted-am3017z-ar3017-spline-fit1-feather4.json",
+    "sha256": "389148524E0524C1D7086573C03E7ACAC2EA8A471A558E6A9973E172EE19F8F5",
+    "status": "accepted"
+  },
+  "recipe_id": "mecanique-seedvr7b-apo8-30fps-spline-fit1-feather4",
+  "resref": "AM3017Z",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3017Z/runs/ar3017-z-spline-fit1-feather4-20260917/manifest.json",
+    "manifest_sha256": "44B4678667FFFD7E5519F50F2C6D43A2525AE901A01A378E90C49C0F253B3469",
+    "path": "animations/ressources/AM3017Z/runs/ar3017-z-spline-fit1-feather4-20260917",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3017",
+        "manifest_path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/AR3017/manifest.json",
+        "manifest_sha256": "1874B306A73A48BAC5B97BAA64B30007C4E96F46A395C267F7F9DB5263F86911",
+        "path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/AR3017",
+        "registry_sha256": "5E4253C0AE2DB8A5C3755E2077B9A5F9F2C6BBD0124AE42B5BA6487036D9171D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917/manifest.json",
+    "manifest_sha256": "130B772C07D6542F8A8E4099B0130CBD4269843E70F8492ACF6DC13D8DC1AB30",
+    "path": "animations/packs-par-zone/ar3017-complete-wheelmask-f-v6-20260917",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3017"
+  ],
+  "updated_at_utc": "2026-09-17T20:15:18Z"
+}
