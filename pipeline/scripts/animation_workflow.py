@@ -726,6 +726,11 @@ def _resource_group(
     ]
     if not matching:
         raise WorkflowError(f"ressource {resref} absente du pack runtime")
+    # Registry v3 pack mergers materialise the implicit, unbound runtime
+    # variant as ``variant_index: 0``.  Producer packs predating that merge
+    # step omit the field, but both representations address the same output.
+    for item in matching:
+        item.setdefault("variant_index", 0)
     try:
         return sorted(
             matching,

@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0516LC",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack/manifest.json",
+        "manifest_sha256": "BA88584F2A808F0544D4D86BBE5C54B0D44EAF2BFF268D659F558B40E2AC42D7",
+        "path": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4/manifest.json",
+        "manifest_sha256": "BF84A4B858EAAE193ADD2F9725A9BD1EE65368D260149ABDB7F696DDD38B9C6B",
+        "path": "animations/runs/ar0516-all-bam-seedvr7b-lab-x4",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-17",
+    "path": "animations/index/qa-decisions/AM0516LC/2026-09-17-accepted-ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917.json",
+    "sha256": "7AF6DEDAA62B187118196005DCDACBED1B04E90B656FBB041452EA9815DB80A9",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-lab-x4-apo8-30fps-custom-blink",
+  "resref": "AM0516LC",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917/manifest.json",
+    "manifest_sha256": "B29070A4D8CAA726BB6821C949B570EEF75F60E3759E2957EA50FD071D8387A8",
+    "path": "animations/batches/ar0516-labc-apo8-x4-30fps-hybrid-custom-blink-lc-exact-repeat-20260917",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0516",
+        "manifest_path": "animations/packs-par-zone/ar0516-complete-plus-am0516ld-custom-blink-20260917/AR0516/manifest.json",
+        "manifest_sha256": "6A6F93E4AC27C6A3F71A37F36D5B84A07E1769E9C0560653C9449529F6E7C0A8",
+        "path": "animations/packs-par-zone/ar0516-complete-plus-am0516ld-custom-blink-20260917/AR0516",
+        "registry_sha256": "6D23F517A779EF5B656C1EB9CF6E7CD9CD77A6F9B785CC06CB8A0E05030C1028",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0516-complete-plus-am0516ld-custom-blink-20260917/manifest.json",
+    "manifest_sha256": "583EF34017648E6E156CB79E2DCAB841C16F8FEEC2C5AF57864E25625B9CD624",
+    "path": "animations/packs-par-zone/ar0516-complete-plus-am0516ld-custom-blink-20260917",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0516"
+  ],
+  "updated_at_utc": "2026-09-17T16:47:30Z"
+}

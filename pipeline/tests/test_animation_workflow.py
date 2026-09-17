@@ -556,6 +556,16 @@ class AnimationWorkflowTests(unittest.TestCase):
             [item["path"] for item in status["runs"]],
         )
 
+    def test_resource_group_normalizes_implicit_default_variant(self) -> None:
+        implicit = workflow._resource_group(
+            [{"resref": "AMTEST", "frame_count": 1}], "AMTEST"
+        )
+        explicit = workflow._resource_group(
+            [{"resref": "AMTEST", "frame_count": 1, "variant_index": 0}],
+            "AMTEST",
+        )
+        self.assertEqual(explicit, implicit)
+
     def test_finalize_plan_then_apply_is_relative_hashed_and_preserves_other_rows(self) -> None:
         before = self.fixture.registry.read_bytes()
         planned = self.fixture.finalize(apply=False)
