@@ -1,0 +1,737 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FLAME2S",
+  "correction_id": "flame2s-reboutcx-innerfeather20-premultiply-20260919",
+  "decision": "Petite flamme partagee : etage spatial ReboutCX x4, fondu interne 20 px x4 sur l alpha et RGB premultiplie (ressource Blended). Remplace la version SeedVR2 7B/LAB d AR0602. Validee ingame par l utilisateur ; asset strictement identique dans les 77 zones (signature 6fd483b997af), validation etendue a l ensemble.",
+  "decision_date": "2026-09-19",
+  "decision_id": "2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/flame2s-reboutcx-selection-accepted-20260919/manifest.json",
+    "manifest_sha256": "EF31791E72EA5B7D5234F461E699A38D6B5ED81C2F8387A96A62FCB3052463EF",
+    "path": "animations/batches/flame2s-reboutcx-selection-accepted-20260919",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FLAME2S/runs/flame2s-reboutcx-x4-20260919/03_runtime_pack/manifest.json",
+        "manifest_sha256": "718AC88AE09EAA04DBBE1A0AF2655AF24BBDC8C937EEB3855B42A43333F7F558",
+        "path": "animations/ressources/FLAME2S/runs/flame2s-reboutcx-x4-20260919/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-18T23:44:14Z",
+  "resref": "FLAME2S",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0302",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0302/manifest.json",
+        "manifest_sha256": "AE20E20414A638893D9E7D349D1D048F9F441F73FA64B30CF7FED6D7EF02A294",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0302",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0303",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0303/manifest.json",
+        "manifest_sha256": "ED156F8F2CCF07899883F5B858E2DFD2FD2985C9470FD3A46D046018288DC296",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0303",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0307",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0307/manifest.json",
+        "manifest_sha256": "97F87C4408D14B400ED1D2E09E955D1572EB64758B47D361F0D9F403891B1555",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0307",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0312",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0312/manifest.json",
+        "manifest_sha256": "00F831EAB4CB5B5FC6AE8076DA6AB47C9B519BE4CBC622CFED906AB04451DA95",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0312",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0315",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0315/manifest.json",
+        "manifest_sha256": "B21EE3F2EA063D8C9E3FA091B293FCE81F5114685F43962BD6E8F91283B92EB0",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0315",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0322",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0322/manifest.json",
+        "manifest_sha256": "9D130F20E12C26BDE564D8B2CFFA35ADF3FFAC06E979861F100443D3D00CCEA1",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0322",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0323",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0323/manifest.json",
+        "manifest_sha256": "2F8D987FA9D9D7E8632ED9782FE83A71ED7764A820981684A4576EF9A301D35B",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0323",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0326",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0326/manifest.json",
+        "manifest_sha256": "8C6776764DBA0F16BA5A3D1E77A7AC674C0F224D72F22B21A4B1B22572DCD025",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0326",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0329",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0329/manifest.json",
+        "manifest_sha256": "7646DABFFFDF569E835C474BAF559C4FC2F561634ABB052C30D7B0671E9B7017",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0329",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0334",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0334/manifest.json",
+        "manifest_sha256": "417B1A217789F99E178E6F273ED679104C02F268032530FE7F753991E0ABA6C8",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0334",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0335",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0335/manifest.json",
+        "manifest_sha256": "7FF86A3964C30605460A9BD5C0F1EE6174B442DF3159770981D5DB2CAD784C5D",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0335",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0406",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0406/manifest.json",
+        "manifest_sha256": "0D532FE3EFDED64EECBD07066C52DC74E81358FAA393DE8E77B150EA84F1D612",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0406",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0409",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0409/manifest.json",
+        "manifest_sha256": "C4A690AC19646AFFD71A5A703DB9A7B350755DA2071D77E0B7F77AC972CC1534",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0409",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0502",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0502/manifest.json",
+        "manifest_sha256": "6504F433E1C84DB5B5CACD1F6E876B29E95205E70FD4ACC6621EFB124D0D9D9B",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0502",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0504",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0504/manifest.json",
+        "manifest_sha256": "578C86EAE2790A49DE583D6149769ACF55C6E46D6849B7FDD2D4BAF244A4E46D",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0504",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0505",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0505/manifest.json",
+        "manifest_sha256": "198005CF517C5E31A5AC8757EC58058EEEE9DC13C45E4D8F49377BAA924DEF89",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0505",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0506",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0506/manifest.json",
+        "manifest_sha256": "B6D80DA74AD03482364EDCD5CEF9944102024E1EBE734E14DEAD92EDBF60F6B1",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0506",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0509",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0509/manifest.json",
+        "manifest_sha256": "A47D1FA291B473A88B62146D0C61CF5972E093B3D52729C245818F4366D8F392",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0509",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0510",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0510/manifest.json",
+        "manifest_sha256": "A5085B44299352B78F52448714D2BB93825DF498CE335E63F2F5B4B09C406290",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0510",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0511",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0511/manifest.json",
+        "manifest_sha256": "A1D082FDF64B451BA99CB3B0EB7E5B1F3FCD64EFED1D7E972163D17F433F6455",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0511",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0513",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0513/manifest.json",
+        "manifest_sha256": "C929EBC0A6BACB2FB380F1BA8480B307620A11D8DAD803E5E9E058A137C9A18E",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0513",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0514",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0514/manifest.json",
+        "manifest_sha256": "623BC559D197B171ABD5882BE14D151CF6509B2E695FA1EB4F945B1E6A26B528",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0514",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0515",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0515/manifest.json",
+        "manifest_sha256": "FE8C1383E77301939E6E2F6B0F6963558D0DD9E5FCDB74F02581E713EEC5F129",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0515",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0522",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0522/manifest.json",
+        "manifest_sha256": "EED2392B050C39E46408C947888562B217AF778AAEBF6D96CD64C2BD45CE640B",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0522",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0527",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0527/manifest.json",
+        "manifest_sha256": "07DF5EDC0896ABA3CB56AC4B5140D596C08AF9838C1B9E4DA484074255450A9F",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0527",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0528",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0528/manifest.json",
+        "manifest_sha256": "A50D9F3E9C8BD9E183E0C50BCFBA538B5FFDA1744F76313EE79F57CCCA198B3A",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0528",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0529",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0529/manifest.json",
+        "manifest_sha256": "41268198708935CEF80477C599D9BB142150407F8773BC297F3310440A594056",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0529",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0602",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0602/manifest.json",
+        "manifest_sha256": "C58CEFC2CD6384A527A08791A27F4A7BEB683615C301CFF05F3C415FB31C6982",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0602",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0704",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0704/manifest.json",
+        "manifest_sha256": "B08600ED2071A0B18DFB42E10A9D49EEC3D8673FDB4FD36EFB40465A08F8F279",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0704",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0705",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0705/manifest.json",
+        "manifest_sha256": "D8D97368244E6EDB0C6A6C677E41BE50792A080F54FD5781CE34FECBC12C04FB",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0705",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0706",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0706/manifest.json",
+        "manifest_sha256": "779AC76B88A17B44382238A16CC87E8CE9FCED104F9C8569F086106EAE5ECD0A",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0706",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0709",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0709/manifest.json",
+        "manifest_sha256": "1DABB1F8A46D4917E7AB9FF9FB615838C1663203F21EC5D6DC52B6BAC8D206A5",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0709",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0710",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0710/manifest.json",
+        "manifest_sha256": "E5BEFB58A436DDCBE479503331F966626116723B90942DF55D5A4ACC824016D3",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0710",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0712",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0712/manifest.json",
+        "manifest_sha256": "B35BAC81B761F8EA91AE0235CDA5FE9A2381DEA9C152C3FA07F68DF5735D2907",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0712",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0801",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0801/manifest.json",
+        "manifest_sha256": "4BB938B36F9ACCB1C16B89B7235F5174923BE769BD189A0C6E3EDF6534FBEE73",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0801",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0802",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0802/manifest.json",
+        "manifest_sha256": "899B7FFA1C594231FAB579D8D5FDB2F2C60FBA717C79ED9CB96EFF33068EA0FA",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0802",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0808",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0808/manifest.json",
+        "manifest_sha256": "93122C591474FEB40E26BA297233D1B0555F2976D502850D1D92C505E12A00BE",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0808",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0903",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0903/manifest.json",
+        "manifest_sha256": "1FC68CEDE5120FB3DBB9CFA9B8DB89E44EDBE01F5E3EB52CFEA81FFAD6C0E56E",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0903",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0905",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0905/manifest.json",
+        "manifest_sha256": "FC1B28F53DF94EA85C7A585BA68EE737513B783D1CC33080BF0A7A0F04D7BA97",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0905",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0906",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0906/manifest.json",
+        "manifest_sha256": "A6D105318D7FE8169B448A9D58C1D2E96C41AAC5C4C3EDE1F9FEDB7B818A4307",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0906",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0907",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0907/manifest.json",
+        "manifest_sha256": "109067DB6E2915CCDF9F56FBFCC045B1511DC78D9D3374C076FAFA1FCBD7BCD5",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0907",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1001",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1001/manifest.json",
+        "manifest_sha256": "0C8258F2E173C3C0E7FF810154FA503CCC267F9382E8DB9E8E5BBF594D8D005C",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1001",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1003",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1003/manifest.json",
+        "manifest_sha256": "FA3B9379B124146522B2AF58462DBA3B54FF2858B3F9491DF58F6204967B9DC6",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1003",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1004",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1004/manifest.json",
+        "manifest_sha256": "6D3323716DFCE2F05E4BA981E3F78C7A1600748F1EBC58CC730304D783588548",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1004",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1006",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1006/manifest.json",
+        "manifest_sha256": "B60C9128A5FE72996365125729CCAE38EFB10F22A429FCAE7DC2B3AD606BB222",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1006",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1007",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1007/manifest.json",
+        "manifest_sha256": "E3864E29EEACA96F96F1F5DB7D578020C4A90944D51AD8DB5FDB673BE73BFF5C",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1007",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1009",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1009/manifest.json",
+        "manifest_sha256": "8E9DF72D70C3035F291FEB24DEB941975D2A7C2D70B95DEBC788E99B54F2EA19",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1009",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1103",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1103/manifest.json",
+        "manifest_sha256": "ADE57074C2D7F36BB263089D030A4C71F36ACF004D17CC6CC7257DD57DC3D662",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1103",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1104",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1104/manifest.json",
+        "manifest_sha256": "F4F29E6B7458B18F01BA3D84E350BA0591FB8886FD2D653E8025922E924800CC",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1104",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1105",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1105/manifest.json",
+        "manifest_sha256": "B6A2C2E45A05251B2779E0E0282B96215662155A3CEE587CE416A98CD12F9B56",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1105",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1202",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1202/manifest.json",
+        "manifest_sha256": "82CD6F8C88698BC12707CAF440BF9DD0DEBF7A6D9190EA8BC14B8F151F1BB35B",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1202",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1302",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1302/manifest.json",
+        "manifest_sha256": "FDF041388FDBBFB26192DF9C4AD533EC7C905FF78A10D2B42CF17111A55D6F64",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1302",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1303",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1303/manifest.json",
+        "manifest_sha256": "ABB327DCBB7E3E574F2C1217531E8B0244DAE58AF33E30D932C2A4EA2F090867",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1303",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1305",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1305/manifest.json",
+        "manifest_sha256": "863F14430E108A00E500B2B6D59C01FCC025DE9D67D1D319964564370F7791F6",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1305",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1306",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1306/manifest.json",
+        "manifest_sha256": "B4531F9C7581C75D1DCC58438D739A31B9AFC30BB5DD1DE88F95D5AC56E93645",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1306",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1307",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1307/manifest.json",
+        "manifest_sha256": "C51A8431C762413E31D1999E9F73BB9D85344445161BF9E4BF60E4697F23DF2A",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1307",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1511",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1511/manifest.json",
+        "manifest_sha256": "C5141CF08841AF1C0A221879605B9F03F7B831E99F35A04F1915F0AA3F80396A",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1511",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1601",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1601/manifest.json",
+        "manifest_sha256": "DF7C9E123F32C10ED53B51715D920C482675791E136AE617F3004E146B6C5D64",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1601",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1603",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1603/manifest.json",
+        "manifest_sha256": "276728D4153832D61AF1397AD1EAD4E8696D5AAF13E242144093AEDCC58514BF",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1603",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1606",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1606/manifest.json",
+        "manifest_sha256": "60D10FEF8A6E12015F6FDB23CEB383C51C248BA2F37A206A5D15D17BF145A27E",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1606",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1609",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1609/manifest.json",
+        "manifest_sha256": "306241F752AB60D3AD5F9FE020CE90CB1328A852F83B941186D0797C60FEE384",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1609",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1613",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1613/manifest.json",
+        "manifest_sha256": "259183CC1892D0B2A975204BB854751F8A9E1011B37A628851AF342321539C1E",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR1613",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2001",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2001/manifest.json",
+        "manifest_sha256": "CD48962A1B3899802ED9A25D33EA0818507BFDEBD34ACBD131F5D056E3555E6A",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2001",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2002",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2002/manifest.json",
+        "manifest_sha256": "FEC997ACDC035D91FBB5D5BE7E6D77ACFB70DA9CCF741F58072E7EA58BE147F9",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2002",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2007",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2007/manifest.json",
+        "manifest_sha256": "9BB693FC635A6AD4AC98B72FA0C60C75F9B7636A0FBC3636EE3EFCEC483079D0",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2007",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2011",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2011/manifest.json",
+        "manifest_sha256": "FFB06376BE77A37A425F0043BA708C6868B2B7378CDD6D3E294D7BA5293C09E7",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2011",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2012",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2012/manifest.json",
+        "manifest_sha256": "630C1F971224C30B103A828C2A4FE783A9ABE7351DAC6C025F2C1DABF2EF14FF",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2012",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2208",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2208/manifest.json",
+        "manifest_sha256": "0234E39323DA9919BFA21F5F4FABA44C8F2685970AFF0C882C0B8883CBA94AC2",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR2208",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR3026",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR3026/manifest.json",
+        "manifest_sha256": "B937E4C419AABF50ACAAEC277431BA6AFFE448D76CE243B563063F19CA35D691",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR3026",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5008",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5008/manifest.json",
+        "manifest_sha256": "95D74440E138BBBEB311A7F88F35CB258B85F79A87191E8C8A028C00502BBC58",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5008",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5009",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5009/manifest.json",
+        "manifest_sha256": "B54651F169573D1313E11F333739681B421F29877A10987B80A19ECA2EDDCC71",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5009",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5010",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5010/manifest.json",
+        "manifest_sha256": "CCAD9812F60B50E4453DD0E2E5D761E5E302F9A31209627D7851CF9076875275",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5010",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5011",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5011/manifest.json",
+        "manifest_sha256": "69A9638311BBEB5807B00DAE522D6604A28ABAAE3205B4F280C041B438A29B6C",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5011",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5012",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5012/manifest.json",
+        "manifest_sha256": "FF09D36D77EF99C7B5159040AD730B69B3F71A5E005E2807DA9328BD906C7872",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR5012",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR6012",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR6012/manifest.json",
+        "manifest_sha256": "44748C07C691DA838A3E3D31471893B0471D345964AEBC25B0448D019C7E6DE8",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR6012",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH5000",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/OH5000/manifest.json",
+        "manifest_sha256": "71F05D9AD23C488EDC07504F1DD75E0872B1742BC729CE0AF18771B17C0542A7",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/OH5000",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH9000",
+        "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/OH9000/manifest.json",
+        "manifest_sha256": "C5732007BA662B1595F5A7F29B6BE3EB2D26FB91855FE3FBD2FCCD1FDEA1B9E9",
+        "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/OH9000",
+        "registry_sha256": "4E52F05B83D9F8522ECAFCBC1F66B18FB8B72A3E5A6F3B9508B04771C9693B59",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/manifest.json",
+    "manifest_sha256": "DEB6BB65F966D805EB4656238DDA82B5B719F293B3E168057098FEB3ED7B5706",
+    "path": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0302",
+    "AR0303",
+    "AR0307",
+    "AR0312",
+    "AR0315",
+    "AR0322",
+    "AR0323",
+    "AR0326",
+    "AR0329",
+    "AR0334",
+    "AR0335",
+    "AR0406",
+    "AR0409",
+    "AR0502",
+    "AR0504",
+    "AR0505",
+    "AR0506",
+    "AR0509",
+    "AR0510",
+    "AR0511",
+    "AR0513",
+    "AR0514",
+    "AR0515",
+    "AR0522",
+    "AR0527",
+    "AR0528",
+    "AR0529",
+    "AR0602",
+    "AR0704",
+    "AR0705",
+    "AR0706",
+    "AR0709",
+    "AR0710",
+    "AR0712",
+    "AR0801",
+    "AR0802",
+    "AR0808",
+    "AR0903",
+    "AR0905",
+    "AR0906",
+    "AR0907",
+    "AR1001",
+    "AR1003",
+    "AR1004",
+    "AR1006",
+    "AR1007",
+    "AR1009",
+    "AR1103",
+    "AR1104",
+    "AR1105",
+    "AR1202",
+    "AR1302",
+    "AR1303",
+    "AR1305",
+    "AR1306",
+    "AR1307",
+    "AR1511",
+    "AR1601",
+    "AR1603",
+    "AR1606",
+    "AR1609",
+    "AR1613",
+    "AR2001",
+    "AR2002",
+    "AR2007",
+    "AR2011",
+    "AR2012",
+    "AR2208",
+    "AR3026",
+    "AR5008",
+    "AR5009",
+    "AR5010",
+    "AR5011",
+    "AR5012",
+    "AR6012",
+    "OH5000",
+    "OH9000"
+  ]
+}
