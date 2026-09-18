@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2000A",
+  "correction_id": "cross-cycle-joint-spline6-axis8-16-rgb-g2d12s55",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar2000-water-quadmosaic-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "DAC7044DD13C1936947ED4A7C918309F61F7C98685D000903091DAACB73F5D0E",
+        "path": "animations/batches/ar2000-water-quadmosaic-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar2000-water-quadmosaic-seedvr7b-lab-x4-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "91467FC43BE5F0DB0DAC02DDEC58B80F1098044D5B337AB7576FDFD2E59E5851",
+        "path": "animations/batches/ar2000-water-quadmosaic-seedvr7b-lab-x4-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar2000-water-quadmosaic-apo8-x4-30fps-v2-20260918/manifest.json",
+        "manifest_sha256": "97D6F167DA4B1112C7DA09F3325EA2D1EEFABAB097D5975A9030EA283C2990A4",
+        "path": "animations/batches/ar2000-water-quadmosaic-apo8-x4-30fps-v2-20260918",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar2000-water-quadmosaic-seedvr7b-lab-x4-20260918/manifest.json",
+        "manifest_sha256": "9E5D3971B56A3081EBBF34F13C0058FEC113D015E96DC30CBD741C87EAA2060B",
+        "path": "animations/batches/ar2000-water-quadmosaic-seedvr7b-lab-x4-20260918",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-18",
+    "path": "animations/index/qa-decisions/AM2000A/2026-09-18-accepted-am2000a-ar2000-quadmosaic-cross-spline6.json",
+    "sha256": "D09A09CB53235E093739E3E2B5AA564195E06EA6ABA311A755A0F0CCD93D1DF7",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-quadmosaic-apo8-30fps-cross-spline6-rgb-g2d12s55",
+  "resref": "AM2000A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar2000-am2000ab-quadmosaic-cross-spline6-rgb-g2d12s55-20260918/manifest.json",
+    "manifest_sha256": "93D0382FD4A089CD6B727B6F571E5731D8B61D25D631942CA03A2B577B8ECCDA",
+    "path": "animations/batches/ar2000-am2000ab-quadmosaic-cross-spline6-rgb-g2d12s55-20260918",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2000",
+        "manifest_path": "animations/packs-par-zone/ar2000-am2000ab-quadmosaic-cross-spline6-split-20260918/AR2000/manifest.json",
+        "manifest_sha256": "F5F2108052FB9FE7022976C814A7679E434E87258F8764FC274BBBF80BFE7B17",
+        "path": "animations/packs-par-zone/ar2000-am2000ab-quadmosaic-cross-spline6-split-20260918/AR2000",
+        "registry_sha256": "F5F25991C5DD492E098BBF0D519E1B89C41E4452A9C33A22BC2C8666E8DC799C",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2000-am2000ab-quadmosaic-cross-spline6-split-20260918/manifest.json",
+    "manifest_sha256": "1EB44D3562345D32188B0520A839B7892522D88C4D570CB62276ACBE39A69D16",
+    "path": "animations/packs-par-zone/ar2000-am2000ab-quadmosaic-cross-spline6-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2000"
+  ],
+  "updated_at_utc": "2026-09-18T20:33:04Z"
+}
