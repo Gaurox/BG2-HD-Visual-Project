@@ -3,7 +3,8 @@ param(
     [string]$AreaPack,
     [string]$GameRoot,
     [string]$BackupRoot,
-    [switch]$VerifyOnly
+    [switch]$VerifyOnly,
+    [switch]$AllowDrop
 )
 
 $ErrorActionPreference = 'Stop'
@@ -21,6 +22,9 @@ if (-not [string]::IsNullOrWhiteSpace($BackupRoot)) {
 }
 if ($VerifyOnly) {
     $arguments += '--verify-only'
+}
+if ($AllowDrop) {
+    $arguments += '--allow-drop'
 }
 
 & python @arguments

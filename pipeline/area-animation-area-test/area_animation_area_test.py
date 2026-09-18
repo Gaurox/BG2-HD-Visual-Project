@@ -21,7 +21,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
@@ -92,6 +92,15 @@ class InstallResult:
     receipt_path: Path | None
     incoming_files: int
     incoming_bytes: int
+    dropped: tuple[str, ...] = ()
+
+
+ASSET_RESOURCE_RE = re.compile(r"^AAX4-(.+)-frame\d+\.rgba$")
+
+
+def resource_names(file_names: Iterable[str]) -> set[str]:
+    """Ressources (resref + variante) portées par des noms de frames `AAX4-<RESREF>-frameNNN.rgba`."""
+    return {match.group(1) for name in file_names if (match := ASSET_RESOURCE_RE.match(name))}
 
 
 ProcessChecker = Callable[[], list[str]]
@@ -797,6 +806,7 @@ def install_area_pack(
     verify_only: bool = False,
     process_checker: ProcessChecker = running_game_processes,
     failure_hook: FailureHook | None = None,
+    allow_drop: bool = False,
 ) -> InstallResult:
     ensure_game_stopped(process_checker)
     game = validate_game_root(game_root)
@@ -807,10 +817,20 @@ def install_area_pack(
     installed = DirectorySnapshot(True, tuple((entry.name, entry.snapshot) for entry in pack.files))
     incoming_bytes = sum(entry.snapshot.bytes for entry in pack.files)
     ini = validate_ini_enabled(game.ini)
+    dropped = tuple(sorted(
+        resource_names(name for name, _snapshot in before.files)
+        - resource_names(entry.name for entry in pack.files)
+    ))
     if verify_only:
-        return InstallResult("verified-only", pack.area_id, None, len(pack.files), incoming_bytes)
+        return InstallResult("verified-only", pack.area_id, None, len(pack.files), incoming_bytes,
+                             dropped)
     if before == installed:
         return InstallResult("already-installed", pack.area_id, None, len(pack.files), incoming_bytes)
+    if dropped and not allow_drop:
+        raise TransactionError(
+            f"cette installation retirerait de {pack.area_id} : {', '.join(dropped)} ; "
+            "ajouter --allow-drop (-AllowDrop) pour confirmer, ou fusionner ces ressources dans le pack"
+        )
 
     backup_parent = validate_backup_root(backup_root, pack.root, game.areas)
     transaction_id = (
@@ -896,6 +916,20 @@ def install_area_pack(
         ) from install_error
 
 
+def record_lock(area_id: str, area_pack: Path, game_root: Path) -> None:
+    """Met à jour `animations/index/area-pack-lock.json` ; ne bloque jamais l'installation."""
+    try:
+        import area_pack_state
+
+        if Path(game_root).resolve() != area_pack_state.game_areas_dir().parents[1].resolve():
+            return  # jeu de test ou copie : le verrou ne suit que le jeu configuré
+        outcome = area_pack_state.record_zone(
+            area_id, Path(game_root) / "iee-assets" / "areas", leaf=Path(area_pack).resolve())
+        print(f"Verrou mis à jour : {area_id} ({outcome})")
+    except Exception as error:  # noqa: BLE001 - le verrou est un suivi, pas une condition
+        print(f"Avertissement : verrou non mis à jour ({error})", file=sys.stderr)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(
         description="Installe/restaure transactionnellement un pack d'animations d'une seule zone."
@@ -906,6 +940,8 @@ def parser() -> argparse.ArgumentParser:
     install.add_argument("--game-root", type=Path, default=DEFAULT_GAME_ROOT)
     install.add_argument("--backup-root", type=Path, default=DEFAULT_BACKUP_ROOT)
     install.add_argument("--verify-only", action="store_true")
+    install.add_argument("--allow-drop", action="store_true",
+                         help="autoriser l'installation à retirer des ressources déjà servies dans la zone")
     restore = commands.add_parser("restore", help="restaurer une transaction")
     restore.add_argument("--backup-path", required=True, type=Path)
     restore.add_argument("--game-root", type=Path, default=DEFAULT_GAME_ROOT)
@@ -922,12 +958,16 @@ def main(argv: list[str] | None = None) -> int:
                 game_root=args.game_root,
                 backup_root=args.backup_root,
                 verify_only=args.verify_only,
+                allow_drop=args.allow_drop,
             )
             if result.status == "verified-only":
                 print(
                     f"VerifyOnly : {result.area_id}, {result.incoming_files} fichier(s), "
                     f"{result.incoming_bytes} octets ; aucune écriture."
                 )
+                if result.dropped:
+                    print(f"Attention : l'installation retirerait {', '.join(result.dropped)} "
+                          f"de {result.area_id} (bloquée sans --allow-drop).")
             elif result.status == "already-installed":
                 print(f"Déjà installé et byte-identique : {result.area_id}; aucune écriture.")
             else:
@@ -936,6 +976,8 @@ def main(argv: list[str] | None = None) -> int:
                     f"{result.incoming_bytes} octets."
                 )
                 print(f"Sauvegarde : {result.receipt_path.parent if result.receipt_path else ''}")
+            if result.status in {"installed", "already-installed"}:
+                record_lock(result.area_id, args.area_pack, args.game_root)
             return 0
         receipt = restore_from_receipt(
             args.backup_path,

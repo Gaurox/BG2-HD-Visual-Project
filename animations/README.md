@@ -25,6 +25,7 @@ uniquement si le format ou le défaut rencontré l'exige.
 | Candidats release | `../releases/BG2-HD-Upscale/manifests/animation-release-candidates.json` |
 | Résolution du legacy | `index/path-migrations.json`, `index/qa-evidence-migrations.json` ; un snapshot d'un blob Git orphelin doit être versionné sous `index/qa-evidence-history/`, avec SHA-256 et id blob dans la migration |
 | Rétention physique post-P3 | `index/post-p3-pack-retention-20260902.json` ; inventaire hashé sans implication QA/release |
+| Ce qui est servi dans le jeu | `index/area-pack-lock.json` (auto, par zone : ressources, signature, recette de reconstruction) et `index/area-pack-exceptions.json` ; commande `area_pack_state.py status` |
 
 Runs, packs, captures, backups et présence dans le jeu ne prouvent aucun statut.
 
@@ -67,6 +68,40 @@ Lorsque l'essai ingame nécessite un pack de zone : run x4 terminé → `split_a
 - Un pack historique où ce champ est absent ou faux est incompatible : régénérer un nouveau split
   puis une nouvelle fusion depuis les runs terminés ; ne jamais éditer un manifest immuable.
 - L'essai ingame ne modifie ni QA, ni sélection, ni release.
+
+## État installé (verrou)
+
+`index/area-pack-lock.json` : pour chaque zone servie, ses ressources avec signature de contenu,
+l'empreinte du dossier installé et la recette de reconstruction — soit `leaf` (un pack stocké
+identique), soit `merged_from` (les arguments `--pack` de `merge_area_pack_resources.py`). Les deux
+installateurs l'écrivent automatiquement après chaque installation réussie ; l'échec de cette mise à
+jour n'interrompt jamais l'installation. Le verrou est l'inventaire de reprise : sans lui, une zone
+effacée du jeu n'est plus rattachable à son pack d'origine.
+
+```powershell
+python pipeline/scripts/area_pack_state.py status [-v]      # < 1 s : empreintes ; -v détaille les manques
+python pipeline/scripts/area_pack_state.py status --deep    # ~5 s / 34 zones : réhache tout + rejoue les recettes
+python pipeline/scripts/area_pack_state.py restore --all-missing [--verify-only]   # reprise : zones du verrou absentes du jeu
+python pipeline/scripts/area_pack_state.py restore --zones AR0700 AR2100 [--verify-only]
+python pipeline/scripts/area_pack_state.py restore --from-backup <dossier areas sauvegardé> --zones AR.. | --all-missing [--exact]
+python pipeline/scripts/area_pack_state.py bootstrap [--zones AR..]   # zone installée hors verrou
+python pipeline/scripts/area_pack_state.py forget AR..               # zone désinstallée volontairement
+python pipeline/scripts/area_pack_state.py prior-work     # `non-traité` qui ont déjà des runs/packs
+```
+
+- `status` sort en code 1 dès qu'un écart existe, 0 sinon ; `--verify-only` et `status` n'écrivent
+  jamais rien. `status` seul fait confiance aux empreintes (taille/mtime) ; `--deep` les ignore,
+  réhache les frames installées et vérifie que chaque recette reproduit encore les signatures
+  verrouillées. Lancer `--deep` avant une session de restauration ou après un incident.
+- `restore --from-backup` substitue par défaut la version acceptée par la QA quand elle diffère de
+  la sauvegarde ; `--exact` reprend le contenu sauvegardé octet pour octet. Une zone absente de la
+  source est signalée et ignorée, jamais devinée.
+- `Install-AreaAnimation-AreaTest.ps1` et `Install-AreaAnimations-PerArea.ps1` refusent une
+  installation qui retirerait une ressource déjà servie (ou, pour l'installateur complet, une zone
+  installée) ; `-AllowDrop` confirme un retrait voulu. `-VerifyOnly` avertit sans bloquer.
+- L'installateur complet remplace tout `iee-assets/areas` : ne jamais lui donner un split-root partiel.
+- `status` signale aussi les packs sources du verrou supprimés du disque : ne pas les purger.
+- Un `validé-x4` volontairement non servi s'ajoute à `index/area-pack-exceptions.json`.
 
 ## Parcours courant
 

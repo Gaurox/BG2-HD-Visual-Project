@@ -17,7 +17,8 @@ param(
     [string]$GameRoot = $env:BG2EE_GAME_ROOT,
     [string]$SourceDll,
     [string]$BackupRoot,
-    [switch]$VerifyOnly
+    [switch]$VerifyOnly,
+    [switch]$AllowDrop
 )
 
 $workspaceRoot = $PSScriptRoot
@@ -163,6 +164,28 @@ $totalFiles = ($plan | ForEach-Object { $_.Files.Count } | Measure-Object -Sum).
 Write-Host ("Prevalidation reussie : {0} zone(s), {1} fichier(s), plus lourde zone {2:N1} Mio (plafond {3:N0} Mio)." -f `
     $plan.Count, $totalFiles, ([double]$index.largest_area_raw_bytes / 1MB), ([double]$index.runtime_budget_bytes / 1MB))
 
+# Garde-fou : cette installation REMPLACE tout iee-assets\areas. Toute zone ou ressource deja
+# servie et absente du split-root serait perdue (incident du 2026-09-16 : 138 zones -> 1).
+$dropped = [Collections.Generic.List[string]]::new()
+if (Test-Path -LiteralPath $areasDirectory -PathType Container) {
+    foreach ($installedDir in Get-ChildItem -LiteralPath $areasDirectory -Directory) {
+        $planned = $plan | Where-Object { $_.AreaId -eq $installedDir.Name } | Select-Object -First 1
+        if (-not $planned) { $dropped.Add("$($installedDir.Name) (zone entiere)"); continue }
+        $have = @(Get-ChildItem -LiteralPath $installedDir.FullName -File |
+            ForEach-Object { if ($_.Name -match '^AAX4-(.+)-frame\d+\.rgba$') { $Matches[1] } } | Select-Object -Unique)
+        $will = @($planned.Files |
+            ForEach-Object { if ($_.Name -match '^AAX4-(.+)-frame\d+\.rgba$') { $Matches[1] } } | Select-Object -Unique)
+        $lostResources = @($have | Where-Object { $_ -notin $will })
+        if ($lostResources.Count -gt 0) { $dropped.Add("$($installedDir.Name): $($lostResources -join ',')") }
+    }
+}
+if ($dropped.Count -gt 0) {
+    $dropMessage = "Cette installation remplace tout iee-assets\areas et retirerait ($($dropped.Count)) : " +
+        (($dropped | Select-Object -First 12) -join ' | ') + $(if ($dropped.Count -gt 12) { ' ...' } else { '' })
+    if ($VerifyOnly -or $AllowDrop) { Write-Warning $dropMessage }
+    else { throw ($dropMessage + ' Ajouter -AllowDrop pour confirmer.') }
+}
+
 if ($VerifyOnly) {
     Write-Host 'VerifyOnly : aucune ecriture effectuee.'
     return
@@ -216,6 +239,10 @@ foreach ($entry in $plan) {
     }
 }
 if ((Get-Sha256 $targetDll) -ne (Get-Sha256 $SourceDll)) { throw 'Verification de la DLL echouee.' }
+
+# Suivi : le verrou memorise l'etat installe (jamais bloquant).
+try { & python (Join-Path $projectRoot 'pipeline\scripts\area_pack_state.py') record-splitroot $splitRootPath }
+catch { Write-Warning "Verrou non mis a jour : $_" }
 
 Write-Host ("Installation terminee : {0} zone(s) sous {1}." -f $plan.Count, $areasDirectory)
 Write-Host ("Sauvegarde : {0}" -f $backupDirectory)

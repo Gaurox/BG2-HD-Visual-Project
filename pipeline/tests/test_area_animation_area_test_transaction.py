@@ -53,15 +53,16 @@ class AreaAnimationAreaTestTransactionTests(unittest.TestCase):
         )
         return game, areas
 
-    def make_pack(self, root: Path, area_id: str = "AR0001", marker: int = 17) -> Path:
+    def make_pack(self, root: Path, area_id: str = "AR0001", marker: int = 17,
+                  resref: str = "TESTA") -> Path:
         pack = root / area_id
         pack.mkdir(parents=True)
-        asset_name = runtime_v2.asset_name("TESTA", 0)
+        asset_name = runtime_v2.asset_name(resref, 0)
         asset_path = pack / asset_name
         asset_path.write_bytes(bytes([marker]) * 64)
         asset = {"name": asset_name, "bytes": 64, "sha256": sha256(asset_path)}
         resource = {
-            "resref": "TESTA",
+            "resref": resref,
             "frame_count": 1,
             "cycle_count": 1,
             "geometry_mode": "uniform",
@@ -114,6 +115,27 @@ class AreaAnimationAreaTestTransactionTests(unittest.TestCase):
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
         return pack
+
+    def test_install_refuses_to_drop_served_resources_without_allow_drop(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            game, areas = self.make_game(root)
+            backups = root / "backups"
+            backups.mkdir()
+            first = self.make_pack(root / "first", resref="TESTA")
+            second = self.make_pack(root / "second", resref="TESTB")
+            self.install(first, game, backups)
+            before = tree_bytes(areas / "AR0001")
+
+            with self.assertRaisesRegex(transaction.TransactionError, "retirerait.*TESTA"):
+                self.install(second, game, backups)
+            self.assertEqual(tree_bytes(areas / "AR0001"), before)
+
+            verified = self.install(second, game, backups, verify_only=True)
+            self.assertEqual(verified.dropped, ("TESTA",))
+            result = self.install(second, game, backups, allow_drop=True)
+            self.assertEqual(result.status, "installed")
+            self.assertEqual(transaction.resource_names(p.name for p in (areas / "AR0001").iterdir()), {"TESTB"})
 
     def install(self, pack: Path, game: Path, backups: Path, **kwargs: object) -> object:
         return transaction.install_area_pack(
