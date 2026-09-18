@@ -92,12 +92,22 @@ def dilate_rgb_under_transparency(rgba: np.ndarray) -> tuple[np.ndarray, int]:
 
 
 def apply_inner_contour_fade(
-    rgba: np.ndarray, radius: float, rgb_policy: str
+    rgba: np.ndarray, radius: float, rgb_policy: str, open_canvas_edges: bool = False
 ) -> tuple[np.ndarray, int]:
-    """Fade strictly inside the alpha silhouette; canvas exterior is transparent."""
+    """Fade strictly inside the alpha silhouette; canvas exterior is transparent.
+
+    With ``open_canvas_edges`` the silhouette continues past the canvas where it is opaque, so a
+    canvas-cut edge (e.g. the contact seam between two adjacent BAM) keeps its source alpha.
+    """
     inside = rgba[:, :, 3] > 0
-    padded = np.pad(inside, 1, mode="constant", constant_values=False)
-    distance = distance_transform_edt(padded)[1:-1, 1:-1]
+    if open_canvas_edges:
+        padded = np.pad(inside, 1, mode="edge")
+    else:
+        padded = np.pad(inside, 1, mode="constant", constant_values=False)
+    distance = (
+        distance_transform_edt(padded)[1:-1, 1:-1] if not padded.all()
+        else np.full(inside.shape, radius + 1.0)
+    )
     factor = smoothstep((distance - 1.0) / radius)
     if rgb_policy == "premultiplied":
         return (
@@ -400,7 +410,8 @@ def build(args: argparse.Namespace) -> Path:
                 fade_widths.append(fade_width)
             elif using_inner_contour:
                 treated, dilated = apply_inner_contour_fade(
-                    rgba, args.inner_contour_fade_x4, args.rgb_policy
+                    rgba, args.inner_contour_fade_x4, args.rgb_policy,
+                    args.inner_contour_open_canvas_edges
                 )
                 rgb_dilated_pixels += dilated
             elif np.any(rgba[:, :, 3]):
@@ -483,6 +494,7 @@ def build(args: argparse.Namespace) -> Path:
         treatment = {
             "kind": "inner-contour-fade", "curve": "smoothstep-distance-transform",
             "radius_x4": args.inner_contour_fade_x4,
+            "open_canvas_edges": args.inner_contour_open_canvas_edges,
             "rgba_policy": (
                 "preserve-straight-rgb-dilate-under-zero-alpha"
                 if args.rgb_policy == "preserve"
@@ -573,6 +585,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--luminance-low", type=float)
     parser.add_argument("--luminance-high", type=float)
     parser.add_argument("--inner-contour-fade-x4", type=float, default=0.0)
+    parser.add_argument(
+        "--inner-contour-open-canvas-edges", action="store_true",
+        help="ne pas faire fondre les bords coupés par le canvas (raccord entre deux BAM)",
+    )
     parser.add_argument(
         "--alpha-mask", type=Path, action="append",
         help="masque PNG monochrome correspondant au --resref de même position",
