@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0801A",
+  "correction_id": "spline-fit1-innerfeather16",
+  "decision": "QA ingame AR0801 + AR0808 validée par l'utilisateur : bassin de sang accepté en ReboutCX x4 (SeedVR 7B jugé trop granuleux, 3B écarté pour ses cellules hexagonales), Apollo-8 30 fps (7→14 phases, aucun doublon), spline fit 1 multi-contour avec feather 16 px x4, RGB préservé.",
+  "decision_date": "2026-09-18",
+  "decision_id": "2026-09-18-accepted-am0801a-ar0801-ar0808-reboutcx-feather16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-spline-fit1-feather16-20260918/manifest.json",
+    "manifest_sha256": "4BBC447DC85FD749AC61B83AF30B0119C264BD6CFB9AA0CCA854E0E27733BD6F",
+    "path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-spline-fit1-feather16-20260918",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C600E1C8E323185EE4BF2B384CE1CE71C9697C557B7715F95F6540B50AAC791C",
+        "path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-x4-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "851E5E8255430D602AACB57267142E8DEB83FCD1F9BCF2532DD8B2910C6C3F33",
+        "path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-x4-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-apo8-x4-30fps-v2-20260918/manifest.json",
+        "manifest_sha256": "A806F517062F56AA393CE4D15DA192AF94DF532CC30C72619F41BC11B8085A6F",
+        "path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-apo8-x4-30fps-v2-20260918",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-x4-20260918/manifest.json",
+        "manifest_sha256": "8132C12A7256686C7D19A75F99484305C3D12903F3FD8A7D1A8AECF40D755A7B",
+        "path": "animations/ressources/AM0801A/runs/ar0801-am0801a-reboutcx-x4-20260918",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "reboutcx-apo8-30fps-spline-fit1-feather16",
+  "recorded_at_utc": "2026-09-18T21:03:58Z",
+  "resref": "AM0801A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0801",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918/AR0801/manifest.json",
+        "manifest_sha256": "C8B66F1FC0F3E77A5FA1089BD6C48A41C30C6689B17F2775082A6DEB51AE49ED",
+        "path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918/AR0801",
+        "registry_sha256": "6A7BD6961A941DFAD3938883EDB652C8090B6268CDC910538833FB11A2AFB568",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0808",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918/AR0808/manifest.json",
+        "manifest_sha256": "6BF29A091B576144901CCD3A8649BBFADAD778E2A2E6F549C64BF6F7979105A5",
+        "path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918/AR0808",
+        "registry_sha256": "6A7BD6961A941DFAD3938883EDB652C8090B6268CDC910538833FB11A2AFB568",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918/manifest.json",
+    "manifest_sha256": "DDB6C4426A8412683C695D709EA1C25AEEA99252108DB3CF1F4E19BE687A2735",
+    "path": "animations/packs-par-zone/ar0801-am0801a-reboutcx-feather16-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0801",
+    "AR0808"
+  ]
+}

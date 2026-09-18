@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0801B2",
+  "correction_id": "spline-fit1-innerfeather16-seam-left8-16",
+  "decision": "QA ingame AR0801 + AR0808 validée par l'utilisateur : moitié droite du bassin pentagonal acceptée ; SeedVR2 7B/LAB x4 sur mosaïque B1|B2 (raccord continu à x=2848), Apollo-8 30 fps, spline fit 1 feather 16 avec alpha source restauré sur le bord gauche (8+16 px x4).",
+  "decision_date": "2026-09-18",
+  "decision_id": "2026-09-18-accepted-am0801b2-ar0801-ar0808-mosaic-feather16-seaml",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0801B2/runs/ar0801-am0801b2-spline-fit1-feather16-seamL-20260918/manifest.json",
+    "manifest_sha256": "5D78FD85DC1E2B5EB6A04B639246081DC499768AAD70733844D4D9795763C389",
+    "path": "animations/ressources/AM0801B2/runs/ar0801-am0801b2-spline-fit1-feather16-seamL-20260918",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "EC6C1F744C12660714E81D53EB933C10779DF7FCC44FB45060610DC91FFEA523",
+        "path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "A2EEE3501173B47257F618DF846101CE45F1EDA402E82A1117FB1C8C6C26CEA8",
+        "path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/manifest.json",
+        "manifest_sha256": "8CA2309F356E6A995CBACA444B9D673E2107ED3B15E1502D227797112AC9007F",
+        "path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/manifest.json",
+        "manifest_sha256": "EFEFBC28B89DFB1AEB8AA2C48BDF93182FDFB869D7FBFD80EF1D6BE4E77BA494",
+        "path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "seedvr7b-b1b2mosaic-apo8-30fps-spline-fit1-feather16-seam-left8-16",
+  "recorded_at_utc": "2026-09-18T21:04:00Z",
+  "resref": "AM0801B2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0801",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918/AR0801/manifest.json",
+        "manifest_sha256": "333D6CD3534DA6A35A563DA54288CC9348BAE25FB057AE6DBD0FA25214AB0AB4",
+        "path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918/AR0801",
+        "registry_sha256": "CB8031D676C7B9A87F97B45F45CF1B1FD0B7B526C7ED26D472700EB5C4B94DDA",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0808",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918/AR0808/manifest.json",
+        "manifest_sha256": "313BBCA92FA0029EE4E4A7503EAAC93EC2CA4A82D5F1794F112736AC1B0767E0",
+        "path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918/AR0808",
+        "registry_sha256": "CB8031D676C7B9A87F97B45F45CF1B1FD0B7B526C7ED26D472700EB5C4B94DDA",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918/manifest.json",
+    "manifest_sha256": "A6F6FB5AC8745EDAE6ACE22BF17657B5BA4AC6AA54276B202EB49330F5C05794",
+    "path": "animations/packs-par-zone/ar0801-am0801b2-feather16-seamL-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0801",
+    "AR0808"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0801B1",
+  "correction_id": "spline-fit1-innerfeather16-seam-right8-16",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "EC6C1F744C12660714E81D53EB933C10779DF7FCC44FB45060610DC91FFEA523",
+        "path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "A2EEE3501173B47257F618DF846101CE45F1EDA402E82A1117FB1C8C6C26CEA8",
+        "path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918/manifest.json",
+        "manifest_sha256": "8CA2309F356E6A995CBACA444B9D673E2107ED3B15E1502D227797112AC9007F",
+        "path": "animations/batches/ar0801-apo8-x4-30fps-v2-20260918",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918/manifest.json",
+        "manifest_sha256": "EFEFBC28B89DFB1AEB8AA2C48BDF93182FDFB869D7FBFD80EF1D6BE4E77BA494",
+        "path": "animations/batches/ar0801-seedvr7b-lab-x4-b1b2mosaic-20260918",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-18",
+    "path": "animations/index/qa-decisions/AM0801B1/2026-09-18-accepted-am0801b1-ar0801-ar0808-mosaic-feather16-seamr.json",
+    "sha256": "395B1A33F313E59EED34C8E42A8C078D60F5EEC2705EF9EA56702CA27A50DAE5",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-b1b2mosaic-apo8-30fps-spline-fit1-feather16-seam-right8-16",
+  "resref": "AM0801B1",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0801B1/runs/ar0801-am0801b1-spline-fit1-feather16-seamR-20260918/manifest.json",
+    "manifest_sha256": "9B56AF9D80F8BA56F0F4BFD8E82E7721DC9608C6BDC02E3320D6599A819120CA",
+    "path": "animations/ressources/AM0801B1/runs/ar0801-am0801b1-spline-fit1-feather16-seamR-20260918",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0801",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918/AR0801/manifest.json",
+        "manifest_sha256": "CD8302FF63DD629A931C02AFA6D9080103369CCDA29E5B53CDB4666B03694BB7",
+        "path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918/AR0801",
+        "registry_sha256": "CB8031D676C7B9A87F97B45F45CF1B1FD0B7B526C7ED26D472700EB5C4B94DDA",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0808",
+        "manifest_path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918/AR0808/manifest.json",
+        "manifest_sha256": "CE92FCF3D4A8C9036FAED713C1981685A4C21E0320129F7BBDAEF35991938C63",
+        "path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918/AR0808",
+        "registry_sha256": "CB8031D676C7B9A87F97B45F45CF1B1FD0B7B526C7ED26D472700EB5C4B94DDA",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918/manifest.json",
+    "manifest_sha256": "6CCEA025C12CB5B4AE871FE2DF91170D621F6EFEAFF87AD60F7CF3FC079C59A3",
+    "path": "animations/packs-par-zone/ar0801-am0801b1-feather16-seamR-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0801",
+    "AR0808"
+  ],
+  "updated_at_utc": "2026-09-18T21:03:59Z"
+}
