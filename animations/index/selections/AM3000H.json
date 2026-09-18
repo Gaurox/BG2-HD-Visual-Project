@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3000H",
+  "correction_id": "spline-fit1-innerfeather4-innerfade36",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM3000H/runs/ar3000-am3000h-spline-fit1-feather4-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "152F9287491B39EFAAF6F86EDD1BE425323C3BF24F0E601DE452E87C68B821FA",
+        "path": "animations/ressources/AM3000H/runs/ar3000-am3000h-spline-fit1-feather4-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-18",
+    "path": "animations/index/qa-decisions/AM3000H/2026-09-18-accepted-am3000h-ar3000-spline-fit1-feather4-innerfade36.json",
+    "sha256": "8EF9770DA7DEA122AC98D49B9EA274B5B4C24EB443F9BEFFFA4DC8292E4611CA",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-spline-fit1-feather4-innerfade36",
+  "resref": "AM3000H",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM3000H/runs/ar3000-am3000h-spline-fit1-innerfade36-20260918/manifest.json",
+    "manifest_sha256": "62B59912246F5538EB216C4C5125BD848DF7D5E4E159D6203D79F1B5BDDE86C6",
+    "path": "animations/ressources/AM3000H/runs/ar3000-am3000h-spline-fit1-innerfade36-20260918",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3000",
+        "manifest_path": "animations/packs-par-zone/ar3000-am3000h-spline-fit1-innerfade36-split-20260918/AR3000/manifest.json",
+        "manifest_sha256": "DF21B49CBEF12C467B32760F9EE8B72E905C9C8C4525C9BB92A055EC3DB9F6B0",
+        "path": "animations/packs-par-zone/ar3000-am3000h-spline-fit1-innerfade36-split-20260918/AR3000",
+        "registry_sha256": "DEF74DB0C3FDCAE88BAA1706CC88F7D3BFEFF41FA4F4597A9ED5F23FE522988F",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3000-am3000h-spline-fit1-innerfade36-split-20260918/manifest.json",
+    "manifest_sha256": "B33827E1CD5E27DDF8A2F625D11AA93B1285C7393BCADAEEDB14D8F156C3DC5F",
+    "path": "animations/packs-par-zone/ar3000-am3000h-spline-fit1-innerfade36-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3000"
+  ],
+  "updated_at_utc": "2026-09-18T19:24:33Z"
+}

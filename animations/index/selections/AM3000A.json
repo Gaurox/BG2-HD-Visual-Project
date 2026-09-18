@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM3000A",
+  "correction_id": "alpha-strict-innerfade36-straightrgb-dilate",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar3000-decor-apo8-x4-30fps-v2-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B906AE5178805EB29D5675D22A169137D9B1B8C926630F1C1D2F2B6853033272",
+        "path": "animations/batches/ar3000-decor-apo8-x4-30fps-v2-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-18",
+    "path": "animations/index/qa-decisions/AM3000A/2026-09-18-accepted-am3000a-ar3000-fade36-straightrgb.json",
+    "sha256": "11B55B112DD01B33B6EDF942A7328A3FBF9EA673ECD6D56B9864262C98CC449E",
+    "status": "accepted"
+  },
+  "recipe_id": "mecanique-seedvr7b-apo8-30fps-alpha-strict-fade36",
+  "resref": "AM3000A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/ar3000-am3000a-innerfade36-straightrgb-20260918/manifest.json",
+    "manifest_sha256": "A1AED6D0F113729A22A243B34800BAB26EF28AA49D58431E31FFC074F611BDE1",
+    "path": "animations/batches/ar3000-am3000a-innerfade36-straightrgb-20260918",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR3000",
+        "manifest_path": "animations/packs-par-zone/ar3000-am3000a-innerfade36-split-20260918/AR3000/manifest.json",
+        "manifest_sha256": "055E7FE8FFDF1073BE4A3D844F154309F09D88D6A2008311F7C2A32FCBC48721",
+        "path": "animations/packs-par-zone/ar3000-am3000a-innerfade36-split-20260918/AR3000",
+        "registry_sha256": "6A86067CF865E86F5B033CB9AA81BD87CCB9CAD3913D7113257E6973053B5038",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar3000-am3000a-innerfade36-split-20260918/manifest.json",
+    "manifest_sha256": "CBF0EF4FED49246BCA335CE6E34ACC1612226F6D36F047D89876D5555BBACA03",
+    "path": "animations/packs-par-zone/ar3000-am3000a-innerfade36-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR3000"
+  ],
+  "updated_at_utc": "2026-09-18T19:24:32Z"
+}
