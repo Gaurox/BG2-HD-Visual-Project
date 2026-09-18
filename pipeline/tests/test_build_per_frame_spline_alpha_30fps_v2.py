@@ -68,3 +68,24 @@ class PerFrameSplineAlphaTests(unittest.TestCase):
         np.testing.assert_array_equal(result[12:], faded[12:])
         self.assertTrue(np.all(result <= source))
         self.assertGreater(report["changed_alpha_pixels"], 0)
+
+    def test_left_and_right_seams_restore_source_alpha_without_expansion(self) -> None:
+        source = np.full((8, 24), 180, dtype=np.uint8)
+        faded = np.full((8, 24), 30, dtype=np.uint8)
+
+        left, left_report = builder.restore_left_seam(
+            faded, source, protected_depth=4, transition=8
+        )
+        right, right_report = builder.restore_right_seam(
+            faded, source, protected_depth=4, transition=8
+        )
+
+        np.testing.assert_array_equal(left[:, :4], source[:, :4])
+        self.assertGreater(int(left[3, 7]), int(faded[3, 7]))
+        np.testing.assert_array_equal(left[:, 12:], faded[:, 12:])
+        np.testing.assert_array_equal(right[:, -4:], source[:, -4:])
+        self.assertGreater(int(right[3, 16]), int(faded[3, 16]))
+        np.testing.assert_array_equal(right[:, :12], faded[:, :12])
+        self.assertTrue(np.all(left <= source) and np.all(right <= source))
+        self.assertGreater(left_report["changed_alpha_pixels"], 0)
+        self.assertGreater(right_report["changed_alpha_pixels"], 0)

@@ -279,6 +279,22 @@ def restore_top_seam(alpha: np.ndarray, source_alpha: np.ndarray, *,
     }
 
 
+def restore_left_seam(alpha: np.ndarray, source_alpha: np.ndarray, *,
+                      protected_depth: int, transition: int) -> tuple[np.ndarray, dict[str, int]]:
+    """Restore source alpha at a shared left canvas seam (top-seam logic on the transposed frame)."""
+    restored, report = restore_top_seam(
+        alpha.T, source_alpha.T, protected_depth=protected_depth, transition=transition)
+    return np.ascontiguousarray(restored.T), report
+
+
+def restore_right_seam(alpha: np.ndarray, source_alpha: np.ndarray, *,
+                       protected_depth: int, transition: int) -> tuple[np.ndarray, dict[str, int]]:
+    """Restore source alpha at a shared right canvas seam (bottom-seam logic on the transposed frame)."""
+    restored, report = restore_bottom_seam(
+        alpha.T, source_alpha.T, protected_depth=protected_depth, transition=transition)
+    return np.ascontiguousarray(restored.T), report
+
+
 def apply_timeline_global_fade(pack_root: Path, resource: dict[str, Any], *,
                                hold_ratio: float) -> dict[str, Any]:
     """Clone timeline phases so repeated frames can carry phase-specific alpha."""
@@ -525,7 +541,9 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
           active_fade_full: int, active_fade_out: int, rgb_policy: str,
           bottom_seam_protected_depth: int, bottom_seam_transition: int,
           top_seam_protected_depth: int, top_seam_transition: int,
-          review_ffmpeg: str) -> dict[str, Any]:
+          review_ffmpeg: str, left_seam_protected_depth: int = 0,
+          left_seam_transition: int = 0, right_seam_protected_depth: int = 0,
+          right_seam_transition: int = 0) -> dict[str, Any]:
     require(not output.exists() and not output.with_name(output.name + ".partial").exists(),
             f"sortie déjà présente : {output}")
     require(fit_error > 0 and sample_spacing > 0 and supersample >= 1 and padding >= 1 and
@@ -541,6 +559,14 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
     require(not top_seam_requested or
             (top_seam_protected_depth > 0 and top_seam_transition > 0),
             "raccord haut : fournir ensemble profondeur et transition")
+    left_seam_requested = left_seam_protected_depth > 0 or left_seam_transition > 0
+    require(not left_seam_requested or
+            (left_seam_protected_depth > 0 and left_seam_transition > 0),
+            "raccord gauche : fournir ensemble profondeur et transition")
+    right_seam_requested = right_seam_protected_depth > 0 or right_seam_transition > 0
+    require(not right_seam_requested or
+            (right_seam_protected_depth > 0 and right_seam_transition > 0),
+            "raccord droit : fournir ensemble profondeur et transition")
     active_fade_requested = any((active_fade_in, active_fade_full, active_fade_out))
     require(not active_fade_requested or (active_fade_in > 0 and active_fade_full > 0 and active_fade_out > 0),
             "fade actif : fournir les trois segments")
@@ -610,6 +636,20 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
                 protected_depth=bottom_seam_protected_depth,
                 transition=bottom_seam_transition,
             )
+        left_seam_report: dict[str, int] | None = None
+        right_seam_report: dict[str, int] | None = None
+        if left_seam_requested:
+            alpha, left_seam_report = restore_left_seam(
+                alpha, raw[:, :, 3],
+                protected_depth=left_seam_protected_depth,
+                transition=left_seam_transition,
+            )
+        if right_seam_requested:
+            alpha, right_seam_report = restore_right_seam(
+                alpha, raw[:, :, 3],
+                protected_depth=right_seam_protected_depth,
+                transition=right_seam_transition,
+            )
         result = apply_rgb_policy(raw, alpha, rgb_policy)
         asset_path.write_bytes(result.tobytes())
         frame["bytes"] = asset_path.stat().st_size
@@ -619,6 +659,8 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             **report, "oval_edge_fade": oval_report,
             "top_seam_protection": top_seam_report,
             "bottom_seam_protection": seam_report,
+            "left_seam_protection": left_seam_report,
+            "right_seam_protection": right_seam_report,
         })
     timeline_fade = (apply_timeline_active_fade(
         pack_root, resource, fade_in=active_fade_in, full=active_fade_full,
@@ -704,6 +746,16 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             "transition_x4": top_seam_transition,
             "policy": "restore-source-alpha-with-vertical-smoothstep",
         } if top_seam_requested else None,
+        "left_seam_protection": {
+            "protected_depth_x4": left_seam_protected_depth,
+            "transition_x4": left_seam_transition,
+            "policy": "restore-source-alpha-with-horizontal-smoothstep",
+        } if left_seam_requested else None,
+        "right_seam_protection": {
+            "protected_depth_x4": right_seam_protected_depth,
+            "transition_x4": right_seam_transition,
+            "policy": "restore-source-alpha-with-horizontal-smoothstep",
+        } if right_seam_requested else None,
     }
     temporal.write_json(pack_root / "manifest.json", pack_manifest)
     temporal.validate_v2_pack(pack_root)
@@ -733,6 +785,10 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             "bottom_seam_transition_x4": bottom_seam_transition,
             "top_seam_protected_depth_x4": top_seam_protected_depth,
             "top_seam_transition_x4": top_seam_transition,
+            "left_seam_protected_depth_x4": left_seam_protected_depth,
+            "left_seam_transition_x4": left_seam_transition,
+            "right_seam_protected_depth_x4": right_seam_protected_depth,
+            "right_seam_transition_x4": right_seam_transition,
         },
         "frames": reports,
         "timeline_fade": timeline_fade,
@@ -749,6 +805,16 @@ def build(temporal_run: Path, resref: str, output: Path, *, threshold: int,
             "transition_x4": top_seam_transition,
             "policy": "restore-source-alpha-with-vertical-smoothstep",
         } if top_seam_requested else None,
+        "left_seam_protection": {
+            "protected_depth_x4": left_seam_protected_depth,
+            "transition_x4": left_seam_transition,
+            "policy": "restore-source-alpha-with-horizontal-smoothstep",
+        } if left_seam_requested else None,
+        "right_seam_protection": {
+            "protected_depth_x4": right_seam_protected_depth,
+            "transition_x4": right_seam_transition,
+            "policy": "restore-source-alpha-with-horizontal-smoothstep",
+        } if right_seam_requested else None,
         "installation": "not performed",
     }
     temporal.write_json(report_path, report)
@@ -822,6 +888,14 @@ def main() -> None:
                         help="profondeur haute restauree pour une jointure entre deux BAM")
     parser.add_argument("--top-seam-transition-x4", type=int, default=0,
                         help="transition verticale entre jointure haute restauree et spline")
+    parser.add_argument("--left-seam-protected-depth-x4", type=int, default=0,
+                        help="profondeur gauche restauree pour une jointure horizontale entre deux BAM")
+    parser.add_argument("--left-seam-transition-x4", type=int, default=0,
+                        help="transition horizontale entre jointure gauche restauree et spline")
+    parser.add_argument("--right-seam-protected-depth-x4", type=int, default=0,
+                        help="profondeur droite restauree pour une jointure horizontale entre deux BAM")
+    parser.add_argument("--right-seam-transition-x4", type=int, default=0,
+                        help="transition horizontale entre spline et jointure droite restauree")
     parser.add_argument("--threshold", type=int, default=127)
     parser.add_argument("--review-ffmpeg", default="ffmpeg")
     args = parser.parse_args()
@@ -851,6 +925,10 @@ def main() -> None:
         top_seam_protected_depth=args.top_seam_protected_depth_x4,
         top_seam_transition=args.top_seam_transition_x4,
         review_ffmpeg=args.review_ffmpeg,
+        left_seam_protected_depth=args.left_seam_protected_depth_x4,
+        left_seam_transition=args.left_seam_transition_x4,
+        right_seam_protected_depth=args.right_seam_protected_depth_x4,
+        right_seam_transition=args.right_seam_transition_x4,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
