@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM2805A",
+  "decision": "AR2804 et AR2805 : arbre de vie, animation x4 TimedTimeline 30 fps validee ingame par l'utilisateur ; rendu, cadence, alpha et occlusion native acceptes.",
+  "decision_date": "2026-09-19",
+  "decision_id": "2026-09-19-accepted-am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908/manifest.json",
+    "manifest_sha256": "BB301CCAF8DF0FCC2DEC5BC4E8B2D22CC4C08D33E6B60F1011EEDB42141465DA",
+    "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "85428EE862F3A46A486F70B493D10D7DCD45D466BE885E03E66B538B7A9DA876",
+        "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907/03_runtime_pack/manifest.json",
+        "manifest_sha256": "09CA99D2709C122C7AC424FFE294FBF124BFA886D47D4B74905C115B91047AD6",
+        "path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907/manifest.json",
+        "manifest_sha256": "AAF1DA7A6109AD68519FD9BC0ABC50E8B5E9995660467EAFF8F29274AFDE6BF5",
+        "path": "animations/ressources/AM2805A/runs/am2805a-apo8-x4-30fps-v2-20260907",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907/manifest.json",
+        "manifest_sha256": "C12E0091C21A16191F07C2D4B0F40DD1602516531B867FCA2FA44FDCF8AC02AD",
+        "path": "animations/ressources/AM2805A/runs/am2805a-seedvr2-7b-lab-x4-20260907",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recorded_at_utc": "2026-09-18T22:50:10Z",
+  "resref": "AM2805A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2804",
+        "manifest_path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/AR2804/manifest.json",
+        "manifest_sha256": "B848B593FE2C2ECC4EDF1CB448C161FB261A09367FA734ADDA3BE0A02FBC3786",
+        "path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/AR2804",
+        "registry_sha256": "6FA093C5360116AA1A3051FB0EBB855420B675577618B180D93D8F27663446DE",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2805",
+        "manifest_path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/AR2805/manifest.json",
+        "manifest_sha256": "FB02F67E2E0E1F3ADDA059F81B6CF6BDF89D8287A318603909120F4B68D1D86F",
+        "path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/AR2805",
+        "registry_sha256": "44F7AF5B558722C88759635BFFFB166719D6638A523A4B89E887AFA623967E62",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/manifest.json",
+    "manifest_sha256": "932CCC577209E3472D1AE2E6A8A0524618CF770026742DDE9C2D32AA3D9240F0",
+    "path": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR2804",
+    "AR2805"
+  ]
+}
