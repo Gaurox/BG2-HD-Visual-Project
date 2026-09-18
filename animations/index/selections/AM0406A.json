@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0406A",
+  "correction_id": "alpha-strict-innerfade8-open-canvas-edges",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM0406A/runs/ar0406-am0406a-mosaic-apo8-x4-30fps-weighted-20260918/03_runtime_pack/manifest.json",
+        "manifest_sha256": "3E1D77B6A0B6BCBE05BE1AD60620F19723AFFEED829191B3646A5F9444901B26",
+        "path": "animations/ressources/AM0406A/runs/ar0406-am0406a-mosaic-apo8-x4-30fps-weighted-20260918/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-18",
+    "path": "animations/index/qa-decisions/AM0406A/2026-09-18-accepted-am0406a-ar0406-mosaic-innerfade8-open.json",
+    "sha256": "9444B76C8B14C1C29837A4A1426A4B4B13EAA887D0953F8A474FC4DC67DC3914",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-mosaic-apo8-30fps-innerfade8-open-edges",
+  "resref": "AM0406A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM0406A/runs/ar0406-am0406a-mosaic-innerfade8-open-20260918/manifest.json",
+    "manifest_sha256": "F9CB7D47E3B1DCD080DAEBFA1B9B89246A9191B71DB5C8012FB5A58251B3A396",
+    "path": "animations/ressources/AM0406A/runs/ar0406-am0406a-mosaic-innerfade8-open-20260918",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0406",
+        "manifest_path": "animations/packs-par-zone/ar0406-am0406a-mosaic-innerfade8-open-split-20260918/AR0406/manifest.json",
+        "manifest_sha256": "A0DAA0B3FD0C3D12865A4D8CABEA6EF3122B44D5EDDAEC3D82E3B885E031DE06",
+        "path": "animations/packs-par-zone/ar0406-am0406a-mosaic-innerfade8-open-split-20260918/AR0406",
+        "registry_sha256": "BA6B908D9B8F7A227E5A7338CA609DC363799DB49884D36475BD8E2613D971F2",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0406-am0406a-mosaic-innerfade8-open-split-20260918/manifest.json",
+    "manifest_sha256": "C55B3BD98E1322CDBC6974ACDD1BB8A2102DDCD244CBFB0EB5285FE688E2BCA3",
+    "path": "animations/packs-par-zone/ar0406-am0406a-mosaic-innerfade8-open-split-20260918",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0406"
+  ],
+  "updated_at_utc": "2026-09-18T20:12:21Z"
+}
