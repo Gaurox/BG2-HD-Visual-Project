@@ -1222,20 +1222,48 @@ def input_rgb(image: Image.Image, transparent_rgb_mode: str) -> tuple[Image.Imag
     return nearest_opaque_dilate(image)
 
 
-def save_input_rgb(base_pack: Path, context: dict[str, Any], frame_index: int,
-                   destination: Path, transparent_rgb_mode: str) -> int:
+def input_source_image(base_pack: Path, context: dict[str, Any], frame_index: int) -> Image.Image:
     frame = context["frames"][frame_index]
     if context["input_mode"] == "spatial-v1":
         with Image.open(frame["aligned_rgba"]) as aligned:
-            rgb, replaced = input_rgb(aligned, transparent_rgb_mode)
-    else:
-        raw = base_pack / str(frame["runtime_asset"])
-        source = rgba_from_raw(raw, frame["physical_size_x4"])
-        if context["geometry_mode"] == "runtime-centre-aligned-base":
-            aligned = Image.new("RGBA", tuple(context["aligned_size_x4"]), (0, 0, 0, 0))
-            aligned.alpha_composite(source, tuple(frame["crop_box_x4"][:2]))
-            source = aligned
-        rgb, replaced = input_rgb(source, transparent_rgb_mode)
+            return aligned.convert("RGBA")
+    raw = base_pack / str(frame["runtime_asset"])
+    source = rgba_from_raw(raw, frame["physical_size_x4"])
+    if context["geometry_mode"] == "runtime-centre-aligned-base":
+        aligned = Image.new("RGBA", tuple(context["aligned_size_x4"]), (0, 0, 0, 0))
+        aligned.alpha_composite(source, tuple(frame["crop_box_x4"][:2]))
+        source = aligned
+    return source
+
+
+def empty_frame_fallbacks(base_pack: Path, context: dict[str, Any],
+                          lookup: list[int]) -> dict[int, int]:
+    """Map each fully transparent input frame to the nearest visible neighbour in the lookup.
+
+    Topaz cannot be fed a frame with no visible colour to dilate. Such a frame borrows the hidden
+    RGB of its nearest visible neighbour (previous pose first); alpha stays authoritative.
+    """
+    empty = {index for index in set(lookup)
+             if input_source_image(base_pack, context, index).getchannel("A").getbbox() is None}
+    fallbacks: dict[int, int] = {}
+    for position, index in enumerate(lookup):
+        if index not in empty or index in fallbacks:
+            continue
+        candidates = [lookup[position - offset] for offset in range(1, position + 1)]
+        candidates += lookup[position + 1:]
+        visible = [candidate for candidate in candidates if candidate not in empty]
+        require(visible, f"{context['resref']}: aucune frame visible pour alimenter Topaz")
+        fallbacks[index] = visible[0]
+    return fallbacks
+
+
+def save_input_rgb(base_pack: Path, context: dict[str, Any], frame_index: int,
+                   destination: Path, transparent_rgb_mode: str,
+                   fallbacks: dict[int, int] | None = None) -> int:
+    if fallbacks and frame_index in fallbacks:
+        frame_index = fallbacks[frame_index]
+    rgb, replaced = input_rgb(input_source_image(base_pack, context, frame_index),
+                              transparent_rgb_mode)
     rgb.save(destination)
     return replaced
 
@@ -1447,10 +1475,13 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
             group_segments = group["segments"]
             group_lookup = [int(item["left_native_frame"]) for item in group_segments]
             group_lookup.append(int(group_segments[-1]["right_native_frame"]))
+            group_fallbacks = (empty_frame_fallbacks(base_pack, context, group_lookup)
+                               if transparent_rgb_mode == "nearest-opaque-dilate" else None)
             for position, frame_index in enumerate(group_lookup):
                 destination = group_input / f"in_{position:04d}.png"
                 input_hidden_rgb_replaced.append(save_input_rgb(
-                    base_pack, context, frame_index, destination, transparent_rgb_mode))
+                    base_pack, context, frame_index, destination, transparent_rgb_mode,
+                    group_fallbacks))
             run_checked([
                 str(tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
                 "-framerate", rate_text, "-i", str(group_input / "in_%04d.png"),
@@ -1506,9 +1537,12 @@ def interpolate_cycle(base_pack: Path, base_resource: dict[str, Any], context: d
             input_lookup if strategy == "preserve-segmented-holds"
             else input_lookup + [input_lookup[0]]
         )
+        video_fallbacks = (empty_frame_fallbacks(base_pack, context, video_lookup)
+                           if transparent_rgb_mode == "nearest-opaque-dilate" else None)
         for position, frame_index in enumerate(video_lookup):
             replaced = save_input_rgb(base_pack, context, frame_index,
-                                      input_dir / f"in_{position:04d}.png", transparent_rgb_mode)
+                                      input_dir / f"in_{position:04d}.png", transparent_rgb_mode,
+                                      video_fallbacks)
             input_hidden_rgb_replaced.append(replaced)
         run_checked([
             str(tvai_ffmpeg), "-hide_banner", "-loglevel", "error", "-y",
