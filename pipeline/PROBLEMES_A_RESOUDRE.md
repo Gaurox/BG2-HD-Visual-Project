@@ -33,6 +33,13 @@ Les décisions durables sont dans
 |---|---|
 | AR2300 | crash de carte complète et incohérence d'eau ; reprise complète |
 
+| Lot 1 ToB (28 zones : AR5000–AR5016 hors AR5013, AR5203, AR5500–AR5509 hors AR5508, AR6300, AR6400) | installées le 2026-09-19 ; QA jour + secondaires par zone à faire ; points sensibles : eau AR5000/AR5203 (WATER-005), AR5010 (WTPOOL x2), AR6300 (WTLAKA-D x2), raccords de découpe AR5000/AR5203/AR5500/AR5007/AR6400 |
+
+| Lot 2 ToB (22 zones : AR6000–AR6012 hors 6006/6007/6009/6010, AR6100–AR6111, AR6200) | installées le 2026-09-19 ; QA à faire ; sensibles : AR6008 (WTSWAM keep-stock, 1 carré d'eau opaque sans secondaire non réparé, alpha0 de l'audit volontairement non appliqué), raccords AR6101/AR6104/AR6100/AR6200/AR6000/AR6004/AR6005 |
+| Lot 3 ToB (9 zones : OH4200/4210/4220/4230, OH5110/5120/5200, OH5400, OH5500) | installées le 2026-09-19 ; QA jour **et nuit** OH4200 et OH5200 ; secondaires OH4200/4210/4220 |
+| Lot 4 ToB + Black Pits (8 zones : OH6400, OH6460, OH6500, OH7310, OH8000, OH8200/8300/8400) | installées le 2026-09-19 sauf OH6460 (voir ci-dessous) ; QA jour **et nuit** OH6400, OH6500, OH8200/8300/8400 ; maîtres x1 jour OH8200/8300/8400 régénérés (`--fix`) |
+| OH6460 | WED sur le tileset `OH8100` (cellules et maîtres x1 identiques à OH8100) : build propre **non installé** (≠ octets de l'override OH8100 validé le 2026-09-04, l'écraserait) ; s'affiche déjà en x4 via l'override OH8100 ; build conservé dans `maps/OH6460/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build` |
+
 Ne jamais convertir `installed-pending-qa` en `validated-installed` sans décision explicite.
 
 ## MAP-OVERLAY-001 — Politique WTLAVA-D contradictoire
@@ -76,6 +83,19 @@ ne sont pas réconciliés par une décision explicite.
 - Traitement reporté ; identifier le resref/la cellule concernée avant toute nouvelle passe.
 - `areas.csv` reste `validated-installed` pour AR5200 (le reste de la zone est accepté) ; ne pas
   clore cette entrée sans preuve de la correction de la partie eau signalée.
+
+## WATER-005 — Famille WT5000A-D (AR5000, AR5203) non classée
+
+- Rivière brune (overlays 1×1, 8 frames) partagée par AR5000 et AR5203 ; ~720 cellules à flags
+  overlay par carte. Préflight : `other-liquid-day` → blocage « liquide non classé »
+  (`family-policy-v1.json` : `brown-flowing-wt5000`, `engine_mode: unclassified`,
+  `overlay_action: preserve-stock`, route2 bloquée).
+- Traitement 2026-09-19 : inférence lancée avec `--allow-blocked-test` (manifeste conserve le
+  bloqueur), correction couleur `none`, base x4 avec alpha source restauré, overlays WT5000 non
+  installés (stock x1). Runs `maps/AR5000|AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4`, builds installés
+  `installed-pending-qa`. AR5000 = zone témoin ; AR5203 suit son verdict.
+- Non fait : classification dans `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py`,
+  matériau route2 dédié. À décider après QA : rive/contour, animation de la rivière sous base x4, pause/reprise.
 
 ## WTPOOL-001 — Piscines x4
 
