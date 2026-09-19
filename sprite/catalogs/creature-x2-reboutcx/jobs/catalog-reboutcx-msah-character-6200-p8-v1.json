@@ -1,0 +1,4697 @@
+{
+  "schema": "bg2-upscale-reboutcx-derived-catalog-job-v1",
+  "job_id": "catalog-reboutcx-msah-character-6200-p8-v1",
+  "installable": false,
+  "target_scale": 2,
+  "paths": {
+    "parent_pointer": "sprite/catalogs/creature-x2-nearest/runs/catalog-x2-nearest/runs/catalog-xbr2x-x2/current-generation.json",
+    "run_dir": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-msah-character-6200-p8-v1"
+  },
+  "parent": {
+    "pointer_sha256": "71DE26627A7A06B3338242BD722AACA17F32022FE6108F78F33F680B682249EB",
+    "generation_id": "912AE8AE2B6E3D297F042FC972C6C6DB5C2B95752DCFEBD015B1CFD9433E45DD",
+    "build_manifest_sha256": "34A642C439E837C624D9D739ED1210832D2DEFC1DA082323F3E2C3E25DE36533",
+    "catalog_sha256": "434E50C478E0EC9409E3E4A37D8F1293E4C1E77AC186B1B271EE4B70AD5DE536",
+    "logical_content_sha256": "8E83C53526B0718B35B051ED4F212401F092064DAFBD89ECAAFD2AC5B1C263D7"
+  },
+  "replacements": [
+    {
+      "animation_id": "0x1200",
+      "expected_owner": 5,
+      "expected_component_indices": [
+        438
+      ],
+      "expected_component_digests": [
+        "0E83EF6A0A75E965D940F9E639077B7336614F80DBF84881688CDCD71BF6BDCB"
+      ],
+      "expected_logical_component_digests": [
+        "B4B804B2122A4E499481DCD454BF817B8EB12683FFF3EB7C7D39A0D55FA8E0E7"
+      ],
+      "expected_shard_sha256s": [
+        "91F3E738CA3088FD854212943C248DE392291C76C827F5E436ACCD0ECA323754",
+        "114D67F126AC618BE729C6F9EA4802D472F0DF919231D48E5F678762CA02718F",
+        "C41AC10AA711C3AB60E62734A5F33B9E063C1E39B7D5F24085A4A9912C72F1E1",
+        "640D63C67A6C517065F2E0F321395B7B9B1112FDD2B285642B93DA8012B6C2BC",
+        "81AD015166AB7FA4C520A33C7D0F51865B4610E9CBAB49A91C5F483D6BE74647"
+      ],
+      "expected_resrefs": [
+        "MDR11100",
+        "MDR11101",
+        "MDR11102",
+        "MDR11103",
+        "MDR11104",
+        "MDR11105",
+        "MDR11106",
+        "MDR11107",
+        "MDR11108",
+        "MDR11200",
+        "MDR11201",
+        "MDR11202",
+        "MDR11203",
+        "MDR11204",
+        "MDR11205",
+        "MDR11206",
+        "MDR11207",
+        "MDR11208",
+        "MDR11300",
+        "MDR11301",
+        "MDR11302",
+        "MDR11303",
+        "MDR11304",
+        "MDR11305",
+        "MDR11306",
+        "MDR11307",
+        "MDR11308",
+        "MDR11400",
+        "MDR11401",
+        "MDR11402",
+        "MDR11403",
+        "MDR11404",
+        "MDR11405",
+        "MDR11406",
+        "MDR11407",
+        "MDR11408",
+        "MDR11500",
+        "MDR11501",
+        "MDR11502",
+        "MDR11503",
+        "MDR11504",
+        "MDR11505",
+        "MDR11506",
+        "MDR11507",
+        "MDR11508",
+        "MDR11600",
+        "MDR11601",
+        "MDR11602",
+        "MDR11603",
+        "MDR11604",
+        "MDR11605",
+        "MDR11606",
+        "MDR11607",
+        "MDR11608",
+        "MDR11700",
+        "MDR11701",
+        "MDR11702",
+        "MDR11703",
+        "MDR11704",
+        "MDR11705",
+        "MDR11706",
+        "MDR11707",
+        "MDR11708",
+        "MDR11800",
+        "MDR11801",
+        "MDR11802",
+        "MDR11803",
+        "MDR11804",
+        "MDR11805",
+        "MDR11806",
+        "MDR11807",
+        "MDR11808",
+        "MDR11900",
+        "MDR11901",
+        "MDR11902",
+        "MDR11903",
+        "MDR11904",
+        "MDR11905",
+        "MDR11906",
+        "MDR11907",
+        "MDR11908",
+        "MDR12100",
+        "MDR12101",
+        "MDR12102",
+        "MDR12103",
+        "MDR12104",
+        "MDR12105",
+        "MDR12106",
+        "MDR12107",
+        "MDR12108",
+        "MDR12200",
+        "MDR12201",
+        "MDR12202",
+        "MDR12203",
+        "MDR12204",
+        "MDR12205",
+        "MDR12206",
+        "MDR12207",
+        "MDR12208",
+        "MDR12300",
+        "MDR12301",
+        "MDR12302",
+        "MDR12303",
+        "MDR12304",
+        "MDR12305",
+        "MDR12306",
+        "MDR12307",
+        "MDR12308",
+        "MDR12400",
+        "MDR12401",
+        "MDR12402",
+        "MDR12403",
+        "MDR12404",
+        "MDR12405",
+        "MDR12406",
+        "MDR12407",
+        "MDR12408",
+        "MDR12500",
+        "MDR12501",
+        "MDR12502",
+        "MDR12503",
+        "MDR12504",
+        "MDR12505",
+        "MDR12506",
+        "MDR12507",
+        "MDR12508",
+        "MDR12600",
+        "MDR12601",
+        "MDR12602",
+        "MDR12603",
+        "MDR12604",
+        "MDR12605",
+        "MDR12606",
+        "MDR12607",
+        "MDR12608",
+        "MDR12700",
+        "MDR12701",
+        "MDR12702",
+        "MDR12703",
+        "MDR12704",
+        "MDR12705",
+        "MDR12706",
+        "MDR12707",
+        "MDR12708",
+        "MDR12800",
+        "MDR12801",
+        "MDR12802",
+        "MDR12803",
+        "MDR12804",
+        "MDR12805",
+        "MDR12806",
+        "MDR12807",
+        "MDR12808",
+        "MDR12900",
+        "MDR12901",
+        "MDR12902",
+        "MDR12903",
+        "MDR12904",
+        "MDR12905",
+        "MDR12906",
+        "MDR12907",
+        "MDR12908",
+        "MDR13100",
+        "MDR13101",
+        "MDR13102",
+        "MDR13103",
+        "MDR13104",
+        "MDR13105",
+        "MDR13106",
+        "MDR13107",
+        "MDR13108",
+        "MDR13200",
+        "MDR13201",
+        "MDR13202",
+        "MDR13203",
+        "MDR13204",
+        "MDR13205",
+        "MDR13206",
+        "MDR13207",
+        "MDR13208",
+        "MDR13300",
+        "MDR13301",
+        "MDR13302",
+        "MDR13303",
+        "MDR13304",
+        "MDR13305",
+        "MDR13306",
+        "MDR13307",
+        "MDR13308",
+        "MDR13400",
+        "MDR13401",
+        "MDR13402",
+        "MDR13403",
+        "MDR13404",
+        "MDR13405",
+        "MDR13406",
+        "MDR13407",
+        "MDR13408",
+        "MDR13500",
+        "MDR13501",
+        "MDR13502",
+        "MDR13503",
+        "MDR13504",
+        "MDR13505",
+        "MDR13506",
+        "MDR13507",
+        "MDR13508",
+        "MDR13600",
+        "MDR13601",
+        "MDR13602",
+        "MDR13603",
+        "MDR13604",
+        "MDR13605",
+        "MDR13606",
+        "MDR13607",
+        "MDR13608",
+        "MDR13700",
+        "MDR13701",
+        "MDR13702",
+        "MDR13703",
+        "MDR13704",
+        "MDR13705",
+        "MDR13706",
+        "MDR13707",
+        "MDR13708",
+        "MDR13800",
+        "MDR13801",
+        "MDR13802",
+        "MDR13803",
+        "MDR13804",
+        "MDR13805",
+        "MDR13806",
+        "MDR13807",
+        "MDR13808",
+        "MDR13900",
+        "MDR13901",
+        "MDR13902",
+        "MDR13903",
+        "MDR13904",
+        "MDR13905",
+        "MDR13906",
+        "MDR13907",
+        "MDR13908",
+        "MDR14100",
+        "MDR14101",
+        "MDR14102",
+        "MDR14103",
+        "MDR14104",
+        "MDR14105",
+        "MDR14106",
+        "MDR14107",
+        "MDR14108",
+        "MDR14110",
+        "MDR14111",
+        "MDR14112",
+        "MDR14113",
+        "MDR14114",
+        "MDR14115",
+        "MDR14116",
+        "MDR14117",
+        "MDR14118",
+        "MDR14120",
+        "MDR14121",
+        "MDR14122",
+        "MDR14123",
+        "MDR14124",
+        "MDR14125",
+        "MDR14126",
+        "MDR14127",
+        "MDR14128",
+        "MDR14200",
+        "MDR14201",
+        "MDR14202",
+        "MDR14203",
+        "MDR14204",
+        "MDR14205",
+        "MDR14206",
+        "MDR14207",
+        "MDR14208",
+        "MDR14210",
+        "MDR14211",
+        "MDR14212",
+        "MDR14213",
+        "MDR14214",
+        "MDR14215",
+        "MDR14216",
+        "MDR14217",
+        "MDR14218",
+        "MDR14220",
+        "MDR14221",
+        "MDR14222",
+        "MDR14223",
+        "MDR14224",
+        "MDR14225",
+        "MDR14226",
+        "MDR14227",
+        "MDR14228",
+        "MDR14300",
+        "MDR14301",
+        "MDR14302",
+        "MDR14303",
+        "MDR14304",
+        "MDR14305",
+        "MDR14306",
+        "MDR14307",
+        "MDR14308",
+        "MDR14310",
+        "MDR14311",
+        "MDR14312",
+        "MDR14313",
+        "MDR14314",
+        "MDR14315",
+        "MDR14316",
+        "MDR14317",
+        "MDR14318",
+        "MDR14320",
+        "MDR14321",
+        "MDR14322",
+        "MDR14323",
+        "MDR14324",
+        "MDR14325",
+        "MDR14326",
+        "MDR14327",
+        "MDR14328",
+        "MDR14400",
+        "MDR14401",
+        "MDR14402",
+        "MDR14403",
+        "MDR14404",
+        "MDR14405",
+        "MDR14406",
+        "MDR14407",
+        "MDR14408",
+        "MDR14410",
+        "MDR14411",
+        "MDR14412",
+        "MDR14413",
+        "MDR14414",
+        "MDR14415",
+        "MDR14416",
+        "MDR14417",
+        "MDR14418",
+        "MDR14420",
+        "MDR14421",
+        "MDR14422",
+        "MDR14423",
+        "MDR14424",
+        "MDR14425",
+        "MDR14426",
+        "MDR14427",
+        "MDR14428",
+        "MDR14500",
+        "MDR14501",
+        "MDR14502",
+        "MDR14503",
+        "MDR14504",
+        "MDR14505",
+        "MDR14506",
+        "MDR14507",
+        "MDR14508",
+        "MDR14510",
+        "MDR14511",
+        "MDR14512",
+        "MDR14513",
+        "MDR14514",
+        "MDR14515",
+        "MDR14516",
+        "MDR14517",
+        "MDR14518",
+        "MDR14520",
+        "MDR14521",
+        "MDR14522",
+        "MDR14523",
+        "MDR14524",
+        "MDR14525",
+        "MDR14526",
+        "MDR14527",
+        "MDR14528",
+        "MDR14600",
+        "MDR14601",
+        "MDR14602",
+        "MDR14603",
+        "MDR14604",
+        "MDR14605",
+        "MDR14606",
+        "MDR14607",
+        "MDR14608",
+        "MDR14610",
+        "MDR14611",
+        "MDR14612",
+        "MDR14613",
+        "MDR14614",
+        "MDR14615",
+        "MDR14616",
+        "MDR14617",
+        "MDR14618",
+        "MDR14620",
+        "MDR14621",
+        "MDR14622",
+        "MDR14623",
+        "MDR14624",
+        "MDR14625",
+        "MDR14626",
+        "MDR14627",
+        "MDR14628",
+        "MDR14700",
+        "MDR14701",
+        "MDR14702",
+        "MDR14703",
+        "MDR14704",
+        "MDR14705",
+        "MDR14706",
+        "MDR14707",
+        "MDR14708",
+        "MDR14710",
+        "MDR14711",
+        "MDR14712",
+        "MDR14713",
+        "MDR14714",
+        "MDR14715",
+        "MDR14716",
+        "MDR14717",
+        "MDR14718",
+        "MDR14720",
+        "MDR14721",
+        "MDR14722",
+        "MDR14723",
+        "MDR14724",
+        "MDR14725",
+        "MDR14726",
+        "MDR14727",
+        "MDR14728",
+        "MDR14800",
+        "MDR14801",
+        "MDR14802",
+        "MDR14803",
+        "MDR14804",
+        "MDR14805",
+        "MDR14806",
+        "MDR14807",
+        "MDR14808",
+        "MDR14810",
+        "MDR14811",
+        "MDR14812",
+        "MDR14813",
+        "MDR14814",
+        "MDR14815",
+        "MDR14816",
+        "MDR14817",
+        "MDR14818",
+        "MDR14820",
+        "MDR14821",
+        "MDR14822",
+        "MDR14823",
+        "MDR14824",
+        "MDR14825",
+        "MDR14826",
+        "MDR14827",
+        "MDR14828",
+        "MDR14900",
+        "MDR14901",
+        "MDR14902",
+        "MDR14903",
+        "MDR14904",
+        "MDR14905",
+        "MDR14906",
+        "MDR14907",
+        "MDR14908",
+        "MDR14910",
+        "MDR14911",
+        "MDR14912",
+        "MDR14913",
+        "MDR14914",
+        "MDR14915",
+        "MDR14916",
+        "MDR14917",
+        "MDR14918",
+        "MDR14920",
+        "MDR14921",
+        "MDR14922",
+        "MDR14923",
+        "MDR14924",
+        "MDR14925",
+        "MDR14926",
+        "MDR14927",
+        "MDR14928",
+        "MDR15110",
+        "MDR15111",
+        "MDR15112",
+        "MDR15113",
+        "MDR15114",
+        "MDR15115",
+        "MDR15116",
+        "MDR15117",
+        "MDR15118",
+        "MDR15210",
+        "MDR15211",
+        "MDR15212",
+        "MDR15213",
+        "MDR15214",
+        "MDR15215",
+        "MDR15216",
+        "MDR15217",
+        "MDR15218",
+        "MDR15310",
+        "MDR15311",
+        "MDR15312",
+        "MDR15313",
+        "MDR15314",
+        "MDR15315",
+        "MDR15316",
+        "MDR15317",
+        "MDR15318",
+        "MDR15410",
+        "MDR15411",
+        "MDR15412",
+        "MDR15413",
+        "MDR15414",
+        "MDR15415",
+        "MDR15416",
+        "MDR15417",
+        "MDR15418",
+        "MDR15510",
+        "MDR15511",
+        "MDR15512",
+        "MDR15513",
+        "MDR15514",
+        "MDR15515",
+        "MDR15516",
+        "MDR15517",
+        "MDR15518",
+        "MDR15610",
+        "MDR15611",
+        "MDR15612",
+        "MDR15613",
+        "MDR15614",
+        "MDR15615",
+        "MDR15616",
+        "MDR15617",
+        "MDR15618",
+        "MDR15710",
+        "MDR15711",
+        "MDR15712",
+        "MDR15713",
+        "MDR15714",
+        "MDR15715",
+        "MDR15716",
+        "MDR15717",
+        "MDR15718",
+        "MDR15810",
+        "MDR15811",
+        "MDR15812",
+        "MDR15813",
+        "MDR15814",
+        "MDR15815",
+        "MDR15816",
+        "MDR15817",
+        "MDR15818",
+        "MDR15910",
+        "MDR15911",
+        "MDR15912",
+        "MDR15913",
+        "MDR15914",
+        "MDR15915",
+        "MDR15916",
+        "MDR15917",
+        "MDR15918"
+      ],
+      "reboutcx_manifest": "sprite/families/composite-monsters/multi-new/12xx/1200-mdr1-dragon-red/runs/reboutcx-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BB4E3CB8088F96834FDC81A49AEC329B67BF693D5E617E126C535D7F118F5CB3"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        3
+      ],
+      "expected_component_digests": [
+        "A281B0A8E38CFF5EE811EF99D8070E6E346D88E7A9D1145D11A361EF4F88C5BE"
+      ],
+      "expected_logical_component_digests": [
+        "050B51166C4E8A1452425A5CDE9ABAE29788E402A79678D38E3C5C625E4D43E7"
+      ],
+      "expected_shard_sha256s": [
+        "3C09838F66CF7CEFAF54F76D9162D921F1E111F3316D3A522527297653367CA1"
+      ],
+      "expected_resrefs": [
+        "WQLJ7A1",
+        "WQLJ7A2",
+        "WQLJ7A3",
+        "WQLJ7A4",
+        "WQLJ7A5",
+        "WQLJ7A6",
+        "WQLJ7A7",
+        "WQLJ7A8",
+        "WQLJ7A9",
+        "WQLJ7CA",
+        "WQLJ7G1",
+        "WQLJ7SA",
+        "WQLJ7SS",
+        "WQLJ7SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm07-wqlj7/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7E6C5C3165E2608F9B4C454559E2B61986067688B07E864723D84FCACD966987"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        9
+      ],
+      "expected_component_digests": [
+        "74D967AC617A68705D001727B214D9E8914886C38755ADCB3798DFCF63C4FC41"
+      ],
+      "expected_logical_component_digests": [
+        "0916A29BD9980E956D1FBE09F95388ABB0F4C49891D686EE02372885FA691D3C"
+      ],
+      "expected_shard_sha256s": [
+        "9BB4A61EDF892D5DE7614918EA76C92D7CA75F0188A66A492FA2E51F834D1243"
+      ],
+      "expected_resrefs": [
+        "WQLD4A1",
+        "WQLD4A3",
+        "WQLD4A5",
+        "WQLD4G1",
+        "WQLD4SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld05a-wqld4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B79F774982D418D1F9103D73044973DCF121AB74F42029187D9812D610C8DBD2"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        10
+      ],
+      "expected_component_digests": [
+        "C47704A5FD59BB1AB8C2A3A75C79BD1C76603D4F250021F72A7A62F5CDB7CA1C"
+      ],
+      "expected_logical_component_digests": [
+        "0929DD00004D5CD5D3EBEFBCF6F359F9FC2C2F93CD8931EC91BE64A329AFD989"
+      ],
+      "expected_shard_sha256s": [
+        "CA4A27D825F1C0D2279FA4D907F42356609A2AE9063FF2883CB3FEE61841125A"
+      ],
+      "expected_resrefs": [
+        "WQLJ1A1",
+        "WQLJ1A2",
+        "WQLJ1A3",
+        "WQLJ1A4",
+        "WQLJ1A5",
+        "WQLJ1A6",
+        "WQLJ1A7",
+        "WQLJ1A8",
+        "WQLJ1A9",
+        "WQLJ1CA",
+        "WQLJ1G1",
+        "WQLJ1SA",
+        "WQLJ1SS",
+        "WQLJ1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chalhelm-wqlj1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7D1E83D7AEBB3363623B85F3955EC21BA49EF703247D75667B3541A14762EEBE"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        23
+      ],
+      "expected_component_digests": [
+        "B2B3809C6A23F35075C9ADDEE1F7C9001C51BB808296334AE0A0108F9E33FD89"
+      ],
+      "expected_logical_component_digests": [
+        "114637E3B9B25F32CFFD17B709A3A4E2A77AA9815B7854BF826654815A15BED0"
+      ],
+      "expected_shard_sha256s": [
+        "F13726BE04BE82FCE9FE0593953C371988DA0BE1EC4DF9A48EA02BACE0B9708A"
+      ],
+      "expected_resrefs": [
+        "WQLC6A1",
+        "WQLC6A3",
+        "WQLC6A5",
+        "WQLC6G1",
+        "WQLC6SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld07-wqlc6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B51AAED812030AAF2865F40B8A6E48F48B8A3CC5FCBC4737FAD512193F7C52AA"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        31
+      ],
+      "expected_component_digests": [
+        "425F359C83EFD567756C4CBACFEA9DED2EC7FF175F83F542E0D797D2F6E3573A"
+      ],
+      "expected_logical_component_digests": [
+        "16C5D2AE5A69E537747E4655DCB352A6BFF0388EA9EF33D3C08F7D500E4B11CE"
+      ],
+      "expected_shard_sha256s": [
+        "9BE822B02DFF66D0FDBC957F2EE776611C0D46364565D88D7E1467714F31542C"
+      ],
+      "expected_resrefs": [
+        "WQLH5A1",
+        "WQLH5A2",
+        "WQLH5A3",
+        "WQLH5A4",
+        "WQLH5A5",
+        "WQLH5A6",
+        "WQLH5A7",
+        "WQLH5A8",
+        "WQLH5A9",
+        "WQLH5CA",
+        "WQLH5G1",
+        "WQLH5SA",
+        "WQLH5SS",
+        "WQLH5SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/ihelm10-wqlh5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D0CD6826B017133879109E76C61FB3A3772944FD4E1C917A50FFC8B6352F35A8"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        41
+      ],
+      "expected_component_digests": [
+        "17622606A7EC6F8A1312885D24F6CF7956992DB8DAA8E4658C1EC7BE874FCFCE"
+      ],
+      "expected_logical_component_digests": [
+        "1ABCA8109BDB69E4C95FEC707E3CF4554400AACE45D49BA2F8A01D8EEC11EED8"
+      ],
+      "expected_shard_sha256s": [
+        "A6F24CD4F7EF5C1A2050D198A7E2C94FB12774E389D8B3F0A1EEF274FF79F7D9"
+      ],
+      "expected_resrefs": [
+        "WQLZWA1",
+        "WQLZWA2",
+        "WQLZWA3",
+        "WQLZWA4",
+        "WQLZWA5",
+        "WQLZWA6",
+        "WQLZWA7",
+        "WQLZWA8",
+        "WQLZWA9",
+        "WQLZWCA",
+        "WQLZWG1",
+        "WQLZWSA",
+        "WQLZWSS",
+        "WQLZWSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/wings01-wqlzw/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "52EBCDE43AB0DB2960F2FB6B7F1F6FDAE3E0E36D5D4027128F940D940C8160DE"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        47
+      ],
+      "expected_component_digests": [
+        "CBA19D5FF04303BE93DB506A7B9B97E835F5A44BE368E047B78B5BAFFF66DF60"
+      ],
+      "expected_logical_component_digests": [
+        "1FEA392C0E3CFAA522557CD1B2C7AACDED48ADB0D882657FF06151869E5BEE49"
+      ],
+      "expected_shard_sha256s": [
+        "CD62F541AC1E57D7A2C618AF9B4BA396D21666CA6748F979F8CDDB679E787AD6"
+      ],
+      "expected_resrefs": [
+        "WQLJBA1",
+        "WQLJBA2",
+        "WQLJBA3",
+        "WQLJBA4",
+        "WQLJBA5",
+        "WQLJBA6",
+        "WQLJBA7",
+        "WQLJBA8",
+        "WQLJBA9",
+        "WQLJBCA",
+        "WQLJBG1",
+        "WQLJBSA",
+        "WQLJBSS",
+        "WQLJBSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdhelm16-wqljb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B545216381944ED43A45037F804636D9A79CC1C7C9BBAB4362493B3A6F4E2274"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        54
+      ],
+      "expected_component_digests": [
+        "4E44C94334AF84874C6F2BDEDF8E615361E246B997A30B9866D257F95F36B604"
+      ],
+      "expected_logical_component_digests": [
+        "2402DB9DA8B7713BE6628F1CDD5452E9E64A99449285E788F83D6A1BF94C4E7E"
+      ],
+      "expected_shard_sha256s": [
+        "B67C88A05913BA270C3F68FBD041A81239C502C9EE7E57C0D654E0214432989E"
+      ],
+      "expected_resrefs": [
+        "WQLC2A1",
+        "WQLC2A3",
+        "WQLC2A5",
+        "WQLC2G1",
+        "WQLC2SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld05-wqlc2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "ACB3175C4AF9C835B8F258CF00BE0E49621B0DA1A5E2FE854E56E51D7E8209CF"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        58
+      ],
+      "expected_component_digests": [
+        "9C22F2AC0194BA0E5C922F3F00BA297874591E56BE950DC000C0ABBD66FB9CFE"
+      ],
+      "expected_logical_component_digests": [
+        "25C07023CB837175F7C561A6AEC82B315E27412BF3E9161F75949F7BE5E71E31"
+      ],
+      "expected_shard_sha256s": [
+        "91DCF3A25388B7058A440DBCB9802AD4265CDF1C6CF2735503F6081D2C63AB13"
+      ],
+      "expected_resrefs": [
+        "WQLF0A1",
+        "WQLF0A3",
+        "WQLF0A5",
+        "WQLF0A7",
+        "WQLF0A8",
+        "WQLF0A9",
+        "WQLF0G1",
+        "WQLF0OA7",
+        "WQLF0OA8",
+        "WQLF0OA9",
+        "WQLF0OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun13-wqlf0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5B97797F7ABBF04D260C65918FEE3843201CC8D1F54C58C18AA27E489E9CACBC"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        66
+      ],
+      "expected_component_digests": [
+        "B98C811E3815A40967F42C3A8AA7F8F63456F56815368C706DA68C648B59FF93"
+      ],
+      "expected_logical_component_digests": [
+        "2B0D638EC93D05833DA5F1291E45D8AF7BB02DEA8AD3DB4EDA043A12C95A9201"
+      ],
+      "expected_shard_sha256s": [
+        "54A2682F10B8C86230306060EA9F224662B6C1775D1ADC03288FC143A26CED29"
+      ],
+      "expected_resrefs": [
+        "WQLS0A1",
+        "WQLS0A3",
+        "WQLS0A5",
+        "WQLS0A7",
+        "WQLS0A8",
+        "WQLS0A9",
+        "WQLS0G1",
+        "WQLS0OA7",
+        "WQLS0OA8",
+        "WQLS0OA9",
+        "WQLS0OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/sw1h01-wqls0/runs/reboutcx-p6-3-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "8B999C72DF9C3BD0F0CAF5DB8DB849BEEEBC3B52F26C028F3A414C73618E1D6D"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        71
+      ],
+      "expected_component_digests": [
+        "1C15594B3152DAA42DC61FBDD19ACE9661242CDB2CC62E93E62BEB84B7B5DB59"
+      ],
+      "expected_logical_component_digests": [
+        "2E357A157675F0748DA18835A3A7B7AE5FD3A448B1062E4C9F20D9B2C9C262A2"
+      ],
+      "expected_shard_sha256s": [
+        "A180C89B2FAF5571E3CD9A49B360C29D8F088A7C72C1CA399CE713917B202584"
+      ],
+      "expected_resrefs": [
+        "WQLDDA1",
+        "WQLDDA3",
+        "WQLDDA5",
+        "WQLDDA7",
+        "WQLDDA8",
+        "WQLDDA9",
+        "WQLDDG1",
+        "WQLDDOA7",
+        "WQLDDOA8",
+        "WQLDDOA9",
+        "WQLDDOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/cdnebdag-wqldd/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "9E109D3198FED8C7BD0FF705A71741B9D6E144E2FFEE8DA5EB115396A52D1FDE"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        80
+      ],
+      "expected_component_digests": [
+        "CF958D14CCC3FB0B0903C6386F1682B0A4F97AF27238CA36FE6B688569A0AAAF"
+      ],
+      "expected_logical_component_digests": [
+        "31CA2B558EA132FD50E4D55F752EAE9F31EB476672CBB151D5EFCC0033EC91BD"
+      ],
+      "expected_shard_sha256s": [
+        "ED715C267282D4AA605A86C05CDDC774F77D6FB98DA9C5A348A860F5A0364B3A"
+      ],
+      "expected_resrefs": [
+        "WQLJ8A1",
+        "WQLJ8A2",
+        "WQLJ8A3",
+        "WQLJ8A4",
+        "WQLJ8A5",
+        "WQLJ8A6",
+        "WQLJ8A7",
+        "WQLJ8A8",
+        "WQLJ8A9",
+        "WQLJ8CA",
+        "WQLJ8G1",
+        "WQLJ8SA",
+        "WQLJ8SS",
+        "WQLJ8SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm03-wqlj8/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2D84AC48483B18E0D12F30F0940A1DB234465AE472DC24978F2758E9243AA8EA"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        81
+      ],
+      "expected_component_digests": [
+        "819463EED0C802BAE99975EC99F161895817DE1118627B0B3FF9828C43086874"
+      ],
+      "expected_logical_component_digests": [
+        "331C5F5E0B03C947544409A7618C1165C0DCE61577A3FB034FEF2D59526C1C32"
+      ],
+      "expected_shard_sha256s": [
+        "ADC0811BA5EF391A14143327BBD97870628E3939BE840F5BC1EE082184C086BF"
+      ],
+      "expected_resrefs": [
+        "WQLJ2A1",
+        "WQLJ2A2",
+        "WQLJ2A3",
+        "WQLJ2A4",
+        "WQLJ2A5",
+        "WQLJ2A6",
+        "WQLJ2A7",
+        "WQLJ2A8",
+        "WQLJ2A9",
+        "WQLJ2CA",
+        "WQLJ2G1",
+        "WQLJ2SA",
+        "WQLJ2SS",
+        "WQLJ2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm21-wqlj2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2BD546F00306A912D04D3D7DF019819C9B53E78092482C6521F73C53509E6146"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        84
+      ],
+      "expected_component_digests": [
+        "AA2CFEE02FD1D79215B2A1462ADE11D352B65C0685D97F01DF466CCC4FD7603F"
+      ],
+      "expected_logical_component_digests": [
+        "33C1B45FCD24BB24B6825E47ADAD2315FE5A39540C2806E63661A860C3886D80"
+      ],
+      "expected_shard_sha256s": [
+        "EB4701E0625341B8CBD28180C1807DBADD489D67984383CB7302CCC074B28914"
+      ],
+      "expected_resrefs": [
+        "WQLCLA1",
+        "WQLCLA3",
+        "WQLCLA5",
+        "WQLCLA7",
+        "WQLCLA8",
+        "WQLCLA9",
+        "WQLCLG1",
+        "WQLCLOA7",
+        "WQLCLOA8",
+        "WQLCLOA9",
+        "WQLCLOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun01-wqlcl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B7DE4251775DB956DB3F8A340A6BB96832B05FA513F0DDBC3F360103154033FB"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        98
+      ],
+      "expected_component_digests": [
+        "448F3503C1322A07B24D9199ADC6F945A00988A2E7DF063530BD576D1DBD54A5"
+      ],
+      "expected_logical_component_digests": [
+        "40949D5C2CB29C175A56E9D4766ABC860BA43004B030A7A295C084CE30F919F9"
+      ],
+      "expected_shard_sha256s": [
+        "7DA643761CC2D70F7BC9AE8EB738005AD5545B73ED7FD9EBEF0D4751C0BF505D"
+      ],
+      "expected_resrefs": [
+        "WQLF1A1",
+        "WQLF1A3",
+        "WQLF1A5",
+        "WQLF1A7",
+        "WQLF1A8",
+        "WQLF1A9",
+        "WQLF1G1",
+        "WQLF1OA7",
+        "WQLF1OA8",
+        "WQLF1OA9",
+        "WQLF1OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun14d-wqlf1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "1E165C1D58FC1C822626470AB50E0912456B0AF0049D561018217742F935BA88"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        110
+      ],
+      "expected_component_digests": [
+        "B821558CA1BA15DE9A77C9BB33BA44B8BE6C8DDC39B1A2F472F9E0261772F130"
+      ],
+      "expected_logical_component_digests": [
+        "432F3CB0293B2211D9D39FD74270906C80984BAA41D15AD5D8E353714913FEC0"
+      ],
+      "expected_shard_sha256s": [
+        "B74C80344268B09D60EDA7D869CC99C9AA25C87485D32F3940FC29503245B67C"
+      ],
+      "expected_resrefs": [
+        "WQLWHA1",
+        "WQLWHA3",
+        "WQLWHA5",
+        "WQLWHA7",
+        "WQLWHA8",
+        "WQLWHA9",
+        "WQLWHG1",
+        "WQLWHOA7",
+        "WQLWHOA8",
+        "WQLWHOA9",
+        "WQLWHOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/aegis-wqlwh/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7722B03A39D0D30A1B70A115753EAD70C58F897C7A408E8B4080E719004CCD48"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        112
+      ],
+      "expected_component_digests": [
+        "B2C45FD40D34D61B36390CBEF205278E45541C93DE8592B8D5D9F9CBFAAAE7E2"
+      ],
+      "expected_logical_component_digests": [
+        "44A1C4E98F07F7484B900637B24D90929EF5AA00F7839620BE95E9EFAF82361E"
+      ],
+      "expected_shard_sha256s": [
+        "E8BE9320A5ABA7B17030954FBB52893A503FCF3CD130A7AEFAB0F0B1B7EDB1E1"
+      ],
+      "expected_resrefs": [
+        "WQLSSA1",
+        "WQLSSA3",
+        "WQLSSA5",
+        "WQLSSA7",
+        "WQLSSA8",
+        "WQLSSA9",
+        "WQLSSG1",
+        "WQLSSOA7",
+        "WQLSSOA8",
+        "WQLSSOA9",
+        "WQLSSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chalcy1-wqlss/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "8A8504EC66D6BE5C67F9C87BA0C5E5B565C442C1BAB768F1C5FDFD33DFE326A9"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        117
+      ],
+      "expected_component_digests": [
+        "44911E5A72BFF978E1F0F8FE0737F730D53D11B4DEB9D105F6842D21BB0ECA02"
+      ],
+      "expected_logical_component_digests": [
+        "498BF8619D31B36DEB9C2095137B6EDA01B8C69B03F23A6CFE4E474F4F1059D8"
+      ],
+      "expected_shard_sha256s": [
+        "281EC12868B035DC894E2EDCB1901A849A9BCC5B0DE407C2E6E4C3F3C1DB5D8D"
+      ],
+      "expected_resrefs": [
+        "WQLBSG1",
+        "WQLBSSA"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bow05-wqlbs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "3F98FD412D6655A216712235F609731E99BC30E399E6BA67E3C546C94B48053B"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        123
+      ],
+      "expected_component_digests": [
+        "5A7320E033DDCC6F915C59DC7027BE0539C4375DD4DA9EC0D0168EAEAE90F61B"
+      ],
+      "expected_logical_component_digests": [
+        "4DB2CE063EC51DBBA0B4545843CF49A22938D2D9B7D1A32A0441185C545BDE7E"
+      ],
+      "expected_shard_sha256s": [
+        "4CDAE008A97A00CDB7FA8AF282F2FB822E865FB3C7593A8D47C7A8D61C29E7F8"
+      ],
+      "expected_resrefs": [
+        "WQLC4A1",
+        "WQLC4A3",
+        "WQLC4A5",
+        "WQLC4G1",
+        "WQLC4SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/ohshld50-wqlc4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "13D88977886CA4B159C794EA6E3412C39F5EB2C5C9D25CD7A4F8B2626D081227"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        129
+      ],
+      "expected_component_digests": [
+        "A4BA8EC98602A656487FDCBEBC907F60485939A8D52A62C6476699DFD61E2F27"
+      ],
+      "expected_logical_component_digests": [
+        "524FF9262822D9D6C82F1D49ACDD6886A74E787752B4FBBC81C8F4C6345D380E"
+      ],
+      "expected_shard_sha256s": [
+        "297E4E0C4B55C4E89C4747586C511F1CD5C3303ED66B1CFDDAA70998A78DA73B"
+      ],
+      "expected_resrefs": [
+        "WQLH1A1",
+        "WQLH1A2",
+        "WQLH1A3",
+        "WQLH1A4",
+        "WQLH1A5",
+        "WQLH1A6",
+        "WQLH1A7",
+        "WQLH1A8",
+        "WQLH1A9",
+        "WQLH1CA",
+        "WQLH1G1",
+        "WQLH1SA",
+        "WQLH1SS",
+        "WQLH1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/misc9p-wqlh1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "ED621D276D3CE95525EEB39FFE20B0B5420EBFE3C9EB56DDAE8EAEF8183F5008"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        130
+      ],
+      "expected_component_digests": [
+        "CB38BC4AB03D74090CD3DA76635F9892781C0DB417914906CFB0D1BDBF634B59"
+      ],
+      "expected_logical_component_digests": [
+        "52544FB7BDC8ED668130EF90BF81F8A47B7FA822350792AB444C9C9177873C20"
+      ],
+      "expected_shard_sha256s": [
+        "45AD2C4428FB4869D705359BF5DA5CF524C2D1C6F888B02C0AED4B408B462D86"
+      ],
+      "expected_resrefs": [
+        "WQLJAA1",
+        "WQLJAA2",
+        "WQLJAA3",
+        "WQLJAA4",
+        "WQLJAA5",
+        "WQLJAA6",
+        "WQLJAA7",
+        "WQLJAA8",
+        "WQLJAA9",
+        "WQLJACA",
+        "WQLJAG1",
+        "WQLJASA",
+        "WQLJASS",
+        "WQLJASX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm05-wqlja/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5A1E519A7443CB703DEDDE3F97C9579B2B81CBA9400D94D1B35CF1D449000A83"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        138
+      ],
+      "expected_component_digests": [
+        "353828BAC3DC969E7C90BF81BEC40003C50D41B572358943CB4C1E7F3E9FDFF0"
+      ],
+      "expected_logical_component_digests": [
+        "56B356E4D140F7DE68E2F00B347853E3B80F6668B54F514B37DB3CFD2391C27A"
+      ],
+      "expected_shard_sha256s": [
+        "9B3DA2291DD44BFBB906BB790FA4232BC9AACDD8C5D29F69621B3BBAA02EEE3A"
+      ],
+      "expected_resrefs": [
+        "WQLQ4A2",
+        "WQLQ4A4",
+        "WQLQ4A6",
+        "WQLQ4G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/staf09-wqlq4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "62E8A145E0E0D4FE5580BE9DD3037AA868CD19A72D1D0233E31AD6BBADAE5E6E"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        139
+      ],
+      "expected_component_digests": [
+        "A16233A1CFB248E6A8250A11D67E884990397EE8D280B620A5C3D603C2F2D2E9"
+      ],
+      "expected_logical_component_digests": [
+        "571B298FE4046D855483CB1754C31E9F9FD5AAB98360D36101F27275C2C6074D"
+      ],
+      "expected_shard_sha256s": [
+        "11E74BED2D14D22105E2D085FCFC9768BA70B63703612EC7AA8F360333DFFFCE"
+      ],
+      "expected_resrefs": [
+        "WQLMSA1",
+        "WQLMSA3",
+        "WQLMSA5",
+        "WQLMSA7",
+        "WQLMSA8",
+        "WQLMSA9",
+        "WQLMSG1",
+        "WQLMSOA7",
+        "WQLMSOA8",
+        "WQLMSOA9",
+        "WQLMSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun06-wqlms/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "C145D81A7F05EFECF7633CA33818C54363E499A968E7310C2508658B987D06FE"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        147
+      ],
+      "expected_component_digests": [
+        "2663D75C86C614D2F669127FC5BBE8586F03FEDFCCDACE606D74C8CD23674F6E"
+      ],
+      "expected_logical_component_digests": [
+        "59A63587C41B9221B4B7746837589997782EDB2CDB6F1BA3377C21DCDD0FB078"
+      ],
+      "expected_shard_sha256s": [
+        "C5A84DBA7E924566B9818C394C8D851D9DBCAC1257D1464D840C5E1E1D22B7B4"
+      ],
+      "expected_resrefs": [
+        "WQLC5A1",
+        "WQLC5A3",
+        "WQLC5A5",
+        "WQLC5G1",
+        "WQLC5SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld26-wqlc5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D22B2BFED723B1C6F747E2C57CBA0220437E629999B75F225D8C14A98DC07CB6"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        151
+      ],
+      "expected_component_digests": [
+        "8CDD97E1A8B7D64F00A2DFBA9DD38A0639A99F0A88ED8953CAA4726FD575D898"
+      ],
+      "expected_logical_component_digests": [
+        "5C948D75E1C086605D6E58CDBD4C3C75AB771056F68AF9543974AD164FFB3CC1"
+      ],
+      "expected_shard_sha256s": [
+        "C72EAFFAF833515D0D85C7AE3E2497715658BBB1EA187087BF535B66E647CCAA"
+      ],
+      "expected_resrefs": [
+        "CHMB1A1",
+        "CHMB1A2",
+        "CHMB1A3",
+        "CHMB1A4",
+        "CHMB1A5",
+        "CHMB1A6",
+        "CHMB1A7",
+        "CHMB1A8",
+        "CHMB1A9",
+        "CHMB1CA",
+        "CHMB1G1",
+        "CHMB1G11",
+        "CHMB1G12",
+        "CHMB1G13",
+        "CHMB1G14",
+        "CHMB1G15",
+        "CHMB1G16",
+        "CHMB1G17",
+        "CHMB1G18",
+        "CHMB1G19",
+        "CHMB1SA",
+        "CHMB1SS",
+        "CHMB1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmb1/runs/reboutcx-p6-3-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "667885EF8F6A9B7B4835E0EF8B7DE85A2D02670C089BF2C3FB67341619B7C486"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        162
+      ],
+      "expected_component_digests": [
+        "61C80DF8B4F805EC87682609539698236BBD05BF39D53815E67678FD2948B266"
+      ],
+      "expected_logical_component_digests": [
+        "6355B8AE085B490A1F8C6D17BA0F0DD0087F79761B3B3A1539AF12426C84F167"
+      ],
+      "expected_shard_sha256s": [
+        "F7E28E7AFBB57F7F31067C8265BE8C3F979D69F94E0FB637749D5259F91D1B76"
+      ],
+      "expected_resrefs": [
+        "WQLCBG1",
+        "WQLCBSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dwxbow01-wqlcb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BBBB978510D320ED07F33840F3074D1991B14617486F94D90BF51EA5C4887353"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        163
+      ],
+      "expected_component_digests": [
+        "0454D7718CA9B3DF09E0E3600016E87BCC2B610C5558FF28985A4E6C1E4143DF"
+      ],
+      "expected_logical_component_digests": [
+        "64B5B24E758578BA6ADC35366F7DE829A84D8326DC77A1E9B947DEDCC78F82DF"
+      ],
+      "expected_shard_sha256s": [
+        "F753B1C3C88DA8191A2DC9A98F1DA969250A5C0982A95A3762FE397EB6D16D1D"
+      ],
+      "expected_resrefs": [
+        "WQLD1A1",
+        "WQLD1A3",
+        "WQLD1A5",
+        "WQLD1G1",
+        "WQLD1SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdshld01-wqld1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "F91327A76F1529595D17EB03629999D8A96B1E87D1935A24E5A0E1D74528BE8E"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        173
+      ],
+      "expected_component_digests": [
+        "AEE731F3DB7086BBBA7A3EC5A362D04AF8F0C49493AF869ED59BEDE60E498554"
+      ],
+      "expected_logical_component_digests": [
+        "6B2B16E4FC8C39E4310222D8F3047CFCAFBC8E8581A3929A18A2F3E218990072"
+      ],
+      "expected_shard_sha256s": [
+        "3E31EBD51C3E384FD3C2F2E3FF03F32C761C7D2899328666602E72AB44C67F94"
+      ],
+      "expected_resrefs": [
+        "WQLJCA1",
+        "WQLJCA2",
+        "WQLJCA3",
+        "WQLJCA4",
+        "WQLJCA5",
+        "WQLJCA6",
+        "WQLJCA7",
+        "WQLJCA8",
+        "WQLJCA9",
+        "WQLJCCA",
+        "WQLJCG1",
+        "WQLJCSA",
+        "WQLJCSS",
+        "WQLJCSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm12-wqljc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D2FDA614551EBD7E7DBC1545076ABB32A91F12AA40EC664F05B3611216964147"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        183
+      ],
+      "expected_component_digests": [
+        "19B0DA307645FA0BD5409EECB8FFDF3F9D76DCB7A1873FF309BD431BB595F5A2"
+      ],
+      "expected_logical_component_digests": [
+        "751A157D3E968A423847664781E4864CBD0FF60C335092A88949E1E9DE49E84B"
+      ],
+      "expected_shard_sha256s": [
+        "D6CB611CBA54A63CAA83D56B282E52D601D3BCF1C8EAD27EAA89F1521B626743"
+      ],
+      "expected_resrefs": [
+        "CHMF4A1",
+        "CHMF4A2",
+        "CHMF4A3",
+        "CHMF4A4",
+        "CHMF4A5",
+        "CHMF4A6",
+        "CHMF4A7",
+        "CHMF4A8",
+        "CHMF4A9",
+        "CHMF4CA",
+        "CHMF4G1",
+        "CHMF4G11",
+        "CHMF4G12",
+        "CHMF4G13",
+        "CHMF4G14",
+        "CHMF4G15",
+        "CHMF4G16",
+        "CHMF4G17",
+        "CHMF4G18",
+        "CHMF4G19",
+        "CHMF4SA",
+        "CHMF4SS",
+        "CHMF4SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmf4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BE9C79AE4ED550ADC06AC6EE9DE3818C27A2AB08299D44F51606F172B4A679C8"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        189
+      ],
+      "expected_component_digests": [
+        "8656B1D08500C86A417F364C200B8761E475B5B0253B75241761B42137B61812"
+      ],
+      "expected_logical_component_digests": [
+        "77C48D25CBA3436DB239F9D0C12C39AD056AB033E6257DC62DB9C8E558354843"
+      ],
+      "expected_shard_sha256s": [
+        "C20977214A07C51D517ECCC93EDBA4367750EBD41586DEC38B37562B2F7AAA0E"
+      ],
+      "expected_resrefs": [
+        "WQLJ3A1",
+        "WQLJ3A2",
+        "WQLJ3A3",
+        "WQLJ3A4",
+        "WQLJ3A5",
+        "WQLJ3A6",
+        "WQLJ3A7",
+        "WQLJ3A8",
+        "WQLJ3A9",
+        "WQLJ3CA",
+        "WQLJ3G1",
+        "WQLJ3SA",
+        "WQLJ3SS",
+        "WQLJ3SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm02-wqlj3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B38B0D3BBF44D73B41216FE885FDE83F5BD69855EC9FC38889B9474941DF4DF9"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        192
+      ],
+      "expected_component_digests": [
+        "F36E2CAF19C6DE15A519C21054EF183565002534BCCD53B2C43C049AFF6B8205"
+      ],
+      "expected_logical_component_digests": [
+        "7CFECD3362347054CCD81EA928F3010D217EFCFF5A245ABFCF21EDD26C7EF41E"
+      ],
+      "expected_shard_sha256s": [
+        "C558983160601C1254D89B4A7ACB99171302F5FDFC82337F0575F0078FB2F259"
+      ],
+      "expected_resrefs": [
+        "WQLD2A1",
+        "WQLD2A3",
+        "WQLD2A5",
+        "WQLD2G1",
+        "WQLD2SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dshld01-wqld2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "35D080F8B114B46075FFDBBF7F830159679219A8386A369071F29D1FB9C27990"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        194
+      ],
+      "expected_component_digests": [
+        "E1F5762ECE51ED53A1CB9ABE5167C0645240EAD30D9F7DF3CF35972120BEC88F"
+      ],
+      "expected_logical_component_digests": [
+        "81659FF7525E330F7B15A67940DDFD0CF617C8AEA58BEB86D30F5944BE6B362F"
+      ],
+      "expected_shard_sha256s": [
+        "29CAE215E2E2E792608AE8ADFA55B455A8784268C81A2C1EFF71EB4CA9E933A1"
+      ],
+      "expected_resrefs": [
+        "WQLSPA2",
+        "WQLSPA4",
+        "WQLSPA6",
+        "WQLSPG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dwsper01-wqlsp/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "C01E148879E463FDF328854A4747333FEA940267045E1D5E603A7CD3D542908F"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        196
+      ],
+      "expected_component_digests": [
+        "87641E44E8046BD419291FF4B915FC5BEB919A767741FC4F2F6D42E80EFD7270"
+      ],
+      "expected_logical_component_digests": [
+        "822D5C1A056CE125467FD7A7D592E90E514660FF70A206F0961E4AF20129CF95"
+      ],
+      "expected_shard_sha256s": [
+        "B06342E2FD6D049DB03745ED0A9BCA32641C475F1C5738BCD2F848239A7D8839"
+      ],
+      "expected_resrefs": [
+        "WQLGSA2",
+        "WQLGSA4",
+        "WQLGSA6",
+        "WQLGSG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/staf11-wqlgs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BEBC9817D2AA608B667A85D369FE5B1254CA851ABC4AE99831E5331B0F612BD2"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        205
+      ],
+      "expected_component_digests": [
+        "B91EE9AE4C630606FA5171478C5EFE0710788F5CB854CD337FB69BA711743B4A"
+      ],
+      "expected_logical_component_digests": [
+        "8846018A4BD6E22DC5F841543E18A08106365A5750A919DDEAD0DF96698E9ED7"
+      ],
+      "expected_shard_sha256s": [
+        "6BF98099CE04A6CBC901E35A821FC7BCEF59063FBF915834E0B50A52419F3B6A"
+      ],
+      "expected_resrefs": [
+        "WQLQ3A2",
+        "WQLQ3A4",
+        "WQLQ3A6",
+        "WQLQ3G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/misc5t-wqlq3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7CB9F3AE003ECA52C43A588F15BF8F148A31C8A7697DEE6121D310BD251AFE1A"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        219
+      ],
+      "expected_component_digests": [
+        "FE21E4EDFAE5D3B7774BD5F1929D76A212597E28FE488438CD0CA0C317B7598B"
+      ],
+      "expected_logical_component_digests": [
+        "909CDDF039E58FFC67AB28AFCEFAFD816007602E8DCF81EF749B133F0EBA933B"
+      ],
+      "expected_shard_sha256s": [
+        "A32569FA04C69C544559D2A1C087B7D6B91236028E28032766D1ABE6F4448AA2",
+        "144763487A48BFD09FC1E07F507349049FD61246C639C4EF2F370156929C4045",
+        "173C9207BBF966D489D74707E2958FE80569D4D30B75A4AE3C618C8A3CBCCE8C"
+      ],
+      "expected_resrefs": [
+        "WQLFSA1",
+        "WQLFSA3",
+        "WQLFSA5",
+        "WQLFSA7",
+        "WQLFSA8",
+        "WQLFSA9",
+        "WQLFSG1",
+        "WQLFSOA7",
+        "WQLFSOA8",
+        "WQLFSOA9",
+        "WQLFSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/comps39-wqlfs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "22247E1529DCBFB2A2E6BCFC8D0690D4CA5D05EA8CF909FBE121BEBFAAC1BE67"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        220
+      ],
+      "expected_component_digests": [
+        "97651D0733EF2200A42EA68255C5BCFB58FDF622DFF05545FF2A3E6A188E4F99"
+      ],
+      "expected_logical_component_digests": [
+        "9150FC7CB8A260F1733FB93FBA804C5B77350223654EA70216D91ABAA10E61F7"
+      ],
+      "expected_shard_sha256s": [
+        "8BDCFEE272D78F053DF49619B8F63B09C1C967F9FF178FE324C1CEC25DDB94AA"
+      ],
+      "expected_resrefs": [
+        "WQLQSA2",
+        "WQLQSA4",
+        "WQLQSA6",
+        "WQLQSG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/enstaff-wqlqs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "0258F999AD7C053911FB3B9FF02353C6CFFE0091FA9927CCB43FBD53F05B8348"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        221
+      ],
+      "expected_component_digests": [
+        "026294EC52C3F9AF4376908E80A27138EBE9797DB3935F05E5AA88E3FDE9B67C"
+      ],
+      "expected_logical_component_digests": [
+        "91EE10580E4EA4303391345994A7DCFA97C1B33689C31B2A21577AB5A445883E"
+      ],
+      "expected_shard_sha256s": [
+        "3045DE7519E88A5C0E0F3E5A61CE0E777B9D1AC3308B8FA3027947E632026227"
+      ],
+      "expected_resrefs": [
+        "WQLHBA2",
+        "WQLHBA4",
+        "WQLHBA6",
+        "WQLHBG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dwhalb01-wqlhb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5023B9E9ABE4AFB3EE10B207E2B4F18E5DE822320B2C084238951B69C1B78D61"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        235
+      ],
+      "expected_component_digests": [
+        "09FA6E2DC474ACB012FD265541262A0BF4624B378520F8D164A29573E202B641"
+      ],
+      "expected_logical_component_digests": [
+        "9CFF5C42E9120A299C32951FD8590CC639EE34E8CD913E810869A1F1C7500A5E"
+      ],
+      "expected_shard_sha256s": [
+        "6C06922322636F99DE1B0E3EE8A1F20639FF71D97DEF8A93E565956467A3933F"
+      ],
+      "expected_resrefs": [
+        "WQLQ2A2",
+        "WQLQ2A4",
+        "WQLQ2A6",
+        "WQLQ2G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/staf02-wqlq2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "08C1642F29910111D723F5701E99ADA861143778BF79079A9565EC079F0BF3D5"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        237
+      ],
+      "expected_component_digests": [
+        "A781AEF8F9E3D65F2250AB47BAAA40B318D041627216930754D778C2861A29BD"
+      ],
+      "expected_logical_component_digests": [
+        "9DD746D11363BDEDF35F64742A44562EBD8D61F39B9613C66B8C7E7897879291"
+      ],
+      "expected_shard_sha256s": [
+        "AF56D63FEB41793A007BCA2EEED804B433A5CF2CE7449968760423C22FABB5B8"
+      ],
+      "expected_resrefs": [
+        "WQLH2A1",
+        "WQLH2A2",
+        "WQLH2A3",
+        "WQLH2A4",
+        "WQLH2A5",
+        "WQLH2A6",
+        "WQLH2A7",
+        "WQLH2A8",
+        "WQLH2A9",
+        "WQLH2CA",
+        "WQLH2G1",
+        "WQLH2SA",
+        "WQLH2SS",
+        "WQLH2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dhelm01-wqlh2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2D278872A2CC76768E60B99E9448E7915DF339D2898A7834265ED895C60C7D59"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        244
+      ],
+      "expected_component_digests": [
+        "83F6FA242293EC46F4800A13FA62E4415B3E13A53B80AD35615949FF316F9573"
+      ],
+      "expected_logical_component_digests": [
+        "A570F29ED2A54F2C7EC4AF928848DA0AD9FE101F5D24BA00A86D9F90FC528852"
+      ],
+      "expected_shard_sha256s": [
+        "0CE03639333214591C76EBE2ADBF01946E7374F27D469C83D2A937FA1BC7B2C8"
+      ],
+      "expected_resrefs": [
+        "WQLJ4A1",
+        "WQLJ4A2",
+        "WQLJ4A3",
+        "WQLJ4A4",
+        "WQLJ4A5",
+        "WQLJ4A6",
+        "WQLJ4A7",
+        "WQLJ4A8",
+        "WQLJ4A9",
+        "WQLJ4CA",
+        "WQLJ4G1",
+        "WQLJ4SA",
+        "WQLJ4SS",
+        "WQLJ4SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm16-wqlj4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "94DFEE6054DD261BD5647784EA68393E6849E341CB2FBC0E72D2E457D949BBCD"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        251
+      ],
+      "expected_component_digests": [
+        "55E3BFA1C7501328C2B3627CC7F3516F69CB942A064892FB3CEE60D9E30A9CB0"
+      ],
+      "expected_logical_component_digests": [
+        "AD173B4DCF4FB10DD845DE78D2489C42C66249C66F64C259C351918CDBAE78CD"
+      ],
+      "expected_shard_sha256s": [
+        "9AA5807EFC157598D10E6668FC7695994DEE708513F26688527ED75A26692D60"
+      ],
+      "expected_resrefs": [
+        "WQLFLA1",
+        "WQLFLA3",
+        "WQLFLA5",
+        "WQLFLA7",
+        "WQLFLA8",
+        "WQLFLA9",
+        "WQLFLG1",
+        "WQLFLOA7",
+        "WQLFLOA8",
+        "WQLFLOA9",
+        "WQLFLOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/barlfl-wqlfl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5B6C2AC6BECB2696EB12607B6A546F7898D905FF61C37EF192477BE2A449097E"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        258
+      ],
+      "expected_component_digests": [
+        "EBAB499B564E7DFE4E63B982D76570FBF49CC8FB97C29F3E96F6CD1202961BF1"
+      ],
+      "expected_logical_component_digests": [
+        "B02F7DC60D371D3BECDE3F3AE479A8D6F8309727F6D54E45742DC676EDF3B27B"
+      ],
+      "expected_shard_sha256s": [
+        "5A23A74ABBD39FB902DD0A64AE25DCBA6AECF1847DDCF47152CB0B54C4DC1BBD"
+      ],
+      "expected_resrefs": [
+        "WQLBWG1",
+        "WQLBWSA"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/arropheo-wqlbw/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4F97A8BEB0EED8E66176969AE85842AEBA3F68CFABE1A4B570E96363DB4ACEF1"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        260
+      ],
+      "expected_component_digests": [
+        "44318DBE510ADBED99FADE6ECBB791E494D5B7D2A0C3465E76BB17E2E2F29890"
+      ],
+      "expected_logical_component_digests": [
+        "B07E104B52FCB8CE91CBBCE23560EA99F23FF7197BCE6D0A447CFCC3170B432A"
+      ],
+      "expected_shard_sha256s": [
+        "F25E21991A5D1CB206395C26AB7450883B311AB416A979A6F2A58776419C1BDC"
+      ],
+      "expected_resrefs": [
+        "WQLS3A1",
+        "WQLS3A3",
+        "WQLS3A5",
+        "WQLS3A7",
+        "WQLS3A8",
+        "WQLS3A9",
+        "WQLS3G1",
+        "WQLS3OA7",
+        "WQLS3OA8",
+        "WQLS3OA9",
+        "WQLS3OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/misc9q-wqls3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "F76F569F8B0CF8872ED578839B9C3E1F9DCA25EA4CEA0551A31D2203E52A1472"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        261
+      ],
+      "expected_component_digests": [
+        "0C8C8BE481DB23E2F6DA1938D3286A2288F870D9063DFACC2DBAE264FD1D3C64"
+      ],
+      "expected_logical_component_digests": [
+        "B09118209F5A9C7183B24A3555CAB6202C5278C2689AD5222614EE752EA12955"
+      ],
+      "expected_shard_sha256s": [
+        "03081A5DA926AF3636260F310452B368D277F80299C469C8A8897BA48859BB15"
+      ],
+      "expected_resrefs": [
+        "WQLH6A1",
+        "WQLH6A2",
+        "WQLH6A3",
+        "WQLH6A4",
+        "WQLH6A5",
+        "WQLH6A6",
+        "WQLH6A7",
+        "WQLH6A8",
+        "WQLH6A9",
+        "WQLH6CA",
+        "WQLH6G1",
+        "WQLH6SA",
+        "WQLH6SS",
+        "WQLH6SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bearspir-wqlh6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "6FAB5EDC9681DA9620472437059409AB13635379553CA86EB846792F065F6B6A"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        280
+      ],
+      "expected_component_digests": [
+        "5A5BECC6E137C0678211725266947D0378BEB85D1903B125A45F9382A13E2C40"
+      ],
+      "expected_logical_component_digests": [
+        "C00837A1E29B0FD3CC39E3CFD02187AE4E8C28A04601BEABE493EB92B243315D"
+      ],
+      "expected_shard_sha256s": [
+        "B4604FDF6CF8C556C4AB83CEE325AE8B83065BF9D07AF2F52CC8941A3D5EA84D"
+      ],
+      "expected_resrefs": [
+        "WQLJ5A1",
+        "WQLJ5A2",
+        "WQLJ5A3",
+        "WQLJ5A4",
+        "WQLJ5A5",
+        "WQLJ5A6",
+        "WQLJ5A7",
+        "WQLJ5A8",
+        "WQLJ5A9",
+        "WQLJ5CA",
+        "WQLJ5G1",
+        "WQLJ5SA",
+        "WQLJ5SS",
+        "WQLJ5SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm13-wqlj5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B9CB8AA4C074D1A3272AACAD9F286461881FA005C87E29E2DF87605A077DE682"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        282
+      ],
+      "expected_component_digests": [
+        "F43A483E2B37ADF01C511125A3D4E8CADF5E4A4D985C03BF947B1A0B8F03447C"
+      ],
+      "expected_logical_component_digests": [
+        "C07A6C40C220FF7514AB3E4F2FE063258B8E773E045FE966488F295EF8888D67"
+      ],
+      "expected_shard_sha256s": [
+        "428FD3F6FB00150927F99C90343BDB7149108CE43AD78D6CBA67F530CA48A175"
+      ],
+      "expected_resrefs": [
+        "WQLC1A1",
+        "WQLC1A3",
+        "WQLC1A5",
+        "WQLC1G1",
+        "WQLC1SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld03-wqlc1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5413D186700B57BD44FEEB5FDB6CE9C37E9803DDDC022AAFD9333558AD5A6B94"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        290
+      ],
+      "expected_component_digests": [
+        "CE1227771907FDFED43B9DDD655F92DA59FF09B493ED3D926C579B664D239235"
+      ],
+      "expected_logical_component_digests": [
+        "CB59C931C95F09071C1C01B699E299841D506F32E171A81F27BEFFB83AE67B69"
+      ],
+      "expected_shard_sha256s": [
+        "B74C075FB01C203F22862A3B1269A5778CB3EFDB7383A54AFE5B0E7F1D7055DC"
+      ],
+      "expected_resrefs": [
+        "WQLC7A1",
+        "WQLC7A3",
+        "WQLC7A5",
+        "WQLC7G1",
+        "WQLC7SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dwshld01-wqlc7/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "6ABA52FE674F458B7549434EF37C1C2A24FEFF24ED29997F4A40C221576B4B95"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        303
+      ],
+      "expected_component_digests": [
+        "BFEDB08290A7A8BF85F5F58CCA0BDF991AEC45DC37FB68F4F1B1307E0C9D6F99"
+      ],
+      "expected_logical_component_digests": [
+        "D1FFBD58396929C2F12F07E46715A5409A851FF355ACD676E23013D7196AD071"
+      ],
+      "expected_shard_sha256s": [
+        "43741A66E65EBF9D6866BFE97C081150BE4EB8394247A80D821825809AEA794F"
+      ],
+      "expected_resrefs": [
+        "WQLJ9A1",
+        "WQLJ9A2",
+        "WQLJ9A3",
+        "WQLJ9A4",
+        "WQLJ9A5",
+        "WQLJ9A6",
+        "WQLJ9A7",
+        "WQLJ9A8",
+        "WQLJ9A9",
+        "WQLJ9CA",
+        "WQLJ9G1",
+        "WQLJ9SA",
+        "WQLJ9SS",
+        "WQLJ9SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/compon05-wqlj9/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "F733583E21B3FB3CB24E59040DF41F282D2C454C1DA6B0ADC2F8C1E515653811"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        305
+      ],
+      "expected_component_digests": [
+        "403E5A6448CEF8440879DC540C9248142E8C121935C49D0FAEE8AA8E83C20229"
+      ],
+      "expected_logical_component_digests": [
+        "D242B5528C6D0C430140FB53A7F4EFFF218F511FA3A40D51F3BFD4119C40091F"
+      ],
+      "expected_shard_sha256s": [
+        "74327A117E03B08312B8A88ACE6B925D393FC25BE33A49EAA979369CEACA9C0D"
+      ],
+      "expected_resrefs": [
+        "CHMB3A1",
+        "CHMB3A2",
+        "CHMB3A3",
+        "CHMB3A4",
+        "CHMB3A5",
+        "CHMB3A6",
+        "CHMB3A7",
+        "CHMB3A8",
+        "CHMB3A9",
+        "CHMB3CA",
+        "CHMB3G1",
+        "CHMB3G11",
+        "CHMB3G12",
+        "CHMB3G13",
+        "CHMB3G14",
+        "CHMB3G15",
+        "CHMB3G16",
+        "CHMB3G17",
+        "CHMB3G18",
+        "CHMB3G19",
+        "CHMB3SA",
+        "CHMB3SS",
+        "CHMB3SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmb3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B814F067560C610EA9220179D2EA7AF56CAAAB10A5DFFBDB9BFD7FADC5C80FF8"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        308
+      ],
+      "expected_component_digests": [
+        "1C4B99920C11CFD09503F8E4B77A4EABBBFB147B36F688370AA22BE99697584A"
+      ],
+      "expected_logical_component_digests": [
+        "D4C4B8CADA85F006BF9175C6C7E00DCC84D54D01AFFDADFE4238377BE9D1A04B"
+      ],
+      "expected_shard_sha256s": [
+        "7C136484D98BCC99708842BFCEAAAA0572B5AC15CDD909DA94B41790B3A91234"
+      ],
+      "expected_resrefs": [
+        "WQLAXA1",
+        "WQLAXA3",
+        "WQLAXA5",
+        "WQLAXA7",
+        "WQLAXA8",
+        "WQLAXA9",
+        "WQLAXG1",
+        "WQLAXOA7",
+        "WQLAXOA8",
+        "WQLAXOA9",
+        "WQLAXOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/ax1h01-wqlax/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "79A1A973910BBCC5B2AF600EE70F8A9B52F8937AC0A8EE638C9DCF27C2CA6923"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        325
+      ],
+      "expected_component_digests": [
+        "FF00B4FD5C18D8558E574AA8E684F3578108707DF9EBB955573EE5548CC2A0DD"
+      ],
+      "expected_logical_component_digests": [
+        "DCDB97B0F215696360744B1F553684795561810949CCB7161E4743247136E6B0"
+      ],
+      "expected_shard_sha256s": [
+        "CA34C2CA5E2D42EF2E212933B5EB80FD23211ECE57FE016B969E70FE96D8470B"
+      ],
+      "expected_resrefs": [
+        "WQLMCA1",
+        "WQLMCA3",
+        "WQLMCA5",
+        "WQLMCA7",
+        "WQLMCA8",
+        "WQLMCA9",
+        "WQLMCG1",
+        "WQLMCOA7",
+        "WQLMCOA8",
+        "WQLMCOA9",
+        "WQLMCOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun04-wqlmc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "0B1AF90F33818A2FD750C0E1E49934940BAC9A57BE234EF6FA5A0DE8064BE186"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        327
+      ],
+      "expected_component_digests": [
+        "D6F5F5B70491A9091C390923720488955867FE9FA0657806560CFDDAEB2A4DDF"
+      ],
+      "expected_logical_component_digests": [
+        "DE882C06381111D4B22E3FF684CDBF9EB50327FF424815B450A962540C8F9A07"
+      ],
+      "expected_shard_sha256s": [
+        "276E95BFE7D04339CE18CF8ACE32ADBCBF3806CC37FADCD6A27514936585A810"
+      ],
+      "expected_resrefs": [
+        "WQLC3A1",
+        "WQLC3A3",
+        "WQLC3A5",
+        "WQLC3G1",
+        "WQLC3SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chalshld-wqlc3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "6E6F6B3A93B36B294E307FA5994602D8D86896B083B1638A7DCFF8994675ADF9"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        330
+      ],
+      "expected_component_digests": [
+        "EBBC86EBABD3C87652AF7CC00547B70194BB982F8E2FDA7554E5C783E6999183"
+      ],
+      "expected_logical_component_digests": [
+        "DF9302F476910ED95B72F9674E32C7C6B14CD1DA4769638D2452E3AB26EA7CE3"
+      ],
+      "expected_shard_sha256s": [
+        "0168B9D7273C3B089AF2907E8EC521876213536D2A3D34F8EEA69FCF1E1F033F"
+      ],
+      "expected_resrefs": [
+        "WQLSCA1",
+        "WQLSCA3",
+        "WQLSCA5",
+        "WQLSCA7",
+        "WQLSCA8",
+        "WQLSCA9",
+        "WQLSCG1",
+        "WQLSCOA7",
+        "WQLSCOA8",
+        "WQLSCOA9",
+        "WQLSCOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/dwsw1h01-wqlsc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "62173DCE7EABE728D3D58C013E2F6C51AC130EB40E57F2D00970C7E69AF296A6"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        335
+      ],
+      "expected_component_digests": [
+        "E54F850B91074687E8AF7A1567A6A0E05B7BDE4FE08E0EB53A8F430E1B85608A"
+      ],
+      "expected_logical_component_digests": [
+        "E20FB311E7AD911C2ABECC408206D81A14FFBE5B29B9FEC6D9F4C0A6167EB4A8"
+      ],
+      "expected_shard_sha256s": [
+        "630F1F00A7923609BA2C3F93EF78833E40F8CB5058697ADAF0188BFE41E9EE00"
+      ],
+      "expected_resrefs": [
+        "WQLM2A1",
+        "WQLM2A3",
+        "WQLM2A5",
+        "WQLM2A7",
+        "WQLM2A8",
+        "WQLM2A9",
+        "WQLM2G1",
+        "WQLM2OA7",
+        "WQLM2OA8",
+        "WQLM2OA9",
+        "WQLM2OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun12-wqlm2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "03F1C2F5449321EB110DA66551757AB6007B38B86E1329D5A8BA763EA7FB28A8"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        336
+      ],
+      "expected_component_digests": [
+        "C8702EF76F96917DD2AE5C492D958571815D38FCAB780572EFA4178C1C37753A"
+      ],
+      "expected_logical_component_digests": [
+        "E24B081BDF88A08D2467CF3BCB7903CC31DE4C406496E2E54ABCEF8EBA0D5ACB"
+      ],
+      "expected_shard_sha256s": [
+        "644FF7B1DC1B63F462E38A0D632EBA3F83359807C16AC456E3D34DCA60244DB1"
+      ],
+      "expected_resrefs": [
+        "WQLF3A1",
+        "WQLF3A3",
+        "WQLF3A5",
+        "WQLF3A7",
+        "WQLF3A8",
+        "WQLF3A9",
+        "WQLF3G1",
+        "WQLF3OA7",
+        "WQLF3OA8",
+        "WQLF3OA9",
+        "WQLF3OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/blun14-wqlf3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "217EE47CF4A03F007609456761A14D9174D41503F95D518578FA6263BB2781C6"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        345
+      ],
+      "expected_component_digests": [
+        "534FFDD5417961BDFDF23F15BD434B14A7468337D30AA15E44248DA6D77CFEF7"
+      ],
+      "expected_logical_component_digests": [
+        "E605DD7896FCACE783F9F6F91E6144DEB9C2909C0F4F26F0C0DB7C71B8B3C1E5"
+      ],
+      "expected_shard_sha256s": [
+        "81E33595B66F904E373580066AC92CA90E3B14FABA0E966AE04A98681F407908"
+      ],
+      "expected_resrefs": [
+        "WQLS1A1",
+        "WQLS1A3",
+        "WQLS1A5",
+        "WQLS1A7",
+        "WQLS1A8",
+        "WQLS1A9",
+        "WQLS1G1",
+        "WQLS1OA7",
+        "WQLS1OA8",
+        "WQLS1OA9",
+        "WQLS1OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdsw1h06-wqls1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2DA64E70BDE01F592F9A8DE5867F9AA40190EA1E825E32A29A39D08BDBD2192D"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        346
+      ],
+      "expected_component_digests": [
+        "9B38935EF56C19AE5A7B9939BC8FE896F18D7412ACD04C5EE4CCC73B3DD1F0D2"
+      ],
+      "expected_logical_component_digests": [
+        "E6E86E74095D7191F178AB9842F1768037FFADDBA29114B9687884378D4E39B5"
+      ],
+      "expected_shard_sha256s": [
+        "C17613C906F466D295A05D65789F0FF026F88DF80EBC3D047F5BE5E66E896C9A"
+      ],
+      "expected_resrefs": [
+        "WQLS2A2",
+        "WQLS2A4",
+        "WQLS2A6",
+        "WQLS2G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdsw2h01-wqls2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "0835A8A985C220D8535EFF78FDF0A03E91C07960B9B54FBB5AA53886680ABB39"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        348
+      ],
+      "expected_component_digests": [
+        "75AC864E078AF640067E7C0A19F77EBC3BFE42A3564E677DBDE6F8B645E47F94"
+      ],
+      "expected_logical_component_digests": [
+        "E803C7897FB063B7D76944B39263FD2172068EFFDF2A781578864FBEBF58BE7F"
+      ],
+      "expected_shard_sha256s": [
+        "CF1E5422B20D3302B136A6FFDBCE58723A2F3A7AA7AB102E3D8CEE8E8EE0738F"
+      ],
+      "expected_resrefs": [
+        "WQLF2A1",
+        "WQLF2A3",
+        "WQLF2A5",
+        "WQLF2A7",
+        "WQLF2A8",
+        "WQLF2A9",
+        "WQLF2G1",
+        "WQLF2OA7",
+        "WQLF2OA8",
+        "WQLF2OA9",
+        "WQLF2OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/npsw06-wqlf2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "AC1D0CE535CA5E486B55818141E1028E4ABBF70891B36121F6B202A20B593463"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        351
+      ],
+      "expected_component_digests": [
+        "37D145C814CA5EEA12322C8E4170F46DBCAC2025874247F05A1F5C645DB92E5A"
+      ],
+      "expected_logical_component_digests": [
+        "EA1E3EEB7EC17903186E0B8CEEB622AE0644ED2AA1AF7431DCD86B27B734C5D2"
+      ],
+      "expected_shard_sha256s": [
+        "5CBBB8095B81E867D1DF27A06DA8A9C2CCC58AAB4804BA78F6EF307B0C02A17C"
+      ],
+      "expected_resrefs": [
+        "WQLH0A1",
+        "WQLH0A2",
+        "WQLH0A3",
+        "WQLH0A4",
+        "WQLH0A5",
+        "WQLH0A6",
+        "WQLH0A7",
+        "WQLH0A8",
+        "WQLH0A9",
+        "WQLH0CA",
+        "WQLH0G1",
+        "WQLH0SA",
+        "WQLH0SS",
+        "WQLH0SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/bdhelm09-wqlh0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "A4AF7121AB209A50BBB96713D3D713539E343BC0A09D8D22CA1CEE3EF4626B34"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        352
+      ],
+      "expected_component_digests": [
+        "036F4AA2D88D97821AA3B71DD7B8FA1B31BF25EFFFECD03D185D0633F22E145A"
+      ],
+      "expected_logical_component_digests": [
+        "EA21F5D17FD211E85ED266551AE043719784AE207653297281952E2885DB7BC3"
+      ],
+      "expected_shard_sha256s": [
+        "EF4066C227BE56017D0176076E9FCB6240E481252816ADEB0F42FC4DED990777"
+      ],
+      "expected_resrefs": [
+        "CHMB2A1",
+        "CHMB2A2",
+        "CHMB2A3",
+        "CHMB2A4",
+        "CHMB2A5",
+        "CHMB2A6",
+        "CHMB2A7",
+        "CHMB2A8",
+        "CHMB2A9",
+        "CHMB2CA",
+        "CHMB2G1",
+        "CHMB2G11",
+        "CHMB2G12",
+        "CHMB2G13",
+        "CHMB2G14",
+        "CHMB2G15",
+        "CHMB2G16",
+        "CHMB2G17",
+        "CHMB2G18",
+        "CHMB2G19",
+        "CHMB2SA",
+        "CHMB2SS",
+        "CHMB2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/chmb2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "11E8460182583688CB2A107A258636C44AEE219FE7B3C979ED265E7E89C7D5A8"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        355
+      ],
+      "expected_component_digests": [
+        "E12822D7167A0712E47578D8510BBEDEE693D431091CD2A92369EE7084F622B1"
+      ],
+      "expected_logical_component_digests": [
+        "ED8C3AFB9718E017B99CAF20A594B4AB1AB2193AAC8EE57A90FEF50833C1721E"
+      ],
+      "expected_shard_sha256s": [
+        "C4DDF7FCF9728C3475256FE8A2CBF495B1C7A64FE0B3B1E4C05A085563B353ED"
+      ],
+      "expected_resrefs": [
+        "WQLC0A1",
+        "WQLC0A3",
+        "WQLC0A5",
+        "WQLC0G1",
+        "WQLC0SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/shld01-wqlc0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "60A7FDD83060CC637381E3DA08D82D288F18C079538D1506BCBCA77B03DF97EE"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        361
+      ],
+      "expected_component_digests": [
+        "C86AF9B0C0BADF05DB633181B20940D623833A967047B77A2C099DB58C296C79"
+      ],
+      "expected_logical_component_digests": [
+        "F0EF07C21BA078D9FB60A9DB67151D9656ABFAE2CF2D66636987A8C9B4EFA7CF"
+      ],
+      "expected_shard_sha256s": [
+        "616F325959F2C8ADF9A5AB844114636A33AD383152B6671997770D3FC14CFAD6"
+      ],
+      "expected_resrefs": [
+        "WQLSLG1",
+        "WQLSLSS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/ohnslng1-wqlsl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D3D280DE26FE808C4C535EAEAF8BE6A76FC0469DA451C676E366535E838293C4"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        363
+      ],
+      "expected_component_digests": [
+        "AB6059C9A3C4E6179D3BC15940228B7C314833EA2103EABBA6C3A72D8CBAAB23"
+      ],
+      "expected_logical_component_digests": [
+        "F2275C02FE4C02EFED0FD0368894CBA2A155EC5C969728F037ADAC285665B804"
+      ],
+      "expected_shard_sha256s": [
+        "D6092924BBFB8D0764882D6B64039C3FC919B056F16F220F823E24473AEBA181"
+      ],
+      "expected_resrefs": [
+        "WQLD3A1",
+        "WQLD3A3",
+        "WQLD3A5",
+        "WQLD3G1",
+        "WQLD3SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/ishld03-wqld3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "245732ACFABD70990B07F5D16A1911485AD93720BA6994C2BAC3D75F35F97F79"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        372
+      ],
+      "expected_component_digests": [
+        "1C160AD37B81D018C8552594560B5C9E7AC6BDB28919834CC557E0F18DFC5E41"
+      ],
+      "expected_logical_component_digests": [
+        "F5D28FC7FA0071A6734BE4A6C74BC632ACA1248C3DECCB73F3EF156FBAB0F1A2"
+      ],
+      "expected_shard_sha256s": [
+        "52AD322043117A59E965FA79AC8DD4E185ED5602C64DB2FA886AA0D5A8784F45"
+      ],
+      "expected_resrefs": [
+        "WQLJ0A1",
+        "WQLJ0A2",
+        "WQLJ0A3",
+        "WQLJ0A4",
+        "WQLJ0A5",
+        "WQLJ0A6",
+        "WQLJ0A7",
+        "WQLJ0A8",
+        "WQLJ0A9",
+        "WQLJ0CA",
+        "WQLJ0G1",
+        "WQLJ0SA",
+        "WQLJ0SS",
+        "WQLJ0SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm15-wqlj0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "A355AC0C75A8F0FDAEF7ABE576971C7D777A10D34E84ABC38A146A52F162ED2D"
+    },
+    {
+      "animation_id": "0x6100",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        380
+      ],
+      "expected_component_digests": [
+        "64632E305459CAB21BED649A39E278D20A03589B48095555C8ACFF9218E1EE79"
+      ],
+      "expected_logical_component_digests": [
+        "FB37640DF7D2A892E4598D8AC4C5DC08D55EA6F72D39A53546CA3DE287E071D9"
+      ],
+      "expected_shard_sha256s": [
+        "265DC7B839B7D38E9414F5E35C773B0598D28E0C2EA75307498E5541C34F605D"
+      ],
+      "expected_resrefs": [
+        "WQLJ6A1",
+        "WQLJ6A2",
+        "WQLJ6A3",
+        "WQLJ6A4",
+        "WQLJ6A5",
+        "WQLJ6A6",
+        "WQLJ6A7",
+        "WQLJ6A8",
+        "WQLJ6A9",
+        "WQLJ6CA",
+        "WQLJ6G1",
+        "WQLJ6SA",
+        "WQLJ6SS",
+        "WQLJ6SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6100-human-male-fighter/helm01-wqlj6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "C21A06A44AFAC21F0082622F7B3E5E125C7325020EAF8A55760023A250D71E46"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        3
+      ],
+      "expected_component_digests": [
+        "A281B0A8E38CFF5EE811EF99D8070E6E346D88E7A9D1145D11A361EF4F88C5BE"
+      ],
+      "expected_logical_component_digests": [
+        "050B51166C4E8A1452425A5CDE9ABAE29788E402A79678D38E3C5C625E4D43E7"
+      ],
+      "expected_shard_sha256s": [
+        "3C09838F66CF7CEFAF54F76D9162D921F1E111F3316D3A522527297653367CA1"
+      ],
+      "expected_resrefs": [
+        "WQLJ7A1",
+        "WQLJ7A2",
+        "WQLJ7A3",
+        "WQLJ7A4",
+        "WQLJ7A5",
+        "WQLJ7A6",
+        "WQLJ7A7",
+        "WQLJ7A8",
+        "WQLJ7A9",
+        "WQLJ7CA",
+        "WQLJ7G1",
+        "WQLJ7SA",
+        "WQLJ7SS",
+        "WQLJ7SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm07-wqlj7/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "928D30C4588C0D3B3DAA37E860BB1D3E02D94FE8F4B484F59BD39DC6E2E744FC"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        9
+      ],
+      "expected_component_digests": [
+        "74D967AC617A68705D001727B214D9E8914886C38755ADCB3798DFCF63C4FC41"
+      ],
+      "expected_logical_component_digests": [
+        "0916A29BD9980E956D1FBE09F95388ABB0F4C49891D686EE02372885FA691D3C"
+      ],
+      "expected_shard_sha256s": [
+        "9BB4A61EDF892D5DE7614918EA76C92D7CA75F0188A66A492FA2E51F834D1243"
+      ],
+      "expected_resrefs": [
+        "WQLD4A1",
+        "WQLD4A3",
+        "WQLD4A5",
+        "WQLD4G1",
+        "WQLD4SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld05a-wqld4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7AF59744001C8295E342165A374D5B5EE3C8976C2336F2B52E64FFF6F12683BE"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        10
+      ],
+      "expected_component_digests": [
+        "C47704A5FD59BB1AB8C2A3A75C79BD1C76603D4F250021F72A7A62F5CDB7CA1C"
+      ],
+      "expected_logical_component_digests": [
+        "0929DD00004D5CD5D3EBEFBCF6F359F9FC2C2F93CD8931EC91BE64A329AFD989"
+      ],
+      "expected_shard_sha256s": [
+        "CA4A27D825F1C0D2279FA4D907F42356609A2AE9063FF2883CB3FEE61841125A"
+      ],
+      "expected_resrefs": [
+        "WQLJ1A1",
+        "WQLJ1A2",
+        "WQLJ1A3",
+        "WQLJ1A4",
+        "WQLJ1A5",
+        "WQLJ1A6",
+        "WQLJ1A7",
+        "WQLJ1A8",
+        "WQLJ1A9",
+        "WQLJ1CA",
+        "WQLJ1G1",
+        "WQLJ1SA",
+        "WQLJ1SS",
+        "WQLJ1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chalhelm-wqlj1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "44DCF9CF7C503163928E8F3FBD2E2C8ED33090A7F4A9FE3F2A363C7E849C148A"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        23
+      ],
+      "expected_component_digests": [
+        "B2B3809C6A23F35075C9ADDEE1F7C9001C51BB808296334AE0A0108F9E33FD89"
+      ],
+      "expected_logical_component_digests": [
+        "114637E3B9B25F32CFFD17B709A3A4E2A77AA9815B7854BF826654815A15BED0"
+      ],
+      "expected_shard_sha256s": [
+        "F13726BE04BE82FCE9FE0593953C371988DA0BE1EC4DF9A48EA02BACE0B9708A"
+      ],
+      "expected_resrefs": [
+        "WQLC6A1",
+        "WQLC6A3",
+        "WQLC6A5",
+        "WQLC6G1",
+        "WQLC6SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld07-wqlc6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4DF3634FC6C26646C45EFE481C24BB320880956FEEF06C62DC10E7AABCEAFE14"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        31
+      ],
+      "expected_component_digests": [
+        "425F359C83EFD567756C4CBACFEA9DED2EC7FF175F83F542E0D797D2F6E3573A"
+      ],
+      "expected_logical_component_digests": [
+        "16C5D2AE5A69E537747E4655DCB352A6BFF0388EA9EF33D3C08F7D500E4B11CE"
+      ],
+      "expected_shard_sha256s": [
+        "9BE822B02DFF66D0FDBC957F2EE776611C0D46364565D88D7E1467714F31542C"
+      ],
+      "expected_resrefs": [
+        "WQLH5A1",
+        "WQLH5A2",
+        "WQLH5A3",
+        "WQLH5A4",
+        "WQLH5A5",
+        "WQLH5A6",
+        "WQLH5A7",
+        "WQLH5A8",
+        "WQLH5A9",
+        "WQLH5CA",
+        "WQLH5G1",
+        "WQLH5SA",
+        "WQLH5SS",
+        "WQLH5SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/ihelm10-wqlh5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "AC8014317F83080A6F2540F002DDD871BD7E83EB7E6771782AE259D587603FEE"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        41
+      ],
+      "expected_component_digests": [
+        "17622606A7EC6F8A1312885D24F6CF7956992DB8DAA8E4658C1EC7BE874FCFCE"
+      ],
+      "expected_logical_component_digests": [
+        "1ABCA8109BDB69E4C95FEC707E3CF4554400AACE45D49BA2F8A01D8EEC11EED8"
+      ],
+      "expected_shard_sha256s": [
+        "A6F24CD4F7EF5C1A2050D198A7E2C94FB12774E389D8B3F0A1EEF274FF79F7D9"
+      ],
+      "expected_resrefs": [
+        "WQLZWA1",
+        "WQLZWA2",
+        "WQLZWA3",
+        "WQLZWA4",
+        "WQLZWA5",
+        "WQLZWA6",
+        "WQLZWA7",
+        "WQLZWA8",
+        "WQLZWA9",
+        "WQLZWCA",
+        "WQLZWG1",
+        "WQLZWSA",
+        "WQLZWSS",
+        "WQLZWSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/wings01-wqlzw/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4350D04B4F5CE4B9EBBDC0C0E9FF64F70816F880C4A585186ABDEB78DC71C146"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        47
+      ],
+      "expected_component_digests": [
+        "CBA19D5FF04303BE93DB506A7B9B97E835F5A44BE368E047B78B5BAFFF66DF60"
+      ],
+      "expected_logical_component_digests": [
+        "1FEA392C0E3CFAA522557CD1B2C7AACDED48ADB0D882657FF06151869E5BEE49"
+      ],
+      "expected_shard_sha256s": [
+        "CD62F541AC1E57D7A2C618AF9B4BA396D21666CA6748F979F8CDDB679E787AD6"
+      ],
+      "expected_resrefs": [
+        "WQLJBA1",
+        "WQLJBA2",
+        "WQLJBA3",
+        "WQLJBA4",
+        "WQLJBA5",
+        "WQLJBA6",
+        "WQLJBA7",
+        "WQLJBA8",
+        "WQLJBA9",
+        "WQLJBCA",
+        "WQLJBG1",
+        "WQLJBSA",
+        "WQLJBSS",
+        "WQLJBSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bdhelm16-wqljb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "C07E214FB34F9AF2E16AC8D2D7868BC4CB10B70DC72E8B6BE0825431F5C5F90F"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        54
+      ],
+      "expected_component_digests": [
+        "4E44C94334AF84874C6F2BDEDF8E615361E246B997A30B9866D257F95F36B604"
+      ],
+      "expected_logical_component_digests": [
+        "2402DB9DA8B7713BE6628F1CDD5452E9E64A99449285E788F83D6A1BF94C4E7E"
+      ],
+      "expected_shard_sha256s": [
+        "B67C88A05913BA270C3F68FBD041A81239C502C9EE7E57C0D654E0214432989E"
+      ],
+      "expected_resrefs": [
+        "WQLC2A1",
+        "WQLC2A3",
+        "WQLC2A5",
+        "WQLC2G1",
+        "WQLC2SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld05-wqlc2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B715D149279E93A258F0151A02B2947655094AFFBF265D5A055630C19D9E213E"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        58
+      ],
+      "expected_component_digests": [
+        "9C22F2AC0194BA0E5C922F3F00BA297874591E56BE950DC000C0ABBD66FB9CFE"
+      ],
+      "expected_logical_component_digests": [
+        "25C07023CB837175F7C561A6AEC82B315E27412BF3E9161F75949F7BE5E71E31"
+      ],
+      "expected_shard_sha256s": [
+        "91DCF3A25388B7058A440DBCB9802AD4265CDF1C6CF2735503F6081D2C63AB13"
+      ],
+      "expected_resrefs": [
+        "WQLF0A1",
+        "WQLF0A3",
+        "WQLF0A5",
+        "WQLF0A7",
+        "WQLF0A8",
+        "WQLF0A9",
+        "WQLF0G1",
+        "WQLF0OA7",
+        "WQLF0OA8",
+        "WQLF0OA9",
+        "WQLF0OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun13-wqlf0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "E68ED09365FF76FF6C168D1EF390319F1882C0FEB06A64C1B7EA1813D5FC4965"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        66
+      ],
+      "expected_component_digests": [
+        "B98C811E3815A40967F42C3A8AA7F8F63456F56815368C706DA68C648B59FF93"
+      ],
+      "expected_logical_component_digests": [
+        "2B0D638EC93D05833DA5F1291E45D8AF7BB02DEA8AD3DB4EDA043A12C95A9201"
+      ],
+      "expected_shard_sha256s": [
+        "54A2682F10B8C86230306060EA9F224662B6C1775D1ADC03288FC143A26CED29"
+      ],
+      "expected_resrefs": [
+        "WQLS0A1",
+        "WQLS0A3",
+        "WQLS0A5",
+        "WQLS0A7",
+        "WQLS0A8",
+        "WQLS0A9",
+        "WQLS0G1",
+        "WQLS0OA7",
+        "WQLS0OA8",
+        "WQLS0OA9",
+        "WQLS0OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/sw1h01-wqls0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4EFC5B2C17346C69857AD2C316E0F92D61079A11A08389B77C8C643A023C9DE7"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        71
+      ],
+      "expected_component_digests": [
+        "1C15594B3152DAA42DC61FBDD19ACE9661242CDB2CC62E93E62BEB84B7B5DB59"
+      ],
+      "expected_logical_component_digests": [
+        "2E357A157675F0748DA18835A3A7B7AE5FD3A448B1062E4C9F20D9B2C9C262A2"
+      ],
+      "expected_shard_sha256s": [
+        "A180C89B2FAF5571E3CD9A49B360C29D8F088A7C72C1CA399CE713917B202584"
+      ],
+      "expected_resrefs": [
+        "WQLDDA1",
+        "WQLDDA3",
+        "WQLDDA5",
+        "WQLDDA7",
+        "WQLDDA8",
+        "WQLDDA9",
+        "WQLDDG1",
+        "WQLDDOA7",
+        "WQLDDOA8",
+        "WQLDDOA9",
+        "WQLDDOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/cdnebdag-wqldd/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "8FEA1409A6F3CA36FA8A3617F5A4CE4EEB30BAE5399A023C17285371AF008842"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        80
+      ],
+      "expected_component_digests": [
+        "CF958D14CCC3FB0B0903C6386F1682B0A4F97AF27238CA36FE6B688569A0AAAF"
+      ],
+      "expected_logical_component_digests": [
+        "31CA2B558EA132FD50E4D55F752EAE9F31EB476672CBB151D5EFCC0033EC91BD"
+      ],
+      "expected_shard_sha256s": [
+        "ED715C267282D4AA605A86C05CDDC774F77D6FB98DA9C5A348A860F5A0364B3A"
+      ],
+      "expected_resrefs": [
+        "WQLJ8A1",
+        "WQLJ8A2",
+        "WQLJ8A3",
+        "WQLJ8A4",
+        "WQLJ8A5",
+        "WQLJ8A6",
+        "WQLJ8A7",
+        "WQLJ8A8",
+        "WQLJ8A9",
+        "WQLJ8CA",
+        "WQLJ8G1",
+        "WQLJ8SA",
+        "WQLJ8SS",
+        "WQLJ8SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm03-wqlj8/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "80AC2FC49A474756E8467C66B029E5F7C28D00729EECF5A6A1C12FA1A54684F3"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        81
+      ],
+      "expected_component_digests": [
+        "819463EED0C802BAE99975EC99F161895817DE1118627B0B3FF9828C43086874"
+      ],
+      "expected_logical_component_digests": [
+        "331C5F5E0B03C947544409A7618C1165C0DCE61577A3FB034FEF2D59526C1C32"
+      ],
+      "expected_shard_sha256s": [
+        "ADC0811BA5EF391A14143327BBD97870628E3939BE840F5BC1EE082184C086BF"
+      ],
+      "expected_resrefs": [
+        "WQLJ2A1",
+        "WQLJ2A2",
+        "WQLJ2A3",
+        "WQLJ2A4",
+        "WQLJ2A5",
+        "WQLJ2A6",
+        "WQLJ2A7",
+        "WQLJ2A8",
+        "WQLJ2A9",
+        "WQLJ2CA",
+        "WQLJ2G1",
+        "WQLJ2SA",
+        "WQLJ2SS",
+        "WQLJ2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm21-wqlj2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "DCE8F0C24769AB57F23ABE094A5A5F0AB25A715092B619C6D9E510B72FF3B1D8"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        84
+      ],
+      "expected_component_digests": [
+        "AA2CFEE02FD1D79215B2A1462ADE11D352B65C0685D97F01DF466CCC4FD7603F"
+      ],
+      "expected_logical_component_digests": [
+        "33C1B45FCD24BB24B6825E47ADAD2315FE5A39540C2806E63661A860C3886D80"
+      ],
+      "expected_shard_sha256s": [
+        "EB4701E0625341B8CBD28180C1807DBADD489D67984383CB7302CCC074B28914"
+      ],
+      "expected_resrefs": [
+        "WQLCLA1",
+        "WQLCLA3",
+        "WQLCLA5",
+        "WQLCLA7",
+        "WQLCLA8",
+        "WQLCLA9",
+        "WQLCLG1",
+        "WQLCLOA7",
+        "WQLCLOA8",
+        "WQLCLOA9",
+        "WQLCLOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun01-wqlcl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "31C60B1EA23E032DB9D783DDFA07109AF1E811F002B6214210B15B4E6E8E08B9"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        98
+      ],
+      "expected_component_digests": [
+        "448F3503C1322A07B24D9199ADC6F945A00988A2E7DF063530BD576D1DBD54A5"
+      ],
+      "expected_logical_component_digests": [
+        "40949D5C2CB29C175A56E9D4766ABC860BA43004B030A7A295C084CE30F919F9"
+      ],
+      "expected_shard_sha256s": [
+        "7DA643761CC2D70F7BC9AE8EB738005AD5545B73ED7FD9EBEF0D4751C0BF505D"
+      ],
+      "expected_resrefs": [
+        "WQLF1A1",
+        "WQLF1A3",
+        "WQLF1A5",
+        "WQLF1A7",
+        "WQLF1A8",
+        "WQLF1A9",
+        "WQLF1G1",
+        "WQLF1OA7",
+        "WQLF1OA8",
+        "WQLF1OA9",
+        "WQLF1OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun14d-wqlf1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BB0B67A00B68A417215246673EF35E64564FD249BF650DCD0D8125E056830913"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        102
+      ],
+      "expected_component_digests": [
+        "69EC62CEAEF68D76339DCEBD16EB721497271856DE631BE5CC0C93611D2A434B"
+      ],
+      "expected_logical_component_digests": [
+        "4135AF5A7AA8155EC5172035CB9CC57BABE35328731B10E61CF1155954580C21"
+      ],
+      "expected_shard_sha256s": [
+        "55F2B3A9A120D81524CC9AE9B88914D0ABDFEACF37EEAB08D47DBC9E4DB06CEC"
+      ],
+      "expected_resrefs": [
+        "CHMW2A1",
+        "CHMW2A2",
+        "CHMW2A3",
+        "CHMW2A4",
+        "CHMW2A5",
+        "CHMW2A6",
+        "CHMW2A7",
+        "CHMW2A8",
+        "CHMW2A9",
+        "CHMW2CA",
+        "CHMW2G1",
+        "CHMW2G11",
+        "CHMW2G12",
+        "CHMW2G13",
+        "CHMW2G14",
+        "CHMW2G15",
+        "CHMW2G16",
+        "CHMW2G17",
+        "CHMW2G18",
+        "CHMW2G19",
+        "CHMW2SA",
+        "CHMW2SS",
+        "CHMW2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chmw2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "76F5BEF62C804F00A5FF2EE1552355FAF99E3453C4398601C6793169F46F8015"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        110
+      ],
+      "expected_component_digests": [
+        "B821558CA1BA15DE9A77C9BB33BA44B8BE6C8DDC39B1A2F472F9E0261772F130"
+      ],
+      "expected_logical_component_digests": [
+        "432F3CB0293B2211D9D39FD74270906C80984BAA41D15AD5D8E353714913FEC0"
+      ],
+      "expected_shard_sha256s": [
+        "B74C80344268B09D60EDA7D869CC99C9AA25C87485D32F3940FC29503245B67C"
+      ],
+      "expected_resrefs": [
+        "WQLWHA1",
+        "WQLWHA3",
+        "WQLWHA5",
+        "WQLWHA7",
+        "WQLWHA8",
+        "WQLWHA9",
+        "WQLWHG1",
+        "WQLWHOA7",
+        "WQLWHOA8",
+        "WQLWHOA9",
+        "WQLWHOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/aegis-wqlwh/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D722DB06BD2D5A55288B4F849053F7C9929D76F556C10AF3191E2FE52F9B3398"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        112
+      ],
+      "expected_component_digests": [
+        "B2C45FD40D34D61B36390CBEF205278E45541C93DE8592B8D5D9F9CBFAAAE7E2"
+      ],
+      "expected_logical_component_digests": [
+        "44A1C4E98F07F7484B900637B24D90929EF5AA00F7839620BE95E9EFAF82361E"
+      ],
+      "expected_shard_sha256s": [
+        "E8BE9320A5ABA7B17030954FBB52893A503FCF3CD130A7AEFAB0F0B1B7EDB1E1"
+      ],
+      "expected_resrefs": [
+        "WQLSSA1",
+        "WQLSSA3",
+        "WQLSSA5",
+        "WQLSSA7",
+        "WQLSSA8",
+        "WQLSSA9",
+        "WQLSSG1",
+        "WQLSSOA7",
+        "WQLSSOA8",
+        "WQLSSOA9",
+        "WQLSSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chalcy1-wqlss/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "227522A62BAE1F0CA25ED5A206E57320A9CC58AB0BAF8574C13298B847C3778B"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        117
+      ],
+      "expected_component_digests": [
+        "44911E5A72BFF978E1F0F8FE0737F730D53D11B4DEB9D105F6842D21BB0ECA02"
+      ],
+      "expected_logical_component_digests": [
+        "498BF8619D31B36DEB9C2095137B6EDA01B8C69B03F23A6CFE4E474F4F1059D8"
+      ],
+      "expected_shard_sha256s": [
+        "281EC12868B035DC894E2EDCB1901A849A9BCC5B0DE407C2E6E4C3F3C1DB5D8D"
+      ],
+      "expected_resrefs": [
+        "WQLBSG1",
+        "WQLBSSA"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bow05-wqlbs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B699267C8AC464A7A7BB705AF9996AE0A9D1FA86716C29E96DC1714E66B2CC49"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        123
+      ],
+      "expected_component_digests": [
+        "5A7320E033DDCC6F915C59DC7027BE0539C4375DD4DA9EC0D0168EAEAE90F61B"
+      ],
+      "expected_logical_component_digests": [
+        "4DB2CE063EC51DBBA0B4545843CF49A22938D2D9B7D1A32A0441185C545BDE7E"
+      ],
+      "expected_shard_sha256s": [
+        "4CDAE008A97A00CDB7FA8AF282F2FB822E865FB3C7593A8D47C7A8D61C29E7F8"
+      ],
+      "expected_resrefs": [
+        "WQLC4A1",
+        "WQLC4A3",
+        "WQLC4A5",
+        "WQLC4G1",
+        "WQLC4SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/ohshld50-wqlc4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "6F25C3F4151215044ECB985A37F61E69A6AD6585F011025F493E8E8EB8031C0D"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        129
+      ],
+      "expected_component_digests": [
+        "A4BA8EC98602A656487FDCBEBC907F60485939A8D52A62C6476699DFD61E2F27"
+      ],
+      "expected_logical_component_digests": [
+        "524FF9262822D9D6C82F1D49ACDD6886A74E787752B4FBBC81C8F4C6345D380E"
+      ],
+      "expected_shard_sha256s": [
+        "297E4E0C4B55C4E89C4747586C511F1CD5C3303ED66B1CFDDAA70998A78DA73B"
+      ],
+      "expected_resrefs": [
+        "WQLH1A1",
+        "WQLH1A2",
+        "WQLH1A3",
+        "WQLH1A4",
+        "WQLH1A5",
+        "WQLH1A6",
+        "WQLH1A7",
+        "WQLH1A8",
+        "WQLH1A9",
+        "WQLH1CA",
+        "WQLH1G1",
+        "WQLH1SA",
+        "WQLH1SS",
+        "WQLH1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/misc9p-wqlh1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D0F49B9658BD93A6D444D74E52B09FE83A0BF88C06B45F776EBE63C471B0EF2B"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        130
+      ],
+      "expected_component_digests": [
+        "CB38BC4AB03D74090CD3DA76635F9892781C0DB417914906CFB0D1BDBF634B59"
+      ],
+      "expected_logical_component_digests": [
+        "52544FB7BDC8ED668130EF90BF81F8A47B7FA822350792AB444C9C9177873C20"
+      ],
+      "expected_shard_sha256s": [
+        "45AD2C4428FB4869D705359BF5DA5CF524C2D1C6F888B02C0AED4B408B462D86"
+      ],
+      "expected_resrefs": [
+        "WQLJAA1",
+        "WQLJAA2",
+        "WQLJAA3",
+        "WQLJAA4",
+        "WQLJAA5",
+        "WQLJAA6",
+        "WQLJAA7",
+        "WQLJAA8",
+        "WQLJAA9",
+        "WQLJACA",
+        "WQLJAG1",
+        "WQLJASA",
+        "WQLJASS",
+        "WQLJASX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm05-wqlja/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "F2314BEA380825C012335489DC587DA5C6045D88E5E3259559789BE7A3F546F1"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        138
+      ],
+      "expected_component_digests": [
+        "353828BAC3DC969E7C90BF81BEC40003C50D41B572358943CB4C1E7F3E9FDFF0"
+      ],
+      "expected_logical_component_digests": [
+        "56B356E4D140F7DE68E2F00B347853E3B80F6668B54F514B37DB3CFD2391C27A"
+      ],
+      "expected_shard_sha256s": [
+        "9B3DA2291DD44BFBB906BB790FA4232BC9AACDD8C5D29F69621B3BBAA02EEE3A"
+      ],
+      "expected_resrefs": [
+        "WQLQ4A2",
+        "WQLQ4A4",
+        "WQLQ4A6",
+        "WQLQ4G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/staf09-wqlq4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "390F9CF055A48DB34B68B112EE4C1EDCF4863FE073A135B52C22E1ADBEE4EC4F"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        139
+      ],
+      "expected_component_digests": [
+        "A16233A1CFB248E6A8250A11D67E884990397EE8D280B620A5C3D603C2F2D2E9"
+      ],
+      "expected_logical_component_digests": [
+        "571B298FE4046D855483CB1754C31E9F9FD5AAB98360D36101F27275C2C6074D"
+      ],
+      "expected_shard_sha256s": [
+        "11E74BED2D14D22105E2D085FCFC9768BA70B63703612EC7AA8F360333DFFFCE"
+      ],
+      "expected_resrefs": [
+        "WQLMSA1",
+        "WQLMSA3",
+        "WQLMSA5",
+        "WQLMSA7",
+        "WQLMSA8",
+        "WQLMSA9",
+        "WQLMSG1",
+        "WQLMSOA7",
+        "WQLMSOA8",
+        "WQLMSOA9",
+        "WQLMSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun06-wqlms/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7106E6CE5E88304EA2339F1100D65D0A2BB4652CA71FFC5F2FC1D31388B2ABF7"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        147
+      ],
+      "expected_component_digests": [
+        "2663D75C86C614D2F669127FC5BBE8586F03FEDFCCDACE606D74C8CD23674F6E"
+      ],
+      "expected_logical_component_digests": [
+        "59A63587C41B9221B4B7746837589997782EDB2CDB6F1BA3377C21DCDD0FB078"
+      ],
+      "expected_shard_sha256s": [
+        "C5A84DBA7E924566B9818C394C8D851D9DBCAC1257D1464D840C5E1E1D22B7B4"
+      ],
+      "expected_resrefs": [
+        "WQLC5A1",
+        "WQLC5A3",
+        "WQLC5A5",
+        "WQLC5G1",
+        "WQLC5SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld26-wqlc5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4CBC19D582F7A5EA9C4A6444A70A0D90B56D86859FDFA9E03E922F32F9794B2A"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        155
+      ],
+      "expected_component_digests": [
+        "22E21817C47AC5DBEA8DFF661F363CEC653F9A8694760C613857715A73713E3E"
+      ],
+      "expected_logical_component_digests": [
+        "605654990D7235C64E39DB8F389BD883C716F89D155125CCB2FF7BC7C20C5366"
+      ],
+      "expected_shard_sha256s": [
+        "8A0D746BB57088E07D1BB74E29C91D8EF2F5886F336BF8AE24C73E621A0BF883"
+      ],
+      "expected_resrefs": [
+        "CHMW1A1",
+        "CHMW1A2",
+        "CHMW1A3",
+        "CHMW1A4",
+        "CHMW1A5",
+        "CHMW1A6",
+        "CHMW1A7",
+        "CHMW1A8",
+        "CHMW1A9",
+        "CHMW1CA",
+        "CHMW1G1",
+        "CHMW1G11",
+        "CHMW1G12",
+        "CHMW1G13",
+        "CHMW1G14",
+        "CHMW1G15",
+        "CHMW1G16",
+        "CHMW1G17",
+        "CHMW1G18",
+        "CHMW1G19",
+        "CHMW1SA",
+        "CHMW1SS",
+        "CHMW1SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chmw1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4161C72F028C023F530A8C86A69DCBD8061C313F98F084646BAEC6CEB60C814D"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        162
+      ],
+      "expected_component_digests": [
+        "61C80DF8B4F805EC87682609539698236BBD05BF39D53815E67678FD2948B266"
+      ],
+      "expected_logical_component_digests": [
+        "6355B8AE085B490A1F8C6D17BA0F0DD0087F79761B3B3A1539AF12426C84F167"
+      ],
+      "expected_shard_sha256s": [
+        "F7E28E7AFBB57F7F31067C8265BE8C3F979D69F94E0FB637749D5259F91D1B76"
+      ],
+      "expected_resrefs": [
+        "WQLCBG1",
+        "WQLCBSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dwxbow01-wqlcb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "41E4B9FE7B41A804F9EDE1EC9B52726C56C4330BC87FAB981403372B3AF8BCDE"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        163
+      ],
+      "expected_component_digests": [
+        "0454D7718CA9B3DF09E0E3600016E87BCC2B610C5558FF28985A4E6C1E4143DF"
+      ],
+      "expected_logical_component_digests": [
+        "64B5B24E758578BA6ADC35366F7DE829A84D8326DC77A1E9B947DEDCC78F82DF"
+      ],
+      "expected_shard_sha256s": [
+        "F753B1C3C88DA8191A2DC9A98F1DA969250A5C0982A95A3762FE397EB6D16D1D"
+      ],
+      "expected_resrefs": [
+        "WQLD1A1",
+        "WQLD1A3",
+        "WQLD1A5",
+        "WQLD1G1",
+        "WQLD1SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bdshld01-wqld1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "CFA6D368667B3E01B4E9F7376D4CCD0C7F288951D248CC9E57FDB11212F588AC"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        173
+      ],
+      "expected_component_digests": [
+        "AEE731F3DB7086BBBA7A3EC5A362D04AF8F0C49493AF869ED59BEDE60E498554"
+      ],
+      "expected_logical_component_digests": [
+        "6B2B16E4FC8C39E4310222D8F3047CFCAFBC8E8581A3929A18A2F3E218990072"
+      ],
+      "expected_shard_sha256s": [
+        "3E31EBD51C3E384FD3C2F2E3FF03F32C761C7D2899328666602E72AB44C67F94"
+      ],
+      "expected_resrefs": [
+        "WQLJCA1",
+        "WQLJCA2",
+        "WQLJCA3",
+        "WQLJCA4",
+        "WQLJCA5",
+        "WQLJCA6",
+        "WQLJCA7",
+        "WQLJCA8",
+        "WQLJCA9",
+        "WQLJCCA",
+        "WQLJCG1",
+        "WQLJCSA",
+        "WQLJCSS",
+        "WQLJCSX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm12-wqljc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D6A69FD48084330DBC253236DE7060B994C630C2243721390A6883DFED5E73A7"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        189
+      ],
+      "expected_component_digests": [
+        "8656B1D08500C86A417F364C200B8761E475B5B0253B75241761B42137B61812"
+      ],
+      "expected_logical_component_digests": [
+        "77C48D25CBA3436DB239F9D0C12C39AD056AB033E6257DC62DB9C8E558354843"
+      ],
+      "expected_shard_sha256s": [
+        "C20977214A07C51D517ECCC93EDBA4367750EBD41586DEC38B37562B2F7AAA0E"
+      ],
+      "expected_resrefs": [
+        "WQLJ3A1",
+        "WQLJ3A2",
+        "WQLJ3A3",
+        "WQLJ3A4",
+        "WQLJ3A5",
+        "WQLJ3A6",
+        "WQLJ3A7",
+        "WQLJ3A8",
+        "WQLJ3A9",
+        "WQLJ3CA",
+        "WQLJ3G1",
+        "WQLJ3SA",
+        "WQLJ3SS",
+        "WQLJ3SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm02-wqlj3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "A307F8C1162137666B8C979DCCFF1AE000E417445824B8B042EB4BBE72B8E585"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        190
+      ],
+      "expected_component_digests": [
+        "5A1A1D4892D663D2ADA92032215230870339EC14562EF516D67B0CAB75214C9D"
+      ],
+      "expected_logical_component_digests": [
+        "792A557BDA830D7900136E997455E59AC74ACCDBF9CC40CC833910332476D17B"
+      ],
+      "expected_shard_sha256s": [
+        "C3E51262B98D7AF2A25843DD2DBF9C0E3E17C229CEBD6E8158B8E727F73F45C8"
+      ],
+      "expected_resrefs": [
+        "CHMW3A1",
+        "CHMW3A2",
+        "CHMW3A3",
+        "CHMW3A4",
+        "CHMW3A5",
+        "CHMW3A6",
+        "CHMW3A7",
+        "CHMW3A8",
+        "CHMW3A9",
+        "CHMW3CA",
+        "CHMW3G1",
+        "CHMW3G11",
+        "CHMW3G12",
+        "CHMW3G13",
+        "CHMW3G14",
+        "CHMW3G15",
+        "CHMW3G16",
+        "CHMW3G17",
+        "CHMW3G18",
+        "CHMW3G19",
+        "CHMW3SA",
+        "CHMW3SS",
+        "CHMW3SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chmw3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4EB4760BB58D0B4FB70B03A68D671DE910C112FDF761D8DE7847238A13FE4DD5"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        192
+      ],
+      "expected_component_digests": [
+        "F36E2CAF19C6DE15A519C21054EF183565002534BCCD53B2C43C049AFF6B8205"
+      ],
+      "expected_logical_component_digests": [
+        "7CFECD3362347054CCD81EA928F3010D217EFCFF5A245ABFCF21EDD26C7EF41E"
+      ],
+      "expected_shard_sha256s": [
+        "C558983160601C1254D89B4A7ACB99171302F5FDFC82337F0575F0078FB2F259"
+      ],
+      "expected_resrefs": [
+        "WQLD2A1",
+        "WQLD2A3",
+        "WQLD2A5",
+        "WQLD2G1",
+        "WQLD2SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dshld01-wqld2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "FCD201EE3C55B816853EE38C10CF97F5457DD11E935011CF8EC299C339832952"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        194
+      ],
+      "expected_component_digests": [
+        "E1F5762ECE51ED53A1CB9ABE5167C0645240EAD30D9F7DF3CF35972120BEC88F"
+      ],
+      "expected_logical_component_digests": [
+        "81659FF7525E330F7B15A67940DDFD0CF617C8AEA58BEB86D30F5944BE6B362F"
+      ],
+      "expected_shard_sha256s": [
+        "29CAE215E2E2E792608AE8ADFA55B455A8784268C81A2C1EFF71EB4CA9E933A1"
+      ],
+      "expected_resrefs": [
+        "WQLSPA2",
+        "WQLSPA4",
+        "WQLSPA6",
+        "WQLSPG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dwsper01-wqlsp/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "09DAD042039AE4C8EFE80403CC0CD6A5D69C1444275A59F05B61B4D1192B1FFA"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        196
+      ],
+      "expected_component_digests": [
+        "87641E44E8046BD419291FF4B915FC5BEB919A767741FC4F2F6D42E80EFD7270"
+      ],
+      "expected_logical_component_digests": [
+        "822D5C1A056CE125467FD7A7D592E90E514660FF70A206F0961E4AF20129CF95"
+      ],
+      "expected_shard_sha256s": [
+        "B06342E2FD6D049DB03745ED0A9BCA32641C475F1C5738BCD2F848239A7D8839"
+      ],
+      "expected_resrefs": [
+        "WQLGSA2",
+        "WQLGSA4",
+        "WQLGSA6",
+        "WQLGSG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/staf11-wqlgs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "71DAE37A95321AE2157C7A6F457C1B15AF369947F9D27A1F3CB9859B684DB634"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        205
+      ],
+      "expected_component_digests": [
+        "B91EE9AE4C630606FA5171478C5EFE0710788F5CB854CD337FB69BA711743B4A"
+      ],
+      "expected_logical_component_digests": [
+        "8846018A4BD6E22DC5F841543E18A08106365A5750A919DDEAD0DF96698E9ED7"
+      ],
+      "expected_shard_sha256s": [
+        "6BF98099CE04A6CBC901E35A821FC7BCEF59063FBF915834E0B50A52419F3B6A"
+      ],
+      "expected_resrefs": [
+        "WQLQ3A2",
+        "WQLQ3A4",
+        "WQLQ3A6",
+        "WQLQ3G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/misc5t-wqlq3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "FE8A240A9605BBFB02D06742F4DCD972BE8071ED9BBC6E12D93090DD7C0625ED"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        219
+      ],
+      "expected_component_digests": [
+        "FE21E4EDFAE5D3B7774BD5F1929D76A212597E28FE488438CD0CA0C317B7598B"
+      ],
+      "expected_logical_component_digests": [
+        "909CDDF039E58FFC67AB28AFCEFAFD816007602E8DCF81EF749B133F0EBA933B"
+      ],
+      "expected_shard_sha256s": [
+        "A32569FA04C69C544559D2A1C087B7D6B91236028E28032766D1ABE6F4448AA2",
+        "144763487A48BFD09FC1E07F507349049FD61246C639C4EF2F370156929C4045",
+        "173C9207BBF966D489D74707E2958FE80569D4D30B75A4AE3C618C8A3CBCCE8C"
+      ],
+      "expected_resrefs": [
+        "WQLFSA1",
+        "WQLFSA3",
+        "WQLFSA5",
+        "WQLFSA7",
+        "WQLFSA8",
+        "WQLFSA9",
+        "WQLFSG1",
+        "WQLFSOA7",
+        "WQLFSOA8",
+        "WQLFSOA9",
+        "WQLFSOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/comps39-wqlfs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "98C28BA7823A8C59F9A605B524711722B167FB44687DC4193ECFA8244CC04C3A"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        220
+      ],
+      "expected_component_digests": [
+        "97651D0733EF2200A42EA68255C5BCFB58FDF622DFF05545FF2A3E6A188E4F99"
+      ],
+      "expected_logical_component_digests": [
+        "9150FC7CB8A260F1733FB93FBA804C5B77350223654EA70216D91ABAA10E61F7"
+      ],
+      "expected_shard_sha256s": [
+        "8BDCFEE272D78F053DF49619B8F63B09C1C967F9FF178FE324C1CEC25DDB94AA"
+      ],
+      "expected_resrefs": [
+        "WQLQSA2",
+        "WQLQSA4",
+        "WQLQSA6",
+        "WQLQSG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/enstaff-wqlqs/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D9F740FB931C9894A52FBFCFD6EDFB1700625E2DD9EF7F82A8C5742250423478"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        221
+      ],
+      "expected_component_digests": [
+        "026294EC52C3F9AF4376908E80A27138EBE9797DB3935F05E5AA88E3FDE9B67C"
+      ],
+      "expected_logical_component_digests": [
+        "91EE10580E4EA4303391345994A7DCFA97C1B33689C31B2A21577AB5A445883E"
+      ],
+      "expected_shard_sha256s": [
+        "3045DE7519E88A5C0E0F3E5A61CE0E777B9D1AC3308B8FA3027947E632026227"
+      ],
+      "expected_resrefs": [
+        "WQLHBA2",
+        "WQLHBA4",
+        "WQLHBA6",
+        "WQLHBG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dwhalb01-wqlhb/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4B02045F7900B27FBA83145B93B0B2A43611675133759D769F9D30C3939A153B"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        235
+      ],
+      "expected_component_digests": [
+        "09FA6E2DC474ACB012FD265541262A0BF4624B378520F8D164A29573E202B641"
+      ],
+      "expected_logical_component_digests": [
+        "9CFF5C42E9120A299C32951FD8590CC639EE34E8CD913E810869A1F1C7500A5E"
+      ],
+      "expected_shard_sha256s": [
+        "6C06922322636F99DE1B0E3EE8A1F20639FF71D97DEF8A93E565956467A3933F"
+      ],
+      "expected_resrefs": [
+        "WQLQ2A2",
+        "WQLQ2A4",
+        "WQLQ2A6",
+        "WQLQ2G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/staf02-wqlq2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "17C33CF41ABEE2F18AC19D66AE4185EA78525166A1952E3CF83CD1141309438A"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        237
+      ],
+      "expected_component_digests": [
+        "A781AEF8F9E3D65F2250AB47BAAA40B318D041627216930754D778C2861A29BD"
+      ],
+      "expected_logical_component_digests": [
+        "9DD746D11363BDEDF35F64742A44562EBD8D61F39B9613C66B8C7E7897879291"
+      ],
+      "expected_shard_sha256s": [
+        "AF56D63FEB41793A007BCA2EEED804B433A5CF2CE7449968760423C22FABB5B8"
+      ],
+      "expected_resrefs": [
+        "WQLH2A1",
+        "WQLH2A2",
+        "WQLH2A3",
+        "WQLH2A4",
+        "WQLH2A5",
+        "WQLH2A6",
+        "WQLH2A7",
+        "WQLH2A8",
+        "WQLH2A9",
+        "WQLH2CA",
+        "WQLH2G1",
+        "WQLH2SA",
+        "WQLH2SS",
+        "WQLH2SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dhelm01-wqlh2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "E274AAF1BC0D519C31C6F2069C093738A256C26D38E3D0DB161B39873504573C"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        244
+      ],
+      "expected_component_digests": [
+        "83F6FA242293EC46F4800A13FA62E4415B3E13A53B80AD35615949FF316F9573"
+      ],
+      "expected_logical_component_digests": [
+        "A570F29ED2A54F2C7EC4AF928848DA0AD9FE101F5D24BA00A86D9F90FC528852"
+      ],
+      "expected_shard_sha256s": [
+        "0CE03639333214591C76EBE2ADBF01946E7374F27D469C83D2A937FA1BC7B2C8"
+      ],
+      "expected_resrefs": [
+        "WQLJ4A1",
+        "WQLJ4A2",
+        "WQLJ4A3",
+        "WQLJ4A4",
+        "WQLJ4A5",
+        "WQLJ4A6",
+        "WQLJ4A7",
+        "WQLJ4A8",
+        "WQLJ4A9",
+        "WQLJ4CA",
+        "WQLJ4G1",
+        "WQLJ4SA",
+        "WQLJ4SS",
+        "WQLJ4SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm16-wqlj4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "54B9A23749886D47BEE25E2C087A309C320D745C9E636F7B994F5B38C1B217C9"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        251
+      ],
+      "expected_component_digests": [
+        "55E3BFA1C7501328C2B3627CC7F3516F69CB942A064892FB3CEE60D9E30A9CB0"
+      ],
+      "expected_logical_component_digests": [
+        "AD173B4DCF4FB10DD845DE78D2489C42C66249C66F64C259C351918CDBAE78CD"
+      ],
+      "expected_shard_sha256s": [
+        "9AA5807EFC157598D10E6668FC7695994DEE708513F26688527ED75A26692D60"
+      ],
+      "expected_resrefs": [
+        "WQLFLA1",
+        "WQLFLA3",
+        "WQLFLA5",
+        "WQLFLA7",
+        "WQLFLA8",
+        "WQLFLA9",
+        "WQLFLG1",
+        "WQLFLOA7",
+        "WQLFLOA8",
+        "WQLFLOA9",
+        "WQLFLOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/barlfl-wqlfl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "92C96D120F15C96CB5B7C9C8D9BC0BA4B28861A132805C24C414B60E48D73C54"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        258
+      ],
+      "expected_component_digests": [
+        "EBAB499B564E7DFE4E63B982D76570FBF49CC8FB97C29F3E96F6CD1202961BF1"
+      ],
+      "expected_logical_component_digests": [
+        "B02F7DC60D371D3BECDE3F3AE479A8D6F8309727F6D54E45742DC676EDF3B27B"
+      ],
+      "expected_shard_sha256s": [
+        "5A23A74ABBD39FB902DD0A64AE25DCBA6AECF1847DDCF47152CB0B54C4DC1BBD"
+      ],
+      "expected_resrefs": [
+        "WQLBWG1",
+        "WQLBWSA"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/arropheo-wqlbw/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "AEF2216B4B6A38FDBC97CCD43F1B2D98059EA1C9C61F48F9DD01A4C33F156E75"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        260
+      ],
+      "expected_component_digests": [
+        "44318DBE510ADBED99FADE6ECBB791E494D5B7D2A0C3465E76BB17E2E2F29890"
+      ],
+      "expected_logical_component_digests": [
+        "B07E104B52FCB8CE91CBBCE23560EA99F23FF7197BCE6D0A447CFCC3170B432A"
+      ],
+      "expected_shard_sha256s": [
+        "F25E21991A5D1CB206395C26AB7450883B311AB416A979A6F2A58776419C1BDC"
+      ],
+      "expected_resrefs": [
+        "WQLS3A1",
+        "WQLS3A3",
+        "WQLS3A5",
+        "WQLS3A7",
+        "WQLS3A8",
+        "WQLS3A9",
+        "WQLS3G1",
+        "WQLS3OA7",
+        "WQLS3OA8",
+        "WQLS3OA9",
+        "WQLS3OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/misc9q-wqls3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "C9B60AE7250BB0009AFC278B383C1C8FD3C25C3A8F0D42184B7FE5953AC7E721"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        261
+      ],
+      "expected_component_digests": [
+        "0C8C8BE481DB23E2F6DA1938D3286A2288F870D9063DFACC2DBAE264FD1D3C64"
+      ],
+      "expected_logical_component_digests": [
+        "B09118209F5A9C7183B24A3555CAB6202C5278C2689AD5222614EE752EA12955"
+      ],
+      "expected_shard_sha256s": [
+        "03081A5DA926AF3636260F310452B368D277F80299C469C8A8897BA48859BB15"
+      ],
+      "expected_resrefs": [
+        "WQLH6A1",
+        "WQLH6A2",
+        "WQLH6A3",
+        "WQLH6A4",
+        "WQLH6A5",
+        "WQLH6A6",
+        "WQLH6A7",
+        "WQLH6A8",
+        "WQLH6A9",
+        "WQLH6CA",
+        "WQLH6G1",
+        "WQLH6SA",
+        "WQLH6SS",
+        "WQLH6SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bearspir-wqlh6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "60C3AF8B38EF77C8E3B513C7148C7E50792384C96F0B8BEEC3533AFE00BFFF91"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        280
+      ],
+      "expected_component_digests": [
+        "5A5BECC6E137C0678211725266947D0378BEB85D1903B125A45F9382A13E2C40"
+      ],
+      "expected_logical_component_digests": [
+        "C00837A1E29B0FD3CC39E3CFD02187AE4E8C28A04601BEABE493EB92B243315D"
+      ],
+      "expected_shard_sha256s": [
+        "B4604FDF6CF8C556C4AB83CEE325AE8B83065BF9D07AF2F52CC8941A3D5EA84D"
+      ],
+      "expected_resrefs": [
+        "WQLJ5A1",
+        "WQLJ5A2",
+        "WQLJ5A3",
+        "WQLJ5A4",
+        "WQLJ5A5",
+        "WQLJ5A6",
+        "WQLJ5A7",
+        "WQLJ5A8",
+        "WQLJ5A9",
+        "WQLJ5CA",
+        "WQLJ5G1",
+        "WQLJ5SA",
+        "WQLJ5SS",
+        "WQLJ5SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm13-wqlj5/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "5830DA16C2DB60210CFE38DFA2A37197452F76C352C542918E730883295B0741"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        282
+      ],
+      "expected_component_digests": [
+        "F43A483E2B37ADF01C511125A3D4E8CADF5E4A4D985C03BF947B1A0B8F03447C"
+      ],
+      "expected_logical_component_digests": [
+        "C07A6C40C220FF7514AB3E4F2FE063258B8E773E045FE966488F295EF8888D67"
+      ],
+      "expected_shard_sha256s": [
+        "428FD3F6FB00150927F99C90343BDB7149108CE43AD78D6CBA67F530CA48A175"
+      ],
+      "expected_resrefs": [
+        "WQLC1A1",
+        "WQLC1A3",
+        "WQLC1A5",
+        "WQLC1G1",
+        "WQLC1SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld03-wqlc1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "1B70CEF606476649B5C72757E8C07F5518631E0627BD3FA75EA2488F48B4BC96"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        290
+      ],
+      "expected_component_digests": [
+        "CE1227771907FDFED43B9DDD655F92DA59FF09B493ED3D926C579B664D239235"
+      ],
+      "expected_logical_component_digests": [
+        "CB59C931C95F09071C1C01B699E299841D506F32E171A81F27BEFFB83AE67B69"
+      ],
+      "expected_shard_sha256s": [
+        "B74C075FB01C203F22862A3B1269A5778CB3EFDB7383A54AFE5B0E7F1D7055DC"
+      ],
+      "expected_resrefs": [
+        "WQLC7A1",
+        "WQLC7A3",
+        "WQLC7A5",
+        "WQLC7G1",
+        "WQLC7SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dwshld01-wqlc7/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "AC5D5B58DB14602CC530F8D9786F8195DE1F6455FD9414FF085EDF8CF2047D9D"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        293
+      ],
+      "expected_component_digests": [
+        "FC5BC58130D8BA7A7DE60D59B6C57EAD9010D77BBA9B920333F196807865CF70"
+      ],
+      "expected_logical_component_digests": [
+        "CBA3B932D2269672F115603EABC722371BF60DD8452C51C9AEDA8028E86892E4"
+      ],
+      "expected_shard_sha256s": [
+        "1E268DBF7342A1B95938B9BB578831178C79C711BEBD7A231DBBEFBB13227486"
+      ],
+      "expected_resrefs": [
+        "CHMW4A1",
+        "CHMW4A2",
+        "CHMW4A3",
+        "CHMW4A4",
+        "CHMW4A5",
+        "CHMW4A6",
+        "CHMW4A7",
+        "CHMW4A8",
+        "CHMW4A9",
+        "CHMW4CA",
+        "CHMW4G1",
+        "CHMW4G11",
+        "CHMW4G12",
+        "CHMW4G13",
+        "CHMW4G14",
+        "CHMW4G15",
+        "CHMW4G16",
+        "CHMW4G17",
+        "CHMW4G18",
+        "CHMW4G19",
+        "CHMW4SA",
+        "CHMW4SS",
+        "CHMW4SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chmw4/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "53F551EDDEF66CB07CBE6CDCC558B9A786C097C0A28EB45D45C5F764F649340E"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        303
+      ],
+      "expected_component_digests": [
+        "BFEDB08290A7A8BF85F5F58CCA0BDF991AEC45DC37FB68F4F1B1307E0C9D6F99"
+      ],
+      "expected_logical_component_digests": [
+        "D1FFBD58396929C2F12F07E46715A5409A851FF355ACD676E23013D7196AD071"
+      ],
+      "expected_shard_sha256s": [
+        "43741A66E65EBF9D6866BFE97C081150BE4EB8394247A80D821825809AEA794F"
+      ],
+      "expected_resrefs": [
+        "WQLJ9A1",
+        "WQLJ9A2",
+        "WQLJ9A3",
+        "WQLJ9A4",
+        "WQLJ9A5",
+        "WQLJ9A6",
+        "WQLJ9A7",
+        "WQLJ9A8",
+        "WQLJ9A9",
+        "WQLJ9CA",
+        "WQLJ9G1",
+        "WQLJ9SA",
+        "WQLJ9SS",
+        "WQLJ9SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/compon05-wqlj9/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "D09A5509B9278938D75ED952D0A3D69A45F3EDB2D694B4A5020A7267984241DA"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        308
+      ],
+      "expected_component_digests": [
+        "1C4B99920C11CFD09503F8E4B77A4EABBBFB147B36F688370AA22BE99697584A"
+      ],
+      "expected_logical_component_digests": [
+        "D4C4B8CADA85F006BF9175C6C7E00DCC84D54D01AFFDADFE4238377BE9D1A04B"
+      ],
+      "expected_shard_sha256s": [
+        "7C136484D98BCC99708842BFCEAAAA0572B5AC15CDD909DA94B41790B3A91234"
+      ],
+      "expected_resrefs": [
+        "WQLAXA1",
+        "WQLAXA3",
+        "WQLAXA5",
+        "WQLAXA7",
+        "WQLAXA8",
+        "WQLAXA9",
+        "WQLAXG1",
+        "WQLAXOA7",
+        "WQLAXOA8",
+        "WQLAXOA9",
+        "WQLAXOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/ax1h01-wqlax/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "676A11342AA78796C47B461BF15D34513321B9B4C4340A27C84251408D84A543"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        325
+      ],
+      "expected_component_digests": [
+        "FF00B4FD5C18D8558E574AA8E684F3578108707DF9EBB955573EE5548CC2A0DD"
+      ],
+      "expected_logical_component_digests": [
+        "DCDB97B0F215696360744B1F553684795561810949CCB7161E4743247136E6B0"
+      ],
+      "expected_shard_sha256s": [
+        "CA34C2CA5E2D42EF2E212933B5EB80FD23211ECE57FE016B969E70FE96D8470B"
+      ],
+      "expected_resrefs": [
+        "WQLMCA1",
+        "WQLMCA3",
+        "WQLMCA5",
+        "WQLMCA7",
+        "WQLMCA8",
+        "WQLMCA9",
+        "WQLMCG1",
+        "WQLMCOA7",
+        "WQLMCOA8",
+        "WQLMCOA9",
+        "WQLMCOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun04-wqlmc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "4FC634C8ECA9F924B6895E0271F6FA5F2B142FA13F1FF5BBF61527B307DB6C6A"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        327
+      ],
+      "expected_component_digests": [
+        "D6F5F5B70491A9091C390923720488955867FE9FA0657806560CFDDAEB2A4DDF"
+      ],
+      "expected_logical_component_digests": [
+        "DE882C06381111D4B22E3FF684CDBF9EB50327FF424815B450A962540C8F9A07"
+      ],
+      "expected_shard_sha256s": [
+        "276E95BFE7D04339CE18CF8ACE32ADBCBF3806CC37FADCD6A27514936585A810"
+      ],
+      "expected_resrefs": [
+        "WQLC3A1",
+        "WQLC3A3",
+        "WQLC3A5",
+        "WQLC3G1",
+        "WQLC3SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/chalshld-wqlc3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7F5A74D075FC5B2E941DDDD0EB1F7D118A7BAC33E2C514B7D5C6FFEA6284C378"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        330
+      ],
+      "expected_component_digests": [
+        "EBBC86EBABD3C87652AF7CC00547B70194BB982F8E2FDA7554E5C783E6999183"
+      ],
+      "expected_logical_component_digests": [
+        "DF9302F476910ED95B72F9674E32C7C6B14CD1DA4769638D2452E3AB26EA7CE3"
+      ],
+      "expected_shard_sha256s": [
+        "0168B9D7273C3B089AF2907E8EC521876213536D2A3D34F8EEA69FCF1E1F033F"
+      ],
+      "expected_resrefs": [
+        "WQLSCA1",
+        "WQLSCA3",
+        "WQLSCA5",
+        "WQLSCA7",
+        "WQLSCA8",
+        "WQLSCA9",
+        "WQLSCG1",
+        "WQLSCOA7",
+        "WQLSCOA8",
+        "WQLSCOA9",
+        "WQLSCOG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/dwsw1h01-wqlsc/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "E72825D93C4BD662FEFC3F6BBA70EB1E2738B047D343C0F931642ABF73DE711F"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        335
+      ],
+      "expected_component_digests": [
+        "E54F850B91074687E8AF7A1567A6A0E05B7BDE4FE08E0EB53A8F430E1B85608A"
+      ],
+      "expected_logical_component_digests": [
+        "E20FB311E7AD911C2ABECC408206D81A14FFBE5B29B9FEC6D9F4C0A6167EB4A8"
+      ],
+      "expected_shard_sha256s": [
+        "630F1F00A7923609BA2C3F93EF78833E40F8CB5058697ADAF0188BFE41E9EE00"
+      ],
+      "expected_resrefs": [
+        "WQLM2A1",
+        "WQLM2A3",
+        "WQLM2A5",
+        "WQLM2A7",
+        "WQLM2A8",
+        "WQLM2A9",
+        "WQLM2G1",
+        "WQLM2OA7",
+        "WQLM2OA8",
+        "WQLM2OA9",
+        "WQLM2OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun12-wqlm2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BFECFDD12606A2CCDF6560B9D704B36589B8F5EC29CA1DF29498D180D99406B9"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        336
+      ],
+      "expected_component_digests": [
+        "C8702EF76F96917DD2AE5C492D958571815D38FCAB780572EFA4178C1C37753A"
+      ],
+      "expected_logical_component_digests": [
+        "E24B081BDF88A08D2467CF3BCB7903CC31DE4C406496E2E54ABCEF8EBA0D5ACB"
+      ],
+      "expected_shard_sha256s": [
+        "644FF7B1DC1B63F462E38A0D632EBA3F83359807C16AC456E3D34DCA60244DB1"
+      ],
+      "expected_resrefs": [
+        "WQLF3A1",
+        "WQLF3A3",
+        "WQLF3A5",
+        "WQLF3A7",
+        "WQLF3A8",
+        "WQLF3A9",
+        "WQLF3G1",
+        "WQLF3OA7",
+        "WQLF3OA8",
+        "WQLF3OA9",
+        "WQLF3OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/blun14-wqlf3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "BD32E2931985FA5DA22AC69C378D1212F8A81A6ECF88745E0D268CDC8DFBA886"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        345
+      ],
+      "expected_component_digests": [
+        "534FFDD5417961BDFDF23F15BD434B14A7468337D30AA15E44248DA6D77CFEF7"
+      ],
+      "expected_logical_component_digests": [
+        "E605DD7896FCACE783F9F6F91E6144DEB9C2909C0F4F26F0C0DB7C71B8B3C1E5"
+      ],
+      "expected_shard_sha256s": [
+        "81E33595B66F904E373580066AC92CA90E3B14FABA0E966AE04A98681F407908"
+      ],
+      "expected_resrefs": [
+        "WQLS1A1",
+        "WQLS1A3",
+        "WQLS1A5",
+        "WQLS1A7",
+        "WQLS1A8",
+        "WQLS1A9",
+        "WQLS1G1",
+        "WQLS1OA7",
+        "WQLS1OA8",
+        "WQLS1OA9",
+        "WQLS1OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bdsw1h06-wqls1/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "1E671778C9E4F1B4F5E6B2DEDDB4E59FC9BC7327EAF56A83C625C7B8CFBF68B9"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        346
+      ],
+      "expected_component_digests": [
+        "9B38935EF56C19AE5A7B9939BC8FE896F18D7412ACD04C5EE4CCC73B3DD1F0D2"
+      ],
+      "expected_logical_component_digests": [
+        "E6E86E74095D7191F178AB9842F1768037FFADDBA29114B9687884378D4E39B5"
+      ],
+      "expected_shard_sha256s": [
+        "C17613C906F466D295A05D65789F0FF026F88DF80EBC3D047F5BE5E66E896C9A"
+      ],
+      "expected_resrefs": [
+        "WQLS2A2",
+        "WQLS2A4",
+        "WQLS2A6",
+        "WQLS2G1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bdsw2h01-wqls2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7FC00A8094884477667F692F3F74138BD8E24758F7F123B39CAA5144C5783C93"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        348
+      ],
+      "expected_component_digests": [
+        "75AC864E078AF640067E7C0A19F77EBC3BFE42A3564E677DBDE6F8B645E47F94"
+      ],
+      "expected_logical_component_digests": [
+        "E803C7897FB063B7D76944B39263FD2172068EFFDF2A781578864FBEBF58BE7F"
+      ],
+      "expected_shard_sha256s": [
+        "CF1E5422B20D3302B136A6FFDBCE58723A2F3A7AA7AB102E3D8CEE8E8EE0738F"
+      ],
+      "expected_resrefs": [
+        "WQLF2A1",
+        "WQLF2A3",
+        "WQLF2A5",
+        "WQLF2A7",
+        "WQLF2A8",
+        "WQLF2A9",
+        "WQLF2G1",
+        "WQLF2OA7",
+        "WQLF2OA8",
+        "WQLF2OA9",
+        "WQLF2OG1"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/npsw06-wqlf2/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "DBE6B38598C47F23E3782FEE9A6E350FAE3DC13308333D184B7CD787F1D2B371"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        351
+      ],
+      "expected_component_digests": [
+        "37D145C814CA5EEA12322C8E4170F46DBCAC2025874247F05A1F5C645DB92E5A"
+      ],
+      "expected_logical_component_digests": [
+        "EA1E3EEB7EC17903186E0B8CEEB622AE0644ED2AA1AF7431DCD86B27B734C5D2"
+      ],
+      "expected_shard_sha256s": [
+        "5CBBB8095B81E867D1DF27A06DA8A9C2CCC58AAB4804BA78F6EF307B0C02A17C"
+      ],
+      "expected_resrefs": [
+        "WQLH0A1",
+        "WQLH0A2",
+        "WQLH0A3",
+        "WQLH0A4",
+        "WQLH0A5",
+        "WQLH0A6",
+        "WQLH0A7",
+        "WQLH0A8",
+        "WQLH0A9",
+        "WQLH0CA",
+        "WQLH0G1",
+        "WQLH0SA",
+        "WQLH0SS",
+        "WQLH0SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/bdhelm09-wqlh0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B9A002A8F53EEAF01D26D333EBF887BD60A1CE73CFA6EFAD11C99A7228221144"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        355
+      ],
+      "expected_component_digests": [
+        "E12822D7167A0712E47578D8510BBEDEE693D431091CD2A92369EE7084F622B1"
+      ],
+      "expected_logical_component_digests": [
+        "ED8C3AFB9718E017B99CAF20A594B4AB1AB2193AAC8EE57A90FEF50833C1721E"
+      ],
+      "expected_shard_sha256s": [
+        "C4DDF7FCF9728C3475256FE8A2CBF495B1C7A64FE0B3B1E4C05A085563B353ED"
+      ],
+      "expected_resrefs": [
+        "WQLC0A1",
+        "WQLC0A3",
+        "WQLC0A5",
+        "WQLC0G1",
+        "WQLC0SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/shld01-wqlc0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "ADE9675E1FBFD272363E305B9168839FA84BD298A467A5C941D5905B1239E90F"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        361
+      ],
+      "expected_component_digests": [
+        "C86AF9B0C0BADF05DB633181B20940D623833A967047B77A2C099DB58C296C79"
+      ],
+      "expected_logical_component_digests": [
+        "F0EF07C21BA078D9FB60A9DB67151D9656ABFAE2CF2D66636987A8C9B4EFA7CF"
+      ],
+      "expected_shard_sha256s": [
+        "616F325959F2C8ADF9A5AB844114636A33AD383152B6671997770D3FC14CFAD6"
+      ],
+      "expected_resrefs": [
+        "WQLSLG1",
+        "WQLSLSS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/ohnslng1-wqlsl/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "F2FA0325DBAF6F424E6F718C59CB9790C80197B95BBA5ACD3B4B0EC7C83E775D"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        363
+      ],
+      "expected_component_digests": [
+        "AB6059C9A3C4E6179D3BC15940228B7C314833EA2103EABBA6C3A72D8CBAAB23"
+      ],
+      "expected_logical_component_digests": [
+        "F2275C02FE4C02EFED0FD0368894CBA2A155EC5C969728F037ADAC285665B804"
+      ],
+      "expected_shard_sha256s": [
+        "D6092924BBFB8D0764882D6B64039C3FC919B056F16F220F823E24473AEBA181"
+      ],
+      "expected_resrefs": [
+        "WQLD3A1",
+        "WQLD3A3",
+        "WQLD3A5",
+        "WQLD3G1",
+        "WQLD3SS"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/ishld03-wqld3/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "EE6B29B8858A4AC9FA84F556E5AAB63247BB457143B52B3168C5F3BDCC503DC3"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        372
+      ],
+      "expected_component_digests": [
+        "1C160AD37B81D018C8552594560B5C9E7AC6BDB28919834CC557E0F18DFC5E41"
+      ],
+      "expected_logical_component_digests": [
+        "F5D28FC7FA0071A6734BE4A6C74BC632ACA1248C3DECCB73F3EF156FBAB0F1A2"
+      ],
+      "expected_shard_sha256s": [
+        "52AD322043117A59E965FA79AC8DD4E185ED5602C64DB2FA886AA0D5A8784F45"
+      ],
+      "expected_resrefs": [
+        "WQLJ0A1",
+        "WQLJ0A2",
+        "WQLJ0A3",
+        "WQLJ0A4",
+        "WQLJ0A5",
+        "WQLJ0A6",
+        "WQLJ0A7",
+        "WQLJ0A8",
+        "WQLJ0A9",
+        "WQLJ0CA",
+        "WQLJ0G1",
+        "WQLJ0SA",
+        "WQLJ0SS",
+        "WQLJ0SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm15-wqlj0/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "B509ED07D5A66EEF05EBFDAAE411808E68794CE8491E6E807CF057303BB111FA"
+    },
+    {
+      "animation_id": "0x6200",
+      "expected_owner": 1,
+      "expected_component_indices": [
+        380
+      ],
+      "expected_component_digests": [
+        "64632E305459CAB21BED649A39E278D20A03589B48095555C8ACFF9218E1EE79"
+      ],
+      "expected_logical_component_digests": [
+        "FB37640DF7D2A892E4598D8AC4C5DC08D55EA6F72D39A53546CA3DE287E071D9"
+      ],
+      "expected_shard_sha256s": [
+        "265DC7B839B7D38E9414F5E35C773B0598D28E0C2EA75307498E5541C34F605D"
+      ],
+      "expected_resrefs": [
+        "WQLJ6A1",
+        "WQLJ6A2",
+        "WQLJ6A3",
+        "WQLJ6A4",
+        "WQLJ6A5",
+        "WQLJ6A6",
+        "WQLJ6A7",
+        "WQLJ6A8",
+        "WQLJ6A9",
+        "WQLJ6CA",
+        "WQLJ6G1",
+        "WQLJ6SA",
+        "WQLJ6SS",
+        "WQLJ6SX"
+      ],
+      "reboutcx_manifest": "sprite/families/playable-characters/6200-human-male-mage/helm01-wqlj6/runs/reboutcx-p8-full-v1/manifest.json",
+      "reboutcx_manifest_sha256": "02A599E97EA71B13D4A09C6CA224FB6CA1CBD19FF76856AE7CC15C5E05C8BA0E"
+    },
+    {
+      "animation_id": "0x7F02",
+      "expected_owner": 3,
+      "expected_component_indices": [
+        396
+      ],
+      "expected_component_digests": [
+        "A3ACEAB7C8C63C8447FCDA2081C0A66D1D18045F36137653D427A0D72E6C45DA"
+      ],
+      "expected_logical_component_digests": [
+        "1A31D38C402D0C915840DF8036B46EC006FFFC78661660EE268AF148AB77A917"
+      ],
+      "expected_shard_sha256s": [
+        "CF71BDF57C83ADD9ECAC12D649FD838B09C87A8F77A7BFB434112EA7B664EC24"
+      ],
+      "expected_resrefs": [
+        "MBEHG1",
+        "MBEHG11",
+        "MBEHG12",
+        "MBEHG13",
+        "MBEHG14",
+        "MBEHG15",
+        "MBEHG2",
+        "MBEHG21",
+        "MBEHG22",
+        "MBEHG23",
+        "MBEHG24",
+        "MBEHG25",
+        "MBEHG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/manifest.json",
+      "reboutcx_manifest_sha256": "9D88635B316B261C4B2CAC16E4972F17607A4234DFD25C2BFC70B3DB1B64D54B"
+    },
+    {
+      "animation_id": "0x7F09",
+      "expected_owner": 3,
+      "expected_component_indices": [
+        29
+      ],
+      "expected_component_digests": [
+        "4CAE636BD6AC0AB3EE94EF29A70188DA85F8DA1EACF19771504F7FCBA83E465E"
+      ],
+      "expected_logical_component_digests": [
+        "15D32205D7D5769B23F59F5242925C2A668E4CC53B8006FD0953D3B49EBDC07B"
+      ],
+      "expected_shard_sha256s": [
+        "4D165A7B5F6C26A1E02F295277ABB1B9F2987F49D9C9EF00EE7D18C831EEBAF0"
+      ],
+      "expected_resrefs": [
+        "MSAHG1",
+        "MSAHG11",
+        "MSAHG12",
+        "MSAHG13",
+        "MSAHG14",
+        "MSAHG15",
+        "MSAHG1CB",
+        "MSAHG1QS",
+        "MSAHG1SP",
+        "MSAHG2",
+        "MSAHG21",
+        "MSAHG22",
+        "MSAHG23",
+        "MSAHG24",
+        "MSAHG25",
+        "MSAHG26",
+        "MSAHG2CB",
+        "MSAHG2QS",
+        "MSAHG2SP"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "reboutcx_manifest_sha256": "7AF17EEB2D6F39F2CF2A8E8A2B13E88CF85DA104078886E7BA55ACC7E34E5242"
+    },
+    {
+      "animation_id": "0x7F17",
+      "expected_owner": 3,
+      "expected_component_indices": [
+        395
+      ],
+      "expected_component_digests": [
+        "81EBE1E0C40A31F5C353D73A0E3E3F64EDB10121C514EED9BC9219D1F1AD9594"
+      ],
+      "expected_logical_component_digests": [
+        "E9E6E7A49B0BD99F4B5A2AFAE44FCCA70B5C7AB1713427CB9252CC3B4E21A2CA"
+      ],
+      "expected_shard_sha256s": [
+        "9DE6757AD5CC6205EAAE1FC42C5F4DFA9217C4333C8C54C1B1150ECDB71702C3"
+      ],
+      "expected_resrefs": [
+        "ARABG1",
+        "ARABG11",
+        "ARABG12",
+        "ARABG13",
+        "ARABG14",
+        "ARABG15",
+        "ARABG2",
+        "ARABG21",
+        "ARABG22",
+        "ARABG23",
+        "ARABG24",
+        "ARABG25",
+        "ARABG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f17-arab-rabbit/runs/reboutcx-p12-cache86-v1/manifest.json",
+      "reboutcx_manifest_sha256": "025ADC6031AF58C7ECF91AFB72147883C6947E418AAA96CD1194385D878B7930"
+    },
+    {
+      "animation_id": "0x7F30",
+      "expected_owner": 3,
+      "expected_component_indices": [
+        412
+      ],
+      "expected_component_digests": [
+        "619DBA4D202E3F2BF26BD8FBD1623852AD34072A89725CE3E05363637A761FEA"
+      ],
+      "expected_logical_component_digests": [
+        "89FFA4223CF4C4BD7AB69FF79B7F47BEAC203692885747EB67ACA5A7D38D734A"
+      ],
+      "expected_shard_sha256s": [
+        "25D55A95D35856F46081D120566ACC7B647D1E96A68E737B2D5294DA6666B569"
+      ],
+      "expected_resrefs": [
+        "NBOHG1",
+        "NBOHG11",
+        "NBOHG12",
+        "NBOHG13",
+        "NBOHG14",
+        "NBOHG15",
+        "NBOHG2",
+        "NBOHG21",
+        "NBOHG22",
+        "NBOHG23",
+        "NBOHG24",
+        "NBOHG25",
+        "NBOHG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/manifest.json",
+      "reboutcx_manifest_sha256": "2A3ED34E9CD2DE2E89DDABDF36C61B49663430537E4B367DA6C8A96F7A8A92F9"
+    },
+    {
+      "animation_id": "0x7F37",
+      "expected_owner": 3,
+      "expected_component_indices": [
+        413
+      ],
+      "expected_component_digests": [
+        "32DC2F57935322897A46646D2B893B89697A7D3E5A26D30750979A30AE237BC5"
+      ],
+      "expected_logical_component_digests": [
+        "8D5E52F83FBEFB9AE85471A8890C29D4F2A264526589E73CFE0F9A4FFBA07B39"
+      ],
+      "expected_shard_sha256s": [
+        "4573C97B7B36BFBDF4F3CA13504AF8F196060554D65B71B2B82BBE0244E2BF5B"
+      ],
+      "expected_resrefs": [
+        "NIREG1",
+        "NIREG11",
+        "NIREG12",
+        "NIREG13",
+        "NIREG14",
+        "NIREG15",
+        "NIREG2",
+        "NIREG21",
+        "NIREG22",
+        "NIREG23",
+        "NIREG24",
+        "NIREG25",
+        "NIREG26"
+      ],
+      "reboutcx_manifest": "sprite/families/monsters/7fxx/7f37-nire-jon-irenicus/runs/reboutcx-p2-sample-v1/manifest.json",
+      "reboutcx_manifest_sha256": "3265A5C7CD9B5EB9DD0DDF3AF6B32326493BB39083C572D8DFFF232BC53F4A78"
+    }
+  ]
+}
