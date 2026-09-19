@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FLMS",
+  "correction_id": "flms-flame2m-visual-area-resample-20260919",
+  "decision": "Petite flamme FLMS dont le visuel est remplace par celui de FLAME2M, canevas FLMS conserve (8x20 x4, 6 frames, 36 occurrences d AR0510). Frames du pack final FLAME2M (ReboutCX x4, fondu 12 px x4, RGB premultiplie) reduites par moyenne de surface. Rendu ReboutCX x4 direct du BAM d origine refuse par l utilisateur ; nouveau visuel valide ingame par l utilisateur le 2026-09-19.",
+  "decision_date": "2026-09-19",
+  "decision_id": "2026-09-19-accepted-flms-flame2m-visual-selection-accepted-20260919",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/flms-flame2m-visual-selection-accepted-20260919/manifest.json",
+    "manifest_sha256": "00AF3FBC8C6D130A870801282D03EE13F0DC784EE5B88C00A6F7369C0B8C9612",
+    "path": "animations/batches/flms-flame2m-visual-selection-accepted-20260919",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FLMS/runs/flms-flame2m-visual-x4-20260919/03_runtime_pack/manifest.json",
+        "manifest_sha256": "CEFFA22E91A71620748EB090830164BB11A18A041321DCFE890554AECE64597D",
+        "path": "animations/ressources/FLMS/runs/flms-flame2m-visual-x4-20260919/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-19T00:27:43Z",
+  "resref": "FLMS",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0510",
+        "manifest_path": "animations/packs-par-zone/flms-flame2m-visual-x4-20260919-split/AR0510/manifest.json",
+        "manifest_sha256": "7DBC9245208DDD99DA16E3B5CA2EC1F1DF0A8C6172C960A374F7B95F2A82AEE3",
+        "path": "animations/packs-par-zone/flms-flame2m-visual-x4-20260919-split/AR0510",
+        "registry_sha256": "D63BDF6738E6152B6866F310522C16D1B6EAB2338D035028F6CFEE854A23FA48",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flms-flame2m-visual-x4-20260919-split/manifest.json",
+    "manifest_sha256": "E13FB135F1EB323CFEABD1448F78BD8C4D1EFE550397FEB98727484844F2D27C",
+    "path": "animations/packs-par-zone/flms-flame2m-visual-x4-20260919-split",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0510"
+  ]
+}

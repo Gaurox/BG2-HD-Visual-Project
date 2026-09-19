@@ -768,20 +768,32 @@
    }
   },
   "AR0510": {
-   "recorded_utc": "2026-09-18T23:34:35.236203+00:00",
+   "recorded_utc": "2026-09-19T00:16:59.469521+00:00",
    "resources": {
+    "FLAME2M": {
+     "sig": "5c63fb76a3ba",
+     "frames": 9
+    },
     "FLAME2S": {
      "sig": "6fd483b997af",
      "frames": 27
+    },
+    "FLMS": {
+     "sig": "92255d9d7acf",
+     "frames": 6
     }
    },
    "fingerprint": {
-    "files": 28,
-    "bytes": 249168,
-    "max_mtime_ns": 1789774475160346300
+    "files": 43,
+    "bytes": 327036,
+    "max_mtime_ns": 1789777019338041100
    },
    "build": {
-    "leaf": "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0510"
+    "merged_from": [
+     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0510",
+     "animations/packs-par-zone/flame2m-reboutcx-x4-innerfeather12-premul-20260919/AR0510",
+     "animations/packs-par-zone/flms-flame2m-visual-x4-20260919-split/AR0510"
+    ]
    }
   },
   "AR0511": {
@@ -1485,7 +1497,7 @@
    }
   },
   "AR0800": {
-   "recorded_utc": "2026-09-18T22:43:23.019031+00:00",
+   "recorded_utc": "2026-09-19T00:07:43.913415+00:00",
    "resources": {
     "BUTRFLY": {
      "sig": "f8cb283031ba",
@@ -1494,17 +1506,22 @@
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
+    },
+    "FLAME2M": {
+     "sig": "5c63fb76a3ba",
+     "frames": 9
     }
    },
    "fingerprint": {
-    "files": 51,
-    "bytes": 9753392,
-    "max_mtime_ns": 1789771402827070500
+    "files": 60,
+    "bytes": 9827288,
+    "max_mtime_ns": 1789776463720311100
    },
    "build": {
     "merged_from": [
      "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0800::BUTRFLY",
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0800::FIRE_4"
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0800::FIRE_4",
+     "animations/packs-par-zone/flame2m-reboutcx-x4-innerfeather12-premul-20260919/AR0800"
     ]
    }
   },
@@ -1735,7 +1752,7 @@
    }
   },
   "AR0900": {
-   "recorded_utc": "2026-09-18T22:16:21.074416+00:00",
+   "recorded_utc": "2026-09-19T00:07:47.823218+00:00",
    "resources": {
     "AM0900DM": {
      "sig": "b432d51657be",
@@ -1744,15 +1761,22 @@
     "AM0900DM-v1": {
      "sig": "fbd18120abab",
      "frames": 40
+    },
+    "FLAME2M": {
+     "sig": "5c63fb76a3ba",
+     "frames": 9
     }
    },
    "fingerprint": {
-    "files": 81,
-    "bytes": 225543408,
-    "max_mtime_ns": 1789769780430847900
+    "files": 90,
+    "bytes": 225617304,
+    "max_mtime_ns": 1789776466950699000
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0900"
+    "merged_from": [
+     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0900",
+     "animations/packs-par-zone/flame2m-reboutcx-x4-innerfeather12-premul-20260919/AR0900"
+    ]
    }
   },
   "AR0903": {
@@ -1854,11 +1878,15 @@
    }
   },
   "AR0907": {
-   "recorded_utc": "2026-09-18T23:35:29.479334+00:00",
+   "recorded_utc": "2026-09-19T00:07:49.261986+00:00",
    "resources": {
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
+    },
+    "FLAME2M": {
+     "sig": "5c63fb76a3ba",
+     "frames": 9
     },
     "FLAME2S": {
      "sig": "6fd483b997af",
@@ -1866,14 +1894,15 @@
     }
    },
    "fingerprint": {
-    "files": 42,
-    "bytes": 564788,
-    "max_mtime_ns": 1789774529362637500
+    "files": 51,
+    "bytes": 638684,
+    "max_mtime_ns": 1789776469110600100
    },
    "build": {
     "merged_from": [
      "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0907",
-     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0907"
+     "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0907",
+     "animations/packs-par-zone/flame2m-reboutcx-x4-innerfeather12-premul-20260919/AR0907"
     ]
    }
   },
@@ -4284,5 +4313,5 @@
    }
   }
  },
- "updated_utc": "2026-09-18T23:36:12.392713+00:00"
+ "updated_utc": "2026-09-19T00:16:59.474523+00:00"
 }
