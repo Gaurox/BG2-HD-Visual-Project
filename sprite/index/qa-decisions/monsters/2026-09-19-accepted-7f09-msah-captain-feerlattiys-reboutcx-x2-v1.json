@@ -1,0 +1,60 @@
+{
+  "schema": "bg2-upscale-creature-sprite-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-09-19T13:40:55.3425600Z",
+  "scope": {
+    "kind": "installed-sprite-family",
+    "domain": "monsters",
+    "asset_key": "sprites:family:0x7F09:body:base-resref:MSAH:MSAH:reboutcx-p12-cache86-v1",
+    "family_id": "0x7F09:body:base-resref:MSAH:MSAH",
+    "variant_id": "reboutcx-p12-cache86-v1",
+    "animation_id": "0x7F09",
+    "bam_prefix": "MSAH",
+    "target_scale": 2,
+    "resource_count": 19,
+    "runtime_profile": "monster-bg2ee-2.7.3.0",
+    "runtime_id": "iee-monster-msah-composite-v5",
+    "catalog_generation": "610EB669C024F81EB65472517DCA97DADBC1339D794E31FA3F74F13E0A8F533C"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "creature": "SAHCPT02",
+    "name": "Capitaine Feerlattiys",
+    "filter": "ReboutCX",
+    "scenarios": [
+      "rendu stable du personnage",
+      "maintien de l'upscaling pendant les animations de combat et les autres actions",
+      "absence de regression observee sur le personnage joueur nain guerriere"
+    ],
+    "user_statement": "valide ! commite",
+    "note": "Acceptation ingame explicite apres correction du routage des 19 ressources MSAH et de la composition monstre 0x7F09."
+  },
+  "provenance": {
+    "source_manifest": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/source/stock/manifest.json",
+    "source_manifest_sha256": "465412C1CF4F30B3C85919AACCAF9323E7F463ECEB722436634184A74F2E9DDB",
+    "selected_run": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/runs/reboutcx-p12-cache86-v1/manifest.json",
+    "selected_run_sha256": "7AF17EEB2D6F39F2CF2A8E8A2B13E88CF85DA104078886E7BA55ACC7E34E5242",
+    "job_file": "sprite/families/monsters/7fxx/7f09-msah-sahuagin/jobs/reboutcx-p12-cache86-v1.json",
+    "job_sha256": "E00F6F19F3317AC2238B4299F9D407C4185ABC56C0AF6F940E06B07737BDE808"
+  },
+  "catalog_evidence": {
+    "job_file": "sprite/catalogs/creature-x2-reboutcx/jobs/catalog-reboutcx-monsters-arab-msah-p12-v1.json",
+    "job_sha256": "8ABEABEDA61F6C07D7869318A6073D56F989D29ACDB1470E40D1BFAFBBB0FD92",
+    "build_manifest": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-monsters-arab-msah-p12-v1/generations/610eb669c024f81eb65472517dca97dadbc1339d794e31fa3f74f13e0a8f533c/build/build-manifest.json",
+    "build_manifest_sha256": "71DAB714A8034306A67018B2BF8728423D2C09C2ADA292E4B849629767A46465",
+    "catalog_sha256": "E0B20D6A9A721B90D30F9891D44A5224AA12C30093118B2648DB89B893CC5B6C",
+    "installed_shard_sha256": "A10F52B3D9FB484EA2D3BA9896DBA219B71EFD8D33C2A5A8EE2A2FB854A1603D"
+  },
+  "automatic_evidence": {
+    "runtime_manifest": "pipeline/runtime/manifests/iee-monster-msah-composite-v5.json",
+    "runtime_manifest_sha256": "B04BB9FBF8360CC37088B37CC0A5BC948F682362CB862F3CD0E9FBE9F1AC2B14",
+    "runtime_dll_sha256": "C6AA1CFA15083E12F9015F7D9B85A343BEB849CCE80B5EC717EF4FBAB06EE0A6",
+    "native_tests_status": "passed",
+    "native_tests": "Release build + iee_tests; validated before installation",
+    "historical_installation_state": "installed",
+    "active_installation_status": "installed and validated ingame"
+  },
+  "release_manifest_modified": false
+}
