@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0322A",
+  "correction_id": "alpha-strict-innerfade8-open-canvas-edges",
+  "decision": "QA ingame utilisateur du 2026-09-19 sur AR0302 (cheminee d'AM0322A/B, integration jugee bonne) apres refus de deux variantes floues (flou gaussien sur la flamme sigma 3,5 puis 1,5, trop flou) ; rendu retenu : SeedVR2 7B/LAB x4, Apollo-8 30 fps a maintiens uniformes condenses (9 poses -> 36 phases, aucun doublon), fondu alpha interieur strict 8 px x4 a bords canvas ouverts, RGB droit dilate sous alpha nul, sans flou. AR0322 etendue par signature identique (335387f56539 / d2e4a511272e), non visitee separement.",
+  "decision_date": "2026-09-19",
+  "decision_id": "2026-09-19-accepted-am0322ab-apo8-x4-30fps-v2-innerfade8-20260919",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am0322ab-apo8-x4-30fps-v2-innerfade8-20260919/manifest.json",
+    "manifest_sha256": "582D5A1309D3BA5D00098E95E471FE0DB3D9C05AAC0E207900642E304E8207C3",
+    "path": "animations/batches/am0322ab-apo8-x4-30fps-v2-innerfade8-20260919",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/am0322ab-apo8-x4-30fps-v2-20260919/03_runtime_pack/manifest.json",
+        "manifest_sha256": "6ABFC1E141A0E78B5D72A6F8C73600302A69517375CC0B7A27CB3D7F809DD3A2",
+        "path": "animations/batches/am0322ab-apo8-x4-30fps-v2-20260919/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-innerfade8-open-edges",
+  "recorded_at_utc": "2026-09-19T14:40:51Z",
+  "resref": "AM0322A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0302",
+        "manifest_path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919/AR0302/manifest.json",
+        "manifest_sha256": "9A937959A503D29284EA82077B91E1D366DCA607C03D8B178629EE2E09735642",
+        "path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919/AR0302",
+        "registry_sha256": "FD87C77ABD33A4CD02B51B0A4736F554844C58040F78DD1921BD575E152D99FF",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0322",
+        "manifest_path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919/AR0322/manifest.json",
+        "manifest_sha256": "1846083E907A29B0AABC13D6CEDD6F6C9690D6BC79B310751C160EE0F7E5325F",
+        "path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919/AR0322",
+        "registry_sha256": "FD87C77ABD33A4CD02B51B0A4736F554844C58040F78DD1921BD575E152D99FF",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919/manifest.json",
+    "manifest_sha256": "F63FC29F7C33F49E2EE0B93BCC0E89F51B427BA48E888D1F0C7CFDC4C446730D",
+    "path": "animations/packs-par-zone/am0322ab-apo8-x4-30fps-v2-innerfade8-noblur-split-20260919",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0302",
+    "AR0322"
+  ]
+}

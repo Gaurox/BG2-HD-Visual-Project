@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive immutable runtime packs with alpha masks, fades or light RGBA blur.
+"""Derive immutable runtime packs with alpha masks, fades, light RGBA blur or a bright-core blur.
 
 The temporal timeline is copied verbatim.  Only selected resource payloads and,
 for Gaussian blur, their padded frame geometry are changed.  The result is a
@@ -19,7 +19,10 @@ from typing import Any
 
 import numpy as np
 from PIL import Image, ImageDraw
-from scipy.ndimage import distance_transform_edt, gaussian_filter
+from scipy.ndimage import (
+    binary_closing, binary_dilation, binary_fill_holes, distance_transform_edt,
+    gaussian_filter, label,
+)
 
 import run_animation_upscale_30fps_v2 as v2
 
@@ -54,6 +57,40 @@ def apply_alpha_mask(rgba: np.ndarray, mask: np.ndarray) -> np.ndarray:
     output = rgba.copy()
     alpha = rgba[:, :, 3].astype(np.uint16)
     output[:, :, 3] = ((alpha * mask.astype(np.uint16) + 127) // 255).astype(np.uint8)
+    return output
+
+
+def bright_core_mask(
+    frames: list[np.ndarray], seed_luma: float, margin_x4: int, feather_x4: float
+) -> tuple[np.ndarray, int]:
+    """One loop-wide soft mask over the largest bright opaque core (a flame body).
+
+    Seed = union over the loop of opaque pixels brighter than ``seed_luma``; closed,
+    largest connected component only, holes filled, then a margin dilation and a
+    Gaussian feather.  Returns the float mask in [0, 1] and the seed pixel count.
+    """
+    weights = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
+    seed = np.zeros(frames[0].shape[:2], dtype=bool)
+    for rgba in frames:
+        luma = rgba[:, :, :3].astype(np.float32) @ weights
+        seed |= (luma > seed_luma) & (rgba[:, :, 3] > 0)
+    seed = binary_closing(seed, iterations=3)
+    labelled, count = label(seed)
+    v2.require(count > 0, "aucun noyau lumineux : seuil de luminance trop haut")
+    sizes = np.bincount(labelled.ravel())[1:]
+    seed = binary_fill_holes(labelled == (int(sizes.argmax()) + 1))
+    grown = binary_dilation(seed, iterations=margin_x4).astype(np.float32)
+    return np.clip(gaussian_filter(grown, feather_x4), 0.0, 1.0), int(seed.sum())
+
+
+def apply_masked_rgb_gaussian(rgba: np.ndarray, mask: np.ndarray, sigma: float) -> np.ndarray:
+    """Blur straight RGB inside ``mask``; alpha and geometry are copied verbatim."""
+    v2.require(mask.shape == rgba.shape[:2], "dimensions du masque de flou incohérentes")
+    rgb = rgba[:, :, :3].astype(np.float32)
+    blurred = np.stack([gaussian_filter(rgb[:, :, c], sigma) for c in range(3)], axis=-1)
+    weight = mask[:, :, None]
+    output = rgba.copy()
+    output[:, :, :3] = np.clip(np.rint(rgb * (1.0 - weight) + blurred * weight), 0, 255).astype(np.uint8)
     return output
 
 
@@ -317,6 +354,7 @@ def build(args: argparse.Namespace) -> Path:
     using_gaussian = args.gaussian_sigma_x4 > 0.0
     using_luminance = args.luminance_low is not None or args.luminance_high is not None
     using_alpha_mask = bool(args.alpha_mask)
+    using_bright_core = args.bright_core_blur_sigma_x4 > 0.0
     alpha_mask_paths = [path.resolve() for path in (args.alpha_mask or [])]
     v2.require(not using_alpha_mask or len(alpha_mask_paths) == len(selected),
                "fournir exactement un --alpha-mask par --resref, dans le même ordre")
@@ -324,7 +362,8 @@ def build(args: argparse.Namespace) -> Path:
         args.luminance_low is not None and args.luminance_high is not None
         and 0.0 <= args.luminance_low < args.luminance_high <= 255.0
     ), "seuils de luminance invalides")
-    v2.require(sum((using_inner_contour, using_gaussian, using_luminance, using_alpha_mask)) == 1
+    v2.require(sum((using_inner_contour, using_gaussian, using_luminance, using_alpha_mask,
+                    using_bright_core)) == 1
                or (using_fade and not using_inner_contour and not using_gaussian),
                "activer un traitement principal ; le fade canvas peut compléter la luminance")
     v2.require(not using_fade or 0.0 < args.canvas_edge_fade_fraction < 0.5,
@@ -333,8 +372,13 @@ def build(args: argparse.Namespace) -> Path:
                "rayon de fade contour hors intervalle (0, 64]")
     v2.require(args.rgb_policy in {"premultiplied", "preserve"},
                "politique RGB inconnue")
-    v2.require(args.rgb_policy != "preserve" or using_inner_contour or using_alpha_mask,
+    v2.require(args.rgb_policy != "preserve" or using_inner_contour or using_alpha_mask
+               or using_bright_core,
                "RGB preserve est réservé aux traitements alpha stricts")
+    v2.require(not using_bright_core or args.rgb_policy == "preserve",
+               "le flou du noyau lumineux exige --rgb-policy preserve (RGB droit)")
+    v2.require(not using_bright_core or args.bright_core_blur_sigma_x4 <= 16.0,
+               "sigma du flou de noyau hors intervalle (0, 16]")
     v2.require(not using_gaussian or args.gaussian_sigma_x4 <= 8.0,
                "sigma gaussien hors intervalle (0, 8]")
     v2.require(not args.gaussian_preserve_geometry or using_gaussian,
@@ -385,6 +429,14 @@ def build(args: argparse.Namespace) -> Path:
     metrics: dict[str, Any] = {}
     for resource in resources:
         changed = 0
+        core_mask = None
+        core_seed_px = 0
+        if using_bright_core:
+            core_mask, core_seed_px = bright_core_mask(
+                [read_rgba(pack, frame) for frame in resource["frames"]],
+                args.bright_core_seed_luma, args.bright_core_margin_x4,
+                args.bright_core_feather_x4,
+            )
         fade_widths: list[float] = []
         alpha_before = 0
         alpha_after = 0
@@ -408,6 +460,10 @@ def build(args: argparse.Namespace) -> Path:
                     rgba, args.canvas_edge_fade_fraction
                 )
                 fade_widths.append(fade_width)
+            elif using_bright_core:
+                treated = apply_masked_rgb_gaussian(
+                    rgba, core_mask, args.bright_core_blur_sigma_x4
+                )
             elif using_inner_contour:
                 treated, dilated = apply_inner_contour_fade(
                     rgba, args.inner_contour_fade_x4, args.rgb_policy,
@@ -450,6 +506,10 @@ def build(args: argparse.Namespace) -> Path:
             "gaussian_padding_x4": padding if using_gaussian else 0,
             "geometry_preserved": bool(args.gaussian_preserve_geometry),
             "alpha_mask": alpha_mask_records.get(resource["resref"]),
+            "bright_core_seed_px": core_seed_px if using_bright_core else None,
+            "bright_core_mask_px": (
+                int((core_mask > 0.3).sum()) if core_mask is not None else None
+            ),
         }
 
     registry = v2.registry_v2_from_resources(resources, int(source_manifest["registry_version"]))
@@ -483,6 +543,16 @@ def build(args: argparse.Namespace) -> Path:
                 args.canvas_edge_fade_fraction if using_fade else 0.0
             ),
             "rgba_policy": "reconstruct-alpha-and-premultiply-rgb",
+        }
+    elif using_bright_core:
+        treatment = {
+            "kind": "bright-core-masked-gaussian",
+            "sigma_x4": args.bright_core_blur_sigma_x4,
+            "seed_luma": args.bright_core_seed_luma,
+            "margin_x4": args.bright_core_margin_x4,
+            "feather_x4": args.bright_core_feather_x4,
+            "mask": "union over the loop of opaque pixels above seed_luma, largest component, filled, dilated, feathered",
+            "rgba_policy": "blur-straight-rgb-inside-mask-alpha-and-geometry-verbatim",
         }
     elif using_fade:
         treatment = {
@@ -598,6 +668,14 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--gaussian-sigma-x4", type=float, default=0.0)
     parser.add_argument("--gaussian-padding-x4", type=int)
+    parser.add_argument(
+        "--bright-core-blur-sigma-x4", type=float, default=0.0,
+        help="flou gaussien du RGB limité au plus grand noyau lumineux (corps d'une flamme "
+             "que SeedVR reconstruit en matière) ; exige --rgb-policy preserve",
+    )
+    parser.add_argument("--bright-core-seed-luma", type=float, default=110.0)
+    parser.add_argument("--bright-core-margin-x4", type=int, default=12)
+    parser.add_argument("--bright-core-feather-x4", type=float, default=8.0)
     parser.add_argument("--gaussian-preserve-geometry", action="store_true")
     parser.add_argument("--ffmpeg")
     return parser.parse_args()
