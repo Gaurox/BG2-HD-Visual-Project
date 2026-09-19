@@ -299,6 +299,8 @@ constexpr BuildManifest kKnownBuilds[] = {
             0x32F8D0,
             "40 55 53 56 57 41 54 41 55 41 57 48 8D 6C 24 F9 48 81 EC D0 00 00 00 48 8B 05 ? ? ? ?",
             0x12F9,
+            {{0x1288, 0xF88}},
+            {{0x127C, 0x125C}},
         },
         {
             true,

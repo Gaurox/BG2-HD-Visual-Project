@@ -554,6 +554,11 @@ void test_manifest_loading() {
               "BG2EE monster animation-id offset should match the offline scan");
     expect_eq(bg2ee->get().areaAnimations.monsterCurrentCell, std::uintptr_t{0xCD8},
               "BG2EE monster current-cell offset should match the offline scan");
+    expect_true(bg2ee->get().areaAnimations.monsterCompositeCells ==
+                    std::array<std::uintptr_t, 2>{0x1288, 0xF88} &&
+                    bg2ee->get().areaAnimations.monsterCompositeEnabled ==
+                    std::array<std::uintptr_t, 2>{0x127C, 0x125C},
+                "Monster composite offsets must match the native body/extra/equipment draw order");
     expect_eq(bg2ee->get().areaAnimations.monsterQuadrantRender,
               std::uintptr_t{0x3305A0},
               "BG2EE CGameAnimationTypeMonsterQuadrant::Render RVA should match the "
@@ -2185,6 +2190,29 @@ void test_creature_sprite_xn_native_border_geometry() {
             "x2 content should begin after one scaled native logical border");
   expect_eq(physical_content_offset(4), std::int64_t{4},
             "x4 content should begin after one scaled native logical border");
+  // Real MSAHG1/MSAHG1SP frame 145: the v4 50x73 body-only replacement
+  // rejected the native 72x75 draw. The equipment union explains it exactly.
+  constexpr std::array<FrameGeometry, 2> msahAttack{{
+      {50, 73, 30, 46}, {56, 43, 50, 38},
+  }};
+  CompositeBounds msahBounds{};
+  expect_true(calculate_composite_bounds(msahAttack.data(), msahAttack.size(), msahBounds),
+              "MSAH attack must combine body and independently centered equipment");
+  expect_eq(msahBounds.logical_width(), 72, "MSAH attack must reproduce logged native width");
+  expect_eq(msahBounds.logical_height(), 75, "MSAH attack must reproduce logged native height");
+  expect_eq(physical_layer_offset(30, msahBounds.left, 2), std::int64_t{42},
+            "MSAH attack body must move 21 logical pixels into the union, not one");
+  expect_eq(physical_layer_offset(50, msahBounds.left, 2), std::int64_t{2},
+            "MSAH spear must occupy the left edge of the bordered composite");
+  expect_eq(physical_layer_offset(38, msahBounds.top, 2), std::int64_t{18},
+            "MSAH spear must preserve its vertical BAM center");
+  constexpr std::array<FrameGeometry, 2> msahIdle{{
+      {47, 84, 33, 67}, {14, 37, -2, 35},
+  }};
+  expect_true(calculate_composite_bounds(msahIdle.data(), msahIdle.size(), msahBounds),
+              "MSAH idle must also retain the equipment layer");
+  expect_eq(msahBounds.logical_width(), 51, "MSAH idle union explains apparent small padding");
+  expect_eq(msahBounds.logical_height(), 86, "MSAH idle union matches the native canvas");
   // Regression: the live MDR12100 draw is 111x139, not 113x141. Its
   // descriptor, backing and pixel origin must all obey the same contract.
   constexpr auto unbordered = FrameTextureLayout::Unbordered;
@@ -2204,13 +2232,17 @@ void test_creature_sprite_xn_native_border_geometry() {
             "Existing xBR callers must retain their bordered physical backing");
   constexpr FrameHandle sharedFrame{.resourceIndex = 3, .frameIndex = 4,
                                     .animationId = 0x1200};
-  constexpr FrameTextureCacheKey borderedKey{sharedFrame, 123};
-  constexpr FrameTextureCacheKey unborderedKey{sharedFrame, 123, unbordered};
+  constexpr FrameTextureCacheKey borderedKey{
+      sharedFrame, 123, FrameTextureLayout::Bordered, 113, 141};
+  constexpr FrameTextureCacheKey unborderedKey{
+      sharedFrame, 123, unbordered, 111, 139};
   expect_true(borderedKey != unborderedKey,
               "Same frame/palette in different native layouts must not collide in the GPU cache");
-  expect_true(unborderedKey == FrameTextureCacheKey{sharedFrame, 123, unbordered},
+  expect_true(unborderedKey ==
+                  FrameTextureCacheKey{sharedFrame, 123, unbordered, 111, 139},
               "Repeated unbordered draws must reuse their own cached texture");
-  expect_true(unborderedKey != FrameTextureCacheKey{sharedFrame, 124, unbordered},
+  expect_true(unborderedKey !=
+                  FrameTextureCacheKey{sharedFrame, 124, unbordered, 111, 139},
               "Layout-aware cache must still distinguish realized palettes");
   expect_eq(kMaximumCompositeLayers, std::size_t{8},
             "Character composition should retain repeated ordered layer events");

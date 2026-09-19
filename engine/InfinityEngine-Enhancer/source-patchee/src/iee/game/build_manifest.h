@@ -227,6 +227,12 @@ struct AreaAnimationRuntime {
   std::string_view monsterMultiRenderSignature{};
   std::uintptr_t monsterMultiPartCount{};
 
+  // Generic Monster::Render submits body, optional extra cell, then equipment
+  // into ONE FX surface. BG2EE 2.7.3 evidence: 0x32DB02..0x32DB64.
+  // Each pointer is gated by its corresponding native int32 enable flag.
+  std::array<std::uintptr_t, 2> monsterCompositeCells{};
+  std::array<std::uintptr_t, 2> monsterCompositeEnabled{};
+
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
     if (!gameStaticRenderBam || !vidCellRenderTexture || !drawDeleteTexture ||

@@ -1448,15 +1448,14 @@ bool upload_frame_locked(const Frame& frame,
                          const std::array<std::uint32_t, 256>& realized,
                          NativePixelEncoding encoding, std::uint32_t physicalScale,
                          int textureId, int previousTextureId,
-                         const EngineTextureApi& api, FrameTextureLayout layout) {
+                         const EngineTextureApi& api, int textureLogicalWidth,
+                         int textureLogicalHeight, FrameTextureLayout layout) {
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
       !gl.glGetError) {
     return false;
   }
-  const int textureLogicalWidth = logical_texture_extent(frame.logicalWidth, layout);
-  const int textureLogicalHeight = logical_texture_extent(frame.logicalHeight, layout);
   int contentPhysicalWidth = 0;
   int contentPhysicalHeight = 0;
   std::uint64_t expectedContentPixels = 0;
@@ -1775,6 +1774,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
                             NativePixelEncoding encoding, std::uint64_t fingerprint,
                             std::uint32_t physicalScale, int previousTextureId,
                             const EngineTextureApi& api, int& textureId,
+                            int logicalWidth, int logicalHeight,
                             FrameTextureLayout layout) {
   textureId = 0;
   if (!validate_lazy_frame_source_locked(handle)) return false;
@@ -1785,14 +1785,19 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
   int physicalHeight = 0;
   std::uint64_t physicalPixels = 0;
   std::uint64_t physicalBytes = 0;
-  if (!checked_physical_metrics(logical_texture_extent(frame.logicalWidth, layout),
-                                logical_texture_extent(frame.logicalHeight, layout),
-                                physicalScale, physicalWidth, physicalHeight,
+  if (!checked_physical_metrics(logicalWidth, logicalHeight, physicalScale,
+                                physicalWidth, physicalHeight,
                                 physicalPixels, physicalBytes) ||
       physicalBytes > kTextureCacheBudgetBytes) {
     return false;
   }
-  const FrameTextureCacheKey key{handle, fingerprint, layout};
+  const FrameTextureCacheKey key{
+      .frame = handle,
+      .paletteFingerprint = fingerprint,
+      .layout = layout,
+      .logicalWidth = logicalWidth,
+      .logicalHeight = logicalHeight,
+  };
   auto existing = std::find_if(g_textureCache.begin(), g_textureCache.end(),
                                [&](const TextureCacheEntry& entry) {
                                  return entry.key == key;
@@ -1856,7 +1861,7 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
   }
   auto& entry = g_textureCache[entryIndex];
   if (!upload_frame_locked(frame, *indices, realized, encoding, physicalScale, entry.textureId,
-                           previousTextureId, api, layout)) {
+                           previousTextureId, api, logicalWidth, logicalHeight, layout)) {
     delete_texture_entry_locked(api, entryIndex);
     api.DrawBindTexture(previousTextureId);
     return false;
@@ -4178,11 +4183,15 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     if (!supported_physical_scale(physicalScale)) return false;
     if (layout != FrameTextureLayout::Bordered &&
         (layout != FrameTextureLayout::Unbordered || handle.animationId != 0x1200u ||
-         physicalScale != 2)) return false;
+         physicalScale != 2)) {
+      return false;
+    }
     const auto& frame = resource->frames[handle.frameIndex];
     const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth, layout);
     const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight, layout);
-    if (logicalWidth != expectedLogicalWidth || logicalHeight != expectedLogicalHeight) {
+    const bool dimensionsCompatible =
+        logicalWidth == expectedLogicalWidth && logicalHeight == expectedLogicalHeight;
+    if (!dimensionsCompatible) {
       if (!g_dimensionMismatchLogged) {
         g_dimensionMismatchLogged = true;
         LOG_WARN(
@@ -4233,7 +4242,7 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     int replacementTexture = 0;
     if (!ensure_texture_locked(handle, realized, palette.encoding, fingerprint,
                                physicalScale, previousTextureId, api,
-                               replacementTexture, layout)) {
+                               replacementTexture, logicalWidth, logicalHeight, layout)) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
         LOG_WARN("Creature sprite xBR2x texture creation failed; using native BAM rendering");
@@ -4252,8 +4261,8 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
           static_cast<std::int64_t>(frame.logicalWidth) * physicalScale,
           static_cast<std::int64_t>(frame.logicalHeight) * physicalScale,
           layout == FrameTextureLayout::Bordered ? "bordered" : "unbordered",
-          physical_texture_extent(frame.logicalWidth, physicalScale, layout),
-          physical_texture_extent(frame.logicalHeight, physicalScale, layout), sampling_filter_name());
+          static_cast<std::int64_t>(logicalWidth) * physicalScale,
+          static_cast<std::int64_t>(logicalHeight) * physicalScale, sampling_filter_name());
     }
     return true;
   } catch (const std::exception& error) {
@@ -4327,10 +4336,11 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       if (!g_compositeDimensionMismatchLogged) {
         g_compositeDimensionMismatchLogged = true;
         LOG_WARN(
-            "Creature sprite xBR2x Character composite skipped: RenderTexture packed "
+            "Creature sprite xBR2x layered composite skipped: RenderTexture packed "
             "argument is {}x{}, registered layer union requires {}x{}; native composite "
-            "retained",
-            logicalWidth, logicalHeight, bounds.logical_width(), bounds.logical_height());
+            "retained (animation=0x{:04X}, layers={}, bodyFrame={})",
+            logicalWidth, logicalHeight, bounds.logical_width(), bounds.logical_height(),
+            layers[0].frame.animationId, layerCount, layers[0].frame.frameIndex);
       }
       return false;
     }
@@ -4363,7 +4373,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       if (!g_sourceTextureFailureLogged) {
         g_sourceTextureFailureLogged = true;
         LOG_WARN(
-            "Creature sprite xBR2x Character skipped: native logical texture id is "
+            "Creature sprite xBR2x layered composite skipped: native logical texture id is "
             "unavailable");
       }
       return false;
@@ -4377,7 +4387,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
         LOG_WARN(
-            "Creature sprite xBR2x Character pixel composition failed; native composite "
+            "Creature sprite xBR2x pixel composition failed; native composite "
             "retained");
       }
       return false;
@@ -4397,7 +4407,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
         LOG_WARN(
-            "Creature sprite xBR2x Character transient replacement failed; native "
+            "Creature sprite xBR2x composite transient replacement failed; native "
             "composite retained");
       }
       return false;
@@ -4423,11 +4433,13 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       const auto& frame = resource->frames[layer.frame.frameIndex];
       LOG_INFO(
           "Composing creature sprite {} animation=0x{:04X} frame {:03} as "
-          "Character composite layer {}/{}: scale=x{}, BAM logical {}x{}, final "
+          "{} composite layer {}/{}: scale=x{}, BAM logical {}x{}, final "
           "bordered texture {}x{} physical {}x{} via transient replacement id {} "
           "({}, delete-pending after queued draw)",
           resref_name(resource->resref), layer.frame.animationId,
-          layer.frame.frameIndex, index + 1, layerCount, physicalScale,
+          layer.frame.frameIndex,
+          layer.frame.animationId == 0x7F09u ? "Monster" : "Character",
+          index + 1, layerCount, physicalScale,
           frame.logicalWidth, frame.logicalHeight, logicalWidth, logicalHeight,
           static_cast<std::int64_t>(logicalWidth) * physicalScale,
           static_cast<std::int64_t>(logicalHeight) * physicalScale,
@@ -4443,7 +4455,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       api.DrawDeleteTexture(transientTextureId);
     }
     transientTextureId = 0;
-    LOG_WARN("Creature sprite xBR2x Character composition failed: {}", error.what());
+    LOG_WARN("Creature sprite xBR2x layered composition failed: {}", error.what());
   } catch (...) {
     if (api.DrawBindTexture && previousTextureId > 0) {
       api.DrawBindTexture(previousTextureId);

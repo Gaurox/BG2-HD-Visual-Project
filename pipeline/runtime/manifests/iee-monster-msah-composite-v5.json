@@ -1,0 +1,81 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-monster-msah-composite-v5",
+  "source_commit": "9ddbecaa439a1bbdb5e1b80ff89f876bd87ead7e",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-cache128/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "C6AA1CFA15083E12F9015F7D9B85A343BEB849CCE80B5EC717EF4FBAB06EE0A6",
+    "bytes": 1827328
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_magic": "IEECSNC",
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_magic": "IEECSXN",
+      "shard_registry_versions": [
+        3,
+        5
+      ],
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1"
+      ],
+      "directory_v2_entry_bytes": 24
+    },
+    "character_composite": {
+      "owners": [
+        1
+      ],
+      "animation_families": [
+        "0x5000",
+        "0x6000"
+      ],
+      "maximum_layers": 8,
+      "palette_mode": "CVidPalette::Realize-per-layer",
+      "composition": "overwrite-nontransparent-pixel-v1"
+    },
+    "monster_single_cell": {
+      "owners": [
+        3
+      ],
+      "animation_families": [
+        "0x7000"
+      ],
+      "pending_palette_correlation": "preserve-across-foreign-realize-v1",
+      "frame_resolution": "refresh-at-render-texture-v1"
+    },
+    "monster_composite": {
+      "owners": [
+        3
+      ],
+      "animation_ids": [
+        "0x7F09"
+      ],
+      "maximum_layers": 3,
+      "palette_mode": "CVidPalette::Realize-per-layer",
+      "frame_resolution": "resolve-at-each-correlated-realize-v1",
+      "geometry": "exact-bam-center-union-plus-one-logical-border-v1",
+      "composition": "overwrite-nontransparent-pixel-native-order-v1",
+      "missing_layer_policy": "native-composite-fallback",
+      "body_cell_offset": "0xCD8",
+      "optional_cells": [
+        {
+          "cell_offset": "0x1288",
+          "enabled_offset": "0x127C"
+        },
+        {
+          "cell_offset": "0xF88",
+          "enabled_offset": "0x125C"
+        }
+      ]
+    }
+  }
+}

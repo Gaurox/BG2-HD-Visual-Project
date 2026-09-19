@@ -301,6 +301,7 @@ struct CreatureSpriteScope {
   std::uint32_t uncorrelatedNativeDraws{};
   bool compositionIncomplete{};
   bool compositeReplacementDone{};
+  bool layeredComposition{};
 };
 
 thread_local CreatureSpriteScope* g_creatureSpriteScope = nullptr;
@@ -2553,6 +2554,34 @@ static void detour_monster_render(
     scope.generation = next_creature_sprite_generation();
     scope.animationId = resolved.animationId;
     (void)append_creature_sprite_layer(scope, resolved);
+    if (scope.animationId == 0x7F09u) {
+      scope.layeredComposition = true;
+      const auto& runtime = g_ctx->manifest->areaAnimations;
+      const auto* base = static_cast<const std::byte*>(thisPtr);
+      for (std::size_t index = 0; index < runtime.monsterCompositeCells.size(); ++index) {
+        std::int32_t enabled = 0;
+        void* cell = nullptr;
+        if (!runtime.monsterCompositeCells[index] ||
+            !runtime.monsterCompositeEnabled[index] ||
+            !core::safe_read(base + runtime.monsterCompositeEnabled[index], enabled)) {
+          scope.compositionIncomplete = true;
+          continue;
+        }
+        if (!enabled) continue;
+        if (!core::safe_read(base + runtime.monsterCompositeCells[index], cell)) {
+          scope.compositionIncomplete = true;
+          continue;
+        }
+        // Native equipment is optional even when its enable flag is set.
+        if (!cell && index == 1) continue;
+        ResolvedCreatureSpriteFrame overlay{};
+        if (!read_registered_creature_cell(scope.animationId, cell,
+                                            "CGameAnimationTypeMonster overlay", overlay) ||
+            !append_creature_sprite_layer(scope, overlay)) {
+          scope.compositionIncomplete = true;
+        }
+      }
+    }
   }
   // Every Monster invocation masks an outer creature scope. A nested
   // non-target render must never inherit the outer sprite's palette/frame.
@@ -2576,9 +2605,11 @@ static void detour_monster_render(
             true, std::memory_order_relaxed)) {
       LOG_WARN(
           "Registered creature animation 0x{:04X} reached no compatible "
-          "owner-scoped palette/texture (target Realize={}, foreign Realize={}); "
+          "owner-scoped palette/texture (target Realize={}, foreign Realize={}, "
+          "layers={}, captured={}, incomplete={}); "
           "native BAM rendering remains active",
-          scope.animationId, scope.targetRealizes, scope.foreignRealizes);
+          scope.animationId, scope.targetRealizes, scope.foreignRealizes,
+          scope.layerCount, scope.compositionCount, scope.compositionIncomplete);
     }
   }
 }
@@ -2803,6 +2834,7 @@ static void detour_character_render(
       g_creatureSpriteHooksEnabled &&
       read_creature_sprite_frame(thisPtr, CreatureSpriteOwner::Character, resolved);
   CreatureSpriteScope scope{};
+  scope.layeredComposition = true;
   const bool shaderScoped = g_spriteShaderScopeActive;
   if (target || shaderScoped) scope.owner = CreatureSpriteOwner::Character;
   if (target) {
@@ -2888,7 +2920,6 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   std::size_t ownerLayer = kNoCreatureSpriteLayer;
   bool unregisteredOwner = false;
   if (scope) {
-    scope->pendingLayer = kNoCreatureSpriteLayer;
     scope->nativeDrawLayer = kNoCreatureSpriteLayer;
     for (std::size_t index = 0; index < scope->layerCount; ++index) {
       if (paletteThis == scope->layers[index].paletteOwner) {
@@ -2906,6 +2937,10 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
     }
     const bool targetCallsite = caller == g_creatureSpritePaletteReturn;
     if (ownerLayer != kNoCreatureSpriteLayer && targetCallsite) {
+      // A Monster frame can issue another, unrelated Realize between its body
+      // palette and RenderTexture. Only a new correlated owner palette may
+      // supersede the pending frame; a foreign Realize must not discard it.
+      scope->pendingLayer = kNoCreatureSpriteLayer;
       ++scope->targetRealizes;
       // Track native submission independently of palette capture success.
       scope->nativeDrawLayer = ownerLayer;
@@ -2914,12 +2949,12 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
       ownerCandidate = core::safe_read(reinterpret_cast<const std::byte*>(paletteThis) + 0x20,
                                        paletteKind) &&
                        paletteKind <= 1;
-      if (!ownerCandidate && scope->owner == CreatureSpriteOwner::Character) {
+      if (!ownerCandidate && scope->layeredComposition) {
         scope->compositionIncomplete = true;
       }
     } else {
       ++scope->foreignRealizes;
-      if (scope->owner == CreatureSpriteOwner::Character &&
+      if (scope->layeredComposition &&
           (targetCallsite || ownerLayer != kNoCreatureSpriteLayer || unregisteredOwner)) {
         scope->compositionIncomplete = true;
         if (targetCallsite && unregisteredOwner) {
@@ -2940,16 +2975,16 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   creature_sprite_x2::PaletteSnapshot captured{};
   if (!creature_sprite_x2::capture_palette_snapshot(realizedOutput, g_creatureSpriteTextureApi,
                                                      captured)) {
-    if (scope->owner == CreatureSpriteOwner::Character) {
+    if (scope->layeredComposition) {
       scope->compositionIncomplete = true;
     }
     return;
   }
   auto& layer = scope->layers[ownerLayer];
-  if (scope->owner == CreatureSpriteOwner::Character) {
+  if (scope->layeredComposition) {
     ResolvedCreatureSpriteFrame current{};
     if (!read_registered_creature_cell(scope->animationId, layer.cell,
-                                       "CGameAnimationTypeCharacter layer", current) ||
+                                       creature_sprite_owner_label(scope->owner), current) ||
         scope->compositionCount >= scope->composition.size()) {
       scope->compositionIncomplete = true;
       return;
@@ -2958,6 +2993,7 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
         .frame = current.handle,
         .palette = captured,
     };
+    layer.captureValid = true;
     return;
   }
   layer.palette = captured;
@@ -3124,9 +3160,17 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   if (g_creatureSpriteHooksEnabled && creatureScope) {
     // A creature scope owns this dispatch even when it fails closed. Never fall
     // through to an unrelated area-animation substitution during creature rendering.
-    if (creatureScope->owner == CreatureSpriteOwner::Character) {
+    if (creatureScope->layeredComposition) {
+      // MSAH's equipment extends the body bounds, especially during attacks.
+      // Every active native layer must have its own captured palette/frame.
+      const bool allMonsterLayersCaptured =
+          creatureScope->owner != CreatureSpriteOwner::Monster ||
+          std::all_of(creatureScope->layers.begin(),
+                      creatureScope->layers.begin() + creatureScope->layerCount,
+                      [](const CreatureSpriteLayer& layer) { return layer.captureValid; });
       if (!creatureScope->compositeReplacementDone &&
           !creatureScope->compositionIncomplete &&
+          allMonsterLayersCaptured &&
           creatureScope->compositionCount > 0 &&
           creature_sprite_x2::bind_composite_texture(
               creatureScope->composition.data(), creatureScope->compositionCount,
@@ -3148,9 +3192,18 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
         }
       }
       const auto layerIndex = creatureScope->pendingLayer;
-      creatureScope->pendingLayer = kNoCreatureSpriteLayer;
       if (layerIndex < creatureScope->layerCount) {
         auto& layer = creatureScope->layers[layerIndex];
+        // Generic Monster advances its CVidCell between the owner Render entry
+        // and the final texture submission. Resolve again at the draw boundary
+        // so the selected frame dimensions match RenderTexture exactly.
+        ResolvedCreatureSpriteFrame current{};
+        if (creatureScope->owner != CreatureSpriteOwner::Character &&
+            read_registered_creature_cell(creatureScope->animationId, layer.cell,
+                                          creature_sprite_owner_label(creatureScope->owner),
+                                          current)) {
+          layer.frame = current.handle;
+        }
         if (!layer.replacementDone && layer.captureValid &&
             layer.capturedOwner == layer.paletteOwner &&
             layer.capturedGeneration == creatureScope->generation) {
@@ -3160,6 +3213,7 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
                   creatureScope->owner == CreatureSpriteOwner::MonsterMulti
                       ? creature_sprite_x2::FrameTextureLayout::Unbordered
                       : creature_sprite_x2::FrameTextureLayout::Bordered)) {
+            creatureScope->pendingLayer = kNoCreatureSpriteLayer;
             layer.replacementDone = true;
             ++creatureScope->replacements;
             replacement = ReplacementKind::CreatureSprite;

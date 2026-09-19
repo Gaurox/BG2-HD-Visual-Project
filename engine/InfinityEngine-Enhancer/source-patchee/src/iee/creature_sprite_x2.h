@@ -65,9 +65,13 @@ inline constexpr std::uint64_t kMaximumCatalogRegistryBytes =
 }
 
 // Ordinary CVidCell frames have a transparent logical pixel on every side.
-// Native MonsterMulti uses the BAM extent directly. The owning hook selects
-// the contract explicitly; a dimension mismatch must never select it implicitly.
-enum class FrameTextureLayout : std::uint8_t { Bordered, Unbordered };
+// Layered Monster/Character draws use the union of their BAM centers, not a
+// padding allowance on the body. Native MonsterMulti uses the BAM extent
+// directly. The owning hook selects the contract explicitly.
+enum class FrameTextureLayout : std::uint8_t {
+  Bordered,
+  Unbordered,
+};
 
 [[nodiscard]] constexpr int logical_texture_extent(
     int frameExtent, FrameTextureLayout layout = FrameTextureLayout::Bordered) noexcept {
@@ -108,12 +112,14 @@ struct FrameHandle {
   [[nodiscard]] constexpr bool operator==(const FrameHandle&) const noexcept = default;
 };
 
-// The same indexed frame/palette can be drawn by distinct native paths.
-// Their padded/unpadded GPU backings must never share a cache entry.
+// The same indexed frame/palette can be drawn by distinct native paths and
+// observed backing sizes. Those GPU textures must never share a cache entry.
 struct FrameTextureCacheKey {
   FrameHandle frame{};
   std::uint64_t paletteFingerprint{};
   FrameTextureLayout layout{FrameTextureLayout::Bordered};
+  int logicalWidth{};
+  int logicalHeight{};
 
   [[nodiscard]] constexpr bool operator==(const FrameTextureCacheKey&) const noexcept = default;
 };
@@ -154,7 +160,7 @@ struct CompositeBounds {
   }
 };
 
-// Character BAM layers share a world-space origin. Their BAM centers map each
+// Character and layered Monster BAMs share a world-space origin. Their centers map each
 // frame into that coordinate system; the final native composite is their union
 // plus CVidCell's one-logical-pixel transparent border.
 bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCount,
