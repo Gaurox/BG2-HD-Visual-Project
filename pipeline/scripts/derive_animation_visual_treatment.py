@@ -24,6 +24,7 @@ from scipy.ndimage import (
     gaussian_filter, label,
 )
 
+import build_per_frame_spline_alpha_30fps_v2 as spline
 import run_animation_upscale_30fps_v2 as v2
 
 
@@ -223,6 +224,48 @@ def apply_geometry_preserving_rgb_gaussian(rgba: np.ndarray, sigma: float) -> np
     return output
 
 
+def apply_lower_edge_cover(
+    rgba: np.ndarray, reference: np.ndarray, rows: int, depth: int, zone: int
+) -> tuple[np.ndarray, int]:
+    """Cover the lower silhouette edges of a strict-alpha animation with opaque water.
+
+    A map hole under the animation can carry a bright halo and dark fill just outside
+    the source alpha; a feathered alpha lets both show at the lower edges.  The source
+    silhouette (``reference``, the alpha before any feather) is extended ``rows`` rows
+    downward, smoothed by the same spline fit, and merged with the current alpha inside
+    ``zone`` px of the added ring.  There the RGB is repushed from ``depth`` px inside
+    the source edge, which also drops the BAM's light edge dots.
+
+    Frame dimensions stay exactly those of the native BAM frame, so the ring is clipped
+    at the canvas: the engine binds an x4 frame only when its logical size matches the
+    CVidCell draw (``resolve_timeline_subframe``), and a padded frame silently falls
+    back to the vanilla BAM.  Returns the frame and the added ring pixels."""
+    source = reference[:, :, 3] > 127
+    if not source.any():
+        return rgba, 0
+    extended = source.copy()
+    for step in range(1, rows + 1):
+        extended[step:] |= source[:-step]
+    ring = extended & ~source
+    canvas = np.pad(extended, 32)
+    labels, count = label(canvas, structure=np.ones((3, 3), dtype=np.uint8))
+    mask = np.zeros(canvas.shape, dtype=np.uint8)
+    for index in range(1, int(count) + 1):
+        fitted, _ = spline.fit_component(labels == index, 1.0, 1.5, 4)
+        mask = np.maximum(mask, fitted)
+    mask = mask[32:-32, 32:-32].astype(np.float32)
+    near_ring = distance_transform_edt(~ring) <= float(zone)
+    alpha = rgba[:, :, 3].astype(np.float32)
+    merged = np.where(near_ring, np.maximum(alpha, mask), alpha)
+    inside = distance_transform_edt(source)
+    _, nearest = distance_transform_edt(inside < depth, return_indices=True)
+    band = near_ring & (merged > 0) & ((inside < depth) | ring)
+    output = rgba.copy()
+    output[:, :, :3][band] = rgba[:, :, :3][nearest[0][band], nearest[1][band]]
+    output[:, :, 3] = np.clip(np.rint(merged), 0, 255).astype(np.uint8)
+    return output, int(ring.sum())
+
+
 def asset_record(resource: dict[str, Any], name: str) -> dict[str, Any]:
     matches = [item for item in resource["assets"] if item["name"] == name]
     v2.require(len(matches) == 1, f"asset absent ou ambigu : {name}")
@@ -355,6 +398,7 @@ def build(args: argparse.Namespace) -> Path:
     using_luminance = args.luminance_low is not None or args.luminance_high is not None
     using_alpha_mask = bool(args.alpha_mask)
     using_bright_core = args.bright_core_blur_sigma_x4 > 0.0
+    using_lower_cover = args.lower_edge_cover_rows > 0
     alpha_mask_paths = [path.resolve() for path in (args.alpha_mask or [])]
     v2.require(not using_alpha_mask or len(alpha_mask_paths) == len(selected),
                "fournir exactement un --alpha-mask par --resref, dans le même ordre")
@@ -363,7 +407,7 @@ def build(args: argparse.Namespace) -> Path:
         and 0.0 <= args.luminance_low < args.luminance_high <= 255.0
     ), "seuils de luminance invalides")
     v2.require(sum((using_inner_contour, using_gaussian, using_luminance, using_alpha_mask,
-                    using_bright_core)) == 1
+                    using_bright_core, using_lower_cover)) == 1
                or (using_fade and not using_inner_contour and not using_gaussian),
                "activer un traitement principal ; le fade canvas peut compléter la luminance")
     v2.require(not using_fade or 0.0 < args.canvas_edge_fade_fraction < 0.5,
@@ -373,10 +417,26 @@ def build(args: argparse.Namespace) -> Path:
     v2.require(args.rgb_policy in {"premultiplied", "preserve"},
                "politique RGB inconnue")
     v2.require(args.rgb_policy != "preserve" or using_inner_contour or using_alpha_mask
-               or using_bright_core,
+               or using_bright_core or using_lower_cover,
                "RGB preserve est réservé aux traitements alpha stricts")
     v2.require(not using_bright_core or args.rgb_policy == "preserve",
                "le flou du noyau lumineux exige --rgb-policy preserve (RGB droit)")
+    v2.require(not using_lower_cover or (
+        args.rgb_policy == "preserve" and args.alpha_reference_pack is not None
+        and 0 < args.lower_edge_cover_rows <= 16
+        and args.lower_edge_cover_depth_x4 >= 0 and args.lower_edge_cover_zone_x4 > 0
+    ), "couverture du bord bas : exige --rgb-policy preserve, --alpha-reference-pack et "
+       "1 <= lignes <= 16")
+    reference_pack = None
+    reference_by_resref: dict[str, dict[str, Any]] = {}
+    if using_lower_cover:
+        reference_pack = args.alpha_reference_pack.resolve()
+        _reference_manifest, reference_resources = v2.validate_v2_pack(reference_pack)
+        reference_by_resref = {
+            v2.normalise_resref(item["resref"]): item for item in reference_resources
+        }
+        v2.require(set(selected) <= set(reference_by_resref),
+                   "ressource absente du pack de référence alpha")
     v2.require(not using_bright_core or args.bright_core_blur_sigma_x4 <= 16.0,
                "sigma du flou de noyau hors intervalle (0, 16]")
     v2.require(not using_gaussian or args.gaussian_sigma_x4 <= 8.0,
@@ -441,6 +501,7 @@ def build(args: argparse.Namespace) -> Path:
         alpha_before = 0
         alpha_after = 0
         rgb_dilated_pixels = 0
+        cover_ring_pixels = 0
         for frame in resource["frames"]:
             rgba = read_rgba(pack, frame)
             alpha_before += int(rgba[:, :, 3].sum(dtype=np.uint64))
@@ -464,6 +525,17 @@ def build(args: argparse.Namespace) -> Path:
                 treated = apply_masked_rgb_gaussian(
                     rgba, core_mask, args.bright_core_blur_sigma_x4
                 )
+            elif using_lower_cover:
+                reference_frame = next(
+                    item for item in reference_by_resref[resource["resref"]]["frames"]
+                    if str(item["asset"]) == str(frame["asset"])
+                )
+                treated, cover_ring_px = apply_lower_edge_cover(
+                    rgba, read_rgba(reference_pack, reference_frame),
+                    args.lower_edge_cover_rows, args.lower_edge_cover_depth_x4,
+                    args.lower_edge_cover_zone_x4,
+                )
+                cover_ring_pixels += cover_ring_px
             elif using_inner_contour:
                 treated, dilated = apply_inner_contour_fade(
                     rgba, args.inner_contour_fade_x4, args.rgb_policy,
@@ -510,6 +582,7 @@ def build(args: argparse.Namespace) -> Path:
             "bright_core_mask_px": (
                 int((core_mask > 0.3).sum()) if core_mask is not None else None
             ),
+            "lower_edge_cover_ring_px": cover_ring_pixels if using_lower_cover else None,
         }
 
     registry = v2.registry_v2_from_resources(resources, int(source_manifest["registry_version"]))
@@ -543,6 +616,18 @@ def build(args: argparse.Namespace) -> Path:
                 args.canvas_edge_fade_fraction if using_fade else 0.0
             ),
             "rgba_policy": "reconstruct-alpha-and-premultiply-rgb",
+        }
+    elif using_lower_cover:
+        treatment = {
+            "kind": "lower-edge-cover",
+            "rows_x4": args.lower_edge_cover_rows,
+            "rgb_depth_x4": args.lower_edge_cover_depth_x4,
+            "zone_x4": args.lower_edge_cover_zone_x4,
+            "geometry": "native-bam-dimensions-preserved-ring-clipped-at-canvas",
+            "alpha_reference_pack": str(reference_pack),
+            "alpha_reference_pack_manifest_sha256": v2.sha256_file(reference_pack / "manifest.json"),
+            "rgba_policy": "preserve-straight-rgb-repushed-from-inside-in-the-cover-zone",
+            "alpha_constraint": "final>=input alpha inside the zone, unchanged elsewhere",
         }
     elif using_bright_core:
         treatment = {
@@ -643,6 +728,18 @@ def build(args: argparse.Namespace) -> Path:
     }
     v2.write_json(partial / "manifest.json", run_manifest)
     partial.rename(output)
+    resized = sum(
+        1
+        for source_resource, output_resource in zip(source_selected, resources, strict=True)
+        for source_frame, output_frame in zip(
+            source_resource["frames"], output_resource["frames"], strict=True
+        )
+        if list(source_frame["logical_size_x1"]) != list(output_frame["logical_size_x1"])
+    )
+    if resized:
+        print(f"ATTENTION : {resized} frame(s) changent de taille logique. Le moteur ne lie une "
+              "frame x4 que si sa taille logique est celle du BAM natif "
+              "(resolve_timeline_subframe) ; sinon il rend le BAM vanilla sans rien journaliser.")
     return output
 
 
@@ -667,7 +764,11 @@ def parse_args() -> argparse.Namespace:
         "--rgb-policy", choices=("premultiplied", "preserve"), default="premultiplied"
     )
     parser.add_argument("--gaussian-sigma-x4", type=float, default=0.0)
-    parser.add_argument("--gaussian-padding-x4", type=int)
+    parser.add_argument(
+        "--gaussian-padding-x4", type=int,
+        help="agrandit le canevas : le moteur n'accepte que la taille logique du BAM natif "
+             "et retombe en vanilla sinon ; préférer --gaussian-preserve-geometry",
+    )
     parser.add_argument(
         "--bright-core-blur-sigma-x4", type=float, default=0.0,
         help="flou gaussien du RGB limité au plus grand noyau lumineux (corps d'une flamme "
@@ -677,6 +778,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--bright-core-margin-x4", type=int, default=12)
     parser.add_argument("--bright-core-feather-x4", type=float, default=8.0)
     parser.add_argument("--gaussian-preserve-geometry", action="store_true")
+    parser.add_argument(
+        "--lower-edge-cover-rows", type=int, default=0,
+        help="étend l'alpha source de N lignes x4 vers le bas (couvre le halo d'un trou de map)",
+    )
+    parser.add_argument("--lower-edge-cover-depth-x4", type=int, default=5)
+    parser.add_argument("--lower-edge-cover-zone-x4", type=int, default=10)
+    parser.add_argument(
+        "--alpha-reference-pack", type=Path,
+        help="pack V2 portant l'alpha source avant feather (mêmes assets que --input)",
+    )
     parser.add_argument("--ffmpeg")
     return parser.parse_args()
 

@@ -10,9 +10,13 @@ Une ressemblance de couleur seule ne suffit pas.
 | `MECANIQUE-SEEDVR-ALPHA-NATIVE` | Roue, ventilateur, cuve, machine ; arêtes rigides, rayons et trous à préserver | SeedVR2 7B INT8/LAB x4 → TimedTimeline v2 Apollo-8 15→30 → alpha source nearest ; RGB caché nearest-opaque ; **sans spline/feather** | `AM307TT1` |
 | `FUMEE-SEEDVR-SPLINE4-EDGEFADE` | Fumée ou vapeur diffuse touchant le canvas ; multi-contours, `Blended` | SeedVR2 7B INT8/LAB x4 → TimedTimeline v2 Apollo-8 15→30 → Spline Fit 1 multi-contours par frame → feather `4 px x4` → Oval Edge Fade `20/6` → RGB prémultiplié | `CHIMSMK` |
 | `PORTAIL-SEEDVR-SPLINE8` | Portail elliptique à silhouette fermée et alpha binaire | SeedVR2 7B INT8/LAB x4 → TimedTimeline v2 Apollo-8 15→30 → spline périodique Fit 1 → feather intérieur `8 px x4` ; RGB inchangé | `PORTL1A`, `PORTL1B`, `PORTL2A` |
+| `BASSIN-SUR-TROU-DE-CARTE` | Bassin posé sur un trou noir de la carte x4 bordé d'un halo clair, visible en liseré aux bords bas | `LIQUIDE-SEEDVR-SPLINE4` avec feather `6 px x4` → `Lower Edge Cover` : alpha source étendu de `5` lignes x4 vers le bas, lissé par la même spline sans feather, fusionné à `10 px` de l'anneau, RGB repoussé depuis `5 px` à l'intérieur du bord ; géométrie native conservée | `AM1004A` |
 
 ## Règles de choix
 
+- **Géométrie** : une frame x4 garde exactement la taille logique de la frame BAM native. Le moteur
+  compare cette taille au dessin CVidCell et retombe en vanilla **sans journaliser** si elle diffère —
+  donc jamais de rembourrage de canevas (`--gaussian-padding-x4`) ; utiliser `--gaussian-preserve-geometry`.
 - `Blended` : neutraliser le RGB transparent et prémultiplier par l'alpha final.
 - Détails fins/branches/rayons : préférer xBR ou alpha nearest ; éviter une spline destructrice.
 - Silhouette organique fermée : Spline Fit 1 + feather.

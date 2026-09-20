@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:SMOKE",
+  "correction_id": "ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1",
+  "decision": "QA ingame validee par l'utilisateur le 2026-09-21 sur AR1004, AR1601 et AR2012 : fumee x4 30 fps, grain SeedVR attenue par le flou gaussien sigma 1,0 a geometrie preservee.",
+  "decision_date": "2026-09-21",
+  "decision_id": "2026-09-21-accepted-ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921/manifest.json",
+    "manifest_sha256": "2B150B5DBBF6416009C5EA811F31ACFBB1C58F6A1D906ACF031C43137A46717A",
+    "path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-20260920/03_runtime_pack/manifest.json",
+        "manifest_sha256": "45738E78576BAB29CF710B30A52866F626FFB1268A55D743FB210510F2385BA9",
+        "path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-20260920/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-20T22:37:53Z",
+  "resref": "SMOKE",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1004",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1004/manifest.json",
+        "manifest_sha256": "2A28770C27E61E32A97A3E85ED522F252A5FB29672C74AD47C843EB098B5C0E4",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1004",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1601",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1601/manifest.json",
+        "manifest_sha256": "09C7546BCA014125A1305F93F0BEB5B041804A768D10B4747AF663C53F3CBDF2",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1601",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2012",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR2012/manifest.json",
+        "manifest_sha256": "39B738C68373016B5B03AAEFC89500A9EC7FE365C6611163C6EB7276C5298679",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR2012",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/manifest.json",
+    "manifest_sha256": "69F10CBC1C769DCDB8A86FA450C72E223671579F3601765ACC0816712B5A7DD0",
+    "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR1004",
+    "AR1601",
+    "AR2012"
+  ]
+}

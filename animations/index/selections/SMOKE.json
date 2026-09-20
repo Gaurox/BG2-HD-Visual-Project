@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:SMOKE",
+  "correction_id": "ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-20260920/03_runtime_pack/manifest.json",
+        "manifest_sha256": "45738E78576BAB29CF710B30A52866F626FFB1268A55D743FB210510F2385BA9",
+        "path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-20260920/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/SMOKE/2026-09-21-accepted-ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921.json",
+    "sha256": "3C8AAE54C1BCF3D975CC525520056E8A9D022B70ED506B4D6DBD123E1C4EADEA",
+    "status": "accepted"
+  },
+  "resref": "SMOKE",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921/manifest.json",
+    "manifest_sha256": "2B150B5DBBF6416009C5EA811F31ACFBB1C58F6A1D906ACF031C43137A46717A",
+    "path": "animations/ressources/SMOKE/runs/ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1004",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1004/manifest.json",
+        "manifest_sha256": "2A28770C27E61E32A97A3E85ED522F252A5FB29672C74AD47C843EB098B5C0E4",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1004",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1601",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1601/manifest.json",
+        "manifest_sha256": "09C7546BCA014125A1305F93F0BEB5B041804A768D10B4747AF663C53F3CBDF2",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR1601",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2012",
+        "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR2012/manifest.json",
+        "manifest_sha256": "39B738C68373016B5B03AAEFC89500A9EC7FE365C6611163C6EB7276C5298679",
+        "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/AR2012",
+        "registry_sha256": "3A3C41E011DBEF71D4D6DF470E694F79E8CFCDBEC62F71C4DF5CAEDC85B60DF9",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921/manifest.json",
+    "manifest_sha256": "69F10CBC1C769DCDB8A86FA450C72E223671579F3601765ACC0816712B5A7DD0",
+    "path": "animations/packs-par-zone/ar1004-smoke-rgbgaussian1-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1004",
+    "AR1601",
+    "AR2012"
+  ],
+  "updated_at_utc": "2026-09-20T22:37:53Z"
+}

@@ -60,6 +60,8 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Contour 1 bit crénelé | spline `fit 1.0`, puis feather intérieur si la marche reste visible | QA d'un contour où spline seule suffit |
 | Fumée : concavités internes rognées | `Spline Fit 1 Multi-Contour — Core Guard 16` (`spline-fit1-multicontour-core-guard16`) : restaurer l'alpha source à partir de 16 px x4 depuis le contour ; spline/feather limités à la bordure | épaisseur, famille ou défaut de contour différents |
 | Coupe de canvas visible | `Oval Edge Fade 20/6` (`oval-edge-fade20x6`) : fade elliptique 20 px x4 haut/bas, 6 px x4 côtés | forme, paramètres ou défaut de coupe différents |
+| Taille d'une frame x4 | toujours celle de la frame BAM native : `resolve_timeline_subframe`/`resolve_native_subframe` comparent la taille logique au dessin CVidCell et **échouent en silence** (vanilla, aucune ligne de journal) ; ne jamais rembourrer le canevas (`--gaussian-padding-x4`), utiliser `--gaussian-preserve-geometry` | contrat moteur modifié |
+| Halo/trou de carte au bord d'une animation | `Lower Edge Cover` (`--lower-edge-cover-rows 5 --lower-edge-cover-depth-x4 5 --lower-edge-cover-zone-x4 10`) : alpha source étendu vers le bas, lissé par la même spline, RGB intérieur repoussé ; anneau rogné au canevas | halo au-dessus ou sur les côtés, ou carte corrigée à la source |
 
 Le témoin de rétrocompatibilité TimedTimeline v2 est AR0603 ; les packs v3 prouvent le routage par
 occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans

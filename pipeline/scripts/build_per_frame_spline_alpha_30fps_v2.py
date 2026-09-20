@@ -75,7 +75,12 @@ def fit_component(component: np.ndarray, fit_error: float, spacing: float,
     plt.close()
     if not paths:
         return component.astype(np.uint8) * 255, {"status": "preserved-no-contour"}
-    contour = max((path.vertices for path in paths), key=len)
+    # matplotlib >= 3.8 returns one Path per level holding every loop (outer contour and
+    # holes, split at MOVETO); tracing it as a single loop joins them with chords.
+    contour = max(
+        (loop for path in paths for loop in path.to_polygons(closed_only=False)),
+        key=len,
+    )
     if np.allclose(contour[0], contour[-1]):
         contour = contour[:-1]
     samples = resample_closed(contour, spacing)

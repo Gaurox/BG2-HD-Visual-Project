@@ -41,6 +41,16 @@ class PerFrameSplineAlphaTests(unittest.TestCase):
 
         np.testing.assert_array_equal(result, np.array([[[50, 100, 25, 128]]], dtype=np.uint8))
 
+    def test_fit_component_traces_only_the_outer_contour_of_a_component_with_holes(self) -> None:
+        component = np.zeros((80, 80), dtype=bool)
+        component[10:70, 10:70] = True
+        component[55:59, 55:59] = False
+
+        result, report = builder.fit_component(component, 1.0, 1.5, 4)
+
+        self.assertEqual(report["input_vertices"], 240)
+        self.assertEqual(int(result[57, 57]), 255)
+
     def test_bottom_seam_restores_source_alpha_without_expansion(self) -> None:
         source = np.full((24, 8), 180, dtype=np.uint8)
         faded = np.full((24, 8), 30, dtype=np.uint8)
