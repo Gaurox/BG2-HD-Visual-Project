@@ -32,6 +32,7 @@
     "manifests/dependency-bootstrap.json",
     "manifests/components.json",
     "manifests/content.json",
+    "manifests/map-release-candidates.csv",
     "manifests/animation-release-candidates.json",
     "manifests/effect-release-candidates.json",
     "manifests/sprite-release-candidates.json",
@@ -39,14 +40,14 @@
     "manifests/licenses-and-exclusions.json"
   ],
   "content_scope": {
-    "maps": "validated SeedVR2 7B/LAB x4 zones plus byte-pinned validated water/WED repairs",
+    "maps": "369 zones x4 validees ingame (variantes nuit comprises) : SeedVR2 7B INT8, correction couleur LAB, ou none pour les zones du lot eau ; plus les reparations eau/WED validees et epinglees a l'octet. Le bootstrap historique de New-BG2HD-ContentManifest.ps1 et map-release-candidates.csv sont les deux sources ; OH6460 en est absente car son payload est celui du composant map-oh8100 (tileset partage).",
     "ui": "approved Topaz Recovery v2 Detail 50 x4 atlas set",
     "overlays": "overlay-sources.json is authoritative: validated WTLAKE/WTPOOL2/WSWPIL aliases and WTLAV family; WTSWAM/WTSEW/WTOIL remain stock",
     "sprites": "approved 173-animation playable, monster and Icewind creature x2 Catmull-Rom catalog, projected byte-for-byte",
     "effects": "approved SPMAGMIS, SPMINDAT and SPFEAREF x4 runtime pack, projected byte-for-byte",
     "excluded": [
       "all x2 map builds",
-      "installed-pending-qa maps",
+      "maps not registered in the historical bootstrap or map-release-candidates.csv",
       "unapproved x4 water overlays",
       "HUD",
       "development override",

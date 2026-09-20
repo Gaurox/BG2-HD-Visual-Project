@@ -33,14 +33,32 @@ Les décisions durables sont dans
 |---|---|
 | AR2300 | crash de carte complète et incohérence d'eau ; reprise complète |
 
-| Lot 1 ToB (28 zones : AR5000–AR5016 hors AR5013, AR5203, AR5500–AR5509 hors AR5508, AR6300, AR6400) | installées le 2026-09-19 ; QA jour + secondaires par zone à faire ; points sensibles : eau AR5000/AR5203 (WATER-005), AR5010 (WTPOOL x2), AR6300 (WTLAKA-D x2), raccords de découpe AR5000/AR5203/AR5500/AR5007/AR6400 |
-
-| Lot 2 ToB (22 zones : AR6000–AR6012 hors 6006/6007/6009/6010, AR6100–AR6111, AR6200) | installées le 2026-09-19 ; QA à faire ; sensibles : AR6008 (WTSWAM keep-stock, 1 carré d'eau opaque sans secondaire non réparé, alpha0 de l'audit volontairement non appliqué), raccords AR6101/AR6104/AR6100/AR6200/AR6000/AR6004/AR6005 |
-| Lot 3 ToB (9 zones : OH4200/4210/4220/4230, OH5110/5120/5200, OH5400, OH5500) | installées le 2026-09-19 ; QA jour **et nuit** OH4200 et OH5200 ; secondaires OH4200/4210/4220 |
-| Lot 4 ToB + Black Pits (8 zones : OH6400, OH6460, OH6500, OH7310, OH8000, OH8200/8300/8400) | installées le 2026-09-19 sauf OH6460 (voir ci-dessous) ; QA jour **et nuit** OH6400, OH6500, OH8200/8300/8400 ; maîtres x1 jour OH8200/8300/8400 régénérés (`--fix`) |
-| OH6460 | WED sur le tileset `OH8100` (cellules et maîtres x1 identiques à OH8100) : build propre **non installé** (≠ octets de l'override OH8100 validé le 2026-09-04, l'écraserait) ; s'affiche déjà en x4 via l'override OH8100 ; build conservé dans `maps/OH6460/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build` |
-
 Ne jamais convertir `installed-pending-qa` en `validated-installed` sans décision explicite.
+
+Au 2026-09-21, `areas.csv` ne porte plus aucune carte `installed-pending-qa` : les 369 zones sont
+`validated-installed`, variantes nuit comprises. Cette validation ne couvre que **l'upscaling x4 du
+décor**. Restent ouverts sur des zones déjà validées :
+
+| Sujet | Zones | Entrée |
+|---|---|---|
+| Famille liquide `WT5000A-D` non classée | AR5000, AR5203 | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
+| Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
+| Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
+| Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL), AR6300 (WTLAKA-D) | `overlay-sources.json` |
+| Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
+
+## MAP-RELEASE-001 — OH6460 partage le tileset OH8100
+
+- Le WED `OH6460` pointe sur le tileset `OH8100` : mêmes table de cellules et mêmes maîtres x1
+  primaire/secondaire que `OH8100`. Le payload d'un build OH6460 est donc les 56 fichiers
+  `OH8100.TIS` + `O8100xx.PVRZ` déjà possédés par le composant `map-oh8100`.
+- Conséquence : OH6460 n'a **ni installation ni ligne** dans
+  `releases/BG2-HD-Upscale/manifests/map-release-candidates.csv`; l'enregistrer créerait une
+  collision de destination. La zone rend déjà en x4 via le composant `map-oh8100`, validé le
+  2026-09-04 puis revalidé avec OH6460 le 2026-09-21.
+- Le build propre d'OH6460 (octets différents de ceux d'OH8100) reste un candidat non installé sous
+  `maps/OH6460/runs/seedvr2-7b-int8-lab-grid-2x5-x4/05_build`. Ne pas l'installer sans décision
+  explicite : il écraserait l'asset validé d'OH8100.
 
 ## MAP-OVERLAY-001 — Politique WTLAVA-D contradictoire
 
@@ -92,10 +110,12 @@ ne sont pas réconciliés par une décision explicite.
   `overlay_action: preserve-stock`, route2 bloquée).
 - Traitement 2026-09-19 : inférence lancée avec `--allow-blocked-test` (manifeste conserve le
   bloqueur), correction couleur `none`, base x4 avec alpha source restauré, overlays WT5000 non
-  installés (stock x1). Runs `maps/AR5000|AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4`, builds installés
-  `installed-pending-qa`. AR5000 = zone témoin ; AR5203 suit son verdict.
-- Non fait : classification dans `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py`,
-  matériau route2 dédié. À décider après QA : rive/contour, animation de la rivière sous base x4, pause/reprise.
+  installés (stock x1). Runs `maps/AR5000|AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4`, builds installés.
+- QA 2026-09-21 : l'utilisateur valide **l'upscaling x4** des deux zones (`validated-installed`,
+  enregistrées en candidats release). Cette acceptation ne porte pas sur l'eau.
+- Reste ouvert : classification dans `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py`
+  (le préflight de ces deux zones bloque toujours sans `--allow-blocked-test`), matériau route2 dédié,
+  rive/contour, animation de la rivière sous la base x4, pause/reprise.
 
 ## WTPOOL-001 — Piscines x4
 
