@@ -92,9 +92,9 @@ conserver. Le pointeur xBR canonique reste intact.
 
 ## Suivi des personnages jouables
 
-Courant : `sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p13-v1.json`
-épingle **77/78 familles complètes, 4 831 composants ; restante : `0x6110`**, par manifeste+SHA-256.
-Historiques immuables : `…-p12-v1.json` (33/2 109), `…-p9-v1.json` (23/1 471).
+Courant : `sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p13-v2.json`
+épingle **78/78 familles complètes, 4 896 composants**, par manifeste+SHA-256.
+Historiques immuables : `…-p13-v1.json` (77/4 831), `…-p12-v1.json` (33/2 109), `…-p9-v1.json` (23/1 471).
 Mesure/reprise P12 : [REBOUTCX_P12_DIX_FAMILLES_20260915.md](REBOUTCX_P12_DIX_FAMILLES_20260915.md).
 
 ### P13 — cache partagé entre familles (2026-09-21)
@@ -121,12 +121,18 @@ python reboutcx_shared_p13.py finish <queue> --report <report.json> ; python reb
   Windows) et vide le cache CUDA après. Donner ≥ 0,45 aux shards qui portent les COMPS39/gros canvas.
 - Reprise : relancer le même `run` ; les composants scellés sont revérifiés, seuls les manquants sont calculés.
   Nettoyer les `.reboutcx-p12-cache86-v1.tmp-<pid>` orphelins des processus tués (run final présent).
-- **0x6110 non produite** : 4 manifestes source xBR du 2026-08-24 (`chfb1`, `chfb2`, `chfb3`, `chff4`) sans champ
-  `layer` ⇒ `reboutcx_prepare_sources_p12.prepare` (scellé) échoue. Ré-extraire ces 4 sources ou ajouter une
-  préparation P13 tolérante ; jobs de famille P8 de 0x6102/0x6110 créés par `bootstrap`.
+- **0x6110** : 4 sources xBR d'août (`chfb1/2/3`, `chff4`) sans champ `layer` ⇒ `prepare` P12 (scellé) échoue.
+  P13 (`prepare_with_derived_layer`) lit `source-p13-layer/manifest.json`, dérivé (layer=body, défaut xBR ;
+  BAM/hashes scellés inchangés). Run séparé `docs/measurements/reboutcx-p13-0x6110-20260921-v1/`, 65 composants.
+  Jobs de famille P8 de 0x6102/0x6110 créés par `reboutcx_character_family.py bootstrap`.
+- **Catalogue dérivé** `catalog-reboutcx-playable-characters-p13-v1` (`reboutcx_shared_p13.py catalog <snapshot>
+  --seed <catalogue précédent> --job-id …`) : 4 902 remplacements (136 hérités), 733 shards ; sélection par
+  (animation, component_index), sans ambiguïté de RESREF partagé. `reboutcx_catalog.py build` ≈ 46 min
+  (lecture ≈ 380 Gio, mono-processus). Installé en thin-catalog avec
+  `-RuntimeManifest pipeline/runtime/manifests/iee-monster-msah-composite-v5.json` (le défaut du script est un
+  runtime plus ancien). État `installed-pending-qa` : QA en jeu et release non faites.
 
-Instantanés de production vérifiée, **pas** des catalogues dérivés, une QA, une installation ou une
-release : des familles partagent des RESREF xBR alors que leurs sorties ReboutCX diffèrent.
+Les snapshots de suivi sont des instantanés de production vérifiée, pas une QA ni une release.
 Après reprise, créer une nouvelle version ; conserver les instantanés antérieurs.
 
 Décompte : une famille = ID d'animation (race/sexe/apparence/variante LOW), pas un personnage nommé.
