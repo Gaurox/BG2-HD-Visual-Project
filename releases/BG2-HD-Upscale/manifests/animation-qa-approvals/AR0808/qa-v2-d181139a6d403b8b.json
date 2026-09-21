@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0808",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-18T23:44:14Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR0808",
+  "pack_manifest_sha256": "A86F3377DCDEE0A5BABADC2B7307FD5348C1BB5524A1D6B1FEB3164C359719C3",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "C53C2E2B3A3D42211E57D2811763391F8F346F0DE28C264E74CF1A748F8C6B02",
+  "required_resrefs": [
+    "AM0801A",
+    "AM0801B1",
+    "AM0801B2",
+    "FIRE_4",
+    "FLAME2S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0801A/2026-09-18-accepted-am0801a-ar0801-ar0808-reboutcx-feather16.json",
+      "sha256": "7E6CF7274A04122F74BC0A33A93D78FF4F41F1911D30E4B275BA3A7AC868B3BF",
+      "accepted_resrefs": [
+        "AM0801A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0801B1/2026-09-18-accepted-am0801b1-ar0801-ar0808-mosaic-feather16-seamr.json",
+      "sha256": "395B1A33F313E59EED34C8E42A8C078D60F5EEC2705EF9EA56702CA27A50DAE5",
+      "accepted_resrefs": [
+        "AM0801B1"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0801B2/2026-09-18-accepted-am0801b2-ar0801-ar0808-mosaic-feather16-seaml.json",
+      "sha256": "4995B53E1E56423122AD458C6F3269AFB25361E65B93D9CC733F2A29FB35F542",
+      "accepted_resrefs": [
+        "AM0801B2"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0808: AM0801A, AM0801B1, AM0801B2, FIRE_4, FLAME2S."
+}

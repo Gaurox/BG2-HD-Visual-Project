@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 3,
+  "area": "AR0802",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa-with-byte-identical-carry-forward",
+  "recorded_at_utc": "2026-09-18T23:44:14Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR0802",
+  "pack_manifest_sha256": "2FD33E6E9B95AC129A6CE0894341A86383206102B432287EEC2183AC07EC77B1",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "6CD742D7DE00224F85D5067DFAEA60500B83F5A827613F9B5BD5325438698FE8",
+  "required_resrefs": [
+    "FIRE_1",
+    "FIRE_4",
+    "FLAME2S"
+  ],
+  "evidence": [
+    {
+      "kind": "byte-identical-release-continuity",
+      "path": "releases/BG2-HD-Upscale/manifests/animation-qa-approvals/AR0700/qa-approval.json",
+      "sha256": "5CC20167591B20B5D7F6548B8AE50067433BE18EF53F6FB7525F970C0D845411",
+      "accepted_resrefs": [
+        "FIRE_1"
+      ],
+      "source_pack": "animations/packs-par-zone/combined-20260827-plus-flame2s-ar0602-radialA/AR0700",
+      "pack_manifest_sha256": "30D8B5C9461B9E7E2136F34788D254F85544629F5473FCA89D795926859BAA9A",
+      "registry_version": 3,
+      "renderer_contract": "area-animation-per-area-registry-v3-position-timed-timeline",
+      "resource_sha256": "C8EAA425A35683C1990E58CC3335D947048BCF1B715A45C59C6EA75AC76AE607"
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0802: FIRE_4, FLAME2S. Continuité binaire vérifiée: FIRE_1."
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR3001",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-18T22:32:56Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR3001",
+  "pack_manifest_sha256": "24C2197AA8465D14F443451D2BEB61399A025BE59C90479F319245E160C68F87",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "88751DAE36C877BC098F9EBD141DE781A3E8A799430FD1ADDAA9E4342474EB1B",
+  "required_resrefs": [
+    "AM3001D",
+    "AM3001F",
+    "AM3001G",
+    "FIRE_3"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001D/2026-09-11-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "B97D083CF108E850C420025E8F69A88FEEF2F88CD68E1D01D3F11C70B6BDACF6",
+      "accepted_resrefs": [
+        "AM3001D"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001F/2026-09-11-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "C9E36BFAB3543E47DB9EB3958474146350C8D7C2212E0E4A6412ED04B8423A8A",
+      "accepted_resrefs": [
+        "AM3001F"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM3001G/2026-09-19-accepted-ar3001-altar-three-apo8-x4-30fps-spline-fit1-feather4-20260911.json",
+      "sha256": "33747BC94519DEC60B22BFF3830255BE264A8C13D124A3AEEC4FF8145C74AE92",
+      "accepted_resrefs": [
+        "AM3001G"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+      "sha256": "F27620E816CBE8A35F97053C1264D191F87F336AA24136B4B07C0097B477F21B",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR3001: AM3001D, AM3001F, AM3001G, FIRE_3."
+}

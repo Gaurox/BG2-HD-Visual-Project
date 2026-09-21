@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1601",
+  "status": "accepted",
+  "decision_date": "2026-09-21",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-20T22:37:53Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR1601",
+  "pack_manifest_sha256": "8A2DF809B09FBDCA1DF2EF7EFBD52EE659A09F0B61DDCD2B93BE089B91C9ACEF",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "94DA7BBF884BC6633A185F173F6E51156D9608DB3F78ED70EC6011434AEC9874",
+  "required_resrefs": [
+    "AM1004A",
+    "FLAME2S",
+    "SMOKE"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM1004A/2026-09-21-accepted-ar1004-am1004a-spline-fit1-feather6-lowercover5-20260921.json",
+      "sha256": "EE44DDA64278C414B6B638DDA4832659E43697854EF726EE2B46E2DA0FBB474C",
+      "accepted_resrefs": [
+        "AM1004A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/SMOKE/2026-09-21-accepted-ar1004-smoke-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921.json",
+      "sha256": "3C8AAE54C1BCF3D975CC525520056E8A9D022B70ED506B4D6DBD123E1C4EADEA",
+      "accepted_resrefs": [
+        "SMOKE"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR1601: AM1004A, FLAME2S, SMOKE."
+}

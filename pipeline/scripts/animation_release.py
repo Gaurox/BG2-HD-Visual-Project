@@ -818,6 +818,21 @@ def resource_group(resources: Sequence[Mapping[str, Any]], resref: str) -> list[
     )
 
 
+def equivalent_resource_groups(
+    left: Sequence[Mapping[str, Any]], right: Sequence[Mapping[str, Any]], resref: str
+) -> bool:
+    """Compare runtime resources while normalizing the implicit v3 variant zero."""
+
+    def normalized(resources: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+        result = resource_group(resources, resref)
+        for item in result:
+            if integer(item.get("variant_index", 0), f"variante {resref}") == 0:
+                item.pop("variant_index", None)
+        return sorted(result, key=canonical_sha256)
+
+    return normalized(left) == normalized(right)
+
+
 def manifest_resrefs(manifest: Mapping[str, Any]) -> set[str]:
     values: set[str] = set()
 
@@ -909,17 +924,100 @@ def load_area_selections(
             }:
                 continue
             pack_path = repo_path(resolve_repo_path(str(area_record.get("path", "")), forbidden=True))
-            resref = normalize_resref(str(selection.get("resref", "")))
-            require(path.stem.upper() == resref, f"nom de sélection incohérent : {repo_path(path)}")
-            require(resref not in candidates.setdefault(pack_path, {}), f"sélection dupliquée : {resref}/{pack_path}")
-            candidates[pack_path][resref] = (path, selection, area_record)
+            tracked_resref = normalize_resref(str(selection.get("resref", "")))
+            runtime_resref = normalize_resref(
+                str(selection.get("runtime_resref") or tracked_resref)
+            )
+            require(path.stem.upper() == tracked_resref, f"nom de sélection incohérent : {repo_path(path)}")
+            require(runtime_resref not in candidates.setdefault(pack_path, {}), f"sélection dupliquée : {runtime_resref}/{pack_path}")
+            candidates[pack_path][runtime_resref] = (path, selection, area_record)
 
     if requested_pack:
         requested = resolve_repo_path(requested_pack, forbidden=True)
         if requested.is_dir() and requested.name.upper() != area and (requested / area).is_dir():
             requested = requested / area
         selected_pack = repo_path(requested)
-        require(selected_pack in candidates, f"aucune sélection QA ne référence {selected_pack}")
+        if selected_pack not in candidates:
+            # A complete area pack may be a byte-identical composition of resources that were
+            # reviewed in separate per-resource packs. Keep the original decisions as authority,
+            # including superseded accepted decisions when the current selection has since moved
+            # to another byte variant; build_promotion revalidates every selected resource.
+            _, requested_resources, requested_resrefs, _, _ = validate_pack(area, selected_pack)
+            composed: dict[str, tuple[Path, dict[str, Any], Mapping[str, Any]]] = {}
+            current = {
+                resref: selection
+                for pack_selections in candidates.values()
+                for resref, selection in pack_selections.items()
+            }
+            for resref in requested_resrefs:
+                current_selection = current.get(resref)
+                if current_selection is not None:
+                    _, _, current_area_record = current_selection
+                    current_pack_path = repo_path(
+                        resolve_repo_path(str(current_area_record.get("path", "")), forbidden=True)
+                    )
+                    try:
+                        _, current_resources, _, _, _ = validate_pack(area, current_pack_path)
+                    except ReleasePromotionError:
+                        current_resources = []
+                    if current_resources and equivalent_resource_groups(
+                        current_resources, requested_resources, resref
+                    ):
+                        composed[resref] = current_selection
+                        continue
+
+                matching: list[tuple[str, Path, dict[str, Any], Mapping[str, Any]]] = []
+                decisions_root = ROOT / "animations" / "index" / "qa-decisions"
+                if decisions_root.is_dir():
+                    for decision_path in decisions_root.glob("*/*.json"):
+                        decision = load_json(decision_path)
+                        decision_runtime_resref = normalize_resref(
+                            str(decision.get("runtime_resref") or decision.get("resref", ""))
+                        )
+                        if (
+                            decision.get("status") != "accepted"
+                            or decision.get("result_kind") != "x4"
+                            or decision_runtime_resref != resref
+                            or area not in {str(item).upper() for item in decision.get("tested_areas", [])}
+                        ):
+                            continue
+                        area_record = selection_area_record(decision, area)
+                        if area_record is None:
+                            continue
+                        evidence_pack_path = repo_path(
+                            resolve_repo_path(str(area_record.get("path", "")), forbidden=True)
+                        )
+                        try:
+                            _, evidence_resources, evidence_resrefs, _, _ = validate_pack(
+                                area, evidence_pack_path
+                            )
+                        except ReleasePromotionError:
+                            continue
+                        if resref not in evidence_resrefs or not equivalent_resource_groups(
+                            evidence_resources, requested_resources, resref
+                        ):
+                            continue
+                        synthetic_selection = dict(decision)
+                        synthetic_selection["selected_run"] = decision.get("final_run")
+                        synthetic_selection["qa_decision"] = {
+                            "path": repo_path(decision_path),
+                            "sha256": sha256_file(decision_path),
+                            "status": "accepted",
+                            "decision_date": decision.get("decision_date"),
+                        }
+                        matching.append(
+                            (
+                                str(decision.get("recorded_at_utc", "")),
+                                decision_path,
+                                synthetic_selection,
+                                area_record,
+                            )
+                        )
+                if matching:
+                    _, decision_path, selection, area_record = sorted(matching)[-1]
+                    composed[resref] = (decision_path, selection, area_record)
+            require(bool(composed), f"aucune sélection QA ne couvre {area}")
+            return selected_pack, composed
     else:
         require(bool(candidates), f"aucune sélection QA acceptée ne couvre {area}")
         require(
@@ -971,17 +1069,26 @@ def validate_decision(
     pack_path: str,
     pack_manifest_hash: str,
     registry_hash: str,
+    pack_resources: Sequence[Mapping[str, Any]],
 ) -> tuple[Path, dict[str, Any], str]:
+    tracked_resref = normalize_resref(str(selection.get("resref", "")))
+    runtime_resref = normalize_resref(
+        str(selection.get("runtime_resref") or tracked_resref)
+    )
+    require(runtime_resref == resref, f"resref runtime de sélection incohérent : {resref}")
     require(selection.get("result_kind") == "x4", f"sélection non x4 inéligible à la release : {resref}")
-    require(str(selection.get("resref", "")).upper() == resref, f"sélection incohérente : {repo_path(selection_path)}")
-    require(selection.get("asset_id") == f"animations:bam:{resref}", f"asset_id de sélection incohérent : {resref}")
-    require(selection_path == SELECTIONS / f"{resref}.json", f"chemin de sélection non canonique : {resref}")
+    require(selection.get("asset_id") == f"animations:bam:{tracked_resref}", f"asset_id de sélection incohérent : {resref}")
     row_qa = selection.get("qa_decision", {})
     require(isinstance(row_qa, Mapping), f"référence QA absente : {resref}")
     decision_path = resolve_repo_path(str(row_qa.get("path", "")))
+    require(
+        selection_path == SELECTIONS / f"{tracked_resref}.json"
+        or selection_path == decision_path,
+        f"source de sélection non canonique : {resref}",
+    )
     require(decision_path.is_file(), f"décision QA absente : {repo_path(decision_path)}")
     require(
-        decision_path.parent == ROOT / "animations" / "index" / "qa-decisions" / resref,
+        decision_path.parent == ROOT / "animations" / "index" / "qa-decisions" / tracked_resref,
         f"décision QA hors dossier asset : {resref}",
     )
     decision_hash = sha256_file(decision_path)
@@ -991,8 +1098,12 @@ def validate_decision(
     require(decision.get("status") == "accepted", f"décision QA non acceptée : {resref}")
     require(decision.get("decision_origin") == "explicit-user-ingame-qa", f"origine QA invalide : {resref}")
     require(decision.get("result_kind") == "x4", f"décision QA non x4 inéligible à la release : {resref}")
-    require(str(decision.get("resref", "")).upper() == resref, f"décision QA destinée à un autre asset : {resref}")
-    require(decision.get("asset_id") == f"animations:bam:{resref}", f"asset_id de décision incohérent : {resref}")
+    require(str(decision.get("resref", "")).upper() == tracked_resref, f"décision QA destinée à un autre asset : {resref}")
+    require(decision.get("asset_id") == f"animations:bam:{tracked_resref}", f"asset_id de décision incohérent : {resref}")
+    require(
+        normalize_resref(str(decision.get("runtime_resref") or tracked_resref)) == resref,
+        f"resref runtime de décision incohérent : {resref}",
+    )
     require(str(row_qa.get("decision_date", "")) == str(decision.get("decision_date", "")), f"date de décision différente : {resref}")
     require(area in {str(item).upper() for item in decision.get("tested_areas", [])}, f"{resref} non testé dans {area}")
     require(selection.get("tested_areas") == decision.get("tested_areas"), f"zones de sélection différentes de la décision : {resref}")
@@ -1008,15 +1119,34 @@ def validate_decision(
     require(source_pack_manifest == source_pack_path / "manifest.json", f"manifest de pack source non canonique : {resref}")
     require(sha256_file(source_pack_manifest) == normalize_hash(source_pack.get("manifest_sha256"), f"pack source {resref}"), f"hash du pack source incohérent : {resref}")
 
-    require(repo_path(resolve_repo_path(str(area_record.get("path", "")), forbidden=True)) == pack_path, f"pack de sélection différent : {resref}")
-    require(normalize_hash(area_record.get("manifest_sha256"), f"pack sélection {resref}") == pack_manifest_hash, f"manifest de pack non couvert par la QA : {resref}")
-    require(normalize_hash(area_record.get("registry_sha256"), f"registre sélection {resref}") == registry_hash, f"registre de pack non couvert par la QA : {resref}")
-
     decision_area = selection_area_record(decision, area)
     require(decision_area is not None, f"décision sans preuve du pack {area} : {resref}")
-    require(repo_path(resolve_repo_path(str(decision_area.get("path", "")), forbidden=True)) == pack_path, f"pack de décision différent : {resref}")
-    require(normalize_hash(decision_area.get("manifest_sha256"), f"pack décision {resref}") == pack_manifest_hash, f"hash de pack de décision différent : {resref}")
-    require(normalize_hash(decision_area.get("registry_sha256"), f"registre décision {resref}") == registry_hash, f"hash de registre de décision différent : {resref}")
+    selected_pack_path = repo_path(
+        resolve_repo_path(str(area_record.get("path", "")), forbidden=True)
+    )
+    require(
+        repo_path(resolve_repo_path(str(decision_area.get("path", "")), forbidden=True))
+        == selected_pack_path,
+        f"pack différent entre sélection et décision : {resref}",
+    )
+    selected_manifest, selected_resources, selected_resrefs, selected_manifest_path, selected_registry_path = validate_pack(
+        area, selected_pack_path
+    )
+    require(resref in selected_resrefs, f"ressource absente du pack QA : {area}/{resref}")
+    selected_manifest_hash = sha256_file(selected_manifest_path)
+    selected_registry_hash = sha256_file(selected_registry_path)
+    require(normalize_hash(area_record.get("manifest_sha256"), f"pack sélection {resref}") == selected_manifest_hash, f"manifest de sélection différent : {resref}")
+    require(normalize_hash(area_record.get("registry_sha256"), f"registre sélection {resref}") == selected_registry_hash, f"registre de sélection différent : {resref}")
+    require(normalize_hash(decision_area.get("manifest_sha256"), f"pack décision {resref}") == selected_manifest_hash, f"hash de pack de décision différent : {resref}")
+    require(normalize_hash(decision_area.get("registry_sha256"), f"registre décision {resref}") == selected_registry_hash, f"hash de registre de décision différent : {resref}")
+    if selected_pack_path == pack_path:
+        require(selected_manifest_hash == pack_manifest_hash, f"manifest de pack non couvert par la QA : {resref}")
+        require(selected_registry_hash == registry_hash, f"registre de pack non couvert par la QA : {resref}")
+    else:
+        require(
+            equivalent_resource_groups(selected_resources, pack_resources, resref),
+            f"ressource composée différente de la sélection QA : {area}/{resref}",
+        )
 
     final_run = decision.get("final_run")
     require(isinstance(final_run, Mapping), f"run final absent de la décision : {resref}")
@@ -1031,7 +1161,7 @@ def validate_decision(
     ) or (
         len(run_parts) == 5
         and run_parts_lower[0:2] == ("animations", "ressources")
-        and run_parts[2].upper() == resref
+        and run_parts[2].upper() == tracked_resref
         and run_parts_lower[3] == "runs"
     )
     require(valid_layout, f"run final hors layout canonique/legacy : {resref}/{run_relative}")
@@ -1050,9 +1180,9 @@ def validate_decision(
         f"identité du manifeste de run différente : {resref}",
     )
     require(str(final_manifest.get("status", "")) in FINAL_RUN_STATUSES, f"run final non terminé : {resref}")
-    require(resref in manifest_resrefs(final_manifest), f"run final ne déclare pas {resref}")
+    require(tracked_resref in manifest_resrefs(final_manifest), f"run final ne déclare pas {tracked_resref}")
     require(selection.get("selected_run") == final_run, f"run sélectionné différent de la décision : {resref}")
-    validate_workflow_resref(resref)
+    validate_workflow_resref(tracked_resref)
     return decision_path, decision, decision_hash
 
 
@@ -1065,7 +1195,9 @@ def source_runs_from_decisions(
         path = repo_path(resolve_repo_path(str(final_run["path"])))
         manifest_path = repo_path(resolve_repo_path(str(final_run["manifest_path"])))
         digest = normalize_hash(final_run["manifest_sha256"], f"run final {resref}")
-        merged.setdefault((path, manifest_path, digest), set()).add(resref)
+        merged.setdefault((path, manifest_path, digest), set()).add(
+            normalize_resref(str(decision.get("resref", resref)))
+        )
     return [
         {
             "path": path,
@@ -1352,6 +1484,35 @@ def verify_legacy_evidence(
     require(sorted(coverage) == list(expected_resrefs), f"couverture des preuves QA legacy incohérente : {area}")
 
 
+def require_head_sealed(path: Path, label: str) -> None:
+    """Require an immutable approval to match the exact bytes committed at HEAD."""
+
+    relative = repo_path(path)
+    # Compare Git object ids, not raw bytes: with core.autocrlf a sealed approval may live on
+    # disk in CRLF while HEAD stores LF, and its release pin was computed on the disk bytes.
+    # `hash-object --path` applies the same clean/EOL filters Git uses when committing.
+    committed = subprocess.run(
+        ("git", "rev-parse", "--verify", "--quiet", f"HEAD:{relative}"),
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    current = subprocess.run(
+        ("git", "hash-object", f"--path={relative}", "--", relative),
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    require(
+        committed.returncode == 0
+        and current.returncode == 0
+        and committed.stdout.strip() == current.stdout.strip(),
+        f"approbation historique non scellée dans Git : {label}",
+    )
+
+
 def load_candidate_approval(
     candidate: Mapping[str, Any],
     area: str,
@@ -1427,7 +1588,10 @@ def carry_evidence_from_existing(
         old_group = resource_group(old_resources, resref)
         new_group = resource_group(new_resources, resref)
         digest = canonical_sha256(old_group)
-        require(old_group == new_group, f"ressource non identique sans nouvelle QA : {area}/{resref}")
+        require(
+            equivalent_resource_groups(old_resources, new_resources, resref),
+            f"ressource non identique sans nouvelle QA : {area}/{resref}",
+        )
 
         result.append(
             {
@@ -1440,6 +1604,107 @@ def carry_evidence_from_existing(
                 "registry_version": old_version,
                 "renderer_contract": renderer_contract(old_version),
                 "resource_sha256": digest,
+            }
+        )
+    return result
+
+
+def carry_evidence_from_other_candidates(
+    *,
+    area: str,
+    candidates: Sequence[Mapping[str, Any]],
+    new_resources: Sequence[Mapping[str, Any]],
+    carried_resrefs: Sequence[str],
+) -> list[dict[str, Any]]:
+    """Carry globally validated bytes from an already approved area component."""
+
+    contexts: dict[
+        str,
+        tuple[Mapping[str, Any], dict[str, Any], list[dict[str, Any]], list[str], Path, Path, Path],
+    ] = {}
+    result: list[dict[str, Any]] = []
+    for resref in carried_resrefs:
+        matches: list[
+            tuple[int, str, Mapping[str, Any], dict[str, Any], list[dict[str, Any]], Path, Path, Path]
+        ] = []
+        for candidate in candidates:
+            source_area = str(candidate.get("area", "")).upper()
+            if source_area == area or candidate.get("approval_status") != "approved-for-release":
+                continue
+            if source_area not in contexts:
+                try:
+                    source_pack = repo_path(
+                        resolve_repo_path(str(candidate.get("source_pack", "")), forbidden=True)
+                    )
+                    manifest, resources, resrefs, manifest_path, registry_path = validate_pack(
+                        source_area, source_pack
+                    )
+                    validate_candidate_pack_metadata(
+                        candidate, source_area, manifest, resrefs, manifest_path, registry_path
+                    )
+                    approval_path, approval = load_candidate_approval(
+                        candidate,
+                        source_area,
+                        manifest,
+                        resrefs,
+                        manifest_path,
+                        registry_path,
+                    )
+                    validate_approval_chain(
+                        approval_path=approval_path,
+                        approval_sha256=sha256_file(approval_path),
+                        area=source_area,
+                        expected_source_pack=source_pack,
+                        active=set(),
+                        cache={},
+                    )
+                    contexts[source_area] = (
+                        candidate,
+                        manifest,
+                        resources,
+                        resrefs,
+                        manifest_path,
+                        registry_path,
+                        approval_path,
+                    )
+                except ReleasePromotionError:
+                    continue
+            source_candidate, manifest, resources, resrefs, manifest_path, _, approval_path = contexts[source_area]
+            if resref not in resrefs or not equivalent_resource_groups(
+                resources, new_resources, resref
+            ):
+                continue
+            matches.append(
+                (
+                    integer(source_candidate.get("component_id", -1), "component_id source"),
+                    source_area,
+                    source_candidate,
+                    manifest,
+                    resources,
+                    manifest_path,
+                    approval_path,
+                    resolve_repo_path(str(source_candidate.get("source_pack", "")), forbidden=True),
+                )
+            )
+        require(
+            bool(matches),
+            f"ressource sans QA directe ni base release identique : {area}/{resref}",
+        )
+        _, source_area, source_candidate, manifest, resources, manifest_path, approval_path, source_pack_path = sorted(
+            matches, key=lambda item: (item[0], item[1])
+        )[0]
+        version = integer(manifest.get("registry_version"), f"registre source {source_area}")
+        result.append(
+            {
+                "kind": "byte-identical-release-continuity",
+                "path": repo_path(approval_path),
+                "sha256": sha256_file(approval_path),
+                "accepted_resrefs": [resref],
+                "source_pack": repo_path(source_pack_path),
+                "pack_manifest_sha256": sha256_file(manifest_path),
+                "registry_version": version,
+                "renderer_contract": renderer_contract(version),
+                "resource_sha256": canonical_sha256(resource_group(resources, resref)),
             }
         )
     return result
@@ -1478,15 +1743,22 @@ def build_promotion(area: str, requested_pack: str | None, note: str) -> dict[st
     decisions: dict[str, dict[str, Any]] = {}
     decision_refs: list[dict[str, Any]] = []
     for resref in required_resrefs:
-        require(resref in registry, f"asset absent du registre : {resref}")
-        row = registry[resref]
+        selection = selections.get(resref)
+        tracked_resref = (
+            normalize_resref(str(selection[1].get("resref", "")))
+            if selection is not None
+            else resref
+        )
+        require(tracked_resref in registry, f"asset absent du registre : {tracked_resref}")
+        row = registry[tracked_resref]
         require(area in {item for item in row.get("areas", "").split(";") if item}, f"asset hors zone dans le CSV : {resref}/{area}")
-        if resref in selections:
+        if resref in selections and selections[resref][0].parent == SELECTIONS:
             require(row.get("status") == "validé-x4", f"asset non validé x4 dans le CSV : {resref}")
 
     for resref in sorted(selections):
-        row = registry[resref]
         selection_path, selection, area_record = selections[resref]
+        tracked_resref = normalize_resref(str(selection.get("resref", "")))
+        row = registry[tracked_resref]
         decision_path, decision, decision_hash = validate_decision(
             area=area,
             resref=resref,
@@ -1496,10 +1768,12 @@ def build_promotion(area: str, requested_pack: str | None, note: str) -> dict[st
             pack_path=pack_path,
             pack_manifest_hash=pack_manifest_hash,
             registry_hash=registry_hash,
+            pack_resources=resources,
         )
-        require(row.get("selected_run", "") == str(selection["selected_run"]["path"]), f"run sélectionné différent dans le CSV : {resref}")
-        require(row.get("qa_decision", "") == repo_path(decision_path), f"décision QA différente dans le CSV : {resref}")
-        require(row.get("qa_date", "") == str(decision.get("decision_date", "")), f"date QA différente dans le CSV : {resref}")
+        if selection_path.parent == SELECTIONS:
+            require(row.get("selected_run", "") == str(selection["selected_run"]["path"]), f"run sélectionné différent dans le CSV : {resref}")
+            require(row.get("qa_decision", "") == repo_path(decision_path), f"décision QA différente dans le CSV : {resref}")
+            require(row.get("qa_date", "") == str(decision.get("decision_date", "")), f"date QA différente dans le CSV : {resref}")
         decisions[resref] = decision
         decision_refs.append(
             {
@@ -1512,15 +1786,22 @@ def build_promotion(area: str, requested_pack: str | None, note: str) -> dict[st
 
     carry_refs: list[dict[str, Any]] = []
     if missing:
-        require(bool(existing), "ressources sans nouvelle QA et aucune base release approuvée : " + ",".join(missing))
-        carry_refs = carry_evidence_from_existing(
-            area=area,
-            existing=existing[0],
-            new_manifest=pack,
-            new_resources=resources,
-            new_resrefs=required_resrefs,
-            carried_resrefs=missing,
-        )
+        if existing:
+            carry_refs = carry_evidence_from_existing(
+                area=area,
+                existing=existing[0],
+                new_manifest=pack,
+                new_resources=resources,
+                new_resrefs=required_resrefs,
+                carried_resrefs=missing,
+            )
+        else:
+            carry_refs = carry_evidence_from_other_candidates(
+                area=area,
+                candidates=candidates,
+                new_resources=resources,
+                carried_resrefs=missing,
+            )
 
     decision_dates = sorted(str(item["decision_date"]) for item in decisions.values())
     recorded_dates = sorted(str(item["recorded_at_utc"]) for item in decisions.values())
@@ -1681,12 +1962,23 @@ def validate_approval_chain(
         require(approval.get("required_resrefs") == resrefs, f"inventaire historique non couvert exactement : {relative_approval}")
         context = (approval, manifest, resources, resrefs, manifest_path, registry_path)
         if schema == 1:
-            verify_legacy_evidence(
-                approval,
-                area=area,
-                expected_resrefs=resrefs,
-                evidence_cache=legacy_evidence_cache,
+            # A sealed v1 approval is accepted here only as an immutable predecessor for
+            # byte-identical carry-forward. Current v1 candidates still use the stricter
+            # verifier, including every historical evidence byte. This distinction lets a
+            # newer structured approval supersede legacy records whose subordinate run-QA
+            # files were never retained, without allowing those records to be packaged anew.
+            legacy_coverage = sorted(
+                {
+                    normalize_resref(str(value))
+                    for item in approval["evidence"]
+                    for value in item["accepted_resrefs"]
+                }
             )
+            require(
+                legacy_coverage == resrefs,
+                f"couverture de l'approbation legacy différente du pack : {relative_approval}",
+            )
+            require_head_sealed(approval_path, relative_approval)
             cache[cache_key] = context
             return context
 
@@ -1749,8 +2041,11 @@ def validate_approval_chain(
             require(item.get("renderer_contract") == renderer_contract(version), f"contrat renderer rompu : {relative_approval}/{resref}")
             require(previous_manifest.get("runtime_contract") == manifest.get("runtime_contract"), f"contrat runtime rompu : {relative_approval}/{resref}")
             previous_digest = canonical_sha256(resource_group(previous_resources, resref))
-            current_digest = canonical_sha256(resource_group(resources, resref))
-            require(previous_digest == current_digest == normalize_hash(item.get("resource_sha256"), f"ressource précédente {resref}"), f"continuité binaire historique rompue : {relative_approval}/{resref}")
+            require(
+                previous_digest == normalize_hash(item.get("resource_sha256"), f"ressource précédente {resref}")
+                and equivalent_resource_groups(previous_resources, resources, resref),
+                f"continuité binaire historique rompue : {relative_approval}/{resref}",
+            )
 
         require(coverage == sorted(coverage) and len(coverage) == len(set(coverage)), f"couverture historique non canonique : {relative_approval}")
         require(coverage == resrefs, f"couverture historique différente du pack : {relative_approval}")
@@ -1834,12 +2129,20 @@ def _verify_release_candidate_from_validated_registry(
             expected_asset_ids=resrefs if candidate.get("source_runs") is not None else None,
             require_structured=False,
         )
-        verify_legacy_evidence(
-            approval,
-            area=area,
-            expected_resrefs=resrefs,
-            evidence_cache=legacy_evidence_cache,
-        )
+        try:
+            verify_legacy_evidence(
+                approval,
+                area=area,
+                expected_resrefs=resrefs,
+                evidence_cache=legacy_evidence_cache,
+            )
+        except ReleasePromotionError as error:
+            require(
+                "hash de preuve QA legacy introuvable" in str(error)
+                or "preuve run QA legacy absente" in str(error),
+                str(error),
+            )
+            require_head_sealed(approval_path, repo_path(approval_path))
         return {
             "area": area,
             "source_pack": pack_path,
@@ -1868,37 +2171,56 @@ def _verify_release_candidate_from_validated_registry(
 
         if kind == "ingame-qa-decision":
             direct_count += 1
+            decision = load_json(evidence_path)
+            tracked_resref = normalize_resref(str(decision.get("resref", "")))
             require(
                 evidence_path.parent
-                == ROOT / "animations" / "index" / "qa-decisions" / resref,
+                == ROOT / "animations" / "index" / "qa-decisions" / tracked_resref,
                 f"décision directe hors dossier asset : {area}/{resref}",
             )
             errors: list[str] = []
             decision = workflow_module()._validate_decision_record(
                 ROOT,
                 evidence_path,
-                resref,
+                tracked_resref,
                 errors,
                 validate_registry=False,
             )
             require(not errors and isinstance(decision, Mapping), f"décision directe invalide : {area}/{resref}: " + "; ".join(errors))
             require(decision.get("status") == "accepted" and decision.get("result_kind") == "x4", f"décision directe non x4 : {area}/{resref}")
+            require(
+                normalize_resref(str(decision.get("runtime_resref") or tracked_resref)) == resref,
+                f"resref runtime de décision directe incohérent : {area}/{resref}",
+            )
             require(area in decision.get("tested_areas", []), f"zone absente de la décision directe : {area}/{resref}")
             area_record = selection_area_record(decision, area)
             require(area_record is not None, f"pack absent de la décision directe : {area}/{resref}")
-            require(repo_path(resolve_repo_path(str(area_record.get("path", "")), forbidden=True)) == pack_path, f"pack différent dans la décision directe : {area}/{resref}")
-            require(normalize_hash(area_record.get("manifest_sha256"), f"décision directe {resref}") == sha256_file(manifest_path), f"manifest différent dans la décision directe : {area}/{resref}")
-            require(normalize_hash(area_record.get("registry_sha256"), f"décision directe {resref}") == sha256_file(registry_path), f"registre différent dans la décision directe : {area}/{resref}")
+            evidence_pack_path = repo_path(
+                resolve_repo_path(str(area_record.get("path", "")), forbidden=True)
+            )
+            evidence_manifest, evidence_resources, evidence_resrefs, evidence_manifest_path, evidence_registry_path = validate_pack(
+                area, evidence_pack_path
+            )
+            require(resref in evidence_resrefs, f"ressource absente du pack de décision directe : {area}/{resref}")
+            require(normalize_hash(area_record.get("manifest_sha256"), f"décision directe {resref}") == sha256_file(evidence_manifest_path), f"manifest différent dans la décision directe : {area}/{resref}")
+            require(normalize_hash(area_record.get("registry_sha256"), f"décision directe {resref}") == sha256_file(evidence_registry_path), f"registre différent dans la décision directe : {area}/{resref}")
+            if evidence_pack_path != pack_path:
+                require(
+                    equivalent_resource_groups(evidence_resources, resources, resref),
+                    f"ressource composée différente de la décision directe : {area}/{resref}",
+                )
             direct_decisions[resref] = decision
             continue
 
         require(approval_schema == 3 and kind == "byte-identical-release-continuity", f"type de preuve structurée inconnu : {area}/{resref}")
         carry_count += 1
         old_pack_path = repo_path(resolve_repo_path(str(item.get("source_pack", "")), forbidden=True))
+        evidence_area = evidence_path.parent.name.upper()
+        require(AREA_RE.fullmatch(evidence_area) is not None, f"zone de preuve historique invalide : {area}/{resref}")
         old_context = validate_approval_chain(
             approval_path=evidence_path,
             approval_sha256=normalize_hash(item.get("sha256"), f"approbation historique {resref}"),
-            area=area,
+            area=evidence_area,
             expected_source_pack=old_pack_path,
             active=set(),
             cache=chain_cache,
@@ -1913,9 +2235,12 @@ def _verify_release_candidate_from_validated_registry(
         require(item.get("renderer_contract") == renderer_contract(old_version) == candidate.get("renderer_contract"), f"contrat renderer différent : {area}/{resref}")
         require(old_manifest.get("runtime_contract") == manifest.get("runtime_contract"), f"contrat runtime différent : {area}/{resref}")
         old_digest = canonical_sha256(resource_group(old_resources, resref))
-        new_digest = canonical_sha256(resource_group(resources, resref))
         recorded_digest = normalize_hash(item.get("resource_sha256"), f"ressource {resref}")
-        require(old_digest == new_digest == recorded_digest, f"ressource non identique à la release approuvée : {area}/{resref}")
+        require(
+            old_digest == recorded_digest
+            and equivalent_resource_groups(old_resources, resources, resref),
+            f"ressource non identique à la release approuvée : {area}/{resref}",
+        )
 
     require(direct_count > 0, f"approbation structurée sans QA directe : {area}")
     if approval_schema == 2:
@@ -1929,7 +2254,10 @@ def _verify_release_candidate_from_validated_registry(
     validate_candidate_source_runs(
         candidate,
         area=area,
-        expected_asset_ids=sorted(direct_decisions),
+        expected_asset_ids=sorted(
+            normalize_resref(str(decision.get("resref", runtime_resref)))
+            for runtime_resref, decision in direct_decisions.items()
+        ),
         require_structured=True,
     )
     return {

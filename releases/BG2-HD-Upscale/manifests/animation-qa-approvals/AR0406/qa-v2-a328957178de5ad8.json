@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0406",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-18T23:44:14Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR0406",
+  "pack_manifest_sha256": "00EA1DAFDAFE5D3287B3B81DE1BCE63B81A3ED08A60089E00D89F6EA5E649782",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "DDD27DF73F0719A1FD9B884BB902CB17D239A35CF665C5FA7E7D9B431BB8E005",
+  "required_resrefs": [
+    "AM0406A",
+    "AM0406B",
+    "FIRE_4",
+    "FLAME2S",
+    "FPIT1S"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0406A/2026-09-18-accepted-am0406a-ar0406-mosaic-innerfade8-open.json",
+      "sha256": "9444B76C8B14C1C29837A4A1426A4B4B13EAA887D0953F8A474FC4DC67DC3914",
+      "accepted_resrefs": [
+        "AM0406A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0406B/2026-09-18-accepted-am0406b-ar0406-mosaic-innerfade8-open.json",
+      "sha256": "8824F42EEB62AEA332E7561B26147E738DD1C376A71E862206D30DEB158132E2",
+      "accepted_resrefs": [
+        "AM0406B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FLAME2S/2026-09-19-accepted-flame2s-reboutcx-selection-accepted-20260919.json",
+      "sha256": "4248293576F5B5771CE6C930669266F2131FC3263EB6ED351ADEA54391F04125",
+      "accepted_resrefs": [
+        "FLAME2S"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FPIT1S/2026-09-04-accepted-fpit1s-contour-fondu-j-masques-20260904.json",
+      "sha256": "DEDE54A262D47539DEE19D2F08EBE8CC27FA512A592E32290F807DD9CB8F02B3",
+      "accepted_resrefs": [
+        "FPIT1S"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0406: AM0406A, AM0406B, FIRE_4, FLAME2S, FPIT1S."
+}

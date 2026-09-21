@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR0202",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T23:21:38Z",
+  "source_pack": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0202",
+  "pack_manifest_sha256": "F568A55B118F574520ED4BE108D8A6D674DBE93F30A3ACC6BEDAFC0A5C498543",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "FFC4C31097A41371232D2CE3EC8DDE3888B87D9E345264F214D981F7B25F654F",
+  "required_resrefs": [
+    "AM0202A",
+    "AM0202FL",
+    "FIRE_3",
+    "FIRE_4"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0202A/2026-09-16-accepted-am0202a-ar0202-classic-x4.json",
+      "sha256": "E37B75ECFA5089CDA7231811FAA86A66F79E2B181EF6A313160BC869E16B1DA9",
+      "accepted_resrefs": [
+        "AM0202A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM0202FL/2026-09-16-accepted-am0202fl-projectile-magic-x4.json",
+      "sha256": "AD41F906FED18D1BE464309DDFF3CA6AC4F952322005C05EA71D25E87822E9B8",
+      "accepted_resrefs": [
+        "AM0202FL"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+      "sha256": "F27620E816CBE8A35F97053C1264D191F87F336AA24136B4B07C0097B477F21B",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_4/2026-09-16-accepted-fire4-ar0202-feather2-x4.json",
+      "sha256": "4FD7A3EC60D7CECC0269AA6AC2005008D12630A9DBD366FE4034902A9E17FE23",
+      "accepted_resrefs": [
+        "FIRE_4"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR0202: AM0202A, AM0202FL, FIRE_3, FIRE_4."
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR2804",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-18T22:50:10Z",
+  "source_pack": "animations/packs-par-zone/release-validated-composed-20260921/AR2804",
+  "pack_manifest_sha256": "FAF09C261E7840B4344992383969044E2A4EBCD31F543BC2303024F540280E11",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "7C7145777EE0B1248456B20836013D96814ACC88BE7FC0247CC3A5A2F0C413DE",
+  "required_resrefs": [
+    "AM2805A",
+    "AM2805B",
+    "AM28ADD"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2805A/2026-09-19-accepted-am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908.json",
+      "sha256": "0A017A992C655FCDACECAAACF5844D58104FD1EBD72778DACEFE4B292E427AEC",
+      "accepted_resrefs": [
+        "AM2805A"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2805B/2026-09-08-accepted-am2805b-ar2804-fused-carrier-selection-20260908.json",
+      "sha256": "A9466BE84DB7F6D6DCF5309ABBC7AC0B5F051194FE92A3D5C1CDFF7F09EE77F1",
+      "accepted_resrefs": [
+        "AM2805B"
+      ]
+    },
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2805C/2026-09-08-accepted-am2805c-ar2804-fused-carrier-selection-20260908.json",
+      "sha256": "262F687FAEF1B8C5995C68F5F37089725766C60EA5E1832F1DE9BBAA87A89805",
+      "accepted_resrefs": [
+        "AM28ADD"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR2804: AM2805A, AM2805B, AM28ADD."
+}

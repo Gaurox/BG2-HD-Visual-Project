@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "OH4200",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T23:21:35Z",
+  "source_pack": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4200",
+  "pack_manifest_sha256": "2CBBE0685D9387BE4314550D73025BFC93B52199774CF1DCF1225DFDEC7A5083",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "3A7DFF2C23E8B732E95B29C0B0516014C0D8A9DDC2551CFD6D1362EEA17FD2F0",
+  "required_resrefs": [
+    "FIRE_3"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FIRE_3/2026-09-16-accepted-fire3-x4-reserve-animation.json",
+      "sha256": "F27620E816CBE8A35F97053C1264D191F87F336AA24136B4B07C0097B477F21B",
+      "accepted_resrefs": [
+        "FIRE_3"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour OH4200: FIRE_3."
+}

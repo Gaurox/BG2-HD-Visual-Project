@@ -68,8 +68,8 @@ def load_area_pack(spec: str) -> tuple[list[tuple[dict[str, Any], dict[str, Path
     if selected_resref is not None:
         resources = [resource for resource in resources
                      if v2.normalise_resref(str(resource["resref"])) == selected_resref]
-        v2.require(len(resources) == 1,
-                   f"ressource sélectionnée absente ou ambiguë ({selected_resref}) : {pack}")
+        v2.require(resources,
+                   f"ressource sélectionnée absente ({selected_resref}) : {pack}")
     if position_text is not None:
         v2.require(len(resources) == 1,
                    f"liaison de position réservée à un pack mono-ressource, {len(resources)} trouvées : {pack}")

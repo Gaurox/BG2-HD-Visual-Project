@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR1000",
+  "status": "accepted",
+  "decision_date": "2026-09-16",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-15T22:01:09Z",
+  "source_pack": "animations/packs-par-zone/fount1-xbr2x-gaussian045-x4-30fps-contour-aura-20260915/AR1000",
+  "pack_manifest_sha256": "2B572B2289C51B4F9E54DA114A4828C25FCC63238697E5397C85AF9F525CCCFD",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "A89F3FC237429EE56F0412576996DDF499C63C7F9FDFDE13A3E2012642672DAA",
+  "required_resrefs": [
+    "FOUNT1"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/FOUNT1/2026-09-16-accepted-fount1-xbr2x-gaussian045-30fps-contour-aura-accepted-20260915.json",
+      "sha256": "5E43B85DBAF2FD29C114E3F043F9F9C9D184A919EF3477195B4491A80FBA9BFA",
+      "accepted_resrefs": [
+        "FOUNT1"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR1000: FOUNT1."
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/animation-qa-approval.schema.json",
+  "schema_version": 2,
+  "area": "AR2805",
+  "status": "accepted",
+  "decision_date": "2026-09-19",
+  "decision_origin": "explicit-user-ingame-qa",
+  "recorded_at_utc": "2026-09-18T22:50:10Z",
+  "source_pack": "animations/packs-par-zone/ar2804-treelife-apo8-x4-30fps-v2-spline-fit1-straight-alpha-native-occlusion-20260908/AR2805",
+  "pack_manifest_sha256": "FB02F67E2E0E1F3ADDA059F81B6CF6BDF89D8287A318603909120F4B68D1D86F",
+  "registry": "AreaAnimations-X4.registry",
+  "registry_version": 3,
+  "registry_sha256": "44F7AF5B558722C88759635BFFFB166719D6638A523A4B89E887AFA623967E62",
+  "required_resrefs": [
+    "AM2805A"
+  ],
+  "evidence": [
+    {
+      "kind": "ingame-qa-decision",
+      "path": "animations/index/qa-decisions/AM2805A/2026-09-19-accepted-am2805a-apo8-x4-30fps-v2-spline-fit1-feather1-straight-rgb-20260908.json",
+      "sha256": "0A017A992C655FCDACECAAACF5844D58104FD1EBD72778DACEFE4B292E427AEC",
+      "accepted_resrefs": [
+        "AM2805A"
+      ]
+    }
+  ],
+  "decision": "QA ingame explicite pour AR2805: AM2805A."
+}

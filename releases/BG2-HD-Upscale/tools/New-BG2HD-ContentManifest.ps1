@@ -306,8 +306,16 @@ function Get-AnimationCandidateEntries {
                     Require (@($decision.tested_areas) -contains [string]$candidate.area) "Zone absente de la decision ingame : $relativeEvidence"
                     $decisionArea = @($decision.source_pack.areas | Where-Object { [string]$_.area -eq [string]$candidate.area })
                     Require ($decisionArea.Count -eq 1) "Pack de zone absent ou duplique dans la decision : $relativeEvidence"
-                    Require ([string]$decisionArea[0].path -eq [string]$candidate.source_pack) "Pack de decision different du candidat : $relativeEvidence"
-                    Require ([string]$decisionArea[0].manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$decisionArea[0].registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes du pack de decision differents du candidat : $relativeEvidence"
+                    # Un pack de zone compose reunit des ressources validees dans des packs
+                    # distincts : la decision reference alors son propre pack. La preuve que
+                    # chaque ressource du candidat est identique a celle de sa decision est
+                    # faite par verify_animation_release_candidate.py, execute juste au-dessus
+                    # pour ce candidat ; ici on n'exige l'egalite stricte que pour un pack direct.
+                    if ([string]$decisionArea[0].path -eq [string]$candidate.source_pack) {
+                        Require ([string]$decisionArea[0].manifest_sha256 -eq [string]$candidate.pack_manifest_sha256 -and [string]$decisionArea[0].registry_sha256 -eq [string]$candidate.registry_sha256) "Hashes du pack de decision differents du candidat : $relativeEvidence"
+                    } else {
+                        Require ($qaSchemaVersion -in @(2, 3)) "Pack de decision different du candidat : $relativeEvidence"
+                    }
 
                     $decisionRunDirectory = [IO.Path]::GetFullPath((Join-Path $Workspace ([string]$decision.final_run.path).Replace('/', '\')))
                     $relativeDecisionRun = [IO.Path]::GetRelativePath($Workspace, $decisionRunDirectory).Replace('\', '/')
@@ -979,7 +987,8 @@ if (-not $isAnimationDelta) {
             IncludeWed = $includeWed -eq 'true'
             Scale = 4
             CandidateModel = [string]$_.model
-            ReplacesComponentOutput = $false
+            # ReplacesComponentOutput est pose par la normalisation map commune ; le declarer ici
+            # aussi ferait echouer la fusion de tables ($spec + @{...} refuse une cle deja presente).
         }
     })
 }
