@@ -1,0 +1,273 @@
+{
+  "schema": "bg2-upscale-reboutcx-full-job-v1",
+  "job_id": "character-6115-bdhelm16-wqnjb-wqnjb-reboutcx-p12-cache86-v1",
+  "installable": false,
+  "scope": "full-animation",
+  "animation_id": "0x6115",
+  "runtime_profile": "character-bg2ee-2.7.3.0",
+  "layer": "helmet",
+  "source_inventory": [
+    {
+      "name": "WQNJBA1"
+    },
+    {
+      "name": "WQNJBA2"
+    },
+    {
+      "name": "WQNJBA3"
+    },
+    {
+      "name": "WQNJBA4"
+    },
+    {
+      "name": "WQNJBA5"
+    },
+    {
+      "name": "WQNJBA6"
+    },
+    {
+      "name": "WQNJBA7"
+    },
+    {
+      "name": "WQNJBA8"
+    },
+    {
+      "name": "WQNJBA9"
+    },
+    {
+      "name": "WQNJBCA"
+    },
+    {
+      "name": "WQNJBG1"
+    },
+    {
+      "name": "WQNJBSA"
+    },
+    {
+      "name": "WQNJBSS"
+    },
+    {
+      "name": "WQNJBSX"
+    }
+  ],
+  "source_manifest_sha256": "912234AD91A305ADCCA0283557160B52A2B46AA9428614D90135E74D38BA72B6",
+  "paths": {
+    "source_manifest": "sprite/families/playable-characters/6115-halforc-female-fighter/bdhelm16-wqnjb/source/manifest.json",
+    "run_dir": "sprite/families/playable-characters/6115-halforc-female-fighter/bdhelm16-wqnjb/runs/reboutcx-p12-cache86-v1",
+    "chainner_python": "config://chainner_python",
+    "reboutcx_model": "config://reboutcx_model",
+    "scalepix": "config://mmpx_scalepix"
+  },
+  "tools": {
+    "node": "node",
+    "chainner_python_sha256": "DA82A45A92D989BE4374E34CB354BA21988DC18FB310F55CD17B485A5B26CDF8"
+  },
+  "reboutcx": {
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "target_scale": 2,
+    "device": "cuda:0",
+    "fp16": true,
+    "tiling": "none",
+    "padding": "none",
+    "downscale": "chainner_ext-box-float32-v1"
+  },
+  "semantic_classes_id": "bg2ee-2.7.3.0-character-chmb1-32-classes-v1",
+  "null_frame_marker": 2,
+  "palette_reference": {
+    "id": "bg2ee-2.7.3.0-character-chmb1-neutral-rgb-v1",
+    "source": {
+      "resource": "RANGES12",
+      "type": 1,
+      "locator": "0x00000189",
+      "bif": "data/Default.bif",
+      "sha256": "7A9A654D5CBC4CEE0CA211BE05D24FB54BF8298A781C074882000D5F829D66DD"
+    },
+    "profiles": [
+      {
+        "name": "reference",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "54A3141583B8395FB23B0792D9768857D08BAFECBDB94E583BA773F3F7CBB2EA"
+      },
+      {
+        "name": "contrast-b",
+        "colors": [
+          21,
+          57,
+          47,
+          8,
+          66,
+          30,
+          0
+        ],
+        "palette_rgb_sha256": "2CC296F8479CD10EC38F5B95C72F88C8C3D545002B3DD788368EBAE0C0DFB10E"
+      },
+      {
+        "name": "contrast-c",
+        "colors": [
+          19,
+          63,
+          66,
+          15,
+          39,
+          26,
+          4
+        ],
+        "palette_rgb_sha256": "1BB2918E8F7380603D25071AAE5E2637A51B8B81B5C5BFE247A45B2027D5B2F3"
+      },
+      {
+        "name": "metal-only-blue",
+        "colors": [
+          68,
+          47,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "514F4AF73C94AA4DDA55F70701822C3E5524B3187BA7F6967D8A9E91E54AAA26"
+      },
+      {
+        "name": "minor-only-blue",
+        "colors": [
+          30,
+          68,
+          57,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "87666A09980FE10D799C69ADB3C0A5584C2F1A429EE80BCB65165DCE95E5D0DF"
+      },
+      {
+        "name": "major-only-blue",
+        "colors": [
+          30,
+          47,
+          68,
+          12,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "F247928931B7CFDAD46605F7FFE6F0B9D729E6B78622791C1A96ED88A0DD8876"
+      },
+      {
+        "name": "skin-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          68,
+          39,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "AE1941E8E73E614DA39F7D86E24E950C76585C825B05A3C029A1601EA47E195F"
+      },
+      {
+        "name": "leather-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          68,
+          21,
+          3
+        ],
+        "palette_rgb_sha256": "B15FF79D907C53EEEC24533C4E59E7B4D28906E4494F0727953CE5DBAD8CB43A"
+      },
+      {
+        "name": "armor-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          68,
+          3
+        ],
+        "palette_rgb_sha256": "51877166E2CBB4203B614319687AB114FE8A9DFC9A2A5ECCBA54314E27395A63"
+      },
+      {
+        "name": "hair-only-blue",
+        "colors": [
+          30,
+          47,
+          57,
+          12,
+          39,
+          21,
+          68
+        ],
+        "palette_rgb_sha256": "E2FA99FEC499E02ECB0C2F0038A584458091197E5A154FE8520A341C3148AFEF"
+      }
+    ]
+  },
+  "reboutcx_batch": {
+    "id": "p12-cached-fixed86-q32-v1",
+    "max_frames": 86,
+    "canvas_quantum": 32,
+    "input": "uint8-to-float32-div255-before-fp16",
+    "padding": "zero-top-left-before-model; crop-to-source-after-model",
+    "grouping": "canonical-resource-order; bounded-groups; geometry-buckets; no-duplicates",
+    "group_max_resources": 8,
+    "group_native_pixel_cap": 8000000,
+    "oversize_resource": "single-resource-group",
+    "pixel_cache": {
+      "id": "p12-frame-cache-fixed86-q32-v1",
+      "batch_size": 86,
+      "canvas_quantum": 32,
+      "input": "uint8-float32-div255-fp16; zero-pad-bottom-right",
+      "tail": "zero-filled-to-86; discard-fillers-before-CPU",
+      "alpha": "xbr2x-mask-v1",
+      "rgb_fill": "scipy-distance-transform-nearest-opaque",
+      "downscale": "chainner_ext-box-float32-before-u8-rounding",
+      "quantizer": "reboutcx_cpu_p10.quantize_classed_oklab",
+      "deterministic_algorithms": true
+    },
+    "fixed_gpu_batch": 86,
+    "downscale": "chainner_ext-box-float32-v1",
+    "deterministic_algorithms": true
+  },
+  "p12_source_job": {
+    "path": "sprite/families/playable-characters/6115-halforc-female-fighter/bdhelm16-wqnjb/jobs/halforc-female-fighter-bdhelm16-wqnjb-xbr2x.json",
+    "sha256": "C415B59498FB9D9A25A2B71C00CF95AB193E91E31442A7D56B1A4373CDACE38E",
+    "kind": "sealed-xbr-source-job"
+  },
+  "preparation": {
+    "contract_template": "sprite/families/playable-characters/6100-human-male-fighter/chmb3/jobs/reboutcx-p8-full-v1.json",
+    "contract_template_sha256": "EB1AEEEC069CF77AFE1CCD9F4AA033A18985C660CA090208850BB50279A86774",
+    "source_family_job": "sprite/families/playable-characters/6115-halforc-female-fighter/family-runs/complete-xn-xbr2x/jobs/halforc-female-fighter-complete-xn-xbr2x.json",
+    "source_family_job_sha256": "D0E278AD2D47A75610E1A919E6542F31D34B36E576173E3257FDBEFA8C94F9DB",
+    "script": "pipeline/scripts/reboutcx_prepare_sources_p12.py",
+    "script_sha256": "E509D98A802ECCF24AC54FFDC65FEC52A6CF55148A42C3DED3154FDC455974DC",
+    "reference_inference": "not-required-by-P12; comparison frame selected from native source"
+  },
+  "qa": {
+    "background": "dark-light-green-checkerboard-quadrants",
+    "groups": [
+      {
+        "name": "wqnjb-reference",
+        "resref": "WQNJBA1",
+        "frames": [
+          0
+        ],
+        "duration_ms": 400
+      }
+    ]
+  },
+  "item_resref": "BDHELM16"
+}

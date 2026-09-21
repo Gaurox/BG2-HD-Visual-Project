@@ -92,11 +92,38 @@ conserver. Le pointeur xBR canonique reste intact.
 
 ## Suivi des personnages jouables
 
-Courant : `sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p12-v1.json`
-épingle **33/78 familles complètes, 2 109 composants ; 45 familles restantes**, par manifeste+SHA-256.
-Historique immuable : `playable-characters-reboutcx-progress-p9-v1.json` (23 familles/1 471 composants).
-Le P12-v1 ajoute dix familles et référence la mesure P12 déjà scellée de `0x5211`.
-Mesure/reprise : [REBOUTCX_P12_DIX_FAMILLES_20260915.md](REBOUTCX_P12_DIX_FAMILLES_20260915.md).
+Courant : `sprite/catalogs/creature-x2-reboutcx/jobs/playable-characters-reboutcx-progress-p13-v1.json`
+épingle **77/78 familles complètes, 4 831 composants ; restante : `0x6110`**, par manifeste+SHA-256.
+Historiques immuables : `…-p12-v1.json` (33/2 109), `…-p9-v1.json` (23/1 471).
+Mesure/reprise P12 : [REBOUTCX_P12_DIX_FAMILLES_20260915.md](REBOUTCX_P12_DIX_FAMILLES_20260915.md).
+
+### P13 — cache partagé entre familles (2026-09-21)
+
+`pipeline/scripts/reboutcx_shared_p13.py` compose `execute`/`verify`/`Runtime` P12 sans les modifier
+(manifestes = runs P12 valides). `docs/measurements/reboutcx-p13-shared-20260921-v1/` : `plan.json`,
+`queue*.json`, `production-report.json` (44 familles, 2 722 composants, 7 631 830 frames, **568 613
+inférences pour 6 272 668 logiques = 91 % réutilisées**, 5,79 M évitées).
+
+```powershell
+$py = 'config://chainner_python'   # interpréteur chaiNNer
+python reboutcx_shared_p13.py prepare <dir>            # jobs P12 des familles en attente → queue.json
+python reboutcx_shared_p13.py shard <queue> 4          # cohortes entières par shard (perte de partage 0,5 %)
+python reboutcx_shared_p13.py run <queue-shard> --tag shard-K --components 3 --pre-workers 2 --post-workers 2 --gpu-fraction F
+python reboutcx_shared_p13.py aggregate                # progress.json + milestones.log (jalons 5 %)
+python reboutcx_shared_p13.py finish <queue> --report <report.json> ; python reboutcx_shared_p13.py snapshot <plan> --report <report.json>
+```
+
+- **Un seul processus est GIL-borné** (décodage/écriture/vérification interne en threads) : 231 frames/s
+  mesurés, bien en deçà du GPU. **4 processus par cohortes** (composants de mêmes BAM ensemble) : ≈ 3 700
+  frames/s cumulés ; cohortes triées par coût décroissant, pic de rétention du cache estimé 1,3 Gio.
+- **VRAM** : un lot fixe de 86 sur canvas ≈ 224 px demande > 17 Gio (allocation unique de 8,2 Gio). Un plafond
+  `--gpu-fraction` trop bas ⇒ OOM CUDA ; `LockedRuntime` sérialise les canvas ≥ 128×128 entre processus (mutex
+  Windows) et vide le cache CUDA après. Donner ≥ 0,45 aux shards qui portent les COMPS39/gros canvas.
+- Reprise : relancer le même `run` ; les composants scellés sont revérifiés, seuls les manquants sont calculés.
+  Nettoyer les `.reboutcx-p12-cache86-v1.tmp-<pid>` orphelins des processus tués (run final présent).
+- **0x6110 non produite** : 4 manifestes source xBR du 2026-08-24 (`chfb1`, `chfb2`, `chfb3`, `chff4`) sans champ
+  `layer` ⇒ `reboutcx_prepare_sources_p12.prepare` (scellé) échoue. Ré-extraire ces 4 sources ou ajouter une
+  préparation P13 tolérante ; jobs de famille P8 de 0x6102/0x6110 créés par `bootstrap`.
 
 Instantanés de production vérifiée, **pas** des catalogues dérivés, une QA, une installation ou une
 release : des familles partagent des RESREF xBR alors que leurs sorties ReboutCX diffèrent.
@@ -106,9 +133,8 @@ Décompte : une famille = ID d'animation (race/sexe/apparence/variante LOW), pas
 L'ancien job xBR référence 76 familles sous `playable-characters` et deux entrées historiques sous
 `sprite/jobs` (`0x6102`, `0x6110`), soit **78**. Répartition : 30 LOW, 46 ordinaires, 2 moines.
 
-Recherche des doublons restants : [groupes de frames inter-familles](REBOUTCX_GROUPES_FRAMES_RESTANTES_20260915.md).
-43 familles restantes du lot historique de 76 : **3 338 364 inférences supplémentaires évitables**
-avec partage des pixels entre familles ; inventaire documenté, optimisation non appliquée.
+Recherche des doublons : [groupes de frames inter-familles](REBOUTCX_GROUPES_FRAMES_RESTANTES_20260915.md) ;
+partage inter-familles **appliqué en P13** (ci-dessus).
 
 ## Références validées
 
