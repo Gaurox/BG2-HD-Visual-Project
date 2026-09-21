@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM1516PT",
+  "correction_id": "am1516pt-seedvr7b-apo8-spline-fit1-feather8-20260921",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM1516PT/runs/am1516pt-seedvr7b-apo8-spline-fit1-feather8-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "1E1B5860A3BC073AE667BD2AFC62422A59F7547977C6FBE47A29D5CF6D73F8F9",
+        "path": "animations/ressources/AM1516PT/runs/am1516pt-seedvr7b-apo8-spline-fit1-feather8-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/AM1516PT/2026-09-22-accepted-am1516pt-seedvr7b-apo8-spline-selection-accepted-20260922.json",
+    "sha256": "B173F29827FE66EEE5708AD219A29E5565F76CF8C400C70224ECBCCADC26A54E",
+    "status": "accepted"
+  },
+  "resref": "AM1516PT",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/am1516pt-seedvr7b-apo8-spline-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "A6717DE27C50EE7795D6D8A7F431836C32FFA86E37B42E4EDED1C79679B6954F",
+    "path": "animations/batches/am1516pt-seedvr7b-apo8-spline-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR1516",
+        "manifest_path": "animations/packs-par-zone/am1516pt-seedvr7b-apo8-x4-30fps-v2-spline-fit1-feather8-20260921/AR1516/manifest.json",
+        "manifest_sha256": "76A0F08B0167974312C5F0E5574910A92C446F87A264BDBC21A397DF5E260E79",
+        "path": "animations/packs-par-zone/am1516pt-seedvr7b-apo8-x4-30fps-v2-spline-fit1-feather8-20260921/AR1516",
+        "registry_sha256": "F446F3438AFA3415DE9FC940DF2EEC885DFDBC86904939CCDDA5EA137244CD10",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am1516pt-seedvr7b-apo8-x4-30fps-v2-spline-fit1-feather8-20260921/manifest.json",
+    "manifest_sha256": "36968C644B3EF4D3F82C2F8CD0B346CB24EEB2682B10712FC7C5C1C1F93275CD",
+    "path": "animations/packs-par-zone/am1516pt-seedvr7b-apo8-x4-30fps-v2-spline-fit1-feather8-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR1516"
+  ],
+  "updated_at_utc": "2026-09-21T22:02:37Z"
+}
