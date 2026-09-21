@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM2802A",
+  "correction_id": "ar2801-am2802a-spline-fit1-feather6",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar2801-am2801a-am2802a-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "56F028AC6BF0756ADDFA0A656B08010CF190593240A90A3EF70FD066AB68037F",
+        "path": "animations/batches/ar2801-am2801a-am2802a-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar2801-am2801a-am2802a-seedvr7b-lab-x4-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "B9210FDF35673993F618019262D6C1FB86F48DA6490B4545A4B448F1BFC11EBA",
+        "path": "animations/batches/ar2801-am2801a-am2802a-seedvr7b-lab-x4-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/ar2801-am2801a-am2802a-apo8-x4-30fps-v2-20260921/manifest.json",
+        "manifest_sha256": "CBB48402A8CEACC763CA1ECE5CEB14D1B7C85FDDF71FFFA2DA9D0AB3C3FBF936",
+        "path": "animations/batches/ar2801-am2801a-am2802a-apo8-x4-30fps-v2-20260921",
+        "schema": "bg2-upscale-area-animation-30fps-run-v2",
+        "status": "completed"
+      },
+      {
+        "manifest_path": "animations/batches/ar2801-am2801a-am2802a-seedvr7b-lab-x4-20260921/manifest.json",
+        "manifest_sha256": "34AA7143EFFA7853C6D20C6B88239E0EFABCBAE2E246006B303B6E1CD6CE78F4",
+        "path": "animations/batches/ar2801-am2801a-am2802a-seedvr7b-lab-x4-20260921",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/AM2802A/2026-09-21-accepted-ar2801-am2802a-spline-fit1-feather6-20260921.json",
+    "sha256": "8054C2B8A5BEEE636CDDCB32A8B7C60FD057AAECECC3EF62FDBA2E984EA38ACE",
+    "status": "accepted"
+  },
+  "resref": "AM2802A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM2802A/runs/ar2801-am2802a-spline-fit1-feather6-20260921/manifest.json",
+    "manifest_sha256": "2221C926A8E58E5C25EB3E76CCE2AACC02B638B946BC164D52E7D1AD00B6DD90",
+    "path": "animations/ressources/AM2802A/runs/ar2801-am2802a-spline-fit1-feather6-20260921",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR2802",
+        "manifest_path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2802/manifest.json",
+        "manifest_sha256": "EC0333D581A5CCB1A7A2EDB98E9198608CF9D21C9A86A154627C9259D9212CE5",
+        "path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2802",
+        "registry_sha256": "412DD0D81B73AEAFAE37D6AE6E3AF9A4126EE4F604D3D794E6A0B9FBEFA7AC31",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2810",
+        "manifest_path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2810/manifest.json",
+        "manifest_sha256": "FF184CB4F2CAFDAE8E42A4C636A79D8866DCD2BA815831E6047BBF1564192D77",
+        "path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2810",
+        "registry_sha256": "412DD0D81B73AEAFAE37D6AE6E3AF9A4126EE4F604D3D794E6A0B9FBEFA7AC31",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2811",
+        "manifest_path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2811/manifest.json",
+        "manifest_sha256": "4A02DECBDD7F89ED5D21998316AF407B863E7997851E618B8E5854625CB13498",
+        "path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/AR2811",
+        "registry_sha256": "412DD0D81B73AEAFAE37D6AE6E3AF9A4126EE4F604D3D794E6A0B9FBEFA7AC31",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921/manifest.json",
+    "manifest_sha256": "B1BDBE79DAA3FBED20FDA3863E76997BD481DE6D2C0BF8BDB9DC71C92C0EB13D",
+    "path": "animations/packs-par-zone/ar2801-am2802a-feather6-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR2802",
+    "AR2810",
+    "AR2811"
+  ],
+  "updated_at_utc": "2026-09-21T13:04:50Z"
+}
