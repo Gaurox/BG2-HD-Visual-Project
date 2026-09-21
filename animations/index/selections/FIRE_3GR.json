@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FIRE_3GR",
+  "correction_id": "fire-3gr-reboutcx-apo8-innerfeather8-premultiply-20260921",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FIRE_3GR/runs/fire-3gr-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "11A6CCE892133E9DD447C40492E1D832B47EA013F72E23ED96A286A171816373",
+        "path": "animations/ressources/FIRE_3GR/runs/fire-3gr-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/FIRE_3GR/2026-09-21-accepted-fire-3gr-reboutcx-apo8-selection-accepted-20260921.json",
+    "sha256": "92B5A8A3F79C00BB767ED5D7A508744238ED43C64861C5D5DA69F662CC4E792D",
+    "status": "accepted"
+  },
+  "resref": "FIRE_3GR",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/fire-3gr-reboutcx-apo8-selection-accepted-20260921/manifest.json",
+    "manifest_sha256": "CD337E66585340BFEEA930A5757F15CA2C1B57C0B01C23456CCA97F8EF69CC50",
+    "path": "animations/batches/fire-3gr-reboutcx-apo8-selection-accepted-20260921",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0203",
+        "manifest_path": "animations/packs-par-zone/fire-3gr-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/AR0203/manifest.json",
+        "manifest_sha256": "88BE8C20511084F56942D4055630A3933BF30EF231A1FFE20B3C0A42DE093906",
+        "path": "animations/packs-par-zone/fire-3gr-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/AR0203",
+        "registry_sha256": "C087C3EE65474B4F5F9A8D2CB4B09DE85C0B5FA7B02C1B248A33FD35A0F851EC",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fire-3gr-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/manifest.json",
+    "manifest_sha256": "E0CD96FB3E015571782C695510E05B73B7BC9C01CE25F31A738EAB4505A0CE58",
+    "path": "animations/packs-par-zone/fire-3gr-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0203"
+  ],
+  "updated_at_utc": "2026-09-21T21:10:41Z"
+}

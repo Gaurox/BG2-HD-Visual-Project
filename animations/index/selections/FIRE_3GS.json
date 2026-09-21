@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FIRE_3GS",
+  "correction_id": "fire-3gs-reboutcx-apo8-innerfeather8-premultiply-20260921",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FIRE_3GS/runs/fire-3gs-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "61EDC8C5E3B695EAFD3824AD1E5D8D7E23222BDCE5BA42A9FFE8A6F617144A6C",
+        "path": "animations/ressources/FIRE_3GS/runs/fire-3gs-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/FIRE_3GS/2026-09-21-accepted-fire-3gs-reboutcx-apo8-selection-accepted-20260921.json",
+    "sha256": "70DB996FF11779C69FE8DFC89BFA1201049AA367F98CBD626F3E13CEA27C678D",
+    "status": "accepted"
+  },
+  "resref": "FIRE_3GS",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/fire-3gs-reboutcx-apo8-selection-accepted-20260921/manifest.json",
+    "manifest_sha256": "AE041C1F4AFC0D457360674264370C57CD666D8949A6D1839CE72B87F385DA60",
+    "path": "animations/batches/fire-3gs-reboutcx-apo8-selection-accepted-20260921",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH4101",
+        "manifest_path": "animations/packs-par-zone/fire-3gs-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/OH4101/manifest.json",
+        "manifest_sha256": "C2E100B07C5EF11B7FA87920F655D5FE9FE7DDB334389FEA6A113361AED5DE2A",
+        "path": "animations/packs-par-zone/fire-3gs-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/OH4101",
+        "registry_sha256": "9826F5C4F4D1C32DF3F49437B35161F58B65A4EE1504D6C8FFCA3B88EB6DD734",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fire-3gs-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921/manifest.json",
+    "manifest_sha256": "AAC2F4FA3070ED498F64DC3DD73F77DCADBB4089A60441997A81FE92D6FBF92C",
+    "path": "animations/packs-par-zone/fire-3gs-reboutcx-apo8-x4-30fps-v2-innerfeather8-premul-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "OH4101"
+  ],
+  "updated_at_utc": "2026-09-21T21:10:41Z"
+}
