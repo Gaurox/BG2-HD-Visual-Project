@@ -1,0 +1,64 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM0323A",
+  "correction_id": "alpha-strict-innerfade8-open-canvas-edges",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C96D231C22339A099DD4404A8AF9C059236B024ACF2A8826F621BB9EC6D243DD",
+        "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/AM0323A/2026-09-21-accepted-cheminees-am003xa-am0323a-am0309a-apo8-x4-30fps-v2-innerfade8-20260921.json",
+    "sha256": "774AAB04D0DAC8091480C924B89A4F672AE39F97A79131133A118AEBF8D9AB59",
+    "status": "accepted"
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-innerfade8-open-edges",
+  "resref": "AM0323A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-apo8-x4-30fps-v2-innerfade8-20260921/manifest.json",
+    "manifest_sha256": "03FF35D6F715AA4B40CDACD99EEAC565711F608875BC7977966D10CFC146493E",
+    "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-apo8-x4-30fps-v2-innerfade8-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0303",
+        "manifest_path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921/AR0303/manifest.json",
+        "manifest_sha256": "A8572757D0E5059564E2E73BAAA8C523DE2A595641957803C088B01E8E173D22",
+        "path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921/AR0303",
+        "registry_sha256": "A57503723F260E9BBFC46856B647E834DA9A20B8BBB47C5FFD27255124AE53F0",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0323",
+        "manifest_path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921/AR0323/manifest.json",
+        "manifest_sha256": "3EF89131C684FB429AEC0F59477CC5538E124FE56FE6A23C058D7DF2CEED6121",
+        "path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921/AR0323",
+        "registry_sha256": "A57503723F260E9BBFC46856B647E834DA9A20B8BBB47C5FFD27255124AE53F0",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921/manifest.json",
+    "manifest_sha256": "1AB90FEB9E5F2A4ED8E9299E7BC35701A743053B135EA0BA4F9CCDBE8D4D4865",
+    "path": "animations/packs-par-zone/cheminees-am003xa-am0323a-am0309a-innerfade8-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0303",
+    "AR0323"
+  ],
+  "updated_at_utc": "2026-09-21T19:10:24Z"
+}

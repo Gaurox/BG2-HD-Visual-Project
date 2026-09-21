@@ -52,6 +52,37 @@ def load_alpha_mask(path: Path, expected_size: tuple[int, int]) -> np.ndarray:
     return rgb[:, :, 0].copy()
 
 
+def fill_small_alpha_holes(rgba: np.ndarray, max_px: int) -> tuple[np.ndarray, int]:
+    """Close the BAM's dithered transparency holes inside an opaque animation.
+
+    Every transparent component (alpha < 128, 8-connected) that does not touch the canvas and
+    covers at most ``max_px`` x4 pixels becomes opaque; its hidden RGB is repainted from the
+    nearest visible texels, lightly smoothed inside the hole.  At x4 these 1-6 px x1 holes are
+    nearest-neighbour blocks through which a differently lit map shows as a stepped dotted line.
+    Returns the frame and the number of filled pixels."""
+    transparent = rgba[:, :, 3] < 128
+    labels, count = label(transparent, structure=np.ones((3, 3), dtype=np.uint8))
+    if not count:
+        return rgba, 0
+    sizes = np.bincount(labels.ravel())
+    border = np.unique(np.concatenate(
+        (labels[0], labels[-1], labels[:, 0], labels[:, -1])
+    ))
+    small = sizes <= max_px
+    small[0] = False
+    small[border] = False
+    holes = small[labels]
+    if not holes.any():
+        return rgba, 0
+    output = rgba.copy()
+    nearest = distance_transform_edt(transparent, return_distances=False, return_indices=True)
+    repainted = rgba[nearest[0], nearest[1], :3].astype(np.float32)
+    smoothed = np.stack([gaussian_filter(repainted[:, :, c], 1.5) for c in range(3)], axis=-1)
+    output[holes, :3] = np.clip(np.rint(smoothed[holes]), 0, 255).astype(np.uint8)
+    output[holes, 3] = 255
+    return output, int(holes.sum())
+
+
 def apply_alpha_mask(rgba: np.ndarray, mask: np.ndarray) -> np.ndarray:
     """Multiply only alpha by a user-authored 8-bit grayscale mask."""
     v2.require(mask.shape == rgba.shape[:2], "dimensions du masque alpha incohérentes")
@@ -405,6 +436,12 @@ def build(args: argparse.Namespace) -> Path:
     using_alpha_mask = bool(args.alpha_mask)
     using_bright_core = args.bright_core_blur_sigma_x4 > 0.0
     using_lower_cover = args.lower_edge_cover_rows > 0
+    using_hole_fill = args.fill_alpha_holes_max_px_x4 > 0
+    v2.require(not using_hole_fill or (
+        args.rgb_policy == "preserve" and (using_alpha_mask or using_inner_contour)
+        and args.fill_alpha_holes_max_px_x4 <= 4096
+    ), "comblement des trous alpha : exige --rgb-policy preserve, un masque alpha ou un "
+       "fondu de contour, et une taille <= 4096 px x4")
     alpha_mask_paths = [path.resolve() for path in (args.alpha_mask or [])]
     v2.require(not using_alpha_mask or len(alpha_mask_paths) == len(selected),
                "fournir exactement un --alpha-mask par --resref, dans le même ordre")
@@ -508,9 +545,14 @@ def build(args: argparse.Namespace) -> Path:
         alpha_after = 0
         rgb_dilated_pixels = 0
         cover_ring_pixels = 0
+        hole_filled_pixels = 0
         for frame in resource["frames"]:
-            rgba = read_rgba(pack, frame)
-            alpha_before += int(rgba[:, :, 3].sum(dtype=np.uint64))
+            source_rgba = read_rgba(pack, frame)
+            alpha_before += int(source_rgba[:, :, 3].sum(dtype=np.uint64))
+            rgba = source_rgba
+            if using_hole_fill:
+                rgba, filled = fill_small_alpha_holes(source_rgba, args.fill_alpha_holes_max_px_x4)
+                hole_filled_pixels += filled
             if using_alpha_mask:
                 treated = apply_alpha_mask(rgba, alpha_masks[resource["resref"]])
             elif using_luminance:
@@ -566,7 +608,7 @@ def build(args: argparse.Namespace) -> Path:
             else:
                 treated = rgba
             alpha_after += int(treated[:, :, 3].sum(dtype=np.uint64))
-            if treated.shape != rgba.shape or not np.array_equal(treated, rgba):
+            if treated.shape != source_rgba.shape or not np.array_equal(treated, source_rgba):
                 update_payload(pack, resource, frame, treated)
                 changed += 1
         metrics[resource["resref"]] = {
@@ -589,6 +631,7 @@ def build(args: argparse.Namespace) -> Path:
                 int((core_mask > 0.3).sum()) if core_mask is not None else None
             ),
             "lower_edge_cover_ring_px": cover_ring_pixels if using_lower_cover else None,
+            "alpha_holes_filled_px": hole_filled_pixels if using_hole_fill else None,
         }
 
     registry = v2.registry_v2_from_resources(resources, int(source_manifest["registry_version"]))
@@ -675,6 +718,13 @@ def build(args: argparse.Namespace) -> Path:
             "kind": "premultiplied-rgba-gaussian", "sigma_x4": args.gaussian_sigma_x4,
             "padding_x4": padding, "truncate": 4.0,
             "rgba_policy": "blur-premultiplied-rgba-with-transparent-padding",
+        }
+    if using_hole_fill:
+        treatment["pre_fill_alpha_holes"] = {
+            "max_component_px_x4": args.fill_alpha_holes_max_px_x4,
+            "scope": "transparent 8-connected components not touching the canvas",
+            "rgb": "nearest visible texel, gaussian sigma 1.5 inside the hole",
+            "alpha_constraint": "filled holes become 255 before the main treatment",
         }
     manifest = {
         "schema": v2.PACK_SCHEMA,
@@ -791,6 +841,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--lower-edge-cover-depth-x4", type=int, default=5)
     parser.add_argument("--lower-edge-cover-zone-x4", type=int, default=10)
+    parser.add_argument(
+        "--fill-alpha-holes-max-px-x4", type=int, default=0,
+        help="rend opaques les trous de tramage internes (<= N px x4) avant le traitement "
+             "principal ; RGB repeint depuis les voisins (0 = désactivé)",
+    )
     parser.add_argument("--lower-edge-cover-min-row-x4", type=int, default=0,
                         help="ne couvre que les lignes x4 >= N (0 = tout le bord bas)")
     parser.add_argument(

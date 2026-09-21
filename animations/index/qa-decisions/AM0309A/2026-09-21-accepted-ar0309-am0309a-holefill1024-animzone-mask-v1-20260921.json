@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0309A",
+  "correction_id": "ar0309-am0309a-holefill1024-animzone-mask-v1",
+  "decision": "QA ingame validee par l'utilisateur le 2026-09-21 sur AR0309 apres deux correctifs : trous de tramage combles + masque de zone animee (plus de rectangle visible), puis pack lie a l'occurrence 945,763 pour couper le pont d'occlusion natif du polygone WED 90 (plus de zone en escalier dans le foyer).",
+  "decision_date": "2026-09-21",
+  "decision_id": "2026-09-21-accepted-ar0309-am0309a-holefill1024-animzone-mask-v1-20260921",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/ressources/AM0309A/runs/ar0309-am0309a-holefill1024-animzone-mask-v1-20260921/manifest.json",
+    "manifest_sha256": "6C6D6FD5002E20BC94B323CBC167EF0F89B1F2E62CE16D0CD74D9553D4CEE429",
+    "path": "animations/ressources/AM0309A/runs/ar0309-am0309a-holefill1024-animzone-mask-v1-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C96D231C22339A099DD4404A8AF9C059236B024ACF2A8826F621BB9EC6D243DD",
+        "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-holefill-animzone-mask-occurrence-bound",
+  "recorded_at_utc": "2026-09-21T19:10:26Z",
+  "resref": "AM0309A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0309",
+        "manifest_path": "animations/packs-par-zone/ar0309-am0309a-holefill1024-animzone-mask-v1-split-20260921/AR0309/manifest.json",
+        "manifest_sha256": "6A9DA588DA17446BE5F078CB970691B329665F291DA1460C8BBB667D6630CF90",
+        "path": "animations/packs-par-zone/ar0309-am0309a-holefill1024-animzone-mask-v1-split-20260921/AR0309",
+        "registry_sha256": "899D247D56189874AE4E4F19C8E1147E46B53AFA020249B93E86FA71A31ADF03",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar0309-am0309a-holefill1024-animzone-mask-v1-split-20260921/manifest.json",
+    "manifest_sha256": "CA6CFCC6CE841A2A7467A1B7F2EA8D9D161C3C9594C77BD642DFF50838BA7B76",
+    "path": "animations/packs-par-zone/ar0309-am0309a-holefill1024-animzone-mask-v1-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0309"
+  ]
+}

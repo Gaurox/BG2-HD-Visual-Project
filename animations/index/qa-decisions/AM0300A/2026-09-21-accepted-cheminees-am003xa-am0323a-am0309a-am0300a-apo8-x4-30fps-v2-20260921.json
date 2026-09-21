@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM0300A",
+  "decision": "QA ingame validee par l'utilisateur le 2026-09-21 sur AR0300 : cage de brasero x4 30 fps (6 poses doublees condensees, 24 phases), alpha source nearest sans fondu ni spline pour preserver les croisillons.",
+  "decision_date": "2026-09-21",
+  "decision_id": "2026-09-21-accepted-cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921/manifest.json",
+    "manifest_sha256": "63B0D1B13097E7401AE89D0E91FE29FECB138A49A79B15FA2C28DCC197E8ADDA",
+    "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-apo8-x4-30fps-v2-20260921",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-seedvr7b-lab-x4-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "88016EB1BF93FE20169BAD8CEE8F0E29612B9A093BF393E6CD79EF5FE59D7206",
+        "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-seedvr7b-lab-x4-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": [
+      {
+        "manifest_path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-seedvr7b-lab-x4-20260921/manifest.json",
+        "manifest_sha256": "14E83CF033F5F3A6B1143C3D85C89794161CCAFF6301BFEB06FD7F458140EFB2",
+        "path": "animations/batches/cheminees-am003xa-am0323a-am0309a-am0300a-seedvr7b-lab-x4-20260921",
+        "schema": "bg2-upscale-area-animation-run-v1",
+        "status": "completed"
+      }
+    ]
+  },
+  "recipe_id": "seedvr7b-apo8-30fps-collapse-alpha-native",
+  "recorded_at_utc": "2026-09-21T19:10:25Z",
+  "resref": "AM0300A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0300",
+        "manifest_path": "animations/packs-par-zone/cheminees-am0300a-alphanative-split-20260921/AR0300/manifest.json",
+        "manifest_sha256": "53BA44B7AD8660BF533F7D8CADB22387FFBEFA0BEF370649379B95803BE1D5EE",
+        "path": "animations/packs-par-zone/cheminees-am0300a-alphanative-split-20260921/AR0300",
+        "registry_sha256": "C5FEFF345720DCBE18EF7A6CFBFA1E6EDFDA67E652876112BAB2DAFCAF88DA03",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/cheminees-am0300a-alphanative-split-20260921/manifest.json",
+    "manifest_sha256": "E5FF037455B6C28AFB4E0287E952C3C2058A2820C2879376ABB944293203B935",
+    "path": "animations/packs-par-zone/cheminees-am0300a-alphanative-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0300"
+  ]
+}
