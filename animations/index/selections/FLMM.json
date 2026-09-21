@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FLMM",
+  "correction_id": "flmm-reboutcx-innerfeather6-premultiply-20260921",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FLMM/runs/flmm-reboutcx-x4-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "E728775EA2431E51E7888CF66C8FB5B56FF8E598470729BC4FCBD9A0EF4C2D77",
+        "path": "animations/ressources/FLMM/runs/flmm-reboutcx-x4-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/FLMM/2026-09-21-accepted-flmm-reboutcx-selection-accepted-20260921.json",
+    "sha256": "F22354D217EB485608BC0F4F4884AF26CF71D7B37A1A885B1798974622F59CC6",
+    "status": "accepted"
+  },
+  "resref": "FLMM",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/flmm-reboutcx-selection-accepted-20260921/manifest.json",
+    "manifest_sha256": "4F7D3230E3ED6ED64D6995363AF89686EEDD67421FFFFF72CD55D67C3BC23611",
+    "path": "animations/batches/flmm-reboutcx-selection-accepted-20260921",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH7200",
+        "manifest_path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921/OH7200/manifest.json",
+        "manifest_sha256": "0E5C8778072485D202A560EC484A52D7C83C0D263BD992C4A3E03681FEE32E75",
+        "path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921/OH7200",
+        "registry_sha256": "6F7DA8CFC946D9C453FA891DD791418D30132FCC521002AE067A1487F853BF24",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH7300",
+        "manifest_path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921/OH7300/manifest.json",
+        "manifest_sha256": "A72A627E46C610939EDDF705C769B82E142E8B7256A5ED40F165551743A756B5",
+        "path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921/OH7300",
+        "registry_sha256": "6F7DA8CFC946D9C453FA891DD791418D30132FCC521002AE067A1487F853BF24",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921/manifest.json",
+    "manifest_sha256": "5D87C4BACACA6E1D53893BF9516FA164882F16D3D9B9F66091796733AFF62B13",
+    "path": "animations/packs-par-zone/flmm-reboutcx-x4-innerfeather6-premul-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "OH7200",
+    "OH7300"
+  ],
+  "updated_at_utc": "2026-09-21T20:50:50Z"
+}
