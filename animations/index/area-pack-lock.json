@@ -721,7 +721,7 @@
    }
   },
   "AR0500": {
-   "recorded_utc": "2026-09-18T23:18:41.058012+00:00",
+   "recorded_utc": "2026-09-21T19:26:01.475076+00:00",
    "resources": {
     "CHIMSMK": {
      "sig": "0c17449089e0",
@@ -730,17 +730,22 @@
     "FIRE_3": {
      "sig": "c2cebb655fd3",
      "frames": 14
+    },
+    "FLAME2L": {
+     "sig": "9cf8e8eea5c5",
+     "frames": 9
     }
    },
    "fingerprint": {
-    "files": 39,
-    "bytes": 6531400,
-    "max_mtime_ns": 1789773520919653300
+    "files": 48,
+    "bytes": 6735472,
+    "max_mtime_ns": 1790018761301928400
    },
    "build": {
     "merged_from": [
      "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0500",
-     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0500"
+     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR0500",
+     "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0500"
     ]
    }
   },
@@ -914,6 +919,23 @@
      "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR0511",
      "animations/packs-par-zone/flame2s-reboutcx-x4-innerfeather20-premul-20260919/AR0511"
     ]
+   }
+  },
+  "AR0512": {
+   "recorded_utc": "2026-09-21T19:26:02.487674+00:00",
+   "resources": {
+    "FLAME2L": {
+     "sig": "9cf8e8eea5c5",
+     "frames": 9
+    }
+   },
+   "fingerprint": {
+    "files": 10,
+    "bytes": 204096,
+    "max_mtime_ns": 1790018762448105800
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0512"
    }
   },
   "AR0513": {
@@ -4311,20 +4333,27 @@
    }
   },
   "OH4220": {
-   "recorded_utc": "2026-09-18T23:18:17.878263+00:00",
+   "recorded_utc": "2026-09-21T19:26:03.827986+00:00",
    "resources": {
     "FIRE_3": {
      "sig": "c2cebb655fd3",
      "frames": 14
+    },
+    "FLAME2L": {
+     "sig": "9cf8e8eea5c5",
+     "frames": 9
     }
    },
    "fingerprint": {
-    "files": 15,
-    "bytes": 731068,
-    "max_mtime_ns": 1789773497829779700
+    "files": 24,
+    "bytes": 935140,
+    "max_mtime_ns": 1790018763744864300
    },
    "build": {
-    "leaf": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4220"
+    "merged_from": [
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4220",
+     "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH4220"
+    ]
    }
   },
   "OH5000": {
@@ -4524,6 +4553,23 @@
     ]
    }
   },
+  "OH7000": {
+   "recorded_utc": "2026-09-21T19:26:04.925424+00:00",
+   "resources": {
+    "FLAME2L": {
+     "sig": "9cf8e8eea5c5",
+     "frames": 9
+    }
+   },
+   "fingerprint": {
+    "files": 10,
+    "bytes": 204096,
+    "max_mtime_ns": 1790018764887974400
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH7000"
+   }
+  },
   "OH7300": {
    "recorded_utc": "2026-09-18T23:06:18.930971+00:00",
    "resources": {
@@ -4647,5 +4693,5 @@
    }
   }
  },
- "updated_utc": "2026-09-21T19:06:06.907992+00:00"
+ "updated_utc": "2026-09-21T19:26:04.925924+00:00"
 }

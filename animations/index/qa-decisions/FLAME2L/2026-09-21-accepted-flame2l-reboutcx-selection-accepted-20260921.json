@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FLAME2L",
+  "correction_id": "flame2l-reboutcx-innerfeather16-premultiply-20260921",
+  "decision": "Flamme large partagee : etage spatial ReboutCX x4, cadence native, fondu interne 16 px x4 sur l alpha et RGB premultiplie (ressource Blended). Validee ingame par l utilisateur le 2026-09-21 (zones visitees non precisees) ; asset strictement identique dans les 4 zones (signature 9cf8e8eea5c5), validation etendue a l ensemble.",
+  "decision_date": "2026-09-21",
+  "decision_id": "2026-09-21-accepted-flame2l-reboutcx-selection-accepted-20260921",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/flame2l-reboutcx-selection-accepted-20260921/manifest.json",
+    "manifest_sha256": "2FD4285D84EC6965FBE3623B97AA646AA9C78E49519F494122655EF6E83F57F8",
+    "path": "animations/batches/flame2l-reboutcx-selection-accepted-20260921",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FLAME2L/runs/flame2l-reboutcx-x4-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "09EE5DBAE65FF0CC9E2FD938C687DB9D5EB5BDB876C5D9F40088502C8B41D39B",
+        "path": "animations/ressources/FLAME2L/runs/flame2l-reboutcx-x4-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-21T19:40:29Z",
+  "resref": "FLAME2L",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0500",
+        "manifest_path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0500/manifest.json",
+        "manifest_sha256": "DDAF67F270924EFC9056D7832D91398D4F3047872E3719B854B8518BF06B8F9C",
+        "path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0500",
+        "registry_sha256": "4FC2BF25F1AEB9FF6A9DCCB863E9B13EA4013692DF806266A040C4FD7153F217",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR0512",
+        "manifest_path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0512/manifest.json",
+        "manifest_sha256": "C8B4042C043E8B70803722B16E71CB96FF1CD2732101DAC31A097C623FB42E53",
+        "path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/AR0512",
+        "registry_sha256": "4FC2BF25F1AEB9FF6A9DCCB863E9B13EA4013692DF806266A040C4FD7153F217",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4220",
+        "manifest_path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH4220/manifest.json",
+        "manifest_sha256": "ECE5E67BA8803F14D392D7203AA7D66624ADE70A6D171B4AE151B75ECF06F164",
+        "path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH4220",
+        "registry_sha256": "4FC2BF25F1AEB9FF6A9DCCB863E9B13EA4013692DF806266A040C4FD7153F217",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH7000",
+        "manifest_path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH7000/manifest.json",
+        "manifest_sha256": "5BC450185FFF3DA0511C547706C47CE334FD9C9351F48264280670E8C5B123A1",
+        "path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/OH7000",
+        "registry_sha256": "4FC2BF25F1AEB9FF6A9DCCB863E9B13EA4013692DF806266A040C4FD7153F217",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921/manifest.json",
+    "manifest_sha256": "1F12178D75E664BDE7ADA434007F498D40EE3053446436DDE35EE622769E4A00",
+    "path": "animations/packs-par-zone/flame2l-reboutcx-x4-innerfeather16-premul-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR0500",
+    "AR0512",
+    "OH4220",
+    "OH7000"
+  ]
+}
