@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:STEAM2",
+  "correction_id": "ar1003-steam2-spline-fit1-feather4-oval20x6-rgbgaussian1",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/STEAM2/runs/ar1003-steam2-spline-fit1-feather4-oval20x6-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "9F9EA91E286AA91295215D689E8283F90B160268AA63209D37C603FA7B35C2C2",
+        "path": "animations/ressources/STEAM2/runs/ar1003-steam2-spline-fit1-feather4-oval20x6-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/STEAM2/2026-09-21-accepted-ar1003-steam2-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921.json",
+    "sha256": "E6D1E1BFDEB6834D30AD296DA2FD98EEE3451EACF493ED737315B7592ED53B1A",
+    "status": "accepted"
+  },
+  "resref": "STEAM2",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/STEAM2/runs/ar1003-steam2-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921/manifest.json",
+    "manifest_sha256": "D1DB8D7190A9EB5A57FB88BADFB160B8951CB6A0640DACF0C34D3D4102D87470",
+    "path": "animations/ressources/STEAM2/runs/ar1003-steam2-spline-fit1-feather4-oval20x6-rgbgaussian1-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0506",
+        "manifest_path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921/AR0506/manifest.json",
+        "manifest_sha256": "C0FB71200874B514836A1D0BD9E40FBA4E8DBC19DDA868E305DEB3B9D2C57D00",
+        "path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921/AR0506",
+        "registry_sha256": "BD9C98AF2A427A40173F734B02E83601EB3C5FC9D19DDC74FAE5720335AD7D79",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1003",
+        "manifest_path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921/AR1003/manifest.json",
+        "manifest_sha256": "28E058BF1DED5190C146E268F2E48040E35794422A96321BF0A9C74391504A31",
+        "path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921/AR1003",
+        "registry_sha256": "BD9C98AF2A427A40173F734B02E83601EB3C5FC9D19DDC74FAE5720335AD7D79",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921/manifest.json",
+    "manifest_sha256": "DFB4DEC9BCD3260ED1427EA6F59567E108EA396D52668E3E06FAA38AB4C5A22E",
+    "path": "animations/packs-par-zone/ar1003-steam2-rgbgaussian1-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0506",
+    "AR1003"
+  ],
+  "updated_at_utc": "2026-09-21T12:38:53Z"
+}

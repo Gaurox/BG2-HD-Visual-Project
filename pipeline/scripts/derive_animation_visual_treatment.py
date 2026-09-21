@@ -225,7 +225,8 @@ def apply_geometry_preserving_rgb_gaussian(rgba: np.ndarray, sigma: float) -> np
 
 
 def apply_lower_edge_cover(
-    rgba: np.ndarray, reference: np.ndarray, rows: int, depth: int, zone: int
+    rgba: np.ndarray, reference: np.ndarray, rows: int, depth: int, zone: int,
+    min_row: int = 0,
 ) -> tuple[np.ndarray, int]:
     """Cover the lower silhouette edges of a strict-alpha animation with opaque water.
 
@@ -234,7 +235,9 @@ def apply_lower_edge_cover(
     silhouette (``reference``, the alpha before any feather) is extended ``rows`` rows
     downward, smoothed by the same spline fit, and merged with the current alpha inside
     ``zone`` px of the added ring.  There the RGB is repushed from ``depth`` px inside
-    the source edge, which also drops the BAM's light edge dots.
+    the source edge, which also drops the BAM's light edge dots.  ``min_row`` keeps the
+    ring to rows at or below it, for a feature whose own lower edge must stay untouched
+    (the AM1003A jet leaves the basin through a channel against a statue).
 
     Frame dimensions stay exactly those of the native BAM frame, so the ring is clipped
     at the canvas: the engine binds an x4 frame only when its logical size matches the
@@ -247,6 +250,9 @@ def apply_lower_edge_cover(
     for step in range(1, rows + 1):
         extended[step:] |= source[:-step]
     ring = extended & ~source
+    if min_row > 0:
+        ring[:min_row] = False
+        extended = source | ring
     canvas = np.pad(extended, 32)
     labels, count = label(canvas, structure=np.ones((3, 3), dtype=np.uint8))
     mask = np.zeros(canvas.shape, dtype=np.uint8)
@@ -533,7 +539,7 @@ def build(args: argparse.Namespace) -> Path:
                 treated, cover_ring_px = apply_lower_edge_cover(
                     rgba, read_rgba(reference_pack, reference_frame),
                     args.lower_edge_cover_rows, args.lower_edge_cover_depth_x4,
-                    args.lower_edge_cover_zone_x4,
+                    args.lower_edge_cover_zone_x4, args.lower_edge_cover_min_row_x4,
                 )
                 cover_ring_pixels += cover_ring_px
             elif using_inner_contour:
@@ -623,6 +629,7 @@ def build(args: argparse.Namespace) -> Path:
             "rows_x4": args.lower_edge_cover_rows,
             "rgb_depth_x4": args.lower_edge_cover_depth_x4,
             "zone_x4": args.lower_edge_cover_zone_x4,
+            "min_row_x4": args.lower_edge_cover_min_row_x4,
             "geometry": "native-bam-dimensions-preserved-ring-clipped-at-canvas",
             "alpha_reference_pack": str(reference_pack),
             "alpha_reference_pack_manifest_sha256": v2.sha256_file(reference_pack / "manifest.json"),
@@ -784,6 +791,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--lower-edge-cover-depth-x4", type=int, default=5)
     parser.add_argument("--lower-edge-cover-zone-x4", type=int, default=10)
+    parser.add_argument("--lower-edge-cover-min-row-x4", type=int, default=0,
+                        help="ne couvre que les lignes x4 >= N (0 = tout le bord bas)")
     parser.add_argument(
         "--alpha-reference-pack", type=Path,
         help="pack V2 portant l'alpha source avant feather (mêmes assets que --input)",

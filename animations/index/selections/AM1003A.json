@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM1003A",
+  "correction_id": "ar1003-am1003a-spline-fit1-feather6-lowercover5-minrow190",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM1003A/runs/ar1003-am1003a-spline-fit1-feather6-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "CE42ABF9DB8C402C4D77233D5C4FFDA1BBE70497C6FCC6B0B1153A7EE61B42EB",
+        "path": "animations/ressources/AM1003A/runs/ar1003-am1003a-spline-fit1-feather6-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/AM1003A/2026-09-21-accepted-ar1003-am1003a-spline-fit1-feather6-lowercover5-minrow190-20260921.json",
+    "sha256": "93D490F6A87ED3C7A381EAA71F199510FC86A8B500DE6FE8C23302744171E467",
+    "status": "accepted"
+  },
+  "resref": "AM1003A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/ressources/AM1003A/runs/ar1003-am1003a-spline-fit1-feather6-lowercover5-minrow190-20260921/manifest.json",
+    "manifest_sha256": "8B5F6D253B7695467B876663099862A220112838637C7A9F8ABE1ADDB9430ABB",
+    "path": "animations/ressources/AM1003A/runs/ar1003-am1003a-spline-fit1-feather6-lowercover5-minrow190-20260921",
+    "schema": "bg2-upscale-animation-visual-treatment-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR0506",
+        "manifest_path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR0506/manifest.json",
+        "manifest_sha256": "D89851E7A83B7AC5E3C4A6E3A8BBA5FFFB407063AE2C7C99097A4BF3F202BABF",
+        "path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR0506",
+        "registry_sha256": "A7D976F19AB74BC8C3EE2DA24F00E6F6646ED2810808FC92F80610DBA681D160",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR1003",
+        "manifest_path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR1003/manifest.json",
+        "manifest_sha256": "BAE719ED194CBAFD8F9E71B9FA6E1DFA4E751324AE205526932B81A1032DAC87",
+        "path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR1003",
+        "registry_sha256": "A7D976F19AB74BC8C3EE2DA24F00E6F6646ED2810808FC92F80610DBA681D160",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR2011",
+        "manifest_path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR2011/manifest.json",
+        "manifest_sha256": "E2C2929230767D0B7D5CAD957471B34110E053A588C01FA9DDA66CD24CDA7151",
+        "path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR2011",
+        "registry_sha256": "A7D976F19AB74BC8C3EE2DA24F00E6F6646ED2810808FC92F80610DBA681D160",
+        "resource_entries": 1
+      },
+      {
+        "area": "AR5010",
+        "manifest_path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR5010/manifest.json",
+        "manifest_sha256": "C91B2D6407FD1B63FD397FB95C153B657F53A4BA506AAE26ECF352BDDB9177E0",
+        "path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/AR5010",
+        "registry_sha256": "A7D976F19AB74BC8C3EE2DA24F00E6F6646ED2810808FC92F80610DBA681D160",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921/manifest.json",
+    "manifest_sha256": "2B8B69842748866BF26F7345A11F0476FAABC5231A684223BBAED16484104455",
+    "path": "animations/packs-par-zone/ar1003-am1003a-lowercover5-minrow190-split-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR0506",
+    "AR1003",
+    "AR2011",
+    "AR5010"
+  ],
+  "updated_at_utc": "2026-09-21T12:38:53Z"
+}

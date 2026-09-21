@@ -62,6 +62,7 @@ Les phases B0→B2f et leurs échecs intermédiaires restent dans
 | Coupe de canvas visible | `Oval Edge Fade 20/6` (`oval-edge-fade20x6`) : fade elliptique 20 px x4 haut/bas, 6 px x4 côtés | forme, paramètres ou défaut de coupe différents |
 | Taille d'une frame x4 | toujours celle de la frame BAM native : `resolve_timeline_subframe`/`resolve_native_subframe` comparent la taille logique au dessin CVidCell et **échouent en silence** (vanilla, aucune ligne de journal) ; ne jamais rembourrer le canevas (`--gaussian-padding-x4`), utiliser `--gaussian-preserve-geometry` | contrat moteur modifié |
 | Halo/trou de carte au bord d'une animation | `Lower Edge Cover` (`--lower-edge-cover-rows 5 --lower-edge-cover-depth-x4 5 --lower-edge-cover-zone-x4 10`) : alpha source étendu vers le bas, lissé par la même spline, RGB intérieur repoussé ; anneau rogné au canevas | halo au-dessus ou sur les côtés, ou carte corrigée à la source |
+| Cover qui déborde sur un autre élément de la frame (jet du bassin `AM1003A` contre une statue : polygones plats + tache bleue) | `--lower-edge-cover-min-row-x4 190` : anneau limité aux rangées x4 ≥ 190, juste au-dessus des coins gauche/droit du losange (~196-198) ; défaut 0 = `AM1004A` inchangé | autre géométrie de bassin : recalculer le seuil sur les coins |
 
 Le témoin de rétrocompatibilité TimedTimeline v2 est AR0603 ; les packs v3 prouvent le routage par
 occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
