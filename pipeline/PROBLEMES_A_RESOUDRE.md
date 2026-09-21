@@ -135,6 +135,18 @@ ne sont pas réconciliés par une décision explicite.
 - Contrôler les bords prémultipliés, les pixels RGB cachés et le filtrage de redimensionnement.
 - Une correction globale exige une preuve sur plusieurs familles d'assets.
 
+## ANIMATION-RELEASE-001 — Zones d'animation installées hors release
+
+Compilation du 2026-09-21 : 142 zones d'animation approuvées dans
+`releases/BG2-HD-Upscale/manifests/animation-release-candidates.json`. Restent hors release :
+
+| Cause | Zones | Pour les réintégrer |
+|---|---|---|
+| Preuves QA historiques perdues (ni disque, ni Git, ni archive) ; candidat repassé `validated-awaiting-manifest-approval` sur décision utilisateur | AR0307, AR0329, AR0411, AR0516, AR0603, AR1100, AR1200, AR1600, AR1700, AR2201, AR5200, AR5500, AR6300, OH6400 | QA ingame puis nouvelle décision, ou rétablir `approved-for-release` : `animation_release.py` accepte désormais une approbation legacy scellée dans Git même sans ses preuves subordonnées |
+| Aucune décision QA ne couvre la zone | AR0205, AR0308, AR0517–AR0521, AR0604, AR0805, AR0810, AR0811, AR1400, AR2013, AR3003, AR3027, OH5400, OH5500 | QA ingame de la zone |
+| Ressources sans QA ni base release | AR0601, AR1008, AR3016 | QA des ressources citées par `animation_release.py` |
+| Pas de pack de zone composé | AR0803, AR0809, AR3017 | composer le pack depuis les packs installés, puis `animation_release.py --pack` |
+
 ## ANIMATION-QA-001 — Catalogue alpha historique introuvable
 
 - Preuve requise : `animations/index/animation_alpha_corrections.csv`, SHA-256

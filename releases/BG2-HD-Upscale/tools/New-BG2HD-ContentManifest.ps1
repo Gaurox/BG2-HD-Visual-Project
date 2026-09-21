@@ -263,6 +263,7 @@ function Get-AnimationCandidateEntries {
         )
         $coveredQaResrefs = @()
         $qaDecisionFinalRuns = @{}
+        $runtimeResrefByAsset = @{}
         if ($qaSchemaVersion -eq 1) {
             $coveredQaResrefs = $candidateResrefs
         } else {
@@ -298,9 +299,13 @@ function Get-AnimationCandidateEntries {
                     $evidenceResrefs = @($evidence.accepted_resrefs | Sort-Object -Unique)
                     Require ($evidenceResrefs.Count -eq 1) "Une decision ingame doit couvrir un seul resref : $relativeEvidence"
                     $decisionResref = ([string]$decision.resref).ToUpperInvariant()
+                    # Une decision peut valider une ressource servie sous un autre resref runtime
+                    # (porteur fusionne, ex. AM2805C servi comme AM28ADD) : la preuve et le
+                    # candidat portent alors le resref runtime, champ prevu par le schema.
+                    $decisionRuntimeResref = if ([string]::IsNullOrWhiteSpace([string]$decision.runtime_resref)) { $decisionResref } else { ([string]$decision.runtime_resref).ToUpperInvariant() }
                     Require ($decision.result_kind -eq 'x4') "Decision ingame non x4 interdite en release : $relativeEvidence"
                     Require ($decision.status -eq 'accepted' -and $decision.decision_origin -eq 'explicit-user-ingame-qa') "Decision ingame non acceptee : $relativeEvidence"
-                    Require ($decisionResref -eq $evidenceResrefs[0] -and [string]$decision.asset_id -eq "animations:bam:$decisionResref") "Resref de decision ingame incoherent : $relativeEvidence"
+                    Require ($decisionRuntimeResref -eq $evidenceResrefs[0] -and [string]$decision.asset_id -eq "animations:bam:$decisionResref") "Resref de decision ingame incoherent : $relativeEvidence"
                     $expectedDecisionPath = "animations/index/qa-decisions/$decisionResref/$($decision.decision_id).json"
                     Require ($relativeEvidence -ceq $expectedDecisionPath) "Decision ingame rangee sous un autre asset ou identifiant : $relativeEvidence"
                     Require (@($decision.tested_areas) -contains [string]$candidate.area) "Zone absente de la decision ingame : $relativeEvidence"
@@ -336,9 +341,11 @@ function Get-AnimationCandidateEntries {
                     $decisionFinalManifest = Read-Json $decisionRunManifest
                     Require ([string]$decisionFinalManifest.schema -eq [string]$decision.final_run.schema -and [string]$decisionFinalManifest.status -eq [string]$decision.final_run.status) "Identite du run final QA incoherente : $relativeDecisionRun"
                     Require ([string]$decisionFinalManifest.status -in @('completed', 'validated', 'validated-installed')) "Run final QA non termine : $relativeDecisionRun"
-                    Require (@(Get-AnimationManifestResrefs $decisionFinalManifest) -contains $decisionResref) "Run final QA ne declare pas $decisionResref : $relativeDecisionRun"
-                    Require (-not $qaDecisionFinalRuns.ContainsKey($decisionResref)) "Decision ingame dupliquee : $decisionResref"
-                    $qaDecisionFinalRuns[$decisionResref] = @{
+                    $declaredFinalResrefs = @(Get-AnimationManifestResrefs $decisionFinalManifest)
+                    Require ($declaredFinalResrefs -contains $decisionResref -or $declaredFinalResrefs -contains $decisionRuntimeResref) "Run final QA ne declare pas $decisionResref : $relativeDecisionRun"
+                    Require (-not $qaDecisionFinalRuns.ContainsKey($decisionRuntimeResref)) "Decision ingame dupliquee : $decisionRuntimeResref"
+                    $runtimeResrefByAsset[$decisionResref] = $decisionRuntimeResref
+                    $qaDecisionFinalRuns[$decisionRuntimeResref] = @{
                         path = $relativeDecisionRun
                         manifest_path = $relativeDecisionRunManifest
                         manifest_sha256 = [string]$decision.final_run.manifest_sha256
@@ -430,6 +437,8 @@ function Get-AnimationCandidateEntries {
                 foreach ($assetId in $sourceRunAssetIds) {
                     $normalizedAssetId = ([string]$assetId).ToUpperInvariant()
                     Require ($normalizedAssetId -match '^(?=.*[A-Z0-9])[A-Z0-9_]{1,8}$') "Asset id invalide dans un run source : $assetId"
+                    # Un run source porte l'asset suivi ; le candidat et sa preuve portent le resref runtime.
+                    if ($runtimeResrefByAsset.ContainsKey($normalizedAssetId)) { $normalizedAssetId = [string]$runtimeResrefByAsset[$normalizedAssetId] }
                     Require (-not $candidateSourceRunByResref.ContainsKey($normalizedAssetId)) "Run source duplique pour $normalizedAssetId : $($candidate.area)"
                     $sourceRunResrefs.Add($normalizedAssetId)
                     $candidateSourceRunByResref[$normalizedAssetId] = @{
