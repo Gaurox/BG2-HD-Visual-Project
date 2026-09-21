@@ -4235,6 +4235,23 @@
     ]
    }
   },
+  "AR6111": {
+   "recorded_utc": "2026-09-21T20:09:25.167433+00:00",
+   "resources": {
+    "FPIT1M": {
+     "sig": "d64836e30571",
+     "frames": 12
+    }
+   },
+   "fingerprint": {
+    "files": 13,
+    "bytes": 1427580,
+    "max_mtime_ns": 1790021365123956100
+   },
+   "build": {
+    "leaf": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/AR6111"
+   }
+  },
   "AR6300": {
    "recorded_utc": "2026-09-18T21:48:57.517220+00:00",
    "resources": {
@@ -4278,37 +4295,61 @@
    }
   },
   "OH4000": {
-   "recorded_utc": "2026-09-18T23:06:12.386434+00:00",
+   "recorded_utc": "2026-09-21T20:09:19.094955+00:00",
    "resources": {
     "BUTRFLY": {
      "sig": "f8cb283031ba",
      "frames": 36
+    },
+    "FIRE": {
+     "sig": "119f5fae0d9f",
+     "frames": 18
+    },
+    "FPIT1M": {
+     "sig": "d64836e30571",
+     "frames": 12
     }
    },
    "fingerprint": {
-    "files": 37,
-    "bytes": 9437772,
-    "max_mtime_ns": 1789772772281642600
+    "files": 67,
+    "bytes": 11465576,
+    "max_mtime_ns": 1790021358882827900
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH4000"
+    "merged_from": [
+     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH4000",
+     "animations/packs-par-zone/fire-reboutcx-apo8-x4-30fps-v2-innerfeather2-premul-20260921/OH4000",
+     "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4000"
+    ]
    }
   },
   "OH4200": {
-   "recorded_utc": "2026-09-18T23:18:16.894660+00:00",
+   "recorded_utc": "2026-09-21T20:09:20.628029+00:00",
    "resources": {
+    "FIRE": {
+     "sig": "119f5fae0d9f",
+     "frames": 18
+    },
     "FIRE_3": {
      "sig": "c2cebb655fd3",
      "frames": 14
+    },
+    "FPIT1M": {
+     "sig": "d64836e30571",
+     "frames": 12
     }
    },
    "fingerprint": {
-    "files": 15,
-    "bytes": 731068,
-    "max_mtime_ns": 1789773496843926900
+    "files": 45,
+    "bytes": 2758872,
+    "max_mtime_ns": 1790021360497245300
    },
    "build": {
-    "leaf": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4200"
+    "merged_from": [
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4200",
+     "animations/packs-par-zone/fire-reboutcx-apo8-x4-30fps-v2-innerfeather2-premul-20260921/OH4200",
+     "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4200"
+    ]
    }
   },
   "OH4210": {
@@ -4444,7 +4485,7 @@
    }
   },
   "OH6100": {
-   "recorded_utc": "2026-09-18T22:53:11.359327+00:00",
+   "recorded_utc": "2026-09-21T20:09:24.092172+00:00",
    "resources": {
     "BUTRFLY": {
      "sig": "f8cb283031ba",
@@ -4453,17 +4494,22 @@
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
+    },
+    "FPIT1M": {
+     "sig": "d64836e30571",
+     "frames": 12
     }
    },
    "fingerprint": {
-    "files": 51,
-    "bytes": 9753392,
-    "max_mtime_ns": 1789771991208784200
+    "files": 63,
+    "bytes": 11180948,
+    "max_mtime_ns": 1790021363865947200
    },
    "build": {
     "merged_from": [
      "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH6100::BUTRFLY",
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6100::FIRE_4"
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH6100::FIRE_4",
+     "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH6100"
     ]
    }
   },
@@ -4571,20 +4617,27 @@
    }
   },
   "OH7300": {
-   "recorded_utc": "2026-09-18T23:06:18.930971+00:00",
+   "recorded_utc": "2026-09-21T20:09:21.956161+00:00",
    "resources": {
+    "FIRE": {
+     "sig": "119f5fae0d9f",
+     "frames": 18
+    },
     "FPIT1S": {
      "sig": "8f02b1171edc",
      "frames": 12
     }
    },
    "fingerprint": {
-    "files": 13,
-    "bytes": 338796,
-    "max_mtime_ns": 1789772778891105900
+    "files": 31,
+    "bytes": 939060,
+    "max_mtime_ns": 1790021361869375600
    },
    "build": {
-    "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300"
+    "merged_from": [
+     "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/OH7300",
+     "animations/packs-par-zone/fire-reboutcx-apo8-x4-30fps-v2-innerfeather2-premul-20260921/OH7300"
+    ]
    }
   },
   "OH8100": {
@@ -4693,5 +4746,5 @@
    }
   }
  },
- "updated_utc": "2026-09-21T19:26:04.925924+00:00"
+ "updated_utc": "2026-09-21T20:09:25.172408+00:00"
 }

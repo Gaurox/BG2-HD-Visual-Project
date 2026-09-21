@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FPIT1M",
+  "correction_id": "fpit1m-reboutcx-apo8-contour-aura24-20260921",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FPIT1M/runs/fpit1m-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack/manifest.json",
+        "manifest_sha256": "C5207C7E50C636244FC71C55759CA1452CBECC202FDA333F8D430F2F972EDF2D",
+        "path": "animations/ressources/FPIT1M/runs/fpit1m-reboutcx-apo8-x4-30fps-v2-20260921/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-21",
+    "path": "animations/index/qa-decisions/FPIT1M/2026-09-21-accepted-fpit1m-reboutcx-apo8-selection-accepted-20260921.json",
+    "sha256": "88222CE7514189BC111C376C6467161728AC42E5210C8C5A6573A75276FABCA5",
+    "status": "accepted"
+  },
+  "resref": "FPIT1M",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/fpit1m-reboutcx-apo8-selection-accepted-20260921/manifest.json",
+    "manifest_sha256": "EDF0E4ADC40E9B9710EA6ED8738F64C0A16CD7F9C88B8254636919220E886F8A",
+    "path": "animations/batches/fpit1m-reboutcx-apo8-selection-accepted-20260921",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6111",
+        "manifest_path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/AR6111/manifest.json",
+        "manifest_sha256": "7D77DBCB41B689A83FE24980FAA29EA9C07B6311EA83B59028F48B332FA5967C",
+        "path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/AR6111",
+        "registry_sha256": "2F3C5C914AD8F691FFB8039CE92FA3C9B061CEB97BF3C3F1A207E35E8D2AA135",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4000",
+        "manifest_path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4000/manifest.json",
+        "manifest_sha256": "8C20C1993751E41DD0F40F99A1FD2BDC46D0F6AA0A0DEB306BCD2A69A6C3911A",
+        "path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4000",
+        "registry_sha256": "2F3C5C914AD8F691FFB8039CE92FA3C9B061CEB97BF3C3F1A207E35E8D2AA135",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH4200",
+        "manifest_path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4200/manifest.json",
+        "manifest_sha256": "BCBACF3C657A58B348A6A9935C911F24F46A270F3A8D983E3C316937A646F168",
+        "path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH4200",
+        "registry_sha256": "2F3C5C914AD8F691FFB8039CE92FA3C9B061CEB97BF3C3F1A207E35E8D2AA135",
+        "resource_entries": 1
+      },
+      {
+        "area": "OH6100",
+        "manifest_path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH6100/manifest.json",
+        "manifest_sha256": "60E84C3CB41750B42F44F405996DD5F35B40498E82F0663FD3B63CC92DC703F9",
+        "path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/OH6100",
+        "registry_sha256": "2F3C5C914AD8F691FFB8039CE92FA3C9B061CEB97BF3C3F1A207E35E8D2AA135",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921/manifest.json",
+    "manifest_sha256": "C2ACC340537A87A8CE6706BE39537C2D82BF2A3C33499234FC466BEEF0E0E807",
+    "path": "animations/packs-par-zone/fpit1m-reboutcx-apo8-x4-30fps-v2-aura24-20260921",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR6111",
+    "OH4000",
+    "OH4200",
+    "OH6100"
+  ],
+  "updated_at_utc": "2026-09-21T20:22:59Z"
+}
