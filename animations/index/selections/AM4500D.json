@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM4500D",
+  "correction_id": "am4500d-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM4500D/runs/am4500d-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "657C2E3FFBD3B53E46B0A5656F2332B972CB26605EFB87C8C3D2B9387F6DE6E1",
+        "path": "animations/ressources/AM4500D/runs/am4500d-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/AM4500D/2026-09-22-accepted-am4500d-selection-accepted-20260922.json",
+    "sha256": "773DC12520A3016A378C2E7E2787EF1D68455FEBF5BFA1947D8F0D016E1060A7",
+    "status": "accepted"
+  },
+  "resref": "AM4500D",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/am4500d-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "6DBDBFFD8F5184ED99841F1FA957AB7699469A8C51FE5B78CE7825B80FAB31B5",
+    "path": "animations/batches/am4500d-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR4500",
+        "manifest_path": "animations/packs-par-zone/am4500d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR4500/manifest.json",
+        "manifest_sha256": "F6461AB0DCFBB01575A991AEAD11AA902E2F3250F91E744F2E9C0C7155F5D984",
+        "path": "animations/packs-par-zone/am4500d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR4500",
+        "registry_sha256": "77A27839255411D19EDFB6D97050DAEF757AFC66D42E8A4E86CC41A00C5B1661",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am4500d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "35D99DDF5FEBDD59D1D2909A389CF809FE59CEA022EEEEBBE6C3459FB44D8E4A",
+    "path": "animations/packs-par-zone/am4500d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR4500"
+  ],
+  "updated_at_utc": "2026-09-22T05:23:50Z"
+}

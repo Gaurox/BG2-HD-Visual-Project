@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM6200H",
+  "correction_id": "am6200h-reboutcx-apo8-spline-fit1-feather8-20260922",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6200H/runs/am6200h-reboutcx-apo8-spline-fit1-feather8-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "522038FE8E345A19DC61FA1DEA34C9217C65AC672C1C86F5C77F0EF675D21F81",
+        "path": "animations/ressources/AM6200H/runs/am6200h-reboutcx-apo8-spline-fit1-feather8-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/AM6200H/2026-09-22-accepted-am6200h-selection-accepted-20260922.json",
+    "sha256": "423CD19ADBD5782B268C94D51C4C75867C0E3F5AB4BC6AE2CD1128541699BEFF",
+    "status": "accepted"
+  },
+  "resref": "AM6200H",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/am6200h-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "C1F4E938AB1DA9ADCEED95AAEFA33B2D8E2257666BFB30C28AE1D16906E251E2",
+    "path": "animations/batches/am6200h-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6200",
+        "manifest_path": "animations/packs-par-zone/am6200h-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/AR6200/manifest.json",
+        "manifest_sha256": "178E2474FDB3583C731DA65C82D044E766F8E9CC536A3AFFA0703FBA83637FA7",
+        "path": "animations/packs-par-zone/am6200h-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/AR6200",
+        "registry_sha256": "0E470E6CC57DCDE531BB65E75EBDEBCF1851E1663F941F1DE529C7430CB83974",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am6200h-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/manifest.json",
+    "manifest_sha256": "24823CF316C854ACE496DB770AD02DB53010186B7354C03363A7DAAA470DB99D",
+    "path": "animations/packs-par-zone/am6200h-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR6200"
+  ],
+  "updated_at_utc": "2026-09-22T05:23:53Z"
+}

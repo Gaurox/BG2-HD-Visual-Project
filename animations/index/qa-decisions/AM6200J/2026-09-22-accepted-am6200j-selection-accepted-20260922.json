@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM6200J",
+  "correction_id": "am6200j-reboutcx-apo8-spline-fit1-feather8-20260922",
+  "decision": "Disque vert quasi statique : ReboutCX x4 puis Apollo-8 direct (18 phases), contour corrige par spline Fit 1 + fondu interieur 8 px x4 (RGB preserve, non Blended) apres correctif d'un escalier signale par l'utilisateur sur un premier fondu radial. Validee ingame par l'utilisateur le 2026-09-22.",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-am6200j-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am6200j-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "A5ECC9AD0786B424B864A75E620316DB4D686FAE76CAF28576FD6EFE0981E396",
+    "path": "animations/batches/am6200j-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6200J/runs/am6200j-reboutcx-apo8-spline-fit1-feather8-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "AD217212A42330ADB26A1C96DC18984DDB7FDA4095215D2B3208AB2835ED59B5",
+        "path": "animations/ressources/AM6200J/runs/am6200j-reboutcx-apo8-spline-fit1-feather8-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T05:23:54Z",
+  "resref": "AM6200J",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6200",
+        "manifest_path": "animations/packs-par-zone/am6200j-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/AR6200/manifest.json",
+        "manifest_sha256": "8719AD2C8F2C3F4B926DB9FB97AD2479E43CF26B8A5C2F16EF644E607322CFF1",
+        "path": "animations/packs-par-zone/am6200j-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/AR6200",
+        "registry_sha256": "6C5F836EBC5690D70B1754838594057207A8088F22710E700FFBD4212BAFC1FD",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am6200j-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922/manifest.json",
+    "manifest_sha256": "0738C8DE5D5B2D91401548FEFE544502A64DA1C2288860D1EF3968B383EC7DF0",
+    "path": "animations/packs-par-zone/am6200j-reboutcx-apo8-x4-30fps-v2-spline-fit1-feather8-split-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR6200"
+  ]
+}

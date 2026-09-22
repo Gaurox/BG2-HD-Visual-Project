@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM6200G",
+  "correction_id": "am6200g-seedvr7b-apo8-innerfeather16-premultiply-20260922",
+  "decision": "Plaque d'energie verte : SeedVR2 7B/LAB x4 puis Apollo-8 direct (10 phases), fondu interne 16 px x4 et RGB premultiplie (Blended). Validee ingame par l'utilisateur le 2026-09-22.",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-am6200g-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am6200g-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "5DDF577A25563D2FD7D9E86704D232A965520CE3483EE67EEC02792C923AC2D5",
+    "path": "animations/batches/am6200g-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6200G/runs/am6200g-seedvr7b-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "2F7FB9AB8CC22E499BD59DF3E0049FEC68AF06D2958F448946790A1D7B237BBE",
+        "path": "animations/ressources/AM6200G/runs/am6200g-seedvr7b-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T05:23:53Z",
+  "resref": "AM6200G",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6200",
+        "manifest_path": "animations/packs-par-zone/am6200g-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200/manifest.json",
+        "manifest_sha256": "C17DCF7BBD1C57C3302F063014AD1A84AEE18F5116276564B96C88324B108DDE",
+        "path": "animations/packs-par-zone/am6200g-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200",
+        "registry_sha256": "A50260ED069707FFBF1588BEBC1209E946C5D8AA5246EBA1BE39CDD7ECD21F31",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am6200g-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "D4D9F485A1DA4CDDCD62390EF70BA3D4ED6B0EC5DBB80D906F1BCC18C8870100",
+    "path": "animations/packs-par-zone/am6200g-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR6200"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM6200A",
+  "correction_id": "am6200a-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "decision": "Colonne d'energie verte : ReboutCX x4 puis Apollo-8 avec maintiens x2 condenses (2 cycles de 40 phases), fondu interne 16 px x4 et RGB premultiplie (Blended). Validee ingame par l'utilisateur le 2026-09-22.",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-am6200a-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am6200a-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "C40A2C206CFDBBB721BF57ACC2059CF3B9D1F0D2284276217CA977233673EDA9",
+    "path": "animations/batches/am6200a-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6200A/runs/am6200a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "2E4E1EC26C604FA4BA26813E650DA34CF6B153BEE1F1C422352312BBFD2C95DC",
+        "path": "animations/ressources/AM6200A/runs/am6200a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T05:23:51Z",
+  "resref": "AM6200A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6200",
+        "manifest_path": "animations/packs-par-zone/am6200a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200/manifest.json",
+        "manifest_sha256": "07618EFFB92D95F2ECBC3D3670D83EBD198CF2E60A0AF0F80F225D44DAD4BED8",
+        "path": "animations/packs-par-zone/am6200a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200",
+        "registry_sha256": "13FE55B6D9B912308A1666605403F002D8DDFFB0B7A7017A8BA1F903999696CA",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am6200a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "9B4ABAF517BB78F0B09EBF7A2F3D78812AD2B97C292B3AC70D190FD881E9DBAB",
+    "path": "animations/packs-par-zone/am6200a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR6200"
+  ]
+}

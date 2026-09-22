@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM6200F",
+  "correction_id": "am6200f-seedvr7b-apo8-innerfeather16-premultiply-20260922",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM6200F/runs/am6200f-seedvr7b-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "F20E4E2FB8AEBDCF51FF7F629CE50BE28FA3C092456B96B798B57C4A5A40814D",
+        "path": "animations/ressources/AM6200F/runs/am6200f-seedvr7b-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/AM6200F/2026-09-22-accepted-am6200f-selection-accepted-20260922.json",
+    "sha256": "25CFBE6884D863B322B340F3D6FCDC39C26839EAB0FC33D86E5F89DF4A3C9FBE",
+    "status": "accepted"
+  },
+  "resref": "AM6200F",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/am6200f-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "06BC0EC578594C0890DB69B6905CC042F637A3337B5FC64C1785B80E8134FEAA",
+    "path": "animations/batches/am6200f-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR6200",
+        "manifest_path": "animations/packs-par-zone/am6200f-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200/manifest.json",
+        "manifest_sha256": "C3D93D402EB2DCECB4DAD91C8591FF68D09254E81CFD807A02F2E543E4EFC0A3",
+        "path": "animations/packs-par-zone/am6200f-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR6200",
+        "registry_sha256": "1BD6E3DA30DF0C22A28E6C3C84A63A23E7A3836F3FE6532BA5005BCC8F21488D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am6200f-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "E877A3123F4DBE447C3960CE72A9984A7727EC36C085A8EB789B5ACFF0AAB55B",
+    "path": "animations/packs-par-zone/am6200f-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR6200"
+  ],
+  "updated_at_utc": "2026-09-22T05:23:52Z"
+}
