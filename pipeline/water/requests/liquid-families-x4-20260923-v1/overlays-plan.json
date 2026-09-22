@@ -1,0 +1,428 @@
+{
+  "schema": "bg2-liquid-periodic-x4-trial-plan-v1",
+  "seed": 959948902156062,
+  "color_correction_method": "none",
+  "native_timeline": true,
+  "groups": [
+    {
+      "id": "lake",
+      "wed": "AR1600",
+      "resrefs": [
+        "WTLAKE"
+      ],
+      "aliases": {
+        "WTLAKE": "Q9LAKE"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAKE"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "id": "lake_rain",
+      "wed": "AR1600",
+      "resrefs": [
+        "WTLAKER"
+      ],
+      "aliases": {
+        "WTLAKER": "Q9LAKER"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAKER"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "id": "pool",
+      "wed": "AR1000",
+      "resrefs": [
+        "WTPOOL"
+      ],
+      "aliases": {
+        "WTPOOL": "Q9POOL"
+      },
+      "method": "bilinear",
+      "layout": [
+        [
+          "WTPOOL"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "id": "pool_rain",
+      "wed": "AR1000",
+      "resrefs": [
+        "WTPOOLR"
+      ],
+      "aliases": {
+        "WTPOOLR": "Q9POOLR"
+      },
+      "method": "bilinear",
+      "layout": [
+        [
+          "WTPOOLR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "id": "swamp",
+      "wed": "AR1607",
+      "resrefs": [
+        "WTSWAM"
+      ],
+      "aliases": {
+        "WTSWAM": "Q9SWAM"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTSWAM"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "id": "swamp_rain",
+      "wed": "AR1607",
+      "resrefs": [
+        "WTSWAMR"
+      ],
+      "aliases": {
+        "WTSWAMR": "Q9SWAMR"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTSWAMR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "id": "sewage",
+      "wed": "AR0404",
+      "resrefs": [
+        "WTSEW"
+      ],
+      "aliases": {
+        "WTSEW": "Q9SEWG"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTSEW"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTSEW"
+      ]
+    },
+    {
+      "id": "sewage_rain",
+      "wed": "AR0404",
+      "resrefs": [
+        "WTSEWR"
+      ],
+      "aliases": {
+        "WTSEWR": "Q9SEWGR"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTSEWR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTSEW"
+      ]
+    },
+    {
+      "id": "oil",
+      "wed": "AR0413",
+      "resrefs": [
+        "WTOIL"
+      ],
+      "aliases": {
+        "WTOIL": "Q9OIL0"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTOIL"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTOIL"
+      ]
+    },
+    {
+      "id": "oil_rain",
+      "wed": "AR0413",
+      "resrefs": [
+        "WTOILR"
+      ],
+      "aliases": {
+        "WTOILR": "Q9OIL0R"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTOILR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTOIL"
+      ]
+    },
+    {
+      "id": "lake_teal",
+      "wed": "AR3000",
+      "resrefs": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ],
+      "aliases": {
+        "WTLAKA": "Q9LKA0",
+        "WTLAKB": "Q9LKB0",
+        "WTLAKC": "Q9LKC0",
+        "WTLAKD": "Q9LKD0"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAKA",
+          "WTLAKB"
+        ],
+        [
+          "WTLAKC",
+          "WTLAKD"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ]
+    },
+    {
+      "id": "lake_teal_rain",
+      "wed": "AR3000",
+      "resrefs": [
+        "WTLAKAR",
+        "WTLAKBR",
+        "WTLAKCR",
+        "WTLAKDR"
+      ],
+      "aliases": {
+        "WTLAKAR": "Q9LKA0R",
+        "WTLAKBR": "Q9LKB0R",
+        "WTLAKCR": "Q9LKC0R",
+        "WTLAKDR": "Q9LKD0R"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAKAR",
+          "WTLAKBR"
+        ],
+        [
+          "WTLAKCR",
+          "WTLAKDR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ]
+    },
+    {
+      "id": "lava",
+      "wed": "AR0011",
+      "resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ],
+      "aliases": {
+        "WTLAVA": "Q9LVA0",
+        "WTLAVB": "Q9LVB0",
+        "WTLAVC": "Q9LVC0",
+        "WTLAVD": "Q9LVD0"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAVA",
+          "WTLAVB"
+        ],
+        [
+          "WTLAVC",
+          "WTLAVD"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "id": "lava_rain",
+      "wed": "AR0011",
+      "resrefs": [
+        "WTLAVAR",
+        "WTLAVBR",
+        "WTLAVCR",
+        "WTLAVDR"
+      ],
+      "aliases": {
+        "WTLAVAR": "Q9LVA0R",
+        "WTLAVBR": "Q9LVB0R",
+        "WTLAVCR": "Q9LVC0R",
+        "WTLAVDR": "Q9LVD0R"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WTLAVAR",
+          "WTLAVBR"
+        ],
+        [
+          "WTLAVCR",
+          "WTLAVDR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "id": "brown_flow",
+      "wed": "AR5203",
+      "resrefs": [
+        "WT5000A",
+        "WT5000B",
+        "WT5000C",
+        "WT5000D"
+      ],
+      "aliases": {
+        "WT5000A": "Q9500A",
+        "WT5000B": "Q9500B",
+        "WT5000C": "Q9500C",
+        "WT5000D": "Q9500D"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WT5000A",
+          "WT5000B"
+        ],
+        [
+          "WT5000C",
+          "WT5000D"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WT5000A",
+        "WT5000B",
+        "WT5000C",
+        "WT5000D"
+      ]
+    },
+    {
+      "id": "brown_flow_rain",
+      "wed": "AR5203",
+      "resrefs": [
+        "WT5000AR",
+        "WT5000BR",
+        "WT5000CR",
+        "WT5000DR"
+      ],
+      "aliases": {
+        "WT5000AR": "Q9500AR",
+        "WT5000BR": "Q9500BR",
+        "WT5000CR": "Q9500CR",
+        "WT5000DR": "Q9500DR"
+      },
+      "method": "seedvr",
+      "layout": [
+        [
+          "WT5000AR",
+          "WT5000BR"
+        ],
+        [
+          "WT5000CR",
+          "WT5000DR"
+        ]
+      ],
+      "seam_mode": "compatible",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WT5000A",
+        "WT5000B",
+        "WT5000C",
+        "WT5000D"
+      ]
+    }
+  ]
+}

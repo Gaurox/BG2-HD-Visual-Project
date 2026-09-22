@@ -1,0 +1,76 @@
+{
+  "schema": "bg2-liquid-overlay-trial-plan-v1",
+  "selection_reason": "SeedVR none and inferred seam collars left a visible lava grid; preserve authored native texture with periodic bilinear x4 for user trial.",
+  "groups": [
+    {
+      "id": "lava",
+      "wed": "AR0011",
+      "resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ],
+      "aliases": {
+        "WTLAVA": "Q9LVA0",
+        "WTLAVB": "Q9LVB0",
+        "WTLAVC": "Q9LVC0",
+        "WTLAVD": "Q9LVD0"
+      },
+      "method": "bilinear",
+      "layout": [
+        [
+          "WTLAVA",
+          "WTLAVB"
+        ],
+        [
+          "WTLAVC",
+          "WTLAVD"
+        ]
+      ],
+      "seam_mode": "preserve",
+      "weather": "dry",
+      "source_wed_resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "id": "lava_rain",
+      "wed": "AR0011",
+      "resrefs": [
+        "WTLAVAR",
+        "WTLAVBR",
+        "WTLAVCR",
+        "WTLAVDR"
+      ],
+      "aliases": {
+        "WTLAVAR": "Q9LVA0R",
+        "WTLAVBR": "Q9LVB0R",
+        "WTLAVCR": "Q9LVC0R",
+        "WTLAVDR": "Q9LVD0R"
+      },
+      "method": "bilinear",
+      "layout": [
+        [
+          "WTLAVAR",
+          "WTLAVBR"
+        ],
+        [
+          "WTLAVCR",
+          "WTLAVDR"
+        ]
+      ],
+      "seam_mode": "preserve",
+      "weather": "rain",
+      "source_wed_resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    }
+  ]
+}

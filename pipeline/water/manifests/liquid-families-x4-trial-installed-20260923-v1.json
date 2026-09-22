@@ -1,0 +1,1085 @@
+{
+  "schema": "bg2-liquid-family-trial-installed-v1",
+  "recorded_utc": "2026-09-22T23:44:32.550477+00:00",
+  "status": "installed-pending-user-ingame-qa",
+  "qa": "pending-user-ingame",
+  "game_launched_by_agent": false,
+  "release": "not-requested",
+  "guide": "pipeline/water/BASE_PIPELINES_SURFACES_LIQUIDES.md",
+  "trial_note": "pipeline/water/ESSAIS_FAMILLES_X4_20260923.md",
+  "run": "maps/water-batches/runs/liquid-families-x4-20260923-v1",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "vanilla_root": "G:/AI/BG2_Vanilla_23534562",
+  "request": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/request.json",
+    "bytes": 7215,
+    "sha256": "8e9f05c71759dcbe282692508127b2afb739fcb14a9998baa7393e2579886c71"
+  },
+  "source_overlay_plan": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-plan.json",
+    "bytes": 7718,
+    "sha256": "734cda1520264a30d5a48abadf22dd64eca23c3a0af78b71e53694deefb5eca8"
+  },
+  "lava_fallback_plan": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-lava-bilinear-plan.json",
+    "bytes": 1595,
+    "sha256": "acedc768da91f45dce5c85167c3051391ce125a62883522d0a17440614ab33f1"
+  },
+  "selected_overlays": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
+    "bytes": 14104,
+    "sha256": "389ceeee74785be6e5fa439762c0ca8ec4f328fb0bf4a1b10c0f6c3016877678"
+  },
+  "base_repair": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/bases-v4/base-repair-report.json",
+    "bytes": 359450,
+    "sha256": "0d0d2e57e02ecafa3473d6a8e151fb6390dca172c30fc3068983cfbf49697c28"
+  },
+  "baseline": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/live-before.json",
+    "bytes": 69785,
+    "sha256": "a23ee14383dda270e694fb2af838989f846b39ab56e98e1a8ad5fc56fefdda9f"
+  },
+  "assembly": {
+    "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/override-candidate-v3-assembly-report.json",
+    "bytes": 53295,
+    "sha256": "2381bc89bf8cacead79668b6e0ac76e6028fe6383d696d93e2e6c59ab874289f"
+  },
+  "runtime_contract": {
+    "dll": "preserve-installed",
+    "ini": "preserve-installed",
+    "mode": "native-composition-alias-unregistered-route2-q0",
+    "timeline": "preserve-vanilla-lookup-and-speed"
+  },
+  "protected_runtime": {
+    "InfinityEngine-Enhancer.dll": {
+      "present": true,
+      "sha256": "c6aa1cfa15083e12f9015f7d9b85a343beb849cce80b5ec717ef4fbab06ee0a6",
+      "bytes": 1827328
+    },
+    "InfinityEngine-Enhancer.ini": {
+      "present": true,
+      "sha256": "47979da9d49ef826014b675d4b0f495842509eed95a6574afdf71d72b4204b08",
+      "bytes": 5591
+    }
+  },
+  "scoped_baseline_files": 385,
+  "protected_shared_override_files": 48,
+  "verification": {
+    "override_payload_hashes": true,
+    "unchanged_scoped_and_shared_override": true,
+    "dll_ini_preserved": true,
+    "local_payload_exact": true,
+    "animation_wip_preserved": true
+  },
+  "override_install": {
+    "candidate_manifest": {
+      "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/override-candidate-v3/manifest.json",
+      "bytes": 16214,
+      "sha256": "303b0255d694c46bfffb63c08470cd8b15422adadd21b65d4c36b3ecc81c068a"
+    },
+    "receipt": {
+      "path": "backups/water/liquid-families-x4-20260923-v1/override/override-backup-20260923-014259/install-backup.json",
+      "bytes": 26295,
+      "sha256": "a79b08b9aa34266b59be4b42a4b5fac8a1c8caab07890cb6ca593035599158d1"
+    },
+    "file_count": 116,
+    "files": {
+      "Q9LAKE.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QLAKE00.PVRZ": {
+        "bytes": 167019,
+        "sha256": "0fc82c2d4d92f16b0ea65ca6e89003485cbe06e640435479de40aeccb13d1d83"
+      },
+      "Q9LAKER.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QLAKER00.PVRZ": {
+        "bytes": 178997,
+        "sha256": "b541f7291a742c9a2a34b0a9530b7054cb4a95a98f8bb14cc5c95587eb5bcc91"
+      },
+      "AR1600.WED": {
+        "bytes": 81496,
+        "sha256": "00140ddf284c592d2aca8edb06aa9d6565f838076245567a84eaaff891e91f60"
+      },
+      "Q9POOL.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QPOOL00.PVRZ": {
+        "bytes": 128446,
+        "sha256": "ec33bd1e5e62f608c9f49cf24b4ff4c1720604ec18775def267373c159ef9f06"
+      },
+      "Q9POOLR.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QPOOLR00.PVRZ": {
+        "bytes": 141708,
+        "sha256": "57c189888597f630f05c7bc9f728bf70f0031e9960ece2d25a33b94d6d85cfa6"
+      },
+      "AR1000.WED": {
+        "bytes": 83824,
+        "sha256": "2d54f9a648d183ecbbf21331993e7867fbd28376d77d6205c313a81f40b1815c"
+      },
+      "Q9SWAM.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QSWAM00.PVRZ": {
+        "bytes": 122696,
+        "sha256": "d307acd32a526d6901f7476451094574620791846292bf544158bbec52740f76"
+      },
+      "Q9SWAMR.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QSWAMR00.PVRZ": {
+        "bytes": 153690,
+        "sha256": "983881e6d68b80ded0cf5623b1fdef597088885daebd5266439665452e7dca91"
+      },
+      "AR1607.WED": {
+        "bytes": 23840,
+        "sha256": "97f509def780d47393b69325a12bbd7ed412245991b2157fefcd2795706f6b56"
+      },
+      "A040417.PVRZ": {
+        "bytes": 660173,
+        "sha256": "f7a465a44c3e8b1b497d5ee22f28abffceff13fec8088e8635a2299d982ce670"
+      },
+      "A040418.PVRZ": {
+        "bytes": 363914,
+        "sha256": "a1d78e8697b3f0be4cb00f59473a7d1798593076935a8c2ea85e45d7478a32f5"
+      },
+      "Q9SEWG.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QSEWG00.PVRZ": {
+        "bytes": 150160,
+        "sha256": "cecc2c13e4c7570d5779a9d9f44219db3b30e1edf410debb2ad53b36723f9be1"
+      },
+      "Q9SEWGR.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QSEWGR00.PVRZ": {
+        "bytes": 150160,
+        "sha256": "cecc2c13e4c7570d5779a9d9f44219db3b30e1edf410debb2ad53b36723f9be1"
+      },
+      "AR0404.WED": {
+        "bytes": 34486,
+        "sha256": "6a1800d5be5cb4b03f89b800b149400f7bf6e2bc076f5c5dbda6328047706f3b"
+      },
+      "A041310.PVRZ": {
+        "bytes": 478895,
+        "sha256": "06dce53f87f5d62b6c9b4904503bea940b6bc746e2d0e72266d9a6b27437c21d"
+      },
+      "A041311.PVRZ": {
+        "bytes": 524238,
+        "sha256": "d93889f0930657b832604e970c8b41eb9e7eb1bbe81d734c679cb237481613f7"
+      },
+      "A041312.PVRZ": {
+        "bytes": 542630,
+        "sha256": "b6591000bb07e6c777376cb463e98764c08d00a630a057fb2c4c353a26fd1441"
+      },
+      "A041313.PVRZ": {
+        "bytes": 515381,
+        "sha256": "87c36f15c8e2a5f3d7ecbca189aa4b2dbc834e41840688f3711ff52519a37815"
+      },
+      "A041314.PVRZ": {
+        "bytes": 499001,
+        "sha256": "33a4820204328c1f0cb34a6c18a322b81b4f5d5bde6c31a0b51acba647bf20ee"
+      },
+      "A041315.PVRZ": {
+        "bytes": 297009,
+        "sha256": "b1068814d11004a8b4cef438d6eff22c855a8bce1d77afdf87a6448d635d26ac"
+      },
+      "Q9OIL0.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QOIL000.PVRZ": {
+        "bytes": 139942,
+        "sha256": "ebbeecae8a8bedafb25bc3f0f495269960b0dcd75f5de55c4af62e0e93c6304b"
+      },
+      "Q9OIL0R.TIS": {
+        "bytes": 96,
+        "sha256": "1743a734b7e94fa60ab927b6615933dbdf7b5bf998019c66428413801bb62ee1"
+      },
+      "QOIL0R00.PVRZ": {
+        "bytes": 139942,
+        "sha256": "ebbeecae8a8bedafb25bc3f0f495269960b0dcd75f5de55c4af62e0e93c6304b"
+      },
+      "AR0413.WED": {
+        "bytes": 8206,
+        "sha256": "575c38c2dc42c2b18d77a684e229b4774a946a26faf58d628a62aa534803d560"
+      },
+      "Q9LKA0.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKA000.PVRZ": {
+        "bytes": 191300,
+        "sha256": "057b9a6c83356fd562816de28e89c12a7848606e68de2488f6f09f48c58be4ae"
+      },
+      "Q9LKA0R.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKA0R00.PVRZ": {
+        "bytes": 191300,
+        "sha256": "057b9a6c83356fd562816de28e89c12a7848606e68de2488f6f09f48c58be4ae"
+      },
+      "Q9LKB0.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKB000.PVRZ": {
+        "bytes": 194489,
+        "sha256": "d301758c725c0a3232385076f679e64e01836c15aece594255bb0f40e6a57040"
+      },
+      "Q9LKB0R.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKB0R00.PVRZ": {
+        "bytes": 194489,
+        "sha256": "d301758c725c0a3232385076f679e64e01836c15aece594255bb0f40e6a57040"
+      },
+      "Q9LKC0.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKC000.PVRZ": {
+        "bytes": 195017,
+        "sha256": "e3455abbf8657bac6cc98531107ef222a6cb68b2b37681425003e65946fc4400"
+      },
+      "Q9LKC0R.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKC0R00.PVRZ": {
+        "bytes": 195017,
+        "sha256": "e3455abbf8657bac6cc98531107ef222a6cb68b2b37681425003e65946fc4400"
+      },
+      "Q9LKD0.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKD000.PVRZ": {
+        "bytes": 194020,
+        "sha256": "7ddc8a78ddcdcf7b9c9470ee226a111eedeee40942374f62ccc1984a65680bf0"
+      },
+      "Q9LKD0R.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "QLKD0R00.PVRZ": {
+        "bytes": 194020,
+        "sha256": "7ddc8a78ddcdcf7b9c9470ee226a111eedeee40942374f62ccc1984a65680bf0"
+      },
+      "AR3000.WED": {
+        "bytes": 60852,
+        "sha256": "c1494e66400fda14645a37802689c237aa7f14a0d39f12eed2b121c2ebc06b3e"
+      },
+      "Q9LVA0.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVA000.PVRZ": {
+        "bytes": 303165,
+        "sha256": "f4a120076903b11eb6db569b7163fdc5cff828d75bc9ad72a1a58df6e10629e2"
+      },
+      "Q9LVA0R.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVA0R00.PVRZ": {
+        "bytes": 303165,
+        "sha256": "f4a120076903b11eb6db569b7163fdc5cff828d75bc9ad72a1a58df6e10629e2"
+      },
+      "Q9LVB0.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVB000.PVRZ": {
+        "bytes": 304390,
+        "sha256": "c15430ac39ee6c88f378521aa36c4aaa861cc9a4b2d5caba26f6cf9f5fd3b07e"
+      },
+      "Q9LVB0R.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVB0R00.PVRZ": {
+        "bytes": 304390,
+        "sha256": "c15430ac39ee6c88f378521aa36c4aaa861cc9a4b2d5caba26f6cf9f5fd3b07e"
+      },
+      "Q9LVC0.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVC000.PVRZ": {
+        "bytes": 306984,
+        "sha256": "5ba7608ca349515be53543175f401a6f756eada818b5fdfd121cd1a5f520ff5e"
+      },
+      "Q9LVC0R.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVC0R00.PVRZ": {
+        "bytes": 306984,
+        "sha256": "5ba7608ca349515be53543175f401a6f756eada818b5fdfd121cd1a5f520ff5e"
+      },
+      "Q9LVD0.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVD000.PVRZ": {
+        "bytes": 305018,
+        "sha256": "8a5b4e97a7b361c6446e9f4d30b28a2c20796313a197e9e3242df151fd18b59e"
+      },
+      "Q9LVD0R.TIS": {
+        "bytes": 168,
+        "sha256": "2e4747d68ab583a73da5da8b68a13325ee96386552758167e34f9650a53acb0b"
+      },
+      "QLVD0R00.PVRZ": {
+        "bytes": 305018,
+        "sha256": "8a5b4e97a7b361c6446e9f4d30b28a2c20796313a197e9e3242df151fd18b59e"
+      },
+      "AR0011.WED": {
+        "bytes": 37986,
+        "sha256": "daa8244267c8718f2bba16229eb015b65e071ee682bdbbcbd1c9e7ea5430325f"
+      },
+      "A520300.PVRZ": {
+        "bytes": 935310,
+        "sha256": "b38c347fd79390f8759686b232c00396482f080d9a7833892d45f06f843cc49d"
+      },
+      "A520301.PVRZ": {
+        "bytes": 950714,
+        "sha256": "aa711503e4e208cf612cfc6dfe30f575191aff70003146ec0a336c9c34bf79c9"
+      },
+      "A520302.PVRZ": {
+        "bytes": 942378,
+        "sha256": "9664a108170da0be268adf2d89a838b8aab7c799b2f04c596f673405f9cc8db2"
+      },
+      "A520303.PVRZ": {
+        "bytes": 924348,
+        "sha256": "d394b2804dd64184ca303452f1fd16ad577c6ef6d575238f93ad0f9089db95be"
+      },
+      "A520304.PVRZ": {
+        "bytes": 952579,
+        "sha256": "4afedac6a3285b69122964a5b497c117c331ac8f40f23254af1fdcab826637ea"
+      },
+      "A520305.PVRZ": {
+        "bytes": 972317,
+        "sha256": "531c86e8a5a525cba6b473cf9544969d7701e1d3d5161d5b202b2f720f90abeb"
+      },
+      "A520306.PVRZ": {
+        "bytes": 856569,
+        "sha256": "e0ad30f1490e72cf01f4687034c6fa0abd46287c1f9793786d191c50b05e7865"
+      },
+      "A520307.PVRZ": {
+        "bytes": 780065,
+        "sha256": "b2546286607c8b4a5a266674804262e3814548e98d4c2c7a4a083a3009a70f1a"
+      },
+      "A520308.PVRZ": {
+        "bytes": 887615,
+        "sha256": "c49c391f6f43431da2fb7cf700ddc4263d484b78047d96ad2b6b4cb642a5889c"
+      },
+      "A520309.PVRZ": {
+        "bytes": 877085,
+        "sha256": "34326c0c184e83a67e5457946a246d9c5c26ecfc8d7bf58a6ec5b0e0500b9018"
+      },
+      "A520310.PVRZ": {
+        "bytes": 888574,
+        "sha256": "283b771b0eaff1e9e13f83285535f714331964e3b122df284a3a5451555489d9"
+      },
+      "A520311.PVRZ": {
+        "bytes": 953456,
+        "sha256": "2e4ac4f2d97087d6c85f8ab8b704d0a932916d518257677a8d2ba053d9f9581b"
+      },
+      "A520312.PVRZ": {
+        "bytes": 884579,
+        "sha256": "3ffb4e7ed404e7c9d28f98d6449b0ceb1aa8bfff07d6f8e2a9c16724a4ca2032"
+      },
+      "A520313.PVRZ": {
+        "bytes": 772722,
+        "sha256": "3bcc4994cfb17e655d8623afe5d4567c0c31569f0f9c2a6a9ea58fa37e317f80"
+      },
+      "A520314.PVRZ": {
+        "bytes": 957752,
+        "sha256": "a5ff226224be99a63f5340635f026ced43f392c810f13855c1d51d278127424d"
+      },
+      "A520315.PVRZ": {
+        "bytes": 933485,
+        "sha256": "5e21fab3c05b1f47711cb30b786eb2cbae67bd90d90dbc847441c835e2db046c"
+      },
+      "A520316.PVRZ": {
+        "bytes": 1040558,
+        "sha256": "b18edf5755cd7481f8e178d711d99e1da3243675e39008071702d6fbf654657b"
+      },
+      "A520317.PVRZ": {
+        "bytes": 1028410,
+        "sha256": "a1984575f75b26c3dfd382facad0e959a8c3717172b35b2937750982dfbf224b"
+      },
+      "A520319.PVRZ": {
+        "bytes": 1239551,
+        "sha256": "4ec358489e35215738dc9572c1d42cbf37d2378ea5b72b939bb5fda3148a2d17"
+      },
+      "A520321.PVRZ": {
+        "bytes": 1249438,
+        "sha256": "67c4988965a0bed91c4a5782475638d0f66a8636bb65f758bed8ae51b2611a5a"
+      },
+      "A520322.PVRZ": {
+        "bytes": 1173003,
+        "sha256": "313d3018cf377e0850bc125d099b4ec0a96e7577c3290cdfdc8cfc0433964b34"
+      },
+      "A520323.PVRZ": {
+        "bytes": 1088447,
+        "sha256": "4a15ef4e8b1909deee0e154df56f1424642379907ac11cc92e35bc1cda99aa9b"
+      },
+      "A520324.PVRZ": {
+        "bytes": 1058188,
+        "sha256": "9d75865ff490bff96b67d37da22dd3b8e65005b9b70e5bd3e1187a22cac51f1c"
+      },
+      "A520325.PVRZ": {
+        "bytes": 1094476,
+        "sha256": "88326db3732af43bd5f35f7c91267f73778e012845a119dc0393340624e6cd72"
+      },
+      "A520326.PVRZ": {
+        "bytes": 1338760,
+        "sha256": "3fd829dedb329adb28353d008013f7d678e33503aac0974ae9ca2ee543d6e0b5"
+      },
+      "A520327.PVRZ": {
+        "bytes": 1354385,
+        "sha256": "fea1918c9abc9381b73777eeb9e267d4c00a4214a155d1048cde373c3471f2a0"
+      },
+      "A520328.PVRZ": {
+        "bytes": 1251818,
+        "sha256": "c5ad8e471ee7a55befd68e5c3f73328f8a3aa4ab1ba55a5471e12eab8aade310"
+      },
+      "A520329.PVRZ": {
+        "bytes": 1242266,
+        "sha256": "3eb3d5f95631c7742afc4ec9c29ba250167e41ba33052dad4e89dcab68f6ad41"
+      },
+      "A520330.PVRZ": {
+        "bytes": 1218542,
+        "sha256": "5e1cb21235ad27a7fd65a817608c09f1a93c68457586defae97a4263a421580e"
+      },
+      "A520331.PVRZ": {
+        "bytes": 1192655,
+        "sha256": "592bd287a8d1dacf08ff2d379826cd0085ca3bb00877da0a3b83b0baf7042a36"
+      },
+      "A520333.PVRZ": {
+        "bytes": 1325053,
+        "sha256": "f6d1d6a9f0dec77f63e7152080c23f9c5c5e4778d9757a7b02dd19aa08fafef7"
+      },
+      "A520334.PVRZ": {
+        "bytes": 1351766,
+        "sha256": "98ea0c37a3942c4dedd714a6ba99bf0ed6e98a628bf38748d5cd176535215f3c"
+      },
+      "Q9500A.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500A00.PVRZ": {
+        "bytes": 162232,
+        "sha256": "1ba4fb10177f2f694aa1c9c22389c2544bd5d68152412eb8701dc99501b6b1d5"
+      },
+      "Q9500AR.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500AR00.PVRZ": {
+        "bytes": 162232,
+        "sha256": "1ba4fb10177f2f694aa1c9c22389c2544bd5d68152412eb8701dc99501b6b1d5"
+      },
+      "Q9500B.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500B00.PVRZ": {
+        "bytes": 163477,
+        "sha256": "bdec817ae641c7cc423e45014e531c148d608a50f7896cda3109d8179e4724bb"
+      },
+      "Q9500BR.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500BR00.PVRZ": {
+        "bytes": 163477,
+        "sha256": "bdec817ae641c7cc423e45014e531c148d608a50f7896cda3109d8179e4724bb"
+      },
+      "Q9500C.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500C00.PVRZ": {
+        "bytes": 166905,
+        "sha256": "fbbcf3bfc24c56ec0f0ebee2676aceccf06578235c4e237d6695bb29d7a304a8"
+      },
+      "Q9500CR.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500CR00.PVRZ": {
+        "bytes": 166905,
+        "sha256": "fbbcf3bfc24c56ec0f0ebee2676aceccf06578235c4e237d6695bb29d7a304a8"
+      },
+      "Q9500D.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500D00.PVRZ": {
+        "bytes": 169083,
+        "sha256": "a2bdd059a266baa3ecddff9b6282bb4a7f9756799e920b5c709dd55cd1b68642"
+      },
+      "Q9500DR.TIS": {
+        "bytes": 120,
+        "sha256": "6879425e55587dfd4c316c6b1943b78e7479c9b4f996969ec48bc846f18f3322"
+      },
+      "Q500DR00.PVRZ": {
+        "bytes": 169083,
+        "sha256": "a2bdd059a266baa3ecddff9b6282bb4a7f9756799e920b5c709dd55cd1b68642"
+      },
+      "AR5203.WED": {
+        "bytes": 53606,
+        "sha256": "3cdd9b51cf32c6190d332f3104deefdb1d162fa9ba04675bc34416a5daddd21e"
+      }
+    }
+  },
+  "local_install": {
+    "candidate_manifest": {
+      "path": "maps/water-batches/runs/liquid-families-x4-20260923-v1/local/candidate/AR3021/manifest.json",
+      "bytes": 24572,
+      "sha256": "c6ce09a872e31a8e9572f8827c6cd482fab202f33161e778a952ba2258770d4e"
+    },
+    "receipt": {
+      "path": "backups/water/liquid-families-x4-20260923-v1/local/AR3021-20260922T233851177160Z-a1a9aaba/install-backup.json",
+      "bytes": 19128,
+      "sha256": "a000a048a0491a0828b908f9c3a4388e10035b1f143b0cbeda74da604269fce4"
+    },
+    "file_count": 31,
+    "files": [
+      {
+        "name": "AAX4-AM3021D-frame000.rgba",
+        "bytes": 293760,
+        "sha256": "6b6ad879f247fb090c75e6a2cd9f92ab68e49dbe1d2819ac1a6ed4f22fb9cfa3"
+      },
+      {
+        "name": "AAX4-AM3021D-frame001.rgba",
+        "bytes": 293760,
+        "sha256": "2789b475a132b6c9ea562e949fcd40b3be3ab0970ca14b81716850aeff2be111"
+      },
+      {
+        "name": "AAX4-AM3021D-frame002.rgba",
+        "bytes": 293760,
+        "sha256": "8d962208e8db4258052ca54c14d9c2f04fe90f0512fcd61fa15db6928af08d10"
+      },
+      {
+        "name": "AAX4-AM3021D-frame003.rgba",
+        "bytes": 293760,
+        "sha256": "f88f1c834075bc001c70990155a116ee7bb312a653e8791460588bc430c07567"
+      },
+      {
+        "name": "AAX4-AM3021D-frame004.rgba",
+        "bytes": 293760,
+        "sha256": "7975003d083076191e08ce11caa42cd3274e0f404f9d882f654ac11b1b76a820"
+      },
+      {
+        "name": "AAX4-AM3021D-frame005.rgba",
+        "bytes": 293760,
+        "sha256": "7c0368b6374ec5d22722f1555cfcf1d4608e367bdcd42de36a54b02b9189d065"
+      },
+      {
+        "name": "AAX4-AM3021D-frame006.rgba",
+        "bytes": 293760,
+        "sha256": "df187013c535e644527ecfc13de3cb5bf709c705ba3dfd1df25b368e63d99832"
+      },
+      {
+        "name": "AAX4-AM3021D-frame007.rgba",
+        "bytes": 293760,
+        "sha256": "453d77d94ace4f685abf4d1d6504be986efa16a56fa2413a965d3ae529429ada"
+      },
+      {
+        "name": "AAX4-AM3021D-frame008.rgba",
+        "bytes": 293760,
+        "sha256": "04220c94d4306c082efa08623c9bea464b7f9e9c0ed54be1819d82b5f74268ca"
+      },
+      {
+        "name": "AAX4-AM3021D-frame009.rgba",
+        "bytes": 293760,
+        "sha256": "5371bd52b5bce34f9cb826c50d4d1a1adb9bcb8dbf26f256bb4a61b2c1c0c651"
+      },
+      {
+        "name": "AAX4-AM3021E-frame000.rgba",
+        "bytes": 311808,
+        "sha256": "632f74bd597fd4feb2d52497d72cf2c7de27f072243c00c287fcb01f2c48a499"
+      },
+      {
+        "name": "AAX4-AM3021E-frame001.rgba",
+        "bytes": 311808,
+        "sha256": "460ad29d52f71261d73eccb481f8b9101e6be1f4188f51259e0253ae8a68ac2d"
+      },
+      {
+        "name": "AAX4-AM3021E-frame002.rgba",
+        "bytes": 311808,
+        "sha256": "a360a6e14b6cbc126fc16d4c75690926adde35a938af09cc543545032f834f33"
+      },
+      {
+        "name": "AAX4-AM3021E-frame003.rgba",
+        "bytes": 311808,
+        "sha256": "6a1c9a55d604e436e8c893216b0749c1d2131c8832ed6ee479848f8172ff197d"
+      },
+      {
+        "name": "AAX4-AM3021E-frame004.rgba",
+        "bytes": 311808,
+        "sha256": "b87bdbd70a0154f23f8c937e7fd6bcf38ef6bb19955436625cab2f9192d48e5a"
+      },
+      {
+        "name": "AAX4-AM3021E-frame005.rgba",
+        "bytes": 311808,
+        "sha256": "343370e81a857204fff4d833701c2850e54566d26fb5c8fd48383ec44d26377a"
+      },
+      {
+        "name": "AAX4-AM3021E-frame006.rgba",
+        "bytes": 311808,
+        "sha256": "e33390bb98bba86aa3a275b6e442f29080955843c91eec070b12a7800f8b97bf"
+      },
+      {
+        "name": "AAX4-AM3021E-frame007.rgba",
+        "bytes": 311808,
+        "sha256": "7ee49661d237ea62ce0485c11bfe4ff6bd490eb93b6f73f1c2237fc20f6e4503"
+      },
+      {
+        "name": "AAX4-AM3021E-frame008.rgba",
+        "bytes": 311808,
+        "sha256": "78b1cb691b77977d60e9be1db7320fd91e4d0e14a68558ccd6d2e30440130487"
+      },
+      {
+        "name": "AAX4-AM3021E-frame009.rgba",
+        "bytes": 311808,
+        "sha256": "c5ef654493f9a3f10632293a88dfd058bde90cb3b2c5279539579d6776336f83"
+      },
+      {
+        "name": "AAX4-AM3021F-frame000.rgba",
+        "bytes": 283392,
+        "sha256": "ed1ed42b3b647a2453492e7a735d6e96f8522a1984051aa906e30e66170509ad"
+      },
+      {
+        "name": "AAX4-AM3021F-frame001.rgba",
+        "bytes": 283392,
+        "sha256": "decc06703e81dc060d4054b37e47f2d3744104b74925ba85d9ad57a5058383d0"
+      },
+      {
+        "name": "AAX4-AM3021F-frame002.rgba",
+        "bytes": 283392,
+        "sha256": "1d216cf17f5d236a425e90ae0e66c1d18a0f3633a1b807956c7122839183ef23"
+      },
+      {
+        "name": "AAX4-AM3021F-frame003.rgba",
+        "bytes": 283392,
+        "sha256": "afc3b29eca9d942031b67f31aa42f2d5018735aaa0bc05c2b4f524d49ceda386"
+      },
+      {
+        "name": "AAX4-AM3021F-frame004.rgba",
+        "bytes": 283392,
+        "sha256": "09e6a30c045d910bf5b47f5351c1b1938ef9d444f3c35035c3fee8ba764b0303"
+      },
+      {
+        "name": "AAX4-AM3021F-frame005.rgba",
+        "bytes": 283392,
+        "sha256": "03524388246dec077832c61f02a4e38cb846bea508a3e1bd43c65ffc6bb7dd1a"
+      },
+      {
+        "name": "AAX4-AM3021F-frame006.rgba",
+        "bytes": 283392,
+        "sha256": "05e262b97f5e805f8e6c9e60c2d4fe1cc0f20499efe0c5930ecae44dee19715e"
+      },
+      {
+        "name": "AAX4-AM3021F-frame007.rgba",
+        "bytes": 283392,
+        "sha256": "ba61b530b54691ebc04e8da745ce8e4dbf0f40422fa9c786bbc152fb92bca7f9"
+      },
+      {
+        "name": "AAX4-AM3021F-frame008.rgba",
+        "bytes": 283392,
+        "sha256": "6c8210f1ce837fd6bb6043b3541342ab402be77cd97d9380ab4cde9690b85f0b"
+      },
+      {
+        "name": "AAX4-AM3021F-frame009.rgba",
+        "bytes": 283392,
+        "sha256": "2542508c27fee6feb853540c41c996fb04754d75c77aef0874c3a468a1a11044"
+      },
+      {
+        "name": "AreaAnimations-X4.registry",
+        "bytes": 564,
+        "sha256": "3a7adef9a2c7120204fe661e43babc41b24bedeadf086ff9b1cdf6b7488c7ee7"
+      }
+    ],
+    "area": "AR3021",
+    "resrefs": [
+      "AM3021D",
+      "AM3021E",
+      "AM3021F"
+    ],
+    "playback": "Native",
+    "native_frames_each": 10,
+    "color": "none",
+    "rgb": "straight",
+    "alpha": "accepted Spline4 donor; byte-identical"
+  },
+  "overlay_groups": [
+    {
+      "id": "lake",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/lake/build.json",
+      "build_manifest_sha256": "ad006318c8cd550d4964d330f55fd62d97633cdd1eb94988a20d1ffa7f905cb4",
+      "family": "lake",
+      "source_resrefs": [
+        "WTLAKE"
+      ],
+      "aliases": {
+        "WTLAKE": "Q9LAKE"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 8.713541666666666,
+      "max_boundary_ratio_post_bc3": 1.5403671721322731
+    },
+    {
+      "id": "lake_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/lake_rain/build.json",
+      "build_manifest_sha256": "eeeed9cec41af36f0b1fcffaa6a8a13333e9348db58d3095480c56127e191d22",
+      "family": "lake_rain",
+      "source_resrefs": [
+        "WTLAKER"
+      ],
+      "aliases": {
+        "WTLAKER": "Q9LAKER"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 11.458333333333334,
+      "max_boundary_ratio_post_bc3": 2.019797015864485
+    },
+    {
+      "id": "pool",
+      "method": "bilinear",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/pool/build.json",
+      "build_manifest_sha256": "5b3f786b7c41be25f334a6e1025c500054bc85899d838c01dfabdd8792be88c9",
+      "family": "pool",
+      "source_resrefs": [
+        "WTPOOL"
+      ],
+      "aliases": {
+        "WTPOOL": "Q9POOL"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 2.7408854166666665,
+      "max_boundary_ratio_post_bc3": 2.2820804972514273
+    },
+    {
+      "id": "pool_rain",
+      "method": "bilinear",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/pool_rain/build.json",
+      "build_manifest_sha256": "c2426c5b9ef14aa26a8299f5a604a161d8fc50cf952a64a180d28c5a9647b7fb",
+      "family": "pool_rain",
+      "source_resrefs": [
+        "WTPOOLR"
+      ],
+      "aliases": {
+        "WTPOOLR": "Q9POOLR"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 3.1263020833333335,
+      "max_boundary_ratio_post_bc3": 2.0833299528627176
+    },
+    {
+      "id": "swamp",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/swamp/build.json",
+      "build_manifest_sha256": "366e837ef88cec0c9d235862c027656a5d1c1a716939dd6f9a1ea92d52f80d89",
+      "family": "swamp",
+      "source_resrefs": [
+        "WTSWAM"
+      ],
+      "aliases": {
+        "WTSWAM": "Q9SWAM"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 2.6236979166666665,
+      "max_boundary_ratio_post_bc3": 2.1074380165289255
+    },
+    {
+      "id": "swamp_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/swamp_rain/build.json",
+      "build_manifest_sha256": "2543aee3f065269f805b4504234aaa5e4b6a64f7d597e86d668d268916e97729",
+      "family": "swamp_rain",
+      "source_resrefs": [
+        "WTSWAMR"
+      ],
+      "aliases": {
+        "WTSWAMR": "Q9SWAMR"
+      },
+      "native_frames": 6,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 11.23828125,
+      "max_boundary_ratio_post_bc3": 1.8382912412324273
+    },
+    {
+      "id": "sewage",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/sewage/build.json",
+      "build_manifest_sha256": "c4680b3862b46ecbdc9bfa14aff57f77ff2300281b870200c3db25ff45adeb06",
+      "family": "sewage",
+      "source_resrefs": [
+        "WTSEW"
+      ],
+      "aliases": {
+        "WTSEW": "Q9SEWG"
+      },
+      "native_frames": 6,
+      "corrected_phases": 6,
+      "max_boundary_mae_post_bc3": 1.13671875,
+      "max_boundary_ratio_post_bc3": 0.33460447100154633
+    },
+    {
+      "id": "sewage_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/sewage_rain/build.json",
+      "build_manifest_sha256": "25fc2e4b5ae126fa069d9535dfd5dc34b01c66427496278f37d3b3fad4458b52",
+      "family": "sewage_rain",
+      "source_resrefs": [
+        "WTSEWR"
+      ],
+      "aliases": {
+        "WTSEWR": "Q9SEWGR"
+      },
+      "native_frames": 6,
+      "corrected_phases": 6,
+      "max_boundary_mae_post_bc3": 1.13671875,
+      "max_boundary_ratio_post_bc3": 0.33460447100154633
+    },
+    {
+      "id": "oil",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/oil/build.json",
+      "build_manifest_sha256": "b4b65e3fb1f90a7bedd46e107f78c948cc8860fa3f8417f3b28749852571e545",
+      "family": "oil",
+      "source_resrefs": [
+        "WTOIL"
+      ],
+      "aliases": {
+        "WTOIL": "Q9OIL0"
+      },
+      "native_frames": 6,
+      "corrected_phases": 6,
+      "max_boundary_mae_post_bc3": 1.1588541666666667,
+      "max_boundary_ratio_post_bc3": 0.3979256862838384
+    },
+    {
+      "id": "oil_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/oil_rain/build.json",
+      "build_manifest_sha256": "5421d4de54df871202b3d65a2d9e906d05bf3d03847b63d29a2f8af72c124554",
+      "family": "oil_rain",
+      "source_resrefs": [
+        "WTOILR"
+      ],
+      "aliases": {
+        "WTOILR": "Q9OIL0R"
+      },
+      "native_frames": 6,
+      "corrected_phases": 6,
+      "max_boundary_mae_post_bc3": 1.1588541666666667,
+      "max_boundary_ratio_post_bc3": 0.3979256862838384
+    },
+    {
+      "id": "lake_teal",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/lake_teal/build.json",
+      "build_manifest_sha256": "654f1bae93620b856467f1423d7a4414fc3043d16b7354bae3602602fecc2d35",
+      "family": "lake_teal",
+      "source_resrefs": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ],
+      "aliases": {
+        "WTLAKA": "Q9LKA0",
+        "WTLAKB": "Q9LKB0",
+        "WTLAKC": "Q9LKC0",
+        "WTLAKD": "Q9LKD0"
+      },
+      "native_frames": 8,
+      "corrected_phases": 8,
+      "max_boundary_mae_post_bc3": 1.1783854166666667,
+      "max_boundary_ratio_post_bc3": 1.0787598701002488
+    },
+    {
+      "id": "lake_teal_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/lake_teal_rain/build.json",
+      "build_manifest_sha256": "1e44ffa9518869866103a3bdf91f6be6e008c8ead57a0de2b45428ff219d070f",
+      "family": "lake_teal_rain",
+      "source_resrefs": [
+        "WTLAKAR",
+        "WTLAKBR",
+        "WTLAKCR",
+        "WTLAKDR"
+      ],
+      "aliases": {
+        "WTLAKAR": "Q9LKA0R",
+        "WTLAKBR": "Q9LKB0R",
+        "WTLAKCR": "Q9LKC0R",
+        "WTLAKDR": "Q9LKD0R"
+      },
+      "native_frames": 8,
+      "corrected_phases": 8,
+      "max_boundary_mae_post_bc3": 1.1783854166666667,
+      "max_boundary_ratio_post_bc3": 1.0787598701002488
+    },
+    {
+      "id": "lava",
+      "method": "bilinear",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-lava-bilinear/groups/lava/build.json",
+      "build_manifest_sha256": "9420409e739e5656169a715279ae0500dcf57fa3e8600848b3cc8f85fc86c05c",
+      "family": "lava",
+      "source_resrefs": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ],
+      "aliases": {
+        "WTLAVA": "Q9LVA0",
+        "WTLAVB": "Q9LVB0",
+        "WTLAVC": "Q9LVC0",
+        "WTLAVD": "Q9LVD0"
+      },
+      "native_frames": 12,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 16.876302083333332,
+      "max_boundary_ratio_post_bc3": 11.210550145605591
+    },
+    {
+      "id": "lava_rain",
+      "method": "bilinear",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-lava-bilinear/groups/lava_rain/build.json",
+      "build_manifest_sha256": "93092a0bd40c9f677bb3d2cbd01d425f51bb01e0d9305e11f717831ff78b9113",
+      "family": "lava_rain",
+      "source_resrefs": [
+        "WTLAVAR",
+        "WTLAVBR",
+        "WTLAVCR",
+        "WTLAVDR"
+      ],
+      "aliases": {
+        "WTLAVAR": "Q9LVA0R",
+        "WTLAVBR": "Q9LVB0R",
+        "WTLAVCR": "Q9LVC0R",
+        "WTLAVDR": "Q9LVD0R"
+      },
+      "native_frames": 12,
+      "corrected_phases": 0,
+      "max_boundary_mae_post_bc3": 16.876302083333332,
+      "max_boundary_ratio_post_bc3": 11.210550145605591
+    },
+    {
+      "id": "brown_flow",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/brown_flow/build.json",
+      "build_manifest_sha256": "eb64166ce0d7e2d3e62801e6a4b498a09bf1bbd72ef76dd3dc1367b492c7bc04",
+      "family": "brown_flow",
+      "source_resrefs": [
+        "WT5000A",
+        "WT5000B",
+        "WT5000C",
+        "WT5000D"
+      ],
+      "aliases": {
+        "WT5000A": "Q9500A",
+        "WT5000B": "Q9500B",
+        "WT5000C": "Q9500C",
+        "WT5000D": "Q9500D"
+      },
+      "native_frames": 8,
+      "corrected_phases": 8,
+      "max_boundary_mae_post_bc3": 0.9752604166666666,
+      "max_boundary_ratio_post_bc3": 0.8655839785728366
+    },
+    {
+      "id": "brown_flow_rain",
+      "method": "seedvr",
+      "build_manifest": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-r2/groups/brown_flow_rain/build.json",
+      "build_manifest_sha256": "1519cb571c138c5c639ff70ce75051ca69fff0bd2f98a5248e85251759b2eb9a",
+      "family": "brown_flow_rain",
+      "source_resrefs": [
+        "WT5000AR",
+        "WT5000BR",
+        "WT5000CR",
+        "WT5000DR"
+      ],
+      "aliases": {
+        "WT5000AR": "Q9500AR",
+        "WT5000BR": "Q9500BR",
+        "WT5000CR": "Q9500CR",
+        "WT5000DR": "Q9500DR"
+      },
+      "native_frames": 8,
+      "corrected_phases": 8,
+      "max_boundary_mae_post_bc3": 0.9752604166666666,
+      "max_boundary_ratio_post_bc3": 0.8655839785728366
+    }
+  ],
+  "clua": {
+    "AR1600": "C:MoveToArea(\"AR1600\")",
+    "AR1000": "C:MoveToArea(\"AR1000\")",
+    "AR1607": "C:MoveToArea(\"AR1607\")",
+    "AR0404": "C:MoveToArea(\"AR0404\")",
+    "AR0413": "C:MoveToArea(\"AR0413\")",
+    "AR3000": "C:MoveToArea(\"AR3000\")",
+    "AR0011": "C:MoveToArea(\"AR0011\")",
+    "AR5203": "C:MoveToArea(\"AR5203\")",
+    "AR3021": "C:MoveToArea(\"AR3021\")"
+  },
+  "decisions": [
+    "AR1000 day only; night unchanged",
+    "WTPOOL uses periodic bilinear x4",
+    "Lava SeedVR none trial rejected for visible tiling; installed native periodic bilinear x4",
+    "Other generated overlays use fixed seed and none color correction; native WED cadence preserved",
+    "New bytes remain pending user QA; historical animation WIP and release untouched"
+  ],
+  "producer_files": [
+    {
+      "path": "pipeline/scripts/assemble_liquid_family_x4_trial.py",
+      "bytes": 14021,
+      "sha256": "21d45c42d74ff0d9facf5daeb20e2b66323cc273fec03155e9956f40c04eb908"
+    },
+    {
+      "path": "pipeline/scripts/build_liquid_base_x4_trial.py",
+      "bytes": 22512,
+      "sha256": "62ac94966f7d503294de5bd5c4b668eb556494eac2bb9389ff2beeff4f01c3b2"
+    },
+    {
+      "path": "pipeline/scripts/build_liquid_periodic_x4_trial.py",
+      "bytes": 28177,
+      "sha256": "87d56f3238bf998493d5c456dc028ceb44097f073acd54a2d4ca55ff34be38ad"
+    },
+    {
+      "path": "pipeline/scripts/build_liquid_local_surface_x4_trial.py",
+      "bytes": 16523,
+      "sha256": "ed643a6c03b74c84be75ff304486df78222e5cfe2faa3e454c9788b47b078da9"
+    }
+  ]
+}

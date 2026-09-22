@@ -1,0 +1,222 @@
+{
+  "schema": "bg2-liquid-family-x4-trial-request-v1",
+  "date": "2026-09-23",
+  "guide": "pipeline/water/BASE_PIPELINES_SURFACES_LIQUIDES.md",
+  "source_vanilla": "G:/AI/BG2_Vanilla_23534562",
+  "destination": "config://bg2ee_game_root",
+  "authorized_actions": [
+    "produce-x4-trials",
+    "install-for-user-ingame-qa",
+    "commit-this-task-only",
+    "shutdown-after-delivery"
+  ],
+  "user_qa": "pending",
+  "release": "not-requested",
+  "runtime": {
+    "dll": "preserve-installed",
+    "ini": "preserve-installed",
+    "mode": "native-composition-alias-unregistered-route2-q0",
+    "timeline": "preserve-vanilla-lookup-and-speed"
+  },
+  "targets": [
+    {
+      "wed": "AR1600",
+      "family": "lake",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTLAKE",
+          "alias": "Q9LAKE",
+          "rain_alias": "Q9LAKER"
+        }
+      ],
+      "primary_master": "maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4/tuiles-principales/03_assemble/AR1600-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR1600/runs/seedvr2-7b-int8-lab-grid-2x3-x4/tuiles-secondaires/03_assemble/AR1600-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR1000",
+      "family": "pool",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTPOOL",
+          "alias": "Q9POOL",
+          "rain_alias": "Q9POOLR"
+        }
+      ],
+      "primary_master": "maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/tuiles-principales/03_assemble/AR1000-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR1000/runs/seedvr2-7b-int8-lab-grid-2x5-x4-jour/tuiles-secondaires/03_assemble/AR1000-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR1607",
+      "family": "swamp",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTSWAM",
+          "alias": "Q9SWAM",
+          "rain_alias": "Q9SWAMR"
+        }
+      ],
+      "primary_master": "maps/AR1607/runs/seedvr2-7b-int8-lab-grid-2x2-x4/tuiles-principales/03_assemble/AR1607-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR1607/runs/seedvr2-7b-int8-lab-grid-2x2-x4/tuiles-secondaires/03_assemble/AR1607-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR0404",
+      "family": "sewage",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTSEW",
+          "alias": "Q9SEWG",
+          "rain_alias": "Q9SEWGR"
+        }
+      ],
+      "primary_master": "maps/AR0404/runs/upscale-01/tuiles-principales/03_assemble/AR0404-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR0404/runs/upscale-01/tuiles-secondaires/03_assemble/AR0404-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR0413",
+      "family": "oil",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTOIL",
+          "alias": "Q9OIL0",
+          "rain_alias": "Q9OIL0R"
+        }
+      ],
+      "primary_master": "maps/AR0413/runs/upscale-01/tuiles-principales/03_assemble/AR0413-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR0413/runs/upscale-01/tuiles-secondaires/03_assemble/AR0413-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR3000",
+      "family": "lake_teal",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTLAKA",
+          "alias": "Q9LKA0",
+          "rain_alias": "Q9LKA0R"
+        },
+        {
+          "slot": 2,
+          "source": "WTLAKB",
+          "alias": "Q9LKB0",
+          "rain_alias": "Q9LKB0R"
+        },
+        {
+          "slot": 3,
+          "source": "WTLAKC",
+          "alias": "Q9LKC0",
+          "rain_alias": "Q9LKC0R"
+        },
+        {
+          "slot": 4,
+          "source": "WTLAKD",
+          "alias": "Q9LKD0",
+          "rain_alias": "Q9LKD0R"
+        }
+      ],
+      "primary_master": "maps/AR3000/runs/seedvr2-7b-int8-lab-x4-primary-secondary-grid3x2/tuiles-principales/03_assemble/AR3000-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR3000/runs/seedvr2-7b-int8-lab-x4-primary-secondary-grid3x2/tuiles-secondaires/03_assemble/AR3000-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR0011",
+      "family": "lava",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTLAVA",
+          "alias": "Q9LVA0",
+          "rain_alias": "Q9LVA0R"
+        },
+        {
+          "slot": 2,
+          "source": "WTLAVB",
+          "alias": "Q9LVB0",
+          "rain_alias": "Q9LVB0R"
+        },
+        {
+          "slot": 3,
+          "source": "WTLAVC",
+          "alias": "Q9LVC0",
+          "rain_alias": "Q9LVC0R"
+        },
+        {
+          "slot": 4,
+          "source": "WTLAVD",
+          "alias": "Q9LVD0",
+          "rain_alias": "Q9LVD0R"
+        }
+      ],
+      "primary_master": "maps/AR0011/runs/seedvr2-7b-int8-lab-grid-2x3-x4/tuiles-principales/03_assemble/AR0011-tuiles-principales-x4-seedvr2-7b-int8-lab-overlap.png",
+      "secondary_master": "maps/AR0011/runs/seedvr2-7b-int8-lab-grid-2x3-x4/tuiles-secondaires/03_assemble/AR0011-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    },
+    {
+      "wed": "AR5203",
+      "family": "brown_flow",
+      "variant": "day-or-unique",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WT5000A",
+          "alias": "Q9500A",
+          "rain_alias": "Q9500AR"
+        },
+        {
+          "slot": 2,
+          "source": "WT5000B",
+          "alias": "Q9500B",
+          "rain_alias": "Q9500BR"
+        },
+        {
+          "slot": 3,
+          "source": "WT5000C",
+          "alias": "Q9500C",
+          "rain_alias": "Q9500CR"
+        },
+        {
+          "slot": 4,
+          "source": "WT5000D",
+          "alias": "Q9500D",
+          "rain_alias": "Q9500DR"
+        }
+      ],
+      "primary_master": "maps/AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4/tuiles-principales/03_assemble/AR5203-tuiles-principales-x4-seedvr2-7b-int8-none-overlap.png",
+      "secondary_master": "maps/AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4/tuiles-secondaires/03_assemble/AR5203-tuiles-secondaires-x4-seedvr2-7b-int8-none-overlap.png",
+      "composition": "native",
+      "repair_seams": true
+    }
+  ],
+  "local_surface": {
+    "wed": "AR3021",
+    "resrefs": [
+      "AM3021D",
+      "AM3021E",
+      "AM3021F"
+    ],
+    "status": "candidate-to-produce"
+  }
+}
