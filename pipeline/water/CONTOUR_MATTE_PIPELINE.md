@@ -1,7 +1,9 @@
 # Contours devant l'eau — détourage par silhouette RGB x4 (toutes familles)
 
-Recette **validée ingame sur AR1600** (zone bateau puis carte entière, 2026-09-23 ; réserve acceptée :
-liseré cyan-vert résiduel sur éléments très fins). Autres maps : procédé applicable, **QA par map**.
+Recette historiquement validée ingame sur AR1600 (2026-09-23), mais **refonte globale requise** depuis la
+QA AR0500N du 2026-09-24 : l'utilisateur juge C clairement améliorable sur toutes les familles. Ne pas
+généraliser ni installer un nouveau C sans nouvel essai comparatif et validation utilisateur. Les validations
+antérieures restent des preuves historiques, pas l'approbation du standard actuel.
 Famille `sewage` validée sur AR2100 avec le matte actuel accepté en l'état ; adaptation `CONTOUR-NET`
 explicitement abandonnée. Contrat : `liquid-family-standard-v1.json`.
 Famille `pool` validée sur AR0703 (10 paires, alpha 128).
@@ -81,6 +83,8 @@ Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non enco
 | AR2100 | WTSEW | `ar2100-contour-matte-20260923-v1` | validée avec réserve — `ar2100-contour-user-qa-20260923-v3.json` | matte accepté en l'état ; adaptation CONTOUR-NET abandonnée (v1 rejet historique, v2 citation non canonique) |
 | AR0408 | WTPOOL | `ar0408-contour-matte-20260923-v1` | **à revoir** (utilisateur, 2026-09-23) — reçu `ar0408-contour-installed-20260923-v1.json` encore installé | défaut non décrit : demander ce qui ne va pas avant tout nouvel essai `-v2` |
 | AR0703 | WTPOOL | `ar0703-contour-matte-20260923-v1` | validée — `ar0703-contour-user-qa-20260923-v1.json` | 10 paires ; alpha 128 |
+| AR0500 | WTSWAM | `ar0500-contour-matte-20260924-v1` | validation jour historique — `ar0500-contour-user-qa-20260924-v1.json` | supersédée comme standard par la décision globale du 2026-09-24 |
+| AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | déclenche la refonte C toutes familles ; défaut visuel précis à qualifier avant nouvel essai |
 
 ## Limites connues
 

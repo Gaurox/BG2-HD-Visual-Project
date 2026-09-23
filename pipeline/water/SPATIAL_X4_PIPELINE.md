@@ -83,6 +83,8 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR2100 | sewage | `ar2100-water-x4-20260923-v1` | `ar2100-spatial-installed-20260923-v1.json` | validée — `ar2100-spatial-user-qa-20260923-v1.json` |
 | AR0408 | pool | `ar0408-water-x4-20260923-v2` | `ar0408-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0408-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v2) |
 | AR0703 | pool | `ar0703-water-x4-20260923-v2` | `ar0703-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0703-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v1) |
+| AR0500 | swamp | `ar0500-water-x4-20260924-v2` | `ar0500-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, jour ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
+| AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases
 validée historiquement (route2). Les maps prêtes utilisant une ressource partagée déjà surchargée (WTSWAM,

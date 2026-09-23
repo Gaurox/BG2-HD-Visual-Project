@@ -52,6 +52,20 @@ class PlanWaterMapTests(unittest.TestCase):
         self.assertNotIn("approved_strength", rain)
         self.assertNotIn("cycle_seconds", rain)
 
+    def test_swamp_validated_rain_strength_is_written_on_both_groups(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        temporal = next(f for f in standard["families"] if f["id"] == "swamp")["temporal"]
+        self.assertEqual(
+            (temporal["material_id"], temporal["cycle_seconds"],
+             temporal["approved_strength"], temporal["approved_rain_strength"]),
+            (5, 2.4, 0.70, 0.70),
+        )
+        dry = p.temporal_plan_group("swamp", {"WTSWAM": "YFTEST"}, temporal)
+        rain = p.temporal_plan_group("swamp_rain", {"WTSWAMR": "YFTESTR"}, temporal, "swamp")
+        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.70, 2.4))
+        self.assertEqual((rain["approved_strength"], rain["rain_of"]), (0.70, "swamp"))
+        self.assertNotIn("cycle_seconds", rain)
+
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())
         self.assertEqual(first, p.make_alias("AR0404", 1, "S", set()))

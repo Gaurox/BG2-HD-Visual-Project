@@ -114,6 +114,8 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR0408 | pool | 72 / 2,4 s | `ar0408-water-30fps-20260923-v1` | **rejetée** — `ar0408-temporal-30fps-user-qa-20260923-v1.json` | eau figée ; animation d’eau qui coule absente |
 | AR0408 | pool | 72 / 2,4 s, q0,70 | `ar0408-water-30fps-20260923-v2` | validée — `ar0408-temporal-30fps-user-qa-20260923-v2.json` | candidat = octets v1 ; seuls registre (q0,70 sec) et DLL changent |
 | AR0703 | pool | 72 / 2,4 s, q0,70 | `ar0703-water-30fps-20260923-v1` | validée — `ar0703-temporal-30fps-user-qa-20260923-v1.json` | pluie q0 non observée (intérieur) |
+| AR0500 | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500-water-30fps-20260924-v1` | validée jour — `ar0500-temporal-30fps-user-qa-20260924-v1.json` | ratios 1,20/1,43 sec et 1,37/1,34 pluie acceptés pour QA ingame ; pluie non confirmée |
+| AR0500N | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500n-water-30fps-20260924-v1` | validée nuit — `ar0500n-temporal-30fps-user-qa-20260924-v1.json` | mêmes ratios hors seuil acceptés avant installation ; pluie non confirmée |
 
 Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) non vérifié en jeu ;
 lave émissive non qualifiée route2 ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;

@@ -51,7 +51,9 @@ def page_name(alias):
 def temporal_plan_group(family_id, aliases, temporal, rain_of=None):
     group = {'id': family_id, 'aliases': aliases, 'material_id': temporal['material_id']}
     if rain_of:
-        group['rain_of'] = rain_of     # rain = fpTone pass: the runtime keeps it timing-only (q0)
+        group['rain_of'] = rain_of
+        if 'approved_rain_strength' in temporal:
+            group['approved_strength'] = temporal['approved_rain_strength']
         return group
     if 'cycle_seconds' in temporal:
         group['cycle_seconds'] = temporal['cycle_seconds']

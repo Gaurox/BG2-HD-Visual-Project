@@ -1,0 +1,26 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar0500-water-x4-20260924-v2",
+  "wed": "AR0500",
+  "selection": "maps/water-batches/runs/ar0500-water-x4-20260924-v2/selection.json",
+  "source_wed": "maps/water-batches/runs/ar0500-water-x4-20260924-v2/override-candidate/AR0500.WED",
+  "groups": [
+    {
+      "id": "swamp",
+      "aliases": {
+        "WTSWAM": "YFLRP9"
+      },
+      "material_id": 5,
+      "cycle_seconds": 2.4,
+      "approved_strength": 0.7
+    },
+    {
+      "id": "swamp_rain",
+      "aliases": {
+        "WTSWAMR": "YFLRP9R"
+      },
+      "material_id": 5,
+      "rain_of": "swamp",
+      "approved_strength": 0.7
+    }
+  ]
+}
