@@ -24,7 +24,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | lake | WTLAKE | seedvr | AR1600 |
 | pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR1000 |
 | swamp | WTSWAM | seedvr | AR1607 |
-| sewage | WTSEW | seedvr | AR0404 |
+| sewage | WTSEW | seedvr | AR2100 (chaîne standard complète) |
 | oil | WTOIL | seedvr | AR0413 |
 | lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
 | brown_flow | WT5000A–D (2×2) | seedvr | AR5203 |

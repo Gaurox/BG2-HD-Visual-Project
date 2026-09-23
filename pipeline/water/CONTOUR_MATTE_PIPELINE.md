@@ -2,6 +2,8 @@
 
 Recette **validée ingame sur AR1600** (zone bateau puis carte entière, 2026-09-23 ; réserve acceptée :
 liseré cyan-vert résiduel sur éléments très fins). Autres maps : procédé applicable, **QA par map**.
+Famille `sewage` validée sur AR2100 avec le matte actuel accepté en l'état ; adaptation `CONTOUR-NET`
+explicitement abandonnée. Contrat : `liquid-family-standard-v1.json`.
 Historique et mesures : [`AR1600_CONTOURS_MATTE_ESSAI_20260923.md`](AR1600_CONTOURS_MATTE_ESSAI_20260923.md).
 Remplace l'approche Potrace du masque x1 ([essai Astra](AR1600_CONTOURS_ESSAI_20260923.md), rejeté).
 

@@ -31,6 +31,10 @@ overlay inconnu, master secondaire ambigu, base absente). `decisions_owed` : ce 
 pas de pluie). `survey` : `a` (WATER_ALPHA), paires, refus pour l'étape C.
 Les trois étapes sont indépendantes ; faire celles qui s'appliquent, **dans l'ordre A → B → C**.
 
+Références : AR1600 valide la recette lac ; AR2100 valide la chaîne standard complète `sewage` A → B → C.
+Contrat figé dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4, cycle 2,4 s / 72 phases,
+contours `rgb-x4-silhouette-matte` avec réserve acceptée. Les garde-fous de review restent applicables.
+
 | Étape | S'applique si | Sinon |
 |---|---|---|
 | A. Eau x4 spatiale (overlay alias + bases) | `plan` sans `stops` | STOP (voir `plan-report.json`) |

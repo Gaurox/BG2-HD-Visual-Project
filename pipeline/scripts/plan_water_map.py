@@ -48,6 +48,15 @@ def page_name(alias):
     return alias[0] + alias[2:] + '00'
 
 
+def temporal_plan_group(family_id, aliases, temporal, rain_of=None):
+    group = {'id': family_id, 'aliases': aliases, 'material_id': temporal['material_id']}
+    if rain_of:
+        group['rain_of'] = rain_of
+    elif 'cycle_seconds' in temporal:
+        group['cycle_seconds'] = temporal['cycle_seconds']
+    return group
+
+
 class Vanilla:
     def __init__(self, root):
         bg2lib.GAME_DIR = str(root)
@@ -245,11 +254,10 @@ def plan(args):
             report['decisions_owed'].append(f"{family_id} 30 fps: {temporal['why']}")
             continue
         fps = {r: make_alias(area, slot_of.get(r, f'm{i}'), 'F', taken) for i, r in enumerate(refs)}
-        temporal_groups.append({'id': family_id, 'aliases': fps, 'material_id': temporal['material_id']})
+        temporal_groups.append(temporal_plan_group(family_id, fps, temporal))
         if rain:
-            temporal_groups.append({'id': family_id + '_rain', 'rain_of': family_id,
-                                    'aliases': {r + 'R': fps[r] + 'R' for r in refs},
-                                    'material_id': temporal['material_id']})
+            temporal_groups.append(temporal_plan_group(
+                family_id + '_rain', {r + 'R': fps[r] + 'R' for r in refs}, temporal, family_id))
     output.mkdir(parents=True)
     write(output / 'request.json', {
         'schema': 'bg2-liquid-family-x4-trial-request-v1', 'standard': report['standard'],

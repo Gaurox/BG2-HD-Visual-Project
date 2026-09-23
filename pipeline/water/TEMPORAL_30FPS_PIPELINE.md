@@ -97,7 +97,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | lake WTLAKE | AR1600 | 6 | 6 | 2,4 s | 72 | seedvr | non | **validé** |
 | pool WTPOOL | AR1000 jour | 6 | 6 | 2,4 s | 72 | bilinear | non | — |
 | swamp WTSWAM | AR1607 | 6 | 6 | 2,4 s | 72 | seedvr | non | opacité native 100 |
-| sewage WTSEW | AR0404 | 6 | 6 | 2,4 s | 72 | seedvr | oui | AR2100 stock6 hors run |
+| sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |
 | lake_teal WTLAKA–D | AR3000 | 8 | 8/0/0/0 | explicite (8×8/15 = 4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM chunk unique |
 | brown_flow WT5000A–D | AR5203 | 8 | 8/0/0/0 | explicite (4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM |

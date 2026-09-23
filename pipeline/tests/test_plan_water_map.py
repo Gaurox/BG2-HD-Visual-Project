@@ -18,6 +18,28 @@ class PlanWaterMapTests(unittest.TestCase):
             self.assertEqual(sorted(r for row in family["layout"] for r in row), sorted(family["overlays"]))
             self.assertIn(family["spatial_method"], ("seedvr", "bilinear"))
 
+    def test_sewage_contract_is_frozen_from_ar2100_validation(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        sewage = next(f for f in standard["families"] if f["id"] == "sewage")
+        self.assertEqual(sewage["spatial_method"], "seedvr")
+        self.assertEqual(sewage["spatial_status"], "validated-ingame-AR2100")
+        self.assertEqual(sewage["temporal"], {
+            "material_id": 4,
+            "cycle": "fixed",
+            "cycle_seconds": 2.4,
+            "status": "validated-ingame-AR2100",
+        })
+        self.assertEqual(sewage["contour"]["method"], "rgb-x4-silhouette-matte")
+        self.assertEqual(sewage["witness"], "AR2100")
+
+    def test_frozen_cycle_is_written_only_on_the_dry_temporal_group(self):
+        temporal = {"material_id": 4, "cycle_seconds": 2.4}
+        dry = p.temporal_plan_group("sewage", {"WTSEW": "YFTEST"}, temporal)
+        rain = p.temporal_plan_group("sewage_rain", {"WTSEWR": "YFTESTR"}, temporal, "sewage")
+        self.assertEqual(dry["cycle_seconds"], 2.4)
+        self.assertNotIn("cycle_seconds", rain)
+        self.assertEqual(rain["rain_of"], "sewage")
+
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())
         self.assertEqual(first, p.make_alias("AR0404", 1, "S", set()))
