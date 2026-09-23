@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM5000B",
+  "correction_id": "ar5000-am5000b-contour-net-potrace0p8-fill6-20260923",
+  "decision": "Fontaine octogonale : SeedVR2 7B LAB x4, recette CONTOUR-NET (Potrace x1 alphamax 0.8 + liseré RGB remplacé, profondeur 6, sigma 2.5), Apollo-8 30 fps. Validée ingame de jour par l'utilisateur le 2026-09-23 (AR5000).",
+  "decision_date": "2026-09-23",
+  "decision_id": "2026-09-23-accepted-ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/manifest.json",
+    "manifest_sha256": "B2DE8E8894DE3869BB0A5E98FB7804A12EC7D5379567901E35E2695F359BE8EC",
+    "path": "animations/batches/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923",
+    "schema": "bg2-upscale-area-animation-30fps-run-v2",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/03_runtime_pack_potrace0p8fill6/manifest.json",
+        "manifest_sha256": "492724AE0C38E4BEB795525DDB7350072E2D648BA47F2EF174FCCAF484690B00",
+        "path": "animations/batches/ar5000-am5000ab-seedvr7b-lab-x4-20260922/03_runtime_pack_potrace0p8fill6",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v1",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recipe_id": "contour-net",
+  "recorded_at_utc": "2026-09-22T22:32:30Z",
+  "resref": "AM5000B",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5000",
+        "manifest_path": "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000/manifest.json",
+        "manifest_sha256": "AB617066BC58AFE6572ED22A816925042B24D73AA98B3E8D839B25F78AE3973C",
+        "path": "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000",
+        "registry_sha256": "8A69D459ECAF755BEF26AD611A33BE78CA942FC78ECE8724B713ACB5310D5AD4",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/manifest.json",
+    "manifest_sha256": "3C64ABA4D646C3E31764E0875D0C32856B537B7F8E30C5DC1D7A0AC2AAD6B223",
+    "path": "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR5000"
+  ]
+}

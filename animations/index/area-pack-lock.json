@@ -3972,8 +3972,16 @@
    }
   },
   "AR5000": {
-   "recorded_utc": "2026-09-18T23:18:45.689062+00:00",
+   "recorded_utc": "2026-09-22T22:25:50.470997+00:00",
    "resources": {
+    "AM5000A": {
+     "sig": "9c2b7661729d",
+     "frames": 10
+    },
+    "AM5000B": {
+     "sig": "735cd6b76360",
+     "frames": 10
+    },
     "FIRE_1": {
      "sig": "073eb78953a7",
      "frames": 15
@@ -3985,18 +3993,25 @@
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
+    },
+    "FISH3L": {
+     "sig": "0f462700251d",
+     "frames": 36
     }
    },
    "fingerprint": {
-    "files": 44,
-    "bytes": 2678928,
-    "max_mtime_ns": 1789773525552139500
+    "files": 100,
+    "bytes": 38316820,
+    "max_mtime_ns": 1790115950080576700
    },
    "build": {
     "merged_from": [
      "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5000::FIRE_1",
      "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_4",
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_3"
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5000::FIRE_3",
+     "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000A",
+     "animations/packs-par-zone/ar5000-am5000ab-potrace0p8fill6-apo8-x4-30fps-v2-20260923/AR5000::AM5000B",
+     "animations/packs-par-zone/ar5000-fish3l-apo8-x4-30fps-v2-20260922/AR5000::FISH3L"
     ]
    }
   },

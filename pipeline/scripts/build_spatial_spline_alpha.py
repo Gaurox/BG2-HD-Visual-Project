@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 from scipy import ndimage
 from scipy.ndimage import gaussian_filter
 
@@ -202,6 +202,127 @@ def safe_boundary_spline_alpha(
         "outer_band_x4": outer_band,
         "expanded_alpha_pixels": int(np.count_nonzero((output > source) & outside_allowed)),
         "component_reports": component_reports,
+    }
+
+
+def potrace_alpha(
+    source: np.ndarray,
+    *,
+    threshold: int,
+    alphamax: float,
+    opttolerance: float,
+    supersample: int,
+    band: float,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Vectorise the native x1 mask with Potrace and rasterise it anti-aliased at x4.
+
+    A smoothing spline rounds every corner; a pixel-art scaler scallops shallow slopes.
+    Potrace keeps straight runs straight and corners sharp (``alphamax`` below 1 keeps
+    more corners). Only pixels within ``band`` of the nearest-neighbour source edge may
+    change, so the core and distant contours stay byte-identical.
+    """
+    import potrace
+    from PIL import ImageChops
+
+    binary = source > threshold
+    require(binary.shape[0] % 4 == 0 and binary.shape[1] % 4 == 0, "canevas non multiple de 4")
+    mask_x1 = binary[::4, ::4]
+    require(
+        np.array_equal(mask_x1.repeat(4, axis=0).repeat(4, axis=1), binary),
+        "alpha source non issu d'un nearest x4 : vectorisation x1 impossible",
+    )
+    if not mask_x1.any():
+        return source.copy(), {"mode": "potrace", "status": "empty-preserved"}
+    height, width = mask_x1.shape
+    scale = 4 * supersample
+    accumulated = Image.new("1", (width * scale, height * scale), 0)
+    path = potrace.Bitmap(~mask_x1).trace(
+        turdsize=0, alphamax=alphamax, opticurve=True, opttolerance=opttolerance
+    )
+    curves = 0
+    for curve in path:
+        current = np.array([curve.start_point.x, curve.start_point.y])
+        points = [current]
+        for segment in curve.segments:
+            end = np.array([segment.end_point.x, segment.end_point.y])
+            if segment.is_corner:
+                points.extend([np.array([segment.c.x, segment.c.y]), end])
+            else:
+                c1 = np.array([segment.c1.x, segment.c1.y])
+                c2 = np.array([segment.c2.x, segment.c2.y])
+                steps = max(4, int(np.hypot(*(end - current)) * 4))
+                t = np.linspace(0.0, 1.0, steps + 1)[1:, None]
+                points.extend(
+                    (1 - t) ** 3 * current + 3 * (1 - t) ** 2 * t * c1
+                    + 3 * (1 - t) * t * t * c2 + t ** 3 * end
+                )
+            current = end
+        layer = Image.new("1", accumulated.size, 0)
+        ImageDraw.Draw(layer).polygon([(float(p[0]) * scale, float(p[1]) * scale) for p in points], fill=1)
+        accumulated = ImageChops.logical_xor(accumulated, layer)
+        curves += 1
+    high = np.asarray(accumulated.convert("L"), dtype=np.float32)
+    traced = high.reshape(height * 4, supersample, width * 4, supersample).mean(axis=(1, 3))
+    traced = np.clip(np.rint(traced), 0, 255).astype(np.uint8)
+    distance = np.where(
+        binary,
+        ndimage.distance_transform_edt(binary),
+        ndimage.distance_transform_edt(~binary),
+    )
+    output = np.where(distance <= band, traced, source).astype(np.uint8)
+    return output, {
+        "mode": "potrace",
+        "status": "traced",
+        "curves": curves,
+        "alphamax": alphamax,
+        "opttolerance": opttolerance,
+        "band_x4": band,
+        "discarded_far_changes": int(np.count_nonzero((traced != source) & (distance > band))),
+        "grown_pixels": int(np.count_nonzero((output > 0) & ~binary)),
+        "shrunk_pixels": int(np.count_nonzero((output < 255) & binary)),
+    }
+
+
+def fill_edge_rgb(
+    rgb: np.ndarray,
+    source_alpha: np.ndarray,
+    final_alpha: np.ndarray,
+    *,
+    threshold: int,
+    depth: float,
+    sigma: float,
+) -> tuple[np.ndarray, dict[str, int | float]]:
+    """Replace the source's dark outline band with a smooth continuation of the interior.
+
+    A 1 px dark BAM outline becomes a ~4 px dark band after x4, and SeedVR draws the
+    staircase of that outline as notches; no alpha reshaping can remove either. Every
+    visible pixel within ``depth`` of the source edge (and every pixel grown outside it)
+    takes a Gaussian-normalised average of deeper pixels. Copying the single nearest
+    pixel streaks textured surfaces, so the average is used instead. Thin parts with no
+    deep pixel nearby retry with shallower depths, then keep their RGB.
+    """
+    require(depth > 0.0 and sigma > 0.0, "remplissage RGB de bord invalide")
+    binary = source_alpha > threshold
+    inside = ndimage.distance_transform_edt(binary)
+    visible = final_alpha > 0
+    output = rgb.astype(np.float32)
+    done = np.zeros(binary.shape, dtype=bool)
+    depths = sorted({depth, max(depth - 2.0, 1.0), max(depth - 4.0, 1.0)}, reverse=True)
+    for level in depths:
+        donor = inside > level
+        weight = ndimage.gaussian_filter(donor.astype(np.float32), sigma)
+        band = visible & ~donor & ~done & (weight >= 0.05)
+        for channel in range(3):
+            total = ndimage.gaussian_filter(rgb[:, :, channel].astype(np.float32) * donor, sigma)
+            output[:, :, channel][band] = total[band] / weight[band]
+        done |= band
+    return np.clip(np.rint(output), 0, 255).astype(np.uint8), {
+        "depth_x4": depth,
+        "sigma_x4": sigma,
+        "depth_cascade_x4": depths,
+        "filled_pixels": int(np.count_nonzero(done)),
+        "grown_pixels_recoloured": int(np.count_nonzero(done & ~binary)),
+        "outline_pixels_left": int(np.count_nonzero(visible & (inside <= depths[-1]) & ~done)),
     }
 
 
@@ -583,6 +704,20 @@ def parse_args() -> argparse.Namespace:
         "--rgb-gaussian-sigma-x4", type=float, default=0.0,
         help="flou gaussien RGB premultiplie sur toute la texture visible",
     )
+    parser.add_argument(
+        "--potrace-alphamax", type=float, default=0.0,
+        help="remplace la spline par une vectorisation Potrace du masque x1 (angles vifs, pentes droites)",
+    )
+    parser.add_argument("--potrace-opttolerance", type=float, default=0.2)
+    parser.add_argument(
+        "--potrace-band-x4", type=float, default=6.0,
+        help="distance maximale au bord source des pixels modifiables par Potrace",
+    )
+    parser.add_argument(
+        "--edge-rgb-fill-depth-x4", type=float, default=0.0,
+        help="remplace le RGB du liseré de bord (et des pixels gagnés) par une moyenne gaussienne de l'intérieur",
+    )
+    parser.add_argument("--edge-rgb-fill-sigma-x4", type=float, default=2.5)
     parser.add_argument("--left-edge-blur-sigma-x4", type=float, default=0.0)
     parser.add_argument("--left-edge-blur-inner-x4", type=int, default=0)
     parser.add_argument("--left-edge-blur-outer-x4", type=int, default=0)
@@ -672,6 +807,11 @@ def main() -> None:
         "la conservation de la découpe native exige un masque d'occlusion",
     )
     rgb_gaussian = args.rgb_gaussian_sigma_x4 > 0.0
+    edge_fill = args.edge_rgb_fill_depth_x4 > 0.0
+    require(not (rgb_gaussian and edge_fill), "flou RGB et remplissage RGB de bord sont exclusifs")
+    use_potrace = args.potrace_alphamax > 0.0
+    require(not (use_potrace and safe_boundary), "Potrace et spline sécurisée sont exclusifs")
+    require(not use_potrace or args.potrace_band_x4 > 0.0, "bande Potrace invalide")
     left_blur = args.left_edge_blur_sigma_x4 > 0.0
     require(
         not left_blur or (args.left_edge_blur_inner_x4 > 0 and args.left_edge_blur_outer_x4 > 0),
@@ -751,7 +891,16 @@ def main() -> None:
             (physical_height, physical_width, 4)
         )
         source_alpha = source_pixels[:, :, 3]
-        if safe_boundary:
+        if use_potrace:
+            corrected, spline_report = potrace_alpha(
+                source_alpha,
+                threshold=args.threshold,
+                alphamax=args.potrace_alphamax,
+                opttolerance=args.potrace_opttolerance,
+                supersample=max(args.supersample, 8),
+                band=args.potrace_band_x4,
+            )
+        elif safe_boundary:
             corrected, spline_report = safe_boundary_spline_alpha(
                 source_alpha,
                 threshold=args.threshold,
@@ -872,11 +1021,21 @@ def main() -> None:
         pixels = source_pixels.copy()
         pixels[:, :, 3] = corrected
         rgb_gaussian_report: dict[str, int | float] | None = None
+        edge_fill_report: dict[str, int | float] | None = None
         if rgb_gaussian:
             pixels[:, :, :3], rgb_gaussian_report = blur_rgb_premultiplied(
                 source_pixels[:, :, :3],
                 corrected,
                 sigma=args.rgb_gaussian_sigma_x4,
+            )
+        elif edge_fill:
+            pixels[:, :, :3], edge_fill_report = fill_edge_rgb(
+                source_pixels[:, :, :3],
+                source_alpha,
+                corrected,
+                threshold=args.threshold,
+                depth=args.edge_rgb_fill_depth_x4,
+                sigma=args.edge_rgb_fill_sigma_x4,
             )
         else:
             require(bool(np.array_equal(pixels[:, :, :3], source_pixels[:, :, :3])), f"frame {index}: RGB modifie")
@@ -909,19 +1068,20 @@ def main() -> None:
             "painted_fade_protection": painted_protection_report,
             "painted_foreground_occlusion": painted_foreground_occlusion_report,
             "rgb_gaussian": rgb_gaussian_report,
+            "edge_rgb_fill": edge_fill_report,
             "left_edge_blur": left_blur_report,
             "local_reconstruction": reconstruction_report,
             "local_reinforcement": reinforcement_report,
             "changed_alpha_pixels": int(np.count_nonzero(corrected != source_alpha)),
             "raised_over_source_alpha_pixels": int(np.count_nonzero(corrected > source_alpha)),
-            "rgb_byte_identical": not rgb_gaussian,
+            "rgb_byte_identical": not (rgb_gaussian or edge_fill),
         })
         if index == 0:
             preview_original = Image.fromarray(source_pixels, "RGBA")
             preview_corrected = Image.fromarray(pixels, "RGBA")
 
     require(preview_original is not None and preview_corrected is not None, "preview impossible")
-    label = "spline Fit 1 multi-composante"
+    label = f"Potrace x1 alphamax {args.potrace_alphamax:g}" if use_potrace else "spline Fit 1 multi-composante"
     if safe_boundary:
         label += " securisee"
     if contour_gaussian:
@@ -936,6 +1096,8 @@ def main() -> None:
         label += " + occlusion peinte"
     if rgb_gaussian:
         label += " + flou gaussien RGB"
+    if edge_fill:
+        label += " + liseré RGB remplacé"
     if left_blur:
         label += " + flou bord gauche"
     if region is not None:
@@ -956,7 +1118,7 @@ def main() -> None:
         "source_run": source_root.as_posix(),
         "source_run_manifest_sha256": sha256(source_manifest_path),
         "alpha_operation": {
-            "type": "per-frame-multi-component-spline-fit1"
+            "type": ("per-frame-potrace-x1-vector" if use_potrace else "per-frame-multi-component-spline-fit1")
             + ("-safe-boundary" if safe_boundary else "")
             + ("-plus-contour-gaussian" if contour_gaussian else "")
             + ("-plus-all-contour-fade" if all_contour_fade else "")
@@ -964,6 +1126,7 @@ def main() -> None:
             + ("-plus-painted-fade-protection" if painted_protection else "")
             + ("-plus-painted-foreground-occlusion" if painted_foreground_occlusion else "")
             + ("-plus-rgb-gaussian" if rgb_gaussian else "")
+            + ("-plus-edge-rgb-fill" if edge_fill else "")
             + ("-plus-left-edge-gaussian" if left_blur else "")
             + ("-plus-bounded-gaussian-reconstruction" if region else ""),
             "fit_error": args.fit_error,
@@ -1019,6 +1182,17 @@ def main() -> None:
                 "sigma_x4": args.rgb_gaussian_sigma_x4,
                 "policy": "premultiplied-visible-rgb; transparent-rgb-preserved",
             } if rgb_gaussian else None,
+            "edge_rgb_fill": {
+                "depth_x4": args.edge_rgb_fill_depth_x4,
+                "sigma_x4": args.edge_rgb_fill_sigma_x4,
+                "policy": "visible pixels within depth of the source edge, and grown pixels, take a Gaussian-normalised average of deeper RGB; shallower depths retried for thin parts; alpha unchanged",
+            } if edge_fill else None,
+            "potrace": {
+                "alphamax": args.potrace_alphamax,
+                "opttolerance": args.potrace_opttolerance,
+                "band_x4": args.potrace_band_x4,
+                "source": "x1 mask recovered from the nearest x4 source alpha",
+            } if use_potrace else None,
             "left_edge_blur": {
                 "sigma_x4": args.left_edge_blur_sigma_x4,
                 "inner_band_x4": args.left_edge_blur_inner_x4,

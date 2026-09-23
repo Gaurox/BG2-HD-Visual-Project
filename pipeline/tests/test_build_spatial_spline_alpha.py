@@ -217,3 +217,41 @@ class SpatialSplineAlphaTests(unittest.TestCase):
         np.testing.assert_array_equal(result[:20, :], spline[:20, :])
         self.assertGreater(report["raised_over_spline_pixels"], 0)
         self.assertGreater(report["raised_over_source_pixels"], 0)
+
+    def test_potrace_alpha_straightens_a_staircase_within_its_band(self) -> None:
+        mask_x1 = np.zeros((16, 16), dtype=bool)
+        for row in range(2, 14):
+            mask_x1[row, 2 : 2 + row] = True
+        source = (mask_x1.repeat(4, axis=0).repeat(4, axis=1) * 255).astype(np.uint8)
+
+        result, report = builder.potrace_alpha(
+            source, threshold=127, alphamax=0.8, opttolerance=0.2, supersample=8, band=6.0
+        )
+
+        self.assertGreater(report["grown_pixels"], 0)
+        self.assertGreater(report["shrunk_pixels"], 0)
+        self.assertEqual(result[30, 20], 255)
+        self.assertEqual(result[4, 60], 0)
+        self.assertGreater(len(np.unique(result)), 2)
+
+    def test_potrace_alpha_rejects_a_non_nearest_source(self) -> None:
+        source = np.zeros((16, 16), dtype=np.uint8)
+        source[3:9, 3:9] = 255
+        with self.assertRaisesRegex(SystemExit, "nearest"):
+            builder.potrace_alpha(
+                source, threshold=127, alphamax=0.8, opttolerance=0.2, supersample=8, band=6.0
+            )
+
+    def test_edge_fill_replaces_the_dark_outline_and_keeps_the_core(self) -> None:
+        alpha = np.zeros((40, 40), dtype=np.uint8)
+        alpha[4:36, 4:36] = 255
+        rgb = np.full((40, 40, 3), 200, dtype=np.uint8)
+        inside = alpha > 0
+        outline = inside & ~np.pad(np.ones((28, 28), dtype=bool), 6)
+        rgb[outline] = 30
+
+        result, report = builder.fill_edge_rgb(rgb, alpha, alpha, threshold=127, depth=6.0, sigma=2.5)
+
+        self.assertGreater(int(result[4, 20, 0]), 180)
+        np.testing.assert_array_equal(result[20, 20], rgb[20, 20])
+        self.assertGreater(report["filled_pixels"], 0)
