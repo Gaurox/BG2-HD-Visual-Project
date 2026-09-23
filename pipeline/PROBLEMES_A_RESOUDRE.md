@@ -44,6 +44,7 @@ décor**. Restent ouverts sur des zones déjà validées :
 | Famille liquide `WT5000A-D` non classée | AR5000, AR5203 | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
 | Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
 | Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
+| Contours C provisoires à refondre puis réappliquer | Toutes familles/maps eau traitées | [WATER-006](#water-006--refonte-globale-des-contours-c) |
 | Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL), AR6300 (WTLAKA-D) | `overlay-sources.json` |
 | Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
 
@@ -116,6 +117,15 @@ ne sont pas réconciliés par une décision explicite.
 - Reste ouvert : classification dans `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py`
   (le préflight de ces deux zones bloque toujours sans `--allow-blocked-test`), matériau route2 dédié,
   rive/contour, animation de la rivière sous la base x4, pause/reprise.
+
+## WATER-006 — Refonte globale des contours C
+
+- Décision utilisateur du 2026-09-24 : continuer le développement et les installations avec C actuel.
+- Dette : C reste provisoire et doit être amélioré sur toutes les familles.
+- Clôture : nouveau contrat C validé ingame, puis reconstruction/réinstallation de C sur chaque map/famille
+  déjà traitée ; conserver les anciens runs et reçus immuables.
+- État et preuve : `water/CONTOUR_MATTE_PIPELINE.md`,
+  `water/manifests/ar0500n-contour-user-qa-20260924-v1.json`.
 
 ## WTPOOL-001 — Piscines x4
 
