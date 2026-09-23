@@ -50,6 +50,8 @@ de la chaîne standard ([SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md)) ; à l
 ```
 
 `cycle_seconds` est à fixer par groupe sec lorsque les vitesses WED divergent (voir tableau).
+`approved_strength` (groupe sec, contrat famille) → force route2 du registre ; > 0 sur un groupe pluie refusé
+sauf matériau 5 (seul matériau qualifié par la DLL pour la passe pluie fpTone).
 `base_registry` optionnel : par défaut, registre compilé dans la DLL installée, lu dans
 [`route2-registry-current.json`](route2-registry-current.json) (le producteur refuse si la DLL live n'est pas celle
 du pointeur). Les entrées de la même WED sont remplacées, les autres conservées. Copier le nouveau registre sous
@@ -96,7 +98,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | Groupe | Témoin | Clés | Vitesses | Cycle proposé | Phases | x4 | Collier | Point ouvert |
 |---|---|---:|---|---|---:|---|---|---|
 | lake WTLAKE | AR1600 | 6 | 6 | 2,4 s | 72 | seedvr | non | **validé** |
-| pool WTPOOL | AR1000 jour | 6 | 6 | 2,4 s | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
+| pool WTPOOL | AR0408 | 6 | 6 (0 : AR1004, AR1601, AR2012) | **2,4 s figé** | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
 | swamp WTSWAM | AR1607 | 6 | 6 | 2,4 s | 72 | seedvr | non | opacité native 100 |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |

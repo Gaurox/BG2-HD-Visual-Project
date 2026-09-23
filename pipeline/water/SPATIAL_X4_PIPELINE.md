@@ -22,7 +22,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | Famille | Overlays | x4 | Témoin validé |
 |---|---|---|---|
 | lake | WTLAKE | seedvr | AR1600 |
-| pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR1000 |
+| pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR0408 (A + B) ; AR1000 historique |
 | swamp | WTSWAM | seedvr | AR1607 |
 | sewage | WTSEW | seedvr | AR2100 (chaîne standard complète) |
 | oil | WTOIL | seedvr | AR0413 |
@@ -81,6 +81,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | Map | Famille | Run | Installation | QA en jeu |
 |---|---|---|---|---|
 | AR2100 | sewage | `ar2100-water-x4-20260923-v1` | `ar2100-spatial-installed-20260923-v1.json` | validée — `ar2100-spatial-user-qa-20260923-v1.json` |
+| AR0408 | pool | `ar0408-water-x4-20260923-v2` | `ar0408-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0408-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v2) |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases
 validée historiquement (route2). Les maps prêtes utilisant une ressource partagée déjà surchargée (WTSWAM,

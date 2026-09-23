@@ -92,12 +92,23 @@ def install_record(area, kind, run, override, backup, runtime=None, manifest=Non
     return record
 
 
-def qa_record(area, kind, selection, quote, result, override, reserve=None, weather=None):
+def qa_record(area, kind, selection, quote, result, override, reserve=None, weather=None,
+              superseded_by=None):
+    """``superseded_by``: later receipt of the same area that replaced some selection files
+    (A -> B rewrites the WED); each replaced file must be live from that receipt."""
     selection = Path(selection)
     installed = json.loads(selection.read_text(encoding='utf-8-sig'))
     if installed.get('area', area).upper() != area.upper():
         raise SystemExit('selection belongs to another area')
     bad = live_mismatches(installed['files'], override) if 'files' in installed else []
+    later = None
+    if bad and superseded_by:
+        later = Path(superseded_by)
+        newer = json.loads(later.read_text(encoding='utf-8-sig'))
+        if newer.get('area', '').upper() != area.upper() or later.resolve() == selection.resolve():
+            raise SystemExit('--superseded-by must be another receipt of the same area')
+        kept = {n: newer['files'][n] for n in bad if n in newer.get('files', {})}
+        bad = [n for n in bad if n not in kept] + live_mismatches(kept, override)
     if bad:
         raise SystemExit(f'selection no longer installed: {bad}')
     if result == 'validated-with-reserve' and not reserve:
@@ -106,7 +117,9 @@ def qa_record(area, kind, selection, quote, result, override, reserve=None, weat
             'recorded_utc': datetime.now(timezone.utc).isoformat(timespec='seconds'),
             'source': 'user-message', 'quote': quote, 'result': result, 'reserve': reserve,
             'weather_and_variant_observed': weather or 'not-specified-by-user',
-            'selection': {'path': rel(selection), 'sha256': sha(selection)}, 'release': 'not-requested'}
+            'selection': {'path': rel(selection), 'sha256': sha(selection)},
+            **({'superseded_by': {'path': rel(later), 'sha256': sha(later)}} if later else {}),
+            'release': 'not-requested'}
 
 
 def main():
@@ -129,6 +142,8 @@ def main():
     q.add_argument('--result', required=True, choices=RESULTS)
     q.add_argument('--reserve')
     q.add_argument('--weather', help='variant/weather actually observed, if the user said so')
+    q.add_argument('--superseded-by', type=Path,
+                   help='later installed receipt of the same area that replaced selection files')
     args = parser.parse_args()
     game = args.game_root
     if game is None:
@@ -144,7 +159,7 @@ def main():
         path = save(next_path(MANIFESTS, args.area, args.kind, 'installed', day), data)
     else:
         data = qa_record(args.area, args.kind, args.selection, args.quote, args.result, override,
-                         args.reserve, args.weather)
+                         args.reserve, args.weather, args.superseded_by)
         path = save(next_path(MANIFESTS, args.area, args.kind, 'user-qa', day), data)
     print(rel(path))
 

@@ -127,7 +127,10 @@ ne sont pas réconciliés par une décision explicite.
   6→36phases/15Hz, q0 ; énergie haute fréquence17,2763→1,4345. Q0 accepté sans quadrillage mais
   rejeté comme figé. Voie2 v5 installée sur identité AR1000 exacte : blend30FPS, matériau1, q0.70 ;
   validée ingame le2026-09-12. Base conforme ;37/37cellules avec secondaire, aucune correction alpha
-  central ; nuit exclue. Cas AR1000 jour résolu ; aucune généralisation WTPOOL.
+  central ; nuit exclue. Cas AR1000 jour résolu.
+- 2026-09-23 : généralisé à la famille par la chaîne standard, validé sur AR0408 (A + B) : force route2 0,70
+  matériau 1 sur le groupe sec ; la DLL donne le mode liquide aux alias `YF…` via le registre. Contours AR0408
+  à revoir. Autres maps pool (AR0703…) : QA par map.
 - Ne pas généraliser un masque ou un seuil depuis une seule zone.
 
 ## ALPHA-001 — Liserés de transparence

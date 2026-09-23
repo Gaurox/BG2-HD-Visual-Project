@@ -44,10 +44,13 @@ class PlanWaterMapTests(unittest.TestCase):
         standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
         temporal = next(f for f in standard["families"] if f["id"] == "pool")["temporal"]
         self.assertEqual((temporal["material_id"], temporal["approved_strength"]), (1, 0.70))
+        self.assertEqual((temporal["cycle"], temporal["cycle_seconds"], temporal["status"]),
+                         ("fixed", 2.4, "validated-ingame-AR0408"))
         dry = p.temporal_plan_group("pool", {"WTPOOL": "YFTEST"}, temporal)
         rain = p.temporal_plan_group("pool_rain", {"WTPOOLR": "YFTESTR"}, temporal, "pool")
-        self.assertEqual(dry["approved_strength"], 0.70)
+        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.70, 2.4))
         self.assertNotIn("approved_strength", rain)
+        self.assertNotIn("cycle_seconds", rain)
 
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())

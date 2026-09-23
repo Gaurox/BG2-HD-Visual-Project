@@ -34,6 +34,8 @@ Les trois étapes sont indépendantes ; faire celles qui s'appliquent, **dans l'
 Références : AR1600 valide la recette lac ; AR2100 valide la chaîne standard complète `sewage` A → B → C.
 Contrat figé dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4, cycle 2,4 s / 72 phases,
 contours `rgb-x4-silhouette-matte` avec réserve acceptée. Les garde-fous de review restent applicables.
+AR0408 valide `pool` A → B : bilinéaire x4, matériau 1, cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le
+groupe sec** (la timeline seule paraît figée), pluie q0 ; contours pool à revoir.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|
@@ -113,6 +115,7 @@ python pipeline/scripts/record_water_decision.py qa --area ARxxxx --kind contour
 
 `--result validated-with-reserve --reserve "<réserve>"` ou `rejected` selon la réponse. Mettre à jour la ligne
 de la map dans le tableau d'état de TEMPORAL_30FPS_PIPELINE.md / CONTOUR_MATTE_PIPELINE.md.
+QA de A enregistrée après B (B réécrit la WED) : ajouter `--superseded-by <reçu installed de B>`.
 
 ## Retour arrière (jeu fermé)
 

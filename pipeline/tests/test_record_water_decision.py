@@ -35,6 +35,24 @@ class RecordWaterDecisionTests(unittest.TestCase):
         qa = r.qa_record("AR0404", "contour", selection, "validé", "validated", self.override)
         self.assertEqual(qa["result"], "validated")
 
+    def test_qa_accepts_files_replaced_by_a_later_live_receipt_only(self):
+        record = r.install_record("AR0404", "spatial", self.run, self.override, self.backup)
+        selection = Path(self.tmp.name) / "sel.json"
+        selection.write_text(json.dumps(record))
+        (self.override / "A040401.PVRZ").write_bytes(b"later")
+        later = Path(self.tmp.name) / "later.json"
+        later.write_text(json.dumps({"area": "AR0404", "files": {
+            "A040401.PVRZ": {"sha256": r.sha(self.override / "A040401.PVRZ")}}}))
+        with self.assertRaises(SystemExit):
+            r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override)
+        qa = r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override,
+                         superseded_by=later)
+        self.assertIn("superseded_by", qa)
+        (self.override / "A040401.PVRZ").write_bytes(b"drift")
+        with self.assertRaises(SystemExit):
+            r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override,
+                        superseded_by=later)
+
     def test_refuses_bytes_that_are_not_live(self):
         (self.override / "A040401.PVRZ").write_bytes(b"other")
         with self.assertRaises(SystemExit):

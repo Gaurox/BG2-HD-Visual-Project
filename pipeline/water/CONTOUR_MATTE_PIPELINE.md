@@ -78,6 +78,7 @@ Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non enco
 | Map | Famille | Run | QA en jeu | Suite |
 |---|---|---|---|---|
 | AR2100 | WTSEW | `ar2100-contour-matte-20260923-v1` | validée avec réserve — `ar2100-contour-user-qa-20260923-v3.json` | matte accepté en l'état ; adaptation CONTOUR-NET abandonnée (v1 rejet historique, v2 citation non canonique) |
+| AR0408 | WTPOOL | `ar0408-contour-matte-20260923-v1` | **à revoir** (utilisateur, 2026-09-23) — reçu `ar0408-contour-installed-20260923-v1.json` encore installé | défaut non décrit : demander ce qui ne va pas avant tout nouvel essai `-v2` |
 
 ## Limites connues
 
