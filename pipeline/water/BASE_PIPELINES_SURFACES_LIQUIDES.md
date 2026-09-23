@@ -14,6 +14,13 @@ Premier essai installé, validation en attente :
 Les constats de l'analyse initiale ci-dessous restent historiques ; cette cible ne signifie pas
 que toutes les maps ont déjà reçu une interpolation.
 
+Étude complémentaire après capture du bateau :
+[lissage généralisable des contours devant l'eau](LISSAGE_CONTOURS_EAU_STRATEGIE_20260923.md).
+Constat AR1600 : alpha déjà bilinéaire, mais silhouette x1 et RGB noir partiellement révélés ;
+stratégie proposée = géométrie + RGB de bord + composition des passes.
+Masque témoin accepté visuellement ; [correctif couleur/BC3 installé sur le bateau AR1600](AR1600_CONTOURS_ESSAI_20260923.md),
+validation ingame en attente. Aucune généralisation à la map entière ou à une autre variante.
+
 ## 1. Mandat, périmètre et statut des preuves
 
 - Objectif : un traitement commun ; sinon, quelques recettes déterminées par la structure réelle.
