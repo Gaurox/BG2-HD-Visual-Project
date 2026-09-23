@@ -108,6 +108,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | Map | Famille | Phases / cycle | Run | QA en jeu | Réserve de production |
 |---|---|---|---|---|---|
 | AR2100 | sewage | 72 / 2,4 s | `ar2100-water-30fps-20260923-v1` | validée — `ar2100-temporal-30fps-user-qa-20260923-v1.json` | ratios 1,269 / 1,682 acceptés après vidéo de review |
+| AR0408 | pool | 72 / 2,4 s | `ar0408-water-30fps-20260923-v1` | **rejetée** — `ar0408-temporal-30fps-user-qa-20260923-v1.json` | eau figée ; animation d’eau qui coule absente |
 
 Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) non vérifié en jeu ;
 lave émissive non qualifiée route2 ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;
