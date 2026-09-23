@@ -1788,14 +1788,14 @@ void prepare_water_overlay_draw(WaterOverlayUniformScope& scope) {
   const auto route = hooks::route2_water_overlay_match(
       texture.texture, texture.width, texture.height);
   const float approvedStrength = route ? route->approvedStrength : 0.0f;
-  // Weather uses fpTone for the very same atlas. Qualify that new path only
-  // for approved swamp identities; all previous materials keep their baseline.
-  const bool matched = route.has_value() && approvedStrength > 0.0f &&
-                       (!tonePass || route->materialId == 5);
+  // Weather uses fpTone for the same atlas. Qualify approved swamp effects
+  // and explicit timing-only identities; other materials keep their baseline.
+  const bool matched = route.has_value() && route->supports_pass(tonePass);
   const float strength = matched && g_cfg.enableWaterEffect
       ? core::route2_water_strength(g_cfg.waterOverlayStrength, approvedStrength) : 0.0f;
   gl.glUniform1f(scope.strength, strength);
-  const bool temporal = matched && strength > 0.0f && route->temporal_enabled() &&
+  const bool temporal = matched && (strength > 0.0f || route->temporal_only()) &&
+                        route->temporal_enabled() &&
                         scope.timelineEnabled >= 0 &&
                         locations->waterTimelineFrameCount >= 0 &&
                         locations->waterTimelineSourceFps >= 0 &&

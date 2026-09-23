@@ -1,0 +1,123 @@
+{
+  "schema": "bg2-ar1600-water-30fps-installed-v1",
+  "recorded_utc": "2026-09-23T05:36:51.925502+00:00",
+  "status": "installed-pending-user-ingame-qa",
+  "area": "AR1600",
+  "weather": [
+    "dry",
+    "rain"
+  ],
+  "target_fps_all_water_animations": 30,
+  "scope_this_trial": "AR1600 surface overlays only",
+  "cycle_seconds": 2.4,
+  "stored_phases": 36,
+  "stored_phase_fps": 15,
+  "display_fps": 30,
+  "interpolation": "Apollo apo-8 sixfold closed loop, then linear half-steps in shader",
+  "procedural_strength": 0,
+  "baseline_spatial_install": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\manifests\\liquid-families-x4-trial-installed-20260923-v1.json",
+    "bytes": 39125,
+    "sha256": "12EAD6F37CEAC68BF551878518F865B919DBBD68F6B882A06B8F12339F186A9E"
+  },
+  "run": "maps\\water-batches\\runs\\ar1600-water-30fps-20260923-v1",
+  "plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar1600-water-30fps-20260923-v1\\plan.json",
+    "bytes": 6817,
+    "sha256": "35BA7494B423C059C7CB49538D3D1B9ED4A03378D09A2D6D42F552D4EA82F9DE"
+  },
+  "registry": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar1600-water-30fps-20260923-v1\\registry-v3.json",
+    "bytes": 12127,
+    "sha256": "C0B8B131091BA9BCF74346D3320968D344E8C5AB6A4223C022471813B0ED28F7"
+  },
+  "producer": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\scripts\\build_ar1600_water_30fps_trial.py",
+    "bytes": 12756,
+    "sha256": "22775FAF5B80A501E84F8E286F850E31812EDDFB0F74FAFABE5E619064FE4FED"
+  },
+  "build_report": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar1600-water-30fps-20260923-v1\\build.json",
+    "bytes": 41254,
+    "sha256": "A646DC3ACA4986BEE4A3DA159ACC88BB2208B0A9EF9A4206729E4AEFDE56C526"
+  },
+  "installed_override": {
+    "AR1600.WED": {
+      "bytes": 81556,
+      "sha256": "ACA0EAD43272893AE452FF3E0A615FD9D959EF7E46C586D8374F1BD284AA10C5"
+    },
+    "QALAK0.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83"
+    },
+    "QALAK0R.TIS": {
+      "bytes": 456,
+      "sha256": "3DCEDEE67DD4C31B0AB1E1A2CF3DCBBF45C732D8F4FD9C96677B254DB50C4B83"
+    },
+    "QLAK000.PVRZ": {
+      "bytes": 904592,
+      "sha256": "E85867C73FA63C6C7AF528445F00264660D675C751C4069164A774BD2CC02103"
+    },
+    "QLAK0R00.PVRZ": {
+      "bytes": 1025463,
+      "sha256": "DF5984C50B35522C0C2E0C4ED10D341FCDE547EF81A98B1FE08B77706F08CA34"
+    }
+  },
+  "runtime": {
+    "schema": "bg2-water-runtime-trial-backup-v1",
+    "created_utc": "2026-09-23T05:33:22.6980108Z",
+    "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.dll",
+    "source": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\build-ar1600-water-30fps-20260923-v1\\Release\\InfinityEngine-Enhancer.dll",
+    "backup": "G:\\AI\\BG2_Upscale\\backups\\water\\ar1600-water-30fps-20260923-v1\\runtime\\InfinityEngine-Enhancer.dll",
+    "before_sha256": "C6AA1CFA15083E12F9015F7D9B85A343BEB849CCE80B5EC717EF4FBAB06EE0A6",
+    "installed_sha256": "B5ECAAC5F1A4F46D9CD91ECB770386BCB702ABC93581B451E6A07F7A1BBE8D57",
+    "bytes": 1828864
+  },
+  "receipts": {
+    "assets": {
+      "path": "G:\\AI\\BG2_Upscale\\backups\\water\\ar1600-water-30fps-20260923-v1\\override\\override-backup-20260923-073322\\install-backup.json",
+      "bytes": 1395,
+      "sha256": "E673C637F42EA1EBD21F45DABAE024B59E3264D739442CE652EE8C6A3DF2EDE4"
+    },
+    "runtime": {
+      "path": "G:\\AI\\BG2_Upscale\\backups\\water\\ar1600-water-30fps-20260923-v1\\runtime\\install-backup.json",
+      "bytes": 704,
+      "sha256": "8A2087E2753DC10E6108CD3D08E154D4D6F4A15E394BBEEDECE2BAEE7F043ABD"
+    }
+  },
+  "verification": {
+    "installed_hashes": true,
+    "accepted_anchors_pixel_exact_after_bc3": true,
+    "geometry_preserved": true,
+    "other_spatial_trial_files_unchanged": 146,
+    "animation_wip_hashes_preserved": 8,
+    "ini_and_glsl_unchanged": true,
+    "ctest_iee_tests": "1/1 passed, 0.95 seconds",
+    "test_log": {
+      "path": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\build-ar1600-water-30fps-20260923-v1\\Testing\\Temporary\\LastTest.log",
+      "bytes": 29558,
+      "sha256": "DE3B320687AC64CFED66B76D282DE71A54A0A486286CED24B2350550982C4AAC"
+    },
+    "other_registry_entry_preserved": true
+  },
+  "previews": {
+    "dry": {
+      "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar1600-water-30fps-20260923-v1\\dry\\comparison-30fps.mp4",
+      "bytes": 1956370,
+      "sha256": "4865D65CFA4A44B39FE8FBE4534FF014E3A8A10977B3184D8C4E59705ED976CF"
+    },
+    "rain": {
+      "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar1600-water-30fps-20260923-v1\\rain\\comparison-30fps.mp4",
+      "bytes": 2420763,
+      "sha256": "86EDB47A2595177F1576D356855C628154C09171B7B3BB364DA07686FCC62328"
+    }
+  },
+  "known_limits": [
+    "30 Hz is a render-clock target, not an observed ingame capture.",
+    "Half-step transitions are blends, not 72 independently inferred phases.",
+    "Clock uses wall time; pause/menu behavior remains subject to ingame validation."
+  ],
+  "game_launched_by_agent": false,
+  "release": "not-requested",
+  "clua": "C:MoveToArea(\"AR1600\")"
+}

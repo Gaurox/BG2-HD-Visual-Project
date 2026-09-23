@@ -120,6 +120,14 @@ struct Match {
            temporalAtlasStridePixels > temporalAtlasPaddingPixels * 2;
   }
   bool weatherVariant{};
+  // Explicit zero-strength timelines change timing without procedural RGB.
+  [[nodiscard]] bool temporal_only() const noexcept {
+    return approvedStrength == 0.0f && temporal_enabled();
+  }
+  [[nodiscard]] bool supports_pass(bool tonePass) const noexcept {
+    return (approvedStrength > 0.0f || temporal_only()) &&
+           (!tonePass || materialId == 5 || temporal_only());
+  }
 };
 
 inline bool layout_matches(const Query& query, const RegistryEntry& entry) noexcept {

@@ -6,6 +6,14 @@ Ce document reprend la notice d'analyse vanilla/HD remise dans la conversation. 
 à la création des pipelines et aux décisions jusqu'à leur validation définitive. Les rubriques
 sont des repères de conception, pas un ordre de travail imposé ni une obligation de préflight.
 
+Évolution du 2026-09-23 : rendu spatial du lot témoin accepté globalement par l'utilisateur
+(`manifests/liquid-families-spatial-user-qa-20260923-v1.json`). Cible temporelle demandée :
+**30 FPS pour toutes les composantes animées de l'eau**, sans accélérer les cycles.
+Premier essai installé, validation en attente :
+[Brynnlaw AR1600, normal/pluie](AR1600_WATER_30FPS_20260923.md).
+Les constats de l'analyse initiale ci-dessous restent historiques ; cette cible ne signifie pas
+que toutes les maps ont déjà reçu une interpolation.
+
 ## 1. Mandat, périmètre et statut des preuves
 
 - Objectif : un traitement commun ; sinon, quelques recettes déterminées par la structure réelle.

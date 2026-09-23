@@ -1047,6 +1047,27 @@ void test_water_overlay_route2_policy() {
   using iee::water_route2::Query;
   using iee::water_route2::identity_matches;
   using iee::water_route2::resref_array;
+  iee::water_route2::Match timing{};
+  expect_true(!timing.supports_pass(false) && !timing.supports_pass(true),
+              "A neutral entry without a timeline remains native in both passes");
+  timing.materialId = 1;
+  timing.temporalFrameCount = 36;
+  timing.temporalSourceFps = 15.0f;
+  timing.temporalTargetFps = 30.0f;
+  timing.temporalAtlasColumns = 7;
+  timing.temporalAtlasStridePixels = 264;
+  timing.temporalAtlasPaddingPixels = 4;
+  expect_true(timing.temporal_only() && timing.supports_pass(false) && timing.supports_pass(true),
+              "Explicit zero-strength timing runs for dry and rain without procedural RGB");
+  timing.approvedStrength = 0.7f;
+  expect_true(!timing.temporal_only() && timing.supports_pass(false) && !timing.supports_pass(true),
+              "Existing positive-strength lake retains its dry-only qualification");
+  timing.materialId = 5;
+  expect_true(timing.supports_pass(true), "Existing swamp weather remains qualified");
+  timing.approvedStrength = 0.0f;
+  timing.temporalFrameCount = 0;
+  expect_true(!timing.supports_pass(false) && !timing.supports_pass(true),
+              "Incomplete zero-strength timeline fails closed");
   std::array<std::string_view, 5> slots{"AR0900", "WTLAKE", "", "", ""};
   RegistryEntry entry{};
   entry.wed = resref_array("AR0900");
