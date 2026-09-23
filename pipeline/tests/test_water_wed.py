@@ -54,6 +54,16 @@ class WaterWedTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             replace_overlay_timeline(bytes(source), 1, 36)
 
+    def test_non_sequential_native_lookup_needs_explicit_opt_in(self):
+        source = bytearray(fixture())
+        struct.pack_into("<6H", source, 114, 0, 1, 2, 3, 5, 4)
+        with self.assertRaises(ValueError):
+            replace_overlay_timeline(bytes(source), 1, 72)
+        after = replace_overlay_timeline(bytes(source), 1, 72, 1, require_sequential=False)
+        lookup = struct.unpack_from("<I", after, 56 + 20)[0]
+        self.assertEqual(struct.unpack_from("<72H", after, lookup), tuple(range(72)))
+        self.assertEqual(validate_polygons(after), validate_polygons(bytes(source)))
+
     def test_overlay_resref_changes_only_the_eight_byte_field(self):
         before = fixture()
         after = replace_overlay_resref(before, 1, "wtpool1")

@@ -11,6 +11,9 @@ sont des repères de conception, pas un ordre de travail imposé ni une obligati
 **30 FPS pour toutes les composantes animées de l'eau**, sans accélérer les cycles.
 Premier essai installé, validation en attente :
 [Brynnlaw AR1600, normal/pluie](AR1600_WATER_30FPS_20260923.md).
+**v2 validée ingame le même jour** : 72 phases réelles, interpolation périodique à bande limitée +
+SeedVR vidéo — [AR1600 v2](AR1600_WATER_30FPS_V2_20260923.md). Procédé commun des familles :
+[TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md). Apollo/flux rejetés pour les overlays liquides.
 Les constats de l'analyse initiale ci-dessous restent historiques ; cette cible ne signifie pas
 que toutes les maps ont déjà reçu une interpolation.
 
@@ -489,6 +492,10 @@ ARE → occurrences constitutives → BAM/cycles/positions/flags → raccords av
   pas une obligation d'IA ni un choix fondé uniquement sur lac/piscine.
 
 ### 9.5 Temporalité indépendante
+
+Recette validée (AR1600) et application par famille : [TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md).
+Les points ci-dessous restent les contraintes de conception.
+
 
 - Préserver ordre exact, durée, maintiens, phase et fermeture de boucle.
 - Distinguer interpolation temporelle, amélioration spatiale et matériau procédural.

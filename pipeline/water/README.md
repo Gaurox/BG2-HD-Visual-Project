@@ -11,6 +11,8 @@ et ouvrir uniquement la référence utile.
 | Symptôme visuel ou crash | [`VALIDATED_WATER_RECIPES.md`](VALIDATED_WATER_RECIPES.md) |
 | Réparation TIS/PVRZ/WED | [`../WATER_REPAIR_RUNBOOK.md`](../WATER_REPAIR_RUNBOOK.md) |
 | Mouvement procédural/runtime | [`../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md) |
+| Animation 30 FPS réels, toutes familles | [`TEMPORAL_30FPS_PIPELINE.md`](TEMPORAL_30FPS_PIPELINE.md) |
+| Conception surfaces liquides | [`BASE_PIPELINES_SURFACES_LIQUIDES.md`](BASE_PIPELINES_SURFACES_LIQUIDES.md) |
 | File QA ingame exhaustive, une carte à la fois | `ingame-map-tracking-v1.json` |
 | Sélection finale et QA | [`WATER_RELEASE_TRACKING.md`](WATER_RELEASE_TRACKING.md) |
 | Politique machine par famille | `family-policy-v1.json` |

@@ -1,0 +1,93 @@
+{
+  "schema": "bg2-ar1600-water-30fps-installed-v2",
+  "recorded_utc": "2026-09-23T18:17:24Z",
+  "status": "installed-pending-user-ingame-qa",
+  "area": "AR1600",
+  "weather": [
+    "dry",
+    "rain"
+  ],
+  "supersedes_install": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\manifests\\ar1600-water-30fps-installed-20260923-v1.json",
+    "bytes": 5361,
+    "sha256": "26D3E95E0FC38D9F7B7AF2722A9E17B0FE1CC81EA60F5FDAC80AB88A95BCA713"
+  },
+  "cycle_seconds": 2.4,
+  "stored_phases": 72,
+  "phase_fps": 30,
+  "display_fps": 30,
+  "shader_blend": "none (source 30 = target 30)",
+  "interpolation": "periodic band-limited trigonometric on native WTLAKE/WTLAKER x1, anchors exact every 12",
+  "spatial": "SeedVR 7B INT8 convrot, color none, 3x3 context, one temporal chunk of 105 wrapped frames, 16-phase variance-preserving loop crossfade",
+  "procedural_strength": 0,
+  "metrics_post_bc3": {
+    "dry": {
+      "sharpness_ratio_max_min": 1.251,
+      "step_ratio_max_median": 1.381
+    },
+    "rain": {
+      "sharpness_ratio_max_min": 1.199,
+      "step_ratio_max_median": 1.366
+    }
+  },
+  "plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar1600-water-30fps-20260923-v2\\plan.json",
+    "bytes": 5313,
+    "sha256": "8CAE4FFA3496647D3F5CA55A78AAE937486137F78BB1731FEB331467E53F5796"
+  },
+  "registry": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar1600-water-30fps-20260923-v2\\registry-v3.json",
+    "bytes": 12130,
+    "sha256": "479223D7D0009FDCF57AECFCFFC1E57C0228745FE01911B1ADFB6A8D40B026A9"
+  },
+  "producer": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\scripts\\build_ar1600_water_30fps_v2_trial.py",
+    "bytes": 20922,
+    "sha256": "29E6215B754AB0B330C9B195D8FA7C4CA1C591E970B8519CF36102251AC2A6B0"
+  },
+  "build_report": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar1600-water-30fps-20260923-v2\\build.json",
+    "bytes": 88445,
+    "sha256": "99C62B9E6DAA42B073C6589A9C79FBE14E7F27AFE02867F5F012ABE297010F46"
+  },
+  "installed_override": {
+    "AR1600.WED": {
+      "bytes": 81628,
+      "sha256": "FA4D6C3B2D4251E1918DB87DC790FDC86E66DB6A97EAC0EA4BF4CB3424E48994"
+    },
+    "QBLKV0.TIS": {
+      "bytes": 888,
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6"
+    },
+    "QBLKV0R.TIS": {
+      "bytes": 888,
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6"
+    },
+    "QLKV000.PVRZ": {
+      "bytes": 1731620,
+      "sha256": "744CAB102755BB1F25E2E00DEDC6A712E717AB969B4276BA6B99F3BFBC8CC4D0"
+    },
+    "QLKV0R00.PVRZ": {
+      "bytes": 1944618,
+      "sha256": "5708B0DF70D53F248D4B1F0AE764F1D8B76EBCBA11B50A02C72DCF8BDB50C771"
+    }
+  },
+  "runtime": {
+    "schema": "bg2-water-runtime-trial-backup-v1",
+    "created_utc": "2026-09-23T18:17:24.5538164Z",
+    "target": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition\\InfinityEngine-Enhancer.dll",
+    "source": "G:\\AI\\BG2_Upscale\\engine\\InfinityEngine-Enhancer\\source-patchee\\build-ar1600-water-30fps-20260923-v2\\Release\\InfinityEngine-Enhancer.dll",
+    "backup": "G:\\AI\\BG2_Upscale\\backups\\water\\ar1600-water-30fps-20260923-v2\\runtime\\InfinityEngine-Enhancer.dll",
+    "before_sha256": "B5ECAAC5F1A4F46D9CD91ECB770386BCB702ABC93581B451E6A07F7A1BBE8D57",
+    "installed_sha256": "F31FE3ACDC82E6C47FA235C74603833D0147D24EC30EE8E14214BA471CE6BCF3",
+    "bytes": 1828864
+  },
+  "override_backup": "backups/water/ar1600-water-30fps-20260923-v2/override/override-backup-20260923-201724",
+  "left_installed_unused": [
+    "QALAK0.TIS",
+    "QALAK0R.TIS",
+    "QLAK000.PVRZ",
+    "QLAK0R00.PVRZ"
+  ],
+  "release": "not-requested"
+}

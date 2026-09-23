@@ -23,7 +23,10 @@ class WaterToneShaderTests(unittest.TestCase):
         source = (ENGINE / 'src/iee/shader_probe.cpp').read_text(encoding='utf-8')
         scope = source[source.index('void prepare_water_overlay_draw('):]
         self.assertIn('record->second.fragmentShaderName != "fpTone"', scope)
-        self.assertIn('(!tonePass || route->materialId == 5)', scope)
+        # Tone pass: swamp material, or an explicit zero-strength timeline (AR1600 30 fps).
+        self.assertIn('route->supports_pass(tonePass)', scope)
+        registry = (ENGINE / 'src/iee/water_route2_registry.h').read_text(encoding='utf-8')
+        self.assertIn('(!tonePass || materialId == 5 || temporal_only())', registry)
         self.assertIn('hooks::route2_water_overlay_match(', scope)
 
 

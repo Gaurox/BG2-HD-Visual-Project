@@ -47,8 +47,14 @@ def validate_polygons(data: bytes) -> dict[str, int]:
     return {"objects": objects, "wall_polygons": groups[0][1], "object_polygons": door_count}
 
 
-def replace_overlay_timeline(data: bytes, slot: int, frames: int, speed: int = 1) -> bytes:
-    """Relocate from original bytes, never from offsets already mutated in output."""
+def replace_overlay_timeline(data: bytes, slot: int, frames: int, speed: int = 1,
+                             require_sequential: bool = True) -> bytes:
+    """Relocate from original bytes, never from offsets already mutated in output.
+
+    The new lookup is always sequential.  ``require_sequential=False`` accepts a native
+    non-sequential lookup (lava ``[0..9,11]``) whose order the caller already baked
+    into the new TIS phases.
+    """
     validate_polygons(data)
     fields = pointer_fields(data)
     layers, _, headers = struct.unpack_from("<3I", data, 8)
@@ -62,7 +68,7 @@ def replace_overlay_timeline(data: bytes, slot: int, frames: int, speed: int = 1
     if (width, height, start) != (1, 1, 0) or count == 0:
         raise ValueError("only a single-cell sequential overlay is supported")
     _span(data, lookup, count * 2)
-    if struct.unpack_from(f"<{count}H", data, lookup) != tuple(range(count)):
+    if require_sequential and struct.unpack_from(f"<{count}H", data, lookup) != tuple(range(count)):
         raise ValueError("non-sequential overlay timeline")
     end = lookup + count * 2
     delta = (frames - count) * 2
