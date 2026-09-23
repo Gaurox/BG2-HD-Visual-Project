@@ -1,0 +1,31 @@
+{
+  "schema": "bg2-water-route2-registry-current-v1",
+  "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated only by pipeline/scripts/Install-WaterRuntime.ps1.",
+  "registry": {
+    "path": "pipeline/water/requests/ar1600-water-30fps-20260923-v2/registry-v3.json",
+    "sha256_lf": "20910B9D1F6896BFECE158EE0F3C256D8D3B177ED60488046DCE35DCDF77408B"
+  },
+  "identities": [
+    {
+      "wed": "AR0900",
+      "overlay": "WTLAKE",
+      "slot": 1,
+      "state": "approved-ingame"
+    },
+    {
+      "wed": "AR1600",
+      "overlay": "QBLKV0",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR1600",
+      "overlay": "QBLKV0R",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    }
+  ],
+  "dll_sha256": "F31FE3ACDC82E6C47FA235C74603833D0147D24EC30EE8E14214BA471CE6BCF3",
+  "installed_by": "backups/water/ar1600-water-30fps-20260923-v2/runtime/install-backup.json",
+  "updated": "2026-09-23"
+}

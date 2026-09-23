@@ -1,0 +1,56 @@
+{
+  "schema": "bg2-liquid-family-standard-v1",
+  "version": 1,
+  "date": "2026-09-23",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). Values reproduce the choices validated on the 2026-09-23 witness batch (liquid-families-x4-20260923-v1, spatial render accepted) and AR1600 30 fps v2; a family's own system is kept, only the orchestration is standard.",
+  "sources": {
+    "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
+    "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
+    "temporal_qa": "pipeline/water/manifests/ar1600-water-30fps-user-qa-20260923-v2.json"
+  },
+  "defaults": {
+    "seedvr": "7B INT8 convrot, color_correction none, seed 959948902156062, periodic 3x3 context, centre crop",
+    "seam_mode": "compatible (collar applied only when a seam is measured as amplified vs stock)",
+    "seam_width_x4": 8,
+    "timeline_spatial": "native lookup, speed and duration kept (no 6->36)",
+    "rain": "resref + R when present in the vanilla KEY; WED names the dry alias only"
+  },
+  "families": [
+    {"id": "lake", "overlays": ["WTLAKE"], "layout": [["WTLAKE"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 1, "cycle": "native", "status": "validated-ingame-AR1600"},
+     "witness": "AR1600"},
+    {"id": "pool", "overlays": ["WTPOOL"], "layout": [["WTPOOL"]], "spatial_method": "bilinear",
+     "why": "SeedVR amplifies the diagonal weave into a grid",
+     "temporal": {"material_id": 1, "cycle": "native", "status": "proposal"},
+     "witness": "AR1000"},
+    {"id": "swamp", "overlays": ["WTSWAM"], "layout": [["WTSWAM"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 5, "cycle": "native", "status": "proposal"},
+     "witness": "AR1607"},
+    {"id": "sewage", "overlays": ["WTSEW"], "layout": [["WTSEW"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 4, "cycle": "native", "status": "proposal"},
+     "witness": "AR0404"},
+    {"id": "oil", "overlays": ["WTOIL"], "layout": [["WTOIL"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 1, "cycle": "native", "status": "proposal"},
+     "witness": "AR0413"},
+    {"id": "lake_teal", "overlays": ["WTLAKA", "WTLAKB", "WTLAKC", "WTLAKD"],
+     "layout": [["WTLAKA", "WTLAKB"], ["WTLAKC", "WTLAKD"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
+                  "why": "WED speed byte 8/0/0/0 across members: loop length not established"},
+     "witness": "AR3000"},
+    {"id": "brown_flow", "overlays": ["WT5000A", "WT5000B", "WT5000C", "WT5000D"],
+     "layout": [["WT5000A", "WT5000B"], ["WT5000C", "WT5000D"]], "spatial_method": "seedvr",
+     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
+                  "why": "WED speed byte 8/0/0/0 across members: loop length not established"},
+     "witness": "AR5203"},
+    {"id": "lava", "overlays": ["WTLAVA", "WTLAVB", "WTLAVC", "WTLAVD"],
+     "layout": [["WTLAVA", "WTLAVB"], ["WTLAVC", "WTLAVD"]], "spatial_method": "bilinear",
+     "why": "SeedVR none left a persistent grid; bilinear fallback selected",
+     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
+                  "why": "speed 12/0/0/12 ambiguous; 12x12/15 s would need 288 phases > 225 per page; emissive route2 unqualified"},
+     "witness": "AR0011"}
+  ],
+  "blocked": {
+    "local_are_bam_surfaces": "ARE/BAM water surfaces (AR2300 falls, AR2804/5, AR3021 basins) follow the animation pipeline, not this chain",
+    "unknown_overlay": "any liquid slot whose resource is not listed above: stop and ask"
+  }
+}

@@ -3,7 +3,8 @@
 Recette **validée ingame sur AR1600 (WTLAKE) le 2026-09-23** :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
 QA [`manifests/ar1600-water-30fps-user-qa-20260923-v2.json`](manifests/ar1600-water-30fps-user-qa-20260923-v2.json).
-Pour les autres familles : **proposition**, chaque map garde sa propre QA. Aide facultative, pas un ordre imposé.
+Pour les autres familles : **proposition**, chaque map garde sa propre QA. Déroulé agent (ordre, STOP, installation,
+reçus) : [WATER_MAP_RUNBOOK.md](WATER_MAP_RUNBOOK.md).
 
 ## Règles acquises
 
@@ -37,21 +38,21 @@ Pré-requis (refus explicite sinon) :
 Régression : reproduit AR1600 v2 à l'octet près (TIS, PVRZ, interpolation ; WED au nom d'alias près).
 Tests : `pipeline/tests/test_liquid_temporal_30fps.py`, `test_water_wed.py`.
 
-Plan (JSON) :
+Plan (JSON) — écrit automatiquement dans `<run>/temporal-plan.json` par `plan_water_map.py plan` pour les maps
+de la chaîne standard ([SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md)) ; à la main pour les témoins du lot :
 
 ```json
 {"spatial_run": "maps/water-batches/runs/liquid-families-x4-20260923-v1", "wed": "AR1607",
  "selection": "<optionnel>", "source_wed": "<optionnel>",
- "base_registry": "pipeline/water/requests/ar1600-water-30fps-20260923-v2/registry-v3.json",
  "groups": [{"id": "swamp", "aliases": {"WTSWAM": "QCSWM0"}, "material_id": 5},
             {"id": "swamp_rain", "rain_of": "swamp", "aliases": {"WTSWAMR": "QCSWM0R"}, "material_id": 5}]}
 ```
 
 `cycle_seconds` est à fixer par groupe sec lorsque les vitesses WED divergent (voir tableau).
-`base_registry` = registre compilé dans la DLL installée (actuellement
-`pipeline/water/requests/ar1600-water-30fps-20260923-v2/registry-v3.json`, AR0900 + AR1600) ;
-les entrées de la même WED sont remplacées, les autres conservées. Reporter le nouveau registre
-sous `pipeline/water/requests/<run>/` avec le reçu d'installation.
+`base_registry` optionnel : par défaut, registre compilé dans la DLL installée, lu dans
+[`route2-registry-current.json`](route2-registry-current.json) (le producteur refuse si la DLL live n'est pas celle
+du pointeur). Les entrées de la même WED sont remplacées, les autres conservées. Copier le nouveau registre sous
+`pipeline/water/requests/<run>/` ; `Install-WaterRuntime.ps1` installe la DLL et met le pointeur à jour.
 
 ```powershell
 $plan = '<plan.json>'
@@ -79,8 +80,9 @@ $b = 'build-<map>-water-30fps-<date>-v1'; $deps = "$PWD/build-cache128/_deps"
 & 'C:/Program Files/CMake/bin/cmake' --build $b --config Release -- -m
 & 'C:/Program Files/CMake/bin/ctest' --test-dir $b -C Release -R '^iee_tests$' --output-on-failure
 ```
-- Installation, jeu fermé : `Install-AreaOverrideAssets.ps1 -SourceRoot RUN/candidate -BackupRoot <chemin absolu>`
-  + copie DLL avec reçu (modèle : `backups/water/ar1600-water-30fps-20260923-v2/runtime/install-backup.json`).
+- Installation, jeu fermé : `Install-AreaOverrideAssets.ps1 -SourceRoot RUN/candidate -BackupRoot backups/water/<run>/override`
+  puis `Install-WaterRuntime.ps1 -Dll … -Registry pipeline/water/requests/<run>/registry-v3.json -Label <run>` ;
+  reçu : `record_water_decision.py install --kind temporal-30fps` (commandes : [runbook](WATER_MAP_RUNBOOK.md)).
 
 ## Familles — état des données (témoins du lot spatial)
 

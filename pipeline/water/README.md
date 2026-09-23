@@ -6,6 +6,10 @@ et ouvrir uniquement la référence utile.
 
 ## Où chercher
 
+**Appliquer le travail eau à une map : [`WATER_MAP_RUNBOOK.md`](WATER_MAP_RUNBOOK.md)** (ordre, STOP, installation, QA).
+Chaînes : [spatiale x4](SPATIAL_X4_PIPELINE.md) → [30 FPS](TEMPORAL_30FPS_PIPELINE.md) → [contours](CONTOUR_MATTE_PIPELINE.md) ;
+paramètres par famille : [`liquid-family-standard-v1.json`](liquid-family-standard-v1.json).
+
 | Besoin | Référence |
 |---|---|
 | Symptôme visuel ou crash | [`VALIDATED_WATER_RECIPES.md`](VALIDATED_WATER_RECIPES.md) |

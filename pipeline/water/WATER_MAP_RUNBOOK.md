@@ -1,0 +1,120 @@
+# Traiter une map d'eau — runbook agent
+
+Point d'entrée unique pour appliquer le travail eau validé à **une** map (une WED : jour et nuit sont deux
+maps). Suivre l'ordre ; chaque `STOP` = s'arrêter et demander à l'utilisateur, sans contourner.
+Recettes et raisons : [SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md), [TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md),
+[CONTOUR_MATTE_PIPELINE.md](CONTOUR_MATTE_PIPELINE.md). État de chaque map : `plan_water_map.py inventory`. Référence validée : AR1600 (2026-09-23).
+
+## Règles fixes
+
+- Une map par tâche ; ne toucher aucune autre map, variante jour/nuit ou famille.
+- Jeu **et** InfinityLoader fermés avant toute installation (les scripts refusent sinon).
+- Jamais : release (payload, staging, `content.json`, TP2, archive), `maps/*/runs` ou `backups/` dans Git,
+  réécriture d'un run ou d'un reçu existant (nouveau dossier `-vN` à chaque essai).
+- QA : l'agent ne lance pas le jeu et ne déduit jamais une validation ; il donne la commande
+  `C:MoveToArea("ARxxxx")` et enregistre seulement la réponse de l'utilisateur.
+- Commit : seulement sur demande. Committer scripts, docs, `pipeline/water/manifests/`, `pipeline/water/requests/`,
+  `route2-registry-current.json` ; jamais `animations/` ni changements hors eau non liés.
+- Python : `python` (3.11, Pillow ≥ 12, NumPy, SciPy). Chemins locaux via `config://` (`workspace_paths.py`).
+
+## 0. Qualifier la map (lecture seule)
+
+```powershell
+git status --short                                   # préserver les changements hors périmètre
+$v = 'G:/AI/BG2_Vanilla_23534562'; $run = 'maps/water-batches/runs/<map>-water-x4-<date>-v1'
+python -B pipeline/scripts/plan_water_map.py plan --area ARxxxx --vanilla-root $v --output $run
+python -B pipeline/scripts/build_water_contour_matte.py survey --area ARxxxx --vanilla-root $v
+```
+
+`plan` : famille(s), alias, plans de toutes les étapes ; **STOP** si `stops` non vide (traitement antérieur,
+overlay inconnu, master secondaire ambigu, base absente). `decisions_owed` : ce qui reste à trancher (30 FPS bloqué,
+pas de pluie). `survey` : `a` (WATER_ALPHA), paires, refus pour l'étape C.
+Les trois étapes sont indépendantes ; faire celles qui s'appliquent, **dans l'ordre A → B → C**.
+
+| Étape | S'applique si | Sinon |
+|---|---|---|
+| A. Eau x4 spatiale (overlay alias + bases) | `plan` sans `stops` | STOP (voir `plan-report.json`) |
+| B. Eau 30 FPS réels | A installé et validé ; famille présente dans `temporal-plan.json` | famille bloquée : STOP, décision utilisateur |
+| C. Contours devant l'eau | `survey` → `"ready": true` | voir STOP ci-dessous |
+
+C ne dépend ni de A ni de B : C seul reste possible (y compris sur une map « décision utilisateur »).
+Ordre : C modifie les pages de base ; faire ou refaire A (bases) après C écraserait C → restaurer C d'abord.
+
+## A. Eau x4 spatiale
+
+Détails : [SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md). ComfyUI lancé si une famille est `seedvr`.
+
+```powershell
+python -B pipeline/scripts/build_water_map_x4.py --run $run --stage all
+& pipeline/scripts/Install-AreaOverrideAssets.ps1 -SourceRoot $run/override-candidate -BackupRoot backups/water/<run>
+python -B pipeline/scripts/build_water_map_x4.py --run $run --stage verify-installed
+python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind spatial --run $run --override-backup backups/water/<run>/<override-backup-stamp>
+```
+
+Puis QA (section D). Les 8 témoins du lot `liquid-families-x4-20260923-v1` sont déjà faits (alias `Q9*`).
+
+## B. Eau 30 FPS réels
+
+Pré-requis : étape A installée et validée ; ComfyUI lancé (`config://comfyui_url`, file vide) si `seedvr`.
+
+1. Plan : `$run/temporal-plan.json` écrit par `plan_water_map.py` (alias `YF…` standard, matériau de la famille,
+   `base_registry` = registre de la DLL installée via [`route2-registry-current.json`](route2-registry-current.json)).
+   Témoins du lot 2026-09-23 : plan à écrire à la main (modèle dans TEMPORAL_30FPS_PIPELINE.md).
+2. `prepare` (`--plan $run/temporal-plan.json`), `interpolate`, `upscale`, `build`, `review` de `build_liquid_temporal_30fps.py`, run
+   `maps/water-batches/runs/<map>-water-30fps-<date>-v1`. Critères post-BC3 (`build.json`) :
+   netteté max/min ≤ 1,25, pas max/médian ≤ 1,4 ; sinon montrer `review-30fps.mp4` et demander.
+3. Copier `<run>/registry-v3.json` et `<run>/plan.json` sous `pipeline/water/requests/<run>/`.
+4. DLL : commande CMake complète dans TEMPORAL_30FPS_PIPELINE.md, avec
+   `-DIEE_WATER_ROUTE2_REGISTRY=<repo>/pipeline/water/requests/<run>/registry-v3.json` ; `ctest` doit passer.
+5. Installation, jeu fermé :
+
+```powershell
+& pipeline/scripts/Install-AreaOverrideAssets.ps1 -SourceRoot <run>/candidate -BackupRoot backups/water/<run>/override
+pwsh pipeline/scripts/Install-WaterRuntime.ps1 -Dll <build>/Release/InfinityEngine-Enhancer.dll `
+     -Registry pipeline/water/requests/<run>/registry-v3.json -Label <run>
+python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind temporal-30fps --run <run> `
+     --override-backup backups/water/<run>/override/<override-backup-stamp> `
+     --runtime-receipt backups/water/<run>/runtime/install-backup.json
+```
+
+**STOP** si : `prepare` exige `cycle_seconds` (pavages A–D : vitesse WED ambiguë) ; phases > 225
+(lave, 12 clés → 288) ; groupe à alpha variable ou lookups différents ; DLL live ≠ pointeur
+(`Install-WaterRuntime.ps1` refuse) ; lave : matériau émissif route2 non qualifié → demander avant d'installer.
+
+## C. Contours devant l'eau
+
+```powershell
+python -B pipeline/scripts/build_water_contour_matte.py prepare --area ARxxxx --vanilla-root $v --output maps/water-batches/runs/<map>-contour-matte-<date>-v1
+python -B pipeline/scripts/build_water_contour_matte.py encode  --area ARxxxx --vanilla-root $v --output <même run>
+& pipeline/scripts/Install-AreaOverrideAssets.ps1 -SourceRoot <run>/override-candidate -BackupRoot backups/water/<run>
+python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind contour --run <run> `
+     --override-backup backups/water/<run>/<override-backup-stamp>
+```
+
+**STOP** si `survey` n'est pas prêt : base déjà traitée (relance uniquement avec `--source-backup` des pages non
+traitées, voir CONTOUR_MATTE_PIPELINE.md), pages non BC3, atlas non standard. **Signaler** dans la demande de QA :
+`a` ≠ 128 (AR1607 = 100, AR6300 = 160, composition non encore vue en jeu), lave, huile (contrat alpha0 historique),
+cellules ignorées nombreuses.
+
+## D. Demande de QA et enregistrement
+
+Donner à l'utilisateur : ce qui a changé, `C:MoveToArea("ARxxxx")`, quoi regarder (B : fluidité, pop toutes
+les 0,4 s, raccord de boucle, pluie ; C : cordes/gréement, frange sombre, liseré clair), le chemin du rollback.
+Après sa réponse, et seulement alors :
+
+```powershell
+python pipeline/scripts/record_water_decision.py qa --area ARxxxx --kind contour `
+     --selection pipeline/water/manifests/<reçu installed>.json --result validated --quote "<message exact>"
+```
+
+`--result validated-with-reserve --reserve "<réserve>"` ou `rejected` selon la réponse. Mettre à jour la ligne
+de la map dans le tableau d'état de TEMPORAL_30FPS_PIPELINE.md / CONTOUR_MATTE_PIPELINE.md.
+
+## Retour arrière (jeu fermé)
+
+```powershell
+& pipeline/scripts/Restore-AreaOverrideAssets.ps1 -BackupPath <dossier override-backup-*>   # depuis la racine du dépôt
+pwsh pipeline/scripts/Install-WaterRuntime.ps1 -Restore -Receipt backups/water/<run>/runtime/install-backup.json
+```
+
+Restaurer dans l'ordre inverse de l'installation ; le restore DLL remet aussi le pointeur de registre.

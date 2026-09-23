@@ -47,6 +47,7 @@ STRIDE = TILE + 2 * PAD
 COLUMNS = PAGE // STRIDE                   # 15 -> 225 phases per page
 DISPLAY_FPS, WED_HZ = 30, 15
 LOOP_CROSSFADE = 16
+CURRENT_REGISTRY = ROOT / 'pipeline/water/route2-registry-current.json'
 SEEDVR_SEED = 959948902156062
 
 
@@ -195,9 +196,17 @@ def resolve(path):
 
 
 def prepare(plan_path, output, game):
-    """Plan: {spatial_run, wed, base_registry, selection?, source_wed?, groups: [{id, aliases,
-    material_id, cycle_seconds?}]}.  Rain groups name an earlier dry group in ``rain_of``."""
+    """Plan: {spatial_run, wed, base_registry?, selection?, source_wed?, groups: [{id, aliases,
+    material_id, cycle_seconds?}]}.  Rain groups name an earlier dry group in ``rain_of``.
+    Without ``base_registry`` the registry compiled into the installed DLL is used
+    (``route2-registry-current.json``); its DLL hash must match the live DLL."""
     plan = read(plan_path)
+    current = read(CURRENT_REGISTRY)
+    live_dll = digest(game / 'InfinityEngine-Enhancer.dll')
+    if live_dll != current['dll_sha256']:
+        raise ValueError(f'installed DLL {live_dll} is not the one recorded in {CURRENT_REGISTRY.name}; '
+                         'find which registry it carries before building on it')
+    plan.setdefault('base_registry', current['registry']['path'])
     spatial = resolve(plan['spatial_run'])
     selection_path = resolve(plan.get('selection', spatial / 'overlays-selected-v3/selection.json'))
     source_wed = resolve(plan.get('source_wed', spatial / 'override-candidate-v3' / f"{plan['wed']}.WED"))

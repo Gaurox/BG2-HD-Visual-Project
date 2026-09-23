@@ -38,8 +38,8 @@ python -B pipeline/scripts/build_water_contour_matte.py prepare --area AR0404 --
 python -B pipeline/scripts/build_water_contour_matte.py encode  --area AR0404 --vanilla-root $v --output maps/water-batches/runs/ar0404-contour-matte-<date>-v1
 ```
 
-Installation, jeu fermé : `Install-AreaOverrideAssets.ps1 -SourceRoot <run>/override-candidate -BackupRoot <chemin absolu>`
-(chemin relatif résolu depuis le processus). Seules des pages `A…PVRZ` de base changent ; WED/TIS/overlays/DLL intacts,
+Installation, jeu fermé : `Install-AreaOverrideAssets.ps1 -SourceRoot <run>/override-candidate -BackupRoot backups/water/<run>`,
+puis reçu `record_water_decision.py install --kind contour` ; déroulé complet : [WATER_MAP_RUNBOOK.md](WATER_MAP_RUNBOOK.md). Seules des pages `A…PVRZ` de base changent ; WED/TIS/overlays/DLL intacts,
 donc compatible avec l'eau 30 FPS ([TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md)).
 
 ### Portée et refus (automatiques, rapportés dans `prepare.json`)

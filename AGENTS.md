@@ -37,6 +37,7 @@
 | Décision ou essai déjà connu | [`docs/DECISIONS.md`](docs/DECISIONS.md) |
 | Symptôme encore ouvert | [`pipeline/PROBLEMES_A_RESOUDRE.md`](pipeline/PROBLEMES_A_RESOUDRE.md) |
 | Eau : symptôme → solution | [`pipeline/water/VALIDATED_WATER_RECIPES.md`](pipeline/water/VALIDATED_WATER_RECIPES.md) |
+| Eau : traiter une map (x4, 30 FPS, contours) | [`pipeline/water/WATER_MAP_RUNBOOK.md`](pipeline/water/WATER_MAP_RUNBOOK.md) |
 | Formats BG2EE | [`BG2EE_Documentation_Modders_FR/INDEX.md`](BG2EE_Documentation_Modders_FR/INDEX.md) |
 | Cartes | [`areas.csv`](areas.csv) |
 | Animations | [`animations/index/`](animations/index/) |

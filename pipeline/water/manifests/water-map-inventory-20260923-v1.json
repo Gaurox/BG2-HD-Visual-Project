@@ -1,0 +1,1039 @@
+{
+  "schema": "bg2-water-inventory-v1",
+  "areas": [
+    {
+      "area": "AR0011",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0011 (slot 1: WTLAVA -> Q9LVA0; slot 2: WTLAVB -> Q9LVB0; slot 3: WTLAVC -> Q9LVC0; slot 4: WTLAVD -> Q9LVD0): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR0046",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0046 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0046N",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0046N (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0204",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0204 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0300",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0300 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0300N",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0300N (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0310",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR0404",
+      "families": [
+        "sewage"
+      ],
+      "slots": [
+        "1:WTSEW"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0404 (slot 1: WTSEW -> Q9SEWG): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTSEW"
+      ]
+    },
+    {
+      "area": "AR0408",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR0413",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0413 (slot 1: WTOIL -> Q9OIL0): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR0500",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR0500N",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR0503",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR0506",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR0512",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0512 (slot 1: lookup 1 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0603",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR0604",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR0703",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR0900",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0900 (slot 1: lookup 6 -> 36): replacing it is a user decision",
+        "AR0900 has a route2 identity in the installed DLL registry: user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR0900N",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR0900N (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR1000",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1000 (slot 1: WTPOOL -> Q9POOL): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR1000N",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1000N (slot 1: WTSWAM -> WSWPIL; slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1003",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR1004",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR1100",
+      "families": [
+        "pool",
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM",
+        "2:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL",
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1106",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1200",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1200 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR1201",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1203",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR1401",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR1403",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1500",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1600",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1600 (slot 1: WTLAKE -> QBLKV0; slot 1: lookup 6 -> 72): replacing it is a user decision",
+        "AR1600 has a route2 identity in the installed DLL registry: user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR1601",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR1604",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1604 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR1607",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1607 (slot 1: WTSWAM -> Q9SWAM): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1700",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1700 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR1800",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1800 (slot 1: WTSWAM -> WSWPIL; slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR1901",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR1901 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR2000",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR2000N",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR2011",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR2012",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR2100",
+      "families": [
+        "sewage"
+      ],
+      "slots": [
+        "1:WTSEW"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSEW"
+      ]
+    },
+    {
+      "area": "AR2102",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR2210",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR2300",
+      "families": [
+        "lake"
+      ],
+      "slots": [
+        "1:WTLAKE"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR2300 (slot 1: lookup 6 -> 36): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKE"
+      ]
+    },
+    {
+      "area": "AR2500",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR2600",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR2602",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR2700",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR2903",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR3000",
+      "families": [
+        "lake_teal"
+      ],
+      "slots": [
+        "1:WTLAKA",
+        "2:WTLAKB",
+        "3:WTLAKC",
+        "4:WTLAKD"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR3000 (slot 1: WTLAKA -> Q9LKA0; slot 2: WTLAKB -> Q9LKB0; slot 3: WTLAKC -> Q9LKC0; slot 4: WTLAKD -> Q9LKD0): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ]
+    },
+    {
+      "area": "AR3024",
+      "families": [
+        "oil"
+      ],
+      "slots": [
+        "1:WTOIL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR3025",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR5000",
+      "families": [
+        "brown_flow"
+      ],
+      "slots": [
+        "1:WT5000A",
+        "2:WT5000B",
+        "3:WT5000C",
+        "4:WT5000D"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR5010",
+      "families": [
+        "pool"
+      ],
+      "slots": [
+        "1:WTPOOL"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTPOOL"
+      ]
+    },
+    {
+      "area": "AR5200",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR5201",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR5203",
+      "families": [
+        "brown_flow"
+      ],
+      "slots": [
+        "1:WT5000A",
+        "2:WT5000B",
+        "3:WT5000C",
+        "4:WT5000D"
+      ],
+      "x4_base_installed": true,
+      "state": "user-decision",
+      "prior_treatment": [
+        "earlier water treatment installed on AR5203 (slot 1: WT5000A -> Q9500A; slot 2: WT5000B -> Q9500B; slot 3: WT5000C -> Q9500C; slot 4: WT5000D -> Q9500D): replacing it is a user decision"
+      ],
+      "shared_overlay_overridden": []
+    },
+    {
+      "area": "AR5204",
+      "families": [
+        "lava"
+      ],
+      "slots": [
+        "1:WTLAVA",
+        "2:WTLAVB",
+        "3:WTLAVC",
+        "4:WTLAVD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAVA",
+        "WTLAVB",
+        "WTLAVC",
+        "WTLAVD"
+      ]
+    },
+    {
+      "area": "AR6008",
+      "families": [
+        "swamp"
+      ],
+      "slots": [
+        "1:WTSWAM"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTSWAM"
+      ]
+    },
+    {
+      "area": "AR6300",
+      "families": [
+        "lake_teal"
+      ],
+      "slots": [
+        "1:WTLAKA",
+        "2:WTLAKB",
+        "3:WTLAKC",
+        "4:WTLAKD"
+      ],
+      "x4_base_installed": true,
+      "state": "ready",
+      "prior_treatment": [],
+      "shared_overlay_overridden": [
+        "WTLAKA",
+        "WTLAKB",
+        "WTLAKC",
+        "WTLAKD"
+      ]
+    }
+  ]
+}

@@ -87,6 +87,9 @@ foreach ($entry in $plan) {
 if ($VerifyOnly) { Write-Host 'VerifyOnly : aucune ecriture effectuee.'; return }
 
 if (-not $BackupRoot) { $BackupRoot = Join-Path $sourcePath 'install-backups' }
+# [IO.Path]::GetFullPath resolves against the process directory, not Set-Location:
+# anchor relative backup roots at the workspace root.
+if (-not [IO.Path]::IsPathRooted($BackupRoot)) { $BackupRoot = Join-Path $workspaceRoot $BackupRoot }
 $backupDirectory = Join-Path ([IO.Path]::GetFullPath($BackupRoot)) ('override-backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
 if (Test-Path -LiteralPath $backupDirectory) { throw "Sauvegarde deja presente : $backupDirectory" }
 New-Item -ItemType Directory -Path $backupDirectory -Force | Out-Null
