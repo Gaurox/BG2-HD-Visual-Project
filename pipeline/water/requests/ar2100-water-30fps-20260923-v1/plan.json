@@ -1,0 +1,194 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1\\temporal-plan.json",
+    "bytes": 556,
+    "sha256": "8DDEABC85E68EB39B5BFBD44548AF22F981C7DF061E90EC009C2EF12FBED8E02"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR2100",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1\\selection.json",
+    "bytes": 455,
+    "sha256": "048FAB774FAD665828BAC8416A54FD06D393CC8444C61675DDD794B020A74A00"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1\\override-candidate\\AR2100.WED",
+    "bytes": 86308,
+    "sha256": "06DF5B200A62ECD5E0DB6FD8B812F00CAEA916CCCE875ABC607FB1E94C285381"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar1600-water-30fps-20260923-v2\\registry-v3.json",
+  "groups": [
+    {
+      "id": "sewage",
+      "rain_of": null,
+      "group": {
+        "id": "sewage",
+        "wed": "AR2100",
+        "resrefs": [
+          "WTSEW"
+        ],
+        "aliases": {
+          "WTSEW": "YS0I6C"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTSEW"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTSEW"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTSEW": "YF8K47"
+      },
+      "material_id": 4,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTSEW",
+          "wed_resref": "WTSEW",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr",
+      "edge_collar": true,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTSEW",
+          "b": "WTSEW",
+          "axis": "x",
+          "occurrences": 163
+        },
+        {
+          "a": "WTSEW",
+          "b": "WTSEW",
+          "axis": "y",
+          "occurrences": 162
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1\\overlays\\groups\\sewage\\build.json",
+        "bytes": 18932,
+        "sha256": "D2399C3DB55BAE3B18A61DD5DB26A2ED030FC4CF123E957BCAF4450E0A4EF905"
+      }
+    },
+    {
+      "id": "sewage_rain",
+      "rain_of": "sewage",
+      "group": {
+        "id": "sewage_rain",
+        "wed": "AR2100",
+        "resrefs": [
+          "WTSEWR"
+        ],
+        "aliases": {
+          "WTSEWR": "YS0I6CR"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTSEWR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTSEW"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTSEWR": "YF8K47R"
+      },
+      "material_id": 4,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTSEWR",
+          "wed_resref": "WTSEW",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr",
+      "edge_collar": true,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTSEWR",
+          "b": "WTSEWR",
+          "axis": "x",
+          "occurrences": 163
+        },
+        {
+          "a": "WTSEWR",
+          "b": "WTSEWR",
+          "axis": "y",
+          "occurrences": 162
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2100-water-x4-20260923-v1\\overlays\\groups\\sewage_rain\\build.json",
+        "bytes": 19083,
+        "sha256": "AC827CA894D494570E323ACA063506B4C0ED708C34668E6EE12F0D6F90F401EE"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

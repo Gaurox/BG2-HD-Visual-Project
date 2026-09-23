@@ -103,6 +103,12 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | brown_flow WT5000A–D | AR5203 | 8 | 8/0/0/0 | explicite (4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM |
 | lava WTLAVA–D | AR0011 | 12 | 12/0/0/12 | explicite (12×12/15 = 9,6 s ?) | 288 > 225 | bilinear | non | capacité page ; lookup 11 d'AR5200 |
 
+### Validations par map
+
+| Map | Famille | Phases / cycle | Run | QA en jeu | Réserve de production |
+|---|---|---|---|---|---|
+| AR2100 | sewage | 72 / 2,4 s | `ar2100-water-30fps-20260923-v1` | validée — `ar2100-temporal-30fps-user-qa-20260923-v1.json` | ratios 1,269 / 1,682 acceptés après vidéo de review |
+
 Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) non vérifié en jeu ;
 lave émissive non qualifiée route2 ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;
 surfaces ARE/BAM → timeline 30 FPS du pack d'animation, même durée.

@@ -2,8 +2,8 @@
   "schema": "bg2-water-route2-registry-current-v1",
   "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated only by pipeline/scripts/Install-WaterRuntime.ps1.",
   "registry": {
-    "path": "pipeline/water/requests/ar1600-water-30fps-20260923-v2/registry-v3.json",
-    "sha256_lf": "20910B9D1F6896BFECE158EE0F3C256D8D3B177ED60488046DCE35DCDF77408B"
+    "path": "pipeline/water/requests/ar2100-water-30fps-20260923-v1/registry-v3.json",
+    "sha256_lf": "11FC7DA629A09F59402D951A88D112ABFDFEC1DB63AFA6124E08AF5FD7FC018E"
   },
   "identities": [
     {
@@ -23,9 +23,21 @@
       "overlay": "QBLKV0R",
       "slot": 1,
       "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR2100",
+      "overlay": "YF8K47",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR2100",
+      "overlay": "YF8K47R",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
     }
   ],
-  "dll_sha256": "F31FE3ACDC82E6C47FA235C74603833D0147D24EC30EE8E14214BA471CE6BCF3",
-  "installed_by": "backups/water/ar1600-water-30fps-20260923-v2/runtime/install-backup.json",
+  "dll_sha256": "E90DACFD6380B5F7B99D1540354514C41214CE54B626B0D2C3C6F6748820E341",
+  "installed_by": "backups/water/ar2100-water-30fps-20260923-v1/runtime/install-backup.json",
   "updated": "2026-09-23"
 }

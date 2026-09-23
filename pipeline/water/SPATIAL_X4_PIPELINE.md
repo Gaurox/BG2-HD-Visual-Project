@@ -76,6 +76,12 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | brown_flow | AR5000 | AR5203 |
 | lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
 
+### Validations par map
+
+| Map | Famille | Run | Installation | QA en jeu |
+|---|---|---|---|---|
+| AR2100 | sewage | `ar2100-water-x4-20260923-v1` | `ar2100-spatial-installed-20260923-v1.json` | validée — `ar2100-spatial-user-qa-20260923-v1.json` |
+
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases
 validée historiquement (route2). Les maps prêtes utilisant une ressource partagée déjà surchargée (WTSWAM,
 WTPOOL, WTSEW, WTLAVA–D, WTLAKA–D x4 installés) passent sur alias isolé ; la ressource partagée reste intacte.

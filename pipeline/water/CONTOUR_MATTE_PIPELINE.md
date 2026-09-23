@@ -71,6 +71,12 @@ Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non enco
 | WTLAVA–D | AR0011 / AR5200 | 128 | 101 / 287 | 0 | 0 / 5 | oui (lave émissive : juger en jeu) |
 | WT5000A–D | AR5203 / AR5000 | 128 | 267 / 402 | 366 / 321 | 1 / 0 | oui |
 
+### Validations par map
+
+| Map | Famille | Run | QA en jeu | Suite |
+|---|---|---|---|---|
+| AR2100 | WTSEW | `ar2100-contour-matte-20260923-v1` | validée avec réserve — `ar2100-contour-user-qa-20260923-v3.json` | matte accepté en l'état ; adaptation CONTOUR-NET abandonnée (v1 rejet historique, v2 citation non canonique) |
+
 ## Limites connues
 
 - Liseré cyan-vert résiduel sur éléments < 8 px x4 (échelle, cordages) : correction couleur testée, non retenue.
