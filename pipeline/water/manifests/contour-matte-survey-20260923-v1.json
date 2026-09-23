@@ -1,0 +1,348 @@
+{
+ "schema": "bg2-water-contour-matte-survey-v1",
+ "recorded": "2026-09-23",
+ "producer": "pipeline/scripts/build_water_contour_matte.py survey",
+ "note": "read-only; AR1600 refused because its live pages are already treated",
+ "areas": [
+  {
+   "area": "AR1600",
+   "water_alpha": 128,
+   "qualified_pairs": 272,
+   "skipped": {
+    "non-black-background": 149,
+    "no-secondary": 166
+   },
+   "pvr_formats": {
+    "11": 39
+   },
+   "atlas_padding": {
+    "ok": 544
+   },
+   "outside_native_lit_share": {
+    "median": 0.09585813492063493,
+    "tiles_over_limit_share": 0.35391923990498814
+   },
+   "ready": false,
+   "problems": [
+    "x4 RGB not black outside the native mask: already treated, or no matte background"
+   ]
+  },
+  {
+   "area": "AR0900",
+   "water_alpha": 128,
+   "qualified_pairs": 858,
+   "skipped": {
+    "no-secondary": 775,
+    "non-black-background": 2
+   },
+   "pvr_formats": {
+    "11": 22
+   },
+   "atlas_padding": {
+    "ok": 1716
+   },
+   "outside_native_lit_share": {
+    "median": 0.003170333899781517,
+    "tiles_over_limit_share": 0.002325581395348837
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR0204",
+   "water_alpha": 128,
+   "qualified_pairs": 442,
+   "skipped": {
+    "no-secondary": 218,
+    "non-black-background": 1
+   },
+   "pvr_formats": {
+    "11": 20
+   },
+   "atlas_padding": {
+    "ok": 884
+   },
+   "outside_native_lit_share": {
+    "median": 0.0005268703898840885,
+    "tiles_over_limit_share": 0.002257336343115124
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR2300",
+   "water_alpha": 128,
+   "qualified_pairs": 1105,
+   "skipped": {
+    "non-black-background": 6
+   },
+   "pvr_formats": {
+    "11": 75
+   },
+   "atlas_padding": {
+    "ok": 2210
+   },
+   "outside_native_lit_share": {
+    "median": 0.0018582306018854243,
+    "tiles_over_limit_share": 0.0054005400540054005
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR1000",
+   "water_alpha": 128,
+   "qualified_pairs": 37,
+   "skipped": {},
+   "pvr_formats": {
+    "11": 13
+   },
+   "atlas_padding": {
+    "ok": 74
+   },
+   "outside_native_lit_share": {
+    "median": 0.006686875891583452,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR1000N",
+   "water_alpha": 128,
+   "qualified_pairs": 37,
+   "skipped": {},
+   "pvr_formats": {
+    "11": 5
+   },
+   "atlas_padding": {
+    "ok": 74
+   },
+   "outside_native_lit_share": {
+    "median": 0.007944104134762634,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR1607",
+   "water_alpha": 100,
+   "qualified_pairs": 348,
+   "skipped": {
+    "no-secondary": 525,
+    "non-black-background": 1
+   },
+   "pvr_formats": {
+    "11": 21
+   },
+   "atlas_padding": {
+    "ok": 696
+   },
+   "outside_native_lit_share": {
+    "median": 0.0057461801896733404,
+    "tiles_over_limit_share": 0.0028653295128939827
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR1800",
+   "water_alpha": 128,
+   "qualified_pairs": 94,
+   "skipped": {
+    "no-secondary": 7
+   },
+   "pvr_formats": {
+    "11": 11
+   },
+   "atlas_padding": {
+    "ok": 188
+   },
+   "outside_native_lit_share": {
+    "median": 0.024520064740722557,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR0404",
+   "water_alpha": 128,
+   "qualified_pairs": 138,
+   "skipped": {
+    "no-secondary": 2
+   },
+   "pvr_formats": {
+    "11": 13
+   },
+   "atlas_padding": {
+    "ok": 276
+   },
+   "outside_native_lit_share": {
+    "median": 0.0023319163551861278,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR2100",
+   "water_alpha": 128,
+   "qualified_pairs": 169,
+   "skipped": {
+    "no-secondary": 39
+   },
+   "pvr_formats": {
+    "11": 42
+   },
+   "atlas_padding": {
+    "ok": 338
+   },
+   "outside_native_lit_share": {
+    "median": 0.0010048231511254019,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR0413",
+   "water_alpha": 128,
+   "qualified_pairs": 227,
+   "skipped": {
+    "no-secondary": 349
+   },
+   "pvr_formats": {
+    "11": 11
+   },
+   "atlas_padding": {
+    "ok": 454
+   },
+   "outside_native_lit_share": {
+    "median": 0.00021570319240724764,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR3000",
+   "water_alpha": 128,
+   "qualified_pairs": 137,
+   "skipped": {
+    "no-secondary": 184,
+    "non-black-background": 1
+   },
+   "pvr_formats": {
+    "11": 13
+   },
+   "atlas_padding": {
+    "ok": 274
+   },
+   "outside_native_lit_share": {
+    "median": 0.00256605895448493,
+    "tiles_over_limit_share": 0.007246376811594203
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR6300",
+   "water_alpha": 160,
+   "qualified_pairs": 36,
+   "skipped": {},
+   "pvr_formats": {
+    "11": 8
+   },
+   "atlas_padding": {
+    "ok": 72
+   },
+   "outside_native_lit_share": {
+    "median": 0.003033581704295154,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR0011",
+   "water_alpha": 128,
+   "qualified_pairs": 101,
+   "skipped": {},
+   "pvr_formats": {
+    "11": 15
+   },
+   "atlas_padding": {
+    "ok": 202
+   },
+   "outside_native_lit_share": {
+    "median": 0.0047753667481662595,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR5200",
+   "water_alpha": 128,
+   "qualified_pairs": 287,
+   "skipped": {
+    "non-black-background": 5
+   },
+   "pvr_formats": {
+    "11": 21
+   },
+   "atlas_padding": {
+    "ok": 574
+   },
+   "outside_native_lit_share": {
+    "median": 0.0036178267934277985,
+    "tiles_over_limit_share": 0.017123287671232876
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR5203",
+   "water_alpha": 128,
+   "qualified_pairs": 267,
+   "skipped": {
+    "no-secondary": 366,
+    "non-black-background": 1
+   },
+   "pvr_formats": {
+    "11": 35
+   },
+   "atlas_padding": {
+    "ok": 534
+   },
+   "outside_native_lit_share": {
+    "median": 0.0015428953769363895,
+    "tiles_over_limit_share": 0.0037313432835820895
+   },
+   "ready": true,
+   "problems": []
+  },
+  {
+   "area": "AR5000",
+   "water_alpha": 128,
+   "qualified_pairs": 402,
+   "skipped": {
+    "no-secondary": 321
+   },
+   "pvr_formats": {
+    "11": 49
+   },
+   "atlas_padding": {
+    "ok": 804
+   },
+   "outside_native_lit_share": {
+    "median": 0.0021749811453938396,
+    "tiles_over_limit_share": 0.0
+   },
+   "ready": true,
+   "problems": []
+  }
+ ]
+}

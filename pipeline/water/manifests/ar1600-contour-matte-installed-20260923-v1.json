@@ -1,0 +1,59 @@
+{
+  "schema": "bg2-water-contour-installed-v1",
+  "status": "installed-pending-user-ingame-qa",
+  "area": "AR1600",
+  "rect_x1": [
+    1856,
+    2048,
+    384,
+    320
+  ],
+  "run": "maps\\water-batches\\runs\\ar1600-contour-matte-trial-20260923-v1",
+  "recipe": "x4 RGB matte (see build_water_contour_matte_trial.py)",
+  "replaces": "Astra trial ar1600-contour-installed-20260923-v1 (same 8 pages, rebuilt from pre-Astra bytes)",
+  "files": {
+    "A160037.PVRZ": {
+      "sha256": "E2ACC36745191767A8ABB1A546986FC02F8BBC1A89DC5AA9BF554315F1B41163",
+      "bytes": 1551675
+    },
+    "A160038.PVRZ": {
+      "sha256": "BDD7E4CD81987D58F72803B6414B279FAF3C89B7ECB6292DB11F3E48B6C85333",
+      "bytes": 1430793
+    },
+    "A160039.PVRZ": {
+      "sha256": "BEC2A85F47063D8EE65CDA3F3DAB4646834F9916B39D9267CDC03E37F166EC07",
+      "bytes": 1476736
+    },
+    "A160040.PVRZ": {
+      "sha256": "B0DA4953B3588DD872A66E23C3CC5D3844058D448B705BD38B5962755F6D419C",
+      "bytes": 1416569
+    },
+    "A160041.PVRZ": {
+      "sha256": "850FFD784B2773CA2FF3E6DC44019FFF06C9E86E3CB898B01476F188E94BA4ED",
+      "bytes": 1404269
+    },
+    "A160056.PVRZ": {
+      "sha256": "2A4AFAAEED6C149218A3B18D22B07A59D7DC4B0517C6D505AD4CDC217117AB57",
+      "bytes": 737698
+    },
+    "A160057.PVRZ": {
+      "sha256": "56FF9D89FE7542D454361374919DF5C074F77043465632D236471959D56E0775",
+      "bytes": 815978
+    },
+    "A160058.PVRZ": {
+      "sha256": "BD610FC1DEAC1BFD9B773E1A1FE2454E8BAB8011E65ACC1F47104965548F3581",
+      "bytes": 792047
+    }
+  },
+  "build_sha256": "D9F8DA07747A37A646197C17C4E680AC6F180EE48FA73BB27CD0CE25F629508E",
+  "bc3_edge_effective_coverage_error": {
+    "mean": 0.0015558156558021182,
+    "p99": 0.027520322048081417,
+    "max": 0.0623360246059208,
+    "samples": 9774
+  },
+  "backup_receipt": "backups/water/ar1600-contour-matte-trial-20260923-v1/override-backup-20260923-204930/install-backup.json",
+  "rollback_target": "Astra installed state",
+  "qa": "pending-user-ingame",
+  "release": "not-requested"
+}

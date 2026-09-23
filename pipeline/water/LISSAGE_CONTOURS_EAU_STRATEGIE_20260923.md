@@ -1,5 +1,8 @@
 # Contours devant l'eau — méthode généralisable proposée
 
+> **Remplacée** par [CONTOUR_MATTE_PIPELINE.md](CONTOUR_MATTE_PIPELINE.md) (silhouette RGB x4, validée AR1600).
+> La vectorisation Potrace du masque x1 ci-dessous produit des cordes en « os » ; conservée comme historique.
+
 2026-09-23. **Étude puis masque local accepté ; correctif couleur/BC3 installé sur demande utilisateur.**
 État courant : [essai installé AR1600](AR1600_CONTOURS_ESSAI_20260923.md), zone bateau uniquement,
 validation ingame en attente. Les constats et propositions ci-dessous décrivent l'étude initiale.

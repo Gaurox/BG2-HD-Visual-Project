@@ -12,6 +12,7 @@ et ouvrir uniquement la référence utile.
 | Réparation TIS/PVRZ/WED | [`../WATER_REPAIR_RUNBOOK.md`](../WATER_REPAIR_RUNBOOK.md) |
 | Mouvement procédural/runtime | [`../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md`](../WATER_ROUTE2_EXPERIMENT_RUNBOOK.md) |
 | Animation 30 FPS réels, toutes familles | [`TEMPORAL_30FPS_PIPELINE.md`](TEMPORAL_30FPS_PIPELINE.md) |
+| Contours devant l'eau (frange sombre, cordes épaisses) | [`CONTOUR_MATTE_PIPELINE.md`](CONTOUR_MATTE_PIPELINE.md) |
 | Conception surfaces liquides | [`BASE_PIPELINES_SURFACES_LIQUIDES.md`](BASE_PIPELINES_SURFACES_LIQUIDES.md) |
 | File QA ingame exhaustive, une carte à la fois | `ingame-map-tracking-v1.json` |
 | Sélection finale et QA | [`WATER_RELEASE_TRACKING.md`](WATER_RELEASE_TRACKING.md) |

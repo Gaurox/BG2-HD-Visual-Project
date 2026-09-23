@@ -486,6 +486,9 @@ ARE → occurrences constitutives → BAM/cycles/positions/flags → raccords av
 - Travailler la géométrie sur canvas complet ; conserver îlots/trous ; refuser ou dédoubler
   explicitement un usage partagé lorsqu'un même index exigerait deux résultats différents.
 
+Contours d'objets devant l'eau : procédé validé [CONTOUR_MATTE_PIPELINE.md](CONTOUR_MATTE_PIPELINE.md)
+(silhouette RGB x4, pas de vectorisation du masque x1 pour les éléments fins).
+
 ### 9.4 Traitement périodique adapté à la topologie
 
 - Motif unique : contexte 3 × 3/crop central comme opérateur déjà éprouvé.

@@ -1,6 +1,6 @@
 # AR1600 — contours du bateau, essai installé
 
-2026-09-23. Statut : **installé, QA utilisateur ingame en attente**. Masque avant/après accepté par
+2026-09-23. Statut : **rejeté par l'utilisateur, remplacé** par [l'essai matte RGB x4](AR1600_CONTOURS_MATTE_ESSAI_20260923.md) (même zone, puis carte entière). Historique ci-dessous. Masque avant/après accepté par
 l'utilisateur ; autorisation explicite de terminer le correctif et de l'installer. Pas de release.
 
 ## Portée et fichiers

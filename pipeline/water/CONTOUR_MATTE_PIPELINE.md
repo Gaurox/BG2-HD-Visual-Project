@@ -1,0 +1,80 @@
+# Contours devant l'eau — détourage par silhouette RGB x4 (toutes familles)
+
+Recette **validée ingame sur AR1600** (zone bateau puis carte entière, 2026-09-23 ; réserve acceptée :
+liseré cyan-vert résiduel sur éléments très fins). Autres maps : procédé applicable, **QA par map**.
+Historique et mesures : [`AR1600_CONTOURS_MATTE_ESSAI_20260923.md`](AR1600_CONTOURS_MATTE_ESSAI_20260923.md).
+Remplace l'approche Potrace du masque x1 ([essai Astra](AR1600_CONTOURS_ESSAI_20260923.md), rejeté).
+
+## Principe
+
+| Constat (AR1600) | Conséquence |
+|---|---|
+| Frange sombre = fond noir du RGB x4 révélé par l'alpha HD adouci, hors masque natif | corriger la géométrie, pas « éclaircir » |
+| Le RGB x4 dessine l'objet net, droit, plus fin, **dans** le masque natif, sur fond noir | le RGB x4 est la meilleure source de silhouette |
+| Potrace du masque x1 sur cordes de 1–4 px x1 → formes en « os », marbrure | ne pas vectoriser le x1 pour les éléments fins |
+| Liseré clair SeedVR au bord (≈2 px objets larges, 1 px cordes) | recolorer depuis l'intérieur du même objet |
+
+Recette (fonctions `silhouette`, `edge_rgb`, `extend_colours` de `build_water_contour_matte_trial.py`) :
+
+1. Couverture M : RGB x4 non noir (> 20) à ≤ 4 px x4 du bord natif, fermeture 3×3, taches < 12 px ôtées,
+   AA gaussien σ 0,8 / rampe 0,35 ; intérieur natif > 4 px toujours opaque (détails sombres gardés).
+2. RGB primaire : liseré recoloré (2 px si largeur locale > 8 px x4 ; 1 px depuis l'axe pour 4–8 px ;
+   intact en dessous), puis couleur prolongée 5 px vers l'extérieur (aucun noir sous filtrage/AA).
+3. RGB secondaire (art marin) prolongé côté objet.
+4. Passes `U → P → a·S` : `S = 1−M`, `P = M/(1−a(1−M))`, `a` = WATER_ALPHA de l'ARE (0 → 128).
+5. BC3 sélectif : seuls les blocs 4×4 touchés changent ; alpha à extrémités exactes ; marges 4 px recalculées
+   pour les canaux modifiés ; blocs hors sélection octet-identiques.
+
+## Producteur
+
+[`pipeline/scripts/build_water_contour_matte.py`](../scripts/build_water_contour_matte.py) — une map par run ;
+fenêtres 8×8 cellules + halo 1 cellule. Régression : reproduit à l'octet les 804 tuiles AR1600 installées.
+Tests : `pipeline/tests/test_water_contour_matte.py`.
+
+```powershell
+$v = 'G:/AI/BG2_Vanilla_23534562'
+python -B pipeline/scripts/build_water_contour_matte.py survey --area AR0404 AR2100 --vanilla-root $v
+python -B pipeline/scripts/build_water_contour_matte.py prepare --area AR0404 --vanilla-root $v --output maps/water-batches/runs/ar0404-contour-matte-<date>-v1
+python -B pipeline/scripts/build_water_contour_matte.py encode  --area AR0404 --vanilla-root $v --output maps/water-batches/runs/ar0404-contour-matte-<date>-v1
+```
+
+Installation, jeu fermé : `Install-AreaOverrideAssets.ps1 -SourceRoot <run>/override-candidate -BackupRoot <chemin absolu>`
+(chemin relatif résolu depuis le processus). Seules des pages `A…PVRZ` de base changent ; WED/TIS/overlays/DLL intacts,
+donc compatible avec l'eau 30 FPS ([TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md)).
+
+### Portée et refus (automatiques, rapportés dans `prepare.json`)
+
+- Traitées : cellules WED avec secondaire et un bit d'overlay liquide (`flags & 0x1E`).
+- Ignorées : sans secondaire (eau pure ou art translucide, contrat différent), portes, animées, tuile partagée,
+  paire non complémentaire, sentinelle, tuile dont le RGB hors masque natif n'est pas noir (> 15 %).
+- Refus carte : pages non BC3, atlas autre que pas 264/marge 4, ou fond non noir généralisé
+  (médiane > 5 % ou > 5 % des tuiles) = **base déjà traitée**. Relancer alors depuis les pages non traitées :
+  `--source-backup <install-backup>` (répétable, premier trouvé prioritaire). AR1600 :
+  `backups/water/ar1600-contour-colour-trial-20260923-v2/override-backup-20260923-063203` puis
+  `backups/water/ar1600-contour-matte-map-20260923-v1/override-backup-20260923-205837`.
+- Variante nuit sans ARE propre (ex. AR1000N) : WATER_ALPHA lu dans l'ARE jour.
+
+## État par map — survey du 2026-09-23 (lecture seule)
+
+Rapport : [`manifests/contour-matte-survey-20260923-v1.json`](manifests/contour-matte-survey-20260923-v1.json).
+Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non encore vue en jeu.
+
+| Famille | Map | a | Paires | Sans secondaire | Ignorées | Prêt |
+|---|---|---:|---:|---:|---:|---|
+| WTLAKE | AR1600 | 128 | 421 | 166 | — | **installé** (relance : backups) |
+| WTLAKE | AR0900 / AR0204 / AR2300 | 128 | 858 / 442 / 1105 | 775 / 218 / 0 | 2 / 1 / 6 fond | oui |
+| WTPOOL | AR1000 | 128 | 37 | 0 | 0 | oui |
+| WTSWAM | AR1000N / AR1607 / AR1800 | 128 / **100** / 128 | 37 / 348 / 94 | 0 / 525 / 7 | 0 / 1 / 0 | oui |
+| WTSEW | AR0404 / AR2100 | 128 | 138 / 169 | 2 / 39 | 0 | oui |
+| WTOIL | AR0413 | 128 | 227 | 349 | 0 | oui (contrat alpha0 historique à surveiller) |
+| WTLAKA–D | AR3000 / AR6300 | 128 / **160** | 137 / 36 | 184 / 0 | 1 / 0 | oui |
+| WTLAVA–D | AR0011 / AR5200 | 128 | 101 / 287 | 0 | 0 / 5 | oui (lave émissive : juger en jeu) |
+| WT5000A–D | AR5203 / AR5000 | 128 | 267 / 402 | 366 / 321 | 1 / 0 | oui |
+
+## Limites connues
+
+- Liseré cyan-vert résiduel sur éléments < 8 px x4 (échelle, cordages) : correction couleur testée, non retenue.
+- Cellules sans secondaire non traitées : objets posés sur l'art marin translucide (ex. AR0900 775, AR1607 525)
+  gardent leurs contours actuels.
+- Cellules d'art peint (eau/mousse dans le décor) conservées telles quelles : ce ne sont pas des contours.
+- Un lot par map ; QA ingame de chaque map avant de généraliser un réglage.

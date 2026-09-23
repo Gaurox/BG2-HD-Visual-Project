@@ -14,6 +14,7 @@ compatible, pas des recettes universelles.
 | Animation saccadée | seulement 6 frames ou absence d'interpolation temporelle | historique : 6→36 phases + blend 30 FPS ; actuel : [30 FPS réels](TEMPORAL_30FPS_PIPELINE.md) |
 | 30 FPS « non ressenti », pop toutes les 0,4 s | ancres x4 SeedVR image par image (détail ×3), Apollo inadapté au miroitement, demi-fondu shader | interpolation trigonométrique x1 → SeedVR un seul chunk vidéo → 72 phases/4096, source=cible 30 ([AR1600 v2](AR1600_WATER_30FPS_V2_20260923.md)) |
 | Traits noirs/bleus | RGB primaire contaminé ou padding incohérent | greffe RGB bornée depuis le secondaire de même coordonnée ; padding 4 px x4 |
+| Frange sombre, cordes/gréement épais ou en escalier devant l'eau | alpha HD issu du masque x1 révèle le fond noir du RGB x4 | silhouette RGB x4 + liseré recoloré ([CONTOUR_MATTE_PIPELINE](CONTOUR_MATTE_PIPELINE.md)) ; validé AR1600 |
 | Art local, ombres ou reflets disparus | alpha central 0/255 ou passe secondaire perdue | restaurer l'alpha natif effectif et la composition primaire/secondaire |
 | Marche de luminosité | opacités primaire/secondaire désaccordées | apparier les contributions ; AR0300N v10 utilise 160/160 localement |
 | Mosaïque sous pluie | seule la ressource sèche a été traitée | créer/router la ressource alternative pluie exacte |
