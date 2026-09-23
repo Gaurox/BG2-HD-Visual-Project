@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 
@@ -38,7 +39,13 @@ struct WedAreaInfo {
   [[nodiscard]] std::string_view areaResrefView() const noexcept;
 };
 
-[[nodiscard]] bool parse_loaded_wed(const CRes& resource, WedAreaInfo& out) noexcept;
+// Mode for an overlay the resref classifier leaves None; runs before coverage
+// and tint sampling so a resolved overlay is treated like a prefixed one.
+using LiquidModeResolver = TileLiquidMode (*)(const WedAreaInfo& wed,
+                                              std::size_t overlayIndex) noexcept;
+
+[[nodiscard]] bool parse_loaded_wed(const CRes& resource, WedAreaInfo& out,
+                                    LiquidModeResolver resolver = nullptr) noexcept;
 
 [[nodiscard]] std::uint8_t liquid_overlay_mask(const WedAreaInfo& wed) noexcept;
 }  // namespace iee::game

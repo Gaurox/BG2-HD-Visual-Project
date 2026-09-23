@@ -150,8 +150,26 @@ inline bool identity_matches(const Query& query, const RegistryEntry& entry) noe
          layout_matches(query, entry);
 }
 
+// Dry overlay identity whose approved procedural strength needs the material's
+// cell mode. Isolated aliases (YF...) carry no liquid prefix for the classifier.
+inline bool approved_material_identity(const RegistryEntry& entry, std::string_view wed,
+                                       std::span<const std::string_view> slots,
+                                       std::uint32_t slot) noexcept {
+  if (!(entry.approvedStrength > 0.0f) || wed != resref_view(entry.wed) ||
+      slot != entry.overlaySlot || slots.size() != entry.slotCount ||
+      entry.slotCount > entry.slots.size() || slot >= slots.size() ||
+      slots[slot] != resref_view(entry.overlayTis)) return false;
+  for (std::size_t index = 0; index < slots.size(); ++index) {
+    if (slots[index] != resref_view(entry.slots[index])) return false;
+  }
+  return true;
+}
+
 // Validates every manifested override file before publishing any entry.
 bool prepare(const std::filesystem::path& overrideRoot) noexcept;
+// Material id of the unique validated identity, 0 when none or ambiguous.
+std::uint32_t approved_material(std::string_view wed, std::span<const std::string_view> slots,
+                                std::uint32_t slot) noexcept;
 std::optional<Match> match(const Query& query) noexcept;
 // Pointer refers to immutable compiled data, only after all entry hashes pass.
 const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept;

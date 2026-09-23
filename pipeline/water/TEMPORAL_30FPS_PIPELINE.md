@@ -20,6 +20,7 @@ reçus) : [WATER_MAP_RUNBOOK.md](WATER_MAP_RUNBOOK.md).
 | Une page PVRZ 4096 par ressource (15×15 = 225 phases max) | timeline shader = une page ; 4096 déjà prouvé ([DECISIONS](../../docs/DECISIONS.md)) |
 | WED : slot → alias isolé, lookup séquentielle 0…M−1, vitesse 1 | repli sans shader = 2× plus lent, jamais faux ; autres maps intactes |
 | Alias pluie = alias sec + `R` | routage pluie natif du moteur |
+| Pool : force route2 0,70 matériau 1 sur le groupe sec (`approved_strength` du contrat) | WTPOOL bilinéaire quasi plat (σ 5,5/255) : la timeline seule paraît figée (AR1000 v3, AR0408 v1) ; la DLL donne le mode liquide du matériau aux alias `YF…` d'une identité à force > 0 |
 | Nom de page = `alias[0] + alias[2:] + "00"` ≤ 8 et **unique** | `QZLKV0` et `QBLKV0` donnent tous deux `QLKV000` : le producteur refuse |
 
 ## Producteur
@@ -95,7 +96,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | Groupe | Témoin | Clés | Vitesses | Cycle proposé | Phases | x4 | Collier | Point ouvert |
 |---|---|---:|---|---|---:|---|---|---|
 | lake WTLAKE | AR1600 | 6 | 6 | 2,4 s | 72 | seedvr | non | **validé** |
-| pool WTPOOL | AR1000 jour | 6 | 6 | 2,4 s | 72 | bilinear | non | — |
+| pool WTPOOL | AR1000 jour | 6 | 6 | 2,4 s | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
 | swamp WTSWAM | AR1607 | 6 | 6 | 2,4 s | 72 | seedvr | non | opacité native 100 |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |
@@ -109,6 +110,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 |---|---|---|---|---|---|
 | AR2100 | sewage | 72 / 2,4 s | `ar2100-water-30fps-20260923-v1` | validée — `ar2100-temporal-30fps-user-qa-20260923-v1.json` | ratios 1,269 / 1,682 acceptés après vidéo de review |
 | AR0408 | pool | 72 / 2,4 s | `ar0408-water-30fps-20260923-v1` | **rejetée** — `ar0408-temporal-30fps-user-qa-20260923-v1.json` | eau figée ; animation d’eau qui coule absente |
+| AR0408 | pool | 72 / 2,4 s, q0,70 | `ar0408-water-30fps-20260923-v2` | validée — `ar0408-temporal-30fps-user-qa-20260923-v2.json` | candidat = octets v1 ; seuls registre (q0,70 sec) et DLL changent |
 
 Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) non vérifié en jeu ;
 lave émissive non qualifiée route2 ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;

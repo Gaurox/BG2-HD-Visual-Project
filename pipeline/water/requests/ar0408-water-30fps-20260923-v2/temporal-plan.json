@@ -1,0 +1,24 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar0408-water-x4-20260923-v2",
+  "wed": "AR0408",
+  "selection": "maps/water-batches/runs/ar0408-water-x4-20260923-v2/selection.json",
+  "source_wed": "maps/water-batches/runs/ar0408-water-x4-20260923-v2/override-candidate/AR0408.WED",
+  "groups": [
+    {
+      "id": "pool",
+      "aliases": {
+        "WTPOOL": "YFR3ZG"
+      },
+      "material_id": 1,
+      "approved_strength": 0.7
+    },
+    {
+      "id": "pool_rain",
+      "aliases": {
+        "WTPOOLR": "YFR3ZGR"
+      },
+      "material_id": 1,
+      "rain_of": "pool"
+    }
+  ]
+}

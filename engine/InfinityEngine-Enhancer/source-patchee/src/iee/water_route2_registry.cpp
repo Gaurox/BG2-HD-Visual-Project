@@ -194,6 +194,19 @@ std::optional<Match> match(const Query& query) noexcept {
                matched->overlayTis != matched->slots[matched->overlaySlot]};
 }
 
+std::uint32_t approved_material(std::string_view wed, std::span<const std::string_view> slots,
+                                std::uint32_t slot) noexcept {
+  const auto registry = g_registry.load(std::memory_order_acquire);
+  if (!registry) return 0;
+  std::uint32_t material = 0;
+  for (const auto* entry : registry->entries) {
+    if (!approved_material_identity(*entry, wed, slots, slot)) continue;
+    if (material && material != entry->materialId) return 0;
+    material = entry->materialId;
+  }
+  return material;
+}
+
 std::uint32_t version() noexcept { return generated::kRegistryVersion; }
 
 const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept {

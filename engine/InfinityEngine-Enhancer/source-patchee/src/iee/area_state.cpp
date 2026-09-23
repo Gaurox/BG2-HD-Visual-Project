@@ -35,6 +35,24 @@ bool same_resref(std::string_view lhs, const game::ResrefBuffer& rhs) noexcept {
   return lhs == game::resref_view(rhs);
 }
 
+// Only the cell modes the route2 material branch of fpSEAM handles.
+game::TileLiquidMode route2_material_mode(const game::WedAreaInfo& wed,
+                                          std::size_t overlayIndex) noexcept {
+  std::array<std::string_view, 5> slots{};
+  if (wed.overlays.size() > slots.size()) return game::TileLiquidMode::None;
+  for (std::size_t i = 0; i < wed.overlays.size(); ++i) {
+    slots[i] = wed.overlays[i].tilesetResrefView();
+  }
+  switch (water_route2::approved_material(wed.areaResrefView(),
+                                          {slots.data(), wed.overlays.size()},
+                                          static_cast<std::uint32_t>(overlayIndex))) {
+    case 1: return game::TileLiquidMode::Water;
+    case 4: return game::TileLiquidMode::Sewage;
+    case 5: return game::TileLiquidMode::Swamp;
+    default: return game::TileLiquidMode::None;
+  }
+}
+
 struct PvrzTintCandidate {
   unsigned texture{};
   int width{};
@@ -602,7 +620,7 @@ void refresh_wed_cache(AppContext& ctx, void* infGame) {
     }
 
     game::WedAreaInfo wed{};
-    if (!game::parse_loaded_wed(wedResource.baseclass_0, wed)) {
+    if (!game::parse_loaded_wed(wedResource.baseclass_0, wed, route2_material_mode)) {
       game::ResrefBuffer areaResref{};
       game::CResRef runtimeAreaResref{};
       if (core::safe_read(areaBytes + offsetof(game::CGameArea, m_resref), runtimeAreaResref)) {

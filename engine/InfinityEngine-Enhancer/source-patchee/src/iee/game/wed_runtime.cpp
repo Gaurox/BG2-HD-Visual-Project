@@ -45,7 +45,8 @@ std::string_view WedOverlayInfo::tilesetResrefView() const noexcept {
 
 std::string_view WedAreaInfo::areaResrefView() const noexcept { return resref_view(areaResref); }
 
-bool parse_loaded_wed(const CRes& resource, WedAreaInfo& out) noexcept {
+bool parse_loaded_wed(const CRes& resource, WedAreaInfo& out,
+                      LiquidModeResolver resolver) noexcept {
   out = {};
 
   if (!resource.bLoaded || !resource.pData || resource.nSize < sizeof(WED_WedHeader_st)) {
@@ -113,6 +114,15 @@ bool parse_loaded_wed(const CRes& resource, WedAreaInfo& out) noexcept {
 
   if (out.overlays.empty()) {
     return true;
+  }
+
+  if (resolver) {
+    for (std::size_t i = 1; i < out.overlays.size(); ++i) {
+      auto& overlay = out.overlays[i];
+      if (overlay.liquidMode == TileLiquidMode::None && !overlay.tilesetResrefView().empty()) {
+        overlay.liquidMode = resolver(out, i);
+      }
+    }
   }
 
   out.baseWidth = out.overlays.front().width;

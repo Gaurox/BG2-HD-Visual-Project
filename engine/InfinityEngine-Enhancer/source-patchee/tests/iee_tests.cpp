@@ -1093,6 +1093,21 @@ void test_water_overlay_route2_policy() {
   query.wed = "AR0900";
   query.overlayTileCount = 7;
   expect_true(!identity_matches(query, entry), "Unknown overlay tile count is excluded");
+  using iee::water_route2::approved_material_identity;
+  const std::span<const std::string_view> layout{slots.data(), slots.size()};
+  expect_true(!approved_material_identity(entry, "AR0900", layout, 1),
+              "Timing-only identity keeps its native cell mode");
+  entry.approvedStrength = 0.7f;
+  expect_true(approved_material_identity(entry, "AR0900", layout, 1),
+              "Approved dry identity supplies its material cell mode");
+  expect_true(!approved_material_identity(entry, "AR0900N", layout, 1) &&
+                  !approved_material_identity(entry, "AR0900", layout, 2),
+              "Material cell mode stays on the exact WED and slot");
+  slots[1] = "WTLAKER";
+  expect_true(!approved_material_identity(entry, "AR0900", layout, 1),
+              "Rain resource is never taken for the WED's dry overlay");
+  slots[1] = "WTLAKE";
+  entry.approvedStrength = 0.0f;
   for (const float q : {0.0f, 0.15f, 0.3f, 1.0f}) {
     expect_eq(route2_water_strength(q), q, "Valid route2 dosage is preserved including zero");
   }
@@ -5804,6 +5819,27 @@ void test_parse_loaded_wed() {
             "Cell 1 tile index should resolve through the tile-index lookup");
   expect_eq(wed.overlays[1].tintTileCandidates[2], std::uint16_t{23},
             "Cell 2 tile index should resolve through the tile-index lookup");
+
+  auto aliased = bytes;
+  auto aliasLayer = liquidLayer;
+  aliasLayer.rrTileSet = {'Y', 'F', 'R', '3', 'Z', 'G', '\0', '\0'};
+  write_bytes(aliased, layerOffset + sizeof(WED_LayerHeader_st), &aliasLayer, sizeof(aliasLayer));
+  resource.pData = aliased.data();
+  expect_true(parse_loaded_wed(resource, wed) &&
+                  wed.overlays[1].liquidMode == TileLiquidMode::None &&
+                  wed.overlays[1].tintTileCandidates.empty(),
+              "An isolated alias has no liquid mode from its resref");
+  const LiquidModeResolver resolver = [](const WedAreaInfo& info,
+                                         std::size_t overlay) noexcept {
+    return info.areaResrefView() == "AR0001" && overlay == 1 ? TileLiquidMode::Water
+                                                              : TileLiquidMode::None;
+  };
+  expect_true(parse_loaded_wed(resource, wed, resolver) &&
+                  wed.overlays[1].liquidMode == TileLiquidMode::Water &&
+                  wed.overlays[1].tintTileCandidates.size() == 3 &&
+                  liquid_overlay_mask(wed) == 0x02,
+              "A resolved alias gets coverage, tint candidates and its mask bit");
+  resource.pData = bytes.data();
 
   auto tooManyLayers = bytes;
   auto invalidHeader = header;

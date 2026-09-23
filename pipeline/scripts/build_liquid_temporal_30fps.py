@@ -197,7 +197,7 @@ def resolve(path):
 
 def prepare(plan_path, output, game):
     """Plan: {spatial_run, wed, base_registry?, selection?, source_wed?, groups: [{id, aliases,
-    material_id, cycle_seconds?}]}.  Rain groups name an earlier dry group in ``rain_of``.
+    material_id, cycle_seconds?, approved_strength?}]}.  Rain groups name an earlier dry group in ``rain_of``.
     Without ``base_registry`` the registry compiled into the installed DLL is used
     (``route2-registry-current.json``); its DLL hash must match the live DLL."""
     plan = read(plan_path)
@@ -256,6 +256,12 @@ def prepare(plan_path, output, game):
                 raise ValueError(f'{gid}: WED speeds disagree {[p["speed_divisor"] for p in playback]}; '
                                  'set cycle_seconds explicitly and validate it ingame')
         cycles[gid] = cycle
+        strength = float(entry.get('approved_strength', 0))
+        if not 0 <= strength <= 1:
+            raise ValueError(f'{gid}: approved_strength outside [0, 1]')
+        if dry and strength and entry.get('material_id', 1) != 5:
+            raise ValueError(f'{gid}: the runtime qualifies the rain (fpTone) pass for material 5 only; '
+                             'keep the rain group timing-only')
         phases = phase_count(len(lookup), cycle)
         folder = output / gid
         (folder / 'keys').mkdir(parents=True)
@@ -269,7 +275,8 @@ def prepare(plan_path, output, game):
         method = selected['group']['method']
         collar = any(m.get('correction_applied') for m in selected['metrics'])
         records.append({'id': gid, 'rain_of': dry, 'group': group, 'aliases': aliases,
-                        'material_id': entry.get('material_id', 1), 'lookup': lookup,
+                        'material_id': entry.get('material_id', 1), 'approved_strength': strength,
+                        'lookup': lookup,
                         'playback': playback, 'cycle_seconds': cycle, 'phases': phases,
                         'method': method, 'edge_collar': collar,
                         'seam_width_x4': int(group.get('seam_width_x4', 8)),
@@ -460,7 +467,8 @@ def build(output):
                         'tis_bytes': tis.stat().st_size, 'tile_count': group['phases'], 'tile_dimension': TILE,
                         'pages': [{'resref': page.stem, 'width': PAGE, 'height': PAGE,
                                    'bytes': page.stat().st_size, 'sha256': digest(page)}]},
-            'approved_strength': 0, 'material_id': group['material_id'], 'overlay_coverage_cells': coverage,
+            'approved_strength': group.get('approved_strength', 0), 'material_id': group['material_id'],
+            'overlay_coverage_cells': coverage,
             'allow_stock_wed_when_override_absent': False,
             'temporal_overlay': {'mode': 'atlas-linear', 'frame_count': group['phases'],
                 'source_fps': DISPLAY_FPS, 'target_fps': DISPLAY_FPS, 'atlas_columns': COLUMNS,
