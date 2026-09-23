@@ -4,6 +4,7 @@ Point d'entrée unique pour appliquer le travail eau validé à **une** map (une
 maps). Suivre l'ordre ; chaque `STOP` = s'arrêter et demander à l'utilisateur, sans contourner.
 Recettes et raisons : [SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md), [TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md),
 [CONTOUR_MATTE_PIPELINE.md](CONTOUR_MATTE_PIPELINE.md). État de chaque map : `plan_water_map.py inventory`. Référence validée : AR1600 (2026-09-23).
+Suivi courant A/B/C et QA : [`manifests/water-standard-map-status-20260923-v1.json`](manifests/water-standard-map-status-20260923-v1.json).
 
 ## Règles fixes
 
@@ -34,8 +35,9 @@ Les trois étapes sont indépendantes ; faire celles qui s'appliquent, **dans l'
 Références : AR1600 valide la recette lac ; AR2100 valide la chaîne standard complète `sewage` A → B → C.
 Contrat figé dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4, cycle 2,4 s / 72 phases,
 contours `rgb-x4-silhouette-matte` avec réserve acceptée. Les garde-fous de review restent applicables.
-AR0408 valide `pool` A → B : bilinéaire x4, matériau 1, cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le
-groupe sec** (la timeline seule paraît figée), pluie q0 ; contours pool à revoir.
+AR0408 valide `pool` A → B ; AR0703 valide la chaîne `pool` complète A → B → C : bilinéaire x4, matériau 1,
+cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le groupe sec** (la timeline seule paraît figée), pluie q0,
+contours `rgb-x4-silhouette-matte` (10 paires, alpha 128).
 
 | Étape | S'applique si | Sinon |
 |---|---|---|

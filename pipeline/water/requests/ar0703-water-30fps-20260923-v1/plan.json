@@ -1,0 +1,196 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2\\temporal-plan.json",
+    "bytes": 612,
+    "sha256": "A7E38F0108C7AFCCAF0B9079C062409CA70FAAF5E62C88B0F7B06A54DDF08F3E"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR0703",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2\\selection.json",
+    "bytes": 451,
+    "sha256": "522C5F811F525694BD755CAA0638D483AB956D8B4B743C8E81735819EA9B8856"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2\\override-candidate\\AR0703.WED",
+    "bytes": 2074,
+    "sha256": "87DE05C38AEAFB1DB976F971AA46E306C7AC7C8FC566CCA5A1792C84912BC916"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar0408-water-30fps-20260923-v2\\registry-v3.json",
+  "groups": [
+    {
+      "id": "pool",
+      "rain_of": null,
+      "group": {
+        "id": "pool",
+        "wed": "AR0703",
+        "resrefs": [
+          "WTPOOL"
+        ],
+        "aliases": {
+          "WTPOOL": "YSSRXL"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTPOOL"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTPOOL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTPOOL": "YF6L83"
+      },
+      "material_id": 1,
+      "approved_strength": 0.7,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTPOOL",
+          "wed_resref": "WTPOOL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "bilinear",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTPOOL",
+          "b": "WTPOOL",
+          "axis": "x",
+          "occurrences": 6
+        },
+        {
+          "a": "WTPOOL",
+          "b": "WTPOOL",
+          "axis": "y",
+          "occurrences": 6
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2\\overlays\\groups\\pool\\build.json",
+        "bytes": 18443,
+        "sha256": "F1EEF1774F615FC097966B4D607E681A8F42FE791AB99CBEDFE945AF0A7EB1A0"
+      }
+    },
+    {
+      "id": "pool_rain",
+      "rain_of": "pool",
+      "group": {
+        "id": "pool_rain",
+        "wed": "AR0703",
+        "resrefs": [
+          "WTPOOLR"
+        ],
+        "aliases": {
+          "WTPOOLR": "YSSRXLR"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTPOOLR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTPOOL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTPOOLR": "YF6L83R"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTPOOLR",
+          "wed_resref": "WTPOOL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "bilinear",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTPOOLR",
+          "b": "WTPOOLR",
+          "axis": "x",
+          "occurrences": 6
+        },
+        {
+          "a": "WTPOOLR",
+          "b": "WTPOOLR",
+          "axis": "y",
+          "occurrences": 6
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0703-water-x4-20260923-v2\\overlays\\groups\\pool_rain\\build.json",
+        "bytes": 18584,
+        "sha256": "1862B1F0BD4CE6375CF15378847F52019D99CD1A1D8DF6F03AEB423A8718DD33"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

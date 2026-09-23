@@ -1,0 +1,68 @@
+{
+  "schema": "bg2-water-standard-map-status-v1",
+  "updated": "2026-09-23",
+  "scope": "Standard WED water chain only; installation, user QA and release remain separate states.",
+  "maps": [
+    {
+      "area": "AR1600",
+      "family": "lake",
+      "overall": "validated-ingame",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "qa": "pipeline/water/manifests/ar1600-water-30fps-user-qa-20260923-v2.json"
+        },
+        "contour": {
+          "status": "validated-ingame-with-reserve",
+          "qa": "pipeline/water/manifests/ar1600-contour-matte-map-user-qa-20260923-v1.json"
+        }
+      }
+    },
+    {
+      "area": "AR0408",
+      "family": "pool",
+      "overall": "partial-contour-review-required",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "qa": "pipeline/water/manifests/ar0408-spatial-user-qa-20260923-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "qa": "pipeline/water/manifests/ar0408-temporal-30fps-user-qa-20260923-v2.json"
+        },
+        "contour": {
+          "status": "review-required",
+          "installed": "pipeline/water/manifests/ar0408-contour-installed-20260923-v1.json"
+        }
+      }
+    },
+    {
+      "area": "AR0703",
+      "family": "pool",
+      "overall": "validated-ingame",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0703-spatial-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar0703-spatial-user-qa-20260923-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0703-temporal-30fps-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar0703-temporal-30fps-user-qa-20260923-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0703-contour-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar0703-contour-user-qa-20260923-v1.json"
+        }
+      }
+    }
+  ],
+  "release": "not-requested"
+}

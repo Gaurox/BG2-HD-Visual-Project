@@ -2,7 +2,7 @@
   "schema": "bg2-liquid-family-standard-v1",
   "version": 1,
   "date": "2026-09-23",
-  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). Values reproduce the choices validated on the 2026-09-23 witness batch, AR1600, the full standard chain on AR2100 and pool A -> B on AR0408; a family's own system is kept, only the orchestration is standard.",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). Values reproduce the choices validated on the 2026-09-23 witness batch, AR1600, the full standard chain on AR2100 and pool A -> B on AR0408 then A -> B -> C on AR0703; a family's own system is kept, only the orchestration is standard.",
   "sources": {
     "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
     "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
@@ -11,7 +11,12 @@
     "sewage_temporal_qa": "pipeline/water/manifests/ar2100-temporal-30fps-user-qa-20260923-v1.json",
     "sewage_contour_qa": "pipeline/water/manifests/ar2100-contour-user-qa-20260923-v3.json",
     "pool_spatial_qa": "pipeline/water/manifests/ar0408-spatial-user-qa-20260923-v1.json",
-    "pool_temporal_qa": "pipeline/water/manifests/ar0408-temporal-30fps-user-qa-20260923-v2.json"
+    "pool_temporal_qa": "pipeline/water/manifests/ar0408-temporal-30fps-user-qa-20260923-v2.json",
+    "pool_full_chain_qa": {
+      "spatial": "pipeline/water/manifests/ar0703-spatial-user-qa-20260923-v1.json",
+      "temporal": "pipeline/water/manifests/ar0703-temporal-30fps-user-qa-20260923-v1.json",
+      "contour": "pipeline/water/manifests/ar0703-contour-user-qa-20260923-v1.json"
+    }
   },
   "defaults": {
     "seedvr": "7B INT8 convrot, color_correction none, seed 959948902156062, periodic 3x3 context, centre crop",
@@ -31,8 +36,8 @@
                   "approved_strength": 0.70, "status": "validated-ingame-AR0408",
                   "why_strength": "bilinear WTPOOL is near-flat (std 5.5/255): its timeline alone reads frozen (AR1000 v3, AR0408 30fps v1); route2 q0.70 material 1 on the dry group (AR1000 v5, AR0408 v2); rain stays q0",
                   "why_cycle": "6 keys x speed 6 / 15 Hz validated on AR0408; AR1004, AR1601, AR2012 carry speed 0"},
-     "contour": {"method": "rgb-x4-silhouette-matte", "status": "to-review-AR0408"},
-     "witness": "AR0408"},
+     "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-ingame-AR0703"},
+     "witness": "AR0408-A-B;AR0703-A-B-C"},
     {"id": "swamp", "overlays": ["WTSWAM"], "layout": [["WTSWAM"]], "spatial_method": "seedvr",
      "temporal": {"material_id": 5, "cycle": "native", "status": "proposal"},
      "witness": "AR1607"},

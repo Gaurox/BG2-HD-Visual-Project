@@ -32,7 +32,7 @@ compatible, pas des recettes universelles.
 | `lake-wtlake` nuit | AR0046N v7 | correction runtime slot PVRZ→nom GL | défaut runtime exact |
 | `lake-wtlake` nuit | AR0300N v10 | RGB nocturne ; opacité primaire/secondaire 160 ; q0.70 | choix artistique local |
 | `pool-wtpool` | AR1000 jour v5 | bilinéaire x4 périodique sans SeedVR ; 6→36 linéaire/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | AR1000 jour ; AR1000N exclu |
-| `pool-wtpool` 30 FPS | AR0408 v2 (2026-09-23) | chaîne standard A → B ; 72 phases/30 Hz ; alias `YFR3ZG` ; matériau 1 ; **q0.70 sec**, pluie q0 ; DLL : mode liquide donné par le registre | contrat famille ; contours à revoir |
+| `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408 valide A → B ; AR0703 valide A → B → C ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; contours silhouette RGB x4 | contrat famille ; pluie non observée en intérieur AR0703 |
 | `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |

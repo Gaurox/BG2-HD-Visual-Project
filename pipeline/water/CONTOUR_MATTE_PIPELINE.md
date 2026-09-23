@@ -4,6 +4,7 @@ Recette **validée ingame sur AR1600** (zone bateau puis carte entière, 2026-09
 liseré cyan-vert résiduel sur éléments très fins). Autres maps : procédé applicable, **QA par map**.
 Famille `sewage` validée sur AR2100 avec le matte actuel accepté en l'état ; adaptation `CONTOUR-NET`
 explicitement abandonnée. Contrat : `liquid-family-standard-v1.json`.
+Famille `pool` validée sur AR0703 (10 paires, alpha 128).
 Historique et mesures : [`AR1600_CONTOURS_MATTE_ESSAI_20260923.md`](AR1600_CONTOURS_MATTE_ESSAI_20260923.md).
 Remplace l'approche Potrace du masque x1 ([essai Astra](AR1600_CONTOURS_ESSAI_20260923.md), rejeté).
 
@@ -79,6 +80,7 @@ Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non enco
 |---|---|---|---|---|
 | AR2100 | WTSEW | `ar2100-contour-matte-20260923-v1` | validée avec réserve — `ar2100-contour-user-qa-20260923-v3.json` | matte accepté en l'état ; adaptation CONTOUR-NET abandonnée (v1 rejet historique, v2 citation non canonique) |
 | AR0408 | WTPOOL | `ar0408-contour-matte-20260923-v1` | **à revoir** (utilisateur, 2026-09-23) — reçu `ar0408-contour-installed-20260923-v1.json` encore installé | défaut non décrit : demander ce qui ne va pas avant tout nouvel essai `-v2` |
+| AR0703 | WTPOOL | `ar0703-contour-matte-20260923-v1` | validée — `ar0703-contour-user-qa-20260923-v1.json` | 10 paires ; alpha 128 |
 
 ## Limites connues
 
