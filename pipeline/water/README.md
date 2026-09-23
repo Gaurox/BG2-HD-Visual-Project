@@ -9,6 +9,9 @@ et ouvrir uniquement la référence utile.
 **Appliquer le travail eau à une map : [`WATER_MAP_RUNBOOK.md`](WATER_MAP_RUNBOOK.md)** (ordre, STOP, installation, QA).
 Chaînes : [spatiale x4](SPATIAL_X4_PIPELINE.md) → [30 FPS](TEMPORAL_30FPS_PIPELINE.md) → [contours](CONTOUR_MATTE_PIPELINE.md) ;
 paramètres par famille : [`liquid-family-standard-v1.json`](liquid-family-standard-v1.json).
+État standard courant : `lake` (AR1600), `pool` (AR0408/AR0703), `sewage` (AR2100) et `swamp`
+(AR0500/AR0500N) ont des validations ingame A/B ; C reste utilisable provisoirement et devra être refondu puis
+réappliqué à toutes les maps/familles traitées (`WATER-006`).
 
 | Besoin | Référence |
 |---|---|

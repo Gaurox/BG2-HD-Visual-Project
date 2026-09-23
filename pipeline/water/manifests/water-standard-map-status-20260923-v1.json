@@ -14,18 +14,21 @@
     {
       "area": "AR1600",
       "family": "lake",
-      "overall": "spatial-temporal-validated-contour-rework-required",
+      "overall": "spatial-temporal-validated-contour-provisional",
       "stages": {
         "spatial": {
           "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/liquid-families-x4-trial-installed-20260923-v1.json",
           "qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json"
         },
         "temporal-30fps": {
           "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1600-water-30fps-installed-20260923-v2.json",
           "qa": "pipeline/water/manifests/ar1600-water-30fps-user-qa-20260923-v2.json"
         },
         "contour": {
-          "status": "historically-validated-ingame-with-reserve-rework-required-global",
+          "status": "historically-validated-ingame-with-reserve-currently-provisional",
+          "installed": "pipeline/water/manifests/ar1600-contour-matte-map-installed-20260923-v1.json",
           "qa": "pipeline/water/manifests/ar1600-contour-matte-map-user-qa-20260923-v1.json"
         }
       }
@@ -33,14 +36,16 @@
     {
       "area": "AR0408",
       "family": "pool",
-      "overall": "partial-contour-review-required",
+      "overall": "spatial-temporal-validated-contour-review-required-provisional",
       "stages": {
         "spatial": {
           "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0408-spatial-installed-20260923-v1.json",
           "qa": "pipeline/water/manifests/ar0408-spatial-user-qa-20260923-v1.json"
         },
         "temporal-30fps": {
           "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0408-temporal-30fps-installed-20260923-v2.json",
           "qa": "pipeline/water/manifests/ar0408-temporal-30fps-user-qa-20260923-v2.json"
         },
         "contour": {
@@ -50,9 +55,31 @@
       }
     },
     {
+      "area": "AR2100",
+      "family": "sewage",
+      "overall": "spatial-temporal-validated-contour-provisional",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2100-spatial-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar2100-spatial-user-qa-20260923-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2100-temporal-30fps-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar2100-temporal-30fps-user-qa-20260923-v1.json"
+        },
+        "contour": {
+          "status": "historically-validated-with-reserve-currently-provisional",
+          "installed": "pipeline/water/manifests/ar2100-contour-installed-20260923-v1.json",
+          "qa": "pipeline/water/manifests/ar2100-contour-user-qa-20260923-v3.json"
+        }
+      }
+    },
+    {
       "area": "AR0703",
       "family": "pool",
-      "overall": "spatial-temporal-validated-contour-rework-required",
+      "overall": "spatial-temporal-validated-contour-provisional",
       "stages": {
         "spatial": {
           "status": "validated-ingame",
@@ -65,7 +92,7 @@
           "qa": "pipeline/water/manifests/ar0703-temporal-30fps-user-qa-20260923-v1.json"
         },
         "contour": {
-          "status": "historically-validated-ingame-rework-required-global",
+          "status": "historically-validated-ingame-currently-provisional",
           "installed": "pipeline/water/manifests/ar0703-contour-installed-20260923-v1.json",
           "qa": "pipeline/water/manifests/ar0703-contour-user-qa-20260923-v1.json"
         }
@@ -74,7 +101,7 @@
     {
       "area": "AR0500",
       "family": "swamp",
-      "overall": "spatial-temporal-validated-contour-rework-required",
+      "overall": "spatial-temporal-validated-contour-provisional",
       "stages": {
         "spatial": {
           "status": "validated-ingame-user-message-receipt-unavailable-after-B-C",
@@ -86,7 +113,7 @@
           "qa": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json"
         },
         "contour": {
-          "status": "historically-validated-ingame-rework-required-global",
+          "status": "historically-validated-ingame-currently-provisional",
           "installed": "pipeline/water/manifests/ar0500-contour-installed-20260924-v1.json",
           "qa": "pipeline/water/manifests/ar0500-contour-user-qa-20260924-v1.json"
         }
@@ -95,7 +122,7 @@
     {
       "area": "AR0500N",
       "family": "swamp",
-      "overall": "spatial-temporal-validated-contour-rejected",
+      "overall": "spatial-temporal-validated-contour-rejected-provisional-in-use",
       "stages": {
         "spatial": {
           "status": "validated-ingame-user-message-receipt-unavailable-after-B-C",
@@ -107,7 +134,7 @@
           "qa": "pipeline/water/manifests/ar0500n-temporal-30fps-user-qa-20260924-v1.json"
         },
         "contour": {
-          "status": "rejected-ingame-rework-required-global",
+          "status": "rejected-ingame-currently-provisional-rework-planned",
           "installed": "pipeline/water/manifests/ar0500n-contour-installed-20260924-v1.json",
           "qa": "pipeline/water/manifests/ar0500n-contour-user-qa-20260924-v1.json"
         }

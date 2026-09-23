@@ -14,7 +14,7 @@ compatible, pas des recettes universelles.
 | Animation saccadée | seulement 6 frames ou absence d'interpolation temporelle | historique : 6→36 phases + blend 30 FPS ; actuel : [30 FPS réels](TEMPORAL_30FPS_PIPELINE.md) |
 | 30 FPS « non ressenti », pop toutes les 0,4 s | ancres x4 SeedVR image par image (détail ×3), Apollo inadapté au miroitement, demi-fondu shader | interpolation trigonométrique x1 → SeedVR un seul chunk vidéo → 72 phases/4096, source=cible 30 ([AR1600 v2](AR1600_WATER_30FPS_V2_20260923.md)) |
 | Traits noirs/bleus | RGB primaire contaminé ou padding incohérent | greffe RGB bornée depuis le secondaire de même coordonnée ; padding 4 px x4 |
-| Frange sombre, cordes/gréement épais ou en escalier devant l'eau | alpha HD issu du masque x1 révèle le fond noir du RGB x4 | silhouette RGB x4 + liseré recoloré ([CONTOUR_MATTE_PIPELINE](CONTOUR_MATTE_PIPELINE.md)) ; validé AR1600 |
+| Frange sombre, cordes/gréement épais ou en escalier devant l'eau | alpha HD issu du masque x1 révèle le fond noir du RGB x4 | C actuel : silhouette RGB x4 + liseré recoloré ([CONTOUR_MATTE_PIPELINE](CONTOUR_MATTE_PIPELINE.md)) ; utilisable provisoirement, refonte puis réapplication globale planifiées |
 | Art local, ombres ou reflets disparus | alpha central 0/255 ou passe secondaire perdue | restaurer l'alpha natif effectif et la composition primaire/secondaire |
 | Marche de luminosité | opacités primaire/secondaire désaccordées | apparier les contributions ; AR0300N v10 utilise 160/160 localement |
 | Mosaïque sous pluie | seule la ressource sèche a été traitée | créer/router la ressource alternative pluie exacte |
@@ -32,17 +32,19 @@ compatible, pas des recettes universelles.
 | `lake-wtlake` nuit | AR0046N v7 | correction runtime slot PVRZ→nom GL | défaut runtime exact |
 | `lake-wtlake` nuit | AR0300N v10 | RGB nocturne ; opacité primaire/secondaire 160 ; q0.70 | choix artistique local |
 | `pool-wtpool` | AR1000 jour v5 | bilinéaire x4 périodique sans SeedVR ; 6→36 linéaire/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | AR1000 jour ; AR1000N exclu |
-| `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408 valide A → B ; AR0703 valide A → B → C ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; contours silhouette RGB x4 | contrat famille ; pluie non observée en intérieur AR0703 |
+| `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408/AR0703 valident A → B ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; C AR0703 historiquement validé mais désormais provisoire | contrat famille ; pluie non observée en intérieur AR0703 |
+| `swamp-wtswam` standard | AR0500 + AR0500N (2026-09-24) | A SeedVR 7B x4 ; B trig x1 → SeedVR vidéo, 72 phases/30 Hz, cycle 2,4 s ; matériau 5 ; **q0.70 sec+pluie** | A/B validés ingame jour+nuit ; pluie non observée ; C installé mais provisoire |
 | `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |
 | `swamp-wtswam` | AR1607, AR1800 | paire sèche/pluie isolée ; 36 phases ; matériau 5 ; q0.70 | ces deux cartes |
 | `lake-wtlake` 30 FPS | AR1600 v2 (2026-09-23) | alias `QBLKV0`/`R` ; 72 phases/30 Hz ; trig x1 + SeedVR vidéo ; page 4096 ; force 0 | AR1600 slot1 ; pluie non confirmée |
 
-État installé au 2026-09-23 : AR1000 jour, AR1607, AR0404 utilisent les alias `Q9*` du lot spatial
+État historique au 2026-09-23 : AR1000 jour, AR1607, AR0404 utilisent les alias `Q9*` du lot spatial
 ([ESSAIS_FAMILLES_X4](ESSAIS_FAMILLES_X4_20260923.md), lookup native, q0) ; leurs lignes 36 phases/q0.70
-ci-dessus sont des recettes acquises mais non installées. Apollo est rejeté pour les overlays
-liquides ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)).
+ci-dessus sont des recettes acquises mais non installées. État standard courant :
+[`manifests/water-standard-map-status-20260923-v1.json`](manifests/water-standard-map-status-20260923-v1.json).
+Apollo est rejeté pour les overlays liquides ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)).
 
 AR0512 et AR1604 restent non qualifiées. Les familles huile, lave, goo et intérieures n'héritent
 pas automatiquement des paramètres lac/piscine/marais.
@@ -97,4 +99,6 @@ Repères techniques :
 - AR0300N : `manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json`
 - Égouts : `manifests/wtsew-ar0404-ar2100-validated-20260912-v1.json`
 - Marais : `manifests/wtswam-ar1607-ar1800-validated-20260912-v1.json`
+- Marais standard jour/nuit : `manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json`,
+  `manifests/ar0500n-temporal-30fps-user-qa-20260924-v1.json`
 - État machine : `release-tracking-v1.json`

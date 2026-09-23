@@ -22,9 +22,9 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | Famille | Overlays | x4 | Témoin validé |
 |---|---|---|---|
 | lake | WTLAKE | seedvr | AR1600 |
-| pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR0408 (A + B) ; AR1000 historique |
-| swamp | WTSWAM | seedvr | AR1607 |
-| sewage | WTSEW | seedvr | AR2100 (chaîne standard complète) |
+| pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR0408 + AR0703 (standard) ; AR1000 historique |
+| swamp | WTSWAM | seedvr | AR0500 + AR0500N (standard) ; AR1607 historique |
+| sewage | WTSEW | seedvr | AR2100 |
 | oil | WTOIL | seedvr | AR0413 |
 | lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
 | brown_flow | WT5000A–D (2×2) | seedvr | AR5203 |

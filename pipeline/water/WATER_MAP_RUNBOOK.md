@@ -32,12 +32,15 @@ overlay inconnu, master secondaire ambigu, base absente). `decisions_owed` : ce 
 pas de pluie). `survey` : `a` (WATER_ALPHA), paires, refus pour l'étape C.
 Les trois étapes sont indépendantes ; faire celles qui s'appliquent, **dans l'ordre A → B → C**.
 
-Références : AR1600 valide la recette lac ; AR2100 valide la chaîne standard complète `sewage` A → B → C.
-Contrat figé dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4, cycle 2,4 s / 72 phases,
-contours `rgb-x4-silhouette-matte` avec réserve acceptée. Les garde-fous de review restent applicables.
-AR0408 valide `pool` A → B ; AR0703 valide la chaîne `pool` complète A → B → C : bilinéaire x4, matériau 1,
+Références : AR1600 valide la recette lac ; AR2100 valide `sewage` A → B, avec C historiquement accepté
+avec réserve et désormais provisoire. Contrat dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4,
+cycle 2,4 s / 72 phases. Les garde-fous de review restent applicables.
+AR0408 valide `pool` A → B ; AR0703 valide A → B et fournit la QA historique C : bilinéaire x4, matériau 1,
 cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le groupe sec** (la timeline seule paraît figée), pluie q0,
-contours `rgb-x4-silhouette-matte` (10 paires, alpha 128).
+contours C provisoires `rgb-x4-silhouette-matte` (10 paires, alpha 128).
+AR0500 jour et AR0500N nuit valident `swamp` A → B : SeedVR 7B x4, matériau 5, cycle 2,4 s / 72 phases,
+force route2 0,70 sur les groupes sec et pluie ; QA sèche validée, pluie non observée. C reste applicable mais
+provisoire : continuer en l'état, puis reconstruire/réinstaller toutes les maps après validation de sa refonte.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|

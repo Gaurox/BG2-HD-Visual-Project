@@ -62,7 +62,9 @@ donc compatible avec l'eau 30 FPS ([TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_P
 ## État par map — survey du 2026-09-23 (lecture seule)
 
 Rapport : [`manifests/contour-matte-survey-20260923-v1.json`](manifests/contour-matte-survey-20260923-v1.json).
-Traité/installé : **AR1600 seul**. `a` ≠ 128 : composition de paire non encore vue en jeu.
+Instantané historique du survey 2026-09-23. C est désormais installé sur AR1600, AR2100, AR0408, AR0703,
+AR0500 et AR0500N ; toutes ces installations restent provisoires au niveau du standard global. `a` ≠ 128 :
+composition de paire non encore vue en jeu.
 
 | Famille | Map | a | Paires | Sans secondaire | Ignorées | Prêt |
 |---|---|---:|---:|---:|---:|---|

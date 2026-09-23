@@ -1,10 +1,11 @@
 # Eau WED à 30 FPS réels — procédé commun aux familles
 
-Recette **validée ingame sur AR1600 (WTLAKE) le 2026-09-23** :
+Recette **validée ingame** sur AR1600 (`lake`), AR0408/AR0703 (`pool`), AR2100 (`sewage`) et
+AR0500/AR0500N (`swamp`, sec observé ; pluie non observée). Référence fondatrice AR1600 :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
 QA [`manifests/ar1600-water-30fps-user-qa-20260923-v2.json`](manifests/ar1600-water-30fps-user-qa-20260923-v2.json).
-Pour les autres familles : **proposition**, chaque map garde sa propre QA. Déroulé agent (ordre, STOP, installation,
-reçus) : [WATER_MAP_RUNBOOK.md](WATER_MAP_RUNBOOK.md).
+Pour les autres familles : **proposition ou blocage explicite**, chaque map garde sa propre QA. Déroulé agent
+(ordre, STOP, installation, reçus) : [WATER_MAP_RUNBOOK.md](WATER_MAP_RUNBOOK.md).
 
 ## Règles acquises
 
@@ -99,7 +100,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 |---|---|---:|---|---|---:|---|---|---|
 | lake WTLAKE | AR1600 | 6 | 6 | 2,4 s | 72 | seedvr | non | **validé** |
 | pool WTPOOL | AR0408 | 6 | 6 (0 : AR1004, AR1601, AR2012) | **2,4 s figé** | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
-| swamp WTSWAM | AR1607 | 6 | 6 | 2,4 s | 72 | seedvr | non | opacité native 100 |
+| swamp WTSWAM | AR0500 / AR0500N | 6 | 6 | **2,4 s figé** | 72 | seedvr | non | **validé ingame sec jour+nuit**, q0,70 matériau 5 sec+pluie ; pluie non observée |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |
 | lake_teal WTLAKA–D | AR3000 | 8 | 8/0/0/0 | explicite (8×8/15 = 4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM chunk unique |
