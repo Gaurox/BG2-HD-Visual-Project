@@ -1,0 +1,30 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar5200-water-x4-20260924-v1",
+  "wed": "AR5200",
+  "selection": "maps/water-batches/runs/ar5200-water-x4-20260924-v1/selection.json",
+  "source_wed": "maps/water-batches/runs/ar5200-water-x4-20260924-v1/override-candidate/AR5200.WED",
+  "groups": [
+    {
+      "id": "lava",
+      "aliases": {
+        "WTLAVA": "YFW5GJ",
+        "WTLAVB": "YF9PPE",
+        "WTLAVC": "YFINHD",
+        "WTLAVD": "YF1DHC"
+      },
+      "material_id": 1,
+      "cycle_seconds": 7.5
+    },
+    {
+      "id": "lava_rain",
+      "aliases": {
+        "WTLAVAR": "YFW5GJR",
+        "WTLAVBR": "YF9PPER",
+        "WTLAVCR": "YFINHDR",
+        "WTLAVDR": "YF1DHCR"
+      },
+      "material_id": 1,
+      "rain_of": "lava"
+    }
+  ]
+}
