@@ -48,6 +48,8 @@ l'utilisateur ; autorisation explicite de terminer le correctif et de l'installe
   sont vides ; modifier ces PVRZ ne change aucune preuve utilisée par ces identités. TIS/WED,
   QALAK0/R, QLAK000/QLAK0R00, DLL, shaders et INI identiques au départ. Aucun registre reconstruit.
 - Le résultat reste un candidat de validation, pas une recette acquise pour toutes les maps.
+- Postérieur (soir du 2026-09-23) : overlay AR1600 remplacé par la v2 30 FPS `QBLKV0`/`R` ;
+  WED réécrit, pages `A1600*` non touchées ; registre v2 : `base_tis.pages` toujours vide.
 
 ## Reproduction ciblée
 

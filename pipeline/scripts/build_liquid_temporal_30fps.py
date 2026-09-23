@@ -195,11 +195,18 @@ def resolve(path):
 
 
 def prepare(plan_path, output, game):
-    """Plan: {spatial_run, wed, base_registry, groups: [{id, aliases, material_id,
-    cycle_seconds?}]}.  Rain groups name the dry group in ``rain_of``."""
+    """Plan: {spatial_run, wed, base_registry, selection?, source_wed?, groups: [{id, aliases,
+    material_id, cycle_seconds?}]}.  Rain groups name an earlier dry group in ``rain_of``."""
     plan = read(plan_path)
     spatial = resolve(plan['spatial_run'])
-    selection = {g['id']: g for g in read(spatial / 'overlays-selected-v3/selection.json')['groups']}
+    selection_path = resolve(plan.get('selection', spatial / 'overlays-selected-v3/selection.json'))
+    source_wed = resolve(plan.get('source_wed', spatial / 'override-candidate-v3' / f"{plan['wed']}.WED"))
+    selection = {g['id']: g for g in read(selection_path)['groups']}
+    if not source_wed.is_file() or not (game / 'override' / f"{plan['wed']}.TIS").is_file():
+        raise ValueError('source WED and installed x4 base TIS are both required')
+    pages = [page_name(a) for e in plan['groups'] for a in e['aliases'].values()]
+    if len(pages) != len(set(pages)):
+        raise ValueError(f'page names collide inside the plan: {pages}')
     output.mkdir(parents=True, exist_ok=False)
     override = game / 'override'
     records, cycles = [], {}
@@ -225,6 +232,8 @@ def prepare(plan_path, output, game):
         lookup = list(lookups.pop())
         dry = entry.get('rain_of')
         if dry:
+            if dry not in cycles:
+                raise ValueError(f'{gid}: list its dry group {dry} first')
             cycle = cycles[dry]
             dry_aliases = next(e['aliases'] for e in plan['groups'] if e['id'] == dry)
             dry_group = read(spatial / 'overlays/groups' / dry / 'prepare.json')['contract']['group']
@@ -259,6 +268,7 @@ def prepare(plan_path, output, game):
                         'selected_build': evidence(resolve(selection[gid]['build_manifest']))})
     save(output / 'plan.json', {'schema': 'bg2-liquid-temporal-30fps-v1', 'source_plan': evidence(plan_path),
          'game_root': str(game), 'wed': plan['wed'], 'spatial_run': str(spatial),
+         'selection': evidence(selection_path), 'source_wed': evidence(source_wed),
          'base_registry': str(resolve(plan['base_registry'])), 'groups': records,
          'display_fps': DISPLAY_FPS, 'qa': 'pending-user-ingame'})
     for r in records:
@@ -379,11 +389,12 @@ def upscale(output, frames_per_chunk=None, overlap=0):
 def build(output):
     plan = read(output / 'plan.json')
     game = Path(plan['game_root'])
-    spatial = Path(plan['spatial_run'])
     candidate = output / 'candidate'
     candidate.mkdir(exist_ok=False)
     wed_name = plan['wed']
-    source_wed = spatial / 'override-candidate-v3' / f'{wed_name}.WED'
+    source_wed = Path(plan['source_wed']['path'])
+    if digest(source_wed) != plan['source_wed']['sha256']:
+        raise ValueError('source WED changed since prepare')
     wed = source_wed.read_bytes()
     base_geometry = validate_polygons(wed)
     headers = struct.unpack_from('<I', wed, 16)[0]

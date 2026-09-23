@@ -9,8 +9,7 @@ sont des repères de conception, pas un ordre de travail imposé ni une obligati
 Évolution du 2026-09-23 : rendu spatial du lot témoin accepté globalement par l'utilisateur
 (`manifests/liquid-families-spatial-user-qa-20260923-v1.json`). Cible temporelle demandée :
 **30 FPS pour toutes les composantes animées de l'eau**, sans accélérer les cycles.
-Premier essai installé, validation en attente :
-[Brynnlaw AR1600, normal/pluie](AR1600_WATER_30FPS_20260923.md).
+Premier essai [AR1600 v1](AR1600_WATER_30FPS_20260923.md) (36 phases + demi-fondus) remplacé.
 **v2 validée ingame le même jour** : 72 phases réelles, interpolation périodique à bande limitée +
 SeedVR vidéo — [AR1600 v2](AR1600_WATER_30FPS_V2_20260923.md). Procédé commun des familles :
 [TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_PIPELINE.md). Apollo/flux rejetés pour les overlays liquides.
@@ -285,6 +284,10 @@ Sources principales :
 - [`AR0413_WTOIL_CASE.md`](../../docs/archive/map-cases/AR0413_WTOIL_CASE.md).
 - [`QA AR0300N v10`](manifests/ar0300n-reflections-alpha160-validated-20260912-v10.json).
 
+Depuis le 2026-09-23, les témoins AR1600, AR1000 jour, AR1607, AR0404 et AR0413 sont installés
+avec les alias du lot spatial (AR1600 : 30 FPS v2) ; les états route2 36 phases/q0.70 ci-dessus
+restent des acquis historiques, non actifs sur ces WED.
+
 ### 6.2 Paramètres utiles à conserver sans les universaliser
 
 - WTLAKE : référence x4 historique avec contexte périodique 3 × 3/crop central ; wavelet
@@ -501,8 +504,8 @@ Les points ci-dessous restent les contraintes de conception.
 - Distinguer interpolation temporelle, amélioration spatiale et matériau procédural.
 - Ne pas imposer 6→36 aux ressources de 1, 8, 11 ou 12 images.
 - Couvrir les alternatives météo réellement utilisées.
-- Privilégier une interpolation runtime si elle permet de conserver le contrat WED, sous réserve
-  de représenter correctement toutes ses séquences ; ce choix reste à valider.
+- ~~Privilégier une interpolation runtime conservant le contrat WED~~ : tranché par AR1600 v2 —
+  phases réelles stockées (WED réécrit, durée conservée), demi-fondu shader rejeté (flou/pulsation).
 - Si modification WED nécessaire : préserver géométrie/portes/pointeurs, pas seulement la lookup.
 
 ### 9.6 Isolation des changements partagés

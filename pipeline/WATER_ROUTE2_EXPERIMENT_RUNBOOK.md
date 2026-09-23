@@ -9,7 +9,7 @@ lecture ne sont requis.
 | Symptôme | Piste route2 |
 |---|---|
 | Eau propre mais visuellement figée | activer l'identité exacte avec matériau adapté et q mesuré |
-| Cycle de tuiles encore saccadé | 36 phases/15 Hz côté WED/TIS + blend 30 FPS côté renderer |
+| Cycle de tuiles encore saccadé | historique : 36 phases/15 Hz + blend 30 FPS ; actuel : phases réelles 30 FPS sans blend ([`water/TEMPORAL_30FPS_PIPELINE.md`](water/TEMPORAL_30FPS_PIPELINE.md)) |
 | Effet absent | comparer WED, TIS, page, hash et nom GL live à l'entrée du registre |
 | Effet sur une autre carte | restreindre le matcher aux identités/hashes propriétaires |
 | Teinte fausse/intermittente | vérifier la résolution slot PVRZ→nom GL avant les assets |

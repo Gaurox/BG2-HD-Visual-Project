@@ -52,7 +52,8 @@ suivantes. Un reparse local de ces sections est utile uniquement lorsqu'un WED a
 
 - WTPOOL AR1000 : bilinéaire x4, contexte 3×3, crop central, 6→36 phases linéaires à 15 Hz.
 - WTLAKE historique : sortie wavelet périodique déjà validée ; aucune nécessité de la régénérer.
-- WTSEW : 6→36 Apollo-8 validé sur AR0404.
+- WTSEW : 6→36 Apollo-8 validé sur AR0404 (historique ; Apollo rejeté depuis pour les overlays,
+  voir [`water/TEMPORAL_30FPS_PIPELINE.md`](water/TEMPORAL_30FPS_PIPELINE.md)).
 - WTSWAM : paire sèche/pluie isolée validée sur AR1607/AR1800.
 
 ### Runtime plutôt qu'asset

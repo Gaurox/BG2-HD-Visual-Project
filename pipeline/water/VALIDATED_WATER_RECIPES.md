@@ -10,7 +10,7 @@ compatible, pas des recettes universelles.
 |---|---|---|
 | Crash au chargement | nom PVRZ > capacité resref, page mal nommée ou offsets WED non relocalisés | borner les resrefs à 8 octets ; recalculer pagination et offsets WED |
 | Quadrillage/répétition WTPOOL | SeedVR amplifie la trame diagonale du 64×64 stock | bilinéaire x4 non génératif en contexte périodique 3×3, crop central |
-| Eau propre mais figée | voie 1/q0 sans mouvement procédural perceptible | 36 phases/15 Hz + blend renderer 30 FPS ; route2 exacte si souhaitée |
+| Eau propre mais figée | voie 1/q0 sans mouvement procédural perceptible | [30 FPS réels](TEMPORAL_30FPS_PIPELINE.md) (historique : 36 phases/15 Hz + blend) ; route2 exacte si souhaitée |
 | Animation saccadée | seulement 6 frames ou absence d'interpolation temporelle | historique : 6→36 phases + blend 30 FPS ; actuel : [30 FPS réels](TEMPORAL_30FPS_PIPELINE.md) |
 | 30 FPS « non ressenti », pop toutes les 0,4 s | ancres x4 SeedVR image par image (détail ×3), Apollo inadapté au miroitement, demi-fondu shader | interpolation trigonométrique x1 → SeedVR un seul chunk vidéo → 72 phases/4096, source=cible 30 ([AR1600 v2](AR1600_WATER_30FPS_V2_20260923.md)) |
 | Traits noirs/bleus | RGB primaire contaminé ou padding incohérent | greffe RGB bornée depuis le secondaire de même coordonnée ; padding 4 px x4 |
@@ -26,7 +26,7 @@ compatible, pas des recettes universelles.
 
 | Famille | Identité validée | Paramètres utiles | Portée |
 |---|---|---|---|
-| `lake-wtlake` | AR0900, AR0204, AR1600 | WTLAKE x4 périodique ; 36 phases/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | identités exactes |
+| `lake-wtlake` | AR0900, AR0204 (AR1600 : historique, remplacé par la ligne 30 FPS) | WTLAKE x4 périodique ; 36 phases/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | identités exactes |
 | `lake-wtlake` nuit | AR0900N v5 | maîtres nuit, alpha128, raccords, cache WED renouvelé ; q0.70 | AR0900N |
 | `lake-wtlake` nuit | AR0046N v7 | correction runtime slot PVRZ→nom GL | défaut runtime exact |
 | `lake-wtlake` nuit | AR0300N v10 | RGB nocturne ; opacité primaire/secondaire 160 ; q0.70 | choix artistique local |
@@ -36,6 +36,11 @@ compatible, pas des recettes universelles.
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |
 | `swamp-wtswam` | AR1607, AR1800 | paire sèche/pluie isolée ; 36 phases ; matériau 5 ; q0.70 | ces deux cartes |
 | `lake-wtlake` 30 FPS | AR1600 v2 (2026-09-23) | alias `QBLKV0`/`R` ; 72 phases/30 Hz ; trig x1 + SeedVR vidéo ; page 4096 ; force 0 | AR1600 slot1 ; pluie non confirmée |
+
+État installé au 2026-09-23 : AR1000 jour, AR1607, AR0404 utilisent les alias `Q9*` du lot spatial
+([ESSAIS_FAMILLES_X4](ESSAIS_FAMILLES_X4_20260923.md), lookup native, q0) ; leurs lignes 36 phases/q0.70
+ci-dessus sont des recettes acquises mais non installées. Apollo est rejeté pour les overlays
+liquides ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)).
 
 AR0512 et AR1604 restent non qualifiées. Les familles huile, lave, goo et intérieures n'héritent
 pas automatiquement des paramètres lac/piscine/marais.

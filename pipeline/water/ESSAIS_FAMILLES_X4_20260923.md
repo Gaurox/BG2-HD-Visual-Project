@@ -2,10 +2,12 @@
 
 ## État et périmètre
 
-- **Installé et vérifié :147fichiers de payload, dont116override +31surface locale AR3021.
-  QA utilisateur en attente ; jeu non lancé par l'agent.**
-- QA utilisateur : **en attente**. Aucune validation ingame, généralisation de recette ou intégration
-  release déduite de la production, des hashes, de l'installation ou des contrôles CPU.
+- **Installé et vérifié :147fichiers de payload, dont116override +31surface locale AR3021.**
+- QA utilisateur : **rendu spatial accepté globalement** le 2026-09-23
+  ([décision](manifests/liquid-families-spatial-user-qa-20260923-v1.json)) ; météo/jour-nuit non détaillés,
+  fluidité non qualifiée. Aucune intégration release.
+- AR1600 : overlay `Q9LAKE`/`R` remplacé par `QBLKV0`/`R` (30 FPS v2 validé) ; les autres témoins
+  gardent les alias `Q9*` ci-dessous.
 - Run : `maps/water-batches/runs/liquid-families-x4-20260923-v1/` ; abrégé `RUN` ci-dessous.
 - Demande machine : `RUN/request.json` ; overlays : `RUN/overlays-plan.json`.
 - Référence de stratégie : [BASE_PIPELINES_SURFACES_LIQUIDES.md](BASE_PIPELINES_SURFACES_LIQUIDES.md).
