@@ -41,7 +41,7 @@ décor**. Restent ouverts sur des zones déjà validées :
 
 | Sujet | Zones | Entrée |
 |---|---|---|
-| Famille liquide `WT5000A-D` non classée | AR5000, AR5203 | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
+| Famille liquide `WT5000A-D` : AR5000 traitée (chaîne eau standard) ; AR5203 et préflight décor restent | AR5203 (+ préflight AR5000) | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
 | Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
 | Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
 | Contours C provisoires à refondre puis réappliquer | Toutes familles/maps eau traitées | [WATER-006](#water-006--refonte-globale-des-contours-c) |
@@ -114,9 +114,12 @@ ne sont pas réconciliés par une décision explicite.
   installés (stock x1). Runs `maps/AR5000|AR5203/runs/seedvr2-7b-int8-none-grid-2x3-x4`, builds installés.
 - QA 2026-09-21 : l'utilisateur valide **l'upscaling x4** des deux zones (`validated-installed`,
   enregistrées en candidats release). Cette acceptation ne porte pas sur l'eau.
-- Reste ouvert : classification dans `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py`
-  (le préflight de ces deux zones bloque toujours sans `--allow-blocked-test`), matériau route2 dédié,
-  rive/contour, animation de la rivière sous la base x4, pause/reprise.
+- 2026-09-25 : AR5000 traitée par la chaîne eau standard (famille `brown_flow`, A/B/C validés ;
+  [TEMPORAL_30FPS_PIPELINE](water/TEMPORAL_30FPS_PIPELINE.md)) : animation 30 FPS, bases rendues à l'alpha
+  natif, contours. Raccord vanilla hors tore conservé sur 5 cellules (41–45, rangées 33/34).
+- Reste ouvert : AR5203 (témoin du lot, alias `Q9*` : reprise = décision utilisateur) ; classification dans
+  `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py` (le préflight décor bloque toujours
+  sans `--allow-blocked-test`) ; matériau route2 dédié (non requis : q0 validé).
 
 ## WATER-006 — Refonte globale des contours C
 

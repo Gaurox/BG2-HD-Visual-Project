@@ -79,6 +79,20 @@ class PlanWaterMapTests(unittest.TestCase):
         for key in ("method", "keyframes", "cycle_seconds", "approved_strength"):
             self.assertNotIn(key, rain)
 
+    def test_brown_flow_contract_from_ar5000_is_written_only_on_the_dry_group(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        temporal = next(f for f in standard["families"] if f["id"] == "brown_flow")["temporal"]
+        refs = {r: "YFTST" + r[-1] for r in ("WT5000A", "WT5000B", "WT5000C", "WT5000D")}
+        dry = p.temporal_plan_group("brown_flow", refs, temporal)
+        rain = p.temporal_plan_group("brown_flow_rain", {r + "R": a + "R" for r, a in refs.items()},
+                                     temporal, "brown_flow")
+        self.assertEqual((dry["method"], dry["cycle_seconds"]), ("seedvr-torus", 4.2667))
+        self.assertEqual({k: dry["torus"][k] for k in ("heal_gain", "periodic_sigma_x4", "deridge_band_x1",
+                                                       "max_non_torus_share", "temporal_harmonics")},
+                         {"heal_gain": 0.0, "periodic_sigma_x4": 2.0, "deridge_band_x1": 2,
+                          "max_non_torus_share": 0.01, "temporal_harmonics": 12})
+        self.assertNotIn("torus", rain)
+
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())
         self.assertEqual(first, p.make_alias("AR0404", 1, "S", set()))

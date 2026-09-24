@@ -406,7 +406,7 @@ Preuves : `HD/override/WTSEW.TIS`, `HD/override/WTSWAM.TIS`, WED résolus depuis
 | AR0300N | Exception artistique160 appariée assets/runtime ; pas une nouvelle valeur native universelle |
 | WTOIL | Acquis du remplacement procédural historique ; migration vers composition native à valider |
 | AR2102 / AR3024 | Aliasing eau encore signalé / revue eau-huile différée dans le suivi |
-| WT5000A–D | Décors AR5000/5203 x4 acceptés ; overlays stock, eau explicitement hors de cette validation |
+| WT5000A–D | AR5000 : chaîne eau standard A/B/C validée 2026-09-25 (famille `brown_flow`) ; AR5203 : témoin du lot, reprise = décision utilisateur |
 | AR6008 | Cellule centrale WTSWAM non réparée ; acceptation décor ne prouve pas traitement eau |
 | AR5200 | Réserve sur une portion eau distincte des overlays lave ; resref/cellule à identifier |
 | Acide/saumure | Pas de famille chimique démontrée par les noms actifs ; qualifier structure puis matériau |

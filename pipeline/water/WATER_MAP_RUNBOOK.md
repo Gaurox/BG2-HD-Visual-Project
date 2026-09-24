@@ -130,6 +130,11 @@ python pipeline/scripts/record_water_decision.py qa --area ARxxxx --kind contour
 
 `--result validated-with-reserve --reserve "<réserve>"` ou `rejected` selon la réponse. Mettre à jour la ligne
 de la map dans le tableau d'état de TEMPORAL_30FPS_PIPELINE.md / CONTOUR_MATTE_PIPELINE.md.
+Refaire les bases A alors que C est installé (cas AR5000) : reconstituer les pages d'avant A (sauvegarde A,
+sinon sauvegarde C, sinon live ; vérifier l'égalité au build x4 de la carte) dans une racine de jeu temporaire,
+lancer `build_liquid_base_x4_trial.py --game-root <racine temporaire> --plan <run A>/request.json --run` vers un
+nouveau run, installer ses pages, puis reconstruire C depuis le live. Le reçu `install` de ces bases est refusé une
+fois C installé (pages remplacées) : consigner le run et la sauvegarde dans la note du reçu C.
 QA de A enregistrée après B (B réécrit la WED) : ajouter `--superseded-by <reçu installed de B>` ; après B **et** C
 (pages de base réécrites), répéter l'option : `--superseded-by <B> --superseded-by <C>` (AR0503).
 
