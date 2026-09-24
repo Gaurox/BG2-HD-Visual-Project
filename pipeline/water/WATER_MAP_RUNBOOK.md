@@ -44,6 +44,8 @@ provisoire : continuer en l'état, puis reconstruire/réinstaller toutes les map
 AR5200 valide `lava` B → C (2026-09-24) : A seulement **construit** (contextes x1 + topologie, non installé ;
 sa WED bilinéaire est remplacée par B), B `seedvr-torus` 12 clés / 216 phases / 7,2 s, q0 matériau 1,
 C provisoire validé avec les mêmes réserves que les autres familles.
+AR0503 valide `oil` A → B → C (2026-09-24) : A SeedVR x4 (master secondaire d'un run direct), B `seedvr-torus`
+1×1 + harmoniques ≤ 9 + égalisation (la v1 sans filtres « grouillait »), C provisoire avec réserve.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|
@@ -126,7 +128,8 @@ python pipeline/scripts/record_water_decision.py qa --area ARxxxx --kind contour
 
 `--result validated-with-reserve --reserve "<réserve>"` ou `rejected` selon la réponse. Mettre à jour la ligne
 de la map dans le tableau d'état de TEMPORAL_30FPS_PIPELINE.md / CONTOUR_MATTE_PIPELINE.md.
-QA de A enregistrée après B (B réécrit la WED) : ajouter `--superseded-by <reçu installed de B>`.
+QA de A enregistrée après B (B réécrit la WED) : ajouter `--superseded-by <reçu installed de B>` ; après B **et** C
+(pages de base réécrites), répéter l'option : `--superseded-by <B> --superseded-by <C>` (AR0503).
 
 ## Retour arrière (jeu fermé)
 

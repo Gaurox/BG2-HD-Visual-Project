@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0503",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T19:39:50+00:00",
+  "run": "maps/water-batches/runs/ar0503-water-30fps-20260924-v2",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0503-water-30fps-20260924-v2/candidate/manifest.json",
+    "sha256": "035CEE07A571F6D5A3399A96BE35AF41290AFABFA760537723BDBE50BE74167B"
+  },
+  "files": {
+    "AR0503.WED": {
+      "sha256": "186808033E058ECC27EBFCE33B2DCF407271DCFC248301C63350F594B1A85D07",
+      "bytes": 5404
+    },
+    "YFOL2A.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YFOL2AR.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YOL2A00.PVRZ": {
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C",
+      "bytes": 1256542
+    },
+    "YOL2AR00.PVRZ": {
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C",
+      "bytes": 1256542
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0503-water-30fps-20260924-v2/override/override-backup-20260924-213944/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0503-water-30fps-20260924-v2/build.json",
+    "sha256": "6452CF51905C5FBBA2B2B40373807616F656766BDFA30ADD549B2D4D12C4220A"
+  },
+  "runtime": {
+    "receipt": "backups/water/ar0503-water-30fps-20260924-v2/runtime/install-backup.json",
+    "dll_sha256": "6681039FF548CE673E8C7C61DC23B1A6C104E2ED02697476A8476B731BCC1C9B",
+    "registry": {
+      "path": "pipeline/water/requests/ar0503-water-30fps-20260924-v2/registry-v3.json",
+      "sha256_lf": "F92FBD42DC5E31A80D7511D7A7100810439EA236594AFB7913C517286D66FE5B"
+    }
+  },
+  "note": "v1 + temporal low-pass (harmonics<=9) + detail equalisation; same SeedVR inference as v1"
+}

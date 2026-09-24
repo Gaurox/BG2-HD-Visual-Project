@@ -89,6 +89,27 @@ class TemporalRecipeTests(unittest.TestCase):
         self.assertLess(t.border_step_ratio(periodic, 64)[0], 1.5)
         self.assertAlmostEqual(periodic.mean(), ramp.mean(), places=6)
 
+    def test_temporal_lowpass_keeps_interpolated_motion_and_drops_latent_cadence(self):
+        rng = np.random.default_rng(5)
+        keys = rng.uniform(0, 255, (6, 8, 8, 3))
+        motion = t.trig_interpolate(keys, 72)
+        cadence = np.zeros_like(motion)
+        cadence[::4] = 5.0                          # SeedVR 4-frame latent pattern
+        cadence -= cadence.mean(axis=0)             # its mean is not motion
+        noisy = motion + cadence + rng.normal(0, 3, motion.shape)
+        filtered = t.temporal_lowpass(noisy, 9)
+        np.testing.assert_allclose(t.temporal_lowpass(motion, 9), motion, atol=1e-9)
+        self.assertLess(np.abs(filtered - motion).mean(), 0.5 * np.abs(noisy - motion).mean())
+        profile = t.loop_metrics(filtered)["cadence4"]
+        self.assertLess(max(profile) - min(profile), 0.1)
+
+    def test_equalize_detail_flattens_sharpness_pulse(self):
+        rng = np.random.default_rng(6)
+        base = rng.normal(128, 20, (64, 64, 3))
+        frames = np.stack([128 + (base - 128) * (0.85 + 0.3 * (i % 2)) for i in range(8)])
+        self.assertGreater(t.loop_metrics(frames)["sharpness_max_min"], 1.3)
+        self.assertLess(t.loop_metrics(t.equalize_detail(frames))["sharpness_max_min"], 1.1)
+
     def test_torus_tiles_margin_reads_the_neighbour_and_survives_export(self):
         motif = np.zeros((512, 512, 4), np.uint8)
         motif[..., 3] = 255

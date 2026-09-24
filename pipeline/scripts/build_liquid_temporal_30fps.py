@@ -12,8 +12,8 @@ Recipe (AR1600 v2, validated ingame 2026-09-23):
 2. x4: ``seedvr`` = SeedVR 7B on the whole wrapped sequence as one temporal chunk
    (consistent detail), loop seam = variance-preserving crossfade of the two renditions;
    ``bilinear`` = periodic bilinear x4 per phase.  Same edge collar as the spatial build.
-   ``seedvr-torus`` (multi-tile groups whose WED adjacencies are exactly the torus of their
-   layout, e.g. lava WTLAVA-D): native tile borders healed at x1 before interpolation
+   ``seedvr-torus`` (groups whose WED adjacencies are exactly the torus of their layout:
+   lava WTLAVA-D, or any 1x1 tile instead of the blurring edge collar): native tile borders healed at x1 before interpolation
    (SeedVR otherwise sharpens them into a grid), SeedVR on the motif plus a wrapped margin,
    periodic + smooth decomposition of each x4 phase, atlas margins read the torus neighbour.
 3. One 4096 BC3 page per resource, WED slot -> isolated alias, sequential lookup of the
@@ -55,7 +55,12 @@ LOOP_CROSSFADE = 16
 CURRENT_REGISTRY = ROOT / 'pipeline/water/route2-registry-current.json'
 SEEDVR_SEED = 959948902156062
 TORUS_DEFAULTS = {'heal_band_x1': 4, 'heal_sigma_x1': 3.0, 'heal_gain': 0.8, 'seedvr_margin_x1': 32,
-                  'periodic_sigma_x4': 8.0}
+                  'periodic_sigma_x4': 8.0,
+                  # Off by default (AR5200 lava validated without): loop harmonics kept after SeedVR
+                  # (0 = off) and per-phase detail equalisation.
+                  'temporal_harmonics': 0, 'equalize_detail': False,
+                  # Earlier run group folder whose SeedVR output is reused after byte checks.
+                  'reuse_seedvr_from': None}
 
 
 # --- pure recipe ---------------------------------------------------------------
@@ -181,6 +186,36 @@ def periodic_component(image, sigma=0.0):
     smooth = np.fft.fft2(v, axes=(0, 1)) / denominator[..., None]
     smooth[0, 0] = 0
     return u - np.real(np.fft.ifft2(smooth, axes=(0, 1)))
+
+
+def temporal_lowpass(frames, harmonics):
+    """Keep loop harmonics <= ``harmonics`` along axis 0.  The x1 trig interpolation of N
+    keys carries harmonics <= N/2 only; what SeedVR adds above is boiling detail and the
+    4-frame latent cadence (AR0503 oil: 65 % of the phase-to-phase change)."""
+    spectrum = np.fft.fft(frames, axis=0)
+    spectrum[harmonics + 1:frames.shape[0] - harmonics] = 0
+    return np.real(np.fft.ifft(spectrum, axis=0))
+
+
+def equalize_detail(frames, sigma=3.0, limits=(0.8, 1.25)):
+    """Same high-frequency detail level on every phase (median of the loop), per channel."""
+    split = [split_detail(f, sigma) for f in frames]
+    levels = np.array([d.std(axis=(0, 1)) for _, d in split])
+    target = np.median(levels, axis=0)
+    return np.stack([low + detail * np.clip(target / np.maximum(level, 1e-6), *limits)
+                     for (low, detail), level in zip(split, levels)])
+
+
+def loop_metrics(frames):
+    """Pre-BC3 loop check: step max/median, sharpness max/min, 4-phase cadence (SeedVR latent)."""
+    steps = np.array([np.abs(frames[(i + 1) % len(frames)] - frames[i]).mean() for i in range(len(frames))])
+    sharp = np.array([sharpness(f) for f in frames])
+    cadence = [float(steps[k::4].mean() / np.median(steps)) for k in range(4)]
+    return {'step_max_median': round(float(steps.max() / np.median(steps)), 3),
+            'step_median': round(float(np.median(steps)), 3),
+            'sharpness_max_min': round(float(sharp.max() / sharp.min()), 3),
+            'sharpness_median': round(float(np.median(sharp)), 3),
+            'cadence4': [round(c, 3) for c in cadence]}
 
 
 def torus_tiles(motif, layout, pad=PAD):
@@ -364,7 +399,7 @@ def prepare(plan_path, output, game):
         torus = None
         if method == 'seedvr-torus':
             used = {(a['a'], a['b'], a['axis']) for a in prepared['topology']['adjacencies']}
-            if len(group['layout']) < 2 or not used <= torus_pairs(group['layout']):
+            if not used <= torus_pairs(group['layout']):     # 1x1: the tile tiles itself
                 raise ValueError(f'{gid}: WED adjacencies are not the torus of the layout: '
                                  f'{sorted(used - torus_pairs(group["layout"]))}')
             torus = {**TORUS_DEFAULTS, **(dry_record['torus'] if dry_record else {}), **entry.get('torus', {})}
@@ -486,6 +521,25 @@ def upscale(output, frames_per_chunk=None, overlap=0):
             wrapped = folder / 'seedvr-in'
             raw = folder / 'seedvr-out'
             prompt = seedvr_prompt(wrapped, f"bg2_water/{output.name}-{group['id']}", frames_per_chunk, overlap)
+            source = torus['reuse_seedvr_from'] and resolve(torus['reuse_seedvr_from'])
+            if source and not wrapped.exists():
+                # Reuse an earlier inference only if its inputs and graph are byte-identical.
+                wrapped.mkdir()
+                for k, i in enumerate(order):
+                    Image.fromarray(rgb(folder / f'x1/frame_{i:03d}.png')[window]).save(wrapped / f'frame_{k:03d}.png')
+                theirs = read(source / 'seedvr-prompt.json')
+                ours = copy.deepcopy(prompt)
+                for p in (theirs, ours):
+                    p['1']['inputs']['directory'] = p['11']['inputs']['filename_prefix'] = None
+                same = theirs == ours and all(
+                    np.array_equal(rgb(wrapped / f'frame_{k:03d}.png'), rgb(source / f'seedvr-in/frame_{k:03d}.png'))
+                    for k in range(len(order)))
+                if not same or len(list((source / 'seedvr-out').glob('frame_*.png'))) != len(order):
+                    raise ValueError(f"{group['id']}: {source} is not the same SeedVR inference")
+                shutil.copytree(source / 'seedvr-out', raw)
+                shutil.copy2(source / 'seedvr-run.json', folder / 'seedvr-run.json')
+                save(folder / 'seedvr-prompt.json', prompt)
+                print(f"{group['id']}: SeedVR output reused from {source}", flush=True)
             if (folder / 'seedvr-prompt.json').is_file() and len(list(raw.glob('frame_*.png'))) == len(order):
                 # Resume post-processing: same inputs, same prompt, completed download.
                 if read(folder / 'seedvr-prompt.json') != prompt:
@@ -521,12 +575,21 @@ def upscale(output, frames_per_chunk=None, overlap=0):
                 wrap_before.append(border_step_ratio(tile, side) + border_step_ratio(tile, TILE))
                 wrap_after.append(border_step_ratio(periodic, side) + border_step_ratio(periodic, TILE))
                 contexts[phase] = periodic
+            loop = np.stack([contexts[p] for p in range(phases)])
+            before = loop_metrics(loop)
+            if torus['temporal_harmonics']:
+                loop = temporal_lowpass(loop, torus['temporal_harmonics'])
+            if torus['equalize_detail']:
+                loop = equalize_detail(loop)
+            contexts = dict(enumerate(loop))
             save(folder / 'seedvr.json', {'prompt_id': prompt_id, 'wrapped_order': order,
                  'crossfade_phases': head, 'frames_per_chunk': frames_per_chunk, 'overlap': overlap,
                  'window_x1': [motif - margin, 2 * motif + margin], 'torus': torus,
                  'border_step_ratio_fields': ['wrap_x', 'wrap_y', 'tile_x', 'tile_y'],
                  'border_step_ratio_before_periodic': np.mean(wrap_before, axis=0).tolist(),
-                 'border_step_ratio_after_periodic': np.mean(wrap_after, axis=0).tolist()})
+                 'border_step_ratio_after_periodic': np.mean(wrap_after, axis=0).tolist(),
+                 'loop_before_temporal_filters': before, 'loop_after_temporal_filters': loop_metrics(loop)})
+            print(f"{group['id']}: loop {before} -> {loop_metrics(loop)}", flush=True)
             for phase in range(phases):
                 motif_rgba = np.dstack([np.clip(np.rint(contexts[phase]), 0, 255).astype(np.uint8),
                                         alpha_x4[center]])

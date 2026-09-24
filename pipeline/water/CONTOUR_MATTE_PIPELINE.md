@@ -63,7 +63,7 @@ donc compatible avec l'eau 30 FPS ([TEMPORAL_30FPS_PIPELINE.md](TEMPORAL_30FPS_P
 
 Rapport : [`manifests/contour-matte-survey-20260923-v1.json`](manifests/contour-matte-survey-20260923-v1.json).
 Instantané historique du survey 2026-09-23. C est désormais installé sur AR1600, AR2100, AR0408, AR0703,
-AR0500, AR0500N et AR5200 ; toutes ces installations restent provisoires au niveau du standard global. `a` ≠ 128 :
+AR0500, AR0500N, AR5200 et AR0503 ; toutes ces installations restent provisoires au niveau du standard global. `a` ≠ 128 :
 composition de paire non encore vue en jeu.
 
 | Famille | Map | a | Paires | Sans secondaire | Ignorées | Prêt |
@@ -73,7 +73,7 @@ composition de paire non encore vue en jeu.
 | WTPOOL | AR1000 | 128 | 37 | 0 | 0 | oui |
 | WTSWAM | AR1000N / AR1607 / AR1800 | 128 / **100** / 128 | 37 / 348 / 94 | 0 / 525 / 7 | 0 / 1 / 0 | oui |
 | WTSEW | AR0404 / AR2100 | 128 | 138 / 169 | 2 / 39 | 0 | oui |
-| WTOIL | AR0413 | 128 | 227 | 349 | 0 | oui (contrat alpha0 historique à surveiller) |
+| WTOIL | AR0413 / AR0503 | 128 | 227 / 67 | 349 / 84 | 0 | oui ; **AR0503 installé** ; AR0413 : contrat alpha0 historique à surveiller |
 | WTLAKA–D | AR3000 / AR6300 | 128 / **160** | 137 / 36 | 184 / 0 | 1 / 0 | oui |
 | WTLAVA–D | AR0011 / AR5200 | 128 | 101 / 287 | 0 | 0 / 5 | oui ; **AR5200 installé** |
 | WT5000A–D | AR5203 / AR5000 | 128 | 267 / 402 | 366 / 321 | 1 / 0 | oui |
@@ -86,6 +86,7 @@ composition de paire non encore vue en jeu.
 | AR0408 | WTPOOL | `ar0408-contour-matte-20260923-v1` | **à revoir** (utilisateur, 2026-09-23) — reçu `ar0408-contour-installed-20260923-v1.json` encore installé | défaut non décrit : demander ce qui ne va pas avant tout nouvel essai `-v2` |
 | AR0703 | WTPOOL | `ar0703-contour-matte-20260923-v1` | validée — `ar0703-contour-user-qa-20260923-v1.json` | 10 paires ; alpha 128 |
 | AR0500 | WTSWAM | `ar0500-contour-matte-20260924-v1` | validation jour historique — `ar0500-contour-user-qa-20260924-v1.json` | supersédée comme standard par la décision globale du 2026-09-24 |
+| AR0503 | WTOIL | `ar0503-contour-matte-20260924-v1` | validée avec réserve — `ar0503-contour-user-qa-20260924-v1.json` | 67 paires, 84 cellules sans secondaire ; construit sur les pages réparées par A ; mêmes réserves que les autres familles |
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
 

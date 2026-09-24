@@ -53,6 +53,27 @@ class RecordWaterDecisionTests(unittest.TestCase):
             r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override,
                         superseded_by=later)
 
+    def test_qa_accepts_files_split_across_several_later_receipts(self):
+        (self.override / "AR0404.WED").write_bytes(b"wed")
+        (self.run / "override-candidate/manifest.json").write_text(json.dumps({"files": {
+            n: {"sha256": r.sha(self.override / n)} for n in ("A040401.PVRZ", "AR0404.WED")}}))
+        record = r.install_record("AR0404", "spatial", self.run, self.override, self.backup)
+        selection = Path(self.tmp.name) / "sel.json"
+        selection.write_text(json.dumps(record))
+        receipts = []
+        for name, data in (("AR0404.WED", b"wed-b"), ("A040401.PVRZ", b"page-c")):
+            (self.override / name).write_bytes(data)
+            receipt = Path(self.tmp.name) / f"{name}.json"
+            receipt.write_text(json.dumps({"area": "AR0404", "files": {
+                name: {"sha256": r.sha(self.override / name)}}}))
+            receipts.append(receipt)
+        with self.assertRaises(SystemExit):
+            r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override,
+                        superseded_by=receipts[:1])
+        qa = r.qa_record("AR0404", "spatial", selection, "ok", "validated", self.override,
+                         superseded_by=receipts)
+        self.assertEqual(len(qa["superseded_by"]), 2)
+
     def test_refuses_bytes_that_are_not_live(self):
         (self.override / "A040401.PVRZ").write_bytes(b"other")
         with self.assertRaises(SystemExit):

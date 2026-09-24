@@ -1,7 +1,8 @@
 # Eau WED à 30 FPS réels — procédé commun aux familles
 
 Recette **validée ingame** sur AR1600 (`lake`), AR0408/AR0703 (`pool`), AR2100 (`sewage`) et
-AR0500/AR0500N (`swamp`, sec observé ; pluie non observée), AR5200 (`lava`, méthode `seedvr-torus`).
+AR0500/AR0500N (`swamp`, sec observé ; pluie non observée), AR5200 (`lava`, méthode `seedvr-torus`),
+AR0503 (`oil`, `seedvr-torus` 1×1 + filtres temporels).
 Référence fondatrice AR1600 :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
 QA [`manifests/ar1600-water-30fps-user-qa-20260923-v2.json`](manifests/ar1600-water-30fps-user-qa-20260923-v2.json).
@@ -103,7 +104,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | pool WTPOOL | AR0408 | 6 | 6 (0 : AR1004, AR1601, AR2012) | **2,4 s figé** | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
 | swamp WTSWAM | AR0500 / AR0500N | 6 | 6 | **2,4 s figé** | 72 | seedvr | non | **validé ingame sec jour+nuit**, q0,70 matériau 5 sec+pluie ; pluie non observée |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
-| oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |
+| oil WTOIL | AR0503 | 6 | 6 | 2,4 s natif | 72 | seedvr-torus + filtres | non | **validé ingame AR0503** ; AR0413 (contrat alpha0 historique) hors standard |
 | lake_teal WTLAKA–D | AR3000 | 8 | 8/0/0/0 | explicite (8×8/15 = 4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM chunk unique |
 | brown_flow WT5000A–D | AR5203 | 8 | 8/0/0/0 | explicite (4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM |
 | lava WTLAVA–D | AR5200 | 12 (`keyframes`, pas la lookup `[0…9,11]`) | 11/11/0/0 | **7,2 s figé** | 216 | seedvr-torus | non | **validé ingame AR5200** ; autres maps lave : tore à vérifier |
@@ -119,11 +120,14 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR0500 | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500-water-30fps-20260924-v1` | validée jour — `ar0500-temporal-30fps-user-qa-20260924-v1.json` | ratios 1,20/1,43 sec et 1,37/1,34 pluie acceptés pour QA ingame ; pluie non confirmée |
 | AR0500N | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500n-water-30fps-20260924-v1` | validée nuit — `ar0500n-temporal-30fps-user-qa-20260924-v1.json` | mêmes ratios hors seuil acceptés avant installation ; pluie non confirmée |
 | AR5200 | lava | 220 / 7,3 s, bilinéaire, lookup 11 | `ar5200-water-30fps-20260924-v1` | **rejetée** — `ar5200-temporal-30fps-user-qa-20260924-v1.json` | lag 12 → 2,8 FPS : scan DLL par draw (corrigé, voir plus bas) |
+| AR0503 | oil | 72 / 2,4 s, `seedvr-torus`, q0 | `ar0503-water-30fps-20260924-v1` | remplacée par v2 (jugée « pas terrible ») | bouillonnement SeedVR + cadence 4 phases 0,73 ; netteté 1,34 |
+| AR0503 | oil | 72 / 2,4 s, `seedvr-torus` + harmoniques ≤ 9 + égalisation, q0 | `ar0503-water-30fps-20260924-v2` | validée — `ar0503-temporal-30fps-user-qa-20260924-v1.json` | même inférence que v1 ; pas médian 1,02 → 0,42, netteté 1,34 → 1,15 ; pluie non observée |
 | AR5200 | lava | 216 / 7,2 s, `seedvr-torus`, q0 | `ar5200-lava-torus-30fps-20260924-v1` | validée — `ar5200-temporal-30fps-user-qa-20260924-v2.json` | pas max/médian 1,53 (fondu de boucle) accepté ; 60 FPS mesurés ; pluie non observée |
 
-## Méthode `seedvr-torus` (pavages A–D, lave AR5200)
+## Méthode `seedvr-torus` (pavages A–D, lave AR5200 ; tuile unique, huile AR0503)
 
-Condition : adjacences WED ⊆ tore du layout (`torus_pairs`), sinon `prepare` refuse. Mesures AR5200 :
+Condition : adjacences WED ⊆ tore du layout (`torus_pairs`), sinon `prepare` refuse ; un layout 1×1 remplace
+le collier de bord (bande lissée ~10 px par tuile, détail horizontal < 0,6 × médiane sur AR0503). Mesures AR5200 :
 raccords natifs x1 1,16/1,13 × pas médian ; SeedVR sur les 12 clés brutes les amplifiait en grille (1,56).
 
 | Étape | Paramètre (`TORUS_DEFAULTS`) | Résultat AR5200 |
@@ -136,6 +140,18 @@ raccords natifs x1 1,16/1,13 × pas médian ; SeedVR sur les 12 clés brutes les
 Plan : `method: seedvr-torus`, `keyframes`, `cycle_seconds` sur le groupe sec (écrits par `plan_water_map.py`
 depuis le standard) ; la pluie hérite. Pluie à clés identiques : sortie SeedVR du sec réutilisée.
 Reprise post-traitement sans ré-inférence : `seedvr-prompt.json` identique + `seedvr-out` complet.
+Nouveau run sur la même inférence : `torus.reuse_seedvr_from` = dossier groupe d'un run antérieur ; refus si
+entrées `seedvr-in` ou graphe (hors chemins) diffèrent.
+
+Filtres de boucle optionnels (off par défaut ; activés pour l'huile par le standard) :
+
+| Paramètre | Effet | Mesure AR0503 v1 → v2 |
+|---|---|---|
+| `temporal_harmonics` (1,5 × clés) | FFT temporelle : garde les harmoniques de boucle ≤ n ; la trig x1 n'en porte que ≤ clés/2, le reste = bouillonnement SeedVR + cadence latente 4 images | pas médian 1,02 → 0,42 ; cadence 1,05/1,03/1,07/0,73 → 1,05/1,06/1,03/1,02 |
+| `equalize_detail` | détail haute fréquence (σ 3) de chaque phase ramené à la médiane (gain 0,8–1,25) | netteté max/min 1,34 → 1,15 |
+
+`seedvr.json` : `loop_before_temporal_filters` / `loop_after_temporal_filters`. Autres familles SeedVR (lac, égouts,
+marais, lave) : même symptôme probable, non mesuré ni requalifié.
 
 ## Runtime : correspondance overlay par draw
 

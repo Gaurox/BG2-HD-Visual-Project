@@ -1,0 +1,29 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar0503-water-x4-20260924-v1",
+  "wed": "AR0503",
+  "selection": "maps/water-batches/runs/ar0503-water-x4-20260924-v1/selection.json",
+  "source_wed": "maps/water-batches/runs/ar0503-water-x4-20260924-v1/override-candidate/AR0503.WED",
+  "groups": [
+    {
+      "id": "oil",
+      "aliases": {
+        "WTOIL": "YFOL2A"
+      },
+      "material_id": 1,
+      "method": "seedvr-torus",
+      "torus": {
+        "temporal_harmonics": 9,
+        "equalize_detail": true,
+        "reuse_seedvr_from": "maps/water-batches/runs/ar0503-water-30fps-20260924-v1/oil"
+      }
+    },
+    {
+      "id": "oil_rain",
+      "aliases": {
+        "WTOILR": "YFOL2AR"
+      },
+      "material_id": 1,
+      "rain_of": "oil"
+    }
+  ]
+}

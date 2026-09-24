@@ -2,7 +2,7 @@
   "schema": "bg2-liquid-family-standard-v1",
   "version": 1,
   "date": "2026-09-24",
-  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200. Current C remains provisionally usable pending a global redesign and reapplication.",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200; oil A/B on AR0503. Current C remains provisionally usable pending a global redesign and reapplication.",
   "sources": {
     "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
     "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
@@ -19,6 +19,11 @@
     },
     "swamp_temporal_qa_day": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json",
     "swamp_temporal_qa_night": "pipeline/water/manifests/ar0500n-temporal-30fps-user-qa-20260924-v1.json",
+    "oil_full_chain_qa": {
+      "spatial": "pipeline/water/manifests/ar0503-spatial-user-qa-20260924-v1.json",
+      "temporal": "pipeline/water/manifests/ar0503-temporal-30fps-user-qa-20260924-v1.json",
+      "contour": "pipeline/water/manifests/ar0503-contour-user-qa-20260924-v1.json"
+    },
     "lava_full_chain_qa": {
       "temporal": "pipeline/water/manifests/ar5200-temporal-30fps-user-qa-20260924-v2.json",
       "contour": "pipeline/water/manifests/ar5200-contour-user-qa-20260924-v1.json"
@@ -64,8 +69,14 @@
                  "reserve": "current matte accepted as-is; CONTOUR-NET adaptation declined"},
      "witness": "AR2100"},
     {"id": "oil", "overlays": ["WTOIL"], "layout": [["WTOIL"]], "spatial_method": "seedvr",
-     "temporal": {"material_id": 1, "cycle": "native", "status": "proposal"},
-     "witness": "AR0413"},
+     "spatial_status": "validated-ingame-AR0503",
+     "temporal": {"material_id": 1, "method": "seedvr-torus", "cycle": "native",
+                  "torus": {"temporal_harmonics": 9, "equalize_detail": true},
+                  "status": "validated-ingame-AR0503",
+                  "why_method": "the edge collar left a ~10 px smeared band on every 64 px tile border; seedvr-torus 1x1 joins without blur (wrap 1.22/0.94)",
+                  "why_filters": "WTOIL keys are shimmer (key-to-key corr 0.65-0.76): 65 % of SeedVR phase-to-phase change was boiling detail plus the 4-frame latent cadence (0.73); harmonics <= 9 (1.5 x keys) + detail equalisation: step median 1.02 -> 0.42, cadence flat, sharpness max/min 1.34 -> 1.15 (AR0503 v1 -> v2)"},
+     "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-with-reserve-AR0503-current-C-provisional"},
+     "witness": "AR0503-A-B-C;AR0413-historical"},
     {"id": "lake_teal", "overlays": ["WTLAKA", "WTLAKB", "WTLAKC", "WTLAKD"],
      "layout": [["WTLAKA", "WTLAKB"], ["WTLAKC", "WTLAKD"]], "spatial_method": "seedvr",
      "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",

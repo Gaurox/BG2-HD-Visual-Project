@@ -161,6 +161,30 @@
           "qa": "pipeline/water/manifests/ar5200-contour-user-qa-20260924-v1.json"
         }
       }
+    },
+    {
+      "area": "AR0503",
+      "family": "oil",
+      "overall": "spatial-temporal-validated-contour-provisional",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0503-spatial-installed-20260924-v1.json",
+          "qa": "pipeline/water/manifests/ar0503-spatial-user-qa-20260924-v1.json",
+          "note": "WED superseded by B v2, pages A050303-05 by C"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0503-temporal-30fps-installed-20260924-v2.json",
+          "qa": "pipeline/water/manifests/ar0503-temporal-30fps-user-qa-20260924-v1.json",
+          "note": "v1 (no temporal filters) replaced after user feedback"
+        },
+        "contour": {
+          "status": "validated-ingame-with-reserve-currently-provisional",
+          "installed": "pipeline/water/manifests/ar0503-contour-installed-20260924-v1.json",
+          "qa": "pipeline/water/manifests/ar0503-contour-user-qa-20260924-v1.json"
+        }
+      }
     }
   ],
   "release": "not-requested"

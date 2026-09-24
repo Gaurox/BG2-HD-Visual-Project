@@ -55,7 +55,7 @@ def temporal_plan_group(family_id, aliases, temporal, rain_of=None):
         if 'approved_rain_strength' in temporal:
             group['approved_strength'] = temporal['approved_rain_strength']
         return group
-    for key in ('cycle_seconds', 'approved_strength', 'method', 'keyframes'):   # rain inherits
+    for key in ('cycle_seconds', 'approved_strength', 'method', 'keyframes', 'torus'):   # rain inherits
         if key in temporal:
             group[key] = temporal[key]
     return group
@@ -183,7 +183,11 @@ def secondary_master(area, explicit):
         path = Path(explicit)
         return (path if path.is_absolute() else ROOT / path), []
     base = area.rstrip('N') if area.endswith('N') else area
-    found = sorted((ROOT / 'maps' / base / 'runs').glob('*/tuiles-secondaires/03_assemble/*.png'))
+    runs = ROOT / 'maps' / base / 'runs'
+    found = sorted(runs.glob('*/tuiles-secondaires/03_assemble/*.png'))
+    # Direct (single-pass) runs have no assembly step: their x4 master is the upscale output.
+    found += sorted(p for p in runs.glob('*/tuiles-secondaires/01_upscale/*.png')
+                    if not (p.parents[1] / '03_assemble').is_dir())
     night = [p for p in found if any(w in p.as_posix().lower() for w in ('nuit', 'night'))]
     found = night if area.endswith('N') else [p for p in found if p not in night]
     return (found[0] if len(found) == 1 else None), found

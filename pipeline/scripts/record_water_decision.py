@@ -94,20 +94,26 @@ def install_record(area, kind, run, override, backup, runtime=None, manifest=Non
 
 def qa_record(area, kind, selection, quote, result, override, reserve=None, weather=None,
               superseded_by=None):
-    """``superseded_by``: later receipt of the same area that replaced some selection files
-    (A -> B rewrites the WED); each replaced file must be live from that receipt."""
+    """``superseded_by``: later receipt(s) of the same area that replaced some selection files
+    (A -> B rewrites the WED, C rewrites base pages); each replaced file must be live from the
+    first later receipt that lists it."""
     selection = Path(selection)
     installed = json.loads(selection.read_text(encoding='utf-8-sig'))
     if installed.get('area', area).upper() != area.upper():
         raise SystemExit('selection belongs to another area')
     bad = live_mismatches(installed['files'], override) if 'files' in installed else []
-    later = None
-    if bad and superseded_by:
-        later = Path(superseded_by)
+    laters = [Path(p) for p in ([superseded_by] if isinstance(superseded_by, (str, Path))
+                                else superseded_by or [])]
+    used = []
+    for later in laters:
+        if not bad:
+            break
         newer = json.loads(later.read_text(encoding='utf-8-sig'))
         if newer.get('area', '').upper() != area.upper() or later.resolve() == selection.resolve():
             raise SystemExit('--superseded-by must be another receipt of the same area')
         kept = {n: newer['files'][n] for n in bad if n in newer.get('files', {})}
+        if kept:
+            used.append(later)
         bad = [n for n in bad if n not in kept] + live_mismatches(kept, override)
     if bad:
         raise SystemExit(f'selection no longer installed: {bad}')
@@ -118,7 +124,8 @@ def qa_record(area, kind, selection, quote, result, override, reserve=None, weat
             'source': 'user-message', 'quote': quote, 'result': result, 'reserve': reserve,
             'weather_and_variant_observed': weather or 'not-specified-by-user',
             'selection': {'path': rel(selection), 'sha256': sha(selection)},
-            **({'superseded_by': {'path': rel(later), 'sha256': sha(later)}} if later else {}),
+            **({'superseded_by': {'path': rel(used[0]), 'sha256': sha(used[0])}} if len(used) == 1 else
+               {'superseded_by': [{'path': rel(p), 'sha256': sha(p)} for p in used]} if used else {}),
             'release': 'not-requested'}
 
 
@@ -142,8 +149,9 @@ def main():
     q.add_argument('--result', required=True, choices=RESULTS)
     q.add_argument('--reserve')
     q.add_argument('--weather', help='variant/weather actually observed, if the user said so')
-    q.add_argument('--superseded-by', type=Path,
-                   help='later installed receipt of the same area that replaced selection files')
+    q.add_argument('--superseded-by', type=Path, action='append',
+                   help='later installed receipt of the same area that replaced selection files '
+                        '(repeatable: B for the WED, C for base pages)')
     args = parser.parse_args()
     game = args.game_root
     if game is None:

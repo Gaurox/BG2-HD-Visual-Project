@@ -25,7 +25,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | pool | WTPOOL | bilinear (SeedVR → quadrillage) | AR0408 + AR0703 (standard) ; AR1000 historique |
 | swamp | WTSWAM | seedvr | AR0500 + AR0500N (standard) ; AR1607 historique |
 | sewage | WTSEW | seedvr | AR2100 |
-| oil | WTOIL | seedvr | AR0413 |
+| oil | WTOIL | seedvr (A validé ; overlay remplacé par B) | AR0503 (A+B+C) ; AR0413 historique |
 | lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
 | brown_flow | WT5000A–D (2×2) | seedvr | AR5203 |
 | lava | WTLAVA–D (2×2) | bilinear, **construit seulement** (contextes/topologie pour B `seedvr-torus` ; WED remplacée par B) | AR5200 (B+C) ; AR0011 historique |
@@ -56,7 +56,8 @@ bases réparées) ; le `temporal-plan.json` produit est accepté par le producte
 - overlay liquide inconnu du standard ; ressources d'une famille absentes du KEY ;
 - base x4 de la map absente ;
 - master x4 des tuiles secondaires introuvable ou ambigu (`--secondary-master` explicite) ; découverte :
-  `maps/<map>/runs/*/tuiles-secondaires/03_assemble/*.png`, runs `nuit`/`night` réservés aux variantes `N` ;
+  `maps/<map>/runs/*/tuiles-secondaires/03_assemble/*.png`, plus `01_upscale/*.png` des runs directs sans
+  `03_assemble` (AR0503) ; runs `nuit`/`night` réservés aux variantes `N` ;
 - traitement eau antérieur installé (resref d'overlay renommé, lookup re-temporisée, identité route2 dans la DLL) :
   le remplacer est une décision utilisateur ; chaîne standard déjà installée : restaurer avant de replanifier.
 
@@ -71,7 +72,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | pool | AR0408, AR0506, AR0703, AR1003, AR1004, AR1100, AR1601, AR2000, AR2000N, AR2011, AR2012, AR5010 | AR1000 |
 | swamp | AR0310, AR0500, AR0500N, AR0604, AR1100, AR1106, AR1201, AR1403, AR1500, AR2210, AR2500, AR2600, AR2602, AR2700, AR3025, AR6008 | AR1000N, AR1607, AR1800 |
 | sewage | AR2100 | AR0404 |
-| oil | AR0503, AR0603, AR1203, AR2102, AR3024 | AR0413 |
+| oil | AR0603, AR1203, AR2102, AR3024 (AR0503 fait) | AR0413 |
 | lake_teal | AR6300 | AR3000 |
 | brown_flow | AR5000 | AR5203 |
 | lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
@@ -83,9 +84,10 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR2100 | sewage | `ar2100-water-x4-20260923-v1` | `ar2100-spatial-installed-20260923-v1.json` | validée — `ar2100-spatial-user-qa-20260923-v1.json` |
 | AR0408 | pool | `ar0408-water-x4-20260923-v2` | `ar0408-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0408-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v2) |
 | AR0703 | pool | `ar0703-water-x4-20260923-v2` | `ar0703-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0703-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v1) |
-| AR0500 | swamp | `ar0500-water-x4-20260924-v2` | `ar0500-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, jour ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
+| AR0500 | swamp | `ar0500-water-x4-20260924-v2` | `ar0500-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, jour ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
+| AR0503 | oil | `ar0503-water-x4-20260924-v1` | `ar0503-spatial-installed-20260924-v1.json` (WED remplacée par B, 3 pages par C) | validée — `ar0503-spatial-user-qa-20260924-v1.json` (`superseded_by` B v2 + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
-| AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
+| AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases
 validée historiquement (route2). Les maps prêtes utilisant une ressource partagée déjà surchargée (WTSWAM,

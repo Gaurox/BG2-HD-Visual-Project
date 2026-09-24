@@ -1,0 +1,226 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar0503-water-30fps-20260924-v1\\temporal-plan.json",
+    "bytes": 580,
+    "sha256": "DC44A554CC582165246BC468FF7AC0DD55F8EA2F79A5E9E336DEEB70CB7F4F51"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR0503",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0503-water-x4-20260924-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0503-water-x4-20260924-v1\\selection.json",
+    "bytes": 443,
+    "sha256": "EC8AECC37564E838A8550AF5A436A2A30DF57970E0E4E2288E00BC6851924C1D"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0503-water-x4-20260924-v1\\override-candidate\\AR0503.WED",
+    "bytes": 5272,
+    "sha256": "F14CEB14069FE2EA60D303F32822DF2A2A96784F3AF7056B66AADB936CEE38F9"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar5200-lava-torus-30fps-20260924-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "oil",
+      "rain_of": null,
+      "group": {
+        "id": "oil",
+        "wed": "AR0503",
+        "resrefs": [
+          "WTOIL"
+        ],
+        "aliases": {
+          "WTOIL": "YSZXIU"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTOIL"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTOIL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTOIL": "YFCCAJ"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "wed_resref": "WTOIL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTOIL",
+          "b": "WTOIL",
+          "axis": "x",
+          "occurrences": 133
+        },
+        {
+          "a": "WTOIL",
+          "b": "WTOIL",
+          "axis": "y",
+          "occurrences": 129
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0503-water-x4-20260924-v1\\overlays\\groups\\oil\\build.json",
+        "bytes": 18685,
+        "sha256": "1689DACB36D0655DD5B6362AE4526F743349E96C09AB8491F1BECD7BCDAAAE82"
+      }
+    },
+    {
+      "id": "oil_rain",
+      "rain_of": "oil",
+      "group": {
+        "id": "oil_rain",
+        "wed": "AR0503",
+        "resrefs": [
+          "WTOILR"
+        ],
+        "aliases": {
+          "WTOILR": "YSZXIUR"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTOILR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTOIL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTOILR": "YFCCAJR"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTOILR",
+          "wed_resref": "WTOIL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTOILR",
+          "b": "WTOILR",
+          "axis": "x",
+          "occurrences": 133
+        },
+        {
+          "a": "WTOILR",
+          "b": "WTOILR",
+          "axis": "y",
+          "occurrences": 129
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0503-water-x4-20260924-v1\\overlays\\groups\\oil_rain\\build.json",
+        "bytes": 18834,
+        "sha256": "C3B772136E1E551DC75AAF4AEA27F0A2F64D2365052718B826F138E270D7A8AD"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

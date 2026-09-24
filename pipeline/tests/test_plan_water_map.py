@@ -111,6 +111,33 @@ class PlanWaterMapTests(unittest.TestCase):
             self.assertIn("jour", day.as_posix())
             self.assertIn("nuit", night.as_posix())
 
+    def test_direct_run_master_is_found_in_its_upscale_output(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            direct = root / "maps/AR0503/runs/direct-x4/tuiles-secondaires/01_upscale"
+            grid = root / "maps/AR0600/runs/grid-x4/tuiles-secondaires"
+            for target in (direct, grid / "01_upscale", grid / "03_assemble"):
+                target.mkdir(parents=True)
+                (target / "master.png").write_bytes(b"x")
+            saved, p.ROOT = p.ROOT, root
+            try:
+                master, _ = p.secondary_master("AR0503", None)
+                assembled, candidates = p.secondary_master("AR0600", None)
+            finally:
+                p.ROOT = saved
+            self.assertIn("01_upscale", master.as_posix())
+            self.assertIn("03_assemble", assembled.as_posix())
+            self.assertEqual(len(candidates), 1)
+
+    def test_oil_torus_filters_are_written_only_on_the_dry_group(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        temporal = next(f for f in standard["families"] if f["id"] == "oil")["temporal"]
+        dry = p.temporal_plan_group("oil", {"WTOIL": "YFTEST"}, temporal)
+        rain = p.temporal_plan_group("oil_rain", {"WTOILR": "YFTESTR"}, temporal, "oil")
+        self.assertEqual((dry["method"], dry["torus"]),
+                         ("seedvr-torus", {"temporal_harmonics": 9, "equalize_detail": True}))
+        self.assertNotIn("torus", rain)
+
 
 if __name__ == "__main__":
     unittest.main()
