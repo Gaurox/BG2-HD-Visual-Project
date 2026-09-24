@@ -55,10 +55,9 @@ def temporal_plan_group(family_id, aliases, temporal, rain_of=None):
         if 'approved_rain_strength' in temporal:
             group['approved_strength'] = temporal['approved_rain_strength']
         return group
-    if 'cycle_seconds' in temporal:
-        group['cycle_seconds'] = temporal['cycle_seconds']
-    if 'approved_strength' in temporal:
-        group['approved_strength'] = temporal['approved_strength']
+    for key in ('cycle_seconds', 'approved_strength', 'method', 'keyframes'):   # rain inherits
+        if key in temporal:
+            group[key] = temporal[key]
     return group
 
 

@@ -2,7 +2,7 @@
   "schema": "bg2-liquid-family-standard-v1",
   "version": 1,
   "date": "2026-09-24",
-  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N. Current C remains provisionally usable pending a global redesign and reapplication.",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200. Current C remains provisionally usable pending a global redesign and reapplication.",
   "sources": {
     "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
     "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
@@ -18,7 +18,11 @@
       "contour": "pipeline/water/manifests/ar0703-contour-user-qa-20260923-v1.json"
     },
     "swamp_temporal_qa_day": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json",
-    "swamp_temporal_qa_night": "pipeline/water/manifests/ar0500n-temporal-30fps-user-qa-20260924-v1.json"
+    "swamp_temporal_qa_night": "pipeline/water/manifests/ar0500n-temporal-30fps-user-qa-20260924-v1.json",
+    "lava_full_chain_qa": {
+      "temporal": "pipeline/water/manifests/ar5200-temporal-30fps-user-qa-20260924-v2.json",
+      "contour": "pipeline/water/manifests/ar5200-contour-user-qa-20260924-v1.json"
+    }
   },
   "defaults": {
     "seedvr": "7B INT8 convrot, color_correction none, seed 959948902156062, periodic 3x3 context, centre crop",
@@ -74,10 +78,15 @@
      "witness": "AR5203"},
     {"id": "lava", "overlays": ["WTLAVA", "WTLAVB", "WTLAVC", "WTLAVD"],
      "layout": [["WTLAVA", "WTLAVB"], ["WTLAVC", "WTLAVD"]], "spatial_method": "bilinear",
-     "why": "SeedVR none left a persistent grid; bilinear fallback selected",
-     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
-                  "why": "speed 12/0/0/12 ambiguous; 12x12/15 s would need 288 phases > 225 per page; emissive route2 unqualified"},
-     "witness": "AR0011"}
+     "why": "spatial stage only prepares the x1 torus contexts and topology; its bilinear WED is superseded by the 30 fps seedvr-torus build (SeedVR on 12 raw keys sharpened the native 64 px tile borders into a grid)",
+     "temporal": {"material_id": 1, "method": "seedvr-torus", "cycle": "fixed", "cycle_seconds": 7.2,
+                  "keyframes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                  "status": "validated-ingame-AR5200",
+                  "why_keyframes": "the 12 native frames loop evenly (step 2.8, 11->0 3.1); the vanilla AR520x lookup [0..9,11] skips frame 10 (step 4.0 = 1.45x median)",
+                  "why_cycle": "12 keys x 18 = 216 phases fit one 4096 page (225 max); vanilla 11x11/15 = 8.07 s nominal",
+                  "why_method": "WED adjacencies are exactly the 2x2 torus: seams healed at x1 (band 4, sigma 3, gain 0.8), SeedVR on motif + 32 px wrapped margin, periodic+smooth with border jump low-passed (sigma 8 x4), atlas margins from the torus neighbour; q0 timing-only, no procedural lava"},
+     "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-with-reserve-AR5200-current-C-provisional"},
+     "witness": "AR5200-B-C"}
   ],
   "blocked": {
     "local_are_bam_surfaces": "ARE/BAM water surfaces (AR2300 falls, AR2804/5, AR3021 basins) follow the animation pipeline, not this chain",

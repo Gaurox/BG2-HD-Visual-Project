@@ -66,6 +66,19 @@ class PlanWaterMapTests(unittest.TestCase):
         self.assertEqual((rain["approved_strength"], rain["rain_of"]), (0.70, "swamp"))
         self.assertNotIn("cycle_seconds", rain)
 
+    def test_lava_torus_method_and_keys_are_written_only_on_the_dry_group(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        temporal = next(f for f in standard["families"] if f["id"] == "lava")["temporal"]
+        self.assertEqual((temporal["method"], temporal["cycle_seconds"], temporal["keyframes"]),
+                         ("seedvr-torus", 7.2, list(range(12))))
+        refs = {r: "YFTST" + r[-1] for r in ("WTLAVA", "WTLAVB", "WTLAVC", "WTLAVD")}
+        dry = p.temporal_plan_group("lava", refs, temporal)
+        rain = p.temporal_plan_group("lava_rain", {r + "R": a + "R" for r, a in refs.items()}, temporal, "lava")
+        self.assertEqual((dry["method"], dry["keyframes"], dry["cycle_seconds"]),
+                         ("seedvr-torus", list(range(12)), 7.2))
+        for key in ("method", "keyframes", "cycle_seconds", "approved_strength"):
+            self.assertNotIn(key, rain)
+
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())
         self.assertEqual(first, p.make_alias("AR0404", 1, "S", set()))

@@ -171,6 +171,9 @@ bool prepare(const std::filesystem::path& overrideRoot) noexcept;
 std::uint32_t approved_material(std::string_view wed, std::span<const std::string_view> slots,
                                 std::uint32_t slot) noexcept;
 std::optional<Match> match(const Query& query) noexcept;
+// Cheap per-draw prefilter: true when a validated identity of this WED owns an
+// overlay page of exactly this size. Never a match by itself.
+bool has_overlay_page(std::string_view wed, std::uint32_t width, std::uint32_t height) noexcept;
 // Pointer refers to immutable compiled data, only after all entry hashes pass.
 const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept;
 std::uint32_t version() noexcept;

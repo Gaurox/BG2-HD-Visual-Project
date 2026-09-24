@@ -28,7 +28,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | oil | WTOIL | seedvr | AR0413 |
 | lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
 | brown_flow | WT5000A–D (2×2) | seedvr | AR5203 |
-| lava | WTLAVA–D (2×2) | bilinear (SeedVR → grille) | AR0011 |
+| lava | WTLAVA–D (2×2) | bilinear, **construit seulement** (contextes/topologie pour B `seedvr-torus` ; WED remplacée par B) | AR5200 (B+C) ; AR0011 historique |
 
 Collier de bord : mode `compatible` pour tous ; appliqué seulement si un raccord est mesuré amplifié
 par rapport au stock (règle du producteur, identique au lot témoin).
@@ -84,6 +84,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR0408 | pool | `ar0408-water-x4-20260923-v2` | `ar0408-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0408-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v2) |
 | AR0703 | pool | `ar0703-water-x4-20260923-v2` | `ar0703-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0703-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v1) |
 | AR0500 | swamp | `ar0500-water-x4-20260924-v2` | `ar0500-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, jour ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
+| AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
 | AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis (`superseded_by` unique insuffisant pour B+C) |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases

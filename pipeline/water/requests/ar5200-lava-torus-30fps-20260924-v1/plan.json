@@ -1,0 +1,506 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar5200-lava-torus-30fps-20260924-v1\\temporal-plan.json",
+    "bytes": 765,
+    "sha256": "99F9B23437B292A4AA332225ADB8E9C5D7D9A5033A3A8EDE0BB8C78451A7FDB7"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR5200",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5200-water-x4-20260924-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5200-water-x4-20260924-v1\\selection.json",
+    "bytes": 451,
+    "sha256": "26879A88FC7BA178BF58417B517F06155610C007E00CA97B7B8843FDD9BFDF9C"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5200-water-x4-20260924-v1\\override-candidate\\AR5200.WED",
+    "bytes": 34456,
+    "sha256": "4A22853A5498E2E6749E3CFFA4307F67AC23CC6E9DDF7E075359236E014F44E9"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar0500n-water-30fps-20260924-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "lava",
+      "rain_of": null,
+      "group": {
+        "id": "lava",
+        "wed": "AR5200",
+        "resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "aliases": {
+          "WTLAVA": "YSNHM3",
+          "WTLAVB": "YSGC10",
+          "WTLAVC": "YSRQLG",
+          "WTLAVD": "YS8KTB"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTLAVA",
+            "WTLAVB"
+          ],
+          [
+            "WTLAVC",
+            "WTLAVD"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAVA": "YLVTA1",
+        "WTLAVB": "YLVTB1",
+        "WTLAVC": "YLVTC1",
+        "WTLAVD": "YLVTD1"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "wed_resref": "WTLAVA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 11,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 8.066666666666666
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "wed_resref": "WTLAVB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 11,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 8.066666666666666
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "wed_resref": "WTLAVC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.7333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "wed_resref": "WTLAVD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.7333333333333333
+        }
+      ],
+      "cycle_seconds": 7.2,
+      "phases": 216,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVB",
+          "axis": "x",
+          "occurrences": 65
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVC",
+          "axis": "y",
+          "occurrences": 60
+        },
+        {
+          "a": "WTLAVB",
+          "b": "WTLAVA",
+          "axis": "x",
+          "occurrences": 70
+        },
+        {
+          "a": "WTLAVB",
+          "b": "WTLAVD",
+          "axis": "y",
+          "occurrences": 59
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVA",
+          "axis": "y",
+          "occurrences": 60
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVD",
+          "axis": "x",
+          "occurrences": 57
+        },
+        {
+          "a": "WTLAVD",
+          "b": "WTLAVB",
+          "axis": "y",
+          "occurrences": 62
+        },
+        {
+          "a": "WTLAVD",
+          "b": "WTLAVC",
+          "axis": "x",
+          "occurrences": 61
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5200-water-x4-20260924-v1\\overlays\\groups\\lava\\build.json",
+        "bytes": 120736,
+        "sha256": "368CED40C4F81833D9E409F14836ED766BDFEB6016245CCA9D2560CB29182A62"
+      }
+    },
+    {
+      "id": "lava_rain",
+      "rain_of": "lava",
+      "group": {
+        "id": "lava_rain",
+        "wed": "AR5200",
+        "resrefs": [
+          "WTLAVAR",
+          "WTLAVBR",
+          "WTLAVCR",
+          "WTLAVDR"
+        ],
+        "aliases": {
+          "WTLAVAR": "YSNHM3R",
+          "WTLAVBR": "YSGC10R",
+          "WTLAVCR": "YSRQLGR",
+          "WTLAVDR": "YS8KTBR"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTLAVAR",
+            "WTLAVBR"
+          ],
+          [
+            "WTLAVCR",
+            "WTLAVDR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAVAR": "YLVTA1R",
+        "WTLAVBR": "YLVTB1R",
+        "WTLAVCR": "YLVTC1R",
+        "WTLAVDR": "YLVTD1R"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAVAR",
+          "wed_resref": "WTLAVA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 11,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 8.066666666666666
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVBR",
+          "wed_resref": "WTLAVB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 11,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 8.066666666666666
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVCR",
+          "wed_resref": "WTLAVC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.7333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVDR",
+          "wed_resref": "WTLAVD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.7333333333333333
+        }
+      ],
+      "cycle_seconds": 7.2,
+      "phases": 216,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVBR",
+          "axis": "x",
+          "occurrences": 65
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVCR",
+          "axis": "y",
+          "occurrences": 60
+        },
+        {
+          "a": "WTLAVBR",
+          "b": "WTLAVAR",
+          "axis": "x",
+          "occurrences": 70
+        },
+        {
+          "a": "WTLAVBR",
+          "b": "WTLAVDR",
+          "axis": "y",
+          "occurrences": 59
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVAR",
+          "axis": "y",
+          "occurrences": 60
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVDR",
+          "axis": "x",
+          "occurrences": 57
+        },
+        {
+          "a": "WTLAVDR",
+          "b": "WTLAVBR",
+          "axis": "y",
+          "occurrences": 62
+        },
+        {
+          "a": "WTLAVDR",
+          "b": "WTLAVCR",
+          "axis": "x",
+          "occurrences": 61
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5200-water-x4-20260924-v1\\overlays\\groups\\lava_rain\\build.json",
+        "bytes": 121703,
+        "sha256": "2A22ADC4F90AFFCFBC883C3830553840BE0921C371D8B4E4E82DFE857B69D1AB"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

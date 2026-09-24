@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR5200",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T17:39:09+00:00",
+  "run": "maps/water-batches/runs/ar5200-lava-torus-30fps-20260924-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar5200-lava-torus-30fps-20260924-v1/candidate/manifest.json",
+    "sha256": "EC4C0BB3B4DEED864A1980EABC5D1B2070CD6F12D5FEACBC645ED3C42A71D2B7"
+  },
+  "files": {
+    "AR5200.WED": {
+      "sha256": "B1B2CC33495CC424A1FA2DAA11853700009247166BF2E7808A9774D1C3832896",
+      "bytes": 36096
+    },
+    "YLVTA1.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTA1R.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTB1.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTB1R.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTC1.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTC1R.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTD1.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YLVTD1R.TIS": {
+      "sha256": "F171D12C777786C08245779E75CEC218447ABE46FFD5D2A5A4135B3CB88DBECC",
+      "bytes": 2616
+    },
+    "YVTA100.PVRZ": {
+      "sha256": "098CC3C46542F250B0ADA843714CB049A0C032C48981028256F2441436A040AF",
+      "bytes": 4950916
+    },
+    "YVTA1R00.PVRZ": {
+      "sha256": "098CC3C46542F250B0ADA843714CB049A0C032C48981028256F2441436A040AF",
+      "bytes": 4950916
+    },
+    "YVTB100.PVRZ": {
+      "sha256": "B8C0558D9143318C4599D9A82C01894311492796711D0D66C55ED682D8A0EA4F",
+      "bytes": 4965543
+    },
+    "YVTB1R00.PVRZ": {
+      "sha256": "B8C0558D9143318C4599D9A82C01894311492796711D0D66C55ED682D8A0EA4F",
+      "bytes": 4965543
+    },
+    "YVTC100.PVRZ": {
+      "sha256": "17128506CE02C6C0DDF12B7D0ED348C3FAED7205CD3F6033B8690C39E8DEBFCA",
+      "bytes": 4895275
+    },
+    "YVTC1R00.PVRZ": {
+      "sha256": "17128506CE02C6C0DDF12B7D0ED348C3FAED7205CD3F6033B8690C39E8DEBFCA",
+      "bytes": 4895275
+    },
+    "YVTD100.PVRZ": {
+      "sha256": "F53850E52A8C7582146378F1B37BC4E292A6EFA650D7DF68A82E7BB234152702",
+      "bytes": 4902018
+    },
+    "YVTD1R00.PVRZ": {
+      "sha256": "F53850E52A8C7582146378F1B37BC4E292A6EFA650D7DF68A82E7BB234152702",
+      "bytes": 4902018
+    }
+  },
+  "override_backup_receipt": "backups/water/ar5200-lava-torus-30fps-20260924-v1/override/override-backup-20260924-193901/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar5200-lava-torus-30fps-20260924-v1/build.json",
+    "sha256": "A5D7F09AE0C826C80C4D79343946AF7923F25441EA14F238E98EF98214C10D66"
+  },
+  "runtime": {
+    "receipt": "backups/water/ar5200-lava-torus-30fps-20260924-v1/runtime/install-backup.json",
+    "dll_sha256": "856C2D8545776126D650CAA34AAA19D2582C862765E839D4DDEDA5891398A6F0",
+    "registry": {
+      "path": "pipeline/water/requests/ar5200-lava-torus-30fps-20260924-v1/registry-v3.json",
+      "sha256_lf": "6BCA93192C533D19E9C87F67D509A98590BBE5A86D6BA040E50EBCDCC533D07A"
+    }
+  },
+  "note": "LAVE-TORE: seedvr-torus, 12 keys/216 phases 7.2s, DLL overlay-match cache fix"
+}

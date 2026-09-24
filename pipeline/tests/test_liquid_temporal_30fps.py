@@ -61,6 +61,48 @@ class TemporalRecipeTests(unittest.TestCase):
             self.assertTrue(np.array_equal(got[:, :, 3], want[:, :, 3]))
             self.assertLess(np.abs(got[:, :, :3].astype(int) - want[:, :, :3]).max(), 9)  # RGB565
 
+    def test_torus_pairs_accept_lava_adjacency_only(self):
+        pairs = t.torus_pairs([["A", "B"], ["C", "D"]])
+        self.assertEqual(len(pairs), 8)
+        self.assertIn(("B", "A", "x"), pairs)
+        self.assertIn(("D", "B", "y"), pairs)
+        self.assertNotIn(("A", "A", "x"), pairs)
+        self.assertNotIn(("A", "C", "x"), pairs)
+
+    def test_heal_torus_seams_flattens_a_border_step_and_keeps_texture(self):
+        rng = np.random.default_rng(3)
+        motif = rng.normal(128, 6, (128, 128, 3))
+        stepped = motif.copy()
+        stepped[:, 64:] += 12          # one tile brighter: steps at x=64 and at the wrap
+        before = t.border_step_ratio(stepped)[0]
+        healed = t.heal_torus_seams(stepped, band=4, sigma=3.0, gain=1.0)
+        self.assertGreater(before, 1.5)
+        self.assertLess(t.border_step_ratio(healed)[0], 1.15)
+        interior = (slice(8, 56), slice(8, 56))
+        np.testing.assert_allclose(healed[interior], stepped[interior])
+
+    def test_periodic_component_removes_wrap_step_and_keeps_mean(self):
+        rng = np.random.default_rng(4)
+        ramp = np.linspace(0, 60, 64)[None, :, None] + rng.normal(0, 3, (64, 64, 3))
+        periodic = t.periodic_component(ramp)
+        self.assertGreater(t.border_step_ratio(ramp, 64)[0], 5)
+        self.assertLess(t.border_step_ratio(periodic, 64)[0], 1.5)
+        self.assertAlmostEqual(periodic.mean(), ramp.mean(), places=6)
+
+    def test_torus_tiles_margin_reads_the_neighbour_and_survives_export(self):
+        motif = np.zeros((512, 512, 4), np.uint8)
+        motif[..., 3] = 255
+        motif[:, :256, 0] = 200         # A and C red, B and D blue
+        motif[:, 256:, 2] = 200
+        tiles = t.torus_tiles(motif, [["A", "B"], ["C", "D"]])
+        self.assertEqual(tiles["A"].shape, (t.STRIDE, t.STRIDE, 4))
+        self.assertEqual(tiles["A"][100, -1, 2], 200)   # right margin of A = B
+        self.assertEqual(tiles["A"][100, 0, 2], 200)    # left margin of A = B (wrap)
+        with tempfile.TemporaryDirectory() as folder:
+            tis, _ = t.export_tiles([tiles["A"]], "QTEST0", Path(folder))
+            decoded = t.decode_tiles(tis, Path(folder))
+        self.assertLess(np.abs(decoded[0][:, :, :3].astype(int) - tiles["A"][4:-4, 4:-4, :3]).max(), 9)
+
 
 if __name__ == "__main__":
     unittest.main()

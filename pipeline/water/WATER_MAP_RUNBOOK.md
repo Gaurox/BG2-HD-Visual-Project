@@ -41,6 +41,9 @@ contours C provisoires `rgb-x4-silhouette-matte` (10 paires, alpha 128).
 AR0500 jour et AR0500N nuit valident `swamp` A → B : SeedVR 7B x4, matériau 5, cycle 2,4 s / 72 phases,
 force route2 0,70 sur les groupes sec et pluie ; QA sèche validée, pluie non observée. C reste applicable mais
 provisoire : continuer en l'état, puis reconstruire/réinstaller toutes les maps après validation de sa refonte.
+AR5200 valide `lava` B → C (2026-09-24) : A seulement **construit** (contextes x1 + topologie, non installé ;
+sa WED bilinéaire est remplacée par B), B `seedvr-torus` 12 clés / 216 phases / 7,2 s, q0 matériau 1,
+C provisoire validé avec les mêmes réserves que les autres familles.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|
@@ -88,9 +91,12 @@ python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind te
      --runtime-receipt backups/water/<run>/runtime/install-backup.json
 ```
 
-**STOP** si : `prepare` exige `cycle_seconds` (pavages A–D : vitesse WED ambiguë) ; phases > 225
-(lave, 12 clés → 288) ; groupe à alpha variable ou lookups différents ; DLL live ≠ pointeur
-(`Install-WaterRuntime.ps1` refuse) ; lave : matériau émissif route2 non qualifié → demander avant d'installer.
+**STOP** si : `prepare` exige `cycle_seconds` (pavages A–D : vitesse WED ambiguë) ; phases > 225 ;
+groupe à alpha variable ou lookups différents ; DLL live ≠ pointeur (`Install-WaterRuntime.ps1` refuse) ;
+`seedvr-torus` refusé (adjacences WED hors tore du layout : autre lave que AR5200 à vérifier une par une).
+Lave : pas d'étape A installée ; B prend `source_wed`/`selection` du run A construit (plan AR5200 :
+`pipeline/water/requests/ar5200-lava-torus-30fps-20260924-v1/temporal-plan.json`). Pluie à clés identiques :
+le producteur réutilise la sortie SeedVR du groupe sec.
 
 ## C. Contours devant l'eau
 
@@ -104,7 +110,7 @@ python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind co
 
 **STOP** si `survey` n'est pas prêt : base déjà traitée (relance uniquement avec `--source-backup` des pages non
 traitées, voir CONTOUR_MATTE_PIPELINE.md), pages non BC3, atlas non standard. **Signaler** dans la demande de QA :
-`a` ≠ 128 (AR1607 = 100, AR6300 = 160, composition non encore vue en jeu), lave, huile (contrat alpha0 historique),
+`a` ≠ 128 (AR1607 = 100, AR6300 = 160, composition non encore vue en jeu), huile (contrat alpha0 historique),
 cellules ignorées nombreuses.
 
 ## D. Demande de QA et enregistrement

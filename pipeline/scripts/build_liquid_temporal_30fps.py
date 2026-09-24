@@ -12,6 +12,10 @@ Recipe (AR1600 v2, validated ingame 2026-09-23):
 2. x4: ``seedvr`` = SeedVR 7B on the whole wrapped sequence as one temporal chunk
    (consistent detail), loop seam = variance-preserving crossfade of the two renditions;
    ``bilinear`` = periodic bilinear x4 per phase.  Same edge collar as the spatial build.
+   ``seedvr-torus`` (multi-tile groups whose WED adjacencies are exactly the torus of their
+   layout, e.g. lava WTLAVA-D): native tile borders healed at x1 before interpolation
+   (SeedVR otherwise sharpens them into a grid), SeedVR on the motif plus a wrapped margin,
+   periodic + smooth decomposition of each x4 phase, atlas margins read the torus neighbour.
 3. One 4096 BC3 page per resource, WED slot -> isolated alias, sequential lookup of the
    phases, speed 1; registry timeline source 30 = target 30 (no shader blend).
 Produces a candidate and a registry; DLL build and installation stay separate.
@@ -31,6 +35,7 @@ import zlib
 
 import numpy as np
 from PIL import Image
+from scipy.ndimage import gaussian_filter1d
 from build_liquid_periodic_x4_trial import compatible_edges, seam_metrics, split_context
 from mos_decode import decode_pvrz_page
 from run_seedvr_comfyui import ComfyClient
@@ -49,6 +54,8 @@ DISPLAY_FPS, WED_HZ = 30, 15
 LOOP_CROSSFADE = 16
 CURRENT_REGISTRY = ROOT / 'pipeline/water/route2-registry-current.json'
 SEEDVR_SEED = 959948902156062
+TORUS_DEFAULTS = {'heal_band_x1': 4, 'heal_sigma_x1': 3.0, 'heal_gain': 0.8, 'seedvr_margin_x1': 32,
+                  'periodic_sigma_x4': 8.0}
 
 
 # --- pure recipe ---------------------------------------------------------------
@@ -112,6 +119,77 @@ def variance_preserving_mix(a, b, w):
     return low + detail * gain
 
 
+def torus_pairs(layout):
+    """Adjacencies of a layout repeated on a torus: (a, b, axis) with b right of / below a."""
+    dim = len(layout)
+    return ({(layout[y][x], layout[y][(x + 1) % dim], 'x') for y in range(dim) for x in range(dim)} |
+            {(layout[y][x], layout[(y + 1) % dim][x], 'y') for y in range(dim) for x in range(dim)})
+
+
+def _heal_columns(motif, tile, band, sigma, gain):
+    out = motif.astype(np.float64).copy()
+    width = out.shape[1]
+    ramp = 1 - np.arange(band) / band
+    for c in range(0, width, tile):
+        col = lambda k: out[:, (c + k) % width]
+        excess = (col(0) - col(-1)) - 0.5 * ((col(-1) - col(-2)) + (col(1) - col(0)))
+        excess = gain * gaussian_filter1d(excess, sigma, axis=0, mode='wrap')
+        for j in range(band):
+            out[:, (c + j) % width] -= excess / 2 * ramp[j]
+            out[:, (c - 1 - j) % width] += excess / 2 * ramp[j]
+    return out
+
+
+def heal_torus_seams(motif, tile=64, band=4, sigma=3.0, gain=0.8):
+    """Spread the low-frequency excess step of every native tile border of a periodic
+    motif over a band on both sides (x1).  Texture is kept; only the smoothed step moves."""
+    out = _heal_columns(motif, tile, band, sigma, gain)
+    return _heal_columns(out.transpose(1, 0, 2), tile, band, sigma, gain).transpose(1, 0, 2)
+
+
+def border_step_ratio(motif, tile=64):
+    """Step across tile borders / median step of the folded profile, per axis (x, y)."""
+    ratios = []
+    for axis in (1, 0):
+        wrapped = np.concatenate([motif, np.take(motif, [0], axis=axis)], axis=axis).astype(np.float64)
+        steps = np.abs(np.diff(wrapped, axis=axis)).mean(axis=(0, 2) if axis == 1 else (1, 2))
+        folded = np.array([steps[k::tile].mean() for k in range(tile)])
+        ratios.append(float(folded[tile - 1] / np.median(folded)))
+    return ratios
+
+
+def periodic_component(image, sigma=0.0):
+    """Periodic part of the periodic + smooth decomposition (Moisan 2011): removes the
+    wrap discontinuity with a smooth field, mean and interior detail preserved.
+    ``sigma`` low-passes the jump along the border first: the exact decomposition also
+    cancels the texture mismatch and leaves a visibly soft line (AR5200 lava: 0.37)."""
+    u = image.astype(np.float64)
+    h, w = u.shape[:2]
+    rows, cols = u[-1] - u[0], u[:, -1] - u[:, 0]
+    if sigma:
+        rows = gaussian_filter1d(rows, sigma, axis=0, mode='wrap')
+        cols = gaussian_filter1d(cols, sigma, axis=0, mode='wrap')
+    v = np.zeros_like(u)
+    v[0] += rows
+    v[-1] -= rows
+    v[:, 0] += cols
+    v[:, -1] -= cols
+    q = np.arange(h)[:, None]
+    r = np.arange(w)[None, :]
+    denominator = 2 * np.cos(2 * np.pi * q / h) + 2 * np.cos(2 * np.pi * r / w) - 4
+    denominator[0, 0] = 1
+    smooth = np.fft.fft2(v, axes=(0, 1)) / denominator[..., None]
+    smooth[0, 0] = 0
+    return u - np.real(np.fft.ifft2(smooth, axes=(0, 1)))
+
+
+def torus_tiles(motif, layout, pad=PAD):
+    """Per-resource tiles with their atlas margin read from the torus neighbours."""
+    padded = np.pad(motif, ((pad, pad), (pad, pad), (0, 0)), mode='wrap')
+    return {ref: padded[y * TILE:(y + 1) * TILE + 2 * pad, x * TILE:(x + 1) * TILE + 2 * pad]
+            for y, row in enumerate(layout) for x, ref in enumerate(row)}
+
+
 def sharpness(image):
     g = image[:, :, :3].astype(np.float64).mean(2)
     return float(np.abs(np.diff(g, axis=0)).mean() + np.abs(np.diff(g, axis=1)).mean())
@@ -138,8 +216,11 @@ def export_tiles(frames, alias, out):
     for i, frame in enumerate(frames):
         row, col = divmod(i, COLUMNS)
         x, y = col * STRIDE + PAD, row * STRIDE + PAD
-        # Periodic margin: bilinear taps past the tile edge read the opposite edge.
-        canvas[y-PAD:y+TILE+PAD, x-PAD:x+TILE+PAD] = np.pad(frame, ((PAD, PAD), (PAD, PAD), (0, 0)), mode='wrap')
+        if frame.shape[:2] == (STRIDE, STRIDE):   # margin already read from the real neighbour
+            canvas[y-PAD:y+TILE+PAD, x-PAD:x+TILE+PAD] = frame
+        else:
+            # Periodic margin: bilinear taps past the tile edge read the opposite edge.
+            canvas[y-PAD:y+TILE+PAD, x-PAD:x+TILE+PAD] = np.pad(frame, ((PAD, PAD), (PAD, PAD), (0, 0)), mode='wrap')
         entries.append((0, x, y))
     page = out / (page_name(alias) + '.PVRZ')
     write_pvrz(Image.fromarray(canvas, 'RGBA'), page)
@@ -238,8 +319,14 @@ def prepare(plan_path, output, game):
         lookups = {tuple(p['lookup']) for p in playback}
         if len(lookups) != 1:
             raise ValueError(f'{gid}: members use different lookups; not supported')
-        lookup = list(lookups.pop())
+        wed_lookup = list(lookups.pop())
         dry = entry.get('rain_of')
+        dry_record = next((r for r in records if r['id'] == dry), None)
+        # Explicit keyframes replace the WED lookup (e.g. lava: the native 12-frame loop
+        # instead of the vanilla [0..9, 11] that skips frame 10).  Rain follows its dry group.
+        lookup = list(entry.get('keyframes') or (dry_record['lookup'] if dry_record else wed_lookup))
+        if dry_record and lookup != dry_record['lookup']:
+            raise ValueError(f'{gid}: rain keyframes must equal its dry group')
         if dry:
             if dry not in cycles:
                 raise ValueError(f'{gid}: list its dry group {dry} first')
@@ -272,11 +359,19 @@ def prepare(plan_path, output, game):
         if not all(np.array_equal(alphas[0], a) for a in alphas):
             raise ValueError(f'{gid}: alpha changes between keyframes; not supported')
         Image.fromarray(alphas[0]).save(folder / 'alpha.png')
-        method = selected['group']['method']
+        method = entry.get('method') or (dry_record['method'] if dry_record else selected['group']['method'])
         collar = any(m.get('correction_applied') for m in selected['metrics'])
+        torus = None
+        if method == 'seedvr-torus':
+            used = {(a['a'], a['b'], a['axis']) for a in prepared['topology']['adjacencies']}
+            if len(group['layout']) < 2 or not used <= torus_pairs(group['layout']):
+                raise ValueError(f'{gid}: WED adjacencies are not the torus of the layout: '
+                                 f'{sorted(used - torus_pairs(group["layout"]))}')
+            torus = {**TORUS_DEFAULTS, **(dry_record['torus'] if dry_record else {}), **entry.get('torus', {})}
+            collar = False
         records.append({'id': gid, 'rain_of': dry, 'group': group, 'aliases': aliases,
                         'material_id': entry.get('material_id', 1), 'approved_strength': strength,
-                        'lookup': lookup,
+                        'lookup': lookup, 'wed_lookup': wed_lookup, 'torus': torus,
                         'playback': playback, 'cycle_seconds': cycle, 'phases': phases,
                         'method': method, 'edge_collar': collar,
                         'seam_width_x4': int(group.get('seam_width_x4', 8)),
@@ -295,6 +390,19 @@ def interpolate(output):
     for group in read(output / 'plan.json')['groups']:
         folder = output / group['id']
         keys = np.stack([rgb(folder / f'keys/frame_{k:03d}.png') for k in range(len(group['lookup']))])
+        heal = None
+        if group.get('torus'):
+            t = group['torus']
+            side = 64 * len(group['group']['layout'])
+            motifs = keys[:, side:2 * side, side:2 * side]
+            if not all(np.array_equal(np.tile(m, (3, 3, 1)), k) for m, k in zip(motifs, keys)):
+                raise ValueError(f"{group['id']}: x1 context is not the tiled motif")
+            healed = np.stack([heal_torus_seams(m, 64, t['heal_band_x1'], t['heal_sigma_x1'], t['heal_gain'])
+                               for m in motifs])
+            heal = {'before': [border_step_ratio(m) for m in motifs],
+                    'after': [border_step_ratio(m) for m in healed],
+                    'mean_abs_change': float(np.abs(healed - motifs).mean())}
+            keys = np.tile(healed, (1, 3, 3, 1))
         phases = trig_interpolate(keys, group['phases'])
         step = group['phases'] // len(group['lookup'])
         assert np.allclose(phases[::step], keys, atol=1e-6)
@@ -304,7 +412,7 @@ def interpolate(output):
             Image.fromarray(np.clip(np.rint(frame), 0, 255).astype(np.uint8)).save(x1 / f'frame_{i:03d}.png')
         steps = [float(np.abs(phases[(i + 1) % len(phases)] - phases[i]).mean()) for i in range(len(phases))]
         save(folder / 'interpolation.json', {'phases': group['phases'], 'anchor_every': step,
-             'anchors_exact': True, 'closed_loop': True, 'x1_step_mae': steps})
+             'anchors_exact': True, 'closed_loop': True, 'x1_step_mae': steps, 'torus_heal': heal})
         print(f"{group['id']}: x1 step {min(steps):.2f}-{max(steps):.2f}", flush=True)
 
 
@@ -354,6 +462,78 @@ def upscale(output, frames_per_chunk=None, overlap=0):
         alpha = Image.open(folder / 'alpha.png')
         alpha_x4 = np.asarray(alpha.resize((alpha.width * 4, alpha.height * 4), Image.Resampling.NEAREST))
         contexts = {}
+        tiles = folder / 'tiles'
+        if group['method'] == 'seedvr-torus' and group['rain_of']:
+            dry = next(d for d in plan['groups'] if d['id'] == group['rain_of'])
+            same = all((folder / f'keys/frame_{k:03d}.png').read_bytes() ==
+                       (output / dry['id'] / f'keys/frame_{k:03d}.png').read_bytes()
+                       for k in range(len(group['lookup'])))
+            same = same and dry['method'] == group['method'] and dry['torus'] == group['torus'] and (
+                (output / dry['id'] / 'alpha.png').read_bytes() == (folder / 'alpha.png').read_bytes())
+            if same:
+                positions = {(y, x): ref for y, row in enumerate(dry['group']['layout']) for x, ref in enumerate(row)}
+                for y, row in enumerate(g['layout']):
+                    for x, ref in enumerate(row):
+                        shutil.copytree(output / dry['id'] / 'tiles' / positions[(y, x)], tiles / ref)
+                save(folder / 'seedvr.json', {'reused_from': dry['id'], 'reason': 'byte-identical keys and alpha'})
+                print(f"{group['id']}: reused {dry['id']} (identical keys)", flush=True)
+                continue
+        if group['method'] == 'seedvr-torus':
+            torus = {**TORUS_DEFAULTS, **group['torus']}   # plans may predate a parameter
+            motif, margin = side // 4, torus['seedvr_margin_x1']
+            window = (slice(motif - margin, 2 * motif + margin),) * 2
+            order = wrap_order(phases)
+            wrapped = folder / 'seedvr-in'
+            raw = folder / 'seedvr-out'
+            prompt = seedvr_prompt(wrapped, f"bg2_water/{output.name}-{group['id']}", frames_per_chunk, overlap)
+            if (folder / 'seedvr-prompt.json').is_file() and len(list(raw.glob('frame_*.png'))) == len(order):
+                # Resume post-processing: same inputs, same prompt, completed download.
+                if read(folder / 'seedvr-prompt.json') != prompt:
+                    raise ValueError(f"{group['id']}: stored SeedVR prompt differs; use a new run")
+                prompt_id = read(folder / 'seedvr-run.json')['prompt_id']
+                print(f"{group['id']}: reusing SeedVR output {prompt_id}", flush=True)
+            else:
+                client = client or ComfyClient(get_service('comfyui_url'), 2.0, 7200.0)
+                client.preflight()
+                wrapped.mkdir()
+                for k, i in enumerate(order):
+                    Image.fromarray(rgb(folder / f'x1/frame_{i:03d}.png')[window]).save(wrapped / f'frame_{k:03d}.png')
+                save(folder / 'seedvr-prompt.json', prompt)
+                prompt_id = client.queue(prompt)
+                save(folder / 'seedvr-run.json', {'prompt_id': prompt_id, 'frames': len(order)})
+                print(f"{group['id']}: SeedVR torus {prompt_id} ({len(order)} frames, "
+                      f"{motif + 2 * margin}px x1)", flush=True)
+                images = client.wait_history(prompt_id)['outputs']['11']['images']
+                if len(images) != len(order):
+                    raise ValueError(f'SeedVR frame count: {len(images)}')
+                for k, info in enumerate(images):
+                    client.download(info, raw / f'frame_{k:03d}.png')
+            inner = (slice(4 * margin, 4 * margin + side),) * 2
+            head = order.index(0)
+            crop = lambda k: rgb(raw / f'frame_{k:03d}.png')[inner].astype(np.float64)
+            wrap_before, wrap_after = [], []
+            for phase in range(phases):
+                tile = crop(head + phase)
+                if phase < head:
+                    tile = variance_preserving_mix(tile, crop(head + phases + phase), (phase + 0.5) / head)
+                periodic = periodic_component(tile, torus['periodic_sigma_x4'])
+                # (wrap border only, every x4 tile border incl. wrap) per axis
+                wrap_before.append(border_step_ratio(tile, side) + border_step_ratio(tile, TILE))
+                wrap_after.append(border_step_ratio(periodic, side) + border_step_ratio(periodic, TILE))
+                contexts[phase] = periodic
+            save(folder / 'seedvr.json', {'prompt_id': prompt_id, 'wrapped_order': order,
+                 'crossfade_phases': head, 'frames_per_chunk': frames_per_chunk, 'overlap': overlap,
+                 'window_x1': [motif - margin, 2 * motif + margin], 'torus': torus,
+                 'border_step_ratio_fields': ['wrap_x', 'wrap_y', 'tile_x', 'tile_y'],
+                 'border_step_ratio_before_periodic': np.mean(wrap_before, axis=0).tolist(),
+                 'border_step_ratio_after_periodic': np.mean(wrap_after, axis=0).tolist()})
+            for phase in range(phases):
+                motif_rgba = np.dstack([np.clip(np.rint(contexts[phase]), 0, 255).astype(np.uint8),
+                                        alpha_x4[center]])
+                for ref, array in torus_tiles(motif_rgba, g['layout']).items():
+                    (tiles / ref).mkdir(parents=True, exist_ok=True)
+                    Image.fromarray(array, 'RGBA').save(tiles / ref / f'frame_{phase:03d}.png')
+            continue
         if group['method'] == 'seedvr':
             client = client or ComfyClient(get_service('comfyui_url'), 2.0, 7200.0)
             client.preflight()
@@ -389,7 +569,6 @@ def upscale(output, frames_per_chunk=None, overlap=0):
                 contexts[phase] = np.asarray(up)[center].astype(np.float64)
         else:
             raise ValueError(f"unsupported spatial method {group['method']}")
-        tiles = folder / 'tiles'
         for phase in range(phases):
             full = np.zeros((side * 3, side * 3, 4), np.uint8)
             full[center[0], center[1], :3] = np.clip(np.rint(contexts[phase]), 0, 255).astype(np.uint8)
@@ -425,6 +604,8 @@ def build(output):
                       for i in range(group['phases'])]
             tis, page = export_tiles(frames, alias, candidate)
             decoded = decode_tiles(tis, candidate)
+            frames = [f[PAD:PAD + TILE, PAD:PAD + TILE] if f.shape[:2] == (STRIDE, STRIDE) else f
+                      for f in frames]
             if not all(np.array_equal(d[:, :, 3], f[:, :, 3]) for d, f in zip(decoded, frames)):
                 raise ValueError('BC3 changed the native binary alpha')
             sharp = [sharpness(f) for f in decoded]

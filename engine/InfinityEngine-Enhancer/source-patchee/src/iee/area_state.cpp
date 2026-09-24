@@ -441,11 +441,35 @@ std::optional<water_route2::Match> route2_water_overlay_match(
   static thread_local std::shared_ptr<const game::WedAreaInfo> diagnosticWed;
   static thread_local unsigned loggedReasons = 0;
   static thread_local unsigned identityLogs[2]{};
+  // Called for every fpSEAM batch. A full scan reads every overlay tile of
+  // every slot and weather (AR5200 lava: 4 x 220 x 2), which starved the
+  // frame. The cache only remembers where to look: a positive entry is
+  // revalidated through the same live identity checks on every draw, and a
+  // negative entry expires after a bounded number of calls (fail-closed).
+  struct CachedLookup {
+    const game::CGameArea* area{};
+    unsigned texture{};
+    int width{};
+    int height{};
+    bool positive{};
+    std::size_t slot{};
+    std::uint32_t tile{};
+    std::size_t weather{};
+    std::uint64_t expiresAtCall{};
+  };
+  constexpr std::size_t kLookupCacheSize = 32;
+  constexpr std::uint64_t kNegativeLookupCalls = 256;
+  static thread_local std::array<CachedLookup, kLookupCacheSize> lookupCache{};
+  static thread_local std::size_t lookupCacheNext = 0;
+  static thread_local std::uint64_t lookupCalls = 0;
   if (diagnosticWed != wed) {
     diagnosticWed = wed;
     loggedReasons = 0;
     identityLogs[0] = identityLogs[1] = 0;
+    lookupCache = {};
+    lookupCacheNext = 0;
   }
+  ++lookupCalls;
   const auto reject = [&ctx, &wed](unsigned reason, std::uint32_t count = 0) {
     const unsigned bit = 1u << reason;
     if (ctx.cfg.enableTilePageDiagnostics && !(loggedReasons & bit)) {
@@ -457,7 +481,22 @@ std::optional<water_route2::Match> route2_water_overlay_match(
   };
   const auto* area = ctx.activeArea.load();
   if (!wed || !area || wed->overlays.size() < 2 || wed->overlays.size() > 5 ||
+      !water_route2::has_overlay_page(wed->areaResrefView(), static_cast<std::uint32_t>(width),
+                                      static_cast<std::uint32_t>(height)) ||
       resolve_active_area(ctx.infGame.load(), *ctx.manifest) != area) return std::nullopt;
+  CachedLookup* cached = nullptr;
+  for (auto& entry : lookupCache) {
+    if (entry.area == area && entry.texture == texture && entry.width == width &&
+        entry.height == height) {
+      cached = &entry;
+      break;
+    }
+  }
+  if (cached && !cached->positive) {
+    if (lookupCalls < cached->expiresAtCall) return std::nullopt;
+    *cached = {};
+    cached = nullptr;
+  }
   std::array<std::string_view, 5> slots{};
   for (std::size_t i = 0; i < wed->overlays.size(); ++i) {
     slots[i] = wed->overlays[i].tilesetResrefView();
@@ -493,76 +532,132 @@ std::optional<water_route2::Match> route2_water_overlay_match(
       !core::safe_read(baseWrapper, baseTile) || !baseTile.tis ||
       !core::safe_read(baseTile.tis, baseTis) ||
       !game::read_runtime_resref(baseTis.resref, baseName)) return reject(5, baseCount);
-  for (std::size_t slot = 1; slot < wed->overlays.size(); ++slot) {
-    if (!tileSets[slot] || slots[slot].empty()) continue;
-    void** overlayResources = nullptr;
-    std::uint32_t overlayCount = 0;
-    if (!readResources(tileSets[slot], overlayResources, overlayCount) || !overlayCount) continue;
+
+  struct SlotState {
+    void** resources{};
+    std::uint32_t count{};
+    std::array<game::CResTileSet*, 2> ownedTis{};
+  };
+  const auto readSlot = [&](std::size_t slot, SlotState& state) {
+    if (!tileSets[slot] || slots[slot].empty()) return false;
+    if (!readResources(tileSets[slot], state.resources, state.count) || !state.count) return false;
     // The WED names the dry TIS. Native wet states may draw the separate
     // resource owned by the same tile wrapper; never infer it from a suffix.
-    std::array<game::CResTileSet*, 2> ownedTis{};
-    if (!core::safe_read(reinterpret_cast<const std::byte*>(tileSets[slot]) +
-                        offsetof(game::CInfTileSet, tis), ownedTis)) continue;
-    for (std::uint32_t i = 0; i < overlayCount; ++i) {
-      void* wrapper = nullptr;
-      if (!core::safe_read(overlayResources + i, wrapper) || !wrapper) continue;
-      game::CResTile* rainResource = nullptr;
-      (void)core::safe_read(reinterpret_cast<const std::byte*>(wrapper) +
-                           offsetof(game::CInfTileResourcePrefix, rainResource), rainResource);
-      const std::array<const void*, 2> variants{wrapper, rainResource};
-      for (std::size_t weather = 0; weather < variants.size(); ++weather) {
-        if (!variants[weather] || !ownedTis[weather]) continue;
-        game::CRes variantTis{};
-        game::ResrefBuffer variantName{};
-        if (!core::safe_read(ownedTis[weather], variantTis) ||
-            !game::read_runtime_resref(variantTis.resref, variantName)) continue;
-        const auto expectedName = weather == 0 ? slots[slot] : game::resref_view(variantName);
-        PvrzTintCandidate candidate{};
-        if (!read_pvrz_tint_candidate(variants[weather], i, expectedName, candidate)) continue;
-        // CResPVR::texture is an engine slot, not the live GL name. Resolve per draw.
-        if (candidate.texture == 0 || candidate.texture >= 512) continue;
-        const auto* descriptor = validatedTextureTable +
-                                 static_cast<std::size_t>(candidate.texture) * 0x28;
-        unsigned glName = 0;
-        int backingWidth = 0, backingHeight = 0;
-        std::uint8_t deletePending = 0;
-        if (!core::safe_read(descriptor, glName) ||
-            !core::safe_read(descriptor + 0x04, backingWidth) ||
-            !core::safe_read(descriptor + 0x08, backingHeight) ||
-            !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
-            backingWidth != width || backingHeight != height || glName != texture ||
-            candidate.width != width || candidate.height != height) continue;
-        const water_route2::Query query{
-            game::resref_view(wedName), game::resref_view(baseName), expectedName,
-            game::resref_view(candidate.resref), {slots.data(), wed->overlays.size()},
-            static_cast<std::uint32_t>(slot), wed->baseWidth, wed->baseHeight,
-            baseCount, overlayCount, wed->overlays[slot].coverageCells,
-            static_cast<std::uint32_t>(width), static_cast<std::uint32_t>(height)};
-        const auto match = water_route2::match(query);
-        if (!match && ctx.cfg.enableTilePageDiagnostics && !(loggedReasons & (1u << 7))) {
-          loggedReasons |= 1u << 7;
-          LOG_INFO("WATER_ROUTE2 unmatched owned overlay wed={} base={} overlay={} page={} "
-                   "grid={}x{} baseTiles={} overlayTiles={} coverage={} slots={}",
-                   query.wed, query.baseTis, query.overlayTis, query.page,
-                   query.gridWidth, query.gridHeight, query.baseTileCount,
-                   query.overlayTileCount, query.overlayCoverageCells, query.slots.size());
+    return core::safe_read(reinterpret_cast<const std::byte*>(tileSets[slot]) +
+                               offsetof(game::CInfTileSet, tis), state.ownedTis);
+  };
+  // Tile resource drawn for `weather` (0 dry wrapper, 1 wrapper-owned rain resource).
+  const auto variantOf = [](void* wrapper, std::size_t weather) -> const void* {
+    if (!wrapper || weather == 0) return wrapper;
+    game::CResTile* rainResource = nullptr;
+    (void)core::safe_read(reinterpret_cast<const std::byte*>(wrapper) +
+                         offsetof(game::CInfTileResourcePrefix, rainResource), rainResource);
+    return rainResource;
+  };
+  // One full live identity check of overlay tile `i`. `validPvr` receives the
+  // page resource when the tile is a well-formed candidate for another texture.
+  const auto probe = [&](std::size_t slot, const SlotState& state, std::uint32_t i,
+                         std::size_t weather, const game::CResPVR** validPvr)
+      -> std::optional<water_route2::Match> {
+    void* wrapper = nullptr;
+    if (!core::safe_read(state.resources + i, wrapper) || !wrapper) return std::nullopt;
+    const void* variant = variantOf(wrapper, weather);
+    if (!variant || !state.ownedTis[weather]) return std::nullopt;
+    game::CRes variantTis{};
+    game::ResrefBuffer variantName{};
+    if (!core::safe_read(state.ownedTis[weather], variantTis) ||
+        !game::read_runtime_resref(variantTis.resref, variantName)) return std::nullopt;
+    const auto expectedName = weather == 0 ? slots[slot] : game::resref_view(variantName);
+    PvrzTintCandidate candidate{};
+    if (!read_pvrz_tint_candidate(variant, i, expectedName, candidate)) return std::nullopt;
+    // CResPVR::texture is an engine slot, not the live GL name. Resolve per draw.
+    if (candidate.texture == 0 || candidate.texture >= 512) return std::nullopt;
+    const auto* descriptor = validatedTextureTable +
+                             static_cast<std::size_t>(candidate.texture) * 0x28;
+    unsigned glName = 0;
+    int backingWidth = 0, backingHeight = 0;
+    std::uint8_t deletePending = 0;
+    if (!core::safe_read(descriptor, glName) ||
+        !core::safe_read(descriptor + 0x04, backingWidth) ||
+        !core::safe_read(descriptor + 0x08, backingHeight) ||
+        !core::safe_read(descriptor + 0x0D, deletePending) || deletePending != 0 ||
+        backingWidth != width || backingHeight != height || glName != texture ||
+        candidate.width != width || candidate.height != height) {
+      game::CResTile tile{};
+      if (validPvr && core::safe_read(variant, tile)) *validPvr = tile.pvr;
+      return std::nullopt;
+    }
+    const water_route2::Query query{
+        game::resref_view(wedName), game::resref_view(baseName), expectedName,
+        game::resref_view(candidate.resref), {slots.data(), wed->overlays.size()},
+        static_cast<std::uint32_t>(slot), wed->baseWidth, wed->baseHeight,
+        baseCount, state.count, wed->overlays[slot].coverageCells,
+        static_cast<std::uint32_t>(width), static_cast<std::uint32_t>(height)};
+    const auto match = water_route2::match(query);
+    if (!match && ctx.cfg.enableTilePageDiagnostics && !(loggedReasons & (1u << 7))) {
+      loggedReasons |= 1u << 7;
+      LOG_INFO("WATER_ROUTE2 unmatched owned overlay wed={} base={} overlay={} page={} "
+               "grid={}x{} baseTiles={} overlayTiles={} coverage={} slots={}",
+               query.wed, query.baseTis, query.overlayTis, query.page,
+               query.gridWidth, query.gridHeight, query.baseTileCount,
+               query.overlayTileCount, query.overlayCoverageCells, query.slots.size());
+    }
+    if (match && ctx.cfg.enableTilePageDiagnostics && identityLogs[weather] < 8) {
+      ++identityLogs[weather];
+      std::uint8_t nativeAlpha = 0;
+      (void)core::safe_read(areaBytes + offsetof(game::CGameArea, m_waterAlpha), nativeAlpha);
+      LOG_INFO("WATER_ROUTE2 identity wed={} nativeAlpha={} registry={} slot={} baseTiles={} overlayTiles={} "
+               "page={} engineSlot={} glName={} q={}", game::resref_view(wedName), nativeAlpha, match->registryVersion, slot,
+               baseCount, state.count, game::resref_view(candidate.resref),
+               candidate.texture, glName, match->approvedStrength);
+    }
+    return match;
+  };
+  const auto accept = [&](const std::optional<water_route2::Match>& match) {
+    return ctx.activeArea.load() == area && ctx.wed.load() == wed
+               ? match : std::optional<water_route2::Match>{};
+  };
+
+  if (cached) {
+    SlotState state{};
+    if (cached->slot < wed->overlays.size() && readSlot(cached->slot, state) &&
+        cached->tile < state.count) {
+      if (const auto match = probe(cached->slot, state, cached->tile, cached->weather, nullptr))
+        return accept(match);
+    }
+    *cached = {};
+  }
+
+  for (std::size_t slot = 1; slot < wed->overlays.size(); ++slot) {
+    SlotState state{};
+    if (!readSlot(slot, state)) continue;
+    for (std::size_t weather = 0; weather < 2; ++weather) {
+      // Tiles of one page share its CResPVR: once a well-formed tile of that
+      // page failed the texture check, its siblings cannot pass it either.
+      std::array<const game::CResPVR*, 8> rejectedPages{};
+      std::size_t rejectedCount = 0;
+      for (std::uint32_t i = 0; i < state.count; ++i) {
+        if (rejectedCount) {
+          void* wrapper = nullptr;
+          game::CResTile tile{};
+          const void* variant = core::safe_read(state.resources + i, wrapper)
+                                    ? variantOf(wrapper, weather) : nullptr;
+          if (variant && core::safe_read(variant, tile) && tile.pvr &&
+              std::find(rejectedPages.begin(), rejectedPages.begin() + rejectedCount,
+                        tile.pvr) != rejectedPages.begin() + rejectedCount) continue;
         }
-        if (match) {
-          if (ctx.cfg.enableTilePageDiagnostics && identityLogs[weather] < 8) {
-            ++identityLogs[weather];
-            std::uint8_t nativeAlpha = 0;
-            (void)core::safe_read(areaBytes + offsetof(game::CGameArea, m_waterAlpha), nativeAlpha);
-            LOG_INFO("WATER_ROUTE2 identity wed={} nativeAlpha={} registry={} slot={} baseTiles={} overlayTiles={} "
-                     "page={} engineSlot={} glName={} q={}", game::resref_view(wedName), nativeAlpha, match->registryVersion, slot,
-                     baseCount, overlayCount, game::resref_view(candidate.resref),
-                     candidate.texture, glName, match->approvedStrength);
-          }
-          return ctx.activeArea.load() == area && ctx.wed.load() == wed
-                     ? match : std::optional<water_route2::Match>{};
+        const game::CResPVR* validPvr = nullptr;
+        if (const auto match = probe(slot, state, i, weather, &validPvr)) {
+          lookupCache[lookupCacheNext++ % kLookupCacheSize] =
+              {area, texture, width, height, true, slot, i, weather, 0};
+          return accept(match);
         }
+        if (validPvr && rejectedCount < rejectedPages.size()) rejectedPages[rejectedCount++] = validPvr;
       }
     }
   }
+  lookupCache[lookupCacheNext++ % kLookupCacheSize] =
+      {area, texture, width, height, false, 0, 0, 0, lookupCalls + kNegativeLookupCalls};
   return reject(6);
 }
 

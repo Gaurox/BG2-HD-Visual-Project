@@ -17,6 +17,8 @@ compatible, pas des recettes universelles.
 | Frange sombre, cordes/gréement épais ou en escalier devant l'eau | alpha HD issu du masque x1 révèle le fond noir du RGB x4 | C actuel : silhouette RGB x4 + liseré recoloré ([CONTOUR_MATTE_PIPELINE](CONTOUR_MATTE_PIPELINE.md)) ; utilisable provisoirement, refonte puis réapplication globale planifiées |
 | Art local, ombres ou reflets disparus | alpha central 0/255 ou passe secondaire perdue | restaurer l'alpha natif effectif et la composition primaire/secondaire |
 | Marche de luminosité | opacités primaire/secondaire désaccordées | apparier les contributions ; AR0300N v10 utilise 160/160 localement |
+| Grille régulière sur un pavage A–D après SeedVR | raccords natifs des tuiles 64 px amplifiés (×1,2 → ×1,56) | recoller les bords en x1 avant interpolation ; `seedvr-torus` ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)) |
+| Map 30 FPS qui rame (FPS ÷5), CPU hook faible | scan DLL de toutes les tuiles overlay à chaque draw (multi-slots) | cache de correspondance overlay dans la DLL (build ≥ `ar5200-lava-torus-30fps-20260924-v1`) |
 | Mosaïque sous pluie | seule la ressource sèche a été traitée | créer/router la ressource alternative pluie exacte |
 | Route2 invisible | WED/TIS/page/nom GL non reconnu ou hash divergent | corriger l'identité exacte du registre ; garder q0 pour les cas non reconnus |
 | Eau parfois brune | `CResPVR::texture` pris pour un nom GL au lieu d'un slot moteur | runtime avec résolution slot→descripteur→nom GL ; ne pas retraiter les PVRZ |
@@ -34,6 +36,7 @@ compatible, pas des recettes universelles.
 | `pool-wtpool` | AR1000 jour v5 | bilinéaire x4 périodique sans SeedVR ; 6→36 linéaire/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | AR1000 jour ; AR1000N exclu |
 | `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408/AR0703 valident A → B ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; C AR0703 historiquement validé mais désormais provisoire | contrat famille ; pluie non observée en intérieur AR0703 |
 | `swamp-wtswam` standard | AR0500 + AR0500N (2026-09-24) | A SeedVR 7B x4 ; B trig x1 → SeedVR vidéo, 72 phases/30 Hz, cycle 2,4 s ; matériau 5 ; **q0.70 sec+pluie** | A/B validés ingame jour+nuit ; pluie non observée ; C installé mais provisoire |
+| `lava-wtlava` standard | AR5200 (2026-09-24) | B `seedvr-torus` : recollage x1 des bords 64 px, trig 12 clés → 216 phases/7,2 s, SeedVR vidéo motif+marge enroulée, périodique+lisse σ8 ; matériau 1 **q0** ; C provisoire validé avec réserve | contrat famille ; autres maps lave : adjacences tore à vérifier ; pluie non observée |
 | `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |
@@ -46,7 +49,7 @@ ci-dessus sont des recettes acquises mais non installées. État standard couran
 [`manifests/water-standard-map-status-20260923-v1.json`](manifests/water-standard-map-status-20260923-v1.json).
 Apollo est rejeté pour les overlays liquides ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)).
 
-AR0512 et AR1604 restent non qualifiées. Les familles huile, lave, goo et intérieures n'héritent
+AR0512 et AR1604 restent non qualifiées. Les familles huile, goo et intérieures n'héritent
 pas automatiquement des paramètres lac/piscine/marais.
 
 ## Composition connue

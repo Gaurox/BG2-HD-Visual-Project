@@ -2,8 +2,8 @@
   "schema": "bg2-water-route2-registry-current-v1",
   "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated only by pipeline/scripts/Install-WaterRuntime.ps1.",
   "registry": {
-    "path": "pipeline/water/requests/ar0500n-water-30fps-20260924-v1/registry-v3.json",
-    "sha256_lf": "22AAEF6D3812B69EDDAB93B84770775929F794F082B2DFD8B10351BFB61142E6"
+    "path": "pipeline/water/requests/ar5200-lava-torus-30fps-20260924-v1/registry-v3.json",
+    "sha256_lf": "6BCA93192C533D19E9C87F67D509A98590BBE5A86D6BA040E50EBCDCC533D07A"
   },
   "identities": [
     {
@@ -83,9 +83,57 @@
       "overlay": "YF7F6ER",
       "slot": 1,
       "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTA1",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTB1",
+      "slot": 2,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTC1",
+      "slot": 3,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTD1",
+      "slot": 4,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTA1R",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTB1R",
+      "slot": 2,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTC1R",
+      "slot": 3,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR5200",
+      "overlay": "YLVTD1R",
+      "slot": 4,
+      "state": "candidate-installable-pending-qa"
     }
   ],
-  "dll_sha256": "0B24B4B8D53E52B9FA8E659AF9BC542511B0B4F69454ACA4B96AE28DC8D73EB4",
-  "installed_by": "backups/water/ar0500n-water-30fps-20260924-v1/runtime/install-backup.json",
+  "dll_sha256": "856C2D8545776126D650CAA34AAA19D2582C862765E839D4DDEDA5891398A6F0",
+  "installed_by": "backups/water/ar5200-lava-torus-30fps-20260924-v1/runtime/install-backup.json",
   "updated": "2026-09-24"
 }

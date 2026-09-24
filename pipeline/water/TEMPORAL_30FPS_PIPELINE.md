@@ -1,7 +1,8 @@
 # Eau WED à 30 FPS réels — procédé commun aux familles
 
 Recette **validée ingame** sur AR1600 (`lake`), AR0408/AR0703 (`pool`), AR2100 (`sewage`) et
-AR0500/AR0500N (`swamp`, sec observé ; pluie non observée). Référence fondatrice AR1600 :
+AR0500/AR0500N (`swamp`, sec observé ; pluie non observée), AR5200 (`lava`, méthode `seedvr-torus`).
+Référence fondatrice AR1600 :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
 QA [`manifests/ar1600-water-30fps-user-qa-20260923-v2.json`](manifests/ar1600-water-30fps-user-qa-20260923-v2.json).
 Pour les autres familles : **proposition ou blocage explicite**, chaque map garde sa propre QA. Déroulé agent
@@ -105,7 +106,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | oil WTOIL | AR0413 | 6 | 6 | 2,4 s | 72 | seedvr | oui | contrat alpha0 historique |
 | lake_teal WTLAKA–D | AR3000 | 8 | 8/0/0/0 | explicite (8×8/15 = 4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM chunk unique |
 | brown_flow WT5000A–D | AR5203 | 8 | 8/0/0/0 | explicite (4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM |
-| lava WTLAVA–D | AR0011 | 12 | 12/0/0/12 | explicite (12×12/15 = 9,6 s ?) | 288 > 225 | bilinear | non | capacité page ; lookup 11 d'AR5200 |
+| lava WTLAVA–D | AR5200 | 12 (`keyframes`, pas la lookup `[0…9,11]`) | 11/11/0/0 | **7,2 s figé** | 216 | seedvr-torus | non | **validé ingame AR5200** ; autres maps lave : tore à vérifier |
 
 ### Validations par map
 
@@ -117,7 +118,33 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR0703 | pool | 72 / 2,4 s, q0,70 | `ar0703-water-30fps-20260923-v1` | validée — `ar0703-temporal-30fps-user-qa-20260923-v1.json` | pluie q0 non observée (intérieur) |
 | AR0500 | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500-water-30fps-20260924-v1` | validée jour — `ar0500-temporal-30fps-user-qa-20260924-v1.json` | ratios 1,20/1,43 sec et 1,37/1,34 pluie acceptés pour QA ingame ; pluie non confirmée |
 | AR0500N | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500n-water-30fps-20260924-v1` | validée nuit — `ar0500n-temporal-30fps-user-qa-20260924-v1.json` | mêmes ratios hors seuil acceptés avant installation ; pluie non confirmée |
+| AR5200 | lava | 220 / 7,3 s, bilinéaire, lookup 11 | `ar5200-water-30fps-20260924-v1` | **rejetée** — `ar5200-temporal-30fps-user-qa-20260924-v1.json` | lag 12 → 2,8 FPS : scan DLL par draw (corrigé, voir plus bas) |
+| AR5200 | lava | 216 / 7,2 s, `seedvr-torus`, q0 | `ar5200-lava-torus-30fps-20260924-v1` | validée — `ar5200-temporal-30fps-user-qa-20260924-v2.json` | pas max/médian 1,53 (fondu de boucle) accepté ; 60 FPS mesurés ; pluie non observée |
 
-Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) non vérifié en jeu ;
-lave émissive non qualifiée route2 ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;
+## Méthode `seedvr-torus` (pavages A–D, lave AR5200)
+
+Condition : adjacences WED ⊆ tore du layout (`torus_pairs`), sinon `prepare` refuse. Mesures AR5200 :
+raccords natifs x1 1,16/1,13 × pas médian ; SeedVR sur les 12 clés brutes les amplifiait en grille (1,56).
+
+| Étape | Paramètre (`TORUS_DEFAULTS`) | Résultat AR5200 |
+|---|---|---|
+| Recollage x1 des bords de tuile 64 px, avant interpolation | bande 4, σ 3 le long du bord, gain 0,8 | 0,90 / 1,03 |
+| SeedVR 7B, un chunk, motif 128 + marge enroulée 32 px x1 (192 → 768) | `seedvr_margin_x1` 32 | 249 frames, 10 Go VRAM |
+| Périodique + lisse (Moisan), saut de bord passe-bas | `periodic_sigma_x4` 8 (σ 0 = ligne floue 0,37) | bouclage 1,01/1,11 ; tuiles 1,03/1,12 |
+| Marges d'atlas | voisin réel du tore (`torus_tiles`) | — |
+
+Plan : `method: seedvr-torus`, `keyframes`, `cycle_seconds` sur le groupe sec (écrits par `plan_water_map.py`
+depuis le standard) ; la pluie hérite. Pluie à clés identiques : sortie SeedVR du sec réutilisée.
+Reprise post-traitement sans ré-inférence : `seedvr-prompt.json` identique + `seedvr-out` complet.
+
+## Runtime : correspondance overlay par draw
+
+`route2_water_overlay_match` (DLL) relisait toutes les tuiles de tous les slots et météos à chaque batch fpSEAM
+(AR5200 : 4 × 220 × 2) → ~6,5 M `safe_read`/image. Correctif (build `ar5200-lava-torus-30fps-20260924-v1`) :
+rejet immédiat si la taille de texture n'est pas une page overlay du registre de la WED (`has_overlay_page`),
+cache positif revalidé à chaque draw, cache négatif expirant après 256 appels, dédoublonnage par page PVR.
+Mesuré : AR5200 60 FPS, `safe_read` ~10⁵ / 5 s (4·10⁸ avant).
+
+Hors producteur : shader multi-slots (A–D = 4 identités sur une même WED) vérifié en jeu sur AR5200 (q0) ;
+lave émissive procédurale route2 non qualifiée (non utilisée : q0) ; écume/art fixe peint dans le TIS de base (AR1600) non animé ;
 surfaces ARE/BAM → timeline 30 FPS du pack d'animation, même durée.

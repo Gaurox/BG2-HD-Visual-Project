@@ -194,6 +194,20 @@ std::optional<Match> match(const Query& query) noexcept {
                matched->overlayTis != matched->slots[matched->overlaySlot]};
 }
 
+bool has_overlay_page(std::string_view wed, std::uint32_t width, std::uint32_t height) noexcept {
+  const auto registry = g_registry.load(std::memory_order_acquire);
+  if (!registry) return false;
+  for (const auto* entry : registry->entries) {
+    if (resref_view(entry->wed) != wed) continue;
+    for (std::uint32_t index = 0; index < entry->fileCount; ++index) {
+      const auto& evidence = generated::kFiles[entry->fileStart + index];
+      if (evidence.kind == RegistryFileKind::OverlayPvrz && evidence.width == width &&
+          evidence.height == height) return true;
+    }
+  }
+  return false;
+}
+
 std::uint32_t approved_material(std::string_view wed, std::span<const std::string_view> slots,
                                 std::uint32_t slot) noexcept {
   const auto registry = g_registry.load(std::memory_order_acquire);
