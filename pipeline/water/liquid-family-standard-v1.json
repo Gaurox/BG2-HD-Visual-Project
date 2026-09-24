@@ -2,7 +2,7 @@
   "schema": "bg2-liquid-family-standard-v1",
   "version": 1,
   "date": "2026-09-24",
-  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200; oil A/B on AR0503; brown_flow A/B/C on AR5000. Current C remains provisionally usable pending a global redesign and reapplication.",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200; oil A/B on AR0503; brown_flow A/B/C on AR5000; lake_teal B/C on AR6300. Current C remains provisionally usable pending a global redesign and reapplication.",
   "sources": {
     "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
     "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
@@ -28,6 +28,10 @@
       "spatial": "pipeline/water/manifests/ar5000-spatial-user-qa-20260925-v1.json",
       "temporal": "pipeline/water/manifests/ar5000-temporal-30fps-user-qa-20260925-v1.json",
       "contour": "pipeline/water/manifests/ar5000-contour-user-qa-20260925-v1.json"
+    },
+    "lake_teal_chain_qa": {
+      "temporal": "pipeline/water/manifests/ar6300-temporal-30fps-user-qa-20260925-v1.json",
+      "contour": "pipeline/water/manifests/ar6300-contour-user-qa-20260925-v1.json"
     },
     "lava_full_chain_qa": {
       "temporal": "pipeline/water/manifests/ar5200-temporal-30fps-user-qa-20260924-v2.json",
@@ -84,9 +88,18 @@
      "witness": "AR0503-A-B-C;AR0413-historical"},
     {"id": "lake_teal", "overlays": ["WTLAKA", "WTLAKB", "WTLAKC", "WTLAKD"],
      "layout": [["WTLAKA", "WTLAKB"], ["WTLAKC", "WTLAKD"]], "spatial_method": "seedvr",
-     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
-                  "why": "WED speed byte 8/0/0/0 across members: loop length not established"},
-     "witness": "AR3000"},
+     "spatial_status": "built-only-AR6300-no-central-cells",
+     "temporal": {"material_id": 1, "method": "seedvr-torus", "cycle": "fixed", "cycle_seconds": 4.2667,
+                  "torus": {"heal_gain": 0.0, "temporal_harmonics": 12, "equalize_detail": true,
+                            "periodic_sigma_x4": 2.0},
+                  "status": "validated-ingame-AR6300",
+                  "why_cycle": "8 keys x 16 = 128 phases; AR6300 WED speeds 0/0/0/0 (no reference), AR3000 8/0/0/0: same 4.27 s as brown_flow, accepted in game",
+                  "why_torus": "all 43 AR6300 adjacencies on the torus; native borders neutral (1.02/1.02): heal off",
+                  "why_no_deridge": "deridge removed real content on this contrasted texture (mean change 0.47) and SeedVR turned it into a visible grid (AR6300 v2 rejected before install)",
+                  "why_periodic_sigma": "sigma 8 left the wrap at 1.85/1.49; sigma 2 -> 1.16/1.07"},
+     "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-AR6300-alpha160-current-C-provisional",
+                 "spline_trial": "spline fit 1 (x4) and fit 4 + AA tried on AR6300, not retained: more angular, or new steps at window borders"},
+     "witness": "AR6300-B-C;AR3000-historical"},
     {"id": "brown_flow", "overlays": ["WT5000A", "WT5000B", "WT5000C", "WT5000D"],
      "layout": [["WT5000A", "WT5000B"], ["WT5000C", "WT5000D"]], "spatial_method": "seedvr",
      "spatial_status": "validated-ingame-AR5000",

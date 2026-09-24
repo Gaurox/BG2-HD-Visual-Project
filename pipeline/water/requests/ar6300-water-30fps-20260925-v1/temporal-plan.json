@@ -1,0 +1,36 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar6300-water-x4-20260925-v1",
+  "wed": "AR6300",
+  "selection": "maps/water-batches/runs/ar6300-water-x4-20260925-v1/selection.json",
+  "source_wed": "maps/water-batches/runs/ar6300-water-x4-20260925-v1/override-candidate/AR6300.WED",
+  "groups": [
+    {
+      "id": "lake_teal",
+      "aliases": {
+        "WTLAKA": "YFF6R2",
+        "WTLAKB": "YFPCT0",
+        "WTLAKC": "YF0OEV",
+        "WTLAKD": "YFNF0S"
+      },
+      "material_id": 1,
+      "method": "seedvr-torus",
+      "cycle_seconds": 4.2667,
+      "torus": {
+        "heal_gain": 0.0,
+        "temporal_harmonics": 12,
+        "equalize_detail": true
+      }
+    },
+    {
+      "id": "lake_teal_rain",
+      "aliases": {
+        "WTLAKAR": "YFF6R2R",
+        "WTLAKBR": "YFPCT0R",
+        "WTLAKCR": "YF0OEVR",
+        "WTLAKDR": "YFNF0SR"
+      },
+      "material_id": 1,
+      "rain_of": "lake_teal"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR6300",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T23:08:35+00:00",
+  "run": "maps/water-batches/runs/ar6300-contour-matte-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v1/override-candidate/manifest.json",
+    "sha256": "164D1714861FF86366346DC4E235751E4CB45696EE841D0C80B884FB1CD9FD7B"
+  },
+  "files": {
+    "A630000.PVRZ": {
+      "sha256": "F25320FD9B9E31DFBDBD16F9552E550E68AF02A50CD133F2D5996760C740072B",
+      "bytes": 1663499
+    },
+    "A630001.PVRZ": {
+      "sha256": "473BD5AAD7511AA8261BBCBD7A18F5EFA35D369A1D31F3364CD9F81A3A7AA400",
+      "bytes": 1596627
+    },
+    "A630006.PVRZ": {
+      "sha256": "40C3C4193F1815B0FE9808C93C18CE266100B4725B0D99A214B12C464C8CA983",
+      "bytes": 1578995
+    },
+    "A630007.PVRZ": {
+      "sha256": "0A7787BFBC33E0A99C24EB31FDDF73F2B3F3A928746AEF0FF2228C191FF0C4A5",
+      "bytes": 1457499
+    },
+    "A630008.PVRZ": {
+      "sha256": "FBD12E1E3C98F5AA3643B2BD33561C24A9AA78B374DF225E7DC254F027DAEEEC",
+      "bytes": 1550298
+    },
+    "A630009.PVRZ": {
+      "sha256": "44E620995DBB369E365F70DAA9A12502FCC507C390A24F3B389D24DD775D66A0",
+      "bytes": 1506816
+    },
+    "A630010.PVRZ": {
+      "sha256": "136EB81D16932A15CBA7D25EF7549E4587D81F28F6BC698AB909B7AAD5895405",
+      "bytes": 1603021
+    },
+    "A630011.PVRZ": {
+      "sha256": "4087C563A7C609B719F5BA6DA21A5399DA841C0EAF4317BB781CCC57297C29C8",
+      "bytes": 1651698
+    },
+    "A630014.PVRZ": {
+      "sha256": "4400C428A4EBD9A0ADEFDC62302A06D9A09F5AAD73F52F4F2200C1B0E7F43381",
+      "bytes": 1405779
+    },
+    "A630015.PVRZ": {
+      "sha256": "85558D2D11A5EB708DDCEED1CF07B25764B16220B36E2269F7F7F12716F77E55",
+      "bytes": 327608
+    }
+  },
+  "override_backup_receipt": "backups/water/ar6300-contour-matte-20260925-v1/override-backup-20260925-010828/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v1/build.json",
+    "sha256": "F12584D3E714F202AE65A26AB509167CF0E8A0FC2FA6846AF6476451DE86115E"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v1/prepare.json",
+    "sha256": "898D1E6A22FF5AF995BBCA926B9A88B00A4FB79137009BE4D2BAA34AF212DD6D"
+  },
+  "note": "36 pairs, WATER_ALPHA 160 (composition not yet seen in game), central_water default (no central cells)"
+}

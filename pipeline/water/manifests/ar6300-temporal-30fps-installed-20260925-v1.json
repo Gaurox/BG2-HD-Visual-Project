@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR6300",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T23:08:35+00:00",
+  "run": "maps/water-batches/runs/ar6300-water-30fps-20260925-v3",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar6300-water-30fps-20260925-v3/candidate/manifest.json",
+    "sha256": "F23A34CF7761B8A5FD0629F8FED381639C3EC8CD1465668E038E0D386F714207"
+  },
+  "files": {
+    "AR6300.WED": {
+      "sha256": "CF292E87BA5C021581D2768DEEA520269229DD9EBD8042ADC2188A93C7767C9F",
+      "bytes": 33384
+    },
+    "Y0OEV00.PVRZ": {
+      "sha256": "3CF3ECEF4882C3416F08A5EA4679997A4648F32D692DB5189A99987AF4C784EF",
+      "bytes": 2306928
+    },
+    "Y0OEVR00.PVRZ": {
+      "sha256": "3CF3ECEF4882C3416F08A5EA4679997A4648F32D692DB5189A99987AF4C784EF",
+      "bytes": 2306928
+    },
+    "YF0OEV.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YF0OEVR.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YF6R200.PVRZ": {
+      "sha256": "930BF74D43F87157B9B5050EA14CC2F883DAB9D74A91C9A65CC7666336236909",
+      "bytes": 2298227
+    },
+    "YF6R2R00.PVRZ": {
+      "sha256": "930BF74D43F87157B9B5050EA14CC2F883DAB9D74A91C9A65CC7666336236909",
+      "bytes": 2298227
+    },
+    "YFF6R2.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YFF6R2R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YFNF0S.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YFNF0SR.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YFPCT0.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YFPCT0R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YNF0S00.PVRZ": {
+      "sha256": "A9C51EAC7E4C50F95046675599AEF8819AF167591680A1CD7622745615761DD8",
+      "bytes": 2265846
+    },
+    "YNF0SR00.PVRZ": {
+      "sha256": "A9C51EAC7E4C50F95046675599AEF8819AF167591680A1CD7622745615761DD8",
+      "bytes": 2265846
+    },
+    "YPCT000.PVRZ": {
+      "sha256": "00E4509FCB9E161BD5F03CEFA926FC35D430F3B6DA91532A05669D36C7638DDD",
+      "bytes": 2351140
+    },
+    "YPCT0R00.PVRZ": {
+      "sha256": "00E4509FCB9E161BD5F03CEFA926FC35D430F3B6DA91532A05669D36C7638DDD",
+      "bytes": 2351140
+    }
+  },
+  "override_backup_receipt": "backups/water/ar6300-water-30fps-20260925-v3/override/override-backup-20260925-010827/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar6300-water-30fps-20260925-v3/build.json",
+    "sha256": "8A501BE26ED28A8FAF83EDBD5C50B31D6894293A3A5D3952DCDB1277FB9BCB3E"
+  },
+  "runtime": {
+    "receipt": "backups/water/ar6300-water-30fps-20260925-v3/runtime/install-backup.json",
+    "dll_sha256": "EE2B938B513751E0B2C68212B29DC8F2E3D0410B1799074EB108BA358D16649E",
+    "registry": {
+      "path": "pipeline/water/requests/ar6300-water-30fps-20260925-v3/registry-v3.json",
+      "sha256_lf": "0EE10C9799852DCEE7004F52FBE32CA6E9A01277E61776CDFB25F3FC3C6B9064"
+    }
+  },
+  "note": "lake_teal seedvr-torus 2x2, 128 phases/4.27 s (no vanilla reference: speeds 0), heal off, harmonics<=12 + detail eq, periodic sigma 2; v2 deridge rejected before install (created a grid); A built only (no central cells)"
+}

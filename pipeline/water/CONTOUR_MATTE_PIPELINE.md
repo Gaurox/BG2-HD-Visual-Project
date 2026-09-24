@@ -82,7 +82,7 @@ composition de paire non encore vue en jeu.
 | WTSWAM | AR1000N / AR1607 / AR1800 | 128 / **100** / 128 | 37 / 348 / 94 | 0 / 525 / 7 | 0 / 1 / 0 | oui |
 | WTSEW | AR0404 / AR2100 | 128 | 138 / 169 | 2 / 39 | 0 | oui |
 | WTOIL | AR0413 / AR0503 | 128 | 227 / 67 | 349 / 84 | 0 | oui ; **AR0503 installé** ; AR0413 : contrat alpha0 historique à surveiller |
-| WTLAKA–D | AR3000 / AR6300 | 128 / **160** | 137 / 36 | 184 / 0 | 1 / 0 | oui |
+| WTLAKA–D | AR3000 / AR6300 | 128 / **160** | 137 / 36 | 184 / 0 | 1 / 0 | oui ; **AR6300 installé** (alpha 160 validé) |
 | WTLAVA–D | AR0011 / AR5200 | 128 | 101 / 287 | 0 | 0 / 5 | oui ; **AR5200 installé** |
 | WT5000A–D | AR5203 / AR5000 | 128 | 267 / 402 | 366 / 321 | 1 / 0 | oui ; **AR5000 installé** (v3 `central_water`) |
 
@@ -96,9 +96,18 @@ composition de paire non encore vue en jeu.
 | AR0500 | WTSWAM | `ar0500-contour-matte-20260924-v1` | validation jour historique — `ar0500-contour-user-qa-20260924-v1.json` | supersédée comme standard par la décision globale du 2026-09-24 |
 | AR0503 | WTOIL | `ar0503-contour-matte-20260924-v1` | validée avec réserve — `ar0503-contour-user-qa-20260924-v1.json` | 67 paires, 84 cellules sans secondaire ; construit sur les pages réparées par A ; mêmes réserves que les autres familles |
 | AR5000 | WT5000A–D | `ar5000-contour-matte-20260924-v3` (v1 : lignes aux jonctions) | validée — `ar5000-contour-user-qa-20260925-v1.json` | `central_water` sur les pages A-v2 (240 interfaces) ; jonction 5,69 → 3,14 |
+| AR6300 | WTLAKA–D | `ar6300-contour-matte-20260925-v1` (réinstallé) | validée — `ar6300-contour-user-qa-20260925-v1.json` | 36 paires, alpha 160 ; essais spline v3 (fit 1) / v5 (fit 4 + AA) non retenus |
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
 | AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
+
+## Essai spline (`--spline-fit`, `--spline-aa`), non retenu
+
+AR6300, 2026-09-25 : le contour de la silhouette x4 est réajusté par spline périodique (`spline_coverage`), alpha
+seulement (le RGB reste réparé sur la silhouette d'origine : sinon les creux comblés propagent du noir, v2).
+Fit 1 x4 : bord net qui suit les marches x1 → jugé plus anguleux en jeu (v3). Fit 4 + AA 0,8 (v5) : plus rond
+mais bosses et marche au bord des fenêtres de calcul. Utilisateur : gain insuffisant, C gaussien conservé.
+Liseré jaune identique dans toutes les variantes : il vient du RGB de bord, pas de la géométrie (piste WATER-006).
 
 ## Limites connues
 

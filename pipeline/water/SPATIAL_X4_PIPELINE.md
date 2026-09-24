@@ -26,7 +26,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | swamp | WTSWAM | seedvr | AR0500 + AR0500N (standard) ; AR1607 historique |
 | sewage | WTSEW | seedvr | AR2100 |
 | oil | WTOIL | seedvr (A validé ; overlay remplacé par B) | AR0503 (A+B+C) ; AR0413 historique |
-| lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
+| lake_teal | WTLAKA–D (2×2) | seedvr, **construit seulement** sur AR6300 (aucune cellule d'eau pure ; WED remplacée par B) | AR6300 (B+C) ; AR3000 historique |
 | brown_flow | WT5000A–D (2×2) | seedvr (A validé ; overlay remplacé par B) | AR5000 (A+B+C) ; AR5203 historique |
 | lava | WTLAVA–D (2×2) | bilinear, **construit seulement** (contextes/topologie pour B `seedvr-torus` ; WED remplacée par B) | AR5200 (B+C) ; AR0011 historique |
 
@@ -77,7 +77,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | swamp | AR0310, AR0500, AR0500N, AR0604, AR1100, AR1106, AR1201, AR1403, AR1500, AR2210, AR2500, AR2600, AR2602, AR2700, AR3025, AR6008 | AR1000N, AR1607, AR1800 |
 | sewage | AR2100 | AR0404 |
 | oil | AR0603, AR1203, AR2102, AR3024 (AR0503 fait) | AR0413 |
-| lake_teal | AR6300 | AR3000 |
+| lake_teal | — (AR6300 fait) | AR3000 |
 | brown_flow | — (AR5000 fait) | AR5203 |
 | lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
 

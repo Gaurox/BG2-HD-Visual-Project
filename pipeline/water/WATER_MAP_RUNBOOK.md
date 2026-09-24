@@ -48,6 +48,8 @@ AR0503 valide `oil` A → B → C (2026-09-24) : A SeedVR x4 (master secondaire 
 1×1 + harmoniques ≤ 9 + égalisation (la v1 sans filtres « grouillait »), C provisoire avec réserve.
 AR5000 valide `brown_flow` A → B → C (2026-09-25) : A avec interfaces par famille (240), B `seedvr-torus` 2×2
 128 phases/4,27 s + décrêtage x1, C `central_water` ; v1/v2 montraient des lignes aux bords de cellules.
+AR6300 valide `lake_teal` B → C (2026-09-25) : A construit seulement (aucune cellule d'eau pure), B `seedvr-torus`
+sans décrêtage (il créait une grille), C gaussien à alpha 160 ; essais spline des contours non retenus.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|

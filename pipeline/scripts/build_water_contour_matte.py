@@ -40,6 +40,28 @@ from mos_decode import decode_pvrz_page
 from workspace_paths import ROOT, get_path
 
 WINDOW = 8
+
+
+def spline_coverage(obj, native, fit_error=1.0, spacing=1.5, supersample=2, band=4, aa_sigma=None, aa_ramp=0.35):
+    """Coverage of the x4 silhouette whose contour (holes and islands kept) is refitted by a
+    periodic spline (SPLINE_ALPHA_MASK_PIPELINE, fit 1.0 validated on AR0900 water) and
+    rasterised by area, instead of the gaussian AA of ``silhouette``.  Same bounds: native
+    interior > band stays opaque, nothing appears beyond band px of the native mask."""
+    from scipy import ndimage as ndi
+    from build_spline_map_alpha import spline_mask
+    if not obj.any():
+        return np.zeros(obj.shape, np.float64), {'rings': 0}
+    fitted, report = spline_mask(Image.fromarray(np.where(obj, 255, 0).astype(np.uint8)),
+                                 fit_error, spacing, supersample)
+    coverage = np.asarray(fitted, np.float64) / 255.0
+    if aa_sigma:                  # same soft edge as ``silhouette`` on the refitted trajectory
+        blur = ndi.gaussian_filter((coverage > 0.5).astype(np.float64), aa_sigma)
+        coverage = np.clip((blur - 0.5) / aa_ramp + 0.5, 0, 1)
+    deep = native & (ndi.distance_transform_edt(native) > band)
+    near = ndi.distance_transform_edt(~native) <= band
+    coverage[deep] = 1.0
+    coverage[~near & ~native] = 0.0
+    return coverage, report
 LIQUID_BITS = 0x1E          # overlay slots 1-4
 BLACK, MAX_OUTSIDE_LIT = 20, 0.15       # per tile: skip the cell above this lit share
 TREATED_MEDIAN, TREATED_TILES = 0.05, 0.05  # map level: refuse (already treated / no matte)
@@ -172,7 +194,7 @@ def survey(area):
     return report
 
 
-def prepare(area, output, central_water=False):
+def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
     """``central_water``: liquid cells without secondary (fully water, alpha restored by the
     spatial stage) join the matte as water instead of an opaque object; otherwise their
     coverage bleeds 1-4 px into the neighbouring pair and draws a line (AR5000)."""
@@ -202,6 +224,10 @@ def prepare(area, output, central_water=False):
                 if (cx, cy) in qualified:
                     secondary[cell(cx, cy)] = area.tile(c['secondary'])
         obj, coverage = silhouette(primary[:, :, :3], native)
+        if spline_fit:
+            # Alpha only: pixels the spline adds lie within the 5 px colour extension of the
+            # original silhouette; using the refitted mask as RGB donor spread black notches.
+            coverage, _ = spline_coverage(obj, native, spline_fit, aa_sigma=spline_aa)
         rgb_p, rep = edge_rgb(primary[:, :, :3], obj)
         colour.update(rep)
         rgb_s = extend_colours(secondary[:, :, :3], secondary[:, :, 3] > 127)
@@ -226,7 +252,7 @@ def prepare(area, output, central_water=False):
         'water_alpha': area.water_alpha, 'qualified_pairs': len(qualified), 'skipped': dict(skipped),
         'recipe': 'build_water_contour_matte_trial.py silhouette/edge_rgb/extend_colours (validated AR1600)',
         'composition': 'U -> P -> a*S; S=1-M; P=M/(1-a*(1-M))', 'window_cells': WINDOW, 'halo_cells': 1,
-        'central_water': central_water,
+        'central_water': central_water, 'spline_fit': spline_fit, 'spline_aa_sigma': spline_aa,
         'colour': dict(colour), 'source_backups': [str(b) for b in area.backups],
         'source_pages': dict(area.page_hashes), 'tiles': records,
         'producer_sha256': sha(Path(__file__).read_bytes()), 'installation': 'not performed'})
@@ -319,6 +345,12 @@ def main():
     parser.add_argument('--source-backup', type=Path, action='append',
                         help='install-backup folder holding untreated pages; repeatable, first match wins')
     parser.add_argument('--output', type=Path, help='prepare/encode: run folder under maps/')
+    parser.add_argument('--spline-fit', type=float,
+                        help='prepare: refit the silhouette contour with a periodic spline of this '
+                             'error (x4 px, 1.0 = validated AR0900 water setting) instead of gaussian AA')
+    parser.add_argument('--spline-aa', type=float,
+                        help='prepare with --spline-fit: gaussian AA sigma (x4 px) applied to the refitted '
+                             'mask, as in the default matte (0.8)')
     parser.add_argument('--no-central-water', dest='central_water', action='store_false',
                         help='prepare: historical matte (runs before 2026-09-25): liquid cells without '
                              'secondary count as opaque objects and bleed into the neighbouring pair')
@@ -338,7 +370,7 @@ def main():
     area = Area(args.area[0], args.vanilla_root, args.source_backup)
     if args.stage == 'prepare':
         require(not output.exists(), 'Refusing to overwrite an existing run')
-        prepare(area, output, args.central_water)
+        prepare(area, output, args.central_water, args.spline_fit, args.spline_aa)
     else:
         encode(area, output)
 

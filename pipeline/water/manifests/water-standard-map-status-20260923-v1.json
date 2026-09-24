@@ -211,6 +211,27 @@
           "qa": "pipeline/water/manifests/ar5000-contour-user-qa-20260925-v1.json"
         }
       }
+    },
+    {
+      "area": "AR6300",
+      "family": "lake_teal",
+      "overall": "temporal-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "built-not-installed",
+          "note": "no central cells: nothing to repair; ar6300-water-x4-20260925-v1 feeds B"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar6300-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar6300-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-alpha160",
+          "installed": "pipeline/water/manifests/ar6300-contour-installed-20260925-v4.json",
+          "qa": "pipeline/water/manifests/ar6300-contour-user-qa-20260925-v1.json"
+        }
+      }
     }
   ],
   "release": "not-requested"

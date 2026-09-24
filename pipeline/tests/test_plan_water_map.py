@@ -93,6 +93,14 @@ class PlanWaterMapTests(unittest.TestCase):
                           "max_non_torus_share": 0.01, "temporal_harmonics": 12})
         self.assertNotIn("torus", rain)
 
+    def test_lake_teal_contract_from_ar6300_keeps_deridge_off(self):
+        standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
+        temporal = next(f for f in standard["families"] if f["id"] == "lake_teal")["temporal"]
+        dry = p.temporal_plan_group("lake_teal", {"WTLAKA": "YFTSTA"}, temporal)
+        self.assertEqual((dry["method"], dry["cycle_seconds"]), ("seedvr-torus", 4.2667))
+        self.assertNotIn("deridge_band_x1", dry["torus"])       # it drew a grid on AR6300
+        self.assertEqual(dry["torus"]["periodic_sigma_x4"], 2.0)
+
     def test_aliases_are_deterministic_unique_and_page_safe(self):
         first = p.make_alias("AR0404", 1, "S", set())
         self.assertEqual(first, p.make_alias("AR0404", 1, "S", set()))

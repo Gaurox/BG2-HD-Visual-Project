@@ -45,7 +45,7 @@ décor**. Restent ouverts sur des zones déjà validées :
 | Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
 | Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
 | Contours C provisoires à refondre puis réappliquer | Toutes familles/maps eau traitées | [WATER-006](#water-006--refonte-globale-des-contours-c) |
-| Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL), AR6300 (WTLAKA-D) | `overlay-sources.json` |
+| Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL) ; AR6300 traitée 2026-09-25 (chaîne standard) | `overlay-sources.json` |
 | Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
 
 ## MAP-RELEASE-001 — OH6460 partage le tileset OH8100

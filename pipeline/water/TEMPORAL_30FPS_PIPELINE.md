@@ -2,7 +2,7 @@
 
 Recette **validée ingame** sur AR1600 (`lake`), AR0408/AR0703 (`pool`), AR2100 (`sewage`) et
 AR0500/AR0500N (`swamp`, sec observé ; pluie non observée), AR5200 (`lava`, méthode `seedvr-torus`),
-AR0503 (`oil`, `seedvr-torus` 1×1 + filtres temporels), AR5000 (`brown_flow`, `seedvr-torus` 2×2 + filtres + décrêtage).
+AR0503 (`oil`, `seedvr-torus` 1×1 + filtres temporels), AR5000 (`brown_flow`, `seedvr-torus` 2×2 + filtres + décrêtage), AR6300 (`lake_teal`, `seedvr-torus` 2×2 + filtres).
 Référence fondatrice AR1600 :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
 QA [`manifests/ar1600-water-30fps-user-qa-20260923-v2.json`](manifests/ar1600-water-30fps-user-qa-20260923-v2.json).
@@ -105,7 +105,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | swamp WTSWAM | AR0500 / AR0500N | 6 | 6 | **2,4 s figé** | 72 | seedvr | non | **validé ingame sec jour+nuit**, q0,70 matériau 5 sec+pluie ; pluie non observée |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0503 | 6 | 6 | 2,4 s natif | 72 | seedvr-torus + filtres | non | **validé ingame AR0503** ; AR0413 (contrat alpha0 historique) hors standard |
-| lake_teal WTLAKA–D | AR3000 | 8 | 8/0/0/0 | explicite (8×8/15 = 4,27 s ?) | 128 | seedvr 1536² | oui | durée ; VRAM chunk unique |
+| lake_teal WTLAKA–D | AR6300 | 8 | 0/0/0/0 (AR3000 : 8/0/0/0) | **4,27 s figé** | 128 | seedvr-torus + filtres | non | **validé ingame AR6300** |
 | brown_flow WT5000A–D | AR5000 | 8 | 8/0/0/0 | **4,27 s figé** | 128 | seedvr-torus + filtres + décrêtage | non | **validé ingame AR5000** |
 | lava WTLAVA–D | AR5200 | 12 (`keyframes`, pas la lookup `[0…9,11]`) | 11/11/0/0 | **7,2 s figé** | 216 | seedvr-torus | non | **validé ingame AR5200** ; autres maps lave : tore à vérifier |
 
@@ -122,6 +122,9 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR5000 | brown_flow | 128 / 4,27 s, `seedvr-torus`, σ périodique 8 | `ar5000-water-30fps-20260924-v1` | non installée | bouclage 1,85/1,50 (texture lisse) |
 | AR5000 | brown_flow | 128 / 4,27 s, σ 2 | `ar5000-water-30fps-20260924-v2` | remplacée par v3 | lignes aux bords de cellules : cause surtout bases A/C (interfaces, `central_water`), voir SPATIAL/CONTOUR |
 | AR5000 | brown_flow | 128 / 4,27 s, σ 2 + décrêtage x1 | `ar5000-water-30fps-20260924-v3` | validée — `ar5000-temporal-30fps-user-qa-20260925-v1.json` | netteté ≤ 1,11, pas ≤ 1,16 ; raccord natif hors tore conservé (cellules 41–45, rangées 33/34) ; pluie non observée |
+| AR6300 | lake_teal | 128 / 4,27 s, σ 8 | `ar6300-water-30fps-20260925-v1` | non installée | bouclage 1,85/1,49 |
+| AR6300 | lake_teal | + décrêtage x1 | `ar6300-water-30fps-20260925-v2` | **rejetée avant installation** | grille visible : le décrêtage retire du contenu (0,47) sur texture contrastée |
+| AR6300 | lake_teal | σ 2, même inférence que v1 | `ar6300-water-30fps-20260925-v3` | validée — `ar6300-temporal-30fps-user-qa-20260925-v1.json` | netteté ≤ 1,20, pas ≤ 1,23 ; petits cercles SeedVR répétés acceptés ; pluie non observée |
 | AR5200 | lava | 220 / 7,3 s, bilinéaire, lookup 11 | `ar5200-water-30fps-20260924-v1` | **rejetée** — `ar5200-temporal-30fps-user-qa-20260924-v1.json` | lag 12 → 2,8 FPS : scan DLL par draw (corrigé, voir plus bas) |
 | AR0503 | oil | 72 / 2,4 s, `seedvr-torus`, q0 | `ar0503-water-30fps-20260924-v1` | remplacée par v2 (jugée « pas terrible ») | bouillonnement SeedVR + cadence 4 phases 0,73 ; netteté 1,34 |
 | AR0503 | oil | 72 / 2,4 s, `seedvr-torus` + harmoniques ≤ 9 + égalisation, q0 | `ar0503-water-30fps-20260924-v2` | validée — `ar0503-temporal-30fps-user-qa-20260924-v1.json` | même inférence que v1 ; pas médian 1,02 → 0,42, netteté 1,34 → 1,15 ; pluie non observée |
@@ -160,7 +163,7 @@ Autres paramètres `seedvr-torus` (standard famille) :
 | `heal_gain` 0 | pas de recollage quand les bords natifs sont déjà plus doux que l'intérieur | rivière brune (0,69/0,74) |
 | `max_non_torus_share` | tolère des adjacences WED hors tore (raccord natif conservé, listé dans `plan.json`) | AR5000 : 0,4 % (cellules 41–45, rangées 33/34) |
 | `periodic_sigma_x4` 2 | texture lisse : σ 8 laissait le bouclage à 1,85 | AR5000 → 1,21/0,95 |
-| `deridge_band_x1` 2, `deridge_sigma_x1` 6 | efface en x1 la ligne claire des rangées de bord natives (SeedVR en fait une bande 4 px) | WT5000A–D 1,11 → 0,14 ; autres familles : ligne ≤ contenu, non appliqué |
+| `deridge_band_x1` 2, `deridge_sigma_x1` 6 | efface en x1 la ligne claire des rangées de bord natives (SeedVR en fait une bande 4 px) | WT5000A–D 1,11 → 0,14 ; **refusé sur WTLAKA–D** (grille) ; autres familles : ligne ≤ contenu, non appliqué |
 
 `seedvr.json` : `loop_before_temporal_filters` / `loop_after_temporal_filters`. Autres familles SeedVR (lac, égouts,
 marais, lave) : même symptôme probable, non mesuré ni requalifié.

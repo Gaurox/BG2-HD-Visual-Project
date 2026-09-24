@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR6300",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T23:27:06+00:00",
+  "run": "maps/water-batches/runs/ar6300-contour-matte-20260925-v5",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v5/override-candidate/manifest.json",
+    "sha256": "4DF0C28FE5FC1FC05CA6DC8BCBB5303A4299632939F5D317B13FEAF9D5E75443"
+  },
+  "files": {
+    "A630000.PVRZ": {
+      "sha256": "AD95C34C555BDDF1A70206EA6BBB62441A47166D8BFD75ADEEF1698F2BE0FC80",
+      "bytes": 1663392
+    },
+    "A630001.PVRZ": {
+      "sha256": "FF0EAB7855B7B8241BF99B687E3F447082C40E111D69DBD073F7A3F9E91E1D14",
+      "bytes": 1596104
+    },
+    "A630006.PVRZ": {
+      "sha256": "9E3E6B4DB10603ED21C5CDBA589AB8A14CBDA2741639A8B1FAC510E49D2094DD",
+      "bytes": 1579026
+    },
+    "A630007.PVRZ": {
+      "sha256": "E0D4E0C474157E02654C36C95F48406B7B739FD3CE466AEA7D84F220B68B34DF",
+      "bytes": 1457125
+    },
+    "A630008.PVRZ": {
+      "sha256": "921BECEC3A104740CEAFF1DE5880B2DB98F12F988D9E9CA3C1811387F593C16E",
+      "bytes": 1550316
+    },
+    "A630009.PVRZ": {
+      "sha256": "6FC817AECCF5DD14079A2AAB2B79DF76BA09A1CCF03D3B5AC9F415D834549771",
+      "bytes": 1506270
+    },
+    "A630010.PVRZ": {
+      "sha256": "9D70F221D1FF09F82AA21FB29629D300EDDE1A7842F0E0443AC3F42A05AEF106",
+      "bytes": 1602704
+    },
+    "A630011.PVRZ": {
+      "sha256": "5FB74B7A22EF404D7EE561698D9376A181F4E08D6113D29B19D15427CE78B033",
+      "bytes": 1651731
+    },
+    "A630014.PVRZ": {
+      "sha256": "A88CBD90B5A6D38CA96A500D6F395C9A69C72219775CB41DC2B6DBB84FC7F552",
+      "bytes": 1404614
+    },
+    "A630015.PVRZ": {
+      "sha256": "5F3A408E8F2E3B7D3CB3D794BE3D4A43350108E77DBE06357E18592B474F4782",
+      "bytes": 326998
+    }
+  },
+  "override_backup_receipt": "backups/water/ar6300-contour-matte-20260925-v5/override-backup-20260925-012700/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v5/build.json",
+    "sha256": "1B881EEAA8BF0101627AC63EF027E21C200FF55355F011D50278F3341585F2CA"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-v5/prepare.json",
+    "sha256": "0AEB5A5D1040B2750ED9DD3A431D2E9553F1822DE752845B181435F926CD5074"
+  },
+  "note": "spline trial B: silhouette refitted by spline fit 4.0 x4 px (~1 px x1) then gaussian AA 0.8/0.35 as the default matte; RGB repair on the original silhouette. Compared offline with v1 (gaussian), v3 (fit 1, judged more angular in game) and v4 (fit 3)."
+}
