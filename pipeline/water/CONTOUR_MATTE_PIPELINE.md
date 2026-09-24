@@ -108,6 +108,8 @@ seulement (le RGB reste réparé sur la silhouette d'origine : sinon les creux c
 Fit 1 x4 : bord net qui suit les marches x1 → jugé plus anguleux en jeu (v3). Fit 4 + AA 0,8 (v5) : plus rond
 mais bosses et marche au bord des fenêtres de calcul. Utilisateur : gain insuffisant, C gaussien conservé.
 Liseré jaune identique dans toutes les variantes : il vient du RGB de bord, pas de la géométrie (piste WATER-006).
+**C reste à améliorer pour toutes les familles** (décision 2026-09-25, [WATER-006](../PROBLEMES_A_RESOUDRE.md#water-006--refonte-globale-des-contours-c)) ;
+les validations par map ci-dessus portent sur le C courant, provisoire.
 
 ## Limites connues
 

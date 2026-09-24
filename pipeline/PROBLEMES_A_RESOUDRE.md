@@ -127,8 +127,14 @@ ne sont pas réconciliés par une décision explicite.
 - Dette : C reste provisoire et doit être amélioré sur toutes les familles.
 - Clôture : nouveau contrat C validé ingame, puis reconstruction/réinstallation de C sur chaque map/famille
   déjà traitée ; conserver les anciens runs et reçus immuables.
+- 2026-09-25 (décision utilisateur) : C reste à améliorer pour **toutes** les familles, y compris celles
+  validées depuis (huile AR0503, rivière brune AR5000, turquoise AR6300, reprises AR1600/AR0500/AR0500N).
+  Acquis : `central_water` par défaut (lignes aux jonctions eau pure ↔ paire) ; essai spline fit 1 / fit 4 + AA
+  non retenu (AR6300). Défaut restant commun : liseré jaune-clair = RGB de bord recoloré (`edge_rgb`), pas la
+  géométrie → piste prioritaire de la refonte.
 - État et preuve : `water/CONTOUR_MATTE_PIPELINE.md`,
-  `water/manifests/ar0500n-contour-user-qa-20260924-v1.json`.
+  `water/manifests/ar0500n-contour-user-qa-20260924-v1.json`, `water/manifests/ar6300-contour-installed-20260925-v2.json`
+  (spline fit 1), `-v3.json` (fit 4 + AA).
 
 ## WTPOOL-001 — Piscines x4
 
