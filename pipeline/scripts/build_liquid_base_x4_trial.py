@@ -62,8 +62,10 @@ def block_mask(mask):
     return np.pad(mask, 4, mode='edge').reshape(66, 4, 66, 4).any((1, 3))
 
 
-def seam_masks(parsed, selected_slots, full_cells, stock_tile, unique_primary, unique_secondary):
-    """World-space masks per actual overlay bit; never cross material slots or true banks."""
+def seam_masks(parsed, slot_groups, full_cells, stock_tile, unique_primary, unique_secondary):
+    """World-space masks per group of overlay bits; never cross materials or true banks.
+    A group is one slot, or every slot of one tiled family (A-D pavings: neighbouring water
+    cells always carry different slots of the same material, AR5000 WT5000A-D)."""
     width, height = parsed['layers'][0]['width'], parsed['layers'][0]['height']
     cells = {(c['x'], c['y']): c for c in parsed['cells']}
     rgb, alpha, coords, interfaces = {}, {}, {}, []
@@ -81,8 +83,9 @@ def seam_masks(parsed, selected_slots, full_cells, stock_tile, unique_primary, u
             else: mask[255-distance] = np.maximum(mask[255-distance], values)
         coords[tile] = xy
 
-    for slot in selected_slots:
-        bit = 1 << slot
+    for group in slot_groups:
+        bit = sum(1 << slot for slot in group)
+        slot = group[0] if len(group) == 1 else list(group)
         water = np.zeros((height * 64, width * 64), bool)
         for xy, cell in cells.items():
             if not cell['flags'] & bit or cell['count'] != 1:
@@ -196,10 +199,12 @@ def process_target(target, vanilla, live, destination, write):
     central_ids = set(full_cells.values()) if central_enabled else set()
     donor_path = target.get('secondary_master', target.get('secondary_master_x4', target.get('donor')))
     rgb, secondary_alpha, coords, interfaces = ({}, {}, {}, [])
+    family = str(target.get('family', ''))
+    slot_groups = [slots] if family and ',' not in family else [[slot] for slot in slots]
     if seams_enabled and full_cells:
         require(donor_path is not None, f'{wed_name}: missing secondary master')
         rgb, secondary_alpha, coords, interfaces = seam_masks(
-            parsed, slots, full_cells, stock_tile, unique_primary, unique_secondary)
+            parsed, slot_groups, full_cells, stock_tile, unique_primary, unique_secondary)
     modified_ids = central_ids | set(rgb) | set(secondary_alpha)
     require(not (set(rgb) & set(secondary_alpha)), 'Primary/secondary repair overlap')
     relocations, relocated_pages, shared_already_conform = [], {}, []

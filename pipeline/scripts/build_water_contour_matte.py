@@ -172,7 +172,10 @@ def survey(area):
     return report
 
 
-def prepare(area, output):
+def prepare(area, output, central_water=False):
+    """``central_water``: liquid cells without secondary (fully water, alpha restored by the
+    spatial stage) join the matte as water instead of an opaque object; otherwise their
+    coverage bleeds 1-4 px into the neighbouring pair and draws a line (AR5000)."""
     report = survey(area)
     require(report['ready'], 'Survey failed: ' + '; '.join(report['problems']))
     qualified, skipped = area.qualify()
@@ -192,6 +195,8 @@ def prepare(area, output):
                 c = area.grid.get((cx, cy))
                 if c is None or c['count'] != 1 or area.tis['entries'][c['primary'][0]][0] == 0xffffffff:
                     continue
+                if central_water and c['flags'] & LIQUID_BITS and c['secondary'] == 65535:
+                    continue                  # water: black RGB, empty native mask
                 primary[cell(cx, cy)] = area.tile(c['primary'][0])
                 native[cell(cx, cy)] = area.native(c['primary'][0])
                 if (cx, cy) in qualified:
@@ -221,6 +226,7 @@ def prepare(area, output):
         'water_alpha': area.water_alpha, 'qualified_pairs': len(qualified), 'skipped': dict(skipped),
         'recipe': 'build_water_contour_matte_trial.py silhouette/edge_rgb/extend_colours (validated AR1600)',
         'composition': 'U -> P -> a*S; S=1-M; P=M/(1-a*(1-M))', 'window_cells': WINDOW, 'halo_cells': 1,
+        'central_water': central_water,
         'colour': dict(colour), 'source_backups': [str(b) for b in area.backups],
         'source_pages': dict(area.page_hashes), 'tiles': records,
         'producer_sha256': sha(Path(__file__).read_bytes()), 'installation': 'not performed'})
@@ -313,6 +319,9 @@ def main():
     parser.add_argument('--source-backup', type=Path, action='append',
                         help='install-backup folder holding untreated pages; repeatable, first match wins')
     parser.add_argument('--output', type=Path, help='prepare/encode: run folder under maps/')
+    parser.add_argument('--no-central-water', dest='central_water', action='store_false',
+                        help='prepare: historical matte (runs before 2026-09-25): liquid cells without '
+                             'secondary count as opaque objects and bleed into the neighbouring pair')
     args = parser.parse_args()
     if args.stage == 'survey':
         reports = []
@@ -329,7 +338,7 @@ def main():
     area = Area(args.area[0], args.vanilla_root, args.source_backup)
     if args.stage == 'prepare':
         require(not output.exists(), 'Refusing to overwrite an existing run')
-        prepare(area, output)
+        prepare(area, output, args.central_water)
     else:
         encode(area, output)
 

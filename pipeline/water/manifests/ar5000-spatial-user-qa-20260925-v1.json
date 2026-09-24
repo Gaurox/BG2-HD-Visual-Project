@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR5000",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-24T22:18:46+00:00",
+  "source": "user-message",
+  "quote": "c'est corrigé. famille validée.",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "not-specified-by-user",
+  "selection": {
+    "path": "pipeline/water/manifests/ar5000-spatial-installed-20260924-v1.json",
+    "sha256": "BF421C99C2481C34D596B109E1EE522387AC7A8D72697199ABB8F454CC1E787E"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar5000-temporal-30fps-installed-20260924-v2.json",
+      "sha256": "10E068AFB894B959E8555838658372D7513412576131B8AC96F8D5B6C2A30646"
+    },
+    {
+      "path": "pipeline/water/manifests/ar5000-contour-installed-20260924-v2.json",
+      "sha256": "00AE8E796821FAFC42B3BFE0FABFA71F6C5021D1B41C198D1B29C41ED9BB86E4"
+    }
+  ],
+  "release": "not-requested"
+}

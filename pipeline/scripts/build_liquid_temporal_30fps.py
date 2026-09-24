@@ -56,9 +56,13 @@ CURRENT_REGISTRY = ROOT / 'pipeline/water/route2-registry-current.json'
 SEEDVR_SEED = 959948902156062
 TORUS_DEFAULTS = {'heal_band_x1': 4, 'heal_sigma_x1': 3.0, 'heal_gain': 0.8, 'seedvr_margin_x1': 32,
                   'periodic_sigma_x4': 8.0,
+                  # Border line removal at x1 (0 = off): band rows each side, sigma along the border.
+                  'deridge_band_x1': 0, 'deridge_sigma_x1': 6.0,
                   # Off by default (AR5200 lava validated without): loop harmonics kept after SeedVR
                   # (0 = off) and per-phase detail equalisation.
                   'temporal_harmonics': 0, 'equalize_detail': False,
+                  # Share of WED adjacency occurrences allowed outside the layout torus.
+                  'max_non_torus_share': 0.0,
                   # Earlier run group folder whose SeedVR output is reused after byte checks.
                   'reuse_seedvr_from': None}
 
@@ -150,6 +154,37 @@ def heal_torus_seams(motif, tile=64, band=4, sigma=3.0, gain=0.8):
     motif over a band on both sides (x1).  Texture is kept; only the smoothed step moves."""
     out = _heal_columns(motif, tile, band, sigma, gain)
     return _heal_columns(out.transpose(1, 0, 2), tile, band, sigma, gain).transpose(1, 0, 2)
+
+
+def deridge_torus_seams(motif, tile=64, band=2, sigma=6.0, reference=3):
+    """Remove a native bright/dark line along every tile border of a periodic motif (x1):
+    rows border-band..border+band-1 lose their low-frequency deviation (sigma along the
+    border) from the linear blend of the rows `reference` px outside the band.  WT5000A-D
+    carry a +1 line on their border rows that SeedVR turns into a 4 px band (AR5000)."""
+    out = motif.astype(np.float64).copy()
+    size = out.shape[0]
+    for axis in (0, 1):
+        view = out if axis == 0 else out.transpose(1, 0, 2)
+        source = view.copy()
+        for border in range(0, size, tile):
+            first, last = border - band - reference, border + band + reference - 1
+            for row in range(border - band, border + band):
+                w = (row - first) / (last - first)
+                expected = (1 - w) * source[first % size] + w * source[last % size]
+                view[row % size] -= gaussian_filter1d(source[row % size] - expected, sigma, axis=0, mode='wrap')
+    return out
+
+
+def border_line_profile(motif, tile=64, width=9):
+    """Row/column mean deviation from a local moving average at the tile borders (x, y)."""
+    from scipy.ndimage import uniform_filter1d
+    result = []
+    for axis in ((0, 2), (1, 2)):           # column profile (vertical lines), row profile
+        profile = motif.astype(np.float64).mean(axis=axis)
+        deviation = profile - uniform_filter1d(profile, width, mode='wrap')
+        result.append(float(max(abs(deviation[b % len(profile)]) for c in range(0, len(profile), tile)
+                                for b in (c - 1, c))))
+    return result
 
 
 def border_step_ratio(motif, tile=64):
@@ -398,11 +433,16 @@ def prepare(plan_path, output, game):
         collar = any(m.get('correction_applied') for m in selected['metrics'])
         torus = None
         if method == 'seedvr-torus':
-            used = {(a['a'], a['b'], a['axis']) for a in prepared['topology']['adjacencies']}
-            if not used <= torus_pairs(group['layout']):     # 1x1: the tile tiles itself
-                raise ValueError(f'{gid}: WED adjacencies are not the torus of the layout: '
-                                 f'{sorted(used - torus_pairs(group["layout"]))}')
             torus = {**TORUS_DEFAULTS, **(dry_record['torus'] if dry_record else {}), **entry.get('torus', {})}
+            pairs = torus_pairs(group['layout'])            # 1x1: the tile tiles itself
+            adjacencies = prepared['topology']['adjacencies']
+            outside = [a for a in adjacencies if (a['a'], a['b'], a['axis']) not in pairs]
+            share = sum(a['occurrences'] for a in outside) / max(1, sum(a['occurrences'] for a in adjacencies))
+            if share > torus['max_non_torus_share']:
+                raise ValueError(f'{gid}: WED adjacencies outside the layout torus ({share:.2%} > '
+                                 f"{torus['max_non_torus_share']:.2%}): {[(a['a'], a['b'], a['axis']) for a in outside]}")
+            # Kept native seams at these cells (the torus cannot join them); recorded, not hidden.
+            torus = {**torus, 'non_torus_adjacencies': outside, 'non_torus_share': round(share, 5)}
             collar = False
         records.append({'id': gid, 'rain_of': dry, 'group': group, 'aliases': aliases,
                         'material_id': entry.get('material_id', 1), 'approved_strength': strength,
@@ -432,10 +472,16 @@ def interpolate(output):
             motifs = keys[:, side:2 * side, side:2 * side]
             if not all(np.array_equal(np.tile(m, (3, 3, 1)), k) for m, k in zip(motifs, keys)):
                 raise ValueError(f"{group['id']}: x1 context is not the tiled motif")
+            t = {**TORUS_DEFAULTS, **t}                       # plans may predate a parameter
             healed = np.stack([heal_torus_seams(m, 64, t['heal_band_x1'], t['heal_sigma_x1'], t['heal_gain'])
                                for m in motifs])
+            if t['deridge_band_x1']:
+                healed = np.stack([deridge_torus_seams(m, 64, t['deridge_band_x1'], t['deridge_sigma_x1'])
+                                   for m in healed])
             heal = {'before': [border_step_ratio(m) for m in motifs],
                     'after': [border_step_ratio(m) for m in healed],
+                    'line_before': [border_line_profile(m) for m in motifs],
+                    'line_after': [border_line_profile(m) for m in healed],
                     'mean_abs_change': float(np.abs(healed - motifs).mean())}
             keys = np.tile(healed, (1, 3, 3, 1))
         phases = trig_interpolate(keys, group['phases'])
@@ -503,7 +549,8 @@ def upscale(output, frames_per_chunk=None, overlap=0):
             same = all((folder / f'keys/frame_{k:03d}.png').read_bytes() ==
                        (output / dry['id'] / f'keys/frame_{k:03d}.png').read_bytes()
                        for k in range(len(group['lookup'])))
-            same = same and dry['method'] == group['method'] and dry['torus'] == group['torus'] and (
+            recipe = lambda t: {k: v for k, v in t.items() if k != 'non_torus_adjacencies'}
+            same = same and dry['method'] == group['method'] and recipe(dry['torus']) == recipe(group['torus']) and (
                 (output / dry['id'] / 'alpha.png').read_bytes() == (folder / 'alpha.png').read_bytes())
             if same:
                 positions = {(y, x): ref for y, row in enumerate(dry['group']['layout']) for x, ref in enumerate(row)}

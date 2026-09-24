@@ -1,0 +1,98 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0500N",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-24T22:40:49+00:00",
+  "run": "maps/water-batches/runs/ar0500n-contour-matte-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0500n-contour-matte-20260925-v1/override-candidate/manifest.json",
+    "sha256": "CAE446C24A724FD7CEEF2646743F3980BC9F38F5A363993DD856561A8C2DF5F2"
+  },
+  "files": {
+    "A0500N06.PVRZ": {
+      "sha256": "186C67300626B156C44CB2667043DF30F2526AB1AF5CAA853E9E8FC4A853B64C",
+      "bytes": 6121346
+    },
+    "A0500N07.PVRZ": {
+      "sha256": "D2916A61172D2468E63683834D739732236C993331533FA96A5BD7215CEA5F6D",
+      "bytes": 6096549
+    },
+    "A0500N08.PVRZ": {
+      "sha256": "D07BD91BA155F1B5CFBE59651629D5B8B0E2A9C4DC812D85074B75DCC01C2E0F",
+      "bytes": 6162448
+    },
+    "A0500N09.PVRZ": {
+      "sha256": "C6B25E288913A7205D48EE18BE078FD6518973BBF8CC9D1497353C37240406E8",
+      "bytes": 6147833
+    },
+    "A0500N10.PVRZ": {
+      "sha256": "C8B0444CCA89AC8532EC60812D1B0AD1122D06D626E460D4DBC46044B0016EC1",
+      "bytes": 6012731
+    },
+    "A0500N11.PVRZ": {
+      "sha256": "165D2D72CB9BE19756BF55FAA49941AE84ED4A365A51CBA8252DDFA0ED57C259",
+      "bytes": 6060177
+    },
+    "A0500N12.PVRZ": {
+      "sha256": "5E1BFC75B9771205DCF114ED4273738E58DC1B21D3068234BFE0DA3767C6592E",
+      "bytes": 5959241
+    },
+    "A0500N13.PVRZ": {
+      "sha256": "E91C4F843AAAA44314B78732F7CECA3A000AC243FA6B92542808E61ED589B728",
+      "bytes": 5768752
+    },
+    "A0500N14.PVRZ": {
+      "sha256": "F52AA8B9EFB4454179ABB1E8956310381F6F0AE4B444E7A7203CB811A9AB5149",
+      "bytes": 5523420
+    },
+    "A0500N15.PVRZ": {
+      "sha256": "A2784E2CED71045FBBF988E7A5E73EBBDBDEBB9FACA5389D93B945E36D1A71F4",
+      "bytes": 5399988
+    },
+    "A0500N16.PVRZ": {
+      "sha256": "E100201810256846BBE439F6D71CE467053FB1FEF6136BD79A99D651D96FC459",
+      "bytes": 5399978
+    },
+    "A0500N17.PVRZ": {
+      "sha256": "7B017477E7DFD22649A25E5568F127CCF8456E1F04D5B240BA15C9BE1AD1A8B4",
+      "bytes": 5080829
+    },
+    "A0500N18.PVRZ": {
+      "sha256": "F4A6FF9CFBA5E657070B98C7EFF981EF39CCD6BAAB3E357713D5903B2FE463BC",
+      "bytes": 4881161
+    },
+    "A0500N19.PVRZ": {
+      "sha256": "0A25F41FC84BA2024AF0E9F897DBA951EC192889262BD17239543FD0EF4FB52B",
+      "bytes": 4482907
+    },
+    "A0500N20.PVRZ": {
+      "sha256": "C4149E14D236BCCC0A48C2BECD47F3EE34CD143971CBEA4F68C7BE62865E25F4",
+      "bytes": 4246925
+    },
+    "A0500N21.PVRZ": {
+      "sha256": "EE3D9D28184AB4451B1E3501375F40E65DC30EB134DC5DB3CDAD5A2D1FBBAFDE",
+      "bytes": 4433665
+    },
+    "A0500N22.PVRZ": {
+      "sha256": "1B33ECD7D1DC60D2D27695190C62E7B1C39B15B9E2072BAD75FA22F0CA098291",
+      "bytes": 3824998
+    },
+    "A0500N23.PVRZ": {
+      "sha256": "7F5FA55879F02F606FC487E64898C3A4864DFD70B2C77239C3C7866791D99B81",
+      "bytes": 1614941
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0500n-contour-matte-20260925-v1/override-backup-20260925-004039/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0500n-contour-matte-20260925-v1/build.json",
+    "sha256": "A967E78C8BF72888F1593CE195F7E6E29C447F4575DBDE5D0C6B6F2FEA4C5B23"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0500n-contour-matte-20260925-v1/prepare.json",
+    "sha256": "371EA840FCC3CA75F782ADF110EEFA0A9C006B3D9C01D74769ED9DF3F3A308A0"
+  },
+  "note": "C rebuilt with central_water from untreated pages; central<->pair composite seam 3.12->2.86"
+}

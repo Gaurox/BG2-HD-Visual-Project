@@ -46,6 +46,8 @@ sa WED bilinéaire est remplacée par B), B `seedvr-torus` 12 clés / 216 phases
 C provisoire validé avec les mêmes réserves que les autres familles.
 AR0503 valide `oil` A → B → C (2026-09-24) : A SeedVR x4 (master secondaire d'un run direct), B `seedvr-torus`
 1×1 + harmoniques ≤ 9 + égalisation (la v1 sans filtres « grouillait »), C provisoire avec réserve.
+AR5000 valide `brown_flow` A → B → C (2026-09-25) : A avec interfaces par famille (240), B `seedvr-torus` 2×2
+128 phases/4,27 s + décrêtage x1, C `central_water` ; v1/v2 montraient des lignes aux bords de cellules.
 
 | Étape | S'applique si | Sinon |
 |---|---|---|

@@ -69,6 +69,10 @@ class TemporalRecipeTests(unittest.TestCase):
         self.assertNotIn(("A", "A", "x"), pairs)
         self.assertNotIn(("A", "C", "x"), pairs)
 
+    def test_defaults_refuse_any_adjacency_outside_the_torus(self):
+        self.assertEqual(t.TORUS_DEFAULTS["max_non_torus_share"], 0.0)
+        self.assertEqual((t.TORUS_DEFAULTS["temporal_harmonics"], t.TORUS_DEFAULTS["equalize_detail"]), (0, False))
+
     def test_heal_torus_seams_flattens_a_border_step_and_keeps_texture(self):
         rng = np.random.default_rng(3)
         motif = rng.normal(128, 6, (128, 128, 3))
@@ -80,6 +84,18 @@ class TemporalRecipeTests(unittest.TestCase):
         self.assertLess(t.border_step_ratio(healed)[0], 1.15)
         interior = (slice(8, 56), slice(8, 56))
         np.testing.assert_allclose(healed[interior], stepped[interior])
+
+    def test_deridge_removes_a_border_line_and_keeps_texture(self):
+        rng = np.random.default_rng(7)
+        motif = rng.normal(128, 4, (128, 128, 3))
+        lined = motif.copy()
+        lined[[63, 64, 127, 0]] += 3.0             # bright line on every horizontal tile border
+        self.assertGreater(t.border_line_profile(lined)[1], 1.0)
+        cleaned = t.deridge_torus_seams(lined, band=2, sigma=6.0)
+        self.assertLess(t.border_line_profile(cleaned)[1], 0.4)
+        interior = (slice(8, 56), slice(8, 56))
+        np.testing.assert_allclose(cleaned[interior], lined[interior])
+        self.assertLess(np.abs(cleaned - motif).mean(), 0.2 * np.abs(lined - motif).mean() + 0.2)
 
     def test_periodic_component_removes_wrap_step_and_keeps_mean(self):
         rng = np.random.default_rng(4)

@@ -2,7 +2,7 @@
   "schema": "bg2-liquid-family-standard-v1",
   "version": 1,
   "date": "2026-09-24",
-  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200; oil A/B on AR0503. Current C remains provisionally usable pending a global redesign and reapplication.",
+  "purpose": "Per-family parameters of the standard water chain (spatial x4 -> 30 fps -> contours). A/B are validated on lake AR1600, sewage AR2100, pool AR0408/AR0703 and swamp AR0500/AR0500N; lava B on AR5200; oil A/B on AR0503; brown_flow A/B/C on AR5000. Current C remains provisionally usable pending a global redesign and reapplication.",
   "sources": {
     "spatial_selection": "maps/water-batches/runs/liquid-families-x4-20260923-v1/overlays-selected-v3/selection.json",
     "spatial_qa": "pipeline/water/manifests/liquid-families-spatial-user-qa-20260923-v1.json",
@@ -23,6 +23,11 @@
       "spatial": "pipeline/water/manifests/ar0503-spatial-user-qa-20260924-v1.json",
       "temporal": "pipeline/water/manifests/ar0503-temporal-30fps-user-qa-20260924-v1.json",
       "contour": "pipeline/water/manifests/ar0503-contour-user-qa-20260924-v1.json"
+    },
+    "brown_flow_full_chain_qa": {
+      "spatial": "pipeline/water/manifests/ar5000-spatial-user-qa-20260925-v1.json",
+      "temporal": "pipeline/water/manifests/ar5000-temporal-30fps-user-qa-20260925-v1.json",
+      "contour": "pipeline/water/manifests/ar5000-contour-user-qa-20260925-v1.json"
     },
     "lava_full_chain_qa": {
       "temporal": "pipeline/water/manifests/ar5200-temporal-30fps-user-qa-20260924-v2.json",
@@ -84,9 +89,18 @@
      "witness": "AR3000"},
     {"id": "brown_flow", "overlays": ["WT5000A", "WT5000B", "WT5000C", "WT5000D"],
      "layout": [["WT5000A", "WT5000B"], ["WT5000C", "WT5000D"]], "spatial_method": "seedvr",
-     "temporal": {"material_id": 1, "cycle": "decision-required", "status": "blocked",
-                  "why": "WED speed byte 8/0/0/0 across members: loop length not established"},
-     "witness": "AR5203"},
+     "spatial_status": "validated-ingame-AR5000",
+     "temporal": {"material_id": 1, "method": "seedvr-torus", "cycle": "fixed", "cycle_seconds": 4.2667,
+                  "torus": {"heal_gain": 0.0, "max_non_torus_share": 0.01, "temporal_harmonics": 12,
+                            "equalize_detail": true, "periodic_sigma_x4": 2.0, "deridge_band_x1": 2,
+                            "deridge_sigma_x1": 6.0},
+                  "status": "validated-ingame-AR5000",
+                  "why_cycle": "8 keys x 16 = 128 phases, vanilla nominal 8x8/15 s (speed 8/0/0/0), accepted in game",
+                  "why_torus": "native 2x2 borders already softer than the interior (0.69/0.74): heal off; 0.4 % non-torus adjacencies (AR5000 cells 41-45 rows 33/34) keep their native seam",
+                  "why_periodic_sigma": "smooth texture: sigma 8 left the wrap at 1.85; sigma 2 -> 1.21/0.95",
+                  "why_deridge": "native +1 line on the tile border rows, turned by SeedVR into a 4 px band; removed at x1 (1.11 -> 0.14)"},
+     "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-AR5000-central-water-current-C-provisional"},
+     "witness": "AR5000-A-B-C;AR5203-historical"},
     {"id": "lava", "overlays": ["WTLAVA", "WTLAVB", "WTLAVC", "WTLAVD"],
      "layout": [["WTLAVA", "WTLAVB"], ["WTLAVC", "WTLAVD"]], "spatial_method": "bilinear",
      "why": "spatial stage only prepares the x1 torus contexts and topology; its bilinear WED is superseded by the 30 fps seedvr-torus build (SeedVR on 12 raw keys sharpened the native 64 px tile borders into a grid)",

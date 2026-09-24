@@ -1,0 +1,37 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar5000-water-x4-20260924-v1",
+  "wed": "AR5000",
+  "selection": "maps/water-batches/runs/ar5000-water-x4-20260924-v1/selection.json",
+  "source_wed": "maps/water-batches/runs/ar5000-water-x4-20260924-v1/override-candidate/AR5000.WED",
+  "groups": [
+    {
+      "id": "brown_flow",
+      "aliases": {
+        "WT5000A": "YFIQ00",
+        "WT5000B": "YFCP75",
+        "WT5000C": "YF0SO7",
+        "WT5000D": "YF62IG"
+      },
+      "material_id": 1,
+      "method": "seedvr-torus",
+      "cycle_seconds": 4.2667,
+      "torus": {
+        "heal_gain": 0.0,
+        "max_non_torus_share": 0.01,
+        "temporal_harmonics": 12,
+        "equalize_detail": true
+      }
+    },
+    {
+      "id": "brown_flow_rain",
+      "aliases": {
+        "WT5000AR": "YFIQ00R",
+        "WT5000BR": "YFCP75R",
+        "WT5000CR": "YF0SO7R",
+        "WT5000DR": "YF62IGR"
+      },
+      "material_id": 1,
+      "rain_of": "brown_flow"
+    }
+  ]
+}

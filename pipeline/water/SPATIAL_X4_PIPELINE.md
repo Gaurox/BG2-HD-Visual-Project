@@ -27,7 +27,7 @@ Chaque famille garde son système : méthode, disposition, collier, contrat de c
 | sewage | WTSEW | seedvr | AR2100 |
 | oil | WTOIL | seedvr (A validé ; overlay remplacé par B) | AR0503 (A+B+C) ; AR0413 historique |
 | lake_teal | WTLAKA–D (2×2) | seedvr | AR3000 |
-| brown_flow | WT5000A–D (2×2) | seedvr | AR5203 |
+| brown_flow | WT5000A–D (2×2) | seedvr (A validé ; overlay remplacé par B) | AR5000 (A+B+C) ; AR5203 historique |
 | lava | WTLAVA–D (2×2) | bilinear, **construit seulement** (contextes/topologie pour B `seedvr-torus` ; WED remplacée par B) | AR5200 (B+C) ; AR0011 historique |
 
 Collier de bord : mode `compatible` pour tous ; appliqué seulement si un raccord est mesuré amplifié
@@ -50,6 +50,10 @@ python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind sp
 chaque étape existe seule (`--stage`). Sorties immuables : nouveau run `-vN` pour tout nouvel essai.
 Vérifié de bout en bout, sans installation, sur AR5200 (lave, bilinéaire, 4 slots) et AR2100 (égouts, SeedVR,
 bases réparées) ; le `temporal-plan.json` produit est accepté par le producteur 30 FPS.
+
+Réparation des interfaces primaire/secondaire (`build_liquid_base_x4_trial.py`) : voisins cherchés par famille
+(tous les slots d'une famille tuilée), plus par slot seul. Avant le 2026-09-25 les pavages A–D n'avaient aucune
+interface (voisins toujours sur un autre slot : AR5000 0 → 240) ; cartes multi-familles : un slot par groupe.
 
 ## Arrêts automatiques (`plan-report.json` → `stops`)
 
@@ -74,7 +78,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | sewage | AR2100 | AR0404 |
 | oil | AR0603, AR1203, AR2102, AR3024 (AR0503 fait) | AR0413 |
 | lake_teal | AR6300 | AR3000 |
-| brown_flow | AR5000 | AR5203 |
+| brown_flow | — (AR5000 fait) | AR5203 |
 | lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
 
 ### Validations par map
@@ -86,6 +90,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR0703 | pool | `ar0703-water-x4-20260923-v2` | `ar0703-spatial-installed-20260923-v1.json` (WED remplacée par B) | validée — `ar0703-spatial-user-qa-20260923-v1.json` (`superseded_by` reçu B v1) |
 | AR0500 | swamp | `ar0500-water-x4-20260924-v2` | `ar0500-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, jour ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 | AR0503 | oil | `ar0503-water-x4-20260924-v1` | `ar0503-spatial-installed-20260924-v1.json` (WED remplacée par B, 3 pages par C) | validée — `ar0503-spatial-user-qa-20260924-v1.json` (`superseded_by` B v2 + C) |
+| AR5000 | brown_flow | `ar5000-water-x4-20260924-v1` + bases `ar5000-bases-x4-20260924-v2` | `ar5000-spatial-installed-20260924-v1.json` (WED par B, pages par bases v2 puis C) | validée — `ar5000-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
 | AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 

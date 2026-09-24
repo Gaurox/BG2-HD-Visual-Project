@@ -1,0 +1,536 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar5000-water-30fps-20260924-v3\\temporal-plan.json",
+    "bytes": 1067,
+    "sha256": "C98BD5A584C0B978FBD276DF74DF4E9FF70646753FDA6AA981A1DB5EACA3A39F"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR5000",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5000-water-x4-20260924-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5000-water-x4-20260924-v1\\selection.json",
+    "bytes": 471,
+    "sha256": "3A68FF9285FED6293B62F44B568BA5C6C9E1640A39F69C8D2B2FAF47A2477EE1"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5000-water-x4-20260924-v1\\override-candidate\\AR5000.WED",
+    "bytes": 47698,
+    "sha256": "FADE86EBB936DC9633BEAE9F87A8C2B64298CBC66D737616706905404E733AE2"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar5000-water-30fps-20260924-v2\\registry-v3.json",
+  "groups": [
+    {
+      "id": "brown_flow",
+      "rain_of": null,
+      "group": {
+        "id": "brown_flow",
+        "wed": "AR5000",
+        "resrefs": [
+          "WT5000A",
+          "WT5000B",
+          "WT5000C",
+          "WT5000D"
+        ],
+        "aliases": {
+          "WT5000A": "YS80SF",
+          "WT5000B": "YSKX01",
+          "WT5000C": "YS2ZEM",
+          "WT5000D": "YSB2OP"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WT5000A",
+            "WT5000B"
+          ],
+          [
+            "WT5000C",
+            "WT5000D"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WT5000A",
+          "WT5000B",
+          "WT5000C",
+          "WT5000D"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WT5000A": "YF4HKF",
+        "WT5000B": "YFEQI5",
+        "WT5000C": "YFWK4I",
+        "WT5000D": "YF8DFC"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.0,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 2.0,
+        "deridge_band_x1": 2,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 12,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.01,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [
+          {
+            "a": "WT5000A",
+            "b": "WT5000D",
+            "axis": "y",
+            "occurrences": 3
+          },
+          {
+            "a": "WT5000B",
+            "b": "WT5000C",
+            "axis": "y",
+            "occurrences": 2
+          }
+        ],
+        "non_torus_share": 0.00407
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WT5000A",
+          "wed_resref": "WT5000A",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 8,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 4.266666666666667
+        },
+        {
+          "slot": 2,
+          "resref": "WT5000B",
+          "wed_resref": "WT5000B",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 3,
+          "resref": "WT5000C",
+          "wed_resref": "WT5000C",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WT5000D",
+          "wed_resref": "WT5000D",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        }
+      ],
+      "cycle_seconds": 4.2667,
+      "phases": 128,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WT5000A",
+          "b": "WT5000B",
+          "axis": "x",
+          "occurrences": 150
+        },
+        {
+          "a": "WT5000A",
+          "b": "WT5000C",
+          "axis": "y",
+          "occurrences": 159
+        },
+        {
+          "a": "WT5000A",
+          "b": "WT5000D",
+          "axis": "y",
+          "occurrences": 3
+        },
+        {
+          "a": "WT5000B",
+          "b": "WT5000A",
+          "axis": "x",
+          "occurrences": 139
+        },
+        {
+          "a": "WT5000B",
+          "b": "WT5000C",
+          "axis": "y",
+          "occurrences": 2
+        },
+        {
+          "a": "WT5000B",
+          "b": "WT5000D",
+          "axis": "y",
+          "occurrences": 156
+        },
+        {
+          "a": "WT5000C",
+          "b": "WT5000A",
+          "axis": "y",
+          "occurrences": 157
+        },
+        {
+          "a": "WT5000C",
+          "b": "WT5000D",
+          "axis": "x",
+          "occurrences": 160
+        },
+        {
+          "a": "WT5000D",
+          "b": "WT5000B",
+          "axis": "y",
+          "occurrences": 149
+        },
+        {
+          "a": "WT5000D",
+          "b": "WT5000C",
+          "axis": "x",
+          "occurrences": 154
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5000-water-x4-20260924-v1\\overlays\\groups\\brown_flow\\build.json",
+        "bytes": 108355,
+        "sha256": "9007BD232FC9280EECF65C1C1234E165844E1E0BC52C1247F05121B0D9D3A647"
+      }
+    },
+    {
+      "id": "brown_flow_rain",
+      "rain_of": "brown_flow",
+      "group": {
+        "id": "brown_flow_rain",
+        "wed": "AR5000",
+        "resrefs": [
+          "WT5000AR",
+          "WT5000BR",
+          "WT5000CR",
+          "WT5000DR"
+        ],
+        "aliases": {
+          "WT5000AR": "YS80SFR",
+          "WT5000BR": "YSKX01R",
+          "WT5000CR": "YS2ZEMR",
+          "WT5000DR": "YSB2OPR"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WT5000AR",
+            "WT5000BR"
+          ],
+          [
+            "WT5000CR",
+            "WT5000DR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WT5000A",
+          "WT5000B",
+          "WT5000C",
+          "WT5000D"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WT5000AR": "YF4HKFR",
+        "WT5000BR": "YFEQI5R",
+        "WT5000CR": "YFWK4IR",
+        "WT5000DR": "YF8DFCR"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.0,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 2.0,
+        "deridge_band_x1": 2,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 12,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.01,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [
+          {
+            "a": "WT5000AR",
+            "b": "WT5000DR",
+            "axis": "y",
+            "occurrences": 3
+          },
+          {
+            "a": "WT5000BR",
+            "b": "WT5000CR",
+            "axis": "y",
+            "occurrences": 2
+          }
+        ],
+        "non_torus_share": 0.00407
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WT5000AR",
+          "wed_resref": "WT5000A",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 8,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 4.266666666666667
+        },
+        {
+          "slot": 2,
+          "resref": "WT5000BR",
+          "wed_resref": "WT5000B",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 3,
+          "resref": "WT5000CR",
+          "wed_resref": "WT5000C",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WT5000DR",
+          "wed_resref": "WT5000D",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        }
+      ],
+      "cycle_seconds": 4.2667,
+      "phases": 128,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WT5000AR",
+          "b": "WT5000BR",
+          "axis": "x",
+          "occurrences": 150
+        },
+        {
+          "a": "WT5000AR",
+          "b": "WT5000CR",
+          "axis": "y",
+          "occurrences": 159
+        },
+        {
+          "a": "WT5000AR",
+          "b": "WT5000DR",
+          "axis": "y",
+          "occurrences": 3
+        },
+        {
+          "a": "WT5000BR",
+          "b": "WT5000AR",
+          "axis": "x",
+          "occurrences": 139
+        },
+        {
+          "a": "WT5000BR",
+          "b": "WT5000CR",
+          "axis": "y",
+          "occurrences": 2
+        },
+        {
+          "a": "WT5000BR",
+          "b": "WT5000DR",
+          "axis": "y",
+          "occurrences": 156
+        },
+        {
+          "a": "WT5000CR",
+          "b": "WT5000AR",
+          "axis": "y",
+          "occurrences": 157
+        },
+        {
+          "a": "WT5000CR",
+          "b": "WT5000DR",
+          "axis": "x",
+          "occurrences": 160
+        },
+        {
+          "a": "WT5000DR",
+          "b": "WT5000BR",
+          "axis": "y",
+          "occurrences": 149
+        },
+        {
+          "a": "WT5000DR",
+          "b": "WT5000CR",
+          "axis": "x",
+          "occurrences": 154
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5000-water-x4-20260924-v1\\overlays\\groups\\brown_flow_rain\\build.json",
+        "bytes": 109229,
+        "sha256": "61B017700D2B9AFD75EE3D915D144878C1F30A0C9F65B8CC2B97479F270444E3"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

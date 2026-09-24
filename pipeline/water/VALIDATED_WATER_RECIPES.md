@@ -19,6 +19,8 @@ compatible, pas des recettes universelles.
 | Marche de luminosité | opacités primaire/secondaire désaccordées | apparier les contributions ; AR0300N v10 utilise 160/160 localement |
 | 30 FPS actif mais eau « qui grouille », micro-saccade | bouillonnement du détail SeedVR (65 % du pas) + cadence latente 4 images | `temporal_harmonics` 1,5 × clés + `equalize_detail` ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)) |
 | Ligne floue à chaque bord de tuile (tuile unique) | collier de raccord 8 px x4 lisse ~10 px de détail | `seedvr-torus` 1×1 à la place du collier |
+| Lignes fines aux bords de cellules eau pure ↔ décor | interfaces A non réparées (pavage A–D) + matte C comptant l'eau pure comme objet | bases A par famille + C `central_water` (AR5000 5,69 → 3,14) |
+| Bande claire au bord des tuiles d'un pavage lisse | rangée de bord native +1 amplifiée par SeedVR | `deridge_band_x1` (WT5000A–D) |
 | Grille régulière sur un pavage A–D après SeedVR | raccords natifs des tuiles 64 px amplifiés (×1,2 → ×1,56) | recoller les bords en x1 avant interpolation ; `seedvr-torus` ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)) |
 | Map 30 FPS qui rame (FPS ÷5), CPU hook faible | scan DLL de toutes les tuiles overlay à chaque draw (multi-slots) | cache de correspondance overlay dans la DLL (build ≥ `ar5200-lava-torus-30fps-20260924-v1`) |
 | Mosaïque sous pluie | seule la ressource sèche a été traitée | créer/router la ressource alternative pluie exacte |
@@ -39,6 +41,7 @@ compatible, pas des recettes universelles.
 | `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408/AR0703 valident A → B ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; C AR0703 historiquement validé mais désormais provisoire | contrat famille ; pluie non observée en intérieur AR0703 |
 | `swamp-wtswam` standard | AR0500 + AR0500N (2026-09-24) | A SeedVR 7B x4 ; B trig x1 → SeedVR vidéo, 72 phases/30 Hz, cycle 2,4 s ; matériau 5 ; **q0.70 sec+pluie** | A/B validés ingame jour+nuit ; pluie non observée ; C installé mais provisoire |
 | `oil-wtoil` standard | AR0503 (2026-09-24) | A SeedVR x4 ; B `seedvr-torus` 1×1, 72 phases/2,4 s, harmoniques ≤ 9 + égalisation du détail ; matériau 1 **q0** ; C provisoire validé avec réserve | contrat famille ; pluie non observée ; AR0413 hors standard |
+| `brown-wt5000` standard | AR5000 (2026-09-25) | A SeedVR x4 + interfaces par famille ; B `seedvr-torus` 2×2, 128 phases/4,27 s, recollage off, décrêtage x1, σ périodique 2, harmoniques ≤ 12 + égalisation ; C `central_water` | contrat famille ; pluie non observée |
 | `lava-wtlava` standard | AR5200 (2026-09-24) | B `seedvr-torus` : recollage x1 des bords 64 px, trig 12 clés → 216 phases/7,2 s, SeedVR vidéo motif+marge enroulée, périodique+lisse σ8 ; matériau 1 **q0** ; C provisoire validé avec réserve | contrat famille ; autres maps lave : adjacences tore à vérifier ; pluie non observée |
 | `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
