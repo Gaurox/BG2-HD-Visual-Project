@@ -98,7 +98,7 @@ composition de paire non encore vue en jeu.
 | AR5000 | WT5000A–D | `ar5000-contour-matte-20260924-v3` (v1 : lignes aux jonctions) | validée — `ar5000-contour-user-qa-20260925-v1.json` | `central_water` sur les pages A-v2 (240 interfaces) ; jonction 5,69 → 3,14 |
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
-| AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | installées 2026-09-25, **QA en attente** — reçus `*-contour-installed-20260925-v1.json` | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
+| AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
 
 ## Limites connues
 
