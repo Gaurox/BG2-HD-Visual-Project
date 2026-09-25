@@ -132,6 +132,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR0503 | oil | 72 / 2,4 s, `seedvr-torus`, q0 | `ar0503-water-30fps-20260924-v1` | remplacée par v2 (jugée « pas terrible ») | bouillonnement SeedVR + cadence 4 phases 0,73 ; netteté 1,34 |
 | AR0503 | oil | 72 / 2,4 s, `seedvr-torus` + harmoniques ≤ 9 + égalisation, q0 | `ar0503-water-30fps-20260924-v2` | validée — `ar0503-temporal-30fps-user-qa-20260924-v1.json` | même inférence que v1 ; pas médian 1,02 → 0,42, netteté 1,34 → 1,15 ; pluie non observée |
 | AR5200 | lava | 216 / 7,2 s, `seedvr-torus`, q0 | `ar5200-lava-torus-30fps-20260924-v1` | validée — `ar5200-temporal-30fps-user-qa-20260924-v2.json` | pas max/médian 1,53 (fondu de boucle) accepté ; 60 FPS mesurés ; pluie non observée |
+| Lot swamp (14) : AR0310, AR0604, AR1100, AR1106, AR1201, AR1403, AR1500, AR2210, AR2500, AR2600, AR2602, AR2700, AR3025, AR6008 | swamp (+ pool slot 2 AR1100) | 72 / 2,4 s, q0,70 sec, pluie q0 | `<map>-water-30fps-20260925-v1` ; registre chaîné, DLL `swamp-batch-20260925-v1` (69 identités) | validées — `<map>-temporal-30fps-user-qa-20260925-v1.json` | ratios identiques AR0500 (1,20/1,43 ; 1,37/1,34) ; pool AR1100 1,08/1,22 |
 
 ## Méthode `seedvr-torus` (pavages A–D, lave AR5200 ; tuile unique, huile AR0503)
 

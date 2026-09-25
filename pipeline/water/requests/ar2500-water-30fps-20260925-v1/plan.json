@@ -1,0 +1,214 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar2500-water-30fps-20260925-v1\\temporal-plan.json",
+    "bytes": 741,
+    "sha256": "E1482175835496BB746209BFDB4E5C86CD624BA8EEFFD0235ABC39C82F5A5D18"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR2500",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2500-water-x4-20260925-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2500-water-x4-20260925-v1\\selection.json",
+    "bytes": 451,
+    "sha256": "B220E8BEEC5EB9B8BFF9F7DDC5B520A72D5B8AE32C9F2BD353CCCC0F619CE59E"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2500-water-x4-20260925-v1\\override-candidate\\AR2500.WED",
+    "bytes": 63398,
+    "sha256": "D4CDB71BB05702D9D23193FC030B8211E3543D6A1AA230C772488D0F280AC6B8"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar2210-water-30fps-20260925-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "swamp",
+      "rain_of": null,
+      "group": {
+        "id": "swamp",
+        "wed": "AR2500",
+        "resrefs": [
+          "WTSWAM"
+        ],
+        "aliases": {
+          "WTSWAM": "YSRZT4"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTSWAM"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTSWAM"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTSWAM": "YF2R10"
+      },
+      "material_id": 5,
+      "approved_strength": 0.7,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": null,
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTSWAM",
+          "wed_resref": "WTSWAM",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTSWAM",
+          "b": "WTSWAM",
+          "axis": "x",
+          "occurrences": 62
+        },
+        {
+          "a": "WTSWAM",
+          "b": "WTSWAM",
+          "axis": "y",
+          "occurrences": 57
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2500-water-x4-20260925-v1\\overlays\\groups\\swamp\\build.json",
+        "bytes": 18655,
+        "sha256": "EE2395007280DF4830867961B41BDA2AA31464389F971D6E199EE5AEE8DFDB32"
+      }
+    },
+    {
+      "id": "swamp_rain",
+      "rain_of": "swamp",
+      "group": {
+        "id": "swamp_rain",
+        "wed": "AR2500",
+        "resrefs": [
+          "WTSWAMR"
+        ],
+        "aliases": {
+          "WTSWAMR": "YSRZT4R"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTSWAMR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTSWAM"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTSWAMR": "YF2R10R"
+      },
+      "material_id": 5,
+      "approved_strength": 0.0,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": null,
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTSWAMR",
+          "wed_resref": "WTSWAM",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 6,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 2.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTSWAMR",
+          "b": "WTSWAMR",
+          "axis": "x",
+          "occurrences": 62
+        },
+        {
+          "a": "WTSWAMR",
+          "b": "WTSWAMR",
+          "axis": "y",
+          "occurrences": 57
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar2500-water-x4-20260925-v1\\overlays\\groups\\swamp_rain\\build.json",
+        "bytes": 18728,
+        "sha256": "3CC610D5DB552BFC4863C835204DDBA411928457F645C651F1E6AD698C54A86F"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

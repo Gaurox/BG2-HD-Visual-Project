@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0604",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T14:50:05+00:00",
+  "run": "maps/water-batches/runs/ar0604-contour-matte-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0604-contour-matte-20260925-v1/override-candidate/manifest.json",
+    "sha256": "124104E4CC5B742BD65282A239D822A35E6E2A407E2DA0F7FB950F7D79C49CAB"
+  },
+  "files": {
+    "A060402.PVRZ": {
+      "sha256": "EA8F28A1CFD3E7A0D3F5DD8645C97747C745081F0E5B62770DFFD18D1044A34A",
+      "bytes": 1127226
+    },
+    "A060403.PVRZ": {
+      "sha256": "1DE14EE269F723BCFBD36C9250410A345E2EC0522624FC2F7E5102E5377056A5",
+      "bytes": 1094619
+    },
+    "A060404.PVRZ": {
+      "sha256": "8539151B8EF8F5C54EE18A1726017299C0405E7904515DAEECB05DE8BBB93F7A",
+      "bytes": 1110571
+    },
+    "A060405.PVRZ": {
+      "sha256": "B1BA54FD235F82BD8D50A66D366E792B31CB38E00A6A23F484C579EEA7487C18",
+      "bytes": 1008110
+    },
+    "A060406.PVRZ": {
+      "sha256": "67BD04D7E80110B3AA5FF9CDC2F07F6CCD5B8A0087C89410F07E887CDBD80B21",
+      "bytes": 645117
+    },
+    "A060407.PVRZ": {
+      "sha256": "BE0DAF539EA398782612BFB9E29CCE79D6CDBEAE725DDB484902F54934C1ADE4",
+      "bytes": 564485
+    },
+    "A060408.PVRZ": {
+      "sha256": "6F01D8B6E7B07719D508952697D3863215C9D2BD8090519FEFAE14E842EF0976",
+      "bytes": 40932
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0604-contour-matte-20260925-v1/override-backup-20260925-165005/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0604-contour-matte-20260925-v1/build.json",
+    "sha256": "B657044A41B1976E2E511E62FED6CD1742273CE21486C691FF5F18626960C74B"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0604-contour-matte-20260925-v1/prepare.json",
+    "sha256": "DD26892D07955A4405FCD23CBB11DCB62003789835B1DDA79F3309A5C2CC61F8"
+  }
+}

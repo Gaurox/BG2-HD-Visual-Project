@@ -1,0 +1,44 @@
+{
+  "spatial_run": "maps/water-batches/runs/ar1100-water-x4-20260925-v1",
+  "wed": "AR1100",
+  "selection": "maps/water-batches/runs/ar1100-water-x4-20260925-v1/selection.json",
+  "source_wed": "maps/water-batches/runs/ar1100-water-x4-20260925-v1/override-candidate/AR1100.WED",
+  "groups": [
+    {
+      "id": "swamp",
+      "aliases": {
+        "WTSWAM": "YF2SB6"
+      },
+      "material_id": 5,
+      "cycle_seconds": 2.4,
+      "approved_strength": 0.7
+    },
+    {
+      "id": "swamp_rain",
+      "aliases": {
+        "WTSWAMR": "YF2SB6R"
+      },
+      "material_id": 5,
+      "rain_of": "swamp",
+      "approved_strength": 0.0
+    },
+    {
+      "id": "pool",
+      "aliases": {
+        "WTPOOL": "YF7KP4"
+      },
+      "material_id": 1,
+      "cycle_seconds": 2.4,
+      "approved_strength": 0.7
+    },
+    {
+      "id": "pool_rain",
+      "aliases": {
+        "WTPOOLR": "YF7KP4R"
+      },
+      "material_id": 1,
+      "rain_of": "pool"
+    }
+  ],
+  "base_registry": "pipeline/water/requests/ar0604-water-30fps-20260925-v1/registry-v3.json"
+}

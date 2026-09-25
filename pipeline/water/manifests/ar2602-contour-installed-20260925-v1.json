@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR2602",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T15:41:51+00:00",
+  "run": "maps/water-batches/runs/ar2602-contour-matte-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar2602-contour-matte-20260925-v1/override-candidate/manifest.json",
+    "sha256": "18454845A70D621545309E2EF43D26EC00695C52B586F9EF76A4987570B73600"
+  },
+  "files": {
+    "A260203.PVRZ": {
+      "sha256": "824E437BA4636119906C7DEBB379592C6FEB38182B56C877CE1C3A318FC71D4C",
+      "bytes": 1213274
+    },
+    "A260204.PVRZ": {
+      "sha256": "8F5831B93F591A7E6C73FD0665FCA9447662A85957B48684D4FD39D54463AEEE",
+      "bytes": 1195599
+    },
+    "A260208.PVRZ": {
+      "sha256": "C2DD4FF0FCA647674E01158B2C9701DD0E1035DE53CC231434919FBF101C030F",
+      "bytes": 296800
+    }
+  },
+  "override_backup_receipt": "backups/water/ar2602-contour-matte-20260925-v1/override-backup-20260925-174151/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar2602-contour-matte-20260925-v1/build.json",
+    "sha256": "5DFE862FBF3B9B4654D3E9812B0A50E251D1EAC04994880776B90F4E327B1EC2"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar2602-contour-matte-20260925-v1/prepare.json",
+    "sha256": "946DED4C76685C50CDBC5A0053DE492573DF0DFD61D51064F03E5BED491ADE34"
+  }
+}

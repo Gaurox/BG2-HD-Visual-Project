@@ -113,7 +113,9 @@
         "temporal-30fps": {
           "status": "validated-ingame",
           "installed": "pipeline/water/manifests/ar0500-temporal-30fps-installed-20260924-v1.json",
-          "qa": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json"
+          "qa": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260924-v1.json",
+          "rain_qa": "pipeline/water/manifests/ar0500-temporal-30fps-user-qa-20260925-v1.json",
+          "rain": "validated-ingame-q0"
         },
         "contour": {
           "status": "validated-ingame-spline-fit1",
@@ -232,6 +234,328 @@
           "qa": "pipeline/water/manifests/ar6300-contour-user-qa-20260925-v2.json"
         }
       }
+    },
+    {
+      "area": "AR0310",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0310-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0310-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0310-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0310-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar0310-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0310-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR0604",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0604-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0604-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar0604-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0604-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar0604-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar0604-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR1100",
+      "family": "swamp+pool",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1100-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1100-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1100-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1100-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar1100-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1100-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR1106",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1106-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1106-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1106-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1106-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar1106-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1106-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR1201",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1201-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1201-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1201-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1201-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar1201-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1201-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR1403",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1403-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1403-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1403-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1403-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar1403-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1403-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR1500",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1500-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1500-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar1500-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1500-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar1500-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar1500-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR2210",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2210-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2210-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2210-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2210-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar2210-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2210-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR2500",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2500-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2500-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2500-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2500-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar2500-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2500-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR2600",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2600-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2600-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2600-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2600-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar2600-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2600-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR2602",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2602-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2602-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2602-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2602-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar2602-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2602-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR2700",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2700-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2700-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar2700-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2700-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar2700-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar2700-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR3025",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar3025-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar3025-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar3025-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar3025-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar3025-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar3025-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
+    },
+    {
+      "area": "AR6008",
+      "family": "swamp",
+      "overall": "spatial-temporal-validated-contour-validated",
+      "stages": {
+        "spatial": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar6008-spatial-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar6008-spatial-user-qa-20260925-v1.json"
+        },
+        "temporal-30fps": {
+          "status": "validated-ingame",
+          "installed": "pipeline/water/manifests/ar6008-temporal-30fps-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar6008-temporal-30fps-user-qa-20260925-v1.json"
+        },
+        "contour": {
+          "status": "validated-ingame-spline-fit1",
+          "installed": "pipeline/water/manifests/ar6008-contour-installed-20260925-v1.json",
+          "qa": "pipeline/water/manifests/ar6008-contour-user-qa-20260925-v1.json"
+        }
+      },
+      "batch": "swamp-batch-20260925-v1"
     }
   ],
   "release": "not-requested"

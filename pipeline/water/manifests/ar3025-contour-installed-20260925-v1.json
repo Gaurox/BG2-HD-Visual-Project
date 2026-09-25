@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR3025",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T15:47:51+00:00",
+  "run": "maps/water-batches/runs/ar3025-contour-matte-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar3025-contour-matte-20260925-v1/override-candidate/manifest.json",
+    "sha256": "F009864D92B5E54EA00AAF519C58A0084A4C8136481FFF079B796EC7C066DEE6"
+  },
+  "files": {
+    "A302501.PVRZ": {
+      "sha256": "445048F932D876AD92E1B5FF4B5CDE2600FD8933B8727647640B105FBD028085",
+      "bytes": 1128780
+    },
+    "A302502.PVRZ": {
+      "sha256": "70B56A89AE4C220A7F156F7EA3661E2072D22DE2A082DA326F2BE92F38EA9327",
+      "bytes": 1202454
+    },
+    "A302504.PVRZ": {
+      "sha256": "6D77CCAE4547E93816FA762F6DD28CDF4F16A63BF274FD560D73BC2D705FDA15",
+      "bytes": 730170
+    }
+  },
+  "override_backup_receipt": "backups/water/ar3025-contour-matte-20260925-v1/override-backup-20260925-174751/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar3025-contour-matte-20260925-v1/build.json",
+    "sha256": "0FA107F5C6DE53170188617FE49964D2FC0E59C97F1BF3B28FEEA46A8A27B013"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar3025-contour-matte-20260925-v1/prepare.json",
+    "sha256": "63D4FBD0A9FD0E6D74272F45B398A72B11E548F1B148262DBCA45E95A0ADD405"
+  }
+}

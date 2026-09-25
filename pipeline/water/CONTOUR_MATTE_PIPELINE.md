@@ -100,6 +100,7 @@ composition de paire non encore vue en jeu.
 | AR6300 | WTLAKA–D | `ar6300-contour-matte-20260925-v1` (réinstallé) | validée — `ar6300-contour-user-qa-20260925-v1.json` | 36 paires, alpha 160 ; essais spline v3 (fit 1) / v5 (fit 4 + AA) non retenus |
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
+| Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | WTSWAM (+ WTPOOL AR1100) | `<map>-contour-matte-20260925-v1` (spline fit 1 + `central_water`, a = 128) | **validées** 2026-09-25 — `<map>-contour-user-qa-20260925-v1.json` | construit après A+B, sans reprise |
 | AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
 
 ## Spline fit 1 (défaut depuis 2026-09-25)

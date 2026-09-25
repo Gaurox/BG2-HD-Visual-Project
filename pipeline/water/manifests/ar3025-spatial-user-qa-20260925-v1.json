@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR3025",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-25T16:31:51+00:00",
+  "source": "user-message",
+  "quote": "toutes les maps de la liste sont validées et tres satisfaisantes. mets a jour le suivi, comite.",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "lot swamp 2026-09-25 ; nuits et pluie contrôlées par l'utilisateur (annonce préalable), sans détail par map ; pluie possible seulement AR1100/AR2500/AR2600/AR2700 ; aucune variante nuit liquide",
+  "selection": {
+    "path": "pipeline/water/manifests/ar3025-spatial-installed-20260925-v1.json",
+    "sha256": "7BD414FE5840296BE9DB8D3D487A9DD09D66E2A5BEF584B6AD1C7BE15DBE273C"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar3025-temporal-30fps-installed-20260925-v1.json",
+      "sha256": "3D8AA5A290A4254C639F177341EB0C3C3B76F148858677021FBD377AC28C6FCF"
+    },
+    {
+      "path": "pipeline/water/manifests/ar3025-contour-installed-20260925-v1.json",
+      "sha256": "3353F352B2655974E14F49628E07FEF8FB33C036D8BC051B5F137346EB1F60A8"
+    }
+  ],
+  "release": "not-requested"
+}

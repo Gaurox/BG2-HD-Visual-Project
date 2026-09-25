@@ -1,0 +1,65 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR1100",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T15:52:37+00:00",
+  "run": "maps/water-batches/runs/ar1100-water-30fps-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar1100-water-30fps-20260925-v1/candidate/manifest.json",
+    "sha256": "26331146FBE147D41BBA37F354551D137A7880B08AF458660730E92C2FEEEF33"
+  },
+  "files": {
+    "AR1100.WED": {
+      "sha256": "9922916A11C1248B6C71C77D85C23116B44ADDB71DC2F812B8174BD8D8FCD05E",
+      "bytes": 107296
+    },
+    "Y2SB600.PVRZ": {
+      "sha256": "488DEE6C1E21B659133977F56165D499921B7C0AB2907A7108B77CB8D01F066D",
+      "bytes": 1122196
+    },
+    "Y2SB6R00.PVRZ": {
+      "sha256": "A0C2DAFE0EA849D3079C7CAD8B781C256945A4A1F1824A4C34EFC5FBDF98AFF4",
+      "bytes": 1872352
+    },
+    "Y7KP400.PVRZ": {
+      "sha256": "ABF35D89D6BBE81FE8F619F135182D229D122519F23A44388451A8106C9F8D76",
+      "bytes": 1114802
+    },
+    "Y7KP4R00.PVRZ": {
+      "sha256": "C71AB5AC7CDDADC219DC968806AA5E58FC8C2A0676FAAD3845B6F625ACF3BC92",
+      "bytes": 1358897
+    },
+    "YF2SB6.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YF2SB6R.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YF7KP4.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YF7KP4R.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    }
+  },
+  "override_backup_receipt": "backups/water/ar1100-water-30fps-20260925-v1/override/override-backup-20260925-165331/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar1100-water-30fps-20260925-v1/build.json",
+    "sha256": "3300FFCBCF6EB4A3352879E7BC163AC05F2E053F8143FF143CB722D33C452A2E"
+  },
+  "runtime": {
+    "receipt": "backups/water/swamp-batch-20260925-v1/runtime/install-backup.json",
+    "dll_sha256": "7FC24FC3B65AD8FCC35FCE1345EF6892E8BCF164EBD1807B6B3D425D6C8CB065",
+    "registry": {
+      "path": "pipeline/water/requests/ar6008-water-30fps-20260925-v1/registry-v3.json",
+      "sha256_lf": "1BE071989823E1ED08C909599481064638B72014F83F467C0DFE0B910A2A370E"
+    }
+  }
+}

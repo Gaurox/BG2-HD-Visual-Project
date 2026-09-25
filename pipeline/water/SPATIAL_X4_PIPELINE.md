@@ -92,6 +92,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR0503 | oil | `ar0503-water-x4-20260924-v1` | `ar0503-spatial-installed-20260924-v1.json` (WED remplacée par B, 3 pages par C) | validée — `ar0503-spatial-user-qa-20260924-v1.json` (`superseded_by` B v2 + C) |
 | AR5000 | brown_flow | `ar5000-water-x4-20260924-v1` + bases `ar5000-bases-x4-20260924-v2` | `ar5000-spatial-installed-20260924-v1.json` (WED par B, pages par bases v2 puis C) | validée — `ar5000-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
+| Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | swamp (+ pool AR1100) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées — `<map>-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases

@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR1201",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-25T16:31:49+00:00",
+  "source": "user-message",
+  "quote": "toutes les maps de la liste sont validées et tres satisfaisantes. mets a jour le suivi, comite.",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "lot swamp 2026-09-25 ; nuits et pluie contrôlées par l'utilisateur (annonce préalable), sans détail par map ; pluie possible seulement AR1100/AR2500/AR2600/AR2700 ; aucune variante nuit liquide",
+  "selection": {
+    "path": "pipeline/water/manifests/ar1201-spatial-installed-20260925-v1.json",
+    "sha256": "1D6AF8B36822A87E8EC103C3197166F1B7F34C88F4E366850248BC6CB2852BF6"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar1201-temporal-30fps-installed-20260925-v1.json",
+      "sha256": "F899D22F69E59A95E29F3ABB27C82532A7E3C4D0E725AD45A4F437237164F745"
+    },
+    {
+      "path": "pipeline/water/manifests/ar1201-contour-installed-20260925-v1.json",
+      "sha256": "D8E052B97ED2522DB01FC702503CFAA94ED23D6BF1C69C08FD20C12C473AFBAB"
+    }
+  ],
+  "release": "not-requested"
+}
