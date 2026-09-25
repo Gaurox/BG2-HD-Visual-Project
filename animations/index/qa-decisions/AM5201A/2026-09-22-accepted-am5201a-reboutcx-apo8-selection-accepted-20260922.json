@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM5201A",
+  "correction_id": "am5201a-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "decision": "ailes cristallines fragmentees : ReboutCX x4, Apollo-8 30 fps, fondu 16 px x4 et RGB premultiplie (Blended). Validee ingame par l'utilisateur le 2026-09-22 (AR5201).",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-am5201a-reboutcx-apo8-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am5201a-reboutcx-apo8-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "377FB88112B990DBF3C626447F96FBB87AC7268F7174F4F3A91F9A58C41E2120",
+    "path": "animations/batches/am5201a-reboutcx-apo8-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM5201A/runs/am5201a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "5CBB783163B956D69F8696428DF820F17869B5E54B9A2E114B5FB8D3A8803032",
+        "path": "animations/ressources/AM5201A/runs/am5201a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T20:20:56Z",
+  "resref": "AM5201A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5201",
+        "manifest_path": "animations/packs-par-zone/am5201a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201/manifest.json",
+        "manifest_sha256": "D9A7971F5DD7DB3894BAAD49E1F88D666580475DE70BB74449C460B604F9C788",
+        "path": "animations/packs-par-zone/am5201a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201",
+        "registry_sha256": "5C00D2E09D7A8EB8C16F5FC462DCBBB0AEA27DE6B421849A67770D1C23EDAA0D",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am5201a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "22D4B5445D648FBF67F56D2F866D29B5800E4AEE4E368B4BF0230056EDD159D8",
+    "path": "animations/packs-par-zone/am5201a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR5201"
+  ]
+}

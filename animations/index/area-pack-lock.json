@@ -4215,6 +4215,35 @@
     "leaf": "animations/packs-par-zone/combined-20260917-active-plus-visual-regression-fix/AR5200"
    }
   },
+  "AR5201": {
+   "recorded_utc": "2026-09-22T19:26:50.886087+00:00",
+   "resources": {
+    "AM5201A": {
+     "sig": "541b0ee606e9",
+     "frames": 16
+    },
+    "AM5201B": {
+     "sig": "a5b7d65670c0",
+     "frames": 28
+    },
+    "AM5204D": {
+     "sig": "e0691595b1d8",
+     "frames": 40
+    }
+   },
+   "fingerprint": {
+    "files": 85,
+    "bytes": 51084788,
+    "max_mtime_ns": 1790105210605261500
+   },
+   "build": {
+    "merged_from": [
+     "animations/packs-par-zone/am5201a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201",
+     "animations/packs-par-zone/am5201b-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201",
+     "animations/packs-par-zone/am5204d-seedvr7b-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5201"
+    ]
+   }
+  },
   "AR5202": {
    "recorded_utc": "2026-09-18T22:53:09.582073+00:00",
    "resources": {
@@ -4268,22 +4297,71 @@
     "leaf": "animations/packs-par-zone/combined-20260904-fpit1s-contour-fondu-J/AR5500"
    }
   },
-  "AR5503": {
-   "recorded_utc": "2026-09-18T23:06:09.978452+00:00",
+  "AR5502": {
+   "recorded_utc": "2026-09-22T19:26:46.636072+00:00",
    "resources": {
+    "AM5502D": {
+     "sig": "c480bec8c4f8",
+     "frames": 24
+    },
+    "AM5502F": {
+     "sig": "5c6e81eaf18f",
+     "frames": 24
+    },
+    "AM5508C": {
+     "sig": "943981ed910a",
+     "frames": 24
+    },
+    "AM5508D": {
+     "sig": "7e144843f43d",
+     "frames": 20
+    }
+   },
+   "fingerprint": {
+    "files": 93,
+    "bytes": 14122256,
+    "max_mtime_ns": 1790105206344850500
+   },
+   "build": {
+    "merged_from": [
+     "animations/packs-par-zone/am5502d-reboutcx-apo8-x4-30fps-v2-innerfeather12-premul-20260922/AR5502",
+     "animations/packs-par-zone/am5502f-reboutcx-apo8-x4-30fps-v2-innerfeather12-premul-20260922/AR5502",
+     "animations/packs-par-zone/am5508c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5502",
+     "animations/packs-par-zone/am5508d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5502"
+    ]
+   }
+  },
+  "AR5503": {
+   "recorded_utc": "2026-09-22T19:26:52.356154+00:00",
+   "resources": {
+    "AM5503A": {
+     "sig": "84a0c9d4061d",
+     "frames": 16
+    },
+    "AM5503C": {
+     "sig": "cbf2ec38927c",
+     "frames": 16
+    },
+    "AM5503D": {
+     "sig": "961557868d20",
+     "frames": 16
+    },
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
     }
    },
    "fingerprint": {
-    "files": 15,
-    "bytes": 315644,
-    "max_mtime_ns": 1789772769935319400
+    "files": 63,
+    "bytes": 15261776,
+    "max_mtime_ns": 1790105212156108900
    },
    "build": {
     "merged_from": [
-     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5503::FIRE_4"
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/AR5503::FIRE_4",
+     "animations/packs-par-zone/am5503a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503",
+     "animations/packs-par-zone/am5503c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503",
+     "animations/packs-par-zone/am5503d-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503"
     ]
    }
   },
@@ -4505,8 +4583,16 @@
    }
   },
   "OH4210": {
-   "recorded_utc": "2026-09-18T23:18:15.820600+00:00",
+   "recorded_utc": "2026-09-22T19:26:49.183046+00:00",
    "resources": {
+    "AM5204C": {
+     "sig": "7cced8318324",
+     "frames": 24
+    },
+    "FIREBRN": {
+     "sig": "f9948541f4a6",
+     "frames": 84
+    },
     "FIRE_3": {
      "sig": "c2cebb655fd3",
      "frames": 14
@@ -4514,15 +4600,24 @@
     "FIRE_4": {
      "sig": "414b3adf5fa8",
      "frames": 14
+    },
+    "FIRE_4GS": {
+     "sig": "2e8861b51ea3",
+     "frames": 28
     }
    },
    "fingerprint": {
-    "files": 29,
-    "bytes": 1046688,
-    "max_mtime_ns": 1789773495711737300
+    "files": 165,
+    "bytes": 6353368,
+    "max_mtime_ns": 1790105208770440900
    },
    "build": {
-    "leaf": "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4210"
+    "merged_from": [
+     "animations/packs-par-zone/soa-ar0202-lot4-accepted-reserve-fire3-animation-20260916/OH4210",
+     "animations/packs-par-zone/am5204c-reboutcx-apo8-x4-30fps-v2-aura16-20260922/OH4210",
+     "animations/packs-par-zone/firebrn-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210",
+     "animations/packs-par-zone/fire_4gs-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210"
+    ]
    }
   },
   "OH4220": {
@@ -4920,5 +5015,5 @@
    }
   }
  },
- "updated_utc": "2026-09-22T05:15:02.452853+00:00"
+ "updated_utc": "2026-09-22T22:25:50.475497+00:00"
 }

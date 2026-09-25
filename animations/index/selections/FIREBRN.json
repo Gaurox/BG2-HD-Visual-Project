@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:FIREBRN",
+  "correction_id": "firebrn-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FIREBRN/runs/firebrn-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "71E6A0BE5E4EA190E77A30512EB2A16F18E0BD37821C994D59702B79A2AA1F94",
+        "path": "animations/ressources/FIREBRN/runs/firebrn-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/FIREBRN/2026-09-22-accepted-firebrn-reboutcx-apo8-selection-accepted-20260922.json",
+    "sha256": "F17EB6B4D44F5CCACF21C474A63A9041B346DD32AC3F81DECA5A3BA5BEB4F407",
+    "status": "accepted"
+  },
+  "resref": "FIREBRN",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/firebrn-reboutcx-apo8-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "61252075FA08C766E79CF0D2385FA372476201C5ED4132515AF5F8A02A0CD600",
+    "path": "animations/batches/firebrn-reboutcx-apo8-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/firebrn-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210/manifest.json",
+        "manifest_sha256": "C6A8E723D818545EDB7106DD80E36240A5571B4AF7A3207B80136F1F049733C4",
+        "path": "animations/packs-par-zone/firebrn-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210",
+        "registry_sha256": "FFD588BF11FD9BD038BAA8ABE8EB264186112E37A48930867BC74C031E47C090",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/firebrn-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "48A4DAFD1C08F8E2251608F8419E508F9887DA2298D7E5F935154E8D35D91C55",
+    "path": "animations/packs-par-zone/firebrn-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "OH4210"
+  ],
+  "updated_at_utc": "2026-09-22T20:20:54Z"
+}

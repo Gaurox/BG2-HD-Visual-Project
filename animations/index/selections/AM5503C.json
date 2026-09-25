@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schemas/animation-selection.schema.json",
+  "asset_id": "animations:bam:AM5503C",
+  "correction_id": "am5503c-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM5503C/runs/am5503c-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "722E5755793FDA940A3557F8870838AE69540DC4E90391E5F82E828496CC1108",
+        "path": "animations/ressources/AM5503C/runs/am5503c-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "qa_decision": {
+    "decision_date": "2026-09-22",
+    "path": "animations/index/qa-decisions/AM5503C/2026-09-22-accepted-am5503c-reboutcx-apo8-selection-accepted-20260922.json",
+    "sha256": "67DA169BCA206E1A97D3F6201D5B364E3F49B5B51F88C3D95D431BCC0F5717F6",
+    "status": "accepted"
+  },
+  "resref": "AM5503C",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "selected_run": {
+    "manifest_path": "animations/batches/am5503c-reboutcx-apo8-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "50B3B93E43794270E52ACBD257E09B8B9FF2382E525F4122D36EB5C86B23882F",
+    "path": "animations/batches/am5503c-reboutcx-apo8-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5503",
+        "manifest_path": "animations/packs-par-zone/am5503c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503/manifest.json",
+        "manifest_sha256": "30E95E38A22A86A3BE666308AF9E9C77DC210507496B36F00EE010574B5BA0EB",
+        "path": "animations/packs-par-zone/am5503c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503",
+        "registry_sha256": "DC97A02F54925BA288ED40A91AC90D79261BE97DD5D0A990B46188F112E7993C",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am5503c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "DF88A1513310B3AA0F9BECD6DE91210882920F621A64B9B9FECE4D2AD820779B",
+    "path": "animations/packs-par-zone/am5503c-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "tested_areas": [
+    "AR5503"
+  ],
+  "updated_at_utc": "2026-09-22T20:20:57Z"
+}

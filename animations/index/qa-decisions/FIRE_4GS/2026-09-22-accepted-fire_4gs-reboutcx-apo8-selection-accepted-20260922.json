@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:FIRE_4GS",
+  "correction_id": "fire_4gs-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "decision": "flamme (rectangle opaque sur fond noir) : ReboutCX x4, Apollo-8 30 fps, fondu 16 px x4 et RGB premultiplie (Blended). Validee ingame par l'utilisateur le 2026-09-22 (OH4210).",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-fire_4gs-reboutcx-apo8-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/fire_4gs-reboutcx-apo8-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "45E39248F50CD3453876E1300F1A07D810E59AE2F92835560700BE3B7CCC8FFA",
+    "path": "animations/batches/fire_4gs-reboutcx-apo8-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/FIRE_4GS/runs/fire_4gs-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "AE2E864F43EAB822526AC27C97C8B9C2F3BF1A09F4AF8988FBF44F4184416375",
+        "path": "animations/ressources/FIRE_4GS/runs/fire_4gs-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T20:20:55Z",
+  "resref": "FIRE_4GS",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "OH4210",
+        "manifest_path": "animations/packs-par-zone/fire_4gs-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210/manifest.json",
+        "manifest_sha256": "CCEBF48D2EBB9ED00AFCE526C44DCCD25E32E5B9CAE44DEFD3452FBE2D3FE9BF",
+        "path": "animations/packs-par-zone/fire_4gs-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/OH4210",
+        "registry_sha256": "2C63079A1F80A9BC7695B3001A43784B39F0CA9ED6A90A681A9EC02AC39C57B6",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/fire_4gs-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "9ACFDF3037AAA7871AABB471ABCEC7C6B6930408168455D27670BDD7458947AB",
+    "path": "animations/packs-par-zone/fire_4gs-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "OH4210"
+  ]
+}

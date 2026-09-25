@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/animation-qa-decision.schema.json",
+  "asset_id": "animations:bam:AM5503A",
+  "correction_id": "am5503a-reboutcx-apo8-innerfeather16-premultiply-20260922",
+  "decision": "coupelle incandescente : ReboutCX x4, Apollo-8 30 fps, fondu 16 px x4 et RGB premultiplie (Blended). Validee ingame par l'utilisateur le 2026-09-22 (AR5503).",
+  "decision_date": "2026-09-22",
+  "decision_id": "2026-09-22-accepted-am5503a-reboutcx-apo8-selection-accepted-20260922",
+  "decision_origin": "explicit-user-ingame-qa",
+  "final_run": {
+    "manifest_path": "animations/batches/am5503a-reboutcx-apo8-selection-accepted-20260922/manifest.json",
+    "manifest_sha256": "87A84802535462FFAE5C9C9B0F87CEE234AE27CBE64956B678E7A7A95325EA16",
+    "path": "animations/batches/am5503a-reboutcx-apo8-selection-accepted-20260922",
+    "schema": "bg2-upscale-area-animation-selection-run-v1",
+    "status": "completed"
+  },
+  "lineage": {
+    "source_packs": [
+      {
+        "manifest_path": "animations/ressources/AM5503A/runs/am5503a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack/manifest.json",
+        "manifest_sha256": "F1E41303FD0D6B23E970DFCBA1C5C5A2641F2AA8F9A95792B049EE18BC262F52",
+        "path": "animations/ressources/AM5503A/runs/am5503a-reboutcx-apo8-x4-30fps-v2-20260922/03_runtime_pack",
+        "schema": "bg2-upscale-area-animation-runtime-pack-v2",
+        "status": "completed"
+      }
+    ],
+    "source_runs": []
+  },
+  "recorded_at_utc": "2026-09-22T20:20:56Z",
+  "resref": "AM5503A",
+  "result_kind": "x4",
+  "schema_version": 1,
+  "source_pack": {
+    "areas": [
+      {
+        "area": "AR5503",
+        "manifest_path": "animations/packs-par-zone/am5503a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503/manifest.json",
+        "manifest_sha256": "2EB3FF159CBD415B924974DA0ECC82E1CD2C48F6266AE780540965ACC1207C76",
+        "path": "animations/packs-par-zone/am5503a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/AR5503",
+        "registry_sha256": "C3BC4CC8158759DC481B5F7C018171E5E67D2E97303AB1260DFE29A19C1241F5",
+        "resource_entries": 1
+      }
+    ],
+    "manifest_path": "animations/packs-par-zone/am5503a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922/manifest.json",
+    "manifest_sha256": "AC173640FE18701AA98C741D595C3193D5CF0CE9F2C6861DB989B80F928B6D02",
+    "path": "animations/packs-par-zone/am5503a-reboutcx-apo8-x4-30fps-v2-innerfeather16-premul-20260922",
+    "schema": "bg2-upscale-area-animation-pack-index-v1",
+    "status": "completed"
+  },
+  "status": "accepted",
+  "tested_areas": [
+    "AR5503"
+  ]
+}
