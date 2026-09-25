@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR6300",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T04:47:43+00:00",
+  "run": "maps/water-batches/runs/ar6300-contour-matte-20260925-spline1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-spline1/override-candidate/manifest.json",
+    "sha256": "DF58C851BDD5C70B167B5BD08A8D3772C94E3888A0FCA85236329F7F284EAA42"
+  },
+  "files": {
+    "A630000.PVRZ": {
+      "sha256": "A7A704FBE5A12731347977DD6050332CCA3444DA1DE415DB2E5908AC24DFEC14",
+      "bytes": 1664237
+    },
+    "A630001.PVRZ": {
+      "sha256": "87AED93AA1F81ACC8936BEE4AD49B5A55FE5A970C4DBF5F540432510BFA99020",
+      "bytes": 1598939
+    },
+    "A630006.PVRZ": {
+      "sha256": "641E0CB144B47BE1EA6DB9A1F11848C404F0BEFAFF49204B53BE2BF0AEECD7E7",
+      "bytes": 1579811
+    },
+    "A630007.PVRZ": {
+      "sha256": "BE819895476749815E7612D3FB1D9FF9296A308C88035B7C71F4839CD2FAD420",
+      "bytes": 1461237
+    },
+    "A630008.PVRZ": {
+      "sha256": "1796D0342E00DEC0A15E9BF1856301FC83088E6F0D6E669A090E1EF6497B96DA",
+      "bytes": 1551914
+    },
+    "A630009.PVRZ": {
+      "sha256": "94DE86CB17878083E8F07C37DD596F756FA0F677EB9335232676E7DBE1E4E85C",
+      "bytes": 1509549
+    },
+    "A630010.PVRZ": {
+      "sha256": "C3820CAA847D55C3C903A8B94ACA3C8DEB579E9E7895CB06A8E9D8D1C7901AE6",
+      "bytes": 1606172
+    },
+    "A630011.PVRZ": {
+      "sha256": "CD7ACFAEFF5E698E6AE0933D097899BD12571B4377D1794866643F4F68B1E653",
+      "bytes": 1655469
+    },
+    "A630014.PVRZ": {
+      "sha256": "F37FCEFB52EF6A28E91DF7DA24E902B953A3ED59A39375BE03B834DC0982AD4F",
+      "bytes": 1413299
+    },
+    "A630015.PVRZ": {
+      "sha256": "90E4D351B0FD8FC1159A4E9F21013CB77A6045FD400FD68591E739866A3AE9FA",
+      "bytes": 339874
+    }
+  },
+  "override_backup_receipt": "backups/water/ar6300-contour-matte-20260925-spline1/override-backup-20260925-064733/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-spline1/build.json",
+    "sha256": "09C06013F68B99BD43BEC55E41DE9D6327A07CEAC7A7C53B8E16AE12FEA71976"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar6300-contour-matte-20260925-spline1/prepare.json",
+    "sha256": "098AC90BDE7E55DE4417646F8B1D39F8EC9639BC483C175F5EE94DF064FFCCDF"
+  },
+  "note": "spline fit 1.0 contour (validated on AR1600 2026-09-25) applied to the family test map; central_water; built from untreated pages"
+}

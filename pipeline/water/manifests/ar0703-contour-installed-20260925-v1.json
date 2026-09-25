@@ -1,0 +1,38 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0703",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T04:47:42+00:00",
+  "run": "maps/water-batches/runs/ar0703-contour-matte-20260925-spline1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260925-spline1/override-candidate/manifest.json",
+    "sha256": "1CB15A2759179F7AB3CF29EB8C69505A896A3D7586A3D651AA4D074B3D7F8B44"
+  },
+  "files": {
+    "A070300.PVRZ": {
+      "sha256": "589486C37282933937AC5D5688C327A91E0D01B46004C60BE2854D05920F59C9",
+      "bytes": 195174
+    },
+    "A070301.PVRZ": {
+      "sha256": "789BD2BF3F47431671CA03D76AD7FD5929FBEB6632E6C2496D498BB3F7BCAEEB",
+      "bytes": 466983
+    },
+    "A070302.PVRZ": {
+      "sha256": "3B47112A5E38A6EF6E1753D99E64915717955C4F562BDA4C6349E4CA3EE503BC",
+      "bytes": 89297
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0703-contour-matte-20260925-spline1/override-backup-20260925-064731/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260925-spline1/build.json",
+    "sha256": "C5B3DF0B91854E30DDA77DD70796B288D0E8E2AE4B658AFB9AD663A5C4346A05"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260925-spline1/prepare.json",
+    "sha256": "B2437915E5AEA1432FDF875D89BD12D33D3D9B921CAD481F8C8AD8CB631512E6"
+  },
+  "note": "spline fit 1.0 contour (validated on AR1600 2026-09-25) applied to the family test map; central_water; built from untreated pages"
+}

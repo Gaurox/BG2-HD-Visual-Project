@@ -40,6 +40,19 @@ from mos_decode import decode_pvrz_page
 from workspace_paths import ROOT, get_path
 
 WINDOW = 8
+STANDARD = ROOT / 'pipeline/water/liquid-family-standard-v1.json'
+
+
+def contour_spline_fit(area, explicit=None, standard_path=STANDARD):
+    """Spline fit of the matte contour: --spline-fit (0 = off) > per-map exception of the family
+    standard (``contour_map_overrides``) > standard default (spline fit 1.0, validated on every
+    family 2026-09-25).  Exceptions belong to maps, never to families (AR0408, AR0703)."""
+    if explicit is not None:
+        return explicit or None
+    standard = json.loads(Path(standard_path).read_text(encoding='utf-8'))
+    override = standard.get('contour_map_overrides', {}).get(area.upper(), {})
+    value = override.get('spline_fit', standard['defaults']['contour'].get('spline_fit'))
+    return value or None
 
 
 def spline_coverage(obj, native, fit_error=1.0, spacing=1.5, supersample=2, band=4, aa_sigma=None, aa_ramp=0.35):
@@ -346,8 +359,9 @@ def main():
                         help='install-backup folder holding untreated pages; repeatable, first match wins')
     parser.add_argument('--output', type=Path, help='prepare/encode: run folder under maps/')
     parser.add_argument('--spline-fit', type=float,
-                        help='prepare: refit the silhouette contour with a periodic spline of this '
-                             'error (x4 px, 1.0 = validated AR0900 water setting) instead of gaussian AA')
+                        help='prepare: periodic spline error (x4 px) refitting the silhouette contour; '
+                             'default from the family standard (1.0, per-map exceptions); 0 = gaussian '
+                             'matte only (historical)')
     parser.add_argument('--spline-aa', type=float,
                         help='prepare with --spline-fit: gaussian AA sigma (x4 px) applied to the refitted '
                              'mask, as in the default matte (0.8)')
@@ -370,7 +384,8 @@ def main():
     area = Area(args.area[0], args.vanilla_root, args.source_backup)
     if args.stage == 'prepare':
         require(not output.exists(), 'Refusing to overwrite an existing run')
-        prepare(area, output, args.central_water, args.spline_fit, args.spline_aa)
+        prepare(area, output, args.central_water, contour_spline_fit(args.area[0], args.spline_fit),
+                args.spline_aa)
     else:
         encode(area, output)
 

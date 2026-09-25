@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0503",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T04:47:42+00:00",
+  "run": "maps/water-batches/runs/ar0503-contour-matte-20260925-spline1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0503-contour-matte-20260925-spline1/override-candidate/manifest.json",
+    "sha256": "A7F2D73FCC157A7599A45623526C8D8393BCC2A103233C17F590BCCAC444C9FE"
+  },
+  "files": {
+    "A050300.PVRZ": {
+      "sha256": "95B58AB793291E140CB0A267082ADF0ABF976ECB922C642159453ACCB5088072",
+      "bytes": 673358
+    },
+    "A050301.PVRZ": {
+      "sha256": "E9E28806865C66E17446D74259B6EB27C95573A7618D4887107333F7EDBA84D2",
+      "bytes": 1271302
+    },
+    "A050302.PVRZ": {
+      "sha256": "A68E59B74D500AB3B1A0BC6194C51D8FFDDEAB0B2C8ECB3FD5122A55D9C0D8D3",
+      "bytes": 1077396
+    },
+    "A050303.PVRZ": {
+      "sha256": "90ED5493F535CAE0474A6230232CA73ABBC2E8721305EDFEA3C4D591DDCEFB51",
+      "bytes": 835270
+    },
+    "A050304.PVRZ": {
+      "sha256": "506D7D501721FF30B84483CAB805D8D3B290EE9A18DC11DCE0AED4A9C37CCB27",
+      "bytes": 367497
+    },
+    "A050305.PVRZ": {
+      "sha256": "09D2A32CC601D92089EAD5AE3DCC89893146898F9D26A4A3AAFE0788A9603171",
+      "bytes": 645948
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0503-contour-matte-20260925-spline1/override-backup-20260925-064732/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0503-contour-matte-20260925-spline1/build.json",
+    "sha256": "2167598892658D4AD508095D06516A08EE35C5044EAA09E29294BFDF4D19CACD"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0503-contour-matte-20260925-spline1/prepare.json",
+    "sha256": "5E1F5E75E6D64CC76502F45561F910D6D1A645154C9F3970ABA0F377C96ED53E"
+  },
+  "note": "spline fit 1.0 contour (validated on AR1600 2026-09-25) applied to the family test map; central_water; built from untreated pages"
+}

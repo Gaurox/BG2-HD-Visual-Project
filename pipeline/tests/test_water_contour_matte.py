@@ -42,6 +42,25 @@ class ContourMatteTests(unittest.TestCase):
         _, coverage = silhouette(rgb, native)
         self.assertTrue(np.all(coverage[40:44, 30:40] == 1.0))
 
+    def test_spline_fit_default_and_map_exceptions_come_from_the_standard(self):
+        import build_water_contour_matte as m
+        self.assertEqual(m.contour_spline_fit("AR1600"), 1.0)
+        self.assertIsNone(m.contour_spline_fit("AR0408"))          # map exception: earlier matte
+        self.assertIsNone(m.contour_spline_fit("AR0703"))
+        self.assertIsNone(m.contour_spline_fit("AR1600", 0.0))     # explicit off
+        self.assertEqual(m.contour_spline_fit("AR0408", 2.0), 2.0) # explicit wins
+
+    def test_spline_coverage_keeps_bounds_and_smooths_a_staircase(self):
+        import build_water_contour_matte as m
+        native = np.zeros((96, 96), bool)
+        for i in range(0, 64, 8):                                  # x1-like 8 px staircase
+            native[16 + i:24 + i, 16:24 + i] = True
+        coverage, report = m.spline_coverage(native.copy(), native, 1.0)
+        self.assertGreater(report["rings"], 0)
+        self.assertTrue(np.all(coverage[native & (np.pad(native, 5)[5:-5, 5:-5])] >= 0))
+        self.assertEqual(coverage[0, 0], 0.0)                      # far outside stays water
+        self.assertTrue(np.all(coverage[20:22, 18:20] == 1.0))     # deep interior opaque
+
 
 if __name__ == "__main__":
     unittest.main()

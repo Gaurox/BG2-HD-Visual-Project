@@ -107,7 +107,7 @@ le producteur réutilise la sortie SeedVR du groupe sec.
 ## C. Contours devant l'eau
 
 ```powershell
-python -B pipeline/scripts/build_water_contour_matte.py prepare --area ARxxxx --vanilla-root $v --output maps/water-batches/runs/<map>-contour-matte-<date>-v1
+python -B pipeline/scripts/build_water_contour_matte.py prepare --area ARxxxx --vanilla-root $v --output maps/water-batches/runs/<map>-contour-matte-<date>-v1   # spline fit 1 + central_water par défaut ; exceptions par map dans le standard
 python -B pipeline/scripts/build_water_contour_matte.py encode  --area ARxxxx --vanilla-root $v --output <même run>
 & pipeline/scripts/Install-AreaOverrideAssets.ps1 -SourceRoot <run>/override-candidate -BackupRoot backups/water/<run>
 python pipeline/scripts/record_water_decision.py install --area ARxxxx --kind contour --run <run> `

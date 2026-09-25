@@ -1,9 +1,10 @@
 # Contours devant l'eau — détourage par silhouette RGB x4 (toutes familles)
 
-Recette historiquement validée ingame sur AR1600 (2026-09-23), mais **refonte globale à planifier** depuis la
-QA AR0500N du 2026-09-24 : l'utilisateur juge C clairement améliorable sur toutes les familles. Politique
-courante : continuer à produire et installer C en l'état pour développer les maps. Après validation d'un nouveau
-contrat C, le réappliquer à toutes les familles/maps déjà traitées. Les validations antérieures restent historiques.
+**Contrat C du 2026-09-25 : matte silhouette RGB x4 + spline fit 1.0 + `central_water`, défaut pour toutes les
+familles** (validé AR1600, puis sur la map test de chaque famille). Exceptions **par map** (jamais par famille) :
+`contour_map_overrides` du standard — AR0408 et AR0703 gardent le matte gaussien antérieur (spline refusée en jeu).
+Le producteur lit ce défaut et ces exceptions (`contour_spline_fit`) ; `--spline-fit 0` = matte gaussien seul.
+Historique : matte gaussien validé AR1600 (2026-09-23), jugé améliorable (AR0500N, 2026-09-24), remplacé.
 Famille `sewage` validée sur AR2100 avec le matte actuel accepté en l'état ; adaptation `CONTOUR-NET`
 explicitement abandonnée. Contrat : `liquid-family-standard-v1.json`.
 Famille `pool` validée sur AR0703 (10 paires, alpha 128).
@@ -101,15 +102,21 @@ composition de paire non encore vue en jeu.
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
 | AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
 
-## Essai spline (`--spline-fit`, `--spline-aa`), non retenu
+## Spline fit 1 (défaut depuis 2026-09-25)
 
-AR6300, 2026-09-25 : le contour de la silhouette x4 est réajusté par spline périodique (`spline_coverage`), alpha
-seulement (le RGB reste réparé sur la silhouette d'origine : sinon les creux comblés propagent du noir, v2).
-Fit 1 x4 : bord net qui suit les marches x1 → jugé plus anguleux en jeu (v3). Fit 4 + AA 0,8 (v5) : plus rond
-mais bosses et marche au bord des fenêtres de calcul. Utilisateur : gain insuffisant, C gaussien conservé.
-Liseré jaune identique dans toutes les variantes : il vient du RGB de bord, pas de la géométrie (piste WATER-006).
-**C reste à améliorer pour toutes les familles** (décision 2026-09-25, [WATER-006](../PROBLEMES_A_RESOUDRE.md#water-006--refonte-globale-des-contours-c)) ;
-les validations par map ci-dessus portent sur le C courant, provisoire.
+`spline_coverage` : le contour de la silhouette x4 (trous et îlots conservés) est réajusté par spline périodique
+(`build_spline_map_alpha.spline_mask`, fit 1.0 px x4, pas 1,5, suréchantillonnage 2), puis rasterisé par aire ;
+bornes identiques au matte (intérieur natif > 4 px opaque, rien au-delà de 4 px du masque natif). **Alpha
+seulement** : le RGB reste réparé sur la silhouette d'origine (sinon les creux comblés propagent du noir, AR6300 v2).
+`--spline-aa σ` ajoute le flou du matte sur le tracé réajusté (essai fit 4 + AA 0,8 sur AR6300 non retenu).
+
+| Étape | Résultat |
+|---|---|
+| AR6300, 1er essai fit 1 puis fit 4 + AA | jugé non concluant (tracé anguleux / marche au bord des fenêtres) |
+| AR1600, fit 1 sur tous les décors devant l'eau et les berges | **validé** — `ar1600-contour-user-qa-20260925-v2.json` |
+| Maps test des familles, fit 1 | validé AR2100, AR0503, AR5200, AR6300, AR5000, AR0500, AR0500N ; **refusé AR0408, AR0703** (matte antérieur réinstallé) |
+
+Défaut résiduel connu, commun aux variantes : fin liseré jaune-clair = RGB de bord recoloré (`edge_rgb`).
 
 ## Limites connues
 

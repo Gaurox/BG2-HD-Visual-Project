@@ -44,7 +44,7 @@ décor**. Restent ouverts sur des zones déjà validées :
 | Famille liquide `WT5000A-D` : AR5000 traitée (chaîne eau standard) ; AR5203 et préflight décor restent | AR5203 (+ préflight AR5000) | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
 | Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
 | Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
-| Contours C provisoires à refondre puis réappliquer | Toutes familles/maps eau traitées | [WATER-006](#water-006--refonte-globale-des-contours-c) |
+| Contours C : résolu (spline fit 1 par défaut) ; reste le liseré jaune-clair mineur | Toutes familles | [WATER-006](#water-006--refonte-globale-des-contours-c) |
 | Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL) ; AR6300 traitée 2026-09-25 (chaîne standard) | `overlay-sources.json` |
 | Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
 
@@ -121,7 +121,11 @@ ne sont pas réconciliés par une décision explicite.
   `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py` (le préflight décor bloque toujours
   sans `--allow-blocked-test`) ; matériau route2 dédié (non requis : q0 validé).
 
-## WATER-006 — Refonte globale des contours C
+## WATER-006 — Refonte globale des contours C (résolue 2026-09-25)
+
+- **Résolution 2026-09-25** : spline fit 1 validée sur toutes les familles et intégrée comme C par défaut
+  (`contour_spline_fit`) ; exceptions par map AR0408/AR0703 (matte antérieur). Reste mineur : liseré jaune-clair
+  du RGB de bord.
 
 - Décision utilisateur du 2026-09-24 : continuer le développement et les installations avec C actuel.
 - Dette : C reste provisoire et doit être amélioré sur toutes les familles.

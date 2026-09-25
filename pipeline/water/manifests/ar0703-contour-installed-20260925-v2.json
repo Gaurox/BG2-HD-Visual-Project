@@ -1,0 +1,38 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0703",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T04:53:35+00:00",
+  "run": "maps/water-batches/runs/ar0703-contour-matte-20260923-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260923-v1/override-candidate/manifest.json",
+    "sha256": "E0279F1D2077EE555142EF33CF183CEA51B6387D07C718518BCDD7011F6FA96A"
+  },
+  "files": {
+    "A070300.PVRZ": {
+      "sha256": "8816CA6B13B17490C09524236A9E590239BEB382673B6D9586CF9080444A96D3",
+      "bytes": 194851
+    },
+    "A070301.PVRZ": {
+      "sha256": "050D167FFB88AFB635B8460DD3D1933BE01B686DAD5F4D79EE9FA6F8A9F9628D",
+      "bytes": 463111
+    },
+    "A070302.PVRZ": {
+      "sha256": "F141C3854250C590258EA4A90FA1CCDE3238B7E7433F7213249D562CDBF8924F",
+      "bytes": 84329
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0703-contour-matte-20260923-v1-restore/override-backup-20260925-065330/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260923-v1/build.json",
+    "sha256": "46B70527F39E5B9BE660FFFA0EE40E6C63108EB4489F554E5F7FF038D5C5D2E5"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0703-contour-matte-20260923-v1/prepare.json",
+    "sha256": "B4D0197E036789F2D76288C628A63226D5CA6BABBFA15A56A4359950CD81A378"
+  },
+  "note": "map exception: historical gaussian matte restored after the spline fit 1 trial (user: map-specific, not family)"
+}
