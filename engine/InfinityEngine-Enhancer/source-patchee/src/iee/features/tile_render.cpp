@@ -18,6 +18,46 @@
 namespace iee::features {
 namespace {
 std::atomic<bool> g_resetRenderStateRequest{false};
+std::atomic<void* (*)(void*)> g_resourcePageDemand{nullptr};
+
+// BG2EE 2.7.3 CInfTileSet (RVA 0x2A46AF..0x2A477C) passes the DRY wrapper's page
+// to RenderTexture even when the wet state put the rain CResTile on the CVidTile
+// (RVA 0x2A44DF): a PVRZ rain variant samples the dry page with rain UVs and its
+// own page is never loaded. Palette variants are drawn natively and never reach
+// here. Bind the drawn resource's own, identity-consistent page instead.
+int drawn_resource_page(const game::TileInfo& tileInfo, int texId, bool diagnostics) noexcept {
+  const auto demand = g_resourcePageDemand.load(std::memory_order_acquire);
+  if (!demand || texId <= 0) return texId;
+  game::CResTile tile{};
+  game::CResPVR pvr{};
+  if (!core::safe_read(tileInfo.resource, tile) || !tile.pvr || !core::safe_read(tile.pvr, pvr) ||
+      pvr.texture == texId) {
+    return texId;
+  }
+  game::CResTileSet tileset{};
+  game::ResrefBuffer tilesetResref{};
+  game::ResrefBuffer pageResref{};
+  if (!core::safe_read(tileInfo.tileset, tileset) ||
+      !game::read_runtime_resref(tileset.baseclass_0.resref, tilesetResref) ||
+      !game::read_runtime_resref(pvr.baseclass_0.resref, pageResref) ||
+      !game::matches_pvrz_page_identity(game::resref_view(pageResref),
+                                        game::resref_view(tilesetResref), tileInfo.entry.page)) {
+    return texId;
+  }
+  try {
+    (void)demand(tile.pvr);
+  } catch (...) {
+    return texId;
+  }
+  if (!core::safe_read(tile.pvr, pvr) || pvr.texture <= 0) return texId;
+  static unsigned logs = 0;
+  if (diagnostics && logs < 8) {
+    ++logs;
+    LOG_INFO("TILE_RESOURCE_PAGE tileset={} page={} texture={} replaces engine texture={}",
+             game::resref_view(tilesetResref), game::resref_view(pageResref), pvr.texture, texId);
+  }
+  return pvr.texture;
+}
 
 bool is_wtpool_page(const game::TileInfo& tileInfo) noexcept {
   game::CResTile tile{};
@@ -66,6 +106,10 @@ TileRenderTelemetryStats tile_render_telemetry_snapshot() noexcept {
 
 void request_tile_render_state_reset() noexcept {
   g_resetRenderStateRequest.store(true, std::memory_order_release);
+}
+
+void configure_resource_page_demand(void* (*demand)(void*)) noexcept {
+  g_resourcePageDemand.store(demand, std::memory_order_release);
 }
 
 bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x, int y,
@@ -214,6 +258,8 @@ bool render_tile(AppContext& ctx, void* vidTile, int texId, void* unused, int x,
     state.lastTexId.store(-1, std::memory_order_relaxed);
     return false;
   }
+
+  texId = drawn_resource_page(tileInfo, texId, ctx.cfg.enableTilePageDiagnostics);
 
   const int scaleFactor = tilesetState->scaleFactor;
   const int du = game::TileDimensions::STANDARD_SIZE * scaleFactor;

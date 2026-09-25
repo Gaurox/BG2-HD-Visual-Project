@@ -325,7 +325,14 @@ namespace iee::game {
         //                        * (screen - rViewPortNotZoomed.origin)
         CRect rViewPortNotZoomed{};
         CRect rViewPort{};
-        std::array<std::byte, 0x268> _pad0{};
+        std::array<std::byte, 0x8C> _pad0{};
+        // BG2EE 2.7.3 CInfinity::Render RVA 0x2A08D5..0x2A0978: overlays draw
+        // their rain resource iff (m_areaType & 4) && nCurrentRainLevel != 0.
+        std::int32_t nCurrentRainLevel{};
+        std::int32_t nNextRainLevel{};
+        std::array<std::byte, 0x1CC> _pad0b{};
+        std::uint16_t m_areaType{};
+        std::byte _pad0c[6]{};
         std::uint32_t m_nLastTickCount{};
         CPoint m_ptCurrentPosExact{};
         std::int16_t m_autoScrollSpeed{};
@@ -501,6 +508,10 @@ namespace iee::game {
     static_assert(offsetof(CInfinity, nNewX) == 0x60);
     static_assert(offsetof(CInfinity, rViewPortNotZoomed) == 0x68);
     static_assert(offsetof(CInfinity, rViewPort) == 0x78);
+    static_assert(offsetof(CInfinity, nCurrentRainLevel) == 0x114);
+    static_assert(offsetof(CInfinity, nNextRainLevel) == 0x118);
+    static_assert(offsetof(CInfinity, m_areaType) == 0x2E8);
+    static_assert(offsetof(CInfinity, m_nLastTickCount) == 0x2F0);
     static_assert(offsetof(CInfinity, m_ptCurrentPosExact) == 0x2F4);
     static_assert(offsetof(CInfinity, m_pArea) == 0x340);
     static_assert(offsetof(CGameArea, m_resref) == 0x204);

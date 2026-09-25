@@ -39,7 +39,7 @@ AR0408 valide `pool` A → B ; AR0703 valide A → B et fournit la QA historique
 cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le groupe sec** (la timeline seule paraît figée), pluie q0,
 contours C provisoires `rgb-x4-silhouette-matte` (10 paires, alpha 128).
 AR0500 jour et AR0500N nuit valident `swamp` A → B : SeedVR 7B x4, matériau 5, cycle 2,4 s / 72 phases,
-force route2 0,70 sur les groupes sec et pluie ; QA sèche validée, pluie non observée. C reste applicable mais
+force route2 0,70 sur le groupe sec, **pluie q0** (validée AR0500 2026-09-25 ; q0,70 efface les flaques). C reste applicable mais
 provisoire : continuer en l'état, puis reconstruire/réinstaller toutes les maps après validation de sa refonte.
 AR5200 valide `lava` B → C (2026-09-24) : A seulement **construit** (contextes x1 + topologie, non installé ;
 sa WED bilinéaire est remplacée par B), B `seedvr-torus` 12 clés / 216 phases / 7,2 s, q0 matériau 1,
@@ -123,6 +123,9 @@ cellules ignorées nombreuses.
 
 Donner à l'utilisateur : ce qui a changé, `C:MoveToArea("ARxxxx")`, quoi regarder (B : fluidité, pop toutes
 les 0,4 s, raccord de boucle, pluie ; C : cordes/gréement, frange sombre, liseré clair), le chemin du rollback.
+Pluie (zone avec bit météo `0x4` de l'ARE, offset 0x48) : `C:SetWeather(1)` (0 aucune, 1 pluie), jeu non en pause ;
+niveau 0 pendant ~10 s (150 ticks) puis flaques. Preuve log : `TILE_RESOURCE_PAGE … page=<alias>R00`,
+`identity … page=<alias>R00` et `draw … weather=true`. Sans bit météo, pas de pluie à qualifier.
 Après sa réponse, et seulement alors :
 
 ```powershell

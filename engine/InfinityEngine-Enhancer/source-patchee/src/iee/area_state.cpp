@@ -515,6 +515,16 @@ std::optional<water_route2::Match> route2_water_overlay_match(
   if (!core::safe_read(areaBytes + offsetof(game::CGameArea, m_cInfinity) +
                       offsetof(game::CInfinity, pTileSets), tileSets) ||
       !tileSets[0]) return reject(4);
+  // Probe only the variant the engine draws this frame (native rule, see
+  // CInfinity::nCurrentRainLevel). A released dry page can hand its engine
+  // texture slot to the rain page, so the dry identity must not be tried then.
+  std::int32_t rainLevel = 0;
+  std::uint16_t areaType = 0;
+  if (!core::safe_read(areaBytes + offsetof(game::CGameArea, m_cInfinity) +
+                           offsetof(game::CInfinity, nCurrentRainLevel), rainLevel) ||
+      !core::safe_read(areaBytes + offsetof(game::CGameArea, m_cInfinity) +
+                           offsetof(game::CInfinity, m_areaType), areaType)) return reject(8);
+  const std::size_t drawnWeather = (areaType & 0x4) != 0 && rainLevel != 0 ? 1 : 0;
   const auto readResources = [](const game::CInfTileSet* set, void**& resources,
                                 std::uint32_t& count) {
     const auto* bytes = reinterpret_cast<const std::byte*>(set);
@@ -620,7 +630,8 @@ std::optional<water_route2::Match> route2_water_overlay_match(
 
   if (cached) {
     SlotState state{};
-    if (cached->slot < wed->overlays.size() && readSlot(cached->slot, state) &&
+    if (cached->weather == drawnWeather && cached->slot < wed->overlays.size() &&
+        readSlot(cached->slot, state) &&
         cached->tile < state.count) {
       if (const auto match = probe(cached->slot, state, cached->tile, cached->weather, nullptr))
         return accept(match);
@@ -631,7 +642,8 @@ std::optional<water_route2::Match> route2_water_overlay_match(
   for (std::size_t slot = 1; slot < wed->overlays.size(); ++slot) {
     SlotState state{};
     if (!readSlot(slot, state)) continue;
-    for (std::size_t weather = 0; weather < 2; ++weather) {
+    {
+      const std::size_t weather = drawnWeather;
       // Tiles of one page share its CResPVR: once a well-formed tile of that
       // page failed the texture check, its siblings cannot pass it either.
       std::array<const game::CResPVR*, 8> rejectedPages{};

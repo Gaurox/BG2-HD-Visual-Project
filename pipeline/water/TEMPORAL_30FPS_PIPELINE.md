@@ -1,7 +1,7 @@
 # Eau WED à 30 FPS réels — procédé commun aux familles
 
 Recette **validée ingame** sur AR1600 (`lake`), AR0408/AR0703 (`pool`), AR2100 (`sewage`) et
-AR0500/AR0500N (`swamp`, sec observé ; pluie non observée), AR5200 (`lava`, méthode `seedvr-torus`),
+AR0500/AR0500N (`swamp`, sec jour+nuit ; pluie q0 validée AR0500), AR5200 (`lava`, méthode `seedvr-torus`),
 AR0503 (`oil`, `seedvr-torus` 1×1 + filtres temporels), AR5000 (`brown_flow`, `seedvr-torus` 2×2 + filtres + décrêtage), AR6300 (`lake_teal`, `seedvr-torus` 2×2 + filtres).
 Référence fondatrice AR1600 :
 [`AR1600_WATER_30FPS_V2_20260923.md`](AR1600_WATER_30FPS_V2_20260923.md),
@@ -54,7 +54,10 @@ de la chaîne standard ([SPATIAL_X4_PIPELINE.md](SPATIAL_X4_PIPELINE.md)) ; à l
 
 `cycle_seconds` est à fixer par groupe sec lorsque les vitesses WED divergent (voir tableau).
 `approved_strength` (groupe sec, contrat famille) → force route2 du registre ; > 0 sur un groupe pluie refusé
-sauf matériau 5 (seul matériau qualifié par la DLL pour la passe pluie fpTone).
+sauf matériau 5 (seul matériau qualifié par la DLL pour la passe pluie fpTone). Pluie : q0 pour toutes les familles
+(`swamp` compris depuis AR0500 2026-09-25 : q0,70 efface les flaques). Pluie x4 visible seulement avec une DLL ≥
+`ar0500-rain-q0-20260925-v2` (page PVRZ pluie liée par le hook ; avant, page sèche affichée) ; le runtime n'essaie que
+la variante dessinée (`CInfinity::nCurrentRainLevel` ≠ 0 et bit météo de la zone).
 `base_registry` optionnel : par défaut, registre compilé dans la DLL installée, lu dans
 [`route2-registry-current.json`](route2-registry-current.json) (le producteur refuse si la DLL live n'est pas celle
 du pointeur). Les entrées de la même WED sont remplacées, les autres conservées. Copier le nouveau registre sous
@@ -102,7 +105,7 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 |---|---|---:|---|---|---:|---|---|---|
 | lake WTLAKE | AR1600 | 6 | 6 | 2,4 s | 72 | seedvr | non | **validé** |
 | pool WTPOOL | AR0408 | 6 | 6 (0 : AR1004, AR1601, AR2012) | **2,4 s figé** | 72 | bilinear | non | **validé ingame AR0408** (q0,70 matériau 1 sec) ; pluie q0 non observée |
-| swamp WTSWAM | AR0500 / AR0500N | 6 | 6 | **2,4 s figé** | 72 | seedvr | non | **validé ingame sec jour+nuit**, q0,70 matériau 5 sec+pluie ; pluie non observée |
+| swamp WTSWAM | AR0500 / AR0500N | 6 | 6 | **2,4 s figé** | 72 | seedvr | non | **validé ingame sec jour+nuit**, q0,70 matériau 5 sec ; **pluie q0 validée AR0500** |
 | sewage WTSEW | AR2100 | 6 | 6 | **2,4 s figé** | 72 | seedvr | oui | **validé ingame** ; ratios 1,269 / 1,682 acceptés après review |
 | oil WTOIL | AR0503 | 6 | 6 | 2,4 s natif | 72 | seedvr-torus + filtres | non | **validé ingame AR0503** ; AR0413 (contrat alpha0 historique) hors standard |
 | lake_teal WTLAKA–D | AR6300 | 8 | 0/0/0/0 (AR3000 : 8/0/0/0) | **4,27 s figé** | 128 | seedvr-torus + filtres | non | **validé ingame AR6300** |
@@ -117,8 +120,8 @@ Sa sémantique n'est pas confirmée : la durée AR1600 (6×6/15 = 2,4 s) est val
 | AR0408 | pool | 72 / 2,4 s | `ar0408-water-30fps-20260923-v1` | **rejetée** — `ar0408-temporal-30fps-user-qa-20260923-v1.json` | eau figée ; animation d’eau qui coule absente |
 | AR0408 | pool | 72 / 2,4 s, q0,70 | `ar0408-water-30fps-20260923-v2` | validée — `ar0408-temporal-30fps-user-qa-20260923-v2.json` | candidat = octets v1 ; seuls registre (q0,70 sec) et DLL changent |
 | AR0703 | pool | 72 / 2,4 s, q0,70 | `ar0703-water-30fps-20260923-v1` | validée — `ar0703-temporal-30fps-user-qa-20260923-v1.json` | pluie q0 non observée (intérieur) |
-| AR0500 | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500-water-30fps-20260924-v1` | validée jour — `ar0500-temporal-30fps-user-qa-20260924-v1.json` | ratios 1,20/1,43 sec et 1,37/1,34 pluie acceptés pour QA ingame ; pluie non confirmée |
-| AR0500N | swamp | 72 / 2,4 s, q0,70 sec+pluie | `ar0500n-water-30fps-20260924-v1` | validée nuit — `ar0500n-temporal-30fps-user-qa-20260924-v1.json` | mêmes ratios hors seuil acceptés avant installation ; pluie non confirmée |
+| AR0500 | swamp | 72 / 2,4 s, q0,70 sec, pluie q0 | `ar0500-water-30fps-20260924-v1` ; registre `requests/ar0500-rain-q0-20260925-v1` | validée jour — `ar0500-temporal-30fps-user-qa-20260924-v1.json` ; pluie validée — `ar0500-temporal-30fps-user-qa-20260925-v1.json` | ratios 1,20/1,43 sec et 1,37/1,34 pluie ; essai pluie q0,70 (`requests/ar0500-rain-q070-test-20260925-v1`) rejeté : « on ne voit plus les flaques » |
+| AR0500N | swamp | 72 / 2,4 s, q0,70 sec, pluie q0 | `ar0500n-water-30fps-20260924-v1` ; registre `requests/ar0500-rain-q0-20260925-v1` | validée nuit — `ar0500n-temporal-30fps-user-qa-20260924-v1.json` | mêmes ratios hors seuil acceptés avant installation ; pluie q0 installée, non observée |
 | AR5000 | brown_flow | 128 / 4,27 s, `seedvr-torus`, σ périodique 8 | `ar5000-water-30fps-20260924-v1` | non installée | bouclage 1,85/1,50 (texture lisse) |
 | AR5000 | brown_flow | 128 / 4,27 s, σ 2 | `ar5000-water-30fps-20260924-v2` | remplacée par v3 | lignes aux bords de cellules : cause surtout bases A/C (interfaces, `central_water`), voir SPATIAL/CONTOUR |
 | AR5000 | brown_flow | 128 / 4,27 s, σ 2 + décrêtage x1 | `ar5000-water-30fps-20260924-v3` | validée — `ar5000-temporal-30fps-user-qa-20260925-v1.json` | netteté ≤ 1,11, pas ≤ 1,16 ; raccord natif hors tore conservé (cellules 41–45, rangées 33/34) ; pluie non observée |

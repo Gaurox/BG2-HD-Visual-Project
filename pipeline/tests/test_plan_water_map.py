@@ -52,18 +52,19 @@ class PlanWaterMapTests(unittest.TestCase):
         self.assertNotIn("approved_strength", rain)
         self.assertNotIn("cycle_seconds", rain)
 
-    def test_swamp_validated_rain_strength_is_written_on_both_groups(self):
+    def test_swamp_rain_is_timing_only_while_dry_keeps_q070(self):
+        # AR0500 2026-09-25: q0.70 on the rain group erased the WTSWAMR drop rings.
         standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
         temporal = next(f for f in standard["families"] if f["id"] == "swamp")["temporal"]
         self.assertEqual(
             (temporal["material_id"], temporal["cycle_seconds"],
              temporal["approved_strength"], temporal["approved_rain_strength"]),
-            (5, 2.4, 0.70, 0.70),
+            (5, 2.4, 0.70, 0.0),
         )
         dry = p.temporal_plan_group("swamp", {"WTSWAM": "YFTEST"}, temporal)
         rain = p.temporal_plan_group("swamp_rain", {"WTSWAMR": "YFTESTR"}, temporal, "swamp")
         self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.70, 2.4))
-        self.assertEqual((rain["approved_strength"], rain["rain_of"]), (0.70, "swamp"))
+        self.assertEqual((rain["approved_strength"], rain["rain_of"]), (0.0, "swamp"))
         self.assertNotIn("cycle_seconds", rain)
 
     def test_lava_torus_method_and_keys_are_written_only_on_the_dry_group(self):

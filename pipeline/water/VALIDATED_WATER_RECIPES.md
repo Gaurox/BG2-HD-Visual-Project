@@ -24,6 +24,8 @@ compatible, pas des recettes universelles.
 | Grille régulière sur un pavage A–D après SeedVR | raccords natifs des tuiles 64 px amplifiés (×1,2 → ×1,56) | recoller les bords en x1 avant interpolation ; `seedvr-torus` ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)) |
 | Map 30 FPS qui rame (FPS ÷5), CPU hook faible | scan DLL de toutes les tuiles overlay à chaque draw (multi-slots) | cache de correspondance overlay dans la DLL (build ≥ `ar5200-lava-torus-30fps-20260924-v1`) |
 | Mosaïque sous pluie | seule la ressource sèche a été traitée | créer/router la ressource alternative pluie exacte |
+| Pluie x4 active mais aucune flaque (page `…R00` jamais lue) | moteur 2.7.3 : une tuile PVRZ reçoit la page du wrapper **sec** même en état pluie (RVA 0x2A46AF..0x2A477C) ; seules les UV viennent du TIS pluie | DLL ≥ `ar0500-rain-q0-20260925-v2` : le hook lie la page de la ressource dessinée (log `TILE_RESOURCE_PAGE`) ; toutes les pluies x4 antérieures n'étaient jamais affichées |
+| Flaques de pluie invisibles malgré la page pluie liée | q > 0 : P remplace 70 % de U (`mix(U, P, q)`), anneaux WTSWAMR effacés | pluie **q0** (timeline seule) ; essai q0,70 rejeté sur AR0500 |
 | Route2 invisible | WED/TIS/page/nom GL non reconnu ou hash divergent | corriger l'identité exacte du registre ; garder q0 pour les cas non reconnus |
 | Eau parfois brune | `CResPVR::texture` pris pour un nom GL au lieu d'un slot moteur | runtime avec résolution slot→descripteur→nom GL ; ne pas retraiter les PVRZ |
 | Autre carte modifiée | remplacement global d'un overlay partagé | alias isolé et routage WED/registre limité aux identités ciblées |
@@ -39,7 +41,7 @@ compatible, pas des recettes universelles.
 | `lake-wtlake` nuit | AR0300N v10 | RGB nocturne ; opacité primaire/secondaire 160 ; q0.70 | choix artistique local |
 | `pool-wtpool` | AR1000 jour v5 | bilinéaire x4 périodique sans SeedVR ; 6→36 linéaire/15 Hz ; blend 30 FPS ; matériau 1 ; q0.70 | AR1000 jour ; AR1000N exclu |
 | `pool-wtpool` standard | AR0408 v2 + AR0703 v1 (2026-09-23) | AR0408/AR0703 valident A → B ; bilinéaire x4 ; 72 phases/30 Hz ; matériau 1 ; **q0.70 sec**, pluie q0 ; C AR0703 historiquement validé mais désormais provisoire | contrat famille ; pluie non observée en intérieur AR0703 |
-| `swamp-wtswam` standard | AR0500 + AR0500N (2026-09-24) | A SeedVR 7B x4 ; B trig x1 → SeedVR vidéo, 72 phases/30 Hz, cycle 2,4 s ; matériau 5 ; **q0.70 sec+pluie** | A/B validés ingame jour+nuit ; pluie non observée ; C installé mais provisoire |
+| `swamp-wtswam` standard | AR0500 + AR0500N (2026-09-24) | A SeedVR 7B x4 ; B trig x1 → SeedVR vidéo, 72 phases/30 Hz, cycle 2,4 s ; matériau 5 ; **q0.70 sec, pluie q0** | A/B validés ingame jour+nuit ; pluie validée AR0500 2026-09-25 (`ar0500-temporal-30fps-user-qa-20260925-v1.json`), AR0500N pluie q0 installée non observée ; C installé mais provisoire |
 | `oil-wtoil` standard | AR0503 (2026-09-24) | A SeedVR x4 ; B `seedvr-torus` 1×1, 72 phases/2,4 s, harmoniques ≤ 9 + égalisation du détail ; matériau 1 **q0** ; C provisoire validé avec réserve | contrat famille ; pluie non observée ; AR0413 hors standard |
 | `brown-wt5000` standard | AR5000 (2026-09-25) | A SeedVR x4 + interfaces par famille ; B `seedvr-torus` 2×2, 128 phases/4,27 s, recollage off, décrêtage x1, σ périodique 2, harmoniques ≤ 12 + égalisation ; C `central_water` | contrat famille ; pluie non observée |
 | `lake-teal-wtlaka` standard | AR6300 (2026-09-25) | B `seedvr-torus` 2×2, 128 phases/4,27 s, recollage off, σ périodique 2, harmoniques ≤ 12 + égalisation, sans décrêtage ; C gaussien, alpha 160 | contrat famille ; AR3000 témoin historique ; pluie non observée |
@@ -47,7 +49,7 @@ compatible, pas des recettes universelles.
 | `swamp-wtswam` nuit | AR1000N v1 sec | réemploi WSWPIL x4 non génératif ; 36 phases/15 Hz ; blend 30 FPS ; matériau 5 ; q0.70 | AR1000N sec ; animation discrète acceptée ; pluie non observée |
 | `sewage-wtsew` | AR0404 | x4 `none`/3×3 ; 6→36 Apollo-8 ; matériau 4 ; q0.70 | AR0404 |
 | `sewage-wtsew` | AR2100 | état natif q0 | fallback courant |
-| `swamp-wtswam` | AR1607, AR1800 | paire sèche/pluie isolée ; 36 phases ; matériau 5 ; q0.70 | ces deux cartes |
+| `swamp-wtswam` | AR1607, AR1800 | paire sèche/pluie isolée ; 36 phases ; matériau 5 ; q0.70 | ces deux cartes ; pluie PVRZ `WWPILR00` jamais affichée avant la DLL v2 (voir symptômes) |
 | `lake-wtlake` 30 FPS | AR1600 v2 (2026-09-23) | alias `QBLKV0`/`R` ; 72 phases/30 Hz ; trig x1 + SeedVR vidéo ; page 4096 ; force 0 | AR1600 slot1 ; pluie non confirmée |
 
 État historique au 2026-09-23 : AR1000 jour, AR1607, AR0404 utilisent les alias `Q9*` du lot spatial

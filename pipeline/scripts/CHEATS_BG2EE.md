@@ -33,7 +33,7 @@ le raccourci déjà en place dans le projet (`C:MoveToArea(...)` = `CLUAConsole:
 | `CreateCreature("resref")` | Fait apparaître la créature `resref` |
 | `SetGlobal("nom","zone",valeur)` | Fixe une variable globale de script |
 | `GetGlobal("nom","zone")` | Affiche la valeur d'une variable globale |
-| `SetWeather(x)` | Change la météo courante |
+| `SetWeather(x)` | Change la météo courante (`WEATHER.IDS` : 0 aucune, 1 pluie, 2 neige, 3 brouillard) ; pluie vérifiée sur AR0500, flaques après ~10 s non en pause |
 | `PlayMovie("resref")` | Joue la cinématique `resref` |
 | `StrrefOn()` / `StrrefOff()` | Affiche/masque le strref à côté de chaque texte |
 

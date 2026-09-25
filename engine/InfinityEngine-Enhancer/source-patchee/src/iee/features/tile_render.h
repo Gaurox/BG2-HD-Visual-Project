@@ -126,6 +126,10 @@ TileRenderState& tile_render_state() noexcept;
 // reset here; the render thread consumes it before touching non-atomic state.
 void request_tile_render_state_reset() noexcept;
 
+// Native CResPVR::Demand, used to bind the page of the tile resource actually
+// drawn (PVRZ rain variants). nullptr keeps the engine's texture unchanged.
+void configure_resource_page_demand(void* (*demand)(void*)) noexcept;
+
 // Tile upscale render path. Returns true if it fully handled the draw;
 // false means the caller must invoke the original RenderTexture.
 // Never calls the original itself; the dispatcher remains installed for the

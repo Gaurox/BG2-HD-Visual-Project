@@ -4214,6 +4214,21 @@ bool install_all(AppContext& ctx) {
                                reinterpret_cast<void*>(&detour_render_texture));
     LOG_INFO("RenderTexture hook created");
 
+    features::configure_resource_page_demand(nullptr);
+    if (ctx.manifest && ctx.manifest->pvrDemand.enabled()) {
+      const auto module = core::get_module_span(nullptr);
+      const auto& runtime = ctx.manifest->pvrDemand;
+      if (module && module->base &&
+          matches_pattern_at_rva(*module, runtime.demand, runtime.signature)) {
+        features::configure_resource_page_demand(reinterpret_cast<CResPvrDemandFn>(
+            reinterpret_cast<std::uintptr_t>(module->base) + runtime.demand));
+        LOG_INFO("Tile resource pages bound through CResPVR::Demand RVA 0x{:X} (PVRZ rain variants)",
+                 runtime.demand);
+      } else {
+        LOG_WARN("CResPVR::Demand signature mismatch; PVRZ rain variants keep the engine's dry page");
+      }
+    }
+
     map_page_prewarm::configure(nullptr);
     (void)map_page_prewarm::configure_shadow(false, false, {});
     if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm ||

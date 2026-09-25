@@ -73,6 +73,13 @@ For 4x tiles:
 
 That preserves lighting, clipping, and engine coordinate expectations while still sampling the authored higher-resolution tile.
 
+Rain (wet) variants of PVRZ overlays: BG2EE 2.7.3 sets the rain `CResTile` (wrapper `+0x20`) on the
+`CVidTile` when `(CInfinity::m_areaType & 4) && nCurrentRainLevel != 0`, but passes the **dry** wrapper's page
+texture to `RenderTexture` (RVA `0x2A46AF..0x2A477C`), so the rain page `<alias>R00` is never loaded. The hook binds
+the drawn resource's own page when its resref matches the tileset/page identity (native `CResPVR::Demand`, log
+`TILE_RESOURCE_PAGE`). Palette variants (vanilla `WT*R`) are drawn natively and unaffected. Route2 probes only the
+variant the engine draws (`area_state.cpp`). Validated ingame on AR0500 rain, 2026-09-25.
+
 ## Tone Handling
 
 The current build still uses the TIS `+0x1DC` linear-tiles switch for the seam/linear tone path. That flag is not used for scale classification.

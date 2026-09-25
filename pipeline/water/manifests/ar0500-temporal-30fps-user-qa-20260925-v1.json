@@ -1,0 +1,16 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR0500",
+  "kind": "temporal-30fps",
+  "recorded_utc": "2026-09-25T14:37:44+00:00",
+  "source": "user-message",
+  "quote": "corrigé et fonctionnel. est-ce que l'animation flaques de pluie est bien a 30 fps? est-ce que l'alpha est repassé a=70?",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "AR0500 jour, pluie via C:SetWeather(1) ; pluie q0 (registre ar0500-rain-q0-20260925-v1) + DLL ar0500-rain-q0-20260925-v2 (page PVRZ de la ressource pluie liée) ; essai pluie q0.70 rejeté",
+  "selection": {
+    "path": "pipeline/water/manifests/ar0500-temporal-30fps-installed-20260924-v1.json",
+    "sha256": "F7B7BED63E7DB5E8509E36261FB94615FCDC9EA23E44342D570F17F0DF099A46"
+  },
+  "release": "not-requested"
+}
