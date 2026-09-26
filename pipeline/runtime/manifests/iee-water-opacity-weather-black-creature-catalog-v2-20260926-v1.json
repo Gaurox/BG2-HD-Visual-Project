@@ -1,0 +1,59 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-water-opacity-weather-black-creature-catalog-v2-20260926-v1",
+  "source_commit": "a0872c71f9beb795d6675ecb3600d8c8ffe2e47f",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-water-opacity-weather-black-20260926-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "A51834A18CD1B1940C18672FC7B92F1279F98492C7F9A81B69C417BCBDE6B18B",
+    "bytes": 1883648
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_magic": "IEECSNC",
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_magic": "IEECSXN",
+      "shard_registry_versions": [
+        3,
+        5
+      ],
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1"
+      ],
+      "directory_v2_entry_bytes": 24
+    },
+    "character_composite": {
+      "owners": [
+        1
+      ],
+      "animation_families": [
+        "0x5000",
+        "0x6000"
+      ],
+      "maximum_layers": 8,
+      "palette_mode": "CVidPalette::Realize-per-layer",
+      "composition": "overwrite-nontransparent-pixel-v1"
+    },
+    "water_route2": {
+      "storage": "compiled-registry",
+      "registry_version": 3,
+      "registry_path": "pipeline/water/requests/wtlake-ar0300n-q070-ar1604-fit1-safe-test-20260926-v1/registry-v3.json",
+      "registry_sha256_lf": "35C93E48C7A7167B4D6EF8F01CCEE6078735B707EA065154C8CED6E9157099D4"
+    }
+  },
+  "evidence": [
+    {
+      "kind": "water-runtime-installation",
+      "path": "backups/water/water-opacity-weather-black-20260926-v1/runtime/install-backup.json",
+      "sha256": "61AF40017BF8E4BD392EEDAE213FCC6D50E1B112DEE7B985170E7EF7762BFE6F"
+    }
+  ]
+}

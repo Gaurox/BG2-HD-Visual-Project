@@ -1,0 +1,53 @@
+{
+  "schema": "bg2-upscale-reboutcx-x4-visual-test-result-v1",
+  "date": "2026-09-26",
+  "scope": {
+    "animation_id": "0x6110",
+    "ids_symbol": "FIGHTER_FEMALE_HUMAN",
+    "components": 65,
+    "resources": 656,
+    "frames": 178360,
+    "coverage": "body, armor, helmets, shields, weapons and other indexed equipment"
+  },
+  "method": {
+    "algorithm": "ReboutCX",
+    "model_scale": 4,
+    "target_scale": 4,
+    "geometry": "native-x1",
+    "sampling": "NEAREST",
+    "palette": "RANGES12; 32 semantic classes; classed OKLab; no dithering"
+  },
+  "artifacts": {
+    "raw_manifest": "sprite/families/playable-characters/6110-human-female-fighter/family-runs/reboutcx-x4-visual-v1/manifest.json",
+    "catalog_manifest": "sprite/families/playable-characters/6110-human-female-fighter/family-runs/reboutcx-x4-visual-catalog-v2/manifest.json",
+    "catalog_sha256": "A5CFB4477868008E6A272A1CBCD61285EE3ADC0B0CB67CC2037F28929691D1C7",
+    "generator": "pipeline/scripts/reboutcx_x4_visual_test.py",
+    "catalog_converter": "pipeline/scripts/reboutcx_x4_catalog_visual.py",
+    "installer": "pipeline/scripts/Set-ReboutCX-X4-Visual-Test.ps1",
+    "binary_payload_policy": "local reserve; *.registry excluded from Git"
+  },
+  "size_comparison_0x6110": {
+    "x2_uncompressed_index_bytes": 947599552,
+    "x4_uncompressed_index_bytes": 3790398208,
+    "uncompressed_ratio_x4_over_x2": 4.0,
+    "x2_compressed_registry_bytes": 195904865,
+    "x4_compressed_registry_bytes": 309550625,
+    "compressed_delta_bytes": 113645760,
+    "compressed_ratio_x4_over_x2": 1.5801068799388929
+  },
+  "runtime_observation": {
+    "verified_by": "user",
+    "result": "working",
+    "visual_assessment": "x4 slightly better than x2",
+    "steady_frame_rate_fps": "59.1-60.0",
+    "steady_p95_frame_time_ms": "16.8-17.3",
+    "interpretation": "keep as a reversible selective-quality option; do not promote to global default from this test alone"
+  },
+  "final_installation": {
+    "status": "restored-to-x2",
+    "catalog_sha256": "CC91FA2EABBFCF5D63B94F3375C861DAE50862B787A000330B7E065148E9BFDC",
+    "legacy_registry_sha256": "8C5D423E68BA0FEA768ABB7A92545DB54954D624E27E4CE76E1B136A5B5E2BE0",
+    "x4_payload_hash_matches_remaining": 0,
+    "runtime_dll_mutated": false
+  }
+}
