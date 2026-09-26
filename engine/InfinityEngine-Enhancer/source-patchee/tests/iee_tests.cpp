@@ -36,6 +36,7 @@
 #include "iee/creature_sprite_filter.h"
 #include "iee/core/logger.h"
 #include "iee/core/map_page_shadow.h"
+#include "iee/core/map_page_prepare_queue.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
@@ -896,6 +897,8 @@ void test_config_parsing() {
     out << "EnableMapPagePrewarm = true\n";
     out << "EnableMapPageOffframeProbe = true\n";
     out << "EnableMapPageOffframeConsume = true\n";
+    out << "EnableMapPagePrepare = true\n";
+    out << "MapPagePrepareCache = private cache/AR0900\n";
     out << "MapPagePrewarmPagesPerFrame = 2\n";
     out << "MapPagePrewarmBudgetMs = 6.5\n";
     out << "MapPagePrewarmMaxPages = 80\n";
@@ -915,6 +918,9 @@ void test_config_parsing() {
               "map-page off-frame probe flag should parse");
   expect_true(cfg.enableMapPageOffframeConsume,
               "map-page off-frame consume flag should parse");
+  expect_true(cfg.enableMapPagePrepare, "B1 flag should parse independently");
+  expect_eq(cfg.mapPagePrepareCache.generic_string(), std::string{"private cache/AR0900"},
+            "B1 cache path should preserve spaces");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{2},
             "map-page per-frame limit should parse");
   expect_eq(cfg.mapPagePrewarmBudgetMs, 6.5f, "map-page time budget should parse");
@@ -5282,6 +5288,136 @@ void test_map_page_shadow_pvrz_validation() {
               "implausible decoded sizes should fail before inflate");
 }
 
+
+iee::core::PvrzPreparedPage prepare_test_private_page(const iee::core::PrivatePageEntry&) {
+  return iee::core::prepare_pvrz_bytes(make_test_pvrz());
+}
+std::atomic<bool> g_prepareEntered{false}, g_prepareRelease{false};
+iee::core::PvrzPreparedPage prepare_blocked_private_page(const iee::core::PrivatePageEntry& e) {
+  g_prepareEntered.store(true);
+  while (!g_prepareRelease.load()) std::this_thread::yield();
+  return prepare_test_private_page(e);
+}
+
+void test_map_page_prepare_queue() {
+  using namespace iee::core;
+  const auto page = prepare_test_private_page({});
+  const auto entry = [&](const char* name) {
+    return PrivatePageEntry{name, "private/test.b1pvrz",
+        static_cast<std::uint32_t>(page.compressedBytes),
+        static_cast<std::uint32_t>(page.decodedBytes), page.compressedCrc32};
+  };
+  MapPagePrepareQueue queue;
+  const auto budget = kPrepareScratchBytes + page.compressedBytes + page.decodedBytes;
+  expect_true(queue.configure({entry("A090000"), entry("A090001")}, budget),
+              "B1 should accept a bounded two-page plan");
+  expect_true(!queue.try_claim("A090000"), "inactive B1 should not claim");
+  queue.activate(true);
+  const auto generation = queue.generation();
+  queue.activate(true);
+  expect_eq(queue.generation(), generation, "same plan must be idempotent");
+  expect_true(queue.work_one(prepare_test_private_page), "worker should prepare first page");
+  expect_true(!queue.work_one(prepare_test_private_page), "budget must block second allocation");
+  auto claim = queue.try_claim("A090000");
+  expect_true(static_cast<bool>(claim), "prepared page should be borrowed");
+  if (claim) expect_true(claim.page()->decoded == page.decoded, "claim must retain exact bytes");
+  expect_true(!queue.try_claim("A090000"), "nested claim cannot borrow outer slot");
+  queue.activate(false);
+  queue.activate(true);
+  expect_true(!claim.current(), "old generation must fail consume guard");
+  expect_true(!queue.work_one(prepare_test_private_page), "held claim retains memory reservation");
+  if (claim) expect_true(claim.page()->decoded == page.decoded, "invalidation cannot destroy held bytes");
+  claim = {};
+  expect_true(queue.reserved_bytes() == page.decodedBytes,
+              "render release must leave destruction and accounting to worker");
+  expect_true(queue.work_one(prepare_test_private_page), "worker reclaims and prepares new generation");
+  auto renewed = queue.try_claim("A090000");
+  expect_true(static_cast<bool>(renewed), "same page can prepare in later generation");
+  renewed = {};
+  expect_true(queue.work_one(prepare_test_private_page), "next page follows recycled first slot");
+  auto second = queue.try_claim("A090001");
+  expect_true(static_cast<bool>(second), "second page should become available");
+  second = {};
+  queue.activate(false);
+  (void)queue.work_one(nullptr);
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "worker should retire every released buffer");
+  expect_true(queue.peak_bytes() <= budget, "peak includes admitted in-flight bytes");
+
+  auto wrong = entry("A090000");
+  wrong.crc32 ^= 1;
+  expect_true(queue.configure({wrong}), "test stale private index");
+  queue.activate(true);
+  (void)queue.work_one(prepare_test_private_page);
+  expect_true(!queue.try_claim("A090000"), "stale private CRC must never publish");
+  expect_eq(queue.failures(), std::uint64_t{1}, "stale private input should count failure");
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "rejected buffer must return reservation");
+  expect_true(!queue.configure({entry("A090000"), entry("A090000")}),
+              "duplicate page identities must fail closed");
+
+  expect_true(queue.configure({entry("A090000"), entry("A090001")}, budget),
+              "set up resident-page retirement");
+  queue.activate(true);
+  (void)queue.work_one(prepare_test_private_page);
+  queue.retire_resident("A090000");
+  expect_true(queue.work_one(prepare_test_private_page),
+              "resident first page must free admission for later missing page");
+  auto remaining = queue.try_claim("A090001");
+  expect_true(static_cast<bool>(remaining), "missing page must not starve behind resident copy");
+  remaining = {};
+  queue.activate(false); (void)queue.work_one(nullptr);
+
+  expect_true(queue.configure({entry("A090000")}), "set up held reader");
+  queue.activate(true);
+  g_prepareEntered.store(false); g_prepareRelease.store(false);
+  std::thread worker([&] { (void)queue.work_one(prepare_blocked_private_page); });
+  while (!g_prepareEntered.load()) std::this_thread::yield();
+  // A watchdog releases the reader even if a regression incorrectly waits;
+  // the assertion then fails without leaving the suite deadlocked.
+  std::atomic<bool> returned{false};
+  std::thread watchdog([&] {
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(1);
+    while (!returned.load() && std::chrono::steady_clock::now() < deadline)
+      std::this_thread::yield();
+    g_prepareRelease.store(true);
+  });
+  auto missed = queue.try_claim("A090000");
+  const bool returnedBeforeReader = !g_prepareRelease.load();
+  returned.store(true);
+  watchdog.join(); worker.join();
+  expect_true(!missed && returnedBeforeReader, "native miss must not wait for in-flight reader");
+  expect_true(!queue.try_claim("A090000"), "late publication after native fallback must be discarded");
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "late result must be reclaimed off render");
+
+  expect_true(queue.configure({entry("A090000")}), "set up in-flight generation cancellation");
+  queue.activate(true);
+  g_prepareEntered.store(false); g_prepareRelease.store(false);
+  std::thread cancelledWorker([&] { (void)queue.work_one(prepare_blocked_private_page); });
+  while (!g_prepareEntered.load()) std::this_thread::yield();
+  queue.activate(false);
+  queue.activate(true);
+  g_prepareRelease.store(true);
+  cancelledWorker.join();
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "old in-flight result must not publish in new area");
+  expect_true(queue.work_one(prepare_test_private_page), "new generation can prepare after cancellation");
+  auto afterCancel = queue.try_claim("A090000");
+  expect_true(afterCancel && afterCancel.current(), "only new-generation bytes can be claimed");
+  afterCancel = {};
+  queue.activate(false); (void)queue.work_one(nullptr);
+
+  std::vector<PrivatePageEntry> many;
+  for (const auto* name : {"A090000", "A090001", "A090002", "A090003", "A090004", "A090005"})
+    many.push_back(entry(name));
+  expect_true(queue.configure(many), "B1 should plan beyond legacy four claims");
+  queue.activate(true);
+  for (const auto& e : many) {
+    expect_true(queue.work_one(prepare_test_private_page), "prepare sequential page");
+    auto next = queue.try_claim(e.resref);
+    expect_true(static_cast<bool>(next), "all six pages should consume without diagnostic quota");
+  }
+  queue.activate(false); (void)queue.work_one(nullptr);
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "no leak after six claims");
+}
+
 iee::core::ShadowPageIdentity make_shadow_identity(std::uint64_t generation,
                                                     std::int32_t page) {
   return {
@@ -6778,7 +6914,7 @@ void test_interface_contract_token_boundary() {
       "// fpBLEND.glsl\nuniform sampler2D sTex;\nuniform sampler2D sTex1;\nvoid main(){}";
   // Replacement that correctly declares both:
   const std::string_view good = "uniform sampler2D sTex;\nuniform sampler2D sTex1;\nvoid main(){}";
-  // Replacement that omits sTex (only has sTex1 — which contains "sTex" as substring):
+  // Replacement that omits sTex (only has sTex1 â€” which contains "sTex" as substring):
   const std::string_view bad_stex_only1 = "uniform sampler2D sTex1;\nvoid main(){}";
   expect_true(iee::game::check_interface_contract(original, good).ok,
               "both sTex and sTex1 present -> passes");
@@ -7118,6 +7254,7 @@ int main() {
   test_creature_sprite_filter_texture_registry();
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
+  test_map_page_prepare_queue();
   test_map_page_shadow_queue_bounds_and_generations();
   test_map_page_shadow_idle_cancellation();
   test_map_page_shadow_inflight_fallback_handshake();

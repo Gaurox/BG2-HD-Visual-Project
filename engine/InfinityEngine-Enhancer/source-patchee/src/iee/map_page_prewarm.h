@@ -53,6 +53,8 @@ struct PvrConsumeAttempt {
   void* resource{};
   core::ShadowPageIdentity identity{};
   core::PvrzPreparedPage page{};
+  // B1 borrows a slot until native Demand returns; only its worker frees it.
+  const core::PvrzPreparedPage* borrowedPage{};
   std::uint32_t claimOrdinal{};
   std::uint32_t claimLimit{};
   PvrConsumeOutcome outcome{PvrConsumeOutcome::NotReached};

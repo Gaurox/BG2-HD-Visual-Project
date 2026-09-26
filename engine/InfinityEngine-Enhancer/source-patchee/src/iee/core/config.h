@@ -46,6 +46,9 @@ struct EngineConfig {
   // number of strictly matched prepared PVRs into destinations allocated by
   // native Demand per area generation; later pages use the native path.
   bool enableMapPageOffframeConsume = false;
+  // B1 private-copy CPU preparation; independent from performance diagnostics.
+  bool enableMapPagePrepare = false;
+  std::filesystem::path mapPagePrepareCache{};
   std::uint32_t mapPagePrewarmPagesPerFrame = 1;
   float mapPagePrewarmBudgetMs = 8.0f;
   // Leave 32 of the engine's evidenced 128 PVR slots outside the plan. This

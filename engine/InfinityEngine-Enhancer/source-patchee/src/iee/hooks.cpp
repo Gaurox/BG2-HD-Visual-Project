@@ -49,6 +49,7 @@
 #include "iee/game/resref_runtime.h"
 #include "iee/game/runtime_types_x64.h"
 #include "iee/map_page_prewarm.h"
+#include "iee/map_page_prepare.h"
 #include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
 #include "iee/shader_suite.h"
@@ -2283,6 +2284,7 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
         map_page_prewarm::request_area_reset();
       }
       area::refresh_wed_cache(*g_ctx, infGame);
+      map_page_prepare::observe_area(*g_ctx);
       if (flushGpuUpload) (void)area::flush_pending_gpu_upload();
       // LoadArea may have selected the outgoing area's pack before the engine
       // publishes its settled active-area pointer. Keep the resident animation
@@ -2290,6 +2292,8 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
       if (areaChanged) swap_area_animation_pack(*g_ctx, infGame);
     }
   }
+  map_page_prepare::observe_area(*g_ctx);
+  if (flushGpuUpload) map_page_prepare::retire_resident_pages(g_pvrCacheEntries);
   if (!g_ctx->wed.load()) {
     return;
   }
@@ -3440,6 +3444,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
     game::request_texture_configuration_cache_reset();
     g_mapViewBurstTelemetryResetRequested.store(true, std::memory_order_release);
     map_page_prewarm::request_area_reset();
+    map_page_prepare::reset();
   } catch (const std::exception& e) {
     LOG_ERROR("LoadArea pre-dispatch failed; continuing with the engine path: {}", e.what());
   } catch (...) {
@@ -3453,6 +3458,7 @@ static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned cha
   const bool measuredEngine = measureEngine && QueryPerformanceCounter(&engineEnd);
   try {
     area::refresh_wed_cache(ctx, thisPtr);
+    map_page_prepare::observe_area(ctx);
     swap_area_animation_pack(ctx, thisPtr);
     // Seed CPU transform state; the next Seam pass owns the GL upload.
     publish_view_state(true, false);
@@ -3695,7 +3701,10 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
                                  const void* source, std::uint32_t sourceSize) {
   const auto original = g_pvrUncompressHook.original();
   auto* attempt = g_activePvrConsumeAttempt;
+  const auto* prepared = attempt
+      ? (attempt->borrowedPage ? attempt->borrowedPage : &attempt->page) : nullptr;
   const auto logDecision = [&](std::string_view action, std::string_view reason) {
+    if (g_ctx && g_ctx->cfg.enableMapPagePrepare) return;
     try {
       const auto resref = diagnostic_pvr_resref(g_activePvrConsumeResource);
       LOG_INFO(
@@ -3707,8 +3716,8 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
           reinterpret_cast<std::uintptr_t>(destination),
           reinterpret_cast<std::uintptr_t>(destinationSize),
           reinterpret_cast<std::uintptr_t>(source), sourceSize,
-          attempt ? reinterpret_cast<std::uintptr_t>(attempt->page.decoded.data()) : 0,
-          attempt ? attempt->page.decoded.size() : 0);
+          attempt ? reinterpret_cast<std::uintptr_t>(prepared->decoded.data()) : 0,
+          attempt ? prepared->decoded.size() : 0);
     } catch (...) {
     }
   };
@@ -3725,16 +3734,18 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
   }
 
   try {
+    if (attempt->borrowedPage && !map_page_prepare::current(attempt->identity.generation))
+      return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
     const auto actualReturn = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
     if (actualReturn != g_pvrUncompressExpectedReturn) {
       return fallback(map_page_prewarm::PvrConsumeOutcome::UnexpectedReturnAddress);
     }
     if (!destination || !destinationSize || !source || !attempt->resource ||
         attempt->resource != g_activePvrConsumeResource ||
-        attempt->page.status != core::PvrzPrepareStatus::Ready ||
-        attempt->page.decoded.empty() ||
-        attempt->page.decoded.size() > core::kShadowMaximumDecodedBytes ||
-        attempt->page.compressedBytes > core::kShadowMaximumCompressedBytes) {
+        prepared->status != core::PvrzPrepareStatus::Ready ||
+        prepared->decoded.empty() ||
+        prepared->decoded.size() > core::kShadowMaximumDecodedBytes ||
+        prepared->compressedBytes > core::kShadowMaximumCompressedBytes) {
       return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
     }
 
@@ -3750,7 +3761,7 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
         !core::is_writable_non_executable_memory(destinationSize,
                                                   sizeof(destinationCapacity)) ||
         !core::is_writable_non_executable_memory(destination,
-                                                  attempt->page.decoded.size())) {
+                                                  prepared->decoded.size())) {
       return fallback(map_page_prewarm::PvrConsumeOutcome::MemoryRejected);
     }
 
@@ -3764,12 +3775,12 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
         .source = reinterpret_cast<std::uintptr_t>(source),
         .nativeResourceBytes = native.baseclass_0.nSize,
         .sourceBytes = sourceSize,
-        .preparedCompressedBytes = static_cast<std::size_t>(attempt->page.compressedBytes),
+        .preparedCompressedBytes = static_cast<std::size_t>(prepared->compressedBytes),
         .declaredDecodedBytes = declaredDecodedSize,
         .destinationCapacity = destinationCapacity,
-        .preparedDecodedBytes = attempt->page.decoded.size(),
-        .expectedCompressedCrc32 = attempt->page.compressedCrc32,
-        .actualCompressedCrc32 = attempt->page.compressedCrc32,
+        .preparedDecodedBytes = prepared->decoded.size(),
+        .expectedCompressedCrc32 = prepared->compressedCrc32,
+        .actualCompressedCrc32 = prepared->compressedCrc32,
     };
     auto validation = core::validate_pvr_consume(evidence);
     if (validation != core::PvrConsumeValidationStatus::Ready) {
@@ -3798,12 +3809,14 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
       return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
     }
 
+    if (attempt->borrowedPage && !map_page_prepare::current(attempt->identity.generation))
+      return fallback(map_page_prewarm::PvrConsumeOutcome::ResourceMismatch);
     logDecision("prepared-copy", "validated");
     LARGE_INTEGER copyStarted{};
     LARGE_INTEGER copyEnded{};
     const bool copyMeasured = QueryPerformanceCounter(&copyStarted);
-    std::memcpy(destination, attempt->page.decoded.data(), attempt->page.decoded.size());
-    const auto produced = static_cast<std::uint32_t>(attempt->page.decoded.size());
+    std::memcpy(destination, prepared->decoded.data(), prepared->decoded.size());
+    const auto produced = static_cast<std::uint32_t>(prepared->decoded.size());
     std::memcpy(destinationSize, &produced, sizeof(produced));
     if (copyMeasured && QueryPerformanceCounter(&copyEnded)) {
       attempt->copyNanoseconds = performance_nanoseconds(copyStarted, copyEnded);
@@ -4012,7 +4025,7 @@ static void detour_pvr_cache_release_diagnostic(void* thisPtr) {
 static void* detour_pvr_demand(void* thisPtr) {
   const auto original = g_pvrDemandHook.original();
   auto* ctx = g_ctx;
-  if (!ctx || !ctx->cfg.enablePerformanceLogging || !thisPtr) {
+  if (!ctx || (!ctx->cfg.enablePerformanceLogging && !map_page_prepare::enabled()) || !thisPtr) {
     return original(thisPtr);
   }
 
@@ -4021,14 +4034,35 @@ static void* detour_pvr_demand(void* thisPtr) {
 
   const bool ioCandidate = haveBefore &&
                            (before.texture <= 0 || !before.baseclass_0.bLoaded);
-  auto consumeAttempt = ioCandidate ? map_page_prewarm::begin_native_demand(thisPtr)
-                                     : std::nullopt;
+  auto preparedClaim = ioCandidate ? map_page_prepare::begin_native_demand(thisPtr)
+                                   : core::MapPagePrepareQueue::Claim{};
+  auto consumeAttempt = ioCandidate && !ctx->cfg.enableMapPagePrepare
+                            ? map_page_prewarm::begin_native_demand(thisPtr) : std::nullopt;
+  if (preparedClaim) {
+    consumeAttempt.emplace();
+    consumeAttempt->resource = thisPtr;
+    consumeAttempt->borrowedPage = preparedClaim.page();
+    consumeAttempt->identity.generation = preparedClaim.generation();
+  }
+  if (!ctx->cfg.enablePerformanceLogging) {
+    PvrConsumeThreadScope consumeScope(thisPtr, consumeAttempt ? &*consumeAttempt : nullptr);
+    void* result = original(thisPtr);
+    const DWORD lastError = GetLastError();
+    if (consumeAttempt) map_page_prepare::record(
+        consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed,
+        consumeAttempt->crcNanoseconds, consumeAttempt->copyNanoseconds);
+    SetLastError(lastError);
+    return result;
+  }
   const auto lifecycle = ioCandidate ? map_page_prewarm::lifecycle_snapshot(thisPtr)
                                      : std::nullopt;
-  const auto lifecycleResref = diagnostic_pvr_resref(thisPtr);
-  const auto lifecycleCacheBefore = capture_pvr_lifecycle_cache(thisPtr);
-  const auto lifecycleProcessBefore = core::capture_process_resource_snapshot();
+  game::ResrefBuffer lifecycleResref{};
   if (ctx->cfg.enableMapPageOffframeConsume && lifecycle) {
+    // These snapshots only feed the detailed consume diagnostic. In particular,
+    // resident Demand calls must not query process memory, I/O and handles.
+    lifecycleResref = diagnostic_pvr_resref(thisPtr);
+    const auto lifecycleCacheBefore = capture_pvr_lifecycle_cache(thisPtr);
+    const auto lifecycleProcessBefore = core::capture_process_resource_snapshot();
     try {
       LOG_INFO(
           "Map page B2c CResPVR::Demand entry: page={}, resource=0x{:X}, activeClaim={}, "
@@ -4141,7 +4175,10 @@ static void* detour_pvr_demand(void* thisPtr) {
       haveAfter ? after.size.cx : 0, haveAfter ? after.size.cy : 0,
       durationNanoseconds, readOperations, readBytes, nested);
   if (consumeAttempt) {
-    map_page_prewarm::record_consume_attempt(*consumeAttempt, durationNanoseconds);
+    if (consumeAttempt->borrowedPage) map_page_prepare::record(
+        consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed,
+        consumeAttempt->crcNanoseconds, consumeAttempt->copyNanoseconds);
+    else map_page_prewarm::record_consume_attempt(*consumeAttempt, durationNanoseconds);
   }
   SetLastError(lifecycleLastError);
   return result;
@@ -4233,9 +4270,12 @@ bool install_all(AppContext& ctx) {
     (void)map_page_prewarm::configure_shadow(false, false, {});
     if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm ||
           ctx.cfg.enableMapPageOffframeProbe ||
-          ctx.cfg.enableMapPageOffframeConsume) &&
+          ctx.cfg.enableMapPageOffframeConsume || ctx.cfg.enableMapPagePrepare) &&
         ctx.manifest) {
       try {
+        if (ctx.cfg.enableMapPagePrepare && (ctx.cfg.enableMapPagePrewarm ||
+            ctx.cfg.enableMapPageOffframeProbe || ctx.cfg.enableMapPageOffframeConsume))
+          throw std::runtime_error("B1 cannot run alongside the legacy map-page experiments");
         const auto module = core::get_module_span(nullptr);
         const auto& runtime = ctx.manifest->pvrDemand;
         if (!module || !module->base) {
@@ -4253,7 +4293,8 @@ bool install_all(AppContext& ctx) {
         CResPvrDemandFn resourceDemandEntry = nullptr;
         CResPvrReleaseFn cacheReleaseEntry = nullptr;
         CResFileOpenFn resourceFileOpenEntry = nullptr;
-        if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
+        if (ctx.cfg.enableMapPagePrepare ||
+            (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging)) {
           const auto& boundary = runtime.decodeBoundary;
           const auto& lifecycle = runtime.lifecycleBoundary;
           if (!boundary.enabled()) {
@@ -4358,6 +4399,18 @@ bool install_all(AppContext& ctx) {
             throw std::runtime_error("off-frame consume worker unavailable");
           }
         }
+        if (ctx.cfg.enableMapPagePrepare) {
+          auto cache = ctx.cfg.mapPagePrepareCache;
+          if (cache.empty()) throw std::runtime_error("B1 cache directory is not configured");
+          if (cache.is_relative()) cache = core::ConfigManager::config_path().parent_path() / cache;
+          if (!map_page_prepare::configure(cache))
+            throw std::runtime_error("B1 private cache/worker unavailable");
+          const auto& boundary = runtime.decodeBoundary;
+          g_pvrUncompressHook.create(
+              reinterpret_cast<void*>(moduleBase + boundary.uncompress),
+              reinterpret_cast<void*>(&detour_pvr_uncompress));
+          g_pvrUncompressHook.enable();
+        }
         if (ctx.cfg.enableMapPageOffframeConsume && ctx.cfg.enablePerformanceLogging) {
           const auto& boundary = runtime.decodeBoundary;
           g_pvrUncompressHook.create(
@@ -4396,7 +4449,7 @@ bool install_all(AppContext& ctx) {
               runtime.lifecycleBoundary.cacheRelease,
               runtime.lifecycleBoundary.cacheEntryCount);
         }
-        if (ctx.cfg.enablePerformanceLogging) {
+        if (ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrepare) {
           g_pvrDemandHook.create(
               reinterpret_cast<void*>(demandEntry),
               reinterpret_cast<void*>(&detour_pvr_demand));
@@ -4436,6 +4489,7 @@ bool install_all(AppContext& ctx) {
         (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
         g_pvrCacheEntries = nullptr;
+        map_page_prepare::shutdown();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: {}", error.what());
@@ -4447,6 +4501,7 @@ bool install_all(AppContext& ctx) {
         (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
         g_pvrCacheEntries = nullptr;
+        map_page_prepare::shutdown();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
         LOG_WARN("PVR demand phase telemetry unavailable: unknown installation error");
@@ -4905,6 +4960,7 @@ bool install_all(AppContext& ctx) {
     (void)g_pvrDemandHook.remove();
     g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
+    map_page_prepare::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -4964,6 +5020,7 @@ bool install_all(AppContext& ctx) {
     (void)g_pvrDemandHook.remove();
     g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
+    map_page_prepare::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
     g_areaCompositionMode = AreaCompositionMode::None;
@@ -5030,6 +5087,7 @@ void uninstall_all() noexcept {
   (void)g_pvrDemandHook.remove();
   g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
+  map_page_prepare::shutdown();
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
 
@@ -5107,6 +5165,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_pvrDemandHook.disable();
   g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
+  map_page_prepare::shutdown();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
   area::configure_texture_table(nullptr);
