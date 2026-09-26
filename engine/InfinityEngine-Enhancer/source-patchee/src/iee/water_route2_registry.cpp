@@ -226,13 +226,7 @@ std::uint32_t version() noexcept { return generated::kRegistryVersion; }
 const RegistryEntry* secondary_art_entry(std::string_view wed) noexcept {
   const auto registry = g_registry.load(std::memory_order_acquire);
   if (!registry) return nullptr;
-  const RegistryEntry* result = nullptr;
-  for (const auto* entry : registry->entries) {
-    if (entry->secondaryArtTiles.empty() || resref_view(entry->wed) != wed) continue;
-    if (result) return nullptr;
-    result = entry;
-  }
-  return result;
+  return select_secondary_art_entry(wed, registry->entries);
 }
 
 void release() noexcept { g_registry.store({}, std::memory_order_release); }

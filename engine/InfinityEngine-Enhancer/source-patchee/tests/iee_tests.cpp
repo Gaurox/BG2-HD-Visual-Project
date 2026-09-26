@@ -1047,6 +1047,37 @@ void test_water_overlay_route2_policy() {
   using iee::water_route2::Query;
   using iee::water_route2::identity_matches;
   using iee::water_route2::resref_array;
+  {
+    using iee::water_route2::select_secondary_art_entry;
+    const std::array<std::uint16_t, 2> tiles{4800, 4801};
+    const std::array<std::uint16_t, 2> rainTiles{4800, 4801};
+    RegistryEntry dry{};
+    dry.wed = dry.baseTis = resref_array("AR0300N");
+    dry.overlayTis = resref_array("YFWFGY");
+    dry.secondaryArtTiles = tiles;
+    dry.secondaryArtSourceAlpha = 128;
+    dry.secondaryArtTargetAlpha = 160;
+    RegistryEntry rain = dry;
+    rain.overlayTis = resref_array("YFWFGYR");
+    rain.secondaryArtTiles = rainTiles; // same IDs, independent generated arrays
+    const std::array<const RegistryEntry*, 2> variants{&dry, &rain};
+    expect_true(select_secondary_art_entry("AR0300N", variants) == &dry,
+                "Dry/rain duplicates must retain the shared secondary opacity contract");
+    expect_true(select_secondary_art_entry("AR0300", variants) == nullptr,
+                "Night opacity never applies to the day WED");
+    rain.secondaryArtTargetAlpha = 128;
+    expect_true(select_secondary_art_entry("AR0300N", variants) == nullptr,
+                "Conflicting weather opacity fails closed");
+    rain = dry;
+    const std::array<std::uint16_t, 1> differentTiles{4800};
+    rain.secondaryArtTiles = differentTiles;
+    expect_true(select_secondary_art_entry("AR0300N", variants) == nullptr,
+                "Different secondary role sets fail closed");
+    rain = dry;
+    rain.wedSha256[0] = std::byte{1};
+    expect_true(select_secondary_art_entry("AR0300N", variants) == nullptr,
+                "Different base WED evidence fails closed");
+  }
   iee::water_route2::Match timing{};
   expect_true(!timing.supports_pass(false) && !timing.supports_pass(true),
               "A neutral entry without a timeline remains native in both passes");

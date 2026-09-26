@@ -346,12 +346,26 @@ def resolve(path):
     return path if path.is_absolute() else ROOT / path
 
 
-def prepare(plan_path, output, game):
+def prepare(plan_path, output, game, base_registry_override=None, reuse_seedvr_root=None,
+            cycle_seconds_override=None, keyframes_override=None):
     """Plan: {spatial_run, wed, base_registry?, selection?, source_wed?, groups: [{id, aliases,
     material_id, cycle_seconds?, approved_strength?}]}.  Rain groups name an earlier dry group in ``rain_of``.
     Without ``base_registry`` the registry compiled into the installed DLL is used
     (``route2-registry-current.json``); its DLL hash must match the live DLL."""
     plan = read(plan_path)
+    if base_registry_override:
+        plan['base_registry'] = str(base_registry_override)
+    if reuse_seedvr_root:
+        for entry in plan['groups']:
+            entry['reuse_seedvr_from'] = str(Path(reuse_seedvr_root) / entry['id'])
+    if cycle_seconds_override is not None:
+        for entry in plan['groups']:
+            if not entry.get('rain_of'):
+                entry['cycle_seconds'] = float(cycle_seconds_override)
+    if keyframes_override is not None:
+        for entry in plan['groups']:
+            if not entry.get('rain_of'):
+                entry['keyframes'] = list(keyframes_override)
     current = read(CURRENT_REGISTRY)
     live_dll = digest(game / 'InfinityEngine-Enhancer.dll')
     if live_dll != current['dll_sha256']:
@@ -446,6 +460,7 @@ def prepare(plan_path, output, game):
             collar = False
         records.append({'id': gid, 'rain_of': dry, 'group': group, 'aliases': aliases,
                         'material_id': entry.get('material_id', 1), 'approved_strength': strength,
+                        'reuse_seedvr_from': entry.get('reuse_seedvr_from'),
                         'lookup': lookup, 'wed_lookup': wed_lookup, 'torus': torus,
                         'playback': playback, 'cycle_seconds': cycle, 'phases': phases,
                         'method': method, 'edge_collar': collar,
@@ -645,23 +660,45 @@ def upscale(output, frames_per_chunk=None, overlap=0):
                     Image.fromarray(array, 'RGBA').save(tiles / ref / f'frame_{phase:03d}.png')
             continue
         if group['method'] == 'seedvr':
-            client = client or ComfyClient(get_service('comfyui_url'), 2.0, 7200.0)
-            client.preflight()
             order = wrap_order(phases)
             wrapped = folder / 'seedvr-in'
             wrapped.mkdir()
             for k, i in enumerate(order):
                 shutil.copy2(folder / f'x1/frame_{i:03d}.png', wrapped / f'frame_{k:03d}.png')
             prompt = seedvr_prompt(wrapped, f"bg2_water/{output.name}-{group['id']}", frames_per_chunk, overlap)
-            save(folder / 'seedvr-prompt.json', prompt)
-            prompt_id = client.queue(prompt)
-            print(f"{group['id']}: SeedVR {prompt_id} ({len(order)} frames)", flush=True)
-            images = client.wait_history(prompt_id)['outputs']['11']['images']
-            if len(images) != len(order):
-                raise ValueError(f'SeedVR frame count: {len(images)}')
             raw = folder / 'seedvr-out'
-            for k, info in enumerate(images):
-                client.download(info, raw / f'frame_{k:03d}.png')
+            source = group.get('reuse_seedvr_from') and resolve(group['reuse_seedvr_from'])
+            if source:
+                theirs = read(source / 'seedvr-prompt.json')
+                ours = copy.deepcopy(prompt)
+                for p in (theirs, ours):
+                    p['1']['inputs']['directory'] = p['11']['inputs']['filename_prefix'] = None
+                same = theirs == ours and all(
+                    (wrapped / f'frame_{k:03d}.png').read_bytes() ==
+                    (source / f'seedvr-in/frame_{k:03d}.png').read_bytes()
+                    for k in range(len(order)))
+                if not same or len(list((source / 'seedvr-out').glob('frame_*.png'))) != len(order):
+                    raise ValueError(f"{group['id']}: {source} is not the same SeedVR inference")
+                shutil.copytree(source / 'seedvr-out', raw)
+                save(folder / 'seedvr-prompt.json', prompt)
+                legacy_run = source / 'seedvr-run.json'
+                if legacy_run.is_file():
+                    shutil.copy2(legacy_run, folder / 'seedvr-run.json')
+                    prompt_id = read(legacy_run)['prompt_id']
+                else:
+                    prompt_id = read(source / 'seedvr.json')['prompt_id']
+                print(f"{group['id']}: SeedVR output reused from {source}", flush=True)
+            else:
+                client = client or ComfyClient(get_service('comfyui_url'), 2.0, 7200.0)
+                client.preflight()
+                save(folder / 'seedvr-prompt.json', prompt)
+                prompt_id = client.queue(prompt)
+                print(f"{group['id']}: SeedVR {prompt_id} ({len(order)} frames)", flush=True)
+                images = client.wait_history(prompt_id)['outputs']['11']['images']
+                if len(images) != len(order):
+                    raise ValueError(f'SeedVR frame count: {len(images)}')
+                for k, info in enumerate(images):
+                    client.download(info, raw / f'frame_{k:03d}.png')
             head = order.index(0)
             crop = lambda k: rgb(raw / f'frame_{k:03d}.png')[center].astype(np.float64)
             for phase in range(phases):
@@ -671,7 +708,8 @@ def upscale(output, frames_per_chunk=None, overlap=0):
                     tile = variance_preserving_mix(tile, crop(head + phases + phase), w)
                 contexts[phase] = tile
             save(folder / 'seedvr.json', {'prompt_id': prompt_id, 'wrapped_order': order,
-                 'crossfade_phases': head, 'frames_per_chunk': frames_per_chunk, 'overlap': overlap})
+                 'crossfade_phases': head, 'frames_per_chunk': frames_per_chunk, 'overlap': overlap,
+                 'reused_from': str(source) if source else None})
         elif group['method'] == 'bilinear':
             for phase in range(phases):
                 with Image.open(folder / f'x1/frame_{phase:03d}.png') as image:
@@ -745,13 +783,21 @@ def build(output):
     base_count = struct.unpack_from('<I', base.read_bytes(), 8)[0]
     base_registry = Path(plan['base_registry'])
     child, resolved = load_registry(base_registry)
+    parent_registry = read(ROOT / child['parent']['path'])
+    required_parent_ids = {item['id'] for item in parent_registry.get('entry_overrides', [])}
     target_slots = {slot for _group, _ref, _alias, slot, _tis, _page in identities}
     entries = []
+    replaced_required = {}
     for existing in copy.deepcopy(resolved['entries']):
         if existing['wed']['resref'] != wed_name:
             entries.append(existing)
             continue
         if existing['overlay']['slot'] in target_slots:
+            if existing['id'] in required_parent_ids:
+                weather = 'rain' if existing['overlay']['tis_resref'].upper().endswith('R') else 'dry'
+                if weather in replaced_required:
+                    raise ValueError(f'{wed_name}: multiple required parent ids for {weather}')
+                replaced_required[weather] = existing['id']
             continue
         # A mixed WED may rebuild one liquid family while retaining another.
         # The retained overlay bytes do not change, but its exact identity must
@@ -764,7 +810,10 @@ def build(output):
         entries.append(existing)
     for group, ref, alias, slot, tis, page in identities:
         coverage = sum(bool(wed[tilemap+i*10+6] & (1 << slot)) for i in range(width*height))
-        entries.append({'id': f"{wed_name.lower()}-temporal-{alias.lower()}-{output.name}",
+        weather = 'rain' if group.get('rain_of') else 'dry'
+        identity_id = replaced_required.pop(
+            weather, f"{wed_name.lower()}-temporal-{alias.lower()}-{output.name}")
+        entries.append({'id': identity_id,
             'state': 'candidate-installable-pending-qa', 'qa': {'status': 'pending-ingame'},
             'wed': {'resref': wed_name, 'sha256': digest(candidate / f'{wed_name}.WED'),
                     'grid': {'width': width, 'height': height}, 'overlay_slots': slots},
@@ -780,6 +829,8 @@ def build(output):
             'temporal_overlay': {'mode': 'atlas-linear', 'frame_count': group['phases'],
                 'source_fps': DISPLAY_FPS, 'target_fps': DISPLAY_FPS, 'atlas_columns': COLUMNS,
                 'atlas_stride_pixels': STRIDE, 'atlas_padding_pixels': PAD}})
+    if replaced_required:
+        raise ValueError(f'{wed_name}: required parent ids could not be rebound: {replaced_required}')
     registry = {'schema': 'bg2-water-route2-registry-v3', 'version': 3,
                 'parent': child['parent'], 'entries': entries}
     save(output / 'registry-v3.json', registry)
@@ -826,13 +877,23 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--stage', choices=['prepare', 'interpolate', 'upscale', 'build', 'review'], required=True)
     parser.add_argument('--plan', type=Path, help='prepare only')
+    parser.add_argument('--base-registry', type=Path, help='prepare: explicit previous cumulative registry')
+    parser.add_argument('--reuse-seedvr-root', type=Path,
+                        help='prepare: reuse validated SeedVR input/output groups from another temporal run')
+    parser.add_argument('--cycle-seconds', type=float,
+                        help='prepare: explicit dry-group cycle for a validated fixed-cycle family')
+    parser.add_argument('--keyframes', type=int, nargs='+',
+                        help='prepare: explicit dry-group native key indices')
     parser.add_argument('--frames-per-chunk', type=int, help='SeedVR manual chunk (4n+1) when one chunk exceeds VRAM')
     parser.add_argument('--chunk-overlap', type=int, default=0)
     args = parser.parse_args()
     output = args.output.resolve()
     output.relative_to(ROOT / 'maps')
     if args.stage == 'prepare':
-        prepare(args.plan.resolve(), output, get_path('bg2ee_game_root'))
+        prepare(args.plan.resolve(), output, get_path('bg2ee_game_root'),
+                args.base_registry.resolve() if args.base_registry else None,
+                args.reuse_seedvr_root.resolve() if args.reuse_seedvr_root else None,
+                args.cycle_seconds, args.keyframes)
     elif args.stage == 'interpolate':
         interpolate(output)
     elif args.stage == 'upscale':

@@ -1,0 +1,20 @@
+{
+  "schema": "bg2-water-paired-art-opacity-request-v1",
+  "output": "maps/water-batches/runs/ar0300n-lake-final-alpha160-20260926-v1",
+  "registry": "maps/water-batches/runs/ar2300-lake-final-temporal-20260926-v1/registry-v3.json",
+  "registry_sha256": "4F0BFCBD7C945E8016F8659F78845FE051A5BA148F81D30A6992A3AF3733B5B7",
+  "source": "config://bg2ee_override",
+  "asset_ids": ["maps:AR0300:night"],
+  "targets": [
+    {
+      "wed": "AR0300N",
+      "action": "paired primary texture alpha160 and secondary draw alpha160 after final WTLAKE temporal and contour treatment; preserve final RGB"
+    }
+  ],
+  "source_alpha": 128,
+  "target_alpha": 160,
+  "user_direction": "preserve the previously validated AR0300N night-reflection alpha160 contract in the definitive full-family rebuild",
+  "qa": "pending-ingame",
+  "tests": "targeted",
+  "release": "not-requested"
+}

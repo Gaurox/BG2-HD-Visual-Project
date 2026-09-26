@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-targeted-repair-v1",
+  "date": "2026-09-26",
+  "area": "AR1604",
+  "status": "installed-pending-user-ingame",
+  "diagnosis": "All113 water pairs already received fit1, but protect-black misclassified thin dark wooden panel caps as void. Examples: cells9,6 /10,7 /11,7 /12,7 retained staircases; cell10,6 was already fitted.",
+  "fix": "Protect an entire dark connected component only if it has an inner radius>=4 x4 pixels. Thin isolated caps get the ordinary spline-fit1 matte; large void components including their boundaries remain frozen byte-exact at BC3 block level.",
+  "run": "maps/water-batches/runs/ar1604-fit1-panel-trim-20260926-v1",
+  "verification": {
+    "python_tests": "8/8 passed",
+    "protected_pass_pixels": 2058570,
+    "protected_rgba_changes": 0,
+    "water_core_pass_pixels": 2531380,
+    "water_core_rgba_changes": 0,
+    "changed_primary_pixels": 13797,
+    "changed_secondary_pixels": 16509,
+    "bc3_mean_coverage_error": 0.008771027462437514,
+    "installed_pages_matching_candidate": 7,
+    "visual_diff": "panels / thin decoration edges; water-core, broad void, WED/TIS, temporal overlays and DLL unchanged"
+  },
+  "installation_receipt": "backups/water/ar1604-fit1-panel-trim-20260926-v1/override/override-backup-20260926-172035/install-backup.json",
+  "parent_candidate": "maps/water-batches/runs/ar1604-fit1-protect-black-20260926-v1",
+  "prior_user_acceptance": "pipeline/water/manifests/ar1604-water-basins-user-qa-20260926-v1.json",
+  "ingame": "pending-user",
+  "release": "not-requested"
+}

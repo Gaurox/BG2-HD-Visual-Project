@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-water-targeted-repair-v1",
+  "date": "2026-09-26",
+  "scope": ["AR0300N dry/rain", "AR1604 contours"],
+  "status": "installed-pending-user-ingame",
+  "ar0300n": {
+    "cause": "secondary_art_entry rejected the second matching WED entry even when dry/rain shared identical base evidence and local_art_opacity. Primary alpha160 remained active; secondary draw stayed128. No WATER_ART_OPACITY lines in the reported session.",
+    "fix": "Coalesce equal base-opacity contracts across weather variants; fail closed on differing base identity, WED hash, slots, alpha or secondary tile IDs.",
+    "evidence": "Offline composition using installed tiles reproduces marked shore cells with160/128 and removes the brightness step with160/160, dry and rain.",
+    "assets": "unchanged; 24 base pages and dry/rain temporal pages match current registry",
+    "runtime_expected_log": "WATER_ART_OPACITY secondary tile=... nativeAlpha=128 drawAlpha=160",
+    "primary_alpha": 160,
+    "secondary_draw_alpha": 160
+  },
+  "ar1604": {
+    "run": "maps/water-batches/runs/ar1604-fit1-protect-black-20260926-v1",
+    "fix": "Spline fit1 on visible RGB shores; retain original RGBA BC3 blocks in opaque black void >8 x4 pixels from lit source drawing, on both primary and secondary passes including padding.",
+    "supersedes": "ar1604-fit1-no-new-secondary-20260926-v2 (global restriction retained staircase and thick black object outlines)",
+    "protected_pass_pixels": 2077648,
+    "protected_rgba_changes_after_bc3": 0,
+    "protected_bc3_blocks_restored": 2834,
+    "new_secondary_pixels_on_visible_shores": 190944,
+    "new_secondary_pixels_in_protected_black": 0,
+    "bc3_mean_coverage_error": 0.014054138056806434,
+    "temporal": "SeedVR x4 / 72 phases / 30 FPS retained, overlay bytes unchanged",
+    "verification": "maps/water-batches/runs/ar1604-fit1-protect-black-20260926-v1/verification.json"
+  },
+  "runtime": {
+    "build": "engine/InfinityEngine-Enhancer/source-patchee/build-water-opacity-weather-black-20260926-v1",
+    "registry": "pipeline/water/requests/wtlake-ar0300n-q070-ar1604-fit1-safe-test-20260926-v1/registry-v3.json",
+    "dll_sha256": "A51834A18CD1B1940C18672FC7B92F1279F98492C7F9A81B69C417BCBDE6B18B"
+  },
+  "verification": {
+    "python": "7 contour tests passed",
+    "cpp": "3/3 CTest passed; dry/rain duplicate opacity regression + conflict rejection",
+    "ingame": "pending-user"
+  },
+  "receipts": {
+    "override": "backups/water/water-opacity-weather-black-20260926-v1/override/override-backup-20260926-170748/install-backup.json",
+    "runtime": "backups/water/water-opacity-weather-black-20260926-v1/runtime/install-backup.json"
+  },
+  "release": "not-requested"
+}

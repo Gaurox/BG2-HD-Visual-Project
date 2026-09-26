@@ -1,0 +1,30 @@
+{
+  "schema": "bg2-water-family-user-qa-v1",
+  "date": "2026-09-26",
+  "family": "lake-wtlake",
+  "scope": "water treatment of the 14 WED variants in the 2026-09-26 lot; not sprites, independent map defects, release, or unobserved weather variants",
+  "decision": "validated-ingame",
+  "weds": ["AR0046", "AR0046N", "AR0204", "AR0300", "AR0300N", "AR0512", "AR0900", "AR0900N", "AR1200", "AR1600", "AR1604", "AR1700", "AR1901", "AR2300"],
+  "decision_sources": {
+    "other_weds": "user: tout le reste est validé (2026-09-26)",
+    "AR0300N": "user: AR0300 validé (after paired-opacity night repair)",
+    "AR1604": "user: c'est pas parfait mais c'est mieux. on valide. (after fit1 panel-trim repair)"
+  },
+  "exceptions": {
+    "AR0300N": {
+      "decision": "validated-ingame",
+      "qa": "pipeline/water/manifests/ar0300n-opacity-weather-user-qa-20260926-v1.json",
+      "contract": "night primary/secondary opacity 160/160; preserve original night base; dry/rain runtime coalescing"
+    },
+    "AR1604": {
+      "decision": "validated-ingame-with-aesthetic-reserve",
+      "reserve": "wooden panel/decor contours improved but not perfect",
+      "prior_qa": "pipeline/water/manifests/ar1604-water-basins-user-qa-20260926-v1.json",
+      "repair": "pipeline/water/requests/ar1604-fit1-panel-trim-20260926-v1/repair.json",
+      "installation_receipt": "backups/water/ar1604-fit1-panel-trim-20260926-v1/override/override-backup-20260926-172035/install-backup.json"
+    }
+  },
+  "runtime_registry": "pipeline/water/requests/wtlake-ar0300n-q070-ar1604-fit1-safe-test-20260926-v1/registry-v3.json",
+  "runtime_receipt": "backups/water/water-opacity-weather-black-20260926-v1/runtime/install-backup.json",
+  "release": "not-requested"
+}

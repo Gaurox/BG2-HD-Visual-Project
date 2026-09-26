@@ -56,11 +56,16 @@
     "AR0506": {"spline_fit": 0, "why": "user 2026-09-26: same non-rounded gaussian contour method as AR0408; residual gaussian/BC3 rounding accepted", "qa": "pipeline/water/manifests/ar0506-contour-user-qa-20260926-v1.json"},
     "AR0703": {"spline_fit": 0, "why": "user 2026-09-25: keep the earlier gaussian matte on this map (map-specific, not the pool family)", "qa": "pipeline/water/manifests/ar0703-contour-user-qa-20260926-v1.json"},
     "AR1003": {"spline_fit": 0, "why": "user 2026-09-26: same non-rounded gaussian contour method as AR0408; residual gaussian/BC3 rounding accepted", "qa": "pipeline/water/manifests/ar1003-contour-user-qa-20260926-v1.json"},
-    "AR1004": {"spline_fit": 0, "why": "user 2026-09-26: same non-rounded gaussian contour method as AR0408; residual gaussian/BC3 rounding accepted", "qa": "pipeline/water/manifests/ar1004-contour-user-qa-20260926-v1.json"}
+    "AR1004": {"spline_fit": 0, "why": "user 2026-09-26: same non-rounded gaussian contour method as AR0408; residual gaussian/BC3 rounding accepted", "qa": "pipeline/water/manifests/ar1004-contour-user-qa-20260926-v1.json"},
+    "AR0300N": {"water_alpha": 160, "contour_action": "preserve-base", "why": "validated artistic night-reflection contract: primary texture alpha 160 plus matching secondary runtime draw alpha 160; 2026-09-26 contour rerun caused night tile colour seams", "qa": "pipeline/water/manifests/ar0300n-opacity-weather-user-qa-20260926-v1.json"},
+    "AR1604": {"contour_action": "build", "spline_constraint": "protect-black", "why": "2026-09-26: fit1 on visible shores and wooden trim. Protect entire opaque dark components >8 x4 px from lit drawing only if their inner radius reaches4 x4 px; thin isolated panel caps must be refitted. Keep source BC3 blocks in exterior void, SeedVR x4 /72 phases /30 FPS.", "qa": "pipeline/water/manifests/wtlake-family-user-qa-20260926-v1.json"}
   },
   "families": [
     {"id": "lake", "overlays": ["WTLAKE"], "layout": [["WTLAKE"]], "spatial_method": "seedvr",
-     "temporal": {"material_id": 1, "cycle": "native", "status": "validated-ingame-AR1600"},
+     "temporal": {"material_id": 1, "cycle": "fixed", "cycle_seconds": 2.4,
+                  "keyframes": [0, 1, 2, 3, 4, 5],
+                  "status": "validated-ingame-AR1600",
+                  "why_cycle": "6 keys / 2.4 s validated on AR1600; explicit keys cover WTLAKE WEDs limited to one image (AR0512/AR1604), fixed cycle covers speed_divisor 0"},
      "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-spline-fit1-AR1600-20260925"},
      "witness": "AR1600"},
     {"id": "pool", "overlays": ["WTPOOL"], "layout": [["WTPOOL"]], "spatial_method": "bilinear",

@@ -67,13 +67,24 @@ def main():
     require(sha256_file(registry_path) == request["registry_sha256"], "parent drift")
     parent = json.loads(registry_path.read_text(encoding="utf-8"))
     registry = copy.deepcopy(parent)
-    target = next(e for e in registry["entries"] if e["wed"]["resref"] == "AR0300N")
-    require(not target.get("local_art_opacity"), "parent already overrides native art opacity")
-    source = ROOT / request["source"]
-    require(tis_metadata("AR0300N", source)[0] == target["base_tis"], "source TIS/PVRZ drift")
-    require(sha256_file(source / "AR0300N.WED") == target["wed"]["sha256"], "source WED drift")
+    targets = [e for e in registry["entries"] if e["wed"]["resref"] == "AR0300N"]
+    require(targets and all(not target.get("local_art_opacity") for target in targets),
+            "parent already overrides native art opacity")
+    target = targets[0]
+    require(all(entry["wed"] == target["wed"] and entry["base_tis"] == target["base_tis"]
+                for entry in targets), "AR0300N dry/rain base identity divergence")
     game = get_path("bg2ee_game_root")
     live = game / "override"
+    source = live if request["source"] == "config://bg2ee_override" else ROOT / request["source"]
+    source_base, _source_paths = tis_metadata("AR0300N", source)
+    pinned = target["base_tis"]
+    for key in ("resref", "sha256", "bytes", "tile_count"):
+        require(source_base[key] == pinned[key], f"source base {key} drift")
+    if "tile_dimension" in pinned:
+        require(source_base["tile_dimension"] == pinned["tile_dimension"], "source base tile dimension drift")
+    if pinned.get("pages"):
+        require(source_base["pages"] == pinned["pages"], "source base pages drift")
+    require(sha256_file(source / "AR0300N.WED") == target["wed"]["sha256"], "source WED drift")
     before = {}
     for entry in parent["entries"]:
         files = [(entry["wed"]["resref"] + ".WED", entry["wed"]["sha256"]),
@@ -86,6 +97,8 @@ def main():
                 require(sha256_file(live / name) == digest, "live drift: " + name)
                 before[name] = digest
             require(before[name] == digest, "registry alias hash conflict")
+    for path in _source_paths:
+        before.setdefault(path.name, sha256_file(path))
     bifs, resources = load_key()
     lookup = {(n.upper(), k): loc for n, k, loc in resources}
     stock_wed, archive = resolve_resource(bifs, lookup["AR0300N", 0x3E9])
@@ -112,19 +125,25 @@ def main():
         return
     output.mkdir(parents=True)
     destination = output / "maps/AR0300N"
-    shutil.copytree(source, destination)
+    destination.mkdir(parents=True)
+    _base_meta, base_paths = tis_metadata("AR0300N", source)
+    for path in [source / "AR0300N.WED", *base_paths]:
+        shutil.copy2(path, destination / path.name)
     alpha_report = correct_central_alpha("AR0300N", stock_wed, source, destination, 160)
     # The reused helper names this field 'native'; this candidate is explicitly artistic.
     alpha_report["candidate_primary_texture_alpha"] = alpha_report.pop("effective_native_alpha")
-    target["base_tis"] = tis_metadata("AR0300N", destination)[0]
-    target["local_art_opacity"] = {
+    final_base = tis_metadata("AR0300N", destination)[0]
+    local_art_opacity = {
         "mode": "paired-primary-texture-secondary-draw", "source_draw_alpha": 128,
         "target_draw_alpha": 160, "primary_texture_alpha": 160,
         "secondary_tile_ids": secondaries,
         "scope": "exact AR0300N WED/TIS and exclusive water secondary roles; preserve RGB and other alpha",
     }
-    target["state"] = "candidate-installable-pending-qa"
-    target["qa"] = {"status": "pending-ingame", "reference": (output / "repair-report.json").relative_to(ROOT).as_posix()}
+    for target in targets:
+        target["base_tis"] = copy.deepcopy(final_base)
+        target["local_art_opacity"] = copy.deepcopy(local_art_opacity)
+        target["state"] = "candidate-installable-pending-qa"
+        target["qa"] = {"status": "pending-ingame", "reference": (output / "repair-report.json").relative_to(ROOT).as_posix()}
     registry["experiment"] = {"scope": ["AR0300N"], "parent": record(registry_path),
                               "reason": request["user_direction"], "qa": "pending-ingame"}
     write_json(output / "registry-v3.json", registry)
@@ -166,7 +185,8 @@ def main():
                        "opengl_color_state_rva": "0x756E08",
                        "evidence": "DrawColor/DrawAlpha share packed color state; alpha is high byte; DrawColor returns previous ARGB; RGB swap in GL retains alpha"},
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ENGINE, text=True).strip(),
-        "source_snapshot": snapshots, "unchanged_registry_entries": len(parent["entries"]) - 1,
+        "source_snapshot": snapshots, "unchanged_registry_entries": len(parent["entries"]) - len(targets),
+        "runtime_identities_updated": len(targets),
         "limits": ["experimental artistic opacity, not native repair", "install pages and matching DLL together",
                    "unexpected native alpha/fades remain unchanged", "not visually validated"],
         "tests": "not-run-user-choice", "qa": "pending-ingame", "release": "not-requested",

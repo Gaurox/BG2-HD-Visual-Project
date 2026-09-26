@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <atomic>
 #include <cstddef>
@@ -84,6 +85,28 @@ inline std::string_view resref_view(const Resref& value) noexcept {
   std::size_t length = 0;
   while (length < 8 && value[length] != '\0') ++length;
   return {value.data(), length};
+}
+
+inline const RegistryEntry* select_secondary_art_entry(
+    std::string_view wed, std::span<const RegistryEntry* const> entries) noexcept {
+  const RegistryEntry* result = nullptr;
+  for (const auto* entry : entries) {
+    if (!entry || entry->secondaryArtTiles.empty() || resref_view(entry->wed) != wed) continue;
+    // Dry/rain overlays share one base-art contract. Different overlay identities do not
+    // make that contract ambiguous; different base identities or opacity rules still do.
+    if (result && (result->baseTis != entry->baseTis ||
+        result->wedSha256 != entry->wedSha256 || result->slots != entry->slots ||
+        result->slotCount != entry->slotCount || result->overlaySlot != entry->overlaySlot ||
+        result->gridWidth != entry->gridWidth || result->gridHeight != entry->gridHeight ||
+        result->baseTileCount != entry->baseTileCount ||
+        result->secondaryArtSourceAlpha != entry->secondaryArtSourceAlpha ||
+        result->secondaryArtTargetAlpha != entry->secondaryArtTargetAlpha ||
+        !std::equal(result->secondaryArtTiles.begin(), result->secondaryArtTiles.end(),
+                    entry->secondaryArtTiles.begin(), entry->secondaryArtTiles.end())))
+      return nullptr;
+    if (!result) result = entry;
+  }
+  return result;
 }
 
 struct Query {

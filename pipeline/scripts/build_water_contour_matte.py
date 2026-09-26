@@ -55,6 +55,62 @@ def contour_spline_fit(area, explicit=None, standard_path=STANDARD):
     return value or None
 
 
+def contour_water_alpha(area, native_alpha, standard_path=STANDARD):
+    """Composition alpha for the contour pass.  Usually this is the ARE value; a
+    map-specific validated artistic contract may override it (AR0300N = 160)."""
+    standard = json.loads(Path(standard_path).read_text(encoding='utf-8'))
+    override = standard.get('contour_map_overrides', {}).get(area.upper(), {})
+    return int(override.get('water_alpha', native_alpha))
+
+
+def contour_action(area, standard_path=STANDARD):
+    """Per-map contour policy. ``preserve-base`` records a QA-proven incompatibility."""
+    standard = json.loads(Path(standard_path).read_text(encoding='utf-8'))
+    override = standard.get('contour_map_overrides', {}).get(area.upper(), {})
+    return override.get('contour_action', 'build')
+
+
+def contour_spline_constraint(area, standard_path=STANDARD):
+    """Optional one-sided safety rule for maps where new secondary alpha leaks through black/fog."""
+    standard = json.loads(Path(standard_path).read_text(encoding='utf-8'))
+    override = standard.get('contour_map_overrides', {}).get(area.upper(), {})
+    return override.get('spline_constraint', 'none')
+
+
+def protected_black_mask(rgb, native, reach=8, min_void_radius=4):
+    """Opaque void far from the visible drawing is not a shoreline to refit.
+
+    Eight x4 pixels cover the 4 px matte band plus its colour donor rim. Nearby black
+    antialiasing pixels can still be replaced by water along a visible fitted edge.
+    Isolated thin dark trim (AR1604 wooden panel tops) is not exterior void: retain
+    only connected dark components with a core at least min_void_radius pixels deep.
+    All pixels of a retained component stay protected, including its boundary.
+    """
+    from scipy import ndimage as ndi
+    lit = np.asarray(rgb).max(-1) > BLACK
+    if not lit.any():
+        return np.asarray(native, bool).copy()
+    guard = native & (ndi.distance_transform_edt(~lit) > reach)
+    labels, count = ndi.label(guard, np.ones((3, 3)))
+    if not count:
+        return guard
+    radii = ndi.maximum(ndi.distance_transform_edt(guard), labels, np.arange(1, count + 1))
+    return np.r_[False, radii >= min_void_radius][labels]
+
+
+def constrain_spline_coverage(coverage, secondary_alpha, constraint, protected=None):
+    """Keep the fit-1 envelope while optionally forbidding newly revealed secondary water."""
+    if constraint == 'none':
+        return coverage, 0
+    require(constraint in ('no-new-secondary', 'protect-black'), f'Unknown spline constraint: {constraint}')
+    floor = 1.0 - np.asarray(secondary_alpha, np.float64) / 255.0
+    if constraint == 'protect-black':
+        require(protected is not None, 'protect-black requires the source void mask')
+        floor = np.where(protected, floor, 0.0)
+    blocked = coverage < floor
+    return np.maximum(coverage, floor), int(blocked.sum())
+
+
 def spline_coverage(obj, native, fit_error=1.0, spacing=1.5, supersample=2, band=4, aa_sigma=None, aa_ramp=0.35):
     """Coverage of the x4 silhouette whose contour (holes and islands kept) is refitted by a
     periodic spline (SPLINE_ALPHA_MASK_PIPELINE, fit 1.0 validated on AR0900 water) and
@@ -211,7 +267,8 @@ def survey(area):
     return report
 
 
-def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
+def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None,
+            spline_constraint='none'):
     """``central_water``: liquid cells without secondary (fully water, alpha restored by the
     spatial stage) join the matte as water instead of an opaque object; otherwise their
     coverage bleeds 1-4 px into the neighbouring pair and draws a line (AR5000)."""
@@ -221,6 +278,7 @@ def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
     output.mkdir(parents=True)
     (output / 'tiles').mkdir()
     records, colour = [], Counter()
+    constrained_pixels = 0
     a = area.water_alpha / 255
     windows = sorted({(x // WINDOW, y // WINDOW) for x, y in qualified})
     for n, (wx, wy) in enumerate(windows, 1):
@@ -241,10 +299,15 @@ def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
                 if (cx, cy) in qualified:
                     secondary[cell(cx, cy)] = area.tile(c['secondary'])
         obj, coverage = silhouette(primary[:, :, :3], native)
+        protected = (protected_black_mask(primary[:, :, :3], native)
+                     if spline_constraint == 'protect-black' else None)
         if spline_fit:
             # Alpha only: pixels the spline adds lie within the 5 px colour extension of the
             # original silhouette; using the refitted mask as RGB donor spread black notches.
             coverage, _ = spline_coverage(obj, native, spline_fit, aa_sigma=spline_aa)
+            coverage, blocked = constrain_spline_coverage(
+                coverage, secondary[:, :, 3], spline_constraint, protected)
+            constrained_pixels += blocked
         rgb_p, rep = edge_rgb(primary[:, :, :3], obj)
         colour.update(rep)
         rgb_s = extend_colours(secondary[:, :, :3], secondary[:, :, 3] > 127)
@@ -258,11 +321,18 @@ def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
                 target = old[sl].copy()
                 target[:, :, :3] = rgb[sl]
                 target[:, :, 3] = np.rint(alpha[sl] * 255).clip(0, 255).astype(np.uint8)
+                if protected is not None:
+                    target[protected[sl]] = old[sl][protected[sl]]
                 if not np.any(target != old[sl]):
                     continue
                 Image.fromarray(target).save(output / 'tiles' / f'{index}-{role}.png')
-                records.append({'tile': index, 'role': role, 'cell': [cx, cy],
-                                'entry': list(area.tis['entries'][index]), 'png': f'tiles/{index}-{role}.png'})
+                record = {'tile': index, 'role': role, 'cell': [cx, cy],
+                          'entry': list(area.tis['entries'][index]), 'png': f'tiles/{index}-{role}.png'}
+                if protected is not None and protected[sl].any():
+                    record['protected_black'] = f'tiles/{index}-{role}-protected.png'
+                    Image.fromarray(np.where(protected[sl], 255, 0).astype(np.uint8)).save(
+                        output / record['protected_black'])
+                records.append(record)
         print(f'window {n}/{len(windows)} ({wx},{wy})', flush=True)
     write(output / 'prepare.json', {
         'schema': 'bg2-water-contour-matte-v1', 'area': area.area, 'survey': report,
@@ -270,6 +340,7 @@ def prepare(area, output, central_water=False, spline_fit=None, spline_aa=None):
         'recipe': 'build_water_contour_matte_trial.py silhouette/edge_rgb/extend_colours (validated AR1600)',
         'composition': 'U -> P -> a*S; S=1-M; P=M/(1-a*(1-M))', 'window_cells': WINDOW, 'halo_cells': 1,
         'central_water': central_water, 'spline_fit': spline_fit, 'spline_aa_sigma': spline_aa,
+        'spline_constraint': spline_constraint, 'constrained_pixels': constrained_pixels,
         'colour': dict(colour), 'source_backups': [str(b) for b in area.backups],
         'source_pages': dict(area.page_hashes), 'tiles': records,
         'producer_sha256': sha(Path(__file__).read_bytes()), 'installation': 'not performed'})
@@ -319,16 +390,68 @@ def encode(area, run):
             allowed_rgb[by:by + 66, bx:bx + 66] |= mr
         require(np.array_equal(original[~allowed_a, :8], blocks[~allowed_a, :8]), 'Unrelated alpha block changed')
         require(np.array_equal(original[~allowed_rgb, 8:], blocks[~allowed_rgb, 8:]), 'Unrelated RGB block changed')
+        safety_alpha_blocks = 0
+        protected_black_blocks = 0
+        if plan.get('spline_constraint') == 'protect-black':
+            # Restore whole BC3 blocks touching protected void in BOTH passes, including
+            # RGB and padding. Thus compression cannot uncover underlay or add blue RGB.
+            protected_blocks = np.zeros(blocks.shape[:2], bool)
+            for t in tiles:
+                if not t.get('protected_black'):
+                    continue
+                _, px, py = t['entry']
+                guard = np.asarray(Image.open(run / t['protected_black'])) > 0
+                guard = np.pad(guard, ((4, 4), (4, 4)), mode='edge')
+                guard = guard.reshape(66, 4, 66, 4).any((1, 3))
+                bx, by = (px - 4) // 4, (py - 4) // 4
+                protected_blocks[by:by + 66, bx:bx + 66] |= guard
+            protected_black_blocks = int((protected_blocks & np.any(blocks != original, 2)).sum())
+            blocks[protected_blocks] = original[protected_blocks]
+            require(np.array_equal(blocks[protected_blocks], original[protected_blocks]),
+                    'Protected black BC3 blocks changed')
+        if plan.get('spline_constraint') == 'no-new-secondary':
+            # BC3 endpoint fitting may overshoot the requested alpha by a few levels.  Restore
+            # the source alpha bytes for every offending 4x4 block; RGB remains refitted.
+            provisional_data = struct.pack('<I', len(raw)) + zlib.compress(raw, 9)
+            provisional = np.asarray(decode_pvrz_page(provisional_data))
+            unsafe = set()
+            for t in tiles:
+                if t['role'] != 'secondary':
+                    continue
+                _, px, py = t['entry']
+                y0, x0 = py - 4, px - 4
+                before = decoded[y0:py + 260, x0:px + 260, 3]
+                after = provisional[y0:py + 260, x0:px + 260, 3]
+                for yy, xx in zip(*np.nonzero(after > before)):
+                    unsafe.add(((y0 + int(yy)) // 4, (x0 + int(xx)) // 4))
+            for by, bx in unsafe:
+                blocks[by, bx, :8] = original[by, bx, :8]
+            safety_alpha_blocks = len(unsafe)
         data = struct.pack('<I', len(raw)) + zlib.compress(raw, 9)
         (candidate / name).write_bytes(data)
         final = np.asarray(decode_pvrz_page(data))
+        if plan.get('spline_constraint') == 'no-new-secondary':
+            for t in tiles:
+                if t['role'] != 'secondary':
+                    continue
+                _, px, py = t['entry']
+                require(np.all(final[py - 4:py + 260, px - 4:px + 260, 3]
+                               <= decoded[py - 4:py + 260, px - 4:px + 260, 3]),
+                        f'{name}: BC3 introduced new secondary alpha')
         for t in tiles:
             _, px, py = t['entry']
             finals[(t['role'], tuple(t['cell']))] = final[py:py + 256, px:px + 256].copy()
+            if t.get('protected_black'):
+                guard = np.asarray(Image.open(run / t['protected_black'])) > 0
+                require(np.array_equal(final[py:py + 256, px:px + 256][guard],
+                                       decoded[py:py + 256, px:px + 256][guard]),
+                        f'{name}: decoded protected black pixels changed')
         files[name] = {'sha256': sha(data), 'bytes': len(data)}
         pages_report.append({'name': name, 'before_sha256': sha(packed), 'after_sha256': sha(data),
                              'alpha_blocks_changed': int(np.any(original[:, :, :8] != blocks[:, :, :8], 2).sum()),
-                             'rgb_blocks_changed': int(np.any(original[:, :, 8:] != blocks[:, :, 8:], 2).sum())})
+                             'rgb_blocks_changed': int(np.any(original[:, :, 8:] != blocks[:, :, 8:], 2).sum()),
+                             'safety_alpha_blocks_restored': safety_alpha_blocks,
+                             'protected_black_blocks_restored': protected_black_blocks})
         print('Encoded ' + name, flush=True)
     a = plan['water_alpha'] / 255
     pngs = {(t['role'], tuple(t['cell'])): t['png'] for t in plan['tiles']}
@@ -386,10 +509,14 @@ def main():
     output = args.output.resolve()
     output.relative_to(ROOT / 'maps')
     area = Area(args.area[0], args.vanilla_root, args.source_backup)
+    area.water_alpha = contour_water_alpha(area.area, area.water_alpha)
     if args.stage == 'prepare':
+        action = contour_action(area.area)
+        require(action == 'build',
+                f'{area.area}: contour_action={action}; QA requires the validated base pages')
         require(not output.exists(), 'Refusing to overwrite an existing run')
         prepare(area, output, args.central_water, contour_spline_fit(args.area[0], args.spline_fit),
-                args.spline_aa)
+                args.spline_aa, contour_spline_constraint(area.area))
     else:
         encode(area, output)
 

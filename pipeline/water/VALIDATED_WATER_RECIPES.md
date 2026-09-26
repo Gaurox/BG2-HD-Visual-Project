@@ -17,6 +17,8 @@ compatible, pas des recettes universelles.
 | Frange sombre, cordes/gréement épais ou en escalier devant l'eau | alpha HD issu du masque x1 révèle le fond noir du RGB x4 | C : silhouette RGB x4 + liseré recoloré + **spline fit 1** (défaut 2026-09-25, [CONTOUR_MATTE_PIPELINE](CONTOUR_MATTE_PIPELINE.md)) ; exceptions par map AR0408/AR0703 |
 | Art local, ombres ou reflets disparus | alpha central 0/255 ou passe secondaire perdue | restaurer l'alpha natif effectif et la composition primaire/secondaire |
 | Marche de luminosité | opacités primaire/secondaire désaccordées | apparier les contributions ; AR0300N v10 utilise 160/160 localement |
+| AR0300N : bordures marquées sec **et** pluie malgré pages160 | `secondary_art_entry` refuse le doublon sec/pluie, donc alpha secondaire reste128 | coalescer les contrats d'opacité identiques ; conflits toujours refusés. Correctif moteur + régression, [QA validée 2026-09-26](manifests/ar0300n-opacity-weather-user-qa-20260926-v1.json) |
+| AR1604 : fit1 fait apparaître des traits bleus dans le noir ; protection globale laisse des escaliers | matte traite le noir opaque comme une berge ; `no-new-secondary` bloque aussi les contours visibles | `protect-black` : figer les blocs BC3 RGBA des deux passes dans le noir éloigné du dessin ; spline fit1 sur berges et panneaux fins, x4/72 phases conservés. [Lot validé avec réserve esthétique](manifests/wtlake-family-user-qa-20260926-v1.json) |
 | 30 FPS actif mais eau « qui grouille », micro-saccade | bouillonnement du détail SeedVR (65 % du pas) + cadence latente 4 images | `temporal_harmonics` 1,5 × clés + `equalize_detail` ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)) |
 | Ligne floue à chaque bord de tuile (tuile unique) | collier de raccord 8 px x4 lisse ~10 px de détail | `seedvr-torus` 1×1 à la place du collier |
 | Lignes fines aux bords de cellules eau pure ↔ décor | interfaces A non réparées (pavage A–D) + matte C comptant l'eau pure comme objet | bases A par famille + C `central_water` (AR5000 5,69 → 3,14) |
@@ -58,7 +60,8 @@ ci-dessus sont des recettes acquises mais non installées. État standard couran
 [`manifests/water-standard-map-status-20260923-v1.json`](manifests/water-standard-map-status-20260923-v1.json).
 Apollo est rejeté pour les overlays liquides ([TEMPORAL_30FPS_PIPELINE](TEMPORAL_30FPS_PIPELINE.md)).
 
-AR0512 et AR1604 restent non qualifiées. Les familles goo et intérieures n'héritent
+Le lot `lake-wtlake` de 14 WED est [validé ingame le 2026-09-26](manifests/wtlake-family-user-qa-20260926-v1.json),
+AR1604 avec réserve esthétique sur les panneaux. Les familles goo et intérieures n'héritent
 pas automatiquement des paramètres lac/piscine/marais.
 
 ## Composition connue

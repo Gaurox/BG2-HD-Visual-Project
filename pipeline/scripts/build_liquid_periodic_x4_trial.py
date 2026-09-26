@@ -424,7 +424,8 @@ def export_tiles(frames: list[np.ndarray], alias: str, out: Path) -> dict:
                       for p in (path, page)]}
 
 
-def build(g: dict, output: Path, build_output: Path | None = None) -> dict:
+def build(g: dict, output: Path, build_output: Path | None = None,
+          reuse_generated_root: Path | None = None) -> dict:
     source_out = output / "groups" / g["id"]
     out = (build_output or output) / "groups" / g["id"]
     prepared = read_json(source_out / "prepare.json")
@@ -437,8 +438,22 @@ def build(g: dict, output: Path, build_output: Path | None = None) -> dict:
     metrics = []
     phases = []
     generation = None
+    generated_out = source_out
     if g["method"] == "seedvr":
-        genpath = source_out / "generated/manifest.json"
+        reuse = (reuse_generated_root / "groups" / g["id"]
+                 if reuse_generated_root else g.get("reuse_generated_from"))
+        if reuse:
+            generated_out = Path(reuse)
+            if not generated_out.is_absolute():
+                generated_out = ROOT / generated_out
+            generated_out = generated_out.resolve(strict=True)
+            for kind in ("rgb", "alpha"):
+                for i in range(prepared["native_frame_count"]):
+                    own = source_out / f"inputs/{kind}/frame_{i:03d}.png"
+                    shared = generated_out / f"inputs/{kind}/frame_{i:03d}.png"
+                    if not shared.is_file() or sha(own.read_bytes()) != sha(shared.read_bytes()):
+                        raise ValueError(f"reused SeedVR input differs: {g['id']}/{kind}/frame_{i:03d}")
+        genpath = generated_out / "generated/manifest.json"
         generation = read_json(genpath)
         if generation.get("status") != "completed":
             raise ValueError("SeedVR generation is not completed")
@@ -451,7 +466,7 @@ def build(g: dict, output: Path, build_output: Path | None = None) -> dict:
             native_context.putalpha(alpha.resize(native_context.size, Image.Resampling.NEAREST))
         native = split_context(native_context, g)
         if g["method"] == "seedvr":
-            with Image.open(source_out / f"generated/rgba/frame_{i:03d}.png") as generated:
+            with Image.open(generated_out / f"generated/rgba/frame_{i:03d}.png") as generated:
                 frames = split_context(generated, g)
             for ref in frames:
                 if not np.array_equal(frames[ref][:, :, 3], native[ref][:, :, 3]):
@@ -508,8 +523,8 @@ def build(g: dict, output: Path, build_output: Path | None = None) -> dict:
     manifest = {"schema": SCHEMA, "status": "built-candidate", "group": g,
                 "prepare_path": str(source_out / "prepare.json"),
                 "prepare_sha256": sha((source_out / "prepare.json").read_bytes()),
-                "generation_manifest_path": str(source_out / "generated/manifest.json") if generation else None,
-                "generation_manifest_sha256": sha((source_out / "generated/manifest.json").read_bytes()) if generation else None,
+                "generation_manifest_path": str(generated_out / "generated/manifest.json") if generation else None,
+                "generation_manifest_sha256": sha((generated_out / "generated/manifest.json").read_bytes()) if generation else None,
                 "producer_sha256": sha(Path(__file__).read_bytes()),
                 "edge_recipe": "generated-interior-profile-equivalence-collar-v2",
                 "metrics": metrics, "outputs": outputs, "topology": prepared["topology"],
@@ -524,6 +539,8 @@ def main() -> int:
     parser.add_argument("--vanilla-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--build-output", type=Path, help="separate new build root; read prepared/generated sources from --output")
+    parser.add_argument("--reuse-generated-root", type=Path,
+                        help="reuse byte-identical generated frames from another prepared output root")
     parser.add_argument("--plan", type=Path)
     parser.add_argument("--group", nargs="+")
     parser.add_argument("--stage", choices=("prepare", "generate", "build", "all"), default="prepare")
@@ -533,10 +550,13 @@ def main() -> int:
     groups = groups_from_args(args)
     output = args.output.resolve()
     build_output = args.build_output.resolve() if args.build_output else None
+    reuse_generated_root = args.reuse_generated_root.resolve() if args.reuse_generated_root else None
     try:
         output.relative_to(ROOT / "maps")
         if build_output:
             build_output.relative_to(ROOT / "maps")
+        if reuse_generated_root:
+            reuse_generated_root.relative_to(ROOT / "maps")
     except ValueError as error:
         raise ValueError("trial output must remain beneath repository maps/") from error
     bifs, resources = configure_vanilla(args.vanilla_root)
@@ -547,7 +567,7 @@ def main() -> int:
         if args.stage in ("generate", "all"):
             generate(g, output, args)
         if args.stage in ("build", "all"):
-            build(g, output, build_output)
+            build(g, output, build_output, reuse_generated_root)
     return 0
 
 
