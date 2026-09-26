@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0408",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:35+00:00",
+  "run": "maps/water-batches/runs/ar0408-pool-final-contour-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0408-pool-final-contour-20260925-v1/override-candidate/manifest.json",
+    "sha256": "8CF11CA3C3D8F19C7B19CB42BFB2F678C764632AC1FBEB157E6B836E5FD03B08"
+  },
+  "files": {
+    "A040800.PVRZ": {
+      "sha256": "BB53BA652CC6CEF6264415A60DB0199A836AA41C4A00E30241A417FC9614FCD4",
+      "bytes": 193502
+    },
+    "A040801.PVRZ": {
+      "sha256": "F810AFA9F4EF844549FCB5A962C1C83FF0421BF898F2998E557AA1808E14F294",
+      "bytes": 461304
+    },
+    "A040802.PVRZ": {
+      "sha256": "8E6CA024E711268BBC5BAABFC474E4E562A38B398F09525A66117A1D9C4ACA7E",
+      "bytes": 81490
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0408-pool-final-contour-20260925-v1/override-backup-20260925-205933/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0408-pool-final-contour-20260925-v1/build.json",
+    "sha256": "96222C7804767016BEA827899BB7B30C7444F7D125212FFFC6B53DC5FD46E598"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0408-pool-final-contour-20260925-v1/prepare.json",
+    "sha256": "139A99F74F1893CE7B0A93F204F5C8F85DD8DE1D74EF16008BAEA1845CF6BBE4"
+  }
+}

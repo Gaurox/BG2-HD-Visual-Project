@@ -2,7 +2,9 @@
 
 **Contrat C du 2026-09-25 : matte silhouette RGB x4 + spline fit 1.0 + `central_water`, défaut pour toutes les
 familles** (validé AR1600, puis sur la map test de chaque famille). Exceptions **par map** (jamais par famille) :
-`contour_map_overrides` du standard — AR0408 et AR0703 gardent le matte gaussien antérieur (spline refusée en jeu).
+`contour_map_overrides` du standard — AR0408, AR0703, AR0506, AR1003 et AR1004 utilisent le matte gaussien
+sans spline. AR0506/AR1003/AR1004 : arrondi gaussien/BC3 résiduel accepté le 2026-09-26 ; ne pas durcir le
+matte (risque d'escaliers et de franges sombres).
 Le producteur lit ce défaut et ces exceptions (`contour_spline_fit`) ; `--spline-fit 0` = matte gaussien seul.
 Historique : matte gaussien validé AR1600 (2026-09-23), jugé améliorable (AR0500N, 2026-09-24), remplacé.
 Famille `sewage` validée sur AR2100 avec le matte actuel accepté en l'état ; adaptation `CONTOUR-NET`
@@ -92,7 +94,7 @@ composition de paire non encore vue en jeu.
 | Map | Famille | Run | QA en jeu | Suite |
 |---|---|---|---|---|
 | AR2100 | WTSEW | `ar2100-contour-matte-20260923-v1` | validée avec réserve — `ar2100-contour-user-qa-20260923-v3.json` | matte accepté en l'état ; adaptation CONTOUR-NET abandonnée (v1 rejet historique, v2 citation non canonique) |
-| AR0408 | WTPOOL | `ar0408-contour-matte-20260923-v1` | **à revoir** (utilisateur, 2026-09-23) — reçu `ar0408-contour-installed-20260923-v1.json` encore installé | défaut non décrit : demander ce qui ne va pas avant tout nouvel essai `-v2` |
+| AR0408 | WTPOOL | `ar0408-pool-final-contour-20260925-v3` | validée 2026-09-26 — `ar0408-contour-user-qa-20260926-v1.json` | exception gaussienne conservée |
 | AR0703 | WTPOOL | `ar0703-contour-matte-20260923-v1` | validée — `ar0703-contour-user-qa-20260923-v1.json` | 10 paires ; alpha 128 |
 | AR0500 | WTSWAM | `ar0500-contour-matte-20260924-v1` | validation jour historique — `ar0500-contour-user-qa-20260924-v1.json` | supersédée comme standard par la décision globale du 2026-09-24 |
 | AR0503 | WTOIL | `ar0503-contour-matte-20260924-v1` | validée avec réserve — `ar0503-contour-user-qa-20260924-v1.json` | 67 paires, 84 cellules sans secondaire ; construit sur les pages réparées par A ; mêmes réserves que les autres familles |
@@ -101,6 +103,7 @@ composition de paire non encore vue en jeu.
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
 | Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | WTSWAM (+ WTPOOL AR1100) | `<map>-contour-matte-20260925-v1` (spline fit 1 + `central_water`, a = 128) | **validées** 2026-09-25 — `<map>-contour-user-qa-20260925-v1.json` | construit après A+B, sans reprise |
+| Lot pool (13 actifs, liste : TEMPORAL_30FPS_PIPELINE) | WTPOOL | `<map>-pool-final-contour-20260925-v1` ; reprises AR0506/AR1003/AR1004 le 2026-09-26 | **validées** 2026-09-26 — `<map>-contour-user-qa-20260926-v1.json` | spline fit 1 par défaut ; exceptions gaussiennes AR0408/AR0506/AR0703/AR1003/AR1004, arrondi résiduel accepté |
 | AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
 
 ## Spline fit 1 (défaut depuis 2026-09-25)

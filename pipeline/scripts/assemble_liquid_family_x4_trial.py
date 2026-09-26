@@ -187,9 +187,21 @@ def assemble(run: Path, game: Path, vanilla: Path, request, bases_root: Path, ov
                 previous = {'present': False, 'sha256': None, 'bytes': None}
             if record(source) != previous:
                 add(source, area, 'base-composition-repair')
-        data, archive = bg2lib.resolve_resource(bifs, index[area, 0x3E9])
+        if target.get('source_wed') == 'live-override':
+            source_wed = game / 'override' / f'{area}.WED'
+            if not source_wed.is_file():
+                raise FileNotFoundError(f'Live source WED required to preserve unselected slots: {source_wed}')
+            data, archive = source_wed.read_bytes(), 'live-override'
+        else:
+            data, archive = bg2lib.resolve_resource(bifs, index[area, 0x3E9])
         original = data
         geometry = validate_polygons(data)
+        headers = struct.unpack_from('<I', data, 16)[0]
+        original_refs = {
+            slot['slot']: data[headers + slot['slot'] * 24 + 4:headers + slot['slot'] * 24 + 12]
+                .split(b'\0')[0].decode('ascii')
+            for slot in target['slots']
+        }
         for slot in target['slots']:
             data = replace_overlay_resref(data, slot['slot'], slot['alias'])
             for key in ('alias', 'rain_alias'):
@@ -210,7 +222,7 @@ def assemble(run: Path, game: Path, vanilla: Path, request, bases_root: Path, ov
                     add(source, area, 'isolated-liquid-overlay')
         restored = data
         for slot in target['slots']:
-            restored = replace_overlay_resref(restored, slot['slot'], slot['source'])
+            restored = replace_overlay_resref(restored, slot['slot'], original_refs[slot['slot']])
         if restored != original or validate_polygons(data) != geometry:
             raise ValueError(f'WED changed outside overlay resrefs: {area}')
         wed_path = run / 'weds' / (area + '.WED')

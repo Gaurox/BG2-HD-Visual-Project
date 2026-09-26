@@ -65,7 +65,7 @@ interface (voisins toujours sur un autre slot : AR5000 0 → 240) ; cartes multi
 - traitement eau antérieur installé (resref d'overlay renommé, lookup re-temporisée, identité route2 dans la DLL) :
   le remplacer est une décision utilisateur ; chaîne standard déjà installée : restaurer avant de replanifier.
 
-## Inventaire du 2026-09-23 — [`manifests/water-map-inventory-20260923-v1.json`](manifests/water-map-inventory-20260923-v1.json)
+## Inventaire de base du 2026-09-23 — [`manifests/water-map-inventory-20260923-v1.json`](manifests/water-map-inventory-20260923-v1.json)
 
 63 WED d'eau actives (vanilla), toutes de familles connues, toutes avec base x4 installée.
 Relancer : `plan_water_map.py inventory --vanilla-root $v`.
@@ -73,8 +73,8 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | Famille | Prêtes (chaîne standard applicable) | Décision utilisateur (traitement antérieur) |
 |---|---|---|
 | lake | — | AR0046, AR0046N, AR0204, AR0300, AR0300N, AR0512, AR0900, AR0900N, AR1200, AR1600, AR1604, AR1700, AR1901, AR2300 |
-| pool | AR0408, AR0506, AR0703, AR1003, AR1004, AR1100, AR1601, AR2000, AR2000N, AR2011, AR2012, AR5010 | AR1000 |
-| swamp | AR0310, AR0500, AR0500N, AR0604, AR1100, AR1106, AR1201, AR1403, AR1500, AR2210, AR2500, AR2600, AR2602, AR2700, AR3025, AR6008 | AR1000N, AR1607, AR1800 |
+| pool | — (famille clôturée 2026-09-26) | 13 WED actifs validés ; AR0700/AR0700N/AR2804/AR2805 audités sans cellule WTPOOL active |
+| swamp | — (famille clôturée 2026-09-25) | 19 WED traités : lot 14 + AR0500/AR0500N/AR1000N/AR1607/AR1800 |
 | sewage | AR2100 | AR0404 |
 | oil | AR0603, AR1203, AR2102, AR3024 (AR0503 fait) | AR0413 |
 | lake_teal | — (AR6300 fait) | AR3000 |
@@ -93,6 +93,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR5000 | brown_flow | `ar5000-water-x4-20260924-v1` + bases `ar5000-bases-x4-20260924-v2` | `ar5000-spatial-installed-20260924-v1.json` (WED par B, pages par bases v2 puis C) | validée — `ar5000-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
 | Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | swamp (+ pool AR1100) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées — `<map>-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
+| Lot pool (13 actifs) : AR0408, AR0506, AR0703, AR1000, AR1003, AR1004, AR1100, AR1601, AR2000, AR2000N, AR2011, AR2012, AR5010 | pool (+ slot swamp AR1100 préservé) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées 2026-09-26 — `<map>-spatial-user-qa-20260926-v1.json` |
 | AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 
 « Décision » : témoins du lot (déjà traités, alias `Q9*`/`QBLKV0`) et maps lac/marais à timeline 36 phases

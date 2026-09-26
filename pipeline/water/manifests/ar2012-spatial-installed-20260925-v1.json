@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR2012",
+  "kind": "spatial",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:37+00:00",
+  "run": "maps/water-batches/runs/ar2012-pool-final-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar2012-pool-final-20260925-v1/override-candidate/manifest.json",
+    "sha256": "62A64785E4BD2F829F4D8EC0A6AA98FC108BDC502670927C34DA64089CF97B9E"
+  },
+  "files": {
+    "YSQTTV.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YQTTV00.PVRZ": {
+      "sha256": "EC33BD1E5E62F608C9F49CF24B4FF4C1720604EC18775DEF267373C159EF9F06",
+      "bytes": 128446
+    },
+    "YSQTTVR.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YQTTVR00.PVRZ": {
+      "sha256": "57C189888597F630F05C7BC9F728BF70F0031E9960ECE2D25A33B94D6D85CFA6",
+      "bytes": 141708
+    },
+    "AR2012.WED": {
+      "sha256": "115625CF463960B49AD49CD11466BDE16A6BA9895D51008095E210C436F68AAD",
+      "bytes": 6132
+    }
+  },
+  "override_backup_receipt": "backups/water/ar2012-pool-final-20260925-v1/override-backup-20260925-205932/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "superseded_by": {
+    "path": "pipeline/water/manifests/ar2012-temporal-30fps-installed-20260925-v1.json",
+    "sha256": "88C4ADE8AC8DEFF498CB04FD18F671A9078655FFD9269371668F2F87071F9947"
+  }
+}

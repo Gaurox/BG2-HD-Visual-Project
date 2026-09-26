@@ -12,7 +12,9 @@ class WaterRainRoutingTests(unittest.TestCase):
         start = source.index('std::optional<water_route2::Match> route2_water_overlay_match')
         source = source[start:source.index('void refresh_wed_cache',start)]
         self.assertIn('offsetof(game::CInfTileResourcePrefix, rainResource)', source)
-        self.assertIn('variants{wrapper, rainResource}', source)
+        self.assertIn('const auto variantOf', source)
+        self.assertIn('const std::size_t drawnWeather', source)
+        self.assertIn('state.ownedTis[weather]', source)
         self.assertIn('water_route2::match(query)', source)
         self.assertIn('glName != texture', source)
         self.assertIn('identityLogs[weather]', source)

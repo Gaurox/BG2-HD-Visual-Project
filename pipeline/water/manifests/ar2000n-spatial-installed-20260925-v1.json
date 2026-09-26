@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR2000N",
+  "kind": "spatial",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:37+00:00",
+  "run": "maps/water-batches/runs/ar2000n-pool-final-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar2000n-pool-final-20260925-v1/override-candidate/manifest.json",
+    "sha256": "ED7CFEE4ADBCC8E0F09D74E56DBE79202AEEDA7A9D6E97375308AFA5AA137B1D"
+  },
+  "files": {
+    "YSZNS7.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YZNS700.PVRZ": {
+      "sha256": "EC33BD1E5E62F608C9F49CF24B4FF4C1720604EC18775DEF267373C159EF9F06",
+      "bytes": 128446
+    },
+    "YSZNS7R.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YZNS7R00.PVRZ": {
+      "sha256": "57C189888597F630F05C7BC9F728BF70F0031E9960ECE2D25A33B94D6D85CFA6",
+      "bytes": 141708
+    },
+    "AR2000N.WED": {
+      "sha256": "60935CB1517A2617B118C73E1BC35D8096221CC43C509093F4E2C523547C484F",
+      "bytes": 106616
+    }
+  },
+  "override_backup_receipt": "backups/water/ar2000n-pool-final-20260925-v1/override-backup-20260925-205932/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "superseded_by": {
+    "path": "pipeline/water/manifests/ar2000n-temporal-30fps-installed-20260925-v1.json",
+    "sha256": "591538BF13DBB1F22C23702563FCA2405C656CC064D7730DBD4A42F86819D036"
+  }
+}

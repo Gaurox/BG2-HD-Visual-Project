@@ -745,7 +745,23 @@ def build(output):
     base_count = struct.unpack_from('<I', base.read_bytes(), 8)[0]
     base_registry = Path(plan['base_registry'])
     child, resolved = load_registry(base_registry)
-    entries = [e for e in copy.deepcopy(resolved['entries']) if e['wed']['resref'] != wed_name]
+    target_slots = {slot for _group, _ref, _alias, slot, _tis, _page in identities}
+    entries = []
+    for existing in copy.deepcopy(resolved['entries']):
+        if existing['wed']['resref'] != wed_name:
+            entries.append(existing)
+            continue
+        if existing['overlay']['slot'] in target_slots:
+            continue
+        # A mixed WED may rebuild one liquid family while retaining another.
+        # The retained overlay bytes do not change, but its exact identity must
+        # follow the new WED hash and complete slot list or it would fail closed.
+        existing['wed']['sha256'] = digest(candidate / f'{wed_name}.WED')
+        existing['wed']['overlay_slots'] = slots
+        existing['base_tis']['tile_count'] = base_count
+        existing['base_tis']['bytes'] = base.stat().st_size
+        existing['base_tis']['sha256'] = digest(base)
+        entries.append(existing)
     for group, ref, alias, slot, tis, page in identities:
         coverage = sum(bool(wed[tilemap+i*10+6] & (1 << slot)) for i in range(width*height))
         entries.append({'id': f"{wed_name.lower()}-temporal-{alias.lower()}-{output.name}",

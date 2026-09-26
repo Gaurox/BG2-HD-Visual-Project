@@ -165,10 +165,11 @@ def inventory(args):
         print(json.dumps(r, ensure_ascii=False))
 
 
-def make_alias(area, key, kind, taken):
+def make_alias(area, key, kind, taken, namespace=''):
     salt = 0
     while True:
-        value = int(hashlib.sha1(f'{area}|{key}|{kind}|{salt}'.encode()).hexdigest(), 16) % 36 ** 4
+        identity = f'{area}|{key}|{kind}|{salt}' if not namespace else f'{area}|{key}|{kind}|{namespace}|{salt}'
+        value = int(hashlib.sha1(identity.encode()).hexdigest(), 16) % 36 ** 4
         code = ''.join(DIGITS[(value // 36 ** i) % 36] for i in range(3, -1, -1))
         alias = f'Y{kind}{code}'
         names = {alias, alias + 'R', page_name(alias), page_name(alias + 'R')}
@@ -212,7 +213,17 @@ def plan(args):
     unknown = sorted({s['source'] for s in active if s['source'] not in families})
     if unknown:
         stops.append(f'unknown liquid overlay(s) {unknown}: not in liquid-family-standard-v1.json')
-    stops += prior_state(area, parsed, active, override, vanilla)
+    selected = [s for s in active if s['source'] in families and
+                (not args.family or families[s['source']]['id'] in args.family)]
+    present_families = {families[s['source']]['id'] for s in active if s['source'] in families}
+    missing_families = sorted(set(args.family) - present_families)
+    if missing_families:
+        stops.append(f'requested families absent from active slots: {missing_families}')
+    if not selected:
+        stops.append('no active liquid overlay selected')
+    prior = prior_state(area, parsed, active, override, vanilla)
+    if prior and not args.replace_existing:
+        stops += prior
     base = parsed['layers'][0]['tis']
     base_tis = override / f'{base}.TIS'
     if not base_tis.is_file() or struct.unpack_from('<I', base_tis.read_bytes(), 20)[0] != 256:
@@ -222,9 +233,11 @@ def plan(args):
         stops.append('secondary master x4 not found or ambiguous; pass --secondary-master. Candidates: '
                      + str([p.relative_to(ROOT).as_posix() for p in candidates]))
     report = {'schema': 'bg2-water-map-plan-v1', 'area': area, 'standard': str(STANDARD.relative_to(ROOT)),
-              'active_slots': active, 'stops': stops, 'decisions_owed': [],
-              'notes': [f"{s['source']}.TIS is overridden (shared by other maps); this WED moves to an isolated "
-                        f"alias and leaves the shared resource untouched" for s in active
+              'active_slots': active, 'selected_slots': selected, 'stops': stops, 'decisions_owed': [],
+              'notes': ([f"Replacement explicitly authorized: {message}" for message in prior]
+                        if prior and args.replace_existing else []) +
+                       [f"{s['source']}.TIS is overridden (shared by other maps); this WED moves to an isolated "
+                        f"alias and leaves the shared resource untouched" for s in selected
                         if (override / f"{s['source']}.TIS").is_file()]}
     if stops:
         print(json.dumps(report, indent=2, ensure_ascii=False))
@@ -232,7 +245,7 @@ def plan(args):
     taken = set(vanilla.names) | {p.stem.upper() for p in override.iterdir()}
     groups, temporal_groups, target_slots = [], [], []
     by_family = {}
-    for s in active:
+    for s in selected:
         by_family.setdefault(families[s['source']]['id'], []).append(s)
     for family_id, members in by_family.items():
         family = next(f for f in standard['families'] if f['id'] == family_id)
@@ -241,7 +254,8 @@ def plan(args):
         missing = [r for r in refs if not vanilla.has_tis(r)]
         if missing:
             raise SystemExit(f'STOP: family {family_id} resources missing from KEY: {missing}')
-        spatial = {r: make_alias(area, slot_of.get(r, f'm{i}'), 'S', taken) for i, r in enumerate(refs)}
+        spatial = {r: make_alias(area, slot_of.get(r, f'm{i}'), 'S', taken, args.alias_namespace)
+                   for i, r in enumerate(refs)}
         rain = all(vanilla.has_tis(r + 'R') for r in refs)
         for weather in ('dry', 'rain') if rain else ('dry',):
             suffix = 'R' if weather == 'rain' else ''
@@ -261,7 +275,8 @@ def plan(args):
         if temporal['status'] == 'blocked':
             report['decisions_owed'].append(f"{family_id} 30 fps: {temporal['why']}")
             continue
-        fps = {r: make_alias(area, slot_of.get(r, f'm{i}'), 'F', taken) for i, r in enumerate(refs)}
+        fps = {r: make_alias(area, slot_of.get(r, f'm{i}'), 'F', taken, args.alias_namespace)
+               for i, r in enumerate(refs)}
         temporal_groups.append(temporal_plan_group(family_id, fps, temporal))
         if rain:
             temporal_groups.append(temporal_plan_group(
@@ -273,6 +288,7 @@ def plan(args):
         'runtime': {'dll': 'preserve-installed', 'mode': 'native-composition-alias-unregistered-route2-q0',
                     'timeline': 'preserve-vanilla-lookup-and-speed'},
         'targets': [{'wed': area, 'family': ','.join(by_family), 'slots': target_slots,
+                     **({'source_wed': 'live-override'} if len(selected) != len(active) else {}),
                      'secondary_master': master.relative_to(ROOT).as_posix(),
                      'composition': 'native', 'repair_seams': True}],
         'user_qa': 'pending', 'release': 'not-requested'})
@@ -303,6 +319,12 @@ def main():
     p.add_argument('--vanilla-root', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--secondary-master', help='x4 secondary-tile master PNG when discovery is ambiguous')
+    p.add_argument('--replace-existing', action='store_true',
+                   help='explicitly replace an installed water treatment instead of stopping')
+    p.add_argument('--alias-namespace', default='',
+                   help='salt deterministic aliases for a new immutable generation')
+    p.add_argument('--family', action='append', default=[],
+                   help='limit a mixed WED to this family while preserving its other live slots')
     args = parser.parse_args()
     inventory(args) if args.command == 'inventory' else plan(args)
 

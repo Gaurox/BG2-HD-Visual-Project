@@ -1,0 +1,50 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR2012",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:37+00:00",
+  "run": "maps/water-batches/runs/ar2012-pool-final-30fps-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar2012-pool-final-30fps-20260925-v1/candidate/manifest.json",
+    "sha256": "836CDD850A3C44D9C450AFA358072C06D33E116FAB2CD5B33231181EBF7463BF"
+  },
+  "files": {
+    "AR2012.WED": {
+      "sha256": "0B6DC3ECB6D1D8246183F034CBF5C178103E91426FDAFAC5BBD7416EDFBF1DF9",
+      "bytes": 6264
+    },
+    "YFOOD6.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YFOOD6R.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YOOD600.PVRZ": {
+      "sha256": "ABF35D89D6BBE81FE8F619F135182D229D122519F23A44388451A8106C9F8D76",
+      "bytes": 1114802
+    },
+    "YOOD6R00.PVRZ": {
+      "sha256": "C71AB5AC7CDDADC219DC968806AA5E58FC8C2A0676FAAD3845B6F625ACF3BC92",
+      "bytes": 1358897
+    }
+  },
+  "override_backup_receipt": "backups/water/ar2012-pool-final-30fps-20260925-v1/override/override-backup-20260925-205932/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar2012-pool-final-30fps-20260925-v1/build.json",
+    "sha256": "C8FA0FEA8A86F2F57E6718EB66B2B2EB0DA00C1FB8317205F7FDC60BB1985D82"
+  },
+  "runtime": {
+    "receipt": "backups/water/wtpool-final-30fps-20260925-v1/runtime/install-backup.json",
+    "dll_sha256": "B28D540F6EBDA7D90AD0B5EB715DB07A3F3E6430DC1F38B2B987423D246F777E",
+    "registry": {
+      "path": "pipeline/water/requests/wtpool-final-30fps-20260925-v1/registry-v3.json",
+      "sha256_lf": "9D22EAAFE84F2211208C5E4A66D87201C9B3D07150D3A210B7C2DBD9B4628D1B"
+    }
+  },
+  "note": "registre runtime cumulatif: pipeline/water/requests/wtpool-final-30fps-20260925-v1/registry-v3.json"
+}

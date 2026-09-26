@@ -46,7 +46,10 @@ class ContourMatteTests(unittest.TestCase):
         import build_water_contour_matte as m
         self.assertEqual(m.contour_spline_fit("AR1600"), 1.0)
         self.assertIsNone(m.contour_spline_fit("AR0408"))          # map exception: earlier matte
+        self.assertIsNone(m.contour_spline_fit("AR0506"))
         self.assertIsNone(m.contour_spline_fit("AR0703"))
+        self.assertIsNone(m.contour_spline_fit("AR1003"))
+        self.assertIsNone(m.contour_spline_fit("AR1004"))
         self.assertIsNone(m.contour_spline_fit("AR1600", 0.0))     # explicit off
         self.assertEqual(m.contour_spline_fit("AR0408", 2.0), 2.0) # explicit wins
 

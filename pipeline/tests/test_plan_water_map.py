@@ -114,6 +114,13 @@ class PlanWaterMapTests(unittest.TestCase):
         blocked = {first, first + "R", p.page_name(first), p.page_name(first + "R")}
         self.assertNotEqual(p.make_alias("AR0404", 1, "S", blocked), first)
 
+    def test_alias_namespace_creates_a_distinct_immutable_generation(self):
+        legacy = p.make_alias("AR0408", 1, "S", set())
+        final = p.make_alias("AR0408", 1, "S", set(), "pool-final-20260925")
+        self.assertNotEqual(final, legacy)
+        self.assertEqual(final, p.make_alias("AR0408", 1, "S", set(), "pool-final-20260925"))
+        self.assertRegex(final, p.STANDARD_ALIAS)
+
     def test_earlier_alias_names_are_not_mistaken_for_the_standard_chain(self):
         for name in ("WSWPIL", "Q9LAKE", "QBLKV0", "WTPOOL2"):
             self.assertIsNone(p.STANDARD_ALIAS.match(name))

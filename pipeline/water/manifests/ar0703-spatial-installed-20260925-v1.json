@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0703",
+  "kind": "spatial",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:35+00:00",
+  "run": "maps/water-batches/runs/ar0703-pool-final-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0703-pool-final-20260925-v1/override-candidate/manifest.json",
+    "sha256": "0E0E753F4AD1110FE314FF5CD2F938340DD62D0D3B6D7F9231FD3CCF9A7F5FEB"
+  },
+  "files": {
+    "YSU8OR.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YU8OR00.PVRZ": {
+      "sha256": "EC33BD1E5E62F608C9F49CF24B4FF4C1720604EC18775DEF267373C159EF9F06",
+      "bytes": 128446
+    },
+    "YSU8ORR.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YU8ORR00.PVRZ": {
+      "sha256": "57C189888597F630F05C7BC9F728BF70F0031E9960ECE2D25A33B94D6D85CFA6",
+      "bytes": 141708
+    },
+    "AR0703.WED": {
+      "sha256": "2DCAA61D16CFF71EDBD3331FF51CC81D1D96E6B591AB0C1F190B1D0803F00091",
+      "bytes": 2074
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0703-pool-final-20260925-v1/override-backup-20260925-205931/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "superseded_by": {
+    "path": "pipeline/water/manifests/ar0703-temporal-30fps-installed-20260925-v1.json",
+    "sha256": "0610793F88CE7F5AA10CC3AB8DEF2A615BF56A317A386575379A1C225EBA8FD8"
+  }
+}

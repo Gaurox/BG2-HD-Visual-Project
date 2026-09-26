@@ -142,19 +142,22 @@ ne sont pas réconciliés par une décision explicite.
 
 ## WTPOOL-001 — Piscines x4
 
-- Limite observée : certaines petites piscines dépassent le coût visuel acceptable après
-  reconstruction.
-- AR1000 jour : v1 rejetée sur crash de nom de page ; v2 charge mais rejetée pour quadrillage.
-  SeedVR x4 amplifie la faible trame diagonale source en reliefs rectangulaires répétés. V2 restaurée ;
-  v3 non générative installée : bilinéaire x4 périodique3×3, interpolation cyclique linéaire
-  6→36phases/15Hz, q0 ; énergie haute fréquence17,2763→1,4345. Q0 accepté sans quadrillage mais
-  rejeté comme figé. Voie2 v5 installée sur identité AR1000 exacte : blend30FPS, matériau1, q0.70 ;
-  validée ingame le2026-09-12. Base conforme ;37/37cellules avec secondaire, aucune correction alpha
-  central ; nuit exclue. Cas AR1000 jour résolu.
-- 2026-09-23 : généralisé à la famille par la chaîne standard, validé sur AR0408 (A + B) : force route2 0,70
-  matériau 1 sur le groupe sec ; la DLL donne le mode liquide aux alias `YF…` via le registre. Contours AR0408
-  à revoir. Autres maps pool (AR0703…) : QA par map.
-- Ne pas généraliser un masque ou un seuil depuis une seule zone.
+- 2026-09-25 : lot final A+B+C construit, installé et vérifié octet pour octet sur les **13 WED actifs** :
+  `AR0408 AR0506 AR0703 AR1000 AR1003 AR1004 AR1100 AR1601 AR2000 AR2000N AR2011 AR2012 AR5010`.
+  B = 72 phases / 2,4 s / 30 FPS, matériau 1, q0,70 sec, q0 pluie ; registre cumulatif
+  `requests/wtpool-final-30fps-20260925-v1/registry-v3.json`. C = spline fit 1 + `central_water`, sauf
+  exceptions gaussiennes AR0408/AR0703/AR0506/AR1003/AR1004. État QA 2026-09-26 : A/B/C validés sur les
+  13 cartes ; réserves acceptées : pluie WTPOOLR très discrète sur AR1000/AR2000, arrondi gaussien/BC3
+  résiduel sur AR0506/AR1003/AR1004 malgré `spline_fit=0`.
+- Pluie AR1000/AR2000 : ARE `AREA_TYPE` porte bien `0x4`; log ingame confirmé sur les deux cartes
+  (`weather=true`, pages `YBK9UR00` / `YR06JR00`, q0, 72 images à 30 FPS). Routage correct ; les anneaux
+  natifs WTPOOLR sont présents mais très peu contrastés, donc difficiles à distinguer dans l'eau.
+- AR1100 : seul slot WTPOOL remplacé ; slot WTSWAM et ses artefacts conservés. AR2000/AR2000N : seules
+  zones du lot où la variante pluie est qualifiable en jeu.
+- Quatre WED déclarent WTPOOL sans cellule active (`AR0700 AR0700N AR2804 AR2805`) : audités, aucun asset
+  WTPOOL à produire. Les surfaces locales ARE/BAM d'AR2804/AR2805 relèvent de la chaîne animation.
+- Aucun nouveau raffinement de contour demandé : un matte plus dur risquerait escaliers et franges sombres.
+  Les deux runs partiels du lot final ont été supprimés ; conserver les artefacts WTSWAM partagés d'AR1100.
 
 ## ALPHA-001 — Liserés de transparence
 

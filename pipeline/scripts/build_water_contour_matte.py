@@ -200,7 +200,11 @@ def survey(area):
         problems.append('non-BC3 pages (format 11 required)')
     if padding.get('other'):
         problems.append('atlas padding other than 4 px x4 / pitch 264')
-    if report['outside_native_lit_share']['median'] > TREATED_MEDIAN or over > TREATED_TILES:
+    # A single painted/non-matte pair is a local exception, not evidence that the
+    # whole base was already contour-treated.  This matters on the small seven/
+    # eight-pair pool maps where one legitimate exception otherwise exceeds 5%.
+    non_black = skipped.get('non-black-background', 0)
+    if report['outside_native_lit_share']['median'] > TREATED_MEDIAN or (over > TREATED_TILES and non_black >= 2):
         problems.append('x4 RGB not black outside the native mask: already treated, or no matte background')
     report['ready'] = not problems
     report['problems'] = problems

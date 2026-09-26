@@ -59,7 +59,8 @@ def live_mismatches(files, override):
             if not (override / name).is_file() or sha(override / name) != row['sha256'].upper()]
 
 
-def install_record(area, kind, run, override, backup, runtime=None, manifest=None, note=None):
+def install_record(area, kind, run, override, backup, runtime=None, manifest=None, note=None,
+                   superseded_by=None):
     run = Path(run).resolve()
     manifest = Path(manifest) if manifest else next(
         (p for p in (run / 'override-candidate/manifest.json', run / 'candidate/manifest.json') if p.is_file()), None)
@@ -67,6 +68,18 @@ def install_record(area, kind, run, override, backup, runtime=None, manifest=Non
         raise SystemExit('candidate manifest not found; pass --candidate-manifest')
     files = json.loads(Path(manifest).read_text(encoding='utf-8-sig'))['files']
     bad = live_mismatches(files, override)
+    laters = [Path(p) for p in (superseded_by or [])]
+    used = []
+    for later in laters:
+        if not bad:
+            break
+        newer = json.loads(later.read_text(encoding='utf-8-sig'))
+        if newer.get('area', '').upper() != area.upper():
+            raise SystemExit('--superseded-by must be another receipt of the same area')
+        kept = {n: newer['files'][n] for n in bad if n in newer.get('files', {})}
+        if kept:
+            used.append(later)
+        bad = [n for n in bad if n not in kept] + live_mismatches(kept, override)
     if bad:
         raise SystemExit(f'not installed byte for byte: {bad}')
     backup = Path(backup)
@@ -79,6 +92,9 @@ def install_record(area, kind, run, override, backup, runtime=None, manifest=Non
               'run': rel(run), 'candidate_manifest': {'path': rel(manifest), 'sha256': sha(manifest)},
               'files': {n: {'sha256': r['sha256'].upper(), 'bytes': r.get('bytes')} for n, r in files.items()},
               'override_backup_receipt': rel(receipt), 'qa': 'pending-user-ingame', 'release': 'not-requested'}
+    if used:
+        record['superseded_by'] = ({'path': rel(used[0]), 'sha256': sha(used[0])} if len(used) == 1 else
+                                   [{'path': rel(p), 'sha256': sha(p)} for p in used])
     for key, name in (('build.json', 'build_report'), ('prepare.json', 'prepare')):
         if (run / key).is_file():
             record[name] = {'path': rel(run / key), 'sha256': sha(run / key)}
@@ -143,6 +159,8 @@ def main():
     i.add_argument('--runtime-receipt', type=Path, help='Install-WaterRuntime.ps1 receipt (30 fps runs)')
     i.add_argument('--candidate-manifest', type=Path)
     i.add_argument('--note')
+    i.add_argument('--superseded-by', type=Path, action='append',
+                   help='later installed receipt of the same area that replaced candidate files')
     q = sub.choices['qa']
     q.add_argument('--selection', required=True, type=Path)
     q.add_argument('--quote', required=True, help="user's message, verbatim")
@@ -163,7 +181,8 @@ def main():
     day = date.today().strftime('%Y%m%d')
     if args.command == 'install':
         data = install_record(args.area, args.kind, args.run, override, args.override_backup,
-                              args.runtime_receipt, args.candidate_manifest, args.note)
+                              args.runtime_receipt, args.candidate_manifest, args.note,
+                              args.superseded_by)
         path = save(next_path(MANIFESTS, args.area, args.kind, 'installed', day), data)
     else:
         data = qa_record(args.area, args.kind, args.selection, args.quote, args.result, override,

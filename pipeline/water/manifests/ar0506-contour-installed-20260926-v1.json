@@ -1,0 +1,34 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0506",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-26T08:11:04+00:00",
+  "run": "maps/water-batches/runs/ar0506-pool-final-contour-20260926-v2",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0506-pool-final-contour-20260926-v2/override-candidate/manifest.json",
+    "sha256": "61F81A39097AB2C19240E7FFB86A06886E69B1C71C34302E39B6065C10E29A64"
+  },
+  "files": {
+    "A050601.PVRZ": {
+      "sha256": "DEDDBA38828B62FAA08D1FF935E23117589CAEC52CC95E2B7A0F7BF10C630F36",
+      "bytes": 973894
+    },
+    "A050604.PVRZ": {
+      "sha256": "0224AD8395695B2377D632EA08EACEC4DBD212328A31526F04598711535A4B3B",
+      "bytes": 66546
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0506-pool-final-contour-20260926-v2/override-backup-20260926-101040/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0506-pool-final-contour-20260926-v2/build.json",
+    "sha256": "23B62D65AAF61A46849D0C390BD0DFE2B47A61817E8C8ED0369A86095C200976"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar0506-pool-final-contour-20260926-v2/prepare.json",
+    "sha256": "B85F54089CD64B7025CEB382D93F89B53CE19044520A962226B39D9008CA1932"
+  },
+  "note": "spline_fit=0; same non-rounded gaussian contour method as AR0408 (user 2026-09-26)"
+}

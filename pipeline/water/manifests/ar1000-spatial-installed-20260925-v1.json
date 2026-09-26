@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR1000",
+  "kind": "spatial",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:35+00:00",
+  "run": "maps/water-batches/runs/ar1000-pool-final-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar1000-pool-final-20260925-v1/override-candidate/manifest.json",
+    "sha256": "45DD5CA5519CF9D87ABEFFCC75DFDF43FA45E01F247F04A16BC6BD282F38DC84"
+  },
+  "files": {
+    "YSPGJ0.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YPGJ000.PVRZ": {
+      "sha256": "EC33BD1E5E62F608C9F49CF24B4FF4C1720604EC18775DEF267373C159EF9F06",
+      "bytes": 128446
+    },
+    "YSPGJ0R.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "YPGJ0R00.PVRZ": {
+      "sha256": "57C189888597F630F05C7BC9F728BF70F0031E9960ECE2D25A33B94D6D85CFA6",
+      "bytes": 141708
+    },
+    "AR1000.WED": {
+      "sha256": "E86CEC2E852691D279CD9617C4045C03973108AF834E2A3A5172D166EC7E4B02",
+      "bytes": 83824
+    }
+  },
+  "override_backup_receipt": "backups/water/ar1000-pool-final-20260925-v1/override-backup-20260925-205931/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "superseded_by": {
+    "path": "pipeline/water/manifests/ar1000-temporal-30fps-installed-20260925-v1.json",
+    "sha256": "252BB48CD8B1F83658A4C4B0D0F908F57F296A415B33872ABE1DEF7614AA75BA"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR2011",
+  "kind": "contour",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:37+00:00",
+  "run": "maps/water-batches/runs/ar2011-pool-final-contour-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar2011-pool-final-contour-20260925-v1/override-candidate/manifest.json",
+    "sha256": "C88773D068DA70A9324DB806CF5409CAC2854B4A96320AD84E1DB29F37917DBF"
+  },
+  "files": {
+    "A201100.PVRZ": {
+      "sha256": "7275E3B9CC7A4ED9A564CDA486329EAE6F64E87F889B7EB513807BA4060174E4",
+      "bytes": 1006335
+    },
+    "A201101.PVRZ": {
+      "sha256": "BADCA386031E1A6C8DA9A558A387266B2C82F7094E79066D1A657D3C6994B094",
+      "bytes": 1186909
+    },
+    "A201102.PVRZ": {
+      "sha256": "4945E46D77CB70B3729049D716FB1D3EB7E9D56DA7C8A39F188AC07897A82679",
+      "bytes": 421821
+    }
+  },
+  "override_backup_receipt": "backups/water/ar2011-pool-final-contour-20260925-v1/override-backup-20260925-205935/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar2011-pool-final-contour-20260925-v1/build.json",
+    "sha256": "12262A46F2628FA8190E711F1CE16567B434FB790A4E27CD0DD7F561BA149363"
+  },
+  "prepare": {
+    "path": "maps/water-batches/runs/ar2011-pool-final-contour-20260925-v1/prepare.json",
+    "sha256": "F6F75F4DEEBAA899904B9AC7271C691BABDE6E18D04D2CC19407CD943B22232B"
+  }
+}

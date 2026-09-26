@@ -2,7 +2,7 @@
   "$schema": "ingame-map-tracking-v1.schema.json",
   "schema": "bg2-water-ingame-map-tracking-v1",
   "version": 1,
-  "updated": "2026-09-13",
+  "updated": "2026-09-26",
   "inventory": {
     "path": "pipeline/water/manifests/liquid-target-matrix-v1.json",
     "sha256": "223538407EB6942B11F3F90D36C3B31704CB393942CBDB3B2679515056543C37",
@@ -306,10 +306,10 @@
       "area_id": "AR0408",
       "wed": "AR0408",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -440,10 +440,10 @@
       "area_id": "AR0506",
       "wed": "AR0506",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -551,9 +551,9 @@
       "area_id": "AR0700",
       "wed": "AR0700",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
+      "work_state": "done",
+      "preparation_state": "native-baseline",
+      "qa_state": "validated-current-fallback",
       "installation_state": "not-run",
       "overlays": [
         {
@@ -577,9 +577,9 @@
       "area_id": "AR0700",
       "wed": "AR0700N",
       "variant": "night",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
+      "work_state": "done",
+      "preparation_state": "native-baseline",
+      "qa_state": "validated-current-fallback",
       "installation_state": "not-run",
       "overlays": [
         {
@@ -603,10 +603,10 @@
       "area_id": "AR0703",
       "wed": "AR0703",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -750,10 +750,10 @@
       "area_id": "AR1003",
       "wed": "AR1003",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -776,10 +776,10 @@
       "area_id": "AR1004",
       "wed": "AR1004",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -802,10 +802,10 @@
       "area_id": "AR1100",
       "wed": "AR1100",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1102,10 +1102,10 @@
       "area_id": "AR1601",
       "wed": "AR1601",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1282,10 +1282,10 @@
       "area_id": "AR2000",
       "wed": "AR2000",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1308,10 +1308,10 @@
       "area_id": "AR2000",
       "wed": "AR2000N",
       "variant": "night",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1334,10 +1334,10 @@
       "area_id": "AR2011",
       "wed": "AR2011",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1360,10 +1360,10 @@
       "area_id": "AR2012",
       "wed": "AR2012",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1610,9 +1610,9 @@
       "area_id": "AR2804",
       "wed": "AR2804",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
+      "work_state": "done",
+      "preparation_state": "native-baseline",
+      "qa_state": "validated-current-fallback",
       "installation_state": "not-run",
       "overlays": [
         {
@@ -1636,9 +1636,9 @@
       "area_id": "AR2805",
       "wed": "AR2805",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
+      "work_state": "done",
+      "preparation_state": "native-baseline",
+      "qa_state": "validated-current-fallback",
       "installation_state": "not-run",
       "overlays": [
         {
@@ -1907,10 +1907,10 @@
       "area_id": "AR5010",
       "wed": "AR5010",
       "variant": "day-or-unique",
-      "work_state": "queued",
-      "preparation_state": "candidate-available",
-      "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,

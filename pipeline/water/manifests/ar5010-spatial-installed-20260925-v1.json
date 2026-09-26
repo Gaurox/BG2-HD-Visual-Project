@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR5010",
+  "kind": "spatial",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-25T19:00:38+00:00",
+  "run": "maps/water-batches/runs/ar5010-pool-final-20260925-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar5010-pool-final-20260925-v1/override-candidate/manifest.json",
+    "sha256": "A289303D70DEFB1E529F18C83AB78F304D8B2151963A56A763E976BA08C1FBEA"
+  },
+  "files": {
+    "YS4U4A.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "Y4U4A00.PVRZ": {
+      "sha256": "EC33BD1E5E62F608C9F49CF24B4FF4C1720604EC18775DEF267373C159EF9F06",
+      "bytes": 128446
+    },
+    "YS4U4AR.TIS": {
+      "sha256": "1743A734B7E94FA60AB927B6615933DBDF7B5BF998019C66428413801BB62EE1",
+      "bytes": 96
+    },
+    "Y4U4AR00.PVRZ": {
+      "sha256": "57C189888597F630F05C7BC9F728BF70F0031E9960ECE2D25A33B94D6D85CFA6",
+      "bytes": 141708
+    },
+    "AR5010.WED": {
+      "sha256": "21FF12262C1961A6E5FEC61214A81C28D48FED4A4448E73D0035035C5147B0FC",
+      "bytes": 4456
+    }
+  },
+  "override_backup_receipt": "backups/water/ar5010-pool-final-20260925-v1/override-backup-20260925-205932/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "superseded_by": {
+    "path": "pipeline/water/manifests/ar5010-temporal-30fps-installed-20260925-v1.json",
+    "sha256": "A5D204AD9A9833A07DD6BF4B3D237C0DA516ECB1E15BF0E32C59FEC48539549A"
+  }
+}
