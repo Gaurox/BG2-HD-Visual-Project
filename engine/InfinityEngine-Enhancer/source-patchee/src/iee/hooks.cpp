@@ -50,6 +50,7 @@
 #include "iee/game/runtime_types_x64.h"
 #include "iee/map_page_prewarm.h"
 #include "iee/map_page_prepare.h"
+#include "iee/map_page_preload.h"
 #include "iee/native_occlusion_bridge.h"
 #include "iee/shader_probe.h"
 #include "iee/shader_suite.h"
@@ -127,6 +128,7 @@ static core::Hook<CResPvrReleaseFn> g_pvrCacheReleaseHook;
 static core::Hook<CResFileOpenFn> g_resFileOpenDiagnosticHook;
 static std::uintptr_t g_pvrUncompressExpectedReturn{};
 static const void* g_pvrCacheEntries{};
+static std::atomic<unsigned> g_nativeAreaLoadDepth{0};
 static DrawFlushGlFn g_drawFlushGl{};
 
 static AppContext* g_ctx = nullptr;
@@ -2313,6 +2315,7 @@ void publish_view_state(bool force = false, bool flushGpuUpload = true) {
 
 void on_frame_boundary(unsigned long long frame,
                        double presentationIntervalMilliseconds) noexcept {
+  map_page_preload::on_frame_interval(presentationIntervalMilliseconds);
   try {
     auto* ctx = g_ctx;
     if (!ctx || !ctx->cfg.enablePerformanceLogging ||
@@ -3411,6 +3414,10 @@ static void swap_area_animation_pack(AppContext& ctx, void* infGame) noexcept {
 // LoadArea hook - reset area-specific state for new area detection
 static void* detour_load_area(void* thisPtr, void* pAreaNameString, unsigned char a2,
                               unsigned char a3, unsigned char a4) {
+  struct AreaLoadScope {
+    AreaLoadScope() { g_nativeAreaLoadDepth.fetch_add(1, std::memory_order_acq_rel); }
+    ~AreaLoadScope() { g_nativeAreaLoadDepth.fetch_sub(1, std::memory_order_acq_rel); }
+  } loading;
   const auto original = g_loadAreaHook.original();
   if (!g_ctx) {
     return original(thisPtr, pAreaNameString, a2, a3, a4);
@@ -4022,9 +4029,14 @@ static void detour_pvr_cache_release_diagnostic(void* thisPtr) {
 // synchronous materialization and leaves the call, cache and texture policy
 // unchanged. Nested GL hooks provide creation/upload time; the remaining time
 // is intentionally reported as a combined resource/read/decode residual.
-static void* detour_pvr_demand(void* thisPtr) {
+static void* dispatch_pvr_demand(void* thisPtr,
+                               const core::MapPagePrepareQueue::Claim* reserved,
+                               bool* consumed) {
+  if (consumed) *consumed = false;
   const auto original = g_pvrDemandHook.original();
   auto* ctx = g_ctx;
+  if (reserved && (!ctx || !thisPtr || !reserved->current() || !reserved->page()))
+    return nullptr;
   if (!ctx || (!ctx->cfg.enablePerformanceLogging && !map_page_prepare::enabled()) || !thisPtr) {
     return original(thisPtr);
   }
@@ -4034,20 +4046,24 @@ static void* detour_pvr_demand(void* thisPtr) {
 
   const bool ioCandidate = haveBefore &&
                            (before.texture <= 0 || !before.baseclass_0.bLoaded);
-  auto preparedClaim = ioCandidate ? map_page_prepare::begin_native_demand(thisPtr)
+  if (reserved && (!haveBefore || before.texture > 0)) return nullptr;
+  auto preparedClaim = ioCandidate && !reserved ? map_page_prepare::begin_native_demand(thisPtr)
                                    : core::MapPagePrepareQueue::Claim{};
+  const auto* borrowed = reserved ? reserved : (preparedClaim ? &preparedClaim : nullptr);
   auto consumeAttempt = ioCandidate && !ctx->cfg.enableMapPagePrepare
                             ? map_page_prewarm::begin_native_demand(thisPtr) : std::nullopt;
-  if (preparedClaim) {
+  if (borrowed) {
     consumeAttempt.emplace();
     consumeAttempt->resource = thisPtr;
-    consumeAttempt->borrowedPage = preparedClaim.page();
-    consumeAttempt->identity.generation = preparedClaim.generation();
+    consumeAttempt->borrowedPage = borrowed->page();
+    consumeAttempt->identity.generation = borrowed->generation();
   }
   if (!ctx->cfg.enablePerformanceLogging) {
     PvrConsumeThreadScope consumeScope(thisPtr, consumeAttempt ? &*consumeAttempt : nullptr);
     void* result = original(thisPtr);
     const DWORD lastError = GetLastError();
+    if (consumed) *consumed = consumeAttempt &&
+        consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed;
     if (consumeAttempt) map_page_prepare::record(
         consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed,
         consumeAttempt->crcNanoseconds, consumeAttempt->copyNanoseconds);
@@ -4180,8 +4196,19 @@ static void* detour_pvr_demand(void* thisPtr) {
         consumeAttempt->crcNanoseconds, consumeAttempt->copyNanoseconds);
     else map_page_prewarm::record_consume_attempt(*consumeAttempt, durationNanoseconds);
   }
+  if (consumed) *consumed = consumeAttempt &&
+      consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed;
   SetLastError(lifecycleLastError);
   return result;
+}
+
+static void* detour_pvr_demand(void* thisPtr) {
+  return dispatch_pvr_demand(thisPtr, nullptr, nullptr);
+}
+static bool demand_prepared_page(void* resource, const core::MapPagePrepareQueue::Claim& claim) {
+  bool consumed = false;
+  dispatch_pvr_demand(resource, &claim, &consumed);
+  return consumed;
 }
 
 // RenderTexture hook - thin dispatch into the tile upscale feature
@@ -4270,9 +4297,12 @@ bool install_all(AppContext& ctx) {
     (void)map_page_prewarm::configure_shadow(false, false, {});
     if ((ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrewarm ||
           ctx.cfg.enableMapPageOffframeProbe ||
-          ctx.cfg.enableMapPageOffframeConsume || ctx.cfg.enableMapPagePrepare) &&
+          ctx.cfg.enableMapPageOffframeConsume || ctx.cfg.enableMapPagePrepare ||
+          ctx.cfg.enableMapPagePreload) &&
         ctx.manifest) {
       try {
+        if (ctx.cfg.enableMapPagePreload && !ctx.cfg.enableMapPagePrepare)
+          throw std::runtime_error("B1.3 preloading requires B1 preparation");
         if (ctx.cfg.enableMapPagePrepare && (ctx.cfg.enableMapPagePrewarm ||
             ctx.cfg.enableMapPageOffframeProbe || ctx.cfg.enableMapPageOffframeConsume))
           throw std::runtime_error("B1 cannot run alongside the legacy map-page experiments");
@@ -4459,6 +4489,13 @@ bool install_all(AppContext& ctx) {
               "native calls remain authoritative",
               runtime.demand);
         }
+        if (ctx.cfg.enableMapPagePreload) {
+          auto bindings = ctx.cfg.mapPagePreloadBindings;
+          if (bindings.is_relative())
+            bindings = core::ConfigManager::config_path().parent_path() / bindings;
+          if (!g_pvrCacheEntries || !map_page_preload::configure(bindings, &demand_prepared_page))
+            throw std::runtime_error("B1.3 requires B1, validated cache and preload bindings");
+        }
         if (ctx.cfg.enableMapPagePrewarm) {
           if (ctx.cfg.enablePerformanceLogging) {
             LOG_INFO(
@@ -4489,6 +4526,7 @@ bool install_all(AppContext& ctx) {
         (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
         g_pvrCacheEntries = nullptr;
+        map_page_preload::shutdown();
         map_page_prepare::shutdown();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
@@ -4501,6 +4539,7 @@ bool install_all(AppContext& ctx) {
         (void)g_pvrCacheReleaseHook.remove();
         (void)g_pvrDemandHook.remove();
         g_pvrCacheEntries = nullptr;
+        map_page_preload::shutdown();
         map_page_prepare::shutdown();
         (void)map_page_prewarm::configure_shadow(false, false, {});
         map_page_prewarm::configure(nullptr);
@@ -4960,6 +4999,7 @@ bool install_all(AppContext& ctx) {
     (void)g_pvrDemandHook.remove();
     g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
+    map_page_preload::shutdown();
     map_page_prepare::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
@@ -5020,6 +5060,7 @@ bool install_all(AppContext& ctx) {
     (void)g_pvrDemandHook.remove();
     g_pvrCacheEntries = nullptr;
     map_page_prewarm::shutdown();
+    map_page_preload::shutdown();
     map_page_prepare::shutdown();
     (void)g_renderTextureHook.remove();
     (void)g_loadAreaHook.remove();
@@ -5087,6 +5128,7 @@ void uninstall_all() noexcept {
   (void)g_pvrDemandHook.remove();
   g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
+  map_page_preload::shutdown();
   map_page_prepare::shutdown();
   (void)g_renderTextureHook.remove();
   (void)g_loadAreaHook.remove();
@@ -5165,6 +5207,7 @@ void prepare_for_shutdown() noexcept {
   (void)g_pvrDemandHook.disable();
   g_pvrCacheEntries = nullptr;
   map_page_prewarm::shutdown();
+  map_page_preload::shutdown();
   map_page_prepare::shutdown();
   (void)g_renderTextureHook.disable();
   (void)g_loadAreaHook.disable();
@@ -5196,7 +5239,11 @@ void retry_shader_probe_install() noexcept {
 
 void on_post_swap() noexcept {
   try {
-    if (g_ctx) map_page_prewarm::on_post_swap(*g_ctx);
+    if (g_ctx) {
+      map_page_prewarm::on_post_swap(*g_ctx);
+      if (g_nativeAreaLoadDepth.load(std::memory_order_acquire) == 0)
+        map_page_preload::on_post_swap(*g_ctx, g_pvrCacheEntries);
+    }
   } catch (...) {
     // Optional scheduling must never escape through the presentation ABI.
   }

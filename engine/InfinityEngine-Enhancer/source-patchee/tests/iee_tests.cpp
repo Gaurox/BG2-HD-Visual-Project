@@ -37,6 +37,7 @@
 #include "iee/core/logger.h"
 #include "iee/core/map_page_shadow.h"
 #include "iee/core/map_page_prepare_queue.h"
+#include "iee/core/map_page_preload_policy.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/map_view_burst_telemetry.h"
 #include "iee/core/native_occlusion_probe.h"
@@ -898,6 +899,8 @@ void test_config_parsing() {
     out << "EnableMapPageOffframeProbe = true\n";
     out << "EnableMapPageOffframeConsume = true\n";
     out << "EnableMapPagePrepare = true\n";
+    out << "EnableMapPagePreload = true\n";
+    out << "MapPagePreloadBindings = private cache/bindings.index\n";
     out << "MapPagePrepareCache = private cache/AR0900\n";
     out << "MapPagePrewarmPagesPerFrame = 2\n";
     out << "MapPagePrewarmBudgetMs = 6.5\n";
@@ -919,6 +922,8 @@ void test_config_parsing() {
   expect_true(cfg.enableMapPageOffframeConsume,
               "map-page off-frame consume flag should parse");
   expect_true(cfg.enableMapPagePrepare, "B1 flag should parse independently");
+  expect_true(cfg.enableMapPagePreload, "B1.3 flag should parse");
+  expect_true(cfg.mapPagePreloadBindings == std::filesystem::path("private cache/bindings.index"), "B1.3 path should preserve spaces");
   expect_eq(cfg.mapPagePrepareCache.generic_string(), std::string{"private cache/AR0900"},
             "B1 cache path should preserve spaces");
   expect_eq(cfg.mapPagePrewarmPagesPerFrame, std::uint32_t{2},
@@ -5429,6 +5434,80 @@ iee::core::ShadowPageIdentity make_shadow_identity(std::uint64_t generation,
   };
 }
 
+void test_map_page_preload_contract() {
+  using namespace iee::core;
+  const auto page = prepare_test_private_page({});
+  const auto entry = [&](const char* name) {
+    return PrivatePageEntry{name, "private/test.b1pvrz",
+        static_cast<std::uint32_t>(page.compressedBytes),
+        static_cast<std::uint32_t>(page.decodedBytes), page.compressedCrc32};
+  };
+  MapPagePrepareQueue queue;
+  const auto budget = kPrepareScratchBytes + page.compressedBytes + page.decodedBytes;
+  expect_true(queue.configure({entry("A090000"), entry("A090001")}, budget), "preload setup");
+  queue.activate(true);
+  expect_true(!queue.try_reserve_ready("A090000"), "unready preload must skip");
+  expect_eq(queue.misses(), std::uint64_t{0}, "preload misses are not native misses");
+  expect_true(queue.work_one(prepare_test_private_page), "skip must not cancel pending preparation");
+  auto claim = queue.try_reserve_ready("A090000");
+  expect_true(static_cast<bool>(claim), "ready preload owns exact buffer");
+  expect_true(!queue.try_reserve_ready("A090000"), "nested reservation cannot steal buffer");
+  expect_true(!queue.work_one(prepare_test_private_page), "held preload remains budgeted");
+  claim.defer();
+  expect_eq(queue.reserved_bytes(), page.decodedBytes, "deferral keeps allocation");
+  auto natural = queue.try_claim("A090000");
+  expect_true(static_cast<bool>(natural), "deferred page remains available to normal Demand");
+  natural = {};
+  expect_true(queue.work_one(prepare_test_private_page), "consumption frees budget for next page");
+  auto second = queue.try_reserve_ready("A090001");
+  expect_true(static_cast<bool>(second), "second prepared page can preload");
+  queue.activate(false);
+  queue.activate(true);
+  expect_true(!second.current(), "transition invalidates speculative reservation");
+  second.defer();
+  expect_true(queue.work_one(prepare_test_private_page), "worker recycles stale deferred buffer");
+  auto final = queue.try_reserve_ready("A090000");
+  expect_true(static_cast<bool>(final), "new generation can reserve again");
+  final = {};
+  (void)queue.work_one(prepare_test_private_page);
+  expect_true(!queue.try_reserve_ready("A090000"), "used reservation is not retried");
+  queue.activate(false);
+  (void)queue.work_one(nullptr);
+  expect_eq(queue.reserved_bytes(), std::size_t{0}, "cleanup releases all private bytes");
+  expect_true(queue.peak_bytes() <= budget, "preloading cannot raise private memory cap");
+
+  std::vector<MapPageBinding> bindings;
+  std::istringstream good("IEE_PRELOAD_BINDINGS_V1 AR0900\nPAGE A090000 AR0900 0 0\nPAGE YU4T600 YFU4T6 0 0\n");
+  expect_true(parse_map_page_bindings(good, bindings) && bindings.size() == 2, "base and overlay metadata");
+  for (auto text : {"IEE_PRELOAD_BINDINGS_V1 AR0300\nPAGE A090000 AR0900 0 0",
+                    "IEE_PRELOAD_BINDINGS_V1 AR0900\nPAGE A090001 AR0900 0 0",
+                    "IEE_PRELOAD_BINDINGS_V1 AR0900\nPAGE A090000 AR0900 0 0\nPAGE A090000 AR0900 0 0",
+                    "IEE_PRELOAD_BINDINGS_V1 AR0900\nPAGE A090000 AR0900 0",
+                    "IEE_PRELOAD_BINDINGS_V1 AR0900\nPAGE A090000 AR0900 0 -1"}) {
+    std::istringstream bad(text);
+    expect_true(!parse_map_page_bindings(bad, bindings) && bindings.empty(), "bad metadata fails closed");
+  }
+  MapPagePreloadPolicy policy;
+  expect_true(policy.admit(1, 33.333, 0, 16777268, 95), "30fps limiter must not starve preload");
+  expect_true(!policy.admit(1, 50, 0, 16777268, 95), "skip after slow frame");
+  expect_true(!policy.admit(1, 16, 0, 16777268, 96), "retain native cache reserve");
+  expect_true(!policy.admit(1, 16, 3, 16777268, 0), "validation time counts against budget");
+  expect_true(!policy.admit(1, -1, 0, 16777268, 0), "unknown interval is not safe admission");
+  expect_true(!policy.admit(1, 16, 0, kShadowMaximumDecodedBytes + 1, 0), "reject oversized page");
+  expect_true(!policy.admit(1, std::numeric_limits<double>::quiet_NaN(), 0, 52, 0), "reject NaN");
+  policy.completed(1, 4, true);
+  expect_true(!policy.admit(1, 16, 0, 52, 0), "at most one native upload per presentation");
+  expect_true(policy.admit(2, 16, 0, 52, 0), "next presentation may preload");
+  policy.completed(2, 8.1, true);
+  expect_true(policy.stopped() && !policy.admit(3, 16, 0, 52, 0), "overrun stops generation");
+  policy = {};
+  policy.completed(1, 1, false);
+  expect_true(policy.stopped(), "failed substitution or cache validation stops generation");
+  const std::array<std::uintptr_t, 4> before{1, 2, 0, 0}, reordered{3, 2, 1, 0}, evicted{3, 1, 0, 0};
+  expect_true(preserves_pvr_cache(before, reordered), "LRU reorder is not eviction");
+  expect_true(!preserves_pvr_cache(before, evicted), "native eviction must stop further preload");
+}
+
 void test_map_page_shadow_queue_bounds_and_generations() {
   using iee::core::MapPageShadowQueue;
   using iee::core::PvrzPrepareStatus;
@@ -7255,6 +7334,7 @@ int main() {
   test_item_icon_x2_registry();
   test_map_page_shadow_pvrz_validation();
   test_map_page_prepare_queue();
+  test_map_page_preload_contract();
   test_map_page_shadow_queue_bounds_and_generations();
   test_map_page_shadow_idle_cancellation();
   test_map_page_shadow_inflight_fallback_handshake();

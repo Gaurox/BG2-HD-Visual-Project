@@ -188,6 +188,10 @@ core::MapPagePrepareQueue::Claim begin_native_demand(void* resource) noexcept {
 bool current(std::uint64_t generation) noexcept {
   return enabled() && (generation & 1u) && runtime().queue.generation() == generation;
 }
+core::MapPagePrepareQueue::Claim reserve_ready(std::string_view page) noexcept {
+  return enabled() ? runtime().queue.try_reserve_ready(page) : core::MapPagePrepareQueue::Claim{};
+}
+std::uint64_t generation() noexcept { return runtime().queue.generation(); }
 void record(bool consumed, std::uint64_t crcNanoseconds, std::uint64_t copyNanoseconds) noexcept {
   auto& r = runtime();
   (consumed ? r.consumed : r.rejected).fetch_add(1, std::memory_order_relaxed);

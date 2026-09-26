@@ -32,7 +32,7 @@ core::PerformanceSamples<2048> g_frameIntervalsMs;
 
 double record_frame_interval() noexcept {
   try {
-    if (!g_performanceLogging || g_freq.QuadPart <= 0) return -1.0;
+    if (g_freq.QuadPart <= 0) return -1.0;
 
     LARGE_INTEGER now{};
     if (!QueryPerformanceCounter(&now)) return -1.0;
@@ -42,9 +42,10 @@ double record_frame_interval() noexcept {
       latestIntervalMilliseconds =
           static_cast<double>(now.QuadPart - g_lastFrameTick.QuadPart) * 1000.0 /
           static_cast<double>(g_freq.QuadPart);
-      g_frameIntervalsMs.add(latestIntervalMilliseconds);
+      if (g_performanceLogging) g_frameIntervalsMs.add(latestIntervalMilliseconds);
     }
     g_lastFrameTick = now;
+    if (!g_performanceLogging) return latestIntervalMilliseconds;
 
     if (now.QuadPart - g_performanceWindowStart.QuadPart < g_freq.QuadPart * 5) {
       return latestIntervalMilliseconds;

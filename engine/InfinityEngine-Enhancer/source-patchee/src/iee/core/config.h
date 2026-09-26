@@ -49,6 +49,9 @@ struct EngineConfig {
   // B1 private-copy CPU preparation; independent from performance diagnostics.
   bool enableMapPagePrepare = false;
   std::filesystem::path mapPagePrepareCache{};
+  // B1.3 opt-in native materialization of ready B1 pages after presentation.
+  bool enableMapPagePreload = false;
+  std::filesystem::path mapPagePreloadBindings{};
   std::uint32_t mapPagePrewarmPagesPerFrame = 1;
   float mapPagePrewarmBudgetMs = 8.0f;
   // Leave 32 of the engine's evidenced 128 PVR slots outside the plan. This

@@ -11,6 +11,8 @@ void observe_area(const AppContext& ctx) noexcept;
 // Once per generation on render thread, using the signature-validated LRU.
 void retire_resident_pages(const void* cacheEntries) noexcept;
 core::MapPagePrepareQueue::Claim begin_native_demand(void* resource) noexcept;
+core::MapPagePrepareQueue::Claim reserve_ready(std::string_view page) noexcept;
+std::uint64_t generation() noexcept;
 bool current(std::uint64_t generation) noexcept;
 void record(bool consumed, std::uint64_t crcNanoseconds, std::uint64_t copyNanoseconds) noexcept;
 void shutdown() noexcept;

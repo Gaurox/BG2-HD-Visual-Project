@@ -172,6 +172,10 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableMapPagePrepare);
     else if (iequals(key, "MapPagePrepareCache"))
       cfg.mapPagePrepareCache = std::filesystem::path(std::string(val));
+    else if (iequals(key, "EnableMapPagePreload"))
+      assign_bool(cfg.enableMapPagePreload);
+    else if (iequals(key, "MapPagePreloadBindings"))
+      cfg.mapPagePreloadBindings = std::filesystem::path(std::string(val));
     else if (iequals(key, "MapPagePrewarmPagesPerFrame"))
       assign_u32(cfg.mapPagePrewarmPagesPerFrame);
     else if (iequals(key, "MapPagePrewarmBudgetMs"))
@@ -377,6 +381,8 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableMapPageOffframeConsume", cfg.enableMapPageOffframeConsume);
   write_bool(f, "EnableMapPagePrepare", cfg.enableMapPagePrepare);
   f << "MapPagePrepareCache = " << cfg.mapPagePrepareCache.string() << "\n";
+  write_bool(f, "EnableMapPagePreload", cfg.enableMapPagePreload);
+  f << "MapPagePreloadBindings = " << cfg.mapPagePreloadBindings.string() << "\n";
   f << "MapPagePrewarmPagesPerFrame = " << cfg.mapPagePrewarmPagesPerFrame << "\n";
   f << "MapPagePrewarmBudgetMs = " << cfg.mapPagePrewarmBudgetMs << "\n";
   f << "MapPagePrewarmMaxPages = " << cfg.mapPagePrewarmMaxPages << "\n";

@@ -22,7 +22,7 @@ struct PrivatePageEntry {
 };
 
 // Fixed slots: only the worker constructs/destroys payloads. Render borrowers
-// return a slot with a single atomic store, including across generation changes.
+// return a slot through atomic state changes, including across generation changes.
 class MapPagePrepareQueue {
  public:
   using Loader = PvrzPreparedPage (*)(const PrivatePageEntry&);
@@ -38,6 +38,8 @@ class MapPagePrepareQueue {
     const PvrzPreparedPage* page() const noexcept;
     std::uint64_t generation() const noexcept { return generation_; }
     bool current() const noexcept;
+    // Unused speculative reservation: make it available again, without freeing.
+    void defer() noexcept;
    private:
     friend class MapPagePrepareQueue;
     Claim(MapPagePrepareQueue* owner, std::size_t slot, std::uint64_t generation) noexcept;
@@ -54,6 +56,8 @@ class MapPagePrepareQueue {
   void activate(bool active) noexcept;
   std::uint64_t generation() const noexcept { return epoch_.load(std::memory_order_acquire); }
   Claim try_claim(std::string_view page) noexcept;
+  // Does not retire or count a native miss. For optional preloading only.
+  Claim try_reserve_ready(std::string_view page) noexcept;
   void retire_resident(std::string_view page) noexcept;
   // Single worker only. At most one file decoded per invocation. Never on render.
   bool work_one(Loader loader);

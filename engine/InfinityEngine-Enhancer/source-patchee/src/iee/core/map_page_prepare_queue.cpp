@@ -22,7 +22,11 @@ MapPagePrepareQueue::Claim& MapPagePrepareQueue::Claim::operator=(Claim&& other)
 MapPagePrepareQueue::Claim::~Claim() { release(); }
 void MapPagePrepareQueue::Claim::release() noexcept {
   if (owner_) {
-    owner_->slots_[slot_].state.store(State::Retired, std::memory_order_release);
+    auto& slot = owner_->slots_[slot_];
+    auto retired = slot.retiredThrough.load(std::memory_order_relaxed);
+    while (retired < generation_ &&
+           !slot.retiredThrough.compare_exchange_weak(retired, generation_)) {}
+    slot.state.store(State::Retired, std::memory_order_release);
     owner_ = nullptr;
   }
 }
@@ -31,6 +35,12 @@ const PvrzPreparedPage* MapPagePrepareQueue::Claim::page() const noexcept {
 }
 bool MapPagePrepareQueue::Claim::current() const noexcept {
   return owner_ && owner_->generation() == generation_;
+}
+void MapPagePrepareQueue::Claim::defer() noexcept {
+  if (owner_) {
+    owner_->slots_[slot_].state.store(State::Ready, std::memory_order_release);
+    owner_ = nullptr;
+  }
 }
 
 bool MapPagePrepareQueue::configure(std::vector<PrivatePageEntry> entries,
@@ -106,6 +116,22 @@ void MapPagePrepareQueue::retire_resident(std::string_view page) noexcept {
     while (retired < epoch && !s.retiredThrough.compare_exchange_weak(retired, epoch)) {}
     return;
   }
+}
+
+MapPagePrepareQueue::Claim MapPagePrepareQueue::try_reserve_ready(std::string_view page) noexcept {
+  const auto epoch = generation();
+  if (!(epoch & 1u)) return {};
+  for (std::size_t i = 0; i < count_; ++i) {
+    auto& s = slots_[i];
+    if (s.entry.resref != page || s.retiredThrough.load() >= epoch) continue;
+    auto expected = State::Ready;
+    if (!s.state.compare_exchange_strong(expected, State::Claimed, std::memory_order_acq_rel))
+      return {};
+    Claim claim(this, i, s.generation);
+    if (s.generation == epoch && generation() == epoch) return claim;
+    return {};
+  }
+  return {};
 }
 
 void MapPagePrepareQueue::recycle(Slot& s) {

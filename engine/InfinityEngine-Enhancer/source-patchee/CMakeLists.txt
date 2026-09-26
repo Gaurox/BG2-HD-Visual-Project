@@ -113,6 +113,7 @@ add_library(iee_common STATIC
     src/iee/core/logger.cpp
     src/iee/core/map_page_shadow.cpp
     src/iee/core/map_page_prepare_queue.cpp
+    src/iee/core/map_page_preload_policy.cpp
     src/iee/core/map_texture_telemetry.cpp
     src/iee/core/map_view_burst_telemetry.cpp
     src/iee/core/native_occlusion_probe.cpp
@@ -213,6 +214,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/item_icon_x2.cpp
         src/iee/map_page_prewarm.cpp
         src/iee/map_page_prepare.cpp
+        src/iee/map_page_preload.cpp
         src/iee/native_occlusion_bridge.cpp
         src/iee/post_process.cpp
         src/iee/shader_diagnostics.cpp

@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from build_map_page_cache import build
+from write_map_page_preload_bindings import write_bindings
 
 
 class CacheBuilderTests(unittest.TestCase):
@@ -63,6 +64,39 @@ class CacheBuilderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.run_build()
         self.assertFalse((self.output / "pages.index").exists())
+
+    def test_preload_bindings_preserve_cache_and_tile_identity(self):
+        self.run_build()
+        before = {p.name: p.read_bytes() for p in self.output.iterdir()}
+        target = self.root / "preload.index"
+        self.assertEqual(write_bindings(self.output, target), 3)
+        self.assertEqual(target.read_text().splitlines(), ["IEE_PRELOAD_BINDINGS_V1 AR0900",
+            "PAGE A090000 AR0900 0 0", "PAGE A090001 AR0900 1 1", "PAGE YU4T600 YFU4T6 0 0"])
+        self.assertEqual(before, {p.name: p.read_bytes() for p in self.output.iterdir()})
+        with self.assertRaises(FileExistsError):
+            write_bindings(self.output, target)
+
+    def test_preload_rejects_inconsistent_cache(self):
+        self.run_build()
+        index = self.output / "pages.index"
+        index.write_text(index.read_text().replace("A090001", "A090099"))
+        target = self.root / "preload.index"
+        with self.assertRaises(ValueError):
+            write_bindings(self.output, target)
+        self.assertFalse(target.exists())
+
+    def test_preload_rejects_wrong_page_or_tile(self):
+        self.run_build()
+        path = self.output / "manifest.json"
+        manifest = json.loads(path.read_text())
+        for changes in ({"page": 2}, {"first_tile": -1}, {"tis": "AR0300"}):
+            invalid = json.loads(json.dumps(manifest))
+            invalid["pages"]["A090000"].update(changes)
+            path.write_text(json.dumps(invalid))
+            target = self.root / "preload.index"
+            with self.assertRaises(ValueError):
+                write_bindings(self.output, target)
+            self.assertFalse(target.exists())
 
     def test_invalid_size_never_publishes_index(self):
         (self.source / "A090000.PVRZ").write_bytes(struct.pack("<I", 0xffffffff) + b"fixture")
