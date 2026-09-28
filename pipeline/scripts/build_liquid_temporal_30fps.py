@@ -64,7 +64,10 @@ TORUS_DEFAULTS = {'heal_band_x1': 4, 'heal_sigma_x1': 3.0, 'heal_gain': 0.8, 'se
                   # Share of WED adjacency occurrences allowed outside the layout torus.
                   'max_non_torus_share': 0.0,
                   # Earlier run group folder whose SeedVR output is reused after byte checks.
-                  'reuse_seedvr_from': None}
+                  'reuse_seedvr_from': None,
+                  # 'refined' = principal-axis + least-squares BC3 (bc3_refined.py): +2.7 dB over
+                  # Pillow on the teal overlay, exposed on flat open water (AR3000/AR5203).
+                  'bc3_encoder': 'pillow'}
 
 
 # --- pure recipe ---------------------------------------------------------------
@@ -269,18 +272,27 @@ def page_name(alias):
     return alias[0] + alias[2:] + '00'
 
 
-def write_pvrz(canvas, destination):
-    buffer = io.BytesIO()
-    canvas.save(buffer, format='DDS', pixel_format='DXT5')
-    dds = buffer.getvalue()
-    if dds[84:88] != b'DXT5' or len(dds) != 128 + PAGE * PAGE:
-        raise RuntimeError(f'Pillow {Image.__version__} cannot encode BC3; use Pillow 12+')
+def write_pvrz(canvas, destination, encoder='pillow'):
+    if encoder == 'refined':
+        from bc3_refined import encode_bc3
+        payload = encode_bc3(np.asarray(canvas.convert('RGBA')))
+    elif encoder == 'pillow':
+        buffer = io.BytesIO()
+        canvas.save(buffer, format='DDS', pixel_format='DXT5')
+        dds = buffer.getvalue()
+        if dds[84:88] != b'DXT5' or len(dds) != 128 + PAGE * PAGE:
+            raise RuntimeError(f'Pillow {Image.__version__} cannot encode BC3; use Pillow 12+')
+        payload = dds[128:]
+    else:
+        raise ValueError(f'unknown BC3 encoder: {encoder}')
+    if len(payload) != PAGE * PAGE:
+        raise RuntimeError('BC3 payload size mismatch')
     header = struct.pack('<13I', 0x03525650, 0, 11, 0, 0, 0, PAGE, PAGE, 1, 1, 1, 1, 0)
-    pvr = header + dds[128:]
+    pvr = header + payload
     destination.write_bytes(struct.pack('<I', len(pvr)) + zlib.compress(pvr, 9))
 
 
-def export_tiles(frames, alias, out):
+def export_tiles(frames, alias, out, encoder='pillow'):
     canvas = np.zeros((PAGE, PAGE, 4), np.uint8)
     entries = []
     for i, frame in enumerate(frames):
@@ -293,7 +305,7 @@ def export_tiles(frames, alias, out):
             canvas[y-PAD:y+TILE+PAD, x-PAD:x+TILE+PAD] = np.pad(frame, ((PAD, PAD), (PAD, PAD), (0, 0)), mode='wrap')
         entries.append((0, x, y))
     page = out / (page_name(alias) + '.PVRZ')
-    write_pvrz(Image.fromarray(canvas, 'RGBA'), page)
+    write_pvrz(Image.fromarray(canvas, 'RGBA'), page, encoder)
     tis = out / (alias + '.TIS')
     tis.write_bytes(b'TIS V1  ' + struct.pack('<4I', len(frames), 12, 24, TILE) +
                     b''.join(struct.pack('<3I', *e) for e in entries))
@@ -750,7 +762,8 @@ def build(output):
             alias = group['aliases'][ref]
             frames = [np.asarray(Image.open(folder / f'tiles/{ref}/frame_{i:03d}.png').convert('RGBA'))
                       for i in range(group['phases'])]
-            tis, page = export_tiles(frames, alias, candidate)
+            tis, page = export_tiles(frames, alias, candidate,
+                                     (group.get('torus') or {}).get('bc3_encoder', 'pillow'))
             decoded = decode_tiles(tis, candidate)
             frames = [f[PAD:PAD + TILE, PAD:PAD + TILE] if f.shape[:2] == (STRIDE, STRIDE) else f
                       for f in frames]

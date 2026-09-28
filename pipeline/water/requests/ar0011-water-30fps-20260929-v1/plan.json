@@ -1,0 +1,706 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1\\temporal-plan-tol08.json",
+    "bytes": 1010,
+    "sha256": "B017AC379B9E6B3A01CBB9A61FC0D2FFD1EC52B5F06A99DD2453AA325BB45AB2"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR0011",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1\\selection.json",
+    "bytes": 451,
+    "sha256": "6755A9361224D098FCD84E4A78C6493FBD079D146BE3DBCBB7696533476F70DE"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1\\override-candidate\\AR0011.WED",
+    "bytes": 37986,
+    "sha256": "9E8E6A10C55A76D8A039DEDD85CDF455349866444DB081996382D0F94B4DF858"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar5203-water-30fps-20260929-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "lava",
+      "rain_of": null,
+      "group": {
+        "id": "lava",
+        "wed": "AR0011",
+        "resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "aliases": {
+          "WTLAVA": "YSHHUR",
+          "WTLAVB": "YSRPU8",
+          "WTLAVC": "YS8WXU",
+          "WTLAVD": "YS01MD"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTLAVA",
+            "WTLAVB"
+          ],
+          [
+            "WTLAVC",
+            "WTLAVD"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAVA": "YFLOBX",
+        "WTLAVB": "YFIV5A",
+        "WTLAVC": "YFXDO4",
+        "WTLAVD": "YFNPUV"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 0,
+        "equalize_detail": false,
+        "max_non_torus_share": 0.08,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [
+          {
+            "a": "WTLAVA",
+            "b": "WTLAVA",
+            "axis": "x",
+            "occurrences": 2
+          },
+          {
+            "a": "WTLAVA",
+            "b": "WTLAVA",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVA",
+            "b": "WTLAVB",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVA",
+            "b": "WTLAVC",
+            "axis": "x",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVC",
+            "b": "WTLAVB",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVC",
+            "b": "WTLAVC",
+            "axis": "x",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVD",
+            "b": "WTLAVA",
+            "axis": "y",
+            "occurrences": 3
+          }
+        ],
+        "non_torus_share": 0.07692
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAVA",
+          "wed_resref": "WTLAVA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 12,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 9.6
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVB",
+          "wed_resref": "WTLAVB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.8
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVC",
+          "wed_resref": "WTLAVC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.8
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVD",
+          "wed_resref": "WTLAVD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 12,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 9.6
+        }
+      ],
+      "cycle_seconds": 7.2,
+      "phases": 216,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVA",
+          "axis": "x",
+          "occurrences": 2
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVA",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVB",
+          "axis": "x",
+          "occurrences": 14
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVB",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVC",
+          "axis": "x",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVA",
+          "b": "WTLAVC",
+          "axis": "y",
+          "occurrences": 16
+        },
+        {
+          "a": "WTLAVB",
+          "b": "WTLAVA",
+          "axis": "x",
+          "occurrences": 13
+        },
+        {
+          "a": "WTLAVB",
+          "b": "WTLAVD",
+          "axis": "y",
+          "occurrences": 17
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVA",
+          "axis": "y",
+          "occurrences": 11
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVB",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVC",
+          "axis": "x",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVC",
+          "b": "WTLAVD",
+          "axis": "x",
+          "occurrences": 19
+        },
+        {
+          "a": "WTLAVD",
+          "b": "WTLAVA",
+          "axis": "y",
+          "occurrences": 3
+        },
+        {
+          "a": "WTLAVD",
+          "b": "WTLAVB",
+          "axis": "y",
+          "occurrences": 13
+        },
+        {
+          "a": "WTLAVD",
+          "b": "WTLAVC",
+          "axis": "x",
+          "occurrences": 17
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1\\overlays\\groups\\lava\\build.json",
+        "bytes": 213688,
+        "sha256": "4543D98ED82A802F4242A23591B962D4385BB359735007192DF7223FFA9693C2"
+      }
+    },
+    {
+      "id": "lava_rain",
+      "rain_of": "lava",
+      "group": {
+        "id": "lava_rain",
+        "wed": "AR0011",
+        "resrefs": [
+          "WTLAVAR",
+          "WTLAVBR",
+          "WTLAVCR",
+          "WTLAVDR"
+        ],
+        "aliases": {
+          "WTLAVAR": "YSHHURR",
+          "WTLAVBR": "YSRPU8R",
+          "WTLAVCR": "YS8WXUR",
+          "WTLAVDR": "YS01MDR"
+        },
+        "method": "bilinear",
+        "layout": [
+          [
+            "WTLAVAR",
+            "WTLAVBR"
+          ],
+          [
+            "WTLAVCR",
+            "WTLAVDR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTLAVA",
+          "WTLAVB",
+          "WTLAVC",
+          "WTLAVD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAVAR": "YFLOBXR",
+        "WTLAVBR": "YFIV5AR",
+        "WTLAVCR": "YFXDO4R",
+        "WTLAVDR": "YFNPUVR"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 0,
+        "equalize_detail": false,
+        "max_non_torus_share": 0.08,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [
+          {
+            "a": "WTLAVAR",
+            "b": "WTLAVAR",
+            "axis": "x",
+            "occurrences": 2
+          },
+          {
+            "a": "WTLAVAR",
+            "b": "WTLAVAR",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVAR",
+            "b": "WTLAVBR",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVAR",
+            "b": "WTLAVCR",
+            "axis": "x",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVCR",
+            "b": "WTLAVBR",
+            "axis": "y",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVCR",
+            "b": "WTLAVCR",
+            "axis": "x",
+            "occurrences": 1
+          },
+          {
+            "a": "WTLAVDR",
+            "b": "WTLAVAR",
+            "axis": "y",
+            "occurrences": 3
+          }
+        ],
+        "non_torus_share": 0.07692
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAVAR",
+          "wed_resref": "WTLAVA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 12,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 9.6
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAVBR",
+          "wed_resref": "WTLAVB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.8
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAVCR",
+          "wed_resref": "WTLAVC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.8
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAVDR",
+          "wed_resref": "WTLAVD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "speed_divisor": 12,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 9.6
+        }
+      ],
+      "cycle_seconds": 7.2,
+      "phases": 216,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVAR",
+          "axis": "x",
+          "occurrences": 2
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVAR",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVBR",
+          "axis": "x",
+          "occurrences": 14
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVBR",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVCR",
+          "axis": "x",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVAR",
+          "b": "WTLAVCR",
+          "axis": "y",
+          "occurrences": 16
+        },
+        {
+          "a": "WTLAVBR",
+          "b": "WTLAVAR",
+          "axis": "x",
+          "occurrences": 13
+        },
+        {
+          "a": "WTLAVBR",
+          "b": "WTLAVDR",
+          "axis": "y",
+          "occurrences": 17
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVAR",
+          "axis": "y",
+          "occurrences": 11
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVBR",
+          "axis": "y",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVCR",
+          "axis": "x",
+          "occurrences": 1
+        },
+        {
+          "a": "WTLAVCR",
+          "b": "WTLAVDR",
+          "axis": "x",
+          "occurrences": 19
+        },
+        {
+          "a": "WTLAVDR",
+          "b": "WTLAVAR",
+          "axis": "y",
+          "occurrences": 3
+        },
+        {
+          "a": "WTLAVDR",
+          "b": "WTLAVBR",
+          "axis": "y",
+          "occurrences": 13
+        },
+        {
+          "a": "WTLAVDR",
+          "b": "WTLAVCR",
+          "axis": "x",
+          "occurrences": 17
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar0011-water-x4-20260929-v1\\overlays\\groups\\lava_rain\\build.json",
+        "bytes": 215341,
+        "sha256": "BF43665D6C3433FB92250D5CEA6140662A519C7E6FE5691AF498EDD71CAD00B5"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

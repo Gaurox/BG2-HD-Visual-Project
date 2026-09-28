@@ -24,8 +24,7 @@ import zlib
 import numpy as np
 
 from bg2lib import load_key, resolve_resource
-from build_water_art_opacity_candidate import secondary_ids
-from build_water_route1_batch import ROOT, parse_pvr, parse_standalone_tis
+from build_water_route1_batch import ROOT, parse_pvr, parse_standalone_tis, parse_wed
 from workspace_paths import get_path
 
 SENTINEL = 0xFFFFFFFF
@@ -34,6 +33,18 @@ SENTINEL = 0xFFFFFFFF
 def require(ok, message):
     if not ok:
         raise RuntimeError(message)
+
+
+def liquid_secondary_ids(wed: bytes) -> list[int]:
+    """Secondary tiles of every liquid overlay slot (A-D pavings use slots 1-4), exclusive to
+    liquid cells; build_water_art_opacity_candidate.secondary_ids only covers slot 1 (AR0300N)."""
+    parsed = parse_wed(wed)
+    bits = sum(1 << layer['slot'] for layer in parsed['layers'][1:] if layer['tis'])
+    water = {c['secondary'] for c in parsed['cells'] if c['flags'] & bits and c['secondary'] != 65535}
+    other = {c['secondary'] for c in parsed['cells'] if not c['flags'] & bits and c['secondary'] != 65535}
+    primaries = {i for c in parsed['cells'] for i in c['primary']}
+    require(not water & (other | primaries), 'ambiguous secondary roles')
+    return sorted(water)
 
 
 def digest(data: bytes) -> str:
@@ -61,7 +72,7 @@ def main():
     bifs, resources = load_key()
     lookup = {(n.upper(), k): loc for n, k, loc in resources}
     stock_wed, _ = resolve_resource(bifs, lookup[area, 0x3E9])
-    secondaries = secondary_ids(stock_wed)
+    secondaries = liquid_secondary_ids(stock_wed)
 
     base = target['base']
     prefix = base[0] + base[2:]

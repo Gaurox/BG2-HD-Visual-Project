@@ -1,0 +1,97 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR3000",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-28T23:58:28+00:00",
+  "run": "maps/water-batches/runs/ar3000-water-30fps-20260929-v2",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar3000-water-30fps-20260929-v2/candidate/manifest.json",
+    "sha256": "0AE0421AC8C63F253C4419C6A57BFD4C6812194EA7785F3FCE952A301E0E9CBA"
+  },
+  "files": {
+    "AR3000.WED": {
+      "sha256": "625BFE65C9F6AF646CA422B60627AF72ABCFBAB4F5581FF697952692E8E74807",
+      "bytes": 61812
+    },
+    "YHTA30.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTA30R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTB30.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTB30R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTC30.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTC30R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTD30.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YHTD30R.TIS": {
+      "sha256": "93BD4C05843FE7F500004C820A1EF22FBA65D79D279F6551ED1DC2BB0E86CCE7",
+      "bytes": 1560
+    },
+    "YTA3000.PVRZ": {
+      "sha256": "E1D33BB3EB290884FD2FE2DD6FD8F98A45FD6F4D9B671615B55653730817363B",
+      "bytes": 2164553
+    },
+    "YTA30R00.PVRZ": {
+      "sha256": "E1D33BB3EB290884FD2FE2DD6FD8F98A45FD6F4D9B671615B55653730817363B",
+      "bytes": 2164553
+    },
+    "YTB3000.PVRZ": {
+      "sha256": "6882C6F99D33C3ED5417608A8C420B169503D3B212DC8CBFDE5D23551BFC3FDF",
+      "bytes": 2231146
+    },
+    "YTB30R00.PVRZ": {
+      "sha256": "6882C6F99D33C3ED5417608A8C420B169503D3B212DC8CBFDE5D23551BFC3FDF",
+      "bytes": 2231146
+    },
+    "YTC3000.PVRZ": {
+      "sha256": "1BEADE99B499E9B006C2FCA81016D87F3602B8DBB5D2DA1EB13358E525F4847E",
+      "bytes": 2181811
+    },
+    "YTC30R00.PVRZ": {
+      "sha256": "1BEADE99B499E9B006C2FCA81016D87F3602B8DBB5D2DA1EB13358E525F4847E",
+      "bytes": 2181811
+    },
+    "YTD3000.PVRZ": {
+      "sha256": "E179D3A676077DB9A4FFCB04ADB926413C624294CB43D5F7632A389D059C2478",
+      "bytes": 2128650
+    },
+    "YTD30R00.PVRZ": {
+      "sha256": "E179D3A676077DB9A4FFCB04ADB926413C624294CB43D5F7632A389D059C2478",
+      "bytes": 2128650
+    }
+  },
+  "override_backup_receipt": "backups/water/ar3000-water-30fps-20260929-v2/override/override-backup-20260929-015327/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar3000-water-30fps-20260929-v2/build.json",
+    "sha256": "D9ECE140174E60D55292C0AFE6297159D2378990E50C68F1247844D126B774AD"
+  },
+  "runtime": {
+    "receipt": "backups/water/ar3000-ar5203-fix-20260929-v1/runtime/install-backup.json",
+    "dll_sha256": "EFD077508833CA2855D1890A4F52EFD092F8E55545104F3722A01CFFF65DB431",
+    "registry": {
+      "path": "pipeline/water/requests/ar3000-teal-opacity160-20260929-v2/registry-v3.json",
+      "sha256_lf": "FFF852F3960030F43172F48C550468D33B04167FDFDC3C932C3EDCE29FD0F453"
+    }
+  }
+}

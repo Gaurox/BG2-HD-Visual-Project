@@ -29,10 +29,10 @@
       "area_id": "AR0011",
       "wed": "AR0011",
       "variant": "day-or-unique",
-      "work_state": "blocked",
-      "preparation_state": "blocked",
-      "qa_state": "blocked-preparation",
-      "installation_state": "not-run",
+      "work_state": "done",
+      "preparation_state": "installed",
+      "qa_state": "validated-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -85,11 +85,7 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": [
-        "dedicated-emissive-route-required",
-        "non-periodic-overlay",
-        "water-alpha128-forbidden"
-      ]
+      "blockers": []
     },
     {
       "id": "liquid-map:AR0046",
@@ -275,9 +271,9 @@
       "area_id": "AR0404",
       "wed": "AR0404",
       "variant": "day-or-unique",
-      "work_state": "done",
+      "work_state": "queued",
       "preparation_state": "installed",
-      "qa_state": "validated-ingame",
+      "qa_state": "pending-ingame",
       "installation_state": "installed",
       "overlays": [
         {
@@ -299,7 +295,9 @@
       "qa_evidence_ids": [
         "wtsew-qa-v1"
       ],
-      "blockers": []
+      "blockers": [
+        "2026-09-29 retreated after QA remarks; ingame QA pending"
+      ]
     },
     {
       "id": "liquid-map:AR0408",
@@ -718,7 +716,7 @@
       "area_id": "AR1000",
       "wed": "AR1000N",
       "variant": "night",
-      "work_state": "queued",
+      "work_state": "done",
       "preparation_state": "installed",
       "qa_state": "validated-ingame",
       "installation_state": "installed",
@@ -741,9 +739,7 @@
       "qa_evidence_ids": [
         "ar1000n-wtswam-route2-qa-v1"
       ],
-      "blockers": [
-        "WSWPILR rain variant installed but not separately observed"
-      ]
+      "blockers": []
     },
     {
       "id": "liquid-map:AR1003",
@@ -1722,9 +1718,9 @@
       "wed": "AR3000",
       "variant": "day-or-unique",
       "work_state": "queued",
-      "preparation_state": "candidate-available",
+      "preparation_state": "installed",
       "qa_state": "pending-ingame",
-      "installation_state": "not-run",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -1777,7 +1773,9 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [
+        "2026-09-29 retreated after QA remarks; ingame QA pending"
+      ]
     },
     {
       "id": "liquid-map:AR3024",
@@ -2051,10 +2049,10 @@
       "area_id": "AR5203",
       "wed": "AR5203",
       "variant": "day-or-unique",
-      "work_state": "blocked",
-      "preparation_state": "blocked",
-      "qa_state": "blocked-preparation",
-      "installation_state": "not-run",
+      "work_state": "queued",
+      "preparation_state": "installed",
+      "qa_state": "pending-ingame",
+      "installation_state": "installed",
       "overlays": [
         {
           "slot": 1,
@@ -2104,8 +2102,7 @@
       "release_target_ids": [],
       "qa_evidence_ids": [],
       "blockers": [
-        "dedicated-material-and-family-qa-required",
-        "liquid-classifier-unresolved"
+        "2026-09-29 retreated after QA remarks; ingame QA pending"
       ]
     },
     {

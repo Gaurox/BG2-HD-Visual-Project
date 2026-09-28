@@ -1,0 +1,490 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1\\temporal-plan-v2.json",
+    "bytes": 1118,
+    "sha256": "1E5E52BBD6D37BA587FDE1F841AD187E869B167BE6BEB6C722C3E74296382734"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR3000",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1\\selection.json",
+    "bytes": 467,
+    "sha256": "F27A54D5FD8EBD51F017444A7F75C22B0E498A897E004652B125F4FE98D40A93"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1\\override-candidate\\AR3000.WED",
+    "bytes": 60852,
+    "sha256": "21B737EF4502E2B4B86953AD493E23358421F94F1702A6C68221946FE68A8801"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\pipeline\\water\\requests\\ar0011-water-30fps-20260929-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "lake_teal",
+      "rain_of": null,
+      "group": {
+        "id": "lake_teal",
+        "wed": "AR3000",
+        "resrefs": [
+          "WTLAKA",
+          "WTLAKB",
+          "WTLAKC",
+          "WTLAKD"
+        ],
+        "aliases": {
+          "WTLAKA": "YSRPHJ",
+          "WTLAKB": "YSQEED",
+          "WTLAKC": "YS3B9S",
+          "WTLAKD": "YS4I7A"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTLAKA",
+            "WTLAKB"
+          ],
+          [
+            "WTLAKC",
+            "WTLAKD"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTLAKA",
+          "WTLAKB",
+          "WTLAKC",
+          "WTLAKD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAKA": "YHTA30",
+        "WTLAKB": "YHTB30",
+        "WTLAKC": "YHTC30",
+        "WTLAKD": "YHTD30"
+      },
+      "material_id": 1,
+      "approved_strength": 0.4,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.0,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 2.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 12,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.0,
+        "reuse_seedvr_from": "maps/water-batches/runs/ar3000-water-30fps-20260929-v1/lake_teal",
+        "bc3_encoder": "refined",
+        "non_torus_adjacencies": [],
+        "non_torus_share": 0.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAKA",
+          "wed_resref": "WTLAKA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 8,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 4.266666666666667
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAKB",
+          "wed_resref": "WTLAKB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAKC",
+          "wed_resref": "WTLAKC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAKD",
+          "wed_resref": "WTLAKD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        }
+      ],
+      "cycle_seconds": 4.2667,
+      "phases": 128,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAKA",
+          "b": "WTLAKB",
+          "axis": "x",
+          "occurrences": 77
+        },
+        {
+          "a": "WTLAKA",
+          "b": "WTLAKC",
+          "axis": "y",
+          "occurrences": 80
+        },
+        {
+          "a": "WTLAKB",
+          "b": "WTLAKA",
+          "axis": "x",
+          "occurrences": 74
+        },
+        {
+          "a": "WTLAKB",
+          "b": "WTLAKD",
+          "axis": "y",
+          "occurrences": 69
+        },
+        {
+          "a": "WTLAKC",
+          "b": "WTLAKA",
+          "axis": "y",
+          "occurrences": 70
+        },
+        {
+          "a": "WTLAKC",
+          "b": "WTLAKD",
+          "axis": "x",
+          "occurrences": 69
+        },
+        {
+          "a": "WTLAKD",
+          "b": "WTLAKB",
+          "axis": "y",
+          "occurrences": 64
+        },
+        {
+          "a": "WTLAKD",
+          "b": "WTLAKC",
+          "axis": "x",
+          "occurrences": 64
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1\\overlays\\groups\\lake_teal\\build.json",
+        "bytes": 89014,
+        "sha256": "848D862733E820253FE4278F9BA071D22700DCCEAD711843DA16CEA7C06F00F4"
+      }
+    },
+    {
+      "id": "lake_teal_rain",
+      "rain_of": "lake_teal",
+      "group": {
+        "id": "lake_teal_rain",
+        "wed": "AR3000",
+        "resrefs": [
+          "WTLAKAR",
+          "WTLAKBR",
+          "WTLAKCR",
+          "WTLAKDR"
+        ],
+        "aliases": {
+          "WTLAKAR": "YSRPHJR",
+          "WTLAKBR": "YSQEEDR",
+          "WTLAKCR": "YS3B9SR",
+          "WTLAKDR": "YS4I7AR"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTLAKAR",
+            "WTLAKBR"
+          ],
+          [
+            "WTLAKCR",
+            "WTLAKDR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTLAKA",
+          "WTLAKB",
+          "WTLAKC",
+          "WTLAKD"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTLAKAR": "YHTA30R",
+        "WTLAKBR": "YHTB30R",
+        "WTLAKCR": "YHTC30R",
+        "WTLAKDR": "YHTD30R"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.0,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 2.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 12,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.0,
+        "reuse_seedvr_from": "maps/water-batches/runs/ar3000-water-30fps-20260929-v1/lake_teal",
+        "bc3_encoder": "refined",
+        "non_torus_adjacencies": [],
+        "non_torus_share": 0.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTLAKAR",
+          "wed_resref": "WTLAKA",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 8,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 4.266666666666667
+        },
+        {
+          "slot": 2,
+          "resref": "WTLAKBR",
+          "wed_resref": "WTLAKB",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 3,
+          "resref": "WTLAKCR",
+          "wed_resref": "WTLAKC",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        },
+        {
+          "slot": 4,
+          "resref": "WTLAKDR",
+          "wed_resref": "WTLAKD",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.5333333333333333
+        }
+      ],
+      "cycle_seconds": 4.2667,
+      "phases": 128,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTLAKAR",
+          "b": "WTLAKBR",
+          "axis": "x",
+          "occurrences": 77
+        },
+        {
+          "a": "WTLAKAR",
+          "b": "WTLAKCR",
+          "axis": "y",
+          "occurrences": 80
+        },
+        {
+          "a": "WTLAKBR",
+          "b": "WTLAKAR",
+          "axis": "x",
+          "occurrences": 74
+        },
+        {
+          "a": "WTLAKBR",
+          "b": "WTLAKDR",
+          "axis": "y",
+          "occurrences": 69
+        },
+        {
+          "a": "WTLAKCR",
+          "b": "WTLAKAR",
+          "axis": "y",
+          "occurrences": 70
+        },
+        {
+          "a": "WTLAKCR",
+          "b": "WTLAKDR",
+          "axis": "x",
+          "occurrences": 69
+        },
+        {
+          "a": "WTLAKDR",
+          "b": "WTLAKBR",
+          "axis": "y",
+          "occurrences": 64
+        },
+        {
+          "a": "WTLAKDR",
+          "b": "WTLAKCR",
+          "axis": "x",
+          "occurrences": 64
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3000-water-x4-20260929-v1\\overlays\\groups\\lake_teal_rain\\build.json",
+        "bytes": 89750,
+        "sha256": "0EA5EDD9B300296AB24DAA1FD470FD2C5DC13BE7FC9655343BB12D4E6F9F5BBA"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR1607",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-28T23:10:10+00:00",
+  "source": "user-message",
+  "quote": "toutes les autres maps sont validées",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "not-specified-by-user",
+  "selection": {
+    "path": "pipeline/water/manifests/ar1607-spatial-installed-20260929-v1.json",
+    "sha256": "45C1EDBE23E8C30ED51F1CD84D5E85A72402E292B1A47E6551CD5DBCA5A631F8"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar1607-temporal-30fps-installed-20260929-v1.json",
+      "sha256": "5A940DA72DE7EA77B0D1A50AF0CE9A00DEB80E4A770D74520B6C01E892BD4563"
+    },
+    {
+      "path": "pipeline/water/manifests/ar1607-contour-installed-20260929-v1.json",
+      "sha256": "C70C73778AFC00735C59EC9D6562AF7EEB98B5EF7F8E7F028E7730DEDB2E801F"
+    }
+  ],
+  "release": "not-requested"
+}
