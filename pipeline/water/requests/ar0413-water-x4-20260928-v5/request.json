@@ -1,0 +1,39 @@
+{
+  "schema": "bg2-liquid-family-x4-trial-request-v1",
+  "standard": "pipeline\\water\\liquid-family-standard-v1.json",
+  "source_vanilla": "G:\\AI\\BG2_Vanilla_23534562",
+  "destination": "config://bg2ee_game_root",
+  "runtime": {
+    "dll": "preserve-installed",
+    "mode": "native-composition-alias-unregistered-route2-q0",
+    "timeline": "preserve-vanilla-lookup-and-speed"
+  },
+  "targets": [
+    {
+      "wed": "AR0413",
+      "family": "oil",
+      "slots": [
+        {
+          "slot": 1,
+          "source": "WTOIL",
+          "alias": "YS61ZI",
+          "rain_alias": "YS61ZIR"
+        }
+      ],
+      "secondary_master": "maps/AR0413/runs/upscale-01/tuiles-secondaires/03_assemble/AR0413-tuiles-secondaires-x4-seedvr2-7b-int8-lab-overlap.png",
+      "composition": "native",
+      "repair_seams": true,
+      "restore_central_alpha": true,
+      "central_rgb": [
+        14,
+        13,
+        7
+      ],
+      "note_central_rgb": "AR0413 exception 2026-09-28: pure oil cells alpha 128 + flat RGB = mean x4 secondary art under oil in the 220 pair cells (14.3,13.3,7.1), so pure and pair cells composite to the same level; v2 (alpha 128 over x4 RGB) = mosaic, v3 (alpha 0) = bright vs dark contours",
+      "flatten_pair_secondary": true,
+      "note_flatten_pair_secondary": "v4 QA 2026-09-28: pair cells still differ (secondary art at native alpha over oil, lum 3.5-18.6); where the pair primary is fully transparent the secondary art takes central_rgb"
+    }
+  ],
+  "user_qa": "pending",
+  "release": "not-requested"
+}

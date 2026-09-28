@@ -51,6 +51,25 @@ def resource_name(value):
     return value
 
 
+def dxt_color_block(rgb):
+    """BC1/BC3 colour block painting one flat RGB565 colour (both endpoints equal, indices 0)."""
+    r, g, b = (int(v) for v in rgb)
+    value = ((r * 31 + 127) // 255) << 11 | ((g * 63 + 127) // 255) << 5 | ((b * 31 + 127) // 255)
+    return list(struct.pack('<HHI', value, value, 0))
+
+
+def free_page_index(prefix, index, reserved, live):
+    """First page index >= ``index`` whose name is neither an archived PVRZ nor an override file.
+
+    Isolated pages must not shadow a vanilla page of the same tileset: x1 atlases can have more
+    pages than the x4 build (AR0413: A041316-19 archived, x4 uses 00-15)."""
+    while True:
+        name = resource_name(f'{prefix}{index:02d}')
+        if name not in reserved and not (live / (name + '.PVRZ')).exists():
+            return index
+        index += 1
+
+
 def resolve_input(value):
     path = Path(value)
     if not path.is_absolute():
@@ -150,6 +169,11 @@ def process_target(target, vanilla, live, destination, write):
     native_alpha = are[0x52] or 128
     require(int(target.get('native_alpha', native_alpha)) == native_alpha, 'Requested alpha differs from native ARE')
     central_enabled = bool(target.get('restore_central_alpha', True))
+    central_rgb = target.get('central_rgb')
+    if central_rgb is not None:
+        require(central_enabled and len(central_rgb) == 3 and all(0 <= int(v) <= 255 for v in central_rgb),
+                'central_rgb needs restore_central_alpha and three 0-255 values')
+        central_color = dxt_color_block(central_rgb)
     seams_enabled = bool(target.get('repair_rgb_seams', target.get('repair_seams', True)))
     threshold = float(target.get('rgb_difference_threshold', 6.0))
     require(threshold >= 0, 'Negative RGB threshold')
@@ -205,16 +229,51 @@ def process_target(target, vanilla, live, destination, write):
         require(donor_path is not None, f'{wed_name}: missing secondary master')
         rgb, secondary_alpha, coords, interfaces = seam_masks(
             parsed, slot_groups, full_cells, stock_tile, unique_primary, unique_secondary)
-    modified_ids = central_ids | set(rgb) | set(secondary_alpha)
+    # Pair cells: the secondary art is drawn at the native alpha over the liquid wherever the
+    # primary is transparent. With central_rgb, that art takes the same flat colour there, so
+    # pure and paired cells composite alike (AR0413); structures and edges keep their art.
+    flat_secondary, primary_pages = {}, {}
+    if central_rgb is not None and target.get('flatten_pair_secondary'):
+        for cell in parsed['cells']:
+            sec = cell['secondary']
+            if not (cell['flags'] & bits) or sec == 65535 or sec not in unique_secondary or cell['count'] != 1:
+                continue
+            ppage, px, py = tis['entries'][cell['primary'][0]]
+            require(ppage != SENTINEL, f'{wed_name}: pair primary is a sentinel')
+            pname = resource_name(f'{prefix}{ppage:02d}') + '.PVRZ'
+            if pname not in primary_pages:
+                primary_pages[pname] = decode_pvrz_page((live / pname).read_bytes())
+            alpha = np.asarray(primary_pages[pname].crop((px, py, px+256, py+256)).getchannel('A'))
+            if (alpha == 0).any():
+                flat_secondary[sec] = alpha == 0
+        require(not (set(flat_secondary) & set(rgb)), 'Flat secondary overlaps an RGB graft')
+    modified_ids = central_ids | set(rgb) | set(secondary_alpha) | set(flat_secondary)
     require(not (set(rgb) & set(secondary_alpha)), 'Primary/secondary repair overlap')
     relocations, relocated_pages, shared_already_conform = [], {}, []
     output_tis = bytearray(tis_bytes)
     header_size = struct.unpack_from('<I', tis_bytes, 16)[0]
-    next_page = max(e[0] for e in tis['entries'] if e[0] != SENTINEL) + 1
+    def free_page(index):
+        return free_page_index(prefix, index, pvr, live)
+
+    next_page = free_page(max(e[0] for e in tis['entries'] if e[0] != SENTINEL) + 1)
+    def sentinel_sharers(tile):
+        """Other tiles on this slot, if all are sentinel redirects under the same liquid."""
+        others = [t for t, e in enumerate(tis['entries']) if e == tis['entries'][tile] and t != tile]
+        if all(stock_entries[t][0] == SENTINEL and primary_uses[t]
+               and all(c['flags'] & bits and c['secondary'] == 65535 for c in primary_uses[t]) for t in others):
+            return others
+        return None
+
+    shared_uniform = {}
     for tile in sorted(modified_ids):
         old_entry = tis['entries'][tile]
         page, x, y = old_entry
         if physical_uses[old_entry] == 1:
+            continue
+        if central_rgb is not None and tile in central_ids and tile not in rgb and sentinel_sharers(tile):
+            # Uniform content: the sentinel redirects sharing this slot show the same liquid, so they
+            # take the same colour and alpha instead of forcing a new page (AR0413 tile 54).
+            shared_uniform[tile] = sentinel_sharers(tile)
             continue
         require(tile in unique_primary and tile in full_cells.values(), 'Only qualified central aliases can be isolated')
         source_name = resource_name(f'{prefix}{page:02d}') + '.PVRZ'
@@ -239,12 +298,13 @@ def process_target(target, vanilla, live, destination, write):
         struct.pack_into('<3I', output_tis, header_size + tile*12, next_page, 4, 4)
         relocations.append({'tile': tile, 'old_entry': list(old_entry), 'new_entry': [next_page, 4, 4],
                             'reason': 'isolate-selected-primary-from-shared-physical-slot'})
-        next_page += 1
+        next_page = free_page(next_page + 1)
     physical_uses = Counter(entry for entry in tis['entries'] if entry[0] != SENTINEL)
     by_page = defaultdict(list)
     for tile in modified_ids:
         page, x, y = tis['entries'][tile]
-        require(page != SENTINEL and physical_uses[page, x, y] == 1, 'Selected atlas slot aliased')
+        require(page != SENTINEL and (physical_uses[page, x, y] == 1 or tile in shared_uniform),
+                'Selected atlas slot aliased')
         require((x % 264, y % 264) == (4, 4), f'{wed_name}/{tile}: unproven 4px atlas padding')
         by_page[page].append(tile)
     donor = None
@@ -268,6 +328,7 @@ def process_target(target, vanilla, live, destination, write):
               'source_tis': {'archive': tis_archive, 'sha256': digest(source_tis)},
               'live_tis_sha256': digest(tis_bytes), 'output_tis_sha256': digest(output_tis),
               'relocations': relocations, 'shared_slots_already_conform': shared_already_conform,
+              'central_rgb': central_rgb, 'shared_uniform_slots': {str(k): v for k, v in shared_uniform.items()},
               'pages': [], 'rgb_tiles': []}
     for page in sorted({entry[0] for entry in tis['entries'] if entry[0] != SENTINEL}):
         name = resource_name(f'{prefix}{page:02d}') + '.PVRZ'
@@ -281,13 +342,14 @@ def process_target(target, vanilla, live, destination, write):
             blocks = np.frombuffer(raw, np.uint8, offset=offset).reshape(height//4, width//4, 16)
             allowed_rgb = np.zeros(blocks.shape[:2], bool)
             allowed_alpha = np.zeros(blocks.shape[:2], bool)
-            decoded = decode_pvrz_page(packed) if any(t in rgb for t in by_page[page]) else None
+            decoded = (decode_pvrz_page(packed)
+                       if any(t in rgb or t in flat_secondary for t in by_page[page]) else None)
             for tile in sorted(by_page[page]):
                 _, x, y = tis['entries'][tile]
                 left, top, right, bottom = x-4, y-4, x+260, y+260
                 require(left >= 0 and top >= 0 and right <= width and bottom <= height, 'Padding outside page')
                 for other_id, (other_page, ox, oy) in enumerate(tis['entries']):
-                    if other_page != page or other_id == tile:
+                    if other_page != page or other_id == tile or other_id in shared_uniform.get(tile, ()):
                         continue
                     require(max(left, ox-4) >= min(right, ox+260)
                             or max(top, oy-4) >= min(bottom, oy+260), 'Selected padding overlaps another tile')
@@ -296,10 +358,31 @@ def process_target(target, vanilla, live, destination, write):
                 if tile in central_ids:
                     view[:, :, :8] = [native_alpha, native_alpha, 0, 0, 0, 0, 0, 0]
                     allowed_alpha[by:by+66, bx:bx+66] = True
+                    if central_rgb is not None:
+                        view[:, :, 8:] = central_color
+                        allowed_rgb[by:by+66, bx:bx+66] = True
                 if tile in secondary_alpha:
                     mask = block_mask(secondary_alpha[tile] > 0)
                     view[mask, :8] = [255, 255, 0, 0, 0, 0, 0, 0]
                     allowed_alpha[by:by+66, bx:bx+66] |= mask
+                if tile in flat_secondary:
+                    core = np.array(decoded.crop((x, y, x+256, y+256)).convert('RGBA'))
+                    mask = flat_secondary[tile]
+                    core[mask, :3] = central_rgb
+                    stream = io.BytesIO()
+                    Image.fromarray(np.pad(core, ((4, 4), (4, 4), (0, 0)), mode='edge')).save(
+                        stream, format='DDS', pixel_format='DXT5')
+                    encoded = stream.getvalue()
+                    require(encoded[84:88] == b'DXT5' and len(encoded) == 128+66*66*16,
+                            'Pillow did not produce BC3 DDS; use the bundled runtime with DXT5 encoder support')
+                    coded = np.frombuffer(encoded, np.uint8, offset=128).reshape(66, 66, 16)
+                    blocks_mask = block_mask(mask)
+                    full = np.zeros((66, 66), bool)
+                    full[1:65, 1:65] = mask.reshape(64, 4, 64, 4).all(axis=(1, 3))
+                    view[blocks_mask, 8:] = coded[blocks_mask, 8:]
+                    view[full, 8:] = central_color          # exact colour on fully covered blocks
+                    allowed_rgb[by:by+66, bx:bx+66] |= blocks_mask
+                    report.setdefault('flat_secondary_tiles', []).append(tile)
                 if tile in rgb:
                     cx, cy = coords[tile]
                     core = np.array(decoded.crop((x, y, x+256, y+256)).convert('RGBA'))

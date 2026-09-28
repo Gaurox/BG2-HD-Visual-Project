@@ -32,5 +32,26 @@ class BaseSeamMaskTests(unittest.TestCase):
         self.assertEqual(interfaces, [])
 
 
+
+class IsolatedPageIndexTests(unittest.TestCase):
+    def test_skips_archived_and_override_pages(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as live:
+            live = Path(live)
+            (live / "A041320.PVRZ").write_bytes(b"")
+            reserved = {f"A0413{i:02d}" for i in range(20)}
+            self.assertEqual(b.free_page_index("A0413", 16, reserved, live), 21)
+            self.assertEqual(b.free_page_index("A0503", 6, reserved, live), 6)
+
+
+class FlatColourBlockTests(unittest.TestCase):
+    def test_flat_block_decodes_to_the_rgb565_colour(self):
+        import struct
+        block = bytes(b.dxt_color_block((14, 13, 7)))
+        c0, c1, indices = struct.unpack("<HHI", block)
+        self.assertEqual((c0, c1, indices), (c0, c0, 0))
+        self.assertEqual(((c0 >> 11) & 31, (c0 >> 5) & 63, c0 & 31), (2, 3, 1))
+
+
 if __name__ == "__main__":
     unittest.main()

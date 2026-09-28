@@ -1,0 +1,117 @@
+{
+  "schema": "bg2-water-map-final-user-qa-v1",
+  "date": "2026-09-28",
+  "area": "AR0413",
+  "family": "oil",
+  "decision": "validated-ingame",
+  "quote": "oui là c'est bien ! je valide comme ca !",
+  "scope": "full standard-chain retreatment of AR0413 WTOIL from the 2026-08-19 map build; replaces the Aug spline, 09-12 route1 and 09-23 Q9OIL0 witness layers",
+  "stack": {
+    "reset": "maps/water-batches/runs/ar0413-base-reset-20260928-v1 (08-19 x4-alpha-release pages + sentinel-12 TIS + vanilla WED)",
+    "spatial_overlay_and_wed": "maps/water-batches/runs/ar0413-water-x4-20260928-v3 (SeedVR 7B x4; receipt ar0413-spatial-installed-20260928-v2.json, base pages superseded)",
+    "bases": "maps/water-batches/runs/ar0413-water-x4-20260928-v5 (central_rgb [14,13,7] + flatten_pair_secondary; built from the reset pages)",
+    "temporal": "maps/water-batches/runs/ar0413-water-30fps-20260928-v1 (seedvr-torus 72 phases/2.4 s, harmonics<=9 + equalisation; QA ar0413-temporal-30fps-user-qa-20260928-v1.json)",
+    "contour": "maps/water-batches/runs/ar0413-contour-matte-20260928-v3 (spline fit 1 + central_water, 227 pairs; receipt ar0413-contour-installed-20260928-v3.json, central alpha then changed)",
+    "paired_opacity": "maps/water-batches/runs/ar0413-oil-opacity64-20260928-v1 (283 central slots alpha 128->64; secondary draw 128->64 via local_art_opacity)",
+    "runtime": "pipeline/water/requests/ar0413-oil-q025-20260928-v1/registry-v3.json (dry YFGPKI approved_strength 0.25, rain 0; INI WaterOverlayStrength 0.70 unchanged)"
+  },
+  "rejected_trials": {
+    "v2_central_alpha128_x4_rgb": "user: 'ca ne va pas. des tuiles claires en haut de la map. et les tuiles font tres mosaique'",
+    "v3_central_alpha0": "user: 'maintenant ce sont les tuiles proches des contours d'eau qui sont sombre et les autres claire'",
+    "v4_central_rgb_only": "user: 'c'est mieux mais on voit encore les tuiles de contour d'eau de couleur differente'",
+    "q_1.00_0.70_0.50": "user: q=1 'tres plastique'; 0.50 vs 1.00 indistinguishable (procedural water dominates the low-contrast oil)",
+    "seedvr_3b": "user: '3B n'est pas mieux' (image comparison only)"
+  },
+  "runtime_receipt": "backups/water/ar0413-oil-q025-20260928-v1/runtime/install-backup.json",
+  "live_files": {
+    "A041300.PVRZ": {
+      "bytes": 33050,
+      "sha256": "CF50CEAFF4BC3ED2FFA382D27321F2F6EF48112302F0C69E198D9BB5E191110D"
+    },
+    "A041301.PVRZ": {
+      "bytes": 198565,
+      "sha256": "E08977EF4087B5DD2A26BCD0519C666164499082B6E80C384CEEA90F328914F3"
+    },
+    "A041302.PVRZ": {
+      "bytes": 464741,
+      "sha256": "56F0F12F2E85E2CA805C48684B52BE2A42A727F2ADA5FA67554C8A8D5C8808A7"
+    },
+    "A041303.PVRZ": {
+      "bytes": 602471,
+      "sha256": "F9F0D19C317FC61614FCE21682AC97E81EB0331AF9FB018A1E728780C43FE9AE"
+    },
+    "A041304.PVRZ": {
+      "bytes": 810927,
+      "sha256": "F9B135BA7B43FAEDC0F4D8872F57233D1388DF1927AC9F00D7AF1211A8D8EAAF"
+    },
+    "A041305.PVRZ": {
+      "bytes": 811969,
+      "sha256": "A14D08D8DE739A88D8EE5718D31CE0178108B0254870677A98B79CCA56F56A0F"
+    },
+    "A041306.PVRZ": {
+      "bytes": 431865,
+      "sha256": "3FA3FC4854E1B9EDA915392FCEBDBEF865187D0D6608F5FB98B6225830DC1DDE"
+    },
+    "A041307.PVRZ": {
+      "bytes": 470419,
+      "sha256": "9763CF3269A2EFAB2E88D0F70A9452D5269C7898399C8117BD837961FC6F5B12"
+    },
+    "A041308.PVRZ": {
+      "bytes": 364087,
+      "sha256": "546F586BB7EEC246793207798C085A51219B1D146F7B81D586F8B35CB0DFC653"
+    },
+    "A041309.PVRZ": {
+      "bytes": 59442,
+      "sha256": "C061AE0AB4350316F39D567C39D5F3925E0AB9D93D86BEFFCC11BB55C990EE04"
+    },
+    "A041310.PVRZ": {
+      "bytes": 47148,
+      "sha256": "7422DF93E9293BAEA6C317FE9C5D7852A81DF14279024C82D5B927AA26FDC4F4"
+    },
+    "A041311.PVRZ": {
+      "bytes": 231438,
+      "sha256": "91718DDC9CEF2B0AA91A844B22DDE7C3EA3E1788F0286BC0529F993C5B41D9E5"
+    },
+    "A041312.PVRZ": {
+      "bytes": 303203,
+      "sha256": "4839980DB8FFEAD3C458892443FC65A2AFCAC8FE0665E9A698EFA432C4E3FFC2"
+    },
+    "A041313.PVRZ": {
+      "bytes": 287209,
+      "sha256": "E611246DE6DFF1AFD09EAA1C527669B614283A38AB3AA8514E7F7E467D91E357"
+    },
+    "A041314.PVRZ": {
+      "bytes": 303624,
+      "sha256": "A42146284B6A6E8EA50AE5774650FB69B6988208DAC84DBADC407096A473B782"
+    },
+    "A041315.PVRZ": {
+      "bytes": 109368,
+      "sha256": "9050CF4D9E63AF2742C3A23CDDA04C3AF1DCE213B2514D84507AA8A2989C102A"
+    },
+    "AR0413.TIS": {
+      "bytes": 9924,
+      "sha256": "6C4D5F49D8480CCD3B7C8D94150965943765F0CA3F67310198380BD721EC5BC3"
+    },
+    "AR0413.WED": {
+      "bytes": 8338,
+      "sha256": "4BEF1DFA4AB7A06532C3DE19F9B1005C6E4ACEB6D7DB7A340298D9595F2EE177"
+    },
+    "YFGPKI.TIS": {
+      "bytes": 888,
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6"
+    },
+    "YFGPKIR.TIS": {
+      "bytes": 888,
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6"
+    },
+    "YGPKI00.PVRZ": {
+      "bytes": 1256542,
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C"
+    },
+    "YGPKIR00.PVRZ": {
+      "bytes": 1256542,
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C"
+    }
+  },
+  "release": "not-requested"
+}

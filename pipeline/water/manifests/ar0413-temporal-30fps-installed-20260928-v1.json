@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-water-installed-v1",
+  "area": "AR0413",
+  "kind": "temporal-30fps",
+  "status": "installed-pending-user-ingame-qa",
+  "recorded_utc": "2026-09-28T19:34:41+00:00",
+  "run": "maps/water-batches/runs/ar0413-water-30fps-20260928-v1",
+  "candidate_manifest": {
+    "path": "maps/water-batches/runs/ar0413-water-30fps-20260928-v1/candidate/manifest.json",
+    "sha256": "C6CF6B04DB1518E5B1225909B3A5F59B5E50926A057BE8326D5EF6194BE6F99A"
+  },
+  "files": {
+    "AR0413.WED": {
+      "sha256": "4BEF1DFA4AB7A06532C3DE19F9B1005C6E4ACEB6D7DB7A340298D9595F2EE177",
+      "bytes": 8338
+    },
+    "YFGPKI.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YFGPKIR.TIS": {
+      "sha256": "11EF690FD6C5D0AC447286E6B4E17A38B653616F07FB9468D133C32B9B1B94A6",
+      "bytes": 888
+    },
+    "YGPKI00.PVRZ": {
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C",
+      "bytes": 1256542
+    },
+    "YGPKIR00.PVRZ": {
+      "sha256": "BB9DE65853181B332FB01475967A8F147CB9C6B93C1385ACFB76D332200C067C",
+      "bytes": 1256542
+    }
+  },
+  "override_backup_receipt": "backups/water/ar0413-water-30fps-20260928-v1/override/override-backup-20260928-213440/install-backup.json",
+  "qa": "pending-user-ingame",
+  "release": "not-requested",
+  "build_report": {
+    "path": "maps/water-batches/runs/ar0413-water-30fps-20260928-v1/build.json",
+    "sha256": "DE4CDD32AE88ADABE7472D98F0F522680D3E347221EF0A77AD73BBCFBB5AD7AF"
+  },
+  "runtime": {
+    "receipt": "backups/water/ar0413-water-30fps-20260928-v1/runtime/install-backup.json",
+    "dll_sha256": "99A999CD67380DD9F06922C8BE01B363183CCC0C472DCE64C79E10ABCA606478",
+    "registry": {
+      "path": "pipeline/water/requests/ar0413-water-30fps-20260928-v1/registry-v3.json",
+      "sha256_lf": "CD3B7A4F506D5274D674A550BF1FB916E6181A1A3330958362A61DF45691FEF0"
+    }
+  }
+}

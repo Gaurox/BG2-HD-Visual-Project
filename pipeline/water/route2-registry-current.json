@@ -2,8 +2,8 @@
   "schema": "bg2-water-route2-registry-current-v1",
   "note": "Registry compiled into the installed InfinityEngine-Enhancer.dll. Base of every new 30 fps run; updated only by pipeline/scripts/Install-WaterRuntime.ps1.",
   "registry": {
-    "path": "pipeline/water/requests/ar3024-water-30fps-20260928-v1/registry-v3.json",
-    "sha256_lf": "301B28DE4A2A87FB2CD5D3FB9AD0413C5EA7C0DF2DC0D8C3D04C2CB22BA83E2C"
+    "path": "pipeline/water/requests/ar0413-oil-q025-20260928-v1/registry-v3.json",
+    "sha256_lf": "5F28C3C76F97940FCF6679D422B12249CF7902FB3D4705FC5CD46EA10E358B3F"
   },
   "identities": [
     {
@@ -737,9 +737,21 @@
       "overlay": "YF3HQCR",
       "slot": 1,
       "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR0413",
+      "overlay": "YFGPKI",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
+    },
+    {
+      "wed": "AR0413",
+      "overlay": "YFGPKIR",
+      "slot": 1,
+      "state": "candidate-installable-pending-qa"
     }
   ],
-  "dll_sha256": "A759DC1B73FA419932C8B2CD03671E207448AE8333526DC4F895F0F4C027EC29",
-  "installed_by": "backups/water/oil-batch-20260928-v1/runtime/install-backup.json",
+  "dll_sha256": "001D242FA122AE0B4353269959BF9CC87177A8A2796B08044C6290AFD74FB213",
+  "installed_by": "backups/water/ar0413-oil-q025-20260928-v1/runtime/install-backup.json",
   "updated": "2026-09-28"
 }
