@@ -19,6 +19,14 @@
 namespace iee::map_page_preload {
 namespace {
 using Clock = std::chrono::steady_clock;
+struct PendingTrace {
+  bool active{}, validated{};
+  std::array<char, 9> page{};
+  std::uint64_t generation{}, frame{};
+  std::size_t occupied{};
+  double previousIntervalMs{}, callMs{}, pumpMs{};
+  core::PvrPreloadTrace native;
+};
 struct Runtime {
   std::vector<core::MapPageBinding> bindings;
   DemandPrepared demand{};
@@ -30,6 +38,7 @@ struct Runtime {
   std::uint64_t lastPresented{~std::uint64_t{0}};
   std::array<bool, core::kPreparePageLimit> done{};
   bool completeLogged{};
+  PendingTrace pending;
 };
 Runtime& runtime() { static auto* r = new Runtime; return *r; }
 double elapsed(Clock::time_point start) {
@@ -147,7 +156,37 @@ bool configure(const std::filesystem::path& bindings, DemandPrepared demand) noe
     return true;
   } catch (...) { r.demand = nullptr; return false; }
 }
-void on_frame_interval(double milliseconds) noexcept { runtime().intervalMs = milliseconds; }
+void on_frame_interval(double milliseconds) noexcept {
+  auto& r = runtime();
+  r.intervalMs = milliseconds;
+  if (!r.pending.active) return;
+  const auto p = r.pending;
+  r.pending.active = false;
+  // Emit after the next interval has been captured, outside both timed windows.
+  // Logging itself can still affect the subsequent image.
+  try {
+    const auto& t = p.native;
+    const auto residual = core::preload_residual(t);
+    constexpr double ms = 1.0 / 1000000.0;
+    LOG_INFO("Map page B1.4 phases: generation={}, frame={}, page={}, measured={}, outcome={}, "
+             "demandMs={:.3f}, resourceCalls={}, resourceMs={:.3f}, fileOpenCalls={}, fileOpenMs={:.3f}, "
+             "crcMs={:.3f}, copyMs={:.3f}, textureGenerationMs={:.3f}, compressedUploadMs={:.3f}, "
+             "residualValid={}, otherMs={:.3f}, ioMeasured={}, processReadOperations={}, processReadBytes={}; "
+             "fileOpen included in resource; process IO includes worker",
+             p.generation, p.frame, p.page.data(), t.measured, t.outcome, t.demandNs * ms,
+             t.resourceCalls, t.resourceNs * ms, t.fileOpenCalls, t.fileOpenNs * ms,
+             t.crcNs * ms, t.copyNs * ms, t.gl.textureGenerationNanoseconds * ms,
+             t.gl.compressedUploadNanoseconds * ms, residual.valid, residual.nanoseconds * ms,
+             t.ioMeasured, t.readOperations, t.readBytes);
+    LOG_INFO("Map page B1.4 presentation: generation={}, frame={}, page={}, validated={}, "
+             "sameGeneration={}, occupiedBefore={}, previousIntervalMs={:.3f}, "
+             "followingIntervalMs={:.3f}, callWithGlStateMs={:.3f}, pumpMs={:.3f}; "
+             "following interval includes preload and subsequent frame, not isolated preload cost",
+             p.generation, p.frame, p.page.data(), p.validated,
+             map_page_prepare::current(p.generation), p.occupied, p.previousIntervalMs,
+             milliseconds, p.callMs, p.pumpMs);
+  } catch (...) {}
+}
 void on_post_swap(AppContext& ctx, const void* cacheEntries) noexcept {
   auto& r = runtime();
   if (!r.demand || !cacheEntries || !map_page_prepare::enabled() || !frame::boundary_available()) return;
@@ -197,22 +236,31 @@ void on_post_swap(AppContext& ctx, const void* cacheEntries) noexcept {
           !r.policy.admit(frameNumber, r.intervalMs, elapsed(started), claim.page()->decoded.size(), occupied)) {
         claim.defer(); ++r.budgetSkips; return;
       }
-      bool consumed = false;
+      core::PvrPreloadTrace trace;
       const auto callStart = Clock::now();
       {
         UploadState state;
         if (!state.capture()) { claim.defer(); return; }
-        consumed = r.demand(resource, claim);
+        trace = r.demand(resource, claim);
       }
       const auto milliseconds = elapsed(callStart);
       ++r.attempts;
       r.totalMs += milliseconds; r.maximumMs = (std::max)(r.maximumMs, milliseconds);
       std::array<std::uintptr_t, 128> after{};
       game::CResPVR loaded{};
-      const bool valid = consumed && claim.current() && wglGetCurrentContext() == context &&
+      const bool valid = trace.consumed && claim.current() && wglGetCurrentContext() == context &&
           ctx.activeArea.load() == area && core::safe_read(resource, loaded) && loaded.texture > 0 &&
           core::safe_read(cacheEntries, after) && core::preserves_pvr_cache(before, after);
-      r.policy.completed(frameNumber, elapsed(started), valid);
+      const auto pumpMs = elapsed(started);
+      r.policy.completed(frameNumber, pumpMs, valid);
+      if (ctx.cfg.enablePerformanceLogging) {
+        r.pending = {};
+        auto& p = r.pending;
+        p.active = true; p.validated = valid; p.generation = generation; p.frame = frameNumber;
+        p.occupied = occupied; p.previousIntervalMs = r.intervalMs;
+        p.callMs = milliseconds; p.pumpMs = pumpMs; p.native = trace;
+        std::copy(r.bindings[i].page.begin(), r.bindings[i].page.end(), p.page.begin());
+      }
       r.done[i] = true;
       if (valid) ++r.submitted;
       if (r.policy.stopped()) summary(r, valid ? "soft-budget-overrun" : "native-validation-failed");

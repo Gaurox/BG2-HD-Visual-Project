@@ -18,6 +18,21 @@ struct PvrDemandNestedTimings {
   std::uint64_t compressedUploadNanoseconds{};
 };
 
+// One proactive Demand only. File-open is included in resource time; never
+// subtract it again. Read counters are process-wide, including the B1 worker.
+struct PvrPreloadTrace {
+  bool consumed{}, measured{}, ioMeasured{}, phaseTimersValid{true};
+  const char* outcome{"not-called"};
+  std::uint64_t demandNs{}, resourceNs{}, fileOpenNs{}, crcNs{}, copyNs{};
+  std::uint64_t resourceCalls{}, fileOpenCalls{}, readOperations{}, readBytes{};
+  PvrDemandNestedTimings gl{};
+};
+struct PvrPreloadResidual {
+  bool valid{};
+  std::uint64_t nanoseconds{};
+};
+[[nodiscard]] PvrPreloadResidual preload_residual(const PvrPreloadTrace& trace) noexcept;
+
 struct PvrDemandTelemetryStats {
   std::uint64_t calls{};
   std::uint64_t materializations{};

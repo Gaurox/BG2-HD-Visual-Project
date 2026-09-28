@@ -175,8 +175,17 @@ HGLRC g_textureContext{};
 HGLRC g_retiredContext{};
 #endif
 
+using TelemetryClock = std::chrono::steady_clock;
+
+double elapsed_milliseconds(TelemetryClock::time_point start,
+                            TelemetryClock::time_point end) noexcept {
+  return std::chrono::duration<double, std::milli>(end - start).count();
+}
+
 std::vector<std::byte> read_file(const std::filesystem::path& path,
-                                 std::uint64_t expectedBytes = 0) {
+                                 std::uint64_t expectedBytes = 0,
+                                 PackPreparationStats* frameStats = nullptr) {
+  const auto started = frameStats ? TelemetryClock::now() : TelemetryClock::time_point{};
   std::ifstream file(path, std::ios::binary | std::ios::ate);
   if (!file) throw std::runtime_error("missing asset: " + path.string());
   const auto end = file.tellg();
@@ -186,10 +195,27 @@ std::vector<std::byte> read_file(const std::filesystem::path& path,
     throw std::runtime_error("invalid asset size: " + path.string());
   }
   file.seekg(0);
+  const auto opened = frameStats ? TelemetryClock::now() : TelemetryClock::time_point{};
   std::vector<std::byte> bytes(static_cast<std::size_t>(byteCount));
+  const auto allocated = frameStats ? TelemetryClock::now() : TelemetryClock::time_point{};
   if (!bytes.empty() &&
       !file.read(reinterpret_cast<char*>(bytes.data()), static_cast<std::streamsize>(bytes.size()))) {
     throw std::runtime_error("cannot read asset: " + path.string());
+  }
+  if (frameStats) {
+    const auto read = TelemetryClock::now();
+    file.close();
+    const auto closed = TelemetryClock::now();
+    frameStats->frameOpenMilliseconds += elapsed_milliseconds(started, opened);
+    frameStats->frameAllocateMilliseconds += elapsed_milliseconds(opened, allocated);
+    frameStats->frameStreamReadMilliseconds += elapsed_milliseconds(allocated, read);
+    frameStats->frameCloseMilliseconds += elapsed_milliseconds(read, closed);
+    const auto total = elapsed_milliseconds(started, closed);
+    if (frameStats->slowestFrame.empty() || total > frameStats->slowestFrameMilliseconds) {
+      frameStats->slowestFrameMilliseconds = total;
+      frameStats->slowestFrameBytes = byteCount;
+      frameStats->slowestFrame = path.filename().string();
+    }
   }
   return bytes;
 }
@@ -396,13 +422,6 @@ ReleaseSummary release_locked() {
   reset_texture_cache_telemetry_locked();
   reset_cache_budget_simulation_locked();
   return summary;
-}
-
-using TelemetryClock = std::chrono::steady_clock;
-
-double elapsed_milliseconds(TelemetryClock::time_point start,
-                            TelemetryClock::time_point end) noexcept {
-  return std::chrono::duration<double, std::milli>(end - start).count();
 }
 
 void log_texture_cache_telemetry(std::string_view area, std::string_view reason,
@@ -790,7 +809,7 @@ bool prepare(const std::filesystem::path& assetsDirectory,
         auto pixels = read_file(
             assetsDirectory /
                 frame_asset_name(resource.displayName, frameIndex, resource.variantIndex),
-            rawBytes);
+            rawBytes, stats);
         if (stats) {
           stats->frameReadMilliseconds +=
               elapsed_milliseconds(frameReadStarted, TelemetryClock::now());
@@ -1370,6 +1389,14 @@ bool prepare_for_area(std::string_view areaResref, bool enablePerformanceLogging
         stats.outgoingTextureNames, stats.deferredTextureNames,
         stats.registryReadMilliseconds, stats.frameReadMilliseconds,
         stats.parseAndAllocateMilliseconds, stats.swapMilliseconds, stats.totalMilliseconds);
+    LOG_INFO("Area-animation frame read phases: area={}, files={}, bytes={}, openSizeSeekMs={:.3f}, "
+             "allocateZeroMs={:.3f}, streamReadMs={:.3f}, closeMs={:.3f}, "
+             "slowestFrame={}, slowestBytes={}, slowestMs={:.3f}; "
+             "phases included in frameRead; streamRead is not physical disk time",
+             area, stats.frameFiles, stats.frameBytes, stats.frameOpenMilliseconds,
+             stats.frameAllocateMilliseconds, stats.frameStreamReadMilliseconds,
+             stats.frameCloseMilliseconds, stats.slowestFrame, stats.slowestFrameBytes,
+             stats.slowestFrameMilliseconds);
     log_pack_process_resource_telemetry(area, stats);
   }
   std::lock_guard lock(g_mutex);

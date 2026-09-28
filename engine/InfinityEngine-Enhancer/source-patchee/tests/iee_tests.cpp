@@ -4516,6 +4516,16 @@ void test_area_animation_registry_formats() {
   expect_eq(preparationStats.frameBytes,
             static_cast<std::uint64_t>(rgba.size() * 2),
             "Pack telemetry should report the exact raw frame payload");
+  expect_true(!preparationStats.slowestFrame.empty(), "Profile identifies an actual frame file");
+  expect_eq(preparationStats.slowestFrameBytes, static_cast<std::uint64_t>(rgba.size()),
+            "Slowest frame size must match a loaded payload");
+  const double phaseTotal = preparationStats.frameOpenMilliseconds +
+      preparationStats.frameAllocateMilliseconds + preparationStats.frameStreamReadMilliseconds +
+      preparationStats.frameCloseMilliseconds;
+  expect_true(phaseTotal >= 0 && phaseTotal <= preparationStats.frameReadMilliseconds + 0.001,
+              "Read subphases must remain inside the existing frameRead measurement");
+  expect_true(preparationStats.slowestFrameMilliseconds <= phaseTotal + 0.001,
+              "A single frame cannot exceed the aggregate of all measured reads");
   expect_eq(preparationStats.outgoingRawBytes, std::uint64_t{0},
             "The first pack should have no outgoing raw payload");
   expect_eq(preparationStats.residentRawBytes, preparationStats.frameBytes,
@@ -6610,6 +6620,33 @@ void test_map_texture_telemetry_is_bounded_and_resettable() {
               "Missing timing should fail open instead of hiding a real load");
 }
 
+void test_preload_residual_accounting() {
+  using namespace iee::core;
+  PvrPreloadTrace trace;
+  expect_true(!preload_residual(trace).valid, "Unmeasured preload must not report zero-cost success");
+  trace.measured = true;
+  trace.demandNs = 100;
+  trace.resourceNs = 50;
+  trace.fileOpenNs = 40;
+  trace.crcNs = 5;
+  trace.copyNs = 10;
+  trace.gl.textureGenerationNanoseconds = 2;
+  trace.gl.compressedUploadNanoseconds = 3;
+  auto remainder = preload_residual(trace);
+  expect_true(remainder.valid && remainder.nanoseconds == 30,
+              "File-open belongs inside resource time, not a second subtraction");
+  trace.fileOpenNs = 51;
+  expect_true(!preload_residual(trace).valid, "Impossible nested open time must be flagged");
+  trace.fileOpenNs = 40;
+  trace.copyNs = 100;
+  expect_true(!preload_residual(trace).valid, "Overlapping phases cannot underflow to huge duration");
+  trace.copyNs = std::numeric_limits<std::uint64_t>::max();
+  expect_true(!preload_residual(trace).valid, "Overflow-sized measurements fail closed");
+  trace.copyNs = 10;
+  trace.phaseTimersValid = false;
+  expect_true(!preload_residual(trace).valid, "Failed native timer invalidates the phase breakdown");
+}
+
 void test_pvr_demand_telemetry_splits_nested_gl_phases() {
   iee::core::reset_pvr_demand_telemetry();
   iee::core::begin_pvr_demand_scope();
@@ -7360,6 +7397,7 @@ int main() {
   test_tileset_runtime_cache_is_bounded_and_resettable();
   test_map_texture_telemetry_is_bounded_and_resettable();
   test_pvr_demand_telemetry_splits_nested_gl_phases();
+  test_preload_residual_accounting();
   test_map_view_burst_telemetry_is_buffered_and_resettable();
   test_scale_selection_precedence();
   test_tile_table_detection_ignores_garbage_steps();

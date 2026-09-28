@@ -251,6 +251,8 @@ thread_local core::NativeOcclusionSampleGate g_nativeOcclusionSampleGate{};
 thread_local std::uint64_t g_nativeOcclusionSampleGeneration = 0;
 thread_local map_page_prewarm::PvrConsumeAttempt* g_activePvrConsumeAttempt = nullptr;
 thread_local void* g_activePvrConsumeResource = nullptr;
+thread_local core::PvrPreloadTrace* g_activePvrPreloadTrace = nullptr;
+thread_local unsigned g_preloadResourceDepth = 0;
 bool g_nativeOcclusionProbeHookEnabled = false;
 bool g_nativeOcclusionProbeLoggingEnabled = false;
 bool g_nativeOcclusionBridgeEnabled = false;
@@ -3662,23 +3664,31 @@ class PvrDemandScopeGuard {
 class PvrConsumeThreadScope {
  public:
   PvrConsumeThreadScope(void* resource,
-                        map_page_prewarm::PvrConsumeAttempt* attempt) noexcept
+                        map_page_prewarm::PvrConsumeAttempt* attempt,
+                        core::PvrPreloadTrace* trace = nullptr) noexcept
       : previousAttempt_(g_activePvrConsumeAttempt),
-        previousResource_(g_activePvrConsumeResource) {
+        previousResource_(g_activePvrConsumeResource),
+        previousTrace_(g_activePvrPreloadTrace), previousDepth_(g_preloadResourceDepth) {
     // Every nested Demand replaces the current scope, even when it has no
     // candidate. It can therefore never consume an outer Demand's page.
     g_activePvrConsumeAttempt = attempt;
     g_activePvrConsumeResource = resource;
+    g_activePvrPreloadTrace = trace;
+    g_preloadResourceDepth = 0;
   }
 
   ~PvrConsumeThreadScope() {
     g_activePvrConsumeAttempt = previousAttempt_;
     g_activePvrConsumeResource = previousResource_;
+    g_activePvrPreloadTrace = previousTrace_;
+    g_preloadResourceDepth = previousDepth_;
   }
 
  private:
   map_page_prewarm::PvrConsumeAttempt* previousAttempt_{};
   void* previousResource_{};
+  core::PvrPreloadTrace* previousTrace_{};
+  unsigned previousDepth_{};
 };
 
 map_page_prewarm::PvrConsumeOutcome consume_outcome(
@@ -3841,7 +3851,24 @@ static int detour_pvr_uncompress(void* destination, std::uint32_t* destinationSi
 // or native return value is read or changed.
 static void* detour_res_demand_diagnostic(void* thisPtr) {
   const auto original = g_resDemandDiagnosticHook.original();
-  if (!thisPtr || thisPtr != g_activePvrConsumeResource) {
+  auto* trace = g_activePvrPreloadTrace;
+  if (trace && thisPtr && thisPtr == g_activePvrConsumeResource && !g_preloadResourceDepth) {
+    const DWORD entryError = GetLastError();
+    LARGE_INTEGER start{}, end{};
+    const bool timed = QueryPerformanceCounter(&start);
+    ++g_preloadResourceDepth;
+    SetLastError(entryError);
+    void* result = original(thisPtr);
+    const DWORD lastError = GetLastError();
+    --g_preloadResourceDepth;
+    ++trace->resourceCalls;
+    if (timed && QueryPerformanceCounter(&end)) trace->resourceNs += performance_nanoseconds(start, end);
+    else trace->phaseTimersValid = false;
+    SetLastError(lastError);
+    return result;
+  }
+  if (!g_ctx || !g_ctx->cfg.enableMapPageOffframeConsume ||
+      !thisPtr || thisPtr != g_activePvrConsumeResource) {
     return original(thisPtr);
   }
 
@@ -3929,7 +3956,21 @@ static void* detour_res_demand_diagnostic(void* thisPtr) {
 static int detour_res_file_open_diagnostic(void* fileObject, const void* pathObject,
                                            std::uint32_t mode, void* errorInfo) {
   const auto original = g_resFileOpenDiagnosticHook.original();
-  if (!g_activePvrConsumeResource) {
+  auto* trace = g_activePvrPreloadTrace;
+  if (trace && g_preloadResourceDepth) {
+    const DWORD entryError = GetLastError();
+    LARGE_INTEGER start{}, end{};
+    const bool timed = QueryPerformanceCounter(&start);
+    SetLastError(entryError);
+    const int result = original(fileObject, pathObject, mode, errorInfo);
+    const DWORD lastError = GetLastError();
+    ++trace->fileOpenCalls;
+    if (timed && QueryPerformanceCounter(&end)) trace->fileOpenNs += performance_nanoseconds(start, end);
+    else trace->phaseTimersValid = false;
+    SetLastError(lastError);
+    return result;
+  }
+  if (!g_ctx || !g_ctx->cfg.enableMapPageOffframeConsume || !g_activePvrConsumeResource) {
     return original(fileObject, pathObject, mode, errorInfo);
   }
 
@@ -4031,7 +4072,7 @@ static void detour_pvr_cache_release_diagnostic(void* thisPtr) {
 // is intentionally reported as a combined resource/read/decode residual.
 static void* dispatch_pvr_demand(void* thisPtr,
                                const core::MapPagePrepareQueue::Claim* reserved,
-                               bool* consumed) {
+                               bool* consumed, core::PvrPreloadTrace* trace = nullptr) {
   if (consumed) *consumed = false;
   const auto original = g_pvrDemandHook.original();
   auto* ctx = g_ctx;
@@ -4121,7 +4162,7 @@ static void* dispatch_pvr_demand(void* thisPtr,
   const bool measured = QueryPerformanceCounter(&started);
   PvrDemandScopeGuard scope;
   PvrConsumeThreadScope consumeScope(
-      thisPtr, consumeAttempt ? &*consumeAttempt : nullptr);
+      thisPtr, consumeAttempt ? &*consumeAttempt : nullptr, trace);
   void* result = original(thisPtr);
   const DWORD lifecycleLastError = GetLastError();
   const auto nested = scope.finish();
@@ -4198,6 +4239,19 @@ static void* dispatch_pvr_demand(void* thisPtr,
   }
   if (consumed) *consumed = consumeAttempt &&
       consumeAttempt->outcome == map_page_prewarm::PvrConsumeOutcome::Consumed;
+  if (trace) {
+    trace->measured = measured && durationNanoseconds != 0;
+    trace->demandNs = durationNanoseconds;
+    trace->gl = nested;
+    trace->ioMeasured = ioMeasured;
+    trace->readOperations = readOperations;
+    trace->readBytes = readBytes;
+    if (consumeAttempt) {
+      trace->crcNs = consumeAttempt->crcNanoseconds;
+      trace->copyNs = consumeAttempt->copyNanoseconds;
+      trace->outcome = consume_outcome_diagnostic_name(consumeAttempt->outcome).data();
+    }
+  }
   SetLastError(lifecycleLastError);
   return result;
 }
@@ -4205,10 +4259,10 @@ static void* dispatch_pvr_demand(void* thisPtr,
 static void* detour_pvr_demand(void* thisPtr) {
   return dispatch_pvr_demand(thisPtr, nullptr, nullptr);
 }
-static bool demand_prepared_page(void* resource, const core::MapPagePrepareQueue::Claim& claim) {
-  bool consumed = false;
-  dispatch_pvr_demand(resource, &claim, &consumed);
-  return consumed;
+static core::PvrPreloadTrace demand_prepared_page(void* resource, const core::MapPagePrepareQueue::Claim& claim) {
+  core::PvrPreloadTrace trace;
+  dispatch_pvr_demand(resource, &claim, &trace.consumed, &trace);
+  return trace;
 }
 
 // RenderTexture hook - thin dispatch into the tile upscale feature
@@ -4478,6 +4532,16 @@ bool install_all(AppContext& ctx) {
               "entries are observed read-only",
               runtime.lifecycleBoundary.cacheRelease,
               runtime.lifecycleBoundary.cacheEntryCount);
+        }
+        if (ctx.cfg.enableMapPagePreload && ctx.cfg.enablePerformanceLogging) {
+          g_resDemandDiagnosticHook.create(reinterpret_cast<void*>(resourceDemandEntry),
+                                          reinterpret_cast<void*>(&detour_res_demand_diagnostic));
+          g_resDemandDiagnosticHook.enable();
+          g_resFileOpenDiagnosticHook.create(reinterpret_cast<void*>(resourceFileOpenEntry),
+                                            reinterpret_cast<void*>(&detour_res_file_open_diagnostic));
+          g_resFileOpenDiagnosticHook.enable();
+          LOG_INFO("Map page B1.4 profiling enabled: proactive Demand only, resource/open timings; "
+                   "B1.3 scheduling and budgets unchanged");
         }
         if (ctx.cfg.enablePerformanceLogging || ctx.cfg.enableMapPagePrepare) {
           g_pvrDemandHook.create(

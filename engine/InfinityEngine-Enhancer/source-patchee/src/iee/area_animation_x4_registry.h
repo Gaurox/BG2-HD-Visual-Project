@@ -5,6 +5,7 @@
 #include <climits>
 #include <cstdint>
 #include <filesystem>
+#include <string>
 #include <string_view>
 
 #include "iee/core/cache_budget_simulator.h"
@@ -95,6 +96,12 @@ struct PackPreparationStats {
   core::ProcessResourceSnapshot processAfterSwap{};
   double registryReadMilliseconds{};
   double frameReadMilliseconds{};
+  // Nested phases of frameRead; buffered stream reads include OS wait/copy.
+  double frameOpenMilliseconds{}, frameAllocateMilliseconds{};
+  double frameStreamReadMilliseconds{}, frameCloseMilliseconds{};
+  double slowestFrameMilliseconds{};
+  std::uint64_t slowestFrameBytes{};
+  std::string slowestFrame;
   double parseAndAllocateMilliseconds{};
   double swapMilliseconds{};
   double totalMilliseconds{};

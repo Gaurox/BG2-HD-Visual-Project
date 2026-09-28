@@ -6,6 +6,17 @@
 #include <mutex>
 
 namespace iee::core {
+PvrPreloadResidual preload_residual(const PvrPreloadTrace& trace) noexcept {
+  if (!trace.measured || !trace.phaseTimersValid || trace.fileOpenNs > trace.resourceNs)
+    return {};
+  auto remaining = trace.demandNs;
+  for (auto part : {trace.resourceNs, trace.crcNs, trace.copyNs,
+                   trace.gl.textureGenerationNanoseconds, trace.gl.compressedUploadNanoseconds}) {
+    if (part > remaining) return {};
+    remaining -= part;
+  }
+  return {true, remaining};
+}
 namespace {
 
 struct AtomicPvrDemandTelemetry {
