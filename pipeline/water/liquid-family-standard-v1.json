@@ -100,7 +100,7 @@
                   "why_method": "the edge collar left a ~10 px smeared band on every 64 px tile border; seedvr-torus 1x1 joins without blur (wrap 1.22/0.94)",
                   "why_filters": "WTOIL keys are shimmer (key-to-key corr 0.65-0.76): 65 % of SeedVR phase-to-phase change was boiling detail plus the 4-frame latent cadence (0.73); harmonics <= 9 (1.5 x keys) + detail equalisation: step median 1.02 -> 0.42, cadence flat, sharpness max/min 1.34 -> 1.15 (AR0503 v1 -> v2)"},
      "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-spline-fit1-AR0503-20260925"},
-     "witness": "AR0503-A-B-C;AR0413-historical"},
+     "witness": "AR0503-A-B-C;batch-4-A-B-C-20260928 (AR0603 AR1203 AR2102 AR3024; speed-0 WEDs AR1203/AR3024 use cycle_seconds 2.4);AR0413-historical"},
     {"id": "lake_teal", "overlays": ["WTLAKA", "WTLAKB", "WTLAKC", "WTLAKD"],
      "layout": [["WTLAKA", "WTLAKB"], ["WTLAKC", "WTLAKD"]], "spatial_method": "seedvr",
      "spatial_status": "built-only-AR6300-no-central-cells",

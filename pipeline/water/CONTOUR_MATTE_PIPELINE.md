@@ -85,6 +85,7 @@ composition de paire non encore vue en jeu.
 | WTSWAM | AR1000N / AR1607 / AR1800 | 128 / **100** / 128 | 37 / 348 / 94 | 0 / 525 / 7 | 0 / 1 / 0 | oui |
 | WTSEW | AR0404 / AR2100 | 128 | 138 / 169 | 2 / 39 | 0 | oui |
 | WTOIL | AR0413 / AR0503 | 128 | 227 / 67 | 349 / 84 | 0 | oui ; **AR0503 installé** ; AR0413 : contrat alpha0 historique à surveiller |
+| WTOIL | AR0603 / AR1203 / AR2102 / AR3024 | 128 / **200** / 128 / **200** | 86 / 212 / 135 / 212 | 0 / 0 / 9 / 0 | 0 | **installés 2026-09-28** (alpha 200 validé) |
 | WTLAKA–D | AR3000 / AR6300 | 128 / **160** | 137 / 36 | 184 / 0 | 1 / 0 | oui ; **AR6300 installé** (alpha 160 validé) |
 | WTLAVA–D | AR0011 / AR5200 | 128 | 101 / 287 | 0 | 0 / 5 | oui ; **AR5200 installé** |
 | WT5000A–D | AR5203 / AR5000 | 128 | 267 / 402 | 366 / 321 | 1 / 0 | oui ; **AR5000 installé** (v3 `central_water`) |
@@ -103,6 +104,7 @@ composition de paire non encore vue en jeu.
 | AR5200 | WTLAVA–D | `ar5200-contour-matte-20260924-v1` | validée avec réserve — `ar5200-contour-user-qa-20260924-v1.json` | 287 paires, 5 ignorées fond non noir ; mêmes réserves que les autres familles (C provisoire) |
 | AR0500N | WTSWAM | `ar0500n-contour-matte-20260924-v1` | **rejetée** — `ar0500n-contour-user-qa-20260924-v1.json` | version courante conservée pour le développement ; refonte puis réapplication toutes familles à prévoir |
 | Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | WTSWAM (+ WTPOOL AR1100) | `<map>-contour-matte-20260925-v1` (spline fit 1 + `central_water`, a = 128) | **validées** 2026-09-25 — `<map>-contour-user-qa-20260925-v1.json` | construit après A+B, sans reprise |
+| Lot oil : AR0603, AR1203, AR2102, AR3024 | WTOIL | `<map>-contour-matte-20260928-v1` (spline fit 1 + `central_water`) | **validées** 2026-09-28 — `<map>-contour-user-qa-20260928-v1.json` | construit après A, avant installation B ; alpha 200 (AR1203/AR3024) validé en jeu |
 | Lot pool (13 actifs, liste : TEMPORAL_30FPS_PIPELINE) | WTPOOL | `<map>-pool-final-contour-20260925-v1` ; reprises AR0506/AR1003/AR1004 le 2026-09-26 | **validées** 2026-09-26 — `<map>-contour-user-qa-20260926-v1.json` | spline fit 1 par défaut ; exceptions gaussiennes AR0408/AR0506/AR0703/AR1003/AR1004, arrondi résiduel accepté |
 | AR1600 / AR0500 / AR0500N | lac / marais | `ar1600|ar0500|ar0500n-contour-matte-20260925-v1` | **validées** 2026-09-25 — `*-contour-user-qa-20260925-v1.json` (AR0500N : remplace le rejet du 2026-09-24) | reprise `central_water` depuis les pages non traitées ; jonction 5,64 → 3,46 / 3,59 → 3,03 / 3,12 → 2,86 (réf. 4,13 / 3,16 / 2,22 : AR0500N reste 1,29×) |
 

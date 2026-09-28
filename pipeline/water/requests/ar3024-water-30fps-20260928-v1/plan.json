@@ -1,0 +1,244 @@
+{
+  "schema": "bg2-liquid-temporal-30fps-v1",
+  "source_plan": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1\\temporal-plan.json",
+    "bytes": 670,
+    "sha256": "212FBFCB81E1F4BDF8D5C29D9C460DE64A0645D35EE22A4C8B69D66A44303C24"
+  },
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "wed": "AR3024",
+  "spatial_run": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1",
+  "selection": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1\\selection.json",
+    "bytes": 443,
+    "sha256": "C68F23384D76C4B4929429D1211B83524DC9B17E3AFB28CE4663DF23F1EDB0B1"
+  },
+  "source_wed": {
+    "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1\\override-candidate\\AR3024.WED",
+    "bytes": 28184,
+    "sha256": "1B8757CDECB41F951450C0F4ECAC3EE16B31AF1FEC3B35AE87ECF13BEF866ADE"
+  },
+  "base_registry": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar1203-water-30fps-20260928-v1\\registry-v3.json",
+  "groups": [
+    {
+      "id": "oil",
+      "rain_of": null,
+      "group": {
+        "id": "oil",
+        "wed": "AR3024",
+        "resrefs": [
+          "WTOIL"
+        ],
+        "aliases": {
+          "WTOIL": "YS90SQ"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTOIL"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "dry",
+        "source_wed_resrefs": [
+          "WTOIL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTOIL": "YF3HQC"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 9,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.0,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [],
+        "non_torus_share": 0.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTOIL",
+          "wed_resref": "WTOIL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTOIL",
+          "b": "WTOIL",
+          "axis": "x",
+          "occurrences": 198
+        },
+        {
+          "a": "WTOIL",
+          "b": "WTOIL",
+          "axis": "y",
+          "occurrences": 186
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1\\overlays\\groups\\oil\\build.json",
+        "bytes": 18685,
+        "sha256": "531B1948E4D1AA995553CF4883962B914368888981861B08714C44DDA3FE6C1C"
+      }
+    },
+    {
+      "id": "oil_rain",
+      "rain_of": "oil",
+      "group": {
+        "id": "oil_rain",
+        "wed": "AR3024",
+        "resrefs": [
+          "WTOILR"
+        ],
+        "aliases": {
+          "WTOILR": "YS90SQR"
+        },
+        "method": "seedvr",
+        "layout": [
+          [
+            "WTOILR"
+          ]
+        ],
+        "seam_mode": "compatible",
+        "weather": "rain",
+        "source_wed_resrefs": [
+          "WTOIL"
+        ],
+        "seam_width_x4": 8,
+        "seed": 959948902156062
+      },
+      "aliases": {
+        "WTOILR": "YF3HQCR"
+      },
+      "material_id": 1,
+      "approved_strength": 0.0,
+      "reuse_seedvr_from": null,
+      "lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "wed_lookup": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "torus": {
+        "heal_band_x1": 4,
+        "heal_sigma_x1": 3.0,
+        "heal_gain": 0.8,
+        "seedvr_margin_x1": 32,
+        "periodic_sigma_x4": 8.0,
+        "deridge_band_x1": 0,
+        "deridge_sigma_x1": 6.0,
+        "temporal_harmonics": 9,
+        "equalize_detail": true,
+        "max_non_torus_share": 0.0,
+        "reuse_seedvr_from": null,
+        "non_torus_adjacencies": [],
+        "non_torus_share": 0.0
+      },
+      "playback": [
+        {
+          "slot": 1,
+          "resref": "WTOILR",
+          "wed_resref": "WTOIL",
+          "lookup": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "speed_divisor": 0,
+          "movement": 0,
+          "secondary": 65535,
+          "flags": 0,
+          "rendering_flags": 0,
+          "nominal_loop_seconds_at_15hz": 0.4
+        }
+      ],
+      "cycle_seconds": 2.4,
+      "phases": 72,
+      "method": "seedvr-torus",
+      "edge_collar": false,
+      "seam_width_x4": 8,
+      "adjacencies": [
+        {
+          "a": "WTOILR",
+          "b": "WTOILR",
+          "axis": "x",
+          "occurrences": 198
+        },
+        {
+          "a": "WTOILR",
+          "b": "WTOILR",
+          "axis": "y",
+          "occurrences": 186
+        }
+      ],
+      "selected_build": {
+        "path": "G:\\AI\\BG2_Upscale\\maps\\water-batches\\runs\\ar3024-water-x4-20260928-v1\\overlays\\groups\\oil_rain\\build.json",
+        "bytes": 18834,
+        "sha256": "757C7F977793406ADDF25B186B214AE98D49321704D89A8707B1C98C76B8FBB7"
+      }
+    }
+  ],
+  "display_fps": 30,
+  "qa": "pending-user-ingame"
+}

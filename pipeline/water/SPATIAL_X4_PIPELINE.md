@@ -76,7 +76,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | pool | — (famille clôturée 2026-09-26) | 13 WED actifs validés ; AR0700/AR0700N/AR2804/AR2805 audités sans cellule WTPOOL active |
 | swamp | — (famille clôturée 2026-09-25) | 19 WED traités : lot 14 + AR0500/AR0500N/AR1000N/AR1607/AR1800 |
 | sewage | AR2100 | AR0404 |
-| oil | AR0603, AR1203, AR2102, AR3024 (AR0503 fait) | AR0413 |
+| oil | — (lot 4 + AR0503 validés 2026-09-28) | AR0413 |
 | lake_teal | — (AR6300 fait) | AR3000 |
 | brown_flow | — (AR5000 fait) | AR5203 |
 | lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
@@ -93,6 +93,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR5000 | brown_flow | `ar5000-water-x4-20260924-v1` + bases `ar5000-bases-x4-20260924-v2` | `ar5000-spatial-installed-20260924-v1.json` (WED par B, pages par bases v2 puis C) | validée — `ar5000-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
 | Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | swamp (+ pool AR1100) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées — `<map>-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
+| Lot oil : AR0603, AR1203, AR2102, AR3024 | oil | `<map>-water-x4-20260928-v1` | `<map>-spatial-installed-20260928-v1.json` (WED par B, pages par C) ; bases réparées sur AR2102 seul (9 centrales, 26 interfaces), aucune ailleurs (0 cellule sans secondaire) | validées 2026-09-28 — `<map>-spatial-user-qa-20260928-v1.json` (QA avant B/C) |
 | Lot pool (13 actifs) : AR0408, AR0506, AR0703, AR1000, AR1003, AR1004, AR1100, AR1601, AR2000, AR2000N, AR2011, AR2012, AR5010 | pool (+ slot swamp AR1100 préservé) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées 2026-09-26 — `<map>-spatial-user-qa-20260926-v1.json` |
 | AR0500N | swamp | `ar0500n-water-x4-20260924-v2` | `ar0500n-spatial-installed-20260924-v1.json` (WED/pages remplacées par B+C) | validée utilisateur, nuit ; reçu QA A non émis ; possible depuis `--superseded-by` répétable (B + C), sur citation utilisateur |
 
