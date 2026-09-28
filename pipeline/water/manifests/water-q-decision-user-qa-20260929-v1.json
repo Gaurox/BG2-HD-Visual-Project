@@ -1,0 +1,76 @@
+{
+  "schema": "bg2-water-q-decision-v1",
+  "date": "2026-09-29",
+  "decision": "validated-ingame",
+  "runtime": {
+    "ini": "WaterOverlayStrength = 1.00",
+    "ini_rule": "INI WaterOverlayStrength = 1.00 (neutral cap); q fixed per identity in the route2 registry (effective q = min(INI, registry))",
+    "registry": "pipeline/water/requests/water-q-per-map-20260929-v5/registry-v3.json",
+    "dll_sha256": "314EB46388AA8E8F807972F363E9DB34047C8CBCAAF4554B25D14F687FDD5269",
+    "runtime_receipt": "backups/water/water-q-per-map-20260929-v5/runtime/install-backup.json"
+  },
+  "q_by_wed": {
+    "0.4": [
+      "AR0300N",
+      "AR0310",
+      "AR0408",
+      "AR0500",
+      "AR0500N",
+      "AR0506",
+      "AR0604",
+      "AR0703",
+      "AR1000",
+      "AR1003",
+      "AR1004",
+      "AR1100",
+      "AR1106",
+      "AR1201",
+      "AR1403",
+      "AR1500",
+      "AR1601",
+      "AR2000",
+      "AR2000N",
+      "AR2011",
+      "AR2012",
+      "AR2210",
+      "AR2500",
+      "AR2600",
+      "AR2602",
+      "AR2700",
+      "AR3025",
+      "AR5010",
+      "AR6008"
+    ],
+    "0.25": [
+      "AR0413"
+    ],
+    "0.6": [
+      "AR2903"
+    ]
+  },
+  "q_zero": "every other registry identity, including every rain variant",
+  "lava": {
+    "AR2903": 0.6,
+    "AR1401": 0.0,
+    "AR5201": 0.0,
+    "AR5204": 0.0,
+    "AR5200": 0.0,
+    "quotes": [
+      "C:MoveToArea(AR5201/AR5204/AR1401) ces 3 maps sont validées.",
+      "ok ces 4 maps sont validées.",
+      "ok on valide toutes les maps lave."
+    ],
+    "not_covered": "AR0011 (23-09 witness Q9LV*, not in the registry, still to retreat)",
+    "trials": "lava q 0.40 (INI cap), 0.70, 0.90, 1.00 (maps differ); AR1401 0.80 then 0; AR5201/AR5204/AR2903 0.50, 0.25, 0; AR2903 0.80 then 0.60 retained"
+  },
+  "pool_swamp_ar0300n": {
+    "q": 0.4,
+    "source": "validated 2026-09-28 via INI cap 0.40 on AR0408/AR1000/AR0500/AR2600/AR0300N; moved into the registry 2026-09-29 (30 identities)"
+  },
+  "AR0413": {
+    "q": 0.25,
+    "qa": "pipeline/water/manifests/ar0413-final-user-qa-20260928-v1.json"
+  },
+  "q_semantics": "fpSEAM route2: stored RGB = mix(x4 texture, procedural water (normals, foam, specular, authored tint), q); lava/oil get water shading (material 1)",
+  "release": "not-requested; the release INI is not changed"
+}

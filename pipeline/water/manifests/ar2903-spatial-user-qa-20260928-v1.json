@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR2903",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-28T21:46:47+00:00",
+  "source": "user-message",
+  "quote": "les rendus sont globalement validé.",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "not-specified-by-user",
+  "selection": {
+    "path": "pipeline/water/manifests/ar2903-spatial-installed-20260928-v1.json",
+    "sha256": "629EB261A5C08B08CC1B96DE054FDA82D71AA67A5036F17C50DE95928640ECBA"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar2903-temporal-30fps-installed-20260928-v1.json",
+      "sha256": "A58C37233A7665C079EFF1F99C283214B6F7C54EAC36750C6F25B4EAAACC6EB1"
+    },
+    {
+      "path": "pipeline/water/manifests/ar2903-contour-installed-20260928-v1.json",
+      "sha256": "AF6C657A35E6197F65546D2B1A0631164B09B4D9EE7288F434AADF0A54612E83"
+    }
+  ],
+  "release": "not-requested"
+}

@@ -36,10 +36,10 @@ Références : AR1600 valide la recette lac ; AR2100 valide `sewage` A → B, av
 avec réserve et désormais provisoire. Contrat dans `liquid-family-standard-v1.json` : SeedVR x4, matériau 4,
 cycle 2,4 s / 72 phases. Les garde-fous de review restent applicables.
 AR0408 valide `pool` A → B ; AR0703 valide A → B et fournit la QA historique C : bilinéaire x4, matériau 1,
-cycle figé 2,4 s / 72 phases, **force route2 0,70 sur le groupe sec** (la timeline seule paraît figée), pluie q0,
+cycle figé 2,4 s / 72 phases, **force route2 0,40 sur le groupe sec** (0,70 jusqu'au 2026-09-28 ; la timeline seule paraît figée), pluie q0,
 contours C provisoires `rgb-x4-silhouette-matte` (10 paires, alpha 128).
 AR0500 jour et AR0500N nuit valident `swamp` A → B : SeedVR 7B x4, matériau 5, cycle 2,4 s / 72 phases,
-force route2 0,70 sur le groupe sec, **pluie q0** (validée AR0500 2026-09-25 ; q0,70 efface les flaques). C reste applicable mais
+force route2 0,40 sur le groupe sec (0,70 jusqu'au 2026-09-28), **pluie q0** (validée AR0500 2026-09-25 ; q0,70 efface les flaques). C reste applicable mais
 provisoire : continuer en l'état, puis reconstruire/réinstaller toutes les maps après validation de sa refonte.
 AR5200 valide `lava` B → C (2026-09-24) : A seulement **construit** (contextes x1 + topologie, non installé ;
 sa WED bilinéaire est remplacée par B), B `seedvr-torus` 12 clés / 216 phases / 7,2 s, q0 matériau 1,
@@ -59,6 +59,11 @@ sans décrêtage (il créait une grille), C gaussien à alpha 160 ; essais splin
 
 C ne dépend ni de A ni de B : C seul reste possible (y compris sur une map « décision utilisateur »).
 Ordre : C modifie les pages de base ; faire ou refaire A (bases) après C écraserait C → restaurer C d'abord.
+
+**q route2 (2026-09-29)** : INI `WaterOverlayStrength = 1.00` (plafond neutre) ; q fixé par identité dans le registre
+(q effectif = min(INI, registre)). Valeurs validées : piscines/marais/AR0300N 0,40 ; AR0413 0,25 ; AR2903 0,60 ; tout le
+reste et toutes les pluies 0. q > 0 = `mix(texture x4, eau procédurale, q)` (lave/huile rendues en eau). Décision :
+[`manifests/water-q-decision-user-qa-20260929-v1.json`](manifests/water-q-decision-user-qa-20260929-v1.json).
 
 ## A. Eau x4 spatiale
 

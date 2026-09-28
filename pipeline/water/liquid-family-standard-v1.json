@@ -72,7 +72,7 @@
      "why": "SeedVR amplifies the diagonal weave into a grid",
      "spatial_status": "validated-ingame-AR0408-AR0703",
      "temporal": {"material_id": 1, "cycle": "fixed", "cycle_seconds": 2.4,
-                  "approved_strength": 0.70, "status": "validated-ingame-AR0408-AR0703",
+                  "approved_strength": 0.40, "status": "validated-ingame-AR0408-AR0703", "why_strength_040": "q0.40 validated 2026-09-29 on AR0408/AR1000/AR0500/AR2600/AR0300N (INI 1.00, q per identity); 0.70 until 2026-09-28",
                   "why_strength": "bilinear WTPOOL is near-flat (std 5.5/255): its timeline alone reads frozen (AR1000 v3, AR0408 30fps v1); route2 q0.70 material 1 on the dry group (AR1000 v5, AR0408 v2); rain stays q0",
                   "why_cycle": "6 keys x speed 6 / 15 Hz validated on AR0408; AR1004, AR1601, AR2012 carry speed 0"},
      "contour": {"method": "rgb-x4-silhouette-matte", "status": "spline-fit1-default; gaussian map exceptions: AR0408/AR0703 (2026-09-25), AR0506/AR1003/AR1004 (2026-09-26)"},
@@ -80,7 +80,7 @@
     {"id": "swamp", "overlays": ["WTSWAM"], "layout": [["WTSWAM"]], "spatial_method": "seedvr",
      "spatial_status": "validated-ingame-AR0500-AR0500N",
      "temporal": {"material_id": 5, "cycle": "fixed", "cycle_seconds": 2.4,
-                  "approved_strength": 0.70, "approved_rain_strength": 0.0,
+                  "approved_strength": 0.40, "approved_rain_strength": 0.0,
                   "status": "validated-ingame-dry-AR0500-AR0500N-rain-AR0500",
                   "why": "AR0500 and AR0500N validate the standard 72-phase 2.4 s producer with material 5 q0.70 on dry identities; rain is timing-only q0 (AR0500 2026-09-25): P replaces 70 % of U, q0.70 erased the WTSWAMR drop rings (trial ar0500-rain-q070-test-20260925-v1 rejected). Rain needs DLL >= ar0500-rain-q0-20260925-v2 (PVRZ rain page bound)"},
      "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-spline-fit1-AR0500-AR0500N-20260925"},
@@ -139,7 +139,7 @@
                   "why_cycle": "12 keys x 18 = 216 phases fit one 4096 page (225 max); vanilla 11x11/15 = 8.07 s nominal",
                   "why_method": "WED adjacencies are exactly the 2x2 torus: seams healed at x1 (band 4, sigma 3, gain 0.8), SeedVR on motif + 32 px wrapped margin, periodic+smooth with border jump low-passed (sigma 8 x4), atlas margins from the torus neighbour; q0 timing-only, no procedural lava"},
      "contour": {"method": "rgb-x4-silhouette-matte", "status": "validated-spline-fit1-AR5200-20260925"},
-     "witness": "AR5200-B-C"}
+     "witness": "AR5200-B-C;batch-4-A-B-C-20260929 (AR5201 AR5204 AR1401 AR2903; AR2903 max_non_torus_share 0.015 and map q0.60, others q0)"}
   ],
   "blocked": {
     "local_are_bam_surfaces": "ARE/BAM water surfaces (AR2300 falls, AR2804/5, AR3021 basins) follow the animation pipeline, not this chain",

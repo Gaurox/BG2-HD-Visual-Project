@@ -79,7 +79,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | oil | — (famille clôturée 2026-09-28 : AR0503, lot 4, AR0413) | — |
 | lake_teal | — (AR6300 fait) | AR3000 |
 | brown_flow | — (AR5000 fait) | AR5203 |
-| lava | AR1401, AR2903, AR5200, AR5201, AR5204 | AR0011 |
+| lava | — (lot 2026-09-29 : AR1401, AR2903, AR5201, AR5204 ; AR5200) | AR0011 |
 
 ### Validations par map
 
@@ -92,6 +92,7 @@ Relancer : `plan_water_map.py inventory --vanilla-root $v`.
 | AR0503 | oil | `ar0503-water-x4-20260924-v1` | `ar0503-spatial-installed-20260924-v1.json` (WED remplacée par B, 3 pages par C) | validée — `ar0503-spatial-user-qa-20260924-v1.json` (`superseded_by` B v2 + C) |
 | AR5000 | brown_flow | `ar5000-water-x4-20260924-v1` + bases `ar5000-bases-x4-20260924-v2` | `ar5000-spatial-installed-20260924-v1.json` (WED par B, pages par bases v2 puis C) | validée — `ar5000-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | AR5200 | lava | `ar5200-water-x4-20260924-v1` | reçu v1 retiré au rollback du 2026-09-24 ; A non installé, entrée de B | sans objet (B+C validés) |
+| Lot lave : AR1401, AR2903 (A installé : 3 / 4 centrales + 8 interfaces) ; AR5201, AR5204 (A construit seulement, 0 centrale) | lava | `<map>-water-x4-20260929-v1` | `<map>-spatial-installed-20260928-v1.json` (AR1401/AR2903) | validées 2026-09-29 — `<map>-spatial-user-qa-20260928-v1.json` (`superseded_by` B + C) |
 | Lot swamp (14, liste : TEMPORAL_30FPS_PIPELINE) | swamp (+ pool AR1100) | `<map>-water-x4-20260925-v1` | `<map>-spatial-installed-20260925-v1.json` (WED par B, pages par C) | validées — `<map>-spatial-user-qa-20260925-v1.json` (`superseded_by` B + C) |
 | Lot oil : AR0603, AR1203, AR2102, AR3024 | oil | `<map>-water-x4-20260928-v1` | `<map>-spatial-installed-20260928-v1.json` (WED par B, pages par C) ; bases réparées sur AR2102 seul (9 centrales, 26 interfaces), aucune ailleurs (0 cellule sans secondaire) | validées 2026-09-28 — `<map>-spatial-user-qa-20260928-v1.json` (QA avant B/C) |
 | AR0413 | oil | reset `ar0413-base-reset-20260928-v1` → overlay `ar0413-water-x4-20260928-v3` → bases `…-v5` (`central_rgb` [14,13,7] + `flatten_pair_secondary`) | reçus supersédés ; pile complète dans `manifests/ar0413-final-user-qa-20260928-v1.json` | validée 2026-09-28 ; v2 (alpha 128 sur RGB x4 : mosaïque + sentinelles claires), v3 (alpha 0 : contours sombres), v4 (couleur unie seule) rejetées |

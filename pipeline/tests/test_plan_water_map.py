@@ -43,27 +43,27 @@ class PlanWaterMapTests(unittest.TestCase):
     def test_pool_strength_from_ar1000_is_written_only_on_the_dry_group(self):
         standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
         temporal = next(f for f in standard["families"] if f["id"] == "pool")["temporal"]
-        self.assertEqual((temporal["material_id"], temporal["approved_strength"]), (1, 0.70))
+        self.assertEqual((temporal["material_id"], temporal["approved_strength"]), (1, 0.40))
         self.assertEqual((temporal["cycle"], temporal["cycle_seconds"], temporal["status"]),
                          ("fixed", 2.4, "validated-ingame-AR0408-AR0703"))
         dry = p.temporal_plan_group("pool", {"WTPOOL": "YFTEST"}, temporal)
         rain = p.temporal_plan_group("pool_rain", {"WTPOOLR": "YFTESTR"}, temporal, "pool")
-        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.70, 2.4))
+        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.40, 2.4))
         self.assertNotIn("approved_strength", rain)
         self.assertNotIn("cycle_seconds", rain)
 
-    def test_swamp_rain_is_timing_only_while_dry_keeps_q070(self):
+    def test_swamp_rain_is_timing_only_while_dry_keeps_family_q(self):
         # AR0500 2026-09-25: q0.70 on the rain group erased the WTSWAMR drop rings.
         standard = json.loads(p.STANDARD.read_text(encoding="utf-8"))
         temporal = next(f for f in standard["families"] if f["id"] == "swamp")["temporal"]
         self.assertEqual(
             (temporal["material_id"], temporal["cycle_seconds"],
              temporal["approved_strength"], temporal["approved_rain_strength"]),
-            (5, 2.4, 0.70, 0.0),
+            (5, 2.4, 0.40, 0.0),
         )
         dry = p.temporal_plan_group("swamp", {"WTSWAM": "YFTEST"}, temporal)
         rain = p.temporal_plan_group("swamp_rain", {"WTSWAMR": "YFTESTR"}, temporal, "swamp")
-        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.70, 2.4))
+        self.assertEqual((dry["approved_strength"], dry["cycle_seconds"]), (0.40, 2.4))
         self.assertEqual((rain["approved_strength"], rain["rain_of"]), (0.0, "swamp"))
         self.assertNotIn("cycle_seconds", rain)
 
