@@ -41,11 +41,9 @@ décor**. Restent ouverts sur des zones déjà validées :
 
 | Sujet | Zones | Entrée |
 |---|---|---|
-| Famille liquide `WT5000A-D` : AR5000 traitée (chaîne eau standard) ; AR5203 et préflight décor restent | AR5203 (+ préflight AR5000) | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
+| Famille liquide `WT5000A-D` : AR5000 et AR5203 traitées et validées (chaîne eau standard, 2026-09-25/29) ; reste le préflight décor | préflight AR5000/AR5203 | [WATER-005](#water-005--famille-wt5000a-d-ar5000-ar5203-non-classée) |
 | Partie eau signalée en QA | AR5200 | [WATER-004](#water-004--ar5200--partie-eau-restante-hors-overlays-lave) |
-| Tuile de base d'eau opaque sans secondaire (1 cellule, réparation native non appliquée) | AR6008 | [WATER-002](#water-002--portage-de-la-réparation-eau-native-aux-autres-maps) |
 | Contours C : résolu (spline fit 1 par défaut) ; reste le liseré jaune-clair mineur | Toutes familles | [WATER-006](#water-006--refonte-globale-des-contours-c) |
-| Overlays liquides réutilisés en x2, non requalifiés pour ces zones | AR5010 (WTPOOL) ; AR6300 traitée 2026-09-25 (chaîne standard) | `overlay-sources.json` |
 | Animations de zone | toutes zones ToB/Black Pits des lots 2026-09-19 | `animations/index/` |
 
 ## MAP-RELEASE-001 — OH6460 partage le tileset OH8100
@@ -80,6 +78,7 @@ ne sont pas réconciliés par une décision explicite.
 - AR0900 jour entièrement corrigé et validé par l'utilisateur le 2026-09-12 : composition native,
   WTLAKE périodique, alpha128 central, bandes RGB/alpha des interfaces internes et marges.
 - Notice technique et preuves : [`WATER_REPAIR_RUNBOOK.md`](WATER_REPAIR_RUNBOOK.md).
+- 2026-09-29 : les 63 WED à eau active sont passées par la chaîne standard (A répare centrales et interfaces), AR6008 comprise (1 centrale, lot marais 2026-09-25) ; toutes validées en jeu.
 - Restent : orchestrateur paramétré, audits/builder legacy recommandant alpha0, qualification des
   autres structures/familles et variantes nuit. Ne pas généraliser les constantes du témoin.
 - La configuration Core release impose encore `EnableWaterEffect=true`, contrairement au témoin ;
@@ -117,7 +116,8 @@ ne sont pas réconciliés par une décision explicite.
 - 2026-09-25 : AR5000 traitée par la chaîne eau standard (famille `brown_flow`, A/B/C validés ;
   [TEMPORAL_30FPS_PIPELINE](water/TEMPORAL_30FPS_PIPELINE.md)) : animation 30 FPS, bases rendues à l'alpha
   natif, contours. Raccord vanilla hors tore conservé sur 5 cellules (41–45, rangées 33/34).
-- Reste ouvert : AR5203 (témoin du lot, alias `Q9*` : reprise = décision utilisateur) ; classification dans
+- 2026-09-29 : AR5203 retraitée par la chaîne standard (remise à zéro, q0,40, BC3 raffiné) et validée en jeu.
+- Reste ouvert : classification dans
   `audit_area_preflight.py`/`audit_water_area.py`/`build_upscaled_area.py` (le préflight décor bloque toujours
   sans `--allow-blocked-test`) ; matériau route2 dédié (non requis : q0 validé).
 
