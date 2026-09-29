@@ -28,6 +28,38 @@ QA_STATES = VALIDATED_QA | BLOCKED_QA | {
     "pending-ingame",
 }
 INSTALLATION_STATES = {"installed", "not-run"}
+REVIEW_KINDS = ("q", "rain", "night")
+REVIEW_STATES = {"pending", "validated", "not-applicable"}
+
+
+def _validate_review(label: str, item: dict[str, Any], errors: list[str],
+                     counts: dict[str, Counter[str]]) -> None:
+    """Per-map re-check columns of the post-treatment campaign (q, rain, night)."""
+    review = item.get("review")
+    if not isinstance(review, dict) or set(review) != set(REVIEW_KINDS):
+        errors.append(f"map[{label}]: review must hold exactly q, rain and night")
+        return
+    for kind in REVIEW_KINDS:
+        entry = review[kind]
+        state = entry.get("state") if isinstance(entry, dict) else None
+        if state not in REVIEW_STATES:
+            errors.append(f"map[{label}]: invalid {kind} review state")
+            continue
+        counts[kind][state] += 1
+        evidence = entry.get("evidence")
+        if not isinstance(evidence, list) or (state == "validated" and not evidence):
+            errors.append(f"map[{label}]: validated {kind} review needs evidence")
+        for ident in entry.get("current", []) if kind in ("q", "rain") else []:
+            if (not isinstance(ident, dict) or not isinstance(ident.get("slot"), int)
+                    or not isinstance(ident.get("overlay"), str)
+                    or not isinstance(ident.get("q"), (int, float)) or not 0 <= ident["q"] <= 1):
+                errors.append(f"map[{label}]: invalid {kind} review identity")
+    if not isinstance(review["rain"].get("weather"), bool):
+        errors.append(f"map[{label}]: rain review lacks the ARE weather flag")
+    elif not review["rain"]["weather"] and review["rain"].get("state") != "not-applicable":
+        errors.append(f"map[{label}]: rain review applies only to weather areas")
+    if item.get("variant") != "night" and review["night"].get("state") != "not-applicable":
+        errors.append(f"map[{label}]: night review applies only to night WEDs")
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -154,6 +186,7 @@ def validate_tracking(
 
     work_counts: Counter[str] = Counter()
     qa_counts: Counter[str] = Counter()
+    review_counts: dict[str, Counter[str]] = {kind: Counter() for kind in REVIEW_KINDS}
     active_ids: list[str] = []
     referenced_release_ids: list[str] = []
     overlay_count = 0
@@ -220,6 +253,7 @@ def validate_tracking(
             errors.append(f"map[{label}]: blocked map cannot be queued/active")
         if work_state == "blocked" and not blockers:
             errors.append(f"map[{label}]: blocked map lacks blockers")
+        _validate_review(label, item, errors, review_counts)
 
     for target_id, count in Counter(referenced_release_ids).items():
         if count > 1:
@@ -231,6 +265,21 @@ def validate_tracking(
     }
     for target_id in sorted(expected_release_ids - set(referenced_release_ids)):
         errors.append(f"release target absent from map tracking: {target_id}")
+
+    campaign = data.get("campaign")
+    if not isinstance(campaign, dict) or not isinstance(campaign.get("treatment"), dict)             or not isinstance(campaign.get("review"), dict):
+        errors.append("campaign: treatment and review blocks are required")
+    else:
+        if campaign["treatment"].get("state") not in {"in-progress", "all-treated"}:
+            errors.append("campaign: invalid treatment state")
+        elif campaign["treatment"]["state"] == "all-treated" and work_counts.get("done", 0) != len(maps):
+            errors.append("campaign: all-treated requires every map done")
+        if campaign["review"].get("state") not in {"pending", "in-progress", "done"}:
+            errors.append("campaign: invalid review state")
+        elif campaign["review"]["state"] == "done" and any(review_counts[k].get("pending") for k in REVIEW_KINDS):
+            errors.append("campaign: review done with pending map reviews")
+        if not set(campaign["review"].get("kinds", [])) <= set(REVIEW_KINDS):
+            errors.append("campaign: unknown review kind")
 
     workflow = data.get("workflow", {})
     if workflow.get("mode") != "one-map-at-a-time":
@@ -246,6 +295,7 @@ def validate_tracking(
         "night_maps": sum(1 for item in maps if isinstance(item, dict) and item.get("variant") == "night"),
         "work_states": dict(sorted(work_counts.items())),
         "qa_states": dict(sorted(qa_counts.items())),
+        "review_states": {kind: dict(sorted(review_counts[kind].items())) for kind in REVIEW_KINDS},
     }
     summary = dict(actual_counts)
     summary["active_map_id"] = active_map_id

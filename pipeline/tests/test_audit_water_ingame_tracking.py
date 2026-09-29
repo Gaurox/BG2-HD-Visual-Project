@@ -70,6 +70,35 @@ class WaterIngameTrackingTests(unittest.TestCase):
         errors, _ = self.validate(data)
         self.assertTrue(any("single active map" in error for error in errors))
 
+    def test_review_campaign_covers_every_active_liquid_map(self):
+        errors, summary = self.validate(self.data)
+        self.assertEqual(errors, [])
+        self.assertEqual(self.data["campaign"]["treatment"]["state"], "all-treated")
+        q = summary["review_states"]["q"]
+        self.assertEqual(q.get("pending", 0) + q.get("validated", 0), 63)
+        self.assertEqual(sum(summary["review_states"]["night"].values()), 67)
+
+    def test_rain_review_needs_a_weather_area(self):
+        data = copy.deepcopy(self.data)
+        target = next(item for item in data["maps"] if not item["review"]["rain"]["weather"])
+        target["review"]["rain"]["state"] = "pending"
+        errors, _ = self.validate(data)
+        self.assertTrue(any("rain review applies only to weather areas" in error for error in errors))
+
+    def test_night_review_only_on_night_weds(self):
+        data = copy.deepcopy(self.data)
+        target = next(item for item in data["maps"] if item["variant"] != "night")
+        target["review"]["night"]["state"] = "pending"
+        errors, _ = self.validate(data)
+        self.assertTrue(any("night review applies only to night WEDs" in error for error in errors))
+
+    def test_validated_review_needs_evidence(self):
+        data = copy.deepcopy(self.data)
+        target = next(item for item in data["maps"] if item["review"]["q"]["state"] == "pending")
+        target["review"]["q"]["state"] = "validated"
+        errors, _ = self.validate(data)
+        self.assertTrue(any("validated q review needs evidence" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

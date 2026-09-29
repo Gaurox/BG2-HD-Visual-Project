@@ -2,7 +2,7 @@
   "$schema": "ingame-map-tracking-v1.schema.json",
   "schema": "bg2-water-ingame-map-tracking-v1",
   "version": 1,
-  "updated": "2026-09-26",
+  "updated": "2026-09-29",
   "inventory": {
     "path": "pipeline/water/manifests/liquid-target-matrix-v1.json",
     "sha256": "223538407EB6942B11F3F90D36C3B31704CB393942CBDB3B2679515056543C37",
@@ -22,6 +22,33 @@
     "mode": "one-map-at-a-time",
     "active_map_id": null,
     "rule": "Sélectionner une seule carte queued, la passer active, installer et tester uniquement cette variante WED, puis enregistrer la preuve QA exacte avant de passer à la suivante."
+  },
+  "campaign": {
+    "treatment": {
+      "state": "all-treated",
+      "date": "2026-09-29",
+      "active_liquid_weds": 63,
+      "without_active_liquid": [
+        "AR0700",
+        "AR0700N",
+        "AR2804",
+        "AR2805"
+      ],
+      "evidence": "every active liquid WED has an ingame validation receipt under pipeline/water/manifests (commit f4f52a71)"
+    },
+    "review": {
+      "id": "water-review-q-rain-night-20260929",
+      "state": "pending",
+      "opened": "2026-09-29",
+      "principle": "Game INI WaterOverlayStrength = 1.00 (neutral cap). Route2 q is set per WED identity in the registry (DLL). Every map is re-checked visually to assign its own dry q, already validated maps included; rain variants of weather maps and night WEDs are re-checked too. Rain identities stay q0 unless a rain review decides otherwise.",
+      "registry_pointer": "pipeline/water/route2-registry-current.json",
+      "kinds": [
+        "q",
+        "rain",
+        "night"
+      ],
+      "procedure": "pipeline/water/README.md#revérification-générale-q-pluie-nuit"
+    }
   },
   "maps": [
     {
@@ -85,7 +112,45 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFLOBX",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFIV5A",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFXDO4",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YFNPUV",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0046",
@@ -115,7 +180,30 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF4MJ2",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0046N",
@@ -145,7 +233,30 @@
       "qa_evidence_ids": [
         "ar0046n-water-tint-qa-v7"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFACCH",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0204",
@@ -175,7 +286,30 @@
       "qa_evidence_ids": [
         "ar0204-ar1600-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFM65B",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0300",
@@ -203,7 +337,36 @@
         "water:AR0300:observed"
       ],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFYLF7",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFYLF7R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0300N",
@@ -233,7 +396,36 @@
       "qa_evidence_ids": [
         "ar0300n-reflections-alpha160-qa-v10"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFWFGY",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFWFGYR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0310",
@@ -260,7 +452,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFFJW5",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0404",
@@ -291,7 +506,30 @@
       "qa_evidence_ids": [
         "wtsew-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF7U9G",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0408",
@@ -317,7 +555,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFTX6Q",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0413",
@@ -344,7 +605,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFGPKI",
+              "q": 0.25
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0500",
@@ -371,7 +655,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFLRP9",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFLRP9R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0500N",
@@ -398,7 +711,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF7F6E",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF7F6ER",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0503",
@@ -425,7 +767,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFOL2A",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0506",
@@ -451,7 +816,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFV0VZ",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0512",
@@ -481,7 +869,30 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFJWAC",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0603",
@@ -507,7 +918,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFK0DA",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0604",
@@ -534,7 +968,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF98F1",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0700",
@@ -560,7 +1017,24 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "not-applicable",
+          "current": [],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0700N",
@@ -586,7 +1060,24 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "not-applicable",
+          "current": [],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0703",
@@ -612,7 +1103,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFJEQZ",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0900",
@@ -639,7 +1153,36 @@
         "water:AR0900:day"
       ],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFU4T6",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFU4T6R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR0900N",
@@ -669,7 +1212,36 @@
       "qa_evidence_ids": [
         "ar0900-night-qa-v5"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFW9QQ",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFW9QQR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1000",
@@ -699,7 +1271,36 @@
       "qa_evidence_ids": [
         "ar1000-wtpool-route2-qa-v5"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFBK9U",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFBK9UR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1000N",
@@ -729,7 +1330,36 @@
       "qa_evidence_ids": [
         "ar1000n-wtswam-route2-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF90L3",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF90L3R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1003",
@@ -755,7 +1385,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFS7KI",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1004",
@@ -781,7 +1434,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFALNH",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1100",
@@ -820,7 +1496,46 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2SB6",
+              "q": 0.4
+            },
+            {
+              "slot": 2,
+              "overlay": "YF9N08",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2SB6R",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YF9N08R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1106",
@@ -847,7 +1562,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFTBXO",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1200",
@@ -877,7 +1615,36 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFPM6Q",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFPM6QR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1201",
@@ -904,7 +1671,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF0MLY",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1203",
@@ -930,7 +1720,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFDGWI",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1401",
@@ -993,7 +1806,45 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFXQK8",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFI0NG",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFW0C4",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YFVX1A",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1403",
@@ -1020,7 +1871,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8ZIA",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1500",
@@ -1047,7 +1921,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFTMWJ",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1600",
@@ -1077,7 +1974,36 @@
       "qa_evidence_ids": [
         "ar0204-ar1600-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFS3EO",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFS3EOR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1601",
@@ -1103,7 +2029,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFIBYJ",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1604",
@@ -1133,7 +2082,30 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFYQYT",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1607",
@@ -1164,7 +2136,36 @@
       "qa_evidence_ids": [
         "wtswam-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFTOZ0",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFTOZ0R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1700",
@@ -1194,7 +2195,36 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF6BYA",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF6BYAR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1800",
@@ -1225,7 +2255,36 @@
       "qa_evidence_ids": [
         "wtswam-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8W7V",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8W7VR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR1901",
@@ -1255,7 +2314,30 @@
       "qa_evidence_ids": [
         "wtlake-session-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFRTGW",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2000",
@@ -1281,7 +2363,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFR06J",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFR06JR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2000N",
@@ -1307,7 +2418,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFSHEB",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFSHEBR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "pending",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2011",
@@ -1333,7 +2473,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFUJZB",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2012",
@@ -1359,7 +2522,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFOOD6",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2100",
@@ -1390,7 +2576,30 @@
       "qa_evidence_ids": [
         "wtsew-qa-v1"
       ],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8K47",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2102",
@@ -1417,7 +2626,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFAPVO",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2210",
@@ -1444,7 +2676,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFL72Z",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2300",
@@ -1472,7 +2727,30 @@
         "water:AR2300:unique"
       ],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF0AM8",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2500",
@@ -1499,7 +2777,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2R10",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2R10R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2600",
@@ -1526,7 +2833,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8CGE",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF8CGER",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2602",
@@ -1553,7 +2889,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFX6VH",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2700",
@@ -1580,7 +2939,36 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFN4V2",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFN4V2R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2804",
@@ -1606,7 +2994,24 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "not-applicable",
+          "current": [],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2805",
@@ -1632,7 +3037,24 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "not-applicable",
+          "current": [],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR2903",
@@ -1695,7 +3117,45 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF9ZQ7",
+              "q": 0.6
+            },
+            {
+              "slot": 2,
+              "overlay": "YFU1MY",
+              "q": 0.6
+            },
+            {
+              "slot": 3,
+              "overlay": "YFK1SQ",
+              "q": 0.6
+            },
+            {
+              "slot": 4,
+              "overlay": "YFW0Y2",
+              "q": 0.6
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR3000",
@@ -1758,7 +3218,66 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHTA30",
+              "q": 0.4
+            },
+            {
+              "slot": 2,
+              "overlay": "YHTB30",
+              "q": 0.4
+            },
+            {
+              "slot": 3,
+              "overlay": "YHTC30",
+              "q": 0.4
+            },
+            {
+              "slot": 4,
+              "overlay": "YHTD30",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHTA30R",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YHTB30R",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YHTC30R",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YHTD30R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR3024",
@@ -1784,7 +3303,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF3HQC",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR3025",
@@ -1811,7 +3353,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2PLM",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5000",
@@ -1870,7 +3435,66 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF4HKF",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFEQI5",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFWK4I",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YF8DFC",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF4HKFR",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFEQI5R",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFWK4IR",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YF8DFCR",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5010",
@@ -1896,7 +3520,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFJUQJ",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5200",
@@ -1959,7 +3606,66 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YLVTA1",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YLVTB1",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YLVTC1",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YLVTD1",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YLVTA1R",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YLVTB1R",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YLVTC1R",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YLVTD1R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5201",
@@ -2022,7 +3728,45 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF2XW9",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFPLIQ",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFTE4C",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YFPB1H",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5203",
@@ -2081,7 +3825,66 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHBA52",
+              "q": 0.4
+            },
+            {
+              "slot": 2,
+              "overlay": "YHBB52",
+              "q": 0.4
+            },
+            {
+              "slot": 3,
+              "overlay": "YHBC52",
+              "q": 0.4
+            },
+            {
+              "slot": 4,
+              "overlay": "YHBD52",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHBA52R",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YHBB52R",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YHBC52R",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YHBD52R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR5204",
@@ -2144,7 +3947,45 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YF94II",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YFEEUT",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YFT7LF",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YFA687",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR6008",
@@ -2170,7 +4011,30 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YFVICD",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "not-applicable",
+          "weather": false,
+          "current": [],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     },
     {
       "id": "liquid-map:AR6300",
@@ -2229,7 +4093,66 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": []
+      "blockers": [],
+      "review": {
+        "q": {
+          "state": "pending",
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHTA63",
+              "q": 0.4
+            },
+            {
+              "slot": 2,
+              "overlay": "YHTB63",
+              "q": 0.4
+            },
+            {
+              "slot": 3,
+              "overlay": "YHTC63",
+              "q": 0.4
+            },
+            {
+              "slot": 4,
+              "overlay": "YHTD63",
+              "q": 0.4
+            }
+          ],
+          "evidence": []
+        },
+        "rain": {
+          "state": "pending",
+          "weather": true,
+          "current": [
+            {
+              "slot": 1,
+              "overlay": "YHTA63R",
+              "q": 0.0
+            },
+            {
+              "slot": 2,
+              "overlay": "YHTB63R",
+              "q": 0.0
+            },
+            {
+              "slot": 3,
+              "overlay": "YHTC63R",
+              "q": 0.0
+            },
+            {
+              "slot": 4,
+              "overlay": "YHTD63R",
+              "q": 0.0
+            }
+          ],
+          "evidence": []
+        },
+        "night": {
+          "state": "not-applicable",
+          "evidence": []
+        }
+      }
     }
   ]
 }

@@ -9,9 +9,9 @@ et ouvrir uniquement la référence utile.
 **Appliquer le travail eau à une map : [`WATER_MAP_RUNBOOK.md`](WATER_MAP_RUNBOOK.md)** (ordre, STOP, installation, QA).
 Chaînes : [spatiale x4](SPATIAL_X4_PIPELINE.md) → [30 FPS](TEMPORAL_30FPS_PIPELINE.md) → [contours](CONTOUR_MATTE_PIPELINE.md) ;
 paramètres par famille : [`liquid-family-standard-v1.json`](liquid-family-standard-v1.json).
-État standard courant : `lake` (AR1600), `pool` (AR0408/AR0703), `sewage` (AR2100) et `swamp`
-(AR0500/AR0500N) ont des validations ingame A/B ; C reste utilisable provisoirement et devra être refondu puis
-réappliqué à toutes les maps/familles traitées (`WATER-006`).
+**État 2026-09-29 : toutes les maps à eau sont traitées** — les 63 WED à eau active sont validées en jeu
+(chaîne A/B/C, `campaign.treatment` de `ingame-map-tracking-v1.json`) ; AR0700/AR0700N/AR2804/AR2805 n'ont
+aucune cellule d'eau active. Une **revérification générale** (q, pluie, nuit) est ouverte : voir plus bas.
 
 | Besoin | Référence |
 |---|---|
@@ -61,3 +61,24 @@ python -B pipeline/scripts/audit_water_release_tracking.py --json
 
 Fermer le jeu et InfinityLoader avant une installation. Une validation ingame et une intégration
 release sont deux décisions séparées ; aucun fichier de release n'est modifié sans demande explicite.
+
+## Revérification générale q, pluie, nuit
+
+Campagne `water-review-q-rain-night-20260929` (`campaign.review` + `maps[].review` de
+`ingame-map-tracking-v1.json`, audit `audit_water_ingame_tracking.py`). Toutes les maps sont revues, même
+déjà validées.
+
+| Colonne | Portée | Contrôle |
+|---|---|---|
+| `review.q` | 63 WED à eau active | aspect sec ; choisir un q propre à la map (`current` = q du registre installé) |
+| `review.rain` | 24 WED dont l'ARE a le bit météo `0x4` | `C:SetWeather(1)`, jeu non en pause, ~10 s ; flaques, pas de mosaïque ; pluie q0 par défaut |
+| `review.night` | 6 WED nuit à eau active (AR0046N, AR0300N, AR0500N, AR0900N, AR1000N, AR2000N) | passer la nuit sur la map de jour ; teinte, opacité, raccords |
+
+- Principe : INI `WaterOverlayStrength = 1.00` (plafond neutre) ; q fixé **par identité dans le registre**
+  (DLL). Ne jamais régler q par l'INI.
+- File : `python -B pipeline/scripts/water_review_queue.py list [--kind q|rain|night]` (commandes console incluses).
+- Changer q : entrée(s) sèche(s) de la WED dans une copie du registre courant
+  (`requests/<run>/registry-v3.json`), build DLL + `Install-WaterRuntime.ps1`, puis `water_review_queue.py sync-q`.
+- Verdict : `water_review_queue.py record --wed ARxxxx --kind q|rain|night --state validated --quote "<message>"`.
+- Contrôle log : `WATER_ROUTE2 draw wed=ARxxxx … q=<valeur>` ; opacité appariée : `WATER_ART_OPACITY … drawAlpha=<cible>`.
+

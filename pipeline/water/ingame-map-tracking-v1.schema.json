@@ -3,85 +3,487 @@
   "$id": "bg2-water-ingame-map-tracking-v1.schema.json",
   "title": "BG2EE liquid-map ingame QA tracking v1",
   "type": "object",
-  "required": ["schema", "version", "updated", "inventory", "workflow", "maps"],
+  "required": [
+    "schema",
+    "version",
+    "updated",
+    "inventory",
+    "workflow",
+    "campaign",
+    "maps"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": {"type": "string"},
-    "schema": {"const": "bg2-water-ingame-map-tracking-v1"},
-    "version": {"const": 1},
-    "updated": {"type": "string", "format": "date"},
+    "$schema": {
+      "type": "string"
+    },
+    "schema": {
+      "const": "bg2-water-ingame-map-tracking-v1"
+    },
+    "version": {
+      "const": 1
+    },
+    "updated": {
+      "type": "string",
+      "format": "date"
+    },
     "inventory": {
       "type": "object",
-      "required": ["path", "sha256", "expected_maps", "expected_overlay_targets", "night_weds"],
+      "required": [
+        "path",
+        "sha256",
+        "expected_maps",
+        "expected_overlay_targets",
+        "night_weds"
+      ],
       "additionalProperties": false,
       "properties": {
-        "path": {"type": "string", "minLength": 1},
-        "sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
-        "expected_maps": {"type": "integer", "minimum": 1},
-        "expected_overlay_targets": {"type": "integer", "minimum": 1},
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-F0-9]{64}$"
+        },
+        "expected_maps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_overlay_targets": {
+          "type": "integer",
+          "minimum": 1
+        },
         "night_weds": {
           "type": "array",
-          "items": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N$"},
+          "items": {
+            "type": "string",
+            "pattern": "^(AR|OH)[0-9]{4}N$"
+          },
           "uniqueItems": true
         }
       }
     },
     "workflow": {
       "type": "object",
-      "required": ["mode", "active_map_id", "rule"],
+      "required": [
+        "mode",
+        "active_map_id",
+        "rule"
+      ],
       "additionalProperties": false,
       "properties": {
-        "mode": {"const": "one-map-at-a-time"},
+        "mode": {
+          "const": "one-map-at-a-time"
+        },
         "active_map_id": {
           "oneOf": [
-            {"type": "null"},
-            {"type": "string", "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"}
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"
+            }
           ]
         },
-        "rule": {"type": "string", "minLength": 1}
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "maps": {
       "type": "array",
       "minItems": 1,
-      "items": {"$ref": "#/$defs/map"}
+      "items": {
+        "$ref": "#/$defs/map"
+      }
+    },
+    "campaign": {
+      "type": "object",
+      "required": [
+        "treatment",
+        "review"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "treatment": {
+          "type": "object",
+          "required": [
+            "state",
+            "date",
+            "active_liquid_weds",
+            "without_active_liquid",
+            "evidence"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": [
+                "in-progress",
+                "all-treated"
+              ]
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "active_liquid_weds": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "without_active_liquid": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(AR|OH)[0-9]{4}N?$"
+              },
+              "uniqueItems": true
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "review": {
+          "type": "object",
+          "required": [
+            "id",
+            "state",
+            "opened",
+            "principle",
+            "registry_pointer",
+            "kinds",
+            "procedure"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "state": {
+              "enum": [
+                "pending",
+                "in-progress",
+                "done"
+              ]
+            },
+            "opened": {
+              "type": "string",
+              "format": "date"
+            },
+            "principle": {
+              "type": "string",
+              "minLength": 1
+            },
+            "registry_pointer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kinds": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "q",
+                  "rain",
+                  "night"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "procedure": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
     "map": {
       "type": "object",
-      "required": ["id", "area_id", "wed", "variant", "work_state", "preparation_state", "qa_state", "installation_state", "overlays", "release_target_ids", "qa_evidence_ids", "blockers"],
+      "required": [
+        "id",
+        "area_id",
+        "wed",
+        "variant",
+        "work_state",
+        "preparation_state",
+        "qa_state",
+        "installation_state",
+        "overlays",
+        "release_target_ids",
+        "qa_evidence_ids",
+        "blockers",
+        "review"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": {"type": "string", "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"},
-        "area_id": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}$"},
-        "wed": {"type": "string", "pattern": "^(AR|OH)[0-9]{4}N?$"},
-        "variant": {"enum": ["day-or-unique", "night"]},
-        "work_state": {"enum": ["queued", "active", "blocked", "done"]},
-        "preparation_state": {"enum": ["candidate-available", "native-baseline", "installed", "blocked"]},
-        "qa_state": {"enum": ["validated-ingame", "validated-current-fallback", "session-accepted-variant-unresolved", "pending-ingame", "blocked-family-qa", "blocked-preparation"]},
-        "installation_state": {"enum": ["installed", "not-run"]},
+        "id": {
+          "type": "string",
+          "pattern": "^liquid-map:(AR|OH)[0-9]{4}N?$"
+        },
+        "area_id": {
+          "type": "string",
+          "pattern": "^(AR|OH)[0-9]{4}$"
+        },
+        "wed": {
+          "type": "string",
+          "pattern": "^(AR|OH)[0-9]{4}N?$"
+        },
+        "variant": {
+          "enum": [
+            "day-or-unique",
+            "night"
+          ]
+        },
+        "work_state": {
+          "enum": [
+            "queued",
+            "active",
+            "blocked",
+            "done"
+          ]
+        },
+        "preparation_state": {
+          "enum": [
+            "candidate-available",
+            "native-baseline",
+            "installed",
+            "blocked"
+          ]
+        },
+        "qa_state": {
+          "enum": [
+            "validated-ingame",
+            "validated-current-fallback",
+            "session-accepted-variant-unresolved",
+            "pending-ingame",
+            "blocked-family-qa",
+            "blocked-preparation"
+          ]
+        },
+        "installation_state": {
+          "enum": [
+            "installed",
+            "not-run"
+          ]
+        },
         "overlays": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/overlay"}
+          "items": {
+            "$ref": "#/$defs/overlay"
+          }
         },
-        "release_target_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-        "qa_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
-        "blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        "release_target_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "qa_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        }
       }
     },
     "overlay": {
       "type": "object",
-      "required": ["slot", "resref", "family", "candidate_state", "route2_strength", "reasons"],
+      "required": [
+        "slot",
+        "resref",
+        "family",
+        "candidate_state",
+        "route2_strength",
+        "reasons"
+      ],
       "additionalProperties": false,
       "properties": {
-        "slot": {"type": "integer", "minimum": 1},
-        "resref": {"type": "string", "pattern": "^[A-Z0-9_]{1,8}$"},
-        "family": {"type": "string", "minLength": 1},
-        "candidate_state": {"enum": ["corrected", "candidate-installable-pending-qa", "already-conform", "blocked"]},
-        "route2_strength": {"type": "number", "minimum": 0, "maximum": 1},
-        "reasons": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        "slot": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "resref": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_]{1,8}$"
+        },
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_state": {
+          "enum": [
+            "corrected",
+            "candidate-installable-pending-qa",
+            "already-conform",
+            "blocked"
+          ]
+        },
+        "route2_strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "q",
+        "rain",
+        "night"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "q": {
+          "$ref": "#/$defs/review_q"
+        },
+        "rain": {
+          "$ref": "#/$defs/review_rain"
+        },
+        "night": {
+          "$ref": "#/$defs/review_night"
+        }
+      }
+    },
+    "review_identity": {
+      "type": "object",
+      "required": [
+        "slot",
+        "overlay",
+        "q"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "slot": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "overlay": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_]{1,8}$"
+        },
+        "q": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "review_q": {
+      "type": "object",
+      "required": [
+        "state",
+        "current",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "pending",
+            "validated",
+            "not-applicable"
+          ]
+        },
+        "current": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/review_identity"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "review_rain": {
+      "type": "object",
+      "required": [
+        "state",
+        "weather",
+        "current",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "pending",
+            "validated",
+            "not-applicable"
+          ]
+        },
+        "weather": {
+          "type": "boolean"
+        },
+        "current": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/review_identity"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "review_night": {
+      "type": "object",
+      "required": [
+        "state",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "pending",
+            "validated",
+            "not-applicable"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
       }
     }
   }
