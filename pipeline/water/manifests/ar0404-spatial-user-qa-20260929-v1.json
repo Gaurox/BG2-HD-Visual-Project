@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-water-user-qa-v1",
+  "area": "AR0404",
+  "kind": "spatial",
+  "recorded_utc": "2026-09-29T05:18:48+00:00",
+  "source": "user-message",
+  "quote": "AR0404 et AR5203 validés.",
+  "result": "validated",
+  "reserve": null,
+  "weather_and_variant_observed": "not-specified-by-user",
+  "selection": {
+    "path": "pipeline/water/manifests/ar0404-spatial-installed-20260929-v1.json",
+    "sha256": "F743B3882088C2FD19D6624F2CCB9FEE4F560633B6ACC2D36FC7BF02ADB8D498"
+  },
+  "superseded_by": [
+    {
+      "path": "pipeline/water/manifests/ar0404-temporal-30fps-installed-20260929-v1.json",
+      "sha256": "4D3AB0CB89EEA8E8CA92EEC256BA731ECE7EF4B84C44EF0BC6FED6E6AD343EC8"
+    },
+    {
+      "path": "pipeline/water/manifests/ar0404-contour-installed-20260929-v2.json",
+      "sha256": "5CDACAA88C1A7DD5C8DF47C14A2D8BB918BCE5F674B5E268248F6884DF868E64"
+    }
+  ],
+  "release": "not-requested"
+}

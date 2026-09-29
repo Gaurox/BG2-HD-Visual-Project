@@ -92,11 +92,12 @@ inline const RegistryEntry* select_secondary_art_entry(
   const RegistryEntry* result = nullptr;
   for (const auto* entry : entries) {
     if (!entry || entry->secondaryArtTiles.empty() || resref_view(entry->wed) != wed) continue;
-    // Dry/rain overlays share one base-art contract. Different overlay identities do not
-    // make that contract ambiguous; different base identities or opacity rules still do.
+    // Dry/rain overlays and the slots of an A-D paving (AR3000: WTLAKA-D on slots 1-4) share
+    // one base-art contract. Different overlay identities (resource or slot) do not make that
+    // contract ambiguous; different base identities or opacity rules still do.
     if (result && (result->baseTis != entry->baseTis ||
         result->wedSha256 != entry->wedSha256 || result->slots != entry->slots ||
-        result->slotCount != entry->slotCount || result->overlaySlot != entry->overlaySlot ||
+        result->slotCount != entry->slotCount ||
         result->gridWidth != entry->gridWidth || result->gridHeight != entry->gridHeight ||
         result->baseTileCount != entry->baseTileCount ||
         result->secondaryArtSourceAlpha != entry->secondaryArtSourceAlpha ||

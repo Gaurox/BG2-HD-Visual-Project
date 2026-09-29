@@ -1088,6 +1088,14 @@ void test_water_overlay_route2_policy() {
     rain.wedSha256[0] = std::byte{1};
     expect_true(select_secondary_art_entry("AR0300N", variants) == nullptr,
                 "Different base WED evidence fails closed");
+    rain = dry;
+    rain.overlayTis = resref_array("YHTB30");
+    rain.overlaySlot = dry.overlaySlot + 1;
+    expect_true(select_secondary_art_entry("AR0300N", variants) == &dry,
+                "Slots of one A-D paving share the secondary opacity contract");
+    rain.secondaryArtTargetAlpha = 192;
+    expect_true(select_secondary_art_entry("AR0300N", variants) == nullptr,
+                "Paving slots with different opacity still fail closed");
   }
   iee::water_route2::Match timing{};
   expect_true(!timing.supports_pass(false) && !timing.supports_pass(true),
