@@ -1715,9 +1715,9 @@
       "area_id": "AR3000",
       "wed": "AR3000",
       "variant": "day-or-unique",
-      "work_state": "queued",
+      "work_state": "done",
       "preparation_state": "installed",
-      "qa_state": "pending-ingame",
+      "qa_state": "validated-ingame",
       "installation_state": "installed",
       "overlays": [
         {
@@ -1771,9 +1771,7 @@
       ],
       "release_target_ids": [],
       "qa_evidence_ids": [],
-      "blockers": [
-        "2026-09-29: light border tiles = secondary opacity 160 not applied on the A-D paving (DLL rejected multi-slot contract); DLL fixed, ingame QA pending"
-      ]
+      "blockers": []
     },
     {
       "id": "liquid-map:AR3024",
