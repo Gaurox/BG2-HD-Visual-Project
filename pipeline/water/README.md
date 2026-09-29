@@ -74,6 +74,8 @@ déjà validées.
 | `review.rain` | 24 WED dont l'ARE a le bit météo `0x4` | `C:SetWeather(1)`, jeu non en pause, ~10 s ; flaques, pas de mosaïque ; pluie q0 par défaut |
 | `review.night` | 6 WED nuit à eau active (AR0046N, AR0300N, AR0500N, AR0900N, AR1000N, AR2000N) | passer la nuit sur la map de jour ; teinte, opacité, raccords |
 
+Nuit : scan du KEY vanilla (2026-09-29) — 31 WED `ARxxxxN` au total, **6 seulement** ont des cellules d'eau actives (ci-dessus) ; AR0700N déclare WTPOOL sans cellule active. Les autres maps à eau (AR1600, AR2300…) n'ont pas de WED nuit : la nuit réutilise la WED de jour sous éclairage nocturne (pas d'asset séparé, contrôlable pendant la revue q).
+
 - Principe : INI `WaterOverlayStrength = 1.00` (plafond neutre) ; q fixé **par identité dans le registre**
   (DLL). Ne jamais régler q par l'INI.
 - File : `python -B pipeline/scripts/water_review_queue.py list [--kind q|rain|night]` (commandes console incluses).
