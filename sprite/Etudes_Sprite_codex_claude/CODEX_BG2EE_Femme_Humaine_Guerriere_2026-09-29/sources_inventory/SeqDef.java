@@ -1,0 +1,287 @@
+// Near Infinity - An Infinity Engine Browser and Editor
+// Copyright (C) 2001 Jon Olav Hauglid
+// See LICENSE.txt for license information
+
+package org.infinity.resource.cre.decoder.util;
+
+import java.awt.AlphaComposite;
+import java.awt.Composite;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+
+import org.infinity.resource.key.ResourceEntry;
+
+/**
+ * Definition of an animation sequence.
+ */
+public class SeqDef implements Cloneable {
+  /** Definition of an empty {@code SeqDef} object. */
+  public static final SeqDef DEFAULT = new SeqDef(Sequence.NONE);
+
+  /** Full set of 16 directions (east & west). */
+  public static final Direction[] DIR_FULL = Direction.values();
+  /** Reduced set of 8 directions (east & west) */
+  public static final Direction[] DIR_REDUCED = { Direction.S, Direction.SW, Direction.W, Direction.NW, Direction.N,
+      Direction.NE, Direction.E, Direction.SE };
+  /** Full set of 9 non-eastern directions. */
+  public static final Direction[] DIR_FULL_W = { Direction.S, Direction.SSW, Direction.SW, Direction.WSW, Direction.W,
+      Direction.WNW, Direction.NW, Direction.NNW, Direction.N };
+  /** Full set of 7 eastern directions. */
+  public static final Direction[] DIR_FULL_E = { Direction.NNE, Direction.NE, Direction.ENE, Direction.E, Direction.ESE,
+      Direction.SE, Direction.SSE };
+  /** Reduced set of 5 non-eastern directions. */
+  public static final Direction[] DIR_REDUCED_W = { Direction.S, Direction.SW, Direction.W, Direction.NW, Direction.N };
+  /** Reduced set of 3 eastern directions. */
+  public static final Direction[] DIR_REDUCED_E = { Direction.NE, Direction.E, Direction.SE };
+  /** Variation of reduced set: 4 non-eastern directions. */
+  public static final Direction[] DIR_REDUCED_STATIC_W = { Direction.S, Direction.SW, Direction.W, Direction.NW };
+  /** Variation of reduced set: 4 eastern directions. */
+  public static final Direction[] DIR_REDUCED_STATIC_E = { Direction.N, Direction.NE, Direction.E, Direction.SE };
+  public static final Direction[] DIR_FULL_LIMITED_W = { Direction.S, Direction.S, Direction.SW, Direction.SW,
+      Direction.W, Direction.W, Direction.NW, Direction.NW, Direction.N };
+  public static final Direction[] DIR_FULL_LIMITED_E = { Direction.N, Direction.NE, Direction.NE, Direction.E,
+      Direction.E, Direction.SE, Direction.SE };
+
+  private final Sequence sequence;
+  private final ArrayList<DirDef> directions;
+
+  /**
+   * Creates a new sequence definition with the specified directions.
+   *
+   * @param seq  The defined sequence
+   * @param dirs One or more direction definitions
+   */
+  public SeqDef(Sequence seq, DirDef... dirs) {
+    this.sequence = Objects.requireNonNull(seq, "Sequence cannot be null");
+    this.directions = new ArrayList<>();
+    addDirections(dirs);
+  }
+
+  public SeqDef(SeqDef sd) {
+    Objects.requireNonNull(sd, "SeqDef instance cannot be null");
+    this.sequence = sd.sequence;
+    this.directions = new ArrayList<>();
+    for (final DirDef dd : sd.directions) {
+      addDirections(new DirDef(dd));
+    }
+  }
+
+  /** Returns the sequence type this definition is assigned to. */
+  public Sequence getSequence() {
+    return sequence;
+  }
+
+  /** Provides access to the list of available direction definitions associated with this sequence. */
+  public List<DirDef> getDirections() {
+    return directions;
+  }
+
+  /**
+   * Appends list of direction definitions. Cycles of existing directions are appended.
+   */
+  public void addDirections(DirDef... directions) {
+    addDirections(true, directions);
+  }
+
+  /**
+   * Appends list of direction definitions. Cycles of existing directions are only appended if {@code group} is
+   * {@code true}. This is useful if only a limited direction set is available, but the animation format itself
+   * provides a full set of directions (e.g. via {@code path_smooth=0} parameter).
+   */
+  public void addDirections(boolean group, DirDef... directions) {
+    for (final DirDef dd : directions) {
+      DirDef dir = null;
+      if (group) {
+        dir = this.directions.stream().filter(d -> d.getDirection() == dd.getDirection()).findAny().orElse(null);
+      }
+      if (dir != null) {
+        dir.getCycle().addCycles(dd.getCycle().getCycles());
+      } else {
+        dd.setParent(this);
+        this.directions.add(dd);
+      }
+    }
+  }
+
+  /** Returns whether the sequence contains any directions with cycle definitions. */
+  public boolean isEmpty() {
+    boolean retVal = true;
+    if (!directions.isEmpty()) {
+      for (final DirDef dd : directions) {
+        if (!dd.getCycle().getCycles().isEmpty()) {
+          retVal = false;
+          break;
+        }
+      }
+    }
+    return retVal;
+  }
+
+  @Override
+  public SeqDef clone() {
+    return new SeqDef(this);
+  }
+
+  @Override
+  public String toString() {
+    return "sequence=" + sequence.toString() + ", directions={" + directions.toString() + "}";
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(directions, sequence);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    SeqDef other = (SeqDef) obj;
+    return Objects.equals(directions, other.directions) && sequence == other.sequence;
+  }
+
+  /** Convenience method: Returns a list of all BAM resources associated with the specified sequence definitions. */
+  public static ResourceEntry[] getBamResourceList(SeqDef... sequences) {
+    return getBamResourceList(null, sequences);
+  }
+
+  /**
+   * Convenience method: Returns a list of all BAM resources associated with the specified sequence definitions matching
+   * the specified segment type.
+   */
+  public static ResourceEntry[] getBamResourceList(SegmentDef.SpriteType type, SeqDef... sequences) {
+    HashSet<ResourceEntry> resources = new HashSet<>();
+    for (final SeqDef sd : sequences) {
+      for (final DirDef dd : sd.directions) {
+        for (SegmentDef element : dd.getCycle().getCycles()) {
+          if (type == null || element.getSpriteType() == type) {
+            resources.add(element.getEntry());
+          }
+        }
+      }
+    }
+    return resources.toArray(new ResourceEntry[0]);
+  }
+
+  /**
+   * Convenience method: Creates a fully defined sequence if specified directions are found within a single BAM
+   * resource. Behavior is assumed to be {@link SegmentDef.Behavior#REPEAT}. Composite object is initialized with
+   * {@link AlphaComposite#SrcOver}.
+   *
+   * @param seq         the animation {@link Sequence}.
+   * @param directions  List of directions to add. Cycle indices are advanced accordingly for each direction.
+   * @param mirrored    indicates whether cycle indices are calculated in reversed direction
+   * @param bamResource the BAM resource used for all cycle definitions.
+   * @param cycleOfs    the first BAM cycle index. Advanced by one for each direction. Cycle indices are processed in
+   *                    reversed direction if {@code mirrored} is {@code true}.
+   * @param type        the {@link SegmentDef.SpriteType} assigned to all cycle definitions.
+   */
+  public static SeqDef createSequence(Sequence seq, Direction[] directions, boolean mirrored, ResourceEntry bamResource,
+      int cycleOfs, SegmentDef.SpriteType type) {
+    return createSequence(seq, directions, mirrored, new ArrayList<SegmentDef>() {
+      {
+        add(new SegmentDef(null, bamResource, cycleOfs, type));
+      }
+    });
+  }
+
+  /**
+   * Convenience method: Creates a fully defined sequence if specified directions are found within a single BAM
+   * resource. Composite object is initialized with {@link AlphaComposite#SrcOver}.
+   *
+   * @param seq         the animation {@link Sequence}.
+   * @param directions  List of directions to add. Cycle indices are advanced accordingly for each direction.
+   * @param mirrored    indicates whether cycle indices are calculated in reversed direction
+   * @param bamResource the BAM resource used for all cycle definitions.
+   * @param cycleOfs    the first BAM cycle index. Advanced by one for each direction. Cycle indices are processed in
+   *                    reversed direction if {@code mirrored} is {@code true}.
+   * @param type        the {@link SegmentDef.SpriteType} assigned to all cycle definitions.
+   * @param behavior    the {@link SegmentDef.Behavior} assigned to all cycle definitions.
+   */
+  public static SeqDef createSequence(Sequence seq, Direction[] directions, boolean mirrored, ResourceEntry bamResource,
+      int cycleOfs, SegmentDef.SpriteType type, SegmentDef.Behavior behavior) {
+    return createSequence(seq, directions, mirrored, new ArrayList<SegmentDef>() {
+      {
+        add(new SegmentDef(null, bamResource, cycleOfs, type, behavior));
+      }
+    });
+  }
+
+  /**
+   * Convenience method: Creates a fully defined sequence if specified directions are found within a single BAM
+   * resource.
+   *
+   * @param seq         the animation {@link Sequence}.
+   * @param directions  List of directions to add. Cycle indices are advanced accordingly for each direction.
+   * @param mirrored    indicates whether cycle indices are calculated in reversed direction
+   * @param bamResource the BAM resource used for all cycle definitions.
+   * @param cycleOfs    the first BAM cycle index. Advanced by one for each direction. Cycle indices are processed in
+   *                    reversed direction if {@code mirrored} is {@code true}.
+   * @param type        the {@link SegmentDef.SpriteType} assigned to all cycle definitions.
+   * @param behavior    the {@link SegmentDef.Behavior} assigned to all cycle definitions.
+   * @param composite   the {@link Composite} object used for rendering sprite frames onto the canvas.
+   */
+  public static SeqDef createSequence(Sequence seq, Direction[] directions, boolean mirrored, ResourceEntry bamResource,
+      int cycleOfs, SegmentDef.SpriteType type, SegmentDef.Behavior behavior, Composite composite) {
+    return createSequence(seq, directions, mirrored, new ArrayList<SegmentDef>() {
+      {
+        add(new SegmentDef(null, bamResource, cycleOfs, type, behavior, composite));
+      }
+    });
+  }
+
+  /**
+   * Convenience method: Creates a fully defined sequence for all directions and their associated segment definitions.
+   *
+   * @param seq        the animation {@link Sequence}.
+   * @param directions List of directions to add. Cycle indices are advanced accordingly for each direction.
+   * @param mirrored   indicates whether cycle indices are calculated in reversed direction
+   * @param cycleInfo  collection of {@link SegmentDef} instances that are to be associated with the directions.
+   */
+  public static SeqDef createSequence(Sequence seq, Direction[] directions, boolean mirrored,
+      Collection<SegmentDef> cycleInfo) {
+    return createSequence(false, seq, directions, mirrored, cycleInfo);
+  }
+
+  /**
+   * Convenience method: Creates a fully defined sequence for all directions and their associated segment definitions.
+   *
+   * @param group      Whether to group identical directions. Useful if only a limited direction set is available, but
+   *                     the animation format itself provides a full set of directions (e.g. via {@code path_smooth=0}
+   *                     parameter).
+   * @param seq        the animation {@link Sequence}.
+   * @param directions List of directions to add. Cycle indices are advanced accordingly for each direction.
+   * @param mirrored   indicates whether cycle indices are calculated in reversed direction
+   * @param cycleInfo  collection of {@link SegmentDef} instances that are to be associated with the directions.
+   */
+  public static SeqDef createSequence(boolean group, Sequence seq, Direction[] directions, boolean mirrored,
+      Collection<SegmentDef> cycleInfo) {
+    SeqDef retVal = new SeqDef(seq);
+
+    DirDef[] dirs = new DirDef[Objects.requireNonNull(directions,
+        "Array of creature directions cannot be null").length];
+    List<SegmentDef> cycleDefs = new ArrayList<>();
+    for (int i = 0; i < directions.length; i++) {
+      cycleDefs.clear();
+      int inc = mirrored ? (directions.length - i - 1) : i;
+      for (SegmentDef sd : cycleInfo) {
+        cycleDefs
+            .add(new SegmentDef(null, sd.getEntry(), sd.getCycleIndex() + inc, sd.getSpriteType(), sd.getBehavior()));
+      }
+      dirs[i] = new DirDef(retVal, directions[i], mirrored, new CycleDef(null, cycleDefs));
+    }
+    retVal.addDirections(group, dirs);
+
+    return retVal;
+  }
+}

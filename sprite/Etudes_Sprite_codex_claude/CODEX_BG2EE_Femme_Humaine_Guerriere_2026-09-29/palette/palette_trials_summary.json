@@ -1,0 +1,104 @@
+{
+  "nonempty_frames": 60,
+  "temporal_synthetic": {
+    "test": "same source frame repeated 14 times; not a measurement of deforming motion",
+    "fixed_bayer_changed_fraction": 0,
+    "random_mean_changed_fraction": 0.30057622575531834
+  },
+  "temporal_real_cycle": {
+    "frames": 14,
+    "stable_support_pixels": 4851,
+    "support_definition": "actor-aligned, identical guide index >=4, target RGB change <=2 per component; no optical flow",
+    "changed_fraction": {
+      "ordered": 0.07606679035250463,
+      "random": 0.32653061224489793,
+      "nearest": 0.08225108225108226
+    }
+  },
+  "aggregates": [
+    {
+      "base": "xbr2",
+      "mode": "nearest",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "xbr2",
+      "mode": "ordered",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "xbr2",
+      "mode": "continuous",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "xbr4",
+      "mode": "nearest",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "xbr4",
+      "mode": "ordered",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "xbr4",
+      "mode": "continuous",
+      "mean_oklab": 0.0,
+      "mean_filtered_linear_rmse": 0.0,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout2",
+      "mode": "nearest",
+      "mean_oklab": 0.02062633856391035,
+      "mean_filtered_linear_rmse": 0.013869285549595732,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout2",
+      "mode": "ordered",
+      "mean_oklab": 0.025668428646297512,
+      "mean_filtered_linear_rmse": 0.012475900393775738,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout2",
+      "mode": "continuous",
+      "mean_oklab": 0.011421685531393501,
+      "mean_filtered_linear_rmse": 0.011434736039100137,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout4",
+      "mode": "nearest",
+      "mean_oklab": 0.021187756474910318,
+      "mean_filtered_linear_rmse": 0.013828324090402041,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout4",
+      "mode": "ordered",
+      "mean_oklab": 0.026177036500910456,
+      "mean_filtered_linear_rmse": 0.011872344789947196,
+      "frame_count": 60
+    },
+    {
+      "base": "rebout4",
+      "mode": "continuous",
+      "mean_oklab": 0.012330945004965878,
+      "mean_filtered_linear_rmse": 0.011674685290581256,
+      "frame_count": 60
+    }
+  ]
+}

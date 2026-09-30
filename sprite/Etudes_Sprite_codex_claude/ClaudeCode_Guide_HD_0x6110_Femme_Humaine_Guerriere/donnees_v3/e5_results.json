@@ -1,0 +1,1277 @@
+{
+ "palettes": {
+  "REF": [
+   30,
+   47,
+   57,
+   12,
+   39,
+   21,
+   3
+  ],
+  "B": [
+   21,
+   57,
+   47,
+   8,
+   66,
+   30,
+   0
+  ],
+  "C": [
+   19,
+   63,
+   66,
+   15,
+   39,
+   26,
+   4
+  ],
+  "D_heldout": [
+   67,
+   68,
+   47,
+   84,
+   25,
+   57,
+   2
+  ],
+  "CX_B_heldout": [
+   30,
+   63,
+   3,
+   12,
+   39,
+   21,
+   57
+  ],
+  "CX_C_heldout": [
+   30,
+   55,
+   30,
+   0,
+   39,
+   30,
+   0
+  ]
+ },
+ "train": [
+  "REF",
+  "B",
+  "C"
+ ],
+ "layers": [
+  [
+   "body",
+   "chfb1",
+   "CHFB1A1"
+  ],
+  [
+   "weapon",
+   "sw1h01-wqns0",
+   "WQNS0A1"
+  ],
+  [
+   "shield",
+   "shld01-wqnc0",
+   "WQNC0A1"
+  ],
+  [
+   "helmet",
+   "helm01-wqnj6",
+   "WQNJ6A1"
+  ]
+ ],
+ "summary_de_x1000": {
+  "x2|xBR|REF": 46.45750787287546,
+  "x2|xBR|B": 44.02945243367882,
+  "x2|xBR|C": 48.48313669184865,
+  "x2|xBR|D_heldout": 53.31322607129123,
+  "x2|xBR|CX_B_heldout": 46.066680192434106,
+  "x2|xBR|CX_C_heldout": 42.57306981498847,
+  "x2|Q0_actuel|REF": 33.42772662242427,
+  "x2|Q0_actuel|B": 44.278479443126706,
+  "x2|Q0_actuel|C": 47.00968020715813,
+  "x2|Q0_actuel|D_heldout": 55.743476689910715,
+  "x2|Q0_actuel|CX_B_heldout": 42.480380379085254,
+  "x2|Q0_actuel|CX_C_heldout": 44.375644250687415,
+  "x2|Q1_classe|REF": 32.31365026239872,
+  "x2|Q1_classe|B": 44.73179879599462,
+  "x2|Q1_classe|C": 47.49609757745827,
+  "x2|Q1_classe|D_heldout": 56.66437969612883,
+  "x2|Q1_classe|CX_B_heldout": 42.922977762945834,
+  "x2|Q1_classe|CX_C_heldout": 45.24284320962982,
+  "x2|Q6_idx_multi|REF": 39.12543153717564,
+  "x2|Q6_idx_multi|B": 35.426214128266786,
+  "x2|Q6_idx_multi|C": 36.38742457363948,
+  "x2|Q6_idx_multi|D_heldout": 48.958894756027064,
+  "x2|Q6_idx_multi|CX_B_heldout": 41.01233815945749,
+  "x2|Q6_idx_multi|CX_C_heldout": 40.19611758850986,
+  "x2|Q3_frac_ref|REF": 25.706729448976244,
+  "x2|Q3_frac_ref|B": 42.76067944929394,
+  "x2|Q3_frac_ref|C": 44.374504988327075,
+  "x2|Q3_frac_ref|D_heldout": 54.200218516295415,
+  "x2|Q3_frac_ref|CX_B_heldout": 38.37238558591589,
+  "x2|Q3_frac_ref|CX_C_heldout": 42.58013046531473,
+  "x2|CX_interp_ref_lin|REF": 26.682142361805425,
+  "x2|CX_interp_ref_lin|B": 42.63924093151903,
+  "x2|CX_interp_ref_lin|C": 44.17161018365281,
+  "x2|CX_interp_ref_lin|D_heldout": 53.73260618877053,
+  "x2|CX_interp_ref_lin|CX_B_heldout": 38.08263769858292,
+  "x2|CX_interp_ref_lin|CX_C_heldout": 42.56218538380421,
+  "x2|CX_codex_exact|REF": 26.412878240012965,
+  "x2|CX_codex_exact|B": 42.6845627905457,
+  "x2|CX_codex_exact|C": 44.30326821829628,
+  "x2|CX_codex_exact|D_heldout": 53.948363330612146,
+  "x2|CX_codex_exact|CX_B_heldout": 38.06013504188544,
+  "x2|CX_codex_exact|CX_C_heldout": 42.684706779013545,
+  "x2|CX_codex_bayer|REF": 35.896177028230476,
+  "x2|CX_codex_bayer|B": 46.82335187790116,
+  "x2|CX_codex_bayer|C": 49.778076921735284,
+  "x2|CX_codex_bayer|D_heldout": 58.69426769252754,
+  "x2|CX_codex_bayer|CX_B_heldout": 45.609989843673254,
+  "x2|CX_codex_bayer|CX_C_heldout": 47.59910242068654,
+  "x2|Q8_srgb|REF": 28.604367191450425,
+  "x2|Q8_srgb|B": 28.957080612818736,
+  "x2|Q8_srgb|C": 27.35635096776944,
+  "x2|Q8_srgb|D_heldout": 41.11707249522284,
+  "x2|Q8_srgb|CX_B_heldout": 31.861189482151705,
+  "x2|Q8_srgb|CX_C_heldout": 33.73335999867084,
+  "x2|Q8x_srgb_exact|REF": 28.66171167046311,
+  "x2|Q8x_srgb_exact|B": 28.9470389231704,
+  "x2|Q8x_srgb_exact|C": 27.451978397004734,
+  "x2|Q8x_srgb_exact|D_heldout": 41.23749647566032,
+  "x2|Q8x_srgb_exact|CX_B_heldout": 32.033181348210576,
+  "x2|Q8x_srgb_exact|CX_C_heldout": 33.85406849046149,
+  "x2|Q8x_lin_exact|REF": 28.90505793521961,
+  "x2|Q8x_lin_exact|B": 28.996118247277174,
+  "x2|Q8x_lin_exact|C": 27.293059242403608,
+  "x2|Q8x_lin_exact|D_heldout": 41.76532355722039,
+  "x2|Q8x_lin_exact|CX_B_heldout": 32.18026704347292,
+  "x2|Q8x_lin_exact|CX_C_heldout": 34.033792490779874,
+  "x4|xBR|REF": 47.69479198855085,
+  "x4|xBR|B": 45.354225813329286,
+  "x4|xBR|C": 49.503337102182,
+  "x4|xBR|D_heldout": 55.038926097648236,
+  "x4|xBR|CX_B_heldout": 47.092696443723504,
+  "x4|xBR|CX_C_heldout": 43.53838648051918,
+  "x4|Q0_actuel|REF": 33.96868573646665,
+  "x4|Q0_actuel|B": 45.97417209860029,
+  "x4|Q0_actuel|C": 48.746852613754214,
+  "x4|Q0_actuel|D_heldout": 58.12204778804945,
+  "x4|Q0_actuel|CX_B_heldout": 44.19520171918188,
+  "x4|Q0_actuel|CX_C_heldout": 45.82115739913769,
+  "x4|Q1_classe|REF": 32.76739449052474,
+  "x4|Q1_classe|B": 46.55952604245668,
+  "x4|Q1_classe|C": 49.38382404580993,
+  "x4|Q1_classe|D_heldout": 59.20244423825286,
+  "x4|Q1_classe|CX_B_heldout": 44.784536574927685,
+  "x4|Q1_classe|CX_C_heldout": 46.94136717164447,
+  "x4|Q6_idx_multi|REF": 40.31417700671972,
+  "x4|Q6_idx_multi|B": 36.67073801086247,
+  "x4|Q6_idx_multi|C": 37.49995084632948,
+  "x4|Q6_idx_multi|D_heldout": 51.28138188796507,
+  "x4|Q6_idx_multi|CX_B_heldout": 42.467015543211666,
+  "x4|Q6_idx_multi|CX_C_heldout": 41.558803329476696,
+  "x4|Q3_frac_ref|REF": 26.3262750950811,
+  "x4|Q3_frac_ref|B": 44.727993479608585,
+  "x4|Q3_frac_ref|C": 46.36882629124608,
+  "x4|Q3_frac_ref|D_heldout": 56.82890322769056,
+  "x4|Q3_frac_ref|CX_B_heldout": 40.4589794043291,
+  "x4|Q3_frac_ref|CX_C_heldout": 44.37069199064873,
+  "x4|CX_interp_ref_lin|REF": 27.38351382755555,
+  "x4|CX_interp_ref_lin|B": 44.51755387375146,
+  "x4|CX_interp_ref_lin|C": 46.12580362763199,
+  "x4|CX_interp_ref_lin|D_heldout": 56.285893776197064,
+  "x4|CX_interp_ref_lin|CX_B_heldout": 40.102284353474246,
+  "x4|CX_interp_ref_lin|CX_C_heldout": 44.24904357881055,
+  "x4|CX_codex_exact|REF": 27.075917020632907,
+  "x4|CX_codex_exact|B": 44.5937347975524,
+  "x4|CX_codex_exact|C": 46.288333769289586,
+  "x4|CX_codex_exact|D_heldout": 56.543921691557536,
+  "x4|CX_codex_exact|CX_B_heldout": 40.10661525287326,
+  "x4|CX_codex_exact|CX_C_heldout": 44.40835099440794,
+  "x4|CX_codex_bayer|REF": 36.31539371100345,
+  "x4|CX_codex_bayer|B": 48.493111681529086,
+  "x4|CX_codex_bayer|C": 51.54282713439375,
+  "x4|CX_codex_bayer|D_heldout": 61.116247615283164,
+  "x4|CX_codex_bayer|CX_B_heldout": 47.27666984387209,
+  "x4|CX_codex_bayer|CX_C_heldout": 49.06159973614074,
+  "x4|Q8_srgb|REF": 30.67993414267122,
+  "x4|Q8_srgb|B": 30.66570885337945,
+  "x4|Q8_srgb|C": 29.11943238473305,
+  "x4|Q8_srgb|D_heldout": 43.5891022572465,
+  "x4|Q8_srgb|CX_B_heldout": 34.2844697203949,
+  "x4|Q8_srgb|CX_C_heldout": 35.589676574363594,
+  "x4|Q8x_srgb_exact|REF": 30.708215715760776,
+  "x4|Q8x_srgb_exact|B": 30.649211825085512,
+  "x4|Q8x_srgb_exact|C": 29.206696100053886,
+  "x4|Q8x_srgb_exact|D_heldout": 43.69250870405181,
+  "x4|Q8x_srgb_exact|CX_B_heldout": 34.44327466523821,
+  "x4|Q8x_srgb_exact|CX_C_heldout": 35.700577926612475,
+  "x4|Q8x_lin_exact|REF": 30.80763646436681,
+  "x4|Q8x_lin_exact|B": 30.684643458587423,
+  "x4|Q8x_lin_exact|C": 29.08020691773485,
+  "x4|Q8x_lin_exact|D_heldout": 43.94777479193553,
+  "x4|Q8x_lin_exact|CX_B_heldout": 34.48964085332541,
+  "x4|Q8x_lin_exact|CX_C_heldout": 35.80055203331825
+ },
+ "flicker": {
+  "body|x2|xBR|REF": [
+   1094,
+   21
+  ],
+  "body|x2|xBR|CX_B_heldout": [
+   1059,
+   29
+  ],
+  "body|x2|xBR|CX_C_heldout": [
+   1120,
+   56
+  ],
+  "body|x2|Q0_actuel|REF": [
+   1094,
+   17
+  ],
+  "body|x2|Q0_actuel|CX_B_heldout": [
+   1059,
+   28
+  ],
+  "body|x2|Q0_actuel|CX_C_heldout": [
+   1120,
+   50
+  ],
+  "body|x2|Q1_classe|REF": [
+   1094,
+   17
+  ],
+  "body|x2|Q1_classe|CX_B_heldout": [
+   1059,
+   32
+  ],
+  "body|x2|Q1_classe|CX_C_heldout": [
+   1120,
+   53
+  ],
+  "body|x2|Q6_idx_multi|REF": [
+   1094,
+   18
+  ],
+  "body|x2|Q6_idx_multi|CX_B_heldout": [
+   1059,
+   30
+  ],
+  "body|x2|Q6_idx_multi|CX_C_heldout": [
+   1120,
+   48
+  ],
+  "body|x2|Q3_frac_ref|REF": [
+   1094,
+   4
+  ],
+  "body|x2|Q3_frac_ref|CX_B_heldout": [
+   1059,
+   30
+  ],
+  "body|x2|Q3_frac_ref|CX_C_heldout": [
+   1120,
+   44
+  ],
+  "body|x2|CX_interp_ref_lin|REF": [
+   1094,
+   4
+  ],
+  "body|x2|CX_interp_ref_lin|CX_B_heldout": [
+   1059,
+   31
+  ],
+  "body|x2|CX_interp_ref_lin|CX_C_heldout": [
+   1120,
+   43
+  ],
+  "body|x2|CX_codex_exact|REF": [
+   1094,
+   4
+  ],
+  "body|x2|CX_codex_exact|CX_B_heldout": [
+   1059,
+   31
+  ],
+  "body|x2|CX_codex_exact|CX_C_heldout": [
+   1120,
+   43
+  ],
+  "body|x2|CX_codex_bayer|REF": [
+   1094,
+   16
+  ],
+  "body|x2|CX_codex_bayer|CX_B_heldout": [
+   1059,
+   36
+  ],
+  "body|x2|CX_codex_bayer|CX_C_heldout": [
+   1120,
+   50
+  ],
+  "body|x2|Q8_srgb|REF": [
+   1094,
+   18
+  ],
+  "body|x2|Q8_srgb|CX_B_heldout": [
+   1059,
+   29
+  ],
+  "body|x2|Q8_srgb|CX_C_heldout": [
+   1120,
+   41
+  ],
+  "body|x2|Q8x_srgb_exact|REF": [
+   1094,
+   19
+  ],
+  "body|x2|Q8x_srgb_exact|CX_B_heldout": [
+   1059,
+   29
+  ],
+  "body|x2|Q8x_srgb_exact|CX_C_heldout": [
+   1120,
+   46
+  ],
+  "body|x2|Q8x_lin_exact|REF": [
+   1094,
+   19
+  ],
+  "body|x2|Q8x_lin_exact|CX_B_heldout": [
+   1059,
+   29
+  ],
+  "body|x2|Q8x_lin_exact|CX_C_heldout": [
+   1120,
+   44
+  ],
+  "body|x4|xBR|REF": [
+   4270,
+   94
+  ],
+  "body|x4|xBR|CX_B_heldout": [
+   4153,
+   118
+  ],
+  "body|x4|xBR|CX_C_heldout": [
+   4382,
+   203
+  ],
+  "body|x4|Q0_actuel|REF": [
+   4270,
+   48
+  ],
+  "body|x4|Q0_actuel|CX_B_heldout": [
+   4153,
+   101
+  ],
+  "body|x4|Q0_actuel|CX_C_heldout": [
+   4382,
+   196
+  ],
+  "body|x4|Q1_classe|REF": [
+   4270,
+   52
+  ],
+  "body|x4|Q1_classe|CX_B_heldout": [
+   4153,
+   111
+  ],
+  "body|x4|Q1_classe|CX_C_heldout": [
+   4382,
+   206
+  ],
+  "body|x4|Q6_idx_multi|REF": [
+   4270,
+   74
+  ],
+  "body|x4|Q6_idx_multi|CX_B_heldout": [
+   4153,
+   98
+  ],
+  "body|x4|Q6_idx_multi|CX_C_heldout": [
+   4382,
+   211
+  ],
+  "body|x4|Q3_frac_ref|REF": [
+   4270,
+   21
+  ],
+  "body|x4|Q3_frac_ref|CX_B_heldout": [
+   4153,
+   113
+  ],
+  "body|x4|Q3_frac_ref|CX_C_heldout": [
+   4382,
+   206
+  ],
+  "body|x4|CX_interp_ref_lin|REF": [
+   4270,
+   22
+  ],
+  "body|x4|CX_interp_ref_lin|CX_B_heldout": [
+   4153,
+   126
+  ],
+  "body|x4|CX_interp_ref_lin|CX_C_heldout": [
+   4382,
+   213
+  ],
+  "body|x4|CX_codex_exact|REF": [
+   4270,
+   21
+  ],
+  "body|x4|CX_codex_exact|CX_B_heldout": [
+   4153,
+   118
+  ],
+  "body|x4|CX_codex_exact|CX_C_heldout": [
+   4382,
+   214
+  ],
+  "body|x4|CX_codex_bayer|REF": [
+   4270,
+   47
+  ],
+  "body|x4|CX_codex_bayer|CX_B_heldout": [
+   4153,
+   107
+  ],
+  "body|x4|CX_codex_bayer|CX_C_heldout": [
+   4382,
+   219
+  ],
+  "body|x4|Q8_srgb|REF": [
+   4270,
+   54
+  ],
+  "body|x4|Q8_srgb|CX_B_heldout": [
+   4153,
+   100
+  ],
+  "body|x4|Q8_srgb|CX_C_heldout": [
+   4382,
+   182
+  ],
+  "body|x4|Q8x_srgb_exact|REF": [
+   4270,
+   61
+  ],
+  "body|x4|Q8x_srgb_exact|CX_B_heldout": [
+   4153,
+   101
+  ],
+  "body|x4|Q8x_srgb_exact|CX_C_heldout": [
+   4382,
+   187
+  ],
+  "body|x4|Q8x_lin_exact|REF": [
+   4270,
+   61
+  ],
+  "body|x4|Q8x_lin_exact|CX_B_heldout": [
+   4153,
+   107
+  ],
+  "body|x4|Q8x_lin_exact|CX_C_heldout": [
+   4382,
+   185
+  ],
+  "weapon|x2|xBR|REF": [
+   2,
+   2
+  ],
+  "weapon|x2|xBR|CX_B_heldout": [
+   2,
+   2
+  ],
+  "weapon|x2|xBR|CX_C_heldout": [
+   6,
+   1
+  ],
+  "weapon|x2|Q0_actuel|REF": [
+   2,
+   2
+  ],
+  "weapon|x2|Q0_actuel|CX_B_heldout": [
+   2,
+   2
+  ],
+  "weapon|x2|Q0_actuel|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|Q1_classe|REF": [
+   2,
+   2
+  ],
+  "weapon|x2|Q1_classe|CX_B_heldout": [
+   2,
+   2
+  ],
+  "weapon|x2|Q1_classe|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|Q6_idx_multi|REF": [
+   2,
+   2
+  ],
+  "weapon|x2|Q6_idx_multi|CX_B_heldout": [
+   2,
+   2
+  ],
+  "weapon|x2|Q6_idx_multi|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|Q3_frac_ref|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|Q3_frac_ref|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|Q3_frac_ref|CX_C_heldout": [
+   6,
+   1
+  ],
+  "weapon|x2|CX_interp_ref_lin|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|CX_interp_ref_lin|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|CX_interp_ref_lin|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|CX_codex_exact|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|CX_codex_exact|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|CX_codex_exact|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|CX_codex_bayer|REF": [
+   2,
+   2
+  ],
+  "weapon|x2|CX_codex_bayer|CX_B_heldout": [
+   2,
+   2
+  ],
+  "weapon|x2|CX_codex_bayer|CX_C_heldout": [
+   6,
+   1
+  ],
+  "weapon|x2|Q8_srgb|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8_srgb|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8_srgb|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|Q8x_srgb_exact|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8x_srgb_exact|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8x_srgb_exact|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x2|Q8x_lin_exact|REF": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8x_lin_exact|CX_B_heldout": [
+   2,
+   0
+  ],
+  "weapon|x2|Q8x_lin_exact|CX_C_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|xBR|REF": [
+   6,
+   6
+  ],
+  "weapon|x4|xBR|CX_B_heldout": [
+   6,
+   6
+  ],
+  "weapon|x4|xBR|CX_C_heldout": [
+   25,
+   6
+  ],
+  "weapon|x4|Q0_actuel|REF": [
+   6,
+   5
+  ],
+  "weapon|x4|Q0_actuel|CX_B_heldout": [
+   6,
+   5
+  ],
+  "weapon|x4|Q0_actuel|CX_C_heldout": [
+   25,
+   1
+  ],
+  "weapon|x4|Q1_classe|REF": [
+   6,
+   5
+  ],
+  "weapon|x4|Q1_classe|CX_B_heldout": [
+   6,
+   5
+  ],
+  "weapon|x4|Q1_classe|CX_C_heldout": [
+   25,
+   1
+  ],
+  "weapon|x4|Q6_idx_multi|REF": [
+   6,
+   6
+  ],
+  "weapon|x4|Q6_idx_multi|CX_B_heldout": [
+   6,
+   6
+  ],
+  "weapon|x4|Q6_idx_multi|CX_C_heldout": [
+   25,
+   1
+  ],
+  "weapon|x4|Q3_frac_ref|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|Q3_frac_ref|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|Q3_frac_ref|CX_C_heldout": [
+   25,
+   3
+  ],
+  "weapon|x4|CX_interp_ref_lin|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|CX_interp_ref_lin|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|CX_interp_ref_lin|CX_C_heldout": [
+   25,
+   2
+  ],
+  "weapon|x4|CX_codex_exact|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|CX_codex_exact|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|CX_codex_exact|CX_C_heldout": [
+   25,
+   2
+  ],
+  "weapon|x4|CX_codex_bayer|REF": [
+   6,
+   5
+  ],
+  "weapon|x4|CX_codex_bayer|CX_B_heldout": [
+   6,
+   5
+  ],
+  "weapon|x4|CX_codex_bayer|CX_C_heldout": [
+   25,
+   0
+  ],
+  "weapon|x4|Q8_srgb|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8_srgb|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8_srgb|CX_C_heldout": [
+   25,
+   2
+  ],
+  "weapon|x4|Q8x_srgb_exact|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8x_srgb_exact|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8x_srgb_exact|CX_C_heldout": [
+   25,
+   1
+  ],
+  "weapon|x4|Q8x_lin_exact|REF": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8x_lin_exact|CX_B_heldout": [
+   6,
+   0
+  ],
+  "weapon|x4|Q8x_lin_exact|CX_C_heldout": [
+   25,
+   1
+  ],
+  "shield|x2|xBR|REF": [
+   60,
+   30
+  ],
+  "shield|x2|xBR|CX_B_heldout": [
+   42,
+   23
+  ],
+  "shield|x2|xBR|CX_C_heldout": [
+   232,
+   72
+  ],
+  "shield|x2|Q0_actuel|REF": [
+   60,
+   21
+  ],
+  "shield|x2|Q0_actuel|CX_B_heldout": [
+   42,
+   16
+  ],
+  "shield|x2|Q0_actuel|CX_C_heldout": [
+   232,
+   96
+  ],
+  "shield|x2|Q1_classe|REF": [
+   60,
+   20
+  ],
+  "shield|x2|Q1_classe|CX_B_heldout": [
+   42,
+   17
+  ],
+  "shield|x2|Q1_classe|CX_C_heldout": [
+   232,
+   96
+  ],
+  "shield|x2|Q6_idx_multi|REF": [
+   60,
+   35
+  ],
+  "shield|x2|Q6_idx_multi|CX_B_heldout": [
+   42,
+   21
+  ],
+  "shield|x2|Q6_idx_multi|CX_C_heldout": [
+   232,
+   110
+  ],
+  "shield|x2|Q3_frac_ref|REF": [
+   60,
+   3
+  ],
+  "shield|x2|Q3_frac_ref|CX_B_heldout": [
+   42,
+   12
+  ],
+  "shield|x2|Q3_frac_ref|CX_C_heldout": [
+   232,
+   131
+  ],
+  "shield|x2|CX_interp_ref_lin|REF": [
+   60,
+   3
+  ],
+  "shield|x2|CX_interp_ref_lin|CX_B_heldout": [
+   42,
+   17
+  ],
+  "shield|x2|CX_interp_ref_lin|CX_C_heldout": [
+   232,
+   140
+  ],
+  "shield|x2|CX_codex_exact|REF": [
+   60,
+   3
+  ],
+  "shield|x2|CX_codex_exact|CX_B_heldout": [
+   42,
+   14
+  ],
+  "shield|x2|CX_codex_exact|CX_C_heldout": [
+   232,
+   136
+  ],
+  "shield|x2|CX_codex_bayer|REF": [
+   60,
+   21
+  ],
+  "shield|x2|CX_codex_bayer|CX_B_heldout": [
+   42,
+   21
+  ],
+  "shield|x2|CX_codex_bayer|CX_C_heldout": [
+   232,
+   114
+  ],
+  "shield|x2|Q8_srgb|REF": [
+   60,
+   13
+  ],
+  "shield|x2|Q8_srgb|CX_B_heldout": [
+   42,
+   18
+  ],
+  "shield|x2|Q8_srgb|CX_C_heldout": [
+   232,
+   130
+  ],
+  "shield|x2|Q8x_srgb_exact|REF": [
+   60,
+   13
+  ],
+  "shield|x2|Q8x_srgb_exact|CX_B_heldout": [
+   42,
+   22
+  ],
+  "shield|x2|Q8x_srgb_exact|CX_C_heldout": [
+   232,
+   126
+  ],
+  "shield|x2|Q8x_lin_exact|REF": [
+   60,
+   14
+  ],
+  "shield|x2|Q8x_lin_exact|CX_B_heldout": [
+   42,
+   19
+  ],
+  "shield|x2|Q8x_lin_exact|CX_C_heldout": [
+   232,
+   140
+  ],
+  "shield|x4|xBR|REF": [
+   202,
+   105
+  ],
+  "shield|x4|xBR|CX_B_heldout": [
+   141,
+   79
+  ],
+  "shield|x4|xBR|CX_C_heldout": [
+   835,
+   254
+  ],
+  "shield|x4|Q0_actuel|REF": [
+   202,
+   78
+  ],
+  "shield|x4|Q0_actuel|CX_B_heldout": [
+   141,
+   76
+  ],
+  "shield|x4|Q0_actuel|CX_C_heldout": [
+   835,
+   391
+  ],
+  "shield|x4|Q1_classe|REF": [
+   202,
+   70
+  ],
+  "shield|x4|Q1_classe|CX_B_heldout": [
+   141,
+   78
+  ],
+  "shield|x4|Q1_classe|CX_C_heldout": [
+   835,
+   408
+  ],
+  "shield|x4|Q6_idx_multi|REF": [
+   202,
+   112
+  ],
+  "shield|x4|Q6_idx_multi|CX_B_heldout": [
+   141,
+   90
+  ],
+  "shield|x4|Q6_idx_multi|CX_C_heldout": [
+   835,
+   398
+  ],
+  "shield|x4|Q3_frac_ref|REF": [
+   202,
+   25
+  ],
+  "shield|x4|Q3_frac_ref|CX_B_heldout": [
+   141,
+   65
+  ],
+  "shield|x4|Q3_frac_ref|CX_C_heldout": [
+   835,
+   499
+  ],
+  "shield|x4|CX_interp_ref_lin|REF": [
+   202,
+   25
+  ],
+  "shield|x4|CX_interp_ref_lin|CX_B_heldout": [
+   141,
+   62
+  ],
+  "shield|x4|CX_interp_ref_lin|CX_C_heldout": [
+   835,
+   542
+  ],
+  "shield|x4|CX_codex_exact|REF": [
+   202,
+   25
+  ],
+  "shield|x4|CX_codex_exact|CX_B_heldout": [
+   141,
+   62
+  ],
+  "shield|x4|CX_codex_exact|CX_C_heldout": [
+   835,
+   530
+  ],
+  "shield|x4|CX_codex_bayer|REF": [
+   202,
+   79
+  ],
+  "shield|x4|CX_codex_bayer|CX_B_heldout": [
+   141,
+   82
+  ],
+  "shield|x4|CX_codex_bayer|CX_C_heldout": [
+   835,
+   443
+  ],
+  "shield|x4|Q8_srgb|REF": [
+   202,
+   71
+  ],
+  "shield|x4|Q8_srgb|CX_B_heldout": [
+   141,
+   74
+  ],
+  "shield|x4|Q8_srgb|CX_C_heldout": [
+   835,
+   463
+  ],
+  "shield|x4|Q8x_srgb_exact|REF": [
+   202,
+   75
+  ],
+  "shield|x4|Q8x_srgb_exact|CX_B_heldout": [
+   141,
+   79
+  ],
+  "shield|x4|Q8x_srgb_exact|CX_C_heldout": [
+   835,
+   470
+  ],
+  "shield|x4|Q8x_lin_exact|REF": [
+   202,
+   70
+  ],
+  "shield|x4|Q8x_lin_exact|CX_B_heldout": [
+   141,
+   75
+  ],
+  "shield|x4|Q8x_lin_exact|CX_C_heldout": [
+   835,
+   485
+  ],
+  "helmet|x2|xBR|REF": [
+   11,
+   8
+  ],
+  "helmet|x2|xBR|CX_B_heldout": [
+   18,
+   14
+  ],
+  "helmet|x2|xBR|CX_C_heldout": [
+   19,
+   11
+  ],
+  "helmet|x2|Q0_actuel|REF": [
+   11,
+   4
+  ],
+  "helmet|x2|Q0_actuel|CX_B_heldout": [
+   18,
+   13
+  ],
+  "helmet|x2|Q0_actuel|CX_C_heldout": [
+   19,
+   8
+  ],
+  "helmet|x2|Q1_classe|REF": [
+   11,
+   4
+  ],
+  "helmet|x2|Q1_classe|CX_B_heldout": [
+   18,
+   13
+  ],
+  "helmet|x2|Q1_classe|CX_C_heldout": [
+   19,
+   8
+  ],
+  "helmet|x2|Q6_idx_multi|REF": [
+   11,
+   5
+  ],
+  "helmet|x2|Q6_idx_multi|CX_B_heldout": [
+   18,
+   13
+  ],
+  "helmet|x2|Q6_idx_multi|CX_C_heldout": [
+   19,
+   7
+  ],
+  "helmet|x2|Q3_frac_ref|REF": [
+   11,
+   0
+  ],
+  "helmet|x2|Q3_frac_ref|CX_B_heldout": [
+   18,
+   9
+  ],
+  "helmet|x2|Q3_frac_ref|CX_C_heldout": [
+   19,
+   9
+  ],
+  "helmet|x2|CX_interp_ref_lin|REF": [
+   11,
+   0
+  ],
+  "helmet|x2|CX_interp_ref_lin|CX_B_heldout": [
+   18,
+   9
+  ],
+  "helmet|x2|CX_interp_ref_lin|CX_C_heldout": [
+   19,
+   9
+  ],
+  "helmet|x2|CX_codex_exact|REF": [
+   11,
+   0
+  ],
+  "helmet|x2|CX_codex_exact|CX_B_heldout": [
+   18,
+   9
+  ],
+  "helmet|x2|CX_codex_exact|CX_C_heldout": [
+   19,
+   8
+  ],
+  "helmet|x2|CX_codex_bayer|REF": [
+   11,
+   6
+  ],
+  "helmet|x2|CX_codex_bayer|CX_B_heldout": [
+   18,
+   15
+  ],
+  "helmet|x2|CX_codex_bayer|CX_C_heldout": [
+   19,
+   7
+  ],
+  "helmet|x2|Q8_srgb|REF": [
+   11,
+   4
+  ],
+  "helmet|x2|Q8_srgb|CX_B_heldout": [
+   18,
+   11
+  ],
+  "helmet|x2|Q8_srgb|CX_C_heldout": [
+   19,
+   9
+  ],
+  "helmet|x2|Q8x_srgb_exact|REF": [
+   11,
+   6
+  ],
+  "helmet|x2|Q8x_srgb_exact|CX_B_heldout": [
+   18,
+   10
+  ],
+  "helmet|x2|Q8x_srgb_exact|CX_C_heldout": [
+   19,
+   10
+  ],
+  "helmet|x2|Q8x_lin_exact|REF": [
+   11,
+   5
+  ],
+  "helmet|x2|Q8x_lin_exact|CX_B_heldout": [
+   18,
+   9
+  ],
+  "helmet|x2|Q8x_lin_exact|CX_C_heldout": [
+   19,
+   11
+  ],
+  "helmet|x4|xBR|REF": [
+   43,
+   28
+  ],
+  "helmet|x4|xBR|CX_B_heldout": [
+   65,
+   49
+  ],
+  "helmet|x4|xBR|CX_C_heldout": [
+   65,
+   42
+  ],
+  "helmet|x4|Q0_actuel|REF": [
+   43,
+   18
+  ],
+  "helmet|x4|Q0_actuel|CX_B_heldout": [
+   65,
+   48
+  ],
+  "helmet|x4|Q0_actuel|CX_C_heldout": [
+   65,
+   31
+  ],
+  "helmet|x4|Q1_classe|REF": [
+   43,
+   18
+  ],
+  "helmet|x4|Q1_classe|CX_B_heldout": [
+   65,
+   46
+  ],
+  "helmet|x4|Q1_classe|CX_C_heldout": [
+   65,
+   28
+  ],
+  "helmet|x4|Q6_idx_multi|REF": [
+   43,
+   23
+  ],
+  "helmet|x4|Q6_idx_multi|CX_B_heldout": [
+   65,
+   46
+  ],
+  "helmet|x4|Q6_idx_multi|CX_C_heldout": [
+   65,
+   22
+  ],
+  "helmet|x4|Q3_frac_ref|REF": [
+   43,
+   0
+  ],
+  "helmet|x4|Q3_frac_ref|CX_B_heldout": [
+   65,
+   37
+  ],
+  "helmet|x4|Q3_frac_ref|CX_C_heldout": [
+   65,
+   33
+  ],
+  "helmet|x4|CX_interp_ref_lin|REF": [
+   43,
+   0
+  ],
+  "helmet|x4|CX_interp_ref_lin|CX_B_heldout": [
+   65,
+   37
+  ],
+  "helmet|x4|CX_interp_ref_lin|CX_C_heldout": [
+   65,
+   32
+  ],
+  "helmet|x4|CX_codex_exact|REF": [
+   43,
+   0
+  ],
+  "helmet|x4|CX_codex_exact|CX_B_heldout": [
+   65,
+   37
+  ],
+  "helmet|x4|CX_codex_exact|CX_C_heldout": [
+   65,
+   32
+  ],
+  "helmet|x4|CX_codex_bayer|REF": [
+   43,
+   16
+  ],
+  "helmet|x4|CX_codex_bayer|CX_B_heldout": [
+   65,
+   40
+  ],
+  "helmet|x4|CX_codex_bayer|CX_C_heldout": [
+   65,
+   24
+  ],
+  "helmet|x4|Q8_srgb|REF": [
+   43,
+   23
+  ],
+  "helmet|x4|Q8_srgb|CX_B_heldout": [
+   65,
+   41
+  ],
+  "helmet|x4|Q8_srgb|CX_C_heldout": [
+   65,
+   21
+  ],
+  "helmet|x4|Q8x_srgb_exact|REF": [
+   43,
+   23
+  ],
+  "helmet|x4|Q8x_srgb_exact|CX_B_heldout": [
+   65,
+   41
+  ],
+  "helmet|x4|Q8x_srgb_exact|CX_C_heldout": [
+   65,
+   22
+  ],
+  "helmet|x4|Q8x_lin_exact|REF": [
+   43,
+   24
+  ],
+  "helmet|x4|Q8x_lin_exact|CX_B_heldout": [
+   65,
+   41
+  ],
+  "helmet|x4|Q8x_lin_exact|CX_C_heldout": [
+   65,
+   25
+  ]
+ }
+}

@@ -27,6 +27,10 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+Recherche de remplacement par palettes dynamiques : [études et guide](Etudes_Sprite_codex_claude/README.md),
+[P1 Q3m K6](families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md).
+P1 satisfait ses critères hors ligne ; validation ingame et remplacement de la méthode courante restent à réaliser.
+
 Voie quotidienne : [`../docs/PRODUCTION_RAPIDE.md`](../docs/PRODUCTION_RAPIDE.md). Les documents
 ci-dessous sont des recettes conditionnelles, pas une chaîne universelle.
 

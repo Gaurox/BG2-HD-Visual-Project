@@ -1,0 +1,110 @@
+# ![EEex Logo](EEex.png)
+
+- [Overview](#overview)
+- [Compatibility](#compatibility)
+- [Download](#download)
+- [Install Order](#install-order)
+- [Installation](#installation)
+- [Stability](#stability)
+- [How EEex Works](#how-eeex-works)
+- [Documentation](#documentation)
+
+<h1>Overview</h1>
+EEex is an executable extender for Beamdog's Enhanced Edition of the Infinity Engine. Its goal is to externalize certain parts of the engine to grant modders a greater degree of control over otherwise hardcoded mechanics.
+<br>
+<br>
+EEex's core component does <b>not</b> make any gameplay changes itself – it merely enables other mods to do so. The installer provides additional <a href="https://eeex-docs.readthedocs.io/en/latest/Introduction/components.html">components</a> that make gameplay changes.
+<br>
+<br>
+<br>
+<h1>Compatibility</h1>
+Operating systems:
+<br>
+<br>
+
+| OS      | Compatibility | Notes             |
+| ------- | ------------- | ----------------- |
+| Windows | Full          | Native support    |
+| Linux   | Partial       | Via Proton / Wine |
+| MacOS   | Limited       | Via CrossOver     |
+
+Game versions:
+
+| Games                 | Engine Version | Compatible EEex Versions |
+| --------------------- | -------------- | ------------------------ |
+| BG:EE, BG2:EE, IWD:EE | v2.7           | ≥ v1.1.0                 |
+| BG:EE, BG2:EE, IWD:EE | v2.6           | ≥ v0.9.0-alpha           |
+| BG:EE, BG2:EE, IWD:EE | v2.5           | < v0.9.0-alpha           |
+
+Dependencies:
+
+- <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe/">Microsoft Visual C++ Redistributable</a>
+<br>
+<h1>Download</h1>
+The latest EEex version can be downloaded from the <a href="https://github.com/Bubb13/EEex/releases">Releases</a> page. The installer is located under the collapsible "Assets" menu.
+<br>
+<br>
+A WeiDU installer has been intentionally omitted from the master branch to prevent it from being accidentally installed, as it contains work-in-progress features and is not guaranteed to be stable.
+<br>
+<br>
+<br>
+
+<h1>Install Order</h1>
+EEex itself has no external mod dependencies, and thus can go anywhere in the install order.
+<br>
+<br>
+There is one notable exception — certain storefronts, (notably Steam), distribute the Siege of Dragonspear DLC for BG:EE as a zip archive. This archive must be merged with the base game before any mods can be installed. In this case, <a href="https://github.com/Argent77/A7-DlcMerger/releases">DLC Merger</a> must be the first mod in the install order, (i.e. go before EEex).
+<br>
+<br>
+It is generally good practice to place EEex near the beginning of the install order, as it needs to be installed before any mods that rely on it, or detect it to activate additional functionality.
+<br>
+<br>
+<br>
+
+<h1>Installation</h1>
+EEex is distributed as a Gibberlings3 installer. After running the setup file, simply point it to your game directory and click "Install".
+<br>
+<br>
+
+- Older versions of EEex are distributed without the Gibberlings3 installer. Extract the archive's contents into your game directory and run the setup file to install.
+
+<b>Please note:</b> The game must be started using InfinityLoader.exe / EEex.exe after installation; any attempt to start the game using the vanilla executable will result in a crash. If InfinityLoader.exe fails to start, please ensure you have installed the latest <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe/">Microsoft Visual C++ Redistributable</a>.
+<br>
+<br>
+<br>
+
+<h1>Stability</h1>
+While crashes are extremely rare, they may still occur. If you encounter a crash, or a bug with EEex, please report the issue to <a href="https://github.com/Bubb13/EEex/issues">EEex's GitHub Issues page</a> or <a href="https://www.gibberlings3.net/forums/topic/41254-mod-eeex-v100">EEex's thread on Gibberlings3</a>.
+<br>
+<br>
+
+When reporting, please:
+- Upload:
+  - WeiDU.log — This is in your game directory.
+  - A save that exhibits the issue — Saves are found in `C:\Users\<user name>\Documents\<game folder>\save`. Zip the entire save folder.
+  - (If applicable) The generated crash .dmp — This is usually found in `C:\Users\<user name>\Documents\Infinity Engine - Enhanced Edition\crash`.
+    - Starting in EEex v1.0.0, crash dumps are instead saved to `<game folder>\InfinityLoader_Crash`.
+- And:
+  - Provide a series of steps that reproduce the issue.
+
+<br>
+<h1>How EEex Works</h1>
+EEex uses a loader program to modify the game's executable after it has been placed into memory. The exact modifications depend on the version of EEex, and any installed mods that make use of EEex's capabilities.
+<br>
+<br>
+Due to EEex's use of in-memory patching, antivirus solutions might flag InfinityLoader.exe / EEex.exe as a virus. This is a false positive.
+<br>
+<br>
+<b>Please note:</b> The following links are <b>NOT</b> intended to be used for installing EEex. The loader programs are bundled with EEex and are automatically installed alongside it.
+<br>
+<br>
+
+- <a href="https://github.com/Bubb13/InfinityLoader">InfinityLoader</a> — EEex versions ≥ v0.9.0-alpha
+- <a href="https://github.com/mrfearless/EEexLoader">EEexLoader</a> (thanks mrfearless!) — EEex versions < v0.9.0-alpha
+
+<br>
+<h1>Documentation</h1>
+EEex makes extensive use of the EE Lua environment, with most of its functionality implemented as Lua code. Features include new Lua functions, opcodes, scripting actions, triggers, and objects. Please see the <a href="https://eeex-docs.readthedocs.io/en/latest/">EEex Documentation</a> for an overview of EEex's features.
+<br>
+<br>
+The above documentation is a work in progress. If you wish to contribute, visit the <a href="https://eeex-docs.readthedocs.io/en/latest/Community/contributing.html">contributing</a> page for details.
