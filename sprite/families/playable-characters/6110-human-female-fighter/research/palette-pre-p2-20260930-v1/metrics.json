@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-upscale-character-pre-p2-metrics-v1",
+  "status": "passed",
+  "created_utc": "2026-09-30T21:27:12.988570+00:00",
+  "elapsed_seconds": 23.281999999999243,
+  "scope": "Saved P1 inputs only; no optimization, inference or runtime execution",
+  "methods": [
+    "Q0",
+    "Q3m-k6"
+  ],
+  "frame_metric_rows": 31104,
+  "summary_rows": 216,
+  "maximum_absolute_difference": 0.0,
+  "relative_and_absolute_tolerance": 1e-12,
+  "all_ten_disjoint_validation_palettes_improve": {
+    "2": true,
+    "4": true
+  },
+  "ref_error_increase_percent": {
+    "2": 6.101401514852811,
+    "4": 11.59165894570824
+  }
+}

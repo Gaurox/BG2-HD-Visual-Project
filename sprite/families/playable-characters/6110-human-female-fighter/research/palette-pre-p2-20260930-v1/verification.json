@@ -1,0 +1,233 @@
+{
+  "schema": "bg2-upscale-character-pre-p2-verification-v1",
+  "status": "passed",
+  "created_utc": "2026-09-30T21:32:52.499770+00:00",
+  "ready_to_begin_p2": true,
+  "p2_started": false,
+  "p3_started": false,
+  "installation_performed": false,
+  "committed": false,
+  "tracked_sources_unchanged": true,
+  "native_baseline_only": true,
+  "python_tests": [
+    {
+      "log": "python-tests.log",
+      "tests": 26,
+      "status": "passed"
+    },
+    {
+      "log": "python-pipeline-tests.log",
+      "tests": 15,
+      "status": "passed"
+    }
+  ],
+  "python_tests_total": 41,
+  "native_ctest_suites_passed": 3,
+  "toolchain": {
+    "cmake": "4.0.2",
+    "msvc": "19.29.30158.0",
+    "toolset": "v142",
+    "sdk": "10.0.19041.0",
+    "architecture": "x64",
+    "configuration": "Release",
+    "warnings_as_errors": false
+  },
+  "summary": {
+    "reference_decodings": 32832,
+    "synthetic_rgba_bgra_decodings": 116736,
+    "xpress_roundtrips": 3168,
+    "frame_scale_pairs": 288,
+    "encoded_variants": 2304,
+    "metric_rows_recomputed": 31104,
+    "summary_rows_recomputed": 216,
+    "metric_maximum_difference": 0.0,
+    "ref_error_increase_percent": {
+      "2": 6.101401514852811,
+      "4": 11.59165894570824
+    }
+  },
+  "live_local_inputs_sha256": {
+    "config://bg2ee_game_root/BaldurReal.exe": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+    "config://bg2ee_game_root/chitin.key": "1818ffebb2424992fb39fb13509e7f629ac819b08a553c2dd4ac25f2e40a979f",
+    "config://reboutcx_model": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05"
+  },
+  "native_bam_provenance": {
+    "CHFF4G12": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x40070a",
+      "canonical_sha256": "4960711f8325a97632e2c04442d95e69ab60a29303f88647519694c100278f19"
+    },
+    "CHFF4G11": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x400709",
+      "canonical_sha256": "094f08e1d3ed95e46c3306ed86981bcd991f6d79d9141c4658037cd640cc57c1"
+    },
+    "WQNJ6G1": {
+      "bif": "data/PaperDol.bif",
+      "locator": "0x6200c61",
+      "canonical_sha256": "e7a1c2d03071a830ee1205ec1578b4a7ecf9ef41d6384aa98c42995ba3911bb0"
+    },
+    "WQND3G1": {
+      "bif": "data/OBJAnim.bif",
+      "locator": "0x2006ed",
+      "canonical_sha256": "460e56276131250f621dda7d17d308e8c5185cfd2dcb899d5f80e251b4378fe1"
+    },
+    "WQNS1G1": {
+      "bif": "data/OBJAnim.bif",
+      "locator": "0x20078d",
+      "canonical_sha256": "957f56a68c88fcdf35b1911b646754df952523da587ca9085ae3dfdd369f7208"
+    },
+    "CHFB1A1": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x40069b",
+      "canonical_sha256": "4bec5be9c136c869b8d1c61426623ad4fbbbde03a1cca923595d38d9421d817f"
+    },
+    "CHFB2A1": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x4006b2",
+      "canonical_sha256": "e34bb41e78ca1787ef8af36c7a8fbb61404272026bc75afcd21a48c08be2d0c5"
+    },
+    "CHFB3A1": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x4006c9",
+      "canonical_sha256": "f9758bfb7f57a9a47c3cf25ee65b793785360209a75bcf5a3c67a44bdf5b89a8"
+    },
+    "CHFF4A1": {
+      "bif": "data/GUIIcon.bif",
+      "locator": "0x4006fe",
+      "canonical_sha256": "0424bfe925c39daacacfdb592081ef872cdb54c79f8bc43b3ea62395ac705031"
+    },
+    "WQNS0A1": {
+      "bif": "data/PaperDol.bif",
+      "locator": "0x6200cd0",
+      "canonical_sha256": "73bbf56afb63b8094dd3a3a1be3137799b5cf5f6792a56bb726d9c96deb4fbaf"
+    },
+    "WQNC0A1": {
+      "bif": "data/PaperDol.bif",
+      "locator": "0x6200b9d",
+      "canonical_sha256": "f256cfd3e10c1f1147b0cca9d1f53d042dff1b7dea8a5f7b2820e13c2978cc29"
+    },
+    "WQNJ6A1": {
+      "bif": "data/PaperDol.bif",
+      "locator": "0x6200c57",
+      "canonical_sha256": "b337b6f73728eb8920d9243042b2a2fd7d4630848cfd3686e0d200c6bf4841cb"
+    }
+  },
+  "occurrence_weights": {
+    "occurrences": 180,
+    "unique_frames": 144,
+    "rows_checked": {
+      "color-frames": 124416,
+      "sizes": 2304
+    }
+  },
+  "guide": {
+    "path": "sprite/Etudes_Sprite_codex_claude/GUIDE_DEFINITIF_SPRITES_HD_BG2EE.md",
+    "sha256": "080cbbd7b5589f4c1715e3ddc837e4e95504b23f441615fb99d74f2e51735db1",
+    "modified": false,
+    "clarifications": [
+      "§8.5 full2048 LUT vs exact dep_mask: only populate actually used pairs",
+      "§8.5 pulse every frame: conditional on changed dependencies",
+      "§11 P2 fallback V5/xBR: current invalid-catalog fallback is native BAM",
+      "§8 V6 logical specification: concrete byte layout/version allocation still required; no current implementation"
+    ]
+  },
+  "format_and_runtime_decisions": {
+    "candidate": "Q3m K6; logical F=0..7; no dithering; experimental only; REF regression retained",
+    "version": "Recommend registry V6 under IEECSXN; constants currently occupy 1..5. Recheck/reserve explicitly in P2; catalog version is independent",
+    "delivery": "Isolated homogeneous catalog V2 + new-version shards, memberships 0x6110 only; no monolithic/set support required initially",
+    "geometry": "Existing x1 u16 width/height, signed i16 centres, transparent byte, complete frames/cycles/slots retained; N=w*h*scale^2 with scale 2 or 4",
+    "source_identity": "Keep resource resref, SHA-256 of canonical BAM, counts and full cycle lookup; producer checks source. Runtime currently does not compare BAM bytes; live geometry checks remain",
+    "representatives": "Keep 256 u16 source offsets / 0xFFFF provenance; do not invent representatives for newly used shades; new version removes representative-presence requirement for I",
+    "dependency_mask": "Exact 32 bytes, little bit order; union(I) plus succ(I) only for F>0. Includes specials as stored by P1; normalize transparent palette entry before fingerprint/decode",
+    "planes": "I=u8[N]; F optional u8[N] values 0..7 (3 significant bits, no bit packing). Absent F=0; writer omits all-zero F; reader accepts explicit all-zero F for identity",
+    "compression": "Per-plane raw codec 0 or Windows XPRESS_HUFF codec 1; compressed only if strictly smaller; exact N decoded bytes. No other codec or packed-F mode",
+    "profiles": "Separate u32 class-profile and decode-rule IDs (recommend ID 1 in each namespace), mapped explicitly to character-bg2ee-2.7.3.0 and ramp-lerp-srgb8-v1; reject unknown. Encoder ID stays producer provenance",
+    "binary_layout_proposal": "LE registry header 24+8 bytes; resource header unchanged 48 bytes. Frame prefix existing 528 bytes (codec I byte9, F-present flag byte10, zero byte11), then 32-byte dep_mask + u32 Fstored + u8 Fcodec + 3 zero bytes: total568 before I then optional F. Cycles unchanged. Confirm final offsets in P2 specification/tests",
+    "frontiers": "B unsupported in first implementation; reject any B/unknown flag",
+    "decode": "For three native color bytes: (a*(8-f)+b*f+4)>>3; alpha copied from P[I]. F0 direct P[I]; legal successors never cross classes; specials/last shades require F0",
+    "lut": "CPU scratch table of at most2048 dwords/frame decode; fill only used (I,F) pairs. F0 reads only primary. Full-palette LUT reads beyond exact dep_mask and must be avoided",
+    "cache": "Fingerprint normalized realized colors selected by dep_mask plus native encoding and decode IDs; retain frame/shard generation and geometry/layout cache keys. Layer/actor snapshots stay separate; no palette cache keyed only by resref",
+    "invalidation": "Relevant palette/alpha changes invalidate texture/composite; unused changes do not. Pulse invalidation follows actual dependencies; graphics forget/reset/context-generation invalidates GPU entries. Same-handle reset remains to prove in P2/P3",
+    "residency": "Atomically load and pin I+F as one cached frame; sum their decoded bytes in existing budget/limits, avoid evicting I while loading F. Catalog index_bytes retains I semantics; F accounting separate",
+    "composition": "Preserve native order, centres, union/borders and nonzero-DWORD overwrite; no new inter-layer blending; keep native pixel encoding and alpha unchanged",
+    "failure": "Reject malformed headers, lengths, overflows, F, masks, profiles, flags and streams before exposing a frame; quarantine bad component; retain current native-BAM fallback. Q0/xBR is an explicit parallel A/B pack, not an existing automatic V5 fallback",
+    "experimental_completion": "Reuse P1 sampled encoded frames; full native frame/cycle tables; keep indexed fallback for unsampled frames, identically in Q0 and Q3m packs. Do not infer full-family coverage from 144 samples"
+  },
+  "p2_implementation_order": [
+    {
+      "step": 1,
+      "work": "Reserve registry version and finalize byte layout/profile ID table; add checked Python inspector and format tests",
+      "files": [
+        "pipeline/scripts/run_creature_sprite_x2.py: inspect_registry, iter_catalog_record_logical_chunks, catalog_source_component_sha256"
+      ]
+    },
+    {
+      "step": 2,
+      "work": "Import immutable P1 planes/dep masks with source geometry and complete resource tables; write new shards; compute versioned logical digests including profiles/I/F/dep",
+      "files": [
+        "pipeline/scripts/run_creature_sprite_x2.py: write_compressed_catalog_registry_records, inspect_registry_catalog, catalog_*_digest, write_registry_catalog_index",
+        "pipeline/scripts/reboutcx_catalog.py: resource_contract_digest",
+        "pipeline/scripts/reboutcx_full.py and reboutcx_cpu_p10.py: legacy V3/representative assumptions; new path must not silently relax old checks"
+      ]
+    },
+    {
+      "step": 3,
+      "work": "Implement checked native reader/decompression and atomic I/F residency; preserve old reader versions",
+      "files": [
+        "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp: Frame, registry_read_limit, parse_registry, catalog_shard_matches, frame_indices_locked"
+      ]
+    },
+    {
+      "step": 4,
+      "work": "Implement integer decode, masked fingerprint, upload/composite and reset lifecycle with existing per-layer snapshots",
+      "files": [
+        "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp: palette_fingerprint, upload_frame_locked, compose_composite_pixels_locked, forget_engine_textures",
+        "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp: observe existing owner/generation snapshot path; modify only if a targeted test demonstrates necessity"
+      ]
+    },
+    {
+      "step": 5,
+      "work": "Native golden/format/cache regression tests; small Q0/Q3m packs and compatible DLL, build/ctest plus pack inspections. Stop before installation/P3",
+      "files": [
+        "pipeline/tests/test_*palette* and catalog tests",
+        "engine/InfinityEngine-Enhancer/source-patchee/tests/iee_tests.cpp",
+        "engine/InfinityEngine-Enhancer/source-patchee/CMakeLists.txt"
+      ]
+    }
+  ],
+  "p2_offgame_tests_required_before_p3": [
+    "Compare actual native production Q3m decoder against all32832 golden outputs, then synthetic arbitrary alpha/BGRA/packed-native cases; fixture export/converter required",
+    "Absent F and explicit all-zero F byte-identical to old indexed upload/composite, including transparent, shadow, reserved indices, negative centres and placeholders",
+    "Raw/XPRESS I/F writer-reader roundtrip and canonical digests, streamed/lazy frame access, homogeneous catalog rules, memberships and same-BAM disjoint actor routing",
+    "Reject truncated header/I/F/cycles; forged dimensions/counts/offsets/lengths and overflow; F8..255, nonzero F on special/terminal indices; missing/excess dep bits; unknown profile/rule/flags/codec; corrupted XPRESS and wrong decompressed size",
+    "Mutating used primary/successor/alpha changes fingerprint/output; changing unused entry does neither; F0 successor excluded; per-layer and two actors with same BAM/different palettes stay independent",
+    "Palette sequences simulating pulse effects, reset/context replacement/texture-ID reuse, payload/cache eviction and I+F pinning; composition retains order/borders/double layers",
+    "Verify malformed experimental component falls back to native without using partial/stale output; no regression to V1..V5/catalog/set baseline",
+    "Measure actual new-header/representatives/file size, CPU rebuild time and I+F/texture residency on small pack; P1 plane ratios exclude full binary overhead"
+  ],
+  "risks_and_open_questions": [
+    "REF error regression is real and repeated; do not adopt globally before user P3 A/B. If unacceptable, new immutable P1 run with REF reweighting",
+    "Synthetic golden alpha does not prove runtime shadows/invisibility/pulses or post-palette modulation, native layer order in real equipment scenes, cadence or graphical reset behaviour",
+    "P1 covers144 distinct frames (180 occurrences), not full5175 source frames; full source topology/fallback must be preserved in experimental pack",
+    "Catalog version/digest and source registry version have independent meanings; old producers/inspectors and legacy representative assumptions cannot be reused unchanged",
+    "Runtime source SHA currently metadata only; decide separately whether to reject native-BAM mod mismatch beyond draw-time geometry checks",
+    "ReboutCX distribution/license remains unresolved; does not block local pre-P2 checks, does block any inferred release authorization"
+  ],
+  "evidence_sha256": {
+    "inputs.json": "538597a417df202ae4f5cbe1bfeeefa93b4b12e8b98c57bb9749608420b8a5f9",
+    "inputs.log": "65465d6de3804a1494fdc3f91f573b9534c5c9fc662ccfc7d06da43d351f3db0",
+    "metrics.json": "6c08fca70947992bae6049826a83987f9743f8dd2b592ed2bbf4e54150d074c0",
+    "metrics.log": "6c08fca70947992bae6049826a83987f9743f8dd2b592ed2bbf4e54150d074c0",
+    "native-build.log": "40ca6a79e01895b89eaefd5cf7e0aa27a76998dab1a8c776be9678cb51af5938",
+    "native-configure.log": "d5046de8fc3235980624aa601e4a1b80dd42ee0040cf4d19d706ffc644ec6256",
+    "native-ctest.log": "c0ed2c90f7c2c97d2654e6f790695a36d6a56299b21ff882393c08eba27c17b8",
+    "native.json": "a500ef5ef83b7b29e008a7c587fc72038e718dcdbeeb14e2b01c153d0977ec23",
+    "provenance/finalize.py": "5f430a1a8d438574b0384e7e2999ab460ab915fe322bbb7aa4adabf16136ad59",
+    "provenance/validate_inputs.py": "1558c3050a244a080e242efdf3404b2da3811a3371ac7df8973866acc399dce6",
+    "provenance/validate_metrics.py": "f05b2c5373f1d33a9192569aed83829ebc4329489f7bf287a0ae1bad6e0f93bc",
+    "provenance/validate_native.ps1": "ddbf7ecf54c3f7287e11227797a96fd065f213e7dbbabbcb14fffb45cf9df366",
+    "python-pipeline-tests.log": "605606f9ed8e53b3c50fbf359f529d481decd23ede971819b41c35831a382490",
+    "python-tests.log": "8c94f21d789a8aab09b34305410cc736e5e8e5bc2d1cc3e021722435413818b0"
+  }
+}
