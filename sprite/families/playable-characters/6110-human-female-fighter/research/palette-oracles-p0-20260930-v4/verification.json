@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "result_sha256": {
+    "audit.json": "aa4ecd5dbb639d3c33bf778c9de690d35a164ab9cf4aaeb889c25dddaa1e6a20",
+    "bam-resources.json": "b3b254ae08110a8672d323ff4e85c220205138da5973ccdea4441f5a5c5e3376",
+    "e3_results.json": "f9bd9f5947f31fcf3fcd4d5f6e253a2a1aec8e435c6f73380f08bd16a2faeaaf",
+    "e3b-reproduction.json": "e2fbe23a7e4315509b5e543b6ca0b500915c746ec72dd2caee9e718ed43e37fc",
+    "mpalette.npy": "5436d88d4e3aa7245da590b4fe2c4f63b83a9ae3eadc4b1c0225473d78a4ac66",
+    "neutral-palette-golden.npz": "779f128995657ef97626bd25a3b99b32388950676d35fb511714df74dd8c3c24",
+    "provenance/e3b_no_visuals.py": "fc0cb45b9c8804c52aa195046d339825b24fa8eb0d97b1facc39ac076df3ca0a",
+    "provenance/palette_oracle.py": "24c92dfd68eef6ef47483440720a6135ef550e0c2201efff79f47bdcebdf2d3e",
+    "provenance/palette_p0.py": "e5e4ad0b8960dc4b84d638883ee974f018f556d451ee75ca7537999a1ee29348",
+    "provenance/reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+    "provenance/reboutcx_quantize.py": "95991bfacf8f2aab639f3da9adb4d1d0539bda98c888f9b5f905ad3dac6907e9",
+    "README.md": "755a27af08228ba2dfdca53d79411842a6c743d518f49a45b96b99729f516fd7",
+    "tests.json": "568c2c569a2955025649c07f1ad90052c2cf05266dbd6a3a42230387a62daf42"
+  },
+  "dependencies_sha256": {
+    "pipeline/scripts/bam_export.py": "1d14bda3532715c662451fb394308f5f3352265b3f38fe2f520bb0b42c933d55",
+    "pipeline/scripts/bg2lib.py": "bcca10c78cccf903049bf1beead179eaacc803e76aa75a01275af0d66e1c6d15",
+    "pipeline/scripts/palette_eval.py": "419b331b595bafc1cfcbc7971b8494fce749c32a0cb16d1c7a477a59831aede3",
+    "pipeline/scripts/run_creature_sprite_x2.py": "5eba2300863e3c6fccde0201370d05dc87d62c38a64c138dd01fbb3b25d23278",
+    "pipeline/scripts/workspace_paths.py": "972a6b7beb08e1382eaed94265566d26dc98b0dfd8834ba814bb8af7dd192daf",
+    "pipeline/scripts/sprite_layout.py": "899e3649b331b30633e0edc71d03c6580ff7cf80cd404c9c035ae05fc40cb83c"
+  },
+  "historical_e3b_unchanged": true,
+  "native_golden_scalar_production_differences": 0,
+  "code_snapshots_match": true,
+  "no_media_files": true
+}

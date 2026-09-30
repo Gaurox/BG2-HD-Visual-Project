@@ -286,7 +286,7 @@ class ReboutCXCharacterAuditTests(unittest.TestCase):
                 }
             )
 
-    def test_palette_profiles_are_derived_from_pinned_ranges12_bytes(self) -> None:
+    def test_palette_profiles_are_derived_from_pinned_mpalette_and_legacy_alias(self) -> None:
         gradients = np.arange(12 * 256 * 3, dtype=np.uint32).reshape(256, 12, 3)
         gradients = ((gradients * 29 + 7) % 256).astype(np.uint8)
         buffer = io.BytesIO()
@@ -314,14 +314,32 @@ class ReboutCXCharacterAuditTests(unittest.TestCase):
                 ],
             },
         }
+        resources = [("RANGES12", 1, 0x189), ("MPALETTE", 1, 0x123)]
+        for name, locator in (("RANGES12", "0x00000189"), ("MPALETTE", "0x00000123")):
+            job["palette_reference"]["source"].update(resource=name, locator=locator)
+            with (
+                mock.patch.object(batch, "load_key", return_value=(["unused"], resources)),
+                mock.patch.object(batch, "resolve_resource", return_value=(raw, "data/Default.bif")),
+            ):
+                profiles, evidence = batch.load_palette_profiles(job)
+            np.testing.assert_array_equal(profiles[0]["palette"], palette)
+            self.assertEqual(evidence["source"], {**job["palette_reference"]["source"],
+                                                "sha256": hashlib.sha256(raw).hexdigest().upper(),
+                                                "dimensions": [12, 256]})
+        # Aliases require exact bytes, even if a decoder could produce equal RGB.
         with (
-            mock.patch.object(batch, "load_key", return_value=(["unused"], [("RANGES12", 1, 0x189)])),
+            mock.patch.object(batch, "load_key", return_value=(["unused"], resources)),
+            mock.patch.object(batch, "resolve_resource", side_effect=[(raw, "data/Default.bif"),
+                                                                      (raw + b"different", "data/Default.bif")]),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "not byte-identical"):
+                batch.load_palette_profiles(job)
+        with (
+            mock.patch.object(batch, "load_key", return_value=(["unused"], resources[1:])),
             mock.patch.object(batch, "resolve_resource", return_value=(raw, "data/Default.bif")),
         ):
-            profiles, evidence = batch.load_palette_profiles(job)
-        np.testing.assert_array_equal(profiles[0]["palette"], palette)
-        self.assertEqual(evidence["source"]["locator"], "0x00000189")
-        self.assertEqual(evidence["source"]["dimensions"], [12, 256])
+            with self.assertRaisesRegex(RuntimeError, "RANGES12 resource identity is ambiguous"):
+                batch.load_palette_profiles(job)
 
     def test_equal_colors_do_not_merge_classes_and_indices_recolor_without_requantizing(self) -> None:
         classes = quantize.character_chmb1_classes()

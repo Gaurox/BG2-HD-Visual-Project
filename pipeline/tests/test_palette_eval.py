@@ -33,6 +33,26 @@ class PaletteEvaluationTests(unittest.TestCase):
     def test_no_world_overlap(self):
         self.assertIsNone(evaluation.aligned_slices((3, 3), (3, 3), (100, 0), (0, 0), 4))
 
+    def test_two_dimensional_recrops_both_orders_at_x2_and_x4(self):
+        world = np.random.default_rng(6110).random((16, 16, 3))
+        for scale in (2, 4):
+            ta = world[5:9, 4:9].repeat(scale, 0).repeat(scale, 1)
+            tb = world[6:10, 6:10].repeat(scale, 0).repeat(scale, 1)
+            ga, gb = np.full(ta.shape[:2], 4, np.uint8), np.full(tb.shape[:2], 4, np.uint8)
+            ra, rb = np.rint(ta*255).astype(np.uint8), np.rint(tb*255).astype(np.uint8)
+            for args in ((ga, gb, ta, tb, ra, rb, (-4, -5), (-6, -6)),
+                         (gb, ga, tb, ta, rb, ra, (-6, -6), (-4, -5))):
+                counts = evaluation.temporal_pair(*args, scale)
+                self.assertEqual(counts["recolorable"], {"static_pixels": 9*scale*scale, "changed_pixels": 0})
+
+    def test_pixel_weighted_and_frame_unweighted_means_are_distinct(self):
+        rows = [{"scale": 2, "method": "Q0", "palette": "REF", "role": "fit",
+                 "mask": "recolorable", "occurrences": 1, "pixels": pixels,
+                 "sum": mean*pixels, "mean": mean} for pixels, mean in ((1, .2), (9, .4))]
+        result = evaluation.summarize_colors(rows)[0]
+        self.assertAlmostEqual(result["pixel_weighted_mean"], .38)
+        self.assertAlmostEqual(result["frame_unweighted_mean"], .3)
+
     def test_k_selection_requires_each_palette_and_two_percent(self):
         rows = [{"scale": s, "method": f"Q3m-k{k}", "mask": "recolorable",
                  "role": "validation", "pixel_weighted_mean": score,

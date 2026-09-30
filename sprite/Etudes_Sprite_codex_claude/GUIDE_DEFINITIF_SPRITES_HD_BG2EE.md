@@ -4,12 +4,14 @@
 
 | Champ | Valeur |
 |---|---|
-| Version | 2026-09-30 — relecture finale et consolidation |
-| Rédaction | Claude Code (Claude Opus 5.5) |
+| Version | 2026-09-30 — relecture finale et consolidation ; **mise à jour du 2026-09-30 : résultats P0/P1 intégrés, P2 et suite ajustés** |
+| Rédaction | Claude Code (Claude Opus 5.5), mise à jour P1 comprise |
 | Entrées relues intégralement | étude Claude (guide v1, présentation + erratum E3b, revue croisée E5) ; étude Codex (guide, notes moteur/inventaire/upscale, comparaison critique, recalcul temporel, arrondi 3 bits) ; synthèse Codex `GUIDE_ULTIME_SPRITES_HD_BG2EE.md` (29/09 21:16) |
 | Vérifications refaites dans cette passe | binaire moteur, `MPALETTE`/`RANGES12`, routine des mélanges, code runtime IEE (`file:line`), quantifieur et cache de production, décisions QA du dépôt, mesure x4 du 26/09, run P13 `0x6110`, tables E3b/E5, recalcul temporel, arrondi 3 bits, inventaire CSV, lignes constantes 74–78, égalisation des rampes, recouvrement des palettes de validation |
+| Mise à jour P1 | Run [`palette-q3m-p1-20260930-v1`](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md) (commit `a1a68a73`) relu : README, JSON, CSV, scripts et tests ; agrégats recalculés depuis `color-summary.csv` / `temporal-sequences.csv`. Résultats §7.14, P2+ ajustés ; chiffres historiques E3/E3b/E5 inchangés |
+| Clôture P0 | Run [`palette-oracles-p0-20260930-v4`](../families/playable-characters/6110-human-female-fighter/research/palette-oracles-p0-20260930-v4/README.md) : oracle scalaire + boucle x64 native, lecteur BAM indépendant, provenance `MPALETTE`/alias, **E3b reproduit numériquement**, 30 tests verts (§7.15). Remplace l'état P0 partiel contenu dans P1 ; historiques/P1 immuables |
 | Autorité | Ce guide fait référence pour le développement. Les études sources restent intactes et historiques ; leurs erreurs sont listées au §16. |
-| Compagnon visuel | [`PRESENTATION_ETUDE_SPRITES_HD_0x6110.html`](PRESENTATION_ETUDE_SPRITES_HD_0x6110.html) (hors ligne, explorateur de palette, comparateur, chiffres) |
+| Compagnon visuel | [`PRESENTATION_ETUDE_SPRITES_HD_0x6110.html`](PRESENTATION_ETUDE_SPRITES_HD_0x6110.html) (hors ligne, explorateur de palette, comparateur, chiffres) ; version expliquée `PRESENTATION_PEDAGOGIQUE_SPRITES_HD_0x6110.html` et `…_EN.html`. Pages locales ignorées par Git, antérieures à P1 |
 | Ce que ce guide n'est pas | Ni validation en jeu, ni état d'installation, ni intégration release. Aucun fichier du jeu, payload, catalogue, DLL ou manifeste n'a été modifié. |
 
 ---
@@ -24,6 +26,7 @@
 | Quoi produire pour `0x6110` (inventaire, périmètre, pièges) | §5 |
 | Chaîne image xBR / ReboutCX | §6 |
 | Tous les chiffres consolidés et comment les lire | §7 |
+| Résultats P1 : K = 6, régression REF, tailles XPRESS réelles | §7.14 |
 | Spécification du format cible (registre V6) | §8 |
 | Algorithme de l'encodeur | §9 |
 | x2, x4, filtrage | §10 |
@@ -65,11 +68,13 @@ BAM V1 P8 (indices, cycles, lookup, centres)                       ── vérit
 | Contrat de couleur | 7 gammes × 12 nuances + 21 paires × 8 ; une palette par couche | CONFIRMÉ |
 | Source du modelé | ReboutCX natif x4 (RRDBNet 64nf/23nb, SHA-256 `c36a14dd…`) | MESURÉ ; licence NON RÉSOLUE |
 | Source de la sémantique (classe, alpha, ombre) | guide xBR à la même échelle + provenance d'indice | CONFIRMÉ (pipeline actuel) |
-| Encodage cible | **Q3m** : indice de base + fraction 3 bits vers la nuance suivante, ajusté sur K palettes | MESURÉ (hors jeu) |
+| Encodage cible | **Q3m** : indice de base + fraction 3 bits vers la nuance suivante, ajusté sur K palettes | MESURÉ (hors jeu) ; P1 : meilleur que Q0 sur 10/10 palettes disjointes, −27,1 % x2, −25,4 % x4 (§7.14) |
 | Frontières (Q8) | option, seulement après ablation contre Q3m, sous règles de paires autorisées | MESURÉ (prototype incomplet) |
 | Espace d'interpolation au runtime | octets sRGB, arrondi entier défini (§8.4) | MESURÉ : sRGB ≈ linéaire (37,8 vs 38,1) |
-| Espace d'optimisation | OKLab, contre les couleurs exactes du décodeur | CANDIDAT |
-| Palettes d'ajustement | K = 3 minimum (REF/B/C mesurés), cible K = 4 avec les défauts réels ; K = 3/4/6 à trancher | MESURÉ pour K = 3 seulement |
+| Espace d'optimisation | OKLab (distance au carré), contre les couleurs exactes du décodeur | MESURÉ (P1 ; recherche exhaustive contrôlée par une implémentation indépendante) |
+| Palettes d'ajustement | **K = 6** : REF + défaut guerrière humaine + rotations LATIN1–4, poids égaux (§7.14) ; K = 4 à +2,7 % du meilleur score, hors du seuil de 2 % | MESURÉ (P1, x2 et x4) |
+| Palette de production REF | Q3m K6 la dégrade : +6,1 % x2, +11,6 % x4 face à Q0 ; verdict en jeu (P3) avant adoption | MESURÉ (P1) |
+| Coût des plans I + F + masque | ×1,98 x2, ×2,11 x4 face à Q0 (XPRESS réel ; en-têtes V6 et `representatives` exclus) | MESURÉ (P1) |
 | Tramage | aucun | MESURÉ sur le corpus |
 | Échelle livrée | x2 par défaut ; x4 option qualité après étude de minification | OBSERVÉ EN JEU (x4 « légèrement meilleur ») + CANDIDAT |
 | Reconstruction | CPU dans `creature_sprite_x2.cpp` ; shader seulement si profilage | CANDIDAT |
@@ -80,9 +85,12 @@ BAM V1 P8 (indices, cycles, lookup, centres)                       ── vérit
 
 ```text
 P0 oracles + banc d'évaluation corrigé (signe temporel, masques séparés, ≥ 10 palettes disjointes)
+   → CLÔTURÉ HORS LIGNE 2026-09-30 : acquis P1 + run P0 dédié (§7.15) ; captures runtime en P3
 P1 inférence multi-palettes + encodeur Q6/Q3m hors ligne ; K = 3/4/6
-P2 DLL : lecteur V6 (masque de dépendances, plan F, LUT) + golden tests Python = C++
-P3 verticale en jeu CHFF4 + un casque, un bouclier, une épée : Q0 vs Q3m
+   → FAIT 2026-09-30 : Q3m K = 6, critères satisfaits x2 et x4 (§7.14)
+P2 DLL : écrivain + lecteur V6 (masque de dépendances, plan F, LUT) + golden tests Python = C++
+   → PROCHAINE ÉTAPE ; fixture Python prête : decoder-golden.npz (§8.6)
+P3 verticale en jeu CHFF4 + un casque, un bouclier, une épée : Q0 vs Q3m K6, régression REF à juger
 P4 décision x2/x4 + filtre de minification au zoom réel
 P5 ablation Q3m ↔ Q8 contraint ; n'adopter Q8 que si le gain propre le justifie
 P6 0x6110 complet (628 BAM monde) → P7 paperdolls → P8 autres animations Character
@@ -91,10 +99,11 @@ P6 0x6110 complet (628 BAM monde) → P7 paperdolls → P8 autres animations Cha
 ### 1.4 Ce qui n'est pas acquis
 
 - Aucune de ces méthodes n'a été vue en jeu sous forme fractionnaire : les gains sont hors ligne, mesurés contre une cible ReboutCX, pas contre une préférence humaine.
-- Les palettes « tenues à l'écart » partagent 1 à 6 canaux sur 7 avec l'entraînement (§7.2). Seule D est quasi indépendante ; les gains s'y maintiennent, mais sur une seule palette.
+- Généralisation hors ligne établie par P1 : 10 palettes sans identifiant ni rampe identique au même canal que l'ajustement, toutes améliorées (§7.14). Les palettes E3b/E5 (§7.2) restent partiellement vues.
+- Consensus ≠ amélioration universelle : Q3m K6 dégrade REF, la palette de production actuelle (+6,1 % x2, +11,6 % x4).
 - La plage de zoom réelle de BG2EE à 2560×1440 n'a jamais été mesurée.
-- Le coût réel du format (XPRESS, plan frontière, masque) n'est pas mesuré ; seuls des ordres de grandeur zlib partiels existent.
-- La stabilité temporelle n'est mesurée que sur pixels immobiles alignés par ancre, pas sur surfaces en mouvement.
+- Coût XPRESS réel mesuré pour les plans I, F et le masque (P1) ; plan frontière, en-têtes V6, mémoire et latence runtime non mesurés.
+- La stabilité temporelle n'est mesurée que sur pixels immobiles alignés par ancre, pas sur surfaces en mouvement (P1 compris).
 - ReboutCX : provenance d'entraînement et licence inconnues.
 
 ---
@@ -248,6 +257,7 @@ Chaîne de production ReboutCX actuelle :
 | 2026-09-14 | ReboutCX x2 `0x6100` : accepté pour Minsc (CHMB3+WQLS2) et Anomen (CHMB3+WQLWH/J6/C3) ; CHMB1+WQLS0 « non inférieur », préférence non tranchée | `…/2026-09-14-accepted-6100-*.json` |
 | 2026-09-21 | P13 : `0x6110` ReboutCX x2 (Q0) produit, 65 composants, 178 360 frames, 146 084 logiques, 94 010 inférences (35,6 % de réutilisation) ; aucune décision QA `0x6110` enregistrée | `docs/measurements/reboutcx-p13-0x6110-20260921-v1/` |
 | 2026-09-26 | Essai x4 `0x6110` (NEAREST) : registre compressé 195 904 865 → 309 550 625 o (×1,58) ; 59,1–60 FPS, p95 16,8–17,3 ms ; « x4 légèrement meilleur que x2 » ; restauré en x2 | `docs/measurements/reboutcx-x4-0x6110-visual-test-20260926-v1/result.json` |
+| 2026-09-30 | P1 hors ligne `0x6110` : Q3m K6 retenu, critères satisfaits x2 et x4 ; aucun catalogue, DLL, installation, QA ni release modifiés | `sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/` |
 | site public | installateur prévu : Auto / Full xBR / Full ReboutCX | `bg2-hd-website/fr/sprites.html` |
 
 Conséquence produit : **xBR n'est pas un simple repli**. C'est la voie acceptée en QA à l'échelle des personnages jouables, et un choix d'installation. Le format V6 doit servir les deux (xBR = plan I seul, F = 0).
@@ -346,13 +356,15 @@ Ne jamais réindexer ni supprimer une frame « inutilisée ».
 6. Encoder (§9) contre les K cibles ; transférer alpha, ombre et spéciaux depuis le guide.
 7. Valider sur les palettes de validation (jamais vues).
 
+Implémentation P1, plans logiques sans écrivain V6 : étapes 2 et 7 `pipeline/scripts/palette_eval.py` ; 3 `reboutcx_batch.prepare_inference_rgb` (existant) ; 4–5 `reboutcx_multipal.py` (noyau P12 N = 86, canevas multiple de 32, fp16 déterministe, cibles float32, contrôle de répétition bit-exact) ; 6 `palette_frac_encode.py`.
+
 ### 6.3 Master x4, livraison x2
 
 ```text
 T_k x4 (float) → réduction BOX → T_k x2 (float) → encodage à x2 avec le guide xBR2
 ```
 
-Ne jamais réduire des plans I/F déjà quantifiés : la quantification et les frontières se recalculent à l'échelle livrée.
+Ne jamais réduire des plans I/F déjà quantifiés : la quantification et les frontières se recalculent à l'échelle livrée. P1 applique ce schéma (BOX float32 `chainner_ext`, guides xBR2 et xBR4 directs).
 
 ### 6.4 xBR ou ReboutCX par asset
 
@@ -389,9 +401,9 @@ Ordre : métal, mineure, majeure, peau, cuir, armure, cheveux.
 | E « armure bleue » | 30 47 57 12 39 68 3 | validation | **6/7** (REF sauf armure) |
 | CX-B « contrast » | 30 63 3 12 39 21 57 | validation E5 | **5/7** |
 | CX-C « pale » (peau sombre) | 30 55 30 0 39 30 0 | validation E5 | **4/7** |
-| Défaut guerrière humaine | 30 91 93 12 23 93 2 | jamais testée | 2/7 |
+| Défaut guerrière humaine | 30 91 93 12 23 93 2 | jamais testée en E3b/E5 ; palette d'ajustement `DEFAULT` de P1 | 2/7 |
 
-Lecture : E, CX-B et CX-C sont partiellement vues. Seule D teste une vraie généralisation. Les gains s'y maintiennent (E3b x4 Q8 −15,5 %, E5 x4 Q8 −25 % face à Q0). Exigence pour la suite : ≥ 10 palettes de validation sans aucun canal commun avec l'entraînement.
+Lecture : E, CX-B et CX-C sont partiellement vues. Seule D teste une vraie généralisation. Les gains s'y maintiennent (E3b x4 Q8 −15,5 %, E5 x4 Q8 −25 % face à Q0). Exigence pour la suite : ≥ 10 palettes de validation sans aucun canal commun avec l'entraînement → satisfaite par P1 (§7.14).
 
 ### 7.3 Candidats limités à la frame source (Codex, 60 frames, pondéré pixels)
 
@@ -525,11 +537,129 @@ Lecture corrigée : x4 n'est désavantagé qu'au zoom entier 2, où x2 est exact
 | Q3m classe + t8 delta 3 bits | 134 302 o (×1,98) | 382 275 o (×2,26) |
 | Pixels frontière / opaques | 32 % | 21 % |
 
-La « taille Q8 » publiée = celle de Q3m (plan frontière, masque, métadonnées omis). zlib ≠ XPRESS. Aucun budget ne se décide sur ces chiffres.
+La « taille Q8 » publiée = celle de Q3m (plan frontière, masque, métadonnées omis). zlib ≠ XPRESS. Aucun budget ne se décide sur ces chiffres. Mesure XPRESS réelle des plans : §7.14.
 
 ### 7.13 Audit du prototype de frontière (Codex)
 
 107 985 pixels frontière pondérés : 14 352 (13,3 %) impliquent plus de 2 canaux ; 9 062 (8,4 %) ont un poids primaire nul (la classe primaire disparaît). Le voisin est le premier d'un parcours 3×3 fixe, pas le meilleur.
+
+### 7.14 P1 — Q3m multi-palettes sur 10 palettes disjointes (2026-09-30)
+
+Run [`palette-q3m-p1-20260930-v1`](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md), commit `a1a68a73`. MESURÉ hors ligne ; aucune capture ni QA en jeu.
+
+| Élément | Protocole |
+|---|---|
+| Corpus | 180 occurrences, 144 frames BAM uniques : E3b 120 (4 couches × repos sud 20 poses + marche sud 10) + Codex 60 (pose A1 des 4 armures `CHFB1–3`/`CHFF4` ; attaque 14 slots × `CHFB1`, `WQNS0`, `WQNC0`, `WQNJ6`) |
+| Cibles | 18 palettes × 144 frames = 2 592 inférences ReboutCX x4 float32 ; x2 = BOX float32 du x4 ; réinférence de contrôle : écart max 0 |
+| Métrique primaire | ΔE OKLab moyen ×1000 contre la cible **float**, pixels recolorables `4..255`, pondéré pixels × occurrences ; visibles et ombre publiés à part |
+| Q0 | quantifieur de production sous REF, candidats = indices de la frame source |
+| Q6 / Q3m | encodeur §9.3, poids égaux, sans tramage ni frontière ; K emboîtés dans l'ordre d'ajustement : K3 = REF, DEFAULT, LATIN1 ; K4 + LATIN2 ; K6 + LATIN3, LATIN4 |
+| Choix de K | plus petit K qui améliore **chacune** des 10 validations et reste à ≤ 2 % du meilleur score |
+
+Palettes, ordre métal, mineure, majeure, peau, cuir, armure, cheveux :
+
+| Rôle | Nom | Valeurs | Origine |
+|---|---|---|---|
+| ajustement | REF | 30 47 57 12 39 21 3 | production |
+| ajustement | DEFAULT | 30 91 93 12 23 93 2 | `CLASCOLR` FIGHTER + `RACECOLR` HUMAN, relus à l'exécution |
+| ajustement | LATIN1 · LATIN2 · LATIN3 · LATIN4 | 21 57 46 83 55 67 44 · 3 54 60 84 45 68 20 · 58 50 69 0 33 19 71 · 73 71 18 15 67 56 66 | rotations teinte/clarté conçues |
+| validation | VAL01 · VAL02 · VAL03 · VAL04 · VAL05 · VAL06 | 57 58 122 152 1 43 98 · 67 46 47 157 2 43 0 · 25 28 120 157 2 24 99 · 24 99 169 13 2 64 4 · 24 67 56 26 2 25 107 · 25 28 120 178 2 24 112 | défauts `CLASCOLR` d'autres classes × `RACECOLR` d'autres races ; ligne en collision remplacée par la plus proche autorisée en OKLab (VAL03–06) |
+| validation | VAL07 · VAL08 | 119 125 155 153 142 39 143 · 52 161 120 171 54 51 134 | `RANDCOLR` résolu, graine 6110 |
+| validation | VAL09 · VAL10 | 67 68 0 79 25 27 14 · 0 67 68 80 0 0 67 | extrêmes |
+| diagnostic | LEGACY_D · LEGACY_E | D et E du §7.2 | partiellement vues ; hors choix de K |
+
+Contrôle : 0 identifiant et 0 rampe RGB identique partagés au même canal avec l'union des 6 palettes d'ajustement.
+
+Validation, moyenne des 10 palettes :
+
+| Méthode | x2 | Δ vs Q0 | x4 | Δ vs Q0 |
+|---|---:|---:|---:|---:|
+| xBR | 35,47 | +6,5 % | 36,90 | +3,8 % |
+| Q0 | 33,31 | — | 35,55 | — |
+| Q6 K6 | 28,73 | −13,7 % | 30,64 | −13,8 % |
+| Q3m K3 | 26,24 | −21,2 % | 28,53 | −19,8 % |
+| Q3m K4 | 24,94 | −25,1 % | 27,22 | −23,4 % |
+| **Q3m K6** | **24,28** | **−27,1 %** | **26,52** | **−25,4 %** |
+
+- K4 est à +2,70 % x2 et +2,63 % x4 du meilleur score, K3 à +8,1 % et +7,6 % ⇒ **K6 aux deux échelles**. K3, K4 et K6 améliorent chacune des 10 validations.
+- Gain Q3m K6 par palette : 19,1 % (VAL10) à 39,8 % (VAL05) en x2 ; 18,1 % à 37,3 % en x4.
+- Par couche, chaque validation s'améliore aux deux échelles (recalculé depuis `color-frames.csv`). Gain minimal x2 / x4 : corps 20,9 / 19,8 %, casque 5,2 / 5,6 %, bouclier 12,1 / 13,4 %, arme 13,5 / 12,1 %. Le casque `WQNJ6` gagne le moins.
+- xBR ne cherche pas à reproduire la cible ReboutCX : son écart mesure une différence de modelé, pas un défaut.
+
+Palettes d'ajustement et de diagnostic, x2 / x4 :
+
+| Palette | Q0 | Q6 K6 | Q3m K3 | Q3m K6 | Δ Q3m K6 vs Q0 |
+|---|---:|---:|---:|---:|---:|
+| REF | 20,91 / 21,55 | 27,52 / 29,19 | 19,75 / 21,47 | 22,18 / 24,04 | **+6,1 % / +11,6 %** |
+| DEFAULT | 31,84 / 34,22 | 28,83 / 30,44 | 18,61 / 20,22 | 22,15 / 24,07 | −30,4 % / −29,6 % |
+| LEGACY_D | 40,50 / 43,10 | 34,73 / 37,05 | 32,80 / 35,49 | 30,93 / 33,48 | −23,6 % / −22,3 % |
+| LEGACY_E | 43,20 / 45,79 | 37,16 / 39,52 | 36,08 / 39,02 | 33,30 / 35,93 | −22,9 % / −21,5 % |
+
+Lecture : le poids de REF fixe le compromis. En K3, REF pèse 1/3 et ne régresse pas (−5,5 % x2, −0,4 % x4), mais la validation perd 8 % ; en K6, REF pèse 1/6 et régresse. Q6 dégrade REF de +31,6 % / +35,5 %. Levier à tester si P3 juge la régression visible : surpondérer REF dans K6 (§9.2), dans un nouveau run.
+
+Temporel, pixels recolorables immobiles qui changent (§7.6, signe corrigé), 10 validations, poses distinctes + couture de boucle :
+
+| Méthode | pondéré pixels x2 | x4 | non pondéré x2 | x4 |
+|---|---:|---:|---:|---:|
+| xBR | 11,73 % | 11,96 % | 24,54 % | 23,98 % |
+| Q0 | 20,28 % | 21,66 % | 29,63 % | 29,07 % |
+| Q6 K6 | 12,03 % | 12,51 % | 25,99 % | 25,20 % |
+| Q3m K3 | 9,97 % | 11,16 % | 25,81 % | 25,77 % |
+| **Q3m K6** | **8,36 %** | **9,40 %** | **23,91 %** | **24,01 %** |
+
+- Slots natifs répétés (durées relatives) : Q0 → Q3m K6 = 4,19 → 1,73 % x2 ; 4,31 → 1,87 % x4.
+- Sous REF aussi : 11,22 → 7,06 % x2 ; 11,29 → 7,66 % x4. La régression de couleur de REF ne se double pas d'une régression temporelle.
+- Par séquence, x2 pondéré : repos 18,91 → 6,88 % ; marche 26,94 → 13,78 % ; attaque 21,61 → 14,90 %.
+- Non pondéré = moyenne sur palettes des moyennes par séquence.
+
+Tailles, XPRESS_HUFF réel par plan, stockage min(brut, compressé), masque de dépendances 32 o par frame, somme sur les 180 occurrences ; en-têtes V6 et `representatives` exclus :
+
+| Méthode | x2 (o) | × Q0 | x4 (o) | × Q0 |
+|---|---:|---:|---:|---:|
+| xBR, plan I | 166 872 | 0,96 | 338 122 | 0,83 |
+| Q0, plan I | 173 704 | 1 | 407 818 | 1 |
+| Q6 K6, I + masque | 179 765 | 1,03 | 405 054 | 0,99 |
+| **Q3m K6, I + F + masque** | **343 620** | **1,98** | **859 646** | **2,11** |
+
+- Plan F compressé : 0,94 × le plan I en x2, 1,13 × en x4. Décompressé, I + F = ×2 de Q0 ; la texture RGBA finale ne change pas à échelle égale.
+- Q3m K6 x4 / x2 = ×2,50 (Q0 : ×2,35) sur ce corpus.
+
+Coût et contrôles :
+
+- Inférence de 2 592 cibles sur RTX 5090 : 2,55 s de calcul CUDA, 40,1 s de mur ; run complet 187 s. Cibles float locales : 188 Mo, ≈ 73 Ko par cible.
+- Fuite de classe 0 ; spéciaux modifiés 0 ; `dep_mask` exact à chaque frame ; 1 935 241 pixels à fraction non nulle, cumul des variantes Q3m.
+- Recherche indépendante : 1 584 cas pixel × méthode × K identiques, surcoût 0.
+- 220 allers-retours XPRESS de plans réels ; 17 tests ciblés verts (README P1).
+
+Limites :
+
+- Nouveau protocole : cible float, masque recolorable, Q3 entier 3 bits, noyau P12. Ne pas comparer ces nombres aux tables §7.4–7.6, qui ne sont ni réécrites ni revendiquées reproduites.
+- Temporel aligné par ancre, sans flot optique ; durées en slots relatifs, secondes réelles inconnues.
+- Plans logiques seulement : aucun binaire V6, aucune DLL, aucune capture palette/effets, aucune QA en jeu.
+- Planche `comparison-x2.png` (xBR/Q0/Q6 K6/Q3m K6 × REF, DEFAULT, VAL01, VAL09, VAL10, LEGACY_D) : illustration locale, ignorée par Git.
+
+### 7.15 P0 : finalisation des oracles, 2026-09-30
+
+Run [`palette-oracles-p0-20260930-v4`](../families/playable-characters/6110-human-female-fighter/research/palette-oracles-p0-20260930-v4/README.md). **PASS hors ligne** ; complète P1, sans réécrire ses résultats ni les études historiques.
+
+| Contrôle | Mesure | Preuve du run P0 |
+|---|---|---|
+| RGB neutre 7×12 + 21×8 | NumPy production = oracle scalaire indépendant = boucle x64 native ; 530 palettes × 768 octets ; différences 0 | `audit.json`, `neutral-palette-golden.npz` |
+| Arrondi des mélanges | 65 536 couples d'octets passés dans la boucle native ; `(a+b)>>1` exact, y compris sommes impaires et >255 | `audit.json` |
+| BAM P8 indépendant | 836 BAM / 185 459 frames / 252 540 168 pixels / 18 903 cycles / 376 665 slots ; indices, centres, palette, lookup identiques au lecteur existant ; octets canoniques identiques aux BIF natifs | `audit.json`, `bam-resources.json` |
+| E3b historique | **1 080 valeurs numériques et toutes les autres feuilles identiques**, écart maximal 0 ; simulation d'affichage incluse | `e3b-reproduction.json`, `e3_results.json` |
+| Tests ciblés | **30 PASS** : BAM/BAMC, palettes, alias, JSON, recadrages 2D x2/x4 dans les deux sens, masques, agrégations | `tests.json` |
+
+Décisions utiles à P2 et suite :
+
+- **Provenance** : `MPALETTE` = locator **`0x0000012E`**, `RANGES12` = **`0x00000189`**, BMP type 1 dans `data/Default.bif`, même SHA §17.3. Nouveau job → `MPALETTE` + son locator ; changer seulement le nom est incorrect. `reboutcx_batch.load_palette_profiles` accepte désormais les deux sources et vérifie l'alias exact ; preuve/cache des jobs historiques inchangés. Aucun job scellé migré.
+- **Périmètre de l'oracle** : `[RVA 0x421F7B,0x42201E)` exécuté dans le processus de test, EXE épinglé §17.3 ; shades 2..9, 21 paires. Vérifie le mélange RGB neutre avant effets et packing final. Ne valide pas évitement de clé verte, alpha, effets ou modulation post-palette. V6 doit consommer la **palette runtime réalisée**, pas cette reconstruction neutre ; captures nécessaires en P3. La fixture RGBA P1 reste à alpha synthétique (§8.6).
+- **Lecture des sources BAM** : 679 BAMC ; 22 209 frames à centre négatif ; 31 933 frames 1×1. Conserver les centres i16 et la distinction frame réelle / marqueur nul. Fixtures synthétiques : dimensions nulles, cycle vide, lookup troué ; absents du corpus réel. L'oracle conserve la géométrie déclarée, le lecteur historique transforme les dimensions nulles en marqueur 1×1.
+- **RLE natif** : 27 frames terminent par un run transparent dépassant `width*height` (ex. `WQNAXA5/106`, `WQNS1G1/730`) ; tronquer ce dernier run comme le lecteur existant. Liste exacte `audit.json:clipped_native_rle`, ressources vérifiées dans les BIF. Cette compatibilité concerne les **sources BAM** ; les bornes des plans V6 restent fail-closed.
+- **Durées relatives** : 95 369 slots adjacents répétés dans le corpus ; idle E3b = 20 poses / 56 slots par couche, motif `[6,2,2,2,2]×4`. Le banc P1 conserve les slots et la couture. BAM V1 ne porte aucun FPS/temps : pondération relative acquise ; secondes, pause/vitesse et cadence effective à mesurer en P3.
+- **Deux protocoles** : E3b reproduit reste batch1 fp16 sans padding, cibles RGB u8, fractions Q3m/Q8 4 bits et ancien signe temporel. P2/P3 utilisent le banc P1 corrigé (noyau P12, cibles float, Q3 entier 3 bits, masques séparés, signe d'ancre corrigé). Ne pas remplacer les critères P1 par les métriques temporelles historiques.
+
+Scripts : `pipeline/scripts/palette_oracle.py`, `palette_p0.py`. Reproduction `audit` / `e3b`, empreintes, commandes et snapshots : README du run P0. Aucun changement de DLL, installation, QA ou release.
 
 ---
 
@@ -550,6 +680,12 @@ compression                                      XPRESS_HUFF par plan, comme V5
 en-tête de registre                              profil de classes (ex. character-bg2ee-2.7.3.0)
                                                  + règle de décodage versionnée (ex. ramp-lerp-srgb8-v1)
 ```
+
+Fixé par P1 (`palette_frac_encode.py`), à reprendre tel quel par l'écrivain et le lecteur V6 :
+
+- identifiants : `CLASS_PROFILE = character-bg2ee-2.7.3.0`, `DECODE_RULE = ramp-lerp-srgb8-v1`, `ENCODER_ID = character-exhaustive-oklab-squared-q3-integer-v1` ;
+- `dep_mask` = `np.packbits(bits, bitorder="little")` : 32 octets, entrée `8k + b` = bit `b` (poids faible d'abord) de l'octet `k` ;
+- plan F = u8 par pixel, valeurs 0..7, compressé comme I. Un empaquetage 3 bits n'a pas été mesuré.
 
 ### 8.2 Successeur
 
@@ -581,6 +717,8 @@ si B           : RGB = (C(I,F)·W + C(I2,F2)·(8−W) + 4) >> 3 ; A = A(P[I])
 
 Opère sur les octets du format natif (RGBA ou BGRA : les trois octets couleur sont indépendants, comme `xbr_blend_pixel`). `f = 0` ⇒ `C(i,0) = P[i]` exactement.
 
+`P` = palette effective capturée au point de rendu, après réalisation et packing natifs. L'oracle RGB neutre P0 (§7.15) ne remplace pas cette palette ; effets, alpha et évitement de clé verte sont hors de sa preuve.
+
 ### 8.5 LUT et cache
 
 ```text
@@ -597,6 +735,8 @@ EXT[i·8 + f] = C(i, f)        2 048 dwords = 8 Kio par palette de couche
 2. `F ≡ 0` : identique au chemin indexé.
 3. Modifier une couleur hors `dep_mask` : ni empreinte ni texture ne changent.
 4. Encodeur Python et décodeur C++ : mêmes octets pour tous les `(i, f)` valides et un échantillon de `(I, F, I2, F2, W)`.
+
+Fixture P1 pour le test 4 : `decoder-golden.npz` dans le run P1 (SHA-256 `12171974…62910e4b`, versionnée). Contenu : `palettes_rgba` u8 18×256×4 (palettes natives neutres, alpha synthétique : transparent 0, ombre 128, autres 255) ; `I`, `F` u8 1 824 = tous les couples légaux (4 spéciaux + 7 × 89 + 21 × 57) ; `expected_rgba` u8 18×1 824×4 calculé scalairement. Le C++ doit la reproduire octet pour octet. Le volet `(I2, F2, W)` reste à créer avec Q8c (P5).
 
 ### 8.7 Cas particuliers
 
@@ -615,14 +755,14 @@ EXT[i·8 + f] = C(i, f)        2 048 dwords = 8 Kio par palette de couche
 
 ### 9.2 Jeu de palettes
 
-| Usage | Composition |
-|---|---|
-| Ajustement (K) | REF (production) + défaut guerrière humaine `30 91 93 12 23 93 2` + 1 à 4 palettes « carré latin » : chaque canal reçoit des familles de teinte distinctes d'une palette à l'autre, un clair et un sombre par canal sur l'ensemble, jamais deux canaux voisins quasi identiques dans une même palette |
-| Validation | ≥ 10 palettes, **aucun canal commun** avec l'ajustement : `RANDCOLR` résolus, défauts `CLASCOLR`/`RACECOLR` d'autres classes/races, valeurs opcode 7 fréquentes des ITM (`PLAT01` armure 27…), extrêmes (0, 67, 68) |
-| Poids | égaux par défaut ; option de surpondérer REF et les défauts |
-| Choix de K | tester 3, 4, 6 ; retenir le plus petit K à ≤ 2 % du meilleur score de validation |
+| Usage | Composition | Appliqué par P1 |
+|---|---|---|
+| Ajustement (K) | REF (production) + défaut guerrière humaine `30 91 93 12 23 93 2` + 1 à 4 palettes « carré latin » : chaque canal reçoit des familles de teinte distinctes d'une palette à l'autre, un clair et un sombre par canal sur l'ensemble, jamais deux canaux voisins quasi identiques dans une même palette | REF, DEFAULT, LATIN1–4 (§7.14) |
+| Validation | ≥ 10 palettes, **aucun canal commun** avec l'ajustement : `RANDCOLR` résolus, défauts `CLASCOLR`/`RACECOLR` d'autres classes/races, valeurs opcode 7 fréquentes des ITM (`PLAT01` armure 27…), extrêmes (0, 67, 68) | VAL01–10 : 6 défauts d'autres classes et races, 2 `RANDCOLR`, 2 extrêmes ; aucune valeur opcode 7 d'ITM ; contrôle par identifiant **et** par rampe RGB identique |
+| Poids | égaux par défaut ; option de surpondérer REF et les défauts | égaux ; REF régresse en K6 ⇒ surpondération à tester si P3 le demande |
+| Choix de K | tester 3, 4, 6 ; retenir le plus petit K à ≤ 2 % du meilleur score de validation | K6 ; K4 à +2,7 % |
 
-Coût : K inférences par frame. Pour `0x6110`, P13 = 94 010 inférences ⇒ ≈ 282 000 pour K = 3. La clé de cache inclut déjà la palette.
+Coût : K inférences par frame. Pour `0x6110`, P13 = 94 010 inférences ⇒ ≈ 564 000 pour K = 6 retenu (≈ 282 000 pour K = 3). La clé de cache inclut déjà la palette. P1 : ≈ 1 ms de calcul CUDA par cible, mais ≈ 73 Ko par cible float32 conservée, soit ≈ 41 Go à l'échelle P6 par extrapolation linéaire ⇒ encoder en flux ou purger les cibles.
 
 ### 9.3 Recherche (Q3m et Q6)
 
@@ -637,6 +777,8 @@ Q6 : même recherche avec f = 0
 
 Recherche exhaustive, vectorisable : elle optimise directement ce que le runtime affichera. Elle remplace la projection sur une polyligne OKLab (Claude) et l'optimisation de poids en lumière linéaire (Codex), qui n'étaient pas alignées sur le décodeur.
 
+Implémentée telle quelle par `palette_frac_encode.encode_variants` (P1). Calcul en float64 ; candidats triés + `argmin` = plus petit `i` puis plus petit `f` ; K emboîtés sur un seul calcul de coût, dans l'ordre de la liste d'ajustement. Une recherche indépendante donne les mêmes choix sur 1 584 cas, surcoût 0. La taille des blocs de pixels ne change pas les octets encodés (test).
+
 ### 9.4 Frontières contraintes (Q8c, après ablation)
 
 - Candidats `c2` : classes présentes dans le voisinage 3×3 **du guide** (matière réellement adjacente), toutes évaluées ; pas de premier voisin.
@@ -647,15 +789,15 @@ Recherche exhaustive, vectorisable : elle optimise directement ce que le runtime
 
 ### 9.5 Contrôles automatiques de chaque run
 
-| Contrôle | Seuil |
-|---|---|
-| Fuite de classe | 0 pixel hors classe du guide (+ `c2` autorisée) |
-| Alpha, ombre, spéciaux | identiques au guide |
-| Dépendances | `dep_mask` exact (ni manque, ni excès) |
-| Reconstruction | Python = C++ octet pour octet |
-| Validation couleur | publier D et chaque palette disjointe séparément |
-| Temporel | métrique corrigée, 4 agrégations (§12.4) |
-| Taille | XPRESS réel par plan, mémoire décompressée |
+| Contrôle | Seuil | État après P1 |
+|---|---|---|
+| Fuite de classe | 0 pixel hors classe du guide (+ `c2` autorisée) | 0, contrôlé à chaque frame (`check_contract`) |
+| Alpha, ombre, spéciaux | identiques au guide | 0 spécial modifié (indices 0–3 copiés du guide, F = 0) |
+| Dépendances | `dep_mask` exact (ni manque, ni excès) | exact |
+| Reconstruction | Python = C++ octet pour octet | côté Python : fixture `decoder-golden.npz` ; comparaison C++ en P2 |
+| Validation couleur | publier D et chaque palette disjointe séparément | 10 validations + REF, DEFAULT, LEGACY_D/E publiées séparément (`color-summary.csv`) |
+| Temporel | métrique corrigée, agrégations séparées (§12.3) | signe corrigé ; visibles / recolorables / ombre ; pondéré et non pondéré ; poses distinctes et slots ; couture |
+| Taille | XPRESS réel par plan, mémoire décompressée | XPRESS réel par plan (`sizes.csv`) ; mémoire runtime non mesurée |
 
 ---
 
@@ -666,6 +808,7 @@ Recherche exhaustive, vectorisable : elle optimise directement ce que le runtime
 - Master : x4. Livraison par défaut : x2 (mémoire ÷4, décodage ÷4).
 - x4 : option qualité, décidée par mesure au zoom réel (OBSERVÉ : léger gain même en NEAREST).
 - Aucun seuil de zoom universel.
+- P1 : gains Q3m K6 quasi identiques aux deux échelles (−27,1 % x2, −25,4 % x4) ; plans Q3m K6 x4 = ×2,50 des plans x2 sur le corpus. La fraction ne tranche donc pas x2/x4 : la décision reste P4.
 
 ### 10.2 Expérience de décision (2560×1440, zooms réellement accessibles)
 
@@ -687,19 +830,23 @@ Code concerné : séparer MIN et MAG dans `creature_sprite_x2.cpp:1534-1538` ; `
 
 Dépendances techniques, pas un workflow imposé (doctrine `docs/PRODUCTION_RAPIDE.md`). Chaque phase produit de nouvelles versions ; aucun run historique réécrit.
 
-| Phase | Travail | Critère de passage |
-|---|---|---|
-| **P0** Oracles | lecteur BAM P8 complet ; réalisation Python `MPALETTE` (7×12 + 21×8) ; renommer le contrôle de provenance en `MPALETTE` (alias vérifié `RANGES12`) ; banc d'évaluation corrigé : signe d'alignement, masques séparés (visibles / 4..255 / ombre), agrégations pondérée et non pondérée, durées natives | réalisation octet pour octet ; E3b reproduit ; signe testé par recadrage synthétique |
-| **P1** Multi-palettes hors ligne | inférence K palettes (cache existant) ; encodeur §9 (Q6, Q3m) ; corpus = E3b + attaque Codex + 4 armures ; ≥ 10 palettes disjointes ; K = 3/4/6 | Q3m bat Q0 sur **chaque** palette disjointe ; fuite 0 ; K choisi |
-| **P2** DLL V6 | lecteur V6 (dep_mask, plan F, LUT 2 048, plan B désactivable) ; fail-closed ; tests hôte golden Python/C++ ; fallback V5/xBR | tests §8.6 verts ; `ctest` ; aucune modification de géométrie ni de sauvegarde |
-| **P3** Verticale en jeu | CHFF4 + `WQNJ6`, `WQND3`, `WQNS1` en Q3m x2 ; memberships limitées à `0x6110` ; A/B contre Q0 | QA utilisateur explicite ; recoloration (§12.2 T1) sans liseré ; `layer n/n` dans le log |
-| **P4** Échelle et filtre | mesure du zoom ; expérience §10.2 | décision x2/x4 + filtre, datée |
-| **P5** Frontières | Q8c vs Q3m, mêmes frames, palettes, packing, scènes (attaque, marche, mort, repos) | gain propre visible **et** mesuré ; coût XPRESS acceptable ; sinon Q8 abandonné |
-| **P6** 0x6110 complet | 628 BAM, par famille et couche ; ordre : CHFF4 → CHFB1–3 → armes fréquentes (S1 S0 SS AX WH MC CL S2 BW) → boucliers → casques | aucune frame manquante ; cache froid/chaud, mémoire, upload mesurés |
-| **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) |
-| **P8** Généralisation | §13 | preuves par famille ; aucune QA transférée |
+| Phase | Travail | Critère de passage | État au 2026-09-30 |
+|---|---|---|---|
+| **P0** Oracles | lecteur BAM P8 complet ; réalisation RGB neutre Python `MPALETTE` (7×12 + 21×8) ; contrôle de provenance `MPALETTE` (alias vérifié `RANGES12`) ; banc corrigé : signe, masques séparés, agrégations pondérée/non pondérée, durées relatives en slots natifs | RGB neutre octet pour octet ; E3b reproduit ; signe testé par recadrage synthétique | **clôturé hors ligne** : acquis P1 + run P0 dédié (§7.15), 30 tests PASS. Captures palette RGBA/effets et cadence réelle : P3 |
+| **P1** Multi-palettes hors ligne | inférence K palettes (cache existant) ; encodeur §9 (Q6, Q3m) ; corpus = E3b + attaque Codex + 4 armures ; ≥ 10 palettes disjointes ; K = 3/4/6 | Q3m bat Q0 sur **chaque** palette disjointe ; fuite 0 ; K choisi | **fait** : critères satisfaits x2 et x4 ; **K = 6** ; fuite 0 (§7.14) |
+| **P2** DLL V6 | écrivain V6 dans la chaîne catalogue (plans I/F, `dep_mask`, identifiants §8.1) ; lecteur V6 (dep_mask, plan F, LUT 2 048, plan B désactivable) ; fail-closed ; tests hôte golden Python/C++ sur `decoder-golden.npz` ; fallback V5/xBR | tests §8.6 verts, dont les 18 × 1 824 RGBA de la fixture ; `ctest` ; aucune modification de géométrie ni de sauvegarde | **prochaine étape** |
+| **P3** Verticale en jeu | CHFF4 + `WQNJ6`, `WQND3`, `WQNS1` en Q3m K6 x2 ; memberships limitées à `0x6110` ; A/B contre Q0 sous REF, DEFAULT et au moins deux validations (ex. VAL05, gain maximal ; VAL10, gain minimal) | QA utilisateur explicite ; régression REF (+6,1 % x2 hors ligne) jugée acceptable, sinon nouveau run P1 avec REF surpondéré ; recoloration (§12.2 T1) sans liseré ; `layer n/n` dans le log | à faire, après P2 |
+| **P4** Échelle et filtre | mesure du zoom ; expérience §10.2 | décision x2/x4 + filtre, datée | à faire |
+| **P5** Frontières | Q8c vs Q3m K6 : d'abord sur le banc P1 étendu au plan B (mêmes occurrences et palettes), puis mêmes frames, palettes, packing et scènes en jeu (attaque, marche, mort, repos) | gain propre visible **et** mesuré ; coût XPRESS acceptable ; sinon Q8 abandonné | à faire ; Q8c absent de P1 |
+| **P6** 0x6110 complet | 628 BAM, par famille et couche ; ordre : CHFF4 → CHFB1–3 → armes fréquentes (S1 S0 SS AX WH MC CL S2 BW) → boucliers → casques ; K = 6 ⇒ ≈ 564 000 inférences, cibles float encodées en flux ou purgées | aucune frame manquante ; cache froid/chaud, mémoire, upload mesurés | à faire |
+| **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) | à faire |
+| **P8** Généralisation | §13 | preuves par famille ; aucune QA transférée | à faire |
 
-Scripts à créer (noms proposés, absents du dépôt) : `reboutcx_multipal.py` (inférence K), `palette_frac_encode.py` (Q6/Q3m/Q8c → V6), `palette_eval.py` (banc corrigé), écrivain V6 dans la chaîne catalogue. Tests ciblés : `python pipeline/scripts/test_changed.py --targeted --path <fichier> --run` ; C++ : commandes de `engine/InfinityEngine-Enhancer/source-patchee/AGENTS.md`.
+Scripts P1 existants : `pipeline/scripts/reboutcx_multipal.py` (inférence K, cibles float32), `palette_frac_encode.py` (Q6/Q3m, plans logiques ; Q8c à ajouter en P5), `palette_eval.py` (banc corrigé et run `0x6110`). Tests : `pipeline/tests/test_palette_eval.py`, `test_palette_frac_encode.py`, `test_reboutcx_multipal.py`. À créer : écrivain V6 dans la chaîne catalogue, lecteur V6 dans le DLL.
+
+Références P0 pour P2 : `palette_oracle.read_bam_p8` (contrat BAM/centres/lookup et cas limites), `neutral-palette-golden.npz` (RGB neutre seulement), et fixture P1 `decoder-golden.npz` (contrat de décodage RGBA entier, alpha synthétique). Contrats et limites §7.15.
+
+Un nouvel essai crée un nouveau dossier de run : `palette_eval.py --output <…/research/palette-…-vN>`. Un run terminé (`result.json` présent) est refusé ; `--resume` n'accepte qu'un run incomplet au contrat identique. Tests ciblés : `python pipeline/scripts/test_changed.py --targeted --path <fichier> --run`, avec le Python `config://chainner_python` ; C++ : commandes de `engine/InfinityEngine-Enhancer/source-patchee/AGENTS.md`.
 
 ---
 
@@ -899,7 +1046,7 @@ Décisions qui restent humaines : visage, texture de peau, matières, niveau de 
 | `GUIDE_DEFINITIF_SPRITES_HD_BG2EE.md` | **ce guide** |
 | `PRESENTATION_ETUDE_SPRITES_HD_0x6110.html` | page compagnon |
 
-Duplication : ~5 100 fichiers, ~1 700 contenus uniques (copies de livraison Codex). Copies racine / étude / `delivery` identiques hors `.pyc`.
+Nettoyage intégré au dépôt (`6032948a`) : copies exactes racine / étude / `delivery` fusionnées ; observations historiques conservées ; grands JSON remplacés par leur gzip exact. Visuels, HTML, BAM, archives et dépendances de recherche restent locaux, ignorés par Git. Runs de développement : `sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/` et `palette-oracles-p0-20260930-v4/`.
 
 ### 17.2 Portabilité des scripts
 
@@ -910,6 +1057,8 @@ Les données sont intègres ; les recettes ne sont pas relançables telles quell
 - `fetch_engine_sources_codex.py` relit `master` : seuls les fichiers de `source_reference/` sont épinglés (Near Infinity `50021b83`, GemRB `5552ade1`, EEex `6c1f42b8`).
 
 Pour rejouer : copier dans une nouvelle version d'étude, résoudre via `config://` (`chainner_python`, `reboutcx_model`, `bg2ee_game_root`), corriger le signe temporel, écrire hors des dossiers historiques.
+
+Exception reproductible intégrée : `pipeline/scripts/palette_p0.py e3b --output <nouveau run>` épingle le script E3b et les poids, relit `MPALETTE` via KEY/BIF, conserve volontairement le protocole historique pour comparaison exacte et supprime seulement la sortie visuelle. Pour de nouvelles mesures corrigées : `palette_eval.py`, protocole P1.
 
 ### 17.3 Identités
 

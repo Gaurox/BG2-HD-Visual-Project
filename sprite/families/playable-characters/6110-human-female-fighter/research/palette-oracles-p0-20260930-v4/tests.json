@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "tests_run": 30,
+  "command": "python -B pipeline/scripts/test_changed.py --targeted --path pipeline/tests/test_palette_oracle.py --path pipeline/tests/test_palette_p0.py --path pipeline/tests/test_reboutcx_pipeline.py --path pipeline/tests/test_palette_eval.py --run",
+  "python": "config://chainner_python",
+  "coverage": ["BAM/BAMC raw/RLE, signed centres, zero geometry, lookup gaps/repeats/empty cycles, bounds", "native transparent RLE tail clipping", "independent palette dependencies and rounding", "historical JSON comparison completeness", "MPALETTE/RANGES12 compatibility and mismatched/missing aliases", "2D recrops x2/x4 in both orders, separate masks and weighted/unweighted means"]
+}

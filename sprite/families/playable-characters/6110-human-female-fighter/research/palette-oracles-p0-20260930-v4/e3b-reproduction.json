@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "source": "sprite/Etudes_Sprite_codex_claude/ClaudeCode_Guide_HD_0x6110_Femme_Humaine_Guerriere/outils/e3b_experiment.py",
+  "source_sha256": "7566a7d62f6eb89b9a1270526d1f9c678837b8800819f281bac124e4669c75b6",
+  "historical_results": "sprite/Etudes_Sprite_codex_claude/ClaudeCode_Guide_HD_0x6110_Femme_Humaine_Guerriere/donnees_v2/e3b_results.json",
+  "historical_results_sha256": "f9bd9f5947f31fcf3fcd4d5f6e253a2a1aec8e435c6f73380f08bd16a2faeaaf",
+  "new_results_sha256": "f9bd9f5947f31fcf3fcd4d5f6e253a2a1aec8e435c6f73380f08bd16a2faeaaf",
+  "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+  "mpalette": {
+    "bif": "data/Default.bif",
+    "locator": "0x12e",
+    "sha256": "7a9a654d5cbc4cee0ca211be05d24fb54bf8298a781c074882000d5f829d66dd"
+  },
+  "comparison": {
+    "numeric_leaves": 1080,
+    "different_leaves": 0,
+    "max_abs_delta": 0.0
+  },
+  "protocol": "original E3b: CUDA0 fp16 batch1 unpadded; x4 RGB u8 + BOX x2 RGB u8; 4-bit Q3m/Q8; original temporal sign",
+  "corrected_evaluation": "P1 palette_eval.py; do not use E3b original flicker for P2 selection"
+}
