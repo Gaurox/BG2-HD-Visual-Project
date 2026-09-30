@@ -106,13 +106,29 @@ jobs:
           $expected = @(
             "InfinityEngine-Enhancer.dll"
             "InfinityEngine-Enhancer.sample.ini"
+            "LICENSE"
+            "THIRD_PARTY_NOTICES.md"
+            "licenses/BG2HD-MIT.txt"
+            "licenses/DSHADERS-MIT.txt"
+            "licenses/SPDLOG-MIT.txt"
+            "licenses/FMT-MIT.txt"
+            "licenses/MINHOOK-BSD.txt"
+            "licenses/ZLIB.txt"
             "override/M_IEEE.lua"
-            "override/fpSEAM.glsl"
-            "iee-textures/README.md"
-            "iee-textures/iee_water_dudv.rgba"
-            "iee-textures/iee_water_foam.rgba"
-            "iee-textures/iee_water_normal.rgba"
-          ) | Sort-Object
+          )
+          # Match the directories copied by CMake; assert notices explicitly above.
+          foreach ($mapping in @(
+            @("assets/override", "override"),
+            @("assets/game-textures", "iee-textures"),
+            @("assets/bridge-transition", "iee-assets/bridge-transition"),
+            @("assets/effects", "iee-assets/effects")
+          )) {
+            $sourceRoot = (Resolve-Path $mapping[0]).Path
+            $expected += @(Get-ChildItem $sourceRoot -File -Recurse | ForEach-Object {
+              $mapping[1] + "/" + [IO.Path]::GetRelativePath($sourceRoot, $_.FullName).Replace('\', '/')
+            })
+          }
+          $expected = $expected | Sort-Object
           $actual = Get-ChildItem $root -File -Recurse | ForEach-Object {
             [IO.Path]::GetRelativePath($root, $_.FullName).Replace('\', '/')
           } | Sort-Object

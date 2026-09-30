@@ -42,7 +42,16 @@ avec double confirmation. La désinstallation directe du Core via `setup-bg2hd.e
 toujours EEex. Ne jamais copier ou renommer manuellement les exécutables ; après Steam Verify,
 utiliser le flux Repair documenté dans [`docs/STEAM_INTEGRATION.md`](docs/STEAM_INTEGRATION.md).
 
-## Aide
+## Licences et credits
+
+Le code et la documentation originaux sont sous MIT (Gaurox), avec conservation des notices.
+Le moteur d'origine conserve MIT (Gabriel / TheForgotten69). WeiDU est un executable GPL-2.0
+distinct, accompagne de sa source dans les nouveaux packages. Les assets HD et les ressources
+tiers ne sont pas couverts par MIT : voir [licences](docs/LICENCES.md) et
+[politique des assets](docs/DISTRIBUTION_POLICY.md). Un credit visible au projet est facultatif.
+La preparation de ces notices ne rend pas l'alpha publiable.
+
+## Aide et rapports
 
 Lire [`docs/RECOVERY.md`](docs/RECOVERY.md) et [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md). Un rapport de
 bug contient `WeiDU.log` et les extraits utiles du log renderer, après suppression des chemins et

@@ -3,7 +3,8 @@ param(
     [Parameter(Mandatory)] [string]$WeiDUExecutable,
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
     [string]$PayloadRoot = (Join-Path $PSScriptRoot '..\bg2hd\payload-allvalidated'),
-    [string]$OutputRoot = (Join-Path $PSScriptRoot '..\dist-local\phase6b-candidate')
+    [string]$OutputRoot = (Join-Path $PSScriptRoot '..\dist-local\phase6b-candidate'),
+    [string]$WeiDUSourceArchive
 )
 
 $ErrorActionPreference = 'Stop'
@@ -73,6 +74,7 @@ try {
     }
     Copy-Item -LiteralPath $stagedPayload -Destination (Join-Path $temporaryMod 'payload') -Recurse
     Copy-Item -LiteralPath $weidu -Destination (Join-Path $temporary 'setup-bg2hd.exe')
+    & (Join-Path $PSScriptRoot 'Copy-BG2HD-LicenseFiles.ps1') -WorkspaceRoot $workspace -PackageRoot $temporary -WeiDUExecutable $weidu -WeiDUSourceArchive $WeiDUSourceArchive
     & (Join-Path $release 'tools\Build-BG2HDBootstrapLauncher.ps1') -ReleaseRoot $release -OutputPath (Join-Path $temporary 'Install-BG2HD.exe') | Out-Null
     Copy-Item -LiteralPath (Join-Path $temporary 'Install-BG2HD.exe') -Destination (Join-Path $temporary 'Uninstall-BG2HD.exe')
     foreach ($document in $publicDocuments) {

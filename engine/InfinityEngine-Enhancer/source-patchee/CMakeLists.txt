@@ -273,6 +273,9 @@ if(IEE_BUILD_WINDOWS_DLL)
         COMMAND "${CMAKE_COMMAND}" -E rm -rf "${IEE_SYMBOLS_DIR}"
         COMMAND "${CMAKE_COMMAND}" -E make_directory "${IEE_RELEASE_BUNDLE_DIR}"
         COMMAND "${CMAKE_COMMAND}" -E make_directory "${IEE_SYMBOLS_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/LICENSE" "${IEE_RELEASE_BUNDLE_DIR}/LICENSE"
+        COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/THIRD_PARTY_NOTICES.md" "${IEE_RELEASE_BUNDLE_DIR}/THIRD_PARTY_NOTICES.md"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/licenses" "${IEE_RELEASE_BUNDLE_DIR}/licenses"
         COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:InfinityEngine-Enhancer>" "${IEE_RELEASE_BUNDLE_DIR}/InfinityEngine-Enhancer.dll"
         COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_PDB_FILE:InfinityEngine-Enhancer>" "${IEE_SYMBOLS_DIR}/InfinityEngine-Enhancer.pdb"
         COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_SOURCE_DIR}/tools/InfinityEngine-Enhancer.sample.ini" "${IEE_RELEASE_BUNDLE_DIR}/InfinityEngine-Enhancer.sample.ini"
@@ -286,6 +289,8 @@ if(IEE_BUILD_WINDOWS_DLL)
     )
 
     install(TARGETS InfinityEngine-Enhancer RUNTIME DESTINATION . LIBRARY DESTINATION .)
+    install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" "${CMAKE_SOURCE_DIR}/THIRD_PARTY_NOTICES.md" DESTINATION .)
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/licenses/" DESTINATION licenses)
     install(
         FILES
             "${CMAKE_SOURCE_DIR}/tools/InfinityEngine-Enhancer.sample.ini"

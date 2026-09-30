@@ -3,7 +3,8 @@ param(
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
     [string]$WeiDUExecutable = (Join-Path $PSScriptRoot '..\release-inputs\weidu\setup-bg2hd.exe'),
     [string]$PayloadRoot = (Join-Path $PSScriptRoot '..\bg2hd\payload-allvalidated'),
-    [string]$OutputName = 'BG2HD-Installer-Windows'
+    [string]$OutputName = 'BG2HD-Installer-Windows',
+    [string]$WeiDUSourceArchive
 )
 
 $ErrorActionPreference = 'Stop'
@@ -11,4 +12,5 @@ $ErrorActionPreference = 'Stop'
     -ReleaseRoot $ReleaseRoot `
     -WeiDUExecutable $WeiDUExecutable `
     -PayloadRoot $PayloadRoot `
-    -OutputName $OutputName
+    -OutputName $OutputName `
+    -WeiDUSourceArchive $WeiDUSourceArchive

@@ -16,7 +16,18 @@ try {
     $entries = @($zip.Entries | Where-Object { -not $_.FullName.EndsWith('/') })
     $names = @($entries.FullName)
     $required = @('Install-BG2HD.exe', 'Uninstall-BG2HD.exe', 'setup-bg2hd.exe', 'BUILD-STATUS.txt', 'BUILD-MANIFEST.json', 'checksums.sha256', 'README.md', 'README_FR.md', 'README_EN.md', 'CHANGELOG.md', 'KNOWN_ISSUES.md', 'tools/Test-BG2HD-FutureSaveCompatibility.ps1', 'tools/Test-BG2HD-AR0413Contract.ps1', 'docs/ARCHITECTURE.md', 'docs/DEPENDENCY_BOOTSTRAP.md', 'docs/MANIFESTS.md', 'docs/INSTALLER_AND_UPSCALE_WORKFLOW.md', 'docs/LOCALIZATION.md', 'docs/STEAM_INTEGRATION.md', 'docs/TESTING.md', 'docs/RECOVERY.md', 'docs/COMPATIBILITY.md', 'docs/LICENCES.md', 'docs/DISTRIBUTION_POLICY.md', 'bg2hd/bg2hd.tp2', 'bg2hd/tools/Install-BG2HD.ps1', 'bg2hd/manifests/dependency-bootstrap.json', 'bg2hd/manifests/runtime-compatibility.json')
+    $required += @(
+        'LICENSE', 'THIRD_PARTY_NOTICES.md', 'licenses/README.md',
+        'licenses/INFINITYENGINE-ENHANCER-MIT.txt', 'licenses/DSHADERS-MIT.txt',
+        'licenses/SPDLOG-MIT.txt', 'licenses/FMT-MIT.txt', 'licenses/MINHOOK-BSD.txt',
+        'licenses/ZLIB.txt', 'licenses/GPL-2.0.txt', 'licenses/NEARINFINITY-LICENSE.txt', 'licenses/WEIDU-SOURCE.md',
+        'sources/weidu-v249.00.tar.gz'
+    )
     foreach ($path in $required) { Require ($names -contains $path) "Archive incomplet : $path" }
+    $weiduStream = $zip.GetEntry('setup-bg2hd.exe').Open()
+    try { Require ((Hash-Stream $weiduStream) -eq 'AD70F5897A6D0BA4B0D226F845A9B14CF345F56CC9697CA8D05CAC9FE4932C1A') 'Binaire WeiDU hors contrat GPL.' } finally { $weiduStream.Dispose() }
+    $sourceStream = $zip.GetEntry('sources/weidu-v249.00.tar.gz').Open()
+    try { Require ((Hash-Stream $sourceStream) -eq 'C32725CE34D5B3F9D23094DB79A5EEDE079EAF9E69622306F51B8CD5373B8595') 'Source correspondante WeiDU incorrecte.' } finally { $sourceStream.Dispose() }
     Require (($names | Where-Object { $_ -match '(^|/)(Baldur(?:Real)?\.exe|EEex\.dll|InfinityLoader\.exe|.*\.log|.*\.sav)$' }).Count -eq 0) 'Archive contient un fichier interdit.'
     Require (($names | Where-Object { $_ -match '(^|/)(PHASE[0-9]|release-inputs|validation|dist-local)/' }).Count -eq 0) 'Archive contient une preuve ou un input interne.'
     $checksums = @{}

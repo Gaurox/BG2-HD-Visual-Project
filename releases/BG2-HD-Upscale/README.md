@@ -34,3 +34,11 @@ elles ne sont pas recopiées ici.
 
 Payload, staging, `content.json` et archive ne sont jamais reconstruits pendant l'acceptation
 quotidienne d'un asset.
+
+## Licences
+
+Code et documentation originaux : [MIT, Gaurox](../../LICENSE). Moteur d'origine : MIT,
+Gabriel / TheForgotten69. [Notices et exclusions](../../THIRD_PARTY_NOTICES.md) et
+[licences du package](docs/LICENCES.md) distinguent code, dependances et assets HD.
+Les builders ajoutent les textes et la source correspondante WeiDU avant checksums ; cette
+mise en place ne leve aucun blocage de diffusion ni ne reconstruit les archives historiques.

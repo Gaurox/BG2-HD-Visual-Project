@@ -110,4 +110,7 @@ modifie pas le bundle release scellé.
 | Sprites | [`../../../sprite/README.md`](../../../sprite/README.md) |
 | Catmull–Rom sprites HD (plan) | [`../../../sprite/catmull-rom/README.md`](../../../sprite/catmull-rom/README.md) |
 
-Licence : [`LICENSE`](LICENSE).
+Licences : moteur d'origine [MIT, Gabriel / TheForgotten69](LICENSE) ; contributions originales
+BG2 HD [MIT, Gaurox](licenses/BG2HD-MIT.txt). [Notices et exclusions](THIRD_PARTY_NOTICES.md) :
+dépendances natives, Dshaders et ressources dérivées du jeu. Le bundle et `cmake --install`
+embarquent les notices ; leur présence ne valide pas les droits des assets tiers.
