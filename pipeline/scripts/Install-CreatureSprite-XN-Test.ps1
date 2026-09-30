@@ -77,6 +77,7 @@ function Get-EngineSourceContractSha256([string]$SourceRoot) {
         'src/iee/bridge_transition.h',
         'src/iee/creature_sprite_x2.cpp',
         'src/iee/creature_sprite_x2.h',
+        'src/iee/core/palette_fraction.h',
         'src/iee/core/config.cpp',
         'src/iee/core/config.h',
         'src/iee/core/creature_sprite_filter_math.cpp',
