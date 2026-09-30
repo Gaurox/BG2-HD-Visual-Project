@@ -42,6 +42,14 @@ vanilla restore. Removing Core directly through `setup-bg2hd.exe` always retains
 or rename executables manually; after Steam Verify, use the Repair flow in
 [`docs/STEAM_INTEGRATION.md`](docs/STEAM_INTEGRATION.md).
 
+## Licenses and credits
+
+Original code and documentation are MIT (Gaurox), with notices retained. The original engine
+keeps MIT (Gabriel / TheForgotten69). WeiDU is a separate GPL-2.0 executable, accompanied by its
+source in new packages. HD assets and third-party resources are outside MIT: see
+[licenses](docs/LICENCES.md) and [asset policy](docs/DISTRIBUTION_POLICY.md).
+Visible project acknowledgement is optional. Adding notices does not approve alpha publication.
+
 For support, read [`docs/RECOVERY.md`](docs/RECOVERY.md) and
 [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md). Share only sanitized `WeiDU.log` and relevant renderer-log
 excerpts.

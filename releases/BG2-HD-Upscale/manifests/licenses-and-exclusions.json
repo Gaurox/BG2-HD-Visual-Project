@@ -3,11 +3,22 @@
   "schema_version": 1,
   "licenses": [
     {
+      "component": "Original BG2 HD code and documentation",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Gaurox",
+      "source": "LICENSE",
+      "distribution_status": "permitted-with-copyright-and-permission-notice",
+      "scope": "Original project contributions only; third-party and game-derived material excluded. Visible credit is optional."
+    },
+    {
       "component": "InfinityEngine-Enhancer",
       "license": "MIT",
       "copyright": "Copyright (c) 2025 Gabriel",
       "source": "engine/InfinityEngine-Enhancer/source-patchee/LICENSE",
-      "distribution_status": "allowed-after-renderer-freeze"
+      "distribution_status": "allowed-after-renderer-freeze",
+      "upstream": "https://github.com/TheForgotten69/InfinityEngine-Enhancer",
+      "additional_project_notice": "LICENSE (Copyright (c) 2026 Gaurox; original project modifications only)",
+      "dependency_provenance": "verify frozen renderer source revision before public distribution; current source notices are not proof of historical DLL dependencies"
     },
     {
       "component": "EEex and InfinityLoader",
@@ -16,29 +27,78 @@
       "source": "https://github.com/Bubb13/EEex"
     },
     {
-      "component": "BG2 HD maps and UI assets",
-      "license": "non-commercial-community-mod-policy",
-      "distribution_status": "permitted-for-free-alpha-subject-to-provenance-record",
+      "component": "BG2 HD game-derived maps, animations, sprites, UI and other assets",
+      "license": "third-party-rights-not-granted-by-project-MIT",
+      "distribution_status": "rights-review-required-before-public-distribution",
       "source": "project production runs and approved UI assets",
-      "provenance": "derived HD assets are listed file-by-file in content.json; no original game executable or raw game archive is distributed"
+      "provenance": "Selected derivatives are recorded file-by-file in content.json. A selection or community policy does not establish rights-holder permission."
+    },
+    {
+      "component": "Dshaders portions",
+      "license": "MIT",
+      "source": "licenses/DSHADERS-MIT.txt",
+      "source_revision": "4722673a8017c56ace4018b3db459392ecbb75a4",
+      "distribution_status": "retain-applicable-notices-and-verify-frozen-renderer-provenance"
+    },
+    {
+      "component": "spdlog",
+      "license": "MIT",
+      "source": "licenses/SPDLOG-MIT.txt",
+      "source_revision": "6fa36017cfd5731d617e1a934f0e5ea9c4445b13",
+      "distribution_status": "retain-applicable-notices-and-verify-frozen-renderer-provenance"
+    },
+    {
+      "component": "fmt bundled in spdlog",
+      "license": "MIT",
+      "source": "licenses/FMT-MIT.txt",
+      "source_revision": "11.2.0",
+      "distribution_status": "retain-applicable-notices-and-verify-frozen-renderer-provenance"
+    },
+    {
+      "component": "MinHook including HDE32/HDE64",
+      "license": "BSD-2-Clause and embedded HDE notices",
+      "source": "licenses/MINHOOK-BSD.txt",
+      "source_revision": "c3fcafdc10146beb5919319d0683e44e3c30d537",
+      "distribution_status": "retain-applicable-notices-and-verify-frozen-renderer-provenance"
+    },
+    {
+      "component": "zlib",
+      "license": "Zlib",
+      "source": "licenses/ZLIB.txt",
+      "source_revision": "da607da739fa6047df13e66a2af6b8bec7c2a498",
+      "distribution_status": "retain-applicable-notices-and-verify-frozen-renderer-provenance"
+    },
+    {
+      "component": "WeiDU 249.00 (separate executable)",
+      "license": "GPL-2.0",
+      "source": "licenses/GPL-2.0.txt",
+      "distribution_status": "binary-with-accompanying-corresponding-source",
+      "binary_sha256": "ad70f5897a6d0ba4b0d226f845a9b14cf345f56cc9697ca8d05cac9fe4932c1a",
+      "source_archive": {
+        "url": "https://codeload.github.com/WeiDUorg/weidu/tar.gz/refs/tags/v249.00",
+        "package_path": "sources/weidu-v249.00.tar.gz",
+        "sha256": "c32725ce34d5b3f9d23094db79a5eede079eaf9e69622306f51b8cd5373b8595",
+        "build_instructions": "archive README.md, sample.Configuration and Makefile; licenses/WEIDU-SOURCE.md"
+      }
     }
   ],
   "distribution_policy": {
-    "status": "adopted-for-future-free-alpha",
-    "model": "free non-commercial community WeiDU mod",
+    "status": "intended-asset-policy-rights-review-still-required",
+    "model": "free non-commercial HD asset package; independently licensed code remains reusable under its own terms",
     "requires": [
       "a legitimate copy of the supported game",
-      "distribution of the archive intact with its notices, credits and checksums",
-      "clear provenance for each release asset",
-      "a public contact or issue channel before the first online release"
+      "retain package notices, credits and checksums; preserve each component license when extracting independently licensed code",
+      "clear provenance and necessary rights-holder permissions for each release asset",
+      "a public contact or issue channel before the first online release",
+      "accompany the pinned WeiDU executable with its verified corresponding source and build instructions"
     ],
     "forbids": [
-      "commercial sale, paid access or commercial bundling",
+      "commercial sale, paid access or commercial bundling of HD assets under the project asset policy; does not restrict MIT/GPL component rights",
       "redistribution of game executables, Steam files, EEex or InfinityLoader",
-      "repackaging the mod or its HD assets in another mod without prior agreement",
+      "repackaging game-derived HD assets without the necessary rights-holder permissions; does not restrict independent code reuse",
       "claiming official affiliation with Beamdog, Wizards of the Coast or Steam"
     ],
-    "notice": "Unofficial community modification. Baldur's Gate and related marks remain the property of their respective owners. This policy is a community-distribution policy, not a warranty of third-party rights.",
+    "notice": "Unofficial community modification. Third-party marks remain their owners' property. Asset policy is not a third-party rights grant. Original code/documentation is MIT; other components retain their licenses. Visible project acknowledgement is optional.",
     "takedown_process": "Before public release, publish a contact route and promptly review good-faith removal or attribution requests."
   },
   "excluded_from_payload": [

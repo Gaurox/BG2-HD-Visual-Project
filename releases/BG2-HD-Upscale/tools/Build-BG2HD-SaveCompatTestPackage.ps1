@@ -3,7 +3,8 @@ param(
     [string]$ReleaseRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path,
     [string]$WeiDUExecutable = (Join-Path $PSScriptRoot '..\release-inputs\weidu\setup-bg2hd.exe'),
     [string]$PayloadRoot = (Join-Path $PSScriptRoot '..\bg2hd\payload-allvalidated'),
-    [string]$OutputName = 'BG2HD-Installer-Windows'
+    [string]$OutputName = 'BG2HD-Installer-Windows',
+    [string]$WeiDUSourceArchive
 )
 
 $ErrorActionPreference = 'Stop'
@@ -81,6 +82,7 @@ foreach ($file in Get-ChildItem -LiteralPath $canonicalMod -File -Recurse) {
     Copy-Item -LiteralPath $file.FullName -Destination $destination -Force
 }
 Copy-Item -LiteralPath $weidu -Destination (Join-Path $temporary 'setup-bg2hd.exe') -Force
+& (Join-Path $PSScriptRoot 'Copy-BG2HD-LicenseFiles.ps1') -WorkspaceRoot $workspace -PackageRoot $temporary -WeiDUExecutable $weidu -WeiDUSourceArchive $WeiDUSourceArchive
 
 $publicDocuments = @(
     'README.md', 'README_FR.md', 'README_EN.md', 'CHANGELOG.md', 'KNOWN_ISSUES.md',

@@ -4,7 +4,7 @@
 
 An unofficial, non-commercial, experimental visual project for *Baldur’s Gate II: Enhanced Edition*.
 
-This repository is the project’s control plane: inventories, decisions, scripts, tests, engine code, and release manifests. It does not include original game resources, upscale outputs, runs, builds, or distributable archives.
+This repository is the project’s control plane: inventories, decisions, scripts, tests, engine code, and release manifests. Heavy production outputs remain external; selected references, comparisons and historical build inputs may be tracked and retain their own rights.
 
 Maps, animations, and effects are retained only when they remain coherent with the original rendering. Production output, in-game QA, installation, and release selection are tracked separately.
 
@@ -79,5 +79,21 @@ domaine seulement lorsqu'un repère manque pour la tâche courante.
 ## Distribution boundaries
 
 - Fan project; not affiliated with Beamdog or the *Baldur’s Gate* rights holders.
-- Original game assets and heavy generated artifacts remain outside the repository.
+- Game resources and their derivatives retain third-party rights, including tracked references and previews.
 - Release files may only be produced after the manifest-defined gates pass.
+
+## License and attribution
+
+Original project code and documentation by Gaurox are available under the standard
+[MIT License](LICENSE). Reuse, including commercial use and closed-source modifications, is
+permitted with preservation of the copyright and permission notice.
+
+[Third-party notices and exclusions](THIRD_PARTY_NOTICES.md) define the scope: engine upstream
+code, dependencies, game assets, shaders containing native code, portraits and other third-party
+material retain their respective terms. The planned non-commercial mod distribution policy
+applies to the HD asset package; it does not restrict MIT code reuse.
+
+Visible credit is appreciated, optionally as
+`BG2 HD Visual Project — Gaurox — https://github.com/Gaurox/BG2-HD-Visual-Project`.
+It is not an extra condition of MIT. Contributions submitted for inclusion use the applicable
+file license; identify third-party material and preserve its notices.

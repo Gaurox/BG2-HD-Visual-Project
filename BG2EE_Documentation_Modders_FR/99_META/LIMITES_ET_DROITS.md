@@ -1,7 +1,7 @@
 # Limites, droits et réutilisation
 
 > **Statut :** Métadonnées juridiques et techniques  
-> **Dernière vérification :** 2026-08-27
+> **Dernière vérification :** 2026-09-30
 
 ## Droit d’auteur
 
@@ -11,7 +11,11 @@ Les noms de produits, marques et ressources appartiennent à leurs détenteurs r
 
 ## Réutilisation
 
-Les procédures et checklists originales de cette archive peuvent être adaptées à un projet. Les extraits de syntaxe, noms d’API et noms de fichiers servent à l’interopérabilité et à la compréhension technique.
+Les textes, procédures et checklists originaux de Gaurox sont sous [MIT](../../LICENSE), avec
+conservation de la notice de copyright et de permission. Les citations, extraits de code tiers et
+documents référencés conservent leurs propres conditions ; voir les
+[notices et exclusions](../../THIRD_PARTY_NOTICES.md). Les noms d’API et de fichiers servent à
+l’interopérabilité et ne constituent pas une autorisation sur les ressources désignées.
 
 Avant de redistribuer :
 

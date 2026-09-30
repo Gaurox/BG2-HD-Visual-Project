@@ -6,6 +6,9 @@
   par empreinte. Son test final de cycle complet sur une installation Steam
   distincte reste requis avant diffusion publique.
 - Les droits de redistribution des assets HD restent a approuver : aucune archive produite a ce stade ne doit etre partagee publiquement.
+- Les licences MIT du code ne couvrent pas ces assets. Les anciens packages ne sont pas
+  retroactivement mis a jour : regenerer un nouveau package avec notices et source WeiDU, puis
+  confirmer les dependances du renderer fige avant publication.
 - AR2300 est incluse avec le correctif de saturation du cache PVRZ valide en jeu. L'ecart de couleur entre l'eau statique et l'eau animee en cascade reste a corriger.
 - Les traductions allemande, espagnole, italienne, polonaise, russe, coreenne et chinoise utilisent encore le repli anglais pour les nouvelles chaines et demandent une relecture native avant publication.
 - Une verification Steam peut restaurer `Baldur.exe`; utiliser le composant Core pour reparer ou desinstaller le patch, jamais une copie manuelle d'executable.

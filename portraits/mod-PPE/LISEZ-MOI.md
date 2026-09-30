@@ -9,7 +9,9 @@
   `PPE/RandomPortraits`. Le mod complet (installeur WeiDU, scripts, dialogues)
   n'a **pas** été téléchargé et **rien n'a été installé dans le jeu**.
 - **Aucun fichier de licence** n'accompagne le dépôt. Ces portraits sont l'œuvre
-  de tiers : à usage personnel, et à créditer en cas de rediffusion.
+  de tiers. La licence MIT du projet BG2 HD ne les couvre pas. Le crédit ne suffit pas à
+  autoriser leur rediffusion ; les permissions de chaque ayant droit restent à établir.
+  Le README original est conservé sans modification.
 
 Le mod couvre BG1EE, Siege of Dragonspear, BG2EE, IWDEE et EET. Une partie des
 portraits ne concerne donc pas BG2EE.
