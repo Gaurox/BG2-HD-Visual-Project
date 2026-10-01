@@ -82,11 +82,21 @@ int main() {
         registry.find(context, 3)->filterMode == CreatureSpriteFilterMode::Nearest,
         "other animation retains nearest and straight storage");
   check(registry.effective_mode(0x6110, 2) == CreatureSpriteFilterMode::Nearest,
-        "x2 is outside new x4 minification modes");
+        "x2 remains outside mipmaps mode");
   registry.configure(CreatureSpriteFilterMode::Box, 0x6110);
   check(!registry.find(context, 1) && registry.publish(context, 4, 12, 8, 4,
         TextureProvenance::Frame, false, 0x6110) && registry.transfer_masked(context, 4, 5),
         "mode transition clears registry and BOX masked storage stays straight");
+  check(registry.publish(context, 6, 12, 8, 2, TextureProvenance::CharacterComposite,
+                         false, 0x6110) && registry.transfer_masked(context, 6, 7),
+        "BOX x2 supports composite and masked straight storage without mips");
+  draw.glName = 7; draw.sampler = Sampler::Nearest; draw.maximumMipLevel = 0;
+  check(registry.decide(draw).owner && registry.decide(draw).mode == 3 &&
+        registry.decide(draw).scale == 2,
+        "BOX x2 reaches the shader with owned scale and mode");
+  check(registry.effective_mode(0x6100, 2) == CreatureSpriteFilterMode::Nearest &&
+        registry.effective_mode(0x6110, 1) == CreatureSpriteFilterMode::Nearest,
+        "BOX x2 retains animation scope and rejects unsupported scale");
   check(sampler_from_gl(0x2703, 0x2600) == Sampler::TrilinearNearestMag &&
         sampler_from_gl(0x2703, 0x2601) == Sampler::Unknown,
         "unsupported MIN/MAG pair rejected");

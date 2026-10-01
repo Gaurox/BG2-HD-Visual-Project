@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-p4-box-x2-verification-v1",
+  "status": "offline-verified-ready-for-install",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.cpp": "96B001EEA4F89F15CFDF69E3C952EA38707DD7823DDE718975B7FB550A77F280",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/sprite_minification_tests.cpp": "8D953B2A8DC85E7229A3A98A7BC44B00782E03B819047103B2ED9FCB9D922E2B",
+    "pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1": "337E123410F280B9CE4E9C1F98F714A3B1CE597714F220C1241CE541A0BD1D1E",
+    "pipeline/tests/test_creature_sprite_xn_catalog_install.py": "DDBCFF3572F49B1B21E39A0355BB4276A61BFF07CAB608D5151EA62FEE4F5150",
+    "pipeline/runtime/manifests/iee-sprite-p4-box-x2-20261001-v1.json": "E0BBC5C03467D682A3CC36B861DA16F0FE448CD75420172F55D90E235F70C289",
+    "sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-box-x2-20261001-v1\\install.ps1": "C30467E1EBE360D3C8F981C040B42F9C60BC575B637B29FA2CB70D742C065894",
+    "sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-box-x2-20261001-v1\\x2-box.job.json": "C3D42804811A7C4499675CDF058411C600E60BBD1E17D289B761734A2808E2E0",
+    "sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-box-x2-20261001-v1\\current-generation.json": "4F6EA036A123102AC5C489B8E83B9471889647B3275627FE59E424269A5455CE"
+  },
+  "ctest": {
+    "status": "4/4 passed",
+    "suites": [
+      "iee_tests",
+      "iee_palette_fraction_tests",
+      "iee_sprite_p4_probe_tests",
+      "iee_sprite_minification_tests"
+    ]
+  },
+  "catalog_install_tests": {
+    "status": "passed",
+    "count": 24,
+    "new_checks": [
+      "BOX x2 install/verify/restore scope",
+      "runtime x4-only rejection",
+      "shader drift rejection"
+    ]
+  },
+  "transaction_fixture": {
+    "status": "passed",
+    "fixture": "G:\\AI\\BG2_Upscale\\.tmp\\p4-x2-fixture-36153bf6ce10411f9ec02a31d3dad7f8",
+    "controls_pc": false,
+    "game_launched": false,
+    "scale": 2,
+    "filter": "Box",
+    "filter_animation": "0x6110",
+    "mipmaps": false,
+    "shards": 1312,
+    "baseline_drift_rejected": true,
+    "active_user_drift_rejected": true,
+    "dll_ini_catalog_restored_exact": true
+  },
+  "catalog_sha256": "5F0596DDAC14ECDBFD1915978736C160DF1F7F465156472FD410A8705CDC6044",
+  "catalog_scale": 2,
+  "catalog_animation_ids": [
+    "0x6100",
+    "0x6110"
+  ],
+  "filter_animation": "0x6110",
+  "filter": "Box",
+  "mipmaps_enabled": false,
+  "gpu_shader_validation_reused": {
+    "proof": "sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-filters-20261001-v1\\gpu-tests.json",
+    "checks": 12,
+    "reason": "all shader bytes unchanged; existing BOX footprint/magnification/alpha oracles and uScale=2 mask checks apply"
+  },
+  "qa": "ingame-pending",
+  "release_changed": false
+}

@@ -809,6 +809,7 @@ Implémentée telle quelle par `palette_frac_encode.encode_variants` (P1). Calcu
 - x4 : option qualité, décidée par mesure au zoom réel (OBSERVÉ : léger gain même en NEAREST).
 - Aucun seuil de zoom universel.
 - P1 : gains Q3m K6 quasi identiques aux deux échelles (−27,1 % x2, −25,4 % x4) ; plans Q3m K6 x4 = ×2,50 des plans x2 sur le corpus. La fraction ne tranche donc pas x2/x4 : la décision reste P4.
+- **P4 décidée le 2026-10-02 : x2 + BOX, sans mipmaps, sur `0x6110`**. Viewport 2528×1339, habituel maximum −7 crans (zoom 2.480864/2.479630) ; préférence utilisateur BOX nette en dézoom, x2 légère/incertaine. CPU composition x2/x4 BOX : 0.148/0.280 ms/frame ; trafic upload base 11.082/44.269 MB/s ; FPS ≈60 (sessions indépendantes). [Décision datée et périmètre](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p4-box-x2-measurement-20261002-v1/decision.json) ; [mesures et limites](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p4-box-x2-measurement-20261002-v1/README.md). Master x4 conservé ; aucun choix/QA BOX transféré à `0x6100` ni intégration release.
 
 ### 10.2 Expérience de décision (2560×1440, zooms réellement accessibles)
 
@@ -816,6 +817,7 @@ Implémentée telle quelle par `palette_frac_encode.encode_variants` (P1). Calcu
 |---|---|---|---|---|
 | x2 témoin | NEAREST | NEAREST | non | référence QA |
 | x2 Catmull-Rom | shader | shader | non | configuration acceptée pour xBR |
+| x2 aire (P4 retenu, `0x6110`) | NEAREST | aire/BOX explicite | non | choix daté 2026-10-02 ; magnification Nearest au zoom habituel mesuré |
 | x4 actuel | NEAREST | NEAREST | non | coût sans correction |
 | x4 aire | NEAREST | aire/BOX explicite | non | qualité de réduction |
 | x4 mips | NEAREST | LINEAR_MIPMAP_LINEAR | oui, sur RGBA prémultiplié, régénérés à chaque recomposition | stabilité en mouvement |
@@ -830,13 +832,13 @@ Code concerné : séparer MIN et MAG dans `creature_sprite_x2.cpp:1534-1538` ; `
 
 Dépendances techniques, pas un workflow imposé (doctrine `docs/PRODUCTION_RAPIDE.md`). Chaque phase produit de nouvelles versions ; aucun run historique réécrit.
 
-| Phase | Travail | Critère de passage | État au 2026-09-30 |
+| Phase | Travail | Critère de passage | État (base 2026-09-30 ; décisions ultérieures datées) |
 |---|---|---|---|
 | **P0** Oracles | lecteur BAM P8 complet ; réalisation RGB neutre Python `MPALETTE` (7×12 + 21×8) ; contrôle de provenance `MPALETTE` (alias vérifié `RANGES12`) ; banc corrigé : signe, masques séparés, agrégations pondérée/non pondérée, durées relatives en slots natifs | RGB neutre octet pour octet ; E3b reproduit ; signe testé par recadrage synthétique | **clôturé hors ligne** : acquis P1 + run P0 dédié (§7.15), 30 tests PASS. Captures palette RGBA/effets et cadence réelle : P3 |
 | **P1** Multi-palettes hors ligne | inférence K palettes (cache existant) ; encodeur §9 (Q6, Q3m) ; corpus = E3b + attaque Codex + 4 armures ; ≥ 10 palettes disjointes ; K = 3/4/6 | Q3m bat Q0 sur **chaque** palette disjointe ; fuite 0 ; K choisi | **fait** : critères satisfaits x2 et x4 ; **K = 6** ; fuite 0 (§7.14) |
 | **P2** DLL V6 | écrivain V6 dans la chaîne catalogue (plans I/F, `dep_mask`, identifiants §8.1) ; lecteur V6 (dep_mask, plan F, LUT 2 048, plan B désactivable) ; fail-closed ; tests hôte golden Python/C++ sur `decoder-golden.npz` ; fallback V5/xBR | tests §8.6 verts, dont les 18 × 1 824 RGBA de la fixture ; `ctest` ; aucune modification de géométrie ni de sauvegarde | **prochaine étape** |
 | **P3** Verticale en jeu | CHFF4 + `WQNJ6`, `WQND3`, `WQNS1` en Q3m K6 x2 ; memberships limitées à `0x6110` ; A/B contre Q0 sous REF, DEFAULT et au moins deux validations (ex. VAL05, gain maximal ; VAL10, gain minimal) | QA utilisateur explicite ; régression REF (+6,1 % x2 hors ligne) jugée acceptable, sinon nouveau run P1 avec REF surpondéré ; recoloration (§12.2 T1) sans liseré ; `layer n/n` dans le log | à faire, après P2 |
-| **P4** Échelle et filtre | mesure du zoom ; expérience §10.2 | décision x2/x4 + filtre, datée | à faire |
+| **P4** Échelle et filtre | mesure du zoom ; expérience §10.2 | décision x2/x4 + filtre, datée | **décidé 2026-10-02 : x2 + BOX, sans mipmaps, `0x6110`** (§10.1) ; préférence x2 légère/incertaine, BOX nette en dézoom ; QA/release hors périmètre non déduites |
 | **P5** Frontières | Q8c vs Q3m K6 : d'abord sur le banc P1 étendu au plan B (mêmes occurrences et palettes), puis mêmes frames, palettes, packing et scènes en jeu (attaque, marche, mort, repos) | gain propre visible **et** mesuré ; coût XPRESS acceptable ; sinon Q8 abandonné | à faire ; Q8c absent de P1 |
 | **P6** 0x6110 complet | 628 BAM, par famille et couche ; ordre : CHFF4 → CHFB1–3 → armes fréquentes (S1 S0 SS AX WH MC CL S2 BW) → boucliers → casques ; K = 6 ⇒ ≈ 564 000 inférences, cibles float encodées en flux ou purgées | aucune frame manquante ; cache froid/chaud, mémoire, upload mesurés | à faire |
 | **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) | à faire |

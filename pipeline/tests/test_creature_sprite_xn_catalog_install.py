@@ -129,7 +129,64 @@ class ThinCatalogInstallTests(unittest.TestCase):
         )
 
     def tearDown(self) -> None:
+        self.root.resolve().relative_to((ROOT / "sprite").resolve())
         shutil.rmtree(self.root)
+
+    def enable_box_x2(self):
+        runtime = json.loads(self.runtime_manifest.read_text())
+        runtime["capabilities"]["sprite_minification"] = {
+            "modes": ["Box"], "box_scales": [2, 4],
+            "shader_contract": "IEE_CREATURE_MINIFICATION_CONTRACT_V1",
+        }
+        runtime["shaders"] = []
+        for name in ("fpDraw", "fpSprite", "fpSELECT"):
+            path = self.game / "override" / (name + ".glsl")
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(name.encode())
+            runtime["shaders"].append({"target": "override/" + path.name, "sha256": sha256(path)})
+        write_json(self.runtime_manifest, runtime)
+        path = self.build / "build-manifest.json"
+        build = json.loads(path.read_text())
+        build["registry_scale"] = 2
+        build["animation_ids"] = ["0x6110"]
+        write_json(path, build)
+
+    def test_box_x2_install_verify_restore_preserves_scope_and_previous_bytes(self):
+        self.enable_box_x2()
+        ini = self.game / "InfinityEngine-Enhancer.ini"
+        before = ini.read_bytes()
+        self.run_ps(INSTALL, "-JobFile", self.job, "-RuntimeManifest", self.runtime_manifest,
+                    "-CreatureSpriteFilter", "Box")
+        result = self.run_ps(INSTALL, "-JobFile", self.job, "-RuntimeManifest", self.runtime_manifest,
+                             "-CreatureSpriteFilter", "Box", "-VerifyOnly")
+        self.assertIn("already-installed", result.stdout)
+        self.assertIn("CreatureSpriteFilterAnimation = 0x6110", ini.read_text())
+        state = json.loads((self.run / "ingame-installation/active-test.json").read_text())
+        self.assertEqual(state["creature_sprite_filter_animation"], "0x6110")
+        self.run_ps(RESTORE, "-JobFile", self.job)
+        self.assertEqual(ini.read_bytes(), before)
+        self.assertEqual((self.game_payload / "CreatureSprites-XN.catalog").read_bytes(), b"previous-catalog")
+
+    def test_box_x2_rejects_runtime_with_only_x4_capability_before_replacement(self):
+        self.enable_box_x2()
+        runtime = json.loads(self.runtime_manifest.read_text())
+        runtime["capabilities"]["sprite_minification"]["box_scales"] = [4]
+        write_json(self.runtime_manifest, runtime)
+        before = (self.game / "InfinityEngine-Enhancer.ini").read_bytes()
+        result = self.run_ps(INSTALL, "-JobFile", self.job, "-RuntimeManifest", self.runtime_manifest,
+                             "-CreatureSpriteFilter", "Box", check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("BOX exige", result.stderr)
+        self.assertEqual((self.game / "InfinityEngine-Enhancer.ini").read_bytes(), before)
+
+    def test_box_x2_rejects_shader_drift_before_replacement(self):
+        self.enable_box_x2()
+        (self.game / "override/fpDraw.glsl").write_bytes(b"user-edit")
+        result = self.run_ps(INSTALL, "-JobFile", self.job, "-RuntimeManifest", self.runtime_manifest,
+                             "-CreatureSpriteFilter", "Box", check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Shader BOX", result.stderr)
+        self.assertEqual((self.game_payload / "CreatureSprites-XN.catalog").read_bytes(), b"previous-catalog")
 
     def enable_mixed_catalog(self, *, runtime_capable):
         path=self.build/"build-manifest.json"

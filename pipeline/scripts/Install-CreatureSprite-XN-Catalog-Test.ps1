@@ -2,7 +2,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$JobFile,
     [string]$RuntimeManifest = 'pipeline/runtime/manifests/iee-water-ar1000n-creature-catalog-v2-v1.json',
-    [ValidateSet('Nearest', 'CatmullRom')][string]$CreatureSpriteFilter = 'Nearest',
+    [ValidateSet('Nearest', 'CatmullRom', 'Box')][string]$CreatureSpriteFilter = 'Nearest',
     [switch]$EnableDerivedInstall,
     [switch]$VerifyOnly
 )
@@ -173,6 +173,21 @@ if ([int64]$build.required_q3m_x4_decoded_shard_bytes -gt 512MB -and
         [int64]$build.required_q3m_x4_decoded_shard_bytes) {
     throw 'Le runtime ne supporte pas la taille cumulée I/F de ce catalogue Q3m x4.'
 }
+if ($CreatureSpriteFilter -eq 'Box') {
+    $minification = $runtime.capabilities.sprite_minification
+    if (@($minification.modes) -notcontains 'Box' -or
+        @($minification.box_scales) -notcontains [int]$build.registry_scale -or
+        @($build.animation_ids) -notcontains '0x6110' -or
+        $minification.shader_contract -ne 'IEE_CREATURE_MINIFICATION_CONTRACT_V1') {
+        throw 'BOX exige une capacité runtime explicite pour cette échelle et 0x6110.'
+    }
+    foreach ($shader in @($runtime.shaders)) {
+        if ((Get-FileSha256 (Resolve-ChildPath $game $shader.target -RequireExisting)) -ne $shader.sha256) {
+            throw "Shader BOX installé divergent : $($shader.target)"
+        }
+    }
+    if (@($runtime.shaders).Count -ne 3) { throw 'BOX exige les trois shaders déclarés.' }
+}
 
 $catalogTarget = Resolve-ChildPath $game ([string]$build.registry_catalog)
 $shards = [Collections.Generic.List[object]]::new()
@@ -231,7 +246,7 @@ if ($active) {
         $runtimeAdoption = $true
     }
     $activeFilter = [string]$active.creature_sprite_filter
-    if ($activeFilter -notin @('Nearest', 'CatmullRom')) {
+    if ($activeFilter -notin @('Nearest', 'CatmullRom', 'Box')) {
         throw 'Filtre sprites du reçu actif invalide.'
     }
     $ini = Get-Content -LiteralPath $iniTarget -Raw
@@ -240,6 +255,10 @@ if ($active) {
         EnableCreatureSpriteX2Test = 'false'
         EnableCreatureSpriteLinearFiltering = 'false'
         CreatureSpriteFilter = $activeFilter
+    }
+    if ($activeFilter -eq 'Box') {
+        if ($active.creature_sprite_filter_animation -ne '0x6110') { throw 'Périmètre BOX du reçu divergent.' }
+        $expectedIni.CreatureSpriteFilterAnimation = '0x6110'
     }
     foreach ($entry in $expectedIni.GetEnumerator()) {
         $actual = Get-IniValue $ini 'Shaders' $entry.Key
@@ -324,6 +343,7 @@ $state = [ordered]@{
     previous_active_state_sha256 = $previousStateSha256
     animation_ids = @($build.animation_ids); shards_total = $shards.Count; shards_copied = $copied
 }
+if ($CreatureSpriteFilter -eq 'Box') { $state.creature_sprite_filter_animation = '0x6110' }
 Write-JsonAtomic $statePath $state
 try {
     $ini = Get-Content -LiteralPath $iniTarget -Raw
@@ -331,6 +351,9 @@ try {
     $ini = Set-IniValue $ini 'Shaders' 'EnableCreatureSpriteX2Test' 'false'
     $ini = Set-IniValue $ini 'Shaders' 'EnableCreatureSpriteLinearFiltering' 'false'
     $ini = Set-IniValue $ini 'Shaders' 'CreatureSpriteFilter' $CreatureSpriteFilter
+    if ($CreatureSpriteFilter -eq 'Box') {
+        $ini = Set-IniValue $ini 'Shaders' 'CreatureSpriteFilterAnimation' '0x6110'
+    }
     Write-TextAtomic $iniTarget $ini
     Copy-FileAtomic $catalogSource $catalogTarget
     if ((Get-FileSha256 $catalogTarget) -ne ([string]$build.registry_catalog_sha256).ToUpperInvariant()) {

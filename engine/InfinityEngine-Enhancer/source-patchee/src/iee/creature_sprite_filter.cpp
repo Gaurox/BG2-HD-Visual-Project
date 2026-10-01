@@ -32,8 +32,8 @@ void TextureRegistry::configure(core::CreatureSpriteFilterMode mode,
 core::CreatureSpriteFilterMode TextureRegistry::effective_mode(
     std::uint16_t animationId, int scale) const noexcept {
   if ((animationId_ != 0 && animationId_ != animationId) ||
-      ((mode_ == core::CreatureSpriteFilterMode::Box ||
-        mode_ == core::CreatureSpriteFilterMode::Mipmaps) && scale != 4))
+      (mode_ == core::CreatureSpriteFilterMode::Box && scale != 2 && scale != 4) ||
+      (mode_ == core::CreatureSpriteFilterMode::Mipmaps && scale != 4))
     return core::CreatureSpriteFilterMode::Nearest;
   return mode_;
 }

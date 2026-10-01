@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-p4-scale-filter-decision-v1",
+  "date_local": "2026-10-02",
+  "status": "decided",
+  "default_scale": 2,
+  "default_filter": "Box",
+  "mipmaps_enabled": false,
+  "animation_scope": "0x6110",
+  "master_scale": 4,
+  "x4_status": "optional quality candidate, not preferred in this trial",
+  "basis": "User clearly prefers BOX to tested x4 Mipmaps; slightly prefers x2 to x4 with BOX. x2 has lower measured CPU composition and base upload traffic at matched zoom.",
+  "feedback": {
+    "date_local": "2026-10-02",
+    "filter_verbatim": "tests fait. au passage je confirme que box est bien meilleur visuellement que mimpas a mesure qu'on dézoome",
+    "scale_verbatim": "J'ai un léger sentiment de préférer x2 bien que ce soit difficile à dire.",
+    "interpretation": "clear BOX preference in zoom-out; slight, uncertain x2 preference; no quantified visual superiority or exhaustive artifact QA"
+  },
+  "viewport": [
+    2528,
+    1339
+  ],
+  "habitual_zoom": [
+    2.480864,
+    2.47963
+  ],
+  "habitual_steps_from_max": 7,
+  "evidence": [
+    "result.json",
+    "G:\\AI\\BG2_Upscale\\sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-box-measurement-20261001-v1\\result.json",
+    "G:\\AI\\BG2_Upscale\\sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-mipmaps-measurement-20261001-v1\\result.json"
+  ],
+  "runtime_id": "iee-sprite-p4-box-x2-20261001-v1",
+  "catalog_sha256": "5F0596DDAC14ECDBFD1915978736C160DF1F7F465156472FD410A8705CDC6044",
+  "catalog_routes": [
+    "0x6100",
+    "0x6110"
+  ],
+  "other_route_filter": "0x6100 remains Nearest; no BOX QA transferred",
+  "installation": "existing x2 BOX remains active; no replacement during measurement",
+  "qa_scope": "P4 scale/filter choice for tested Character scene; P3 acceptance preserved; no broader family/artifact-free QA inferred",
+  "release_changed": false,
+  "pc_control": false
+}
