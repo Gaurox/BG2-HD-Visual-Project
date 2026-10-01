@@ -1,0 +1,94 @@
+{
+  "schema": "bg2-q3m-human-fighters-x4-merged-verification-v1",
+  "status": "passed-offline-ready-for-install",
+  "scale": 4,
+  "method": "Q3m",
+  "k": 6,
+  "boundary_mixing": false,
+  "dithering": false,
+  "source_bindings": [
+    {
+      "animation_id": "0x6100",
+      "frames": 180337,
+      "resources": 656,
+      "verification": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x4-verification.json",
+      "verification_sha256": "CAF830320E075EF1B77EE63CBF7B8D4807792308D3306CE3DE266F343C665298",
+      "source_catalog": "sprite/.work/q3m-6100-20261001-v1/x4/CreatureSprites-XN.catalog",
+      "source_catalog_sha256": "1297BFD743E993FAFDE2B1115D14B511DD37053C42BA0404A942246C5796CE3F",
+      "all_v6_bytes_identical": true
+    },
+    {
+      "animation_id": "0x6110",
+      "frames": 178360,
+      "resources": 656,
+      "verification": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110/verification.json",
+      "verification_sha256": "0CB2522CC85034EE8075B2FC0BCEA3BCBE277483D2349BE593B5584CEED45FD8",
+      "source_catalog": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110/x4-q3m-k6/generation/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "source_catalog_sha256": "F52A76C3BBC7890B0596AEA2B3625212D23129A85E23C3961EFCFB2653DB8777",
+      "all_v6_bytes_identical": true
+    }
+  ],
+  "source_routes_identical": true,
+  "all_source_shards_verified": true,
+  "animation_ids": [
+    "0x6100",
+    "0x6110"
+  ],
+  "directory_entries": 1312,
+  "shards": 1312,
+  "frames_per_animation": {
+    "male": 180337,
+    "female": 178360
+  },
+  "unique_stored_frames": 358697,
+  "catalog_sha256": "637DBC809EAD7A9AD2A771BB760F5C0042109C5A4B6A19BE68A75CC41D50E0B8",
+  "catalog_bytes": 215304,
+  "active_pack_bytes": 1105771164,
+  "build_manifest_sha256": "4001F80AF89F31B196E7E262AA75DDA3FCF59543161E8B791B838DB0BE029278",
+  "preparation_script_sha256": "568F61004FF4D59367E9900D12451888208DD780D13B5DF02BD00948F6CAC93E",
+  "required_q3m_x4_decoded_shard_bytes": 878036576,
+  "required_shard_limit_is_conservative_I_plus_F_upper_bound": true,
+  "runtime_manifest": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110/runtime.json",
+  "runtime_manifest_sha256": "209703389BBB387B912781F0742B6889266EE32D37117BC7B3CF5D04D90FACB5",
+  "runtime_dll_sha256": "250BCF9219152BB70358CF8687DAA14351878B2C57B116582460810FB0938FE3",
+  "native_combined_working_sets": [
+    {
+      "animation_id": "0x6100",
+      "executable": "build/q3m-6100-20261001-v1/native/Release/q3m_6100_palette_tests.exe",
+      "executable_sha256": "744B3BD358F0C6B3CCEA0F8A967EE80AFEB7981083D2FBE79F18DF1CDA9C2F8D",
+      "oracle": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x4-working-set-oracles/decoder-oracle-00.bin",
+      "oracle_sha256": "EB21F79B2BC1EBC71DC6C378863305059DF0BBC9E0BAC5D7C33AD138B415E408",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 261141696,
+        "peak_resident_I_F_bytes": 28448256,
+        "peak_metadata_bytes": 134211424,
+        "verification_elapsed_ms": 16950
+      },
+      "log_sha256": "8077D3282CFED81309A0CFAEF65D7DFAF6D9FF5E2131F40B2CFF2F144E99332C"
+    },
+    {
+      "animation_id": "0x6110",
+      "executable": "build/palette-q3m-p3-20261001-v5-x4/cmake/Release/iee_palette_fraction_tests.exe",
+      "executable_sha256": "723FBE2E9AC96DD24EB8A4FCED2791356FDD45DBDF76996813AF72655B8756DC",
+      "oracle": "build/p3-6110-v5-x4-native/oracles/working-set-0.bin",
+      "oracle_sha256": "F5391A71AA8F7D2BDE93944EF754561E6C2BE20FB34407B4FAE19BCB3D79AAE7",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 267702624,
+        "peak_resident_I_F_bytes": 29198800,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 17301
+      },
+      "log_sha256": "1B3FC67C63014A5A785823B7B747E00434B6BDA3684F9452377AA025022E6E8B"
+    }
+  ],
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "limitations": [
+    "Existing full native proofs retained because V6 bytes are unchanged; combined routes tested on all BAMs.",
+    "Oracle alpha is synthetic; live effects and GL remain manual game QA."
+  ]
+}
