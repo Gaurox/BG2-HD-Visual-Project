@@ -13,14 +13,15 @@
 
 Une installation ne vaut pas QA ; une QA ne vaut pas intégration release.
 
-## Deux modes raster
+## Modes raster
 
 | Mode | Usage | Sortie |
 |---|---|---|
 | xBR | nouvelle famille/animation ; repli sûr | catalogue canonique cumulatif |
 | ReboutCX | améliorer des composants xBR existants | catalogue dérivé complet : ReboutCX ciblé + xBR ailleurs |
+| Q3m K6 Character | traitement de série des personnages palettisés ; expérimental | queue unique + cache partagé I/F, catalogue V6 x2/x4 |
 
-Les deux modes conservent BAM, cycles, centres, palettes dynamiques et registre x2. ReboutCX n'est
+xBR et ReboutCX conservent BAM, cycles, centres, palettes dynamiques et registre x2. ReboutCX n'est
 pas un second runtime et ne se sélectionne pas par instance ingame.
 
 ## Préparer les sources
@@ -34,6 +35,15 @@ python pipeline/scripts/materialize_sprite_sources.py --job <job-xbr> --run
 ```
 
 ## Produire
+
+### Q3m — Characters palettisés
+
+Entrée de série : `pipeline/scripts/palette_playable.py`. Le plan actif
+[`index/palette-work-plan.json`](index/palette-work-plan.json) est consommé systématiquement ;
+résultats communs persistés entre modèles, source/centres/cycles propres à chaque occurrence.
+Commandes `plan` (CPU), `run` (GPU demandé explicitement), `pack` (assemblage expérimental) et
+reconstruction du SQLite : [`../pipeline/PALETTE_PLAYABLE.md`](../pipeline/PALETTE_PLAYABLE.md).
+Cette voie ne change aucun état installation/QA/release.
 
 ### xBR
 

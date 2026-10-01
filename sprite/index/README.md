@@ -34,6 +34,10 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
   `engine_section`; macro-groupe, dossier, layout et règle de bucket.
 - `extractions.csv` : projection générée des BAM réellement présents sous
   `sprite/ressources/`; ne pas l'éditer. Elle reste absente avant la première extraction explicite.
+- [`palette-work-plan.json`](palette-work-plan.json) : pointeur source SHA vers le plan exhaustif
+  de frames Q3m uniques ; entrée `pipeline/scripts/palette_playable.py`. Le SQLite local peut être
+  reconstruit sur CPU ; sources, géométrie et palettes restent régies par les CSV. Contrat et
+  commandes : [`../../pipeline/PALETTE_PLAYABLE.md`](../../pipeline/PALETTE_PLAYABLE.md).
 - [`qa-decisions/`](qa-decisions/) : décisions ingame immuables.
 - Production : pointeur `current-generation.json` et manifeste scellé du catalogue.
 - Installation : `ingame-installation/active-test.json`, sans autorité QA.

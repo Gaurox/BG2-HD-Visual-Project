@@ -1,0 +1,60 @@
+{
+  "schema": "bg2-playable-palette-pipeline-integration-verification-v1",
+  "status": "passed-cpu-integration-no-global-generation",
+  "tests_passed": 52,
+  "tests": [
+    "test_playable_frame_dedup",
+    "test_palette_playable",
+    "test_palette_complete",
+    "test_palette_frac_encode",
+    "test_palette_registry",
+    "test_test_changed"
+  ],
+  "active_plan": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+    "models": 78,
+    "unique_work": 563969,
+    "model_work": 563797
+  },
+  "real_V6_seed_checks": [
+    {
+      "scale": 2,
+      "resref": "CHFB1A1",
+      "native_frames": 135,
+      "seeded_unique_results": 135,
+      "pixel_math_not_run": true
+    },
+    {
+      "scale": 4,
+      "resref": "CHFB1A1",
+      "native_frames": 135,
+      "seeded_unique_results": 135,
+      "pixel_math_not_run": true
+    }
+  ],
+  "shared_pixel_math": "PixelProcessor.process/encode inherited unchanged; task key and result location overridden",
+  "pixel_math_sha256": "09a8c9baf54f361e23846506e26d26de43dfbc4ce6dc01df8ad7486ff0cf202f",
+  "source_sha256": {
+    "pipeline/scripts/analyze_playable_frame_dedup.py": "c14e9dba0480c4d5e18db0958bdf9aaa002996f28e4a4abb36a14123d7f2082e",
+    "pipeline/scripts/palette_playable.py": "3c5c71575abcaa95b84fbdd5c07de5e5894eb8cc809c528ba4964bc217b633b8",
+    "pipeline/scripts/palette_work_plan.py": "b62cd03492c455bec182b5c38454a0b4c64901a7a213eee69e50bee2c0c5247d",
+    "pipeline/scripts/test_changed.py": "3ddf0356f0562b44f35b0fa11039551cf651d27440a20112d612222848870e7e",
+    "pipeline/tests/test_playable_frame_dedup.py": "3e0d04902671195438e525867174e27023bcac2bc4c2993d49c9d88c99e8c80b",
+    "pipeline/tests/test_palette_playable.py": "f277dee74cc8f09e07bca72f188236f0bf5b8df0b7f6956ecf1759accc265a30",
+    "pipeline/tests/test_test_changed.py": "f248b52f27ff7f954b31b23e670241daea885aae170fb309b30449185a86f0be",
+    "pipeline/PALETTE_PLAYABLE.md": "a8576d0286265bdbec65461c160e5300753e33cb2963b1f1f7db1a3dacafaeb2",
+    "sprite/index/palette-work-plan.json": "81d0ad6c617bc436fba12126e5afbb9bd192a40ef0ba3b00ec6473419cbf2c64"
+  },
+  "source_analysis": "exhaustive prior independent-reader verification retained immutable",
+  "gpu_inference_executed": false,
+  "global_pack_generated": false,
+  "native_build_executed": false,
+  "game_installation_changed": false,
+  "ingame_QA": false,
+  "limits": [
+    "Production math stays the previously verified kernel; CPU integration uses synthetic inference.",
+    "No new GPU execution or new native/ingame proof for the complete 78-model pack.",
+    "SQLite is local generated data; committed pointer and source analyzer allow CPU reconstruction."
+  ]
+}

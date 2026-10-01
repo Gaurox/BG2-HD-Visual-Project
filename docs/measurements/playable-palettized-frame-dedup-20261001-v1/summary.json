@@ -1,0 +1,110 @@
+{
+  "schema": "playable-palettized-exact-frame-plan-v1",
+  "status": "complete-source-analysis-not-generated",
+  "counts": {
+    "unique_indexed_inputs": 563488,
+    "unique_neural_inputs": 563319,
+    "unique_neural_q32_pixels": 1655021568,
+    "unique_neural_native_pixels": 959768171,
+    "unique_work_items": 563969,
+    "unique_model_work_items": 563797,
+    "unique_work_native_pixels": 961019931,
+    "unique_model_native_pixels": 960065986,
+    "unique_model_q32_pixels": 1655791616,
+    "unprocessable_work_items": 0,
+    "distinct_bam_frames": 1564054,
+    "distinct_bam_model_frames": 894348,
+    "distinct_bam_native_pixels": 1268986342,
+    "distinct_bam_model_q32_pixels": 2309177344,
+    "logical_frames": 13677041,
+    "logical_model_frames": 11448124,
+    "logical_native_pixels": 17717563045,
+    "logical_model_q32_pixels": 31296118784,
+    "unreferenced_source_frames": 25466,
+    "original_rle_tail_overflow_frames": 70,
+    "resources": 4510,
+    "source_bytes": 189397325,
+    "canonical_bytes": 407156955,
+    "cycles": 168192,
+    "cycle_slots": 3599209,
+    "input_reuses_byte_compared": 1000566,
+    "work_reuses_byte_compared": 1000085,
+    "model_local_unique_work_items": 7187637,
+    "model_local_unique_model_work_items": 7182104,
+    "model_local_unique_model_q32_pixels": 22021695488,
+    "shared_between_models_work_items": 558913,
+    "shared_between_models_model_work_items": 558741,
+    "shared_between_models_source_occurrences": 1558519,
+    "work_items_with_different_centres": 2325,
+    "models": 78,
+    "families": 5142,
+    "available_families": 4896,
+    "absent_families": 246,
+    "strict_full_palette_work_items": 566136,
+    "logical_frame_work_avoided": 13113072,
+    "logical_model_work_avoided": 10884327,
+    "logical_model_q32_pixels_avoided": 29640327168,
+    "within_model_model_work_avoided": 4266020,
+    "cross_model_additional_model_work_avoided": 6618307,
+    "cross_model_additional_q32_pixels_avoided": 20365903872,
+    "six_palette_targets_naive": 68688744,
+    "six_palette_targets_unique_work": 3382782,
+    "six_palette_targets_unique_indexed_input": 3379914,
+    "unused_native_palette_additional_work_avoided": 2167,
+    "source_frames_avoided_after_bam_sharing": 1000085,
+    "source_model_frames_avoided_after_bam_sharing": 330551
+  },
+  "reductions_percent": {
+    "all_frame_work": 95.876528,
+    "model_frame_work": 95.075202,
+    "model_q32_pixels": 94.709275,
+    "after_distinct_bam_frames": 63.941846,
+    "cross_model_additional_model_work": 92.149974,
+    "cross_model_additional_q32_pixels": 92.481089
+  },
+  "layer_source_counts": {
+    "body": {
+      "source_frames": 1011676,
+      "source_model_frames": 348285
+    },
+    "weapon": {
+      "source_frames": 297213,
+      "source_model_frames": 294036
+    },
+    "shield": {
+      "source_frames": 66528,
+      "source_model_frames": 66473
+    },
+    "helmet": {
+      "source_frames": 188637,
+      "source_model_frames": 185554
+    }
+  },
+  "cross_check_6110": {
+    "animation_id": "0x6110",
+    "symbol": "FIGHTER_FEMALE_HUMAN",
+    "logical_frames": 178360,
+    "logical_model_frames": 148485,
+    "logical_native_pixels": 236899888,
+    "logical_model_q32_pixels": 405878784,
+    "resources": 656,
+    "unique_work_items": 93948,
+    "unique_model_work_items": 93868,
+    "unique_model_q32_pixels": 285352960,
+    "strict_full_palette_work_items": 94099
+  },
+  "seconds": 215.3,
+  "limitations": [
+    "Sufficient identical-input proof, not a search for merely equal-looking images or coincidentally equal future encoded outputs.",
+    "No inference, upscale, install or ingame QA. Existing runners are not automatically redirected to this plan.",
+    "q32 pixels exclude fixed86 filler slots; percentages are work-volume savings, not measured elapsed-time speedups.",
+    "All originally declared frames are retained, including unreferenced and special frames; no dead-frame pruning.",
+    "x2 and x4 encoded results and different processing profiles must use distinct namespaces.",
+    "optional neural_queue avoids repeating neural targets for identical indexed inputs with different native guides; six palettes per input."
+  ],
+  "artifact": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "bytes": 576868352,
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25"
+  }
+}

@@ -1,4 +1,4 @@
-"""Run only tests whose filename directly matches a changed Python script."""
+"""Run matching tests plus explicit dependencies of shared pipeline modules."""
 
 from __future__ import annotations
 
@@ -10,6 +10,10 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[2]
+SCRIPT_TESTS = {
+    "pipeline/scripts/analyze_playable_frame_dedup.py": "test_playable_frame_dedup",
+    "pipeline/scripts/palette_work_plan.py": "test_palette_playable",
+}
 
 
 def normalize(path: str) -> str:
@@ -53,10 +57,11 @@ def modules_for(paths: list[str]) -> list[str]:
         if path.startswith("pipeline/tests/test_") and path.endswith(".py"):
             module = path[:-3].replace("/", ".")
         elif path.startswith("pipeline/scripts/") and path.endswith(".py"):
-            test = ROOT / "pipeline" / "tests" / f"test_{Path(path).stem}.py"
+            name = SCRIPT_TESTS.get(path, f"test_{Path(path).stem}")
+            test = ROOT / "pipeline" / "tests" / f"{name}.py"
             if not test.is_file():
                 continue
-            module = f"pipeline.tests.test_{Path(path).stem}"
+            module = f"pipeline.tests.{name}"
         else:
             continue
         if module not in modules:

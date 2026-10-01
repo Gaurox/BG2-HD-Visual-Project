@@ -41,6 +41,13 @@ class TestChangedTests(unittest.TestCase):
             ["pipeline.tests.test_animation_release"],
         )
 
+    def test_playable_dedup_shared_modules_select_their_integration_tests_once(self) -> None:
+        self.assertEqual(selector.modules_for([
+            "pipeline/scripts/analyze_playable_frame_dedup.py",
+            "pipeline/scripts/palette_work_plan.py",
+            "pipeline/scripts/palette_playable.py",
+        ]), ["pipeline.tests.test_playable_frame_dedup", "pipeline.tests.test_palette_playable"])
+
     def test_paths_cannot_escape_repository(self) -> None:
         with self.assertRaises(ValueError):
             selector.normalize("../outside.py")
