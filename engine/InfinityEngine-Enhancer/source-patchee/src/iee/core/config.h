@@ -129,6 +129,10 @@ struct EngineConfig {
   // P3-only bounded capture of realized Character palettes and decoded CRCs.
   // Disable during performance measurements; never changes native draw state.
   bool enableCreatureSpritePaletteTrace = false;
+  // P7 read-only CHFF1INV palette/geometry trace; native inventory pixels kept.
+  // Requires validated creature-palette and CVidCell owner/common scopes.
+  bool enablePaperdollUIProbe = false;
+  bool enablePaperdollQ3mTest = false;
   // P4 read-only telemetry: CSV per session; no hotkeys or draw-state changes.
   bool enableCreatureSpriteP4Probe = false;
   std::filesystem::path creatureSpriteP4Output{};

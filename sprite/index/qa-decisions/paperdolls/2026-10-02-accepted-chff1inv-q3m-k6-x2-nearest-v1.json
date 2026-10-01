@@ -1,0 +1,137 @@
+{
+  "schema": "bg2-upscale-paperdoll-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-01T23:52:16.789277+00:00",
+  "scope": {
+    "kind": "installed-paperdoll-body",
+    "domain": "playable-characters",
+    "animation_id": "0x6110",
+    "resrefs": [
+      "CHFF1INV"
+    ],
+    "frames": [
+      0,
+      1
+    ],
+    "equipment_overlays": [],
+    "variant_id": "q3m-k6-x2-ui-nearest",
+    "target_scale": 2
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "c'est propre je valide ! committe",
+    "scenario": "guerriere humaine sans equipement, figurine inventaire",
+    "note": "Validation du seul corps CHFF1INV du candidat teste ; aucune extension aux autres paperdolls/equipements."
+  },
+  "runtime_contract": {
+    "runtime_id": "iee-sprite-p7-chff1inv-q3m-20261002-v1",
+    "game_profile": {
+      "id": "bg2ee-2.7.3.0-windows-x64",
+      "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+    },
+    "dll_sha256": "5686D1FC9F3AB65F2C73CFCBA52DEC1942460D1BE5A8903017C5322A7AE021B1",
+    "ini_sha256": "B037C32768A6638D99CDD815EFBF86F1EDF8AFD2DD07BD3058577F379A9C556A",
+    "pack_sha256": "1f0d2e5e19aa04df2a2604e1f7234a4d4c6667ae6411e3687f929991a9fa4c33",
+    "ui_sampler": "Nearest",
+    "ui_shader": "native Bitmap (6)",
+    "native_geometry": true,
+    "palette_profile": 1,
+    "decode_rule": 1,
+    "cycle": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "dynamic_native_palette": true,
+    "source_bam_sha256": "7362904ce303b28073f2ecb5eb4384ac0e0f715b84e0f45f715898c14da86d8a",
+    "shaders": [
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+        "target": "override/fpDraw.glsl",
+        "sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1",
+        "bytes": 18005,
+        "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+      },
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+        "target": "override/fpSprite.glsl",
+        "sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32",
+        "bytes": 18939,
+        "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+      },
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+        "target": "override/fpSELECT.glsl",
+        "sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391",
+        "bytes": 19245,
+        "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+      }
+    ]
+  },
+  "provenance": {
+    "selected_run": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-20261002-v1/result.json",
+      "sha256": "8fda418b54ae2aa01547d2ff5c7131f595690e1c5de09b18e761eb36684f5dc2"
+    },
+    "planes": [
+      {
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-20261002-v1/part-0-q3m-x2.npz",
+        "sha256": "e57456d98cd28e1b88c66ec943682f09bb726da3b33fcb924cc444af2e4af6d2"
+      },
+      {
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-20261002-v1/part-1-q3m-x2.npz",
+        "sha256": "017c95aedee2f31e7a13790502a3c3c2892a7f316c821ddd21d8e81cd986a814"
+      }
+    ],
+    "runtime_manifest": {
+      "path": "pipeline/runtime/manifests/iee-sprite-p7-chff1inv-q3m-20261002-v1.json",
+      "sha256": "22872f36b5de19c7ee774a5ca7224c7e584e613c163c2268245360530c8e6f5d"
+    },
+    "pack_manifest": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/pack.json",
+      "sha256": "91ce5c4bfc7222f132a1cafa6138ef9b4f5b4d754b2cc266dd19cbc6b005b5c0"
+    },
+    "installation_receipt": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/installation-verification.json",
+      "sha256": "0dd54c95a46b35288a4342eb7ecbb49cf959416fc5a3797795d9ad518ecd7bd3"
+    }
+  },
+  "automatic_evidence": {
+    "session_start": "2026-10-02 01:48:42.180",
+    "runtime_evidence": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/runtime-evidence-qa-20261002-v1.txt",
+      "sha256": "36bee7e56d7d5ace877846b61a03d15483273f46d4a8573def5a043b48208bf8"
+    },
+    "source_log_sha256": "84c351c4c6758288bfd42a99bfafe4282f2662083ac457a48882ca483f3b52a2",
+    "observed_hd_draws": [
+      {
+        "slot": 0,
+        "frame": 0,
+        "native_palette_crc32": "9E404C49",
+        "decoded_bgra_crc32": "E6444EE6",
+        "bound": true,
+        "independent_crc_match": true
+      },
+      {
+        "slot": 2,
+        "frame": 1,
+        "native_palette_crc32": "9E404C49",
+        "decoded_bgra_crc32": "013BF0F0",
+        "bound": true,
+        "independent_crc_match": true
+      }
+    ],
+    "errors_in_session": [],
+    "coverage": "Deux moities, une palette observee ; couverture couleurs non exhaustive"
+  },
+  "world_contract": {
+    "scale": 2,
+    "filter": "Box",
+    "catalog_sha256": "5F0596DDAC14ECDBFD1915978736C160DF1F7F465156472FD410A8705CDC6044",
+    "changed": false
+  },
+  "release_manifest_modified": false
+}

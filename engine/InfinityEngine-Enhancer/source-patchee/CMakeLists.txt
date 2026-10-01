@@ -213,6 +213,7 @@ if(IEE_BUILD_WINDOWS_DLL)
         src/iee/frame_hook.cpp
         src/iee/hooks.cpp
         src/iee/item_icon_x2.cpp
+        src/iee/paperdoll_q3m.cpp
         src/iee/map_page_prewarm.cpp
         src/iee/map_page_prepare.cpp
         src/iee/map_page_preload.cpp
@@ -344,6 +345,12 @@ if(BUILD_TESTING)
         target_link_libraries(iee_sprite_minification_tests PRIVATE iee_common)
         iee_configure_target(iee_sprite_minification_tests)
         add_test(NAME iee_sprite_minification_tests COMMAND iee_sprite_minification_tests)
+
+        add_executable(iee_paperdoll_q3m_tests tests/paperdoll_q3m_tests.cpp
+            src/iee/paperdoll_q3m.cpp src/iee/game/opengl_types.cpp)
+        target_link_libraries(iee_paperdoll_q3m_tests PRIVATE iee_common opengl32)
+        iee_configure_target(iee_paperdoll_q3m_tests)
+        # Invoked with the current pilot pack and measured-palette oracle.
 
         find_package(Python3 REQUIRED COMPONENTS Interpreter)
         set(IEE_PALETTE_FIXTURES "${IEE_GENERATED_DIR}/palette-fraction-fixtures")

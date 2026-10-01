@@ -30,6 +30,8 @@
 #include "iee/area_animation_x4_registry.h"
 #include "iee/effect_animation_x4_registry.h"
 #include "iee/item_icon_x2.h"
+#include "iee/paperdoll_q3m.h"
+#include "iee/game/opengl_types.h"
 #include "app_context.h"
 #include "area_state.h"
 #include "iee/core/hooking.h"
@@ -156,10 +158,19 @@ thread_local int g_effectAnimationFinalRenderDepth = 0;
 struct ItemIconScope {
   void* cell{};
   bool spriteRoutingOwned{};
+  bool paperdollProbeOwned{};
+  bool paperdollHDOwned{};
+  bool paperdollPaletteValid{};
+  std::int16_t paperdollSequence{-1}, paperdollSlot{-1};
+  core::palette_fraction::Palette paperdollPalette{};
 };
 thread_local ItemIconScope* g_itemIconScope = nullptr;
 static bool g_itemIconHooksEnabled = false;
 static bool g_spriteShaderScopePrepared = false;
+static bool g_paperdollProbeReady = false;
+static bool g_paperdollHDReady = false;
+static paperdoll_q3m::TextureApi g_paperdollTextureApi{};
+static std::uintptr_t g_paperdollProbeModuleBase{};
 static bool g_spriteShaderScopeActive = false;
 static std::uintptr_t g_groundItemVidCellRenderReturn{};
 thread_local int g_nativeShaderTone = static_cast<int>(game::ShaderTone::None);
@@ -1675,6 +1686,42 @@ bool prepare_sprite_shader_scope_hooks(AppContext& ctx) noexcept {
   return true;
 }
 
+bool prepare_paperdoll_ui_probe(AppContext& ctx) noexcept {
+  if (!ctx.cfg.enablePaperdollUIProbe && !ctx.cfg.enablePaperdollQ3mTest) return false;
+  if (!g_creatureSpriteHooksEnabled || !ctx.manifest || !ctx.manifest->itemIcons.enabled) {
+    LOG_WARN("P7_UI_PROBE unavailable: validated creature-palette and CVidCell manifest required");
+    return false;
+  }
+  const auto module = core::get_module_span(nullptr);
+  if (!module) return false;
+  const auto& runtime = ctx.manifest->itemIcons;
+  const std::array<std::pair<std::uintptr_t, std::string_view>, 2> boundaries{{
+      {runtime.vidCellRender, runtime.vidCellRenderSignature},
+      {runtime.vidCellCommonRenderTexture, runtime.vidCellCommonRenderTextureSignature},
+  }};
+  for (const auto& [rva, signature] : boundaries) {
+    if (!matches_pattern_at_rva(*module, rva, signature)) {
+      LOG_WARN("P7_UI_PROBE unavailable: CVidCell boundary signature differs at RVA 0x{:X}", rva);
+      return false;
+    }
+  }
+  if (ctx.cfg.enablePaperdollQ3mTest && paperdoll_q3m::ready()) {
+    const auto& flush = ctx.manifest->worldOverlay;
+    if (flush.enabled && matches_pattern_at_rva(*module, flush.drawFlushGl, flush.drawFlushGlSignature)) {
+      const auto& api = g_creatureSpriteTextureApi;
+      g_paperdollTextureApi.engine = {api.DrawGenTexture, api.DrawBindTexture,
+          api.DrawDeleteTexture, api.TexImage, api.DrawGetRenderer, api.glTextureState};
+      g_paperdollTextureApi.glTextureTable = api.glTextureTable;
+      g_paperdollTextureApi.DrawFlushGl = reinterpret_cast<void (*)()>(
+          reinterpret_cast<std::uintptr_t>(module->base) + flush.drawFlushGl);
+      g_paperdollHDReady = true;
+    } else {
+      LOG_WARN("P7_Q3M unavailable: DrawFlushGl boundary differs; native UI retained");
+    }
+  }
+  return ctx.cfg.enablePaperdollUIProbe;
+}
+
 bool prepare_effect_animation_composition_hooks(AppContext& ctx) noexcept {
   g_effectAnimationHooksEnabled = false;
   g_effectAnimationTextureApi = {};
@@ -2986,6 +3033,112 @@ void trace_q3m_p3_palette(CreatureSpriteScope& scope, std::size_t layerIndex,
   }
 }
 
+// Exact resref ownership shared by the read-only probe and opt-in UI pilot.
+bool paperdoll_probe_cell(void* cell) noexcept {
+  if ((!g_paperdollProbeReady && !g_paperdollHDReady) || !g_ctx || !g_ctx->manifest || !cell) return false;
+  std::array<char, 8> resref{};
+  constexpr std::array<char, 8> target{'C','H','F','F','1','I','N','V'};
+  return core::safe_read(static_cast<const std::byte*>(cell) +
+                            g_ctx->manifest->itemIcons.vidCellResref, resref) &&
+         resref == target;
+}
+
+void trace_paperdoll_palette(void* paletteThis, const std::uint32_t* output,
+                             std::uintptr_t caller, std::uint32_t flags,
+                             std::uint32_t transparency) noexcept {
+  if (!g_paperdollProbeReady || !g_ctx || !g_ctx->manifest) return;
+  try {
+    const auto address = reinterpret_cast<std::uintptr_t>(paletteThis);
+    const auto offset = g_ctx->manifest->areaAnimations.vidCellPalette;
+    if (address < offset) return;
+    auto* cell = reinterpret_cast<void*>(address - offset);
+    if (!paperdoll_probe_cell(cell)) return;
+    std::array<std::uint32_t, 256> colors{};
+    creature_sprite_x2::NativePixelEncoding encoding{};
+    game::CVidPalette native{};
+    std::int16_t frame = -1, sequence = -1;
+    const auto* bytes = static_cast<const std::byte*>(cell);
+    const auto& runtime = g_ctx->manifest->itemIcons;
+    if (!core::safe_read(output, colors) || !core::safe_read(paletteThis, native) ||
+        !core::safe_read(bytes + runtime.vidCellCurrentFrame, frame) ||
+        !core::safe_read(bytes + runtime.vidCellCurrentSequence, sequence)) return;
+    const bool encodingRead = core::safe_read(g_creatureSpriteTextureApi.nativePixelEncoding, encoding);
+    const auto checksum = static_cast<std::uint32_t>(crc32(0,
+        reinterpret_cast<const Bytef*>(colors.data()), static_cast<uInt>(sizeof(colors))));
+    const auto callerRva = caller >= g_paperdollProbeModuleBase ? caller-g_paperdollProbeModuleBase : 0;
+    thread_local std::set<std::array<std::uint64_t, 4>> seen;
+    constexpr std::size_t limit = 64;
+    const std::array<std::uint64_t, 4> key{checksum, callerRva,
+        static_cast<std::uint16_t>(frame) | (static_cast<std::uint64_t>(static_cast<std::uint16_t>(sequence)) << 16),
+        flags | (static_cast<std::uint64_t>(transparency) << 32)};
+    if (seen.size() >= limit || !seen.insert(key).second) return;
+    std::ostringstream palette, source, ranges;
+    palette << std::hex << std::setfill('0');
+    source << std::hex << std::setfill('0');
+    for (const auto color : colors) palette << std::setw(8) << color;
+    std::array<std::uint32_t, 256> sourceColors{};
+    const bool sourceRead = native.m_nEntries == 256 && core::safe_read(native.m_pPalette, sourceColors);
+    if (sourceRead) for (const auto color : sourceColors) source << std::setw(8) << color;
+    for (const auto row : native.m_rangeColors) ranges << static_cast<unsigned>(row) << ',';
+    LOG_INFO("P7_UI_PALETTE resref=CHFF1INV cell={:X} sequence={} slot={} callerRva={:X} "
+             "kind={} entries={} ranges={} flags={:X} transparency={} encodingRead={} format={:X} type={:X} "
+             "globalOutput={} crc32={:08X} sourceRead={} sourceColors={} colors={}",
+        reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, native.m_nType,
+        native.m_nEntries, ranges.str(), flags, transparency, encodingRead,
+        encoding.externalFormat, encoding.type, output == g_creatureSpriteTextureApi.realizedPalette,
+        checksum, sourceRead, source.str(), palette.str());
+    if (seen.size() == limit) LOG_INFO("P7_UI_PALETTE limit={} reached", limit);
+  } catch (...) { /* Diagnostic failure retains native rendering. */ }
+}
+
+void trace_paperdoll_draw(void* cell, std::uintptr_t caller, int x, int y,
+                          int width, int height, const void* sourceRect,
+                          const void* renderRect, const void* clipRect,
+                          std::uint32_t flags) noexcept {
+  if (!g_paperdollProbeReady || !paperdoll_probe_cell(cell)) return;
+  try {
+    const auto* bytes = static_cast<const std::byte*>(cell);
+    const auto& runtime = g_ctx->manifest->itemIcons;
+    std::int16_t frame = -1, sequence = -1;
+    std::array<std::int32_t, 12> rectangles{};
+    std::array<std::int32_t, 4> source{}, render{}, clip{};
+    const bool sr = core::safe_read(sourceRect, source);
+    const bool rr = core::safe_read(renderRect, render);
+    const bool cr = core::safe_read(clipRect, clip);
+    if (!core::safe_read(bytes + runtime.vidCellCurrentFrame, frame) ||
+        !core::safe_read(bytes + runtime.vidCellCurrentSequence, sequence)) return;
+    std::copy(source.begin(), source.end(), rectangles.begin());
+    std::copy(render.begin(), render.end(), rectangles.begin()+4);
+    std::copy(clip.begin(), clip.end(), rectangles.begin()+8);
+    const auto crc = static_cast<std::uint32_t>(crc32(0,
+        reinterpret_cast<const Bytef*>(rectangles.data()), static_cast<uInt>(sizeof(rectangles))));
+    // The native CVidCell may clear reserved entries after Realize. Observe the
+    // shared palette again at draw submission, without changing those entries.
+    std::array<std::uint32_t, 256> drawPalette{};
+    const bool drawPaletteRead = core::safe_read(g_creatureSpriteTextureApi.realizedPalette, drawPalette);
+    const auto paletteCrc = static_cast<std::uint32_t>(crc32(0,
+        reinterpret_cast<const Bytef*>(drawPalette.data()), static_cast<uInt>(sizeof(drawPalette))));
+    const auto callerRva = caller >= g_paperdollProbeModuleBase ? caller-g_paperdollProbeModuleBase : 0;
+    thread_local std::set<std::array<std::uint64_t, 7>> seen;
+    constexpr std::size_t limit = 128;
+    const std::array<std::uint64_t, 7> key{callerRva, crc,
+        static_cast<std::uint16_t>(frame) | (static_cast<std::uint64_t>(static_cast<std::uint16_t>(sequence)) << 16),
+        static_cast<std::uint32_t>(x) | (static_cast<std::uint64_t>(static_cast<std::uint32_t>(y)) << 32),
+        static_cast<std::uint32_t>(width) | (static_cast<std::uint64_t>(static_cast<std::uint32_t>(height)) << 32), flags, paletteCrc};
+    if (seen.size() >= limit || !seen.insert(key).second) return;
+    std::ostringstream palette;
+    palette << std::hex << std::setfill('0');
+    if (drawPaletteRead) for (const auto color : drawPalette) palette << std::setw(8) << color;
+    LOG_INFO("P7_UI_DRAW resref=CHFF1INV cell={:X} sequence={} slot={} callerRva={:X} x={} y={} "
+             "logical={}x{} flags={:X} sourceRead={} source={},{},{},{} renderRead={} render={},{},{},{} "
+             "clipRead={} clip={},{},{},{} nativeTone={} drawPaletteRead={} drawPaletteCrc32={:08X} drawColors={}",
+        reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, x, y, width, height, flags,
+        sr, source[0], source[1], source[2], source[3], rr, render[0], render[1], render[2], render[3],
+        cr, clip[0], clip[1], clip[2], clip[3], g_nativeShaderTone, drawPaletteRead, paletteCrc, palette.str());
+    if (seen.size() == limit) LOG_INFO("P7_UI_DRAW limit={} reached", limit);
+  } catch (...) { /* Diagnostic failure retains native rendering. */ }
+}
+
 static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realizedOutput,
                                        std::uint32_t flags, void* rangeEffects,
                                        std::uint32_t transparency, std::uint32_t arg6) {
@@ -3050,6 +3203,25 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
 
   g_vidPaletteRealizeHook.original()(paletteThis, realizedOutput, flags, rangeEffects,
                                       transparency, arg6);
+  trace_paperdoll_palette(paletteThis, realizedOutput, caller, flags, transparency);
+  // Capture only a Realize belonging to the current CHFF1INV Render scope.
+  // Foreign palettes cannot replace this snapshot; common draw checks it again.
+  auto* ui = g_itemIconScope;
+  if (ui && ui->paperdollHDOwned && g_ctx && g_ctx->manifest &&
+      paletteThis == static_cast<std::byte*>(ui->cell) + g_ctx->manifest->areaAnimations.vidCellPalette) {
+    ui->paperdollPaletteValid = false;
+    game::CVidPalette native{};
+    creature_sprite_x2::NativePixelEncoding encoding{};
+    const auto* bytes = static_cast<const std::byte*>(ui->cell);
+    const auto& runtime = g_ctx->manifest->itemIcons;
+    ui->paperdollPaletteValid = realizedOutput == g_creatureSpriteTextureApi.realizedPalette &&
+        core::safe_read(paletteThis, native) && native.m_nType == 1 && native.m_nEntries == 256 &&
+        core::safe_read(g_creatureSpriteTextureApi.nativePixelEncoding, encoding) &&
+        encoding.externalFormat == game::gl::BGRA && encoding.type == game::gl::UNSIGNED_INT_8_8_8_8_REV &&
+        core::safe_read(realizedOutput, ui->paperdollPalette) &&
+        core::safe_read(bytes + runtime.vidCellCurrentSequence, ui->paperdollSequence) &&
+        core::safe_read(bytes + runtime.vidCellCurrentFrame, ui->paperdollSlot);
+  }
 
   if (!ownerCandidate || g_creatureSpriteScope != scope || scope->generation != generation ||
       ownerLayer >= scope->layerCount ||
@@ -3099,15 +3271,71 @@ static int detour_item_vid_cell_render(void* cell, std::uintptr_t arg2,
   trace_mdr1_native_cell(cell, caller, false);
   const bool spriteRoutingOwned =
       g_spriteShaderScopeActive && caller == g_groundItemVidCellRenderReturn;
-  if ((!g_itemIconHooksEnabled && !spriteRoutingOwned) || !cell) {
+  const bool paperdollProbeOwned = paperdoll_probe_cell(cell);
+  if ((!g_itemIconHooksEnabled && !spriteRoutingOwned && !paperdollProbeOwned) || !cell) {
     return original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
   }
-  ItemIconScope scope{.cell = cell, .spriteRoutingOwned = spriteRoutingOwned};
+  ItemIconScope scope{.cell = cell, .spriteRoutingOwned = spriteRoutingOwned,
+                      .paperdollProbeOwned = paperdollProbeOwned && g_paperdollProbeReady,
+                      .paperdollHDOwned = paperdollProbeOwned && g_paperdollHDReady};
   auto* previousScope = g_itemIconScope;
   g_itemIconScope = &scope;
   const int result = original(cell, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
   g_itemIconScope = previousScope;
   return result;
+}
+
+bool bind_paperdoll_draw(const ItemIconScope& scope, int x, int y, int width, int height,
+                         const void* sourceRect, const void* renderRect, const void* clipRect,
+                         std::uint32_t flags, int& previousTexture) noexcept {
+  try {
+    std::array<std::int32_t, 4> source{}, render{}, clip{};
+    core::palette_fraction::Palette palette{};
+    creature_sprite_x2::NativePixelEncoding encoding{};
+    const auto* bytes = static_cast<const std::byte*>(scope.cell);
+    const auto& runtime = g_ctx->manifest->itemIcons;
+    std::int16_t sequence{-1}, slot{-1};
+    const bool read = core::safe_read(sourceRect, source) && core::safe_read(renderRect, render) &&
+        core::safe_read(clipRect, clip) && core::safe_read(g_creatureSpriteTextureApi.realizedPalette, palette) &&
+        core::safe_read(g_creatureSpriteTextureApi.nativePixelEncoding, encoding) &&
+        core::safe_read(bytes + runtime.vidCellCurrentSequence, sequence) &&
+        core::safe_read(bytes + runtime.vidCellCurrentFrame, slot);
+    const bool lower = slot >= 2;
+    const bool geometry = read && sequence == 0 && slot >= 0 && slot <= 3 &&
+        width == (lower ? 65 : 66) && height == (lower ? 75 : 64) &&
+        source == std::array<std::int32_t,4>{0,0,width,height} && render == clip &&
+        std::int64_t(render[2])-render[0] == 128 && std::int64_t(render[3])-render[1] == 160 &&
+        std::int64_t(x)-render[0] == (lower ? 25 : 24) &&
+        std::int64_t(y)-render[1] == (lower ? 80 : 16);
+    const bool paletteMatches = scope.paperdollPaletteValid && read &&
+        sequence == scope.paperdollSequence && slot == scope.paperdollSlot &&
+        std::equal(palette.begin()+1, palette.end(), scope.paperdollPalette.begin()+1) &&
+        encoding.externalFormat == game::gl::BGRA && encoding.type == game::gl::UNSIGNED_INT_8_8_8_8_REV;
+    const bool contract = geometry && paletteMatches && paperdoll_probe_cell(scope.cell) &&
+        flags == 0x4005 && g_nativeShaderTone == static_cast<int>(game::ShaderTone::Bitmap);
+    std::uint32_t pixelCrc{}; bool uploaded{};
+    const bool bound = contract && paperdoll_q3m::bind(sequence, slot, width, height, palette,
+                                                     g_paperdollTextureApi, previousTexture, pixelCrc, uploaded);
+    const auto paletteCrc = static_cast<std::uint32_t>(crc32(0,
+        reinterpret_cast<const Bytef*>(palette.data()), static_cast<uInt>(sizeof(palette))));
+    // Small independent proof even when the optional native probe saturates.
+    // Logging cannot turn a successful binding into an unrestored fallback.
+    try {
+    thread_local std::set<std::array<std::uint64_t,4>> seen;
+    const std::array<std::uint64_t,4> key{paletteCrc, static_cast<std::uint16_t>(slot),
+        static_cast<std::uint64_t>(bound), static_cast<std::uint64_t>(contract)};
+    if (seen.size()<64 && seen.insert(key).second) {
+      std::ostringstream colors; colors << std::hex << std::setfill('0');
+      if (read) for (const auto color : palette) colors << std::setw(8) << color;
+      LOG_INFO("P7_Q3M_DRAW resref=CHFF1INV sequence={} slot={} logical={}x{} geometry={} "
+          "paletteMatches={} contract={} bound={} uploaded={} uiSampler=Nearest nativeTone={} "
+          "paletteCrc32={:08X} pixelCrc32={:08X} colors={}", sequence, slot, width, height,
+          geometry, paletteMatches, contract, bound, uploaded, g_nativeShaderTone, paletteCrc, pixelCrc, colors.str());
+      if (seen.size()==64) LOG_INFO("P7_Q3M_DRAW limit=64 reached");
+    }
+    } catch (...) { /* Binding/restoration remains valid without diagnostics. */ }
+    return bound;
+  } catch (...) {return false;}
 }
 
 static void detour_item_vid_cell_common_render_texture(
@@ -3119,7 +3347,14 @@ static void detour_item_vid_cell_common_render_texture(
   int previousTextureId = 0;
   bool replacementBound = false;
   const auto* scope = g_itemIconScope;
-  if (g_itemIconHooksEnabled && scope && scope->cell && g_ctx && g_ctx->manifest) {
+  if (scope && scope->paperdollProbeOwned) {
+    trace_paperdoll_draw(scope->cell, reinterpret_cast<std::uintptr_t>(_ReturnAddress()),
+                         x, y, logicalWidth, logicalHeight, sourceRect, renderRect, clipRect, flags);
+  }
+  if (scope && scope->paperdollHDOwned && g_paperdollHDReady && g_ctx && g_ctx->manifest) {
+    replacementBound = bind_paperdoll_draw(*scope, x, y, logicalWidth, logicalHeight,
+        sourceRect, renderRect, clipRect, flags, previousTextureId);
+  } else if (g_itemIconHooksEnabled && scope && scope->cell && g_ctx && g_ctx->manifest) {
     const auto& runtime = g_ctx->manifest->itemIcons;
     const auto* cellBytes = static_cast<const std::byte*>(scope->cell);
     std::array<char, 8> resref{};
@@ -3211,7 +3446,11 @@ static void detour_item_vid_cell_common_render_texture(
     g_nativeShaderTone = nativeTone;
   }
   if (replacementBound) {
-    item_icon_x2::restore_texture(g_itemIconTextureApi, previousTextureId);
+    if (scope && scope->paperdollHDOwned) {
+      g_paperdollTextureApi.engine.DrawBindTexture(previousTextureId);
+    } else {
+      item_icon_x2::restore_texture(g_itemIconTextureApi, previousTextureId);
+    }
   }
 }
 
@@ -4711,6 +4950,10 @@ bool install_all(AppContext& ctx) {
     g_groundItemVidCellRenderReturn = 0;
     g_nativeShaderTone = static_cast<int>(game::ShaderTone::None);
     g_forcedFpSpriteQueueDepth = 0;
+    g_paperdollProbeReady = false;
+    g_paperdollHDReady = false;
+    g_paperdollTextureApi = {};
+    g_paperdollProbeModuleBase = 0;
     if (prepare_area_animation_composition_hooks(ctx)) {
       g_areaCompositionMode = AreaCompositionMode::Registry;
     } else if (prepare_am0205e_composition_hooks(ctx)) {
@@ -4720,6 +4963,9 @@ bool install_all(AppContext& ctx) {
     g_creatureSpriteHooksEnabled = prepare_creature_sprite_composition_hooks(ctx);
     g_itemIconHooksEnabled = prepare_item_icon_composition_hooks(ctx);
     g_spriteShaderScopePrepared = prepare_sprite_shader_scope_hooks(ctx);
+    // Native UI observation must work with the user's fpSprite/fpSELECT styling
+    // disabled. Validate the owner/common entries without enabling D7 styling.
+    g_paperdollProbeReady = prepare_paperdoll_ui_probe(ctx);
     const bool hasBridgeTarget =
         g_areaCompositionMode == AreaCompositionMode::Registry ||
         g_creatureSpriteHooksEnabled;
@@ -4743,12 +4989,15 @@ bool install_all(AppContext& ctx) {
         const auto module = core::get_module_span(nullptr);
         if (!module || !ctx.manifest) throw std::runtime_error("module or manifest unavailable");
         const auto moduleBase = reinterpret_cast<std::uintptr_t>(module->base);
+        if (g_paperdollProbeReady || g_paperdollHDReady) {
+          g_paperdollProbeModuleBase = moduleBase;
+        }
         const auto& runtime = ctx.manifest->areaAnimations;
         g_vidCellRenderTextureHook.create(
             reinterpret_cast<void*>(moduleBase + runtime.vidCellRenderTexture),
             reinterpret_cast<void*>(&detour_vid_cell_render_texture));
         g_vidCellRenderTextureHook.enable();
-        if (g_itemIconHooksEnabled || g_spriteShaderScopePrepared) {
+        if (g_itemIconHooksEnabled || g_spriteShaderScopePrepared || g_paperdollProbeReady || g_paperdollHDReady) {
           const auto& itemRuntime = ctx.manifest->itemIcons;
           g_itemVidCellCommonRenderTextureHook.create(
               reinterpret_cast<void*>(moduleBase + itemRuntime.vidCellCommonRenderTexture),
@@ -4760,9 +5009,9 @@ bool install_all(AppContext& ctx) {
           g_itemVidCellRenderHook.enable();
           LOG_INFO(
               "CVidCell owner/common scopes installed: Render RVA 0x{:X}, "
-              "common RVA 0x{:X}, item-x2={}, D7-x1={}",
+              "common RVA 0x{:X}, item-x2={}, D7-x1={}, paperdollProbe={}, paperdollQ3m={}",
               itemRuntime.vidCellRender, itemRuntime.vidCellCommonRenderTexture,
-              g_itemIconHooksEnabled, g_spriteShaderScopePrepared);
+              g_itemIconHooksEnabled, g_spriteShaderScopePrepared, g_paperdollProbeReady, g_paperdollHDReady);
         }
         if (g_areaCompositionMode != AreaCompositionMode::None) {
           g_gameStaticRenderBamHook.create(
@@ -4801,6 +5050,12 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(moduleBase + runtime.vidPaletteRealize),
               reinterpret_cast<void*>(&detour_vid_palette_realize));
           g_vidPaletteRealizeHook.enable();
+          if (g_paperdollProbeReady) {
+            LOG_INFO("P7_UI_PROBE ready: CHFF1INV only; native palette/draw trace; paletteLimit=64 drawLimit=128; no render-state writes");
+          }
+          if (g_paperdollHDReady) {
+            LOG_INFO("P7_Q3M ready: CHFF1INV body only; palette captured in native Render scope; UI x2/Nearest/native Bitmap; world filter unchanged");
+          }
         }
         if (g_creatureSpriteCharacterHookEnabled || g_spriteShaderScopePrepared) {
           g_characterRenderHook.create(
@@ -5285,6 +5540,7 @@ void uninstall_all() noexcept {
   native_occlusion_bridge::shutdown();
   area_animation_x4::forget_engine_textures();
   item_icon_x2::forget_engine_textures();
+  paperdoll_q3m::forget_engine_textures();
   creature_sprite_x2::forget_engine_textures();
   am0205e_x4::forget_engine_textures();
   g_areaAnimationTextureApi = {};

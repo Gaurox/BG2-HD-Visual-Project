@@ -233,6 +233,10 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableCreatureSpriteX2Test);
     else if (iequals(key, "EnableCreatureSpritePaletteTrace"))
       assign_bool(cfg.enableCreatureSpritePaletteTrace);
+    else if (iequals(key, "EnablePaperdollUIProbe"))
+      assign_bool(cfg.enablePaperdollUIProbe);
+    else if (iequals(key, "EnablePaperdollQ3mTest"))
+      assign_bool(cfg.enablePaperdollQ3mTest);
     else if (iequals(key, "EnableCreatureSpriteP4Probe"))
       assign_bool(cfg.enableCreatureSpriteP4Probe);
     else if (iequals(key, "CreatureSpriteP4Output"))
@@ -433,6 +437,8 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);
   write_bool(f, "EnableCreatureSpriteX2Test", cfg.enableCreatureSpriteX2Test);
   write_bool(f, "EnableCreatureSpritePaletteTrace", cfg.enableCreatureSpritePaletteTrace);
+  write_bool(f, "EnablePaperdollUIProbe", cfg.enablePaperdollUIProbe);
+  write_bool(f, "EnablePaperdollQ3mTest", cfg.enablePaperdollQ3mTest);
   write_bool(f, "EnableCreatureSpriteP4Probe", cfg.enableCreatureSpriteP4Probe);
   f << "CreatureSpriteP4Output = " << cfg.creatureSpriteP4Output.string() << "\n";
   write_bool(f, "EnableCreatureSpriteLinearFiltering", cfg.enableCreatureSpriteLinearFiltering);

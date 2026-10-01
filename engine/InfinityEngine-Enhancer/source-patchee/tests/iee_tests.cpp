@@ -906,14 +906,18 @@ void test_config_parsing() {
     out << "MapPagePrewarmBudgetMs = 6.5\n";
     out << "MapPagePrewarmMaxPages = 80\n";
     out << "MapPagePrewarmDelayFrames = 45\n";
-    out << "[Shaders]\nEnableCreatureSpritePaletteTrace = true\n";
+    out << "[Shaders]\nEnableCreatureSpritePaletteTrace = true\nEnablePaperdollUIProbe = true\nEnablePaperdollQ3mTest = true\n";
   }
 
   iee::core::EngineConfig cfg{};
+  expect_true(!cfg.enablePaperdollUIProbe, "Paperdoll UI probe defaults off");
+  expect_true(!cfg.enablePaperdollQ3mTest, "Paperdoll Q3m test defaults off");
   expect_true(iee::core::ConfigManager::load(tempPath, cfg),
               "ConfigManager::load should parse a valid INI");
   expect_true(cfg.enableVerboseLogging, "Verbose logging flag should parse");
   expect_true(cfg.enableCreatureSpritePaletteTrace, "P3 palette trace should parse explicitly");
+  expect_true(cfg.enablePaperdollUIProbe, "Paperdoll UI probe should parse explicitly");
+  expect_true(cfg.enablePaperdollQ3mTest, "Paperdoll Q3m test should parse explicitly");
   expect_true(!cfg.enableAnisotropicFiltering, "Rendering bool should parse");
   expect_eq(cfg.maxAnisotropy, 4.0f, "Floating-point values should parse");
   expect_eq(cfg.lodBias, -0.5f, "Negative float values should parse");

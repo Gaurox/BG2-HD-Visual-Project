@@ -1,0 +1,14 @@
+{
+  "schema": "bg2-p7-ui-probe-installer-verification-v1",
+  "status": "pass",
+  "fixture_game": "G:\\AI\\BG2_Upscale\\sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p7-ui-probe-20261002-v2\\work\\fixtures\\146c9e7945f741e4b768d0c8808ec603\\game",
+  "verified_at_utc": "2026-10-01T23:11:48.4778241Z",
+  "install_verify_restore": true,
+  "exact_baseline_restored": true,
+  "restore_rejects_user_drift": true,
+  "install_rejects_baseline_drift": true,
+  "real_game_modified": false,
+  "manifest_sha256": "B0F2FF41DC627989D5FE3A190C4CAD0108F4FF80E94F8CAAE3BF989CCBB0F819",
+  "installer_sha256": "09609CF681E67E8582466D432962CA5A0EA215B9ACABBD1367CA1B8B2557038C",
+  "runtime_tests": "ctest -C Release -R ^iee_tests$: 1/1 passed"
+}

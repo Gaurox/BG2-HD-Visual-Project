@@ -22,6 +22,7 @@
 #include "frame_hook.h"
 #include "hooks.h"
 #include "item_icon_x2.h"
+#include "paperdoll_q3m.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
 #include "iee/core/sprite_p4_probe.h"
@@ -156,6 +157,10 @@ static DWORD WINAPI InitThread(LPVOID) {
     if (cfg.enableItemIconX2) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)item_icon_x2::prepare(moduleDir / "iee-assets" / "icons");
+    }
+    if (cfg.enablePaperdollQ3mTest) {
+      const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
+      (void)paperdoll_q3m::prepare(moduleDir / "iee-assets" / "paperdolls");
     }
     if (cfg.enableAreaAnimationX4) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
@@ -309,6 +314,7 @@ static void CleanupHooks() noexcept {
     effect_animation_x4::release();
     creature_sprite_x2::release();
     item_icon_x2::release();
+    paperdoll_q3m::release();
     am0205e_x4::release();
     am0700a_x4::release();
     am3000a_x4::release();

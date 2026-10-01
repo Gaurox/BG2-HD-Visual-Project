@@ -1,0 +1,203 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-sprite-p7-chff1inv-q3m-20261002-v1",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "build/sprite-p7-chff1inv-q3m-20261002-v1/cmake/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "5686D1FC9F3AB65F2C73CFCBA52DEC1942460D1BE5A8903017C5322A7AE021B1",
+    "bytes": 1997824
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_versions": [
+        3,
+        5,
+        6
+      ],
+      "mixed_v5_v6_components": true,
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1",
+        "q3m-u8-per-plane-v1"
+      ],
+      "q3m_x2_decoded_shard_limit_bytes": 268435456,
+      "q3m_x4_decoded_shard_limit_bytes": 1073741824
+    },
+    "character_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "scales": [
+        2,
+        4
+      ],
+      "owner": 1,
+      "mode": "wait-for-validated-metadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "metadata_budget_bytes": 134217728
+    },
+    "sprite_p4_probe": {
+      "target_animation": "0x6110",
+      "opt_in": "EnableCreatureSpriteP4Probe",
+      "output_key": "CreatureSpriteP4Output",
+      "period_seconds": 1,
+      "maximum_rows": 7200,
+      "storage": "unique-session-csv",
+      "viewport": "first-owned-0x6110-HD-draw-per-frame",
+      "measurements": [
+        "physical-per-world-zoom",
+        "frame-cadence",
+        "CPU-composite",
+        "CPU-pixels-cache",
+        "CPU-upload-setup",
+        "successful-RGBA-upload-bytes",
+        "process-working-set",
+        "process-private-commit",
+        "CPU-native-mask-setup",
+        "effective-filter-mode",
+        "maximum-mip-level",
+        "texture-provenance",
+        "animation-id"
+      ],
+      "controls_input": false,
+      "mutates_render_state": false
+    },
+    "sprite_minification": {
+      "modes": [
+        "Box",
+        "Mipmaps"
+      ],
+      "default": "Nearest",
+      "animation_scope_key": "CreatureSpriteFilterAnimation",
+      "box_maximum_texels_per_axis": 16,
+      "box_magnification": "NEAREST",
+      "mips_min": "LINEAR_MIPMAP_LINEAR",
+      "mips_mag": "NEAREST",
+      "mips_storage": "premultiplied-RGBA8",
+      "mips_regeneration": "every-base-upload-and-masked-recomposition",
+      "shader_contract": "IEE_CREATURE_MINIFICATION_CONTRACT_V1",
+      "fail_closed": [
+        "missing-shader-contract",
+        "unresolved-uniforms",
+        "incomplete-mip-chain",
+        "unknown-build"
+      ],
+      "geometry": "native-x1",
+      "box_scales": [
+        2,
+        4
+      ],
+      "mips_scales": [
+        4
+      ]
+    },
+    "paperdoll_ui_probe": {
+      "opt_in": "EnablePaperdollUIProbe",
+      "resref": "CHFF1INV",
+      "storage": "P7_UI_* records in InfinityEngine-Enhancer.log",
+      "palette_limit": 64,
+      "draw_limit": 128,
+      "controls_input": false,
+      "writes_render_state": false,
+      "hd_paperdoll": false,
+      "requires": "validated creature palette hook and CVidCell owner/common signatures; D7 styling stays disabled",
+      "measurements": [
+        "realized 256-entry native palette",
+        "native CVidPalette source/ranges/type",
+        "sequence/cycle-slot",
+        "pixel encoding",
+        "palette/draw caller RVA",
+        "draw position",
+        "logical backing size",
+        "source/render/clip rectangles",
+        "native shader tone"
+      ]
+    },
+    "paperdoll_q3m_test": {
+      "opt_in": "EnablePaperdollQ3mTest",
+      "resref": "CHFF1INV",
+      "scale": 2,
+      "parts": 2,
+      "profile": 1,
+      "decode_rule": 1,
+      "ui_sampler": "Nearest",
+      "ui_shader": "native Bitmap (6)",
+      "dynamic_native_palette": true,
+      "native_geometry": true,
+      "queued_palette_updates": "native DrawFlushGl before replacing either of two backings",
+      "flags": "0x4005",
+      "cycle": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "world_filter": "Box",
+      "controls_pc_input": false,
+      "ingame_qa": false
+    }
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "target": "override/fpDraw.glsl",
+      "sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1",
+      "bytes": 18005,
+      "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "target": "override/fpSprite.glsl",
+      "sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32",
+      "bytes": 18939,
+      "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "target": "override/fpSELECT.glsl",
+      "sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391",
+      "bytes": 19245,
+      "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+    }
+  ],
+  "baseline": {
+    "runtime_id": "iee-sprite-p7-ui-probe-20261002-v2",
+    "scale": 2,
+    "filter": "Box",
+    "dll": "A70996570C423A92500F4775C68C64F0F8ACD4085F951FFFBADB1E9F551E6B2A",
+    "ini": "92ECAF2392C28EAD5C35384827B4525524B88DBF84ECC59B8B14D23ABFB4FB28",
+    "pack": null,
+    "catalog": "5F0596DDAC14ECDBFD1915978736C160DF1F7F465156472FD410A8705CDC6044"
+  },
+  "ini": {
+    "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/work/InfinityEngine-Enhancer.ini",
+    "sha256": "B037C32768A6638D99CDD815EFBF86F1EDF8AFD2DD07BD3058577F379A9C556A"
+  },
+  "source_provenance": {
+    "src/iee/hooks.cpp": "C7C6B8BBF49B80F2D9D1C46EC1B846F3246408298533C7D39C403055C279AFB3",
+    "src/iee/paperdoll_q3m.cpp": "8CBA9A5A82350784379E12471DBD8416CD3DCB863A322F078B35D44CE579E184",
+    "src/iee/paperdoll_q3m.h": "ABEB86256A5761660CE23F7E04F7569FE50A93B5F6772CE8B7D380004F19B420",
+    "src/iee/core/config.cpp": "D5705457C2D101431E813ABF27ECBA1A5BE885769144AE1F6125435F6C4FA53E",
+    "src/iee/core/config.h": "573C392A8E9EB5CCCB7CD3555997D28307F886FA344C5F2646E7DA226BE26934",
+    "src/iee/dll_main.cpp": "5BBC1788625363120AE1FCE1B725C5007C429CD2204D5D1087AC002F5254BD4F",
+    "src/iee/game/build_manifest.cpp": "043669E5EF5B3CAA2AE59542D034D2279D39B3581FDA6BD48157D5C765201A6A",
+    "src/iee/game/game_types.h": "28A3842D38D46DE5D9C4BAE103C5D08E65AF33F425C02BD42279A5E724B20192"
+  },
+  "paperdoll_pack": {
+    "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/work/CHFF1INV-Q3m-X2.registry",
+    "sha256": "1f0d2e5e19aa04df2a2604e1f7234a4d4c6667ae6411e3687f929991a9fa4c33",
+    "bytes": 74028,
+    "target": "iee-assets/paperdolls/CHFF1INV-Q3m-X2.registry",
+    "source_bam_sha256": "7362904ce303b28073f2ecb5eb4384ac0e0f715b84e0f45f715898c14da86d8a"
+  }
+}

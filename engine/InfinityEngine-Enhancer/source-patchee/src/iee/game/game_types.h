@@ -11,6 +11,7 @@ namespace iee::game {
         None = 0,
         Grey = 1,
         Sprite = 5,
+        Bitmap = 6,  // Native CHFF1INV inventory path (P7 UI probe).
         Select = 7,
         Seam = 8,
     };
