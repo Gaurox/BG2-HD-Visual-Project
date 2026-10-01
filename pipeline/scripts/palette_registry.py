@@ -28,6 +28,12 @@ FRAME = struct.Struct("<HHhhBBBBI256H32sIB3x")
 assert FRAME.size == FRAME_BYTES
 
 
+def maximum_decoded_shard_bytes(scale):
+    # Full 0x6110 equipment can use the complete legacy I budget and a matching
+    # F plane. File size, I budget, per-frame limit and resident caches stay fixed.
+    return registry.maximum_registry_bytes(scale) * (2 if scale == 2 else 1)
+
+
 class _Codec:
     """Raw files remain portable; acquire the Windows codec only when used."""
     def __init__(self, compress):
@@ -159,7 +165,9 @@ def inspect(path: Path, *, include_resource_records=False, include_frames=False)
             resources.append(ref)
             totals["index_bytes"] += resource_i
             totals["fraction_bytes"] += resource_f
-            _require(totals["index_bytes"]+totals["fraction_bytes"] <= registry.maximum_registry_bytes(scale),"decoded shard exceeds limit")
+            _require(totals["index_bytes"] <= registry.maximum_registry_bytes(scale) and
+                     totals["index_bytes"]+totals["fraction_bytes"] <= maximum_decoded_shard_bytes(scale),
+                     "decoded shard exceeds limit")
             records.append(dict(resref=ref,path=path,offset=offset,bytes=stream.tell()-offset,
                                 logical_bytes=logical,storage_version=VERSION,scale=scale,
                                 frame_count=nf,index_bytes=resource_i,fraction_bytes=resource_f,

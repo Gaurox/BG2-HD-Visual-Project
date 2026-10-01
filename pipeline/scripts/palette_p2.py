@@ -131,8 +131,27 @@ def fixtures(output):
     eviction=dict(resref="TEST",source_sha256="12"*32,frames=[large]*5,cycles=[[0,1,2,3,4],[]])
     ei=v6.write(root/"eviction.registry",4,[eviction])
     _unchecked_catalog(root/"eviction",(root/"eviction.registry").read_bytes(),ei)
+    # P3 complete x2: 80MiB I + 80MiB F, same bounded 32MiB frames/cache.
+    x2=bytearray((root/"eviction.registry").read_bytes());struct.pack_into("<I",x2,12,2)
+    cursor=80
+    for _ in range(5):
+        struct.pack_into("<HH",x2,cursor,2048,2048)
+        cursor+=568+struct.unpack_from("<I",x2,cursor+12)[0]+struct.unpack_from("<I",x2,cursor+560)[0]
+    (root/"eviction-x2.registry").write_bytes(x2)
+    x2info=v6.inspect(root/"eviction-x2.registry")
+    _unchecked_catalog(root/"eviction-x2",bytes(x2),x2info)
+    # I-only 144MiB remains below the new 256MiB combined bound: this must
+    # independently fail the unchanged 128MiB I bound, not an I+F overrun.
+    frame_bytes=568+struct.unpack_from("<I",x2,92)[0]
+    index_only=bytearray(x2[80:80+frame_bytes]);index_only[10]=0
+    index_only[528:560]=bytes([1<<4])+bytes(31)
+    struct.pack_into("<I",index_only,560,0);index_only[564]=0
+    over=bytearray(x2[:80]);struct.pack_into("<I",over,72,9)
+    over.extend(index_only*9);over.extend(x2[cursor:])
+    _unchecked_catalog(root/"x2-index-budget",bytes(over),{**x2info,"frame_count":9,"index_bytes":9*4096*4096})
     del large_i,large_f,large,eviction
-    cases=[(name,"ok",0x6110) for name in (*valid,"legacy-v5","partial","partial-zero","eviction")]
+    cases=[(name,"ok",0x6110) for name in (*valid,"legacy-v5","partial","partial-zero","eviction","eviction-x2")]
+    cases.append(("x2-index-budget","bad",0x6110))
     raw,info=valid["raw"]
     mutations=[("profile",24,struct.pack("<I",2)),("rule",28,struct.pack("<I",2)),
                ("version",8,struct.pack("<I",7)),("scale",12,struct.pack("<I",3)),

@@ -153,6 +153,21 @@ class ThinCatalogInstallTests(unittest.TestCase):
         self.enable_mixed_catalog(runtime_capable=True)
         self.run_ps(INSTALL,"-JobFile",self.job,"-RuntimeManifest",self.runtime_manifest,"-VerifyOnly")
 
+    def test_complete_q3m_x2_requires_explicit_decoded_shard_budget(self):
+        self.enable_mixed_catalog(runtime_capable=True)
+        path=self.build/"build-manifest.json"
+        build=json.loads(path.read_text());build["required_q3m_x2_decoded_shard_bytes"]=160*1024*1024
+        write_json(path,build)
+        before=sha256(self.game_payload/"CreatureSprites-XN.catalog")
+        result=self.run_ps(INSTALL,"-JobFile",self.job,"-RuntimeManifest",self.runtime_manifest,"-VerifyOnly",check=False)
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn("I/F de ce catalogue Q3m x2",result.stderr)
+        self.assertEqual(sha256(self.game_payload/"CreatureSprites-XN.catalog"),before)
+        runtime=json.loads(self.runtime_manifest.read_text())
+        runtime["capabilities"]["creature_sprite_xn_catalog"]["q3m_x2_decoded_shard_limit_bytes"]=256*1024*1024
+        write_json(self.runtime_manifest,runtime)
+        self.run_ps(INSTALL,"-JobFile",self.job,"-RuntimeManifest",self.runtime_manifest,"-VerifyOnly")
+
     def test_p3_profiles_and_original_files_restore_exactly(self):
         self.enable_mixed_catalog(runtime_capable=True)
         runtime=json.loads(self.runtime_manifest.read_text());write_json(self.run/"runtime.json",runtime)

@@ -1,0 +1,44 @@
+{
+  "schema": "bg2-upscale-character-palette-catalog-working-set-verification-v1",
+  "status": "passed-offline",
+  "resources": 656,
+  "all_BAM_single_session": true,
+  "oldest_BAM_reloaded_after_eviction": true,
+  "metadata_budget_bytes": 134217728,
+  "I_F_budget_bytes": 134217728,
+  "tests": [
+    {
+      "oracle": "palette-q3m-p3-20261001-v3-catalog-working-set.bin",
+      "oracle_sha256": "4e706afa90914ea72c11fd433299acf44b1c1e67852d33b8d3d72637c82c9b5a",
+      "native_test": {
+        "pack_frames": 656,
+        "palettes": 18,
+        "decoded_pixels": 66803184,
+        "peak_resident_I_F_bytes": 7286092,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 11422
+      },
+      "first_BAM_metadata_loads": 1,
+      "log": "captures/catalog-working-set-native.log",
+      "log_sha256": "4d0d1643e08b67429f44fdd602eba10d5ea5a17b7b28893d8c736e35ee5c7e4c"
+    },
+    {
+      "oracle": "palette-q3m-p3-20261001-v3-catalog-working-set-reload.bin",
+      "oracle_sha256": "bc880bb83fca01a9c6405e82cac411f9320be84f4b43af2772d2cdea25d833be",
+      "native_test": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 66925656,
+        "peak_resident_I_F_bytes": 7299700,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 11474
+      },
+      "first_BAM_metadata_loads": 2,
+      "log": "captures/catalog-working-set-reload-native.log",
+      "log_sha256": "3280ef3c63a1efc0ca923c988e63bbc2ddd56c6974fc03246463251217b75b63"
+    }
+  ],
+  "runtime_dll_sha256": "cb99a98a508172c2d7cac939b2aef303d9b17ee11f1c1261d2859eefa6ad053f",
+  "native_test_executable_sha256": "33e12ae4252a6852646d5ebc802cf79fec40da4f56acd40cd0c09cfea30f1197",
+  "visual_qa_accepted": false
+}

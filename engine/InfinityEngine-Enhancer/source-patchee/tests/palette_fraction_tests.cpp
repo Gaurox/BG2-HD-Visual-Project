@@ -239,7 +239,7 @@ void test_mixed_catalog(const fs::path& root) {
   cs::release();
 }
 
-void inspect_pack(const fs::path& directory,const fs::path& oracle) {
+void inspect_pack(const fs::path& directory,const fs::path& oracle,bool complete=false) {
   const auto started=std::chrono::steady_clock::now();
   std::uint64_t peakResident=0,peakMetadata=0;
   std::ifstream input(oracle,std::ios::binary);
@@ -276,7 +276,8 @@ void inspect_pack(const fs::path& directory,const fs::path& oracle) {
       require(resolve(0x6110,ref(names[n]),0,0,layers[n].frame),"preserved real equipment resolves");
       layers[n].palette.encoding={0x80e1,0x8367};
       std::copy_n(colors.data(),256,layers[n].palette.colors.data());
-      require(cs::frame_uses_q3m_profile(layers[n].frame)==(n==0),"real scene uses V6 body and V5 equipment");
+      require(cs::frame_uses_q3m_profile(layers[n].frame)==(complete || n==0),
+              "real scene uses the declared V6 body/equipment coverage");
     }
     cs::CompositeBounds bounds{};std::vector<std::uint32_t> pixels;
     require(cs::reconstruct_composite_pixels(layers.data(),4,pixels,bounds),"real four-layer mixed composition");
@@ -293,8 +294,8 @@ void inspect_pack(const fs::path& directory,const fs::path& oracle) {
 
 int main(int argc,char** argv) {
   try {
-    if(argc==4 && std::string(argv[1])=="--pack") {
-      inspect_pack(fs::path(argv[2]),fs::path(argv[3]));return 0;
+    if(argc==4 && (std::string(argv[1])=="--pack" || std::string(argv[1])=="--pack-complete")) {
+      inspect_pack(fs::path(argv[2]),fs::path(argv[3]),std::string(argv[1])=="--pack-complete");return 0;
     }
     require(argc==2,"usage: palette_fraction_tests fixtures-base OR --pack assets oracle");
     fs::path root(argv[1]);
@@ -314,10 +315,10 @@ int main(int argc,char** argv) {
         ++accepted;
         if(name=="partial") test_cache(handle);
         else if(name=="partial-zero") test_zero_cache(handle);
-        else if(name=="eviction") test_eviction(handle);
+        else if(name=="eviction" || name=="eviction-x2") test_eviction(handle);
         else compare_golden(golden,handle,name=="raw" || name=="compressed");
         cs::FrameHandle repeated{};
-        if(name!="eviction") require(resolve(0x6110,ref("TEST"),0,1,repeated) && repeated==handle,"repeated slot identity");
+        if(name!="eviction" && name!="eviction-x2") require(resolve(0x6110,ref("TEST"),0,1,repeated) && repeated==handle,"repeated slot identity");
         require(!cs::resolve_frame(0x6110,ref("TEST"),1,0,repeated),"empty native cycle");
       } else {
         ++rejected;
@@ -327,7 +328,7 @@ int main(int argc,char** argv) {
       cs::release();
       require(!cs::ensure_frame_payload_available(handle),"released handles must be invalid");
     }
-    require(accepted==8 && rejected==35,"case coverage count");
+    require(accepted==9 && rejected==36,"case coverage count");
     test_mixed_catalog(root);
     std::cout<<"{\"accepted\":"<<accepted<<",\"rejected\":"<<rejected<<",\"decoded_pixels\":"<<decoded
              <<",\"neutral_reference_decodings\":32832,\"cache_pulses\":16,\"reset\":true,\"eviction_budget_bytes\":134217728}\n";

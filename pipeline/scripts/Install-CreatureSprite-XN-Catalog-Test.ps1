@@ -163,6 +163,11 @@ if (@($capability.catalog_versions) -notcontains [int]$build.registry_catalog_ve
     ($requiredVersions.Count -gt 1 -and -not [bool]$capability.mixed_v5_v6_components)) {
     throw 'Le runtime stable ne supporte pas ce catalogue.'
 }
+if ([int64]$build.required_q3m_x2_decoded_shard_bytes -gt 128MB -and
+    [int64]$capability.q3m_x2_decoded_shard_limit_bytes -lt
+        [int64]$build.required_q3m_x2_decoded_shard_bytes) {
+    throw 'Le runtime ne supporte pas la taille cumulée I/F de ce catalogue Q3m x2.'
+}
 
 $catalogTarget = Resolve-ChildPath $game ([string]$build.registry_catalog)
 $shards = [Collections.Generic.List[object]]::new()

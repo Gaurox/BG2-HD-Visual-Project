@@ -77,7 +77,8 @@ Ordre/copies de couches et bordure existants conservés, sans nouveau mélange a
 ## Rejet et digests
 
 Bornes existantes ressources/frames/cycles/slots, fichiers, dimensions, arithmetic et
-lookups ; N*(1+Fprésent) ≤128 Mio/frame ; somme I+F ≤128 Mio(x2)/512 Mio(x4)/shard.
+lookups ; N*(1+Fprésent) ≤128 Mio/frame ; contrat P2 initial : somme I+F
+≤128 Mio(x2)/512 Mio(x4)/shard. Extension x2 complète ci-dessous.
 Décompression exactement N ; flags/codec/IDs inconnus, offsets représentants, F>7,
 masques inexacts, troncatures, données restantes et corruption XPRESS rejetés.
 Prévalidation temporaire I/F avant publication des métadonnées V6 ; recharge lazy vérifiée.
@@ -154,3 +155,25 @@ Provenance P2 : commandes, toolchain, empreintes sources, DLL, catalogues et ora
   `--cpu-only` reste une preuve CPU explicite, sans QA visuelle ni GPU readback.
 - Essai corrigé : `palette-q3m-p3-20261001-v2`, Q0/Q3m dérivés du même parent.
   Profils x1 fpSprite/fpSELECT désactivés temporairement ; restauration INI intégrale.
+
+## Extension P3 — couverture intégrale 0x6110, 2026-10-01
+
+- `palette_complete.py` : 656 BAM, toutes les frames/cycles ; six palettes P1,
+  Q3m K6 x2, fixed86 FP16 q32, sans tramage/B. Reprise uniquement d'un run de travail
+  non scellé avec recette identique ; les runs historiques restent immuables.
+- `palette_p3_catalog.derive` accepte plusieurs feuilles V6 ; doublons resref rejetés.
+  Un composant homogène par BAM ; composants parents partagés conservés.
+- Deux grandes animations d'armes dépassent le budget cumulé initial avec F.
+  Nouvelle borne **I+F décodés cumulés ≤256 Mio/shard x2**, I seul ≤128 Mio.
+  Fichier physique ≤128 Mio, frame I+F ≤128 Mio, cache résident I/F ≤128 Mio : inchangés.
+  x4 conserve 512 Mio cumulés ; aucun changement d'octets/profil/version V6.
+- Manifestes : pack `required_q3m_x2_decoded_shard_bytes` = maximum réel I+F des
+  feuilles ; runtime `q3m_x2_decoded_shard_limit_bytes=268435456`. Si besoin >128 Mio,
+  l'installateur exige explicitement la capacité ; les petits packs restent compatibles.
+- Fixture `eviction-x2` : cinq frames de 32 Mio I+F, cumul 160 Mio ; éviction/recharge
+  sous 128 Mio. `x2-index-budget` : I seul 144 Mio, F absent, cumul <256 Mio ;
+  rejet indépendant par la borne I de 128 Mio, catalogue authentifié.
+- `iee_palette_fraction_tests --pack-complete <assets> <oracle>` : toutes les frames,
+  18 palettes, oracle scalaire distinct du décodeur Python ; quatre couches réelles V6,
+  BAM partagé de `0x6115` toujours V5. Oracles bornés à 60 000 frames/fichier.
+- Essai `palette-q3m-p3-20261001-v3-full-6110` ; aucune QA ingame implicite.

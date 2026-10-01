@@ -1,0 +1,124 @@
+{
+  "schema": "bg2-upscale-character-palette-complete-verification-v1",
+  "status": "passed-offline-ready-for-manual-game",
+  "animation_id": "0x6110",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "boundary_mixing": false,
+  "dithering": false,
+  "resource_count": 656,
+  "frames": 178360,
+  "p1_samples_byte_identical": 144,
+  "python_tests_passed": 78,
+  "ctest_suites_passed": 2,
+  "native_valid_fixtures": 9,
+  "native_invalid_fixtures": 36,
+  "native_pack_tests": [
+    {
+      "oracle": "decoder-oracle-00.bin",
+      "oracle_sha256": "dd32a39a8cbf6b735ea11fcf129d2bec991a5dce41a834acfb830db6ce5d275e",
+      "native_test": {
+        "pack_frames": 60000,
+        "palettes": 18,
+        "decoded_pixels": 1988893656,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 46415400,
+        "verification_elapsed_ms": 90253
+      },
+      "log": "captures/decoder-oracle-00-native.log",
+      "log_sha256": "2611074c69d3e7b27816dc88dffe58205c9840a1c86c10003ceebe3cf81d4c23"
+    },
+    {
+      "oracle": "decoder-oracle-01.bin",
+      "oracle_sha256": "dc63aa00a2c351a0813fb474012969c2a497a05edde662a9e80676aed42d3ba6",
+      "native_test": {
+        "pack_frames": 60000,
+        "palettes": 18,
+        "decoded_pixels": 10182834936,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 46207920,
+        "verification_elapsed_ms": 58858
+      },
+      "log": "captures/decoder-oracle-01-native.log",
+      "log_sha256": "3c4d2cfa99f7acdecdbbf04000f8fe26243965fbcb673d7044da8dc31b382407"
+    },
+    {
+      "oracle": "decoder-oracle-02.bin",
+      "oracle_sha256": "bd5909445edee98e75c39b0dcd1e757d2d20648725168abaffce6171c39ad21a",
+      "native_test": {
+        "pack_frames": 58360,
+        "palettes": 18,
+        "decoded_pixels": 4885063344,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 45086104,
+        "verification_elapsed_ms": 59235
+      },
+      "log": "captures/decoder-oracle-02-native.log",
+      "log_sha256": "be94f7d0b0752c53e06a0b14d4e1b21c78d21e8dd5f6a40b1ea6dc75ed119b94"
+    }
+  ],
+  "reference_decodings": 3210480,
+  "decoded_pixel_comparisons": 17056791936,
+  "runtime_dll_sha256": "cb99a98a508172c2d7cac939b2aef303d9b17ee11f1c1261d2859eefa6ad053f",
+  "native_test_executable_sha256": "33e12ae4252a6852646d5ebc802cf79fec40da4f56acd40cd0c09cfea30f1197",
+  "catalog_sha256": "82668f7a0e5664b07ad53b47dfd925b86056d071ef5ea2fb2ee4b431dbdbcfd6",
+  "catalog": {
+    "animations": 195,
+    "components": 1464,
+    "shards": 1484,
+    "directory_entries": 52984
+  },
+  "native_read_view": {
+    "path": "build/p3-6110-v3-native/creature-sprites",
+    "same_underlying_files": true,
+    "reason": "C++ CRT prefix stream requires a short Windows path; original shard paths are 267 characters"
+  },
+  "required_q3m_x2_decoded_shard_bytes": 186846080,
+  "resident_I_F_budget_bytes": 134217728,
+  "unchanged_animations": 194,
+  "parent_shards_reused": 828,
+  "coverage_sha256": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+  "recipe_sha256": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+  "scope_sha256": "f00b3fb8fe902745991e500c19a7a13785c0474109d81fcc1284b87b6bc4ee89",
+  "preservation_sha256": "1fefb64960558995814c1518df91d9e42339fe51ab4ac160b0a809d4537c6271",
+  "index_budget_control_sha256": "73b7daba2c27407cafc181e86e26cf903f09257899a60e1152cd8e96f9f7a540",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "39f61fd9d3a3f9318c3a0820ac39075d6408de4625f34005ee37e4681be974b0",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_fraction.h": "69044a08c85d5af71ca977abb150dd8f7f40af057396b10131359d519e314a43",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_fraction_tests.cpp": "564a5bc5ba02400e79960e3278da8987be9881cb42874f2b1bbfabd3e68b6750",
+    "pipeline/scripts/palette_complete.py": "4260f434ae2c1c14247f8e4070657477c7873ba276fae0692361375d870421e7",
+    "pipeline/scripts/palette_registry.py": "92c0faa06ba16b9015898711786dff681755848bd2de55179ceec188f32aca49",
+    "pipeline/scripts/palette_p2.py": "5f87984465025731867d4e0fecfa766d5d600e90affcd8b7ce1f35cf0d623d22",
+    "pipeline/scripts/palette_p3_catalog.py": "b4513da1b9392647f3f5a896ef2d9d61b5c31eb550fecd9e8fd2f63e0d380ca3",
+    "pipeline/scripts/palette_frac_encode.py": "578f69bbd0fe422e3f26acc247d10955a12f4e07165e42d72cf8c469382bce7b",
+    "pipeline/scripts/Start-Palette-Q3m-P3.ps1": "84f28fdb08f8cb8137b787bed1e825409870153117bea4160709827e7e43d604",
+    "pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1": "14001eebf4414ae3b63e9f11d8c702f21d633311f4ea226807f04f16bdd2be7f",
+    "pipeline/tests/test_palette_complete.py": "794a453edca8f38fc4614c5ef77a0b25bb920607e61dc639f9d87e345931db2d",
+    "pipeline/tests/test_palette_p3.py": "9d81e589a796af2dad7cb56682c297a63284888e6f26d6cd3bc9e3403de867c8",
+    "pipeline/tests/test_creature_sprite_xn_catalog_install.py": "1cdca46e2fdb047d5bafc135e9e0e7dfe6a91669fb62a3c8c6d8cfb52e4dc927",
+    "pipeline/PALETTE_Q3M_V6.md": "339186d6b5ffd4af5a83399a3a5b8804881aa5b8100f4d662de4b3b1c07d9b35",
+    "sprite/index/sprite_families.csv": "f1fd0f776214393c70c155d830acfac17ab14b907f832ef70fa4990c6ea33eee",
+    "sprite/index/sprite_items.csv": "11e4ee1cafaa3092d8ed8705977d30149ee9dc2fc94320777fd74613ceabf0ac",
+    "sprite/index/extractions.csv": "cb1316ac12880c3afd0709b693473830b17df434be5b98dbc583c51c45b51f79"
+  },
+  "evidence_sha256": {
+    "captures/python-palette-tests.log": "cac42b8a6f745eb2713ed5ab0306ad2f4c3fada77a8cc5d2022ceaecfce54747",
+    "captures/python-catalog-tests.log": "44392c5c808f1cca0a3c3241d7a7ede1960f247e6eec8f4dc4966335d3677090",
+    "captures/ctest.log": "c4e9b69bf8a2fd204e3bf5cab7100b3b179464e225f45bec6dc79051a04c2dd1",
+    "captures/build.log": "646ab50eb64f017f14459eed4a41787293ff4ecebed602fa0d71c4d06fc4905e",
+    "captures/fixture-build.log": "4d3c4344d199cfaae7e69b8318e2693d298dc848402bfacb08bf50b920af773b",
+    "captures/generation-initial.log": "77438bbda7655c5bc33a3ea3bab75fdab7c42ded09d8ed599291ef2d01c5c96a",
+    "captures/generation-resume.log": "fcf5c3e5b6b63541e4b6b06a61c79fd8dcbd86598e5be0b19f5376b4fa50eb5f",
+    "captures/ctest-detail.log": "71d89e7c282761555a03ea592c1683ffbf860430e746b4ee93df9bd7cfc133e0",
+    "captures/native-fixtures.json": "8ca62bb5227ebaf0b4f180338a31686f5f47e3a2a854f142634e9d12d07a9a75"
+  },
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "limitations": [
+    "Synthetic oracle alpha; actual native palette/effects require manual P3 evidence.",
+    "CPU decode/composition/cache tests; no new GL readback or visual acceptance.",
+    "REF P1 regression unchanged: +6.10% x2 / +11.59% x4.",
+    "WINGS01B/YW has no source BAM for 0x6110; inherited absence retained."
+  ]
+}

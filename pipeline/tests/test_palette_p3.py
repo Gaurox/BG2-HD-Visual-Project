@@ -71,6 +71,22 @@ class PaletteP3Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"geometry/cycles"):
             derive(self.catalog,self.manifest,changed,self.destination)
 
+    def test_complete_replacement_accepts_multiple_bounded_leaves(self):
+        r=resource(fraction=0);r["resref"]="KEEP"
+        other=self.root/"replacement-keep";v6.write(other,2,[r],compress=False)
+        _,proof=derive(self.catalog,self.manifest,[self.replacement,other],self.destination)
+        checked=registry.inspect_registry_catalog(self.destination/registry.XN_REGISTRY_CATALOG_FILENAME)
+        self.assertEqual(checked["animation_resources"]["0x6110"],["TEST","KEEP"])
+        self.assertEqual(checked["animation_resources"]["0x6115"],["TEST","KEEP"])
+        self.assertEqual(proof["replaced_resrefs"],["KEEP","TEST"])
+        self.assertEqual(proof["residual_records"],[])
+        self.assertEqual(proof["new_shards"],2)
+
+    def test_duplicate_replacement_leaves_rejected_before_output(self):
+        with self.assertRaisesRegex(ValueError,"Duplicate replacement"):
+            derive(self.catalog,self.manifest,[self.replacement,self.replacement],self.destination)
+        self.assertFalse(self.destination.exists())
+
     def test_capture_requires_correlated_hd_substitution_and_routes_by_catalog(self):
         derive(self.catalog,self.manifest,self.replacement,self.destination)
         colors=[0]*256;colors[4]=0x4d000000;colors[5]=0xff505050

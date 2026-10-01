@@ -1,4 +1,4 @@
-"""Derive a complete P3 catalog, preserving parent records outside five BAMs."""
+"""Derive a scoped P3 catalog, preserving parent records outside replacements."""
 from __future__ import annotations
 
 import copy
@@ -64,10 +64,15 @@ def derive(parent_catalog, parent_manifest, replacement_leaf, destination, *, an
     parent = registry.read_sealed_catalog_index(parent_catalog, parent_manifest["registry_catalog_sha256"])
     if parent["scale"] != 2 or parent_manifest["storage"]["shard_registry_version"] != 5:
         raise ValueError("P3 parent must be the complete V5 x2 catalog")
-    replacement = v6.inspect(replacement_leaf, include_resource_records=True)
-    if replacement["scale"] != 2:
+    leaves = ([Path(replacement_leaf)] if isinstance(replacement_leaf, (str, Path))
+              else [Path(p) for p in replacement_leaf])
+    parts = [(leaf, v6.inspect(leaf, include_resource_records=True)) for leaf in leaves]
+    if not parts or any(info["scale"] != 2 for _, info in parts):
         raise ValueError("P3 replacement must be x2")
-    targets = set(replacement["resources"])
+    replacement_records = {r["resref"]: r for _, info in parts for r in info["resource_records"]}
+    if len(replacement_records) != sum(len(info["resources"]) for _, info in parts):
+        raise ValueError("Duplicate replacement resource across V6 leaves")
+    targets = set(replacement_records)
     old_animation = next(a for a in parent["animations"] if a["animation_id"] == animation)
     if old_animation["owner"] != 1:
         raise ValueError("P3 replacement requires Character ownership")
@@ -101,7 +106,6 @@ def derive(parent_catalog, parent_manifest, replacement_leaf, destination, *, an
         return index, [dict(animation_id=animation, resref=ref, component_index=index,
                             shard_index=shard_index, resource_ordinal=n) for n, ref in enumerate(info["resources"])]
 
-    replacement_records = {r["resref"]: r for r in replacement["resource_records"]}
     new_memberships, new_rows, residual_proofs, source_aliases = [], [], [], []
     extra_storage = dict(stored_index_bytes=0, compressed_frame_count=0, raw_frame_count=0)
     for c in affected:
@@ -143,10 +147,11 @@ def derive(parent_catalog, parent_manifest, replacement_leaf, destination, *, an
             residual_proofs.extend(dict(resref=r["resref"], sha256=record_sha(r)) for r in residual)
             for key in extra_storage:
                 extra_storage[key] += info[key]
-    leaf = destination / registry.catalog_shard_filename(replacement["sha256"])
-    os.link(replacement_leaf, leaf)
-    index, rows = append_component(replacement, leaf, registry.catalog_source_component_sha256(2, replacement["resource_records"]))
-    new_memberships.append(index); new_rows.extend(rows)
+    for source_leaf, replacement in parts:
+        leaf = destination / registry.catalog_shard_filename(replacement["sha256"])
+        os.link(source_leaf, leaf)
+        index, rows = append_component(replacement, leaf, registry.catalog_source_component_sha256(2, replacement["resource_records"]))
+        new_memberships.append(index); new_rows.extend(rows)
     animations = copy.deepcopy(parent["animations"])
     selected = next(a for a in animations if a["animation_id"] == animation)
     selected["component_indices"] = sorted([c for c in old_animation["component_indices"] if c not in affected] + new_memberships)
@@ -154,7 +159,8 @@ def derive(parent_catalog, parent_manifest, replacement_leaf, destination, *, an
                  if r["animation_id"] != animation or r["component_index"] not in affected] + new_rows
     storage = dict(shard_registry_version=0, shard_registry_versions=[5, 6],
         frame_storage="mixed-v5-v6-components-v1",
-        **{key: parent_manifest["storage"][key] + extra_storage[key] + replacement[key] for key in extra_storage})
+        **{key: parent_manifest["storage"][key] + extra_storage[key] +
+           sum(info[key] for _, info in parts) for key in extra_storage})
     result = registry.write_registry_catalog_index(destination / registry.XN_REGISTRY_CATALOG_FILENAME,
         2, animations, components, shards, directory, logical, storage)
     sealed = registry.read_sealed_catalog_index(destination / registry.XN_REGISTRY_CATALOG_FILENAME, result["sha256"])
