@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BG2EE · Q3m x2 / x4</title>
+<style>
+:root{color-scheme:dark;--bg:#101317;--panel:#1b2027;--text:#f0f1f3;--muted:#abb4bf;--accent:#ddb86c;--split:44.5%;--zoom:1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+main{width:min(1500px,100%);margin:auto;padding:24px}header{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:16px}
+h1{margin:0;font-size:24px;font-weight:650;letter-spacing:-.6px}.subtitle{margin:3px 0 0;color:var(--muted);font-size:13px}.quality{font-size:12px;text-align:right;color:var(--muted)}
+.stage{width:min(100%,calc(67vh * 16 / 9));aspect-ratio:16/9;margin:auto;position:relative;overflow:hidden;background:#080a0d;border:1px solid #363d47;border-radius:9px;touch-action:none;cursor:ew-resize;isolation:isolate}
+.layer{position:absolute;inset:0;pointer-events:none}.layer video{display:block;width:100%;height:100%;object-fit:contain;transform:scale(var(--zoom));transform-origin:44.5% 49%;background:#080a0d}
+.layer.x4{clip-path:inset(0 0 0 var(--split))}.badge{position:absolute;top:14px;z-index:2;background:#101317d9;border:1px solid #ffffff35;border-radius:5px;padding:5px 10px;font-weight:650;font-size:13px;pointer-events:none}.badge.left{left:14px}.badge.right{right:14px}
+.divider{position:absolute;left:var(--split);top:0;bottom:0;width:2px;background:#f6e5c3;box-shadow:0 0 0 1px #0007;z-index:3;pointer-events:none}
+.handle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:52px;border-radius:20px;background:#101317de;border:2px solid #f6e5c3;display:grid;place-items:center;color:#f6e5c3;font-size:21px;box-shadow:0 2px 12px #0008}
+.below{width:min(100%,calc(67vh * 16 / 9));margin:14px auto 0}.split-row{display:flex;align-items:center;gap:12px}.split-row label{font-size:13px;font-weight:600}.split-row input{flex:1;min-width:80px}.split-row output{font-size:12px;color:var(--muted);width:134px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{accent-color:var(--accent);cursor:pointer}.transport{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;padding:12px;background:var(--panel);border:1px solid #303741;border-radius:8px}
+button,select,input[type=number]{font:inherit;color:var(--text);background:#252c35;border:1px solid #46505e;border-radius:5px;padding:7px 11px}button{cursor:pointer;font-size:13px}button:hover{background:#333d48}button:focus-visible,input:focus-visible,select:focus-visible,.stage:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.45;cursor:wait}.primary{background:#b59454;color:#101317;border-color:#d8b66e;font-weight:700}.primary:hover{background:#d0af6b}.timeline{flex:1;min-width:160px}.clock{font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}.transport select{font-size:13px;padding:7px}
+.view-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}.group{display:flex;align-items:center;gap:7px}.group button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}.hint{color:var(--muted);font-size:12px;margin:12px 0 0}.status{font-size:12px;color:var(--muted);margin:7px 0 0;min-height:18px}
+details{margin-top:13px;font-size:13px;color:var(--muted)}summary{cursor:pointer;width:fit-content}.alignment{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.alignment input{width:100px;font-size:13px}.alignment p{flex-basis:100%;margin:0;font-size:12px}
+.stage:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0;border:none}.stage:fullscreen .layer video{object-fit:contain}
+@media(max-width:700px){main{padding:12px}header{align-items:start}h1{font-size:19px}.quality{display:none}.stage,.below{width:100%}.split-row{gap:7px}.split-row output{width:98px;font-size:11px}.transport{gap:6px;padding:8px}.timeline{order:10;flex-basis:100%}.clock{margin-left:auto}.hint{font-size:11px}}
+</style>
+</head>
+<body>
+<main>
+  <header><div><h1>BG2EE · Q3m x2 / x4</h1><p class="subtitle">Deux rendus, une même scène. Faites glisser la séparation.</p></div><div class="quality">2560 × 1440 · 59,94 images/s<br>Vidéos originales intégrées, sans réencodage</div></header>
+  <div class="stage" id="stage" tabindex="0" aria-label="Comparatif vidéo : faites glisser pour révéler x2 à gauche et x4 à droite">
+    <div class="layer x2"><video id="video2" muted playsinline preload="auto" src="__X2_DATA_URL__"></video></div>
+    <div class="layer x4"><video id="video4" muted playsinline preload="auto" src="__X4_DATA_URL__"></video></div>
+    <span class="badge left" id="badge2">Q3m x2</span><span class="badge right" id="badge4">Q3m x4</span>
+    <div class="divider" id="divider"><div class="handle">↔</div></div>
+  </div>
+  <div class="below">
+    <div class="split-row"><label for="split">x2 / x4</label><input id="split" type="range" min="0" max="100" step="0.1" value="44.5" aria-label="Position du curseur comparatif"><output id="splitValue">x2 45 % · x4 55 %</output></div>
+    <div class="transport">
+      <button id="play" class="primary" disabled>Lecture</button><button id="restart" disabled aria-label="Revenir au début">↺</button>
+      <button id="previous" disabled aria-label="Image précédente">−1 image</button><button id="next" disabled aria-label="Image suivante">+1 image</button>
+      <input id="timeline" class="timeline" type="range" min="0" max="5.38" step="0.0166833333" value="0" disabled aria-label="Position dans les vidéos">
+      <span class="clock" id="clock">0,00 / 5,39 s</span>
+      <select id="speed" aria-label="Vitesse de lecture"><option value="1">Vitesse ×1</option><option value="0.5">Vitesse ×0,5</option><option value="0.25">Vitesse ×0,25</option></select>
+    </div>
+    <div class="view-row">
+      <div class="group"><button id="only2">Tout x2</button><button id="middle">Comparatif</button><button id="only4">Tout x4</button></div>
+      <div class="group"><button id="zoom" aria-pressed="false">Zoom personnage ×3</button><button id="fullscreen">Plein écran</button></div>
+    </div>
+    <p class="hint">Espace : lecture/pause · Flèches ← → : une image · La portion commune tourne en boucle. Son coupé.</p>
+    <p class="status" id="status" role="status">Chargement des vidéos…</p>
+    <details><summary>Ajuster la synchronisation</summary><div class="alignment">
+      <label for="offset">Avance x4 (secondes)</label><button id="offsetMinus" aria-label="Réduire le décalage d’une image">−1 image</button>
+      <input id="offset" type="number" min="-2" max="2" step="0.001" value="0.166833"><button id="offsetPlus" aria-label="Augmenter le décalage d’une image">+1 image</button><button id="resetOffset">Alignement initial</button>
+      <p>Réglage initial : +0,167 s (10 images), aligné sur le guerrier sélectionné. Les autres personnages peuvent avoir une phase d’animation différente.</p>
+    </div></details>
+  </div>
+</main>
+<script>
+'use strict';
+const el = id => document.getElementById(id);
+const v2=el('video2'),v4=el('video4'),stage=el('stage'),split=el('split'),timeline=el('timeline');
+const FRAME=1001/60000, INITIAL_OFFSET=10*FRAME;
+let offset=INITIAL_OFFSET,start=0,end=0,ready=false,playing=false,revision=0,seeking=false;
+let dragId=null;
+const clamp=(n,lo,hi)=>Math.min(hi,Math.max(lo,n));
+const seconds=n=>n.toFixed(2).replace('.',',');
+const relativeTime=()=>clamp(v2.currentTime-start,0,Math.max(0,end-start));
+function updateTime(){timeline.value=relativeTime();el('clock').textContent=`${seconds(relativeTime())} / ${seconds(end-start)} s`;}
+function updateSplit(value){
+  const n=clamp(Number(value),0,100);split.value=n;stage.style.setProperty('--split',`${n}%`);
+  el('splitValue').textContent=`x2 ${Math.round(n)} % · x4 ${100-Math.round(n)} %`;
+  el('badge2').style.visibility=n===0?'hidden':'visible';el('badge4').style.visibility=n===100?'hidden':'visible';
+  el('divider').style.visibility=n===0||n===100?'hidden':'visible';
+}
+function pauseBoth(){playing=false;v2.pause();v4.pause();v4.playbackRate=v2.playbackRate;el('play').textContent='Lecture';}
+function seekVideo(video,time){
+  return new Promise((resolve,reject)=>{
+    if(Math.abs(video.currentTime-time)<.001&&video.readyState>=2){resolve();return;}
+    let timer;
+    const clean=()=>{clearTimeout(timer);video.removeEventListener('seeked',done);video.removeEventListener('error',fail);};
+    const done=()=>{clean();resolve();};const fail=()=>{clean();reject(new Error('Impossible de lire la vidéo.'));};
+    video.addEventListener('seeked',done,{once:true});video.addEventListener('error',fail,{once:true});
+    timer=setTimeout(()=>{clean();reject(new Error('La vidéo met trop de temps à répondre.'));},6000);
+    video.currentTime=time;
+  });
+}
+async function playBoth(token=revision){
+  if(!ready||seeking||token!==revision)return;
+  playing=true;el('play').textContent='Pause';
+  const speed=Number(el('speed').value);v2.playbackRate=speed;v4.playbackRate=speed;
+  try{await Promise.all([v2.play(),v4.play()]);if(token!==revision||!playing){v2.pause();v4.pause();}}
+  catch(error){if(token===revision){pauseBoth();el('status').textContent='Lecture indisponible : ouvrez ce fichier dans Chrome ou Edge.';}}
+}
+async function seekTo(relative,resume=false){
+  if(!ready)return;
+  const token=++revision;pauseBoth();seeking=true;
+  const time=start+clamp(relative,0,Math.max(0,end-start-FRAME));
+  try{
+    await Promise.all([seekVideo(v2,time),seekVideo(v4,time+offset)]);
+    if(token!==revision)return;
+    seeking=false;updateTime();el('status').textContent='Synchronisation sur le guerrier · décalage x4 '+(offset>=0?'+':'')+offset.toFixed(3).replace('.',',')+' s';
+    if(resume)await playBoth(token);
+  }catch(error){if(token===revision){seeking=false;pauseBoth();el('status').textContent=error.message;}}
+}
+function recalculateRange(){start=Math.max(0,-offset);end=Math.min(v2.duration,v4.duration-offset);timeline.max=Math.max(0,end-start-FRAME);}
+function setOffset(value){
+  if(!ready||!Number.isFinite(value))return;
+  const position=relativeTime(),resume=playing;
+  offset=clamp(value,-2,2);el('offset').value=offset.toFixed(6);recalculateRange();seekTo(position,resume);
+}
+function animate(){
+  if(playing&&!seeking){
+    if(v2.currentTime>=end-FRAME/2||v2.ended||v4.ended){seekTo(0,true);}
+    else{
+      const target=v2.currentTime+offset,drift=v4.currentTime-target,speed=Number(el('speed').value);
+      if(!v4.seeking){
+        if(Math.abs(drift)>.075){v4.currentTime=clamp(target,0,v4.duration-FRAME);}
+        else{v4.playbackRate=speed*(1+clamp(-drift*.8,-.04,.04));}
+      }
+      updateTime();
+    }
+  }
+  requestAnimationFrame(animate);
+}
+function pointerSplit(event){const rect=stage.getBoundingClientRect();updateSplit(100*(event.clientX-rect.left)/rect.width);}
+stage.addEventListener('pointerdown',event=>{if(event.button!==0)return;dragId=event.pointerId;stage.setPointerCapture(dragId);pointerSplit(event);});
+stage.addEventListener('pointermove',event=>{if(event.pointerId===dragId)pointerSplit(event);});
+stage.addEventListener('pointerup',()=>{dragId=null;});stage.addEventListener('pointercancel',()=>{dragId=null;});
+split.addEventListener('input',()=>updateSplit(split.value));
+el('only2').addEventListener('click',()=>updateSplit(100));el('only4').addEventListener('click',()=>updateSplit(0));el('middle').addEventListener('click',()=>updateSplit(44.5));
+el('play').addEventListener('click',()=>{if(playing){++revision;pauseBoth();}else if(seeking){seekTo(relativeTime(),true);}else{playBoth();}});
+el('restart').addEventListener('click',()=>seekTo(0,playing));
+el('previous').addEventListener('click',()=>seekTo(relativeTime()-FRAME));el('next').addEventListener('click',()=>seekTo(relativeTime()+FRAME));
+timeline.addEventListener('input',()=>seekTo(Number(timeline.value)));
+el('speed').addEventListener('change',()=>{const speed=Number(el('speed').value);v2.playbackRate=speed;v4.playbackRate=speed;});
+el('zoom').addEventListener('click',()=>{const active=el('zoom').getAttribute('aria-pressed')!=='true';el('zoom').setAttribute('aria-pressed',String(active));stage.style.setProperty('--zoom',active?'3':'1');});
+el('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await stage.requestFullscreen();}catch{el('status').textContent='Utilisez F11 pour agrandir la fenêtre.';}});
+el('offset').addEventListener('change',()=>setOffset(el('offset').valueAsNumber));el('offsetMinus').addEventListener('click',()=>setOffset(offset-FRAME));el('offsetPlus').addEventListener('click',()=>setOffset(offset+FRAME));el('resetOffset').addEventListener('click',()=>setOffset(INITIAL_OFFSET));
+document.addEventListener('keydown',event=>{
+  if(event.target.matches('input,select,button,summary'))return;
+  if(event.code==='Space'){event.preventDefault();el('play').click();}
+  if(event.code==='ArrowLeft'){event.preventDefault();seekTo(relativeTime()-FRAME);}
+  if(event.code==='ArrowRight'){event.preventDefault();seekTo(relativeTime()+FRAME);}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){++revision;pauseBoth();}});
+function loaded(video){return new Promise((resolve,reject)=>{if(video.readyState>=1){resolve();return;}video.addEventListener('loadedmetadata',resolve,{once:true});video.addEventListener('error',()=>reject(new Error('Format vidéo non pris en charge. Ouvrez le HTML dans Chrome ou Edge.')),{once:true});});}
+Promise.all([loaded(v2),loaded(v4)]).then(async()=>{
+  if(v2.videoWidth!==v4.videoWidth||v2.videoHeight!==v4.videoHeight)throw new Error('Les dimensions des vidéos diffèrent.');
+  ready=true;recalculateRange();await seekTo(0);
+  ['play','restart','previous','next','timeline'].forEach(id=>el(id).disabled=false);
+}).catch(error=>{el('status').textContent=error.message;});
+updateSplit(44.5);requestAnimationFrame(animate);
+</script>
+</body>
+</html>

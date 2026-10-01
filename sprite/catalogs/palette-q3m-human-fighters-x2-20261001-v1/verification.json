@@ -1,0 +1,97 @@
+{
+  "schema": "bg2-q3m-human-fighters-x2-merged-verification-v1",
+  "status": "passed-offline-ready-for-install",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "boundary_mixing": false,
+  "dithering": false,
+  "source_bindings": [
+    {
+      "animation_id": "0x6100",
+      "frames": 180337,
+      "resources": 656,
+      "verification": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x2-verification.json",
+      "verification_sha256": "18B1F6707EAB265904492BF24E900BF417A7E0563EFF1054D847587718F8F7BE",
+      "source_catalog": "sprite/.work/q3m-6100-20261001-v1/x2/CreatureSprites-XN.catalog",
+      "source_catalog_sha256": "529448BCD37B60A8C32603FDBFB5190B99CBD8DD00E2DAA82A1DE54915BEC8D4",
+      "all_v6_bytes_identical": true
+    },
+    {
+      "animation_id": "0x6110",
+      "frames": 178360,
+      "resources": 656,
+      "verification": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110/verification.json",
+      "verification_sha256": "874DF5B09A8243AB3B7C448E973A96815955AB73EF192D5AF05CF5222CDE9AD6",
+      "source_catalog": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110/x2-q3m-k6/generation/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "source_catalog_sha256": "82668F7A0E5664B07AD53B47DFD925B86056D071EF5EA2FB2EE4B431DBDBCFD6",
+      "all_v6_bytes_identical": true
+    }
+  ],
+  "source_routes_identical": true,
+  "all_source_shards_verified": true,
+  "animation_ids": [
+    "0x6100",
+    "0x6110"
+  ],
+  "directory_entries": 1312,
+  "shards": 1312,
+  "frames_per_animation": {
+    "male": 180337,
+    "female": 178360
+  },
+  "unique_stored_frames": 358697,
+  "catalog_sha256": "5F0596DDAC14ECDBFD1915978736C160DF1F7F465156472FD410A8705CDC6044",
+  "catalog_bytes": 215304,
+  "active_pack_bytes": 601827124,
+  "build_manifest_sha256": "66F809EE22B027F20A597F0A08833999BB0774B5A7EBD8A1D703CB91869B7A2A",
+  "preparation_script_sha256": "AE89A180594D1CD837AA8C938B7DBE80C38636EB4604E7286FA3B94389CF7C49",
+  "required_q3m_x2_decoded_shard_bytes": 219509144,
+  "required_shard_limit_is_conservative_I_plus_F_upper_bound": true,
+  "female_working_set_proof": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110/catalog-working-set-verification.json",
+  "female_working_set_proof_sha256": "7F1AF0D119BCCB37224BA4D2B0CF71AA972A260B745FC992F4C288F9B1925E37",
+  "runtime_manifest": "pipeline/runtime/manifests/iee-character-cold-resolve-20261001-v1.json",
+  "runtime_manifest_sha256": "1CC856A0ED3332707F790D93A5950A0A1F5C562CD68BD64D327DE72E3FE4B5D2",
+  "runtime_dll_sha256": "D79B72B97BF48F3D743325F2FFF2BE39D0A008FCE1DA37239476B0018FFC6C74",
+  "native_combined_working_sets": [
+    {
+      "animation_id": "0x6100",
+      "executable": "build/creature-character-cold-resolve-20261001-v1/male-control/cmake/Release/character_cold_6100_control.exe",
+      "executable_sha256": "5A968FE31E7D126388B19FFED7F201BA2EC349496893073B6B65EB75918827DA",
+      "oracle": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x2-working-set-oracles/decoder-oracle-00.bin",
+      "oracle_sha256": "D3A6ACB0B1735C43B2584A7AF2252ABF121B5C4A14028B0F73F4D189ECA1E7FA",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 65285424,
+        "peak_resident_I_F_bytes": 7112064,
+        "peak_metadata_bytes": 134211424,
+        "verification_elapsed_ms": 4881
+      },
+      "log_sha256": "0D2F27267A1C29F36B3084AFF3B369194C0FB7D60F32DFC832B9B876DB3A4520"
+    },
+    {
+      "animation_id": "0x6110",
+      "executable": "build/creature-character-cold-resolve-20261001-v1/cmake/Release/iee_palette_fraction_tests.exe",
+      "executable_sha256": "E2F9436D81004288C095A2311A4EE9C07C3982A0E65D0A05BC68998569B36D63",
+      "oracle": "build/palette-q3m-p3-20261001-v3-catalog-working-set-reload.bin",
+      "oracle_sha256": "BC880BB83FCA01A9C6405E82CAC411F9320BE84F4B43AF2772D2CDEA25D833BE",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 66925656,
+        "peak_resident_I_F_bytes": 7299700,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 4833
+      },
+      "log_sha256": "45E1897AFA8EE3E59F3D7B650455ED15324BE54C7A9CDB5308B26122C21FB004"
+    }
+  ],
+  "garlena_0x6010_not_covered": true,
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "limitations": [
+    "Existing full native proofs retained because V6 bytes are unchanged; combined routes tested on all BAMs.",
+    "Oracle alpha is synthetic; live effects and GL remain manual game QA."
+  ]
+}

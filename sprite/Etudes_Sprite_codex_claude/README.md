@@ -8,6 +8,7 @@
 | Étude Codex, moteur/inventaire/upscale | [Guide](CODEX_BG2EE_Femme_Humaine_Guerriere_2026-09-29/GUIDE_CODEX_BG2EE_FEMME_GUERRIERE.md) |
 | Comparaison corrigée, temporel/3 bits | [Comparaison](CODEX_BG2EE_Femme_Humaine_Guerriere_2026-09-29/codex_palette_study_20260929/COMPARAISON_CODEX_CLAUDE_0x6110.md), [chemins](CODEX_BG2EE_Femme_Humaine_Guerriere_2026-09-29/codex_palette_study_20260929/README.md) |
 | Implémentation actuelle de l'essai | [P1 2026-09-30](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md) |
+| Comparatif vidéo ingame Q3m x2 / x4 | [HTML autonome](comparatif-q3m-x2-x4-20261001-v1/comparatif.html), [sources, usage et limites](comparatif-q3m-x2-x4-20261001-v1/README.md) |
 
 ## Statut
 
@@ -22,6 +23,7 @@
 - `codex_palette_study_20260929/` conserve uniquement les ajouts de comparaison et leur protocole.
 - Versionnés : Markdown/TXT, scripts, CSV/JSON/2DA/INI/IDS, inventaire `.json.gz`, tableaux numériques NPZ/NPY et provenance moteur épinglée.
 - Locaux, ignorés : HTML, PNG/GIF/WEBP/BMP/autres médias, BAM extraits, ZIP de livraison, environnement `research_deps/`, caches, originaux de documents dont seuls les liens ont été adaptés.
+- Exception demandée par l'utilisateur : `comparatif-q3m-x2-x4-20261001-v1/`, HTML autonome avec vidéos originales intégrées et template versionnés ; SHA des sources et du HTML dans `sources.json`.
 - Les liens vers les médias des rapports historiques sont des références locales ; ces médias ne sont pas livrés par Git.
 - `.gitattributes` préserve les octets importés : pas de conversion CRLF/LF, hashes des preuves historiques conservés.
 

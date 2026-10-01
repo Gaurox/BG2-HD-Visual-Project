@@ -1,5 +1,6 @@
 # Guerriers humains 0x6100 + 0x6110 — test ingame Q3m K6 x4
 
+- Catalogue x4 rétabli le 2026-10-01 à 17:52 UTC après comparaison x2 ; DLL corrigée et INI inchangés, 1 312 shards installés vérifiés. Preuve : [restoration-verification.json](../palette-q3m-human-fighters-x2-20261001-v1/restoration-verification.json). Le pack x2 reste disponible pour réinstallation ; les preuves initiales ci-dessous restent historiques.
 - Runtime courant : [correctif Character à froid](../../../pipeline/runtime/fixes/character-cold-resolve-20261001-v1/README.md), installé le 2026-10-01 ; catalogue/INI inchangés, nouvelle DLL et reçu actif mis à jour. Les preuves d'installation initiale ci-dessous restent historiques.
 - État : `installation-verification.json` = `installed-pending-manual-qa` ; reçu courant `ingame-installation/active-test.json`.
 - Catalogue V2 x4 actif : 2 animations Character, 1 312 composants/shards V6, 1 312 routes ; 358 697 frames stockées.

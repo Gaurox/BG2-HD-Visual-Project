@@ -31,6 +31,9 @@ Recherche de remplacement par palettes dynamiques : [études et guide](Etudes_Sp
 [P1 Q3m K6](families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md).
 P1 satisfait ses critères hors ligne ; validation ingame et remplacement de la méthode courante restent à réaliser.
 
+Comparatif vidéo Q3m : [x2 / x4 — ouvrir le HTML autonome](Etudes_Sprite_codex_claude/comparatif-q3m-x2-x4-20261001-v1/comparatif.html),
+[sources, synchronisation et limites](Etudes_Sprite_codex_claude/comparatif-q3m-x2-x4-20261001-v1/README.md).
+
 Traitement de série Q3m des Characters palettisés : [`../pipeline/PALETTE_PLAYABLE.md`](../pipeline/PALETTE_PLAYABLE.md),
 entrée `pipeline/scripts/palette_playable.py`, plan source actif [`index/palette-work-plan.json`](index/palette-work-plan.json).
 La queue unique et le cache I/F partagé sont intégrés à cette entrée ; x2/x4 restent séparés. Le
