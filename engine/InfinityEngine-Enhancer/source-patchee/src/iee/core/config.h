@@ -124,6 +124,9 @@ struct EngineConfig {
   // Legacy activation key kept as an alias and regression surface for existing
   // x2 installations. New installers write EnableCreatureSpriteUpscaleTest.
   bool enableCreatureSpriteX2Test = false;
+  // P3-only bounded capture of realized Character palettes and decoded CRCs.
+  // Disable during performance measurements; never changes native draw state.
+  bool enableCreatureSpritePaletteTrace = false;
   // Explicit A/B diagnostic for creature-sprite xN backing textures. The
   // new enum takes precedence when CreatureSpriteFilter is present. This bool
   // remains a parsed and serialized compatibility surface for older INIs.

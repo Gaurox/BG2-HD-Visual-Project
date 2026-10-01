@@ -1,0 +1,32 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "palette-q3m-p3-20261001-v1",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "9445d59137f97da60ae748a4f21a61a0fa7a4b9ffea9b7d1a939ca821ae45143",
+    "bytes": 1931776
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_versions": [
+        3,
+        5,
+        6
+      ],
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1",
+        "q3m-u8-per-plane-v1"
+      ]
+    }
+  }
+}

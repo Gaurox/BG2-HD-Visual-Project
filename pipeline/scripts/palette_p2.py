@@ -111,6 +111,18 @@ def fixtures(output):
     zero_partial=copy.deepcopy(partial);zero_partial["frames"][0]["F"].fill(0)
     zi=v6.write(root/"partial-zero.registry",2,[zero_partial],compress=False,retain_zero_f=True)
     _unchecked_catalog(root/"partial-zero",(root/"partial-zero.registry").read_bytes(),zi)
+    legacy_small = v5_from_raw_v6((root/"partial-zero.registry").read_bytes(), resref="LEGACY", half_transparent=True)
+    for name, groups, animations in (
+        ("mixed-components", [[0], [1]], None),
+        ("mixed-component-bad", [[0, 1]], [dict(animation_id="0x6110", owner=1, component_indices=[0])]),
+        ("mixed-owner-bad", [[0], [1]], [dict(animation_id="0x6110", owner=1, component_indices=[0, 1]),
+                                      dict(animation_id="0x7000", owner=3, component_indices=[0])])):
+        component_catalog(root/name, [(pr, pi), (legacy_small, {**zi, "version":5})],
+                          groups=groups, animations=animations)
+    component_catalog(root/"mixed-shared", [(pr, pi), (v5_from_raw_v6(
+        (root/"partial-zero.registry").read_bytes(), resref="TEST"), {**zi, "version":5})],
+        animations=[dict(animation_id="0x6110", owner=1, component_indices=[0]),
+                    dict(animation_id="0x6115", owner=1, component_indices=[1])])
     # Five 32MiB I+F frames exceed the unchanged 128MiB lazy cache budget.
     # Scale4 permits the 160MiB decoded shard; each plane is highly compressible.
     large_i=np.full((4096,4096),4,np.uint8);large_f=np.full_like(large_i,3)
@@ -167,6 +179,57 @@ def fixtures(output):
     (root/"fixtures.json").write_text(json.dumps(proof,indent=2)+"\n",encoding="utf-8")
     (output/"ready.txt").write_text(root.name+"\n",encoding="utf-8")
     print(json.dumps({k:proof[k] for k in ("reference_palettes","synthetic_palettes","pairs","valid_cases","invalid_cases")},indent=2))
+
+
+def v5_from_raw_v6(raw, *, resref="LEGACY", half_transparent=False):
+    """Small uncompressed one-frame test fixture, independent physical layout."""
+    if raw[89] or raw[644] or struct.unpack_from("<II", raw, 72) != (1, 2):
+        raise ValueError("Fixture requires one raw frame with absent F and two cycles")
+    count = struct.unpack_from("<I", raw, 92)[0]
+    stored_f = struct.unpack_from("<I", raw, 640)[0]
+    if any(raw[648 + count:648 + count + stored_f]):
+        raise ValueError("Legacy fixture requires zero fractions")
+    legacy = bytearray(raw[:24]); struct.pack_into("<I", legacy, 8, 5)
+    legacy.extend(raw[32:80]); legacy[24:32] = resref.encode().ljust(8, b"\0")
+    legacy.extend(raw[80:608]); legacy[82:84] = b"\0\0"
+    legacy.extend(raw[648:648 + count]); legacy.extend(raw[648 + count + stored_f:])
+    if half_transparent:
+        legacy[24 + 48 + 528 + count // 2:24 + 48 + 528 + count] = bytes(count - count // 2)
+        struct.pack_into("<H", legacy, 24 + 48 + 16, 2)
+    return bytes(legacy)
+
+
+def component_catalog(directory, leaves, *, groups=None, animations=None):
+    """Authenticated catalog fixtures; deliberately permits invalid compositions."""
+    directory.mkdir()
+    groups = groups or [[n] for n in range(len(leaves))]
+    animations = animations or [dict(animation_id="0x6110", owner=1, component_indices=[0, 1]),
+                                dict(animation_id="0x7000", owner=3, component_indices=[1])]
+    components, shards, resource_lists = [], [], []
+    for number, group in enumerate(groups):
+        start = len(shards)
+        for n in group:
+            raw, info = leaves[n]
+            version = struct.unpack_from("<I", raw, 8)[0]
+            ref = raw[32 if version == 6 else 24:40 if version == 6 else 32].rstrip(b"\0").decode()
+            info = {**info, "sha256":hashlib.sha256(raw).hexdigest().upper(), "crc32":zlib.crc32(raw),
+                    "registry_bytes":len(raw), "version":version, "index":len(shards)}
+            leaf = directory / registry.catalog_shard_filename(info["sha256"])
+            leaf.write_bytes(raw); shards.append(info); resource_lists.append([ref])
+        selected = shards[start:]
+        components.append(dict(index=number, shard_start=start, shard_count=len(group),
+            digest=registry.catalog_component_digest(2, [registry.catalog_shard_entry_bytes(s, directory) for s in selected]),
+            **{key:sum(s[key] for s in selected) for key in ("resource_count", "frame_count", "index_bytes", "registry_bytes")}))
+    rows=[]
+    for a in animations:
+        for c in a["component_indices"]:
+            component=components[c]
+            for s in range(component["shard_start"], component["shard_start"] + component["shard_count"]):
+                for n,ref in enumerate(resource_lists[s]):
+                    rows.append(dict(animation_id=a["animation_id"], resref=ref, component_index=c, shard_index=s, resource_ordinal=n))
+    return registry.write_registry_catalog_index(directory / registry.XN_REGISTRY_CATALOG_FILENAME,
+        2, animations, components, shards, rows, ["00"*32]*len(components),
+        dict(shard_registry_version=0, shard_registry_versions=[5, 6]))
 
 
 def _pack_oracle(path,resources,palettes):

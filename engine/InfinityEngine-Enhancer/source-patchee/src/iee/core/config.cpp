@@ -225,6 +225,8 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableCreatureSpriteUpscaleTest);
     else if (iequals(key, "EnableCreatureSpriteX2Test"))
       assign_bool(cfg.enableCreatureSpriteX2Test);
+    else if (iequals(key, "EnableCreatureSpritePaletteTrace"))
+      assign_bool(cfg.enableCreatureSpritePaletteTrace);
     else if (iequals(key, "EnableCreatureSpriteLinearFiltering"))
       assign_bool(cfg.enableCreatureSpriteLinearFiltering);
     else if (iequals(key, "CreatureSpriteFilter")) {
@@ -407,6 +409,7 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableNativeOcclusionBridge", cfg.enableNativeOcclusionBridge);
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);
   write_bool(f, "EnableCreatureSpriteX2Test", cfg.enableCreatureSpriteX2Test);
+  write_bool(f, "EnableCreatureSpritePaletteTrace", cfg.enableCreatureSpritePaletteTrace);
   write_bool(f, "EnableCreatureSpriteLinearFiltering", cfg.enableCreatureSpriteLinearFiltering);
   f << "CreatureSpriteFilter = "
     << creature_sprite_filter_mode_name(cfg.creatureSpriteFilter) << "\n";

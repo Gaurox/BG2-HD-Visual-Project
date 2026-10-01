@@ -151,9 +151,16 @@ if ((Get-FileSha256 $liveDll) -ne ([string]$runtime.dll.sha256).ToUpperInvariant
     throw 'Installez le runtime stable déclaré par -RuntimeManifest avant le catalogue.'
 }
 $capability = $runtime.capabilities.creature_sprite_xn_catalog
+$requiredVersions = if ($build.registry_catalog_shard_versions) {
+    @($build.registry_catalog_shard_versions | ForEach-Object { [int]$_ })
+} else { @([int]$build.registry_catalog_shard_version) }
+$requiredStorage = if ($build.registry_catalog_frame_storages) {
+    @($build.registry_catalog_frame_storages | ForEach-Object { [string]$_ })
+} else { @([string]$build.registry_catalog_frame_storage) }
 if (@($capability.catalog_versions) -notcontains [int]$build.registry_catalog_version -or
-    @($capability.shard_registry_versions) -notcontains [int]$build.registry_catalog_shard_version -or
-    @($capability.frame_storage) -notcontains [string]$build.registry_catalog_frame_storage) {
+    @($requiredVersions | Where-Object { @($capability.shard_registry_versions) -notcontains $_ }).Count -or
+    @($requiredStorage | Where-Object { @($capability.frame_storage) -notcontains $_ }).Count -or
+    ($requiredVersions.Count -gt 1 -and -not [bool]$capability.mixed_v5_v6_components)) {
     throw 'Le runtime stable ne supporte pas ce catalogue.'
 }
 

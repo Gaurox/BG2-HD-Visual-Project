@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <limits>
 #include <optional>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -307,6 +308,7 @@ struct CreatureSpriteScope {
   bool compositionIncomplete{};
   bool compositeReplacementDone{};
   bool layeredComposition{};
+  bool p3PaletteCaptured{};
 };
 
 thread_local CreatureSpriteScope* g_creatureSpriteScope = nullptr;
@@ -937,6 +939,14 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
   }
   if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
                                          currentFrame, resolved.handle)) {
+    if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
+      thread_local std::set<std::array<char, 8>> unresolved;
+      if (unresolved.size() < 64 && unresolved.insert(resref).second) {
+        LOG_INFO("Q3M_P3_UNRESOLVED animation=6110 owner={} resref={} sequence={} slot={} registered={}",
+                 ownerLabel, effect_animation_resref_name(resref), currentSequence, currentFrame,
+                 creature_sprite_x2::contains_resource(animationId, resref));
+      }
+    }
     static std::atomic<bool> unresolvedFrameLogged{false};
     if (!unresolvedFrameLogged.exchange(true, std::memory_order_relaxed)) {
       LOG_WARN(
@@ -2895,6 +2905,11 @@ static void detour_character_render(
                                    a11, a12, a13, a14);
 
   if (target) {
+    if (scope.p3PaletteCaptured) {
+      LOG_INFO("Q3M_P3_DRAW animation={:04X} generation={} replacementBound={} layers={} incomplete={}",
+               scope.animationId, scope.generation, scope.replacements != 0,
+               scope.compositionCount, scope.compositionIncomplete);
+    }
     static std::array<std::atomic<bool>, 65'536> noReplacementLogged{};
     if (scope.replacements == 0 &&
         !noReplacementLogged[scope.animationId].exchange(
@@ -2908,6 +2923,61 @@ static void detour_character_render(
           scope.foreignRealizes, scope.unregisteredLayerRealizes,
           scope.compositionIncomplete);
     }
+  }
+}
+
+// Opt-in P3 evidence only. The trace uses the already correlated snapshot;
+// its extra CPU decode and log I/O must be disabled for timing comparisons.
+void trace_q3m_p3_palette(CreatureSpriteScope& scope, std::size_t layerIndex,
+                         const ResolvedCreatureSpriteFrame& current,
+                         const creature_sprite_x2::PaletteSnapshot& captured,
+                         std::uint32_t flags, std::uint32_t transparency) noexcept {
+  if (!g_ctx || !g_ctx->cfg.enableCreatureSpritePaletteTrace ||
+      scope.animationId != 0x6110 || scope.owner != CreatureSpriteOwner::Character ||
+      !creature_sprite_x2::frame_uses_q3m_profile(current.handle)) return;
+  try {
+    constexpr std::size_t limit = 1024;
+    thread_local std::set<std::array<std::uint64_t, 4>> seen;
+    if (seen.size() >= limit) return;
+    std::uint64_t paletteHash = 14695981039346656037ull;
+    for (auto color : captured.colors) {
+      for (unsigned n = 0; n < 4; ++n) {
+        paletteHash = (paletteHash ^ (color & 255u)) * 1099511628211ull;
+        color >>= 8;
+      }
+    }
+    const std::array<std::uint64_t, 4> key{
+        reinterpret_cast<std::uintptr_t>(current.cell), paletteHash,
+        (static_cast<std::uint64_t>(current.handle.resourceIndex) << 32) |
+            current.handle.frameIndex,
+        (static_cast<std::uint64_t>(captured.encoding.externalFormat) << 32) |
+            captured.encoding.type};
+    if (!seen.insert(key).second) return;
+    scope.p3PaletteCaptured = true;
+    std::ostringstream colors;
+    colors << std::hex << std::setfill('0');
+    for (const auto color : captured.colors) colors << std::setw(8) << color;
+    std::vector<std::uint32_t> pixels;
+    std::uint64_t fingerprint{};
+    const bool decoded = creature_sprite_x2::reconstruct_frame_pixels(
+        current.handle, captured, pixels, fingerprint);
+    const auto checksum = static_cast<std::uint32_t>(crc32(
+        0, reinterpret_cast<const Bytef*>(pixels.data()),
+        static_cast<uInt>(pixels.size() * sizeof(std::uint32_t))));
+    LOG_INFO(
+        "Q3M_P3_PALETTE animation={:04X} generation={} cell={:X} layer={} "
+        "resref={} sequence={} slot={} frame={} format={:X} type={:X} "
+        "flags={:X} transparency={} decoded={} pixels={} crc32={:08X} "
+        "fingerprint={:016X} colors={}",
+        scope.animationId, scope.generation, reinterpret_cast<std::uintptr_t>(current.cell),
+        layerIndex, std::string(current.resref.data(),
+            std::find(current.resref.begin(), current.resref.end(), '\0') - current.resref.begin()),
+        current.sequence, current.slot, current.handle.frameIndex,
+        captured.encoding.externalFormat, captured.encoding.type, flags, transparency,
+        decoded, pixels.size(), checksum, fingerprint, colors.str());
+    if (seen.size() == limit) LOG_INFO("Q3M_P3_PALETTE capture limit reached: {} unique records", limit);
+  } catch (...) {
+    // A diagnostic failure must leave the native palette/composition untouched.
   }
 }
 
@@ -3002,6 +3072,7 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
         .frame = current.handle,
         .palette = captured,
     };
+    trace_q3m_p3_palette(*scope, ownerLayer, current, captured, flags, transparency);
     layer.captureValid = true;
     return;
   }

@@ -1,0 +1,26 @@
+{
+  "schema": "bg2-upscale-character-palette-p3-session-v1",
+  "status": "prepared",
+  "animation_id": "0x6110",
+  "scale": 2,
+  "filter": "Nearest",
+  "p2_source": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p2-20260930-v1",
+  "scope": "Complete parent coverage; five BAM replaced only for 0x6110; 84 P1 samples Q3m",
+  "parent_pointer": "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-playable-characters-p13-v1/current-generation.json",
+  "parent_catalog_sha256": "cc91fa2eabbfcf5d63b94f3375c861dae50862b787a000330b7e065148e9bfdc",
+  "x1_shader_profiles": "disabled-during-test; restored-with-INI",
+  "runtime_dll_sha256": "f73cfc4251d95a95a32bf713648f7aa6fb11d7da5833e0bd602387074f25899b",
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "6305c84a1b65ffb843b6d04e2cd552f98b6e0aae9d5b112b3266e6245943954f",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "86801746e7b8932e1af7545781771bc17e92dcda59a0ee08d9b0f251a43bfcc4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "e2870ff65011e08b7f44f4031a0317661753257135c91eb06a8ed272baf2521a",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "35fba34dcc6b60128bcaa65079e1d7eed4b564a91d136b6d63438d582b3897e7",
+    "pipeline/scripts/run_creature_sprite_x2.py": "8ffd210d2d18cd4d5e86616d0e911155995d5dbee4d5bcac06e4f461c875f1f2",
+    "pipeline/scripts/palette_p3_catalog.py": "f763af9d559f17d2f9f6382d3372a90c510a27fcef730e635c05a95578f9e582",
+    "pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1": "7deb558e4948ac37a399b860966c50028d410dc1fdca7259ff17c3bd6d48f93c",
+    "pipeline/scripts/Start-Palette-Q3m-P3.ps1": "84f28fdb08f8cb8137b787bed1e825409870153117bea4160709827e7e43d604",
+    "pipeline/scripts/palette_p3.py": "cf87caec89ecaab4a254e99c0601918def0a9f71c0fe91d98e63b6e531d79649"
+  }
+}

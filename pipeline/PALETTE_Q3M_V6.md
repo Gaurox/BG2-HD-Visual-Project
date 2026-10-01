@@ -81,8 +81,9 @@ lookups ; N*(1+Fprésent) ≤128 Mio/frame ; somme I+F ≤128 Mio(x2)/512 Mio(x4
 Décompression exactement N ; flags/codec/IDs inconnus, offsets représentants, F>7,
 masques inexacts, troncatures, données restantes et corruption XPRESS rejetés.
 Prévalidation temporaire I/F avant publication des métadonnées V6 ; recharge lazy vérifiée.
-Catalogue Python rejette les mélanges de versions ; lecteur natif détecte et met en
-quarantaine un composant incompatible lors du chargement lazy. Repli = **BAM natif** ;
+Contrat P2 initial : catalogue Python homogène en version ; lecteur natif détecte et met en
+quarantaine un composant incompatible lors du chargement lazy. Extension P3 ci-dessous.
+Repli = **BAM natif** ;
 comparateurs Q0/xBR sont des packs explicites, pas une deuxième feuille V5 automatique.
 Anciennes DLL échouent fermé sur une feuille V6 ; pas d'installation avec une ancienne DLL.
 
@@ -131,3 +132,25 @@ Provenance P2 : commandes, toolchain, empreintes sources, DLL, catalogues et ora
   LUT complète/pulsation chaque frame doit se lire avec les dépendances effectivement
   utilisées ; §14 « fallback V5/xBR » n'est pas un mécanisme actuel de repli automatique.
   Mentions « aucune DLL/V6 » décrivent P1, pas le nouveau résultat P2.
+
+## Extension P3 — coexistence V5/V6, 2026-10-01
+
+- Catalogue V2 existant, octets V5/V6 inchangés ; versions `{5,6}` permises entre
+  composants **homogènes**. Versions distinctes dans un composant : rejet/quarantaine.
+- Restriction Character appliquée à tous les memberships des composants V6 ; les
+  composants V5 des autres owners restent accessibles. Ordres V5→V6 / V6→V5 testés.
+- Capability runtime explicite `mixed_v5_v6_components=true` ; manifeste pack :
+  `registry_catalog_shard_versions=[5,6]` et `registry_catalog_frame_storages`.
+  Scalar version=0 signifie mixte ; il ne remplace pas les identités de feuilles.
+  Installateur refuse une DLL sans cette capacité, même si elle connaît V6 isolé.
+- `palette_p3_catalog.derive` : parent P13 complet épinglé ; 828 shards réutilisés,
+  48 records V5 résiduels copiés octet pour octet, feuille expérimentale P2 conservée.
+  Remplacements limités à `0x6110` ; 194 autres routes/memberships inchangés.
+- SHA source ancien = BAMC ; SHA P1/P2 = BAM canonique. Équivalence autorisée seulement
+  après SHA des deux fichiers + identité exacte du contenu décompressé et des tables
+  géométrie/cycles. Preuve dans `generation/preservation.json` ; aucun SHA réécrit.
+- `Q3M_P3_PALETTE` limité aux frames V6 ; `Q3M_P3_DRAW` corrélé par generation prouve
+  la substitution native du composite. Le checker exige cette corrélation par défaut ;
+  `--cpu-only` reste une preuve CPU explicite, sans QA visuelle ni GPU readback.
+- Essai corrigé : `palette-q3m-p3-20261001-v2`, Q0/Q3m dérivés du même parent.
+  Profils x1 fpSprite/fpSELECT désactivés temporairement ; restauration INI intégrale.

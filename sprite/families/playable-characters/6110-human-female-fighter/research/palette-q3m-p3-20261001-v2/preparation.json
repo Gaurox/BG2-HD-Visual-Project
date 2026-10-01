@@ -1,0 +1,73 @@
+{
+  "schema": "bg2-upscale-character-palette-p3-preparation-v2",
+  "status": "passed-offline-ready-for-manual-game",
+  "runtime_dll_sha256": "f73cfc4251d95a95a32bf713648f7aa6fb11d7da5833e0bd602387074f25899b",
+  "python_tests_passed": 48,
+  "ctest_suites_passed": 2,
+  "packs": [
+    {
+      "label": "x2-q0",
+      "catalog_sha256": "a0e79a8f8e25220f7d8e360674fcf69861fc33f6de133c0cf9972a9277546782",
+      "animations": 195,
+      "components": 813,
+      "shards": 833,
+      "directory_entries": 52984,
+      "native_test": {
+        "pack_frames": 4230,
+        "palettes": 18,
+        "decoded_pixels": 64338984,
+        "peak_resident_I_F_bytes": 3574388,
+        "peak_metadata_bytes": 3269520,
+        "verification_elapsed_ms": 817
+      },
+      "oracle_sha256": "ca175c3e022f343f5d647eeacca053abf5acb0467c929f1ee7eb6aa64fbfefbb",
+      "preservation_sha256": "030049b809c0864fd11de6fa6cf08f1d8d63cb93f640435a51d9fee0600b7ff7"
+    },
+    {
+      "label": "x2-q3m-k6",
+      "catalog_sha256": "e67e9ed1d0c33be56375ccb8d3311d1b3f339eb59534b4b4cf64cb1ecc55165f",
+      "animations": 195,
+      "components": 813,
+      "shards": 833,
+      "directory_entries": 52984,
+      "native_test": {
+        "pack_frames": 4230,
+        "palettes": 18,
+        "decoded_pixels": 64338984,
+        "peak_resident_I_F_bytes": 3742396,
+        "peak_metadata_bytes": 3269520,
+        "verification_elapsed_ms": 808
+      },
+      "oracle_sha256": "8ebb5ab8919de337c4c94c138870d1ded3e9fa131cf8be3505b09d25ff1e98d5",
+      "preservation_sha256": "030049b809c0864fd11de6fa6cf08f1d8d63cb93f640435a51d9fee0600b7ff7"
+    }
+  ],
+  "known_native_x1_failure_rejected": true,
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "35fba34dcc6b60128bcaa65079e1d7eed4b564a91d136b6d63438d582b3897e7",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h": "2af8bea0c9f661896831c12f7b4380db71f99101bb1a593ac3aa707c8248ec4c",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "6305c84a1b65ffb843b6d04e2cd552f98b6e0aae9d5b112b3266e6245943954f",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "86801746e7b8932e1af7545781771bc17e92dcda59a0ee08d9b0f251a43bfcc4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "e2870ff65011e08b7f44f4031a0317661753257135c91eb06a8ed272baf2521a",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_fraction_tests.cpp": "8cf91f706e3b0e3faf2da0477641f3dfaace08d7d4d4a2e15a65bec426525c72",
+    "pipeline/scripts/run_creature_sprite_x2.py": "8ffd210d2d18cd4d5e86616d0e911155995d5dbee4d5bcac06e4f461c875f1f2",
+    "pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1": "7deb558e4948ac37a399b860966c50028d410dc1fdca7259ff17c3bd6d48f93c",
+    "pipeline/scripts/palette_p2.py": "53e84e2cb5dc4994c73ea36bab2c47983d9ed7e050ad4f89067432ba147f6041",
+    "pipeline/scripts/palette_p3.py": "cf87caec89ecaab4a254e99c0601918def0a9f71c0fe91d98e63b6e531d79649",
+    "pipeline/scripts/palette_p3_catalog.py": "f763af9d559f17d2f9f6382d3372a90c510a27fcef730e635c05a95578f9e582",
+    "pipeline/scripts/Start-Palette-Q3m-P3.ps1": "84f28fdb08f8cb8137b787bed1e825409870153117bea4160709827e7e43d604"
+  },
+  "evidence_sha256": {
+    "captures/preparation-ctest.log": "b1216f957c5e2f8b97fe1bd170904eb44137e3ff8abf3fb98a3c63f13664a128",
+    "captures/preparation-python-tests.log": "9d47f088c43ffcc2fbfbaa6c803c873b0bacee24efd0ffb89f60f90c5ba0b71a",
+    "captures/preparation-x2-q0-native.log": "4394199540b7f83e4577ce731bd4731bc560ad4d403493b1b203c73af70c41fa",
+    "captures/preparation-x2-q3m-k6-native.log": "a40b3e0827697b993d17a0f9f8076e43d9cf96a4e7a428422f12e756a97edc31",
+    "captures/regression-old-failure.json": "6256a85e71b83a6a1830321e6144da943e1a4e96431e24dd74d0260837154b5b"
+  },
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "limitations": [
+    "CPU decode/composition and native substitution instrumentation; no new GPU readback or ingame acceptance.",
+    "Q3m still covers 84 P1 samples in five BAM; remaining frames/actors preserve their explicit baseline or P2 comparator."
+  ]
+}

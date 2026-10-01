@@ -131,6 +131,50 @@ class ThinCatalogInstallTests(unittest.TestCase):
     def tearDown(self) -> None:
         shutil.rmtree(self.root)
 
+    def enable_mixed_catalog(self, *, runtime_capable):
+        path=self.build/"build-manifest.json"
+        build=json.loads(path.read_text());build["registry_catalog_shard_version"]=0
+        build["registry_catalog_shard_versions"]=[5,6]
+        build["registry_catalog_frame_storages"]=["XPRESS_HUFF-or-raw-per-frame-v1","q3m-u8-per-plane-v1"]
+        write_json(path,build)
+        runtime=json.loads(self.runtime_manifest.read_text())
+        caps=runtime["capabilities"]["creature_sprite_xn_catalog"]
+        caps["shard_registry_versions"]=[5,6];caps["frame_storage"].append("q3m-u8-per-plane-v1")
+        caps["mixed_v5_v6_components"]=runtime_capable
+        write_json(self.runtime_manifest,runtime)
+
+    def test_mixed_catalog_requires_explicit_runtime_capability(self):
+        self.enable_mixed_catalog(runtime_capable=False)
+        before=sha256(self.game_payload/"CreatureSprites-XN.catalog")
+        result=self.run_ps(INSTALL,"-JobFile",self.job,"-RuntimeManifest",self.runtime_manifest,"-VerifyOnly",check=False)
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn("ne supporte pas ce catalogue",result.stderr)
+        self.assertEqual(sha256(self.game_payload/"CreatureSprites-XN.catalog"),before)
+        self.enable_mixed_catalog(runtime_capable=True)
+        self.run_ps(INSTALL,"-JobFile",self.job,"-RuntimeManifest",self.runtime_manifest,"-VerifyOnly")
+
+    def test_p3_profiles_and_original_files_restore_exactly(self):
+        self.enable_mixed_catalog(runtime_capable=True)
+        runtime=json.loads(self.runtime_manifest.read_text());write_json(self.run/"runtime.json",runtime)
+        job=json.loads(self.job.read_text())
+        for label in ("x2-q0","x2-q3m-k6"):write_json(self.run/(label+".job.json"),job)
+        ini=self.game/"InfinityEngine-Enhancer.ini"
+        ini.write_text("[Shaders]\n[ShaderSuite.fpSprite]\nEnabled=true\nFilter=CatmullRom\nSharpen=-0.25\n"
+                       "[ShaderSuite.fpSELECT]\nEnabled=true\nFilter=CatmullRom\nSharpen=-0.25\n")
+        original_ini=ini.read_bytes();original_catalog=(self.game_payload/"CreatureSprites-XN.catalog").read_bytes()
+        original_dll=(self.game/"InfinityEngine-Enhancer.dll").read_bytes()
+        script=SCRIPTS/"Start-Palette-Q3m-P3.ps1"
+        self.run_ps(script,"-Run",self.run,"-GameRoot",self.game,"-Mode","Q3m","-TracePalettes")
+        active_ini=ini.read_text()
+        self.assertIn("Enabled = false",active_ini)
+        self.assertEqual(active_ini.count("Enabled = false"),2)
+        self.run_ps(script,"-Run",self.run,"-GameRoot",self.game,"-Mode","Q0")
+        self.assertEqual(ini.read_text().count("Enabled = false"),2)
+        self.run_ps(script,"-Run",self.run,"-GameRoot",self.game,"-Mode","Restore")
+        self.assertEqual(ini.read_bytes(),original_ini)
+        self.assertEqual((self.game_payload/"CreatureSprites-XN.catalog").read_bytes(),original_catalog)
+        self.assertEqual((self.game/"InfinityEngine-Enhancer.dll").read_bytes(),original_dll)
+
     def run_ps(self, script: Path, *arguments: str, check: bool = True):
         executable = shutil.which("pwsh.exe") or shutil.which("powershell.exe")
         self.assertIsNotNone(executable)

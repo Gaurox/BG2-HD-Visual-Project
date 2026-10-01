@@ -14,6 +14,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/"pipeline/scripts"))
 import palette_registry as v6
 import run_creature_sprite_x2 as pipeline
 from reboutcx_catalog import resource_contract_digest
+from palette_p2 import component_catalog, v5_from_raw_v6
 
 
 def resource(*,fraction=3,index=4):
@@ -138,6 +139,28 @@ class PaletteRegistryTests(unittest.TestCase):
                 pipeline.write_registry_records(Path(td)/"legacy-raw",pipeline.XN_REGISTRY_MAGIC,
                                                 3,2,0x6110,info["resource_records"])
             self.assertFalse((Path(td)/"legacy-raw").exists())
+
+    def test_mixed_catalog_versions_are_local_to_components_and_owners(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);r=resource()
+            a=v6.write(root/"fraction",2,[r],compress=False)
+            r["frames"][0]["F"].fill(0)
+            b=v6.write(root/"zero",2,[r],compress=False)
+            leaves=[((root/"fraction").read_bytes(),a),
+                    (v5_from_raw_v6((root/"zero").read_bytes()),{**b,"version":5})]
+            component_catalog(root/"good",leaves)
+            checked=pipeline.inspect_registry_catalog(root/"good"/pipeline.XN_REGISTRY_CATALOG_FILENAME)
+            self.assertEqual(checked["shard_registry_versions"],[5,6])
+            self.assertEqual(checked["component_storage_versions"],[6,5])
+            component_catalog(root/"bad-component",leaves,groups=[[0,1]],
+                animations=[dict(animation_id="0x6110",owner=1,component_indices=[0])])
+            with self.assertRaisesRegex(RuntimeError,"component mixes"):
+                pipeline.inspect_registry_catalog(root/"bad-component"/pipeline.XN_REGISTRY_CATALOG_FILENAME)
+            component_catalog(root/"bad-owner",leaves,animations=[
+                dict(animation_id="0x6110",owner=1,component_indices=[0,1]),
+                dict(animation_id="0x7000",owner=3,component_indices=[0])])
+            with self.assertRaisesRegex(RuntimeError,"Character"):
+                pipeline.inspect_registry_catalog(root/"bad-owner"/pipeline.XN_REGISTRY_CATALOG_FILENAME)
 
 
 if __name__=="__main__":unittest.main()

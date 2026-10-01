@@ -4183,6 +4183,7 @@ def inspect_registry_catalog(
     calculated_raw_frames = 0
     expected_shard_names: set[str] = set()
     shard_registry_versions: set[int] = set()
+    component_storage_versions: list[int] = []
     for index in range(component_count):
         offset = component_offset + index * REGISTRY_CATALOG_COMPONENT_ENTRY_BYTES
         (
@@ -4228,6 +4229,7 @@ def inspect_registry_catalog(
         resources: list[str] = []
         logical_records: list[dict[str, Any]] = []
         seen_resrefs: set[str] = set()
+        component_versions: set[int] = set()
         for shard in selected_shards:
             shard_path = path.parent / Path(str(shard["registry"])).name
             expected_shard_names.add(shard_path.name)
@@ -4266,6 +4268,7 @@ def inspect_registry_catalog(
                     f"catalog shard differs from entry: {shard_path.name}"
                 )
             shard_registry_versions.add(int(info["version"]))
+            component_versions.add(int(info["version"]))
             calculated_stored_index_bytes += int(info["stored_index_bytes"])
             calculated_compressed_frames += int(info["compressed_frame_count"])
             calculated_raw_frames += int(info["raw_frame_count"])
@@ -4276,6 +4279,9 @@ def inspect_registry_catalog(
             resources.extend(info["resources"])
             logical_records.extend(info["resource_records"])
             shard_resources[int(shard["index"])] = list(info["resources"])
+        if len(component_versions) != 1:
+            raise RuntimeError("creature registry catalog component mixes shard storage versions")
+        component_storage_versions.append(next(iter(component_versions)))
         seen_component_digests.add(digest)
         components.append(
             {
@@ -4301,21 +4307,27 @@ def inspect_registry_catalog(
         calculated_registry_bytes += registry_bytes
     if expected_shard_start != shard_count:
         raise RuntimeError("creature registry catalog components lack shard coverage")
-    if len(shard_registry_versions) != 1:
+    if len(shard_registry_versions) != 1 and (
+        version != XN_REGISTRY_CATALOG_VERSION
+        or shard_registry_versions != {XN_COMPRESSED_REGISTRY_VERSION, XN_FRACTION_REGISTRY_VERSION}
+    ):
         raise RuntimeError("creature registry catalog mixes shard storage versions")
-    shard_registry_version = next(iter(shard_registry_versions))
+    shard_registry_version = next(iter(shard_registry_versions)) if len(shard_registry_versions) == 1 else 0
     if (
         version == LEGACY_XN_REGISTRY_CATALOG_VERSION
         and shard_registry_version != XN_REGISTRY_VERSION
     ):
         raise RuntimeError("legacy catalog requires V3 shards")
     if (
-        shard_registry_version in (XN_COMPRESSED_REGISTRY_VERSION, XN_FRACTION_REGISTRY_VERSION)
+        shard_registry_versions.intersection({XN_COMPRESSED_REGISTRY_VERSION, XN_FRACTION_REGISTRY_VERSION})
         and version != XN_REGISTRY_CATALOG_VERSION
     ):
         raise RuntimeError("V5/V6 shards require a V2 catalog")
-    if shard_registry_version == XN_FRACTION_REGISTRY_VERSION and any(
-        animation["owner"] != CATALOG_OWNER_CHARACTER for animation in animations
+    if any(
+        animation["owner"] != CATALOG_OWNER_CHARACTER
+        and any(component_storage_versions[c] == XN_FRACTION_REGISTRY_VERSION
+                for c in animation["component_indices"])
+        for animation in animations
     ):
         raise RuntimeError("V6 class profile requires Character catalog owners")
     if (
@@ -4452,6 +4464,8 @@ def inspect_registry_catalog(
         "membership_count": membership_count,
         "shard_count": shard_count,
         "shard_registry_version": shard_registry_version,
+        "shard_registry_versions": sorted(shard_registry_versions),
+        "component_storage_versions": component_storage_versions,
         "total_resources": total_resources,
         "total_frames": total_frames,
         "total_index_bytes": total_index_bytes,

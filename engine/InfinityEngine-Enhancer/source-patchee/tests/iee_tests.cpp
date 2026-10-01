@@ -906,12 +906,14 @@ void test_config_parsing() {
     out << "MapPagePrewarmBudgetMs = 6.5\n";
     out << "MapPagePrewarmMaxPages = 80\n";
     out << "MapPagePrewarmDelayFrames = 45\n";
+    out << "[Shaders]\nEnableCreatureSpritePaletteTrace = true\n";
   }
 
   iee::core::EngineConfig cfg{};
   expect_true(iee::core::ConfigManager::load(tempPath, cfg),
               "ConfigManager::load should parse a valid INI");
   expect_true(cfg.enableVerboseLogging, "Verbose logging flag should parse");
+  expect_true(cfg.enableCreatureSpritePaletteTrace, "P3 palette trace should parse explicitly");
   expect_true(!cfg.enableAnisotropicFiltering, "Rendering bool should parse");
   expect_eq(cfg.maxAnisotropy, 4.0f, "Floating-point values should parse");
   expect_eq(cfg.lodBias, -0.5f, "Negative float values should parse");

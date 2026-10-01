@@ -1,0 +1,48 @@
+{
+  "schema": "bg2-upscale-character-palette-p3-preparation-v1",
+  "created_utc": "2026-09-30T23:26:29.230070+00:00",
+  "status": "installed-pending-manual-qa",
+  "git_base": "9bb9f3f7543aed850254fdc690b847f365954717",
+  "pilot": "user-manual",
+  "agent_game_launch_succeeded": false,
+  "agent_ui_actions_on_game": 0,
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "mode": "Q3m",
+  "scale": 2,
+  "filter": "Nearest",
+  "palette_trace": true,
+  "dll_sha256": "9445d59137f97da60ae748a4f21a61a0fa7a4b9ffea9b7d1a939ca821ae45143",
+  "catalog_sha256": "4ef3187cac1ac86ce8f90083360165e8d23198582d7a321f292aa0ea84ebeef0",
+  "host_suites_passed": [
+    "iee_tests",
+    "iee_palette_fraction_tests"
+  ],
+  "independent_checker_golden_pixels": 65664,
+  "checker_encodings": [
+    "RGBA/u8",
+    "BGRA/u8"
+  ],
+  "ctest_log_sha256": "31a2cc3f006eeb93062544372af81b77b156cb2147b27b3da2010c25acae6790",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "a244c44aa7dbaaf3e452d0d67276f720e521de06c10269a44f221f4130377698",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "86801746e7b8932e1af7545781771bc17e92dcda59a0ee08d9b0f251a43bfcc4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "e2870ff65011e08b7f44f4031a0317661753257135c91eb06a8ed272baf2521a",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/iee_tests.cpp": "1792b8d54446e259920263c0955fbe164a0a5ccca44faa7b674b5c337ad37164",
+    "pipeline/scripts/palette_p3.py": "379fcd6d0c9a68d5fe26fab86a12f9b23cd000e37c51dc2ced234e313080e290",
+    "pipeline/scripts/Start-Palette-Q3m-P3.ps1": "dc5b45586b7bac05147d1f90e36092227239ad810052118e90615cb3f18417e9"
+  },
+  "commands": [
+    "cmake --build build/palette-q3m-p3-20261001-v1/cmake --config Release --target InfinityEngine-Enhancer iee_tests iee_palette_fraction_tests --parallel 8",
+    "ctest --test-dir build/palette-q3m-p3-20261001-v1/cmake -C Release -R \"^(iee_tests|iee_palette_fraction_tests)$\" --output-on-failure"
+  ],
+  "pending": [
+    "manual smoke test",
+    "real-palette capture verification",
+    "Q0/Q3m A-B REF DEFAULT VAL05 VAL10",
+    "actual effects and WGL reset",
+    "performance with trace off",
+    "explicit visual QA and REF regression decision",
+    "full vertical beyond existing P2 samples"
+  ]
+}

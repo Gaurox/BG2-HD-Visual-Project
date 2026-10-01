@@ -186,6 +186,59 @@ void test_eviction(cs::FrameHandle handle) {
           std::all_of(pixels.begin(),pixels.end(),[](auto p){return p==0x4d1e1e1e;}),"reloaded I+F decode identity");
 }
 
+void test_mixed_catalog(const fs::path& root) {
+  for (bool legacyFirst : {true, false}) {
+    require(cs::prepare(root/"mixed-components"), "mixed catalog prepare");
+    cs::FrameHandle fractional{}, legacy{}, monster{};
+    if (legacyFirst) require(resolve(0x6110,ref("LEGACY"),0,0,legacy),"V5 loads before V6");
+    require(resolve(0x6110,ref("TEST"),0,0,fractional),"mixed V6 resolve");
+    require(resolve(0x6110,ref("LEGACY"),0,0,legacy),"mixed V5 resolve");
+    require(resolve(0x7000,ref("LEGACY"),0,0,monster) && monster.resourceIndex==legacy.resourceIndex &&
+            monster.animationId==0x7000 && legacy.animationId==0x6110,"V5 non-Character component and scoped handles preserved");
+    require(cs::frame_uses_q3m_profile(fractional) && !cs::frame_uses_q3m_profile(legacy),"per-frame profile ownership");
+    for (const auto encoding : std::array<cs::NativePixelEncoding,3>{{{0x1908,0x1401},{0x80e1,0x1401},{0x80e1,0x8367}}}) {
+      cs::PaletteSnapshot a{};a.encoding=encoding;a.colors[4]=0x4d000000;a.colors[5]=0xff505050;
+      auto b=a;b.colors[4]=encoding.externalFormat==0x80e1 ? swap_rb(0x80224466u) : 0x80224466u;
+      std::array<cs::CompositeLayer,2> layers{{{fractional,a},{legacy,b}}};
+      cs::CompositeBounds bounds{};std::vector<std::uint32_t> pixels;
+      require(cs::reconstruct_composite_pixels(layers.data(),layers.size(),pixels,bounds),"mixed V5/V6 native composition");
+      for (int y=0;y<8;++y) for(int x=0;x<8;++x) {
+        const auto expected=x>=2 && x<6 && y>=2 && y<6 ? (y<4 ? b.colors[4] : 0x4d1e1e1eu) : 0u;
+        require(pixels[static_cast<std::size_t>(y)*8+x]==expected,"mixed order, alpha, encoding, geometry and border");
+      }
+      const auto builds=cs::composite_rebuild_count();
+      layers[0].palette.colors[6]=0xffffffff;
+      require(cs::reconstruct_composite_pixels(layers.data(),2,pixels,bounds) && cs::composite_rebuild_count()==builds,"mixed unused dependency cache hit");
+      layers[0].palette.colors[5]=0xff808080;
+      require(cs::reconstruct_composite_pixels(layers.data(),2,pixels,bounds) && cs::composite_rebuild_count()==builds+1,"mixed Q3m successor pulse invalidates cache");
+      cs::forget_engine_textures();
+      require(cs::reconstruct_composite_pixels(layers.data(),2,pixels,bounds) && cs::composite_rebuild_count()==builds+2,"mixed graphics reset");
+    }
+    cs::release();
+    require(cs::prepare(root/"mixed-shared"),"shared resref mixed prepare");
+    cs::FrameHandle other{};
+    if (legacyFirst) require(resolve(0x6115,ref("TEST"),0,0,other),"shared V5 first");
+    require(resolve(0x6110,ref("TEST"),0,0,fractional) && resolve(0x6115,ref("TEST"),0,0,other) && fractional!=other,"same resref disjoint memberships");
+    cs::PaletteSnapshot p{};p.encoding={0x1908,0x1401};p.colors[4]=0x4d000000;p.colors[5]=0xff505050;
+    std::vector<std::uint32_t> pixels;std::uint64_t fingerprint{};
+    require(cs::reconstruct_frame_pixels(fractional,p,pixels,fingerprint) && pixels[0]==0x4d1e1e1e,"target actor uses V6");
+    require(cs::reconstruct_frame_pixels(other,p,pixels,fingerprint) && pixels[0]==0x4d000000,"other actor retains V5");
+    require(cs::reconstruct_frame_pixels(fractional,p,pixels,fingerprint) && pixels[0]==0x4d1e1e1e,"mixed actor A/B/A separation");
+    cs::release();
+  }
+  require(cs::prepare(root/"mixed-component-bad"),"bad mixed component outer catalog authenticated");
+  cs::FrameHandle retained{}, invalid{};
+  require(resolve(0x6110,ref("TEST"),0,0,retained),"first bad-component shard accepted provisionally");
+  require(!resolve(0x6110,ref("LEGACY"),0,0,invalid),"mixed versions within component rejected");
+  std::vector<std::uint32_t> pixels;std::uint64_t fingerprint{};cs::PaletteSnapshot palette{};palette.encoding={0x1908,0x1401};
+  require(!cs::reconstruct_frame_pixels(retained,palette,pixels,fingerprint),"quarantine invalidates retained handle");
+  cs::release();
+  require(cs::prepare(root/"mixed-owner-bad"),"bad mixed owner outer catalog authenticated");
+  require(!resolve(0x6110,ref("TEST"),0,0,invalid),"V6 shared with non-Character owner rejected");
+  require(resolve(0x6110,ref("LEGACY"),0,0,retained),"unrelated valid V5 component survives quarantine");
+  cs::release();
+}
+
 void inspect_pack(const fs::path& directory,const fs::path& oracle) {
   const auto started=std::chrono::steady_clock::now();
   std::uint64_t peakResident=0,peakMetadata=0;
@@ -216,6 +269,20 @@ void inspect_pack(const fs::path& directory,const fs::path& oracle) {
     }
   }
   require(input.peek()==EOF,"pack oracle trailing bytes");
+  if (cs::contains_animation(0x6115)) {
+    std::array<cs::CompositeLayer,4> layers{};
+    const std::array<std::string,4> names{{"CHFF4G12","WQNMCG1","WQNJ8G1","WQNC2G1"}};
+    for(std::size_t n=0;n<names.size();++n) {
+      require(resolve(0x6110,ref(names[n]),0,0,layers[n].frame),"preserved real equipment resolves");
+      layers[n].palette.encoding={0x80e1,0x8367};
+      std::copy_n(colors.data(),256,layers[n].palette.colors.data());
+      require(cs::frame_uses_q3m_profile(layers[n].frame)==(n==0),"real scene uses V6 body and V5 equipment");
+    }
+    cs::CompositeBounds bounds{};std::vector<std::uint32_t> pixels;
+    require(cs::reconstruct_composite_pixels(layers.data(),4,pixels,bounds),"real four-layer mixed composition");
+    cs::FrameHandle other{};
+    require(resolve(0x6115,ref("CHFF4G12"),0,0,other) && !cs::frame_uses_q3m_profile(other),"shared body remains V5 for other animation");
+  }
   cs::release();
   const auto ms=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-started).count();
   std::cout<<"{\"pack_frames\":"<<nf<<",\"palettes\":"<<np<<",\"decoded_pixels\":"<<decoded
@@ -261,6 +328,7 @@ int main(int argc,char** argv) {
       require(!cs::ensure_frame_payload_available(handle),"released handles must be invalid");
     }
     require(accepted==8 && rejected==35,"case coverage count");
+    test_mixed_catalog(root);
     std::cout<<"{\"accepted\":"<<accepted<<",\"rejected\":"<<rejected<<",\"decoded_pixels\":"<<decoded
              <<",\"neutral_reference_decodings\":32832,\"cache_pulses\":16,\"reset\":true,\"eviction_budget_bytes\":134217728}\n";
     return 0;

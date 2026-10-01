@@ -283,6 +283,7 @@ struct CatalogComponent {
   std::uint64_t frameCount{};
   std::uint64_t indexBytes{};
   std::uint64_t registryBytes{};
+  std::uint32_t shardVersion{};
   bool quarantined{};
   bool failureLogged{};
 };
@@ -321,7 +322,7 @@ struct CatalogState {
   std::vector<CatalogShardEntry> shards;
   std::vector<CatalogDirectoryEntry> directory;
   std::uint64_t epoch{};
-  std::uint32_t shardVersion{};
+  std::uint32_t shardVersionsMask{};
 };
 
 struct CatalogLoadRequest {
@@ -3453,12 +3454,19 @@ bool load_catalog_shard_for_request(std::uint64_t epoch,
     }
     auto& shard = g_catalog.shards[shardIndex];
     if (shard.status == CatalogShardEntry::Status::Quarantined) return false;
-    if (g_catalog.shardVersion && g_catalog.shardVersion != parsed.version &&
-        (g_catalog.shardVersion == kXnFractionRegistryVersion || parsed.version == kXnFractionRegistryVersion)) {
-      quarantine_catalog_component_locked(shard.componentIndex, "V6 catalog mixes shard versions");
+    auto& component = g_catalog.components[shard.componentIndex];
+    if (component.shardVersion && component.shardVersion != parsed.version) {
+      quarantine_catalog_component_locked(shard.componentIndex, "catalog component mixes shard versions");
       return false;
     }
-    g_catalog.shardVersion = parsed.version;
+    const auto versions = g_catalog.shardVersionsMask | (1u << parsed.version);
+    if ((versions & (1u << kXnFractionRegistryVersion)) != 0 &&
+        (versions & (1u << kXnRegistryVersion)) != 0) {
+      quarantine_catalog_component_locked(shard.componentIndex, "V6 catalog requires V5 companion components");
+      return false;
+    }
+    component.shardVersion = parsed.version;
+    g_catalog.shardVersionsMask = versions;
     if (!catalog_identity_matches_locked()) return false;
     if (!make_catalog_metadata_room_locked(shardIndex, metadataBytes)) {
       quarantine_catalog_component_locked(
@@ -4279,6 +4287,18 @@ bool reconstruct_frame_pixels(FrameHandle handle, const PaletteSnapshot& palette
     return true;
   } catch (...) {
     pixels.clear();
+    return false;
+  }
+}
+
+bool frame_uses_q3m_profile(FrameHandle handle) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire)) return false;
+    const auto* resource = resource_for_handle_locked(handle);
+    return resource && handle.frameIndex < resource->frames.size() &&
+           resource->frames[handle.frameIndex].fractional;
+  } catch (...) {
     return false;
   }
 }
