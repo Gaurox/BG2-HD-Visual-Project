@@ -168,6 +168,11 @@ if ([int64]$build.required_q3m_x2_decoded_shard_bytes -gt 128MB -and
         [int64]$build.required_q3m_x2_decoded_shard_bytes) {
     throw 'Le runtime ne supporte pas la taille cumulée I/F de ce catalogue Q3m x2.'
 }
+if ([int64]$build.required_q3m_x4_decoded_shard_bytes -gt 512MB -and
+    [int64]$capability.q3m_x4_decoded_shard_limit_bytes -lt
+        [int64]$build.required_q3m_x4_decoded_shard_bytes) {
+    throw 'Le runtime ne supporte pas la taille cumulée I/F de ce catalogue Q3m x4.'
+}
 
 $catalogTarget = Resolve-ChildPath $game ([string]$build.registry_catalog)
 $shards = [Collections.Generic.List[object]]::new()

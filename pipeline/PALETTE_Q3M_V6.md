@@ -177,3 +177,23 @@ Provenance P2 : commandes, toolchain, empreintes sources, DLL, catalogues et ora
   18 palettes, oracle scalaire distinct du décodeur Python ; quatre couches réelles V6,
   BAM partagé de `0x6115` toujours V5. Oracles bornés à 60 000 frames/fichier.
 - Essai `palette-q3m-p3-20261001-v3-full-6110` ; aucune QA ingame implicite.
+
+## Extension P3 — Q3m x4 complet, 2026-10-01
+
+- `palette_complete.py --scale 4` : memes 656 BAM / 178 360 frames, six palettes P1,
+  K6, fixed86 FP16 q32 ; cibles x4 directes, guide xbr4X, aucune reduction x2 ni
+  reprise de pixels ReboutCX historiques. Identite de cache distincte du x2.
+- `write_complete_x4_catalog` : catalogue V2 isole `0x6110`, toutes feuilles V6 ;
+  couverture exacte/doublons verifies. Autres animations = BAM natif pendant le test.
+- Budget V6 x4 cumule I+F <=1 Gio/shard ; **I seul/fichier <=512 Mio**, frame I+F et
+  caches I/F/metadonnees <=128 Mio inchanges ; octets/profils/codecs V6 inchanges.
+- Pack `required_q3m_x4_decoded_shard_bytes` ; runtime
+  `q3m_x4_decoded_shard_limit_bytes=1073741824`. Au-dela de 512 Mio cumules,
+  capacite explicite exigee avant installation, anciennes DLL refusees.
+- Fixtures : `eviction-x4-large` = 272 Mio I + 272 Mio F, eviction sous 128 Mio ;
+  `x4-index-budget` = I seul 544 Mio, F absent, rejet meme si cumul <1 Gio.
+- Verification P1 : les 144 echantillons x4 sont identiques en I/F/dep ; 732 cibles
+  float32 x4 rencontrees pendant l'inference identiques (cles de pixels dedupliquees).
+  Oracles natifs : toutes frames/18 palettes,
+  puis 656 BAM dans une session avec retour au premier ; composition 4 couches V6
+  aussi exigee pour catalogue isole sans `0x6115`. Aucun resultat ingame deduit.

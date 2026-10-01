@@ -12,6 +12,43 @@ import palette_registry as v6
 import run_creature_sprite_x2 as registry
 
 
+def write_complete_x4_catalog(leaves, destination, *, expected_resrefs):
+    """Isolated complete Character x4 catalog; every resource must be freshly V6."""
+    if destination.exists():
+        raise ValueError("Use a new x4 catalog directory")
+    parts = [(Path(leaf), v6.inspect(leaf, include_resource_records=True)) for leaf in leaves]
+    refs = [ref for _, info in parts for ref in info["resources"]]
+    if (not parts or any(info["scale"] != 4 for _, info in parts) or
+            len(refs) != len(set(refs)) or set(refs) != set(expected_resrefs)):
+        raise ValueError("Incomplete, duplicate or non-x4 replacement coverage")
+    destination.mkdir(parents=True)
+    components, shards, directory, logical = [], [], [], []
+    storage = dict(shard_registry_version=6, frame_storage="q3m-u8-per-plane-v1",
+        stored_index_bytes=0, stored_fraction_bytes=0, fraction_bytes=0,
+        compressed_frame_count=0, raw_frame_count=0, compressed_fraction_count=0, fractional_frame_count=0)
+    for n, (source, info) in enumerate(parts):
+        leaf = destination / registry.catalog_shard_filename(info["sha256"])
+        os.link(source, leaf)
+        shards.append(info)
+        components.append(dict(index=n, digest=registry.catalog_component_digest(4, [registry.catalog_shard_entry_bytes(info, leaf)]),
+            shard_start=n, shard_count=1, **{key:info[key] for key in ("resource_count", "frame_count", "index_bytes", "registry_bytes")}))
+        logical.append(registry.catalog_source_component_sha256(4, sorted(info["resource_records"], key=lambda r:r["resref"])))
+        directory.extend(dict(animation_id="0x6110", resref=ref, component_index=n, shard_index=n, resource_ordinal=ordinal)
+                         for ordinal, ref in enumerate(info["resources"]))
+        for key in storage:
+            if key not in ("shard_registry_version", "frame_storage"):
+                storage[key] += info[key]
+    result = registry.write_registry_catalog_index(destination / registry.XN_REGISTRY_CATALOG_FILENAME, 4,
+        [dict(animation_id="0x6110", owner=1, component_indices=list(range(len(parts))))],
+        components, shards, directory, logical, storage)
+    sealed = registry.read_sealed_catalog_index(destination / registry.XN_REGISTRY_CATALOG_FILENAME, result["sha256"])
+    if set(refs) != {r["resref"] for r in sealed["directory"]}:
+        raise ValueError("Sealed x4 coverage differs")
+    return result, dict(target_animation="0x6110", target_resource_count=len(refs), parent_shards_reused=0,
+        all_shards_v6=True, all_resources_v6=True, coverage_identical=True, unrelated_routes_identical=False,
+        other_animations="native BAM; isolated x4 catalogue has one animation")
+
+
 def sha(path):
     with Path(path).open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest().upper()

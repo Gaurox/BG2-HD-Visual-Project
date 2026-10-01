@@ -29,9 +29,9 @@ assert FRAME.size == FRAME_BYTES
 
 
 def maximum_decoded_shard_bytes(scale):
-    # Full 0x6110 equipment can use the complete legacy I budget and a matching
-    # F plane. File size, I budget, per-frame limit and resident caches stay fixed.
-    return registry.maximum_registry_bytes(scale) * (2 if scale == 2 else 1)
+    # Full 0x6110 equipment can use the legacy I budget plus a matching F plane.
+    # File size, I budget, per-frame limit and resident caches stay fixed.
+    return registry.maximum_registry_bytes(scale) * 2
 
 
 class _Codec:

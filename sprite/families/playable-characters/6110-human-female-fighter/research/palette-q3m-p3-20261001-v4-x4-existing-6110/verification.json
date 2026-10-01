@@ -1,0 +1,78 @@
+{
+  "schema": "bg2-upscale-existing-x4-native-verification-v1",
+  "status": "passed-offline-ready-for-manual-game",
+  "scale": 4,
+  "animation_id": "0x6110",
+  "resources": 656,
+  "frames": 178360,
+  "q3m_samples": 144,
+  "legacy_reboutcx_frames": 178216,
+  "native_pack_tests": [
+    {
+      "group": "complete_replacement_oracles",
+      "oracle": {
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v4-x4-existing-6110/work/assembly-1790833297682385200/replaced-oracles/decoder-oracle-00.bin",
+        "frames": 5175,
+        "sha256": "2a5617d12c3d7a40475644045353568ab3042370b7c8855c980d4169172160a9"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v1\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v4-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v4-x4-native\\oracles\\complete_replacement_oracles-0.bin"
+      ],
+      "native_test": {
+        "pack_frames": 5175,
+        "palettes": 18,
+        "decoded_pixels": 601400448,
+        "peak_resident_I_F_bytes": 34811104,
+        "peak_metadata_bytes": 3993488,
+        "verification_elapsed_ms": 3019
+      },
+      "log": "captures/complete_replacement_oracles-0.log",
+      "log_sha256": "6829F0F6BA0D2C45F5C982303232B26DCCEE6FDF92A4E835A60A7A037BC125AE"
+    },
+    {
+      "group": "working_set_oracles",
+      "oracle": {
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v4-x4-existing-6110/work/assembly-1790833297682385200/working-set-oracles/decoder-oracle-00.bin",
+        "frames": 656,
+        "sha256": "80e5fbdeb9e506b4eda97c72f2318d6ef3c065265ce6d9a480470dc570838a89"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v1\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v4-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v4-x4-native\\oracles\\working_set_oracles-0.bin"
+      ],
+      "native_test": {
+        "pack_frames": 656,
+        "palettes": 18,
+        "decoded_pixels": 267212736,
+        "peak_resident_I_F_bytes": 14853808,
+        "peak_metadata_bytes": 133025328,
+        "verification_elapsed_ms": 3072
+      },
+      "log": "captures/working_set_oracles-0.log",
+      "log_sha256": "41F375E5ECC1902BA1AD21A43A933D181AB178C5B38EB254954842FFC40EDB25"
+    }
+  ],
+  "reference_decodings": 104958,
+  "decoded_pixel_comparisons": 868613184,
+  "native_test_executable_sha256": "33E12AE4252A6852646D5EBC802CF79FEC40DA4F56ACD40CD0C09CFEA30F1197",
+  "coverage_sha256": "BD5AC8F1CE5D746A53801DACE99798A0BFF7E55C4FD50396F311BBB6159295B1",
+  "catalog_sha256": "938DC483847F72BF327A58D1F7AD5F196FEA5ECFEB30D0A8B1F8702FC310A226",
+  "source_sha256": {
+    "pipeline/scripts/palette_complete.py": "4260F434AE2C1C14247F8E4070657477C7873BA276FAE0692361375D870421E7",
+    "pipeline/scripts/palette_registry.py": "92C0FAA06BA16B9015898711786DFF681755848BD2DE55179CEEC188F32ACA49",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "39F61FD9D3A3F9318C3A0820AC39075D6408DE4625F34005EE37E4681BE974B0",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_fraction_tests.cpp": "564A5BC5BA02400E79960E3278DA8987BE9881CB42874F2B1BBFABD3E68B6750"
+  },
+  "assembly_sha256": "538577F9B171AC06EF57C6D2C79271159498EFB773125350B8BBD89A04450680",
+  "native_validation_script_sha256": "30F9197B34B3082F60D5A2BD0104319296154BA54630F4E6A5693D427CEDC1D9",
+  "independent_oracle": "palette_complete.Oracle: scalar LUT independent of encoder decode",
+  "unchanged_assets": "644 V5 resource records copied byte for byte; other frames of 12 V6 resources retain exact legacy I",
+  "other_animations": "native BAM during isolated 0x6110 x4 test",
+  "ingame_validated": false,
+  "visual_qa_accepted": false
+}

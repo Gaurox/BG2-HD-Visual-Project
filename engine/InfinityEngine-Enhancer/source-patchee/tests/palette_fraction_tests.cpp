@@ -269,7 +269,7 @@ void inspect_pack(const fs::path& directory,const fs::path& oracle,bool complete
     }
   }
   require(input.peek()==EOF,"pack oracle trailing bytes");
-  if (cs::contains_animation(0x6115)) {
+  if (complete || cs::contains_animation(0x6115)) {
     std::array<cs::CompositeLayer,4> layers{};
     const std::array<std::string,4> names{{"CHFF4G12","WQNMCG1","WQNJ8G1","WQNC2G1"}};
     for(std::size_t n=0;n<names.size();++n) {
@@ -281,8 +281,10 @@ void inspect_pack(const fs::path& directory,const fs::path& oracle,bool complete
     }
     cs::CompositeBounds bounds{};std::vector<std::uint32_t> pixels;
     require(cs::reconstruct_composite_pixels(layers.data(),4,pixels,bounds),"real four-layer mixed composition");
-    cs::FrameHandle other{};
-    require(resolve(0x6115,ref("CHFF4G12"),0,0,other) && !cs::frame_uses_q3m_profile(other),"shared body remains V5 for other animation");
+    if (cs::contains_animation(0x6115)) {
+      cs::FrameHandle other{};
+      require(resolve(0x6115,ref("CHFF4G12"),0,0,other) && !cs::frame_uses_q3m_profile(other),"shared body remains V5 for other animation");
+    }
   }
   cs::release();
   const auto ms=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-started).count();
@@ -315,10 +317,10 @@ int main(int argc,char** argv) {
         ++accepted;
         if(name=="partial") test_cache(handle);
         else if(name=="partial-zero") test_zero_cache(handle);
-        else if(name=="eviction" || name=="eviction-x2") test_eviction(handle);
+        else if(name=="eviction" || name=="eviction-x2" || name=="eviction-x4-large") test_eviction(handle);
         else compare_golden(golden,handle,name=="raw" || name=="compressed");
         cs::FrameHandle repeated{};
-        if(name!="eviction" && name!="eviction-x2") require(resolve(0x6110,ref("TEST"),0,1,repeated) && repeated==handle,"repeated slot identity");
+        if(name!="eviction" && name!="eviction-x2" && name!="eviction-x4-large") require(resolve(0x6110,ref("TEST"),0,1,repeated) && repeated==handle,"repeated slot identity");
         require(!cs::resolve_frame(0x6110,ref("TEST"),1,0,repeated),"empty native cycle");
       } else {
         ++rejected;
@@ -328,7 +330,7 @@ int main(int argc,char** argv) {
       cs::release();
       require(!cs::ensure_frame_payload_available(handle),"released handles must be invalid");
     }
-    require(accepted==9 && rejected==36,"case coverage count");
+    require(accepted==10 && rejected==37,"case coverage count");
     test_mixed_catalog(root);
     std::cout<<"{\"accepted\":"<<accepted<<",\"rejected\":"<<rejected<<",\"decoded_pixels\":"<<decoded
              <<",\"neutral_reference_decodings\":32832,\"cache_pulses\":16,\"reset\":true,\"eviction_budget_bytes\":134217728}\n";

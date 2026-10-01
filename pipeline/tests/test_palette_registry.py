@@ -7,6 +7,7 @@ import struct
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -26,6 +27,20 @@ def resource(*,fraction=3,index=4):
 
 
 class PaletteRegistryTests(unittest.TestCase):
+    @unittest.skipUnless(os.name=="nt","XPRESS_HUFF is a Windows codec")
+    def test_x4_combined_extension_preserves_independent_I_limit(self):
+        with tempfile.TemporaryDirectory() as td, patch.object(pipeline,"maximum_registry_bytes",return_value=8192):
+            r=resource();frame=r["frames"][0]
+            frame["geometry"]=(16,16,-3,5,0)
+            for name in ("I","F","guide"):
+                frame[name]=np.full((64,64),3 if name=="F" else 4,np.uint8)
+            r["frames"]=[frame]*2
+            info=v6.write(Path(td)/"full",4,[r])
+            self.assertEqual(info["index_bytes"]+info["fraction_bytes"],16384)
+            frame["F"].fill(0);r["frames"]=[frame]*3
+            with self.assertRaisesRegex(RuntimeError,"decoded shard exceeds"):
+                v6.write(Path(td)/"I-too-large",4,[r])
+
     def test_raw_roundtrip_profiles_geometry_cycles_absent_representative(self):
         with tempfile.TemporaryDirectory() as td:
             p=Path(td)/"test.registry"

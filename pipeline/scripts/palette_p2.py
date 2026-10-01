@@ -149,9 +149,25 @@ def fixtures(output):
     over=bytearray(x2[:80]);struct.pack_into("<I",over,72,9)
     over.extend(index_only*9);over.extend(x2[cursor:])
     _unchecked_catalog(root/"x2-index-budget",bytes(over),{**x2info,"frame_count":9,"index_bytes":9*4096*4096})
+    # Full x4 needs I+F >512MiB while I alone remains <=512MiB.
+    x4raw=(root/"eviction.registry").read_bytes()
+    block_bytes=568+struct.unpack_from("<I",x4raw,92)[0]+struct.unpack_from("<I",x4raw,640)[0]
+    block=x4raw[80:80+block_bytes]
+    tail=x4raw[80+5*block_bytes:]
+    extended=bytearray(x4raw[:80]);struct.pack_into("<I",extended,72,17)
+    extended.extend(block*17);extended.extend(tail)
+    (root/"eviction-x4-large.registry").write_bytes(extended)
+    extended_info=v6.inspect(root/"eviction-x4-large.registry")
+    _unchecked_catalog(root/"eviction-x4-large",bytes(extended),extended_info)
+    # I-only 544MiB is below the new combined 1GiB limit: still reject by I.
+    x4_index=bytearray(index_only);struct.pack_into("<HH",x4_index,0,1024,1024)
+    over4=bytearray(x4raw[:80]);struct.pack_into("<I",over4,72,34)
+    over4.extend(x4_index*34);over4.extend(tail)
+    _unchecked_catalog(root/"x4-index-budget",bytes(over4),{**ei,"frame_count":34,"index_bytes":34*4096*4096})
     del large_i,large_f,large,eviction
-    cases=[(name,"ok",0x6110) for name in (*valid,"legacy-v5","partial","partial-zero","eviction","eviction-x2")]
+    cases=[(name,"ok",0x6110) for name in (*valid,"legacy-v5","partial","partial-zero","eviction","eviction-x2","eviction-x4-large")]
     cases.append(("x2-index-budget","bad",0x6110))
+    cases.append(("x4-index-budget","bad",0x6110))
     raw,info=valid["raw"]
     mutations=[("profile",24,struct.pack("<I",2)),("rule",28,struct.pack("<I",2)),
                ("version",8,struct.pack("<I",7)),("scale",12,struct.pack("<I",3)),

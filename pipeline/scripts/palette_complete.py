@@ -1,4 +1,4 @@
-"""Complete the scoped 0x6110 Q3m K6 x2 experiment; never install or accept QA."""
+"""Complete the scoped 0x6110 Q3m K6 x2/x4 experiment; never install or accept QA."""
 from __future__ import annotations
 
 import argparse
@@ -23,7 +23,7 @@ import run_creature_sprite_x2 as registry
 from palette_oracle import read_bam_p8
 from palette_p2 import P1, golden
 from palette_p3 import ROOT, relative, sha, write_json
-from palette_p3_catalog import derive
+from palette_p3_catalog import derive, write_complete_x4_catalog
 from reboutcx_batch import load_model, prepare_inference_rgb
 from reboutcx_batch_p12 import infer_float_crops
 from reboutcx_cache_p12 import frame_key
@@ -88,15 +88,18 @@ class Oracle:
 
 
 class PixelProcessor:
-    def __init__(self, output, fitting, context, workers):
+    def __init__(self, output, fitting, context, workers, scale=2):
         import torch
         from chainner_ext import ResizeFilter, resize
         os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
         torch.set_num_threads(4)
         torch.backends.cudnn.deterministic = True
         torch.use_deterministic_algorithms(True)
-        self.output, self.fitting = output, fitting
-        self.identity = hashlib.sha256(json.dumps(context, sort_keys=True).encode() + fitting.tobytes()).digest()
+        if scale not in (2, 4):
+            raise ValueError("Unsupported Q3m scale")
+        self.output, self.fitting, self.scale = output, fitting, scale
+        self.identity = hashlib.sha256(json.dumps(context, sort_keys=True).encode() + fitting.tobytes()
+            + (b"/direct-x4" if scale == 4 else b"")).digest()
         self.descriptor, self.versions = load_model(get_path("reboutcx_model", required=True), device="cuda:0", fp16=True)
         self.resize, self.box = resize, ResizeFilter.Box
         self.pool = ThreadPoolExecutor(max_workers=workers)
@@ -128,7 +131,7 @@ class PixelProcessor:
         guides, pending = {}, {}
         for key, frame in unique.items():
             if prepare_inference_rgb(frame, self.fitting[0]) is None or (frame.indices.shape == (1, 1) and int(frame.indices[0, 0]) == 2):
-                guide = np.repeat(np.repeat(frame.indices, 2, 0), 2, 1)
+                guide = np.repeat(np.repeat(frame.indices, self.scale, 0), self.scale, 1)
                 save_npz(self.cache / (key + ".npz"), guide=guide, I=guide, F=np.zeros_like(guide),
                          dep=encoder.dependency_mask(guide, np.zeros_like(guide)))
                 self.stats["special_pixel_keys"] += 1
@@ -137,10 +140,10 @@ class PixelProcessor:
         keys = list(pending)
         for start in range(0, len(keys), 64):
             selected = keys[start:start + 64]
-            outputs = registry.run_xbr([pending[k] for k in selected], self.scalepix, "node", registry.direct_upscale_contract(2))
+            outputs = registry.run_xbr([pending[k] for k in selected], self.scalepix, "node", registry.direct_upscale_contract(self.scale))
             for key, (w, h, rgba) in zip(selected, outputs, strict=True):
                 frame = pending[key]
-                provenance = registry.xbr_provenance_indices(frame, 2) if registry.has_duplicate_used_rgba_indices(frame) else None
+                provenance = registry.xbr_provenance_indices(frame, self.scale) if registry.has_duplicate_used_rgba_indices(frame) else None
                 guide, _ = registry.map_output(frame, rgba, provenance)
                 guides[key] = guide.reshape(h, w)
         groups = defaultdict(list)
@@ -156,11 +159,12 @@ class PixelProcessor:
                 crops, _ = infer_float_crops(self.descriptor, rgb, canvas=canvas, fp16=True)
                 self.stats["neural_targets"] += len(batch)
                 for (key, frame, p), crop in zip(batch, crops, strict=True):
-                    target = np.ascontiguousarray(np.clip(self.resize(crop, (frame.width * 2, frame.height * 2), self.box, False), 0, 1), dtype=np.float32)
+                    pixels = crop if self.scale == 4 else self.resize(crop, (frame.width * 2, frame.height * 2), self.box, False)
+                    target = np.ascontiguousarray(np.clip(pixels, 0, 1), dtype=np.float32)
                     original_key = f"{frame.resref}_{frame.index:04d}"
                     if original_key in self.p1_frames:
                         with np.load(P1 / self.p1_targets[names[p]][original_key], allow_pickle=False) as expected:
-                            if not np.array_equal(target, expected["x2"]):
+                            if not np.array_equal(target, expected[f"x{self.scale}"]):
                                 raise ValueError(f"Fixed86 inference changed the P1 target: {original_key}/{names[p]}")
                         self.stats["p1_targets_bit_exact"] += 1
                     targets = completed.setdefault(key, {})
@@ -216,8 +220,10 @@ def verify_inference_context(context, frozen):
                 p1_sha256=frozen["kernels"]["reboutcx_batch.py"], current_sha256=context["kernels"]["reboutcx_batch.py"])
 
 
-def complete(output, parent_pointer, runtime_source, workers, resume=False):
+def complete(output, parent_pointer, runtime_source, workers, resume=False, scale=2):
     started = time.monotonic()
+    if scale not in (2, 4):
+        raise ValueError("Unsupported Q3m scale")
     if output.exists() and (not resume or (output / "coverage.json").exists()):
         raise ValueError("Use a new full experiment; prior runs remain immutable")
     pointer = json.loads(parent_pointer.read_text())
@@ -239,7 +245,7 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
     fitting = palettes[:6, :, :3].copy()
     fitting[:, 0] = (0, 255, 0)  # Exact neutral source palette; Realize clears entry 0 only at decode.
     output.mkdir(parents=True, exist_ok=True)
-    recipe = dict(animation_id="0x6110", scale=2, method="Q3m", k=6,
+    recipe = dict(animation_id="0x6110", scale=scale, method="Q3m", k=6,
         boundary_mixing=False, dithering=False, inference=context, kernel_compatibility=kernel_compatibility,
         palettes=experiment["palettes"][:6],
         parent_catalog_sha256=sha(parent_catalog), source_sha256={r:sources[r]["canonical_sha256"] for r in refs})
@@ -249,12 +255,15 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
     else:
         write_json(output / "recipe.json", recipe)
     (output / ".gitignore").write_text("candidate/\nwork/\ncaptures/\ningame-runtime/\n*/generation/iee-assets/\n*/ingame-installation/\nactive-session.json\n", encoding="utf-8")
-    processor = PixelProcessor(output, fitting, context, workers)
+    (output / ".gitattributes").write_text("*.json -text whitespace=cr-at-eol\n", encoding="utf-8")
+    processor = PixelProcessor(output, fitting, context, workers, scale)
     leaves = output / "work/leaves"; leaves.mkdir(exist_ok=True)
     oracle_directory = output / "work/oracles"
     if oracle_directory.exists():
         oracle_directory = output / "work" / f"oracles-{time.time_ns()}"
     oracle = Oracle(oracle_directory, palettes)
+    working_oracle = Oracle(output / "work" / f"working-set-{time.time_ns()}", palettes) if scale == 4 else None
+    first_resource = None
     reports, replacements, canonical_sources, p1_checked = [], [], {}, set()
     try:
         for number, ref in enumerate(refs, 1):
@@ -273,7 +282,7 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
                 encoder.check_contract(guide, i, f, dep)
                 key = f"{ref}_{frame.index:04d}"
                 if key in experiment["frames"]:
-                    with np.load(P1 / "encoded" / (key + "-x2.npz"), allow_pickle=False) as expected:
+                    with np.load(P1 / "encoded" / (key + f"-x{scale}.npz"), allow_pickle=False) as expected:
                         if any(not np.array_equal(value, expected["Q3m-k6_" + name]) for name, value in (("I", i), ("F", f), ("dep", dep))):
                             raise ValueError(f"Full encoding changed frozen P1 bytes: {key}")
                     p1_checked.add(key)
@@ -289,7 +298,9 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
                 info = v6.inspect(leaf)
             else:
                 leaf.with_suffix(".registry.part").unlink(missing_ok=True)
-                info = v6.write(leaf, 2, [resource])
+                info = v6.write(leaf, scale, [resource])
+            if info["scale"] != scale:
+                raise ValueError("Working shard scale changed")
             readback = v6.inspect(leaf, include_frames=True)["frame_data"][0]
             if readback["cycles"] != resource["cycles"] or readback["source_sha256"] != source["canonical_sha256"].lower():
                 raise ValueError(f"Source/cycles roundtrip changed: {ref}")
@@ -298,6 +309,11 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
                     a["I"].tobytes() != b["I"] or (a["F"].tobytes() if np.any(a["F"]) else b"") != b["F"]):
                     raise ValueError(f"Plane/geometry roundtrip changed: {ref}")
             oracle.append(resource)
+            if working_oracle is not None:
+                first = dict(resource, frames=records[:1])
+                working_oracle.append(first)
+                if first_resource is None:
+                    first_resource = first
             replacements.append(leaf)
             reports.append(dict(resref=ref, frames=len(records), source_sha256=source["canonical_sha256"],
                 registry_sha256=info["sha256"], registry_bytes=info["registry_bytes"],
@@ -307,25 +323,34 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
             print(f"complete {number}/{len(refs)} {ref} frames={len(records)} fractional={info['fractional_frame_count']} elapsed={time.monotonic()-started:.1f}s", flush=True)
     finally:
         oracle.close_chunk()
+        if working_oracle is not None:
+            if first_resource is not None:
+                working_oracle.append(first_resource)
+            working_oracle.close_chunk()
         processor.pool.shutdown(wait=True)
     if p1_checked != set(experiment["frames"]):
         raise ValueError("Frozen P1 sample coverage changed")
-    label = "x2-q3m-k6"
+    label = f"x{scale}-q3m-k6"
     generation = output / label / "generation"
     assets = generation / "iee-assets/creature-sprites"
-    info, preservation = derive(parent_catalog, parent_manifest, replacements, assets, canonical_sources=canonical_sources)
+    if scale == 2:
+        info, preservation = derive(parent_catalog, parent_manifest, replacements, assets, canonical_sources=canonical_sources)
+    else:
+        info, preservation = write_complete_x4_catalog(replacements, assets, expected_resrefs=refs)
     write_json(generation / "preservation.json", preservation)
     build = dict(schema="bg2-upscale-creature-sprite-xn-catalog-pack-v1", generation_id=label,
-        registry_layout="catalog", registry_catalog_version=2, registry_catalog_shard_version=0,
-        registry_catalog_shard_versions=[5, 6], registry_catalog_frame_storage="mixed-v5-v6-components-v1",
-        registry_catalog_frame_storages=["XPRESS_HUFF-or-raw-per-frame-v1", "q3m-u8-per-plane-v1"],
-        required_q3m_x2_decoded_shard_bytes=max(r["decoded_pixels"]+r["fraction_bytes"] for r in reports),
+        registry_layout="catalog", registry_scale=scale, registry_catalog_version=2,
+        registry_catalog_shard_version=0 if scale == 2 else 6,
+        registry_catalog_shard_versions=[5, 6] if scale == 2 else [6],
+        registry_catalog_frame_storage="mixed-v5-v6-components-v1" if scale == 2 else "q3m-u8-per-plane-v1",
+        registry_catalog_frame_storages=["XPRESS_HUFF-or-raw-per-frame-v1", "q3m-u8-per-plane-v1"] if scale == 2 else ["q3m-u8-per-plane-v1"],
         registry_catalog="iee-assets/creature-sprites/CreatureSprites-XN.catalog",
         registry_catalog_sha256=info["sha256"], registry_catalog_bytes=info["registry_catalog_bytes"],
         animation_ids=[a["animation_id"] for a in info["animations"]], shards=info["shards"],
         registry_catalog_logical_component_digests=info["logical_component_digests"],
         registry_catalog_logical_content_sha256=info["logical_content_sha256"], storage={k:info[k] for k in
-        ("shard_registry_versions", "frame_storage", "stored_index_bytes", "compressed_frame_count", "raw_frame_count")})
+        ("shard_registry_versions" if scale == 2 else "shard_registry_version", "frame_storage", "stored_index_bytes", "compressed_frame_count", "raw_frame_count")})
+    build[f"required_q3m_x{scale}_decoded_shard_bytes"] = max(r["decoded_pixels"]+r["fraction_bytes"] for r in reports)
     write_json(generation / "build-manifest.json", build)
     write_json(output / label / "current-generation.json", dict(
         schema="bg2-upscale-creature-sprite-xn-catalog-current-generation-v1", generation_id=label,
@@ -342,7 +367,7 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
         job_id=f"{output.name}-{label}", paths=dict(game_root="config://bg2ee_game_root", run_dir=relative(output / label)),
         compatibility=dict(baldur_real_sha256=runtime["game_profile"]["baldur_real_sha256"])))
     write_json(output / "session.json", dict(schema="bg2-upscale-character-palette-p3-session-v1", status="prepared",
-        animation_id="0x6110", scale=2, method="Q3m", k=6, boundary_mixing=False, filter="Nearest",
+        animation_id="0x6110", scale=scale, method="Q3m", k=6, boundary_mixing=False, filter="Nearest",
         resources=len(reports), frames=sum(r["frames"] for r in reports), runtime_dll_sha256=sha(target),
         ingame_validated=False, visual_qa_accepted=False))
     write_json(output / "coverage.json", dict(schema="bg2-upscale-character-palette-complete-v1", status="generated-not-native-verified",
@@ -353,6 +378,9 @@ def complete(output, parent_pointer, runtime_source, workers, resume=False):
         catalog_sha256=info["sha256"], parent_shards_reused=preservation["parent_shards_reused"],
         shards=info["shard_count"], unrelated_routes_identical=preservation["unrelated_routes_identical"],
         elapsed_seconds=time.monotonic()-started, visual_qa_accepted=False))
+    if working_oracle is not None:
+        write_json(output / "working-set-oracles.json", dict(directory=relative(working_oracle.directory), oracles=working_oracle.records,
+            resources=len(reports), first_BAM_repeated=True))
     print(json.dumps(dict(status="generated", run=relative(output), frames=sum(r["frames"] for r in reports))), flush=True)
 
 
@@ -362,6 +390,7 @@ if __name__ == "__main__":
     parser.add_argument("--parent-pointer", type=Path, default=ROOT / "sprite/catalogs/creature-x2-reboutcx/runs/catalog-reboutcx-playable-characters-p13-v1/current-generation.json")
     parser.add_argument("--runtime", type=Path, default=P1.parent / "palette-q3m-p3-20261001-v2/runtime.json")
     parser.add_argument("--workers", type=int, choices=range(1, 9), default=4)
+    parser.add_argument("--scale", type=int, choices=(2, 4), default=2)
     parser.add_argument("--resume", action="store_true", help="Resume an unsealed working run with the same recipe")
     args = parser.parse_args()
-    complete(args.output.resolve(), args.parent_pointer.resolve(), args.runtime.resolve(), args.workers, args.resume)
+    complete(args.output.resolve(), args.parent_pointer.resolve(), args.runtime.resolve(), args.workers, args.resume, args.scale)

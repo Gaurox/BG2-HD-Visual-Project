@@ -2271,7 +2271,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       }
       if (!checked_add(decodedPayloadBytes, expectedIndices * (fractionPresent ? 2ull : 1ull),
                        maximum_registry_bytes_for_scale(parsed.scale) *
-                           (fractionalRegistry && parsed.scale == 2 ? 2ull : 1ull))) {
+                           (fractionalRegistry ? 2ull : 1ull))) {
         throw std::runtime_error("decoded registry payload exceeds bound");
       }
       const auto indexOffset = reader.position();

@@ -1,0 +1,157 @@
+{
+  "schema": "bg2-upscale-character-palette-complete-verification-v1",
+  "status": "passed-offline-ready-for-manual-game",
+  "animation_id": "0x6110",
+  "scale": 4,
+  "method": "Q3m",
+  "k": 6,
+  "boundary_mixing": false,
+  "dithering": false,
+  "resource_count": 656,
+  "frames": 178360,
+  "p1_samples_byte_identical": 144,
+  "python_tests_passed": 45,
+  "ctest_suites_passed": 2,
+  "native_valid_fixtures": 10,
+  "native_invalid_fixtures": 37,
+  "native_pack_tests": [
+    {
+      "group": "complete",
+      "oracle": {
+        "path": "decoder-oracle-00.bin",
+        "frames": 60000,
+        "sha256": "cc54d4e7223dd41ab09dd960beb26b42c8ab07c6d9c97ac529453212db5d0cd8"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v5-x4\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack-complete",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\oracles\\complete-0.bin"
+      ],
+      "native_test": {
+        "pack_frames": 60000,
+        "palettes": 18,
+        "decoded_pixels": 7955574624,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 46415400,
+        "verification_elapsed_ms": 53904
+      },
+      "log": "captures/complete-0-native.log",
+      "log_sha256": "95169aaa8443671d8d9013206b62a2f89e8de7e37497c416ec69578d761b50c2"
+    },
+    {
+      "group": "complete",
+      "oracle": {
+        "path": "decoder-oracle-01.bin",
+        "frames": 60000,
+        "sha256": "a021bad9e5140369e89d3fd98cbaf7bb07a64fb2bd3e391e8ee47c7323e760b8"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v5-x4\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack-complete",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\oracles\\complete-1.bin"
+      ],
+      "native_test": {
+        "pack_frames": 60000,
+        "palettes": 18,
+        "decoded_pixels": 40731339744,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 46207920,
+        "verification_elapsed_ms": 155381
+      },
+      "log": "captures/complete-1-native.log",
+      "log_sha256": "b8a36446c9849f1962e7ac86b4832c4ba13c177b3c7d96ada5033561ddf8499a"
+    },
+    {
+      "group": "complete",
+      "oracle": {
+        "path": "decoder-oracle-02.bin",
+        "frames": 58360,
+        "sha256": "fec3bb2033ab5f43c64c9c731d3c7b1577af5c8c258283b79600ff3f1576f3f9"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v5-x4\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack-complete",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\oracles\\complete-2.bin"
+      ],
+      "native_test": {
+        "pack_frames": 58360,
+        "palettes": 18,
+        "decoded_pixels": 19540253376,
+        "peak_resident_I_F_bytes": 134217728,
+        "peak_metadata_bytes": 45086104,
+        "verification_elapsed_ms": 84712
+      },
+      "log": "captures/complete-2-native.log",
+      "log_sha256": "310ceeb34eb645aeeb4cfc588756a4c02dc5ec4bc1da322bb1b79f8d764eb12d"
+    },
+    {
+      "group": "working-set",
+      "oracle": {
+        "path": "decoder-oracle-00.bin",
+        "frames": 657,
+        "sha256": "f5391a71aa8f7d2bde93944ef754561e6c2be20fb34407b4fae19bcb3d79aae7"
+      },
+      "command": [
+        "G:\\AI\\BG2_Upscale\\build\\palette-q3m-p3-20261001-v5-x4\\cmake\\Release\\iee_palette_fraction_tests.exe",
+        "--pack-complete",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\creature-sprites",
+        "G:\\AI\\BG2_Upscale\\build\\p3-6110-v5-x4-native\\oracles\\working-set-0.bin"
+      ],
+      "native_test": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 267702624,
+        "peak_resident_I_F_bytes": 29198800,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 17135
+      },
+      "log": "captures/working-set-0-native.log",
+      "log_sha256": "b6d59bb6ad0f299cd5612e2fd8335bb2e15447edff6f0067feb44eaaeb40f795"
+    }
+  ],
+  "reference_decodings": 3222306,
+  "complete_decoded_pixel_comparisons": 68227167744,
+  "decoded_pixel_comparisons": 68494870368,
+  "runtime_dll_sha256": "250bcf9219152bb70358cf8687daa14351878b2c57b116582460810fb0938fe3",
+  "native_test_executable_sha256": "723fbe2e9ac96dd24eb8a4fced2791356fdd45dbdf76996813af72655b8756dc",
+  "catalog_sha256": "F52A76C3BBC7890B0596AEA2B3625212D23129A85E23C3961EFCFB2653DB8777",
+  "required_q3m_x4_decoded_shard_bytes": 747384320,
+  "resident_I_F_budget_bytes": 134217728,
+  "metadata_budget_bytes": 134217728,
+  "frozen_x2_source_and_frame_coverage_identical": true,
+  "physical_pixel_count_ratio_to_x2": 4,
+  "native_read_view": {
+    "path": "build/p3-6110-v5-x4-native/creature-sprites",
+    "same_underlying_files": true
+  },
+  "coverage_sha256": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+  "recipe_sha256": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+  "preservation_sha256": "d2c19d7da458b0cf3d37a10c2857b2e9e032dd43fb36c94213fe98c7705d33c0",
+  "ctest_log_sha256": "8d4ef1ebfd89317a34351ee9a20910ae97659b8d34fb4e99962e725151a23bca",
+  "source_sha256": {
+    "pipeline/scripts/palette_complete.py": "09a8c9baf54f361e23846506e26d26de43dfbc4ce6dc01df8ad7486ff0cf202f",
+    "pipeline/scripts/palette_frac_encode.py": "578f69bbd0fe422e3f26acc247d10955a12f4e07165e42d72cf8c469382bce7b",
+    "pipeline/scripts/palette_registry.py": "d63a1bac7a58633ea70ef87af9ed67d4c5e5bfb3f6016c6dc5924bbcac756b3e",
+    "pipeline/scripts/palette_p3_catalog.py": "9e762f59aff12c520433071831491a92161e07551fbe79f56936f7a9185b8da1",
+    "pipeline/scripts/palette_p2.py": "e35d7d05cc252741d7992c5ed8e033e037244256c9aa616124b63c778704d6e9",
+    "pipeline/scripts/Start-Palette-Q3m-P3.ps1": "b9b9014ec84e4fbf3ebac691d3cb3a2e9d2d9079e5cf9ab50ed0535bfe1ab602",
+    "pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1": "6a1be41efe363debde4f1772d5e78739c53a98b454ef80c38b24b1e38fad05f6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "cff04efe257966f77bb6c8fd608d5101ff5740be81fc326efe58396022d097bb",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_fraction.h": "69044a08c85d5af71ca977abb150dd8f7f40af057396b10131359d519e314a43",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_fraction_tests.cpp": "3dae7d98fcd034eaf8061e5f543b85164711b32712246ac6d18492c6bd37f605"
+  },
+  "native_validation_script_sha256": "516692686268e096622e5f48f47f83f61ba6cc196ba1d30a1d1043718fac754b",
+  "independent_oracle": "palette_complete.Oracle: scalar class intervals and LUT independent of encoder decode",
+  "legacy_pixels_reused": 0,
+  "other_animations": "native BAM during isolated 0x6110 x4 test",
+  "ingame_validated": false,
+  "visual_qa_accepted": false,
+  "limitations": [
+    "Synthetic oracle alpha; live palette/effects and GL require manual P3 evidence.",
+    "REF P1 regression unchanged: +11.59% x4.",
+    "WINGS01B/YW has no source BAM for 0x6110; inherited absence retained."
+  ]
+}

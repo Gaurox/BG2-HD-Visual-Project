@@ -3,6 +3,7 @@ param(
     [Parameter(Mandatory = $true)][string]$Run,
     [string]$GameRoot,
     [ValidateSet('Q0', 'Q3m', 'Restore')][string]$Mode = 'Q3m',
+    [ValidateSet(2, 4)][int]$Scale = 2,
     [switch]$TracePalettes
 )
 
@@ -29,7 +30,7 @@ if ($Mode -eq 'Restore') {
     return
 }
 
-$label = if ($Mode -eq 'Q0') { 'x2-q0' } else { 'x2-q3m-k6' }
+$label = if ($Mode -eq 'Q0') { "x$Scale-q0" } else { "x$Scale-q3m-k6" }
 $job = Join-Path $runRoot "$label.job.json"
 $newRuntime = -not (Test-Path -LiteralPath (Join-Path $runtimeState 'active-test.json'))
 & (Join-Path $PSScriptRoot 'Install-IEE-Runtime-Test.ps1') -Manifest $runtimeManifest -GameRoot $game -StateRoot $runtimeState
