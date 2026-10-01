@@ -251,8 +251,16 @@ void release() noexcept;
 [[nodiscard]] bool contains_resource(const std::array<char, 8>& resref) noexcept;
 
 // Resolves CVidCell's current cycle slot through the original BAM lookup.
+enum class FrameResolveMode : std::uint8_t {
+  NonBlocking,
+  // Character draws must not alternate native/HD while an authenticated V2
+  // shard loads. Wait only for this resource's metadata; payloads stay lazy.
+  // Unknown mappings, invalid shards and legacy discovery still fail closed.
+  WaitForCharacterMetadata,
+};
 bool resolve_frame(std::uint16_t animationId, const std::array<char, 8>& resref,
-                   int sequence, int currentFrame, FrameHandle& out) noexcept;
+                   int sequence, int currentFrame, FrameHandle& out,
+                   FrameResolveMode mode = FrameResolveMode::NonBlocking) noexcept;
 bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentFrame,
                    FrameHandle& out) noexcept;
 

@@ -47,6 +47,12 @@ std::array<char,8> ref(const std::string& name) {
 }
 bool resolve(std::uint16_t animation, const std::array<char,8>& name,
              int sequence, int slot, cs::FrameHandle& handle) {
+  if (cs::animation_targets_character(animation)) {
+    // One cold render call must resolve a valid Character resource. Retrying
+    // here would hide the native/HD alternation seen with the async resolver.
+    return cs::resolve_frame(animation,name,sequence,slot,handle,
+                            cs::FrameResolveMode::WaitForCharacterMetadata);
+  }
   const auto deadline = std::chrono::steady_clock::now()+std::chrono::seconds(5);
   do {
     if (cs::resolve_frame(animation,name,sequence,slot,handle)) return true;

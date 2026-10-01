@@ -918,7 +918,8 @@ void trace_mdr1_native_cell(void* cell, std::uintptr_t caller,
 
 bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
                                    const char* ownerLabel,
-                                   ResolvedCreatureSpriteFrame& resolved) noexcept {
+                                   ResolvedCreatureSpriteFrame& resolved,
+                                   bool waitForCharacterMetadata = false) noexcept {
   if (!cell || !g_ctx || !g_ctx->manifest) return false;
   const auto& runtime = g_ctx->manifest->areaAnimations;
   const auto cellBase = reinterpret_cast<std::uintptr_t>(cell);
@@ -938,7 +939,10 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
     return false;
   }
   if (!creature_sprite_x2::resolve_frame(animationId, resref, currentSequence,
-                                         currentFrame, resolved.handle)) {
+          currentFrame, resolved.handle,
+          waitForCharacterMetadata
+              ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
+              : creature_sprite_x2::FrameResolveMode::NonBlocking)) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {
@@ -986,7 +990,8 @@ bool read_creature_sprite_frame(void* animation, CreatureSpriteOwner owner,
     }
     return false;
   }
-  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved)) {
+  if (!read_registered_creature_cell(animationId, cell, ownerLabel, resolved,
+                                     owner == CreatureSpriteOwner::Character)) {
     return false;
   }
   static std::array<std::atomic<bool>, 65'536> animationReachedLogged{};
@@ -2881,7 +2886,7 @@ static void detour_character_render(
         }
         ResolvedCreatureSpriteFrame overlay{};
         if (read_registered_creature_cell(scope.animationId, overlayCell,
-                                          kOverlayLabels[index], overlay)) {
+                                          kOverlayLabels[index], overlay, true)) {
           (void)append_creature_sprite_layer(scope, overlay);
         } else {
           (void)append_unregistered_palette_owner(scope, overlayCell);
@@ -3063,7 +3068,8 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   if (scope->layeredComposition) {
     ResolvedCreatureSpriteFrame current{};
     if (!read_registered_creature_cell(scope->animationId, layer.cell,
-                                       creature_sprite_owner_label(scope->owner), current) ||
+                                       creature_sprite_owner_label(scope->owner), current,
+                                       scope->owner == CreatureSpriteOwner::Character) ||
         scope->compositionCount >= scope->composition.size()) {
       scope->compositionIncomplete = true;
       return;

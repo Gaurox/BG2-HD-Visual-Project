@@ -1,5 +1,6 @@
 # Guerriers humains 0x6100 + 0x6110 — test ingame Q3m K6 x4
 
+- Runtime courant : [correctif Character à froid](../../../pipeline/runtime/fixes/character-cold-resolve-20261001-v1/README.md), installé le 2026-10-01 ; catalogue/INI inchangés, nouvelle DLL et reçu actif mis à jour. Les preuves d'installation initiale ci-dessous restent historiques.
 - État : `installation-verification.json` = `installed-pending-manual-qa` ; reçu courant `ingame-installation/active-test.json`.
 - Catalogue V2 x4 actif : 2 animations Character, 1 312 composants/shards V6, 1 312 routes ; 358 697 frames stockées.
 - Par modèle : 656 BAM, 4 corps/armures, 18 casques, 12 boucliers, 31 armes ; absences natives conservées.
@@ -19,7 +20,7 @@
 - Limite I+F requise déclarée : borne conservative `2 × max(index_bytes par shard)` ; runtime x4 capable de 1 Gio. Valeur exacte dans `generation/build-manifest.json`.
 - `generation/build-manifest.json`, `current-generation.json`, `x4-q3m-k6.job.json` : identité scellée du catalogue installable. Payload local ignoré sous `generation/iee-assets/creature-sprites/` ; vue native courte `sprite/.work/q3m-human-fighters-x4-20261001-v1/`.
 
-## Installation effective — 2026-10-01
+## Installation initiale — 2026-10-01
 
 - Jeu : `config://bg2ee_game_root` ; jeu et InfinityLoader fermés avant remplacement.
 - Catalogue actif : `iee-assets/creature-sprites/CreatureSprites-XN.catalog`, SHA `637DBC809EAD7A9AD2A771BB760F5C0042109C5A4B6A19BE68A75CC41D50E0B8`.
@@ -36,13 +37,11 @@ Depuis la racine du workspace :
 
 ```powershell
 $q3mRun = 'sprite/catalogs/palette-q3m-human-fighters-x4-20261001-v1'
-$q3mRuntime = 'sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110/runtime.json'
+$q3mRuntime = 'pipeline/runtime/manifests/iee-character-cold-resolve-20261001-v1.json'
 # Vérifier catalogue, DLL, configuration et tous les shards actifs ; lecture seule.
 & pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 -JobFile "$q3mRun/x4-q3m-k6.job.json" -RuntimeManifest $q3mRuntime -CreatureSpriteFilter Nearest -VerifyOnly
-# Restaurer le catalogue féminin seul et l'INI sauvegardés ; jeu/InfinityLoader fermés.
-& pipeline/scripts/Restore-CreatureSprite-XN-Catalog-Test.ps1 -JobFile "$q3mRun/x4-q3m-k6.job.json"
-# Réinstaller le catalogue commun ; jeu/InfinityLoader fermés, même runtime requis.
-& pipeline/scripts/Install-CreatureSprite-XN-Catalog-Test.ps1 -JobFile "$q3mRun/x4-q3m-k6.job.json" -RuntimeManifest $q3mRuntime -CreatureSpriteFilter Nearest
+# Restauration catalogue + ancienne DLL : commandes dans
+# pipeline/runtime/fixes/character-cold-resolve-20261001-v1/README.md.
 ```
 
 - Contrôle manuel attendu : chaque sexe, quatre armures, casques/boucliers/armes, directions, repos/marche/attaque, couleurs, effets pulsés et ombres/transparence. Aucun lancement ni contrôle du jeu effectué par l'installateur.

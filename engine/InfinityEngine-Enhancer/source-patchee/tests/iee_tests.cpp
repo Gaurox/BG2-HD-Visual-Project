@@ -3118,11 +3118,10 @@ void test_creature_sprite_registry_formats() {
                   iee::creature_sprite_x2::resident_catalog_metadata_bytes() <=
                       iee::creature_sprite_x2::kCatalogMetadataCacheBudgetBytes,
               "Catalog V2 should resolve one resref by loading only its indexed shard");
-  (void)iee::creature_sprite_x2::contains_resource(
-      0x6110, catalogCharacterResref);
-  expect_true(await([&] {
-                return iee::creature_sprite_x2::pending_catalog_loads() == 0;
-              }) &&
+  expect_true(!iee::creature_sprite_x2::resolve_frame(
+                  0x6110, catalogCharacterResref, 0, 0, characterHandle,
+                  iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata) &&
+                  iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
                   !iee::creature_sprite_x2::contains_resource(
                       0x6110, catalogCharacterResref) &&
                   iee::creature_sprite_x2::resolve_frame(
@@ -3336,6 +3335,67 @@ void test_creature_sprite_registry_formats() {
               v5LogicalX4.size(),
       "V5 should support independently compressed x4 catalog frames");
   iee::creature_sprite_x2::release();
+
+  // The Character render path waits for its exact cold V2 resource instead
+  // of returning false until a later draw. Cover body/equipment, both scales,
+  // unrelated native actors, and a hot call with no new filesystem work.
+  for (const auto scale : {2u, 4u}) {
+    const std::vector<std::uint8_t> indices(16u * 16u * scale * scale, 1);
+    const auto stored = compress_xpress_huff(indices);
+    std::vector<TestShard> layers;
+    std::vector<TestCatalogDirectoryEntry> directory;
+    for (std::uint32_t layer = 0; layer < 4; ++layer) {
+      const char marker = static_cast<char>('A' + layer);
+      layers.push_back(make_v5_shard(
+          scale, marker, 16, 16,
+          iee::creature_sprite_x2::kRegistryFrameCodecXpressHuff, stored));
+      auto resref = target;
+      resref[0] = marker;
+      directory.push_back({0x6110, resref, layer, layer, 0});
+      write_file(root / digest_filename(layers.back().sha256), layers.back().registry);
+    }
+    write_file(catalogPath, make_catalog_v2(
+        scale, {{0x6110, 1, {0, 1, 2, 3}}}, layers, directory));
+    expect_true(iee::creature_sprite_x2::prepare(root) &&
+                    iee::creature_sprite_x2::resident_catalog_metadata_bytes() == 0,
+                "The cold Character test must begin with no resident layer metadata");
+    std::array<iee::creature_sprite_x2::FrameHandle, 4> handles{};
+    bool firstDrawReady = true;
+    for (std::size_t layer = 0; layer < handles.size(); ++layer) {
+      firstDrawReady &= iee::creature_sprite_x2::resolve_frame(
+          0x6110, directory[layer].resref, 0, 0, handles[layer],
+          iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata);
+    }
+    expect_true(firstDrawReady &&
+                    iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                    iee::creature_sprite_x2::resident_index_bytes() == 0 &&
+                    iee::creature_sprite_x2::resident_catalog_metadata_bytes() <=
+                        iee::creature_sprite_x2::kCatalogMetadataCacheBudgetBytes,
+                "All four cold x2/x4 layers must resolve on their first render call "
+                "without inflating their payloads or the entire catalog");
+    const auto accesses = iee::creature_sprite_x2::filesystem_access_count();
+    iee::creature_sprite_x2::FrameHandle repeated{};
+    auto absent = target;
+    absent[0] = 'Z';
+    expect_true(iee::creature_sprite_x2::resolve_frame(
+                    0x6110, directory[0].resref, 0, 0, repeated,
+                    iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata) &&
+                    repeated == handles[0] &&
+                    !iee::creature_sprite_x2::resolve_frame(
+                        0x6010, directory[0].resref, 0, 0, repeated,
+                        iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata) &&
+                    !iee::creature_sprite_x2::resolve_frame(
+                        0x6110, absent, 0, 0, repeated,
+                        iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata) &&
+                    !iee::creature_sprite_x2::resolve_frame(
+                        0x6110, directory[0].resref, 0, 1, repeated,
+                        iee::creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata) &&
+                    iee::creature_sprite_x2::pending_catalog_loads() == 0 &&
+                    iee::creature_sprite_x2::filesystem_access_count() == accesses,
+                "Hot render resolution stays filesystem-free; Garlena, absent "
+                "resources and invalid slots keep their native fallback");
+    iee::creature_sprite_x2::release();
+  }
 
   const std::vector<std::uint8_t> v5RawIndices(16u * 16u * 4u, 1);
   const auto v5Raw = make_v5_shard(

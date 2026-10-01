@@ -438,6 +438,8 @@ std::deque<CatalogLoadRequest> g_catalogLoadQueue;
 std::set<std::pair<std::uint16_t, std::array<char, 8>>>
     g_catalogPendingRequests;
 std::condition_variable_any g_catalogWorkChanged;
+std::condition_variable g_catalogLoadCompleted;
+bool g_catalogWorkerStopping{true};  // Protected by g_mutex, including waits.
 std::jthread g_catalogWorker;
 
 void quarantine_catalog_component_locked(std::uint32_t componentIndex,
@@ -3699,10 +3701,18 @@ void catalog_worker_loop(std::stop_token stopToken) noexcept {
       const auto key = std::make_pair(request.animationId, request.resref);
       g_catalogPendingRequests.erase(key);
     }
+    g_catalogLoadCompleted.notify_all();
   }
 }
 
 void stop_catalog_worker() noexcept {
+  {
+    std::lock_guard lock(g_mutex);
+    g_catalogWorkerStopping = true;
+  }
+  // Wake render waiters before joining. Queued work need not be drained at
+  // shutdown, and a waiter must never borrow a replacement catalog's epoch.
+  g_catalogLoadCompleted.notify_all();
   if (!g_catalogWorker.joinable()) return;
   g_catalogWorker.request_stop();
   g_catalogWorkChanged.notify_all();
@@ -3769,6 +3779,7 @@ void activate_registry_catalog(CatalogState&& catalog) {
     g_targetsMonsterQuadrant.store(targetsMonsterQuadrant,
                                    std::memory_order_release);
     g_targetsMultiNew.store(targetsMultiNew, std::memory_order_release);
+    g_catalogWorkerStopping = false;
     g_ready.store(true, std::memory_order_release);
   }
   g_catalogWorker = std::jthread(catalog_worker_loop);
@@ -4182,11 +4193,12 @@ bool capture_palette_snapshot(const std::uint32_t* realizedOutput, const EngineT
 
 bool resolve_frame(std::uint16_t animationId,
                    const std::array<char, 8>& resref, int sequence,
-                   int currentFrame, FrameHandle& out) noexcept {
+                   int currentFrame, FrameHandle& out,
+                   FrameResolveMode mode) noexcept {
   out = {};
   if (!g_ready.load(std::memory_order_acquire) || sequence < 0 || currentFrame < 0) return false;
   try {
-    std::lock_guard lock(g_mutex);
+    std::unique_lock lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire) ||
         !catalog_identity_matches_locked()) {
       return false;
@@ -4196,12 +4208,42 @@ bool resolve_frame(std::uint16_t animationId,
     std::uint32_t resourceOrdinal = 0;
     std::uint64_t catalogGeneration = 0;
     if (g_catalog.active) {
-      if (!find_catalog_animation_locked(animationId) ||
-          !catalog_resident_resource_locked(
+      const auto* animation = find_catalog_animation_locked(animationId);
+      if (!animation) return false;
+      const bool waitForMetadata =
+          mode == FrameResolveMode::WaitForCharacterMetadata &&
+          g_catalog.version == kRegistryCatalogDirectoryVersion &&
+          animation->owner == kCatalogCharacterOwner;
+      if (!catalog_resident_resource_locked(
               animationId, resref, catalogShardIndex, resourceOrdinal,
               resourceIndex)) {
         queue_catalog_load_locked(animationId, resref);
-        return false;
+        const auto key = std::make_pair(animationId, resref);
+        if (!waitForMetadata || g_catalogWorkerStopping ||
+            !g_catalogPendingRequests.contains(key)) return false;
+        const auto epoch = g_catalog.epoch;
+        // Release g_mutex while the existing worker authenticates the exact
+        // shard. Never wait for every frame payload or for the entire catalog.
+        const bool completed = g_catalogLoadCompleted.wait_for(
+            lock, std::chrono::seconds(5), [&] {
+              return g_catalogWorkerStopping || !g_catalog.active ||
+                     g_catalog.epoch != epoch ||
+                     !g_ready.load(std::memory_order_acquire) ||
+                     !g_catalogPendingRequests.contains(key);
+            });
+        if (g_catalogWorkerStopping || !g_catalog.active ||
+            g_catalog.epoch != epoch ||
+            !g_ready.load(std::memory_order_acquire)) return false;
+        if (!completed) {
+          // A stuck/over-budget load must not stall every subsequent draw.
+          const auto* entry = find_catalog_directory_entry_locked(animationId, resref);
+          if (entry) quarantine_catalog_component_locked(
+              entry->componentIndex, "Character metadata load exceeded the 5-second render deadline");
+          return false;
+        }
+        if (!catalog_resident_resource_locked(
+                animationId, resref, catalogShardIndex, resourceOrdinal,
+                resourceIndex)) return false;
       }
       catalogGeneration = g_catalog.shards[catalogShardIndex].generation;
     } else {

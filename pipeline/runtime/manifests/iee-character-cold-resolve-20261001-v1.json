@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-character-cold-resolve-20261001-v1",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "build/creature-character-cold-resolve-20261001-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "D79B72B97BF48F3D743325F2FFF2BE39D0A008FCE1DA37239476B0018FFC6C74",
+    "bytes": 1936384
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_versions": [
+        3,
+        5,
+        6
+      ],
+      "mixed_v5_v6_components": true,
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1",
+        "q3m-u8-per-plane-v1"
+      ],
+      "q3m_x2_decoded_shard_limit_bytes": 268435456,
+      "q3m_x4_decoded_shard_limit_bytes": 1073741824
+    },
+    "character_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "scales": [
+        2,
+        4
+      ],
+      "owner": 1,
+      "mode": "wait-for-validated-metadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "metadata_budget_bytes": 134217728
+    }
+  },
+  "source_contract_sha256": "63260BD5C02E7367D7513C40B581F2296C3D563C56E64093D9388C9C3383CA62"
+}

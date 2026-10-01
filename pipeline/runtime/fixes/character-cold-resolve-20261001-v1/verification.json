@@ -1,0 +1,114 @@
+{
+  "schema": "bg2-character-cold-resolution-verification-v1",
+  "status": "offline-passed-pending-manual-qa",
+  "runtime_manifest": "pipeline/runtime/manifests/iee-character-cold-resolve-20261001-v1.json",
+  "runtime_manifest_sha256": "1CC856A0ED3332707F790D93A5950A0A1F5C562CD68BD64D327DE72E3FE4B5D2",
+  "dll": {
+    "path": "build/creature-character-cold-resolve-20261001-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "D79B72B97BF48F3D743325F2FFF2BE39D0A008FCE1DA37239476B0018FFC6C74",
+    "bytes": 1936384
+  },
+  "source_contract_sha256": "63260BD5C02E7367D7513C40B581F2296C3D563C56E64093D9388C9C3383CA62",
+  "modified_source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "AB4B59F8B1ACF2BAAFD557DFE4A6A8C6061A769907B7399C5AF1ABAE774A7A4F",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h": "502B22CFDBFB5FD759ADD23409E34450AB390F8DF7AB78F841265B7CE934E683",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "760DA810DEBBB4F612B4CA25FB74B1AD11EB31F33B80D0D737D559A71111261F",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/iee_tests.cpp": "6A8DC448C0603184D9B0B556165478DD3C0A54A30AB5201B7DDD5721C9BD0A78",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_fraction_tests.cpp": "85518819822B9B51A6747CBF3BCE08FFEFC54F75A916D340679C8B0BAAA0AF2E"
+  },
+  "parent_runtime_manifest": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110/runtime.json",
+  "parent_runtime_manifest_sha256": "209703389BBB387B912781F0742B6889266EE32D37117BC7B3CF5D04D90FACB5",
+  "tests": {
+    "ctest": [
+      "iee_tests",
+      "iee_palette_fraction_tests"
+    ],
+    "ctest_log": "build/creature-character-cold-resolve-20261001-v1/cmake/Testing/Temporary/LastTest.log",
+    "ctest_log_sha256": "2007803D665629912F8A2CAC91B530538E4DDD344C35F6EC9775B45892DDDF88",
+    "first_cold_call_without_polling": true,
+    "four_layers_scales": [
+      2,
+      4
+    ],
+    "absent_animation_0x6010_keeps_native": true,
+    "missing_or_invalid_resources_keep_fallback": true,
+    "hot_resolution_no_filesystem_access": true
+  },
+  "native_working_sets": [
+    {
+      "animation_id": "0x6110",
+      "scale": 4,
+      "assets": "sprite/.work/q3m-human-fighters-x4-20261001-v1",
+      "oracle": "build/p3-6110-v5-x4-native/oracles/working-set-0.bin",
+      "oracle_sha256": "F5391A71AA8F7D2BDE93944EF754561E6C2BE20FB34407B4FAE19BCB3D79AAE7",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 267702624,
+        "peak_resident_I_F_bytes": 29198800,
+        "peak_metadata_bytes": 134205144,
+        "verification_elapsed_ms": 16981
+      },
+      "log": "build/creature-character-cold-resolve-20261001-v1/native-female-x4.log",
+      "log_sha256": "DE0E9291E8C4DCC910F02A16197F815E0E8B7188FB3F3540B18A362E1037E185"
+    },
+    {
+      "animation_id": "0x6100",
+      "scale": 4,
+      "assets": "sprite/.work/q3m-human-fighters-x4-20261001-v1",
+      "oracle": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x4-working-set-oracles/decoder-oracle-00.bin",
+      "oracle_sha256": "EB21F79B2BC1EBC71DC6C378863305059DF0BBC9E0BAC5D7C33AD138B415E408",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 261141696,
+        "peak_resident_I_F_bytes": 28448256,
+        "peak_metadata_bytes": 134211424,
+        "verification_elapsed_ms": 16890
+      },
+      "log": "build/creature-character-cold-resolve-20261001-v1/native-male-x4.log",
+      "log_sha256": "F81260E82B8284CF0A9F0336831FA902A93A7BDE8C059D850B3B6E985E8E9F58"
+    },
+    {
+      "animation_id": "0x6100",
+      "scale": 2,
+      "assets": "sprite/.work/q3m-6100-20261001-v1/x2",
+      "oracle": "sprite/families/playable-characters/6100-human-male-fighter/research/palette-q3m-series-20261001-v1/x2-working-set-oracles/decoder-oracle-00.bin",
+      "oracle_sha256": "D3A6ACB0B1735C43B2584A7AF2252ABF121B5C4A14028B0F73F4D189ECA1E7FA",
+      "metrics": {
+        "pack_frames": 657,
+        "palettes": 18,
+        "decoded_pixels": 65285424,
+        "peak_resident_I_F_bytes": 7112064,
+        "peak_metadata_bytes": 134211424,
+        "verification_elapsed_ms": 8815
+      },
+      "log": "build/creature-character-cold-resolve-20261001-v1/native-male-x2.log",
+      "log_sha256": "7E4B6F4E5197796EF695CBD9D53AF4AE8FCE385B76FABB1485C548CD30C3ADD3"
+    }
+  ],
+  "male_control": {
+    "source": "build/creature-character-cold-resolve-20261001-v1/male-control/palette_fraction_tests_6100.cpp",
+    "source_sha256": "4147DB9DADAD99EFF97BC796D73D9C9E4BDE031DBBB96DB7970C7CEDD6BABDD9",
+    "replacements_in_inspect_pack_only": {
+      "0x6110": "0x6100",
+      "CHFF4G12": "CHMF4G12",
+      "WQNMCG1": "WQLMCG1",
+      "WQNJ8G1": "WQLJ8G1",
+      "WQNC2G1": "WQLC2G1"
+    }
+  },
+  "scope": {
+    "new_assets": false,
+    "new_animation_routes": false,
+    "geometry_changed": false,
+    "palette_recipe_changed": false,
+    "unrelated_owners_nonblocking": true,
+    "legacy_discovery_nonblocking": true
+  },
+  "ingame_validated": false,
+  "limitations": [
+    "First cold metadata access may pause rendering; wait is bounded at 5 seconds per resource.",
+    "Ingame continuity and visual quality await the user test."
+  ]
+}
