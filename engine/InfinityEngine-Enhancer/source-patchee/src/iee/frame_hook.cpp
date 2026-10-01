@@ -9,6 +9,7 @@
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/core/performance_samples.h"
+#include "iee/core/sprite_p4_probe.h"
 #include "iee/hooks.h"
 #include "iee/post_process.h"
 #include "iee/shader_probe.h"
@@ -68,6 +69,7 @@ double record_frame_interval() noexcept {
 
 void frame_tick() {
   const double presentationIntervalMilliseconds = record_frame_interval();
+  core::sprite_p4::on_frame(presentationIntervalMilliseconds);
   hooks::on_frame_boundary(g_frames.load(std::memory_order_relaxed),
                            presentationIntervalMilliseconds);
   core::advance_readability_cache_epoch();

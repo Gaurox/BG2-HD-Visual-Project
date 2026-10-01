@@ -22,6 +22,7 @@ enum class Sampler : std::uint8_t {
   Unknown,
   Nearest,
   Linear,
+  TrilinearNearestMag,
 };
 
 struct TextureMetadata {
@@ -34,6 +35,10 @@ struct TextureMetadata {
   TextureProvenance provenance{TextureProvenance::Frame};
   Sampler expectedSampler{Sampler::Unknown};
   bool masked{};
+  core::CreatureSpriteFilterMode filterMode{core::CreatureSpriteFilterMode::Nearest};
+  std::uint16_t animationId{};
+  int maximumMipLevel{};
+  bool premultiplied{};
 };
 
 struct DrawObservation {
@@ -44,6 +49,8 @@ struct DrawObservation {
   Sampler sampler{Sampler::Unknown};
   bool routingProgram{};
   bool uniformsAvailable{};
+  bool minificationContract{};
+  int maximumMipLevel{};
 };
 
 struct DrawDecision {
@@ -72,7 +79,9 @@ class TextureRegistry {
   explicit TextureRegistry(
       std::size_t capacity = kTextureRegistryCapacity) noexcept;
 
-  void configure(core::CreatureSpriteFilterMode mode) noexcept;
+  void configure(core::CreatureSpriteFilterMode mode, std::uint16_t animationId = 0) noexcept;
+  [[nodiscard]] core::CreatureSpriteFilterMode effective_mode(
+      std::uint16_t animationId, int scale) const noexcept;
   [[nodiscard]] core::CreatureSpriteFilterMode configured_mode() const noexcept;
 
   // A different native context starts a fresh monotonic context generation
@@ -83,10 +92,12 @@ class TextureRegistry {
 
   [[nodiscard]] bool publish(std::uintptr_t contextIdentity, unsigned glName,
                              int physicalWidth, int physicalHeight, int scale,
-                             TextureProvenance provenance, bool masked) noexcept;
+                             TextureProvenance provenance, bool masked,
+                             std::uint16_t animationId = 0, int maximumMipLevel = 0,
+                             bool premultiplied = false) noexcept;
   [[nodiscard]] bool transfer_masked(std::uintptr_t contextIdentity,
                                      unsigned parentGlName,
-                                     unsigned outputGlName) noexcept;
+                                     unsigned outputGlName, int maximumMipLevel = 0) noexcept;
   void forget(std::uintptr_t contextIdentity, unsigned glName) noexcept;
   void forget_many(std::uintptr_t contextIdentity, int count,
                    const unsigned* glNames) noexcept;
@@ -103,7 +114,8 @@ class TextureRegistry {
   };
 
   [[nodiscard]] std::size_t find_index(unsigned glName) const noexcept;
-  [[nodiscard]] Sampler expected_sampler(bool masked) const noexcept;
+  [[nodiscard]] Sampler expected_sampler(core::CreatureSpriteFilterMode mode,
+                                          bool masked) const noexcept;
 
   std::array<Slot, kTextureRegistryCapacity> slots_{};
   std::uintptr_t contextIdentity_{};
@@ -112,6 +124,7 @@ class TextureRegistry {
   std::size_t size_{};
   std::size_t capacity_{kTextureRegistryCapacity};
   core::CreatureSpriteFilterMode mode_{core::CreatureSpriteFilterMode::Nearest};
+  std::uint16_t animationId_{};
   bool capacityExceeded_{};
 };
 

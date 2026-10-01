@@ -11,6 +11,7 @@ varying lowp vec4 vColor;
 // See licenses/DSHADERS-MIT.txt.
 // IEE_CREATURE_ROUTING_CONTRACT_V1
 // IEE_CREATURE_FILTER_CONTRACT_V1
+// IEE_CREATURE_MINIFICATION_CONTRACT_V1
 // IEE_CREATURE_STYLE_CONTRACT_V1
 // IEE_SPRITE_SCOPE_CONTRACT_V1
 
@@ -60,9 +61,22 @@ lowp vec3 ieeCreatureWorkingRgb(in lowp vec3 color)
 	return color;
 }
 
-lowp vec4 ieeCreatureWorkingSample(in mediump vec2 texCoord)
+lowp vec4 ieeCreatureStoredSample(in mediump vec2 texCoord)
 {
 	lowp vec4 sampleColor = texture2D(uTex, texCoord);
+	if (uIeeCreatureFilterMode > 3.5 && uIeeCreatureFilterMode < 4.5)
+	{
+		// Mips and level zero are premultiplied. Decode before native tint,
+		// blur, selection and straight-alpha engine blending, including MAG.
+		if (sampleColor.a <= 0.000001) return vec4(0.0);
+		sampleColor.rgb = clamp(sampleColor.rgb / sampleColor.a, 0.0, 1.0);
+	}
+	return sampleColor;
+}
+
+lowp vec4 ieeCreatureWorkingSample(in mediump vec2 texCoord)
+{
+	lowp vec4 sampleColor = ieeCreatureStoredSample(texCoord);
 	mediump float alpha = clamp(sampleColor.a, 0.0, 1.0);
 	if (alpha <= 0.000001)
 	{
@@ -176,6 +190,65 @@ mediump vec4 ieeFetchCreatureCatmullRom(in mediump vec2 texCoord,
 	}
 	mediump vec3 premultiplied = clamp(catmull.rgb, vec3(0.0), vec3(alpha));
 	return vec4(premultiplied / alpha, alpha);
+}
+
+lowp vec4 ieeFetchCreatureBox(in mediump vec2 texCoord,
+							in mediump vec2 texelSize)
+{
+	// Axis-aligned engine sprite quads, including mirrors. Integrate exact
+	// texel overlap over the screen-pixel footprint, with premultiplied sums.
+	highp vec2 footprint = fwidth(texCoord) / texelSize;
+	if (max(footprint.x, footprint.y) <= 1.0)
+		return ieeCreatureWorkingSample(texCoord); // MAG = NEAREST
+	footprint = max(footprint, vec2(1.0));
+	// Bounded cost: measured x4 minimum needs 4.86 texels/axis. Outside
+	// the supported <=16 footprint, retain nearest instead of truncating BOX.
+	if (max(footprint.x, footprint.y) > 16.0)
+		return ieeCreatureWorkingSample(texCoord);
+	highp vec2 firstEdge = texCoord / texelSize - footprint * 0.5;
+	highp vec2 lastEdge = firstEdge + footprint;
+	highp vec2 firstTexel = floor(firstEdge);
+	highp vec4 total = vec4(0.0);
+	for (int y = 0; y < 17; ++y)
+	{
+		highp float row = firstTexel.y + float(y);
+		if (row >= lastEdge.y) break;
+		highp float wy = max(0.0, min(row + 1.0, lastEdge.y) - max(row, firstEdge.y));
+		for (int x = 0; x < 17; ++x)
+		{
+			highp float column = firstTexel.x + float(x);
+			if (column >= lastEdge.x) break;
+			highp float wx = max(0.0, min(column + 1.0, lastEdge.x) - max(column, firstEdge.x));
+			lowp vec4 tap = ieeCreatureWorkingSample(
+				(vec2(column, row) + vec2(0.5)) * texelSize);
+			total += vec4(tap.rgb * tap.a, tap.a) * (wx * wy);
+		}
+	}
+	total /= footprint.x * footprint.y;
+	if (total.a <= 0.000001) return vec4(0.0);
+	return vec4(clamp(total.rgb / total.a, 0.0, 1.0), clamp(total.a, 0.0, 1.0));
+}
+
+lowp vec4 ieeFetchCreatureColor(in mediump vec2 texCoord,
+							  out mediump vec3 gaussianRgb)
+{
+	bool styleActive = ieeCreatureStyleActive();
+	bool validSize = uIeeCreatureTexelSize.x > 0.0 && uIeeCreatureTexelSize.y > 0.0;
+	bool reconstruct = uIeeCreatureFilterMode > 1.5 && uIeeCreatureFilterMode < 2.5 && validSize;
+	bool box = uIeeCreatureFilterMode > 2.5 && uIeeCreatureFilterMode < 3.5 && validSize;
+	bool sharpen = styleActive && abs(uIeeCreatureSharpen) > 0.000001;
+	gaussianRgb = vec3(0.0);
+	lowp vec4 color;
+	if (reconstruct || sharpen)
+		color = ieeFetchCreatureCatmullRom(texCoord, uIeeCreatureTexelSize, reconstruct, gaussianRgb);
+	else if (styleActive || box)
+		color = ieeCreatureWorkingSample(texCoord);
+	else
+		color = ieeCreatureStoredSample(texCoord);
+	if (box) color = ieeFetchCreatureBox(texCoord, uIeeCreatureTexelSize);
+	if (sharpen && color.a > 0.000001)
+		color.rgb = color.rgb * (1.0 + uIeeCreatureSharpen) - gaussianRgb * uIeeCreatureSharpen;
+	return color;
 }
 
 mediump float ieeCreatureSegmentDistance2(in mediump vec2 point,
@@ -368,29 +441,8 @@ lowp vec4 ieeFinishCreatureDrawColor(in lowp vec4 color,
 void main()
 {
 	bool styleActive = ieeCreatureStyleActive();
-	bool reconstruct = uIeeCreatureFilterMode > 1.5 &&
-		uIeeCreatureTexelSize.x > 0.0 && uIeeCreatureTexelSize.y > 0.0;
-	bool sharpenActive = styleActive && abs(uIeeCreatureSharpen) > 0.000001;
 	mediump vec3 gaussianRgb = vec3(0.0);
-	lowp vec4 texColor;
-	if (reconstruct || sharpenActive)
-	{
-		texColor = ieeFetchCreatureCatmullRom(
-			vTc, uIeeCreatureTexelSize, reconstruct, gaussianRgb);
-	}
-	else if (styleActive)
-	{
-		texColor = ieeCreatureWorkingSample(vTc);
-	}
-	else
-	{
-		texColor = texture2D(uTex, vTc);
-	}
-	if (sharpenActive && texColor.a > 0.000001)
-	{
-		texColor.rgb = texColor.rgb * (1.0 + uIeeCreatureSharpen) -
-			gaussianRgb * uIeeCreatureSharpen;
-	}
+	lowp vec4 texColor = ieeFetchCreatureColor(vTc, gaussianRgb);
 
 	lowp vec4 modulation = vColor;
 	if (styleActive)

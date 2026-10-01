@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-sprite-p4-probe-20261001-v1",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "build/sprite-p4-probe-20261001-v1/cmake/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "F61D5B7F040F616DC3951631C4224D3B78F08B25B721A284579DB8ACED2432C4",
+    "bytes": 1957888
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_versions": [
+        3,
+        5,
+        6
+      ],
+      "mixed_v5_v6_components": true,
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1",
+        "q3m-u8-per-plane-v1"
+      ],
+      "q3m_x2_decoded_shard_limit_bytes": 268435456,
+      "q3m_x4_decoded_shard_limit_bytes": 1073741824
+    },
+    "character_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "scales": [
+        2,
+        4
+      ],
+      "owner": 1,
+      "mode": "wait-for-validated-metadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "metadata_budget_bytes": 134217728
+    },
+    "sprite_p4_probe": {
+      "target_animation": "0x6110",
+      "opt_in": "EnableCreatureSpriteP4Probe",
+      "output_key": "CreatureSpriteP4Output",
+      "period_seconds": 1,
+      "maximum_rows": 7200,
+      "storage": "unique-session-csv",
+      "viewport": "owned-HD-draw",
+      "measurements": [
+        "physical-per-world-zoom",
+        "frame-cadence",
+        "CPU-composite",
+        "CPU-pixels-cache",
+        "CPU-upload-setup",
+        "successful-RGBA-upload-bytes",
+        "process-working-set",
+        "process-private-commit"
+      ],
+      "controls_input": false,
+      "mutates_render_state": false
+    }
+  }
+}

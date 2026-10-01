@@ -24,6 +24,7 @@
 #include "item_icon_x2.h"
 #include "iee/core/config.h"
 #include "iee/core/logger.h"
+#include "iee/core/sprite_p4_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/game/build_manifest.h"
 #include "iee/game/game_addrs.h"
@@ -172,9 +173,13 @@ static DWORD WINAPI InitThread(LPVOID) {
     }
     if (cfg.creature_sprite_upscale_enabled()) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
-      creature_sprite_x2::configure_filter_mode(cfg.creatureSpriteFilter);
+      creature_sprite_x2::configure_filter_mode(cfg.creatureSpriteFilter,
+                                                cfg.creatureSpriteFilterAnimation);
       (void)creature_sprite_x2::prepare(moduleDir / "iee-assets" / "creature-sprites");
     }
+    (void)core::sprite_p4::configure(cfg.enableCreatureSpriteP4Probe &&
+                                      cfg.creature_sprite_upscale_enabled(),
+                                  cfg.creatureSpriteP4Output);
     if (cfg.enableBridgeTransitionPreview) {
       const auto moduleDir = ModuleDirectory(cfgPath.parent_path());
       (void)bridge::prepare(moduleDir / "iee-assets" / "bridge-transition");
@@ -295,6 +300,7 @@ static void CleanupHooks() noexcept {
     frame::uninstall();
     probe::uninstall_shader_probes();
     hooks::uninstall_all();
+    core::sprite_p4::shutdown();
     area::release_gpu_area_resources();
     water_route2::release();
     water::release_water_textures();

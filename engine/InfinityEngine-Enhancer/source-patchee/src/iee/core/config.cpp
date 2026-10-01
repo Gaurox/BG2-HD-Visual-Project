@@ -47,6 +47,8 @@ static std::optional<CreatureSpriteFilterMode> parse_creature_sprite_filter_mode
   if (iequals(s, "Nearest")) return CreatureSpriteFilterMode::Nearest;
   if (iequals(s, "Linear")) return CreatureSpriteFilterMode::Linear;
   if (iequals(s, "CatmullRom")) return CreatureSpriteFilterMode::CatmullRom;
+  if (iequals(s, "Box")) return CreatureSpriteFilterMode::Box;
+  if (iequals(s, "Mipmaps")) return CreatureSpriteFilterMode::Mipmaps;
   return std::nullopt;
 }
 
@@ -58,6 +60,10 @@ const char* creature_sprite_filter_mode_name(CreatureSpriteFilterMode mode) noex
       return "Linear";
     case CreatureSpriteFilterMode::CatmullRom:
       return "CatmullRom";
+    case CreatureSpriteFilterMode::Box:
+      return "Box";
+    case CreatureSpriteFilterMode::Mipmaps:
+      return "Mipmaps";
   }
   return "Nearest";
 }
@@ -227,6 +233,10 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
       assign_bool(cfg.enableCreatureSpriteX2Test);
     else if (iequals(key, "EnableCreatureSpritePaletteTrace"))
       assign_bool(cfg.enableCreatureSpritePaletteTrace);
+    else if (iequals(key, "EnableCreatureSpriteP4Probe"))
+      assign_bool(cfg.enableCreatureSpriteP4Probe);
+    else if (iequals(key, "CreatureSpriteP4Output"))
+      cfg.creatureSpriteP4Output = std::filesystem::path(val);
     else if (iequals(key, "EnableCreatureSpriteLinearFiltering"))
       assign_bool(cfg.enableCreatureSpriteLinearFiltering);
     else if (iequals(key, "CreatureSpriteFilter")) {
@@ -235,6 +245,19 @@ static void apply_kv(EngineConfig& cfg, ConfigParseState& state, const std::stri
         cfg.creatureSpriteFilter = *parsed;
       } else {
         cfg.creatureSpriteFilter = CreatureSpriteFilterMode::Nearest;
+        if (diagnostics) ++diagnostics->invalidValues;
+      }
+    }
+    else if (iequals(key, "CreatureSpriteFilterAnimation")) {
+      try {
+        std::size_t consumed = 0;
+        const auto animation = std::stoul(val, &consumed, 0);
+        if (consumed != val.size() || animation > 0xffffu || val.front() == '-')
+          throw std::invalid_argument("animation");
+        cfg.creatureSpriteFilterAnimation = static_cast<std::uint16_t>(animation);
+      } catch (...) {
+        // Invalid scope must never broaden a filter experiment to other families.
+        cfg.creatureSpriteFilterAnimation = 0xffffu;
         if (diagnostics) ++diagnostics->invalidValues;
       }
     }
@@ -410,9 +433,12 @@ bool ConfigManager::save(const std::filesystem::path& path, const EngineConfig& 
   write_bool(f, "EnableCreatureSpriteUpscaleTest", cfg.enableCreatureSpriteUpscaleTest);
   write_bool(f, "EnableCreatureSpriteX2Test", cfg.enableCreatureSpriteX2Test);
   write_bool(f, "EnableCreatureSpritePaletteTrace", cfg.enableCreatureSpritePaletteTrace);
+  write_bool(f, "EnableCreatureSpriteP4Probe", cfg.enableCreatureSpriteP4Probe);
+  f << "CreatureSpriteP4Output = " << cfg.creatureSpriteP4Output.string() << "\n";
   write_bool(f, "EnableCreatureSpriteLinearFiltering", cfg.enableCreatureSpriteLinearFiltering);
   f << "CreatureSpriteFilter = "
     << creature_sprite_filter_mode_name(cfg.creatureSpriteFilter) << "\n";
+  f << "CreatureSpriteFilterAnimation = " << cfg.creatureSpriteFilterAnimation << "\n";
   write_bool(f, "EnableBridgeTransitionPreview", cfg.enableBridgeTransitionPreview);
   write_bool(f, "EnableBigLogoX4Test", cfg.enableBigLogoX4Test);
   write_bool(f, "EnableMainMenuX4Test", cfg.enableMainMenuX4Test);

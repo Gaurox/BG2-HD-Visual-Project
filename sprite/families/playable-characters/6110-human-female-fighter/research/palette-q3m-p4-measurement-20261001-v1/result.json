@@ -1,0 +1,113 @@
+{
+  "schema": "bg2-p4-zoom-baseline-result-v1",
+  "status": "zoom-and-x4-baseline-measured",
+  "viewport": [
+    2528,
+    1339
+  ],
+  "scale": 4,
+  "configured_filter": "Nearest",
+  "occlusion_bridge_enabled_before_probe": true,
+  "stable_paliers": [
+    {
+      "label": "initial-as-instructed-habitual",
+      "zoom_x": 2.6865,
+      "zoom_y": 2.6834,
+      "stable_seconds": 18.160228999999998,
+      "cadence_fps": 59.966093254601994,
+      "window_p95_median_ms": 16.9891,
+      "window_p95_max_ms": 17.3848,
+      "cpu_composite_ms_per_frame": 0.32137731864095503,
+      "cpu_pixels_ms_per_frame": 0.12398429752066119,
+      "cpu_upload_setup_ms_per_frame": 0.18396859504132232,
+      "rgba_upload_MB_per_second": 44.36514275232983,
+      "first_window_end_s": 7.318175,
+      "last_window_end_s": 24.464684,
+      "x4_source_texels_per_screen_pixel": 1.48892611204169,
+      "x2_source_texels_per_screen_pixel": 0.744463056020845
+    },
+    {
+      "label": "minimum-held",
+      "zoom_x": 0.8229,
+      "zoom_y": 0.8225,
+      "stable_seconds": 18.112714999999998,
+      "cadence_fps": 59.68182936579951,
+      "window_p95_median_ms": 16.9723,
+      "window_p95_max_ms": 17.1717,
+      "cpu_composite_ms_per_frame": 0.3047744680851064,
+      "cpu_pixels_ms_per_frame": 0.1069690101757632,
+      "cpu_upload_setup_ms_per_frame": 0.18527576318223865,
+      "rgba_upload_MB_per_second": 44.215696211197496,
+      "first_window_end_s": 28.484537,
+      "last_window_end_s": 45.596385,
+      "x4_source_texels_per_screen_pixel": 4.860857941426662,
+      "x2_source_texels_per_screen_pixel": 2.430428970713331
+    },
+    {
+      "label": "maximum-held",
+      "zoom_x": 4.9472,
+      "zoom_y": 4.941,
+      "stable_seconds": 18.156745999999995,
+      "cadence_fps": 59.922643418644356,
+      "window_p95_median_ms": 17.1066,
+      "window_p95_max_ms": 17.507,
+      "cpu_composite_ms_per_frame": 0.31727242647058823,
+      "cpu_pixels_ms_per_frame": 0.12308272058823531,
+      "cpu_upload_setup_ms_per_frame": 0.18173685661764707,
+      "rgba_upload_MB_per_second": 44.35766452865509,
+      "first_window_end_s": 49.630849,
+      "last_window_end_s": 66.786784,
+      "x4_source_texels_per_screen_pixel": 0.8085381630012938,
+      "x2_source_texels_per_screen_pixel": 0.4042690815006469
+    }
+  ],
+  "return_zoom": [
+    2.3171,
+    2.3166
+  ],
+  "return_zoom_differs_from_initial": true,
+  "overall": {
+    "window_count": 115,
+    "target_calls": 6435,
+    "target_successes": 6435,
+    "upload_calls": 6435,
+    "upload_successes": 6435,
+    "pixel_cache_hits": 4728,
+    "pixel_cache_hit_percent": 73.47319347319348,
+    "peak_process_working_set_bytes": 986796032,
+    "peak_process_private_bytes": 1905332224,
+    "successful_base_upload_bytes": 4802176576
+  },
+  "outliers": [
+    {
+      "window_end_s": 6.304454,
+      "phase": "first world entry / load",
+      "frame_max_ms": 772.5774,
+      "cause_not_attributed": true
+    },
+    {
+      "window_end_s": 26.482408,
+      "phase": "zoom-out transition",
+      "frame_max_ms": 82.8562,
+      "cause_not_attributed": true
+    }
+  ],
+  "filter_observation": {
+    "nearest": 9728,
+    "linear": 9729,
+    "linear_branch": "masked output in existing native_occlusion_bridge",
+    "source": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/native_occlusion_bridge.cpp:457",
+    "config_unchanged": true,
+    "view_probe_tracks_first_owned_HD_draw_each_frame": true
+  },
+  "p4_scale_filter_decision": "pending comparative variants and user visual judgment",
+  "limits": [
+    "FPS/p95 include the entire scene. Median/max of per-window p95, not global p95.",
+    "CPU counters cover bind_composite_texture / pixel cache / upload setup for 0x6110; durations are nested.",
+    "Downstream occlusion bridge and metadata cold resolution are outside the CPU composite timer.",
+    "Process working set/private commit are not sprite-only memory or resident VRAM.",
+    "Endpoint labels follow user protocol; no independent read of engine zoom clamp state.",
+    "Walking cannot be certified from CSV without position/animation state; camera shifts and zoom changes are observed."
+  ],
+  "installation_modified": false
+}

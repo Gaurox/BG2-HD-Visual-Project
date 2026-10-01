@@ -3244,6 +3244,14 @@ static void detour_vid_cell_render_texture(int x, int y, void* sourceRect,
   ReplacementKind replacement = ReplacementKind::None;
   auto* creatureScope = g_creatureSpriteScope;
   if (g_creatureSpriteHooksEnabled && creatureScope) {
+    const auto mode = creature_sprite_filter::registry().effective_mode(
+        creatureScope->animationId, static_cast<int>(creature_sprite_x2::loaded_scale()));
+    if ((mode == core::CreatureSpriteFilterMode::Box ||
+         mode == core::CreatureSpriteFilterMode::Mipmaps) &&
+        !probe::creature_minification_program_ready(g_nativeShaderTone)) {
+      original(x, y, sourceRect, logicalSize, clipRect, flags);
+      return;
+    }
     // A creature scope owns this dispatch even when it fails closed. Never fall
     // through to an unrelated area-animation substitution during creature rendering.
     if (creatureScope->layeredComposition) {

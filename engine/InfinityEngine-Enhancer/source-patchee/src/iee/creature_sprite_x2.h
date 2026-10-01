@@ -224,7 +224,8 @@ bool calculate_composite_bounds(const FrameGeometry* frames, std::size_t frameCo
 // registry-set, the version-3 monolithic xN registry, and finally the legacy
 // x2 registry. A present but invalid higher-priority source fails closed
 // without falling through. No game or GL state is touched.
-void configure_filter_mode(core::CreatureSpriteFilterMode mode) noexcept;
+void configure_filter_mode(core::CreatureSpriteFilterMode mode,
+                           std::uint16_t animationId = 0) noexcept;
 bool prepare(const std::filesystem::path& assetsDirectory) noexcept;
 void release() noexcept;
 [[nodiscard]] bool ready() noexcept;

@@ -11,6 +11,8 @@ enum class CreatureSpriteFilterMode : std::uint8_t {
   Nearest = 0,
   Linear = 1,
   CatmullRom = 2,
+  Box = 3,
+  Mipmaps = 4,
 };
 
 [[nodiscard]] const char* creature_sprite_filter_mode_name(
@@ -127,6 +129,9 @@ struct EngineConfig {
   // P3-only bounded capture of realized Character palettes and decoded CRCs.
   // Disable during performance measurements; never changes native draw state.
   bool enableCreatureSpritePaletteTrace = false;
+  // P4 read-only telemetry: CSV per session; no hotkeys or draw-state changes.
+  bool enableCreatureSpriteP4Probe = false;
+  std::filesystem::path creatureSpriteP4Output{};
   // Explicit A/B diagnostic for creature-sprite xN backing textures. The
   // new enum takes precedence when CreatureSpriteFilter is present. This bool
   // remains a parsed and serialized compatibility surface for older INIs.
@@ -134,6 +139,9 @@ struct EngineConfig {
   // Effective startup mode. NEAREST remains the safe default and formal QA
   // baseline; CatmullRom uses a NEAREST sampler plus the targeted shader path.
   CreatureSpriteFilterMode creatureSpriteFilter = CreatureSpriteFilterMode::Nearest;
+  // 0 retains the global filter policy. A scoped test leaves other animations
+  // at Nearest; P4 uses 0x6110. Box/Mipmaps are supported on x4 only.
+  std::uint16_t creatureSpriteFilterAnimation = 0;
 
   [[nodiscard]] constexpr bool creature_sprite_upscale_enabled() const noexcept {
     return enableCreatureSpriteUpscaleTest || enableCreatureSpriteX2Test;

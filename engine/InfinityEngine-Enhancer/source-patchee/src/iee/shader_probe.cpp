@@ -24,6 +24,7 @@
 
 #include "iee/core/hooking.h"
 #include "iee/core/logger.h"
+#include "iee/core/sprite_p4_probe.h"
 #include "iee/core/map_texture_telemetry.h"
 #include "iee/core/pvr_demand_telemetry.h"
 #include "iee/am0205e_animation_x4_test.h"
@@ -37,6 +38,7 @@
 #include "iee/shader_suite.h"
 #include "iee/water_textures.h"
 #include "iee/hooks.h"
+#include "iee/frame_hook.h"
 #include "iee/core/water_overlay_policy.h"
 #include "shader_diagnostics.h"
 #include "shader_uniform_bridge.h"
@@ -66,6 +68,7 @@ struct ProgramRecord {
   std::string vertexShaderName;
   std::string fragmentShaderName;
   bool creatureRoutingContract{};
+  bool creatureMinificationContract{};
   bool creatureStyleContract{};
   bool spriteScopeContract{};
   std::unordered_set<std::uintptr_t> callerLogged;
@@ -110,6 +113,7 @@ struct BoundTextureSnapshot {
   int height{};
   int minFilter{};
   int magFilter{};
+  int maximumMipLevel{};
 };
 
 struct TextureStorageIdentity {
@@ -965,6 +969,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
   std::string fragmentShaderName;
   bool anyOverride = false;
   bool creatureRoutingContract = false;
+  bool creatureMinificationContract = false;
   bool creatureStyleContract = false;
   bool spriteScopeContract = false;
 
@@ -1011,6 +1016,8 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
               std::string::npos &&
           sourcePrefix.find("uniform mediump vec2 uIeeCreatureTexelSize;") !=
               std::string::npos;
+      creatureMinificationContract = creatureRoutingContract &&
+          sourcePrefix.find("IEE_CREATURE_MINIFICATION_CONTRACT_V1") != std::string::npos;
       creatureStyleContract =
           sourcePrefix.find("IEE_CREATURE_STYLE_CONTRACT_V1") != std::string::npos &&
           sourcePrefix.find("uniform lowp float uIeeCreatureStyleEnabled;") !=
@@ -1038,6 +1045,7 @@ void link_program_introspect(unsigned program, bool isArb, bool logDetails = tru
     record.vertexShaderName = vertexShaderName;
     record.fragmentShaderName = fragmentShaderName;
     record.creatureRoutingContract = creatureRoutingContract;
+    record.creatureMinificationContract = creatureMinificationContract;
     record.creatureStyleContract = creatureStyleContract;
     record.spriteScopeContract = spriteScopeContract;
     if (anyOverride) {
@@ -1245,6 +1253,8 @@ BoundTextureSnapshot bound_texture_snapshot(const game::gl::OpenGLFunctions& gl,
                            &snapshot.minFilter);
     gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
                            &snapshot.magFilter);
+    gl.glGetTexParameteriv(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL,
+                           &snapshot.maximumMipLevel);
   }
   return snapshot;
 }
@@ -1404,6 +1414,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
   scope.program = static_cast<unsigned>(currentProgram);
 
   bool routingProgram = false;
+  bool minificationContract = false;
   bool styleContract = false;
   bool spriteScopeContract = false;
   shader_suite::CreatureFragment creatureFragment{
@@ -1417,6 +1428,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
         creature_sprite_filter::is_routing_fragment(
             program->second.fragmentShaderName);
     styleContract = program->second.creatureStyleContract;
+    minificationContract = program->second.creatureMinificationContract;
     spriteScopeContract = program->second.spriteScopeContract;
     creatureFragment = shader_suite::classify_creature_fragment(
         program->second.fragmentShaderName);
@@ -1461,11 +1473,27 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
                                                           texture.magFilter),
       .routingProgram = true,
       .uniformsAvailable = true,
+      .minificationContract = minificationContract,
+      .maximumMipLevel = texture.maximumMipLevel,
   });
   if (metadata) {
     // A known catalog texture that fails the D1 sampler/storage decision must
     // remain neutral. Treating it as x1 would permit a second D7 filter.
     if (!decision.owner) return;
+    if (metadata->animationId == 0x6110 && core::sprite_p4::wants_view(frame::frame_count())) {
+      int viewport[4]{};
+      int framebuffer = 0;
+      gl.glGetIntegerv(game::gl::VIEWPORT, viewport);
+      gl.glGetIntegerv(game::gl::FRAMEBUFFER_BINDING, &framebuffer);
+      const auto view = uniforms::snapshot();
+      core::sprite_p4::observe_view(frame::frame_count(), {
+          .viewportWidth = viewport[2], .viewportHeight = viewport[3], .framebuffer = framebuffer,
+          .worldWidth = view.viewWorldWidth, .worldHeight = view.viewWorldHeight,
+          .scrollX = view.scrollX, .scrollY = view.scrollY, .scale = decision.scale,
+          .minFilter = texture.minFilter, .magFilter = texture.magFilter,
+          .filterMode = static_cast<int>(decision.mode), .maximumMipLevel = texture.maximumMipLevel,
+          .provenance = static_cast<int>(metadata->provenance), .animationId = metadata->animationId});
+    }
     const auto resolved = styleContract
                               ? shader_suite::resolve_draw_profile(
                                     g_cfg.shaderSuiteEnabled,
@@ -2574,6 +2602,21 @@ bool install_shader_probes(const core::EngineConfig& cfg) noexcept {
     LOG_ERROR("GL shader probe initialization failed with an unknown exception");
     return false;
   }
+}
+
+bool creature_minification_program_ready(int programSlot) noexcept {
+  try {
+    if (!is_program_context_current()) return false;
+    std::lock_guard lock(g_probeMutex);
+    return std::any_of(g_programRecords.begin(), g_programRecords.end(),
+        [programSlot](const auto& entry) {
+          const auto& record = entry.second;
+          const auto feed = g_overriddenPrograms.find(entry.first);
+          return record.introspected && record.programSlot == programSlot &&
+                 record.creatureMinificationContract && feed != g_overriddenPrograms.end() &&
+                 feed->second && uniforms::resolve_creature_draw_locations(entry.first, *feed->second);
+        });
+  } catch (...) { return false; }
 }
 
 bool sprite_scope_program_ready(int programSlot) noexcept {

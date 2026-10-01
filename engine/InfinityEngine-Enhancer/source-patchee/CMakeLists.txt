@@ -119,6 +119,7 @@ add_library(iee_common STATIC
     src/iee/core/native_occlusion_probe.cpp
     src/iee/core/pattern_scanner.cpp
     src/iee/core/process_resource_telemetry.cpp
+    src/iee/core/sprite_p4_probe.cpp
     src/iee/core/pvr_demand_telemetry.cpp
     src/iee/creature_sprite_filter.cpp
     src/iee/shader_suite.cpp
@@ -333,7 +334,17 @@ if(BUILD_TESTING)
     iee_configure_target(iee_tests)
     add_test(NAME iee_tests COMMAND iee_tests WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
+    add_executable(iee_sprite_p4_probe_tests tests/sprite_p4_probe_tests.cpp)
+    target_link_libraries(iee_sprite_p4_probe_tests PRIVATE iee_common)
+    iee_configure_target(iee_sprite_p4_probe_tests)
+    add_test(NAME iee_sprite_p4_probe_tests COMMAND iee_sprite_p4_probe_tests)
+
     if(WIN32)
+        add_executable(iee_sprite_minification_tests tests/sprite_minification_tests.cpp)
+        target_link_libraries(iee_sprite_minification_tests PRIVATE iee_common)
+        iee_configure_target(iee_sprite_minification_tests)
+        add_test(NAME iee_sprite_minification_tests COMMAND iee_sprite_minification_tests)
+
         find_package(Python3 REQUIRED COMPONENTS Interpreter)
         set(IEE_PALETTE_FIXTURES "${IEE_GENERATED_DIR}/palette-fraction-fixtures")
         set(IEE_PALETTE_PIPELINE "${CMAKE_SOURCE_DIR}/../../../pipeline/scripts")

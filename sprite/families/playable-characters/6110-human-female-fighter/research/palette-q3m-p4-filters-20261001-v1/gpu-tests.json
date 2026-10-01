@@ -1,0 +1,195 @@
+{
+  "status": "passed",
+  "renderer": "NVIDIA GeForce RTX 5090/PCIe/SSE2",
+  "gl_version": "4.6.0 NVIDIA 616.64",
+  "compiled": [
+    "fpDraw.glsl",
+    "fpSprite.glsl",
+    "fpSELECT.glsl",
+    "native_occlusion_bridge"
+  ],
+  "checks": [
+    {
+      "test": "box_checker_4x4",
+      "actual_rgba": [
+        127,
+        127,
+        127,
+        255
+      ],
+      "expected_rgba": [
+        128,
+        128,
+        128,
+        255
+      ]
+    },
+    {
+      "test": "mips_checker_lod2",
+      "actual_rgba": [
+        127,
+        127,
+        127,
+        255
+      ],
+      "expected_rgba": [
+        128,
+        128,
+        128,
+        255
+      ]
+    },
+    {
+      "test": "box_alpha_no_blue_halo",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "box_fractional_overlap",
+      "actual_rgba": [
+        119,
+        119,
+        119,
+        255
+      ],
+      "expected_rgba": [
+        119,
+        119,
+        119,
+        255
+      ]
+    },
+    {
+      "test": "box_mirror_fractional_overlap",
+      "actual_rgba": [
+        119,
+        119,
+        119,
+        255
+      ],
+      "expected_rgba": [
+        119,
+        119,
+        119,
+        255
+      ]
+    },
+    {
+      "test": "box_mag_nearest",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "mips_alpha_no_dark_halo",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        127
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "mips_mag_straight_decode",
+      "actual_rgba": [
+        255,
+        0,
+        0,
+        128
+      ],
+      "expected_rgba": [
+        255,
+        0,
+        0,
+        128
+      ]
+    },
+    {
+      "test": "nearest_baseline_unchanged",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "test": "mask_premultiplied_visibility",
+      "actual_rgba": [
+        64,
+        0,
+        0,
+        64
+      ],
+      "expected_rgba": [
+        64,
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "test": "mask_shadow",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        64
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "test": "mask_clear_hidden_rgb",
+      "actual_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_rgba": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "desktop_input": false,
+  "window_shown": false
+}

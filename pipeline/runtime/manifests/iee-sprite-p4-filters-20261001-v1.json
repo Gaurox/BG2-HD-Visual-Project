@@ -1,0 +1,127 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-sprite-p4-filters-20261001-v1",
+  "game_profile": {
+    "id": "bg2ee-2.7.3.0-windows-x64",
+    "baldur_real_sha256": "B51093A49140B2B8A7C046B4652BB8E535BE24EBBC12B1D735E0B94217A14D57"
+  },
+  "dll": {
+    "path": "build/sprite-p4-filters-20261001-v1/cmake/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "D96B9E86B7840339B3C3DFBFFBCBD4FC9A37AC8FDEFCEAB33EEB4CD532795D5E",
+    "bytes": 1965568
+  },
+  "capabilities": {
+    "creature_sprite_xn_catalog": {
+      "catalog_versions": [
+        1,
+        2
+      ],
+      "shard_registry_versions": [
+        3,
+        5,
+        6
+      ],
+      "mixed_v5_v6_components": true,
+      "frame_storage": [
+        "raw-v3",
+        "XPRESS_HUFF-or-raw-per-frame-v1",
+        "q3m-u8-per-plane-v1"
+      ],
+      "q3m_x2_decoded_shard_limit_bytes": 268435456,
+      "q3m_x4_decoded_shard_limit_bytes": 1073741824
+    },
+    "character_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "scales": [
+        2,
+        4
+      ],
+      "owner": 1,
+      "mode": "wait-for-validated-metadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "metadata_budget_bytes": 134217728
+    },
+    "sprite_p4_probe": {
+      "target_animation": "0x6110",
+      "opt_in": "EnableCreatureSpriteP4Probe",
+      "output_key": "CreatureSpriteP4Output",
+      "period_seconds": 1,
+      "maximum_rows": 7200,
+      "storage": "unique-session-csv",
+      "viewport": "first-owned-0x6110-HD-draw-per-frame",
+      "measurements": [
+        "physical-per-world-zoom",
+        "frame-cadence",
+        "CPU-composite",
+        "CPU-pixels-cache",
+        "CPU-upload-setup",
+        "successful-RGBA-upload-bytes",
+        "process-working-set",
+        "process-private-commit",
+        "CPU-native-mask-setup",
+        "effective-filter-mode",
+        "maximum-mip-level",
+        "texture-provenance",
+        "animation-id"
+      ],
+      "controls_input": false,
+      "mutates_render_state": false
+    },
+    "sprite_minification": {
+      "modes": [
+        "Box",
+        "Mipmaps"
+      ],
+      "scale": 4,
+      "default": "Nearest",
+      "animation_scope_key": "CreatureSpriteFilterAnimation",
+      "box_maximum_texels_per_axis": 16,
+      "box_magnification": "NEAREST",
+      "mips_min": "LINEAR_MIPMAP_LINEAR",
+      "mips_mag": "NEAREST",
+      "mips_storage": "premultiplied-RGBA8",
+      "mips_regeneration": "every-base-upload-and-masked-recomposition",
+      "shader_contract": "IEE_CREATURE_MINIFICATION_CONTRACT_V1",
+      "fail_closed": [
+        "missing-shader-contract",
+        "unresolved-uniforms",
+        "incomplete-mip-chain",
+        "unknown-build"
+      ],
+      "geometry": "native-x1"
+    }
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "target": "override/fpDraw.glsl",
+      "sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1",
+      "bytes": 18005,
+      "baseline_sha256": "1B38768899DDD9E764B7B66A6935E86C52076BB1AE4062CF36D8A824E9F99C29"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "target": "override/fpSprite.glsl",
+      "sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32",
+      "bytes": 18939,
+      "baseline_sha256": "85A5853F5BA7A0CA9874F8D5A2898893C1895601406F2AED5480B788CE59B234"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "target": "override/fpSELECT.glsl",
+      "sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391",
+      "bytes": 19245,
+      "baseline_sha256": "D5E76628C119024C6FC471CEE9812D7BB5C7AC8D56F52C289D0A86215178EA3A"
+    }
+  ],
+  "baseline": {
+    "runtime_id": "iee-sprite-p4-probe-20261001-v1",
+    "ini_sha256": "AC3385732B7099E5D21BCA9BCA3610A4A988A939CBEC95B63BACE934191AAF85",
+    "catalog_sha256": "637DBC809EAD7A9AD2A771BB760F5C0042109C5A4B6A19BE68A75CC41D50E0B8"
+  }
+}

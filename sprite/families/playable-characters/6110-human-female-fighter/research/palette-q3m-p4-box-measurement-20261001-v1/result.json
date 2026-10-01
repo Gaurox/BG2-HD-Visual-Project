@@ -1,0 +1,372 @@
+{
+  "schema": "bg2-p4-box-session-result-v1",
+  "date": "2026-10-01",
+  "status": "box-session-measured-user-reports-prettier-zoomed-out",
+  "viewport": [
+    2528,
+    1339
+  ],
+  "scale": 4,
+  "filter": "Box",
+  "animation_scope": "0x6110",
+  "sampler": {
+    "MIN": "NEAREST",
+    "MAG": "NEAREST",
+    "MAX_LEVEL": 0,
+    "effective_minification": "explicit shader BOX area integral; filter_mode=3"
+  },
+  "overall": {
+    "target_calls": 9649,
+    "target_successes": 9649,
+    "upload_calls": 9649,
+    "upload_successes": 9649,
+    "pixel_calls": 9649,
+    "pixel_cache_hits": 7208,
+    "upload_bytes": 7178905408,
+    "mask_calls": 448,
+    "mask_successes": 448,
+    "view_samples": 9648,
+    "window_count": 175,
+    "duration_seconds": 177.665602,
+    "pixel_cache_hit_percent": 74.70204166234844,
+    "peak_process_working_set_bytes": 1029570560,
+    "peak_process_private_bytes": 1941385216,
+    "target_failures": 0,
+    "upload_failures": 0,
+    "mask_failures": 0
+  },
+  "stable_stages": [
+    {
+      "label": "initial_static",
+      "zoom": [
+        2.686504,
+        2.683367
+      ],
+      "windows": 12,
+      "seconds": 12.117252,
+      "first_window_end_s": 15.452125,
+      "last_window_end_s": 26.554451,
+      "frames": 726,
+      "cadence_fps": 59.91457961548718,
+      "window_p95_median_ms": 17.0345,
+      "window_p95_max_ms": 18.9895,
+      "frame_max_ms": 52.2784,
+      "cpu_composite_ms_per_frame": 0.32088705234159776,
+      "cpu_pixels_ms_per_frame": 0.13055578512396696,
+      "cpu_upload_setup_ms_per_frame": 0.17837231404958678,
+      "cpu_mask_ms_per_frame": 0.0,
+      "mask_calls": 0,
+      "mask_cpu_max_ms": 0.0,
+      "rgba_upload_MB_per_second": 44.29233955025446,
+      "camera_positions": 1
+    },
+    {
+      "label": "maximum_first",
+      "zoom": [
+        4.947162,
+        4.940959
+      ],
+      "windows": 20,
+      "seconds": 20.168994,
+      "first_window_end_s": 29.572197,
+      "last_window_end_s": 48.724213,
+      "frames": 1210,
+      "cadence_fps": 59.993074291417116,
+      "window_p95_median_ms": 17.1144,
+      "window_p95_max_ms": 17.3552,
+      "frame_max_ms": 19.4513,
+      "cpu_composite_ms_per_frame": 0.28639272727272724,
+      "cpu_pixels_ms_per_frame": 0.09693123966942149,
+      "cpu_upload_setup_ms_per_frame": 0.17763413223140498,
+      "cpu_mask_ms_per_frame": 0.0,
+      "mask_calls": 0,
+      "mask_cpu_max_ms": 0.0,
+      "rgba_upload_MB_per_second": 44.30472952691641,
+      "camera_positions": 1
+    },
+    {
+      "label": "habitual_static",
+      "zoom": [
+        2.480864,
+        2.47963
+      ],
+      "windows": 20,
+      "seconds": 20.150697000000005,
+      "first_window_end_s": 53.757603,
+      "last_window_end_s": 72.908171,
+      "frames": 1209,
+      "cadence_fps": 59.99793035129395,
+      "window_p95_median_ms": 17.076999999999998,
+      "window_p95_max_ms": 17.357,
+      "frame_max_ms": 19.7848,
+      "cpu_composite_ms_per_frame": 0.2799728701406122,
+      "cpu_pixels_ms_per_frame": 0.09546203473945408,
+      "cpu_upload_setup_ms_per_frame": 0.17389023986765922,
+      "cpu_mask_ms_per_frame": 0.0,
+      "mask_calls": 0,
+      "mask_cpu_max_ms": 0.0,
+      "rgba_upload_MB_per_second": 44.2694189684853,
+      "camera_positions": 1
+    },
+    {
+      "label": "minimum",
+      "zoom": [
+        0.822917,
+        0.822482
+      ],
+      "windows": 26,
+      "seconds": 26.180277,
+      "first_window_end_s": 91.078425,
+      "last_window_end_s": 116.242376,
+      "frames": 1570,
+      "cadence_fps": 59.968811105979235,
+      "window_p95_median_ms": 16.955750000000002,
+      "window_p95_max_ms": 17.2638,
+      "frame_max_ms": 23.4416,
+      "cpu_composite_ms_per_frame": 0.2805553503184713,
+      "cpu_pixels_ms_per_frame": 0.0959408280254777,
+      "cpu_upload_setup_ms_per_frame": 0.17303477707006365,
+      "cpu_mask_ms_per_frame": 0.0,
+      "mask_calls": 0,
+      "mask_cpu_max_ms": 0.0,
+      "rgba_upload_MB_per_second": 44.40958481837301,
+      "camera_positions": 1
+    },
+    {
+      "label": "maximum_return",
+      "zoom": [
+        4.947162,
+        4.940959
+      ],
+      "windows": 18,
+      "seconds": 18.118957,
+      "first_window_end_s": 121.277385,
+      "last_window_end_s": 138.379898,
+      "frames": 1087,
+      "cadence_fps": 59.99241537030555,
+      "window_p95_median_ms": 17.151049999999998,
+      "window_p95_max_ms": 17.6862,
+      "frame_max_ms": 18.2639,
+      "cpu_composite_ms_per_frame": 0.29385114995400186,
+      "cpu_pixels_ms_per_frame": 0.09836872125114995,
+      "cpu_upload_setup_ms_per_frame": 0.18389245630174794,
+      "cpu_mask_ms_per_frame": 0.0,
+      "mask_calls": 0,
+      "mask_cpu_max_ms": 0.0,
+      "rgba_upload_MB_per_second": 44.3823586534258,
+      "camera_positions": 1
+    },
+    {
+      "label": "habitual_return_movement_camera",
+      "zoom": [
+        2.480864,
+        2.47963
+      ],
+      "windows": 34,
+      "seconds": 34.22255299999999,
+      "first_window_end_s": 143.427877,
+      "last_window_end_s": 176.649036,
+      "frames": 2053,
+      "cadence_fps": 59.98967708273021,
+      "window_p95_median_ms": 17.15915,
+      "window_p95_max_ms": 17.6954,
+      "frame_max_ms": 18.5929,
+      "cpu_composite_ms_per_frame": 0.31354305893813933,
+      "cpu_pixels_ms_per_frame": 0.1279664880662445,
+      "cpu_upload_setup_ms_per_frame": 0.1746568923526547,
+      "cpu_mask_ms_per_frame": 0.08026653677545055,
+      "mask_calls": 447,
+      "mask_cpu_max_ms": 1.6254,
+      "rgba_upload_MB_per_second": 43.88009369143209,
+      "camera_positions": 8
+    }
+  ],
+  "nearest_baseline_comparisons": [
+    {
+      "box_stage": "initial_static",
+      "nearest_baseline_stage": "initial-as-instructed-habitual",
+      "box_window_p95_median_ms": 17.0345,
+      "nearest_window_p95_median_ms": 16.9891,
+      "median_p95_delta_percent": 0.26723016522358645,
+      "within_plus_5_percent_on_this_statistic": true
+    },
+    {
+      "box_stage": "minimum",
+      "nearest_baseline_stage": "minimum-held",
+      "box_window_p95_median_ms": 16.955750000000002,
+      "nearest_window_p95_median_ms": 16.9723,
+      "median_p95_delta_percent": -0.09751182809636383,
+      "within_plus_5_percent_on_this_statistic": true
+    },
+    {
+      "box_stage": "maximum_first",
+      "nearest_baseline_stage": "maximum-held",
+      "box_window_p95_median_ms": 17.1144,
+      "nearest_window_p95_median_ms": 17.1066,
+      "median_p95_delta_percent": 0.0455964364631134,
+      "within_plus_5_percent_on_this_statistic": true
+    }
+  ],
+  "baseline_path": "G:\\AI\\BG2_Upscale\\sprite\\families\\playable-characters\\6110-human-female-fighter\\research\\palette-q3m-p4-measurement-20261001-v1\\result.json",
+  "user_visual_feedback": {
+    "verbatim": "ca semble plus joli en dézoom. j'ai compté 7 crans depuis le zoom max",
+    "zoom_steps_back_from_maximum": 7,
+    "habitual_measured_zoom": [
+      2.480864,
+      2.47963
+    ],
+    "verdict_scope": "positive perceived zoom-out appearance; no explicit halo/detail/shimmer judgment"
+  },
+  "runtime_warnings": [
+    "[2026-10-01 22:36:35.843] [warning] WATER_ROUTE2 registry rejected wed=AR0900 overlay=WTLAKE slot=1",
+    "[2026-10-01 22:36:35.843] [warning] WATER_ROUTE2 registry has no validated entry; native q=0 fallback is active",
+    "[2026-10-01 22:36:36.180] [warning] RenderTexture prologue is detoured (likely EEex); recovered at reference RVA 0x4257C0 by verifying the un-patched pattern tail",
+    "[2026-10-01 22:39:00.710] [warning] Registered creature CVidCell frame could not be resolved: owner=CGameAnimationTypeCharacter, animation=0x6110, resref=CHFB1G11, sequence=6, slot=-1; native rendering retained"
+  ],
+  "native_frame_fallback": {
+    "warning_observed": true,
+    "resref": "CHFB1G11",
+    "sequence": 6,
+    "slot": -1,
+    "local_time": "2026-10-01T22:39:00.710+02:00",
+    "cause": "negative native frame slot rejected before filter; guard also present in HEAD",
+    "source": "src/iee/creature_sprite_x2.cpp:4233; src/iee/hooks.cpp:954",
+    "warning_frequency": "once per process; total native fallback count unavailable",
+    "visual_consequence": "not established; retain as comparison observation"
+  },
+  "other_warnings": "WATER_ROUTE2 AR0900 native fallback and recovered EEex RenderTexture detour also logged in preceding 21:58 session; outside P4, unchanged here.",
+  "outlier_windows_above_40ms": [
+    {
+      "window_end_s": 1.016611,
+      "frame_max_ms": 275.3953,
+      "window_p95_ms": 275.3953,
+      "eligible": false,
+      "view_valid": false,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 2.020464,
+      "frame_max_ms": 67.9968,
+      "window_p95_ms": 39.7418,
+      "eligible": false,
+      "view_valid": false,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 3.027344,
+      "frame_max_ms": 86.2186,
+      "window_p95_ms": 71.1857,
+      "eligible": false,
+      "view_valid": false,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 4.027586,
+      "frame_max_ms": 295.3182,
+      "window_p95_ms": 17.8704,
+      "eligible": false,
+      "view_valid": false,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 13.424091,
+      "frame_max_ms": 1461.1099,
+      "window_p95_ms": 17.2954,
+      "eligible": false,
+      "view_valid": false,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 14.4372,
+      "frame_max_ms": 836.1539,
+      "window_p95_ms": 836.1539,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 21.5021,
+      "frame_max_ms": 52.2784,
+      "window_p95_ms": 16.9556,
+      "eligible": true,
+      "view_valid": true,
+      "view_mixed": false
+    },
+    {
+      "window_end_s": 74.939395,
+      "frame_max_ms": 48.0493,
+      "window_p95_ms": 17.1172,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 75.95205,
+      "frame_max_ms": 45.9817,
+      "window_p95_ms": 17.0882,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 79.983896,
+      "frame_max_ms": 48.8968,
+      "window_p95_ms": 17.009,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 80.984625,
+      "frame_max_ms": 49.4104,
+      "window_p95_ms": 17.4716,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 85.018938,
+      "frame_max_ms": 50.8363,
+      "window_p95_ms": 17.3971,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 86.027607,
+      "frame_max_ms": 42.6331,
+      "window_p95_ms": 16.9968,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 88.045074,
+      "frame_max_ms": 50.993,
+      "window_p95_ms": 17.6132,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    },
+    {
+      "window_end_s": 140.406209,
+      "frame_max_ms": 41.7769,
+      "window_p95_ms": 17.2989,
+      "eligible": false,
+      "view_valid": true,
+      "view_mixed": true
+    }
+  ],
+  "limits": [
+    "FPS describe the whole scene around 60 FPS; no isolated GPU time/cost available.",
+    "Per-window p95 median/max, not a reconstructed global p95; isolated 52.2784ms stable-window frame retained.",
+    "Stage labels combine user protocol, zoom/camera CSV and moving world positions in log; precise walk/camera subphase boundary uninstrumented.",
+    "CPU pixels/upload are nested in composite; mask setup separate; CPU submission is not GPU execution.",
+    "Process memory is not sprite-only memory or VRAM; upload_bytes are base traffic, not residency.",
+    "Longer session, poses/cache history differ from prior Nearest; matching zoom does not establish controlled GPU/CPU A/B.",
+    "BOX habitual zoom 2.480864 differs from prior Nearest habitual 2.6865; compare future trials at maximum minus 7 steps.",
+    "Successful composite/mask counters do not count pre-composition native frame fallbacks."
+  ],
+  "p4_scale_filter_decision": "pending mipmaps and x2 comparisons; BOX visual preference only",
+  "installation_modified_during_measurement": false
+}

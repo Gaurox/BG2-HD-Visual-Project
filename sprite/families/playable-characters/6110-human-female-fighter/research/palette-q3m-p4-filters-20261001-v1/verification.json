@@ -1,0 +1,67 @@
+{
+  "schema": "bg2-sprite-p4-filters-verification-v1",
+  "status": "offline-verified-ingame-pending",
+  "runtime_manifest": "pipeline/runtime/manifests/iee-sprite-p4-filters-20261001-v1.json",
+  "runtime_manifest_sha256": "307F996C1479180C48BD6B64D1D73894F37541375CD88AA20F3D6A0B0B0167BD",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/CMakeLists.txt": "2C6A1FD1E1509B289FBB8ED7E7DBA022C6EE8E376130840BBC171D1FCC6CDC26",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "ACE8ED3096D8B9C9C8406C2FE052617CD636340766687789F65FF87205E04CCB",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "C0CD042803303CD42C42C2C589C07C881F92D3EDEDC98C90413A0A707FD3B9B2",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_minification.h": "C628E2D1E0A3B9C95C2C30B1DAD3534907A30D8BB647F496190AFC07C9B40483",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.h": "A06BC10ABE33D9E52E358466DCA4BCB25BABFC7FD9E4C3380559FEE2F51BA6D6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.cpp": "181329C5471A790C915C82E57098BDB38AB6275818600445DEA1BBB979F779F4",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_minification.h": "4A1C937EE154025CE04828352C9C68FBACCE13BBE2C33B9A4F06379B0429F07D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.h": "4036DA0CE09664E2DED3EAA2EF283721AC4FB85E42E14130CE4184FA867B08C8",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.cpp": "8C9B13BC8EF6CC7DF267D88C89356EA42602436ADB06F894523462057432E978",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "02E9FFE5993A2B7E59985EF9E4D5D1A9C0B94745C622D0A95261C51FCD18E4D9",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h": "3612A3536776DBA195CC03D799A632035776707D414140CD29C5398866B93492",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/native_occlusion_bridge.cpp": "B41AF92084A86EDAE112917DEC28B3A4AD5731586E47E79CEBE88A7AF577AF22",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.cpp": "8CD2A2B036169CD9BDB92C138D25077F14E53AED824E08C864DB370F8B9552B6",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.h": "939C25006470BCCC34550546C154B6BAD1C4AF4A27862FD419504ED43A2ED2E0",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "1D1C412B97A236AB967FC9685A1545BFF881BAA10F93A960EE63077A8D158C88",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/dll_main.cpp": "4E6A9A17B64020B71D5EE3DE63DB936D72BEAA1133DE9FB440AA443D0D6F93B2",
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/creature-hd-common.glsl": "8278AAB2B1B1C7BF94AEE56DA2DEF9C84918C7629F2B7752697FD1CD038AF1F5",
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpDraw.glsl": "CC5505AFB96C2BB3F9AF4B4E2EE7A38AB49CD7E969E442FC36B66D2E50469BC3",
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpSprite.glsl": "E270152BD66534D89959932352D17F8DA2C6BEAF7955D2450C5DDB91668D2D7C",
+    "engine/InfinityEngine-Enhancer/source-patchee/assets/shader-suite/templates/fpSELECT.glsl": "339E5A2D6769CE18B953576FC30DDB4D5F0A00D155CA061B849C65899A1C2164",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/sprite_minification_tests.cpp": "794D5CB263B9F7F4BB7DAF05E92B80E9AE42D43608A36B5D5AA185BD047BFAB9",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/sprite_p4_probe_tests.cpp": "17631C155A0476F6D6C8D457EE207C6A248E2D4F9D3A94F3736461671807507E",
+    "engine/InfinityEngine-Enhancer/source-patchee/tools/test_sprite_minification_gl.py": "DF76856B0E92A61C5DABEC067B38A253F1AA45747D6ECC108204252858A8E870",
+    "pipeline/scripts/Set-Sprite-P4-Filter.ps1": "983E3EE8722D24A8A6C9AE4C0A7C2C471DEFB5730F694DFBDD83E6ADE03861E1",
+    "pipeline/scripts/palette_p4_probe.py": "3ECC7B4709DD8876E5E100954D158C9B3CF5F607DED4DEE5B9FD6FBF5E150013",
+    "pipeline/tests/test_palette_p4_probe.py": "CB89D96E861C11E88BE855D65643675C5B604049E80BA3DF64C7E2BAEE15D9BD"
+  },
+  "ctest": [
+    "iee_tests",
+    "iee_palette_fraction_tests",
+    "iee_sprite_p4_probe_tests",
+    "iee_sprite_minification_tests"
+  ],
+  "ctest_status": "4/4 passed; probe rechecked after masked CPU counters",
+  "python_tests": {
+    "test_palette_p4_probe": 3,
+    "status": "passed",
+    "test_build_shader_suite": 3
+  },
+  "gpu_oracles": {
+    "desktop_input": false,
+    "status": "passed",
+    "checks": 12,
+    "report": "gpu-tests.json",
+    "window_shown": false
+  },
+  "installation_smoke": {
+    "restored_dll_ini_catalog_shaders_receipt_exact": true,
+    "filters": [
+      "Box",
+      "Mipmaps",
+      "Nearest"
+    ],
+    "fixture": "workspace-only",
+    "install_select_verify_restore": "passed",
+    "preserves_user_drift": true,
+    "scope": "0x6110"
+  },
+  "p4_decision": "pending-user-comparison",
+  "release_changed": false
+}

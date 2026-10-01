@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-sprite-p4-probe-preparation-v1",
+  "status": "host-verified-ready-for-install",
+  "date": "2026-10-01",
+  "runtime_manifest": "pipeline/runtime/manifests/iee-sprite-p4-probe-20261001-v1.json",
+  "runtime_manifest_sha256": "5BD4E7AFF2701B76FF60C7008EF85BB8F9521BFA2F75E2B381082E7BC4E38185",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/CMakeLists.txt": "F71B8217831451FB2491CF04C939CB0A49D326E7410A592A3A484ECA8709DFE8",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.h": "7D833C2E6E540E82FFBFA3D965CFF85B79188BA49AD7E5EC51820734B034FADE",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/config.cpp": "AC9009FB260A8B249A42051F6B0C41CD4A947757D5F5C1A860B47A6E8D02794B",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.h": "29249E32A677DCC3B89183F97FE876DC34533098C3AD9ED3A98104EF129D4D56",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_p4_probe.cpp": "B70C228F14B0BD6F1AB8CE8ABA1AB5D7ED6B31D3AE43928CB88EC78E02CFAE2D",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "449AC5295B6DAE2D1207491AB5644B78C0938DFC2290EA2E2542DEB1DD7F5C4A",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/dll_main.cpp": "AD3FBBD7BF365B435D44590A7AC6C7426B5526C495F474563B9B90C62C79F6FD",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/frame_hook.cpp": "8F2F30C6F73C9C3CFAF7033F3BF64D1B746EB621E2B348068236BA209C0F058C",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_probe.cpp": "FC8CB8A4F75EC111B9D62D82465B1F9F2EDD968DFC37EFCB27C4FA375C883A8D",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/sprite_p4_probe_tests.cpp": "2D218B02B58D3C44C68909D853F9587475605E0810D3DEFCA4EB06D0D39C9879",
+    "pipeline/scripts/Set-Sprite-P4-Probe.ps1": "E664DE4BCAE841CFCCCB57F11D7A9C81C5568B54D0271024DE1D6B88847D25DA",
+    "pipeline/scripts/palette_p4_probe.py": "9A166EB21A369D849ABBFDDF2F087899C004213171C8866905CA3109DDAF4A52",
+    "pipeline/tests/test_palette_p4_probe.py": "51A4DBE408653C8931531863BA94C7E762BCF5EB491AAED3A0746CDF64874DC5"
+  },
+  "validation": {
+    "ctest_suites": [
+      "iee_tests",
+      "iee_palette_fraction_tests",
+      "iee_sprite_p4_probe_tests"
+    ],
+    "ctest_passed": true,
+    "python_session_reader_tests": 2,
+    "transaction_fixture": "workspace-only install/verify/restore; DLL/INI/catalogue/receipt restored byte-for-byte",
+    "csv_periodic_flush_verified": true
+  },
+  "baseline": {
+    "scale": 4,
+    "filter": "Nearest",
+    "catalog_sha256": "637DBC809EAD7A9AD2A771BB760F5C0042109C5A4B6A19BE68A75CC41D50E0B8"
+  },
+  "ingame_capture_performed": false,
+  "user_controls_game": true,
+  "analyze_only_after_user_signal": true
+}

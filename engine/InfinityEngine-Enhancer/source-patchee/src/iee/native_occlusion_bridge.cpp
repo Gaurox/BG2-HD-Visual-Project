@@ -9,7 +9,9 @@
 
 #include "iee/core/logger.h"
 #include "iee/core/pattern_scanner.h"
+#include "iee/core/sprite_p4_probe.h"
 #include "iee/creature_sprite_filter.h"
+#include "iee/creature_sprite_minification.h"
 #include "iee/game/opengl_types.h"
 #include "iee/shader_probe.h"
 
@@ -34,6 +36,7 @@ unsigned g_vao{};
 int g_replacementUniform{-1};
 int g_maskUniform{-1};
 int g_scaleUniform{-1};
+int g_premultipliedUniform{-1};
 bool g_failureLogged{};
 bool g_activeLogged{};
 bool g_routingFailureLogged{};
@@ -56,6 +59,7 @@ layout(location = 0) out vec4 outColor;
 uniform sampler2D uReplacement;
 uniform sampler2D uVisibility;
 uniform int uScale;
+uniform int uPremultiplied;
 
 void main() {
     ivec2 highCoord = ivec2(gl_FragCoord.xy);
@@ -74,7 +78,8 @@ void main() {
         // smoothing. Zero is the neutral element of both composition paths.
         outColor = vec4(0.0, 0.0, 0.0, 0.0);
     } else {
-        outColor = vec4(replacement.rgb, replacement.a * transfer.r);
+        outColor = vec4(replacement.rgb * (uPremultiplied != 0 ? transfer.r : 1.0),
+                        replacement.a * transfer.r);
     }
 }
 )glsl";
@@ -251,6 +256,7 @@ void forget_resources() noexcept {
   g_replacementUniform = -1;
   g_maskUniform = -1;
   g_scaleUniform = -1;
+  g_premultipliedUniform = -1;
 }
 
 bool resources_available(const OpenGLFunctions& gl) noexcept {
@@ -305,7 +311,9 @@ bool initialize_resources(const OpenGLFunctions& gl, HGLRC context) {
   g_replacementUniform = gl.glGetUniformLocation(program, "uReplacement");
   g_maskUniform = gl.glGetUniformLocation(program, "uVisibility");
   g_scaleUniform = gl.glGetUniformLocation(program, "uScale");
-  if (g_replacementUniform >= 0 && g_maskUniform >= 0 && g_scaleUniform >= 0) {
+  g_premultipliedUniform = gl.glGetUniformLocation(program, "uPremultiplied");
+  if (g_replacementUniform >= 0 && g_maskUniform >= 0 && g_scaleUniform >= 0 &&
+      g_premultipliedUniform >= 0) {
     return true;
   }
   gl.glDeleteFramebuffers(1, &g_framebuffer);
@@ -375,6 +383,8 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     const auto contextIdentity = reinterpret_cast<std::uintptr_t>(context);
     const auto creatureParent = creature_sprite_filter::registry().find(
         contextIdentity, replacement.glName);
+    core::sprite_p4::ScopedMetric maskMetric(core::sprite_p4::Metric::Mask,
+        creatureParent && creatureParent->animationId == 0x6110);
 
     DrawState state{};
     game::gl::discard_errors();
@@ -417,7 +427,10 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
         creatureParent && creatureParent->physicalWidth == physicalWidth &&
         creatureParent->physicalHeight == physicalHeight &&
         creatureParent->scale == scale;
-    const auto physicalBytes = static_cast<std::uint64_t>(physicalWidth) *
+    const bool mips = registeredCreatureParent && creatureParent->premultiplied;
+    const auto physicalBytes = mips
+        ? core::sprite_minification::mip_layout(physicalWidth, physicalHeight).bytes
+        : static_cast<std::uint64_t>(physicalWidth) *
                                static_cast<std::uint64_t>(physicalHeight) * 4ull;
     if (physicalBytes > kMaximumPhysicalScratchBytes) {
       restoreReplacement(0);
@@ -454,12 +467,11 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8),
                     physicalWidth, physicalHeight, 0, game::gl::RGBA,
                     game::gl::UNSIGNED_BYTE, nullptr);
-    const auto outputFilter =
-        registeredCreatureParent &&
-                creature_sprite_filter::registry().configured_mode() ==
-                    core::CreatureSpriteFilterMode::CatmullRom
-            ? game::gl::NEAREST
-            : game::gl::LINEAR;
+    const auto outputMode = registeredCreatureParent ? creatureParent->filterMode
+                                                    : core::CreatureSpriteFilterMode::Linear;
+    const auto outputFilter = outputMode == core::CreatureSpriteFilterMode::CatmullRom ||
+                              outputMode == core::CreatureSpriteFilterMode::Box || mips
+                                  ? game::gl::NEAREST : game::gl::LINEAR;
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
                        static_cast<int>(outputFilter));
     gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
@@ -513,16 +525,25 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     gl.glUniform1i(g_replacementUniform, 0);
     gl.glUniform1i(g_maskUniform, 1);
     gl.glUniform1i(g_scaleUniform, scale);
+    gl.glUniform1i(g_premultipliedUniform, mips ? 1 : 0);
     gl.glBindVertexArray(g_vao);
     gl.glDrawArrays(game::gl::TRIANGLES, 0, 3);
     const bool rendered = game::gl::check_error("native occlusion phase1 mask draw");
+    int maximumMipLevel = 0;
+    bool samplingReady = rendered;
+    if (rendered && registeredCreatureParent) {
+      gl.glActiveTexture(game::gl::TEXTURE0);
+      gl.glBindTexture(game::gl::TEXTURE_2D, output.glName);
+      samplingReady = creature_sprite_filter::finish_texture_sampling(
+          gl, outputMode, physicalWidth, physicalHeight, true, maximumMipLevel);
+    }
     restore_draw_state(gl, state);
 
     // TexImage left the engine cache on the transient id. Move away and back
     // so the deferred renderer resolves the transient GL name, not merely the
     // raw binding restored above.
     api.DrawBindTexture(replacementTextureId);
-    if (!rendered) {
+    if (!samplingReady) {
       api.DrawDeleteTexture(generated);
       transientTextureId = 0;
       return false;
@@ -536,16 +557,24 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
     }
     if (registeredCreatureParent) {
       if (creature_sprite_filter::registry().transfer_masked(
-              contextIdentity, replacement.glName, output.glName)) {
+              contextIdentity, replacement.glName, output.glName, maximumMipLevel)) {
         probe::record_creature_texture_trace(output.glName, logicalWidth, logicalHeight,
                                              physicalWidth, physicalHeight, scale,
                                              "creature-native-occlusion-output");
-      } else if (!g_routingFailureLogged) {
-        g_routingFailureLogged = true;
-        LOG_WARN(
+      } else {
+        if (!g_routingFailureLogged) {
+          g_routingFailureLogged = true;
+          LOG_WARN(
             "Creature sprite filter provenance could not be transferred to masked GL "
             "texture {}; native texture sampling retained",
-            output.glName);
+              output.glName);
+        }
+        if (mips) {
+          api.DrawBindTexture(replacementTextureId);
+          api.DrawDeleteTexture(generated);
+          transientTextureId = 0;
+          return false;
+        }
       }
     }
     if (!g_activeLogged) {
@@ -555,6 +584,7 @@ bool bind_masked_texture(const std::vector<std::uint8_t>& visibilityTransfer,
           "transient GPU budget capped at 64 MiB",
           logicalWidth, logicalHeight, scale);
     }
+    maskMetric.success();
     return true;
   } catch (const std::exception& error) {
     if (api.DrawBindTexture) api.DrawBindTexture(replacementTextureId);

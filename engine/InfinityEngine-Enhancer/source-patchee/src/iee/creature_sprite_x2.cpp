@@ -32,8 +32,10 @@
 #include "iee/core/config.h"
 #include "iee/core/palette_fraction.h"
 #include "iee/core/logger.h"
+#include "iee/core/sprite_p4_probe.h"
 #include "iee/core/pattern_scanner.h"
 #include "iee/creature_sprite_filter.h"
+#include "iee/creature_sprite_minification.h"
 #include "iee/game/opengl_types.h"
 #include "iee/shader_probe.h"
 
@@ -453,6 +455,9 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
 }
 
 [[nodiscard]] const char* sampling_filter_name() noexcept {
+  const auto mode = g_filterMode.load(std::memory_order_acquire);
+  if (mode == core::CreatureSpriteFilterMode::Box) return "BOX/NEAREST";
+  if (mode == core::CreatureSpriteFilterMode::Mipmaps) return "LINEAR_MIPMAP_LINEAR/NEAREST";
   return g_filterMode.load(std::memory_order_acquire) == core::CreatureSpriteFilterMode::Linear
              ? "LINEAR"
              : "NEAREST";
@@ -460,7 +465,8 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
 
 bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeight,
                             std::uint32_t physicalScale,
-                            creature_sprite_filter::TextureProvenance provenance) noexcept {
+                            creature_sprite_filter::TextureProvenance provenance,
+                            std::uint16_t animationId, int maximumMipLevel) noexcept {
 #ifdef _WIN32
   const auto contextIdentity = reinterpret_cast<std::uintptr_t>(game::gl::current_context());
 #else
@@ -468,7 +474,8 @@ bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeig
 #endif
   const bool published = creature_sprite_filter::registry().publish(
       contextIdentity, glName, physicalWidth, physicalHeight,
-      static_cast<int>(physicalScale), provenance, false);
+      static_cast<int>(physicalScale), provenance, false, animationId, maximumMipLevel,
+      maximumMipLevel > 0);
   if (!published && !g_filterRegistryFailureLogged) {
     g_filterRegistryFailureLogged = true;
     LOG_WARN(
@@ -1530,7 +1537,8 @@ bool upload_frame_locked(const Frame& frame,
                          NativePixelEncoding encoding, std::uint32_t physicalScale,
                          int textureId, int previousTextureId,
                          const EngineTextureApi& api, int textureLogicalWidth,
-                         int textureLogicalHeight, FrameTextureLayout layout) {
+                         int textureLogicalHeight, FrameTextureLayout layout,
+                         std::uint16_t animationId) {
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glTexParameteri || !gl.glPixelStorei || !gl.glGetTexLevelParameteriv ||
@@ -1607,28 +1615,35 @@ bool upload_frame_locked(const Frame& frame,
     restoreState();
     return false;
   }
+  const auto filterMode = creature_sprite_filter::registry().effective_mode(animationId, physicalScale);
+  std::vector<std::uint32_t> premultiplied;
+  const bool mips = filterMode == core::CreatureSpriteFilterMode::Mipmaps;
+  if (mips && !core::sprite_minification::premultiply_copy(replacement, premultiplied)) {
+    restoreState();
+    return false;
+  }
   gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8), physicalWidth,
                    physicalHeight, 0, encoding.externalFormat, encoding.type,
-                   replacement.data());
+                   mips ? premultiplied.data() : replacement.data());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_S,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                     sampling_filter());
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                     sampling_filter());
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL, 0);
+  int maximumMipLevel = 0;
+  const bool samplingReady = creature_sprite_filter::finish_texture_sampling(
+      gl, filterMode, physicalWidth, physicalHeight, false, maximumMipLevel);
   int actualWidth = 0;
   int actualHeight = 0;
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_WIDTH, &actualWidth);
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_HEIGHT, &actualHeight);
-  const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
+  const bool success = samplingReady && actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
   if (success) {
-    (void)publish_filter_texture(
+    const bool published = publish_filter_texture(
         static_cast<unsigned>(boundTexture), physicalWidth, physicalHeight,
-        physicalScale, creature_sprite_filter::TextureProvenance::Frame);
+        physicalScale, creature_sprite_filter::TextureProvenance::Frame,
+        animationId, maximumMipLevel);
+    if (mips && !published) { restoreState(); return false; }
     probe::record_creature_texture_trace(
         static_cast<unsigned>(boundTexture), textureLogicalWidth, textureLogicalHeight,
         physicalWidth, physicalHeight, static_cast<int>(physicalScale), "creature-frame-xbr");
@@ -1723,7 +1738,9 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
                                      NativePixelEncoding encoding,
                                      std::uint32_t physicalScale, int textureId,
                                      int previousTextureId,
-                                     const EngineTextureApi& api) noexcept {
+                                     const EngineTextureApi& api, bool probeTarget,
+                                     std::uint16_t animationId) noexcept {
+  core::sprite_p4::ScopedMetric uploadMetric(core::sprite_p4::Metric::Upload, probeTarget);
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
       !gl.glBindTexture || !gl.glTexParameteri || !gl.glPixelStorei ||
@@ -1826,32 +1843,40 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
     restoreState();
     return false;
   }
+  const auto filterMode = creature_sprite_filter::registry().effective_mode(animationId, physicalScale);
+  std::vector<std::uint32_t> premultiplied;
+  const bool mips = filterMode == core::CreatureSpriteFilterMode::Mipmaps;
+  if (mips && !core::sprite_minification::premultiply_copy(replacement, premultiplied)) {
+    restoreState();
+    return false;
+  }
   gl.glTexImage2D(game::gl::TEXTURE_2D, 0, static_cast<int>(game::gl::RGBA8), physicalWidth,
                   physicalHeight, 0, encoding.externalFormat, encoding.type,
-                  replacement.data());
+                  mips ? premultiplied.data() : replacement.data());
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_S,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
   gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_WRAP_T,
                      static_cast<int>(game::gl::CLAMP_TO_EDGE));
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MIN_FILTER,
-                     sampling_filter());
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAG_FILTER,
-                     sampling_filter());
-  gl.glTexParameteri(game::gl::TEXTURE_2D, game::gl::TEXTURE_MAX_LEVEL, 0);
+  int maximumMipLevel = 0;
+  const bool samplingReady = creature_sprite_filter::finish_texture_sampling(
+      gl, filterMode, physicalWidth, physicalHeight, false, maximumMipLevel);
   int actualWidth = 0;
   int actualHeight = 0;
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_WIDTH, &actualWidth);
   gl.glGetTexLevelParameteriv(game::gl::TEXTURE_2D, 0, game::gl::TEXTURE_HEIGHT,
                               &actualHeight);
-  const bool success = actualWidth == physicalWidth && actualHeight == physicalHeight &&
+  const bool success = samplingReady && actualWidth == physicalWidth && actualHeight == physicalHeight &&
                        gl.glGetError() == game::gl::GL_NO_ERROR;
   if (success) {
-    (void)publish_filter_texture(
+    const bool published = publish_filter_texture(
         generated.glName, physicalWidth, physicalHeight, physicalScale,
-        creature_sprite_filter::TextureProvenance::CharacterComposite);
+        creature_sprite_filter::TextureProvenance::CharacterComposite,
+        animationId, maximumMipLevel);
+    if (mips && !published) { restoreState(); return false; }
     probe::record_creature_texture_trace(
         generated.glName, logicalWidth, logicalHeight, physicalWidth, physicalHeight,
         static_cast<int>(physicalScale), "creature-composite-xbr");
+    uploadMetric.success(expectedBytes);
   }
   restoreState();
   return success;
@@ -1877,6 +1902,11 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
                                 physicalPixels, physicalBytes) ||
       physicalBytes > kTextureCacheBudgetBytes) {
     return false;
+  }
+  if (creature_sprite_filter::registry().effective_mode(handle.animationId, physicalScale) ==
+      core::CreatureSpriteFilterMode::Mipmaps) {
+    physicalBytes = core::sprite_minification::mip_layout(physicalWidth, physicalHeight).bytes;
+    if (physicalBytes == 0 || physicalBytes > kTextureCacheBudgetBytes) return false;
   }
   const FrameTextureCacheKey key{
       .frame = handle,
@@ -1949,7 +1979,8 @@ bool ensure_texture_locked(FrameHandle handle, const std::array<std::uint32_t, 2
   }
   auto& entry = g_textureCache[entryIndex];
   if (!upload_frame_locked(frame, *indices, *fractions, realized, encoding, physicalScale, entry.textureId,
-                           previousTextureId, api, logicalWidth, logicalHeight, layout)) {
+                           previousTextureId, api, logicalWidth, logicalHeight, layout,
+                           handle.animationId)) {
     delete_texture_entry_locked(api, entryIndex);
     api.DrawBindTexture(previousTextureId);
     return false;
@@ -1964,7 +1995,8 @@ bool ensure_composite_pixels_locked(
     const CompositeBounds& bounds, int logicalWidth, int logicalHeight,
     NativePixelEncoding encoding, std::uint32_t physicalScale,
     const std::array<CompositeLayerCacheKey, kMaximumCompositeLayers>& cacheLayers,
-    const std::vector<std::uint32_t>*& pixels) {
+    const std::vector<std::uint32_t>*& pixels, bool probeTarget = false) {
+  core::sprite_p4::ScopedMetric pixelMetric(core::sprite_p4::Metric::Pixels, probeTarget);
   pixels = nullptr;
   auto existing = std::find_if(
       g_compositePixelCache.begin(), g_compositePixelCache.end(),
@@ -1976,6 +2008,7 @@ bool ensure_composite_pixels_locked(
                entry.encoding.type == encoding.type;
       });
   if (existing != g_compositePixelCache.end()) {
+    if (probeTarget) core::sprite_p4::record_pixel_cache_hit();
     existing->lastUse = ++g_textureUseCounter;
     pixels = &existing->pixels;
     return !pixels->empty();
@@ -3910,9 +3943,10 @@ bool prepare(const std::filesystem::path& assetsDirectory) noexcept {
   return false;
 }
 
-void configure_filter_mode(core::CreatureSpriteFilterMode mode) noexcept {
+void configure_filter_mode(core::CreatureSpriteFilterMode mode,
+                           std::uint16_t animationId) noexcept {
   g_filterMode.store(mode, std::memory_order_release);
-  creature_sprite_filter::registry().configure(mode);
+  creature_sprite_filter::registry().configure(mode, animationId);
 }
 
 void release() noexcept {
@@ -4607,6 +4641,8 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       !api.DrawGetRenderer || !api.glTextureState || !api.glTextureTable) {
     return false;
   }
+  const bool probeTarget = layers[0].frame.animationId == 0x6110u;
+  core::sprite_p4::ScopedMetric compositeMetric(core::sprite_p4::Metric::Composite, probeTarget);
   try {
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire)) return false;
@@ -4703,7 +4739,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
     const std::vector<std::uint32_t>* pixels = nullptr;
     if (!ensure_composite_pixels_locked(layers, layerCount, bounds, logicalWidth,
                                         logicalHeight, encoding, physicalScale,
-                                        cacheLayers, pixels) ||
+                                        cacheLayers, pixels, probeTarget) ||
         !pixels) {
       if (!g_creationFailureLogged) {
         g_creationFailureLogged = true;
@@ -4719,7 +4755,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
         !upload_composite_texture_locked(*pixels, logicalWidth, logicalHeight,
                                          encoding, physicalScale,
                                          transientTextureId, previousTextureId,
-                                         api)) {
+                                         api, probeTarget, layers[0].frame.animationId)) {
       api.DrawBindTexture(previousTextureId);
       if (transientTextureId > 0 && transientTextureId != previousTextureId) {
         api.DrawDeleteTexture(transientTextureId);
@@ -4766,6 +4802,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
           static_cast<std::int64_t>(logicalHeight) * physicalScale,
           transientTextureId, sampling_filter_name());
     }
+    compositeMetric.success();
     return true;
   } catch (const std::exception& error) {
     if (api.DrawBindTexture && previousTextureId > 0) {

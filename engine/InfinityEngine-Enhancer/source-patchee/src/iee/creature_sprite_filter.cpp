@@ -1,4 +1,5 @@
 #include "iee/creature_sprite_filter.h"
+#include "iee/core/sprite_minification.h"
 
 #include <algorithm>
 #include <limits>
@@ -7,6 +8,7 @@ namespace iee::creature_sprite_filter {
 namespace {
 constexpr int kGlNearest = 0x2600;
 constexpr int kGlLinear = 0x2601;
+constexpr int kGlLinearMipmapLinear = 0x2703;
 
 std::uint64_t next_generation(std::uint64_t current) noexcept {
   return current == (std::numeric_limits<std::uint64_t>::max)() ? 1 : current + 1;
@@ -16,13 +18,24 @@ std::uint64_t next_generation(std::uint64_t current) noexcept {
 TextureRegistry::TextureRegistry(std::size_t capacity) noexcept
     : capacity_((std::min)(capacity, slots_.size())) {}
 
-void TextureRegistry::configure(core::CreatureSpriteFilterMode mode) noexcept {
-  if (mode_ != mode) {
+void TextureRegistry::configure(core::CreatureSpriteFilterMode mode,
+                                std::uint16_t animationId) noexcept {
+  if (mode_ != mode || animationId_ != animationId) {
     for (auto& slot : slots_) slot = {};
     size_ = 0;
     capacityExceeded_ = false;
   }
   mode_ = mode;
+  animationId_ = animationId;
+}
+
+core::CreatureSpriteFilterMode TextureRegistry::effective_mode(
+    std::uint16_t animationId, int scale) const noexcept {
+  if ((animationId_ != 0 && animationId_ != animationId) ||
+      ((mode_ == core::CreatureSpriteFilterMode::Box ||
+        mode_ == core::CreatureSpriteFilterMode::Mipmaps) && scale != 4))
+    return core::CreatureSpriteFilterMode::Nearest;
+  return mode_;
 }
 
 core::CreatureSpriteFilterMode TextureRegistry::configured_mode() const noexcept {
@@ -58,22 +71,33 @@ std::size_t TextureRegistry::find_index(unsigned glName) const noexcept {
   return slots_.size();
 }
 
-Sampler TextureRegistry::expected_sampler(bool masked) const noexcept {
+Sampler TextureRegistry::expected_sampler(core::CreatureSpriteFilterMode mode,
+                                          bool masked) const noexcept {
+  if (mode == core::CreatureSpriteFilterMode::Mipmaps) return Sampler::TrilinearNearestMag;
   if (masked) {
-    return mode_ == core::CreatureSpriteFilterMode::CatmullRom
+    return (mode == core::CreatureSpriteFilterMode::CatmullRom ||
+            mode == core::CreatureSpriteFilterMode::Box)
                ? Sampler::Nearest
                : Sampler::Linear;
   }
-  return mode_ == core::CreatureSpriteFilterMode::Linear ? Sampler::Linear
+  return mode == core::CreatureSpriteFilterMode::Linear ? Sampler::Linear
                                                           : Sampler::Nearest;
 }
 
 bool TextureRegistry::publish(std::uintptr_t contextIdentity, unsigned glName,
                               int physicalWidth, int physicalHeight, int scale,
-                              TextureProvenance provenance, bool masked) noexcept {
+                              TextureProvenance provenance, bool masked,
+                              std::uint16_t animationId, int maximumMipLevel,
+                              bool premultiplied) noexcept {
+  const auto mode = effective_mode(animationId, scale);
+  const bool mips = mode == core::CreatureSpriteFilterMode::Mipmaps;
   if (contextIdentity == 0 || glName == 0 || physicalWidth <= 0 ||
       physicalHeight <= 0 || (scale != 2 && scale != 4) ||
-      physicalWidth % scale != 0 || physicalHeight % scale != 0) {
+      physicalWidth % scale != 0 || physicalHeight % scale != 0 ||
+      maximumMipLevel < 0 || (mips != premultiplied) ||
+      (mips ? maximumMipLevel == 0 || maximumMipLevel !=
+                  core::sprite_minification::mip_layout(physicalWidth, physicalHeight).maximumLevel
+            : maximumMipLevel != 0)) {
     return false;
   }
   (void)observe_context(contextIdentity);
@@ -106,8 +130,12 @@ bool TextureRegistry::publish(std::uintptr_t contextIdentity, unsigned glName,
               .scale = static_cast<std::uint8_t>(scale),
               .contentGeneration = nextContentGeneration_,
               .provenance = provenance,
-              .expectedSampler = expected_sampler(masked),
+              .expectedSampler = expected_sampler(mode, masked),
               .masked = masked,
+              .filterMode = mode,
+              .animationId = animationId,
+              .maximumMipLevel = maximumMipLevel,
+              .premultiplied = premultiplied,
           },
       .occupied = true,
   };
@@ -117,12 +145,13 @@ bool TextureRegistry::publish(std::uintptr_t contextIdentity, unsigned glName,
 
 bool TextureRegistry::transfer_masked(std::uintptr_t contextIdentity,
                                       unsigned parentGlName,
-                                      unsigned outputGlName) noexcept {
+                                      unsigned outputGlName, int maximumMipLevel) noexcept {
   const auto parent = find(contextIdentity, parentGlName);
   if (!parent || outputGlName == 0 || outputGlName == parentGlName) return false;
   return publish(contextIdentity, outputGlName, parent->physicalWidth,
                  parent->physicalHeight, parent->scale,
-                 TextureProvenance::Masked, true);
+                 TextureProvenance::Masked, true, parent->animationId,
+                 maximumMipLevel, parent->premultiplied);
 }
 
 void TextureRegistry::forget(std::uintptr_t contextIdentity,
@@ -160,12 +189,18 @@ DrawDecision TextureRegistry::decide(
   const auto metadata = find(observation.contextIdentity, observation.glName);
   if (!metadata || metadata->physicalWidth != observation.physicalWidth ||
       metadata->physicalHeight != observation.physicalHeight ||
-      metadata->expectedSampler != observation.sampler) {
+      metadata->expectedSampler != observation.sampler ||
+      metadata->maximumMipLevel != observation.maximumMipLevel ||
+      ((metadata->filterMode == core::CreatureSpriteFilterMode::Box ||
+        metadata->filterMode == core::CreatureSpriteFilterMode::Mipmaps) &&
+       !observation.minificationContract)) {
     return decision;
   }
   decision.owner = true;
-  decision.filterActive = mode_ == core::CreatureSpriteFilterMode::CatmullRom;
-  decision.mode = static_cast<float>(static_cast<std::uint8_t>(mode_));
+  decision.filterActive = metadata->filterMode == core::CreatureSpriteFilterMode::CatmullRom ||
+                          metadata->filterMode == core::CreatureSpriteFilterMode::Box ||
+                          metadata->filterMode == core::CreatureSpriteFilterMode::Mipmaps;
+  decision.mode = static_cast<float>(static_cast<std::uint8_t>(metadata->filterMode));
   decision.texelWidth = 1.0f / static_cast<float>(metadata->physicalWidth);
   decision.texelHeight = 1.0f / static_cast<float>(metadata->physicalHeight);
   decision.scale = metadata->scale;
@@ -196,6 +231,8 @@ bool is_routing_fragment(std::string_view name) noexcept {
 Sampler sampler_from_gl(int minFilter, int magFilter) noexcept {
   if (minFilter == kGlNearest && magFilter == kGlNearest) return Sampler::Nearest;
   if (minFilter == kGlLinear && magFilter == kGlLinear) return Sampler::Linear;
+  if (minFilter == kGlLinearMipmapLinear && magFilter == kGlNearest)
+    return Sampler::TrilinearNearestMag;
   return Sampler::Unknown;
 }
 
