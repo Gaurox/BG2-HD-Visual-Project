@@ -1,0 +1,645 @@
+{
+  "schema": "bg2-elf-half-elf-q3m-selection-v1",
+  "status": "planned-not-produced",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "source_plan": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25"
+  },
+  "namespace": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "cache": "sprite/.work/palette-q3m-shared/x2/15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "animations": [
+    {
+      "animation_id": "0x5001",
+      "symbol": "CLERIC_MALE_ELF_LOW",
+      "resref": "CEMB",
+      "paperdoll": "CEMC",
+      "stats": {
+        "animation_id": "0x5001",
+        "logical_frames": 180494,
+        "logical_model_frames": 150265,
+        "logical_model_q32_pixels": 403802112,
+        "logical_native_pixels": 226280746,
+        "resources": 656,
+        "strict_full_palette_work_items": 97455,
+        "symbol": "CLERIC_MALE_ELF_LOW",
+        "unique_model_q32_pixels": 286009344,
+        "unique_model_work_items": 97323,
+        "unique_work_items": 97385
+      },
+      "cached_state": {
+        "unique_work": 97385,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96162,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5011",
+      "symbol": "CLERIC_FEMALE_ELF_LOW",
+      "resref": "CEFB",
+      "paperdoll": "CEFC",
+      "stats": {
+        "animation_id": "0x5011",
+        "logical_frames": 180494,
+        "logical_model_frames": 151759,
+        "logical_model_q32_pixels": 405483520,
+        "logical_native_pixels": 226359533,
+        "resources": 656,
+        "strict_full_palette_work_items": 97602,
+        "symbol": "CLERIC_FEMALE_ELF_LOW",
+        "unique_model_q32_pixels": 286149632,
+        "unique_model_work_items": 97316,
+        "unique_work_items": 97378
+      },
+      "cached_state": {
+        "unique_work": 97378,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96155,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5101",
+      "symbol": "FIGHTER_MALE_ELF_LOW",
+      "resref": "CEMB",
+      "paperdoll": "CEMF",
+      "stats": {
+        "animation_id": "0x5101",
+        "logical_frames": 180494,
+        "logical_model_frames": 150265,
+        "logical_model_q32_pixels": 403778560,
+        "logical_native_pixels": 226274421,
+        "resources": 656,
+        "strict_full_palette_work_items": 97497,
+        "symbol": "FIGHTER_MALE_ELF_LOW",
+        "unique_model_q32_pixels": 286080000,
+        "unique_model_work_items": 97365,
+        "unique_work_items": 97427
+      },
+      "cached_state": {
+        "unique_work": 97427,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96204,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5111",
+      "symbol": "FIGHTER_FEMALE_ELF_LOW",
+      "resref": "CEFB",
+      "paperdoll": "CEFF",
+      "stats": {
+        "animation_id": "0x5111",
+        "logical_frames": 180494,
+        "logical_model_frames": 151759,
+        "logical_model_q32_pixels": 405488640,
+        "logical_native_pixels": 226392695,
+        "resources": 656,
+        "strict_full_palette_work_items": 97603,
+        "symbol": "FIGHTER_FEMALE_ELF_LOW",
+        "unique_model_q32_pixels": 286156800,
+        "unique_model_work_items": 97317,
+        "unique_work_items": 97379
+      },
+      "cached_state": {
+        "unique_work": 97379,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96156,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5201",
+      "symbol": "MAGE_MALE_ELF_LOW",
+      "resref": "CEMW",
+      "paperdoll": "CEMW",
+      "stats": {
+        "animation_id": "0x5201",
+        "logical_frames": 180494,
+        "logical_model_frames": 149518,
+        "logical_model_q32_pixels": 408348672,
+        "logical_native_pixels": 230230740,
+        "resources": 656,
+        "strict_full_palette_work_items": 97021,
+        "symbol": "MAGE_MALE_ELF_LOW",
+        "unique_model_q32_pixels": 289916928,
+        "unique_model_work_items": 96890,
+        "unique_work_items": 96952
+      },
+      "cached_state": {
+        "unique_work": 96952,
+        "cached": 1200,
+        "shared_with_human_half_orc": 984,
+        "shared_with_dwarf_gnome": 577,
+        "new_gpu": 95730,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5211",
+      "symbol": "MAGE_FEMALE_ELF_LOW",
+      "resref": "CEFW",
+      "paperdoll": "CEFW",
+      "stats": {
+        "animation_id": "0x5211",
+        "logical_frames": 180494,
+        "logical_model_frames": 149518,
+        "logical_model_q32_pixels": 407777280,
+        "logical_native_pixels": 229863736,
+        "resources": 656,
+        "strict_full_palette_work_items": 97893,
+        "symbol": "MAGE_FEMALE_ELF_LOW",
+        "unique_model_q32_pixels": 291640320,
+        "unique_model_work_items": 97762,
+        "unique_work_items": 97824
+      },
+      "cached_state": {
+        "unique_work": 97824,
+        "cached": 1200,
+        "shared_with_human_half_orc": 984,
+        "shared_with_dwarf_gnome": 577,
+        "new_gpu": 96602,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5301",
+      "symbol": "THIEF_MALE_ELF_LOW",
+      "resref": "CEMT",
+      "paperdoll": "CEMT",
+      "stats": {
+        "animation_id": "0x5301",
+        "logical_frames": 180494,
+        "logical_model_frames": 156656,
+        "logical_model_q32_pixels": 410426368,
+        "logical_native_pixels": 226428124,
+        "resources": 656,
+        "strict_full_palette_work_items": 98068,
+        "symbol": "THIEF_MALE_ELF_LOW",
+        "unique_model_q32_pixels": 287479808,
+        "unique_model_work_items": 97933,
+        "unique_work_items": 97996
+      },
+      "cached_state": {
+        "unique_work": 97996,
+        "cached": 1202,
+        "shared_with_human_half_orc": 986,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96772,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x5311",
+      "symbol": "THIEF_FEMALE_ELF_LOW",
+      "resref": "CEFT",
+      "paperdoll": "CEFT",
+      "stats": {
+        "animation_id": "0x5311",
+        "logical_frames": 180494,
+        "logical_model_frames": 160972,
+        "logical_model_q32_pixels": 414976000,
+        "logical_native_pixels": 226513015,
+        "resources": 656,
+        "strict_full_palette_work_items": 97579,
+        "symbol": "THIEF_FEMALE_ELF_LOW",
+        "unique_model_q32_pixels": 286374912,
+        "unique_model_work_items": 97384,
+        "unique_work_items": 97447
+      },
+      "cached_state": {
+        "unique_work": 97447,
+        "cached": 1203,
+        "shared_with_human_half_orc": 987,
+        "shared_with_dwarf_gnome": 579,
+        "new_gpu": 96222,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6001",
+      "symbol": "CLERIC_MALE_ELF",
+      "resref": "CEMB",
+      "paperdoll": "CEMC",
+      "stats": {
+        "animation_id": "0x6001",
+        "logical_frames": 180494,
+        "logical_model_frames": 150265,
+        "logical_model_q32_pixels": 403802112,
+        "logical_native_pixels": 226280746,
+        "resources": 656,
+        "strict_full_palette_work_items": 97455,
+        "symbol": "CLERIC_MALE_ELF",
+        "unique_model_q32_pixels": 286009344,
+        "unique_model_work_items": 97323,
+        "unique_work_items": 97385
+      },
+      "cached_state": {
+        "unique_work": 97385,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96162,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6011",
+      "symbol": "CLERIC_FEMALE_ELF",
+      "resref": "CEFB",
+      "paperdoll": "CEFC",
+      "stats": {
+        "animation_id": "0x6011",
+        "logical_frames": 180494,
+        "logical_model_frames": 151759,
+        "logical_model_q32_pixels": 405483520,
+        "logical_native_pixels": 226359533,
+        "resources": 656,
+        "strict_full_palette_work_items": 97602,
+        "symbol": "CLERIC_FEMALE_ELF",
+        "unique_model_q32_pixels": 286149632,
+        "unique_model_work_items": 97316,
+        "unique_work_items": 97378
+      },
+      "cached_state": {
+        "unique_work": 97378,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96155,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6101",
+      "symbol": "FIGHTER_MALE_ELF",
+      "resref": "CEMB",
+      "paperdoll": "CEMF",
+      "stats": {
+        "animation_id": "0x6101",
+        "logical_frames": 180494,
+        "logical_model_frames": 150265,
+        "logical_model_q32_pixels": 403778560,
+        "logical_native_pixels": 226274421,
+        "resources": 656,
+        "strict_full_palette_work_items": 97497,
+        "symbol": "FIGHTER_MALE_ELF",
+        "unique_model_q32_pixels": 286080000,
+        "unique_model_work_items": 97365,
+        "unique_work_items": 97427
+      },
+      "cached_state": {
+        "unique_work": 97427,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96204,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6111",
+      "symbol": "FIGHTER_FEMALE_ELF",
+      "resref": "CEFB",
+      "paperdoll": "CEFF",
+      "stats": {
+        "animation_id": "0x6111",
+        "logical_frames": 180494,
+        "logical_model_frames": 151759,
+        "logical_model_q32_pixels": 405488640,
+        "logical_native_pixels": 226392695,
+        "resources": 656,
+        "strict_full_palette_work_items": 97603,
+        "symbol": "FIGHTER_FEMALE_ELF",
+        "unique_model_q32_pixels": 286156800,
+        "unique_model_work_items": 97317,
+        "unique_work_items": 97379
+      },
+      "cached_state": {
+        "unique_work": 97379,
+        "cached": 1201,
+        "shared_with_human_half_orc": 985,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96156,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6201",
+      "symbol": "MAGE_MALE_ELF",
+      "resref": "CEMW",
+      "paperdoll": "CEMW",
+      "stats": {
+        "animation_id": "0x6201",
+        "logical_frames": 180494,
+        "logical_model_frames": 149518,
+        "logical_model_q32_pixels": 408348672,
+        "logical_native_pixels": 230230740,
+        "resources": 656,
+        "strict_full_palette_work_items": 97021,
+        "symbol": "MAGE_MALE_ELF",
+        "unique_model_q32_pixels": 289916928,
+        "unique_model_work_items": 96890,
+        "unique_work_items": 96952
+      },
+      "cached_state": {
+        "unique_work": 96952,
+        "cached": 1200,
+        "shared_with_human_half_orc": 984,
+        "shared_with_dwarf_gnome": 577,
+        "new_gpu": 95730,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6211",
+      "symbol": "MAGE_FEMALE_ELF",
+      "resref": "CEFW",
+      "paperdoll": "CEFW",
+      "stats": {
+        "animation_id": "0x6211",
+        "logical_frames": 180494,
+        "logical_model_frames": 149518,
+        "logical_model_q32_pixels": 407777280,
+        "logical_native_pixels": 229863736,
+        "resources": 656,
+        "strict_full_palette_work_items": 97893,
+        "symbol": "MAGE_FEMALE_ELF",
+        "unique_model_q32_pixels": 291640320,
+        "unique_model_work_items": 97762,
+        "unique_work_items": 97824
+      },
+      "cached_state": {
+        "unique_work": 97824,
+        "cached": 1200,
+        "shared_with_human_half_orc": 984,
+        "shared_with_dwarf_gnome": 577,
+        "new_gpu": 96602,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6301",
+      "symbol": "THIEF_MALE_ELF",
+      "resref": "CEMT",
+      "paperdoll": "CEMT",
+      "stats": {
+        "animation_id": "0x6301",
+        "logical_frames": 180494,
+        "logical_model_frames": 156656,
+        "logical_model_q32_pixels": 410426368,
+        "logical_native_pixels": 226428124,
+        "resources": 656,
+        "strict_full_palette_work_items": 98068,
+        "symbol": "THIEF_MALE_ELF",
+        "unique_model_q32_pixels": 287479808,
+        "unique_model_work_items": 97933,
+        "unique_work_items": 97996
+      },
+      "cached_state": {
+        "unique_work": 97996,
+        "cached": 1202,
+        "shared_with_human_half_orc": 986,
+        "shared_with_dwarf_gnome": 578,
+        "new_gpu": 96772,
+        "new_special": 22
+      }
+    },
+    {
+      "animation_id": "0x6311",
+      "symbol": "THIEF_FEMALE_ELF",
+      "resref": "CEFT",
+      "paperdoll": "CEFT",
+      "stats": {
+        "animation_id": "0x6311",
+        "logical_frames": 180494,
+        "logical_model_frames": 160972,
+        "logical_model_q32_pixels": 414976000,
+        "logical_native_pixels": 226513015,
+        "resources": 656,
+        "strict_full_palette_work_items": 97579,
+        "symbol": "THIEF_FEMALE_ELF",
+        "unique_model_q32_pixels": 286374912,
+        "unique_model_work_items": 97384,
+        "unique_work_items": 97447
+      },
+      "cached_state": {
+        "unique_work": 97447,
+        "cached": 1203,
+        "shared_with_human_half_orc": 987,
+        "shared_with_dwarf_gnome": 579,
+        "new_gpu": 96222,
+        "new_special": 22
+      }
+    }
+  ],
+  "half_elf_scope": {
+    "world_prefix": "E: elf/half-elf; no separate HALF_ELF animation IDs in the current inventory",
+    "reference": "https://gibberlings3.github.io/iesdp/file_formats/ie_formats/ini_anim.htm",
+    "stock_examples": [
+      {
+        "cre": "JAHEIR11",
+        "bif": "data/Creature.bif",
+        "race_id": 3,
+        "race_symbol": "HALF_ELF",
+        "gender_id": 2,
+        "animation_id": "0x6111"
+      },
+      {
+        "cre": "JAHEIR12",
+        "bif": "data/Creature.bif",
+        "race_id": 3,
+        "race_symbol": "HALF_ELF",
+        "gender_id": 2,
+        "animation_id": "0x6111"
+      }
+    ],
+    "stock_offsets": {
+      "animation_id": "CRE V1.0 0x28 u32le",
+      "race": "0x272 u8",
+      "gender": "0x275 u8"
+    },
+    "scope": "selected Character resources; no extra duplicate production for half-elves"
+  },
+  "exact_world_aliases": [
+    {
+      "animation": "0x5001",
+      "same_world_resources_and_profile_as": [
+        "0x6001"
+      ]
+    },
+    {
+      "animation": "0x5011",
+      "same_world_resources_and_profile_as": [
+        "0x6011"
+      ]
+    },
+    {
+      "animation": "0x5101",
+      "same_world_resources_and_profile_as": [
+        "0x6101"
+      ]
+    },
+    {
+      "animation": "0x5111",
+      "same_world_resources_and_profile_as": [
+        "0x6111"
+      ]
+    },
+    {
+      "animation": "0x5201",
+      "same_world_resources_and_profile_as": [
+        "0x6201"
+      ]
+    },
+    {
+      "animation": "0x5211",
+      "same_world_resources_and_profile_as": [
+        "0x6211"
+      ]
+    },
+    {
+      "animation": "0x5301",
+      "same_world_resources_and_profile_as": [
+        "0x6301"
+      ]
+    },
+    {
+      "animation": "0x5311",
+      "same_world_resources_and_profile_as": [
+        "0x6311"
+      ]
+    },
+    {
+      "animation": "0x6001",
+      "same_world_resources_and_profile_as": [
+        "0x5001"
+      ]
+    },
+    {
+      "animation": "0x6011",
+      "same_world_resources_and_profile_as": [
+        "0x5011"
+      ]
+    },
+    {
+      "animation": "0x6101",
+      "same_world_resources_and_profile_as": [
+        "0x5101"
+      ]
+    },
+    {
+      "animation": "0x6111",
+      "same_world_resources_and_profile_as": [
+        "0x5111"
+      ]
+    },
+    {
+      "animation": "0x6201",
+      "same_world_resources_and_profile_as": [
+        "0x5201"
+      ]
+    },
+    {
+      "animation": "0x6211",
+      "same_world_resources_and_profile_as": [
+        "0x5211"
+      ]
+    },
+    {
+      "animation": "0x6301",
+      "same_world_resources_and_profile_as": [
+        "0x5301"
+      ]
+    },
+    {
+      "animation": "0x6311",
+      "same_world_resources_and_profile_as": [
+        "0x5311"
+      ]
+    }
+  ],
+  "selected_world_resource_profile_groups": [
+    [
+      "0x5001",
+      "0x6001"
+    ],
+    [
+      "0x5011",
+      "0x6011"
+    ],
+    [
+      "0x5101",
+      "0x6101"
+    ],
+    [
+      "0x5111",
+      "0x6111"
+    ],
+    [
+      "0x5201",
+      "0x6201"
+    ],
+    [
+      "0x5211",
+      "0x6211"
+    ],
+    [
+      "0x5301",
+      "0x6301"
+    ],
+    [
+      "0x5311",
+      "0x6311"
+    ]
+  ],
+  "resources": 1162,
+  "counts": {
+    "unique_work": 148100,
+    "cached": 1203,
+    "shared_between_selected_models": 148100,
+    "shared_with_previous_batches_union": 1203,
+    "sum_model_unique_work": 1559576,
+    "shared_with_human_half_orc": 987,
+    "shared_with_dwarf_gnome": 579,
+    "new_gpu": 146875,
+    "new_special": 22,
+    "cross_model_repeat_work_avoided": 1411476
+  },
+  "logical_frames": 2887904,
+  "previous_productions": {
+    "human_half_orc": "docs/measurements/human-half-orc-q3m-x2-20261002-v1/production.json",
+    "dwarf_gnome": "docs/measurements/dwarf-gnome-q3m-x2-20261002-v1/production.json"
+  },
+  "work_list": {
+    "path": "sprite/.work/q3m-elf-half-elf-x2-20261002-v1/work-list.csv",
+    "sha256": "8be41416300fbd91e6bad43714562c97c707089d66d66b9103d2ddb93001463a"
+  },
+  "frame_correspondence": "existing SQLite frame_map; filter by selected animation IDs",
+  "excluded_legacy_sprites": [
+    {
+      "animation_id": "0x4700",
+      "symbol": "SLEEPING_MAN_ELF",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    },
+    {
+      "animation_id": "0x4710",
+      "symbol": "SLEEPING_WOMAN_ELF",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    }
+  ],
+  "inventory": "separate UI pipeline, excluded"
+}
