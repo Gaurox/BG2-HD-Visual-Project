@@ -1,0 +1,566 @@
+{
+  "schema": "bg2-q3m-monster-fixed-contract-v1",
+  "version": "20261002-v1",
+  "state": "specified-cpu-verified-not-produced-not-installed",
+  "phase": 1,
+  "scale": 2,
+  "families": [
+    {
+      "target": "Spectateur",
+      "cre": "BEHSPE01",
+      "animation_id": "0x7F02",
+      "family_id": "0x7F02:body:base-resref:MBEH:MBEH",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/manifest.json"
+    },
+    {
+      "target": "Bodhi",
+      "cre": "BODHI",
+      "animation_id": "0x7F30",
+      "family_id": "0x7F30:body:base-resref:NBOH:NBOH",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/manifest.json"
+    },
+    {
+      "target": "Golem geôlier",
+      "cre": "IGOLEM02",
+      "animation_id": "0x7F07",
+      "family_id": "0x7F07:body:base-resref:MGLC:MGLC",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/manifest.json"
+    }
+  ],
+  "resources": [
+    {
+      "resref": "MBEHG1",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG1/source.bam",
+      "canonical_sha256_registered": "3542D059F634323A75139A142F9B64349EF1BB5E3755619E9E3A63A7807B1878",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG11",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG11/source.bam",
+      "canonical_sha256_registered": "2E7A82C428A1CC4CD15F771CB34E59613FEA46936A2C6CF11CC96BB47F1C68AC",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG12",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG12/source.bam",
+      "canonical_sha256_registered": "F8B3621D2ABD17928C9B5284ED43B573A7905E0D5DD662D89B579429D89D0F6F",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG13",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG13/source.bam",
+      "canonical_sha256_registered": "80BE35840B0C47D62637848BE629D0876F1AF9C999282C618E162060606D7E6F",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG14",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG14/source.bam",
+      "canonical_sha256_registered": "3647C938F4D8E62863D7066C941512376EBC5143475E613292D086037DBA69AE",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG15",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG15/source.bam",
+      "canonical_sha256_registered": "6B9D5DA5529585BA7B739C9AFA49F91B030B91A422B58025610B9AD91BA6D975",
+      "palette_bgra_sha256": "4354c4428740bbc4b245d9dfdce0b54fe4fa544ba9d81aee6a33837072fa1151",
+      "palette_profile_id": 2,
+      "frame_count_registered": 666,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MBEHG2",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG2/source.bam",
+      "canonical_sha256_registered": "C72E818185E884463E26753C38DF0D41C34ABF8D59E7E26B1FDCF8BB5DE157B0",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG21",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG21/source.bam",
+      "canonical_sha256_registered": "C72E818185E884463E26753C38DF0D41C34ABF8D59E7E26B1FDCF8BB5DE157B0",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG22",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG22/source.bam",
+      "canonical_sha256_registered": "C72E818185E884463E26753C38DF0D41C34ABF8D59E7E26B1FDCF8BB5DE157B0",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG23",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG23/source.bam",
+      "canonical_sha256_registered": "C72E818185E884463E26753C38DF0D41C34ABF8D59E7E26B1FDCF8BB5DE157B0",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG24",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG24/source.bam",
+      "canonical_sha256_registered": "C72E818185E884463E26753C38DF0D41C34ABF8D59E7E26B1FDCF8BB5DE157B0",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG25",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG25/source.bam",
+      "canonical_sha256_registered": "2EBAD0CDACCC0503B7DB3FF0260C815DE2D329CDEE04D50AC996E46C94488BCF",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MBEHG26",
+      "animation_id": "0x7F02",
+      "source": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/resources/MBEHG26/source.bam",
+      "canonical_sha256_registered": "E4F59BD961CD636F50901DA1F8A86ACCDDFE1189843B1B7FACEBAEA9A1A80D2D",
+      "palette_bgra_sha256": "e3f3378d6f824e59c2e70c1866efb04e9f6dab8f3a275e3cc9c35fe763aae42f",
+      "palette_profile_id": 3,
+      "frame_count_registered": 405,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG1",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG1/source.bam",
+      "canonical_sha256_registered": "2F7D497DC98FAEB012331EECA6F807A998ECC961B4FA54A54E1DC3058AC66707",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG11",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG11/source.bam",
+      "canonical_sha256_registered": "5BF0CC6E9739EF7CDA6A227C6A4F8D660D55B0026E86C47E676A94B75AA7B349",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG12",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG12/source.bam",
+      "canonical_sha256_registered": "D79AF013CC9FB857D63E0772285CAE86752D43F08B60064E6ECA0AFBDE528092",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG13",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG13/source.bam",
+      "canonical_sha256_registered": "14096B94534D2412F3F7F496F6784DF05777E4D0B9F51BD554DADC34F492FA82",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG14",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG14/source.bam",
+      "canonical_sha256_registered": "AFD4F24EA117DFC348A03EC8A9BEE3EDC09E5E25F60F65C666AF755D58C23F7C",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG15",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG15/source.bam",
+      "canonical_sha256_registered": "1840AE97CE65CA8E7BC6E4852B964E2E4400095312BCFFC55A53E8D0A1EA320F",
+      "palette_bgra_sha256": "ffd62bde224e727f4ad9811885fb92263d8ed5054997141b842c206e3da34d3c",
+      "palette_profile_id": 4,
+      "frame_count_registered": 594,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "NBOHG2",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG2/source.bam",
+      "canonical_sha256_registered": "4CF0DC26FED14E475AAB60225690B8288ED2604FC1B77CFDC69384938A0C7952",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG21",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG21/source.bam",
+      "canonical_sha256_registered": "784AD398256677935D260094438574F6082AC295D55043B730D4F12EF6C066A4",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG22",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG22/source.bam",
+      "canonical_sha256_registered": "93DD27EA942724DA130FB042840CE796FAA3A621B217CCE263E36338AD16DF5C",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG23",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG23/source.bam",
+      "canonical_sha256_registered": "4CF0DC26FED14E475AAB60225690B8288ED2604FC1B77CFDC69384938A0C7952",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG24",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG24/source.bam",
+      "canonical_sha256_registered": "93DD27EA942724DA130FB042840CE796FAA3A621B217CCE263E36338AD16DF5C",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG25",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG25/source.bam",
+      "canonical_sha256_registered": "39632207B5DDA5196AF65EE8804703E05ED043CA11DB63A9C47387752C246C79",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "NBOHG26",
+      "animation_id": "0x7F30",
+      "source": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/resources/NBOHG26/source.bam",
+      "canonical_sha256_registered": "1A794933BD0CF815803B594375065670920BCBCA3713904975D9D54F1E1AA5A2",
+      "palette_bgra_sha256": "810f151ce77d608fd2a8ddfcfd0d48c3850536154e747fb569fca4da6eff2ec8",
+      "palette_profile_id": 5,
+      "frame_count_registered": 648,
+      "cycle_count_registered": 63
+    },
+    {
+      "resref": "MGLCG1",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG1/source.bam",
+      "canonical_sha256_registered": "661DCE39A0277F322297FE808B79D2D0E12732ED81DF1431E1125811AAB7BF7F",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG11",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG11/source.bam",
+      "canonical_sha256_registered": "C91586B9293E4F8626D97EBA186D3100093C1555806A59369BFCBCC3C78900B3",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG12",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG12/source.bam",
+      "canonical_sha256_registered": "2793F557B5C60AAE777A26E823FE24754B3ADAB830701DD82A56B3B60900D0BD",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG13",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG13/source.bam",
+      "canonical_sha256_registered": "396053D6D6A0DC6CE50D2F1944137F432F9D94147766E7EC1E186E51DA881D97",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG14",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG14/source.bam",
+      "canonical_sha256_registered": "45542A0E764433038DD41F16A615300E33AD875C9C331175C56204739FEF3BFC",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG15",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG15/source.bam",
+      "canonical_sha256_registered": "F2FC739BD29E52EA071CC6611F19E0B2703C0AD15169036D30D9363E8CBDF6BB",
+      "palette_bgra_sha256": "d3ad14a6160e12e3579138d4b3f1115691fee8b6320e47142fd3c358e37c9e1c",
+      "palette_profile_id": 6,
+      "frame_count_registered": 558,
+      "cycle_count_registered": 54
+    },
+    {
+      "resref": "MGLCG2",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG2/source.bam",
+      "canonical_sha256_registered": "E12DBDF3D5F77F16163EBAE905193C0FA414E0182994CF6E0D2EB0DD2D0DAD2A",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG21",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG21/source.bam",
+      "canonical_sha256_registered": "3494EBFFF35877F63DDF9C35CE91243C7A3B224AD6E4473DAADB7C57F0C3B52E",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG22",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG22/source.bam",
+      "canonical_sha256_registered": "EE54674452EA5D509A0EDE18463D773FB8C03BC9190B4F02CC6C166C81A5DBEA",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG23",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG23/source.bam",
+      "canonical_sha256_registered": "6A62A97616432D00FAC18251525A676C1E20FEF5F896D76FC744C161AB0EC65B",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG24",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG24/source.bam",
+      "canonical_sha256_registered": "6E19BF6AD597E32B7C1B1382B09A2D7AB64B0FBCDE28848F0BD8427277014A6F",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG25",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG25/source.bam",
+      "canonical_sha256_registered": "372BBF53E9F76F2C1FE1D6FEAA6ACACFF5A7D5D6F9911C951979721D1487C4E2",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    },
+    {
+      "resref": "MGLCG26",
+      "animation_id": "0x7F07",
+      "source": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/resources/MGLCG26/source.bam",
+      "canonical_sha256_registered": "45343C7D46EA0BD4EB5CABF59E87111B0C20AFD2633A459FC371A7C747E1C55B",
+      "palette_bgra_sha256": "3defee13f8d67ec62ad0984cd5e1c5c1fb32f6debdf9a6eb174fc0c036cc45ed",
+      "palette_profile_id": 7,
+      "frame_count_registered": 378,
+      "cycle_count_registered": 62
+    }
+  ],
+  "profiles_file": "profiles.json",
+  "profiles_file_sha256": "bfe106f4e4f7debc013d9c819bfc9f0bc04d49929682f65208685d0bca2eb65b",
+  "semantic_classes": {
+    "transparent": [
+      0
+    ],
+    "shadow_black": [
+      1
+    ],
+    "null_frame_marker": [
+      2
+    ],
+    "material": "3..255"
+  },
+  "classes_policy": "Historical fixed material class retained; no inferred Character ramps or i+1 order.",
+  "successor_rule": "Specials self. Material: nearest distinct material RGB vector across six fits, equal-weight mean squared OKLab f64; exact tie lowest index. Freeze table; never recompute at runtime.",
+  "fitting": [
+    {
+      "name": "neutral",
+      "weight": 1,
+      "flags": 5,
+      "tint_rgb": [
+        255,
+        255,
+        255
+      ],
+      "transparency": 255
+    },
+    {
+      "name": "warm",
+      "weight": 1,
+      "flags": 131077,
+      "tint_rgb": [
+        255,
+        192,
+        128
+      ],
+      "transparency": 255
+    },
+    {
+      "name": "cold",
+      "weight": 1,
+      "flags": 131077,
+      "tint_rgb": [
+        128,
+        192,
+        255
+      ],
+      "transparency": 255
+    },
+    {
+      "name": "green",
+      "weight": 1,
+      "flags": 131077,
+      "tint_rgb": [
+        128,
+        255,
+        160
+      ],
+      "transparency": 255
+    },
+    {
+      "name": "red",
+      "weight": 1,
+      "flags": 131077,
+      "tint_rgb": [
+        255,
+        128,
+        160
+      ],
+      "transparency": 255
+    },
+    {
+      "name": "dim",
+      "weight": 1,
+      "flags": 131077,
+      "tint_rgb": [
+        128,
+        128,
+        128
+      ],
+      "transparency": 255
+    }
+  ],
+  "fitting_provenance": "Designed static native states, not measured ingame conditions; Character REF/DEFAULT/LATIN fits cannot be reused.",
+  "oracle": {
+    "exe": "config://bg2ee_game_root/BaldurReal.exe",
+    "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+    "entry_rva": "0x421430",
+    "fixed_type": 0,
+    "fixed_rva": "0x42d350",
+    "branch_sha256": "b0d9fba397dd2228ce7993ba10242954ada10883cf36c4b59b525541ddc9e786",
+    "method": "unicorn-2.1.4 PE image CPU emulation; static mocked video state; area query white unused; /GS bypass only",
+    "limitations": "No ingame capture, animated range effects, gamma, brightness, area/light/add fits or arbitrary native flags verified."
+  },
+  "encoding": {
+    "planes": [
+      "I:u8",
+      "F:u8"
+    ],
+    "fraction_range": [
+      0,
+      7
+    ],
+    "dependency_bytes": 32,
+    "candidates": "For guide material, I=3..255 F=0..7; for specials I=guide F=0.",
+    "objective": "Equal-weight K6 mean squared OKLab f64 of integer reconstructed candidates vs six ReboutCX float32 x2 targets; exact tie I then F.",
+    "rgb_decoder": "((8-F)*P[I].rgb + F*P[succ[I]].rgb + 4) >> 3",
+    "alpha_decoder": "P[I].alpha from realized LIVE palette; force transparent index 0 alpha=0; do not infer from source reserved byte.",
+    "dependency": "Union of I and succ[I] where F>0, 256 bits; include live alpha of every primary index in palette change detection.",
+    "dither": false,
+    "B_plane": false,
+    "Q8c": false
+  },
+  "guide": "Existing xBR2X provenance-based guide; classify source indices, preserve 0/1/2; no Character mapping. Audit and recipe identity must match before historical guide reuse.",
+  "inference_parameters_retained": {
+    "model": "config://reboutcx_model",
+    "model_sha256": "C36A14DDB51AE094324A53B67C345DA2D6B6BBF6A2249726056D5B94BDEDAB05",
+    "model_scale": 4,
+    "fp16": true,
+    "batch": 86,
+    "canvas_quantum": 32,
+    "output": "float32 BOX x4 to x2 before integer encoding",
+    "fill": "nearest opaque RGB under index-0 transparency"
+  },
+  "cache_identity": "New recipe namespace containing profile/rule, classes, source palette, frozen successor, six fit arrays, alpha/guide policy, xBR/model/kernel and scale. Existing Character namespace incompatible; work key alone insufficient. Phase 2 defines keys and reuse plan; no cache created here.",
+  "geometry_format": "V6 I/F/dep layout proposed unchanged; all source frames, native signed centres, exact cycle lookups and null geometry retained. Profile IDs 2..7/rule 2 require producer and reader dispatch extension.",
+  "runtime_requirements": [
+    "Dispatch owner 3 and exact animation/resref/palette profile, accept realized fixed kind 0; no Character fallback profile.",
+    "Frozen six successor tables; alpha stays primary; reject unknown profile/rule or invalid dep/specials; native fallback.",
+    "Guard equal live alpha on positive material pairs; include live colours/alpha and profile in LUT/cache identities.",
+    "Retain owner 1/profile 1/rule 1 and UI readers; capability manifest must declare new profiles before installation."
+  ],
+  "installation_future": "Extend active 78-Character catalogue by only these three families; preserve 81 paperdolls, UI shaders and BOX world settings. No active installation/release/QA/registry touched in phase 1.",
+  "build_script_sha256": "5f4417398e689dca19101b0a2b25fff9ad345eef63a7515b893be48324dee38e"
+}

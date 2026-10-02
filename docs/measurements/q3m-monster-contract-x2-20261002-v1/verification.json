@@ -1,0 +1,154 @@
+{
+  "schema": "bg2-q3m-monster-contract-verification-v1",
+  "status": "passed",
+  "scope": "phase1-only-offline-cpu",
+  "palette_headers": 39,
+  "profiles": 6,
+  "native_realization_cases": 54,
+  "native_palette_entries_checked": 13824,
+  "decoder_rgb_cases": 72972,
+  "mismatches": 0,
+  "golem_index2_audit": [
+    {
+      "resref": "MGLCG1",
+      "frames": 558,
+      "index2_null_frames": 407,
+      "special_pixels_0_1_2": [
+        326998,
+        95514,
+        407
+      ]
+    },
+    {
+      "resref": "MGLCG11",
+      "frames": 558,
+      "index2_null_frames": 450,
+      "special_pixels_0_1_2": [
+        317958,
+        99546,
+        450
+      ]
+    },
+    {
+      "resref": "MGLCG12",
+      "frames": 558,
+      "index2_null_frames": 468,
+      "special_pixels_0_1_2": [
+        147205,
+        43373,
+        468
+      ]
+    },
+    {
+      "resref": "MGLCG13",
+      "frames": 558,
+      "index2_null_frames": 522,
+      "special_pixels_0_1_2": [
+        65670,
+        21342,
+        522
+      ]
+    },
+    {
+      "resref": "MGLCG14",
+      "frames": 558,
+      "index2_null_frames": 378,
+      "special_pixels_0_1_2": [
+        466782,
+        116581,
+        378
+      ]
+    },
+    {
+      "resref": "MGLCG15",
+      "frames": 558,
+      "index2_null_frames": 540,
+      "special_pixels_0_1_2": [
+        57242,
+        10920,
+        540
+      ]
+    },
+    {
+      "resref": "MGLCG2",
+      "frames": 378,
+      "index2_null_frames": 261,
+      "special_pixels_0_1_2": [
+        326076,
+        87739,
+        261
+      ]
+    },
+    {
+      "resref": "MGLCG21",
+      "frames": 378,
+      "index2_null_frames": 252,
+      "special_pixels_0_1_2": [
+        261845,
+        73996,
+        252
+      ]
+    },
+    {
+      "resref": "MGLCG22",
+      "frames": 378,
+      "index2_null_frames": 252,
+      "special_pixels_0_1_2": [
+        414385,
+        93030,
+        252
+      ]
+    },
+    {
+      "resref": "MGLCG23",
+      "frames": 378,
+      "index2_null_frames": 324,
+      "special_pixels_0_1_2": [
+        200462,
+        41651,
+        324
+      ]
+    },
+    {
+      "resref": "MGLCG24",
+      "frames": 378,
+      "index2_null_frames": 377,
+      "special_pixels_0_1_2": [
+        1937,
+        859,
+        377
+      ]
+    },
+    {
+      "resref": "MGLCG25",
+      "frames": 378,
+      "index2_null_frames": 369,
+      "special_pixels_0_1_2": [
+        20516,
+        5776,
+        369
+      ]
+    },
+    {
+      "resref": "MGLCG26",
+      "frames": 378,
+      "index2_null_frames": 370,
+      "special_pixels_0_1_2": [
+        18579,
+        4917,
+        370
+      ]
+    }
+  ],
+  "golem_index2_total": 4970,
+  "historical_semantics_reused": [
+    "sprite/families/monsters/7fxx/7f02-mbeh-beholder/jobs/reboutcx-p2-mbeh-v2.json",
+    "sprite/families/monsters/7fxx/7f30-nboh-bodhi/jobs/reboutcx-p2-sample-v1.json"
+  ],
+  "no_source_frame_dedup_or_character_revalidation": true,
+  "pending": [
+    "MBEH index2 exclusive-null guard in phase2 if not established by existing witnesses",
+    "Runtime implementation, captured actual Monster palette kind/flags/alpha and ingame QA",
+    "Visual pilot quality of K6/successors; replace contract with new version if needed"
+  ]
+}
