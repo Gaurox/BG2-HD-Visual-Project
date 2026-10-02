@@ -1,0 +1,217 @@
+{
+  "schema": "bg2-upscale-p7-paperdoll-preview-v1",
+  "state": "working",
+  "scope": {
+    "animation_id": "0x6110",
+    "body": "CHFF2INV",
+    "equipped_overlays": [],
+    "other_bodies": []
+  },
+  "source": {
+    "path": "sprite/Etudes_Sprite_codex_claude/CODEX_BG2EE_Femme_Humaine_Guerriere_2026-09-29/vanilla_inventory/CHFF2INV.BAM",
+    "sha256": "d7f3e6361216d3273e7f09e00ce8cdc77d9fcbc9fef20b5dab051bc6e2a23672",
+    "bif": "data/GUIIcon.bif",
+    "locator": "not asserted; frozen vanilla inventory source",
+    "frame_count": 2,
+    "cycles": [
+      [
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "transparency": 0
+  },
+  "method": {
+    "model": "reboutcx",
+    "scale": 2,
+    "x2_target": "BOX reduction of model x4 float output before Q3m encoding",
+    "encoder": "character-exhaustive-oklab-squared-q3-integer-v1",
+    "variant": "Q3m-k6",
+    "class_profile": "character-bg2ee-2.7.3.0",
+    "decode_rule": "ramp-lerp-srgb8-v1",
+    "fitting_palettes": [
+      "REF",
+      "DEFAULT",
+      "LATIN1",
+      "LATIN2",
+      "LATIN3",
+      "LATIN4"
+    ],
+    "weights": "equal",
+    "dithering": false
+  },
+  "preview": {
+    "palette": {
+      "name": "DEFAULT",
+      "rows": [
+        30,
+        91,
+        93,
+        12,
+        23,
+        93,
+        2
+      ],
+      "role": "fit",
+      "origin": "CLASCOLR/RACECOLR"
+    },
+    "canvas_x1": [
+      128,
+      160
+    ],
+    "placement": [
+      {
+        "frame": 0,
+        "x1": [
+          24,
+          16
+        ],
+        "x2": [
+          48,
+          32
+        ]
+      },
+      {
+        "frame": 1,
+        "x1": [
+          25,
+          80
+        ],
+        "x2": [
+          50,
+          160
+        ]
+      }
+    ],
+    "native_comparator": "same DEFAULT RGBA palette; nearest x2; identical assembly",
+    "ui_palette": "preparatory reuse of Character palette fixture; native UI realization not verified",
+    "alpha": "P1 diagnostic convention: index0=0, index1=128, other=255; native UI alpha not verified",
+    "layout": "native signed centers plus 80-pixel second-half offset; compatible-engine reference, BG2EE ingame verification pending",
+    "layout_reference": "https://raw.githubusercontent.com/gemrb/gemrb/master/gemrb/core/CharAnimations.cpp"
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "native_geometry": [
+        66,
+        64,
+        -24,
+        -16,
+        0
+      ],
+      "output_geometry": [
+        132,
+        128
+      ],
+      "file": "part-0-q3m-x2.npz",
+      "sha256": "84bad826c0092296b4fdeb543f93ba49a53fc908adc3938345ad09c6ff26fd3d",
+      "class_leaks": 0,
+      "changed_specials": 0,
+      "fractional_pixels": 6126,
+      "dependency_entries": 112,
+      "independent_decode_palettes": 18
+    },
+    {
+      "frame": 1,
+      "native_geometry": [
+        65,
+        75,
+        -25,
+        0,
+        0
+      ],
+      "output_geometry": [
+        130,
+        150
+      ],
+      "file": "part-1-q3m-x2.npz",
+      "sha256": "8482eb9d257b5b9627ca879a5ddb705322daf13c4b266018fdcd3cb75f679f18",
+      "class_leaks": 0,
+      "changed_specials": 0,
+      "fractional_pixels": 4664,
+      "dependency_entries": 76,
+      "independent_decode_palettes": 18
+    }
+  ],
+  "inference": {
+    "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+    "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+    "batch_size": 86,
+    "canvas_quantum": 32,
+    "fp16": true,
+    "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+    "torch": "2.7.0+cu128",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dependencies": {
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "spandrel": "0.4.1",
+      "chainner_ext": "0.3.10"
+    },
+    "kernels": {
+      "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+      "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+      "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+    }
+  },
+  "inference_timing": {
+    "logical_requests": 12,
+    "unique_targets": 12,
+    "missing_targets": 12,
+    "pack_seconds": 0.004612000000065564,
+    "h2d_submit_seconds": 0.0024359999999887805,
+    "model_cuda_seconds": 1.1127673034667969,
+    "model_wait_and_d2h_seconds": 1.1187502999999879,
+    "crop_seconds": 0.0021751000000449494,
+    "dispatch_wall_seconds": 1.127973699999984,
+    "gpu_slots": 172.0,
+    "gpu_filler_frames": 160.0,
+    "total_wall_seconds": 2.1949124999999867,
+    "repeat_target_max_abs_delta": 0.0,
+    "versions": {
+      "python": "3.11.5",
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "torch": "2.7.0+cu128",
+      "spandrel": "0.4.1"
+    }
+  },
+  "total_seconds": 12.242227400000047,
+  "provenance": {
+    "golden_sha256": "12171974b2df6423b928b880529fa277bf5ee7517e278d8d9554efa762910e4b",
+    "recipe_sha256": "3b262d7b80bb0822b08ae49c2b3758d39ab2b4fe8e17ca1eaaca7c215c42e82f",
+    "kernels": {
+      "palette_frac_encode.py": "578f69bbd0fe422e3f26acc247d10955a12f4e07165e42d72cf8c469382bce7b",
+      "palette_oracle.py": "24c92dfd68eef6ef47483440720a6135ef550e0c2201efff79f47bdcebdf2d3e",
+      "palette_complete.py": "09a8c9baf54f361e23846506e26d26de43dfbc4ce6dc01df8ad7486ff0cf202f",
+      "reboutcx_multipal.py": "7944aa8271cd651cb525fe3deea9f39fb68239f7558ea085a6b8fe4c6ebe4f99",
+      "run_creature_sprite_x2.py": "8ffd210d2d18cd4d5e86616d0e911155995d5dbee4d5bcac06e4f461c875f1f2"
+    },
+    "scalepix_sha256": "b8545f0ef97670fe5e077592738ce0faca00bb054dde6e55e23517e892c32598"
+  },
+  "outputs": {
+    "paperdoll-default-q3m-x2.png": {
+      "sha256": "76b7a15293efb8c9486880185e482c03f1ac5de2164ca8586000342a64865d89",
+      "bytes": 28390
+    },
+    "paperdoll-default-native-nearest-x2.png": {
+      "sha256": "026d96fa09c606ddd0548561edc56ab1361b1a83d50c58864c8d6383187ffb27",
+      "bytes": 9260
+    },
+    "preview.png": {
+      "sha256": "4e6545f3773eecbfeae91798368c2c985a970dfd183a1130f1199a2e753535aa",
+      "bytes": 25451
+    },
+    "comparison.png": {
+      "sha256": "ffe690b064d6ab047c3e15b353b3725b5bce8325aa2f247be97ba2fe0a173246",
+      "bytes": 35327
+    }
+  },
+  "ingame_qa": "pending",
+  "installation_modified": false,
+  "catalog_modified": false,
+  "runtime_modified": false,
+  "release_modified": false
+}

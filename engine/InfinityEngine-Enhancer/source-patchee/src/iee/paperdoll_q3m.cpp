@@ -12,9 +12,6 @@
 
 namespace iee::paperdoll_q3m {
 namespace {
-constexpr std::array<std::uint8_t, 32> kSource{
-  0x73,0x62,0x90,0x4c,0xe3,0x03,0xb2,0x80,0x73,0xf2,0xec,0xb5,0xeb,0x43,0x84,0xac,
-  0x0e,0x0f,0x71,0x5b,0x84,0xe0,0xf4,0x5f,0x71,0x58,0x98,0xc1,0x4d,0xa8,0x6d,0x8a};
 struct Reader {
   std::span<const std::uint8_t> bytes;
   std::size_t pos{};
@@ -31,14 +28,19 @@ std::uint32_t u32(std::span<const std::uint8_t> b, std::size_t n) {
 void require(bool value) {if(!value)throw std::runtime_error("unsupported UI pack");}
 std::mutex g_mutex;
 std::atomic<bool> g_ready{};
-Frames g_frames;
+std::array<Frames,kScope.size()> g_frames;
+std::array<bool,kScope.size()> g_loaded{};
 struct Texture {
   int id{};
+  std::size_t owner{kScope.size()}, frame{};
+  std::uint64_t stamp{};
   bool valid{};
   core::palette_fraction::Palette palette{};
   std::uint32_t crc{};
 };
-std::array<Texture,2> g_textures;
+// Bounded engine texture pool: frames/palettes remain separate; flush before reuse.
+std::array<Texture,32> g_textures;
+std::uint64_t g_textureStamp{};
 HGLRC g_context{};
 
 bool palette_equal(const Frame& frame, const core::palette_fraction::Palette& a,
@@ -98,23 +100,37 @@ bool upload(const Frame& frame, std::span<const std::uint32_t> pixels,
 }
 }
 
-bool parse(std::span<const std::uint8_t> bytes, Frames& out) noexcept {
+bool resource_for_resref(const std::array<char,8>& resref, ResourceId& body) noexcept {
+  for (std::size_t n=0;n<kScope.size();++n) if(resref==kScope[n].resref) {
+    body=static_cast<ResourceId>(n);return true;
+  }
+  return false;
+}
+
+const NativeGeometry* native_geometry(ResourceId resource, int slot) noexcept {
+  const auto n=static_cast<std::size_t>(resource);
+  if(n>=kScope.size() || slot<0 || slot>3) return nullptr;
+  return &kScope[n].geometry[static_cast<std::size_t>(slot/2)];
+}
+
+bool parse(std::span<const std::uint8_t> bytes, Frames& out, ResourceId body) noexcept {
   out={};
   try {
-    require(bytes.size()>=32 && bytes.size()<=100000);
+    const auto bi=static_cast<std::size_t>(body);
+    require(bi<kScope.size() && bytes.size()>=32 && bytes.size()<=512000);
     Reader reader{bytes};
     auto magic=reader.take(8);require(std::memcmp(magic.data(),"IEECSXN\0",8)==0);
     require(reader.u32()==6 && reader.u32()==2 && reader.u32()==1 && reader.u32()==0xffff && reader.u32()==1 && reader.u32()==1);
-    auto resref=reader.take(8);require(std::memcmp(resref.data(),"CHFF1INV",8)==0);
-    auto source=reader.take(32);require(std::equal(source.begin(),source.end(),kSource.begin()));
-    require(reader.u32()==2 && reader.u32()==1);
-    Frames parsed;
-    for (std::size_t index=0;index<2;++index) {
+    auto resref=reader.take(8);require(std::memcmp(resref.data(),kScope[bi].resref.data(),8)==0);
+    auto source=reader.take(32);require(std::equal(source.begin(),source.end(),kScope[bi].source.begin()));
+    require(reader.u32()==kScope[bi].frameCount && reader.u32()==1);
+    Frames parsed(kScope[bi].frameCount);
+    for (std::size_t index=0;index<parsed.size();++index) {
       auto h=reader.take(568);auto& frame=parsed[index];
       frame.width=u16(h,0);frame.height=u16(h,2);
       frame.centerX=static_cast<std::int16_t>(u16(h,4));frame.centerY=static_cast<std::int16_t>(u16(h,6));
-      require(frame.width==(index==0?66:65) && frame.height==(index==0?64:75) &&
-              frame.centerX==(index==0?-24:-25) && frame.centerY==(index==0?-16:0));
+      require(frame.width==kScope[bi].geometry[index].width && frame.height==kScope[bi].geometry[index].height &&
+              frame.centerX==kScope[bi].geometry[index].centerX && frame.centerY==kScope[bi].geometry[index].centerY);
       const auto n=static_cast<std::size_t>(frame.width*frame.height*4);
       require(h[8]==0 && h[9]==0 && h[10]==1 && h[11]==0 && u32(h,12)==n &&
               u32(h,560)==n && h[564]==0 && h[565]==0 && h[566]==0 && h[567]==0);
@@ -133,7 +149,7 @@ bool decode(const Frame& frame, core::palette_fraction::Palette palette,
              std::vector<std::uint32_t>& pixels) noexcept {
   pixels.clear();
   try {
-    if (frame.width<=0 || frame.width>66 || frame.height<=0 || frame.height>75 ||
+    if (frame.width<=0 || frame.width>128 || frame.height<=0 || frame.height>160 ||
         frame.indices.size()!=static_cast<std::size_t>(frame.width*frame.height*4) ||
         frame.fractions.size()!=frame.indices.size() ||
         !core::palette_fraction::validate(frame.indices,frame.fractions,frame.dependencies)) return false;
@@ -149,40 +165,64 @@ bool decode(const Frame& frame, core::palette_fraction::Palette palette,
 bool prepare(const std::filesystem::path& directory) noexcept {
   release();
   try {
-    const auto path=directory/"CHFF1INV-Q3m-X2.registry";
-    std::ifstream file(path,std::ios::binary|std::ios::ate);
-    if (!file || file.tellg()<=0 || file.tellg()>100000) return false;
-    std::vector<std::uint8_t> bytes(static_cast<std::size_t>(file.tellg()));
-    file.seekg(0);if (!file.read(reinterpret_cast<char*>(bytes.data()),static_cast<std::streamsize>(bytes.size()))) return false;
-    Frames frames;if(!parse(bytes,frames)) {LOG_WARN("P7_Q3M_PACK invalid: native UI retained");return false;}
-    std::lock_guard lock(g_mutex);g_frames=std::move(frames);g_ready.store(true);
-    LOG_INFO("P7_Q3M_PACK ready: CHFF1INV only, 2 native halves, raw V6 x2, {} bytes; UI sampling=Nearest",bytes.size());return true;
+    std::lock_guard lock(g_mutex);
+    for (std::size_t bi=0;bi<kScope.size();++bi) {
+      const std::string resref(kScope[bi].resref.begin(),kScope[bi].resref.end());
+      const auto path=directory/(resref+"-Q3m-X2.registry");
+      std::ifstream file(path,std::ios::binary|std::ios::ate);
+      if (!file) continue;
+      if (file.tellg()<=0 || file.tellg()>512000) {
+        LOG_WARN("P7_Q3M_PACK invalid: {}; native UI retained",resref);continue;
+      }
+      std::vector<std::uint8_t> bytes(static_cast<std::size_t>(file.tellg()));
+      file.seekg(0);
+      if (!file.read(reinterpret_cast<char*>(bytes.data()),static_cast<std::streamsize>(bytes.size()))) continue;
+      Frames frames;
+      if(!parse(bytes,frames,static_cast<ResourceId>(bi))) {
+        LOG_WARN("P7_Q3M_PACK invalid: {}; native UI retained",resref);continue;
+      }
+      g_frames[bi]=std::move(frames);g_loaded[bi]=true;
+      LOG_INFO("P7_Q3M_PACK ready: {}, {} native frames, raw V6 x2, {} bytes; UI sampling=Nearest",resref,g_frames[bi].size(),bytes.size());
+    }
+    g_ready.store(std::any_of(g_loaded.begin(),g_loaded.end(),[](bool value){return value;}));
+    return g_ready.load();
   } catch (...) {LOG_WARN("P7_Q3M_PACK unavailable: native UI retained");return false;}
 }
 bool ready() noexcept {return g_ready.load();}
-void release() noexcept {std::lock_guard lock(g_mutex);g_ready.store(false);g_frames={};g_textures={};g_context=nullptr;}
+void release() noexcept {std::lock_guard lock(g_mutex);g_ready.store(false);g_frames={};g_loaded={};g_textures={};g_context=nullptr;}
 void forget_engine_textures() noexcept {std::lock_guard lock(g_mutex);g_textures={};g_context=nullptr;}
 
 bool bind(int sequence, int slot, int width, int height,
            core::palette_fraction::Palette palette, const TextureApi& api,
-           int& previousTexture, std::uint32_t& pixelCrc, bool& uploaded) noexcept {
+           int& previousTexture, std::uint32_t& pixelCrc, bool& uploaded, ResourceId body) noexcept {
   previousTexture=0;pixelCrc=0;uploaded=false;
   if (!ready()||sequence!=0||slot<0||slot>3||!api.engine.DrawGenTexture||!api.engine.DrawBindTexture||
       !api.engine.DrawDeleteTexture||!api.engine.TexImage||!api.engine.DrawGetRenderer||!api.engine.glTextureState||
       !api.glTextureTable||!api.DrawFlushGl||api.engine.DrawGetRenderer()==1) return false;
   try {
-    std::lock_guard lock(g_mutex);if(!ready())return false;
-    const auto index=static_cast<std::size_t>(slot/2);const auto& frame=g_frames[index];
+    const auto bi=static_cast<std::size_t>(body);
+    std::lock_guard lock(g_mutex);if(!ready()||bi>=g_loaded.size()||!g_loaded[bi])return false;
+    const auto index=static_cast<std::size_t>(slot/2);const auto& frame=g_frames[bi][index];
     if(frame.width!=width||frame.height!=height)return false;
     const auto context=game::gl::current_context();if(!context)return false;
     if(context!=g_context){g_textures={};g_context=context;}
     std::uint32_t state{};if(!core::safe_read(api.engine.glTextureState,state))return false;
     previousTexture=static_cast<int>((state>>21)&0x1ff);if(previousTexture<=0)return false;
-    palette[0]=0;auto& texture=g_textures[index];
+    palette[0]=0;
+    auto selected=std::find_if(g_textures.begin(),g_textures.end(),[&](const Texture& t) {
+      return t.owner==bi && t.frame==index;
+    });
+    if(selected==g_textures.end()) {
+      selected=std::min_element(g_textures.begin(),g_textures.end(),[](const Texture& a,const Texture& b) {
+        return a.stamp<b.stamp;
+      });
+      selected->valid=false;
+    }
+    auto& texture=*selected;texture.owner=bi;texture.frame=index;texture.stamp=++g_textureStamp;
     if(!texture.valid || !palette_equal(frame,texture.palette,palette)) {
       std::vector<std::uint32_t> pixels;if(!decode(frame,palette,pixels))return false;
-      // Two mutable backings only. Flush queued native/UI draws before changing
-      // either backing: other swatches/actors keep the palette they submitted.
+      // Flush native/UI draws before changing a backing, including eviction.
+      // Previously submitted equipment and actors retain their own palettes.
       api.DrawFlushGl();api.engine.DrawBindTexture(previousTexture);
       if(texture.id==0)texture.id=api.engine.DrawGenTexture(static_cast<int>(game::gl::NEAREST),0,0,0);
       if(texture.id<=0||texture.id>=512){texture={};api.engine.DrawBindTexture(previousTexture);return false;}

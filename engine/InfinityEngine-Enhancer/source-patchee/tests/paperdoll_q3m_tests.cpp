@@ -18,16 +18,35 @@ std::uint32_t word(std::span<const std::uint8_t> b,std::size_t offset) {
 }
 int main(int argc,char** argv) {
   try {
-    expect(argc==3,"usage: iee_paperdoll_q3m_tests PACK ORACLE");
+    expect(argc==3 || argc==4,"usage: iee_paperdoll_q3m_tests PACK ORACLE [CHFF2INV]");
     const auto pack=read(argv[1]),oracle=read(argv[2]);
+    expect(pack.size()>=80,"pack header truncated");
+    std::array<char,8> resourceRef{};
+    std::copy_n(pack.begin()+32,8,resourceRef.begin());
+    iee::paperdoll_q3m::ResourceId body{};
+    expect(iee::paperdoll_q3m::resource_for_resref(resourceRef,body),"resource outside allowlist");
     iee::paperdoll_q3m::Frames frames;
-    expect(iee::paperdoll_q3m::parse(pack,frames),"pilot pack rejected");
-    expect(frames[0].width==66 && frames[0].height==64 && frames[0].centerX==-24 && frames[0].centerY==-16 &&
-           frames[1].width==65 && frames[1].height==75 && frames[1].centerX==-25 && frames[1].centerY==0,"native placement changed");
+    expect(iee::paperdoll_q3m::parse(pack,frames,body),"pilot pack rejected");
+    const auto& spec=iee::paperdoll_q3m::kScope[static_cast<std::size_t>(body)];
+    expect(frames.size()==spec.frameCount,"unreferenced native frames dropped");
+    for(std::size_t n=0;n<frames.size();++n) {
+      const auto& f=frames[n];const auto& g=spec.geometry[n];
+      expect(f.width==g.width && f.height==g.height && f.centerX==g.centerX && f.centerY==g.centerY,"native geometry differs");
+    }
+    iee::paperdoll_q3m::Frames foreign;
+    const auto other=body==iee::paperdoll_q3m::ResourceId::Leather ?
+        iee::paperdoll_q3m::ResourceId::Unarmored : iee::paperdoll_q3m::ResourceId::Leather;
+    expect(!iee::paperdoll_q3m::parse(pack,foreign,other),"body source/identity crossed");
+    std::array<char,8> resref{'C','H','F','F','2','I','N','V'};
+    iee::paperdoll_q3m::ResourceId identified{};
+    expect(iee::paperdoll_q3m::resource_for_resref(resref,identified) &&
+           identified==iee::paperdoll_q3m::ResourceId::Leather,"leather ownership lost");
+    resref[0]='X';
+    expect(!iee::paperdoll_q3m::resource_for_resref(resref,identified),"unrequested armor owned");
     auto reject=[&](std::vector<std::uint8_t> bad) {
       auto copy=frames;
-      expect(!iee::paperdoll_q3m::parse(bad,copy),"malformed pack accepted");
-      expect(copy[0].indices.empty() && copy[1].indices.empty(),"failed parse retained previous frames");
+      expect(!iee::paperdoll_q3m::parse(bad,copy,body),"malformed pack accepted");
+      expect(copy.empty(),"failed parse retained previous frames");
     };
     for(const auto size : {std::size_t(0),std::size_t(31),std::size_t(80),std::size_t(648),pack.size()-1})
       reject({pack.begin(),pack.begin()+size});
@@ -41,10 +60,10 @@ int main(int argc,char** argv) {
     bad=pack;bad.back()=0x80;reject(bad); // cycle points outside this body
     bad=pack;bad.push_back(0);reject(bad); // trailing resource is outside scope
     expect(oracle.size()>=12 && std::equal(oracle.begin(),oracle.begin()+8,"P7ORCL01"),"oracle header differs");
-    const auto count=word(oracle,8);expect(count==64,"measured session fixture differs");
+    const auto count=word(oracle,8);expect(count>0 && count<=256,"palette oracle count differs");
     std::size_t pos=12,decodes=0;
     for(std::size_t n=0;n<count;++n) {
-      iee::core::palette_fraction::Palette palette;
+      iee::core::palette_fraction::Palette palette{};
       for(std::size_t i=0;i<256;++i) {palette[i]=word(oracle,pos);pos+=4;}
       for(const auto& frame:frames) {
         std::vector<std::uint32_t> actual;
@@ -60,7 +79,7 @@ int main(int argc,char** argv) {
     expect(!iee::paperdoll_q3m::decode(invalid,{},result) && result.empty(),"invalid frame produced pixels");
     int previous{};std::uint32_t crc{};bool uploaded{};
     expect(!iee::paperdoll_q3m::bind(0,0,66,64,{}, {},previous,crc,uploaded),"disabled pilot mutated native rendering");
-    std::cout<<"PASS: strict native body scope, malformed/truncated rejection, "<<decodes
+    std::cout<<"PASS: strict resource scope, malformed/truncated rejection, "<<decodes
              <<" measured-palette BGRA byte decodes, disabled fallback\n";
     return 0;
   } catch(const std::exception& e) {std::cerr<<e.what()<<'\n';return 1;}

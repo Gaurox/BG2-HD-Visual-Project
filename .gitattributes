@@ -55,3 +55,7 @@ sprite/families/playable-characters/6110-human-female-fighter/research/palette-q
 # P7 proof/QA references pin raw bytes of runs and runtime manifests.
 sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-*/** -text -whitespace
 pipeline/runtime/manifests/iee-sprite-p7-*.json -text -whitespace
+
+# P7 compiled allowlist and QA decisions are pinned by raw SHA-256 bytes.
+engine/InfinityEngine-Enhancer/source-patchee/src/iee/paperdoll_q3m_scope.h -text whitespace=cr-at-eol
+sprite/index/qa-decisions/paperdolls/*.json -text -whitespace

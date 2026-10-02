@@ -4,13 +4,13 @@
 
 | Champ | Valeur |
 |---|---|
-| Version | **2026-10-02** — consolidation P2/P3, décision P4, Q8c écarté et pilote P7 `CHFF1INV` accepté ; résultats historiques P0/P1 conservés |
+| Version | **2026-10-02** — consolidation P2/P3, décision P4, Q8c écarté ; P7 lot UI normal 81 BAM accepté ; résultats historiques P0/P1 conservés |
 | Rédaction | Claude Code (Claude Opus 5.5), mises à jour de développement Codex |
 | Entrées relues intégralement | étude Claude (guide v1, présentation + erratum E3b, revue croisée E5) ; étude Codex (guide, notes moteur/inventaire/upscale, comparaison critique, recalcul temporel, arrondi 3 bits) ; synthèse Codex `GUIDE_ULTIME_SPRITES_HD_BG2EE.md` (29/09 21:16) |
 | Vérifications refaites dans cette passe | binaire moteur, `MPALETTE`/`RANGES12`, routine des mélanges, code runtime IEE (`file:line`), quantifieur et cache de production, décisions QA du dépôt, mesure x4 du 26/09, run P13 `0x6110`, tables E3b/E5, recalcul temporel, arrondi 3 bits, inventaire CSV, lignes constantes 74–78, égalisation des rampes, recouvrement des palettes de validation |
 | Mise à jour P1 | Run [`palette-q3m-p1-20260930-v1`](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md) (commit `a1a68a73`) relu : README, JSON, CSV, scripts et tests ; agrégats recalculés depuis `color-summary.csv` / `temporal-sequences.csv`. Résultats §7.14, P2+ ajustés ; chiffres historiques E3/E3b/E5 inchangés |
 | Clôture P0 | Run [`palette-oracles-p0-20260930-v4`](../families/playable-characters/6110-human-female-fighter/research/palette-oracles-p0-20260930-v4/README.md) : oracle scalaire + boucle x64 native, lecteur BAM indépendant, provenance `MPALETTE`/alias, **E3b reproduit numériquement**, 30 tests verts (§7.15). Remplace l'état P0 partiel contenu dans P1 ; historiques/P1 immuables |
-| Reprise après P4/P7 | **Monde `0x6110` : Q3m K6 x2 + BOX, sans mipmaps. UI `CHFF1INV` : Q3m K6 x2 + Nearest, accepté.** P3 validée par l'utilisateur ; Q8c écarté ; couverture monde déjà produite ; aucune généralisation UI ni release déduite (§10–11) |
+| Reprise après P4/P7 | **Monde `0x6110` : Q3m K6 x2 + BOX, sans mipmaps. UI `CHFF1INV`/`CHFF2INV` : Q3m K6 x2 + Nearest, acceptés ; lot UI normal 81 BAM installé et accepté par l’utilisateur.** P3 validée par l'utilisateur ; Q8c écarté ; couverture monde déjà produite ; aucune généralisation UI ni release déduite (§10–11) |
 | Autorité | Ce guide fait référence pour le développement. Les études sources restent intactes et historiques ; leurs erreurs sont listées au §16. |
 | Compagnon visuel | [`PRESENTATION_ETUDE_SPRITES_HD_0x6110.html`](PRESENTATION_ETUDE_SPRITES_HD_0x6110.html) (hors ligne, explorateur de palette, comparateur, chiffres) ; version expliquée `PRESENTATION_PEDAGOGIQUE_SPRITES_HD_0x6110.html` et `…_EN.html`. Pages locales ignorées par Git, antérieures à P1 |
 | Autorités d'état | Ce guide référence les acquis ; production = générations, QA = décisions immuables, installation = reçu actif, release = manifestes dédiés. Les installations d'essai P3/P4/P7 ne constituent pas une intégration release. |
@@ -97,13 +97,13 @@ P3 → VALIDÉE INTÉGRALEMENT PAR L'UTILISATEUR avant P4
 P4 → DÉCIDÉE 2026-10-02 : x2 + BOX monde 0x6110, sans mipmaps
 P5 → ÉCARTÉE par l'utilisateur : poursuivre Q3m, aucun essai Q8c
 P6 → COUVERTURE MONDE DÉJÀ PRODUITE en P3 : 656 BAM / 178 360 frames x2
-P7 → PILOTE CHFF1INV SEUL ACCEPTÉ ; autres corps/équipements UI non traités
+P7 → CHFF1INV/CHFF2INV ACCEPTÉS ; lot UI normal 81 BAM / 163 frames produit, installé et accepté par l’utilisateur
 P8 → autres animations Character : aucune QA transférée
 ```
 
 ### 1.4 Ce qui n'est pas acquis
 
-- P3 est validée en jeu ; P7 accepte uniquement `CHFF1INV`. Les gains numériques P1 restent des distances aux cibles ReboutCX, pas des scores de préférence humaine.
+- P3 est validée en jeu ; P7 accepte `CHFF1INV`/`CHFF2INV`, le lot normal complet est accepté par l’utilisateur (§11.3). Les gains numériques P1 restent des distances aux cibles ReboutCX, pas des scores de préférence humaine.
 - Généralisation hors ligne établie par P1 : 10 palettes sans identifiant ni rampe identique au même canal que l'ajustement, toutes améliorées (§7.14). Les palettes E3b/E5 (§7.2) restent partiellement vues.
 - Consensus ≠ amélioration universelle : Q3m K6 dégrade REF, la palette de production actuelle (+6,1 % x2, +11,6 % x4).
 - Zoom P4 mesuré dans le viewport **2528×1339** (§10.4) ; aucun seuil/résultat à transférer à une autre taille de fenêtre, scène ou interface.
@@ -877,7 +877,7 @@ Dépendances techniques, pas un workflow imposé (doctrine `docs/PRODUCTION_RAPI
 | **P4** Échelle et filtre | mesure du zoom ; expérience §10.2 | décision x2/x4 + filtre, datée | **décidé 2026-10-02 : x2 + BOX, sans mipmaps, `0x6110`** (§10.1) ; préférence x2 légère/incertaine, BOX nette en dézoom ; QA/release hors périmètre non déduites |
 | **P5** Frontières | Q8c vs Q3m K6 : d'abord sur le banc P1 étendu au plan B (mêmes occurrences et palettes), puis mêmes frames, palettes, packing et scènes en jeu (attaque, marche, mort, repos) | gain propre visible **et** mesuré ; coût XPRESS acceptable ; sinon Q8 abandonné | **écartée par l'utilisateur le 2026-10-02** : « je souhaite ne pas tester Q8c et j'assume cette decision » ; poursuivre Q3m K6, aucune implémentation/production/QA Q8c |
 | **P6** 0x6110 complet | 628 BAM, par famille et couche ; ordre : CHFF4 → CHFB1–3 → armes fréquentes (S1 S0 SS AX WH MC CL S2 BW) → boucliers → casques ; K = 6 ⇒ ≈ 564 000 inférences, cibles float encodées en flux ou purgées | aucune frame manquante ; cache froid/chaud, mémoire, upload mesurés | **couverture monde déjà produite en P3** : 656 BAM / 178 360 frames Q3m K6 x2, [run complet](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110/README.md) ; working set/éviction hors ligne vérifiés ; mesures ingame de la scène P4 (§10.1), aucun profilage exhaustif déduit. Paperdolls exclus ; aucune régénération demandée |
-| **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) | **CHFF1INV seul validé par l'utilisateur le 2026-10-02** : [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-chff1inv-q3m-k6-x2-nearest-v1.json), Q3m K6 x2, UI Nearest/Bitmap natif ; deux moitiés HD confirmées par journal/CRC. [Mesure native](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-ui-measurement-20261002-v1/README.md) compatible profil/alpha/placement (16 combinaisons, capture bornée) ; [installation pilote](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/README.md), monde x2+BOX conservé ; autres corps/équipements paperdoll hors périmètre, P7 globale non achevée |
+| **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) | **CHFF1INV et CHFF2INV validés par l'utilisateur le 2026-10-02** : [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-chff1inv-q3m-k6-x2-nearest-v1.json), Q3m K6 x2, UI Nearest/Bitmap natif ; deux moitiés HD confirmées par journal/CRC. [Mesure native](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-ui-measurement-20261002-v1/README.md) compatible profil/alpha/placement (16 combinaisons, capture bornée) ; [installation pilote](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/README.md), monde x2+BOX conservé ; lot normal complet produit/installé (§11.3), lot normal accepté (§11.3) ; variantes exclues inchangées |
 | **P8** Généralisation | §13 | preuves par famille ; aucune QA transférée | à faire |
 
 Implémentations disponibles : `pipeline/scripts/reboutcx_multipal.py` (inférence K, cibles float32), `palette_frac_encode.py` (Q6/Q3m), `palette_eval.py` (banc P1), `palette_registry.py` (V6), `palette_p2.py` (fixtures/packs). Runtime : `core/palette_fraction.h`, `creature_sprite_x2.cpp`, `paperdoll_q3m.cpp` ; tests `iee_palette_fraction_tests` et `iee_paperdoll_q3m_tests`. Q8c non demandé ; aucun écrivain/lecteur V6 à refaire.
@@ -907,6 +907,18 @@ Preuves : [rendu hors jeu](../families/playable-characters/6110-human-female-fig
 - QA finale : déclaration utilisateur **« c'est propre je valide ! committe »**, 2026-10-02. Dernière session : `P7_Q3M_DRAW bound=true` pour les deux parties ; CRC pixels concordants aux plans, **une palette observée**, aucun élargissement aux autres corps/équipements. Décision indépendante du reçu/du manifeste candidat historiquement `ingame_qa=false`.
 - [Manifeste runtime](../../pipeline/runtime/manifests/iee-sprite-p7-chff1inv-q3m-20261002-v1.json), DLL`5686D1FC…021B1` ; le reçu actif du pilote est sous `…/palette-q3m-p7-chff1inv-ingame-20261002-v1/ingame-installation/active-test.json`. `Restore` revient à la **sonde native P7v2**, pas directement au runtime pré-P7. Lire la chaîne de backups avant toute restauration ; preuves anciennes intactes.
 - Suite possible **sur demande** : autre corps/armure ou couche équipement UI autonome. Ce pilote n'achève pas les 85 paperdolls ; Q8c, production monde déjà disponible et release ne sont pas relancés implicitement.
+
+### 11.2 P7 suite — CHFF2INV cuir accepté (2026-10-02)
+
+- [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-chff2inv-q3m-k6-x2-nearest-v1.json) : utilisateur « validé. le process est ok » ; deux moitiés HD `bound=true`, CRC indépendants conformes `1CACC540`/`83259385` sous une palette native observée.
+- [Run](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-20261002-v1/README.md) + [pilote historique](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-ingame-20261002-v1/README.md) intacts ; reçu de ce pilote désormais couvert par l'installation suivante. QA non transférée aux autres apparences.
+
+### 11.3 P7 — tous équipements utiles, lot normal accepté (2026-10-02)
+
+- [Lot courant / essai / restauration](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/README.md) : **81 BAM / 163 frames** = 4 corps + 77 équipements INV/OIN ; **79 ajouts**, CHFF1/2 exacts réutilisés. H3/H4 sans ITM, H6 attaque et WMOIN orphelin exclus.
+- Q3m K6 x2, UI Nearest/Bitmap natif ; géométrie/lookup/centres et CHFF4 frame2 inutilisée conservés. 0 fuite/spécial modifié ; 2 934 décodages indépendants par langage ; tests natifs et transaction fixture PASS.
+- Runtime : whitelist compilée par SHA source/géométrie ; palette native par cellule, pool32 textures + flush avant upload/éviction. WPN partagés routés par resref ; aucun autre corps produit. Catalogue/shaders monde x2+BOX inchangés.
+- **Lot normal accepté** : [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-full-ui-6110-q3m-k6-x2-nearest-v1.json), utilisateur « validé. committe ». Session : 81 ressources chargées, 7 ressources / 14 dessins HD `bound=true`, CRC indépendants conformes ; aucune couverture exhaustive ressource/palette déduite. Restauration → pilote cuir validé ; aucune release modifiée.
 
 ---
 
@@ -1033,7 +1045,7 @@ Décisions qui restent humaines : visage, texture de peau, matières, niveau de 
 
 ## 15. Questions ouvertes
 
-Acquis à ne pas rouvrir par défaut : **K6 et 10 palettes disjointes** (P1), **V6 sans B** (P2), **QA P3**, **zoom/choix x2+BOX `0x6110`** (P4), **QA UI `CHFF1INV` x2/Nearest** (P7). **Q8c explicitement écarté** ; autres paperdolls sur demande. Les mesures locales ne répondent pas aux généralisations ci-dessous.
+Acquis à ne pas rouvrir par défaut : **K6 et 10 palettes disjointes** (P1), **V6 sans B** (P2), **QA P3**, **zoom/choix x2+BOX `0x6110`** (P4), **QA UI `CHFF1INV`/`CHFF2INV` x2/Nearest** (P7). **Q8c explicitement écarté** ; lot UI normal accepté (§11.3), 81 BAM / 163 frames. Les mesures locales ne répondent pas aux généralisations ci-dessous.
 
 | Priorité | Question | Expérience décisive |
 |---:|---|---|

@@ -1,0 +1,52 @@
+{
+  "schema": "bg2-upscale-paperdoll-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-02T07:10:53.284207+00:00",
+  "scope": {
+    "kind": "installed-paperdoll-body",
+    "animation_id": "0x6110",
+    "resrefs": [
+      "CHFF2INV"
+    ],
+    "frames": [
+      0,
+      1
+    ],
+    "equipment_overlays": [],
+    "variant_id": "q3m-k6-x2-ui-nearest",
+    "target_scale": 2
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "validé. le process est ok. est-ce que tu peux traiter tous les items"
+  },
+  "runtime_contract": {
+    "runtime_id": "iee-sprite-p7-chff2inv-q3m-20261002-v1",
+    "dll_sha256": "A40A6483A3E70BEBC59877B0FFC468F802BB0867217F6D3F899BB237AB1D81A9",
+    "ini_sha256": "B037C32768A6638D99CDD815EFBF86F1EDF8AFD2DD07BD3058577F379A9C556A",
+    "pack_sha256": "53e01c54f990cebc1b7425f8f9fbac487e93c7a3ca02bb904437c3b6a17250b5",
+    "ui_sampler": "Nearest",
+    "native_geometry": true
+  },
+  "automatic_evidence": {
+    "draws": [
+      {
+        "slot": 0,
+        "frame": 0,
+        "pixel_crc32": "1CACC540",
+        "independent_crc_match": true
+      },
+      {
+        "slot": 2,
+        "frame": 1,
+        "pixel_crc32": "83259385",
+        "independent_crc_match": true
+      }
+    ],
+    "evidence_file": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-ingame-20261002-v1/runtime-evidence-qa-20261002-v1.txt",
+    "source_log_sha256": "4a3b18e346a822a96849e0e4f3f2d3685af5e59b7f5195fcb77a745cc0a33a41"
+  },
+  "release_manifest_modified": false
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "bg2-p7-chff2inv-runtime-pack-v1",
+  "resref": "CHFF2INV",
+  "frames": 2,
+  "scale": 2,
+  "source_sha256": "d7f3e6361216d3273e7f09e00ce8cdc77d9fcbc9fef20b5dab051bc6e2a23672",
+  "planes": [
+    {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-20261002-v1/part-0-q3m-x2.npz",
+      "sha256": "84bad826c0092296b4fdeb543f93ba49a53fc908adc3938345ad09c6ff26fd3d"
+    },
+    {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-20261002-v1/part-1-q3m-x2.npz",
+      "sha256": "8482eb9d257b5b9627ca879a5ddb705322daf13c4b266018fdcd3cb75f679f18"
+    }
+  ],
+  "nn_inferences": 0,
+  "world_catalog_modified": false,
+  "pack": {
+    "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-ingame-20261002-v1/work/CHFF2INV-Q3m-X2.registry",
+    "sha256": "53e01c54f990cebc1b7425f8f9fbac487e93c7a3ca02bb904437c3b6a17250b5",
+    "bytes": 74028
+  },
+  "oracle": {
+    "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff2inv-ingame-20261002-v1/work/measured-palettes.oracle",
+    "sha256": "2b4d14a9e52456fb27a733cb610d956f5774e790eeabcc40d17f73fa4826a7f3",
+    "palettes": 64,
+    "decodes": 128,
+    "session_sha256": "7a5b4b3ff06e6d8f12ea24f98856d11762b3d39b42071ed7faf2858aebffae16",
+    "palette_origin": "CHFF1INV measured native palettes reused for byte-decoder oracle; CHFF2INV live capture pending"
+  },
+  "ui_sampler": "Nearest",
+  "world_filter": "Box",
+  "ingame_qa": false
+}

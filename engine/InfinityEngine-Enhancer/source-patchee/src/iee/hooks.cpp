@@ -3037,10 +3037,10 @@ void trace_q3m_p3_palette(CreatureSpriteScope& scope, std::size_t layerIndex,
 bool paperdoll_probe_cell(void* cell) noexcept {
   if ((!g_paperdollProbeReady && !g_paperdollHDReady) || !g_ctx || !g_ctx->manifest || !cell) return false;
   std::array<char, 8> resref{};
-  constexpr std::array<char, 8> target{'C','H','F','F','1','I','N','V'};
+  paperdoll_q3m::ResourceId body{};
   return core::safe_read(static_cast<const std::byte*>(cell) +
                             g_ctx->manifest->itemIcons.vidCellResref, resref) &&
-         resref == target;
+         paperdoll_q3m::resource_for_resref(resref, body);
 }
 
 void trace_paperdoll_palette(void* paletteThis, const std::uint32_t* output,
@@ -3059,6 +3059,10 @@ void trace_paperdoll_palette(void* paletteThis, const std::uint32_t* output,
     std::int16_t frame = -1, sequence = -1;
     const auto* bytes = static_cast<const std::byte*>(cell);
     const auto& runtime = g_ctx->manifest->itemIcons;
+    std::array<char,8> resref{};
+    paperdoll_q3m::ResourceId body{};
+    if (!core::safe_read(bytes + runtime.vidCellResref,resref) ||
+        !paperdoll_q3m::resource_for_resref(resref,body)) return;
     if (!core::safe_read(output, colors) || !core::safe_read(paletteThis, native) ||
         !core::safe_read(bytes + runtime.vidCellCurrentFrame, frame) ||
         !core::safe_read(bytes + runtime.vidCellCurrentSequence, sequence)) return;
@@ -3066,7 +3070,8 @@ void trace_paperdoll_palette(void* paletteThis, const std::uint32_t* output,
     const auto checksum = static_cast<std::uint32_t>(crc32(0,
         reinterpret_cast<const Bytef*>(colors.data()), static_cast<uInt>(sizeof(colors))));
     const auto callerRva = caller >= g_paperdollProbeModuleBase ? caller-g_paperdollProbeModuleBase : 0;
-    thread_local std::set<std::array<std::uint64_t, 4>> seen;
+    thread_local std::array<std::set<std::array<std::uint64_t, 4>>,paperdoll_q3m::kScope.size()> seenByBody;
+    auto& seen=seenByBody[static_cast<std::size_t>(body)];
     constexpr std::size_t limit = 64;
     const std::array<std::uint64_t, 4> key{checksum, callerRva,
         static_cast<std::uint16_t>(frame) | (static_cast<std::uint64_t>(static_cast<std::uint16_t>(sequence)) << 16),
@@ -3080,10 +3085,10 @@ void trace_paperdoll_palette(void* paletteThis, const std::uint32_t* output,
     const bool sourceRead = native.m_nEntries == 256 && core::safe_read(native.m_pPalette, sourceColors);
     if (sourceRead) for (const auto color : sourceColors) source << std::setw(8) << color;
     for (const auto row : native.m_rangeColors) ranges << static_cast<unsigned>(row) << ',';
-    LOG_INFO("P7_UI_PALETTE resref=CHFF1INV cell={:X} sequence={} slot={} callerRva={:X} "
+    LOG_INFO("P7_UI_PALETTE resref={} cell={:X} sequence={} slot={} callerRva={:X} "
              "kind={} entries={} ranges={} flags={:X} transparency={} encodingRead={} format={:X} type={:X} "
              "globalOutput={} crc32={:08X} sourceRead={} sourceColors={} colors={}",
-        reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, native.m_nType,
+        std::string(resref.begin(),resref.end()), reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, native.m_nType,
         native.m_nEntries, ranges.str(), flags, transparency, encodingRead,
         encoding.externalFormat, encoding.type, output == g_creatureSpriteTextureApi.realizedPalette,
         checksum, sourceRead, source.str(), palette.str());
@@ -3099,6 +3104,10 @@ void trace_paperdoll_draw(void* cell, std::uintptr_t caller, int x, int y,
   try {
     const auto* bytes = static_cast<const std::byte*>(cell);
     const auto& runtime = g_ctx->manifest->itemIcons;
+    std::array<char,8> resref{};
+    paperdoll_q3m::ResourceId body{};
+    if (!core::safe_read(bytes + runtime.vidCellResref,resref) ||
+        !paperdoll_q3m::resource_for_resref(resref,body)) return;
     std::int16_t frame = -1, sequence = -1;
     std::array<std::int32_t, 12> rectangles{};
     std::array<std::int32_t, 4> source{}, render{}, clip{};
@@ -3119,7 +3128,8 @@ void trace_paperdoll_draw(void* cell, std::uintptr_t caller, int x, int y,
     const auto paletteCrc = static_cast<std::uint32_t>(crc32(0,
         reinterpret_cast<const Bytef*>(drawPalette.data()), static_cast<uInt>(sizeof(drawPalette))));
     const auto callerRva = caller >= g_paperdollProbeModuleBase ? caller-g_paperdollProbeModuleBase : 0;
-    thread_local std::set<std::array<std::uint64_t, 7>> seen;
+    thread_local std::array<std::set<std::array<std::uint64_t, 7>>,paperdoll_q3m::kScope.size()> seenByBody;
+    auto& seen=seenByBody[static_cast<std::size_t>(body)];
     constexpr std::size_t limit = 128;
     const std::array<std::uint64_t, 7> key{callerRva, crc,
         static_cast<std::uint16_t>(frame) | (static_cast<std::uint64_t>(static_cast<std::uint16_t>(sequence)) << 16),
@@ -3129,10 +3139,10 @@ void trace_paperdoll_draw(void* cell, std::uintptr_t caller, int x, int y,
     std::ostringstream palette;
     palette << std::hex << std::setfill('0');
     if (drawPaletteRead) for (const auto color : drawPalette) palette << std::setw(8) << color;
-    LOG_INFO("P7_UI_DRAW resref=CHFF1INV cell={:X} sequence={} slot={} callerRva={:X} x={} y={} "
+    LOG_INFO("P7_UI_DRAW resref={} cell={:X} sequence={} slot={} callerRva={:X} x={} y={} "
              "logical={}x{} flags={:X} sourceRead={} source={},{},{},{} renderRead={} render={},{},{},{} "
              "clipRead={} clip={},{},{},{} nativeTone={} drawPaletteRead={} drawPaletteCrc32={:08X} drawColors={}",
-        reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, x, y, width, height, flags,
+        std::string(resref.begin(),resref.end()), reinterpret_cast<std::uintptr_t>(cell), sequence, frame, callerRva, x, y, width, height, flags,
         sr, source[0], source[1], source[2], source[3], rr, render[0], render[1], render[2], render[3],
         cr, clip[0], clip[1], clip[2], clip[3], g_nativeShaderTone, drawPaletteRead, paletteCrc, palette.str());
     if (seen.size() == limit) LOG_INFO("P7_UI_DRAW limit={} reached", limit);
@@ -3204,7 +3214,7 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
   g_vidPaletteRealizeHook.original()(paletteThis, realizedOutput, flags, rangeEffects,
                                       transparency, arg6);
   trace_paperdoll_palette(paletteThis, realizedOutput, caller, flags, transparency);
-  // Capture only a Realize belonging to the current CHFF1INV Render scope.
+  // Capture only a Realize belonging to the current supported paperdoll Render scope.
   // Foreign palettes cannot replace this snapshot; common draw checks it again.
   auto* ui = g_itemIconScope;
   if (ui && ui->paperdollHDOwned && g_ctx && g_ctx->manifest &&
@@ -3294,6 +3304,10 @@ bool bind_paperdoll_draw(const ItemIconScope& scope, int x, int y, int width, in
     creature_sprite_x2::NativePixelEncoding encoding{};
     const auto* bytes = static_cast<const std::byte*>(scope.cell);
     const auto& runtime = g_ctx->manifest->itemIcons;
+    std::array<char,8> resref{};
+    paperdoll_q3m::ResourceId body{};
+    if (!core::safe_read(bytes + runtime.vidCellResref,resref) ||
+        !paperdoll_q3m::resource_for_resref(resref,body)) return false;
     std::int16_t sequence{-1}, slot{-1};
     const bool read = core::safe_read(sourceRect, source) && core::safe_read(renderRect, render) &&
         core::safe_read(clipRect, clip) && core::safe_read(g_creatureSpriteTextureApi.realizedPalette, palette) &&
@@ -3301,12 +3315,13 @@ bool bind_paperdoll_draw(const ItemIconScope& scope, int x, int y, int width, in
         core::safe_read(bytes + runtime.vidCellCurrentSequence, sequence) &&
         core::safe_read(bytes + runtime.vidCellCurrentFrame, slot);
     const bool lower = slot >= 2;
-    const bool geometry = read && sequence == 0 && slot >= 0 && slot <= 3 &&
-        width == (lower ? 65 : 66) && height == (lower ? 75 : 64) &&
+    const auto* expected=paperdoll_q3m::native_geometry(body,slot);
+    const bool geometry = read && expected && sequence == 0 && slot >= 0 && slot <= 3 &&
+        width == expected->width && height == expected->height &&
         source == std::array<std::int32_t,4>{0,0,width,height} && render == clip &&
         std::int64_t(render[2])-render[0] == 128 && std::int64_t(render[3])-render[1] == 160 &&
-        std::int64_t(x)-render[0] == (lower ? 25 : 24) &&
-        std::int64_t(y)-render[1] == (lower ? 80 : 16);
+        std::int64_t(x)-render[0] == -expected->centerX &&
+        std::int64_t(y)-render[1] == -expected->centerY + (lower ? 80 : 0);
     const bool paletteMatches = scope.paperdollPaletteValid && read &&
         sequence == scope.paperdollSequence && slot == scope.paperdollSlot &&
         std::equal(palette.begin()+1, palette.end(), scope.paperdollPalette.begin()+1) &&
@@ -3315,21 +3330,22 @@ bool bind_paperdoll_draw(const ItemIconScope& scope, int x, int y, int width, in
         flags == 0x4005 && g_nativeShaderTone == static_cast<int>(game::ShaderTone::Bitmap);
     std::uint32_t pixelCrc{}; bool uploaded{};
     const bool bound = contract && paperdoll_q3m::bind(sequence, slot, width, height, palette,
-                                                     g_paperdollTextureApi, previousTexture, pixelCrc, uploaded);
+                                                     g_paperdollTextureApi, previousTexture, pixelCrc, uploaded, body);
     const auto paletteCrc = static_cast<std::uint32_t>(crc32(0,
         reinterpret_cast<const Bytef*>(palette.data()), static_cast<uInt>(sizeof(palette))));
     // Small independent proof even when the optional native probe saturates.
     // Logging cannot turn a successful binding into an unrestored fallback.
     try {
-    thread_local std::set<std::array<std::uint64_t,4>> seen;
-    const std::array<std::uint64_t,4> key{paletteCrc, static_cast<std::uint16_t>(slot),
-        static_cast<std::uint64_t>(bound), static_cast<std::uint64_t>(contract)};
+    thread_local std::array<std::set<std::array<std::uint64_t,5>>,paperdoll_q3m::kScope.size()> seenByBody;
+    auto& seen=seenByBody[static_cast<std::size_t>(body)];
+    const std::array<std::uint64_t,5> key{paletteCrc, static_cast<std::uint16_t>(slot),
+        static_cast<std::uint64_t>(bound), static_cast<std::uint64_t>(contract), static_cast<std::uint64_t>(body)};
     if (seen.size()<64 && seen.insert(key).second) {
       std::ostringstream colors; colors << std::hex << std::setfill('0');
       if (read) for (const auto color : palette) colors << std::setw(8) << color;
-      LOG_INFO("P7_Q3M_DRAW resref=CHFF1INV sequence={} slot={} logical={}x{} geometry={} "
+      LOG_INFO("P7_Q3M_DRAW resref={} sequence={} slot={} logical={}x{} geometry={} "
           "paletteMatches={} contract={} bound={} uploaded={} uiSampler=Nearest nativeTone={} "
-          "paletteCrc32={:08X} pixelCrc32={:08X} colors={}", sequence, slot, width, height,
+          "paletteCrc32={:08X} pixelCrc32={:08X} colors={}", std::string(resref.begin(),resref.end()), sequence, slot, width, height,
           geometry, paletteMatches, contract, bound, uploaded, g_nativeShaderTone, paletteCrc, pixelCrc, colors.str());
       if (seen.size()==64) LOG_INFO("P7_Q3M_DRAW limit=64 reached");
     }
@@ -5051,10 +5067,10 @@ bool install_all(AppContext& ctx) {
               reinterpret_cast<void*>(&detour_vid_palette_realize));
           g_vidPaletteRealizeHook.enable();
           if (g_paperdollProbeReady) {
-            LOG_INFO("P7_UI_PROBE ready: CHFF1INV only; native palette/draw trace; paletteLimit=64 drawLimit=128; no render-state writes");
+            LOG_INFO("P7_UI_PROBE ready: 81 whitelisted paperdoll resources only; native palette/draw trace; paletteLimit=64 drawLimit=128; no render-state writes");
           }
           if (g_paperdollHDReady) {
-            LOG_INFO("P7_Q3M ready: CHFF1INV body only; palette captured in native Render scope; UI x2/Nearest/native Bitmap; world filter unchanged");
+            LOG_INFO("P7_Q3M ready: 81 whitelisted paperdoll resources only; palette captured in native Render scope; UI x2/Nearest/native Bitmap; world filter unchanged");
           }
         }
         if (g_creatureSpriteCharacterHookEnabled || g_spriteShaderScopePrepared) {

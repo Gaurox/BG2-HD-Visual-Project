@@ -1,0 +1,754 @@
+{
+  "schema": "bg2-upscale-paperdoll-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-02T07:32:04.375505+00:00",
+  "scope": {
+    "kind": "installed-paperdoll-lot",
+    "domain": "playable-characters",
+    "animation_id": "0x6110",
+    "resrefs": [
+      "CHFF1INV",
+      "CHFF2INV",
+      "CHFF3INV",
+      "CHFF4INV",
+      "WPNAXINV",
+      "WPNAXOIN",
+      "WPNBSINV",
+      "WPNBWINV",
+      "WPNC0INV",
+      "WPNC1INV",
+      "WPNC2INV",
+      "WPNC3INV",
+      "WPNC4INV",
+      "WPNC5INV",
+      "WPNC6INV",
+      "WPNC7INV",
+      "WPNCBINV",
+      "WPNCLINV",
+      "WPNCLOIN",
+      "WPND1INV",
+      "WPND2INV",
+      "WPND3INV",
+      "WPND4INV",
+      "WPNDDINV",
+      "WPNDDOIN",
+      "WPNF0INV",
+      "WPNF0OIN",
+      "WPNF1INV",
+      "WPNF1OIN",
+      "WPNF2INV",
+      "WPNF2OIN",
+      "WPNF3INV",
+      "WPNF3OIN",
+      "WPNFLINV",
+      "WPNFLOIN",
+      "WPNFSINV",
+      "WPNFSOIN",
+      "WPNGSINV",
+      "WPNH0INV",
+      "WPNH1INV",
+      "WPNH2INV",
+      "WPNH5INV",
+      "WPNHBINV",
+      "WPNJ0INV",
+      "WPNJ1INV",
+      "WPNJ2INV",
+      "WPNJ3INV",
+      "WPNJ4INV",
+      "WPNJ5INV",
+      "WPNJ6INV",
+      "WPNJ7INV",
+      "WPNJ8INV",
+      "WPNJ9INV",
+      "WPNJAINV",
+      "WPNJBINV",
+      "WPNJCINV",
+      "WPNM2INV",
+      "WPNM2OIN",
+      "WPNMCINV",
+      "WPNMCOIN",
+      "WPNMSINV",
+      "WPNMSOIN",
+      "WPNQ2INV",
+      "WPNQ3INV",
+      "WPNQ4INV",
+      "WPNQSINV",
+      "WPNS0INV",
+      "WPNS0OIN",
+      "WPNS1INV",
+      "WPNS1OIN",
+      "WPNS2INV",
+      "WPNS3INV",
+      "WPNS3OIN",
+      "WPNSCINV",
+      "WPNSCOIN",
+      "WPNSLINV",
+      "WPNSPINV",
+      "WPNSSINV",
+      "WPNSSOIN",
+      "WPNWHINV",
+      "WPNWHOIN"
+    ],
+    "resource_count": 81,
+    "native_frame_count": 163,
+    "variant_id": "q3m-k6-x2-ui-nearest",
+    "target_scale": 2
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "validé. committe",
+    "scope": "acceptance of the installed normal 0x6110 inventory lot",
+    "note": "User accepts the whole lot; no claim that every appearance was individually observed in the captured session."
+  },
+  "runtime_contract": {
+    "runtime_id": "iee-sprite-p7-full-ui-q3m-20261002-v1",
+    "dll_sha256": "9EB0E2B9A9BD727F2A2D346852BFE9750DA85A8F9885327538537DB02184EFD3",
+    "ini_sha256": "B037C32768A6638D99CDD815EFBF86F1EDF8AFD2DD07BD3058577F379A9C556A",
+    "ui_sampler": "Nearest",
+    "ui_shader": "native Bitmap (6)",
+    "native_geometry": true,
+    "texture_pool": 32,
+    "dynamic_native_palette": true
+  },
+  "provenance": {
+    "production": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/production.json",
+      "sha256": "515a19f334e20d3a92e14a115e92b957b743759b4897ba0fadcf52fb1e36cda6"
+    },
+    "runtime_manifest": {
+      "path": "pipeline/runtime/manifests/iee-sprite-p7-full-ui-q3m-20261002-v1.json",
+      "sha256": "d78a29307d045155ba3544361bc5c8e5559a4abafc65886de642f888840bccd6"
+    },
+    "installation_receipt": {
+      "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/installation-verification.json",
+      "sha256": "bee9247334336d8db643ca815f2be1c39f4e3bd929a65a77bc5f54fb4d13e55c"
+    },
+    "packs": [
+      {
+        "resref": "CHFF1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/CHFF1INV-Q3m-X2.registry",
+        "sha256": "1f0d2e5e19aa04df2a2604e1f7234a4d4c6667ae6411e3687f929991a9fa4c33",
+        "bytes": 74028
+      },
+      {
+        "resref": "CHFF2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/CHFF2INV-Q3m-X2.registry",
+        "sha256": "53e01c54f990cebc1b7425f8f9fbac487e93c7a3ca02bb904437c3b6a17250b5",
+        "bytes": 74028
+      },
+      {
+        "resref": "CHFF3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/CHFF3INV-Q3m-X2.registry",
+        "sha256": "b8dd936293bc72163a51a7d84741f6ec0dcbe1af7974f77743c1f0e878f829d6",
+        "bytes": 74028
+      },
+      {
+        "resref": "CHFF4INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/CHFF4INV-Q3m-X2.registry",
+        "sha256": "6ff61fbff34616072d4692a27f2edad2e9d8eb4a2114a0be7271b416fddc392c",
+        "bytes": 116036
+      },
+      {
+        "resref": "WPNAXINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNAXINV-Q3m-X2.registry",
+        "sha256": "8e0e533ed20220fd58aa02c1c7abfb51127681eefc3dca5752316d55da695458",
+        "bytes": 12356
+      },
+      {
+        "resref": "WPNAXOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNAXOIN-Q3m-X2.registry",
+        "sha256": "35724152b45c11c25724fcbb2b917eac6ef984ade3849eb1e526026a834b4a94",
+        "bytes": 10524
+      },
+      {
+        "resref": "WPNBSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNBSINV-Q3m-X2.registry",
+        "sha256": "45c47cfbf60118fadfde60d0a9bfb6a1ee7bf2d5a6e33e2e8672653d5101875b",
+        "bytes": 11652
+      },
+      {
+        "resref": "WPNBWINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNBWINV-Q3m-X2.registry",
+        "sha256": "9fc81ff5367daa1fe7e0151733ec442b2321ad09222adbf6a26e241dc8f65a4b",
+        "bytes": 18540
+      },
+      {
+        "resref": "WPNC0INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC0INV-Q3m-X2.registry",
+        "sha256": "474d660f86c46d759de600fd0c4131551f13782c7019027f4e971d22ba7aac6b",
+        "bytes": 23540
+      },
+      {
+        "resref": "WPNC1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC1INV-Q3m-X2.registry",
+        "sha256": "b45104692e282573a584034a3eb282aac984c9cd8b80875ba6f6b4293a556aeb",
+        "bytes": 32052
+      },
+      {
+        "resref": "WPNC2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC2INV-Q3m-X2.registry",
+        "sha256": "42d5775f543f516297b95f61e7a582767c780a240c989e6fbe111fda9aba04f2",
+        "bytes": 38164
+      },
+      {
+        "resref": "WPNC3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC3INV-Q3m-X2.registry",
+        "sha256": "954a9f21efb9832f7c405fe7a8e0b62804cc32e74c3594f6697a784e0fd8b0aa",
+        "bytes": 32428
+      },
+      {
+        "resref": "WPNC4INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC4INV-Q3m-X2.registry",
+        "sha256": "53444ae558f54faf0a48c18850643153f84b57bad49cc3b585ebf1a04914437d",
+        "bytes": 11796
+      },
+      {
+        "resref": "WPNC5INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC5INV-Q3m-X2.registry",
+        "sha256": "9296388ebbbc1ede0c46b72d7ed8ed92ef91f99a8a11fdd36ac0cd1c7afc69c5",
+        "bytes": 21028
+      },
+      {
+        "resref": "WPNC6INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC6INV-Q3m-X2.registry",
+        "sha256": "d579b1c72f774d6bc66c3b22da0c968997418ed49f53459c31490b7fa5be5196",
+        "bytes": 34308
+      },
+      {
+        "resref": "WPNC7INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNC7INV-Q3m-X2.registry",
+        "sha256": "a43f0de9b3f3e6adfcb985b2c0d1fcfee62433915e47e8bf26835693a1a6cc35",
+        "bytes": 26140
+      },
+      {
+        "resref": "WPNCBINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNCBINV-Q3m-X2.registry",
+        "sha256": "b7b827634f08c8e0ae2d5dc46df438d3182cd352c9df1d38e111f27e4efa1db4",
+        "bytes": 21508
+      },
+      {
+        "resref": "WPNCLINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNCLINV-Q3m-X2.registry",
+        "sha256": "59d558e31bc6434334a2d5c58f810f9fbb85e3b268709012d3e9a8105d98c8fa",
+        "bytes": 5052
+      },
+      {
+        "resref": "WPNCLOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNCLOIN-Q3m-X2.registry",
+        "sha256": "f8228c30a7b0e7f2058fd7265fe0dc40f73f70207081cd0790cbae280845c7d5",
+        "bytes": 5044
+      },
+      {
+        "resref": "WPND1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPND1INV-Q3m-X2.registry",
+        "sha256": "aca5f401637fccb784eeb98afb165f812559241b4b853b41af038dfa321f21c5",
+        "bytes": 10204
+      },
+      {
+        "resref": "WPND2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPND2INV-Q3m-X2.registry",
+        "sha256": "28db1695610239461efcef975a6885a0c257b22c122ca14fac38d6acd8fa71b9",
+        "bytes": 18732
+      },
+      {
+        "resref": "WPND3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPND3INV-Q3m-X2.registry",
+        "sha256": "292327b6121129a69fc93158b30d3c990e59168ea74844dc7cee06c5a8537a43",
+        "bytes": 26644
+      },
+      {
+        "resref": "WPND4INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPND4INV-Q3m-X2.registry",
+        "sha256": "1c0442e22016de748756e33ad59ff9f77b858fdc677632219a1c7b5857217559",
+        "bytes": 35940
+      },
+      {
+        "resref": "WPNDDINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNDDINV-Q3m-X2.registry",
+        "sha256": "7c31a63791da1df5ea8223c5c99ee6c8255fd0bc2f380d03ad7e23816f696ee8",
+        "bytes": 4276
+      },
+      {
+        "resref": "WPNDDOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNDDOIN-Q3m-X2.registry",
+        "sha256": "bf6c6866a25b6108b5aa3e69ada1d6af1f30053f0e1699a8d15ee8b51c80cfc6",
+        "bytes": 3708
+      },
+      {
+        "resref": "WPNF0INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF0INV-Q3m-X2.registry",
+        "sha256": "14e2b7e9a4d19c88d95b2e8087c12963e0ab646a79bd582cf54e2d7d53fbb4bf",
+        "bytes": 16948
+      },
+      {
+        "resref": "WPNF0OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF0OIN-Q3m-X2.registry",
+        "sha256": "a674cea27bc4711789d36300f5764efd09276a3a2a1b4e4c9dc65db2f85e0c40",
+        "bytes": 15444
+      },
+      {
+        "resref": "WPNF1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF1INV-Q3m-X2.registry",
+        "sha256": "0cc31ed4c31f2708ce29f2f963d61ed0279c0cd9f33c956ebe8e96c52a066f0e",
+        "bytes": 17820
+      },
+      {
+        "resref": "WPNF1OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF1OIN-Q3m-X2.registry",
+        "sha256": "aaeb6477213c71fff0c0ae0a3a6a5f0c5c641fbcdc51cbb4ca313e389955d403",
+        "bytes": 17476
+      },
+      {
+        "resref": "WPNF2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF2INV-Q3m-X2.registry",
+        "sha256": "68b254cfcb63a832a19e1a8608f47bf6f6242aef2c61e2b0afe597c67d553fab",
+        "bytes": 13332
+      },
+      {
+        "resref": "WPNF2OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF2OIN-Q3m-X2.registry",
+        "sha256": "d23d2eba9a3a0dabc6b5143505eb85e3ba03b628c4ae7a099639ebfc9a704bdc",
+        "bytes": 27444
+      },
+      {
+        "resref": "WPNF3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF3INV-Q3m-X2.registry",
+        "sha256": "d504daf3475105d4e9dbee56ea62faf8bff480bcf7633f579f864d9dae6090e9",
+        "bytes": 19068
+      },
+      {
+        "resref": "WPNF3OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNF3OIN-Q3m-X2.registry",
+        "sha256": "6329945a0e6abcdd23242951c9355a65514f6ee667086d843aab7d022b7db3a9",
+        "bytes": 19548
+      },
+      {
+        "resref": "WPNFLINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNFLINV-Q3m-X2.registry",
+        "sha256": "3876eed11c3bc0b60f832a8a288d1ec6fdc1e41da6df9705357f35119d35e497",
+        "bytes": 16556
+      },
+      {
+        "resref": "WPNFLOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNFLOIN-Q3m-X2.registry",
+        "sha256": "23664aba67cce26992a7802213c9208ecb71ffa3604083e11bdfb35d96c9dd89",
+        "bytes": 18396
+      },
+      {
+        "resref": "WPNFSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNFSINV-Q3m-X2.registry",
+        "sha256": "70024dbf346f149739bfb201d6cdfe9373a899c530cceec157d6535025bd70f1",
+        "bytes": 23068
+      },
+      {
+        "resref": "WPNFSOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNFSOIN-Q3m-X2.registry",
+        "sha256": "dd30d2ebdd2bc0f383c23f5c87d0d15ced98c16bc2dc295fc34e6932406acac3",
+        "bytes": 20124
+      },
+      {
+        "resref": "WPNGSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNGSINV-Q3m-X2.registry",
+        "sha256": "d55401ebaaee1a93b7ad37df942f62955fe91b9505f5ccc975da3e54bbba1197",
+        "bytes": 22972
+      },
+      {
+        "resref": "WPNH0INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNH0INV-Q3m-X2.registry",
+        "sha256": "00ac0819140795431ebb534346a84aa15c31e7b6d3e442305048da952dc4d453",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNH1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNH1INV-Q3m-X2.registry",
+        "sha256": "2afb115f48e41532ad334e92010ae35b956b54003943dd5e8082ed8ef46c5cbb",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNH2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNH2INV-Q3m-X2.registry",
+        "sha256": "e26dda8dad949e04f4608987da1fcc8f6897fc39ee462de3cc9620e9241bc7ce",
+        "bytes": 14204
+      },
+      {
+        "resref": "WPNH5INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNH5INV-Q3m-X2.registry",
+        "sha256": "000f345f6400de5bda85153854cb7cb01674b93e1e166935b3bd4f9b4ed0aeb9",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNHBINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNHBINV-Q3m-X2.registry",
+        "sha256": "146afccc97f65ec2ef3a97a4f9e9d1cc109487bc84f69baf8606afb60595c6a8",
+        "bytes": 25892
+      },
+      {
+        "resref": "WPNJ0INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ0INV-Q3m-X2.registry",
+        "sha256": "a4fc46bf5becb7e26c76f7e24e507cb8522fb1a4e8faac364107ab7434bfc481",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ1INV-Q3m-X2.registry",
+        "sha256": "184827afc44b85e313d3b50ec7b72f8807853395b5010b2a2144e0f251d305b2",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ2INV-Q3m-X2.registry",
+        "sha256": "5eb95c3a5a819ea2e559d3a32c0076696f45629e38aba86ce0fa648fb4b0891e",
+        "bytes": 14204
+      },
+      {
+        "resref": "WPNJ3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ3INV-Q3m-X2.registry",
+        "sha256": "8d98621511a1c4979820d10dc2ae050d256b1de804ec8cc163536f7a52bbb734",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ4INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ4INV-Q3m-X2.registry",
+        "sha256": "7f37b44ea99c8f25367796445a4c70f33c13615f4cb63ef65c9417b4c089df71",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ5INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ5INV-Q3m-X2.registry",
+        "sha256": "a4f1d719fbcb5e6247f8834940595cfa286e8d9b8167cb55d7e0b459299e22f3",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ6INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ6INV-Q3m-X2.registry",
+        "sha256": "1b9bbaf3b278effff043b5750bb46785b5519b0039637afa028883d4bac43e5b",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJ7INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ7INV-Q3m-X2.registry",
+        "sha256": "1fd58e19f5b34b032bc1bf16aaf3f9273ea8538d69f30fb5cf7c93ecb31d4cff",
+        "bytes": 14924
+      },
+      {
+        "resref": "WPNJ8INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ8INV-Q3m-X2.registry",
+        "sha256": "ce4f765f8ea6bf89b877753d56f347d1c40474d59d289410e81b2e1a2bca86e3",
+        "bytes": 15156
+      },
+      {
+        "resref": "WPNJ9INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJ9INV-Q3m-X2.registry",
+        "sha256": "d9b05b2f57d0ff92f74db7184433d6db2fe024f8d8c448ab6132b1a27c99c3da",
+        "bytes": 12764
+      },
+      {
+        "resref": "WPNJAINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJAINV-Q3m-X2.registry",
+        "sha256": "faa69865054815b8f680900ea55cc5118ffd9420bc2a735b0942ae76cff27be3",
+        "bytes": 18380
+      },
+      {
+        "resref": "WPNJBINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJBINV-Q3m-X2.registry",
+        "sha256": "c0584d4da489c8123609ee47cb9e17d1d157b4e281fb5ab032388f93d9e600a1",
+        "bytes": 61724
+      },
+      {
+        "resref": "WPNJCINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNJCINV-Q3m-X2.registry",
+        "sha256": "8aa6814a1cdb495245d9d215c8904f4beb7c49e971bbc8719bd6aef16956bbcf",
+        "bytes": 17316
+      },
+      {
+        "resref": "WPNM2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNM2INV-Q3m-X2.registry",
+        "sha256": "7e425baf5eb2d3d0d8c573a3b29f76072f3d3e2f3b287e33a5a5b0bebf7acd61",
+        "bytes": 13012
+      },
+      {
+        "resref": "WPNM2OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNM2OIN-Q3m-X2.registry",
+        "sha256": "3eeb78b6cc17f2dd23b57b125b887274ae5b705a22a6510c0f4255ec41212184",
+        "bytes": 11484
+      },
+      {
+        "resref": "WPNMCINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNMCINV-Q3m-X2.registry",
+        "sha256": "03edaa57c6bd699df6727210eb09dfdb0edcc6154fec29480a5abb12bc1def02",
+        "bytes": 9284
+      },
+      {
+        "resref": "WPNMCOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNMCOIN-Q3m-X2.registry",
+        "sha256": "434643f0e5eeaa356282dd3803ba3593549c34e73870c2a18e2f824157e19c7e",
+        "bytes": 8284
+      },
+      {
+        "resref": "WPNMSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNMSINV-Q3m-X2.registry",
+        "sha256": "672462d13352538d906f0c127007f0611722da96e4563464729891da1b94685f",
+        "bytes": 12044
+      },
+      {
+        "resref": "WPNMSOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNMSOIN-Q3m-X2.registry",
+        "sha256": "596ff1ad1e6e7c17074b56e70afa1e8416bf3c4b8cfdd8ce11d24d3355d9f9e9",
+        "bytes": 11580
+      },
+      {
+        "resref": "WPNQ2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNQ2INV-Q3m-X2.registry",
+        "sha256": "5eb5778830129acb5d09cde4cb459c8461ab5ed6b68ee819ed87a45d1a79d8e1",
+        "bytes": 17828
+      },
+      {
+        "resref": "WPNQ3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNQ3INV-Q3m-X2.registry",
+        "sha256": "9b046f4e2cd440f42e34b686dace8aec2f87cc0f1111fad726e6569c1979ab44",
+        "bytes": 31052
+      },
+      {
+        "resref": "WPNQ4INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNQ4INV-Q3m-X2.registry",
+        "sha256": "5ca6baaa8abe24d9da8874d1c55401c9572bf381d5797224a320eb997b9a53b6",
+        "bytes": 28148
+      },
+      {
+        "resref": "WPNQSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNQSINV-Q3m-X2.registry",
+        "sha256": "0ffe8eb9ef7b6d4dd1a2a1c664b16cd2ff797e143bdc9bd822c66c4571353a9a",
+        "bytes": 16068
+      },
+      {
+        "resref": "WPNS0INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS0INV-Q3m-X2.registry",
+        "sha256": "297befb5379e4fad7d5c10d323724765df109d4f1def75d36fa3c4b219bdbaa7",
+        "bytes": 17900
+      },
+      {
+        "resref": "WPNS0OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS0OIN-Q3m-X2.registry",
+        "sha256": "3e7811acc89e8932e8c5ccb12e2330b3cdf0918ec2c4ecf38e6a454aee5aa12c",
+        "bytes": 15460
+      },
+      {
+        "resref": "WPNS1INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS1INV-Q3m-X2.registry",
+        "sha256": "753b155a1e0b529f33cb669ea3bd1b2532db9f338febcf9150b1133366b4bca4",
+        "bytes": 17044
+      },
+      {
+        "resref": "WPNS1OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS1OIN-Q3m-X2.registry",
+        "sha256": "390190809ba21ee2ac08f500584b1b766dd15c6f1d6c12f022064b9d7f7f0dab",
+        "bytes": 16628
+      },
+      {
+        "resref": "WPNS2INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS2INV-Q3m-X2.registry",
+        "sha256": "5425024526e93e5a9f2fe2ddc4d8ec964e59e96a88cb4640864a81f27b4048aa",
+        "bytes": 15660
+      },
+      {
+        "resref": "WPNS3INV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS3INV-Q3m-X2.registry",
+        "sha256": "fb6af20047c525c9cc76203f81c14d3ffdb909f676c85ccfefa13c583787dafe",
+        "bytes": 15484
+      },
+      {
+        "resref": "WPNS3OIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNS3OIN-Q3m-X2.registry",
+        "sha256": "005916baa94de909570e1cdf60be1f5d1cd62d289b8f6d92aaf343146800bfac",
+        "bytes": 19220
+      },
+      {
+        "resref": "WPNSCINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSCINV-Q3m-X2.registry",
+        "sha256": "7d0f6a793babf023f89ad32a5772850e514ebc7b65073b4bc8ca3d0e4c8a01a4",
+        "bytes": 17764
+      },
+      {
+        "resref": "WPNSCOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSCOIN-Q3m-X2.registry",
+        "sha256": "ca1392597aba3456239c8badc4cefc44dd06abb72343ca61cc4626c55e479c1c",
+        "bytes": 10876
+      },
+      {
+        "resref": "WPNSLINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSLINV-Q3m-X2.registry",
+        "sha256": "adea0ba759730f0d3ad3348a24bc0bf98dd700f296a7ee846d2badf8b0905b2c",
+        "bytes": 6820
+      },
+      {
+        "resref": "WPNSPINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSPINV-Q3m-X2.registry",
+        "sha256": "4e745928cd91695f8e993e8565a5ee6ff77b79f120ec021ebf3c85f958d45984",
+        "bytes": 14908
+      },
+      {
+        "resref": "WPNSSINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSSINV-Q3m-X2.registry",
+        "sha256": "b5b5d4fa570cd7ce0a3a46b42dfa19597eeecabc46775b80ba7a0c1dc201e865",
+        "bytes": 10692
+      },
+      {
+        "resref": "WPNSSOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNSSOIN-Q3m-X2.registry",
+        "sha256": "f9c2219e787c0a7ddb160490c4fc868c987331672d2c2db212be0aca9a2511d9",
+        "bytes": 7156
+      },
+      {
+        "resref": "WPNWHINV",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNWHINV-Q3m-X2.registry",
+        "sha256": "3462914a8cb7ec3914e029380fe68f78411eeac2490cf8b605432f1fd69b8b43",
+        "bytes": 15828
+      },
+      {
+        "resref": "WPNWHOIN",
+        "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/work/packs/WPNWHOIN-Q3m-X2.registry",
+        "sha256": "f8f562ac4d5bcc049f39bbf34f0b9d4b889c0b27c91e76784a100561f4f15e7b",
+        "bytes": 19020
+      }
+    ]
+  },
+  "automatic_evidence": {
+    "loaded_resource_count": 81,
+    "observed_resources": [
+      "CHFF1INV",
+      "CHFF4INV",
+      "WPNC0INV",
+      "WPNC2INV",
+      "WPNFSINV",
+      "WPNJ8INV",
+      "WPNMCINV"
+    ],
+    "draws": [
+      {
+        "resref": "CHFF4INV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "29CF9642",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNFSINV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "D049083F",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNJ8INV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "DEA308CB",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNC0INV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "D843DBF3",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "CHFF4INV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "C8F72B8E",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNFSINV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "8D4D78AA",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNJ8INV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "ECBB4B55",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNC0INV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "D1FED463",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "CHFF1INV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "E6444EE6",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "CHFF1INV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "013BF0F0",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNMCINV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "87AF5FFB",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNMCINV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "610430C5",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNC2INV",
+        "slot": 0,
+        "frame": 0,
+        "bound": true,
+        "pixel_crc32": "978AF446",
+        "independent_crc_match": true
+      },
+      {
+        "resref": "WPNC2INV",
+        "slot": 2,
+        "frame": 1,
+        "bound": true,
+        "pixel_crc32": "ACE56C63",
+        "independent_crc_match": true
+      }
+    ],
+    "evidence_file": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-full-ui-20261002-v1/runtime-evidence-qa-20261002-v1.txt",
+    "evidence_sha256": "b789a3d8257b51ac4c76971bd0b09ce31492f408422804e7591d92db2caf4613",
+    "source_log_sha256": "ec367e919b85a42124e4ddece9ab9526761e0c90b068dfd00e5ba7ef9b8bad70",
+    "coverage": "Seven observed resources / fourteen draws; no exhaustive per-appearance or palette coverage inferred."
+  },
+  "world_contract": {
+    "scale": 2,
+    "filter": "Box",
+    "catalog_changed": false,
+    "shaders_changed": false
+  },
+  "release_manifest_modified": false
+}
