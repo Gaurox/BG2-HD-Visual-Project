@@ -1,0 +1,748 @@
+{
+  "schema": "bg2-human-half-orc-q3m-selection-v1",
+  "status": "planned-not-produced",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "source_plan": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25"
+  },
+  "namespace": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "cache": "sprite/.work/palette-q3m-shared/x2/15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "animations": [
+    {
+      "animation_id": "0x5000",
+      "symbol": "CLERIC_MALE_HUMAN_LOW",
+      "resref": "CHMB",
+      "paperdoll": "CHMC",
+      "stats": {
+        "animation_id": "0x5000",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417380352,
+        "logical_native_pixels": 241368431,
+        "resources": 656,
+        "strict_full_palette_work_items": 95414,
+        "symbol": "CLERIC_MALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 296911872,
+        "unique_model_work_items": 95247,
+        "unique_work_items": 95316
+      },
+      "cached_state": {
+        "unique_work": 95316,
+        "cached": 95316
+      }
+    },
+    {
+      "animation_id": "0x5010",
+      "symbol": "CLERIC_FEMALE_HUMAN_LOW",
+      "resref": "CHFB",
+      "paperdoll": "CHFC",
+      "stats": {
+        "animation_id": "0x5010",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405803008,
+        "logical_native_pixels": 236847339,
+        "resources": 656,
+        "strict_full_palette_work_items": 94074,
+        "symbol": "CLERIC_FEMALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 285225984,
+        "unique_model_work_items": 93843,
+        "unique_work_items": 93923
+      },
+      "cached_state": {
+        "unique_work": 93923,
+        "cached": 93923
+      }
+    },
+    {
+      "animation_id": "0x5100",
+      "symbol": "FIGHTER_MALE_HUMAN_LOW",
+      "resref": "CHMB",
+      "paperdoll": "CHMF",
+      "stats": {
+        "animation_id": "0x5100",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417571840,
+        "logical_native_pixels": 241510985,
+        "resources": 656,
+        "strict_full_palette_work_items": 95222,
+        "symbol": "FIGHTER_MALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 296663040,
+        "unique_model_work_items": 95055,
+        "unique_work_items": 95124
+      },
+      "cached_state": {
+        "unique_work": 95124,
+        "cached": 95124
+      }
+    },
+    {
+      "animation_id": "0x5110",
+      "symbol": "FIGHTER_FEMALE_HUMAN_LOW",
+      "resref": "CHFB",
+      "paperdoll": "CHFF",
+      "stats": {
+        "animation_id": "0x5110",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405878784,
+        "logical_native_pixels": 236899888,
+        "resources": 656,
+        "strict_full_palette_work_items": 94099,
+        "symbol": "FIGHTER_FEMALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 285352960,
+        "unique_model_work_items": 93868,
+        "unique_work_items": 93948
+      },
+      "cached_state": {
+        "unique_work": 93948,
+        "cached": 91277,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x5200",
+      "symbol": "MAGE_MALE_HUMAN_LOW",
+      "resref": "CHMW",
+      "paperdoll": "CHMW",
+      "stats": {
+        "animation_id": "0x5200",
+        "logical_frames": 180337,
+        "logical_model_frames": 148283,
+        "logical_model_q32_pixels": 425597952,
+        "logical_native_pixels": 246709320,
+        "resources": 656,
+        "strict_full_palette_work_items": 94866,
+        "symbol": "MAGE_MALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 304179200,
+        "unique_model_work_items": 94703,
+        "unique_work_items": 94772
+      },
+      "cached_state": {
+        "unique_work": 94772,
+        "cached": 85255,
+        "new_gpu": 9517
+      }
+    },
+    {
+      "animation_id": "0x5210",
+      "symbol": "MAGE_FEMALE_HUMAN_LOW",
+      "resref": "CHFW",
+      "paperdoll": "CHFW",
+      "stats": {
+        "animation_id": "0x5210",
+        "logical_frames": 178359,
+        "logical_model_frames": 147737,
+        "logical_model_q32_pixels": 414350336,
+        "logical_native_pixels": 242816793,
+        "resources": 656,
+        "strict_full_palette_work_items": 93729,
+        "symbol": "MAGE_FEMALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 293278720,
+        "unique_model_work_items": 93563,
+        "unique_work_items": 93643
+      },
+      "cached_state": {
+        "unique_work": 93643,
+        "cached": 83425,
+        "new_gpu": 10218
+      }
+    },
+    {
+      "animation_id": "0x5300",
+      "symbol": "THIEF_MALE_HUMAN_LOW",
+      "resref": "CHMT",
+      "paperdoll": "CHMT",
+      "stats": {
+        "animation_id": "0x5300",
+        "logical_frames": 180337,
+        "logical_model_frames": 156983,
+        "logical_model_q32_pixels": 425243648,
+        "logical_native_pixels": 241481553,
+        "resources": 656,
+        "strict_full_palette_work_items": 95044,
+        "symbol": "THIEF_MALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 296476672,
+        "unique_model_work_items": 94876,
+        "unique_work_items": 94945
+      },
+      "cached_state": {
+        "unique_work": 94945,
+        "cached": 87577,
+        "new_gpu": 7368
+      }
+    },
+    {
+      "animation_id": "0x5310",
+      "symbol": "THIEF_FEMALE_HUMAN_LOW",
+      "resref": "CHFT",
+      "paperdoll": "CHFT",
+      "stats": {
+        "animation_id": "0x5310",
+        "logical_frames": 178359,
+        "logical_model_frames": 159609,
+        "logical_model_q32_pixels": 417952768,
+        "logical_native_pixels": 237289073,
+        "resources": 656,
+        "strict_full_palette_work_items": 93575,
+        "symbol": "THIEF_FEMALE_HUMAN_LOW",
+        "unique_model_q32_pixels": 284820480,
+        "unique_model_work_items": 93434,
+        "unique_work_items": 93514
+      },
+      "cached_state": {
+        "unique_work": 93514,
+        "cached": 83425,
+        "new_gpu": 7418,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x6000",
+      "symbol": "CLERIC_MALE_HUMAN",
+      "resref": "CHMB",
+      "paperdoll": "CHMC",
+      "stats": {
+        "animation_id": "0x6000",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417380352,
+        "logical_native_pixels": 241368431,
+        "resources": 656,
+        "strict_full_palette_work_items": 95414,
+        "symbol": "CLERIC_MALE_HUMAN",
+        "unique_model_q32_pixels": 296911872,
+        "unique_model_work_items": 95247,
+        "unique_work_items": 95316
+      },
+      "cached_state": {
+        "unique_work": 95316,
+        "cached": 95316
+      }
+    },
+    {
+      "animation_id": "0x6005",
+      "symbol": "CLERIC_MALE_HALFORC",
+      "resref": "CHMB",
+      "paperdoll": "COMC",
+      "stats": {
+        "animation_id": "0x6005",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417380352,
+        "logical_native_pixels": 241368431,
+        "resources": 656,
+        "strict_full_palette_work_items": 95414,
+        "symbol": "CLERIC_MALE_HALFORC",
+        "unique_model_q32_pixels": 296911872,
+        "unique_model_work_items": 95247,
+        "unique_work_items": 95316
+      },
+      "cached_state": {
+        "unique_work": 95316,
+        "cached": 95316
+      }
+    },
+    {
+      "animation_id": "0x6010",
+      "symbol": "CLERIC_FEMALE_HUMAN",
+      "resref": "CHFB",
+      "paperdoll": "CHFC",
+      "stats": {
+        "animation_id": "0x6010",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405803008,
+        "logical_native_pixels": 236847339,
+        "resources": 656,
+        "strict_full_palette_work_items": 94074,
+        "symbol": "CLERIC_FEMALE_HUMAN",
+        "unique_model_q32_pixels": 285225984,
+        "unique_model_work_items": 93843,
+        "unique_work_items": 93923
+      },
+      "cached_state": {
+        "unique_work": 93923,
+        "cached": 93923
+      }
+    },
+    {
+      "animation_id": "0x6015",
+      "symbol": "CLERIC_FEMALE_HALFORC",
+      "resref": "CHFB",
+      "paperdoll": "COFC",
+      "stats": {
+        "animation_id": "0x6015",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405803008,
+        "logical_native_pixels": 236847339,
+        "resources": 656,
+        "strict_full_palette_work_items": 94074,
+        "symbol": "CLERIC_FEMALE_HALFORC",
+        "unique_model_q32_pixels": 285225984,
+        "unique_model_work_items": 93843,
+        "unique_work_items": 93923
+      },
+      "cached_state": {
+        "unique_work": 93923,
+        "cached": 93923
+      }
+    },
+    {
+      "animation_id": "0x6100",
+      "symbol": "FIGHTER_MALE_HUMAN",
+      "resref": "CHMB",
+      "paperdoll": "CHMF",
+      "stats": {
+        "animation_id": "0x6100",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417571840,
+        "logical_native_pixels": 241510985,
+        "resources": 656,
+        "strict_full_palette_work_items": 95222,
+        "symbol": "FIGHTER_MALE_HUMAN",
+        "unique_model_q32_pixels": 296663040,
+        "unique_model_work_items": 95055,
+        "unique_work_items": 95124
+      },
+      "cached_state": {
+        "unique_work": 95124,
+        "cached": 95124
+      }
+    },
+    {
+      "animation_id": "0x6105",
+      "symbol": "FIGHTER_MALE_HALFORC",
+      "resref": "CHMB",
+      "paperdoll": "COMF",
+      "stats": {
+        "animation_id": "0x6105",
+        "logical_frames": 180337,
+        "logical_model_frames": 149819,
+        "logical_model_q32_pixels": 417571840,
+        "logical_native_pixels": 241510985,
+        "resources": 656,
+        "strict_full_palette_work_items": 95222,
+        "symbol": "FIGHTER_MALE_HALFORC",
+        "unique_model_q32_pixels": 296663040,
+        "unique_model_work_items": 95055,
+        "unique_work_items": 95124
+      },
+      "cached_state": {
+        "unique_work": 95124,
+        "cached": 95124
+      }
+    },
+    {
+      "animation_id": "0x6110",
+      "symbol": "FIGHTER_FEMALE_HUMAN",
+      "resref": "CHFB",
+      "paperdoll": "CHFF",
+      "stats": {
+        "animation_id": "0x6110",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405878784,
+        "logical_native_pixels": 236899888,
+        "resources": 656,
+        "strict_full_palette_work_items": 94099,
+        "symbol": "FIGHTER_FEMALE_HUMAN",
+        "unique_model_q32_pixels": 285352960,
+        "unique_model_work_items": 93868,
+        "unique_work_items": 93948
+      },
+      "cached_state": {
+        "unique_work": 93948,
+        "cached": 91277,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x6115",
+      "symbol": "FIGHTER_FEMALE_HALFORC",
+      "resref": "CHFB",
+      "paperdoll": "COFF",
+      "stats": {
+        "animation_id": "0x6115",
+        "logical_frames": 178360,
+        "logical_model_frames": 148485,
+        "logical_model_q32_pixels": 405878784,
+        "logical_native_pixels": 236899888,
+        "resources": 656,
+        "strict_full_palette_work_items": 94099,
+        "symbol": "FIGHTER_FEMALE_HALFORC",
+        "unique_model_q32_pixels": 285352960,
+        "unique_model_work_items": 93868,
+        "unique_work_items": 93948
+      },
+      "cached_state": {
+        "unique_work": 93948,
+        "cached": 91277,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x6200",
+      "symbol": "MAGE_MALE_HUMAN",
+      "resref": "CHMW",
+      "paperdoll": "CHMW",
+      "stats": {
+        "animation_id": "0x6200",
+        "logical_frames": 180337,
+        "logical_model_frames": 148283,
+        "logical_model_q32_pixels": 425597952,
+        "logical_native_pixels": 246709320,
+        "resources": 656,
+        "strict_full_palette_work_items": 94866,
+        "symbol": "MAGE_MALE_HUMAN",
+        "unique_model_q32_pixels": 304179200,
+        "unique_model_work_items": 94703,
+        "unique_work_items": 94772
+      },
+      "cached_state": {
+        "unique_work": 94772,
+        "cached": 85255,
+        "new_gpu": 9517
+      }
+    },
+    {
+      "animation_id": "0x6205",
+      "symbol": "MAGE_MALE_HALFORC",
+      "resref": "CHMW",
+      "paperdoll": "COMW",
+      "stats": {
+        "animation_id": "0x6205",
+        "logical_frames": 180337,
+        "logical_model_frames": 148283,
+        "logical_model_q32_pixels": 425597952,
+        "logical_native_pixels": 246709320,
+        "resources": 656,
+        "strict_full_palette_work_items": 94866,
+        "symbol": "MAGE_MALE_HALFORC",
+        "unique_model_q32_pixels": 304179200,
+        "unique_model_work_items": 94703,
+        "unique_work_items": 94772
+      },
+      "cached_state": {
+        "unique_work": 94772,
+        "cached": 85255,
+        "new_gpu": 9517
+      }
+    },
+    {
+      "animation_id": "0x6210",
+      "symbol": "MAGE_FEMALE_HUMAN",
+      "resref": "CHFW",
+      "paperdoll": "CHFW",
+      "stats": {
+        "animation_id": "0x6210",
+        "logical_frames": 178359,
+        "logical_model_frames": 147737,
+        "logical_model_q32_pixels": 414350336,
+        "logical_native_pixels": 242816793,
+        "resources": 656,
+        "strict_full_palette_work_items": 93729,
+        "symbol": "MAGE_FEMALE_HUMAN",
+        "unique_model_q32_pixels": 293278720,
+        "unique_model_work_items": 93563,
+        "unique_work_items": 93643
+      },
+      "cached_state": {
+        "unique_work": 93643,
+        "cached": 83425,
+        "new_gpu": 10218
+      }
+    },
+    {
+      "animation_id": "0x6215",
+      "symbol": "MAGE_FEMALE_HALFORC",
+      "resref": "CHFW",
+      "paperdoll": "COFW",
+      "stats": {
+        "animation_id": "0x6215",
+        "logical_frames": 178359,
+        "logical_model_frames": 147737,
+        "logical_model_q32_pixels": 414350336,
+        "logical_native_pixels": 242816793,
+        "resources": 656,
+        "strict_full_palette_work_items": 93729,
+        "symbol": "MAGE_FEMALE_HALFORC",
+        "unique_model_q32_pixels": 293278720,
+        "unique_model_work_items": 93563,
+        "unique_work_items": 93643
+      },
+      "cached_state": {
+        "unique_work": 93643,
+        "cached": 83425,
+        "new_gpu": 10218
+      }
+    },
+    {
+      "animation_id": "0x6300",
+      "symbol": "THIEF_MALE_HUMAN",
+      "resref": "CHMT",
+      "paperdoll": "CHMT",
+      "stats": {
+        "animation_id": "0x6300",
+        "logical_frames": 180337,
+        "logical_model_frames": 156983,
+        "logical_model_q32_pixels": 425243648,
+        "logical_native_pixels": 241481553,
+        "resources": 656,
+        "strict_full_palette_work_items": 95044,
+        "symbol": "THIEF_MALE_HUMAN",
+        "unique_model_q32_pixels": 296476672,
+        "unique_model_work_items": 94876,
+        "unique_work_items": 94945
+      },
+      "cached_state": {
+        "unique_work": 94945,
+        "cached": 87577,
+        "new_gpu": 7368
+      }
+    },
+    {
+      "animation_id": "0x6305",
+      "symbol": "THIEF_MALE_HALFORC",
+      "resref": "CHMT",
+      "paperdoll": "COMT",
+      "stats": {
+        "animation_id": "0x6305",
+        "logical_frames": 180337,
+        "logical_model_frames": 156983,
+        "logical_model_q32_pixels": 425243648,
+        "logical_native_pixels": 241481553,
+        "resources": 656,
+        "strict_full_palette_work_items": 95044,
+        "symbol": "THIEF_MALE_HALFORC",
+        "unique_model_q32_pixels": 296476672,
+        "unique_model_work_items": 94876,
+        "unique_work_items": 94945
+      },
+      "cached_state": {
+        "unique_work": 94945,
+        "cached": 87577,
+        "new_gpu": 7368
+      }
+    },
+    {
+      "animation_id": "0x6310",
+      "symbol": "THIEF_FEMALE_HUMAN",
+      "resref": "CHFT",
+      "paperdoll": "CHFT",
+      "stats": {
+        "animation_id": "0x6310",
+        "logical_frames": 178359,
+        "logical_model_frames": 159609,
+        "logical_model_q32_pixels": 417952768,
+        "logical_native_pixels": 237289073,
+        "resources": 656,
+        "strict_full_palette_work_items": 93575,
+        "symbol": "THIEF_FEMALE_HUMAN",
+        "unique_model_q32_pixels": 284820480,
+        "unique_model_work_items": 93434,
+        "unique_work_items": 93514
+      },
+      "cached_state": {
+        "unique_work": 93514,
+        "cached": 83425,
+        "new_gpu": 7418,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x6315",
+      "symbol": "THIEF_FEMALE_HALFORC",
+      "resref": "CHFT",
+      "paperdoll": "COFT",
+      "stats": {
+        "animation_id": "0x6315",
+        "logical_frames": 178359,
+        "logical_model_frames": 159609,
+        "logical_model_q32_pixels": 417952768,
+        "logical_native_pixels": 237289073,
+        "resources": 656,
+        "strict_full_palette_work_items": 93575,
+        "symbol": "THIEF_FEMALE_HALFORC",
+        "unique_model_q32_pixels": 284820480,
+        "unique_model_work_items": 93434,
+        "unique_work_items": 93514
+      },
+      "cached_state": {
+        "unique_work": 93514,
+        "cached": 83425,
+        "new_gpu": 7418,
+        "reuse_verified_female_seed": 2671
+      }
+    },
+    {
+      "animation_id": "0x6500",
+      "symbol": "MONK_MALE_HUMAN",
+      "resref": "CHMM",
+      "paperdoll": "CHMM",
+      "stats": {
+        "animation_id": "0x6500",
+        "logical_frames": 149377,
+        "logical_model_frames": 140099,
+        "logical_model_q32_pixels": 391301120,
+        "logical_native_pixels": 226176800,
+        "resources": 587,
+        "strict_full_palette_work_items": 87687,
+        "symbol": "MONK_MALE_HUMAN",
+        "unique_model_q32_pixels": 273780736,
+        "unique_model_work_items": 87524,
+        "unique_work_items": 87593
+      },
+      "cached_state": {
+        "unique_work": 87593,
+        "cached": 85255,
+        "new_gpu": 2338
+      }
+    },
+    {
+      "animation_id": "0x6510",
+      "symbol": "MONK_FEMALE_HUMAN",
+      "resref": "CHFM",
+      "paperdoll": "CHFM",
+      "stats": {
+        "animation_id": "0x6510",
+        "logical_frames": 147398,
+        "logical_model_frames": 137935,
+        "logical_model_q32_pixels": 379115520,
+        "logical_native_pixels": 222039554,
+        "resources": 587,
+        "strict_full_palette_work_items": 86200,
+        "symbol": "MONK_FEMALE_HUMAN",
+        "unique_model_q32_pixels": 262149120,
+        "unique_model_work_items": 86062,
+        "unique_work_items": 86142
+      },
+      "cached_state": {
+        "unique_work": 86142,
+        "cached": 83424,
+        "new_gpu": 2718
+      }
+    }
+  ],
+  "exact_world_aliases": [
+    {
+      "animation": "0x5000",
+      "same_world_resources_as": "0x6000"
+    },
+    {
+      "animation": "0x5010",
+      "same_world_resources_as": "0x6010"
+    },
+    {
+      "animation": "0x5100",
+      "same_world_resources_as": "0x6100"
+    },
+    {
+      "animation": "0x5110",
+      "same_world_resources_as": "0x6110"
+    },
+    {
+      "animation": "0x5200",
+      "same_world_resources_as": "0x6200"
+    },
+    {
+      "animation": "0x5210",
+      "same_world_resources_as": "0x6210"
+    },
+    {
+      "animation": "0x5300",
+      "same_world_resources_as": "0x6300"
+    },
+    {
+      "animation": "0x5310",
+      "same_world_resources_as": "0x6310"
+    },
+    {
+      "animation": "0x6005",
+      "same_world_resources_as": "0x6000"
+    },
+    {
+      "animation": "0x6015",
+      "same_world_resources_as": "0x6010"
+    },
+    {
+      "animation": "0x6105",
+      "same_world_resources_as": "0x6100"
+    },
+    {
+      "animation": "0x6115",
+      "same_world_resources_as": "0x6110"
+    },
+    {
+      "animation": "0x6205",
+      "same_world_resources_as": "0x6200"
+    },
+    {
+      "animation": "0x6215",
+      "same_world_resources_as": "0x6210"
+    },
+    {
+      "animation": "0x6305",
+      "same_world_resources_as": "0x6300"
+    },
+    {
+      "animation": "0x6315",
+      "same_world_resources_as": "0x6310"
+    }
+  ],
+  "resources": 1772,
+  "counts": {
+    "unique_work": 232780,
+    "cached": 190532,
+    "shared_between_selected_models": 227724,
+    "sum_model_unique_work": 2439290,
+    "new_gpu": 39577,
+    "reuse_verified_female_seed": 2671,
+    "cross_model_repeat_work_avoided": 2206510
+  },
+  "logical_frames": 4601133,
+  "work_list": {
+    "path": "sprite/.work/q3m-human-half-orc-x2-20261002-v1/work-list.csv",
+    "sha256": "2dd7a0842d90493b9c401108f0410270b1015897ee46fe5a33c23ae4cc8c4231"
+  },
+  "frame_correspondence": "existing SQLite frame_map; filter by selected animation IDs",
+  "excluded_legacy_humans": [
+    {
+      "animation_id": "0x4200",
+      "symbol": "STATIC_HUMANCLERIC_MAN_CHAIR",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    },
+    {
+      "animation_id": "0x4400",
+      "symbol": "SLEEPING_MAN_HUMAN",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    },
+    {
+      "animation_id": "0x4410",
+      "symbol": "SLEEPING_WOMAN_HUMAN",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    },
+    {
+      "animation_id": "0x4500",
+      "symbol": "SLEEPING_FAT_MAN_HUMAN",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    },
+    {
+      "animation_id": "0x6621",
+      "symbol": "FIGHTER_FEMALE_HUMAN_BG1",
+      "section": "character_old",
+      "reason": "outside existing Character profile"
+    }
+  ],
+  "inventory": "separate UI pipeline, excluded"
+}
