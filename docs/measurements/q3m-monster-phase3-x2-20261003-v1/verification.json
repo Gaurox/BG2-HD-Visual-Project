@@ -1,0 +1,94 @@
+{
+  "schema": "bg2-monster-q3m-phase3-implementation-verification-v1",
+  "status": "targeted-host-verified-not-produced-or-installed",
+  "completed_at_utc": "2026-10-02T23:17:28.664567+00:00",
+  "inputs": {
+    "contract_sha256": "a97f9d01f532017303e294ff3ece17a327d4574ae67fa24f6cac4cece95a3baf",
+    "source_plan_sha256": "a7f13d75d5097bbd8e4c54524a463a33a66492357787aee951be9c8c1ed0e72f"
+  },
+  "python_tests": {
+    "monster": 6,
+    "existing_shared_writer": 11,
+    "status": "passed",
+    "inference": "CPU stub; CUDA not initialized",
+    "cache": "temporary fixtures only"
+  },
+  "native_tests": {
+    "accepted": 18,
+    "rejected": 10,
+    "decoded_pixels": 985608,
+    "profiles": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "palettes_per_case": 9,
+    "native_encodings": 3,
+    "mixed_character_monster": true,
+    "character_primary_alpha_preserved": true,
+    "live_alpha_mismatch_rejected": true,
+    "status": "passed"
+  },
+  "build": {
+    "status": "passed",
+    "targets": [
+      "iee_palette_monster_tests",
+      "InfinityEngine-Enhancer"
+    ],
+    "configuration": "Release",
+    "generator": "Visual Studio 16 2019",
+    "compiler": "MSVC 19.29.30158",
+    "build_directory": ".work/q3m-monster-phase3-20261003-v1/build",
+    "dependencies": "existing local spdlog/zlib/MinHook sources",
+    "log": ".work/q3m-monster-phase3-20261003-v1/build-attempt3.log",
+    "candidate": {
+      "path": ".work/q3m-monster-phase3-20261003-v1/candidate/InfinityEngine-Enhancer.dll",
+      "sha256": "ade49a32a4685e490e773843519fd5f221b79aaffda10cbac02b56d94d4f6759",
+      "bytes": 2064384
+    }
+  },
+  "native_tables_sha256": "473e86fb83b9205490f28cb09067345f31b6cbbea810a03a3c0d903d4ea2cdb3",
+  "source_sha256": {
+    "engine/InfinityEngine-Enhancer/source-patchee/CMakeLists.txt": "b11e79a09d5a50be976e0c36341c2a55fc393e06de7e5bb29959e8b57c1b2adc",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/monster_palette_profiles.h": "473e86fb83b9205490f28cb09067345f31b6cbbea810a03a3c0d903d4ea2cdb3",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_fraction.h": "33dc9aae5cda983d78d7aa44044eb56e8568804edc8be214cac47f86593a1ae3",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp": "2168237eb7ab944efac7f44edefe9171ac87ee1ef9252583804a0f970d6f860d",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h": "825a240774db7ac579146bea8d0d611db103a47fe46f6891758fe0ec51dec030",
+    "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp": "7af1f36d53c4d6def81970fb9c6f9c7c0e177ff3f581fd4f7af63fd44a7724fa",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_monster_tests.cpp": "c47443ab4245e43c038e5218a47fc9c19b249a9fd7a5bf9ce5f5bbe3aac56474",
+    "pipeline/scripts/palette_monster_contract.py": "a735e506275efe639e29de5c0b00bfe413defdc9f100f95ab725401453a87637",
+    "pipeline/scripts/palette_monster_work_plan.py": "646e9bb896096037f36dfc7a4c810e5719bc7087d002a2725c832ef3c831f7c4",
+    "pipeline/scripts/palette_monster.py": "450f4147ff18ed252bd947343332968964f5efeb71b991809d5ed3cab61f2161",
+    "pipeline/scripts/palette_registry.py": "c9ba7a588dcb2c8eb0801704d4b97a50f964e405149801b2c2933ee0f93cbdd8",
+    "pipeline/scripts/palette_monster_fixtures.py": "0bbbd05294381c6bd72fa3efcf7872779bc38643c6eb35c9a49e67d7a7fb5bf1",
+    "pipeline/scripts/generate_monster_palette_profiles.py": "083c17c6d41bdfa4c6e9c8686ef9f10a77103556d2fb0364a4d34eb73a1760e3",
+    "pipeline/tests/test_palette_monster.py": "53ae9158adcf2a1d807dc15f29c81421beb909345c7b58d24905f207dc371cc2"
+  },
+  "runtime_manifest_sha256": "410096f63b278882b29518cc5886954d9c8b04d5ba1a374eefaaae4b4b6574a0",
+  "pilot": {
+    "resrefs": [
+      "NBOHG1",
+      "NBOHG2"
+    ],
+    "native_frames": 1242,
+    "cycles": 117,
+    "slots": 2331,
+    "model_work": 270,
+    "special_work": 2,
+    "neural_targets": 1620
+  },
+  "state": {
+    "gpu_inference": false,
+    "monster_production": false,
+    "active_cache_changed": false,
+    "active_catalog_changed": false,
+    "installation_changed": false,
+    "historical_artifacts_changed": false,
+    "QA_changed": false,
+    "release_changed": false,
+    "ingame_validated": false
+  }
+}

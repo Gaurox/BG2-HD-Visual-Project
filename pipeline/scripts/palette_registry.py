@@ -1,9 +1,9 @@
-"""IEECSXN V6 Character Q3m shards: checked writer, inspector and logical records.
+"""IEECSXN V6 Character/fixed Monster Q3m shards: writer, inspector and logical records.
 
 LE: registry <8s6I> (32); resource <8s32sII> (48); frame
 <HHhhBBBBI256H32sIB3x> (568), then I and optional F, then existing cycles.
 The three bytes at frame offset9 are I codec, F-present bit0, zero.
-Profile1=character-bg2ee-2.7.3.0; decode1=ramp-lerp-srgb8-v1. No B/packing.
+Profile1/decode1=Character; profiles2..7/decode2=frozen fixed Monster x2. No B/packing.
 """
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ import zlib
 import numpy as np
 
 import run_creature_sprite_x2 as registry
+import palette_frac_encode as character_encoder
 from palette_frac_encode import checked_u8, check_contract, dependency_mask, validate_planes
 
 VERSION = registry.XN_FRACTION_REGISTRY_VERSION
@@ -26,6 +27,26 @@ HEADER_BYTES = 32
 FRAME_BYTES = 568
 FRAME = struct.Struct("<HHhhBBBBI256H32sIB3x")
 assert FRAME.size == FRAME_BYTES
+
+
+def profile_encoder(profile, rule, scale):
+    if (profile, rule) == (1, 1):
+        return character_encoder
+    from palette_monster_contract import get_profile
+    try:
+        _require(scale == 2, "fixed Monster profiles require x2")
+        return get_profile(profile, rule)
+    except ValueError as error:
+        raise RuntimeError(f"V6 unsupported profile/rule: {error}") from error
+
+
+def check_resource_profile(encoder, ref, source):
+    if encoder is character_encoder:
+        return
+    try:
+        encoder.check_resource(ref, source)
+    except ValueError as error:
+        raise RuntimeError(f"V6 {error}") from error
 
 
 def maximum_decoded_shard_bytes(scale):
@@ -73,7 +94,7 @@ def _decode_plane(codec, data, logical, decoder):
     return decoder.decode(data, logical) if codec == 1 else data
 
 
-def _read_frame(stream, scale, read, decoder):
+def _read_frame(stream, scale, read, decoder, encoder=character_encoder):
     header = read(stream, FRAME_BYTES, "frame header")
     width, height, cx, cy, transparent, ic, flags, zero, stored_i = struct.unpack_from("<HHhhBBBBI", header)
     dep = np.frombuffer(header, np.uint8, 32, 528)
@@ -93,8 +114,8 @@ def _read_frame(stream, scale, read, decoder):
     i = np.frombuffer(ip, np.uint8).reshape(height*scale, width*scale)
     f = np.frombuffer(fp, np.uint8).reshape(i.shape) if flags else np.zeros_like(i)
     try:
-        validate_planes(i, f)
-        _require(np.array_equal(dep, dependency_mask(i, f)), "dependency mask is not exact")
+        encoder.validate_planes(i, f)
+        _require(np.array_equal(dep, encoder.dependency_mask(i, f)), "dependency mask is not exact")
     except ValueError as error:
         raise RuntimeError(f"V6 invalid I/F: {error}") from error
     return header, ip, fp, (width, height, cx, cy, transparent), reps.copy()
@@ -124,8 +145,8 @@ def inspect(path: Path, *, include_resource_records=False, include_frames=False)
         magic, version, scale, count, animation, profile, rule = struct.unpack("<8s6I", read(stream, HEADER_BYTES, "header"))
         _require(magic == registry.XN_REGISTRY_MAGIC and version == VERSION and scale in (2,4)
                  and 1 <= count <= registry.MAX_RESOURCES and animation == 0xffff
-                 and (profile,rule) == (CLASS_PROFILE_ID,DECODE_RULE_ID)
                  and size <= registry.maximum_registry_bytes(scale), "unsupported header/profile")
+        encoder = profile_encoder(profile, rule, scale)
         for _ in range(count):
             offset = stream.tell()
             rh = read(stream, 48, "resource")
@@ -133,12 +154,13 @@ def inspect(path: Path, *, include_resource_records=False, include_frames=False)
             _require(re.fullmatch(rb"[A-Z0-9_]{1,8}",ref) and rh[:8] == ref.ljust(8,b"\0"), "invalid resref")
             ref = ref.decode("ascii")
             _require(ref not in resources, "duplicate resref")
+            check_resource_profile(encoder, ref, rh[8:40].hex())
             nf,nc = struct.unpack_from("<II",rh,40)
             _require(1 <= nf <= registry.MAX_FRAMES_PER_RESOURCE and 1 <= nc <= registry.MAX_CYCLES_PER_RESOURCE, "invalid counts")
             logical, resource_i, resource_f = 48,0,0
             frames = []
             for _ in range(nf):
-                h,ip,fp,geometry,reps = _read_frame(stream,scale,read,decoder)
+                h,ip,fp,geometry,reps = _read_frame(stream,scale,read,decoder,encoder)
                 n = len(ip)
                 logical += FRAME_BYTES+n+len(fp)
                 resource_i += n
@@ -191,19 +213,21 @@ def inspect(path: Path, *, include_resource_records=False, include_frames=False)
     return result
 
 
-def write(path: Path, scale: int, resources: list[dict], *, compress=True, retain_zero_f=False):
+def write(path: Path, scale: int, resources: list[dict], *, compress=True, retain_zero_f=False,
+          class_profile_id=CLASS_PROFILE_ID, decode_rule_id=DECODE_RULE_ID):
     """Resources carry full native frames/cycles/source identity, not sampled tables.
 
     Each frame: geometry(w,h,cx,cy,transparent), representatives, I, optional F,
     optional guide/dep. Guide proves semantic classes; absent guide is index-only.
     """
     _require(scale in (2,4) and 1 <= len(resources) <= registry.MAX_RESOURCES,"invalid writer scope")
+    encoder = profile_encoder(class_profile_id, decode_rule_id, scale)
     path = Path(path)
     temporary = path.with_name(path.name+".part")
     _require(not path.exists() and not temporary.exists(),"output already exists")
     try:
         with temporary.open("xb") as stream, _Codec(compress=True) as codec:
-            stream.write(struct.pack("<8s6I",registry.XN_REGISTRY_MAGIC,VERSION,scale,len(resources),0xffff,1,1))
+            stream.write(struct.pack("<8s6I",registry.XN_REGISTRY_MAGIC,VERSION,scale,len(resources),0xffff,class_profile_id,decode_rule_id))
             seen = set()
             for resource in resources:
                 ref = resource["resref"]
@@ -214,6 +238,7 @@ def write(path: Path, scale: int, resources: list[dict], *, compress=True, retai
                          1 <= len(cycles) <= registry.MAX_CYCLES_PER_RESOURCE,"invalid writer counts")
                 source = bytes.fromhex(resource["source_sha256"])
                 _require(len(source)==32,"invalid source hash")
+                check_resource_profile(encoder, ref, source.hex())
                 stream.write(struct.pack("<8s32sII",ref.encode().ljust(8,b"\0"),source,len(frames),len(cycles)))
                 for frame in frames:
                     w,h,cx,cy,tr = frame["geometry"]
@@ -222,10 +247,10 @@ def write(path: Path, scale: int, resources: list[dict], *, compress=True, retai
                     i = checked_u8(frame["I"],"I")
                     f = checked_u8(frame.get("F",np.zeros_like(i)),"F")
                     _require(i.shape == (h*scale,w*scale),"I geometry differs")
-                    validate_planes(i,f)
+                    encoder.validate_planes(i,f)
                     if np.any(f):
                         _require("guide" in frame,"fractional writer requires semantic guide")
-                    check_contract(frame.get("guide",i),i,f,frame.get("dep"))
+                    encoder.check_contract(frame.get("guide",i),i,f,frame.get("dep"))
                     reps = np.asarray(frame["representatives"])
                     _require(reps.shape==(256,) and np.issubdtype(reps.dtype,np.integer) and
                              np.all((reps>=0)&(reps<=65535)) and
@@ -241,7 +266,7 @@ def write(path: Path, scale: int, resources: list[dict], *, compress=True, retai
                         stored.append(candidate if use else payload)
                         codecs.append(int(use))
                     stream.write(FRAME.pack(w,h,cx,cy,tr,codecs[0],int(present),0,len(stored[0]),
-                                           *reps.tolist(),dependency_mask(i,f).tobytes(),len(stored[1]),codecs[1]))
+                                           *reps.tolist(),encoder.dependency_mask(i,f).tobytes(),len(stored[1]),codecs[1]))
                     stream.write(stored[0]); stream.write(stored[1])
                 for cycle in cycles:
                     _require(len(cycle)<=registry.MAX_CYCLE_SLOTS and all(isinstance(v,int) and 0<=v<len(frames) for v in cycle),"invalid writer cycle")
@@ -259,6 +284,8 @@ def write(path: Path, scale: int, resources: list[dict], *, compress=True, retai
 def logical_chunks(record, decoder):
     """Compression-independent V6 record; profile IDs hashed by component caller."""
     with Path(record["path"]).open("rb") as stream:
+        encoder = profile_encoder(int(record.get("class_profile_id", 1)),
+                                  int(record.get("decode_rule_id", 1)), int(record["scale"]))
         stream.seek(int(record["offset"]))
         end = stream.tell()+int(record["bytes"])
         def read(s,n,label):
@@ -271,7 +298,7 @@ def logical_chunks(record, decoder):
         nf,nc = struct.unpack_from("<II",rh,40)
         logical = 48
         for _ in range(nf):
-            h,ip,fp,_,_ = _read_frame(stream,int(record["scale"]),read,decoder)
+            h,ip,fp,_,_ = _read_frame(stream,int(record["scale"]),read,decoder,encoder)
             canonical = bytearray(h)
             canonical[9]=canonical[564]=0
             struct.pack_into("<I",canonical,12,len(ip))
@@ -291,16 +318,25 @@ def logical_chunks(record, decoder):
 
 
 def write_catalog(directory: Path, scale: int, components: list[list[dict]], *,
-                  animations=None, compress=True, retain_zero_f=False):
-    """Write an isolated V2 catalog of homogeneous Character V6 components."""
+                  animations=None, compress=True, retain_zero_f=False, profile_ids=None, rule_ids=None):
+    """Write an isolated V2 catalog; each V6 component has one checked profile/owner."""
     directory = Path(directory)
     _require(not directory.exists(),"catalog output already exists")
     directory.mkdir(parents=True)
     _require(components and all(c for c in components),"empty catalog component")
     if animations is None:
         animations = [dict(animation_id="0x6110",owner=1,component_indices=list(range(len(components))))]
-    _require(all(a["owner"]==1 and registry.catalog_owner_matches_animation(1,int(a["animation_id"],16))
-                 for a in animations),"catalog requires Character owners")
+    profile_ids = [1] * len(components) if profile_ids is None else list(profile_ids)
+    rule_ids = [1 if p == 1 else 2 for p in profile_ids] if rule_ids is None else list(rule_ids)
+    _require(len(profile_ids) == len(rule_ids) == len(components), "catalog profile count differs")
+    encoders = [profile_encoder(p, r, scale) for p, r in zip(profile_ids, rule_ids)]
+    for a in animations:
+        _require(registry.catalog_owner_matches_animation(a["owner"], int(a["animation_id"], 16)), "invalid catalog owner/animation")
+        for n in a["component_indices"]:
+            _require(0 <= n < len(components), "invalid catalog membership")
+            e = encoders[n]
+            _require(a["owner"] == 1 if e is character_encoder else e.accepts(a["owner"], a["animation_id"]),
+                     "catalog owner/animation differs from V6 profile")
     infos,entries,component_rows,logical_digests = [],[],[],[]
     storage = dict(shard_registry_version=VERSION,stored_index_bytes=0,stored_fraction_bytes=0,
                    fraction_bytes=0,compressed_frame_count=0,raw_frame_count=0,
@@ -310,7 +346,8 @@ def write_catalog(directory: Path, scale: int, components: list[list[dict]], *,
         # A later production builder may partition while retaining this writer.
         resources = sorted(resources,key=lambda r:r["resref"])
         temporary = directory / f"component-{number:04d}.registry"
-        info = write(temporary,scale,resources,compress=compress,retain_zero_f=retain_zero_f)
+        info = write(temporary,scale,resources,compress=compress,retain_zero_f=retain_zero_f,
+                     class_profile_id=profile_ids[number],decode_rule_id=rule_ids[number])
         final = directory / registry.catalog_shard_filename(info["sha256"])
         _require(not final.exists(),"duplicate shard in catalog")
         temporary.rename(final)

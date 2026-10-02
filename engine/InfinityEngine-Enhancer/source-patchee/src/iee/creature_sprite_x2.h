@@ -283,6 +283,9 @@ bool reconstruct_frame_pixels(FrameHandle handle, const PaletteSnapshot& palette
                               std::uint64_t& fingerprint) noexcept;
 // Diagnostic routing: V6 uses the Q3m profile even when F is absent.
 [[nodiscard]] bool frame_uses_q3m_profile(FrameHandle handle) noexcept;
+[[nodiscard]] bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept;
+bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
+                                        const std::array<std::uint32_t, 256>& colors) noexcept;
 bool reconstruct_composite_pixels(const CompositeLayer* layers, std::size_t layerCount,
                                   std::vector<std::uint32_t>& pixels,
                                   CompositeBounds& bounds) noexcept;

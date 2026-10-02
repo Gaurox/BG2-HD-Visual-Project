@@ -373,6 +373,13 @@ if(BUILD_TESTING)
         iee_configure_target(iee_palette_fraction_tests)
         add_test(NAME iee_palette_fraction_tests COMMAND iee_palette_fraction_tests "${IEE_PALETTE_FIXTURES}")
 
+        add_executable(iee_palette_monster_tests tests/palette_monster_tests.cpp
+            src/iee/creature_sprite_x2.cpp src/iee/game/opengl_types.cpp)
+        target_link_libraries(iee_palette_monster_tests PRIVATE iee_common opengl32 Cabinet bcrypt)
+        iee_configure_target(iee_palette_monster_tests)
+        # Synthetic fixtures are generated explicitly by palette_monster_fixtures.py;
+        # this target never starts production or regenerates Character evidence.
+
         add_executable(iee_effect_animation_x4_registry_tests
             tests/effect_animation_x4_registry_tests.cpp
             src/iee/effect_animation_x4_registry.cpp

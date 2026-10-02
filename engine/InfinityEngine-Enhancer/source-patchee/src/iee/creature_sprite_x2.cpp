@@ -155,6 +155,8 @@ struct Frame {
   std::vector<std::uint8_t> indices;
   std::vector<std::uint8_t> fractions;
   bool fractional{};
+  std::uint32_t fractionProfile{core::palette_fraction::kCharacterProfile};
+  std::uint32_t fractionRule{core::palette_fraction::kSrgb8Rule};
   core::palette_fraction::Dependencies dependencies{};
   std::uint64_t lazyFractionOffset{};
   std::uint32_t lazyFractionStoredBytes{};
@@ -1309,7 +1311,7 @@ const std::vector<std::uint8_t>* frame_indices_locked(
       }
     }
     if (frame.fractional && !core::palette_fraction::validate(
-          prepared.indices, prepared.fractions, frame.dependencies)) {
+          prepared.indices, prepared.fractions, frame.dependencies, frame.fractionProfile, frame.fractionRule)) {
       fail_lazy_frame_locked(handle, "invalid fraction/dependency contract");
       return nullptr;
     }
@@ -1372,7 +1374,7 @@ bool prepare_frame_lut(const Frame& frame, const std::vector<std::uint8_t>& indi
                         const std::vector<std::uint8_t>& fractions,
                         const core::palette_fraction::Palette& palette,
                         core::palette_fraction::Lut& lut) noexcept {
-  return !frame.fractional || lut.prepare(indices, fractions, palette);
+  return !frame.fractional || lut.prepare(indices, fractions, palette, frame.fractionProfile, frame.fractionRule);
 }
 
 std::uint32_t frame_pixel(const Frame& frame, const std::vector<std::uint8_t>& indices,
@@ -1417,8 +1419,8 @@ std::uint64_t palette_fingerprint(const Frame& frame,
   appendDword(encoding.externalFormat);
   appendDword(encoding.type);
   if (frame.fractional) {
-    appendDword(core::palette_fraction::kCharacterProfile);
-    appendDword(core::palette_fraction::kSrgb8Rule);
+    appendDword(frame.fractionProfile);
+    appendDword(frame.fractionRule);
   }
   for (std::size_t paletteIndex = 0; paletteIndex < frame.representatives.size();
        ++paletteIndex) {
@@ -2072,6 +2074,8 @@ enum class RegistryFormat { Legacy, Xn };
 
 struct ParsedRegistry {
   std::uint32_t version{};
+  std::uint32_t fractionProfile{};
+  std::uint32_t fractionRule{};
   std::uint32_t scale{};
   std::uint16_t animationId{};
   std::uint32_t resourceCount{};
@@ -2194,10 +2198,12 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
   if (fractionalRegistry) {
     std::uint32_t profile = 0, rule = 0;
     if (!reader.read(profile) || !reader.read(rule) ||
-        profile != core::palette_fraction::kCharacterProfile ||
-        rule != core::palette_fraction::kSrgb8Rule) {
+        !core::palette_fraction::supported_profile(profile, rule) ||
+        (core::palette_fraction::monster_profile(profile, rule) && parsed.scale != 2)) {
       throw std::runtime_error("unknown/truncated Q3m class profile or decode rule");
     }
+    parsed.fractionProfile = profile;
+    parsed.fractionRule = rule;
   }
   if (!xnFormat && parsed.version == kLegacyRegistryVersion) {
     if (metadata != 0) throw std::runtime_error("invalid legacy creature-sprite metadata");
@@ -2229,6 +2235,12 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
                        return existing.resref == resource.resref;
                      }) != parsed.resources.end()) {
       throw std::runtime_error("duplicate creature-sprite resref");
+    }
+    if (fractionalRegistry && core::palette_fraction::monster_profile(parsed.fractionProfile, parsed.fractionRule) &&
+        !core::palette_fraction::monster_resource(parsed.fractionProfile,
+            std::string_view(resource.resref.data(), std::find(resource.resref.begin(), resource.resref.end(), '\0') - resource.resref.begin()),
+            resource.sourceSha256)) {
+      throw std::runtime_error("Q3m Monster resource/source differs from fixed profile");
     }
     resource.frames.reserve(frameCount);
     for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
@@ -2283,6 +2295,10 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         throw std::runtime_error("invalid creature-sprite frame payload");
       }
       frame.fractional = fractionalRegistry;
+      if (fractionalRegistry) {
+        frame.fractionProfile = parsed.fractionProfile;
+        frame.fractionRule = parsed.fractionRule;
+      }
       const bool fractionPresent = fractionalRegistry && frameReserved[1] == std::byte{1};
       std::uint32_t fractionStored = 0;
       std::uint8_t fractionCodec = 0;
@@ -2347,7 +2363,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         const auto logicalI = inflate(indexData, storedBytes, frameCodec);
         const auto logicalF = fractionPresent ? inflate(fractionData, fractionStored, fractionCodec)
                                              : std::vector<std::uint8_t>{};
-        if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies)) {
+        if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule)) {
           throw std::runtime_error("invalid Q3m fraction/dependency contract");
         }
       } else if (frameCodec == kRegistryFrameCodecRaw) {
@@ -3438,7 +3454,7 @@ bool load_catalog_shard_for_request(std::uint64_t epoch,
   CatalogShardEntry expected;
   std::uint32_t scale = 0;
   std::uint32_t catalogVersion = 0;
-  bool characterOnly = true;
+  std::vector<std::pair<std::uint32_t, std::uint16_t>> fractionOwners;
   {
     std::lock_guard lock(g_mutex);
     if (!g_ready.load(std::memory_order_acquire) || !g_catalog.active ||
@@ -3465,8 +3481,8 @@ bool load_catalog_shard_for_request(std::uint64_t epoch,
     catalogVersion = g_catalog.version;
     for (const auto& animation : g_catalog.animations) {
       for (std::uint32_t m = 0; m < animation.membershipCount; ++m) {
-        if (g_catalog.memberships[animation.membershipStart + m] == shard.componentIndex &&
-            animation.owner != kCatalogCharacterOwner) characterOnly = false;
+        if (g_catalog.memberships[animation.membershipStart + m] == shard.componentIndex)
+          fractionOwners.emplace_back(animation.owner, animation.animationId);
       }
     }
   }
@@ -3475,7 +3491,10 @@ bool load_catalog_shard_for_request(std::uint64_t epoch,
                                  shardIndex, true, true);
     if (((parsed.version == kXnCompressedRegistryVersion || parsed.version == kXnFractionRegistryVersion) &&
          catalogVersion != kRegistryCatalogDirectoryVersion) ||
-        (parsed.version == kXnFractionRegistryVersion && !characterOnly) ||
+        (parsed.version == kXnFractionRegistryVersion &&
+          (fractionOwners.empty() || !std::all_of(fractionOwners.begin(), fractionOwners.end(), [&](const auto& owner) {
+            return core::palette_fraction::profile_owner(parsed.fractionProfile, parsed.fractionRule, owner.first, owner.second);
+          }))) ||
         !catalog_shard_matches(parsed, expected, scale) ||
         expectedOrdinal >= parsed.resources.size() ||
         parsed.resources[expectedOrdinal].resref != request.resref) {
@@ -4378,6 +4397,30 @@ bool frame_uses_q3m_profile(FrameHandle handle) noexcept {
   } catch (...) {
     return false;
   }
+}
+
+bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire)) return false;
+    const auto* resource = resource_for_handle_locked(handle);
+    if (!resource || handle.frameIndex >= resource->frames.size()) return false;
+    const auto& frame = resource->frames[handle.frameIndex];
+    return frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule);
+  } catch (...) { return false; }
+}
+
+bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
+                                        const std::array<std::uint32_t, 256>& colors) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire)) return false;
+    const auto* resource = resource_for_handle_locked(handle);
+    if (!resource || handle.frameIndex >= resource->frames.size()) return false;
+    const auto& frame = resource->frames[handle.frameIndex];
+    return frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule) &&
+           core::palette_fraction::monster_source_palette(frame.fractionProfile, kind, colors);
+  } catch (...) { return false; }
 }
 
 bool reconstruct_composite_pixels(const CompositeLayer* layers, std::size_t layerCount,

@@ -3196,6 +3196,14 @@ static void detour_vid_palette_realize(void* paletteThis, std::uint32_t* realize
       ownerCandidate = core::safe_read(reinterpret_cast<const std::byte*>(paletteThis) + 0x20,
                                        paletteKind) &&
                        paletteKind <= 1;
+      if (ownerCandidate && creature_sprite_x2::frame_requires_fixed_monster_palette(scope->layers[ownerLayer].frame)) {
+        game::CVidPalette native{};
+        std::array<std::uint32_t, 256> sourceColors{};
+        ownerCandidate = core::safe_read(paletteThis, native) && native.m_nEntries == 256 &&
+                         core::safe_read(native.m_pPalette, sourceColors) &&
+                         creature_sprite_x2::frame_accepts_fixed_monster_palette(
+                             scope->layers[ownerLayer].frame, paletteKind, sourceColors);
+      }
       if (!ownerCandidate && scope->layeredComposition) {
         scope->compositionIncomplete = true;
       }
