@@ -1,0 +1,41 @@
+{
+  "schema": "bg2-halfling-q3m-production-v1",
+  "animations": [
+    "0x5003",
+    "0x5013",
+    "0x5103",
+    "0x5113",
+    "0x5303",
+    "0x5313",
+    "0x6003",
+    "0x6013",
+    "0x6103",
+    "0x6113",
+    "0x6303",
+    "0x6313"
+  ],
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "namespace": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "selection": "docs/measurements/halfling-q3m-x2-20261002-v1/selection.json",
+  "production": {
+    "status": "encoded-not-native-or-ingame-verified",
+    "source_plan_sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+    "counts": {
+      "selected_unique_work": 123751,
+      "reused_unique_results": 104575,
+      "new_unique_results": 19176,
+      "logical_frames": 19176,
+      "new_pixel_keys": 19176,
+      "neural_targets": 115056
+    }
+  },
+  "playable_coverage_after": {
+    "total_models": 78,
+    "produced_models": 78,
+    "remaining_animation_ids": [],
+    "evidence": "this production plus the three pinned-compatible previous reports",
+    "status": "encoded production only; native assembly, QA, installation and release separate"
+  }
+}

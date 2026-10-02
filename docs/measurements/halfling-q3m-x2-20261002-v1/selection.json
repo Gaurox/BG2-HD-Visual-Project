@@ -1,0 +1,558 @@
+{
+  "schema": "bg2-halfling-q3m-selection-v1",
+  "status": "planned-not-produced",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "source_plan": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25"
+  },
+  "namespace": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "cache": "sprite/.work/palette-q3m-shared/x2/15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "animations": [
+    {
+      "animation_id": "0x5003",
+      "symbol": "CLERIC_MALE_HALFLING_LOW",
+      "resref": "CIMB",
+      "paperdoll": "CIMC",
+      "stats": {
+        "animation_id": "0x5003",
+        "logical_frames": 161725,
+        "logical_model_frames": 129592,
+        "logical_model_q32_pixels": 373668864,
+        "logical_native_pixels": 213132780,
+        "resources": 596,
+        "strict_full_palette_work_items": 79035,
+        "symbol": "CLERIC_MALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 260224000,
+        "unique_model_work_items": 78961,
+        "unique_work_items": 79032
+      },
+      "cached_state": {
+        "unique_work": 79032,
+        "cached": 69644,
+        "shared_with_human_half_orc": 152,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 99,
+        "new_gpu": 9388
+      }
+    },
+    {
+      "animation_id": "0x5013",
+      "symbol": "CLERIC_FEMALE_HALFLING_LOW",
+      "resref": "CIFB",
+      "paperdoll": "CIFC",
+      "stats": {
+        "animation_id": "0x5013",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395216896,
+        "logical_native_pixels": 220210012,
+        "resources": 656,
+        "strict_full_palette_work_items": 94026,
+        "symbol": "CLERIC_FEMALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 279314432,
+        "unique_model_work_items": 93880,
+        "unique_work_items": 93953
+      },
+      "cached_state": {
+        "unique_work": 93953,
+        "cached": 93953,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 93953,
+        "shared_with_elf_half_elf": 579
+      }
+    },
+    {
+      "animation_id": "0x5103",
+      "symbol": "FIGHTER_MALE_HALFLING_LOW",
+      "resref": "CIMB",
+      "paperdoll": "CIMF",
+      "stats": {
+        "animation_id": "0x5103",
+        "logical_frames": 161725,
+        "logical_model_frames": 129592,
+        "logical_model_q32_pixels": 373518336,
+        "logical_native_pixels": 212996322,
+        "resources": 596,
+        "strict_full_palette_work_items": 79043,
+        "symbol": "FIGHTER_MALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 260106240,
+        "unique_model_work_items": 78969,
+        "unique_work_items": 79040
+      },
+      "cached_state": {
+        "unique_work": 79040,
+        "cached": 69644,
+        "shared_with_human_half_orc": 152,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 99,
+        "new_gpu": 9396
+      }
+    },
+    {
+      "animation_id": "0x5113",
+      "symbol": "FIGHTER_FEMALE_HALFLING_LOW",
+      "resref": "CIFB",
+      "paperdoll": "CIFF",
+      "stats": {
+        "animation_id": "0x5113",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395142144,
+        "logical_native_pixels": 220106993,
+        "resources": 656,
+        "strict_full_palette_work_items": 94279,
+        "symbol": "FIGHTER_FEMALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 279819264,
+        "unique_model_work_items": 94133,
+        "unique_work_items": 94206
+      },
+      "cached_state": {
+        "unique_work": 94206,
+        "cached": 94206,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 94206,
+        "shared_with_elf_half_elf": 579
+      }
+    },
+    {
+      "animation_id": "0x5303",
+      "symbol": "THIEF_MALE_HALFLING_LOW",
+      "resref": "CIMT",
+      "paperdoll": "CIMT",
+      "stats": {
+        "animation_id": "0x5303",
+        "logical_frames": 161725,
+        "logical_model_frames": 142099,
+        "logical_model_q32_pixels": 386422784,
+        "logical_native_pixels": 213260004,
+        "resources": 596,
+        "strict_full_palette_work_items": 79437,
+        "symbol": "THIEF_MALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 261067776,
+        "unique_model_work_items": 79362,
+        "unique_work_items": 79433
+      },
+      "cached_state": {
+        "unique_work": 79433,
+        "cached": 69645,
+        "shared_with_human_half_orc": 153,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 100,
+        "new_gpu": 9788
+      }
+    },
+    {
+      "animation_id": "0x5313",
+      "symbol": "THIEF_FEMALE_HALFLING_LOW",
+      "resref": "CIFT",
+      "paperdoll": "CIFT",
+      "stats": {
+        "animation_id": "0x5313",
+        "logical_frames": 178357,
+        "logical_model_frames": 147716,
+        "logical_model_q32_pixels": 395848704,
+        "logical_native_pixels": 220146379,
+        "resources": 656,
+        "strict_full_palette_work_items": 94821,
+        "symbol": "THIEF_FEMALE_HALFLING_LOW",
+        "unique_model_q32_pixels": 280989696,
+        "unique_model_work_items": 94685,
+        "unique_work_items": 94758
+      },
+      "cached_state": {
+        "unique_work": 94758,
+        "cached": 94758,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 94758,
+        "shared_with_elf_half_elf": 579
+      }
+    },
+    {
+      "animation_id": "0x6003",
+      "symbol": "CLERIC_MALE_HALFLING",
+      "resref": "CIMB",
+      "paperdoll": "CIMC",
+      "stats": {
+        "animation_id": "0x6003",
+        "logical_frames": 161725,
+        "logical_model_frames": 129592,
+        "logical_model_q32_pixels": 373668864,
+        "logical_native_pixels": 213132780,
+        "resources": 596,
+        "strict_full_palette_work_items": 79035,
+        "symbol": "CLERIC_MALE_HALFLING",
+        "unique_model_q32_pixels": 260224000,
+        "unique_model_work_items": 78961,
+        "unique_work_items": 79032
+      },
+      "cached_state": {
+        "unique_work": 79032,
+        "cached": 69644,
+        "shared_with_human_half_orc": 152,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 99,
+        "new_gpu": 9388
+      }
+    },
+    {
+      "animation_id": "0x6013",
+      "symbol": "CLERIC_FEMALE_HALFLING",
+      "resref": "CIFB",
+      "paperdoll": "CIFC",
+      "stats": {
+        "animation_id": "0x6013",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395216896,
+        "logical_native_pixels": 220210012,
+        "resources": 656,
+        "strict_full_palette_work_items": 94026,
+        "symbol": "CLERIC_FEMALE_HALFLING",
+        "unique_model_q32_pixels": 279314432,
+        "unique_model_work_items": 93880,
+        "unique_work_items": 93953
+      },
+      "cached_state": {
+        "unique_work": 93953,
+        "cached": 93953,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 93953,
+        "shared_with_elf_half_elf": 579
+      }
+    },
+    {
+      "animation_id": "0x6103",
+      "symbol": "FIGHTER_MALE_HALFLING",
+      "resref": "CIMB",
+      "paperdoll": "CIMF",
+      "stats": {
+        "animation_id": "0x6103",
+        "logical_frames": 161725,
+        "logical_model_frames": 129592,
+        "logical_model_q32_pixels": 373518336,
+        "logical_native_pixels": 212996322,
+        "resources": 596,
+        "strict_full_palette_work_items": 79043,
+        "symbol": "FIGHTER_MALE_HALFLING",
+        "unique_model_q32_pixels": 260106240,
+        "unique_model_work_items": 78969,
+        "unique_work_items": 79040
+      },
+      "cached_state": {
+        "unique_work": 79040,
+        "cached": 69644,
+        "shared_with_human_half_orc": 152,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 99,
+        "new_gpu": 9396
+      }
+    },
+    {
+      "animation_id": "0x6113",
+      "symbol": "FIGHTER_FEMALE_HALFLING",
+      "resref": "CIFB",
+      "paperdoll": "CIFF",
+      "stats": {
+        "animation_id": "0x6113",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395142144,
+        "logical_native_pixels": 220106993,
+        "resources": 656,
+        "strict_full_palette_work_items": 94279,
+        "symbol": "FIGHTER_FEMALE_HALFLING",
+        "unique_model_q32_pixels": 279819264,
+        "unique_model_work_items": 94133,
+        "unique_work_items": 94206
+      },
+      "cached_state": {
+        "unique_work": 94206,
+        "cached": 94206,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 94206,
+        "shared_with_elf_half_elf": 579
+      }
+    },
+    {
+      "animation_id": "0x6303",
+      "symbol": "THIEF_MALE_HALFLING",
+      "resref": "CIMT",
+      "paperdoll": "CIMT",
+      "stats": {
+        "animation_id": "0x6303",
+        "logical_frames": 161725,
+        "logical_model_frames": 142099,
+        "logical_model_q32_pixels": 386422784,
+        "logical_native_pixels": 213260004,
+        "resources": 596,
+        "strict_full_palette_work_items": 79437,
+        "symbol": "THIEF_MALE_HALFLING",
+        "unique_model_q32_pixels": 261067776,
+        "unique_model_work_items": 79362,
+        "unique_work_items": 79433
+      },
+      "cached_state": {
+        "unique_work": 79433,
+        "cached": 69645,
+        "shared_with_human_half_orc": 153,
+        "shared_with_dwarf_gnome": 69644,
+        "shared_with_elf_half_elf": 100,
+        "new_gpu": 9788
+      }
+    },
+    {
+      "animation_id": "0x6313",
+      "symbol": "THIEF_FEMALE_HALFLING",
+      "resref": "CIFT",
+      "paperdoll": "CIFT",
+      "stats": {
+        "animation_id": "0x6313",
+        "logical_frames": 178357,
+        "logical_model_frames": 147716,
+        "logical_model_q32_pixels": 395848704,
+        "logical_native_pixels": 220146379,
+        "resources": 656,
+        "strict_full_palette_work_items": 94821,
+        "symbol": "THIEF_FEMALE_HALFLING",
+        "unique_model_q32_pixels": 280989696,
+        "unique_model_work_items": 94685,
+        "unique_work_items": 94758
+      },
+      "cached_state": {
+        "unique_work": 94758,
+        "cached": 94758,
+        "shared_with_human_half_orc": 962,
+        "shared_with_dwarf_gnome": 94758,
+        "shared_with_elf_half_elf": 579
+      }
+    }
+  ],
+  "exact_world_aliases": [
+    {
+      "animation": "0x5003",
+      "same_world_resources_and_profile_as": [
+        "0x6003"
+      ]
+    },
+    {
+      "animation": "0x5013",
+      "same_world_resources_and_profile_as": [
+        "0x6013"
+      ]
+    },
+    {
+      "animation": "0x5103",
+      "same_world_resources_and_profile_as": [
+        "0x6103"
+      ]
+    },
+    {
+      "animation": "0x5113",
+      "same_world_resources_and_profile_as": [
+        "0x6113"
+      ]
+    },
+    {
+      "animation": "0x5303",
+      "same_world_resources_and_profile_as": [
+        "0x6303"
+      ]
+    },
+    {
+      "animation": "0x5313",
+      "same_world_resources_and_profile_as": [
+        "0x6313"
+      ]
+    },
+    {
+      "animation": "0x6003",
+      "same_world_resources_and_profile_as": [
+        "0x5003"
+      ]
+    },
+    {
+      "animation": "0x6013",
+      "same_world_resources_and_profile_as": [
+        "0x5013"
+      ]
+    },
+    {
+      "animation": "0x6103",
+      "same_world_resources_and_profile_as": [
+        "0x5103"
+      ]
+    },
+    {
+      "animation": "0x6113",
+      "same_world_resources_and_profile_as": [
+        "0x5113"
+      ]
+    },
+    {
+      "animation": "0x6303",
+      "same_world_resources_and_profile_as": [
+        "0x5303"
+      ]
+    },
+    {
+      "animation": "0x6313",
+      "same_world_resources_and_profile_as": [
+        "0x5313"
+      ]
+    }
+  ],
+  "selected_world_resource_profile_groups": [
+    [
+      "0x5003",
+      "0x6003"
+    ],
+    [
+      "0x5013",
+      "0x6013"
+    ],
+    [
+      "0x5103",
+      "0x6103"
+    ],
+    [
+      "0x5113",
+      "0x6113"
+    ],
+    [
+      "0x5303",
+      "0x6303"
+    ],
+    [
+      "0x5313",
+      "0x6313"
+    ]
+  ],
+  "resources": 978,
+  "counts": {
+    "unique_work": 123751,
+    "cached": 104575,
+    "shared_between_selected_models": 123751,
+    "shared_with_previous_batches_union": 104575,
+    "sum_model_unique_work": 1040844,
+    "shared_with_human_half_orc": 963,
+    "shared_with_dwarf_gnome": 104574,
+    "shared_with_elf_half_elf": 580,
+    "new_gpu": 19176,
+    "cross_model_repeat_work_avoided": 917093
+  },
+  "logical_frames": 2040492,
+  "previous_productions": {
+    "human_half_orc": "docs/measurements/human-half-orc-q3m-x2-20261002-v1/production.json",
+    "dwarf_gnome": "docs/measurements/dwarf-gnome-q3m-x2-20261002-v1/production.json",
+    "elf_half_elf": "docs/measurements/elf-half-elf-q3m-x2-20261002-v1/production.json"
+  },
+  "playable_coverage_before": {
+    "scope": "existing palettized Character source plan; production only",
+    "total_models": 78,
+    "previously_produced_models": 66,
+    "previously_produced_ids": [
+      "0x5000",
+      "0x5001",
+      "0x5002",
+      "0x5010",
+      "0x5011",
+      "0x5012",
+      "0x5100",
+      "0x5101",
+      "0x5102",
+      "0x5110",
+      "0x5111",
+      "0x5112",
+      "0x5200",
+      "0x5201",
+      "0x5202",
+      "0x5210",
+      "0x5211",
+      "0x5212",
+      "0x5300",
+      "0x5301",
+      "0x5302",
+      "0x5310",
+      "0x5311",
+      "0x5312",
+      "0x6000",
+      "0x6001",
+      "0x6002",
+      "0x6004",
+      "0x6005",
+      "0x6010",
+      "0x6011",
+      "0x6012",
+      "0x6014",
+      "0x6015",
+      "0x6100",
+      "0x6101",
+      "0x6102",
+      "0x6104",
+      "0x6105",
+      "0x6110",
+      "0x6111",
+      "0x6112",
+      "0x6114",
+      "0x6115",
+      "0x6200",
+      "0x6201",
+      "0x6202",
+      "0x6204",
+      "0x6205",
+      "0x6210",
+      "0x6211",
+      "0x6212",
+      "0x6214",
+      "0x6215",
+      "0x6300",
+      "0x6301",
+      "0x6302",
+      "0x6304",
+      "0x6305",
+      "0x6310",
+      "0x6311",
+      "0x6312",
+      "0x6314",
+      "0x6315",
+      "0x6500",
+      "0x6510"
+    ],
+    "remaining_ids": [
+      "0x5003",
+      "0x5013",
+      "0x5103",
+      "0x5113",
+      "0x5303",
+      "0x5313",
+      "0x6003",
+      "0x6013",
+      "0x6103",
+      "0x6113",
+      "0x6303",
+      "0x6313"
+    ],
+    "remaining_races": [
+      "HALFLING"
+    ],
+    "projected_models_after_selected_production": 78,
+    "global_audit": "not rerun; existing immutable production reports and source index compared"
+  },
+  "work_list": {
+    "path": "sprite/.work/q3m-halfling-x2-20261002-v1/work-list.csv",
+    "sha256": "92611369ff285db0ea3f41f3897cca0cba660e4850613878a6e3c0b2a9cecfa9"
+  },
+  "frame_correspondence": "existing SQLite frame_map; filter by selected animation IDs",
+  "excluded_legacy_sprites": [
+    {
+      "animation_id": "0x4800",
+      "symbol": "SLEEPING_MAN_HALFLING",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    }
+  ],
+  "inventory": "separate UI pipeline, excluded"
+}
