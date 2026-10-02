@@ -41,6 +41,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 - [`qa-decisions/`](qa-decisions/) : décisions ingame immuables.
 - Production : pointeur `current-generation.json` et manifeste scellé du catalogue.
 - Installation : `ingame-installation/active-test.json`, sans autorité QA.
+- Q3m x2 complet, 78 `Character` (2026-10-02) : [production](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json), [installation active BOX](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/ingame-installation/active-test.json), [couverture vérifiée, aucun manquant](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/verification.json). QA visuelle de ce catalogue complet encore distincte.
 - Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`, puis `content.json`.
 
 Ces quatre états sont indépendants. Aucun registre global ne les fusionne ni ne les réconcilie.
