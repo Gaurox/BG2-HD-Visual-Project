@@ -11,6 +11,7 @@
 | Mise à jour P1 | Run [`palette-q3m-p1-20260930-v1`](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md) (commit `a1a68a73`) relu : README, JSON, CSV, scripts et tests ; agrégats recalculés depuis `color-summary.csv` / `temporal-sequences.csv`. Résultats §7.14, P2+ ajustés ; chiffres historiques E3/E3b/E5 inchangés |
 | Clôture P0 | Run [`palette-oracles-p0-20260930-v4`](../families/playable-characters/6110-human-female-fighter/research/palette-oracles-p0-20260930-v4/README.md) : oracle scalaire + boucle x64 native, lecteur BAM indépendant, provenance `MPALETTE`/alias, **E3b reproduit numériquement**, 30 tests verts (§7.15). Remplace l'état P0 partiel contenu dans P1 ; historiques/P1 immuables |
 | Reprise après P4/P7 | **Monde `0x6110` : Q3m K6 x2 + BOX, sans mipmaps. UI `CHFF1INV`/`CHFF2INV` : Q3m K6 x2 + Nearest, acceptés ; lot UI normal 81 BAM installé et accepté par l’utilisateur.** P3 validée par l'utilisateur ; Q8c écarté ; couverture monde déjà produite ; aucune généralisation UI ni release déduite (§10–11) |
+| Reprise actuelle, 2026-10-02 | **78 animations Character monde produites, assemblées et installées Q3m K6 x2 + BOX global (`0x0`)**, 4 510 BAM / 1 564 054 frames, aucun manquant ; UI P7 et runtime conservés. Processus complet + limites monstres/PNJ : [`pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md), §11.4/13.4. QA visuelle du catalogue complet distincte. |
 | Autorité | Ce guide fait référence pour le développement. Les études sources restent intactes et historiques ; leurs erreurs sont listées au §16. |
 | Compagnon visuel | [`PRESENTATION_ETUDE_SPRITES_HD_0x6110.html`](PRESENTATION_ETUDE_SPRITES_HD_0x6110.html) (hors ligne, explorateur de palette, comparateur, chiffres) ; version expliquée `PRESENTATION_PEDAGOGIQUE_SPRITES_HD_0x6110.html` et `…_EN.html`. Pages locales ignorées par Git, antérieures à P1 |
 | Autorités d'état | Ce guide référence les acquis ; production = générations, QA = décisions immuables, installation = reçu actif, release = manifestes dédiés. Les installations d'essai P3/P4/P7 ne constituent pas une intégration release. |
@@ -23,6 +24,7 @@
 |---|---|
 | La décision et la recette retenues | §1 |
 | Ce que fait réellement le moteur (palette, mélanges, couches) | §3 |
+| Produire/reprendre Q3m x2, déduplication, cache, assemblage, installation, préparer monstres/PNJ | [`SPRITES_PRODUCTION_Q3M_X2.md`](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md), §11.4/13.4 |
 | Ce que le runtime IEE du dépôt sait déjà faire, avec lignes de code | §4 |
 | Quoi produire pour `0x6110` (inventaire, périmètre, pièges) | §5 |
 | Chaîne image xBR / ReboutCX | §6 |
@@ -57,10 +59,10 @@ BAM V1 P8 (indices, cycles, lookup, centres)                       ── vérit
         encodeur multi-palettes, optimisé contre le décodeur exact
                     │
    registre V6 : plan I (u8, = V5) + plan F (fraction 0..7 vers la nuance suivante)
-                 + masque de dépendances palette + plan frontière optionnel
+                 + masque de dépendances palette (aucun plan frontière B)
                     │
    DLL IEE (CPU, compositeur existant) : P[256] capturée par couche après Realize
-     → LUT 2 048 entrées → pixels → composition native → texture (géométrie x1)
+     → LUT scratch (couples utilisés parmi 2 048) → pixels → composition native → texture (géométrie x1)
 ```
 
 ### 1.2 Recette retenue
@@ -79,7 +81,7 @@ BAM V1 P8 (indices, cycles, lookup, centres)                       ── vérit
 | Palette de production REF | régression P1 inchangée : +6,1 % x2, +11,6 % x4 face à Q0 ; P3 validée par l'utilisateur, aucune surpondération demandée | MESURÉ hors ligne + décision utilisateur P3 |
 | Coût des plans I + F + masque | ×1,98 x2, ×2,11 x4 face à Q0 (XPRESS réel ; en-têtes V6 et `representatives` exclus) | MESURÉ (P1) |
 | Tramage | aucun | MESURÉ sur le corpus |
-| Échelle livrée | **x2 + BOX monde `0x6110`** ; x4 conservé comme master/option ; **UI pilote x2 + Nearest** | DÉCISION P4 ; QA UI indépendante (§11.1) |
+| Échelle livrée | **x2 + BOX monde, 78 Character installés (`0x0`)** ; x4 `6110` conservé comme master/option ; **UI P7 x2 + Nearest** | Décision P4 `6110` ; installation complète §11.4, QA UI indépendante (§11.1–11.3) |
 | Reconstruction | CPU V6 dans `creature_sprite_x2.cpp` / `core/palette_fraction.h` ; UI dédiée `paperdoll_q3m.cpp` | IMPLÉMENTÉ ; tests P2 et décodages de palettes natives P7 |
 | Composition | ordre natif, écrasement des pixels non transparents ; alpha doux reporté | CONFIRMÉ (existant) |
 | Palette globale | ne jamais modifier `MPALETTE` pour ce chantier | DÉCISION |
@@ -98,7 +100,7 @@ P4 → DÉCIDÉE 2026-10-02 : x2 + BOX monde 0x6110, sans mipmaps
 P5 → ÉCARTÉE par l'utilisateur : poursuivre Q3m, aucun essai Q8c
 P6 → COUVERTURE MONDE DÉJÀ PRODUITE en P3 : 656 BAM / 178 360 frames x2
 P7 → CHFF1INV/CHFF2INV ACCEPTÉS ; lot UI normal 81 BAM / 163 frames produit, installé et accepté par l’utilisateur
-P8 → autres animations Character : aucune QA transférée
+P8 → 78 Character PRODUITS/ASSEMBLÉS/INSTALLÉS x2+BOX ; aucune QA visuelle exhaustive transférée (§11.4)
 ```
 
 ### 1.4 Ce qui n'est pas acquis
@@ -847,7 +849,7 @@ MIN/MAG désormais séparés par `creature_sprite_filter::finish_texture_samplin
 | UI `CHFF1INV` | backing x2 du corps, shader Bitmap natif | **Nearest sans mipmaps** ; configuration monde BOX non appliquée à cette UI (§11.1) |
 
 - BOX/Mipmaps visent la **qualité en réduction** (détails, contours, scintillement), avec un coût à mesurer. Ce ne sont pas deux options de performance ni deux modes cumulés : l'INI choisit un mode unique. Un hybride serait un nouveau contrat ; il n'est pas livré/testé.
-- Portée P4 : `CreatureSpriteFilterAnimation=0x6110`. Les autres routes du catalogue, notamment `0x6100`, restent Nearest ; un choix global (`0`) demanderait une nouvelle décision de périmètre.
+- Portée **historique P4** : `CreatureSpriteFilterAnimation=0x6110`, autres routes Nearest. **Installation actuelle §11.4 : `CreatureSpriteFilterAnimation=0x0`, BOX sur les 78 Character**, suite à la demande d'installation complète avec la préférence BOX conservée ; cela n'étend pas la QA P4 aux 78 IDs. Une future route HD de monstre héritera de ce scope global si l'INI est conservé.
 - BOX n'agit que si l'empreinte écran dépasse un texel HD. Empreinte >16 texels/axe ⇒ repli Nearest borné, sans tronquer l'intégration. À zoom habituel ~2.48 : x2 ≈0.806 texel/pixel (magnification), x4 ≈1.61 (réduction) ; au minimum x2≈2.43 / x4≈4.86.
 - Preuve BOX : mode3 + chemin shader/provenance valide ; **MIN=MAG=Nearest ne signifie pas BOX inactif**. Preuve Mipmaps : mode4 + MIN9987/MAG9728 et MAX_LEVEL8 (9 niveaux observés). La sonde distingue composite/masque ; une observation isolée d'un sampler ne décrit pas tout le pipeline.
 - Essais réellement effectués : x4 Nearest → **x4 BOX → x4 Mipmaps → x2 BOX**. Mipmaps x2 non implémenté/testé. Avis initial Mips « je vois pas de difference ingame », puis préférence finale BOX nette en dézoom ; préférence x2 légère/incertaine.
@@ -880,7 +882,7 @@ Dépendances techniques, pas un workflow imposé (doctrine `docs/PRODUCTION_RAPI
 | **P7** Paperdolls | `CHFF*INV`, `WPN*INV`, `WPN*OIN` : pipeline UI séparé | mesures UI propres (échelle, centres, filtre) | **CHFF1INV et CHFF2INV validés par l'utilisateur le 2026-10-02** : [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-chff1inv-q3m-k6-x2-nearest-v1.json), Q3m K6 x2, UI Nearest/Bitmap natif ; deux moitiés HD confirmées par journal/CRC. [Mesure native](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-ui-measurement-20261002-v1/README.md) compatible profil/alpha/placement (16 combinaisons, capture bornée) ; [installation pilote](../families/playable-characters/6110-human-female-fighter/research/palette-q3m-p7-chff1inv-ingame-20261002-v1/README.md), monde x2+BOX conservé ; lot normal complet produit/installé (§11.3), lot normal accepté (§11.3) ; variantes exclues inchangées |
 | **P8** Généralisation | §13 | preuves par famille ; aucune QA transférée | à faire |
 
-Implémentations disponibles : `pipeline/scripts/reboutcx_multipal.py` (inférence K, cibles float32), `palette_frac_encode.py` (Q6/Q3m), `palette_eval.py` (banc P1), `palette_registry.py` (V6), `palette_p2.py` (fixtures/packs). Runtime : `core/palette_fraction.h`, `creature_sprite_x2.cpp`, `paperdoll_q3m.cpp` ; tests `iee_palette_fraction_tests` et `iee_paperdoll_q3m_tests`. Q8c non demandé ; aucun écrivain/lecteur V6 à refaire.
+Implémentations disponibles : `pipeline/scripts/reboutcx_multipal.py` (inférence K, cibles float32), `palette_frac_encode.py` (Q6/Q3m), `palette_eval.py` (banc P1), `palette_registry.py` (V6), `palette_p2.py` (fixtures/packs). Runtime : `core/palette_fraction.h`, `creature_sprite_x2.cpp`, `paperdoll_q3m.cpp` ; tests `iee_palette_fraction_tests` et `iee_paperdoll_q3m_tests`. Q8c non demandé ; aucun écrivain/lecteur V6 à refaire **pour Character**. L'extension hors Character est précisée au §13.4.
 
 Références P0 pour P2 : `palette_oracle.read_bam_p8` (contrat BAM/centres/lookup et cas limites), `neutral-palette-golden.npz` (RGB neutre seulement), et fixture P1 `decoder-golden.npz` (contrat de décodage RGBA entier, alpha synthétique). Contrats et limites §7.15.
 
@@ -906,7 +908,7 @@ Preuves : [rendu hors jeu](../families/playable-characters/6110-human-female-fig
 - Sonde native bornée : 64 palettes/128 dessins, 16 combinaisons/32 CRC ; limite atteinte rapidement dans le sélecteur. 128 décodages indépendants octet-exacts (64 palettes×2 parties) valident la compatibilité, pas toutes les couleurs/effets possibles.
 - QA finale : déclaration utilisateur **« c'est propre je valide ! committe »**, 2026-10-02. Dernière session : `P7_Q3M_DRAW bound=true` pour les deux parties ; CRC pixels concordants aux plans, **une palette observée**, aucun élargissement aux autres corps/équipements. Décision indépendante du reçu/du manifeste candidat historiquement `ingame_qa=false`.
 - [Manifeste runtime](../../pipeline/runtime/manifests/iee-sprite-p7-chff1inv-q3m-20261002-v1.json), DLL`5686D1FC…021B1` ; le reçu actif du pilote est sous `…/palette-q3m-p7-chff1inv-ingame-20261002-v1/ingame-installation/active-test.json`. `Restore` revient à la **sonde native P7v2**, pas directement au runtime pré-P7. Lire la chaîne de backups avant toute restauration ; preuves anciennes intactes.
-- Suite possible **sur demande** : autre corps/armure ou couche équipement UI autonome. Ce pilote n'achève pas les 85 paperdolls ; Q8c, production monde déjà disponible et release ne sont pas relancés implicitement.
+- Ce pilote isolé n'achevait pas les 85 paperdolls inventoriés ; le lot normal 81 BAM a depuis été achevé/accepté (§11.3). Suite possible **sur demande** : autre corps/armure ou couche UI autonome hors lot normal. Q8c, production monde déjà disponible et release ne sont pas relancés implicitement.
 
 ### 11.2 P7 suite — CHFF2INV cuir accepté (2026-10-02)
 
@@ -921,6 +923,15 @@ Preuves : [rendu hors jeu](../families/playable-characters/6110-human-female-fig
 - **Lot normal accepté** : [QA immuable](../index/qa-decisions/paperdolls/2026-10-02-accepted-full-ui-6110-q3m-k6-x2-nearest-v1.json), utilisateur « validé. committe ». Session : 81 ressources chargées, 7 ressources / 14 dessins HD `bound=true`, CRC indépendants conformes ; aucune couverture exhaustive ressource/palette déduite. Restauration → pilote cuir validé ; aucune release modifiée.
 
 ---
+
+### 11.4 Production dédupliquée et installation des 78 Character (2026-10-02)
+
+- Entrée de série : [`PALETTE_PLAYABLE.md`](../../pipeline/PALETTE_PLAYABLE.md), `palette_playable.py` + `palette_work_plan.py`, profil/fits P1 inchangés. Source active [`palette-work-plan.json`](../index/palette-work-plan.json) : 78 modèles, 4 510 BAM ; SQLite exact en lecture seule, 563 969 tâches uniques / 13 677 041 occurrences. Centres/cycles/restes de palette conservés par occurrence, hors identité de résultat pixel.
+- Lots humains/demi-orcs → nains/gnomes → elfes/demi-elfes → halfelins : analyses de sélection lisant ce même plan/cache, alias exacts et intersections de frames réutilisés avant GPU ; pas de nouvelle inférence pour les hits compatibles. Encodage I/F/dep persistant, namespace x2 distinct du x4 ; bilans non additifs entre races.
+- [Génération courante](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json), [recette d'assemblage/installation](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/README.md), [preuve de couverture](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/verification.json) : une feuille V6/BAM, assemblage parallèle CPU 8 processus, 1 564 054 frames natives ; source SHA, toutes géométries/centres/transparences/cycles et routes vérifiés.
+- Catalogue SHA `C26C03DFB45913EF69A87B7A85A1E2CA795BEE79C03088F5A12F7D91240A61DD`, runtime P7 full UI conservé ; 4 510 shards installés/authentifiés, 3 198 copiés et 1 312 déjà présents identiques ; aucun ID/resref manquant. BOX scope `0x0`, UI 81 BAM conservée en Nearest.
+- Source, production, couverture/installation, QA et release restent distinctes. La preuve complète ne constitue pas une QA visuelle exhaustive ; anciennes décisions `6110`/UI inchangées. Aucun payload/TP2/content.json/release modifié.
+- Scripts d'installation/vérification de ce run ont baseline 2 IDs/paths/compteurs codés. Pour une extension, **préserver maintenant les 78 IDs**, pas remplacer le catalogue par celui du seul monstre. Détails/commandes/limites : [`SPRITES_PRODUCTION_Q3M_X2.md`](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md).
 
 ## 12. QA
 
@@ -982,17 +993,19 @@ Hors ligne ⇒ encodeur. Capture runtime ⇒ décodeur. Session en jeu ⇒ scèn
 
 ## 13. Généralisation à tous les sprites de BG2
 
-### 13.1 Périmètre (index `sprite/index/sprite_animations.csv`, 2026-09-30)
+### 13.1 Profils et périmètre (instantané initial 2026-09-30 ; production actualisée §11.4)
 
 | Profil runtime | Animations supportées | false_color | Problème multi-palettes |
 |---|---:|---|---|
-| `character-bg2ee-2.7.3.0` (types 5000, 6000) | 78 | 1 | **oui** : ce guide s'applique tel quel |
+| `character-bg2ee-2.7.3.0` (types 5000, 6000) | 78 | 1 | **oui** ; monde désormais produit/installé (§11.4) |
 | `monster-bg2ee-2.7.3.0` (7000) | 102 | 0 | non |
 | `monster-icewind-bg2ee-2.7.3.0` (E000) | 131 | non renseigné | à vérifier |
 | `monster-quadrant` / `multi-new` (1000) | 9 / 10 | 0 | non |
 | Non supportés false-color (character_old 6, monster_old 10, town_static 17, ambient 22, layered 2, large 1) | 58 | 1 | audit du profil de classes avant tout |
 
-504 IDs indexés, 330 supportés. Site : 86 corps PJ/PNJ, 947 objets visuels, 2 238 278 frames.
+504 IDs indexés, 330 supportés dans l'instantané initial. Ancien bilan du site (historique, pas autorité de production) : 86 corps PJ/PNJ, 947 objets visuels, 2 238 278 frames.
+
+Décompte actuel depuis l'union des resrefs de `sprite_resources.csv` : **8 527 BAM / 2 263 518 frames natives inventoriées**. Character acquis = 4 510 BAM / 1 564 054 frames ; monstres (`monster*` + `multi_new`, hors Character) = 3 833 BAM / 689 139 frames ; flying = 243 frames ; autres = 10 082. Les familles se recouvrent : ne pas additionner leurs compteurs. Parts Character = 69,10 % de cet inventaire ou 69,42 % de Character+monstres ; pas un bilan de durée GPU ni une dédup complète des monstres.
 
 ### 13.2 Règles
 
@@ -1013,6 +1026,16 @@ KEY/BIFF → INI (owner, type, false_color, préfixes) → BAM (cycles, frames, 
 ```
 
 Décisions qui restent humaines : visage, texture de peau, matières, niveau de lissage, préférence xBR/ReboutCX par asset, verdict au zoom réel.
+
+### 13.4 Commencer monstres/PNJ sans perdre la production Character
+
+- Référence de reprise détaillée : [`SPRITES_PRODUCTION_Q3M_X2.md`](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). Commandes disponibles de sélection/extraction, identités/cache, spécification de dédup inter-profils, assemblage, installation/restauration et capacités runtime.
+- PNJ utilisant un des 78 IDs `Character` : déjà couvert ; un nom/race de PNJ ne crée pas un nouveau pipeline. `character_old`, sleeping/static, autres moteurs : exclus du plan actuel ; résoudre l'animation CRE et le profil dans les CSV.
+- Producteur et plan actuels limités à Character. Le lecteur V6 vérifie que **tous les owners d'un composant sont Character** ; copier une feuille V6 dans un catalogue Monster ne livre pas une extension fonctionnelle. Aucun `palette_playable --all-monsters` disponible.
+- Premier travail utile : nouveau plan source CPU du profil demandé → clés exactes et intersections avec les tâches Character/cache existants → compatibilité classes/palette/alpha/guide/fits/échelle → bilan des seules nouvelles tâches. Profil différent = namespace différent ; ne pas refaire Character ni adopter ses pixels sur ressemblance.
+- Palettes fixes : la règle de succession des nuances Character est inapplicable à des indices arbitraires. Un candidat existant ReboutCX/Q0 V5 n'est pas un résultat Q3m ; définir l'encodeur/décodeur adapté pour un nouveau profil fractionnel, pas implémenter implicitement B/Q8c.
+- Extension technique nécessaire selon profil : plan/producteur, writer/lecteur, owner/hook, manifeste de capacités et installateur ; compatibilité V5/V6, limites et palette native vérifiées sur le lot. Le graphe §13.3 est conceptuel hors Character, pas une commande livrée pour toutes les familles.
+- Installation prochaine : catalogue actuel 78 IDs à préserver, composants/routes hors lot intacts, UI P7 et proofs conservées. Les scripts scoped `6110`/baseline 2 IDs ne sont pas des installateurs génériques ; pas de finalisation release sans demande.
 
 ---
 

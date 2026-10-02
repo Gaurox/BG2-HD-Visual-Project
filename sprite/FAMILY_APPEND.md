@@ -1,5 +1,7 @@
 # Publier et installer un lot de sprites
 
+**Périmètre de cette recette : catalogues xBR/ReboutCX.** Le monde actuellement installé est Q3m V6 x2, 78 Character, BOX scope `0x0`. Pour ajouter un monstre sans le retirer : [guide de production/extension](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). V3+V6 et V6/owner Monster sont actuellement refusés ; l'installateur BOX ci-dessous scope `6110`. Ne pas appliquer ces commandes telles quelles au catalogue Q3m courant.
+
 Choisir le mode dans [`PROCESSING.md`](PROCESSING.md). xBR ajoute les nouvelles animations au
 catalogue canonique ; ReboutCX remplace des composants de cette base dans un catalogue dérivé.
 

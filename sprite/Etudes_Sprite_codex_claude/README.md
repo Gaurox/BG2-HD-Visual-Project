@@ -3,6 +3,7 @@
 | Rôle | Référence |
 |---|---|
 | Guide de développement | [GUIDE_DEFINITIF_SPRITES_HD_BG2EE.md](GUIDE_DEFINITIF_SPRITES_HD_BG2EE.md) |
+| Reprise production Q3m x2 / extension monstres et PNJ | [SPRITES_PRODUCTION_Q3M_X2.md](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md) : registre/cache, calcul, assemblage, installation, profils hors Character |
 | Synthèse antérieure | [GUIDE_ULTIME_SPRITES_HD_BG2EE.md](GUIDE_ULTIME_SPRITES_HD_BG2EE.md) ; historique, corrigée par le guide définitif |
 | Étude Claude, E3/E3b/E5 | [Guide](ClaudeCode_Guide_HD_0x6110_Femme_Humaine_Guerriere/GUIDE_ClaudeCode_HD_0x6110_palettes_dynamiques.md), [revue croisée Markdown](ClaudeCode_Guide_HD_0x6110_Femme_Humaine_Guerriere/REVUE_CROISEE_Codex_ClaudeCode_0x6110.md) |
 | Étude Codex, moteur/inventaire/upscale | [Guide](CODEX_BG2EE_Femme_Humaine_Guerriere_2026-09-29/GUIDE_CODEX_BG2EE_FEMME_GUERRIERE.md) |
@@ -13,7 +14,7 @@
 ## Statut
 
 - Études = provenance historique ; conclusions E3/E3b/E5 conservées, pas de nouvelle validation ingame.
-- P1 = Q3m K6, critères hors ligne satisfaits ; runtime/installation/release actuels non remplacés.
+- P1 = Q3m K6, critères hors ligne satisfaits ; cette preuve initiale ne remplaçait pas le runtime/installation. Depuis : P3 `6110` validée, UI P7 acceptée, 78 Character produits/installés x2+BOX ; détail courant §11.4 du guide et [génération](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json). Release distincte.
 - Production courante : [sprite/README.md](../README.md), [PROCESSING.md](../PROCESSING.md).
 - Scripts d'étude conservés comme preuves de protocole. Leurs chemins Desktop, `parents[3]`, sorties fixes et fetch `master` sont historiques ; ne pas les relancer dans ces dossiers. Les nouveaux essais utilisent `pipeline/scripts/palette_eval.py` et une nouvelle version de run.
 

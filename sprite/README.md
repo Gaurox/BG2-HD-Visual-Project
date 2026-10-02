@@ -27,9 +27,11 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
-Recherche de remplacement par palettes dynamiques : [études et guide](Etudes_Sprite_codex_claude/README.md),
+**Reprise actuelle Q3m x2, y compris préparation monstres/PNJ** : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). 78 Character monde produits/assemblés/installés, 4 510 BAM / 1 564 054 frames, BOX global ; QA visuelle complète distincte, aucune release déduite.
+
+Recherche et contrat de remplacement par palettes dynamiques : [études et guide](Etudes_Sprite_codex_claude/README.md),
 [P1 Q3m K6](families/playable-characters/6110-human-female-fighter/research/palette-q3m-p1-20260930-v1/README.md).
-P1 satisfait ses critères hors ligne ; validation ingame et remplacement de la méthode courante restent à réaliser.
+P1 satisfait ses critères hors ligne ; P3 `6110` validée et UI P7 acceptée. Le traitement actuel des 78 Character utilise Q3m K6 x2 ; palettes fixes et autres owners nécessitent encore un contrat/lecteur Q3m adapté.
 
 Comparatif vidéo Q3m : [x2 / x4 — ouvrir le HTML autonome](Etudes_Sprite_codex_claude/comparatif-q3m-x2-x4-20261001-v1/comparatif.html),
 [sources, synchronisation et limites](Etudes_Sprite_codex_claude/comparatif-q3m-x2-x4-20261001-v1/README.md).
@@ -50,9 +52,11 @@ Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Publication catalogue,
 |---|---|
 | xBR | base canonique déterministe ; ajoute les nouvelles familles/animations |
 | ReboutCX | remplacements explicites dans un catalogue dérivé de xBR |
+| Q3m K6 Character | cache partagé I/F/dep, catalogue V6 ; monde x2+BOX actuellement installé |
 
 Un catalogue ReboutCX reste complet : composants ciblés en ReboutCX, tous les autres en xBR. Les
 deux modes produisent les mêmes contrats runtime x2 ; aucun choix par créature ou hot-swap ingame.
+La recette xBR/ReboutCX ci-dessous reste disponible pour les profils compatibles ; elle ne décrit pas l'extension Q3m aux monstres. Ajouter une famille ne doit pas remplacer le catalogue Q3m actif des 78 Character par un catalogue ancien/isolé.
 
 ```text
 index normalisé
@@ -87,12 +91,13 @@ Conditions avant production : `runtime_supported=yes`, `pipeline_ready=yes`, `bl
   D0–D6 terminés, D7 partiel ; plan/couverture dans
   [`catmull-rom/DSHADERS_SUITE.md`](catmull-rom/DSHADERS_SUITE.md), GPU/QA à réaliser.
 - Règles de placement : [`FOLDER_LAYOUT.md`](FOLDER_LAYOUT.md).
-- Installation courante : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
+- Installation catalogue xBR/ReboutCX : scripts `Install/Restore-CreatureSprite-XN-Catalog-Test.ps1`.
+- Installation Q3m complète actuelle : [run scellé](../docs/measurements/playable-q3m-x2-ingame-20261002-v1/README.md). Installateur scoped à sa baseline historique ; nouvelle extension = conservation des 78 IDs et adaptation du scope/capacités, selon le [guide de reprise](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md).
 
 Activation ingame : jeu et InfinityLoader fermés, utiliser l'installateur transactionnel de
 [`FAMILY_APPEND.md`](FAMILY_APPEND.md). Ne pas éditer l'INI à la main.
 
-Le baseline QA utilise `NEAREST`. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
+Le baseline xBR/ReboutCX historique utilise `NEAREST` ; le monde Character actuel utilise BOX, UI P7 Nearest. `LINEAR` est uniquement un A/B d'affichage et n'est jamais une
 preuve QA. Les anciennes variantes AA et xBR4 direct sont archivées et ne font
 plus partie du pipeline courant.
 

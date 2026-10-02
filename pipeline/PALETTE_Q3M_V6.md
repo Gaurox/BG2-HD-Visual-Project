@@ -1,7 +1,9 @@
 # Character Q3m — contrat P2 V6
 
-Périmètre : registre expérimental + DLL compatible ; pas d'installation, QA ingame,
-P3, catalogue global ou release. Preuve locale :
+Entrée opérationnelle actuelle : [SPRITES_PRODUCTION_Q3M_X2.md](SPRITES_PRODUCTION_Q3M_X2.md), [PALETTE_PLAYABLE.md](PALETTE_PLAYABLE.md). 78 Character x2 assemblés/installés le 2026-10-02 ; les sections P2/P3 ci-dessous conservent leur périmètre historique.
+
+Périmètre **du résultat P2 initial** : registre expérimental + DLL compatible ; pas d'installation, QA ingame,
+P3, catalogue global ou release à cette étape. Preuve locale :
 `sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p2-20260930-v1/verification.json`.
 P1 Q3m K6 inchangé : fractions 0..7, aucun tramage/mélange de classes/B.
 
@@ -197,3 +199,11 @@ Provenance P2 : commandes, toolchain, empreintes sources, DLL, catalogues et ora
   Oracles natifs : toutes frames/18 palettes,
   puis 656 BAM dans une session avec retour au premier ; composition 4 couches V6
   aussi exigee pour catalogue isole sans `0x6115`. Aucun resultat ingame deduit.
+
+## Extension de production Character x2 — 2026-10-02
+
+- Même format V6/profil=1/règle=1 ; six fits et kernels P1 conservés. `palette_playable` + `palette_work_plan` : dédup source exacte globale, cache persistant I/F/dep, namespaces x2/x4, adoption contrôlée des feuilles natives `6110` vérifiées.
+- 78 IDs / 4 510 BAM / 1 564 054 frames ; 563 969 tâches uniques. [Pack et preuve de couverture](../docs/measurements/playable-q3m-x2-ingame-20261002-v1/README.md), toutes feuilles V6 homogènes, une par BAM partagé. Installation BOX scope `0x0`, DLL P7 full UI conservée.
+- `class_profile_id=1` désigne toujours **Character**, pas un profil universel de palettes BG2EE. Writer catalogue Python et lecteur natif limitent V6 aux memberships Character ; un resref partagé avec un owner Monster ne rend pas ce composant V6 admissible.
+- Le lecteur refuse aussi V3+V6 dans un catalogue ; compagnons V5 compatibles seulement. Une extension doit préserver les Character actuels sans concaténer un ancien pack V3 et le nouveau V6.
+- Nouvelle production Q3m de monstres : contrat source/classes/alpha/successeurs/fits à établir, plan/cache par profil, adaptation writer/lecteur/owner/capacités si nécessaire. [Spécification de reprise et limites](SPRITES_PRODUCTION_Q3M_X2.md#runtime-capacités-et-extension-nécessaire). Aucun profil/format B/Q8c ni commande de production générale livré implicitement.

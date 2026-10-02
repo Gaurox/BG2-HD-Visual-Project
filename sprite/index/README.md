@@ -38,6 +38,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
   de frames Q3m uniques ; entrée `pipeline/scripts/palette_playable.py`. Le SQLite local peut être
   reconstruit sur CPU ; sources, géométrie et palettes restent régies par les CSV. Contrat et
   commandes : [`../../pipeline/PALETTE_PLAYABLE.md`](../../pipeline/PALETTE_PLAYABLE.md).
+- Processus complet Q3m x2 et reprise hors Character (monstres/PNJ, compatibilité des doublons, cache, owner/runtime, installation conservant les 78 IDs) : [`../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). La présence dans ces CSV n'implique pas un profil Q3m V6 disponible.
 - [`qa-decisions/`](qa-decisions/) : décisions ingame immuables.
 - Production : pointeur `current-generation.json` et manifeste scellé du catalogue.
 - Installation : `ingame-installation/active-test.json`, sans autorité QA.

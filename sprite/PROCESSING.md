@@ -1,5 +1,7 @@
 # Traitement des sprites — chemin court
 
+Processus Q3m x2 courant, cache/dédup, assemblage parallèle, installation et extension monstres/PNJ : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). Les commandes xBR/ReboutCX ci-dessous ne remplacent pas ce catalogue actuel de 78 Character.
+
 ## Autorités indépendantes
 
 | État | Source |
@@ -7,8 +9,9 @@
 | identité/éligibilité | `index/sprite_*.csv`, `index/manifest.json` |
 | production xBR | `catalogs/creature-x2-nearest/**/current-generation.json` |
 | production ReboutCX | `catalogs/creature-x2-reboutcx/**/current-generation.json` |
+| production Q3m Character x2 | `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` |
 | QA ingame | décision immuable sous `index/qa-decisions/` |
-| installation locale | unique `ingame-installation/active-test.json` du catalogue xBR parent |
+| installation locale | reçu actif du run effectivement installé ; pour le Q3m complet : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/ingame-installation/active-test.json` |
 | release | `sprite-release-candidates.json`, puis `content.json` |
 
 Une installation ne vaut pas QA ; une QA ne vaut pas intégration release.
@@ -19,7 +22,7 @@ Une installation ne vaut pas QA ; une QA ne vaut pas intégration release.
 |---|---|---|
 | xBR | nouvelle famille/animation ; repli sûr | catalogue canonique cumulatif |
 | ReboutCX | améliorer des composants xBR existants | catalogue dérivé complet : ReboutCX ciblé + xBR ailleurs |
-| Q3m K6 Character | traitement de série des personnages palettisés ; expérimental | queue unique + cache partagé I/F, catalogue V6 x2/x4 |
+| Q3m K6 Character | traitement de série des personnages palettisés ; 78 IDs x2 produits/installés | queue unique + cache partagé I/F, catalogue V6 ; x4 séparé |
 
 xBR et ReboutCX conservent BAM, cycles, centres, palettes dynamiques et registre x2. ReboutCX n'est
 pas un second runtime et ne se sélectionne pas par instance ingame.
@@ -44,6 +47,7 @@ résultats communs persistés entre modèles, source/centres/cycles propres à c
 Commandes `plan` (CPU), `run` (GPU demandé explicitement), `pack` (assemblage expérimental) et
 reconstruction du SQLite : [`../pipeline/PALETTE_PLAYABLE.md`](../pipeline/PALETTE_PLAYABLE.md).
 Cette voie ne change aucun état installation/QA/release.
+L'installation complète a été réalisée séparément : [run et vérification](../docs/measurements/playable-q3m-x2-ingame-20261002-v1/README.md), aucun manquant. Monstres/anciens PNJ hors Character : lire le [contrat d'extension](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md), pas de commande Q3m générale disponible.
 
 ### xBR
 
