@@ -1,0 +1,822 @@
+{
+  "schema": "bg2-dwarf-gnome-q3m-selection-v1",
+  "status": "planned-not-produced",
+  "scale": 2,
+  "method": "Q3m",
+  "k": 6,
+  "source_plan": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25"
+  },
+  "namespace": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "cache": "sprite/.work/palette-q3m-shared/x2/15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+  "animations": [
+    {
+      "animation_id": "0x5002",
+      "symbol": "CLERIC_MALE_DWARF_LOW",
+      "resref": "CDMB",
+      "paperdoll": "CDMC",
+      "stats": {
+        "animation_id": "0x5002",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395599872,
+        "logical_native_pixels": 220855267,
+        "resources": 656,
+        "strict_full_palette_work_items": 94212,
+        "symbol": "CLERIC_MALE_DWARF_LOW",
+        "unique_model_q32_pixels": 280123392,
+        "unique_model_work_items": 94076,
+        "unique_work_items": 94149
+      },
+      "cached_state": {
+        "unique_work": 94149,
+        "new_gpu": 93154,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5012",
+      "symbol": "CLERIC_FEMALE_DWARF_LOW",
+      "resref": "CDFB",
+      "paperdoll": "CDFC",
+      "stats": {
+        "animation_id": "0x5012",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397524992,
+        "logical_native_pixels": 220490782,
+        "resources": 656,
+        "strict_full_palette_work_items": 94641,
+        "symbol": "CLERIC_FEMALE_DWARF_LOW",
+        "unique_model_q32_pixels": 280769536,
+        "unique_model_work_items": 94506,
+        "unique_work_items": 94579
+      },
+      "cached_state": {
+        "unique_work": 94579,
+        "new_gpu": 93584,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5102",
+      "symbol": "FIGHTER_MALE_DWARF_LOW",
+      "resref": "CDMB",
+      "paperdoll": "CDMF",
+      "stats": {
+        "animation_id": "0x5102",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395524096,
+        "logical_native_pixels": 220732429,
+        "resources": 656,
+        "strict_full_palette_work_items": 93913,
+        "symbol": "FIGHTER_MALE_DWARF_LOW",
+        "unique_model_q32_pixels": 279367680,
+        "unique_model_work_items": 93777,
+        "unique_work_items": 93850
+      },
+      "cached_state": {
+        "unique_work": 93850,
+        "new_gpu": 92855,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5112",
+      "symbol": "FIGHTER_FEMALE_DWARF_LOW",
+      "resref": "CDFB",
+      "paperdoll": "CDFF",
+      "stats": {
+        "animation_id": "0x5112",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397514752,
+        "logical_native_pixels": 220443888,
+        "resources": 656,
+        "strict_full_palette_work_items": 94564,
+        "symbol": "FIGHTER_FEMALE_DWARF_LOW",
+        "unique_model_q32_pixels": 280574976,
+        "unique_model_work_items": 94429,
+        "unique_work_items": 94502
+      },
+      "cached_state": {
+        "unique_work": 94502,
+        "new_gpu": 93507,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5202",
+      "symbol": "MAGE_MALE_DWARF_LOW",
+      "resref": "CDMW",
+      "paperdoll": "CDMW",
+      "stats": {
+        "animation_id": "0x5202",
+        "logical_frames": 178357,
+        "logical_model_frames": 146222,
+        "logical_model_q32_pixels": 400809984,
+        "logical_native_pixels": 224622422,
+        "resources": 656,
+        "strict_full_palette_work_items": 94827,
+        "symbol": "MAGE_MALE_DWARF_LOW",
+        "unique_model_q32_pixels": 287326208,
+        "unique_model_work_items": 94692,
+        "unique_work_items": 94765
+      },
+      "cached_state": {
+        "unique_work": 94765,
+        "cached": 961,
+        "shared_with_previous_humans": 961,
+        "new_gpu": 93771,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5212",
+      "symbol": "MAGE_FEMALE_DWARF_LOW",
+      "resref": "CDFW",
+      "paperdoll": "CDFW",
+      "stats": {
+        "animation_id": "0x5212",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 403549184,
+        "logical_native_pixels": 224396145,
+        "resources": 656,
+        "strict_full_palette_work_items": 94743,
+        "symbol": "MAGE_FEMALE_DWARF_LOW",
+        "unique_model_q32_pixels": 286875648,
+        "unique_model_work_items": 94607,
+        "unique_work_items": 94680
+      },
+      "cached_state": {
+        "unique_work": 94680,
+        "new_gpu": 93685,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5302",
+      "symbol": "THIEF_MALE_DWARF_LOW",
+      "resref": "CDMT",
+      "paperdoll": "CDMT",
+      "stats": {
+        "animation_id": "0x5302",
+        "logical_frames": 178357,
+        "logical_model_frames": 147716,
+        "logical_model_q32_pixels": 396484608,
+        "logical_native_pixels": 221038836,
+        "resources": 656,
+        "strict_full_palette_work_items": 93945,
+        "symbol": "THIEF_MALE_DWARF_LOW",
+        "unique_model_q32_pixels": 279614464,
+        "unique_model_work_items": 93807,
+        "unique_work_items": 93880
+      },
+      "cached_state": {
+        "unique_work": 93880,
+        "new_gpu": 92885,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x5312",
+      "symbol": "THIEF_FEMALE_DWARF_LOW",
+      "resref": "CDFT",
+      "paperdoll": "CDFT",
+      "stats": {
+        "animation_id": "0x5312",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397537280,
+        "logical_native_pixels": 220681254,
+        "resources": 656,
+        "strict_full_palette_work_items": 94523,
+        "symbol": "THIEF_FEMALE_DWARF_LOW",
+        "unique_model_q32_pixels": 280337408,
+        "unique_model_work_items": 94323,
+        "unique_work_items": 94396
+      },
+      "cached_state": {
+        "unique_work": 94396,
+        "new_gpu": 93401,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6002",
+      "symbol": "CLERIC_MALE_DWARF",
+      "resref": "CDMB",
+      "paperdoll": "CDMC",
+      "stats": {
+        "animation_id": "0x6002",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395599872,
+        "logical_native_pixels": 220855267,
+        "resources": 656,
+        "strict_full_palette_work_items": 94212,
+        "symbol": "CLERIC_MALE_DWARF",
+        "unique_model_q32_pixels": 280123392,
+        "unique_model_work_items": 94076,
+        "unique_work_items": 94149
+      },
+      "cached_state": {
+        "unique_work": 94149,
+        "new_gpu": 93154,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6004",
+      "symbol": "CLERIC_MALE_GNOME",
+      "resref": "CDMB",
+      "paperdoll": "CGMC",
+      "stats": {
+        "animation_id": "0x6004",
+        "logical_frames": 161725,
+        "logical_model_frames": 130339,
+        "logical_model_q32_pixels": 374262784,
+        "logical_native_pixels": 213299644,
+        "resources": 596,
+        "strict_full_palette_work_items": 79661,
+        "symbol": "CLERIC_MALE_GNOME",
+        "unique_model_q32_pixels": 261489664,
+        "unique_model_work_items": 79586,
+        "unique_work_items": 79657
+      },
+      "cached_state": {
+        "unique_work": 79657,
+        "new_gpu": 79472,
+        "shared_with_previous_humans": 153,
+        "cached": 153,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6012",
+      "symbol": "CLERIC_FEMALE_DWARF",
+      "resref": "CDFB",
+      "paperdoll": "CDFC",
+      "stats": {
+        "animation_id": "0x6012",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397524992,
+        "logical_native_pixels": 220490782,
+        "resources": 656,
+        "strict_full_palette_work_items": 94641,
+        "symbol": "CLERIC_FEMALE_DWARF",
+        "unique_model_q32_pixels": 280769536,
+        "unique_model_work_items": 94506,
+        "unique_work_items": 94579
+      },
+      "cached_state": {
+        "unique_work": 94579,
+        "new_gpu": 93584,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6014",
+      "symbol": "CLERIC_FEMALE_GNOME",
+      "resref": "CIFB",
+      "paperdoll": "CGFC",
+      "stats": {
+        "animation_id": "0x6014",
+        "logical_frames": 161725,
+        "logical_model_frames": 130339,
+        "logical_model_q32_pixels": 373879808,
+        "logical_native_pixels": 212654389,
+        "resources": 596,
+        "strict_full_palette_work_items": 79475,
+        "symbol": "CLERIC_FEMALE_GNOME",
+        "unique_model_q32_pixels": 260701184,
+        "unique_model_work_items": 79400,
+        "unique_work_items": 79471
+      },
+      "cached_state": {
+        "unique_work": 79471,
+        "cached": 153,
+        "shared_with_previous_humans": 153,
+        "new_gpu": 79286,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6102",
+      "symbol": "FIGHTER_MALE_DWARF",
+      "resref": "CDMB",
+      "paperdoll": "CDMF",
+      "stats": {
+        "animation_id": "0x6102",
+        "logical_frames": 178357,
+        "logical_model_frames": 146969,
+        "logical_model_q32_pixels": 395524096,
+        "logical_native_pixels": 220732429,
+        "resources": 656,
+        "strict_full_palette_work_items": 93913,
+        "symbol": "FIGHTER_MALE_DWARF",
+        "unique_model_q32_pixels": 279367680,
+        "unique_model_work_items": 93777,
+        "unique_work_items": 93850
+      },
+      "cached_state": {
+        "unique_work": 93850,
+        "new_gpu": 92855,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6104",
+      "symbol": "FIGHTER_MALE_GNOME",
+      "resref": "CDMB",
+      "paperdoll": "CGMF",
+      "stats": {
+        "animation_id": "0x6104",
+        "logical_frames": 161725,
+        "logical_model_frames": 130339,
+        "logical_model_q32_pixels": 374187008,
+        "logical_native_pixels": 213176806,
+        "resources": 596,
+        "strict_full_palette_work_items": 79362,
+        "symbol": "FIGHTER_MALE_GNOME",
+        "unique_model_q32_pixels": 260733952,
+        "unique_model_work_items": 79287,
+        "unique_work_items": 79358
+      },
+      "cached_state": {
+        "unique_work": 79358,
+        "new_gpu": 79173,
+        "shared_with_previous_humans": 153,
+        "cached": 153,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6112",
+      "symbol": "FIGHTER_FEMALE_DWARF",
+      "resref": "CDFB",
+      "paperdoll": "CDFF",
+      "stats": {
+        "animation_id": "0x6112",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397514752,
+        "logical_native_pixels": 220443888,
+        "resources": 656,
+        "strict_full_palette_work_items": 94564,
+        "symbol": "FIGHTER_FEMALE_DWARF",
+        "unique_model_q32_pixels": 280574976,
+        "unique_model_work_items": 94429,
+        "unique_work_items": 94502
+      },
+      "cached_state": {
+        "unique_work": 94502,
+        "new_gpu": 93507,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6114",
+      "symbol": "FIGHTER_FEMALE_GNOME",
+      "resref": "CIFB",
+      "paperdoll": "CGFF",
+      "stats": {
+        "animation_id": "0x6114",
+        "logical_frames": 161725,
+        "logical_model_frames": 130339,
+        "logical_model_q32_pixels": 373805056,
+        "logical_native_pixels": 212551370,
+        "resources": 596,
+        "strict_full_palette_work_items": 79728,
+        "symbol": "FIGHTER_FEMALE_GNOME",
+        "unique_model_q32_pixels": 261206016,
+        "unique_model_work_items": 79653,
+        "unique_work_items": 79724
+      },
+      "cached_state": {
+        "unique_work": 79724,
+        "cached": 153,
+        "shared_with_previous_humans": 153,
+        "new_gpu": 79539,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6202",
+      "symbol": "MAGE_MALE_DWARF",
+      "resref": "CDMW",
+      "paperdoll": "CDMW",
+      "stats": {
+        "animation_id": "0x6202",
+        "logical_frames": 178357,
+        "logical_model_frames": 146222,
+        "logical_model_q32_pixels": 400809984,
+        "logical_native_pixels": 224622422,
+        "resources": 656,
+        "strict_full_palette_work_items": 94827,
+        "symbol": "MAGE_MALE_DWARF",
+        "unique_model_q32_pixels": 287326208,
+        "unique_model_work_items": 94692,
+        "unique_work_items": 94765
+      },
+      "cached_state": {
+        "unique_work": 94765,
+        "cached": 961,
+        "shared_with_previous_humans": 961,
+        "new_gpu": 93771,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6204",
+      "symbol": "MAGE_MALE_GNOME",
+      "resref": "CDMW",
+      "paperdoll": "CGMW",
+      "stats": {
+        "animation_id": "0x6204",
+        "logical_frames": 161725,
+        "logical_model_frames": 129592,
+        "logical_model_q32_pixels": 379472896,
+        "logical_native_pixels": 217066799,
+        "resources": 596,
+        "strict_full_palette_work_items": 80276,
+        "symbol": "MAGE_MALE_GNOME",
+        "unique_model_q32_pixels": 268692480,
+        "unique_model_work_items": 80202,
+        "unique_work_items": 80273
+      },
+      "cached_state": {
+        "unique_work": 80273,
+        "cached": 152,
+        "shared_with_previous_humans": 152,
+        "new_gpu": 80089,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6212",
+      "symbol": "MAGE_FEMALE_DWARF",
+      "resref": "CDFW",
+      "paperdoll": "CDFW",
+      "stats": {
+        "animation_id": "0x6212",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 403549184,
+        "logical_native_pixels": 224396145,
+        "resources": 656,
+        "strict_full_palette_work_items": 94743,
+        "symbol": "MAGE_FEMALE_DWARF",
+        "unique_model_q32_pixels": 286875648,
+        "unique_model_work_items": 94607,
+        "unique_work_items": 94680
+      },
+      "cached_state": {
+        "unique_work": 94680,
+        "new_gpu": 93685,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6214",
+      "symbol": "MAGE_FEMALE_GNOME",
+      "resref": "CDFW",
+      "paperdoll": "CGFW",
+      "stats": {
+        "animation_id": "0x6214",
+        "logical_frames": 161725,
+        "logical_model_frames": 132580,
+        "logical_model_q32_pixels": 382212096,
+        "logical_native_pixels": 216840522,
+        "resources": 596,
+        "strict_full_palette_work_items": 80192,
+        "symbol": "MAGE_FEMALE_GNOME",
+        "unique_model_q32_pixels": 268241920,
+        "unique_model_work_items": 80117,
+        "unique_work_items": 80188
+      },
+      "cached_state": {
+        "unique_work": 80188,
+        "new_gpu": 80003,
+        "shared_with_previous_humans": 153,
+        "cached": 153,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6302",
+      "symbol": "THIEF_MALE_DWARF",
+      "resref": "CDMT",
+      "paperdoll": "CDMT",
+      "stats": {
+        "animation_id": "0x6302",
+        "logical_frames": 178357,
+        "logical_model_frames": 147716,
+        "logical_model_q32_pixels": 396484608,
+        "logical_native_pixels": 221038836,
+        "resources": 656,
+        "strict_full_palette_work_items": 93945,
+        "symbol": "THIEF_MALE_DWARF",
+        "unique_model_q32_pixels": 279614464,
+        "unique_model_work_items": 93807,
+        "unique_work_items": 93880
+      },
+      "cached_state": {
+        "unique_work": 93880,
+        "new_gpu": 92885,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6304",
+      "symbol": "THIEF_MALE_GNOME",
+      "resref": "CDMT",
+      "paperdoll": "CGMT",
+      "stats": {
+        "animation_id": "0x6304",
+        "logical_frames": 161725,
+        "logical_model_frames": 131086,
+        "logical_model_q32_pixels": 375147520,
+        "logical_native_pixels": 213483213,
+        "resources": 596,
+        "strict_full_palette_work_items": 79394,
+        "symbol": "THIEF_MALE_GNOME",
+        "unique_model_q32_pixels": 260980736,
+        "unique_model_work_items": 79317,
+        "unique_work_items": 79388
+      },
+      "cached_state": {
+        "unique_work": 79388,
+        "new_gpu": 79203,
+        "shared_with_previous_humans": 153,
+        "cached": 153,
+        "new_special": 32
+      }
+    },
+    {
+      "animation_id": "0x6312",
+      "symbol": "THIEF_FEMALE_DWARF",
+      "resref": "CDFT",
+      "paperdoll": "CDFT",
+      "stats": {
+        "animation_id": "0x6312",
+        "logical_frames": 178357,
+        "logical_model_frames": 149210,
+        "logical_model_q32_pixels": 397537280,
+        "logical_native_pixels": 220681254,
+        "resources": 656,
+        "strict_full_palette_work_items": 94523,
+        "symbol": "THIEF_FEMALE_DWARF",
+        "unique_model_q32_pixels": 280337408,
+        "unique_model_work_items": 94323,
+        "unique_work_items": 94396
+      },
+      "cached_state": {
+        "unique_work": 94396,
+        "new_gpu": 93401,
+        "shared_with_previous_humans": 962,
+        "cached": 962,
+        "new_special": 33
+      }
+    },
+    {
+      "animation_id": "0x6314",
+      "symbol": "THIEF_FEMALE_GNOME",
+      "resref": "CIFT",
+      "paperdoll": "CGFT",
+      "stats": {
+        "animation_id": "0x6314",
+        "logical_frames": 161725,
+        "logical_model_frames": 131086,
+        "logical_model_q32_pixels": 374511616,
+        "logical_native_pixels": 212590756,
+        "resources": 596,
+        "strict_full_palette_work_items": 80270,
+        "symbol": "THIEF_FEMALE_GNOME",
+        "unique_model_q32_pixels": 262355968,
+        "unique_model_work_items": 80195,
+        "unique_work_items": 80266
+      },
+      "cached_state": {
+        "unique_work": 80266,
+        "cached": 153,
+        "shared_with_previous_humans": 153,
+        "new_gpu": 80081,
+        "new_special": 32
+      }
+    }
+  ],
+  "exact_world_aliases": [
+    {
+      "animation": "0x5002",
+      "same_world_resources_and_profile_as": [
+        "0x6002"
+      ]
+    },
+    {
+      "animation": "0x5012",
+      "same_world_resources_and_profile_as": [
+        "0x6012"
+      ]
+    },
+    {
+      "animation": "0x5102",
+      "same_world_resources_and_profile_as": [
+        "0x6102"
+      ]
+    },
+    {
+      "animation": "0x5112",
+      "same_world_resources_and_profile_as": [
+        "0x6112"
+      ]
+    },
+    {
+      "animation": "0x5202",
+      "same_world_resources_and_profile_as": [
+        "0x6202"
+      ]
+    },
+    {
+      "animation": "0x5212",
+      "same_world_resources_and_profile_as": [
+        "0x6212"
+      ]
+    },
+    {
+      "animation": "0x5302",
+      "same_world_resources_and_profile_as": [
+        "0x6302"
+      ]
+    },
+    {
+      "animation": "0x5312",
+      "same_world_resources_and_profile_as": [
+        "0x6312"
+      ]
+    },
+    {
+      "animation": "0x6002",
+      "same_world_resources_and_profile_as": [
+        "0x5002"
+      ]
+    },
+    {
+      "animation": "0x6012",
+      "same_world_resources_and_profile_as": [
+        "0x5012"
+      ]
+    },
+    {
+      "animation": "0x6102",
+      "same_world_resources_and_profile_as": [
+        "0x5102"
+      ]
+    },
+    {
+      "animation": "0x6112",
+      "same_world_resources_and_profile_as": [
+        "0x5112"
+      ]
+    },
+    {
+      "animation": "0x6202",
+      "same_world_resources_and_profile_as": [
+        "0x5202"
+      ]
+    },
+    {
+      "animation": "0x6212",
+      "same_world_resources_and_profile_as": [
+        "0x5212"
+      ]
+    },
+    {
+      "animation": "0x6302",
+      "same_world_resources_and_profile_as": [
+        "0x5302"
+      ]
+    },
+    {
+      "animation": "0x6312",
+      "same_world_resources_and_profile_as": [
+        "0x5312"
+      ]
+    }
+  ],
+  "selected_world_resource_profile_groups": [
+    [
+      "0x5002",
+      "0x6002"
+    ],
+    [
+      "0x5012",
+      "0x6012"
+    ],
+    [
+      "0x5102",
+      "0x6102"
+    ],
+    [
+      "0x5112",
+      "0x6112"
+    ],
+    [
+      "0x5202",
+      "0x6202"
+    ],
+    [
+      "0x5212",
+      "0x6212"
+    ],
+    [
+      "0x5302",
+      "0x6302"
+    ],
+    [
+      "0x5312",
+      "0x6312"
+    ],
+    [
+      "0x6004"
+    ],
+    [
+      "0x6014"
+    ],
+    [
+      "0x6104"
+    ],
+    [
+      "0x6114"
+    ],
+    [
+      "0x6204"
+    ],
+    [
+      "0x6214"
+    ],
+    [
+      "0x6304"
+    ],
+    [
+      "0x6314"
+    ]
+  ],
+  "resources": 1369,
+  "counts": {
+    "unique_work": 166078,
+    "new_gpu": 165083,
+    "shared_between_selected_models": 155710,
+    "shared_with_previous_humans": 962,
+    "sum_model_unique_work": 2147927,
+    "cached": 962,
+    "new_special": 33,
+    "cross_model_repeat_work_avoided": 1981849
+  },
+  "logical_frames": 4147512,
+  "previous_production": "docs/measurements/human-half-orc-q3m-x2-20261002-v1/production.json",
+  "work_list": {
+    "path": "sprite/.work/q3m-dwarf-gnome-x2-20261002-v1/work-list.csv",
+    "sha256": "e7e7ae26d589a998ae3048d7258e36f8af4f041610bebc4a2c96c1832a6bc3ea"
+  },
+  "frame_correspondence": "existing SQLite frame_map; filter by selected animation IDs",
+  "excluded_legacy_sprites": [
+    {
+      "animation_id": "0x4600",
+      "symbol": "SLEEPING_DWARF",
+      "section": "town_static",
+      "reason": "outside existing Character profile"
+    }
+  ],
+  "inventory": "separate UI pipeline, excluded"
+}
