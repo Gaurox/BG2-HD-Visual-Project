@@ -1,0 +1,174 @@
+{
+  "schema": "bg2-monster-q3m-phase2-summary-v1",
+  "status": "complete-cpu-plan-not-production",
+  "totals": {
+    "resources": 39,
+    "frames": 20925,
+    "cycles": 2288,
+    "cycle_slots": 41217,
+    "unique_canonical_bams": 33,
+    "unique_indexed_inputs": 3185,
+    "unique_native_rgb_guide_requests": 3185,
+    "unique_contract_work_items": 3190,
+    "new_model_work_items": 3184,
+    "new_special_work_items": 6,
+    "reused_q3m_encoded_work_items": 0,
+    "reusable_old_xbr_guide_requests": 3185,
+    "new_xbr_guide_requests": 0,
+    "unique_neural_six_fit_requests": 3184,
+    "character_indexed_input_intersections": 1,
+    "character_native_rgb_work_intersections": 1,
+    "historical_runs_compared": 9,
+    "historical_matching_frame_records": 95668,
+    "historical_matching_unique_inputs": 2295,
+    "bam_reuses_byte_compared": 6,
+    "input_reuses_byte_compared": 17740,
+    "guide_key_reuses_byte_compared": 17740,
+    "contract_work_reuses": 17735,
+    "six_fit_target_calls_without_cross_encoder_target_sharing": 19104,
+    "six_fit_target_calls_if_neural_queue_shared": 19104
+  },
+  "families": [
+    {
+      "target": "Spectateur",
+      "cre": "BEHSPE01",
+      "animation_id": "0x7F02",
+      "family_id": "0x7F02:body:base-resref:MBEH:MBEH",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/source/stock/manifest.json",
+      "frames_with_index2": 5184,
+      "model_frame_occurrences": 1647,
+      "special_frame_occurrences": 5184,
+      "native_pixels": 28482420,
+      "unreferenced_frames": 0,
+      "resources": 13,
+      "frames": 6831,
+      "cycles": 765,
+      "cycle_slots": 15939,
+      "unique_work_items": 1054,
+      "new_model_work_items": 1052,
+      "new_special_work_items": 2,
+      "unique_canonical_bams": 9
+    },
+    {
+      "target": "Bodhi",
+      "cre": "BODHI",
+      "animation_id": "0x7F30",
+      "family_id": "0x7F30:body:base-resref:NBOH:NBOH",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/source/stock/manifest.json",
+      "model_frame_occurrences": 1557,
+      "special_frame_occurrences": 6543,
+      "native_pixels": 3235840,
+      "unreferenced_frames": 0,
+      "frames_with_index2": 6543,
+      "resources": 13,
+      "frames": 8100,
+      "cycles": 765,
+      "cycle_slots": 15561,
+      "unique_work_items": 1244,
+      "new_model_work_items": 1242,
+      "new_special_work_items": 2,
+      "unique_canonical_bams": 11
+    },
+    {
+      "target": "Golem geôlier",
+      "cre": "IGOLEM02",
+      "animation_id": "0x7F07",
+      "family_id": "0x7F07:body:base-resref:MGLC:MGLC",
+      "runtime_owner": 3,
+      "runtime_profile": "monster-bg2ee-2.7.3.0",
+      "false_color": 0,
+      "source_manifest": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/source/stock/manifest.json",
+      "frames_with_index2": 4970,
+      "model_frame_occurrences": 1024,
+      "special_frame_occurrences": 4970,
+      "native_pixels": 6158286,
+      "unreferenced_frames": 279,
+      "resources": 13,
+      "frames": 5994,
+      "cycles": 758,
+      "cycle_slots": 9717,
+      "unique_work_items": 892,
+      "new_model_work_items": 890,
+      "new_special_work_items": 2,
+      "unique_canonical_bams": 13
+    }
+  ],
+  "pairwise": [
+    {
+      "animation_ids": [
+        "0x7F02",
+        "0x7F30"
+      ],
+      "common_indexed_inputs": 1,
+      "common_final_q3m_work_items": 0,
+      "reason": "distinct frozen palette profiles/recipes"
+    },
+    {
+      "animation_ids": [
+        "0x7F02",
+        "0x7F07"
+      ],
+      "common_indexed_inputs": 1,
+      "common_final_q3m_work_items": 0,
+      "reason": "distinct frozen palette profiles/recipes"
+    },
+    {
+      "animation_ids": [
+        "0x7F30",
+        "0x7F07"
+      ],
+      "common_indexed_inputs": 1,
+      "common_final_q3m_work_items": 0,
+      "reason": "distinct frozen palette profiles/recipes"
+    }
+  ],
+  "character_reference": {
+    "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+    "registered_sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+    "bytes": 576868352,
+    "mode": "immutable-read-only; registered baseline reused, no global rehash/rebuild/validation",
+    "namespace_x2": "15e582a92931128f728d9532113ba86a8a5958361d2989caadb7fbcb6dd20ae2",
+    "encoded_adopted": 0
+  },
+  "guide_reuse_evidence": [
+    {
+      "animation_id": "0x7F02",
+      "manifest": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/x2-nearest-v1/build/build-manifest.json",
+      "manifest_sha256": "78842ccc65fa36dd85b24d72f527f9c071a7aedbba5843390427b5818124486d",
+      "registry": "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/x2-nearest-v1/build/iee-assets/creature-sprites/CreatureSprites-XN.registry",
+      "registry_sha256": "4d462fb24f98ebb268fda505777a6426cdc3c8337138033cfbc7546d0f48f545",
+      "status": "compatible-xBR-guide-only"
+    },
+    {
+      "animation_id": "0x7F30",
+      "manifest": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/x2-nearest-v1/build/build-manifest.json",
+      "manifest_sha256": "fd460aa6ea3b4722b92304e0ce3ad0220920796e74dcb294c2a8a470bde9679c",
+      "registry": "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/x2-nearest-v1/build/iee-assets/creature-sprites/CreatureSprites-XN.registry",
+      "registry_sha256": "3d3691d6dbb5632fb1d850dd7a2cb11a33517ed7dd5197507c6a37d379d91bea",
+      "status": "compatible-xBR-guide-only"
+    },
+    {
+      "animation_id": "0x7F07",
+      "manifest": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/runs/x2-nearest-v1/build/build-manifest.json",
+      "manifest_sha256": "669b0362746487facada189f4235e3f0c5df4fcec3caa12ed4feb1f9899a78eb",
+      "registry": "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/runs/x2-nearest-v1/build/iee-assets/creature-sprites/CreatureSprites-XN.registry",
+      "registry_sha256": "4f6ad96fa9e0331b964e61d87a4fccfa404dfbef33111a38c3e6c6ce01eeca58",
+      "status": "compatible-xBR-guide-only"
+    }
+  ],
+  "guide_alpha_policy": "Keep acquired xBR transport RGBA: source RGB, alpha 0 for index0, 255 otherwise. This mask is not the render alpha; decoder uses native live palette alpha.",
+  "contract_namespace_policy": "CPU semantic namespaces frozen from phase1; final persistent cache namespaces require phase3 producer/encoder/kernel identities. Do not claim existing files as hits by key alone.",
+  "neural_sharing_policy": "Potential sharing only with identical indexed raster and all six used fitting RGB arrays plus inference context; no neural-target persistent cache implemented or created.",
+  "historical_scope": "Existing Monster/MonsterIcewind/composite full ReboutCX manifests only. Prototype synthetic cycles excluded; unrelated native BAMs read only for matching witnessed frames. No global native monster scan.",
+  "historical_hash_semantics": "ReboutCX frame_records.indices_sha256 is the quantized x2 OUTPUT. Native intersections use the referenced canonical BAM raster and byte comparison; no inference from that output hash.",
+  "pending": [
+    "Implement scoped consumer and fixed profile V6 encode/read in phase3",
+    "Pilot visual/native live-palette QA remains separate from CPU source/guide correspondence"
+  ]
+}
