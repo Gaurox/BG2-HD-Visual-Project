@@ -1,0 +1,21 @@
+{
+  "schema": "bg2-all-creature-source-dedup-verification-v1",
+  "status": "passed",
+  "source_plan_sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+  "integrity": "ok",
+  "foreign_key_errors": 0,
+  "all_resource_frames_cycles_slots_match": true,
+  "source_pins_unchanged": true,
+  "animation_queue_rows": 465,
+  "noncharacter_plan_animation_rows": 387,
+  "character_plan_rows_preserved": 78,
+  "noncharacter_frames": 699374,
+  "source_work": 194573,
+  "hash_reuses_byte_compared": true,
+  "known_monster_cache_hits": 3190,
+  "known_monster_payloads_unchanged": true,
+  "processor_created": false,
+  "GPU_inference": false,
+  "targeted_tests": "pipeline.tests.test_analyze_sprite_frame_dedup: 3 passed",
+  "QA_or_installation_or_release_changed": false
+}

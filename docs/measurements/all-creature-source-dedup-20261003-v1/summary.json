@@ -1,0 +1,42 @@
+{
+  "schema": "bg2-all-creature-source-dedup-v1",
+  "status": "complete-source-analysis-no-inference",
+  "counts": {
+    "resources_from_stock_read_only": 1659,
+    "native_out_of_frame_cycle_slots": 2929,
+    "distinct_bams_with_out_of_frame_cycle_slots": 88,
+    "resources": 4014,
+    "distinct_bam_frames": 699374,
+    "cycles": 122120,
+    "cycle_slots": 1557593,
+    "logical_frames": 1210756,
+    "input_reuses_byte_compared": 438716,
+    "work_reuses_byte_compared": 436391,
+    "resources_from_extraction": 2355,
+    "identical_bams_decoded_once": 212,
+    "defined_noncharacter_ids": 387,
+    "with_bam_noncharacter_ids": 257,
+    "unique_indexed_inputs": 192248,
+    "unique_source_work": 194573,
+    "unique_model_candidate_work": 194158,
+    "source_work_shared_with_character": 5,
+    "known_monster_encoded_work": 3190,
+    "source_frame_reuses": 504801,
+    "logical_source_work_avoided": 1016183
+  },
+  "character_plan_reused_read_only": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+  "all_creature_source_counts": {
+    "distinct_bam_frames": 2263428,
+    "unique_source_work": 758537
+  },
+  "remaining_gpu_work": null,
+  "limits": [
+    "Source equality only; no automatic I/F/dep adoption across palette/profile/scale/recipe contracts.",
+    "Unknown palette contracts prevent an exact total of GPU tasks; model_candidate is a source diagnostic.",
+    "Centres, cycles, quadrants, equipment and consumers remain per occurrence, outside pixel keys.",
+    "Fourth BAM palette byte retained verbatim; comparison used RGB is not an assertion of runtime alpha compatibility.",
+    "Out-of-frame native cycle lookups retained exactly; their runtime meaning requires the native profile contract.",
+    "No crop, mirror, rotation, index remap, tolerance, native-source rewrite or GPU work."
+  ],
+  "seconds": 173.765
+}

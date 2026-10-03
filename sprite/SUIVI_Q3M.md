@@ -42,3 +42,13 @@
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
 - Paperdolls `6110` : 81 BAM / 163 frames acceptés ; autres avatars UI non couverts par cet acquis. Suivi UI séparé dans le JSON.
 - Mise à jour : modifier uniquement la queue et ses références pour le lot demandé ; nouvelle référence pour un nouveau contrat couleur. Ne pas transformer une ancienne QA en QA du nouveau contrat.
+
+## Travail réel / doublons exacts
+
+- Plan source global : `index/q3m-source-work-plan.json` → `../docs/measurements/all-creature-source-dedup-20261003-v1/README.md` ; Character acquis lu sans reconstruction, 14 autres profils analysés.
+- Hors Character : **699 374 frames / 4 014 BAM → 194 573 travaux source**, 504 801 répétitions physiques évitées. 5 travaux source communs avec Character ; contrat couleur distinct ≠ hit Q3m.
+- Queue CSV enrichie : `dedup_unique_source_work`, `dedup_unique_model_candidate_work`, `dedup_source_work_shared_with_character`, `dedup_source_plan`. Compteurs par ID non additifs ; sélectionner l'union des clés pour connaître un lot réel.
+- Q3m Monster connu : reprise vérifiée **3 190/3 190 hits**, aucun processeur/GPU/Torch, payloads inchangés. Character/Monster et leurs producteurs acquis inchangés.
+- Garantie locale : produire une seule fois chaque clé finale compatible ; namespace profil/recette/échelle + clé pixel, cache persistant validé et verrouillé. Centres/cycles/calques restent hors clé pixel, stockés par occurrence.
+- Profil/couleur/alpha/fits non défini : travail source mesuré, coût GPU final `null` ; aucune adoption I/F ni transposition de profil. Quatre partenaires reste un contrat distinct à définir.
+- Sélection CPU : `pipeline/scripts/analyze_sprite_frame_dedup.py plan --animation-id <ID> [...]`. Pas d'inférence indépendante par famille ni addition des compteurs partagés.
