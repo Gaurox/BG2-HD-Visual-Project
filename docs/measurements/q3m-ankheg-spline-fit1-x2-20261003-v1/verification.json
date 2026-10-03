@@ -1,0 +1,67 @@
+{
+  "schema": "bg2-ankheg-spline-host-verification-v1",
+  "V8_spline": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_original_unchanged": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_flying_unchanged": {
+    "resources": 5,
+    "frames": 279,
+    "native_cycle_slots": 324,
+    "decoded_pixels": 15183936,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "core_native_suite_passed": true,
+  "python_existing_tests": 8,
+  "python_contour_tests": 6,
+  "native_malformed_catalogs": [
+    {
+      "case": "length",
+      "expected_rejection": "invalid V8 coverage header/limit",
+      "passed": true
+    },
+    {
+      "case": "special",
+      "expected_rejection": "V8 coverage changes a native special class",
+      "passed": true
+    }
+  ],
+  "application": "coverage multiplied at frame_pixel before texture/composite upload; RGB preserved for positive alpha",
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-spline-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+    "bytes": 2107904
+  },
+  "source": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+    "sha256": "119fac6c88eae56f98ab64e83c2c41cf4ad7c2739a4105b53e26e91889b7d454",
+    "bytes": 222590
+  },
+  "mask_processor": {
+    "path": "pipeline/scripts/sprite_spline_coverage.py",
+    "sha256": "9b1dd21b6d97c6f66c717876d3449f192304cf4366189e5863f6dc86379a1fe3",
+    "bytes": 2849
+  },
+  "leaf_writer": {
+    "path": "pipeline/scripts/palette_partner_registry.py",
+    "sha256": "9af2bc2e479093cc8c8860da7002abe3f6ac53cd00e75304c7dcd1d6281b2842",
+    "bytes": 9135
+  },
+  "ingame_QA": false
+}

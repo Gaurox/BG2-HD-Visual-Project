@@ -1,0 +1,415 @@
+{
+  "schema": "bg2-ankheg-SDF-offline-final-verification-v1",
+  "role": "offline-test-not-ingame-QA-installation-or-release",
+  "trial": {
+    "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/trial.json",
+    "sha256": "0751564397b7e591288c28b3660b893397c35edba8abd957a0ba1d263e607649",
+    "bytes": 13114
+  },
+  "pdf": {
+    "path": "output/pdf/ankheg-contour-sdf-comparatif-20261004-v1.pdf",
+    "sha256": "074b9201df6d1e0e96341c5a499a05e1f75043964e45b9222cbf539e671ed46b",
+    "bytes": 2237950
+  },
+  "pdf_metadata": {
+    "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/pdf.json",
+    "sha256": "b5729c0e4c0a1e39a30a77f37d2f64107cb30a603f103063279cb633b405782f",
+    "bytes": 662
+  },
+  "visual_review": {
+    "authority": "agent",
+    "pages": 5,
+    "layout": "passed",
+    "comparative_content": "reviewed"
+  },
+  "selected_frames": 12,
+  "mask_computation_work": 12,
+  "neural_work": 0,
+  "silhouette_checks": {
+    "solid_components_and_holes_preserved_at_centres": true,
+    "maximum_absolute_area_change_percent": 0.466,
+    "maximum_field_bias_x2": 1.0
+  },
+  "code": [
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/sdf_trial.py",
+      "sha256": "b65ffdf855efc187c39c85f15e95069e19fc9ada135cf3ee4c38ee97bc9b3ff3",
+      "bytes": 6250
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/prepare.py",
+      "sha256": "2261eaed5281348fe9c68c9206474126b7a9966000e71ce03fe534ed86b73f4e",
+      "bytes": 3100
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/generate.py",
+      "sha256": "2c28b919ab8e9be3ea60df08ca249d991c05ce2f1361f02322ea630cd6edca08",
+      "bytes": 7994
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/details.py",
+      "sha256": "a813926fb1401608755a30abc12a4e65c1a30b64baf5f45ebea9b81fe7c5bb0c",
+      "bytes": 1331
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/build_pdf.py",
+      "sha256": "97207f42741bad43fb09aa18572d3de1164778c8b03a57ceca8d2f932c2b331a",
+      "bytes": 8598
+    }
+  ],
+  "images": [
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-actuel-1p0-gris.png",
+      "sha256": "f0aedb304e163ab822bcf1070d8b8802c0bf44baee09d0b497aad0207b273eab",
+      "bytes": 25558
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-actuel-1p5-gris.png",
+      "sha256": "6bea63e01ccaa47010e0e6ba71eeb1375289959b53c734a94007aec77590e935",
+      "bytes": 53305
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-actuel-3p0-gris.png",
+      "sha256": "607f14262675da0226365de29e3b2b2502eaf9ffbb8640659096d3f7989e2411",
+      "bytes": 150266
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-actuel-3p0-pierre.png",
+      "sha256": "baade933d3eee1d663a971a75d7506b134decb1c575bb6ef28e3935b5ce752ae",
+      "bytes": 419166
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-actuel-alpha.png",
+      "sha256": "2052c581d59e7573ff81fc47e92439043a3f2f8010549dad833a567ffce05bd9",
+      "bytes": 39976
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-sdf-1p0-gris.png",
+      "sha256": "7417709228568d67cd1c6dca0d3d2ef9c2099c8bd1137bd27ab28fa62d6961c6",
+      "bytes": 27279
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-sdf-1p5-gris.png",
+      "sha256": "97c49aaed7ff0609c3426ffeb93611be769ba4f5684a5ec7a511bdf3229c0f85",
+      "bytes": 52972
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-sdf-3p0-gris.png",
+      "sha256": "52639ce2309154cdeb6e8c6d786ed6d3aa6f79b6d236665c0578853611712b6f",
+      "bytes": 145480
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-sdf-3p0-pierre.png",
+      "sha256": "eeb7dfe9f27d6c9af49241fc0c6fd71ea24a47141006ff41bbeeaa2e5e1b120c",
+      "bytes": 411523
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/attaque-sdf-alpha.png",
+      "sha256": "08d3511cf67b859d48468c39ac0e9e56e5c2c86351c24fe4d1807cdc2012c80b",
+      "bytes": 25931
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/detail-dos-actuel.png",
+      "sha256": "929c8760a051fc98aaf8968f7f053fc7649e73f74a4045a567bb204dec5d5ec1",
+      "bytes": 42848
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/detail-dos-sdf.png",
+      "sha256": "837c27768f6e6471a07df1e6f3ffb5fbae0493b0960fa03d9b634300a56439fa",
+      "bytes": 41031
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/detail-patte-actuel.png",
+      "sha256": "c80dd8d412bf80f727b1fc26c7621b957d32f5b9d244a74877d65ac97e3fac30",
+      "bytes": 31645
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/detail-patte-sdf.png",
+      "sha256": "f6ba742103cc6f894385368bd61be19d232d6db0a91629af689d33cdc6ce1747",
+      "bytes": 27716
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-actuel-1p0-gris.png",
+      "sha256": "3ee555b903388c03654cd04459dd1885e9c38d75b0370ffe965a60761dde09b9",
+      "bytes": 27144
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-actuel-1p5-gris.png",
+      "sha256": "31b8ecbb3b8e091185e0dd722c88767b25d168a8441ca5587c8d9b4cafcfd53d",
+      "bytes": 57188
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-actuel-3p0-gris.png",
+      "sha256": "8d79ebcc001e215116bc40c8d7602776dddb0df72d1cf75c20b9f9572a082481",
+      "bytes": 158489
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-actuel-3p0-pierre.png",
+      "sha256": "be2a5601c73aa2c40999927f9883e15ec042582cde75f0e785f1b82914c20e00",
+      "bytes": 385668
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-actuel-alpha.png",
+      "sha256": "264eb8334228293d5db34c95164ac52fec45b312a39a425ccef1bdb7c6a48c39",
+      "bytes": 40516
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-sdf-1p0-gris.png",
+      "sha256": "ca26ac966f99031feb3ff952dfdd622e33b64bc02b0a1ef3051fe9f43248d681",
+      "bytes": 29313
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-sdf-1p5-gris.png",
+      "sha256": "97dcca957d339f026ab2cd0f79ae4af2ac4fc326304787a9801a6ec57c19600a",
+      "bytes": 57453
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-sdf-3p0-gris.png",
+      "sha256": "091a62aadcd2a02ff5e184811f2a82af2a838313029977b6589f883f8273dc1d",
+      "bytes": 155099
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-sdf-3p0-pierre.png",
+      "sha256": "7d6655caab2f31648e5f1d1fce0dec712b902176c9eed34835825c78932df57d",
+      "bytes": 378792
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/face-sdf-alpha.png",
+      "sha256": "07cb45920ed27e6acff529e58ea00eb59243e7718fed107cd92daea31bc3cde2",
+      "bytes": 30434
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-actuel-1p0-gris.png",
+      "sha256": "8786d9270eb900aa110ef3b8db0ff4d58e58f5830caf7d1109b082f539d604cb",
+      "bytes": 19702
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-actuel-1p5-gris.png",
+      "sha256": "16ead7ddfb33e3367b178f0491864f43388205aeb136e3bc5bce9c2e63c81e8c",
+      "bytes": 41589
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-actuel-3p0-gris.png",
+      "sha256": "8ac7ebb73e7d6f2b0acfaad1416a37e9c8e8d51d6225d245604f7ec186d03a1e",
+      "bytes": 115317
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-actuel-3p0-pierre.png",
+      "sha256": "ddd47586bb7780b4b17879195e9f5b9a7da231f4a0634c16c03a5c1003f69f25",
+      "bytes": 276286
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-actuel-alpha.png",
+      "sha256": "fac4c3ccde111ee50bbb07b7c6ca61ae22f3a9f94b5f1291798e99dd43cd5167",
+      "bytes": 28365
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-sdf-1p0-gris.png",
+      "sha256": "cd3feb7cea9fc4e1907e01708486cab2dc5a7506a883fe6e1923c02c614266c3",
+      "bytes": 20666
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-sdf-1p5-gris.png",
+      "sha256": "a0a72158c627fb7eb6cb57703facb1d7cb84fd199466fa5aed6d2ba5086ce754",
+      "bytes": 41294
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-sdf-3p0-gris.png",
+      "sha256": "35a7f766437dfb759b37ea8758282bb740d78aaec3355f3ea4d8191fffabf13f",
+      "bytes": 112090
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-sdf-3p0-pierre.png",
+      "sha256": "d0bb0441cc10df6ab648b2de5aa99120638e2afecb6eb51db53a0cd7ee56b576",
+      "bytes": 271463
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/miroir-sdf-alpha.png",
+      "sha256": "2557292df556753a96a013a86abcc3528ddb8c92e6c6d468415b478595165432",
+      "bytes": 21100
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-actuel-1p0-gris.png",
+      "sha256": "be8a993d43f7cefc61bbe7988bd66fb2657ff6e3544057c09832a7a6836bc22f",
+      "bytes": 18081
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-actuel-1p5-gris.png",
+      "sha256": "724e2bd964ba9803e7192dbef522d395c52a6b6bd5f87423a66165c65ef41ceb",
+      "bytes": 37704
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-actuel-3p0-gris.png",
+      "sha256": "e8fd88191019453b20438c20c7a9437422aa94cd2ebdea777e91b7dc25bd2dda",
+      "bytes": 103901
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-actuel-3p0-pierre.png",
+      "sha256": "29cec68e2ada150ba1303e253cfe6a7ce54f3e03caab8af7c5fd665313170569",
+      "bytes": 208250
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-actuel-alpha.png",
+      "sha256": "eb1741d2ccc1c16b1c06b6a7c8e2f5342af19854b15a7d3d1f38451eddcee3b8",
+      "bytes": 22607
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-sdf-1p0-gris.png",
+      "sha256": "ee1d5098b7fe11f818836f1b57bce6521e6cb5ab4fe6d661c02934dbe2f68bdf",
+      "bytes": 19247
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-sdf-1p5-gris.png",
+      "sha256": "a015d45b467be84a6626da588022122e4e5176068e8dd4a91ae9e8961bc010c6",
+      "bytes": 37456
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-sdf-3p0-gris.png",
+      "sha256": "7e88b3c6a363ff34238e1324cddd38ebdc5c8e29de74c36987da365c735bcc4f",
+      "bytes": 101326
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-sdf-3p0-pierre.png",
+      "sha256": "b5279a784bc9045d5f7d5a4e2a7aa33c8e192290fe9130719e5f8d1362876081",
+      "bytes": 203687
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/profil-sdf-alpha.png",
+      "sha256": "322a2ec65987f6301fce720c431ea3463c58a2619d0643a08b24dffb6be70cab",
+      "bytes": 15692
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-19-actuel.png",
+      "sha256": "ba5694119f75e4363d698f93b0f3563d522ec11ca34cc3b529a1bd218da87f0d",
+      "bytes": 26311
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-19-sdf.png",
+      "sha256": "a7ec5c921fa222b31ecb673a68f3953dd812b6da0d371a4947fd1d4511a9a0ed",
+      "bytes": 28341
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-20-actuel.png",
+      "sha256": "f0aedb304e163ab822bcf1070d8b8802c0bf44baee09d0b497aad0207b273eab",
+      "bytes": 25558
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-20-sdf.png",
+      "sha256": "7417709228568d67cd1c6dca0d3d2ef9c2099c8bd1137bd27ab28fa62d6961c6",
+      "bytes": 27279
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-21-actuel.png",
+      "sha256": "ec6c53202bdc99f3eb6be67a2fb4b276aa6737dc6cafd9f4cb7096c9bfc28d0d",
+      "bytes": 28469
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-attaque-21-sdf.png",
+      "sha256": "1b857e316773efc6b615e6e1787fde67001d277201495ea011dccfd18274ec47",
+      "bytes": 30453
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-10-actuel.png",
+      "sha256": "817ee2023fa6d5c62c74caadd9a539d29cc09b5c19431151e4c2999aef39a64b",
+      "bytes": 19369
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-10-sdf.png",
+      "sha256": "1049d947acb02a1aa94bcf8a9d58e531166c83ba14255df0a1466a9aede2938b",
+      "bytes": 20586
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-11-actuel.png",
+      "sha256": "3ee555b903388c03654cd04459dd1885e9c38d75b0370ffe965a60761dde09b9",
+      "bytes": 27144
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-11-sdf.png",
+      "sha256": "ca26ac966f99031feb3ff952dfdd622e33b64bc02b0a1ef3051fe9f43248d681",
+      "bytes": 29313
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-12-actuel.png",
+      "sha256": "475a7e7d6ecfec00ae557baae54e55fa3e3f5724e28fd3141700d8e828d54988",
+      "bytes": 27204
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-face-12-sdf.png",
+      "sha256": "32c4452ec5b8e5d5eca11a114d2c86140eee0242f7426e1f64ec63b924f5d914",
+      "bytes": 29363
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-24-actuel.png",
+      "sha256": "587e538e6506c9e3b0a9cebd3ddc20a9ce2664ab3d47d2dd9924ca52b269e0c3",
+      "bytes": 19587
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-24-sdf.png",
+      "sha256": "cd8b480b2cebe54fbbda415a54201e5cfea408808271b5ec72720f762250022b",
+      "bytes": 20464
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-25-actuel.png",
+      "sha256": "8786d9270eb900aa110ef3b8db0ff4d58e58f5830caf7d1109b082f539d604cb",
+      "bytes": 19702
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-25-sdf.png",
+      "sha256": "cd3feb7cea9fc4e1907e01708486cab2dc5a7506a883fe6e1923c02c614266c3",
+      "bytes": 20666
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-26-actuel.png",
+      "sha256": "69a704a8621182a5f39532dff896fc60e8dea2e8651e11b85c02d65518bc55ba",
+      "bytes": 19078
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-miroir-26-sdf.png",
+      "sha256": "c0df024c3ac95d7935696e1d37c785755afec393784e19f8d80b066995d3614d",
+      "bytes": 20046
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-24-actuel.png",
+      "sha256": "67af7541aab71f84ee571cac24d5d9607af713b374bf6ca2c32f21d744c4b4a8",
+      "bytes": 17267
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-24-sdf.png",
+      "sha256": "6548ca2b134cbc45f70e0feb9020f745910adad7fb5f65a6575af210e710870b",
+      "bytes": 18209
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-25-actuel.png",
+      "sha256": "be8a993d43f7cefc61bbe7988bd66fb2657ff6e3544057c09832a7a6836bc22f",
+      "bytes": 18081
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-25-sdf.png",
+      "sha256": "ee1d5098b7fe11f818836f1b57bce6521e6cb5ab4fe6d661c02934dbe2f68bdf",
+      "bytes": 19247
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-26-actuel.png",
+      "sha256": "8af2f8215d08a14d11167d195a741f257132727a0e22f4e251ab637ac0a4d732",
+      "bytes": 18781
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/images/sequence-profil-26-sdf.png",
+      "sha256": "8d7103455e593970df268f98c1eb1a586f1e522406a9dddf3f6031e6b2842ca7",
+      "bytes": 19902
+    },
+    {
+      "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/comparatif.png",
+      "sha256": "46e50e20dcd328c0e49b72d6527b16b2c5dbbbf939169bf3879538633cb16208",
+      "bytes": 285714
+    }
+  ],
+  "active_installation_unchanged": true,
+  "active_receipt": {
+    "path": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/ingame-installation/active-test.json",
+    "sha256": "ba4bad2680e5842cd8cbb2f287b146e3b6ef8a716ebc8c5fd09b33b4971ab98a",
+    "bytes": 8576
+  },
+  "ingame_QA": false,
+  "release": false
+}

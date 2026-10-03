@@ -1,0 +1,51 @@
+{
+  "schema": "bg2-ankheg-Q3m-spline-V8-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "monster_ankheg",
+  "animation_ids": [
+    "0x3000"
+  ],
+  "resources": 12,
+  "frames": 516,
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels-unchanged",
+  "registry_version": 8,
+  "mask_recipe": {
+    "method": "periodic-cubic-spline-fit1-inward-coverage",
+    "fit_error_x2": 1.0,
+    "band_x2": 2.0,
+    "thin_radius_x2": 2.0,
+    "supersample": 4,
+    "spacing_x2": 1.5,
+    "protect_special_classes": true,
+    "expand_outside_source": false
+  },
+  "generation_dir": "sprite/.work/q3m-ankheg-spline-fit1-x2-20261003-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-ankheg-spline-fit1-x2-20261003-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "69175162cd442d757790edc5c2e4eb884ea0cbf424091b064044a9c692475dac",
+    "bytes": 2030388
+  },
+  "production": {
+    "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/production.json",
+    "sha256": "8c0969fbaa8554110eda578973979fd761c997cefbbfb04d742f95ee6a46cccd",
+    "bytes": 194365
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/runtime.json",
+    "sha256": "70f53a4cf32ecd9855c8c68351f19409877b63caba98fc2183958491cf6b0cc0",
+    "bytes": 49240
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-spline-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+    "bytes": 2107904
+  },
+  "host_verification": {
+    "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/verification.json",
+    "sha256": "4a930be09fac867512df847e949c5957abcc66d6099e684f6aa002a88c705a9f",
+    "bytes": 1991
+  },
+  "state": "produced-host-verified-ready-to-install",
+  "ingame_QA": false
+}

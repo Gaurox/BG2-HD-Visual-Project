@@ -1,0 +1,36 @@
+{
+  "schema": "bg2-ankheg-live-CRE-v1",
+  "stock_cre_scanned": 4735,
+  "override_cre_scanned": 4,
+  "precedence": "override first; KEY/BIF otherwise",
+  "creatures": [
+    {
+      "resref": "ANKHEG01",
+      "animation_id": "0x3000",
+      "body_resref": "MAKH",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ef7d314cbc19971e820b0c26eecd4c4f75b7e7a7de65dea484c547fa2ad489c1",
+      "clua": "C:CreateCreature(\"ANKHEG01\")"
+    },
+    {
+      "resref": "OHDRANKH",
+      "animation_id": "0x3000",
+      "body_resref": "MAKH",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "84ee5cb585cd9696f0f9d339949d934706d2639274b7670189c8905fc36bdd8a",
+      "clua": "C:CreateCreature(\"OHDRANKH\")"
+    }
+  ],
+  "representatives": [
+    {
+      "resref": "ANKHEG01",
+      "animation_id": "0x3000",
+      "body_resref": "MAKH",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ef7d314cbc19971e820b0c26eecd4c4f75b7e7a7de65dea484c547fa2ad489c1",
+      "clua": "C:CreateCreature(\"ANKHEG01\")"
+    }
+  ],
+  "distinct_sprite_models": 1,
+  "ingame_spawn_verified": false
+}

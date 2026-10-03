@@ -1,0 +1,85 @@
+{
+  "schema": "bg2-ankheg-alpha-host-verification-v1",
+  "V8_alpha": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_original_unchanged": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_flying_unchanged": {
+    "resources": 5,
+    "frames": 279,
+    "native_cycle_slots": 324,
+    "decoded_pixels": 15183936,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "core_native_suite_passed": true,
+  "native_malformed_catalogs": [
+    {
+      "case": "length",
+      "expected_rejection": "invalid V8 coverage header/limit",
+      "passed": true
+    },
+    {
+      "case": "special",
+      "expected_rejection": "V8 coverage changes a native special class",
+      "passed": true
+    }
+  ],
+  "unchanged_runtime_compatibility_proof": {
+    "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/verification.json",
+    "sha256": "4a930be09fac867512df847e949c5957abcc66d6099e684f6aa002a88c705a9f",
+    "bytes": 1991
+  },
+  "python_alpha_tests": 6,
+  "source_support_preserved": true,
+  "source_holes_and_connected_components_preserved": true,
+  "visible_RGB_preserved_K6": true,
+  "physical_pixels_cleared": 0,
+  "application": "strictly positive edge coverage multiplied at frame_pixel; original silhouette support unchanged",
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-spline-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+    "bytes": 2107904
+  },
+  "source": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+    "sha256": "119fac6c88eae56f98ab64e83c2c41cf4ad7c2739a4105b53e26e91889b7d454",
+    "bytes": 222590
+  },
+  "leaf_writer": {
+    "path": "pipeline/scripts/palette_partner_registry.py",
+    "sha256": "9af2bc2e479093cc8c8860da7002abe3f6ac53cd00e75304c7dcd1d6281b2842",
+    "bytes": 9135
+  },
+  "mask_processor": {
+    "path": "pipeline/scripts/sprite_alpha_coverage.py",
+    "sha256": "834799c674a1989b83db96f8d31dab5fa25d7cf269c87a8834595b21a8ff5aab",
+    "bytes": 2293
+  },
+  "native_log": {
+    "path": "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/native-alpha.log",
+    "sha256": "86872d9903cce62003a6465d588103458c57984ab1562338ae1b150c9841b94c",
+    "bytes": 2393
+  },
+  "python_log": {
+    "path": "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/alpha-tests.log",
+    "sha256": "a3dbac32a68ff19f7c4436dca0d89b846a1f702a2ed2f54a3f53e2514d1972bd",
+    "bytes": 109
+  },
+  "ingame_QA": false
+}

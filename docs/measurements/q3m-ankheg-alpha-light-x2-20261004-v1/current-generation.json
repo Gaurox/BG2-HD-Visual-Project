@@ -1,0 +1,64 @@
+{
+  "schema": "bg2-ankheg-Q3m-alpha-V8-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "monster_ankheg",
+  "animation_ids": [
+    "0x3000"
+  ],
+  "resources": 12,
+  "frames": 516,
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels-unchanged",
+  "registry_version": 8,
+  "mask_recipe": {
+    "method": "light-gaussian-inward-alpha",
+    "sigma_x2": 0.65,
+    "strength": 0.8,
+    "minimum_coverage": 176,
+    "band_x2": 2.0,
+    "thin_radius_x2": 1.5,
+    "protect_special_classes": true,
+    "expand_outside_source": false,
+    "preserve_positive_support": true
+  },
+  "generation_dir": "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "005a14409cfb1517e25154abcd2cfe686048c33f6a2b79e7fba3c8bc50905550",
+    "bytes": 2030388
+  },
+  "production": {
+    "path": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/production.json",
+    "sha256": "759baf13139164081e462459a5c4213e866ef5ef3bdad0a7669b8efe43c210e6",
+    "bytes": 207593
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/runtime.json",
+    "sha256": "1fd4f4da10a8dd03ab9c605719aca070732dfb68fb25cc8529551150fe51bb4a",
+    "bytes": 49799
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-spline-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+    "bytes": 2107904
+  },
+  "host_verification": {
+    "path": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/verification.json",
+    "sha256": "a1d7015760e823094f828bbfe1630ef925e02a5460b1fb169f76234a68f8d063",
+    "bytes": 2764
+  },
+  "state": "produced-host-verified-ready-to-install",
+  "ingame_QA": false,
+  "replaces_rejected_trial": {
+    "generation": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/current-generation.json",
+      "sha256": "e03785c19172544d31a1739c0499c10b18e43d17653d01d093938c881ce53477",
+      "bytes": 1874
+    },
+    "decision": {
+      "path": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-rejected-spline-fit1-q3m-x2-catmullrom-v1.json",
+      "sha256": "2c1733229fea6dcdd133085efcfe146f7ad77023af5bfc5381e3ea6956281203",
+      "bytes": 2772
+    }
+  }
+}

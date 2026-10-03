@@ -1,0 +1,66 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "rejected",
+  "qa_state": "failed",
+  "recorded_at_utc": "2026-10-03T22:09:33.002611+00:00",
+  "scope": {
+    "kind": "installed-complete-native-family-contour-trial",
+    "engine_family": "monster_ankheg",
+    "animation_ids": [
+      "0x3000"
+    ],
+    "variant_id": "q3m-v8-spline-fit1-x2-catmullrom",
+    "scale": 2,
+    "resources": 12,
+    "frames": 516
+  },
+  "visual_qa": {
+    "result": "fail",
+    "authority": "user",
+    "user_statement": "testé ingame, le contour n'est pas propre et fait des points de pixels flottants isolés sur le contour. autre solution plus propre? on peut annuler le dernier travail et tester Lissage léger du masque alpha — la transparence ?",
+    "defect": "isolated floating edge pixels; contour not clean"
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/runtime.json",
+      "sha256": "70f53a4cf32ecd9855c8c68351f19409877b63caba98fc2183958491cf6b0cc0",
+      "bytes": 49240
+    },
+    "dll": {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-spline-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+      "bytes": 2107904
+    },
+    "catalogue_sha256": "69175162cd442d757790edc5c2e4eb884ea0cbf424091b064044a9c692475dac",
+    "ini_sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4",
+    "world_filter": "CatmullRom",
+    "owner": 9,
+    "colour_profile_id": 8,
+    "decode_rule_id": 3,
+    "native_palette_kind": 0
+  },
+  "provenance": {
+    "selected_generation": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/current-generation.json",
+      "sha256": "e03785c19172544d31a1739c0499c10b18e43d17653d01d093938c881ce53477",
+      "bytes": 1874
+    },
+    "production": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/production.json",
+      "sha256": "8c0969fbaa8554110eda578973979fd761c997cefbbfb04d742f95ee6a46cccd",
+      "bytes": 194365
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/installation-verification.json",
+      "sha256": "7cb22dc9c89bc09762d970ed965ce8efc4a5305aecefb15ceee183f9ac349eae",
+      "bytes": 1700
+    },
+    "installed_receipt_at_decision": {
+      "path": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/ingame-installation/active-test.json",
+      "sha256": "b5c90372d0bdcff3b85fe71a203265e1a51d25dd72dd1b14b0c8e1033c08a466",
+      "bytes": 8577
+    }
+  },
+  "next_action": "restore sealed original V7; new independent light-alpha trial; no inferred acceptance",
+  "release_state": "not-promoted"
+}

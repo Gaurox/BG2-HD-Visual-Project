@@ -1,7 +1,7 @@
 {
   "schema": "bg2-sprite-q3m-work-tracking-v1",
   "role": "work-queue-not-production-QA-installation-or-release-authority",
-  "recorded_on": "2026-10-03",
+  "recorded_on": "2026-10-04",
   "classification": "sprite/index/family-groups.csv:engine_section",
   "source_inventory": [
     "sprite/index/sprite_animations.csv",
@@ -41,7 +41,7 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -64,7 +64,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "V7-x2-flying-accepted-Ogre-installed-other-families-pilot",
+    "state": "V7-x2-flying-accepted-Ogre-Ankheg-installed-other-families-pilot",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -79,10 +79,10 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 6,
+    "current_recipe_complete_animation_ids": 7,
     "current_recipe_ingame_accepted_families": 1,
-    "current_recipe_complete_families": 2,
-    "current_recipe_installed_animation_ids": 6,
+    "current_recipe_complete_families": 3,
+    "current_recipe_installed_animation_ids": 7,
     "current_recipe_ingame_accepted_animation_ids": 5
   },
   "families": [
@@ -107,7 +107,7 @@
       },
       "current_colour_witness": {
         "animation_id": "0x6110",
-        "name": "Guerrière humaine",
+        "name": "GuerriÃƒÂ¨re humaine",
         "native_kind": 1,
         "bams": [
           "CHFB1G1",
@@ -390,7 +390,7 @@
         "unique_model_candidate_work": 429,
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0
       },
       "current_colour_witness": {
         "animation_id": "0x3000",
@@ -405,8 +405,91 @@
         "physical_frames": 164,
         "unique_source_work": 143,
         "unique_encoded_work": 143,
-        "state": "host-verified-ingame-pending",
-        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+        "state": "installed-via-complete-family-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+        "installation_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/ingame-installation/active-test.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/selection.json",
+        "animation_ids": [
+          "0x3000"
+        ],
+        "native_kind": 0,
+        "bams": [
+          "MAKHDG1",
+          "MAKHDG1E",
+          "MAKHDG2",
+          "MAKHDG2E",
+          "MAKHDG3",
+          "MAKHDG3E",
+          "MAKHG1",
+          "MAKHG1E",
+          "MAKHG2",
+          "MAKHG2E",
+          "MAKHG3",
+          "MAKHG3E"
+        ],
+        "physical_frames": 516,
+        "unique_source_work": 431,
+        "unique_encoded_work": 432,
+        "encoded_cache_hits": 143,
+        "new_encoded_work": 288,
+        "special_work": 1,
+        "new_neural_targets": 1728,
+        "resume_cache_hits": 432,
+        "scope": "complete-native-family-world; body/earth; all actions/directions/frames/cycles",
+        "installation_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/installation-verification.json",
+        "state": "family-complete-produced-installed-ingame-QA-pending",
+        "qa_ingame": false,
+        "release": false
+      },
+      "current_contour_trial": {
+        "reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/current-generation.json",
+        "production_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/production.json",
+        "installation_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/installation-verification.json",
+        "runtime_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/runtime.json",
+        "scope": "complete monster_ankheg only",
+        "animation_ids": [
+          "0x3000"
+        ],
+        "resources": 12,
+        "physical_frames": 516,
+        "registry_version": 8,
+        "colour_profile": 8,
+        "decode_rule": 3,
+        "world_filter": "CatmullRom",
+        "recipe": {
+          "method": "light-gaussian-inward-alpha",
+          "sigma_x2": 0.65,
+          "strength": 0.8,
+          "minimum_coverage": 176,
+          "band_x2": 2.0,
+          "thin_radius_x2": 1.5,
+          "protect_special_classes": true,
+          "expand_outside_source": false,
+          "preserve_positive_support": true
+        },
+        "stats": {
+          "physical_frames": 516,
+          "unique_masks": 431,
+          "mask_cache_hits": 85,
+          "frames_changed": 494,
+          "physical_pixels_changed": 696732,
+          "physical_pixels_cleared": 0,
+          "new_neural_targets": 0,
+          "new_Q3m_encodings": 0
+        },
+        "state": "alpha-trial-produced-host-verified-installed-ingame-QA-pending",
+        "qa_ingame": false,
+        "release": false,
+        "restore_script": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/restore.ps1",
+        "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+        "qa_state": "pending",
+        "positive_source_support_preserved": true,
+        "replaces_rejected_trial_decision": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-rejected-spline-fit1-q3m-x2-catmullrom-v1.json"
       }
     },
     {
@@ -623,7 +706,7 @@
       },
       "current_colour_witness": {
         "animation_id": "0xD400",
-        "name": "Oiseau intérieur",
+        "name": "Oiseau intÃƒÂ©rieur",
         "native_kind": 0,
         "bams": [
           "ABIRG1"
@@ -822,6 +905,141 @@
       "qa_ingame": true,
       "release": false,
       "qa_reference": "sprite/index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json"
+    },
+    {
+      "family": "monster_ankheg",
+      "reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/selection.json",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "native_kind": 0,
+      "bams": [
+        "MAKHDG1",
+        "MAKHDG1E",
+        "MAKHDG2",
+        "MAKHDG2E",
+        "MAKHDG3",
+        "MAKHDG3E",
+        "MAKHG1",
+        "MAKHG1E",
+        "MAKHG2",
+        "MAKHG2E",
+        "MAKHG3",
+        "MAKHG3E"
+      ],
+      "physical_frames": 516,
+      "unique_source_work": 431,
+      "unique_encoded_work": 432,
+      "encoded_cache_hits": 143,
+      "new_encoded_work": 288,
+      "special_work": 1,
+      "new_neural_targets": 1728,
+      "resume_cache_hits": 432,
+      "scope": "complete-native-family-world; body/earth; all actions/directions/frames/cycles",
+      "installation_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/installation-verification.json",
+      "state": "family-complete-produced-installed-ingame-QA-pending",
+      "qa_ingame": false,
+      "release": false
+    }
+  ],
+  "current_contour_trials": [
+    {
+      "family": "monster_ankheg",
+      "reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/current-generation.json",
+      "production_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/production.json",
+      "installation_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/installation-verification.json",
+      "runtime_reference": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/runtime.json",
+      "scope": "complete monster_ankheg only",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "resources": 12,
+      "physical_frames": 516,
+      "registry_version": 8,
+      "colour_profile": 8,
+      "decode_rule": 3,
+      "world_filter": "CatmullRom",
+      "recipe": {
+        "method": "light-gaussian-inward-alpha",
+        "sigma_x2": 0.65,
+        "strength": 0.8,
+        "minimum_coverage": 176,
+        "band_x2": 2.0,
+        "thin_radius_x2": 1.5,
+        "protect_special_classes": true,
+        "expand_outside_source": false,
+        "preserve_positive_support": true
+      },
+      "stats": {
+        "physical_frames": 516,
+        "unique_masks": 431,
+        "mask_cache_hits": 85,
+        "frames_changed": 494,
+        "physical_pixels_changed": 696732,
+        "physical_pixels_cleared": 0,
+        "new_neural_targets": 0,
+        "new_Q3m_encodings": 0
+      },
+      "state": "alpha-trial-produced-host-verified-installed-ingame-QA-pending",
+      "qa_ingame": false,
+      "release": false,
+      "restore_script": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/restore.ps1",
+      "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+      "qa_state": "pending",
+      "positive_source_support_preserved": true,
+      "replaces_rejected_trial_decision": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-rejected-spline-fit1-q3m-x2-catmullrom-v1.json"
+    }
+  ],
+  "historical_contour_trials": [
+    {
+      "reference": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/current-generation.json",
+      "production_reference": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/production.json",
+      "installation_reference": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/installation-verification.json",
+      "runtime_reference": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/runtime.json",
+      "scope": "complete monster_ankheg only",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "resources": 12,
+      "physical_frames": 516,
+      "registry_version": 8,
+      "colour_profile": 8,
+      "decode_rule": 3,
+      "world_filter": "CatmullRom",
+      "recipe": {
+        "method": "periodic-cubic-spline-fit1-inward-coverage",
+        "fit_error_x2": 1.0,
+        "band_x2": 2.0,
+        "thin_radius_x2": 2.0,
+        "supersample": 4,
+        "spacing_x2": 1.5,
+        "protect_special_classes": true,
+        "expand_outside_source": false
+      },
+      "stats": {
+        "physical_frames": 516,
+        "unique_masks": 431,
+        "mask_cache_hits": 85,
+        "frames_changed": 490,
+        "physical_pixels_changed": 392547,
+        "physical_pixels_cleared": 25872,
+        "new_neural_targets": 0,
+        "new_Q3m_encodings": 0
+      },
+      "state": "rejected-ingame-restored-parent",
+      "qa_ingame": false,
+      "release": false,
+      "restore_script": "docs/measurements/q3m-ankheg-spline-fit1-x2-20261003-v1/restore.ps1",
+      "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+      "family": "monster_ankheg",
+      "qa_state": "failed",
+      "qa_decision": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-rejected-spline-fit1-q3m-x2-catmullrom-v1.json",
+      "qa_decision_sha256": "2c1733229fea6dcdd133085efcfe146f7ad77023af5bfc5381e3ea6956281203",
+      "installation_state": "restored-parent"
     }
   ]
 }

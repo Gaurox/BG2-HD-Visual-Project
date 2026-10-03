@@ -1,0 +1,58 @@
+{
+  "schema": "bg2-ankheg-spline-installed-verification-v1",
+  "role": "installation-not-ingame-QA-or-release",
+  "verified_at_utc": "2026-10-03T21:56:52.9679410Z",
+  "family": "monster_ankheg",
+  "resources": 12,
+  "frames": 516,
+  "registry_version": 8,
+  "scale": 2,
+  "world_filter": "CatmullRom",
+  "contour_recipe": {
+    "method": "periodic-cubic-spline-fit1-inward-coverage",
+    "fit_error_x2": 1.0,
+    "band_x2": 2.0,
+    "thin_radius_x2": 2.0,
+    "supersample": 4,
+    "spacing_x2": 1.5,
+    "protect_special_classes": true,
+    "expand_outside_source": false
+  },
+  "new_leaf_sha256_verified": 12,
+  "inherited_animations_unchanged": 87,
+  "catalog_sha256": "69175162cd442d757790edc5c2e4eb884ea0cbf424091b064044a9c692475dac",
+  "dll_sha256": "4e0048bce2fc4a4719a601f722be71920323df0dd675fba865f808c32917e30a",
+  "ini_byte_identical": true,
+  "unchanged_assets_sha256_verified": 84,
+  "backup_sha256_verified": true,
+  "native_spline": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "native_original": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "native_flying": {
+    "resources": 5,
+    "frames": 279,
+    "native_cycle_slots": 324,
+    "decoded_pixels": 15183936,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "installation_receipt_sha256": "B5C90372D0BDCFF3B85FE71A203265E1A51D25DD72DD1B14B0C8E1033C08A466",
+  "ingame_QA": false,
+  "release": false
+}

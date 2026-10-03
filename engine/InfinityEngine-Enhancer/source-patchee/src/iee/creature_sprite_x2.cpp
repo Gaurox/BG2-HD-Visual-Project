@@ -83,8 +83,12 @@ constexpr std::uint32_t kXnAntialiasRegistryVersion = 4;
 constexpr std::uint32_t kXnCompressedRegistryVersion = 5;
 constexpr std::uint32_t kXnFractionRegistryVersion = 6;
 constexpr std::uint32_t kXnPartnerRegistryVersion = 7;
+constexpr std::uint32_t kXnContourRegistryVersion = 8;
+constexpr bool partner_version(std::uint32_t version) noexcept {
+  return version == kXnPartnerRegistryVersion || version == kXnContourRegistryVersion;
+}
 constexpr bool fraction_version(std::uint32_t version) noexcept {
-  return version == kXnFractionRegistryVersion || version == kXnPartnerRegistryVersion;
+  return version == kXnFractionRegistryVersion || partner_version(version);
 }
 constexpr std::uint32_t kRegistrySetVersion = 1;
 constexpr std::uint32_t kRegistryCatalogVersion = 1;
@@ -160,6 +164,9 @@ struct Frame {
   std::array<std::uint16_t, 256> representatives{};
   std::vector<std::uint8_t> indices;
   std::vector<std::uint8_t> fractions;
+  // V8 immutable coverage stays with shard metadata (bounded by its LRU budget).
+  // Empty = identity, so V1-V7 retain their original palette/alpha contract.
+  std::vector<std::uint8_t> coverage;
   bool fractional{};
   std::shared_ptr<const core::palette_fraction::PartnerProfile> partnerProfile;
   std::uint32_t fractionProfile{core::palette_fraction::kCharacterProfile};
@@ -1391,8 +1398,11 @@ std::uint32_t frame_pixel(const Frame& frame, const std::vector<std::uint8_t>& i
                           const std::vector<std::uint8_t>& fractions,
                           const core::palette_fraction::Palette& palette,
                           const core::palette_fraction::Lut& lut, std::size_t n) noexcept {
-  return frame.fractional ? lut.pixel(indices[n], fractions.empty() ? 0 : fractions[n])
-                          : palette[indices[n]];
+  const auto color = frame.fractional ? lut.pixel(indices[n], fractions.empty() ? 0 : fractions[n])
+                                     : palette[indices[n]];
+  if (frame.coverage.empty()) return color;
+  const auto alpha = ((color >> 24) * frame.coverage[n] + 127u) / 255u;
+  return alpha ? (color & 0x00ffffffu) | (alpha << 24) : 0u;
 }
 
 void delete_texture_entry_locked(const EngineTextureApi& api,
@@ -2155,7 +2165,7 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
       (version != kXnRegistryVersion &&
        version != kXnAntialiasRegistryVersion &&
        version != kXnCompressedRegistryVersion &&
-       version != kXnFractionRegistryVersion && version != kXnPartnerRegistryVersion) ||
+       version != kXnFractionRegistryVersion && !partner_version(version)) ||
       !supported_physical_scale(scale) ||
       (version == kXnAntialiasRegistryVersion && scale != 2)) {
     throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
@@ -2212,8 +2222,8 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
     if (!reader.read(profile) || !reader.read(rule) ||
         !core::palette_fraction::supported_profile(profile, rule) ||
         (core::palette_fraction::four_partner_profile(profile, rule) !=
-         (parsed.version == kXnPartnerRegistryVersion)) ||
-        (parsed.version == kXnPartnerRegistryVersion && parsed.scale != 2) ||
+         partner_version(parsed.version)) ||
+        (partner_version(parsed.version) && parsed.scale != 2) ||
         (core::palette_fraction::monster_profile(profile, rule) && parsed.scale != 2)) {
       throw std::runtime_error("unknown/truncated Q3m class profile or decode rule");
     }
@@ -2233,6 +2243,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
   }
   parsed.resources.reserve(parsed.resourceCount);
   std::uint64_t decodedPayloadBytes = 0;
+  std::uint64_t decodedCoverageBytes = 0;
   for (std::uint32_t resourceIndex = 0; resourceIndex < parsed.resourceCount;
        ++resourceIndex) {
     Resource resource;
@@ -2257,7 +2268,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
             resource.sourceSha256)) {
       throw std::runtime_error("Q3m Monster resource/source differs from fixed profile");
     }
-    if (parsed.version == kXnPartnerRegistryVersion) {
+    if (partner_version(parsed.version)) {
       auto profile = std::make_shared<core::palette_fraction::PartnerProfile>();
       if (!reader.read(profile->nativeKind) || !reader.read(profile->sourcePalette) ||
           !reader.read(profile->partners) || !profile->valid(parsed.fractionProfile, parsed.fractionRule))
@@ -2290,7 +2301,9 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
            ((!fractionalRegistry && frameReserved[1] != std::byte{0}) ||
             (fractionalRegistry && (frame.transparent != 0 ||
               std::to_integer<std::uint8_t>(frameReserved[1]) > 1)) ||
-            frameReserved[2] != std::byte{0}))) {
+            (parsed.version == kXnContourRegistryVersion
+              ? std::to_integer<std::uint8_t>(frameReserved[2]) > 1
+              : frameReserved[2] != std::byte{0})))) {
         throw std::runtime_error("invalid creature-sprite frame header");
       }
       const auto nativePixels = static_cast<std::uint64_t>(width) * height;
@@ -2323,8 +2336,11 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         frame.fractionRule = parsed.fractionRule;
       }
       const bool fractionPresent = fractionalRegistry && frameReserved[1] == std::byte{1};
+      const bool coveragePresent = parsed.version == kXnContourRegistryVersion && frameReserved[2] == std::byte{1};
       std::uint32_t fractionStored = 0;
       std::uint8_t fractionCodec = 0;
+      std::uint32_t coverageStored = 0;
+      std::uint8_t coverageCodec = 0;
       if (fractionalRegistry) {
         std::array<std::byte, 3> reserved{};
         if (!reader.read(frame.dependencies) || !reader.read(fractionStored) ||
@@ -2343,6 +2359,19 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
           }
         }
       }
+      if (parsed.version == kXnContourRegistryVersion) {
+        std::array<std::byte, 3> reserved{};
+        if (!reader.read(coverageStored) || !reader.read(coverageCodec) || !reader.read(reserved) ||
+            reserved != std::array<std::byte, 3>{} ||
+            (!coveragePresent && (coverageStored != 0 || coverageCodec != 0)) ||
+            (coveragePresent &&
+             !((coverageCodec == kRegistryFrameCodecRaw && coverageStored == expectedIndices) ||
+               (coverageCodec == kRegistryFrameCodecXpressHuff && coverageStored > 0 && coverageStored < expectedIndices))) ||
+            !checked_add(decodedCoverageBytes, coveragePresent ? expectedIndices : 0,
+                         kCatalogMetadataCacheBudgetBytes)) {
+          throw std::runtime_error("invalid V8 coverage header/limit");
+        }
+      }
       if (!checked_add(decodedPayloadBytes, expectedIndices * (fractionPresent ? 2ull : 1ull),
                        maximum_registry_bytes_for_scale(parsed.scale) *
                            (fractionalRegistry ? 2ull : 1ull))) {
@@ -2357,6 +2386,10 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       const std::byte* fractionData = nullptr;
       if (fractionPresent && !reader.read_view(fractionData, fractionStored)) {
         throw std::runtime_error("truncated Q3m fraction plane");
+      }
+      const std::byte* coverageData = nullptr;
+      if (coveragePresent && !reader.read_view(coverageData, coverageStored)) {
+        throw std::runtime_error("truncated V8 coverage plane");
       }
       if (fractionalRegistry) {
         // Validate the complete logical contract before publishing metadata.
@@ -2388,6 +2421,15 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
                                              : std::vector<std::uint8_t>{};
         if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get())) {
           throw std::runtime_error("invalid Q3m fraction/dependency contract");
+        }
+        if (coveragePresent) {
+          frame.coverage = inflate(coverageData, coverageStored, coverageCodec);
+          const auto limit = frame.partnerProfile->nativeKind == 0 ? 3u : 4u;
+          for (std::size_t n = 0; n < logicalI.size(); ++n) {
+            if (logicalI[n] < limit && frame.coverage[n] != 255) {
+              throw std::runtime_error("V8 coverage changes a native special class");
+            }
+          }
         }
       } else if (frameCodec == kRegistryFrameCodecRaw) {
         for (std::uint32_t index = 0; index < storedBytes; ++index) {
@@ -2449,7 +2491,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       for (auto& frameIndex : cycle) {
         if (!reader.read(frameIndex) ||
             (frameIndex >= frameCount &&
-             !(parsed.version == kXnPartnerRegistryVersion && frameIndex <= 0xffffu))) {
+             !(partner_version(parsed.version) && frameIndex <= 0xffffu))) {
           throw std::runtime_error("invalid creature-sprite cycle lookup");
         }
       }
@@ -3237,6 +3279,9 @@ std::uint64_t resource_metadata_bytes(
                sizeof(std::uint32_t))) {
         return (std::numeric_limits<std::uint64_t>::max)();
       }
+    }
+    for (const auto& frame : resource.frames) {
+      if (!add(frame.coverage.size())) return (std::numeric_limits<std::uint64_t>::max)();
     }
   }
   return total;
