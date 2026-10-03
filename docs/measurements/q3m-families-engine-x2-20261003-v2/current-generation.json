@@ -1,0 +1,95 @@
+{
+  "schema": "bg2-q3m-family-witness-generation-v1",
+  "state": "local-candidate-host-verified-ingame-pending",
+  "method": "Q3m-K6-four-partners-eight-levels",
+  "scale": 2,
+  "registry_version": 7,
+  "selection": {
+    "path": "sprite/index/q3m-family-witnesses.json",
+    "bytes": 2582,
+    "sha256": "aaea77a38038c58047826c968606ab5c59fdf46aff979b480f14ff67bc9c4d41"
+  },
+  "catalog": {
+    "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/pack-v3/CreatureSprites-XN.catalog",
+    "bytes": 8380,
+    "sha256": "9c9f3416e8c6446cfadf18623492444e2a581fcf8b74ce9b981f7caa110dcd73"
+  },
+  "pack_directory": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/pack-v3",
+  "pack_summary": {
+    "path": "docs/measurements/q3m-families-engine-x2-20261003-v2/pack-summary.json",
+    "bytes": 19997,
+    "sha256": "e4c9ff77db3947d68aa22c371d9d134b17524b684fc57c31871f6d86ff0557f0"
+  },
+  "oracle": {
+    "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/pack-v3/witnesses.oracle",
+    "bytes": 2919244,
+    "sha256": "08780dcf58a725cec726e9ad27aa6c1206416a932f0c02bd8d301858b2ec576e"
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-families-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "bytes": 2106880,
+    "sha256": "cb8d4f5181e3edbd68fb9a5ef252e59812acec846e0186573edea3e26a71c282"
+  },
+  "sources": [
+    {
+      "path": "pipeline/scripts/q3m_family_witnesses.py",
+      "bytes": 22312,
+      "sha256": "fef1e931021a3e1263f25a2d1432ee65bc5175ae594368a8fa5efe8cb0d1e8d9"
+    },
+    {
+      "path": "pipeline/scripts/palette_q3m_partners.py",
+      "bytes": 6554,
+      "sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449"
+    },
+    {
+      "path": "pipeline/scripts/palette_partner_registry.py",
+      "bytes": 7258,
+      "sha256": "944b346be9e63dea6fa525fde097b302a4ddefd53b3c759fa34d355ea5c583fe"
+    },
+    {
+      "path": "pipeline/scripts/analyze_native_sprite_families.py",
+      "bytes": 5049,
+      "sha256": "bc6a7644c589f8eea2f310269a67ca49dd43fd8bd52bfafb872d0f665ab66ebc"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp",
+      "bytes": 291231,
+      "sha256": "b07e81954faef53b33faf6c265cf8d3e16b849bdaff2359f3bc73370012cfbf6"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+      "bytes": 220027,
+      "sha256": "1bab6f280e47e0fed0e8abd8fe48021fd15c711c74ab3b417e59da522cbef3b7"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_fraction.h",
+      "bytes": 5418,
+      "sha256": "d676696c48e06d0d81bab5a7a2b5c3d74648d802dcfb2e02a6df9161e1216abc"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/palette_partners.h",
+      "bytes": 1457,
+      "sha256": "975977ca1a976e339f8193bfb7419854513d9f20b34c0a65d7ef3731f9e91b90"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/core/sprite_family_owners.h",
+      "bytes": 8009,
+      "sha256": "22dde4d3ae02b5bb69bfe54f3455bcb918f8e69ed7bbf3898fac2af8a563ab97"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/build_manifest.cpp",
+      "bytes": 26744,
+      "sha256": "c2b586eea9001a54059429cbbaeae7d21d975dae8938387d97a1bc3dd8a7799c"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/game/build_manifest.h",
+      "bytes": 21769,
+      "sha256": "2dba9858cb811350c27c641a06d2d8074564e3dcc28028767766477ea70661df"
+    }
+  ],
+  "verification": "docs/measurements/q3m-families-engine-x2-20261003-v2/verification.json",
+  "scope": "15 witnesses; selected actions/BAMs complete; other actions/equipment remain native",
+  "ingame_validated": false,
+  "installed": false,
+  "release": false
+}

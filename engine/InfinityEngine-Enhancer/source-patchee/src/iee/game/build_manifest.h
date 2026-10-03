@@ -144,6 +144,14 @@ struct RuntimeOffsets {
 // Optional high-level CGameStatic/CVidCell composition bridge used by external
 // area-animation runtime packs. Every RVA, object offset and signature is tied
 // to one positively identified executable manifest.
+struct AdditionalCreatureRender {
+  std::uintptr_t render{}, vtable{};
+  std::uint32_t owner{};
+  std::uintptr_t alternateVtable{};
+  std::uint32_t alternateOwner{};
+  bool composite{};
+  std::string_view signature{};
+};
 struct AreaAnimationRuntime {
   bool enabled{};
   std::uintptr_t gameStaticRenderBam{};
@@ -232,6 +240,8 @@ struct AreaAnimationRuntime {
   // Each pointer is gated by its corresponding native int32 enable flag.
   std::array<std::uintptr_t, 2> monsterCompositeCells{};
   std::array<std::uintptr_t, 2> monsterCompositeEnabled{};
+  std::array<AdditionalCreatureRender, 9> additionalCreatureRenders{};
+  std::uintptr_t additionalCreatureRenderSlot{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {
     if (!enabled) return true;
@@ -285,6 +295,12 @@ struct AreaAnimationRuntime {
         !monsterMultiRenderSignature.empty() && monsterMultiPartCount &&
         multipartCurrentCells && vidCellStride;
     if (hasAnyMonsterMultiEvidence && !hasCompleteMonsterMultiEvidence) return false;
+    for (const auto& entry : additionalCreatureRenders) {
+      const bool present = entry.render || entry.vtable || entry.owner ||
+          entry.alternateVtable || entry.alternateOwner || !entry.signature.empty();
+      if (present && (!additionalCreatureRenderSlot || !entry.render || !entry.vtable || entry.owner < 6 || entry.owner > 15 ||
+          entry.signature.empty() || ((entry.alternateVtable == 0) != (entry.alternateOwner == 0)))) return false;
+    }
     return true;
   }
 };

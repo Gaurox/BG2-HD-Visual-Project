@@ -1,0 +1,103 @@
+"""IEECSXN V7 x2 leaves. V6 frame layout; packed partner/fraction plane; BAM-local profile."""
+from __future__ import annotations
+import hashlib
+from pathlib import Path
+import re
+import struct
+import zlib
+import numpy as np
+import palette_registry as v6
+import run_creature_sprite_x2 as registry
+from palette_q3m_partners import Profile, RULE, PROFILE_BYTES
+
+VERSION = 7
+
+
+def require(ok, message):
+    if not ok: raise ValueError('V7 ' + message)
+
+
+def write(path, resources, profile, *, compress=True):
+    path = Path(path); temporary = path.with_suffix(path.suffix+'.part')
+    require(not path.exists() and not temporary.exists(), 'fresh leaf destination required')
+    require(1 <= len(resources) <= registry.MAX_RESOURCES, 'resource count')
+    try:
+        with temporary.open('xb') as output, v6._Codec(compress=True) as codec:
+            output.write(struct.pack('<8s6I', registry.XN_REGISTRY_MAGIC, VERSION, 2, len(resources), 0xffff, profile.id, RULE))
+            seen = set()
+            for resource in resources:
+                ref = resource['resref']; require(re.fullmatch(r'[A-Z0-9_]{1,8}', ref) and ref not in seen, 'resref')
+                seen.add(ref); frames, cycles = resource['frames'], resource['cycles']
+                require(1 <= len(frames) <= registry.MAX_FRAMES_PER_RESOURCE and 1 <= len(cycles) <= registry.MAX_CYCLES_PER_RESOURCE, 'counts')
+                source = bytes.fromhex(resource['source_sha256']); require(len(source) == 32, 'source SHA256')
+                output.write(struct.pack('<8s32sII', ref.encode().ljust(8,b'\0'), source, len(frames), len(cycles)))
+                output.write(profile.metadata())
+                for frame in frames:
+                    w,h,cx,cy,tr = frame['geometry']; i, code = frame['I'], frame['F']
+                    require(0 < w <= 65535 and 0 < h <= 65535 and tr == 0 and -32768 <= cx < 32768 and -32768 <= cy < 32768, 'geometry')
+                    require(i.shape == (h*2,w*2), 'physical x2 extent')
+                    profile.validate(i, code, frame['guide'], frame['dep'])
+                    reps = np.asarray(frame['representatives'], dtype=np.uint16)
+                    require(reps.shape == (256,) and np.all((reps == 0xffff) | (reps < w*h)), 'representatives')
+                    present = bool(np.any(code)); require(i.size*(1+present) <= registry.MAX_LAZY_FRAME_INDEX_BYTES, 'frame bound')
+                    stored, codecs = [], []
+                    for plane in (i.tobytes(), code.tobytes() if present else b''):
+                        zipped = codec.encode(plane) if compress and plane else plane
+                        use = len(zipped) < len(plane); stored.append(zipped if use else plane); codecs.append(int(use))
+                    output.write(v6.FRAME.pack(w,h,cx,cy,tr,codecs[0],int(present),0,len(stored[0]),*reps.tolist(),frame['dep'].tobytes(),len(stored[1]),codecs[1]))
+                    output.write(stored[0]); output.write(stored[1])
+                for cycle in cycles:
+                    require(len(cycle) <= registry.MAX_CYCLE_SLOTS and all(0 <= v <= 0xffff for v in cycle), 'native u16 cycle lookup')
+                    output.write(struct.pack('<I',len(cycle))); output.write(struct.pack(f'<{len(cycle)}I',*cycle))
+        require(temporary.stat().st_size <= registry.maximum_registry_bytes(2), 'leaf bound')
+        info = inspect(temporary); temporary.replace(path); return info
+    except BaseException:
+        if temporary.exists(): temporary.unlink()
+        raise
+
+
+def inspect(path, *, include_frames=False):
+    path = Path(path); size = path.stat().st_size
+    require(32 < size <= registry.maximum_registry_bytes(2), 'file size')
+    raw = path.read_bytes(); pos = 0
+    def take(n):
+        nonlocal pos
+        require(0 <= n <= len(raw)-pos, 'truncated input'); data = raw[pos:pos+n]; pos += n; return data
+    magic, version, scale, count, animation, pid, rule = struct.unpack('<8s6I',take(32))
+    require(magic == registry.XN_REGISTRY_MAGIC and version == VERSION and scale == 2 and animation == 0xffff and pid in (8,9) and rule == RULE and 1 <= count <= registry.MAX_RESOURCES, 'header')
+    resources, frames_total, indices_total = [], 0, 0
+    with v6._Codec(compress=False) as decoder:
+        for _ in range(count):
+            header = take(48); name = header[:8].split(b'\0')[0]
+            require(re.fullmatch(rb'[A-Z0-9_]{1,8}',name) and header[:8] == name.ljust(8,b'\0'), 'resource name')
+            ref = name.decode(); require(ref not in [r['resref'] for r in resources], 'duplicate resource')
+            nf,nc = struct.unpack_from('<II',header,40)
+            require(1 <= nf <= registry.MAX_FRAMES_PER_RESOURCE and 1 <= nc <= registry.MAX_CYCLES_PER_RESOURCE, 'resource counts')
+            metadata = take(PROFILE_BYTES); kind = struct.unpack_from('<I',metadata)[0]
+            profile = Profile(kind, np.frombuffer(metadata,np.uint8,1024,4).reshape(256,4), np.zeros((6,256,3),np.uint8), np.frombuffer(metadata,np.uint8,1024,1028).reshape(256,4))
+            require(profile.id == pid, 'resource palette kind/profile differs')
+            frames = []
+            for _ in range(nf):
+                h = take(v6.FRAME_BYTES); w,he,cx,cy,tr,ic,flags,res,si = struct.unpack_from('<HHhhBBBBI',h)
+                sf,fc = struct.unpack_from('<IB',h,560); n = w*he*4
+                require(w > 0 and he > 0 and tr == 0 and flags in (0,1) and res == 0 and h[565:568] == bytes(3) and n*(1+flags) <= registry.MAX_LAZY_FRAME_INDEX_BYTES, 'frame header')
+                reps = np.frombuffer(h,'<u2',256,16); require(np.all((reps == 0xffff) | (reps < w*he)), 'representatives')
+                ip = v6._decode_plane(ic,take(si),n,decoder)
+                if flags: fp = v6._decode_plane(fc,take(sf),n,decoder)
+                else: require(sf == 0 and fc == 0, 'absent blend storage'); fp = bytes(n)
+                i = np.frombuffer(ip,np.uint8).reshape(he*2,w*2); f = np.frombuffer(fp,np.uint8).reshape(i.shape)
+                profile.validate(i,f,dep=np.frombuffer(h,np.uint8,32,528))
+                frames_total += 1; indices_total += n
+                require(indices_total <= registry.maximum_registry_bytes(2), 'decoded index limit')
+                if include_frames: frames.append(dict(geometry=(w,he,cx,cy,tr),I=i.copy(),F=f.copy(),dep=h[528:560]))
+            cycles = []
+            for _ in range(nc):
+                slots = struct.unpack('<I',take(4))[0]; require(slots <= registry.MAX_CYCLE_SLOTS, 'cycle bound')
+                values = list(struct.unpack(f'<{slots}I',take(slots*4)))
+                require(all(v <= 0xffff for v in values), 'native u16 cycle lookup')
+                cycles.append(values)
+            resources.append(dict(resref=ref,source_sha256=header[8:40].hex(),frame_count=nf,cycle_count=nc,profile=profile,frames=frames,cycles=cycles))
+    require(pos == len(raw), 'trailing bytes')
+    info = dict(version=VERSION,scale=2,registry_magic='IEECSXN',animation_id='0xFFFF',sha256=hashlib.sha256(raw).hexdigest().upper(),crc32=zlib.crc32(raw)&0xffffffff,resource_count=count,frame_count=frames_total,index_bytes=indices_total,registry_bytes=size,class_profile_id=pid,decode_rule_id=rule)
+    if include_frames: info['resources'] = resources
+    return info

@@ -1,0 +1,39 @@
+{
+  "schema": "bg2-q3m-family-witness-verification-v1",
+  "dll_build": "passed-VS2019-Release",
+  "python_unit_tests": {
+    "passed": 5,
+    "command": "python -m unittest discover -s pipeline/tests -p test_palette_q3m_partners.py -v"
+  },
+  "native_core_tests": "passed",
+  "v7": {
+    "resources": 49,
+    "frames": 11586,
+    "native_cycle_slots": 24530,
+    "decoded_pixels": 1458851832,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "v6_character": {
+    "accepted": 10,
+    "rejected": 37,
+    "decoded_pixels": 1368000,
+    "neutral_reference_decodings": 32832,
+    "cache_pulses": 16,
+    "reset": true,
+    "eviction_budget_bytes": 134217728
+  },
+  "v6_monster": {
+    "accepted": 18,
+    "rejected": 10,
+    "decoded_pixels": 985608,
+    "mixed_character_monster": true
+  },
+  "ingame_QA": {
+    "accepted_families": 0,
+    "total_families": 15
+  },
+  "installed": false,
+  "release": false
+}

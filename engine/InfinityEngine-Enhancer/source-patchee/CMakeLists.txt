@@ -377,6 +377,10 @@ if(BUILD_TESTING)
             src/iee/creature_sprite_x2.cpp src/iee/game/opengl_types.cpp)
         target_link_libraries(iee_palette_monster_tests PRIVATE iee_common opengl32 Cabinet bcrypt)
         iee_configure_target(iee_palette_monster_tests)
+        add_executable(iee_palette_partner_tests tests/palette_partner_tests.cpp
+            src/iee/creature_sprite_x2.cpp src/iee/game/opengl_types.cpp)
+        target_link_libraries(iee_palette_partner_tests PRIVATE iee_common opengl32 Cabinet bcrypt)
+        iee_configure_target(iee_palette_partner_tests)
         # Synthetic fixtures are generated explicitly by palette_monster_fixtures.py;
         # this target never starts production or regenerates Character evidence.
 

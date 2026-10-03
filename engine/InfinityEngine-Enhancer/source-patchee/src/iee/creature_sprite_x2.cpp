@@ -1,4 +1,5 @@
 #include "creature_sprite_x2.h"
+#include "iee/core/sprite_family_owners.h"
 
 #include <algorithm>
 #include <array>
@@ -12,6 +13,7 @@
 #include <fstream>
 #include <iterator>
 #include <limits>
+#include <memory>
 #include <mutex>
 #include <deque>
 #include <set>
@@ -80,6 +82,10 @@ constexpr std::uint32_t kXnRegistryVersion = 3;
 constexpr std::uint32_t kXnAntialiasRegistryVersion = 4;
 constexpr std::uint32_t kXnCompressedRegistryVersion = 5;
 constexpr std::uint32_t kXnFractionRegistryVersion = 6;
+constexpr std::uint32_t kXnPartnerRegistryVersion = 7;
+constexpr bool fraction_version(std::uint32_t version) noexcept {
+  return version == kXnFractionRegistryVersion || version == kXnPartnerRegistryVersion;
+}
 constexpr std::uint32_t kRegistrySetVersion = 1;
 constexpr std::uint32_t kRegistryCatalogVersion = 1;
 constexpr std::uint32_t kRegistryCatalogDirectoryVersion = 2;
@@ -155,6 +161,7 @@ struct Frame {
   std::vector<std::uint8_t> indices;
   std::vector<std::uint8_t> fractions;
   bool fractional{};
+  std::shared_ptr<const core::palette_fraction::PartnerProfile> partnerProfile;
   std::uint32_t fractionProfile{core::palette_fraction::kCharacterProfile};
   std::uint32_t fractionRule{core::palette_fraction::kSrgb8Rule};
   core::palette_fraction::Dependencies dependencies{};
@@ -183,6 +190,7 @@ struct Frame {
 struct Resource {
   std::array<char, 8> resref{};
   std::array<std::byte, 32> sourceSha256{};
+  std::shared_ptr<const core::palette_fraction::PartnerProfile> partnerProfile;
   std::vector<Frame> frames;
   std::vector<std::vector<std::uint32_t>> cycles;
   // QA needs one proof per animation/resref, not one synchronous disk flush per
@@ -868,6 +876,8 @@ constexpr bool is_multi_new_animation(std::uint32_t animationId) noexcept {
 
 bool catalog_owner_matches_animation(std::uint32_t owner,
                                      std::uint32_t animationId) noexcept {
+  const auto declared = core::sprite_family_owner(animationId);
+  if (owner >= 6) return owner == declared;
   const auto family = animationId & 0xF000u;
   return (owner == kCatalogCharacterOwner &&
           (family == 0x5000u || family == 0x6000u)) ||
@@ -1311,7 +1321,7 @@ const std::vector<std::uint8_t>* frame_indices_locked(
       }
     }
     if (frame.fractional && !core::palette_fraction::validate(
-          prepared.indices, prepared.fractions, frame.dependencies, frame.fractionProfile, frame.fractionRule)) {
+          prepared.indices, prepared.fractions, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get())) {
       fail_lazy_frame_locked(handle, "invalid fraction/dependency contract");
       return nullptr;
     }
@@ -1374,7 +1384,7 @@ bool prepare_frame_lut(const Frame& frame, const std::vector<std::uint8_t>& indi
                         const std::vector<std::uint8_t>& fractions,
                         const core::palette_fraction::Palette& palette,
                         core::palette_fraction::Lut& lut) noexcept {
-  return !frame.fractional || lut.prepare(indices, fractions, palette, frame.fractionProfile, frame.fractionRule);
+  return !frame.fractional || lut.prepare(indices, fractions, palette, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get());
 }
 
 std::uint32_t frame_pixel(const Frame& frame, const std::vector<std::uint8_t>& indices,
@@ -2145,11 +2155,13 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
       (version != kXnRegistryVersion &&
        version != kXnAntialiasRegistryVersion &&
        version != kXnCompressedRegistryVersion &&
-       version != kXnFractionRegistryVersion) ||
+       version != kXnFractionRegistryVersion && version != kXnPartnerRegistryVersion) ||
       !supported_physical_scale(scale) ||
       (version == kXnAntialiasRegistryVersion && scale != 2)) {
     throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
-                             path.filename().string());
+                             path.string() + " (version=" + std::to_string(version) +
+                             ", scale=" + std::to_string(scale) + ", stream=" +
+                             std::to_string(static_cast<bool>(input)) + ")");
   }
   return maximum_registry_bytes_for_scale(scale);
 }
@@ -2182,7 +2194,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
                  (parsed.version == kXnAntialiasRegistryVersion &&
                   parsed.scale == 2 && !lazyPayloads && !catalogShard) ||
                  ((parsed.version == kXnCompressedRegistryVersion ||
-                   parsed.version == kXnFractionRegistryVersion) &&
+                   fraction_version(parsed.version)) &&
                   lazyPayloads && catalogShard))
           : magic == kLegacyRegistryMagic &&
                 (parsed.version == kLegacyRegistryVersion ||
@@ -2194,11 +2206,14 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
     throw std::runtime_error("invalid creature-sprite registry header: " +
                              path.filename().string());
   }
-  const bool fractionalRegistry = parsed.version == kXnFractionRegistryVersion;
+  const bool fractionalRegistry = fraction_version(parsed.version);
   if (fractionalRegistry) {
     std::uint32_t profile = 0, rule = 0;
     if (!reader.read(profile) || !reader.read(rule) ||
         !core::palette_fraction::supported_profile(profile, rule) ||
+        (core::palette_fraction::four_partner_profile(profile, rule) !=
+         (parsed.version == kXnPartnerRegistryVersion)) ||
+        (parsed.version == kXnPartnerRegistryVersion && parsed.scale != 2) ||
         (core::palette_fraction::monster_profile(profile, rule) && parsed.scale != 2)) {
       throw std::runtime_error("unknown/truncated Q3m class profile or decode rule");
     }
@@ -2241,6 +2256,13 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
             std::string_view(resource.resref.data(), std::find(resource.resref.begin(), resource.resref.end(), '\0') - resource.resref.begin()),
             resource.sourceSha256)) {
       throw std::runtime_error("Q3m Monster resource/source differs from fixed profile");
+    }
+    if (parsed.version == kXnPartnerRegistryVersion) {
+      auto profile = std::make_shared<core::palette_fraction::PartnerProfile>();
+      if (!reader.read(profile->nativeKind) || !reader.read(profile->sourcePalette) ||
+          !reader.read(profile->partners) || !profile->valid(parsed.fractionProfile, parsed.fractionRule))
+        throw std::runtime_error("invalid V7 native palette/partner table");
+      resource.partnerProfile = std::move(profile);
     }
     resource.frames.reserve(frameCount);
     for (std::uint32_t frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
@@ -2294,6 +2316,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
           !reader.read(frame.representatives)) {
         throw std::runtime_error("invalid creature-sprite frame payload");
       }
+      frame.partnerProfile = resource.partnerProfile;
       frame.fractional = fractionalRegistry;
       if (fractionalRegistry) {
         frame.fractionProfile = parsed.fractionProfile;
@@ -2363,7 +2386,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         const auto logicalI = inflate(indexData, storedBytes, frameCodec);
         const auto logicalF = fractionPresent ? inflate(fractionData, fractionStored, fractionCodec)
                                              : std::vector<std::uint8_t>{};
-        if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule)) {
+        if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get())) {
           throw std::runtime_error("invalid Q3m fraction/dependency contract");
         }
       } else if (frameCodec == kRegistryFrameCodecRaw) {
@@ -2424,7 +2447,9 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       auto& cycle = resource.cycles[cycleIndex];
       cycle.resize(slotCount);
       for (auto& frameIndex : cycle) {
-        if (!reader.read(frameIndex) || frameIndex >= frameCount) {
+        if (!reader.read(frameIndex) ||
+            (frameIndex >= frameCount &&
+             !(parsed.version == kXnPartnerRegistryVersion && frameIndex <= 0xffffu))) {
           throw std::runtime_error("invalid creature-sprite cycle lookup");
         }
       }
@@ -3200,6 +3225,7 @@ std::uint64_t resource_metadata_bytes(
     return (std::numeric_limits<std::uint64_t>::max)();
   }
   for (const auto& resource : resources) {
+    if (resource.partnerProfile && !add(sizeof(core::palette_fraction::PartnerProfile))) return (std::numeric_limits<std::uint64_t>::max)();
     if (!add(static_cast<std::uint64_t>(resource.frames.size()) *
                  sizeof(Frame)) ||
         !add(static_cast<std::uint64_t>(resource.cycles.size()) *
@@ -3436,7 +3462,7 @@ bool catalog_shard_matches(const ParsedRegistry& parsed,
       expected.identity.bytes == 0 || parsed.identity == expected.identity;
   return (parsed.version == kXnRegistryVersion ||
           parsed.version == kXnCompressedRegistryVersion ||
-          parsed.version == kXnFractionRegistryVersion) &&
+          fraction_version(parsed.version)) &&
          parsed.scale == scale &&
          parsed.animationId == kCatalogShardAnimationSentinel &&
          parsed.resourceCount == expected.resourceCount &&
@@ -3489,9 +3515,9 @@ bool load_catalog_shard_for_request(std::uint64_t epoch,
   try {
     auto parsed = parse_registry(expected.path, RegistryFormat::Xn, true,
                                  shardIndex, true, true);
-    if (((parsed.version == kXnCompressedRegistryVersion || parsed.version == kXnFractionRegistryVersion) &&
+    if (((parsed.version == kXnCompressedRegistryVersion || fraction_version(parsed.version)) &&
          catalogVersion != kRegistryCatalogDirectoryVersion) ||
-        (parsed.version == kXnFractionRegistryVersion &&
+        (fraction_version(parsed.version) &&
           (fractionOwners.empty() || !std::all_of(fractionOwners.begin(), fractionOwners.end(), [&](const auto& owner) {
             return core::palette_fraction::profile_owner(parsed.fractionProfile, parsed.fractionRule, owner.first, owner.second);
           }))) ||
@@ -4022,6 +4048,22 @@ bool contains_animation(std::uint16_t animationId) noexcept {
   }
 }
 
+bool animation_targets_owner(std::uint16_t animationId, std::uint32_t owner) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !catalog_identity_matches_locked()) return false;
+    const auto* animation = g_catalog.active ? find_catalog_animation_locked(animationId) : find_pack_animation_locked(animationId);
+    return animation && animation->owner == owner;
+  } catch (...) { return false; }
+}
+bool targets_owner(std::uint32_t owner) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !catalog_identity_matches_locked()) return false;
+    const auto& animations = g_catalog.active ? g_catalog.animations : g_packAnimations;
+    return std::any_of(animations.begin(), animations.end(), [owner](const auto& a) { return a.owner == owner; });
+  } catch (...) { return false; }
+}
 bool animation_targets_character(std::uint16_t animationId) noexcept {
   if (!g_ready.load(std::memory_order_acquire) || animationId == 0) return false;
   try {
@@ -4406,7 +4448,8 @@ bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept {
     const auto* resource = resource_for_handle_locked(handle);
     if (!resource || handle.frameIndex >= resource->frames.size()) return false;
     const auto& frame = resource->frames[handle.frameIndex];
-    return frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule);
+    return frame.partnerProfile != nullptr ||
+           (frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule));
   } catch (...) { return false; }
 }
 
@@ -4418,6 +4461,16 @@ bool frame_accepts_fixed_monster_palette(FrameHandle handle, std::uint16_t kind,
     const auto* resource = resource_for_handle_locked(handle);
     if (!resource || handle.frameIndex >= resource->frames.size()) return false;
     const auto& frame = resource->frames[handle.frameIndex];
+    if (frame.partnerProfile) {
+      if (kind != frame.partnerProfile->nativeKind) return false;
+      if (kind == 1) return true;
+      for (std::size_t i = 0; i < colors.size(); ++i) {
+        const auto alpha = colors[i] >> 24;
+        if ((colors[i] & 0xffffffu) != (frame.partnerProfile->sourcePalette[i] & 0xffffffu) ||
+            (alpha != 0 && alpha != 255)) return false;
+      }
+      return true;
+    }
     return frame.fractional && core::palette_fraction::monster_profile(frame.fractionProfile, frame.fractionRule) &&
            core::palette_fraction::monster_source_palette(frame.fractionProfile, kind, colors);
   } catch (...) { return false; }
@@ -4579,12 +4632,17 @@ bool bind_frame_texture(FrameHandle handle, int logicalWidth, int logicalHeight,
     }
     const auto physicalScale = g_loadedScale.load(std::memory_order_acquire);
     if (!supported_physical_scale(physicalScale)) return false;
+    const auto& frame = resource->frames[handle.frameIndex];
+    // V7 admits both measured native CVidCell extents. Choose only an exact BAM
+    // width/height match; unexpected backings still fail closed, without padding guesses.
+    if (frame.partnerProfile && physicalScale == 2 &&
+        logicalWidth == frame.logicalWidth && logicalHeight == frame.logicalHeight)
+      layout = FrameTextureLayout::Unbordered;
     if (layout != FrameTextureLayout::Bordered &&
-        (layout != FrameTextureLayout::Unbordered || handle.animationId != 0x1200u ||
+        (layout != FrameTextureLayout::Unbordered || (!frame.partnerProfile && handle.animationId != 0x1200u) ||
          physicalScale != 2)) {
       return false;
     }
-    const auto& frame = resource->frames[handle.frameIndex];
     const int expectedLogicalWidth = logical_texture_extent(frame.logicalWidth, layout);
     const int expectedLogicalHeight = logical_texture_extent(frame.logicalHeight, layout);
     const bool dimensionsCompatible =

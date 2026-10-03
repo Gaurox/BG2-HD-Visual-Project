@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-q3m-family-witness-selection-v1",
+  "scale": 2,
+  "colour": "four partners; eight blend levels; K6; V7",
+  "scope": "one native animation per integration family; complete BAM frames/cycles for the selected action and required parts; other actions retain native fallback",
+  "witnesses": [
+    {"family":"character","animation_id":"0x6110","name":"Guerrière humaine","owner":1,"native_kind":1,"refs":["CHFB1G1","CHFB1G11","CHFB1G12","CHFB1G13","CHFB1G14","CHFB1G15"]},
+    {"family":"character_old","animation_id":"0x6400","name":"Drizzt","owner":6,"native_kind":1,"refs":["UDRZ1G1","UDRZ1G1E"]},
+    {"family":"monster","animation_id":"0x7F02","name":"Spectateur","owner":3,"native_kind":0,"refs":["MBEHG1","MBEHG11","MBEHG12","MBEHG13","MBEHG14","MBEHG15"]},
+    {"family":"monster_old","animation_id":"0x7603","name":"Chien gris","owner":7,"native_kind":0,"refs":["MDOGG1","MDOGG1E"]},
+    {"family":"monster_icewind","animation_id":"0xEF10","name":"Esprit des eaux","owner":2,"native_kind":0,"refs":["MWWEWK","MWWEWKE"]},
+    {"family":"monster_quadrant","animation_id":"0x1000","name":"Grande wyverne","owner":4,"native_kind":0,"refs":["MWYVG11","MWYVG12","MWYVG13","MWYVG14"]},
+    {"family":"multi_new","animation_id":"0x1201","name":"Dragon noir","owner":5,"native_kind":0,"refs":["MDR21100","MDR21200","MDR21300","MDR21400","MDR21500","MDR21600","MDR21700","MDR21800","MDR21900"],"multipart_groups":[["MDR21100","MDR21200","MDR21300","MDR21400","MDR21500","MDR21600","MDR21700","MDR21800","MDR21900"]]},
+    {"family":"monster_layered","animation_id":"0x2100","name":"Volo","owner":8,"native_kind":0,"refs":["UVOLG1","UVOLG1E","UVOLMG1","UVOLMG1E"]},
+    {"family":"monster_ankheg","animation_id":"0x3000","name":"Ankheg","owner":9,"native_kind":0,"refs":["MAKHG1","MAKHG1E","MAKHDG1","MAKHDG1E"]},
+    {"family":"monster_large","animation_id":"0x9000","name":"Ogre","owner":10,"native_kind":1,"refs":["MOGRG1","MOGRG1E"]},
+    {"family":"monster_large16","animation_id":"0xA100","name":"Ver charognard","owner":11,"native_kind":0,"refs":["MCARG1","MCARG1E"]},
+    {"family":"ambient","animation_id":"0xC300","name":"Rat","owner":12,"native_kind":0,"refs":["ARATG1","ARATG1E"]},
+    {"family":"ambient_static","animation_id":"0xB100","name":"Cheval","owner":13,"native_kind":0,"refs":["AHRSG1","AHRSG1E"]},
+    {"family":"town_static","animation_id":"0x4410","name":"Femme endormie","owner":14,"native_kind":1,"refs":["LHFC"]},
+    {"family":"flying","animation_id":"0xD400","name":"Oiseau intérieur","owner":15,"native_kind":0,"refs":["ABIRG1"]}
+  ]
+}

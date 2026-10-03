@@ -39,11 +39,12 @@
     "basis": "user-estimate",
     "date": "2026-10-03",
     "does_not_measure": "asset-coverage-or-QA",
-    "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json"
+    "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
+    "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
   },
   "method": {
-    "current": "Q3m-K6",
-    "colour_contract": "indices-fractions-dependencies; live palette; per-profile semantic classes and successors",
+    "current": "Q3m-K6-four-partners-eight-levels",
+    "colour_contract": "V7 profiles 8/9 rule 3; I + packed B/F + exact dependencies; live native palettes; four same-class partners; eight levels",
     "world_scale": 2,
     "world_filter": "Box",
     "historical_final_rasters_excluded": [
@@ -62,9 +63,11 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "six-frame-diagnostics; not full production or QA",
-    "format_compatibility": "requires-format-and-reader-extension-from-V6",
-    "next_recipe_selection": "open; no candidate promoted by this inventory"
+    "state": "V7-x2-15-family-pilot-host-verified-ingame-pending",
+    "format_compatibility": "V7 reader implemented; V6 unchanged",
+    "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
+    "selected": "four-partners-eight-levels",
+    "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
   },
   "queue_totals": {
     "engine_families": 15,
@@ -73,7 +76,10 @@
     "without_source_bam_ids": 130,
     "q3m_referenced_ids": 81,
     "with_bam_without_q3m_reference": 254,
-    "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work"
+    "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
+    "current_recipe_witness_ids": 15,
+    "current_recipe_complete_animation_ids": 0,
+    "current_recipe_ingame_accepted_families": 0
   },
   "families": [
     {
@@ -94,6 +100,24 @@
         "unique_source_work": 563969,
         "unique_model_candidate_work": 563797,
         "descriptor": "sprite/index/palette-work-plan.json"
+      },
+      "current_colour_witness": {
+        "animation_id": "0x6110",
+        "name": "Guerrière humaine",
+        "native_kind": 1,
+        "bams": [
+          "CHFB1G1",
+          "CHFB1G11",
+          "CHFB1G12",
+          "CHFB1G13",
+          "CHFB1G14",
+          "CHFB1G15"
+        ],
+        "physical_frames": 5076,
+        "unique_source_work": 467,
+        "unique_encoded_work": 467,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -113,6 +137,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x6400",
+        "name": "Drizzt",
+        "native_kind": 1,
+        "bams": [
+          "UDRZ1G1",
+          "UDRZ1G1E"
+        ],
+        "physical_frames": 288,
+        "unique_source_work": 288,
+        "unique_encoded_work": 288,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -134,6 +172,24 @@
         "source_work_shared_with_character": 2,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x7F02",
+        "name": "Spectateur",
+        "native_kind": 0,
+        "bams": [
+          "MBEHG1",
+          "MBEHG11",
+          "MBEHG12",
+          "MBEHG13",
+          "MBEHG14",
+          "MBEHG15"
+        ],
+        "physical_frames": 3996,
+        "unique_source_work": 648,
+        "unique_encoded_work": 648,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -153,6 +209,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x7603",
+        "name": "Chien gris",
+        "native_kind": 0,
+        "bams": [
+          "MDOGG1",
+          "MDOGG1E"
+        ],
+        "physical_frames": 144,
+        "unique_source_work": 144,
+        "unique_encoded_work": 144,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -173,6 +243,20 @@
         "source_work_shared_with_character": 2,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0xEF10",
+        "name": "Esprit des eaux",
+        "native_kind": 0,
+        "bams": [
+          "MWWEWK",
+          "MWWEWKE"
+        ],
+        "physical_frames": 16,
+        "unique_source_work": 8,
+        "unique_encoded_work": 8,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -192,6 +276,22 @@
         "source_work_shared_with_character": 1,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x1000",
+        "name": "Grande wyverne",
+        "native_kind": 0,
+        "bams": [
+          "MWYVG11",
+          "MWYVG12",
+          "MWYVG13",
+          "MWYVG14"
+        ],
+        "physical_frames": 200,
+        "unique_source_work": 200,
+        "unique_encoded_work": 200,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -211,6 +311,27 @@
         "source_work_shared_with_character": 1,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x1201",
+        "name": "Dragon noir",
+        "native_kind": 0,
+        "bams": [
+          "MDR21100",
+          "MDR21200",
+          "MDR21300",
+          "MDR21400",
+          "MDR21500",
+          "MDR21600",
+          "MDR21700",
+          "MDR21800",
+          "MDR21900"
+        ],
+        "physical_frames": 972,
+        "unique_source_work": 109,
+        "unique_encoded_work": 109,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -231,6 +352,22 @@
         "source_work_shared_with_character": 3,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x2100",
+        "name": "Volo",
+        "native_kind": 0,
+        "bams": [
+          "UVOLG1",
+          "UVOLG1E",
+          "UVOLMG1",
+          "UVOLMG1E"
+        ],
+        "physical_frames": 282,
+        "unique_source_work": 276,
+        "unique_encoded_work": 276,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -250,6 +387,22 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x3000",
+        "name": "Ankheg",
+        "native_kind": 0,
+        "bams": [
+          "MAKHG1",
+          "MAKHG1E",
+          "MAKHDG1",
+          "MAKHDG1E"
+        ],
+        "physical_frames": 164,
+        "unique_source_work": 143,
+        "unique_encoded_work": 143,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -269,6 +422,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x9000",
+        "name": "Ogre",
+        "native_kind": 1,
+        "bams": [
+          "MOGRG1",
+          "MOGRG1E"
+        ],
+        "physical_frames": 136,
+        "unique_source_work": 136,
+        "unique_encoded_work": 136,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -288,6 +455,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0xA100",
+        "name": "Ver charognard",
+        "native_kind": 0,
+        "bams": [
+          "MCARG1",
+          "MCARG1E"
+        ],
+        "physical_frames": 176,
+        "unique_source_work": 176,
+        "unique_encoded_work": 176,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -307,6 +488,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0xC300",
+        "name": "Rat",
+        "native_kind": 0,
+        "bams": [
+          "ARATG1",
+          "ARATG1E"
+        ],
+        "physical_frames": 48,
+        "unique_source_work": 48,
+        "unique_encoded_work": 48,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -326,6 +521,20 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0xB100",
+        "name": "Cheval",
+        "native_kind": 0,
+        "bams": [
+          "AHRSG1",
+          "AHRSG1E"
+        ],
+        "physical_frames": 44,
+        "unique_source_work": 44,
+        "unique_encoded_work": 44,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -345,6 +554,19 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0x4410",
+        "name": "Femme endormie",
+        "native_kind": 1,
+        "bams": [
+          "LHFC"
+        ],
+        "physical_frames": 8,
+        "unique_source_work": 8,
+        "unique_encoded_work": 8,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     },
     {
@@ -364,6 +586,19 @@
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
         "remaining_gpu_work": null
+      },
+      "current_colour_witness": {
+        "animation_id": "0xD400",
+        "name": "Oiseau intérieur",
+        "native_kind": 0,
+        "bams": [
+          "ABIRG1"
+        ],
+        "physical_frames": 36,
+        "unique_source_work": 36,
+        "unique_encoded_work": 36,
+        "state": "host-verified-ingame-pending",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
       }
     }
   ],
@@ -419,5 +654,19 @@
     "known_monster_cache_resume": "docs/measurements/all-creature-source-dedup-20261003-v1/known-monster-cache-resume.json",
     "remaining_gpu_work": null,
     "rule": "unique compatible final keys; namespace profile/recipe/scale + source key; validated shared cache under exclusive lock; unknown contract does not authorize reuse; per-animation counters not additive"
+  },
+  "current_recipe_pilot": {
+    "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+    "selection": "sprite/index/q3m-family-witnesses.json",
+    "families": 15,
+    "resources": 49,
+    "physical_frames": 11586,
+    "unique_source_work": 2730,
+    "unique_encoded_work": 2731,
+    "unique_neural_targets": 16245,
+    "qa_ingame": false,
+    "installed": false,
+    "release": false,
+    "scope": "selected actions/directions only; all frames/cycles for selected BAMs; other actions/equipment native"
   }
 }

@@ -1,0 +1,211 @@
+{
+  "schema": "bg2-q3m-native-families-analysis-v1",
+  "executable_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+  "image_base": "0x140000000",
+  "family_count": 15,
+  "animation_ids": 465,
+  "families": [
+    {
+      "family": "character",
+      "owner": 1,
+      "vtable_rva": "0x5aac20",
+      "render_rva": "0x32c240",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33eea0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33ef48"
+      ],
+      "render_prefix_sha256": "a961c2fc60f73ebc4c250b94948faee7c191784398a3f0ffbd554db435638cd1"
+    },
+    {
+      "family": "character_old",
+      "owner": 6,
+      "vtable_rva": "0x5aae10",
+      "render_rva": "0x32c910",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33f250",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33f2f8"
+      ],
+      "render_prefix_sha256": "cfb51c055c3e79e49748eb4c64a603576435c8b0b7fe53355e01f6d71d6bc9c6"
+    },
+    {
+      "family": "monster",
+      "owner": 3,
+      "vtable_rva": "0x5a98b0",
+      "render_rva": "0x32d770",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33f990",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33fa46"
+      ],
+      "render_prefix_sha256": "7cd4d081fa111440c55959c0030817312669c2ed37f082b539f7703dd3e2a5a9"
+    },
+    {
+      "family": "monster_old",
+      "owner": 7,
+      "vtable_rva": "0x5a9ab0",
+      "render_rva": "0x330180",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x340df0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x340eaf"
+      ],
+      "render_prefix_sha256": "2cf9a260b1d5b567a57ce7e5316f32fad6fe627e835371021eae53a13ccbc323"
+    },
+    {
+      "family": "monster_icewind",
+      "owner": 2,
+      "vtable_rva": "0x5a9ca0",
+      "render_rva": "0x32e360",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33fee0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33ff8f"
+      ],
+      "render_prefix_sha256": "14e050f7a90757c3db305a704abad73b73d5df710337b1bfb962212dde0a33c3"
+    },
+    {
+      "family": "monster_quadrant",
+      "owner": 4,
+      "vtable_rva": "0x5aa460",
+      "render_rva": "0x3305a0",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x341010",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x3410b7"
+      ],
+      "render_prefix_sha256": "207b80abe28a50fe4b45f06a3329ca7947f8f8b909732c6748d00d5bcd979aa6"
+    },
+    {
+      "family": "multi_new",
+      "owner": 5,
+      "vtable_rva": "0x5ab000",
+      "render_rva": "0x32fd20",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x340bc0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x340c6f"
+      ],
+      "render_prefix_sha256": "b7102eb946c8f58fe3607b645405f83e27a0f212034c1906e424718d1b34570e"
+    },
+    {
+      "family": "monster_layered",
+      "owner": 8,
+      "vtable_rva": "0x5aa650",
+      "render_rva": "0x32ee90",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x3403f0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x340498"
+      ],
+      "render_prefix_sha256": "b1501ad9b9fbbb13db416cf778e8f6d11eb4217455a5e3cd9631aef3ec51ed74"
+    },
+    {
+      "family": "monster_ankheg",
+      "owner": 9,
+      "vtable_rva": "0x5aaa30",
+      "render_rva": "0x32dd70",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33fcd0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33fd7a"
+      ],
+      "render_prefix_sha256": "e127632857bd3ec3e7db5d56dd89b2c7cb47710954cd49d8fff9494a73cc1b23"
+    },
+    {
+      "family": "monster_large",
+      "owner": 10,
+      "vtable_rva": "0x5a9e90",
+      "render_rva": "0x32eab0",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x340250",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x3402fa"
+      ],
+      "render_prefix_sha256": "67f598595e4c3c46e880c322bfa034b928679eaa0d96e06555b227371200ce48"
+    },
+    {
+      "family": "monster_large16",
+      "owner": 11,
+      "vtable_rva": "0x5aa080",
+      "render_rva": "0x32eab0",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x3400b0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x34015a"
+      ],
+      "render_prefix_sha256": "67f598595e4c3c46e880c322bfa034b928679eaa0d96e06555b227371200ce48"
+    },
+    {
+      "family": "ambient",
+      "owner": 12,
+      "vtable_rva": "0x5a96c0",
+      "render_rva": "0x32ba40",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33ea60",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33eb0f"
+      ],
+      "render_prefix_sha256": "90c3740a38636f3a044cabe9cf10b83390370210f3c712fba4b10f9e7e6ad724"
+    },
+    {
+      "family": "ambient_static",
+      "owner": 13,
+      "vtable_rva": "0x5a94d0",
+      "render_rva": "0x32be60",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33ec40",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33ecfa"
+      ],
+      "render_prefix_sha256": "9c05ccfe3c288d1e741b2529e1ab85b33723deae93893ee52835f97a82bd0c6f"
+    },
+    {
+      "family": "town_static",
+      "owner": 14,
+      "vtable_rva": "0x5a92e0",
+      "render_rva": "0x3309b0",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x341250",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x34130a"
+      ],
+      "render_prefix_sha256": "850a906dd4e898a1ef1cdbce9fdca4e199cf519742c285a160a2d62967ee45b8"
+    },
+    {
+      "family": "flying",
+      "owner": 15,
+      "vtable_rva": "0x5a90f0",
+      "render_rva": "0x32d390",
+      "render_virtual_slot": 38,
+      "ini_parser_rva": "0x33f7c0",
+      "ini_parser_virtual_slot": 61,
+      "ini_name_instructions": [
+        "0x33f87a"
+      ],
+      "render_prefix_sha256": "f7be5b3aca037cc535b7c2918199383f581edf7bb75554971ee771bfdf65fc54"
+    }
+  ],
+  "alternate_multi_new": {
+    "native_class": "MonsterMulti",
+    "vtable_rva": "0x5aa270",
+    "render_rva": "0x32f8d0"
+  },
+  "proof": "native vtable slots + INI parser LEA + exact additional-hook manifest signatures; no game launched",
+  "ingame_validated": false
+}

@@ -242,6 +242,8 @@ void release() noexcept;
 [[nodiscard]] bool animation_targets_monster_quadrant(
     std::uint16_t animationId) noexcept;
 [[nodiscard]] bool animation_targets_multi_new(std::uint16_t animationId) noexcept;
+[[nodiscard]] bool animation_targets_owner(std::uint16_t animationId, std::uint32_t owner) noexcept;
+[[nodiscard]] bool targets_owner(std::uint32_t owner) noexcept;
 [[nodiscard]] bool targets_character() noexcept;
 [[nodiscard]] bool targets_monster() noexcept;
 [[nodiscard]] bool targets_monster_icewind() noexcept;

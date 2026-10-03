@@ -1,0 +1,382 @@
+{
+  "plan": {
+    "schema": "bg2-q3m-family-witness-work-plan-v1",
+    "selection_sha256": "aaea77a38038c58047826c968606ab5c59fdf46aff979b480f14ff67bc9c4d41",
+    "families": 15,
+    "resources": 49,
+    "physical_frames": 11586,
+    "unique_source_work": 2730,
+    "unique_encoded_work": 2731,
+    "native_oracle": "pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6",
+    "witnesses": [
+      {
+        "family": "character",
+        "animation_id": "0x6110",
+        "name": "Guerrière humaine",
+        "owner": 1,
+        "native_kind": 1,
+        "refs": [
+          "CHFB1G1",
+          "CHFB1G11",
+          "CHFB1G12",
+          "CHFB1G13",
+          "CHFB1G14",
+          "CHFB1G15"
+        ],
+        "physical_frames": 5076,
+        "source_work": 467,
+        "encoded_work": 467
+      },
+      {
+        "family": "character_old",
+        "animation_id": "0x6400",
+        "name": "Drizzt",
+        "owner": 6,
+        "native_kind": 1,
+        "refs": [
+          "UDRZ1G1",
+          "UDRZ1G1E"
+        ],
+        "physical_frames": 288,
+        "source_work": 288,
+        "encoded_work": 288
+      },
+      {
+        "family": "monster",
+        "animation_id": "0x7F02",
+        "name": "Spectateur",
+        "owner": 3,
+        "native_kind": 0,
+        "refs": [
+          "MBEHG1",
+          "MBEHG11",
+          "MBEHG12",
+          "MBEHG13",
+          "MBEHG14",
+          "MBEHG15"
+        ],
+        "physical_frames": 3996,
+        "source_work": 648,
+        "encoded_work": 648
+      },
+      {
+        "family": "monster_old",
+        "animation_id": "0x7603",
+        "name": "Chien gris",
+        "owner": 7,
+        "native_kind": 0,
+        "refs": [
+          "MDOGG1",
+          "MDOGG1E"
+        ],
+        "physical_frames": 144,
+        "source_work": 144,
+        "encoded_work": 144
+      },
+      {
+        "family": "monster_icewind",
+        "animation_id": "0xEF10",
+        "name": "Esprit des eaux",
+        "owner": 2,
+        "native_kind": 0,
+        "refs": [
+          "MWWEWK",
+          "MWWEWKE"
+        ],
+        "physical_frames": 16,
+        "source_work": 8,
+        "encoded_work": 8
+      },
+      {
+        "family": "monster_quadrant",
+        "animation_id": "0x1000",
+        "name": "Grande wyverne",
+        "owner": 4,
+        "native_kind": 0,
+        "refs": [
+          "MWYVG11",
+          "MWYVG12",
+          "MWYVG13",
+          "MWYVG14"
+        ],
+        "physical_frames": 200,
+        "source_work": 200,
+        "encoded_work": 200
+      },
+      {
+        "family": "multi_new",
+        "animation_id": "0x1201",
+        "name": "Dragon noir",
+        "owner": 5,
+        "native_kind": 0,
+        "refs": [
+          "MDR21100",
+          "MDR21200",
+          "MDR21300",
+          "MDR21400",
+          "MDR21500",
+          "MDR21600",
+          "MDR21700",
+          "MDR21800",
+          "MDR21900"
+        ],
+        "multipart_groups": [
+          [
+            "MDR21100",
+            "MDR21200",
+            "MDR21300",
+            "MDR21400",
+            "MDR21500",
+            "MDR21600",
+            "MDR21700",
+            "MDR21800",
+            "MDR21900"
+          ]
+        ],
+        "physical_frames": 972,
+        "source_work": 109,
+        "encoded_work": 109
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x2100",
+        "name": "Volo",
+        "owner": 8,
+        "native_kind": 0,
+        "refs": [
+          "UVOLG1",
+          "UVOLG1E",
+          "UVOLMG1",
+          "UVOLMG1E"
+        ],
+        "physical_frames": 282,
+        "source_work": 276,
+        "encoded_work": 276
+      },
+      {
+        "family": "monster_ankheg",
+        "animation_id": "0x3000",
+        "name": "Ankheg",
+        "owner": 9,
+        "native_kind": 0,
+        "refs": [
+          "MAKHG1",
+          "MAKHG1E",
+          "MAKHDG1",
+          "MAKHDG1E"
+        ],
+        "physical_frames": 164,
+        "source_work": 143,
+        "encoded_work": 143
+      },
+      {
+        "family": "monster_large",
+        "animation_id": "0x9000",
+        "name": "Ogre",
+        "owner": 10,
+        "native_kind": 1,
+        "refs": [
+          "MOGRG1",
+          "MOGRG1E"
+        ],
+        "physical_frames": 136,
+        "source_work": 136,
+        "encoded_work": 136
+      },
+      {
+        "family": "monster_large16",
+        "animation_id": "0xA100",
+        "name": "Ver charognard",
+        "owner": 11,
+        "native_kind": 0,
+        "refs": [
+          "MCARG1",
+          "MCARG1E"
+        ],
+        "physical_frames": 176,
+        "source_work": 176,
+        "encoded_work": 176
+      },
+      {
+        "family": "ambient",
+        "animation_id": "0xC300",
+        "name": "Rat",
+        "owner": 12,
+        "native_kind": 0,
+        "refs": [
+          "ARATG1",
+          "ARATG1E"
+        ],
+        "physical_frames": 48,
+        "source_work": 48,
+        "encoded_work": 48
+      },
+      {
+        "family": "ambient_static",
+        "animation_id": "0xB100",
+        "name": "Cheval",
+        "owner": 13,
+        "native_kind": 0,
+        "refs": [
+          "AHRSG1",
+          "AHRSG1E"
+        ],
+        "physical_frames": 44,
+        "source_work": 44,
+        "encoded_work": 44
+      },
+      {
+        "family": "town_static",
+        "animation_id": "0x4410",
+        "name": "Femme endormie",
+        "owner": 14,
+        "native_kind": 1,
+        "refs": [
+          "LHFC"
+        ],
+        "physical_frames": 8,
+        "source_work": 8,
+        "encoded_work": 8
+      },
+      {
+        "family": "flying",
+        "animation_id": "0xD400",
+        "name": "Oiseau intérieur",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "ABIRG1"
+        ],
+        "physical_frames": 36,
+        "source_work": 36,
+        "encoded_work": 36
+      }
+    ],
+    "source_plans": {
+      "character": {
+        "schema": "bg2-playable-palette-work-plan-pointer-v1",
+        "role": "source-work-plan-not-production-or-QA",
+        "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+        "bytes": 576868352,
+        "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+        "summary": {
+          "absent_families": 246,
+          "available_families": 4896,
+          "canonical_bytes": 407156955,
+          "cross_model_additional_model_work_avoided": 6618307,
+          "cross_model_additional_q32_pixels_avoided": 20365903872,
+          "cycle_slots": 3599209,
+          "cycles": 168192,
+          "distinct_bam_frames": 1564054,
+          "distinct_bam_model_frames": 894348,
+          "distinct_bam_model_q32_pixels": 2309177344,
+          "distinct_bam_native_pixels": 1268986342,
+          "families": 5142,
+          "input_reuses_byte_compared": 1000566,
+          "logical_frame_work_avoided": 13113072,
+          "logical_frames": 13677041,
+          "logical_model_frames": 11448124,
+          "logical_model_q32_pixels": 31296118784,
+          "logical_model_q32_pixels_avoided": 29640327168,
+          "logical_model_work_avoided": 10884327,
+          "logical_native_pixels": 17717563045,
+          "model_local_unique_model_q32_pixels": 22021695488,
+          "model_local_unique_model_work_items": 7182104,
+          "model_local_unique_work_items": 7187637,
+          "models": 78,
+          "original_rle_tail_overflow_frames": 70,
+          "resources": 4510,
+          "shared_between_models_model_work_items": 558741,
+          "shared_between_models_source_occurrences": 1558519,
+          "shared_between_models_work_items": 558913,
+          "six_palette_targets_naive": 68688744,
+          "six_palette_targets_unique_indexed_input": 3379914,
+          "six_palette_targets_unique_work": 3382782,
+          "source_bytes": 189397325,
+          "source_frames_avoided_after_bam_sharing": 1000085,
+          "source_model_frames_avoided_after_bam_sharing": 330551,
+          "strict_full_palette_work_items": 566136,
+          "unique_indexed_inputs": 563488,
+          "unique_model_native_pixels": 960065986,
+          "unique_model_q32_pixels": 1655791616,
+          "unique_model_work_items": 563797,
+          "unique_neural_inputs": 563319,
+          "unique_neural_native_pixels": 959768171,
+          "unique_neural_q32_pixels": 1655021568,
+          "unique_work_items": 563969,
+          "unique_work_native_pixels": 961019931,
+          "unprocessable_work_items": 0,
+          "unreferenced_source_frames": 25466,
+          "unused_native_palette_additional_work_avoided": 2167,
+          "within_model_model_work_avoided": 4266020,
+          "work_items_with_different_centres": 2325,
+          "work_reuses_byte_compared": 1000085
+        },
+        "analysis": "docs/measurements/playable-palettized-frame-dedup-20261001-v1",
+        "consumer": "pipeline/scripts/palette_playable.py",
+        "trusted_seed_runs": [
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110",
+            "sha256": {
+              "recipe.json": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+              "coverage.json": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+              "verification.json": "874df5b09a8243ab3b7c448e973a96815955ab73ef192d5af05cf5222cde9ad6"
+            }
+          },
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110",
+            "sha256": {
+              "recipe.json": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+              "coverage.json": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+              "verification.json": "0cb2522cc85034ee8075b2fc0bcea3bcbe277483d2349be593b5584ceed45fd8"
+            }
+          }
+        ]
+      },
+      "other": {
+        "schema": "bg2-all-creature-source-dedup-v1",
+        "role": "source-plan-not-production-or-QA",
+        "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+        "bytes": 541003776,
+        "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+        "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+        "character_descriptor": "sprite/index/palette-work-plan.json",
+        "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+        "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+      }
+    }
+  },
+  "backend": {
+    "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+    "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+    "batch_size": 86,
+    "canvas_quantum": 32,
+    "fp16": true,
+    "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+    "torch": "2.7.0+cu128",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dependencies": {
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "spandrel": "0.4.1",
+      "chainner_ext": "0.3.10"
+    },
+    "kernels": {
+      "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+      "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+      "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+    }
+  },
+  "encoder_namespace": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "current_candidate_unique_neural_targets": 16245,
+  "neural_targets_generated_across_candidate_iterations": 16779,
+  "corrected_parts_production": {
+    "encoded_cache_hits": 2635,
+    "new_guides": 96,
+    "special_work": 13,
+    "new_neural_targets": 498,
+    "new_encoded_work": 83
+  },
+  "final_encoded_work": 2731,
+  "source_reuses": 8856
+}
