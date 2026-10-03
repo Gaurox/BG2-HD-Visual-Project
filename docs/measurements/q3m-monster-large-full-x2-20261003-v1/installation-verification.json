@@ -1,0 +1,54 @@
+{
+  "schema": "bg2-monster-large-installed-verification-v1",
+  "role": "installation-facts-not-ingame-QA-or-release",
+  "verified_at_utc": "2026-10-03T15:32:24.0377552Z",
+  "installation_receipt": {
+    "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/ingame-installation/active-test.json",
+    "sha256": "6d418b7d96eda819a7eaaa28b7b4828b8c00ce6015cd0eb805e5014402402295",
+    "bytes": 4552
+  },
+  "generation": {
+    "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json",
+    "sha256": "ad80aa0ab6604350ea927d0e243ab0bb16a03d599b22a485a5d3918638fdec08",
+    "bytes": 1379
+  },
+  "family": "monster_large",
+  "animation_ids": [
+    "0x9000"
+  ],
+  "scale": 2,
+  "resources": 7,
+  "frames": 434,
+  "native_tests": {
+    "isolated": {
+      "resources": 7,
+      "frames": 434,
+      "native_cycle_slots": 856,
+      "decoded_pixels": 223048296,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    },
+    "combined": {
+      "resources": 7,
+      "frames": 434,
+      "native_cycle_slots": 856,
+      "decoded_pixels": 223048296,
+      "palette_encodings": 3,
+      "K": 6,
+      "passed": true
+    }
+  },
+  "inherited_animations_unchanged": 81,
+  "inherited_routes_unchanged": 50229,
+  "active_animations": 82,
+  "active_resources": 4556,
+  "active_frames": 1585413,
+  "new_leaf_sha256_verified": 7,
+  "unchanged_assets_sha256_verified": 84,
+  "ini_byte_identical": true,
+  "backup_sha256_verified": true,
+  "clua_count": 22,
+  "ingame_QA": false,
+  "release": false
+}

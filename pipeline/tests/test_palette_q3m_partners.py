@@ -72,6 +72,14 @@ class PartnersTests(unittest.TestCase):
         dragon['multipart_groups'] = [dragon['refs']]
         with self.assertRaises(ValueError): validate_selection(selection)
 
+    def test_complete_family_rejects_missing_bam(self):
+        import json
+        from q3m_family_witnesses import ROOT,validate_selection
+        selection = json.loads((ROOT/'docs/measurements/q3m-monster-large-full-x2-20261003-v1/selection.json').read_text())
+        self.assertEqual(len(validate_selection(selection,'monster_large')),1)
+        selection['witnesses'][0]['refs'].pop()
+        with self.assertRaises(ValueError):validate_selection(selection,'monster_large')
+
     def test_registry_roundtrip_and_malformed_data(self):
         profile = self.profile(); g = np.array([[0,1],[3,4]],np.uint8); code = np.array([[0,0],[9,31]],np.uint8)
         resource = dict(resref='TEST',source_sha256='00'*32,cycles=[[0,0,65535]],frames=[dict(geometry=(1,1,-3,5,0),representatives=np.full(256,65535,np.uint16),guide=g,I=g,F=code,dep=profile.dependencies(g,code))])

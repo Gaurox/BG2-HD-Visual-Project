@@ -1,0 +1,254 @@
+{
+  "plan": {
+    "schema": "bg2-q3m-family-witness-work-plan-v1",
+    "selection_sha256": "3482fb28286842620b05905dd0ee560dc3accfe647a6791eb5b140ec05ba89ac",
+    "families": 1,
+    "resources": 7,
+    "physical_frames": 434,
+    "unique_source_work": 434,
+    "unique_encoded_work": 434,
+    "native_oracle": "pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6",
+    "witnesses": [
+      {
+        "family": "monster_large",
+        "animation_id": "0x9000",
+        "name": "Ogre",
+        "owner": 10,
+        "native_kind": 1,
+        "refs": [
+          "MOGRG1",
+          "MOGRG1E",
+          "MOGRG2",
+          "MOGRG2E",
+          "MOGRG3",
+          "MOGRG3E",
+          "MOGRINV"
+        ],
+        "physical_frames": 434,
+        "source_work": 434,
+        "encoded_work": 434
+      }
+    ],
+    "source_plans": {
+      "character": {
+        "schema": "bg2-playable-palette-work-plan-pointer-v1",
+        "role": "source-work-plan-not-production-or-QA",
+        "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+        "bytes": 576868352,
+        "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+        "summary": {
+          "absent_families": 246,
+          "available_families": 4896,
+          "canonical_bytes": 407156955,
+          "cross_model_additional_model_work_avoided": 6618307,
+          "cross_model_additional_q32_pixels_avoided": 20365903872,
+          "cycle_slots": 3599209,
+          "cycles": 168192,
+          "distinct_bam_frames": 1564054,
+          "distinct_bam_model_frames": 894348,
+          "distinct_bam_model_q32_pixels": 2309177344,
+          "distinct_bam_native_pixels": 1268986342,
+          "families": 5142,
+          "input_reuses_byte_compared": 1000566,
+          "logical_frame_work_avoided": 13113072,
+          "logical_frames": 13677041,
+          "logical_model_frames": 11448124,
+          "logical_model_q32_pixels": 31296118784,
+          "logical_model_q32_pixels_avoided": 29640327168,
+          "logical_model_work_avoided": 10884327,
+          "logical_native_pixels": 17717563045,
+          "model_local_unique_model_q32_pixels": 22021695488,
+          "model_local_unique_model_work_items": 7182104,
+          "model_local_unique_work_items": 7187637,
+          "models": 78,
+          "original_rle_tail_overflow_frames": 70,
+          "resources": 4510,
+          "shared_between_models_model_work_items": 558741,
+          "shared_between_models_source_occurrences": 1558519,
+          "shared_between_models_work_items": 558913,
+          "six_palette_targets_naive": 68688744,
+          "six_palette_targets_unique_indexed_input": 3379914,
+          "six_palette_targets_unique_work": 3382782,
+          "source_bytes": 189397325,
+          "source_frames_avoided_after_bam_sharing": 1000085,
+          "source_model_frames_avoided_after_bam_sharing": 330551,
+          "strict_full_palette_work_items": 566136,
+          "unique_indexed_inputs": 563488,
+          "unique_model_native_pixels": 960065986,
+          "unique_model_q32_pixels": 1655791616,
+          "unique_model_work_items": 563797,
+          "unique_neural_inputs": 563319,
+          "unique_neural_native_pixels": 959768171,
+          "unique_neural_q32_pixels": 1655021568,
+          "unique_work_items": 563969,
+          "unique_work_native_pixels": 961019931,
+          "unprocessable_work_items": 0,
+          "unreferenced_source_frames": 25466,
+          "unused_native_palette_additional_work_avoided": 2167,
+          "within_model_model_work_avoided": 4266020,
+          "work_items_with_different_centres": 2325,
+          "work_reuses_byte_compared": 1000085
+        },
+        "analysis": "docs/measurements/playable-palettized-frame-dedup-20261001-v1",
+        "consumer": "pipeline/scripts/palette_playable.py",
+        "trusted_seed_runs": [
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110",
+            "sha256": {
+              "recipe.json": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+              "coverage.json": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+              "verification.json": "874df5b09a8243ab3b7c448e973a96815955ab73ef192d5af05cf5222cde9ad6"
+            }
+          },
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110",
+            "sha256": {
+              "recipe.json": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+              "coverage.json": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+              "verification.json": "0cb2522cc85034ee8075b2fc0bcea3bcbe277483d2349be593b5584ceed45fd8"
+            }
+          }
+        ]
+      },
+      "other": {
+        "schema": "bg2-all-creature-source-dedup-v1",
+        "role": "source-plan-not-production-or-QA",
+        "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+        "bytes": 541003776,
+        "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+        "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+        "character_descriptor": "sprite/index/palette-work-plan.json",
+        "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+        "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+      }
+    },
+    "complete_family": "monster_large"
+  },
+  "stats": {
+    "encoded_cache_hits": 136,
+    "new_guides": 298,
+    "new_neural_targets": 1788,
+    "new_encoded_work": 298
+  },
+  "resume": {
+    "encoded_cache_hits": 434
+  },
+  "resume_torch_import_blocked": true,
+  "encoder_namespace": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "pack": {
+    "schema": "bg2-q3m-family-witness-pack-v1",
+    "scale": 2,
+    "registry_version": 7,
+    "catalog_version": 2,
+    "animation_count": 1,
+    "resources": 7,
+    "frames": 434,
+    "index_bytes": 12391572,
+    "registry_bytes": 5342129,
+    "catalog_sha256": "ee319fbf62724472edd5a4f418f46cb59d3e0328104132b4a9a0b0c218162f16",
+    "oracle_sha256": "dbd6c6151dc6cffa088bdaa9d409e5aa9461d2ef818ae9ca1a2cbcf8d60c773a",
+    "oracle_palette_stage": "post-CVidCell-transparent-entry-clear",
+    "leaves": [
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "F612A1D58CC71A5A465F10F9F30714F5465DE4E197F5CF2EC08FD15180B3D8FC",
+        "crc32": 1568830757,
+        "resource_count": 1,
+        "frame_count": 85,
+        "index_bytes": 2492228,
+        "registry_bytes": 1017943,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "CB064302DC37BBFE0FC77B5B03A533B24AD88EAD673D87BACEB0F4268026EE65",
+        "crc32": 3172649450,
+        "resource_count": 1,
+        "frame_count": 51,
+        "index_bytes": 1464848,
+        "registry_bytes": 604966,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "4C4A5C57BA033EEA3F42CED870717F1C56AFEAB536676EEEDA390355E04BEF35",
+        "crc32": 2600214889,
+        "resource_count": 1,
+        "frame_count": 100,
+        "index_bytes": 3103224,
+        "registry_bytes": 1292040,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "A08D43854CA008441925AD4280EF78094F5F2C2643B51D30E24D51B2AECDB0E2",
+        "crc32": 2950532039,
+        "resource_count": 1,
+        "frame_count": 60,
+        "index_bytes": 1745972,
+        "registry_bytes": 746424,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "154199C240E77D7B8A0139B4D656925BC5EEE87E13EA7F53AA104174FA8CB5D0",
+        "crc32": 1907773660,
+        "resource_count": 1,
+        "frame_count": 85,
+        "index_bytes": 2239284,
+        "registry_bytes": 1059033,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "B65A253F8E12346022BEB2CA31BC7A4540092A87229ABBF9D7D27F47AF8F90F7",
+        "crc32": 304250832,
+        "resource_count": 1,
+        "frame_count": 51,
+        "index_bytes": 1264096,
+        "registry_bytes": 596962,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "ADEFE42CECAADFC4982711B9D0A6DD1F5619EEBF399068B4D6DB1A95D1FCDE7C",
+        "crc32": 2878023055,
+        "resource_count": 1,
+        "frame_count": 2,
+        "index_bytes": 81920,
+        "registry_bytes": 24761,
+        "class_profile_id": 9,
+        "decode_rule_id": 3
+      }
+    ],
+    "ingame_validated": false
+  },
+  "pack_directory": "sprite/.work/q3m-monster-large-full-x2-20261003-v1/isolated"
+}

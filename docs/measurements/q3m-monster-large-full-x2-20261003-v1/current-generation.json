@@ -1,0 +1,36 @@
+{
+  "schema": "bg2-monster-large-Q3m-V7-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "monster_large",
+  "animation_ids": [
+    "0x9000"
+  ],
+  "resources": 7,
+  "frames": 434,
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels",
+  "registry_version": 7,
+  "generation_dir": "sprite/.work/q3m-monster-large-full-x2-20261003-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-monster-large-full-x2-20261003-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "690d4b9ed3ae0257c274e05cc782963ad3049afd5e9b1bdd4ce987e0c101010c",
+    "bytes": 2027640
+  },
+  "production": {
+    "path": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/production.json",
+    "sha256": "34e25aa6a09107c2faffdc1f4a49ce9141325442009da7cc95de692fe82d2bd2",
+    "bytes": 9635
+  },
+  "runtime": {
+    "path": "pipeline/runtime/manifests/iee-sprite-q3m-v7-x2-all-families-20261003-v1.json",
+    "sha256": "141af2b91d6e55b6a6c1146503ce5a3f7b22c08104f7e616222291ac4c41526c",
+    "bytes": 48296
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-families-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "cb8d4f5181e3edbd68fb9a5ef252e59812acec846e0186573edea3e26a71c282",
+    "bytes": 2106880
+  },
+  "state": "produced-host-verified-ready-to-install",
+  "ingame_QA": false
+}

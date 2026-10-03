@@ -40,7 +40,8 @@
     "date": "2026-10-03",
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
-    "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+    "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+    "installed_candidate_reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -63,7 +64,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "V7-x2-15-family-pilot-host-verified-ingame-pending",
+    "state": "V7-x2-15-family-pilot-plus-complete-Ogre-installed-ingame-pending",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -78,8 +79,10 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 0,
-    "current_recipe_ingame_accepted_families": 0
+    "current_recipe_complete_animation_ids": 1,
+    "current_recipe_ingame_accepted_families": 0,
+    "current_recipe_complete_families": 1,
+    "current_recipe_installed_animation_ids": 1
   },
   "families": [
     {
@@ -421,7 +424,7 @@
         "unique_model_candidate_work": 434,
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0
       },
       "current_colour_witness": {
         "animation_id": "0x9000",
@@ -436,6 +439,36 @@
         "unique_encoded_work": 136,
         "state": "host-verified-ingame-pending",
         "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/selection.json",
+        "animation_ids": [
+          "0x9000"
+        ],
+        "native_kind": 1,
+        "bams": [
+          "MOGRG1",
+          "MOGRG1E",
+          "MOGRG2",
+          "MOGRG2E",
+          "MOGRG3",
+          "MOGRG3E",
+          "MOGRINV"
+        ],
+        "physical_frames": 434,
+        "unique_source_work": 434,
+        "unique_encoded_work": 434,
+        "encoded_cache_hits": 136,
+        "new_encoded_work": 298,
+        "new_neural_targets": 1788,
+        "resume_cache_hits": 434,
+        "scope": "complete-native-family-world; inventory-frame-produced-UI-coverage-separate",
+        "installation_reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/installation-verification.json",
+        "state": "family-complete-produced-installed-ingame-QA-pending",
+        "qa_ingame": false,
+        "release": false
       }
     },
     {
@@ -668,5 +701,38 @@
     "installed": false,
     "release": false,
     "scope": "selected actions/directions only; all frames/cycles for selected BAMs; other actions/equipment native"
-  }
+  },
+  "current_recipe_complete_productions": [
+    {
+      "family": "monster_large",
+      "reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/selection.json",
+      "animation_ids": [
+        "0x9000"
+      ],
+      "native_kind": 1,
+      "bams": [
+        "MOGRG1",
+        "MOGRG1E",
+        "MOGRG2",
+        "MOGRG2E",
+        "MOGRG3",
+        "MOGRG3E",
+        "MOGRINV"
+      ],
+      "physical_frames": 434,
+      "unique_source_work": 434,
+      "unique_encoded_work": 434,
+      "encoded_cache_hits": 136,
+      "new_encoded_work": 298,
+      "new_neural_targets": 1788,
+      "resume_cache_hits": 434,
+      "scope": "complete-native-family-world; inventory-frame-produced-UI-coverage-separate",
+      "installation_reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/installation-verification.json",
+      "state": "family-complete-produced-installed-ingame-QA-pending",
+      "qa_ingame": false,
+      "release": false
+    }
+  ]
 }

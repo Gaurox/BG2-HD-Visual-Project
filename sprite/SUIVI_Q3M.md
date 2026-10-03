@@ -8,12 +8,13 @@
 - Monde : x2 + BOX. Paperdolls : voie UI distincte ; acquis `6110` conservés.
 - xBR final / ReboutCX première génération : **historique, exclus de l'avancement Q3m**. Sources, runs et QA historiques préservés ; aucun déplacement/suppression. xBR comme guide et ReboutCX comme producteur de cibles restent des briques de Q3m.
 - Pilote quatre partenaires : **15 témoins / 49 BAM / 11 586 frames**, actions retenues uniquement, tests hôte acquis, **QA ingame 0/15**. `../docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json` ; contrat `../pipeline/PALETTE_Q3M_V7.md`.
+- Première famille complète V7 : **`monster_large` / ogre `0x9000` / 7 BAM / 434 frames**, produite et installée ; **QA ingame en attente**. `../docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json` ; faits d'installation `installation-verification.json` du même run.
 - Comparaison initiale et 16 niveaux : diagnostics préservés, sans promotion du candidat 16 niveaux. `../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md`.
 - Intégration nouveau moteur sprite : **90 %**, estimation utilisateur du 2026-10-03 ; ne mesure ni couverture des assets ni QA.
 
 ## Inventaire des familles
 
-`Stock` = IDs avec au moins un BAM / IDs définis ; `Q3m connu` = références **V6 antérieures**, pas couverture du nouveau contrat V7. Les sous-types restent dans `index/q3m-work-items.csv` (`animation_type`, INI source). Chaque famille a un témoin V7, listé dans `index/q3m-family-witnesses.json` ; aucun témoin n'est déclaré animation complète.
+`Stock` = IDs avec au moins un BAM / IDs définis ; `Q3m connu` = références **V6 antérieures**, pas couverture du nouveau contrat V7. Les sous-types restent dans `index/q3m-work-items.csv` (`animation_type`, INI source). Chaque famille a un témoin V7, listé dans `index/q3m-family-witnesses.json` ; les témoins restent partiels. Le lot complet Ogre possède une référence distincte.
 
 | Profil | Stock | Q3m connu | Intégration / exemples |
 |---|---:|---:|---|
@@ -26,7 +27,7 @@
 | `multi_new` | 10/10 | — | Grands composites, quadrants et BAM divisés selon l'INI ; dragons, Démogorgon. |
 | `monster_layered` | 7/7 | — | Corps et armes superposées ; sous-types `2000` et `8000` à conserver séparément. Sirines, ogres mages, gnolls, hobgobelins, kobolds. |
 | `monster_ankheg` | 1/1 | — | Ankheg ; enfouissement/émergence et éléments de rendu propres au profil. |
-| `monster_large` | 1/1 | — | Profil grands monstres BG1 ; ogre. |
+| `monster_large` | 1/1 | — | Ogre ; **famille complète V7 x2 installée**, 7 BAM / 434 frames ; QA ingame en attente. |
 | `monster_large16` | 3/5 | — | Profil grands monstres à 16 directions ; wyvernes, charognards rampants. |
 | `ambient` | 18/21 | — | Animations ambiantes mobiles ; chats, rats, poules, écureuils, figurants. |
 | `ambient_static` | 13/13 | — | Ambiants statiques et animaux ; vaches, chevaux, enfants/nobles/figurants. |
@@ -37,7 +38,7 @@
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouveau V7 : **15 IDs témoins partiels, zéro animation complète, zéro QA ingame** ; colonnes `q3m_v7_witness_*` du CSV. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouveau V7 : **15 IDs témoins partiels, 1 animation/famille complète installée, zéro QA ingame** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -52,5 +53,6 @@
 - Q3m Monster connu : reprise vérifiée **3 190/3 190 hits**, aucun processeur/GPU/Torch, payloads inchangés. Character/Monster et leurs producteurs acquis inchangés.
 - Garantie locale : produire une seule fois chaque clé finale compatible ; namespace profil/recette/échelle + clé pixel, cache persistant validé et verrouillé. Centres/cycles/calques restent hors clé pixel, stockés par occurrence.
 - Contrat quatre partenaires défini et testé : V7 fixe/rampes ; **2 730 sources → 2 731 encodages compatibles** pour le pilote. Une source spéciale a deux contrats ; 54 variantes de métadonnées inutiles partagent les mêmes octets. Reprise 2 731/2 731 hits sans import Torch. Centres/cycles restent par occurrence.
+- Ogre complet : **434 clés compatibles = 136 hits du témoin + 298 nouveaux encodages** ; 1 788 nouvelles cibles K6. Reprise 434/434 hits sans import Torch ; les 22 CRE partagent cette production, sans traitement par individu. `../docs/measurements/q3m-monster-large-full-x2-20261003-v1/production.json`.
 - Coût du reste des 335 animations avec BAM : `null` tant que la sélection exacte et son union de clés finale ne sont pas calculées ; ne pas additionner les compteurs par famille.
 - Sélection CPU : `pipeline/scripts/analyze_sprite_frame_dedup.py plan --animation-id <ID> [...]`. Pas d'inférence indépendante par famille ni addition des compteurs partagés.

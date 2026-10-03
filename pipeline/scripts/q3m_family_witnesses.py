@@ -49,13 +49,24 @@ def exclusive(root):
     finally: lock.seek(0); msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1); lock.close()
 
 
-def validate_selection(selection):
+def validate_selection(selection, complete_family=None):
     from analyze_native_sprite_families import KNOWN
     witnesses = selection['witnesses']
-    require(len(witnesses) == len(KNOWN) and {w['family'] for w in witnesses} == set(KNOWN), 'one witness per native family required')
+    if complete_family is None:
+        require(len(witnesses) == len(KNOWN) and {w['family'] for w in witnesses} == set(KNOWN), 'one witness per native family required')
+    else:
+        require(complete_family in KNOWN and {w['family'] for w in witnesses} == {complete_family}, 'complete family scope differs')
     require(len({w['animation_id'] for w in witnesses}) == len(witnesses), 'duplicate witness animation')
     with (ROOT/'sprite/index/sprite_animations.csv').open(encoding='utf-8-sig',newline='') as stream:
         inventory = {r['animation_id']:r for r in csv.DictReader(stream)}
+    if complete_family:
+        expected = {aid for aid,row in inventory.items() if row['engine_section'] == complete_family}
+        require({w['animation_id'] for w in witnesses} == expected, 'complete family animation coverage differs')
+        with (ROOT/'sprite/index/q3m-work-items.csv').open(encoding='utf-8-sig',newline='') as stream:
+            source_items = {r['animation_id']:r for r in csv.DictReader(stream)}
+        for witness in witnesses:
+            refs = source_items[witness['animation_id']]['bam_resrefs'].split(';')
+            require(refs != [''] and len(witness['refs']) == len(set(refs)) and set(witness['refs']) == set(refs), 'complete family BAM coverage differs')
     for witness in witnesses:
         native = inventory[witness['animation_id']]
         require(native['engine_section'] == witness['family'] and KNOWN[witness['family']][0] == witness['owner'], 'witness owner/family differs from source')
@@ -71,9 +82,10 @@ def validate_selection(selection):
     return witnesses
 
 
-def source_plan():
-    selection = json.loads(SELECTION.read_text(encoding='utf-8'))
-    witnesses = validate_selection(selection)
+def source_plan(selection_path=SELECTION, complete_family=None):
+    selection_path = Path(selection_path)
+    selection = json.loads(selection_path.read_text(encoding='utf-8'))
+    witnesses = validate_selection(selection,complete_family)
     pointers = {name:json.loads((ROOT/path).read_text()) for name,path in (
         ('character','sprite/index/palette-work-plan.json'),('other','sprite/index/q3m-source-work-plan.json'))}
     databases = {}
@@ -135,7 +147,8 @@ def source_plan():
         keys = {f['key'] for r in resources if r['witness'] is witness for f in r['frames']}
         witness_summary.append(dict(witness,physical_frames=sum(len(r['frames']) for r in resources if r['witness'] is witness),
                                     source_work=len({works[k]['source_key'] for k in keys}),encoded_work=len(keys)))
-    summary = dict(schema='bg2-q3m-family-witness-work-plan-v1',selection_sha256=file_sha(SELECTION),families=len(witnesses),resources=len(resources),physical_frames=sum(len(r['frames']) for r in resources),unique_source_work=len(source_keys),unique_encoded_work=len(works),native_oracle='pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6',witnesses=witness_summary,source_plans=pointers)
+    summary = dict(schema='bg2-q3m-family-witness-work-plan-v1',selection_sha256=file_sha(selection_path),families=len({w['family'] for w in witnesses}),resources=len(resources),physical_frames=sum(len(r['frames']) for r in resources),unique_source_work=len(source_keys),unique_encoded_work=len(works),native_oracle='pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6',witnesses=witness_summary,source_plans=pointers)
+    if complete_family: summary['complete_family'] = complete_family
     return resources,works,summary
 
 
@@ -286,9 +299,10 @@ def pack(resources,works,output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('command',choices=('plan','run','pack')); parser.add_argument('--cache',type=Path,required=True); parser.add_argument('--output',type=Path)
+    parser.add_argument('--selection',type=Path,default=SELECTION); parser.add_argument('--complete-family')
     args = parser.parse_args(); args.cache = args.cache.resolve(); args.cache.mkdir(parents=True,exist_ok=True)
     if args.output: args.output = args.output.resolve()
-    resources,works,summary = source_plan(); print(json.dumps(dict(stage='plan',**{k:summary[k] for k in ('families','resources','physical_frames','unique_source_work','unique_encoded_work')})),flush=True)
+    resources,works,summary = source_plan(args.selection,args.complete_family); print(json.dumps(dict(stage='plan',**{k:summary[k] for k in ('families','resources','physical_frames','unique_source_work','unique_encoded_work')})),flush=True)
     with exclusive(args.cache):
         if args.command == 'plan':
             if args.output: write_json(args.output,summary)

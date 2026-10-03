@@ -1,0 +1,386 @@
+{
+  "schema": "bg2-monster-large-live-CRE-v1",
+  "animation_id": "0x9000",
+  "stock_cre_scanned": 4735,
+  "override_cre_scanned": 4,
+  "precedence": "override first; KEY/BIF otherwise",
+  "tlk": "config://bg2ee_game_root/lang/fr_FR/dialog.tlk",
+  "creatures": [
+    {
+      "resref": "AERIE10",
+      "name": "Aerie",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "f05ee779087ef3b5cdef41c4fcdcd78008aa0980e79030db82a7fe8e85a4b2ca",
+      "colour_ranges": [
+        97,
+        105,
+        141,
+        12,
+        141,
+        25,
+        25
+      ],
+      "clua": "C:CreateCreature(\"AERIE10\")"
+    },
+    {
+      "resref": "AERIE11",
+      "name": "Aerie",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "93c4fd627bc34e113745819572dda1e5724b2e7b87ccd23ff5c4cd772ef46fd0",
+      "colour_ranges": [
+        97,
+        105,
+        141,
+        12,
+        141,
+        25,
+        25
+      ],
+      "clua": "C:CreateCreature(\"AERIE11\")"
+    },
+    {
+      "resref": "AERIE6",
+      "name": "Aerie",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "e9ad9fbb692d66956c5c8ba695cfbf6b51656f3d84a2fb9d89ea2de4035d9710",
+      "colour_ranges": [
+        97,
+        105,
+        141,
+        12,
+        141,
+        25,
+        25
+      ],
+      "clua": "C:CreateCreature(\"AERIE6\")"
+    },
+    {
+      "resref": "AERIE7",
+      "name": "Aerie",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1cc5b6193e3b021871c9cf5b267ea33a7aeee655faa8ebd7e55e42c02a8c77c8",
+      "colour_ranges": [
+        97,
+        105,
+        141,
+        12,
+        141,
+        25,
+        25
+      ],
+      "clua": "C:CreateCreature(\"AERIE7\")"
+    },
+    {
+      "resref": "AERIE9",
+      "name": "Aerie",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ea1f60e3dd31fde4f3488e923c0534cd9f56ee1f0b96bd90edc038fdbbdd83e4",
+      "colour_ranges": [
+        97,
+        105,
+        141,
+        12,
+        141,
+        25,
+        25
+      ],
+      "clua": "C:CreateCreature(\"AERIE9\")"
+    },
+    {
+      "resref": "BDOCK1",
+      "name": "Ogre des quais",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "d447e2fd1f68eb5c14ce16d314ca3ad0586ef1cd0dd7a52c7196a938d6fd773e",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"BDOCK1\")"
+    },
+    {
+      "resref": "BDOCK2",
+      "name": "Ogre des quais",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "eee6ef37bec59686a571f0e79df3c040b756d7c76905b7edbbcbe0a5c7493225",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"BDOCK2\")"
+    },
+    {
+      "resref": "GIANTF01",
+      "name": "Géant du feu",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "437a9774a37b4e59bf7cee5ab8bbb2f5b505aab8fbd3ff4f42d6debefa60cdb6",
+      "colour_ranges": [
+        30,
+        37,
+        57,
+        12,
+        23,
+        28,
+        0
+      ],
+      "clua": "C:CreateCreature(\"GIANTF01\")"
+    },
+    {
+      "resref": "GORSTA12",
+      "name": "Statue",
+      "animation_id": "0x9000",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "fc2539ccd1e3240a71adf9c6991d6c38101684879536a6151818fce9d9f60c0c",
+      "colour_ranges": [
+        72,
+        72,
+        72,
+        72,
+        72,
+        72,
+        72
+      ],
+      "clua": "C:CreateCreature(\"GORSTA12\")"
+    },
+    {
+      "resref": "GPFIGHT1",
+      "name": "Boz",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "d3d80910e0e7dc97f204a43bf3e19aede3b6a76ded9bc5536d974f8829ac71ed",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"GPFIGHT1\")"
+    },
+    {
+      "resref": "MUGGER4",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "da63ae487d854f7f8b50c13e330ff8bf4571e2539a1ad75a8c8109699926b058",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"MUGGER4\")"
+    },
+    {
+      "resref": "OGRE01",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "229087a750ed06716d39595ab0faa5f264e033820b8dbb4e40012b816192f659",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"OGRE01\")"
+    },
+    {
+      "resref": "OGREGRSU",
+      "name": "Berserker ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "c28f0d3be6a61807b24ea801d7fc4309952ebfdb2ff772bce0e3c7a9c75d6db1",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"OGREGRSU\")"
+    },
+    {
+      "resref": "OGRESU",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "3cd1b797373f7d55192ff33d4d5c91e961f7ee5e4b59e69485cbe3c85ab77de0",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"OGRESU\")"
+    },
+    {
+      "resref": "OHDGOLD",
+      "name": "Statue",
+      "animation_id": "0x9000",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "91238bf58c3b14b09f3b0dbddbf5137b9b8008eb5cd715158508b0e4d8dc054c",
+      "colour_ranges": [
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67
+      ],
+      "clua": "C:CreateCreature(\"OHDGOLD\")"
+    },
+    {
+      "resref": "OHNOGREB",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Neera.bif",
+      "sha256": "87947b63b4c2a5ee84fe58c7b93e5784c41fb242e42965257498962a47719da8",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"OHNOGREB\")"
+    },
+    {
+      "resref": "PALKNI02",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "64ee9533eadc4cad4b4660921804ff6978804c59addaeff5c4b10d20ea678a08",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"PALKNI02\")"
+    },
+    {
+      "resref": "PALKNI04",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "0d3b7fd1a54dd36b788b88ce36adb0c816af7255e68437e2d6b7e0432913c5ff",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"PALKNI04\")"
+    },
+    {
+      "resref": "PLYOGRE",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "c4a8c4bd0b7afc5f4f82bf33fb9152e62e745d46a8a0de1a584197c40e1d9b7d",
+      "colour_ranges": [
+        29,
+        36,
+        23,
+        16,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"PLYOGRE\")"
+    },
+    {
+      "resref": "SHTHASS3",
+      "name": "Voleur",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "7d606f6b098c733d1f1ac43893e80efa63d5a0327faad108a76105d5f4714139",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"SHTHASS3\")"
+    },
+    {
+      "resref": "UDOGRE",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "a3bbacda8825da142be43d119588c755f3e56d40eada2d79b3e5784b0d34f5ae",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"UDOGRE\")"
+    },
+    {
+      "resref": "UHOGRE02",
+      "name": "Ogre",
+      "animation_id": "0x9000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "b46fede56cafcb2a52c46101297e4dff0496cb940a9391ca1068ee7f680e9361",
+      "colour_ranges": [
+        29,
+        249,
+        248,
+        247,
+        91,
+        30,
+        0
+      ],
+      "clua": "C:CreateCreature(\"UHOGRE02\")"
+    }
+  ],
+  "count": 22,
+  "ingame_spawn_verified": false
+}
