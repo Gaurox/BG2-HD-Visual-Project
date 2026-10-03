@@ -1,0 +1,112 @@
+{
+  "role": "offline-image-test-not-Q3m-not-runtime",
+  "model": "seedvr2_7b_int8_convrot.safetensors",
+  "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e",
+  "workflow": {
+    "node_ids": {
+      "LoadImage": "1",
+      "SaveImage": "9",
+      "UNETLoader": "66:52",
+      "VAELoader": "66:51",
+      "KSampler": "66:54",
+      "ResizeImageMaskNode": "66:57",
+      "SeedVR2PostProcessing": "66:59",
+      "VAEEncodeTiled": "66:48",
+      "VAEDecodeTiled": "66:55"
+    },
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "weight_dtype": "default",
+    "vae": "seedvr2_ema_vae_fp16.safetensors",
+    "scale": 4,
+    "scale_method": "lanczos",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "denoise": 1,
+    "color_correction_method": "lab",
+    "vae_encode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    },
+    "vae_decode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    }
+  },
+  "scale": 4,
+  "input": "same native indexed BAM frame; nearest nontransparent RGB fill; native alpha",
+  "inference": "SeedVR2 7B INT8 convrot, Euler one step, fixed workflow seed, LAB colour correction",
+  "display_alpha": "same xBR4 guide/live neutral palette alpha as Q3m x4; exact special shadow RGB restored",
+  "source_comparison_sha256": "8bfd1ffa211e992eca5fd238337c45ca17d32e88c25f1b709d01a3f2f879019b",
+  "system": {
+    "system": {
+      "os": "win32",
+      "ram_total": 68463722496,
+      "ram_free": 49499705344,
+      "comfyui_version": "0.38.1",
+      "required_frontend_version": "1.53.6",
+      "installed_templates_version": "0.11.73",
+      "required_templates_version": "0.11.73",
+      "comfy_package_versions": [
+        {
+          "name": "comfyui-frontend-package",
+          "installed": "1.53.6",
+          "required": "1.53.6"
+        },
+        {
+          "name": "comfyui-workflow-templates",
+          "installed": "0.11.73",
+          "required": "0.11.73"
+        },
+        {
+          "name": "comfyui-embedded-docs",
+          "installed": "0.5.12",
+          "required": "0.5.12"
+        },
+        {
+          "name": "comfy-kitchen",
+          "installed": "0.2.36",
+          "required": "0.2.36"
+        },
+        {
+          "name": "comfy-aimdo",
+          "installed": "0.5.5",
+          "required": "0.5.5"
+        }
+      ],
+      "python_version": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+      "pytorch_version": "2.12.0+cu130",
+      "embedded_python": true,
+      "deploy_environment": "local-portable",
+      "argv": [
+        "ComfyUI\\main.py",
+        "--windows-standalone-build",
+        "--disable-comfy-compiler",
+        "--vram-headroom",
+        "1",
+        "--fast",
+        "fp16_accumulation",
+        "fp8_matrix_mult",
+        "autotune",
+        "--use-ck-attention"
+      ]
+    },
+    "devices": [
+      {
+        "name": "cuda:0 NVIDIA GeForce RTX 5090 : native",
+        "type": "cuda",
+        "index": 0,
+        "vram_total": 34162016256,
+        "vram_free": 32450281472,
+        "torch_vram_total": 35651584,
+        "torch_vram_free": 2097152
+      }
+    ]
+  }
+}

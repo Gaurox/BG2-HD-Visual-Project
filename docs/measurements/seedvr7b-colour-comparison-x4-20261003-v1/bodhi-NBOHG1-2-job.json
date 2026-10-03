@@ -1,0 +1,78 @@
+{
+  "key": "bodhi-NBOHG1-2",
+  "prompt_id": "d62c50de-ea5a-456f-907b-17ee2ec763e3",
+  "source_sha256": "3dfbe5916facbfebf3ad22170a925020bf14b2adca2e7f1f4c86efba8515354b",
+  "status": "completed",
+  "workflow_summary": {
+    "node_ids": {
+      "LoadImage": "1",
+      "SaveImage": "9",
+      "UNETLoader": "66:52",
+      "VAELoader": "66:51",
+      "KSampler": "66:54",
+      "ResizeImageMaskNode": "66:57",
+      "SeedVR2PostProcessing": "66:59",
+      "VAEEncodeTiled": "66:48",
+      "VAEDecodeTiled": "66:55"
+    },
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "weight_dtype": "default",
+    "vae": "seedvr2_ema_vae_fp16.safetensors",
+    "scale": 4,
+    "scale_method": "lanczos",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "denoise": 1,
+    "color_correction_method": "lab",
+    "vae_encode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    },
+    "vae_decode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    }
+  },
+  "history_status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "d62c50de-ea5a-456f-907b-17ee2ec763e3",
+          "timestamp": 1791014237313
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "d62c50de-ea5a-456f-907b-17ee2ec763e3",
+          "timestamp": 1791014237326
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "d62c50de-ea5a-456f-907b-17ee2ec763e3",
+          "timestamp": 1791014242309
+        }
+      ]
+    ]
+  },
+  "output": {
+    "filename": "bodhi-NBOHG1-2_00001_.png",
+    "subfolder": "bg2_sprite_seedvr7b_x4_20261003_v1",
+    "type": "output"
+  },
+  "raw_sha256": "8a15774e8abbe332d22fdb490e20f6a54292c61ebb9378cb8a1071ea8ba1b5f6",
+  "wait_seconds": 6.016890899998543
+}

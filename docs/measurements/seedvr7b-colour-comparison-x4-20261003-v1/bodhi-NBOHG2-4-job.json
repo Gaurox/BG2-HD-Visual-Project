@@ -1,0 +1,81 @@
+{
+  "key": "bodhi-NBOHG2-4",
+  "prompt_id": "acd9fd63-f7cb-43a4-bee5-7743bc6b6a59",
+  "source_sha256": "3a3effbe2b105fbc77ab94c264687ddac6ed5d5ea6fc92c0ae2d0311e8298b89",
+  "status": "completed",
+  "workflow_summary": {
+    "node_ids": {
+      "LoadImage": "1",
+      "SaveImage": "9",
+      "UNETLoader": "66:52",
+      "VAELoader": "66:51",
+      "KSampler": "66:54",
+      "ResizeImageMaskNode": "66:57",
+      "SeedVR2PostProcessing": "66:59",
+      "VAEEncodeTiled": "66:48",
+      "VAEDecodeTiled": "66:55"
+    },
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "weight_dtype": "default",
+    "vae": "seedvr2_ema_vae_fp16.safetensors",
+    "scale": 4,
+    "scale_method": "lanczos",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "denoise": 1,
+    "color_correction_method": "lab",
+    "vae_encode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    },
+    "vae_decode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    }
+  },
+  "history_status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "acd9fd63-f7cb-43a4-bee5-7743bc6b6a59",
+          "timestamp": 1791014243376
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "66:51",
+            "66:52"
+          ],
+          "prompt_id": "acd9fd63-f7cb-43a4-bee5-7743bc6b6a59",
+          "timestamp": 1791014243384
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "acd9fd63-f7cb-43a4-bee5-7743bc6b6a59",
+          "timestamp": 1791014243953
+        }
+      ]
+    ]
+  },
+  "output": {
+    "filename": "bodhi-NBOHG2-4_00001_.png",
+    "subfolder": "bg2_sprite_seedvr7b_x4_20261003_v1",
+    "type": "output"
+  },
+  "raw_sha256": "72a078268f6cf04d898d6e2d2dba43c7e0cb56befbf88a7acba4be5e2045a35e",
+  "wait_seconds": 2.012549700004456
+}

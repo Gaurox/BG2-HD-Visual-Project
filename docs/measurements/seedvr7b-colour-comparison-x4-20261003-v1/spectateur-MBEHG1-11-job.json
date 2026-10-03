@@ -1,0 +1,81 @@
+{
+  "key": "spectateur-MBEHG1-11",
+  "prompt_id": "7197887b-7dfa-40a1-8c70-e32a23a56c05",
+  "source_sha256": "20806fea0fd887be8dbe20c0e543eab68d49d4a5f3129164ef15d52cc4053d77",
+  "status": "completed",
+  "workflow_summary": {
+    "node_ids": {
+      "LoadImage": "1",
+      "SaveImage": "9",
+      "UNETLoader": "66:52",
+      "VAELoader": "66:51",
+      "KSampler": "66:54",
+      "ResizeImageMaskNode": "66:57",
+      "SeedVR2PostProcessing": "66:59",
+      "VAEEncodeTiled": "66:48",
+      "VAEDecodeTiled": "66:55"
+    },
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "weight_dtype": "default",
+    "vae": "seedvr2_ema_vae_fp16.safetensors",
+    "scale": 4,
+    "scale_method": "lanczos",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "denoise": 1,
+    "color_correction_method": "lab",
+    "vae_encode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    },
+    "vae_decode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    }
+  },
+  "history_status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "7197887b-7dfa-40a1-8c70-e32a23a56c05",
+          "timestamp": 1791014251835
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "66:51",
+            "66:52"
+          ],
+          "prompt_id": "7197887b-7dfa-40a1-8c70-e32a23a56c05",
+          "timestamp": 1791014251846
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "7197887b-7dfa-40a1-8c70-e32a23a56c05",
+          "timestamp": 1791014252898
+        }
+      ]
+    ]
+  },
+  "output": {
+    "filename": "spectateur-MBEHG1-11_00001_.png",
+    "subfolder": "bg2_sprite_seedvr7b_x4_20261003_v1",
+    "type": "output"
+  },
+  "raw_sha256": "d6ab87a12e079746376046fac2f5f91f163ecf04912bea6ccdc4dc1a45194cb5",
+  "wait_seconds": 2.009580799996911
+}

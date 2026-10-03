@@ -1,0 +1,205 @@
+{
+  "role": "diagnostic-comparison-not-QA",
+  "palette": "native neutral; same palette/alpha for both decoders",
+  "colours": "distinct RGB on opaque sprite pixels, before background compositing; excludes transparency and shadow",
+  "sampling": "first existing phase-5 G1 sample and first G2 sample; those previews selected high-F frames within representative cycles",
+  "display": "PNG lossless; full sprite nearest-neighbour x3 of x2 pixels, detail nearest-neighbour x8; no added colours",
+  "families": [
+    {
+      "target": "Spectateur",
+      "old_method": "ReboutCX classique x2",
+      "old_run": "reboutcx-p2-mbeh-v2",
+      "comparison_png": "sprite/.work/q3m-colour-comparison-20261003-v1/spectateur-avant-apres.png",
+      "samples": [
+        {
+          "resref": "MBEHG1",
+          "frame": 11,
+          "cycle": 9,
+          "source_sha256": "3542d059f634323a75139a142f9b64349ef1bb5e3755619e9e3a63a7807b1878",
+          "native_geometry": [
+            130,
+            166,
+            63,
+            131,
+            0
+          ],
+          "before_colours": 86,
+          "q3m_colours": 569,
+          "q3m_colours_absent_from_source_palette": 455,
+          "q3m_fractional_opaque_pixels": 14484,
+          "opaque_pixels": 26140,
+          "crop": [
+            112,
+            81,
+            144,
+            113
+          ],
+          "installed_leaf_sha256": "837094A34294D7288237D9B18AF90C5FBC3C65CFD5D2C9C8E087028DE8E448A9",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/components/MBEHG1.registry",
+            "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/components/MBEHG2.registry"
+          ]
+        },
+        {
+          "resref": "MBEHG2",
+          "frame": 38,
+          "cycle": 0,
+          "source_sha256": "c72e818185e884463e26753c38df0d41c34abf8d59e7e26b1fdcf8bb5de157b0",
+          "native_geometry": [
+            131,
+            162,
+            64,
+            98,
+            0
+          ],
+          "before_colours": 85,
+          "q3m_colours": 583,
+          "q3m_colours_absent_from_source_palette": 471,
+          "q3m_fractional_opaque_pixels": 15697,
+          "opaque_pixels": 28641,
+          "crop": [
+            115,
+            86,
+            147,
+            118
+          ],
+          "installed_leaf_sha256": "DE70440BC37866569C736135D78610DC2E71497C43DC446E66DDC5529F5EBFC0",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/components/MBEHG1.registry",
+            "sprite/families/monsters/7fxx/7f02-mbeh-beholder/runs/reboutcx-p2-mbeh-v2/components/MBEHG2.registry"
+          ]
+        }
+      ]
+    },
+    {
+      "target": "Bodhi",
+      "old_method": "ReboutCX classique x2",
+      "old_run": "reboutcx-p2-sample-v1",
+      "comparison_png": "sprite/.work/q3m-colour-comparison-20261003-v1/bodhi-avant-apres.png",
+      "samples": [
+        {
+          "resref": "NBOHG1",
+          "frame": 2,
+          "cycle": 9,
+          "source_sha256": "2f7d497dc98faeb012331eeca6f807a998ecc961b4fa54a54e1dc3058ac66707",
+          "native_geometry": [
+            36,
+            59,
+            17,
+            37,
+            0
+          ],
+          "before_colours": 64,
+          "q3m_colours": 428,
+          "q3m_colours_absent_from_source_palette": 351,
+          "q3m_fractional_opaque_pixels": 1858,
+          "opaque_pixels": 2609,
+          "crop": [
+            19,
+            24,
+            51,
+            56
+          ],
+          "installed_leaf_sha256": "6E44F6722CB5CB356A4542FFB6600A99E03567A7F150D922711687EFFD5BDE48",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/components/NBOHG1.registry",
+            "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/components/NBOHG2.registry"
+          ]
+        },
+        {
+          "resref": "NBOHG2",
+          "frame": 4,
+          "cycle": 0,
+          "source_sha256": "4cf0dc26fed14e475aab60225690b8288ed2604fc1b77cfdc69384938a0c7952",
+          "native_geometry": [
+            50,
+            82,
+            21,
+            49,
+            0
+          ],
+          "before_colours": 62,
+          "q3m_colours": 423,
+          "q3m_colours_absent_from_source_palette": 339,
+          "q3m_fractional_opaque_pixels": 2014,
+          "opaque_pixels": 2943,
+          "crop": [
+            26,
+            55,
+            58,
+            87
+          ],
+          "installed_leaf_sha256": "A5CD134E99ABD1FA6597137CFA56672DAD39DC817CEA6BD31A1DB52869A13729",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/components/NBOHG1.registry",
+            "sprite/families/monsters/7fxx/7f30-nboh-bodhi/runs/reboutcx-p2-sample-v1/components/NBOHG2.registry"
+          ]
+        }
+      ]
+    },
+    {
+      "target": "Golem geôlier",
+      "old_method": "Ancien xBR x2 (pas ReboutCX)",
+      "old_run": null,
+      "comparison_png": "sprite/.work/q3m-colour-comparison-20261003-v1/golem-avant-apres.png",
+      "samples": [
+        {
+          "resref": "MGLCG1",
+          "frame": 24,
+          "cycle": 9,
+          "source_sha256": "661dce39a0277f322297fe808b79d2d0e12732ed81df1431e1125811aab7bf7f",
+          "native_geometry": [
+            71,
+            84,
+            36,
+            62,
+            0
+          ],
+          "before_colours": 81,
+          "q3m_colours": 342,
+          "q3m_colours_absent_from_source_palette": 271,
+          "q3m_fractional_opaque_pixels": 8898,
+          "opaque_pixels": 12908,
+          "crop": [
+            55,
+            51,
+            87,
+            83
+          ],
+          "installed_leaf_sha256": "0F64AAFC3C32E9AC4F4268ACE1E5D155680E3C380D3751EEAD3904FE96B3A219",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/runs/x2-nearest-v1/build/iee-assets/creature-sprites/CreatureSprites-XN.registry"
+          ]
+        },
+        {
+          "resref": "MGLCG2",
+          "frame": 3,
+          "cycle": 0,
+          "source_sha256": "e12dbdf3d5f77f16163ebae905193c0fa414e0182994cf6e0d2eb0dd2d0dad2a",
+          "native_geometry": [
+            80,
+            106,
+            42,
+            80,
+            0
+          ],
+          "before_colours": 99,
+          "q3m_colours": 402,
+          "q3m_colours_absent_from_source_palette": 310,
+          "q3m_fractional_opaque_pixels": 9674,
+          "opaque_pixels": 13522,
+          "crop": [
+            67,
+            72,
+            99,
+            104
+          ],
+          "installed_leaf_sha256": "CBB0EF9890824508CAFFC69224A4D2447A36562ED2A4A8226652AD4800EEBE86",
+          "old_registry_paths": [
+            "sprite/families/monsters/7fxx/7f07-mglc-golem-clay/runs/x2-nearest-v1/build/iee-assets/creature-sprites/CreatureSprites-XN.registry"
+          ]
+        }
+      ]
+    }
+  ]
+}

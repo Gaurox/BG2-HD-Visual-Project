@@ -1,0 +1,273 @@
+{
+  "recipe": {
+    "role": "offline-image-test-not-Q3m-not-runtime",
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "workflow_sha256": "30dec619a4c1a3ecde076c0926a5ed8ee29d5f2ca8b4eb89a75d3b5f7811b61e",
+    "workflow": {
+      "node_ids": {
+        "LoadImage": "1",
+        "SaveImage": "9",
+        "UNETLoader": "66:52",
+        "VAELoader": "66:51",
+        "KSampler": "66:54",
+        "ResizeImageMaskNode": "66:57",
+        "SeedVR2PostProcessing": "66:59",
+        "VAEEncodeTiled": "66:48",
+        "VAEDecodeTiled": "66:55"
+      },
+      "model": "seedvr2_7b_int8_convrot.safetensors",
+      "weight_dtype": "default",
+      "vae": "seedvr2_ema_vae_fp16.safetensors",
+      "scale": 4,
+      "scale_method": "lanczos",
+      "seed": 959948902156062,
+      "steps": 1,
+      "cfg": 1,
+      "sampler": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "color_correction_method": "lab",
+      "vae_encode_tiling": {
+        "tile_size": 512,
+        "overlap": 128,
+        "temporal_size": 4096,
+        "temporal_overlap": 8
+      },
+      "vae_decode_tiling": {
+        "tile_size": 512,
+        "overlap": 128,
+        "temporal_size": 4096,
+        "temporal_overlap": 8
+      }
+    },
+    "scale": 4,
+    "input": "same native indexed BAM frame; nearest nontransparent RGB fill; native alpha",
+    "inference": "SeedVR2 7B INT8 convrot, Euler one step, fixed workflow seed, LAB colour correction",
+    "display_alpha": "same xBR4 guide/live neutral palette alpha as Q3m x4; exact special shadow RGB restored",
+    "source_comparison_sha256": "8bfd1ffa211e992eca5fd238337c45ca17d32e88c25f1b709d01a3f2f879019b",
+    "system": {
+      "system": {
+        "os": "win32",
+        "ram_total": 68463722496,
+        "ram_free": 49499705344,
+        "comfyui_version": "0.38.1",
+        "required_frontend_version": "1.53.6",
+        "installed_templates_version": "0.11.73",
+        "required_templates_version": "0.11.73",
+        "comfy_package_versions": [
+          {
+            "name": "comfyui-frontend-package",
+            "installed": "1.53.6",
+            "required": "1.53.6"
+          },
+          {
+            "name": "comfyui-workflow-templates",
+            "installed": "0.11.73",
+            "required": "0.11.73"
+          },
+          {
+            "name": "comfyui-embedded-docs",
+            "installed": "0.5.12",
+            "required": "0.5.12"
+          },
+          {
+            "name": "comfy-kitchen",
+            "installed": "0.2.36",
+            "required": "0.2.36"
+          },
+          {
+            "name": "comfy-aimdo",
+            "installed": "0.5.5",
+            "required": "0.5.5"
+          }
+        ],
+        "python_version": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+        "pytorch_version": "2.12.0+cu130",
+        "embedded_python": true,
+        "deploy_environment": "local-portable",
+        "argv": [
+          "ComfyUI\\main.py",
+          "--windows-standalone-build",
+          "--disable-comfy-compiler",
+          "--vram-headroom",
+          "1",
+          "--fast",
+          "fp16_accumulation",
+          "fp8_matrix_mult",
+          "autotune",
+          "--use-ck-attention"
+        ]
+      },
+      "devices": [
+        {
+          "name": "cuda:0 NVIDIA GeForce RTX 5090 : native",
+          "type": "cuda",
+          "index": 0,
+          "vram_total": 34162016256,
+          "vram_free": 32450281472,
+          "torch_vram_total": 35651584,
+          "torch_vram_free": 2097152
+        }
+      ]
+    }
+  },
+  "installation_changed": false,
+  "registries_changed": false,
+  "QA_changed": false,
+  "colour_count": "distinct RGB on opaque sprite pixels; raw SeedVR RGB is not palette/Q3m constrained",
+  "families": [
+    {
+      "target": "Spectateur",
+      "old_method": "ReboutCX classique x2",
+      "comparison_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\spectateur-comparatif-4-traitements.png",
+      "samples": [
+        {
+          "resref": "MBEHG1",
+          "frame": 11,
+          "cycle": 9,
+          "source_sha256": "3542d059f634323a75139a142f9b64349ef1bb5e3755619e9e3a63a7807b1878",
+          "source_geometry": [
+            130,
+            166,
+            63,
+            131,
+            0
+          ],
+          "old_colours": 86,
+          "q3m_x2_colours": 569,
+          "q3m_x4_colours": 760,
+          "seedvr7b_x4_colours": 42586,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\spectateur-MBEHG1-11-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\spectateur-MBEHG1-11-seedvr7b-x4-rgba.png",
+          "prompt_id": "7197887b-7dfa-40a1-8c70-e32a23a56c05",
+          "png_sha256": "6ff590831d341c3fb540c46a59af36f7700ddd3474e36ac3030f4583442bbdb1",
+          "alpha_identical_to_Q3m_x4": true
+        },
+        {
+          "resref": "MBEHG2",
+          "frame": 38,
+          "cycle": 0,
+          "source_sha256": "c72e818185e884463e26753c38df0d41c34abf8d59e7e26b1fdcf8bb5de157b0",
+          "source_geometry": [
+            131,
+            162,
+            64,
+            98,
+            0
+          ],
+          "old_colours": 85,
+          "q3m_x2_colours": 583,
+          "q3m_x4_colours": 760,
+          "seedvr7b_x4_colours": 42138,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\spectateur-MBEHG2-38-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\spectateur-MBEHG2-38-seedvr7b-x4-rgba.png",
+          "prompt_id": "ad4c186b-1e08-4d98-ab02-2e499bcde409",
+          "png_sha256": "49288a41e94bb7372b3d5bbdb69de1203b874b0b867c8731c1bdd20e39368d1d",
+          "alpha_identical_to_Q3m_x4": true
+        }
+      ]
+    },
+    {
+      "target": "Bodhi",
+      "old_method": "ReboutCX classique x2",
+      "comparison_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\bodhi-comparatif-4-traitements.png",
+      "samples": [
+        {
+          "resref": "NBOHG1",
+          "frame": 2,
+          "cycle": 9,
+          "source_sha256": "2f7d497dc98faeb012331eeca6f807a998ecc961b4fa54a54e1dc3058ac66707",
+          "source_geometry": [
+            36,
+            59,
+            17,
+            37,
+            0
+          ],
+          "old_colours": 64,
+          "q3m_x2_colours": 428,
+          "q3m_x4_colours": 705,
+          "seedvr7b_x4_colours": 6003,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\bodhi-NBOHG1-2-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\bodhi-NBOHG1-2-seedvr7b-x4-rgba.png",
+          "prompt_id": "d62c50de-ea5a-456f-907b-17ee2ec763e3",
+          "png_sha256": "61afbf8959047014f8867a1b959a1d38a1a33c2faebf268e6a089f4186d44033",
+          "alpha_identical_to_Q3m_x4": true
+        },
+        {
+          "resref": "NBOHG2",
+          "frame": 4,
+          "cycle": 0,
+          "source_sha256": "4cf0dc26fed14e475aab60225690b8288ed2604fc1b77cfdc69384938a0c7952",
+          "source_geometry": [
+            50,
+            82,
+            21,
+            49,
+            0
+          ],
+          "old_colours": 62,
+          "q3m_x2_colours": 423,
+          "q3m_x4_colours": 681,
+          "seedvr7b_x4_colours": 6145,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\bodhi-NBOHG2-4-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\bodhi-NBOHG2-4-seedvr7b-x4-rgba.png",
+          "prompt_id": "acd9fd63-f7cb-43a4-bee5-7743bc6b6a59",
+          "png_sha256": "78163c52b7e86a82f77d1aea8f838c3aa2b4907780ab44022ddbc40ccdae896c",
+          "alpha_identical_to_Q3m_x4": true
+        }
+      ]
+    },
+    {
+      "target": "Golem geôlier",
+      "old_method": "Ancien xBR x2 (pas ReboutCX)",
+      "comparison_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\golem-comparatif-4-traitements.png",
+      "samples": [
+        {
+          "resref": "MGLCG1",
+          "frame": 24,
+          "cycle": 9,
+          "source_sha256": "661dce39a0277f322297fe808b79d2d0e12732ed81df1431e1125811aab7bf7f",
+          "source_geometry": [
+            71,
+            84,
+            36,
+            62,
+            0
+          ],
+          "old_colours": 81,
+          "q3m_x2_colours": 342,
+          "q3m_x4_colours": 436,
+          "seedvr7b_x4_colours": 12644,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\golem-MGLCG1-24-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\golem-MGLCG1-24-seedvr7b-x4-rgba.png",
+          "prompt_id": "a4a67364-f8c1-432c-9a3a-1f05864b0cc8",
+          "png_sha256": "4a873a0cd91da708ed1bd357cce2cfceb958d1cb1220921066ac33532a2ee4b8",
+          "alpha_identical_to_Q3m_x4": true
+        },
+        {
+          "resref": "MGLCG2",
+          "frame": 3,
+          "cycle": 0,
+          "source_sha256": "e12dbdf3d5f77f16163ebae905193c0fa414e0182994cf6e0d2eb0dd2d0dad2a",
+          "source_geometry": [
+            80,
+            106,
+            42,
+            80,
+            0
+          ],
+          "old_colours": 99,
+          "q3m_x2_colours": 402,
+          "q3m_x4_colours": 563,
+          "seedvr7b_x4_colours": 13826,
+          "seedvr7b_raw_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\golem-MGLCG2-3-seedvr7b-x4-raw.png",
+          "comparison_rgba_png": "sprite\\.work\\seedvr7b-colour-comparison-x4-20261003-v1\\golem-MGLCG2-3-seedvr7b-x4-rgba.png",
+          "prompt_id": "38bf32e1-7463-4d74-94bb-8673b81956b6",
+          "png_sha256": "9601aefb78854645c5f646dc5f9cbe8cd166a2f7cbc4047c4796e4bef395d216",
+          "alpha_identical_to_Q3m_x4": true
+        }
+      ]
+    }
+  ]
+}

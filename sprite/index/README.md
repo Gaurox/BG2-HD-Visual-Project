@@ -43,6 +43,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 - Production : pointeur `current-generation.json` et manifeste scellé du catalogue.
 - Installation : `ingame-installation/active-test.json`, sans autorité QA.
 - Q3m x2 complet, 78 `Character` (2026-10-02) : [production](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json), [installation active BOX](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/ingame-installation/active-test.json), [couverture vérifiée, aucun manquant](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/verification.json). QA visuelle de ce catalogue complet encore distincte.
+- Diagnostics couleur, six frames Spectateur/Bodhi/golem (2026-10-03) : [cinq essais archivés, PNG et mesures](../../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md) — ancien x2, Q3m x2/x4, SeedVR 7B, 16 niveaux et quatre partenaires. Hors production/QA/installation/release ; variantes expérimentales incompatibles V6.
 - Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`, puis `content.json`.
 
 Ces quatre états sont indépendants. Aucun registre global ne les fusionne ni ne les réconcilie.

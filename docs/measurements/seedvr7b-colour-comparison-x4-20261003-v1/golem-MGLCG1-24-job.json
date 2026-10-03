@@ -1,0 +1,81 @@
+{
+  "key": "golem-MGLCG1-24",
+  "prompt_id": "a4a67364-f8c1-432c-9a3a-1f05864b0cc8",
+  "source_sha256": "ae37aa07c072d67c6040fdd2164f4aaae0bb9371625d0a46fd41a95ddf89998a",
+  "status": "completed",
+  "workflow_summary": {
+    "node_ids": {
+      "LoadImage": "1",
+      "SaveImage": "9",
+      "UNETLoader": "66:52",
+      "VAELoader": "66:51",
+      "KSampler": "66:54",
+      "ResizeImageMaskNode": "66:57",
+      "SeedVR2PostProcessing": "66:59",
+      "VAEEncodeTiled": "66:48",
+      "VAEDecodeTiled": "66:55"
+    },
+    "model": "seedvr2_7b_int8_convrot.safetensors",
+    "weight_dtype": "default",
+    "vae": "seedvr2_ema_vae_fp16.safetensors",
+    "scale": 4,
+    "scale_method": "lanczos",
+    "seed": 959948902156062,
+    "steps": 1,
+    "cfg": 1,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "denoise": 1,
+    "color_correction_method": "lab",
+    "vae_encode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    },
+    "vae_decode_tiling": {
+      "tile_size": 512,
+      "overlap": 128,
+      "temporal_size": 4096,
+      "temporal_overlap": 8
+    }
+  },
+  "history_status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "a4a67364-f8c1-432c-9a3a-1f05864b0cc8",
+          "timestamp": 1791014245429
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [
+            "66:51",
+            "66:52"
+          ],
+          "prompt_id": "a4a67364-f8c1-432c-9a3a-1f05864b0cc8",
+          "timestamp": 1791014245436
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "a4a67364-f8c1-432c-9a3a-1f05864b0cc8",
+          "timestamp": 1791014246051
+        }
+      ]
+    ]
+  },
+  "output": {
+    "filename": "golem-MGLCG1-24_00001_.png",
+    "subfolder": "bg2_sprite_seedvr7b_x4_20261003_v1",
+    "type": "output"
+  },
+  "raw_sha256": "7d46e206a7c397216d9946a8efefd68f73279872bffc74961568a1769365698b",
+  "wait_seconds": 2.0185805000000983
+}

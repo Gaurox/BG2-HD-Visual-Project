@@ -1,0 +1,49 @@
+{
+  "role": "six-frame-offline-comparison-only",
+  "scale": 4,
+  "k": 6,
+  "source": "indexed native BAM; not enlarged x2 PNG",
+  "inference": {
+    "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+    "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+    "batch_size": 86,
+    "canvas_quantum": 32,
+    "fp16": true,
+    "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+    "torch": "2.7.0+cu128",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dependencies": {
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "spandrel": "0.4.1",
+      "chainner_ext": "0.3.10"
+    },
+    "kernels": {
+      "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+      "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+      "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+    }
+  },
+  "target": "direct x4 float32 crop; no downscale",
+  "encoder": "monster-fixed-exhaustive-oklab-f64-integer-k6-v1",
+  "rule": 2,
+  "guide": {
+    "algorithm": "XBR/xbr4X",
+    "scale": 4,
+    "passes": 1,
+    "antialias": false,
+    "xbr_blend": false
+  },
+  "dither": false,
+  "boundary_mixing": false,
+  "contract_sha256": "a97f9d01f532017303e294ff3ece17a327d4574ae67fa24f6cac4cece95a3baf",
+  "profiles_sha256": "bfe106f4e4f7debc013d9c819bfc9f0bc04d49929682f65208685d0bca2eb65b",
+  "code": {
+    "palette_monster_contract.py": "a735e506275efe639e29de5c0b00bfe413defdc9f100f95ab725401453a87637",
+    "reboutcx_quantize.py": "95991bfacf8f2aab639f3da9adb4d1d0539bda98c888f9b5f905ad3dac6907e9",
+    "run_creature_sprite_x2.py": "6f927964b91ab4dd2ae0d99fc7353ad564794117ac931cc6f2a4c83281fd7788",
+    "xbr2x_batch.js": "d690e7ce26106f12192177404ae14066af75c9f8b0ab06a9726e1fbff50b1b23"
+  },
+  "scalepix_sha256": "b8545f0ef97670fe5e077592738ce0faca00bb054dde6e55e23517e892c32598",
+  "comparison_source_sha256": "35abe84a18cfe7e40b0f27eb2bfb17d12000bbeaf35c94a16639065cd0094a16"
+}
