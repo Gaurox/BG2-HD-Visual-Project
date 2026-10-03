@@ -4184,6 +4184,7 @@ def inspect_registry_catalog(
     expected_shard_names: set[str] = set()
     shard_registry_versions: set[int] = set()
     component_storage_versions: list[int] = []
+    component_fraction_profiles: list[set[tuple[int, int]]] = []
     for index in range(component_count):
         offset = component_offset + index * REGISTRY_CATALOG_COMPONENT_ENTRY_BYTES
         (
@@ -4230,6 +4231,7 @@ def inspect_registry_catalog(
         logical_records: list[dict[str, Any]] = []
         seen_resrefs: set[str] = set()
         component_versions: set[int] = set()
+        fraction_profiles: set[tuple[int, int]] = set()
         for shard in selected_shards:
             shard_path = path.parent / Path(str(shard["registry"])).name
             expected_shard_names.add(shard_path.name)
@@ -4269,6 +4271,8 @@ def inspect_registry_catalog(
                 )
             shard_registry_versions.add(int(info["version"]))
             component_versions.add(int(info["version"]))
+            if int(info["version"]) == XN_FRACTION_REGISTRY_VERSION:
+                fraction_profiles.add((int(info["class_profile_id"]), int(info["decode_rule_id"])))
             calculated_stored_index_bytes += int(info["stored_index_bytes"])
             calculated_compressed_frames += int(info["compressed_frame_count"])
             calculated_raw_frames += int(info["raw_frame_count"])
@@ -4282,6 +4286,7 @@ def inspect_registry_catalog(
         if len(component_versions) != 1:
             raise RuntimeError("creature registry catalog component mixes shard storage versions")
         component_storage_versions.append(next(iter(component_versions)))
+        component_fraction_profiles.append(fraction_profiles)
         seen_component_digests.add(digest)
         components.append(
             {
@@ -4323,13 +4328,16 @@ def inspect_registry_catalog(
         and version != XN_REGISTRY_CATALOG_VERSION
     ):
         raise RuntimeError("V5/V6 shards require a V2 catalog")
-    if any(
-        animation["owner"] != CATALOG_OWNER_CHARACTER
-        and any(component_storage_versions[c] == XN_FRACTION_REGISTRY_VERSION
-                for c in animation["component_indices"])
-        for animation in animations
-    ):
-        raise RuntimeError("V6 class profile requires Character catalog owners")
+    for animation in animations:
+        for component in animation["component_indices"]:
+            for profile, rule in component_fraction_profiles[component]:
+                if (profile, rule) == (1, 1):
+                    if animation["owner"] != CATALOG_OWNER_CHARACTER:
+                        raise RuntimeError("V6 Character class profile requires Character catalog owners")
+                else:
+                    from palette_monster_contract import get_profile
+                    if not get_profile(profile, rule).accepts(animation["owner"], animation["animation_id"]):
+                        raise RuntimeError("V6 Monster profile differs from catalog owner/animation")
     if (
         calculated_resources != total_resources
         or calculated_frames != total_frames

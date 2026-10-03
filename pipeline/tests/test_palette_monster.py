@@ -16,6 +16,7 @@ from palette_monster_contract import get_profile
 from palette_monster_work_plan import Cache, WorkPlan
 from palette_monster import Processor, produce
 import palette_registry as v6
+import run_creature_sprite_x2 as registry
 from reboutcx_quantize import srgb_u8_to_oklab
 
 BACKEND = dict(batch_size=86, canvas_quantum=32, fp16=True, model_sha256="12"*32, device="CPU-test-fixture-only")
@@ -33,6 +34,25 @@ def resource(pid, *, fraction=3):
 
 
 class MonsterTests(unittest.TestCase):
+    def test_catalog_inspector_accepts_fixed_monster_and_mixed_character_rejects_wrong_shared_owner(self):
+        from palette_p2 import component_catalog
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            char=resource(4);char['resref']='CHAR';char['source_sha256']='12'*32
+            char['frames'][0]['I'].fill(4);char['frames'][0]['guide'].fill(4);char['frames'][0].pop('dep')
+            infos=[]
+            for pid,r in ((4,resource(4)),(5,resource(5)),(1,char)):
+                path=root/str(pid);info=v6.write(path,2,[r],class_profile_id=pid,decode_rule_id=1 if pid==1 else 2)
+                infos.append((path.read_bytes(),info))
+            component_catalog(root/'mixed',infos,animations=[dict(animation_id='0x7F30',owner=3,component_indices=[0,1]),
+                                                           dict(animation_id='0x6110',owner=1,component_indices=[2])])
+            checked=registry.inspect_registry_catalog(root/'mixed'/registry.XN_REGISTRY_CATALOG_FILENAME)
+            self.assertEqual(len(checked['directory']),3)
+            component_catalog(root/'wrong',infos[:1],animations=[dict(animation_id='0x7F30',owner=3,component_indices=[0]),
+                                                               dict(animation_id='0x7F07',owner=3,component_indices=[0])])
+            with self.assertRaisesRegex(RuntimeError,'Monster profile'):
+                registry.inspect_registry_catalog(root/'wrong'/registry.XN_REGISTRY_CATALOG_FILENAME)
+
     def test_materialization_keeps_unused_native_frames_centres_and_cycles(self):
         plan=WorkPlan()
         try:

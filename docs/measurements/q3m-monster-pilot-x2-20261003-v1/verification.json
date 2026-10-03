@@ -1,0 +1,273 @@
+{
+  "schema": "bg2-monster-q3m-phase4-pilot-verification-v1",
+  "status": "produced-isolated-native-host-verified-not-installed-or-ingame-QA",
+  "completed_at_utc": "2026-10-03T00:12:06.921431+00:00",
+  "production": {
+    "cache_root": "sprite/.work/q3m-monster-pilot-x2-20261003-v1",
+    "model_work": 270,
+    "special_work": 2,
+    "k": 6,
+    "neural_targets": 1620,
+    "device": "NVIDIA GeForce RTX 5090",
+    "backend": {
+      "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+      "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+      "batch_size": 86,
+      "canvas_quantum": 32,
+      "fp16": true,
+      "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+      "torch": "2.7.0+cu128",
+      "device": "NVIDIA GeForce RTX 5090",
+      "dependencies": {
+        "numpy": "1.24.4",
+        "scipy": "1.9.3",
+        "spandrel": "0.4.1",
+        "chainner_ext": "0.3.10"
+      },
+      "kernels": {
+        "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+        "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+        "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+      }
+    },
+    "cache_namespace": "21a989cf5180280bbcc3801296b65e40e2af11f83b63e1a29a3249ecd44bd75c"
+  },
+  "pack": {
+    "path": "sprite/.work/q3m-monster-pilot-x2-pack-20261003-v2/pack.json",
+    "sha256": "6f4be148012f89530a4d9eaabbaace200d30536413eb4e27c502aa5ba05452f9",
+    "catalog": {
+      "path": "sprite/.work/q3m-monster-pilot-x2-pack-20261003-v2/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "76DBFE68ED99253F05450F0205755BD51D01A08471FBEB1CD7089C97ADE0EFEC",
+      "logical_content_sha256": "0536C63F388616E94C5B035F572F5B01BE93334D1985C1B8BD3EDF04538C61AB",
+      "components": 2,
+      "shards": 2
+    },
+    "resources": [
+      {
+        "resref": "NBOHG1",
+        "profile_id": 4,
+        "source_sha256": "2f7d497dc98faeb012331eeca6f807a998ecc961b4fa54a54e1dc3058ac66707",
+        "source_cache_leaf_identical": true,
+        "representatives_identical": true,
+        "native_geometry_cycles_identical": true,
+        "oracle": {
+          "path": "sprite/.work/q3m-monster-pilot-x2-pack-20261003-v2/NBOHG1-oracle.bin",
+          "sha256": "f64106b3d262264aca1db4b0ab0f19391a6b4aa350afb37fdb43f1020d47c2cc",
+          "palettes": 9
+        },
+        "native_frames": 594,
+        "decoded_pixels": 1148212,
+        "fractional_pixels": 255846,
+        "fractional_frames": 144,
+        "null_frames": 450,
+        "cycles": 54,
+        "cycle_slots": 756
+      },
+      {
+        "resref": "NBOHG2",
+        "profile_id": 5,
+        "source_sha256": "4cf0dc26fed14e475aab60225690b8288ed2604fc1b77cfdc69384938a0c7952",
+        "source_cache_leaf_identical": true,
+        "representatives_identical": true,
+        "native_geometry_cycles_identical": true,
+        "oracle": {
+          "path": "sprite/.work/q3m-monster-pilot-x2-pack-20261003-v2/NBOHG2-oracle.bin",
+          "sha256": "8165b99667709fa056e930d0aea38d63b637480a158f6f2cc429fb80049fdb84",
+          "palettes": 9
+        },
+        "native_frames": 648,
+        "decoded_pixels": 1148828,
+        "fractional_pixels": 220962,
+        "fractional_frames": 126,
+        "null_frames": 522,
+        "cycles": 63,
+        "cycle_slots": 1575
+      }
+    ]
+  },
+  "cache_adoption": {
+    "adopted": 272,
+    "old_namespace": "daa7639c9fcc01f85a93029851f1476ff1f4d490591be8394d6034b0ebd80fd3",
+    "new_namespace": "21a989cf5180280bbcc3801296b65e40e2af11f83b63e1a29a3249ecd44bd75c",
+    "compatibility": "only inspect_registry_catalog AST changed; all other AST and recipe fields identical",
+    "previous_commit": "1e0eda3d",
+    "old_code_sha256": "8ffd210d2d18cd4d5e86616d0e911155995d5dbee4d5bcac06e4f461c875f1f2",
+    "new_code_sha256": "6f927964b91ab4dd2ae0d99fc7353ad564794117ac931cc6f2a4c83281fd7788",
+    "encoded_payloads_sha256": "f41f5b1373d4f9d69cf77b631aff55fa1f5b820d3159f9f52dfc2757cd09f03a",
+    "original_cache_unchanged": true,
+    "gpu_recomputed": false
+  },
+  "cache_resume": {
+    "stats": {
+      "selected_work": 272,
+      "cache_hits": 272
+    },
+    "namespace": "21a989cf5180280bbcc3801296b65e40e2af11f83b63e1a29a3249ecd44bd75c",
+    "encoded_entries": 272,
+    "torch_imported": false,
+    "payloads_unchanged": true
+  },
+  "native_tests": [
+    {
+      "resref": "NBOHG1",
+      "profile_id": 4,
+      "frames": 594,
+      "cycles": 54,
+      "cycle_slots": 756,
+      "palettes": 9,
+      "native_encodings": 3,
+      "decoded_pixels": 31001724,
+      "native_centres_identical": true,
+      "peak_resident_I_F_bytes": 2294624,
+      "peak_metadata_bytes": 460616,
+      "elapsed_ms": 197,
+      "log": ".work/q3m-monster-phase4-20261003-v1/native-NBOHG1.log",
+      "log_sha256": "8675d67290447b207cbc94cbe7b549ce9a5184c4e2a2fde8466f86cf0417b7aa"
+    },
+    {
+      "resref": "NBOHG2",
+      "profile_id": 5,
+      "frames": 648,
+      "cycles": 63,
+      "cycle_slots": 1575,
+      "palettes": 9,
+      "native_encodings": 3,
+      "decoded_pixels": 31018356,
+      "native_centres_identical": true,
+      "peak_resident_I_F_bytes": 2295568,
+      "peak_metadata_bytes": 505580,
+      "elapsed_ms": 198,
+      "log": ".work/q3m-monster-phase4-20261003-v1/native-NBOHG2.log",
+      "log_sha256": "9d0b6ebd8d9c084771c3b2d661bba6bf8d8c8b18f500a6d614c393b08651264e"
+    }
+  ],
+  "totals": {
+    "frames": 1242,
+    "cycles": 117,
+    "slots": 2331,
+    "decoded_pixels": 62020080,
+    "fractional_pixels": 476808
+  },
+  "python_tests": {
+    "monster": 7,
+    "shared_writer": 11,
+    "status": "passed",
+    "scope": "changed catalog inspector + prior targeted kernels; no global Character QA"
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-monster-phase3-x2-20261003-v1/runtime.json",
+    "sha256": "410096f63b278882b29518cc5886954d9c8b04d5ba1a374eefaaae4b4b6574a0",
+    "candidate": {
+      "path": ".work/q3m-monster-phase3-20261003-v1/candidate/InfinityEngine-Enhancer.dll",
+      "sha256": "ade49a32a4685e490e773843519fd5f221b79aaffda10cbac02b56d94d4f6759",
+      "bytes": 2064384
+    },
+    "cpp_runtime_sources_unchanged_from_phase3": true,
+    "installed": false
+  },
+  "host_test": {
+    "executable": ".work/q3m-monster-phase4-20261003-v1/build/Release/iee_palette_monster_tests.exe",
+    "sha256": "1611532b36fed674f9cc3ff5fee979444bff1f650b8d0fbf8706461ca2a36a59",
+    "build": "fresh Release VS2019/MSVC; test target only; sealed phase3 candidate not rebuilt"
+  },
+  "preview": {
+    "path": "docs/measurements/q3m-monster-pilot-x2-20261003-v1/work/preview-v1/preview.png",
+    "sha256": "f3c483c66e19b819acf97d8b2c8224a272ec3cc7e8c94bbf1b6d82dc66302767",
+    "metadata": "docs/measurements/q3m-monster-pilot-x2-20261003-v1/work/preview-v1/preview.json",
+    "samples": [
+      {
+        "resref": "NBOHG1",
+        "cycle": 9,
+        "frame": 2,
+        "centre": [
+          17,
+          37
+        ],
+        "fractional_pixels": 1858
+      },
+      {
+        "resref": "NBOHG1",
+        "cycle": 13,
+        "frame": 274,
+        "centre": [
+          29,
+          43
+        ],
+        "fractional_pixels": 1880
+      },
+      {
+        "resref": "NBOHG1",
+        "cycle": 17,
+        "frame": 538,
+        "centre": [
+          16,
+          48
+        ],
+        "fractional_pixels": 1991
+      },
+      {
+        "resref": "NBOHG2",
+        "cycle": 0,
+        "frame": 4,
+        "centre": [
+          21,
+          49
+        ],
+        "fractional_pixels": 2014
+      },
+      {
+        "resref": "NBOHG2",
+        "cycle": 27,
+        "frame": 2,
+        "centre": [
+          14,
+          57
+        ],
+        "fractional_pixels": 1928
+      },
+      {
+        "resref": "NBOHG2",
+        "cycle": 35,
+        "frame": 581,
+        "centre": [
+          31,
+          55
+        ],
+        "fractional_pixels": 1930
+      }
+    ],
+    "status": "agent-inspected-static-comparison-only",
+    "QA_accepted": false
+  },
+  "source_sha256": {
+    "docs/measurements/q3m-monster-pilot-x2-20261003-v1/assemble.py": "970ad8298e5f46cec65e6dd1d551c9fbc9ab7ee327a03745eace4b6b95aeb791",
+    "pipeline/scripts/run_creature_sprite_x2.py": "6f927964b91ab4dd2ae0d99fc7353ad564794117ac931cc6f2a4c83281fd7788",
+    "pipeline/tests/test_palette_monster.py": "38314c757de3009629b93d59cf5c519dffbaa789752154a9581520d0d87cb84e",
+    "engine/InfinityEngine-Enhancer/source-patchee/tests/palette_monster_tests.cpp": "c202db6a115dc036969bcda9b5fe7b1387d34466f675892f57c47b43e5bfaac6"
+  },
+  "preservation": {
+    "character_animations": 78,
+    "paperdolls": 81,
+    "active_catalog_written": false,
+    "installed_files_written": false,
+    "world_filter_written": false,
+    "QA_registry_written": false,
+    "release_written": false,
+    "historical_measurements_written": false,
+    "global_reaudit": false
+  },
+  "next_step": {
+    "phase": 5,
+    "first_animation": "0x7F30",
+    "BAM": 13,
+    "native_frames": 8100,
+    "expected_existing_work": 272,
+    "expected_new_model_work": 972,
+    "following_animations": [
+      "0x7F07",
+      "0x7F02"
+    ],
+    "installation_phase": 7
+  },
+  "ingame_validated": false
+}

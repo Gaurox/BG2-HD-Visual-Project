@@ -9,6 +9,10 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <algorithm>
+#include <limits>
+#include <windows.h>
+#include <bcrypt.h>
 #include "iee/creature_sprite_x2.h"
 #include "iee/core/palette_fraction.h"
 
@@ -37,8 +41,95 @@ bool resolve(unsigned animation,const std::string& name,int slot,cs::FrameHandle
 }
 std::uint32_t swap_rb(std::uint32_t p) { return (p&0xff00ff00u)|((p&255u)<<16)|((p>>16)&255u); }
 
+std::array<unsigned char,32> hash_pixels(const std::vector<std::uint32_t>& pixels) {
+  std::array<unsigned char,32> result{};
+  require(pixels.size()<=(std::numeric_limits<ULONG>::max)()/4,"hash size overflow");
+  require(BCryptHash(BCRYPT_SHA256_ALG_HANDLE,nullptr,0,
+      reinterpret_cast<PUCHAR>(const_cast<std::uint32_t*>(pixels.data())),
+      static_cast<ULONG>(pixels.size()*4),result.data(),static_cast<ULONG>(result.size()))>=0,"pixel SHA256 failed");
+  return result;
+}
+
+void inspect_produced_pack(const fs::path& assets,const fs::path& oracle) {
+  const auto start=std::chrono::steady_clock::now();
+  std::ifstream input(oracle,std::ios::binary);require(static_cast<bool>(input),"pack oracle missing");
+  std::array<char,8> magic{};read(input,magic);
+  require(magic==std::array<char,8>{'I','E','E','Q','M','4','\0','\0'},"pack oracle magic");
+  unsigned np{},nf{},profile{},animation{},nc{};
+  read(input,np);read(input,nf);read(input,profile);read(input,animation);read(input,nc);
+  require(np==9&&nf>0&&nf<=65535&&nc>0&&nc<=255&&pf::monster_profile(profile,2)&&
+      pf::monster_owner(profile,3,static_cast<std::uint16_t>(animation)),"pack oracle contract");
+  std::array<char,8> name{};read(input,name);
+  const std::string resref(name.data(),std::find(name.begin(),name.end(),'\0')-name.begin());
+  std::array<std::byte,32> sourceSha{};read(input,sourceSha);
+  require(pf::monster_resource(profile,resref,sourceSha),"pack oracle source identity");
+  std::vector<pf::Palette> palettes(np);for(auto& palette:palettes)read(input,palette);
+  std::vector<std::vector<unsigned>> cycles(nc);
+  for(auto& cycle:cycles) {
+    unsigned count{};read(input,count);require(count<=65535,"oracle cycle size");cycle.resize(count);
+    for(auto& index:cycle) {read(input,index);require(index<nf,"oracle cycle index");}
+  }
+  require(cs::prepare(assets)&&cs::contains_animation(static_cast<std::uint16_t>(animation)),"pack catalog prepare");
+  cs::FrameHandle handle{};unsigned slots=0;bool resolvedAny=false;
+  for(unsigned c=0;c<nc;++c) {
+    for(unsigned s=0;s<cycles[c].size();++s) {
+      // Cold Monster metadata uses the existing asynchronous resolver; wait only in this host test.
+      const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
+      bool ok=false;
+      do {
+        if(cs::resolve_frame(static_cast<std::uint16_t>(animation),name,static_cast<int>(c),static_cast<int>(s),handle)) {ok=true;break;}
+        if(!cs::pending_catalog_loads()) break;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+      } while(std::chrono::steady_clock::now()<deadline);
+      require(ok&&handle.frameIndex==cycles[c][s],"produced native cycle/slot/frame identity");
+      resolvedAny=true;++slots;
+    }
+    cs::FrameHandle invalid{};
+    require(!cs::resolve_frame(static_cast<std::uint16_t>(animation),name,static_cast<int>(c),
+                              static_cast<int>(cycles[c].size()),invalid),"out-of-range cycle slot accepted");
+  }
+  require(resolvedAny,"produced resource has no native cycle slots");
+  require(cs::frame_requires_fixed_monster_palette(handle)&&
+          cs::frame_accepts_fixed_monster_palette(handle,0,pf::kMonsterSourceRgb[profile-2]),"produced fixed palette routing");
+  std::uint64_t decoded=0,peakResident=0,peakMetadata=0;
+  for(unsigned index=0;index<nf;++index) {
+    unsigned w{},h{};int cx{},cy{};read(input,w);read(input,h);read(input,cx);read(input,cy);
+    require(w>0&&h>0&&static_cast<std::uint64_t>(w)*h<65535,"oracle frame geometry");
+    handle.frameIndex=index; // Host-only access also covers native frames absent from cycle slots.
+    for(unsigned p=0;p<np;++p) {
+      std::array<unsigned char,32> expected{};read(input,expected);
+      for(unsigned encoding=0;encoding<3;++encoding) {
+        cs::PaletteSnapshot palette{};palette.colors=palettes[p];palette.encoding={0x1908,0x1401};
+        if(encoding) {palette.encoding={0x80e1,encoding==1?0x1401u:0x8367u};for(auto& color:palette.colors)color=swap_rb(color);}
+        std::vector<std::uint32_t> pixels;std::uint64_t fingerprint{};
+        require(cs::reconstruct_frame_pixels(handle,palette,pixels,fingerprint)&&pixels.size()==w*h*4,
+                "produced frame reconstruct/geometry");
+        if(encoding)for(auto& color:pixels)color=swap_rb(color);
+        require(hash_pixels(pixels)==expected,"produced scalar/native pixel SHA mismatch");
+        decoded+=pixels.size();
+      }
+    }
+    // A single-layer composition derives bounds from parsed native centres, not oracle geometry.
+    cs::CompositeLayer layer{};layer.frame=handle;layer.palette.encoding={0x1908,0x1401};layer.palette.colors=palettes[0];
+    std::vector<std::uint32_t> composite;cs::CompositeBounds bounds{};
+    require(cs::reconstruct_composite_pixels(&layer,1,composite,bounds)&&
+            bounds.left==-cx&&bounds.top==-cy&&bounds.right==static_cast<int>(w)-cx&&
+            bounds.bottom==static_cast<int>(h)-cy&&composite.size()==(w+2)*(h+2)*4,"produced native centres/composition bounds");
+    peakResident=std::max(peakResident,cs::resident_index_bytes());
+    peakMetadata=std::max(peakMetadata,cs::resident_catalog_metadata_bytes());
+  }
+  require(input.peek()==EOF,"pack oracle trailing data");cs::release();
+  const auto ms=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-start).count();
+  std::cout<<"{\"resref\":\""<<resref<<"\",\"profile_id\":"<<profile<<",\"frames\":"<<nf
+      <<",\"cycles\":"<<nc<<",\"cycle_slots\":"<<slots<<",\"palettes\":"<<np
+      <<",\"native_encodings\":3,\"decoded_pixels\":"<<decoded<<",\"native_centres_identical\":true"
+      <<",\"peak_resident_I_F_bytes\":"<<peakResident<<",\"peak_metadata_bytes\":"<<peakMetadata
+      <<",\"elapsed_ms\":"<<ms<<"}\n";
+}
+
 int main(int argc,char** argv) {
   try {
+    if(argc==4&&std::string(argv[1])=="--pack") {inspect_produced_pack(fs::path(argv[2]),fs::path(argv[3]));return 0;}
     require(argc==2,"usage: palette_monster_tests fixtures");const fs::path root(argv[1]);
     std::ifstream cases(root/"cases.tsv");require(static_cast<bool>(cases),"missing cases");
     unsigned accepted=0,rejected=0;std::uint64_t decoded=0;
