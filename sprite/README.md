@@ -27,6 +27,8 @@ installation, ni une validation ingame.
 
 ## Méthode actuelle
 
+**Suivi courant de tous les sprites : [Q3m / 15 familles d'intégration](SUIVI_Q3M.md)** ; queue par animation sous `index/q3m-work-items.csv`, moteur estimé à 90 % par l'utilisateur. Les productions finales xBR/ReboutCX antérieures sont historiques et ne comptent plus dans l'avancement Q3m.
+
 **Reprise actuelle Q3m x2, y compris préparation monstres/PNJ** : [`../pipeline/SPRITES_PRODUCTION_Q3M_X2.md`](../pipeline/SPRITES_PRODUCTION_Q3M_X2.md). 78 Character monde produits/assemblés/installés, 4 510 BAM / 1 564 054 frames, BOX global ; QA visuelle complète distincte, aucune release déduite.
 
 Recherche et contrat de remplacement par palettes dynamiques : [études et guide](Etudes_Sprite_codex_claude/README.md),
@@ -47,6 +49,8 @@ ci-dessous sont des recettes conditionnelles, pas une chaîne universelle.
 Runbook opérationnel : [`PROCESSING.md`](PROCESSING.md). Publication catalogue, installation et QA :
 [`FAMILY_APPEND.md`](FAMILY_APPEND.md). Spécificités ReboutCX :
 [`../docs/REBOUTCX_PIPELINE_BG2_CODEX.md`](../docs/REBOUTCX_PIPELINE_BG2_CODEX.md).
+
+### Recettes xBR / ReboutCX historiques
 
 | Mode raster | Rôle |
 |---|---|

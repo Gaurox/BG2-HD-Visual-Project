@@ -1,0 +1,284 @@
+{
+  "schema": "bg2-sprite-q3m-work-tracking-v1",
+  "role": "work-queue-not-production-QA-installation-or-release-authority",
+  "recorded_on": "2026-10-03",
+  "classification": "sprite/index/family-groups.csv:engine_section",
+  "source_inventory": [
+    "sprite/index/sprite_animations.csv",
+    "sprite/index/sprite_families.csv",
+    "sprite/index/sprite_resources.csv",
+    "sprite/index/manifest.json"
+  ],
+  "work_items": "sprite/index/q3m-work-items.csv",
+  "scope": {
+    "included": [
+      "character",
+      "character_old",
+      "monster",
+      "monster_old",
+      "monster_icewind",
+      "monster_quadrant",
+      "multi_new",
+      "monster_layered",
+      "monster_ankheg",
+      "monster_large",
+      "monster_large16",
+      "ambient",
+      "ambient_static",
+      "town_static",
+      "flying"
+    ],
+    "excluded": [
+      "effect",
+      "animation-ini-missing"
+    ],
+    "identity": "animation_id + engine_section; family_ids retain bodies/armor/equipment; native animation_type retained"
+  },
+  "engine_integration": {
+    "progress_percent": 90,
+    "basis": "user-estimate",
+    "date": "2026-10-03",
+    "does_not_measure": "asset-coverage-or-QA",
+    "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json"
+  },
+  "method": {
+    "current": "Q3m-K6",
+    "colour_contract": "indices-fractions-dependencies; live palette; per-profile semantic classes and successors",
+    "world_scale": 2,
+    "world_filter": "Box",
+    "historical_final_rasters_excluded": [
+      "xBR",
+      "ReboutCX-first-generation"
+    ],
+    "historical_artifacts_policy": "preserve-in-place; no QA/history rewrite; no deletion or move",
+    "q3m_internal_primitives_retained": [
+      "indexed-xBR-guide",
+      "ReboutCX-float32-targets"
+    ]
+  },
+  "colour_variants": {
+    "reference": "docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md",
+    "candidates": [
+      "four-partners-eight-levels",
+      "sixteen-levels"
+    ],
+    "state": "six-frame-diagnostics; not full production or QA",
+    "format_compatibility": "requires-format-and-reader-extension-from-V6",
+    "next_recipe_selection": "open; no candidate promoted by this inventory"
+  },
+  "queue_totals": {
+    "engine_families": 15,
+    "defined_animation_ids": 465,
+    "with_source_bam_ids": 335,
+    "without_source_bam_ids": 130,
+    "q3m_referenced_ids": 81,
+    "with_bam_without_q3m_reference": 254,
+    "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work"
+  },
+  "families": [
+    {
+      "engine_section": "character",
+      "animation_types": [
+        "5000",
+        "6000"
+      ],
+      "defined_animation_ids": 78,
+      "with_source_bam_ids": 78,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 78,
+      "distinct_source_bams": 4510,
+      "production_references": [
+        "docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json"
+      ]
+    },
+    {
+      "engine_section": "character_old",
+      "animation_types": [
+        "6000"
+      ],
+      "defined_animation_ids": 8,
+      "with_source_bam_ids": 7,
+      "without_source_bam_ids": 1,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 99,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster",
+      "animation_types": [
+        "7000"
+      ],
+      "defined_animation_ids": 102,
+      "with_source_bam_ids": 77,
+      "without_source_bam_ids": 25,
+      "q3m_referenced_ids": 3,
+      "distinct_source_bams": 850,
+      "production_references": [
+        "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json"
+      ]
+    },
+    {
+      "engine_section": "monster_old",
+      "animation_types": [
+        "7000"
+      ],
+      "defined_animation_ids": 54,
+      "with_source_bam_ids": 46,
+      "without_source_bam_ids": 8,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 79,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_icewind",
+      "animation_types": [
+        "7000",
+        "E000"
+      ],
+      "defined_animation_ids": 132,
+      "with_source_bam_ids": 44,
+      "without_source_bam_ids": 88,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 1173,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_quadrant",
+      "animation_types": [
+        "1000"
+      ],
+      "defined_animation_ids": 9,
+      "with_source_bam_ids": 7,
+      "without_source_bam_ids": 2,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 69,
+      "production_references": []
+    },
+    {
+      "engine_section": "multi_new",
+      "animation_types": [
+        "1000"
+      ],
+      "defined_animation_ids": 10,
+      "with_source_bam_ids": 10,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 1753,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_layered",
+      "animation_types": [
+        "2000",
+        "8000"
+      ],
+      "defined_animation_ids": 7,
+      "with_source_bam_ids": 7,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 66,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_ankheg",
+      "animation_types": [
+        "3000"
+      ],
+      "defined_animation_ids": 1,
+      "with_source_bam_ids": 1,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 12,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_large",
+      "animation_types": [
+        "9000"
+      ],
+      "defined_animation_ids": 1,
+      "with_source_bam_ids": 1,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 7,
+      "production_references": []
+    },
+    {
+      "engine_section": "monster_large16",
+      "animation_types": [
+        "A000"
+      ],
+      "defined_animation_ids": 5,
+      "with_source_bam_ids": 3,
+      "without_source_bam_ids": 2,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 25,
+      "production_references": []
+    },
+    {
+      "engine_section": "ambient",
+      "animation_types": [
+        "C000"
+      ],
+      "defined_animation_ids": 21,
+      "with_source_bam_ids": 18,
+      "without_source_bam_ids": 3,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 34,
+      "production_references": []
+    },
+    {
+      "engine_section": "ambient_static",
+      "animation_types": [
+        "B000"
+      ],
+      "defined_animation_ids": 13,
+      "with_source_bam_ids": 13,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 26,
+      "production_references": []
+    },
+    {
+      "engine_section": "town_static",
+      "animation_types": [
+        "4000"
+      ],
+      "defined_animation_ids": 19,
+      "with_source_bam_ids": 18,
+      "without_source_bam_ids": 1,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 18,
+      "production_references": []
+    },
+    {
+      "engine_section": "flying",
+      "animation_types": [
+        "D000"
+      ],
+      "defined_animation_ids": 5,
+      "with_source_bam_ids": 5,
+      "without_source_bam_ids": 0,
+      "q3m_referenced_ids": 0,
+      "distinct_source_bams": 4,
+      "production_references": []
+    }
+  ],
+  "state_authorities": {
+    "source": "sprite/index/manifest.json + source CSVs",
+    "production": "current-generation.json + sealed generation manifest",
+    "QA": "sprite/index/qa-decisions/",
+    "installation": "run-specific ingame-installation/active-test.json",
+    "release": "releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json then content.json",
+    "rule": "independent states; this queue does not reconcile or infer them"
+  },
+  "UI": {
+    "profile": "paperdolls-separate-from-world",
+    "known_accepted_animation": "0x6110",
+    "known_bams": 81,
+    "known_frames": 163,
+    "sampler": "Nearest",
+    "QA_reference": "sprite/index/qa-decisions/paperdolls/2026-10-02-accepted-full-ui-6110-q3m-k6-x2-nearest-v1.json",
+    "remaining_scope": "other-avatar-paperdolls-unrecorded-here"
+  }
+}

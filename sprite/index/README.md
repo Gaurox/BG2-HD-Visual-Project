@@ -30,6 +30,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 
 ## Tables
 
+- [`q3m-work-tracking.json`](q3m-work-tracking.json) et [`q3m-work-items.csv`](q3m-work-items.csv) : nouvelle queue Q3m de tous les profils personnages/créatures ; xBR/ReboutCX historiques exclus des compteurs. Inventaire des 15 familles, règles couleur et estimation moteur : [`../SUIVI_Q3M.md`](../SUIVI_Q3M.md). Suivi de travail uniquement ; production, QA, installation et release gardent leurs autorités indépendantes.
 - [`family-groups.csv`](family-groups.csv) : autorité manuelle de classement des
   `engine_section`; macro-groupe, dossier, layout et règle de bucket.
 - `extractions.csv` : projection générée des BAM réellement présents sous
