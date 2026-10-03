@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-monster-q3m-phase5-user-pause-v1",
+  "date_local": "2026-10-03",
+  "status": "paused-at-user-request",
+  "producer_stopped": true,
+  "queued_assembly_stopped": true,
+  "remaining_producer_processes": 0,
+  "cache_root": "sprite/.work/q3m-monster-pilot-x2-20261003-v1",
+  "cache_namespace": "21a989cf5180280bbcc3801296b65e40e2af11f83b63e1a29a3249ecd44bd75c",
+  "cache_payload_files_present": 2412,
+  "count_basis": "atomic .npz files present after producer exit; no new source analysis or full cache validation; acquired lazy validation applies on resume",
+  "families": [
+    {
+      "animation_id": "0x7F30",
+      "family": "NBOH",
+      "saved_work": 1244,
+      "total_work": 1244,
+      "existing_phase4_hits": 272,
+      "new_model_work": 972,
+      "report": "docs/measurements/q3m-monster-complete-x2-20261003-v1/work/production/0x7F30.json"
+    },
+    {
+      "animation_id": "0x7F07",
+      "family": "MGLC",
+      "saved_work": 892,
+      "total_work": 892,
+      "new_model_work": 890,
+      "new_special_work": 2,
+      "report": "docs/measurements/q3m-monster-complete-x2-20261003-v1/work/production/0x7F07.json"
+    },
+    {
+      "animation_id": "0x7F02",
+      "family": "MBEH",
+      "saved_work": 276,
+      "total_work": 1054,
+      "saved_model_work": 274,
+      "saved_special_work": 2,
+      "last_complete_reported_model_batch": 256,
+      "remaining_model_work": 778,
+      "finished_family_report": null,
+      "unsaved_inference_targets": "not measured; not counted as persistent results"
+    }
+  ],
+  "resume": {
+    "script": "docs/measurements/q3m-monster-complete-x2-20261003-v1/produce.py",
+    "new_report_destination": "docs/measurements/q3m-monster-complete-x2-20261003-v1/work/production-resume-v1",
+    "expected_existing_hits": 2412,
+    "expected_new_model_work": 778,
+    "preserve_recipe_and_cache": true,
+    "final_record": "aggregate original reports, this pause snapshot and new resume reports; do not rewrite earlier reports or equate interrupted-run hits with phase4 hits"
+  },
+  "phase5_complete_leaves_created": false,
+  "phase5_isolated_pack_created": false,
+  "phase5_native_verification_executed": false,
+  "phase5_full_cache_resume_executed": false,
+  "runtime_rebuilt": false,
+  "installation_changed": false,
+  "QA_changed": false,
+  "release_changed": false,
+  "committed": false,
+  "resume_scheduled": false
+}
