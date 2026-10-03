@@ -1,0 +1,230 @@
+{
+  "passed": true,
+  "renderer": "NVIDIA GeForce RTX 5090/PCIe/SSE2",
+  "compiled_shaders": [
+    "fpDraw",
+    "fpSprite",
+    "fpSELECT"
+  ],
+  "SDF_views": [
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "zoom": 0.75,
+      "maximum_alpha_error": 8,
+      "mean_alpha_error": 0.008589863184079602,
+      "mean_composited_error": 0.017646144278606966,
+      "offline_float_mean_error": 0.050204705638474297
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "zoom": 1.0,
+      "maximum_alpha_error": 4,
+      "mean_alpha_error": 0.0018653441011235955,
+      "mean_composited_error": 0.00318937265917603,
+      "offline_float_mean_error": 0.035660990168539325
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "zoom": 1.5,
+      "maximum_alpha_error": 24,
+      "mean_alpha_error": 0.002662687265917603,
+      "mean_composited_error": 0.013693820224719102,
+      "offline_float_mean_error": 0.04801290054099043
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "zoom": 3.0,
+      "maximum_alpha_error": 32,
+      "mean_alpha_error": 0.0017678097690387016,
+      "mean_composited_error": 0.010709269662921348,
+      "offline_float_mean_error": 0.046522250832292965
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "zoom": 0.75,
+      "maximum_alpha_error": 4,
+      "mean_alpha_error": 0.006230078238191828,
+      "mean_composited_error": 0.019245629286197236,
+      "offline_float_mean_error": 0.052714189123925434
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "zoom": 1.0,
+      "maximum_alpha_error": 16,
+      "mean_alpha_error": 0.0053016603649515045,
+      "mean_composited_error": 0.004863280179735876,
+      "offline_float_mean_error": 0.039344621623102635
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "zoom": 1.5,
+      "maximum_alpha_error": 24,
+      "mean_alpha_error": 0.002045774197672932,
+      "mean_composited_error": 0.0162992188308644,
+      "offline_float_mean_error": 0.05059029109662021
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "zoom": 3.0,
+      "maximum_alpha_error": 32,
+      "mean_alpha_error": 0.0018813816282170714,
+      "mean_composited_error": 0.013671982026412406,
+      "offline_float_mean_error": 0.05143051978495016
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "zoom": 0.75,
+      "maximum_alpha_error": 20,
+      "mean_alpha_error": 0.005829487490891426,
+      "mean_composited_error": 0.013567438148443736,
+      "offline_float_mean_error": 0.03801889956857166
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "zoom": 1.0,
+      "maximum_alpha_error": 15,
+      "mean_alpha_error": 0.00241498468546297,
+      "mean_composited_error": 0.0028534778397340246,
+      "offline_float_mean_error": 0.02774941752401895
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "zoom": 1.5,
+      "maximum_alpha_error": 4,
+      "mean_alpha_error": 0.0012042200057593132,
+      "mean_composited_error": 0.010666364157293239,
+      "offline_float_mean_error": 0.03680142877504065
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "zoom": 3.0,
+      "maximum_alpha_error": 32,
+      "mean_alpha_error": 0.0009511592799113415,
+      "mean_composited_error": 0.008418632250407952,
+      "offline_float_mean_error": 0.03576664310584047
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "zoom": 0.75,
+      "maximum_alpha_error": 20,
+      "mean_alpha_error": 0.005446853516657853,
+      "mean_composited_error": 0.015512074739996475,
+      "offline_float_mean_error": 0.03714084258769611
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "zoom": 1.0,
+      "maximum_alpha_error": 16,
+      "mean_alpha_error": 0.003176315474050102,
+      "mean_composited_error": 0.003515921531024012,
+      "offline_float_mean_error": 0.024191937352670903
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "zoom": 1.5,
+      "maximum_alpha_error": 32,
+      "mean_alpha_error": 0.0019444111497329765,
+      "mean_composited_error": 0.013788449842626997,
+      "offline_float_mean_error": 0.036180253128593055
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "zoom": 3.0,
+      "maximum_alpha_error": 32,
+      "mean_alpha_error": 0.001265199035785156,
+      "mean_composited_error": 0.011282467892799908,
+      "offline_float_mean_error": 0.0354644168320304
+    }
+  ],
+  "neutral_draws": [
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "shader": "fpSELECT",
+      "byte_identical": true
+    }
+  ],
+  "ingame_QA": false
+}

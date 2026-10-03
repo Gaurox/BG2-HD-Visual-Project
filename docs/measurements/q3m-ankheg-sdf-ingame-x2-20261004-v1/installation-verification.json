@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-ankheg-sdf-installed-verification-v1",
+  "role": "installation-not-ingame-QA-or-release",
+  "verified_at_utc": "2026-10-03T23:28:32.0983457Z",
+  "family": "monster_ankheg",
+  "resources": 12,
+  "frames": 516,
+  "registry_version": 9,
+  "scale": 2,
+  "world_filter": "CatmullRom",
+  "contour_recipe": {
+    "method": "bounded-smoothed-SDF-with-area-coverage",
+    "sigma_x2": 2.0,
+    "distance_bias_limit_x2": 1.0,
+    "core_radius_x2": 2.0,
+    "near_core_radius_x2": 3.0,
+    "area_supersampling": 8,
+    "colour_filter": "CatmullRom-premultiplied-16-taps",
+    "native_shadows": "separate unchanged source layer",
+    "topology": "preserve foreground-8 and background-4 components at texel centres",
+    "installation": "V9-adaptive-runtime",
+    "distance_quantization_x2": 0.0625,
+    "sdf_pad_x2": 6
+  },
+  "new_leaf_sha256_verified": 12,
+  "inherited_animations_unchanged": 87,
+  "catalog_sha256": "56be42fbe7ddce563a068907cc1b1d3f75b6a40f3e9521ddbcee5e11ada4fcc8",
+  "dll_sha256": "6e52211759009d54acc808a849ccaa55e98f8d046ef959395de8b24d22ba99c1",
+  "ini_byte_identical": true,
+  "unchanged_assets_sha256_verified": 81,
+  "backup_sha256_verified": true,
+  "native_SDF": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "native_original": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "native_flying": {
+    "resources": 5,
+    "frames": 279,
+    "native_cycle_slots": 324,
+    "decoded_pixels": 15183936,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "installation_receipt_sha256": "B670C94C30AC2B8D2AADF1B431612438399775F5F0FD34F660A5082C649DCA79",
+  "ingame_QA": false,
+  "release": false
+}

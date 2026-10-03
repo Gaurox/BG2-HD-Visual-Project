@@ -1,0 +1,101 @@
+{
+  "schema": "bg2-ankheg-sdf-native-host-verification-v1",
+  "V9_SDF": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_original_unchanged": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V8_alpha_compatible": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "V7_flying_unchanged": {
+    "resources": 5,
+    "frames": 279,
+    "native_cycle_slots": 324,
+    "decoded_pixels": 15183936,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "core_native_suite_passed": true,
+  "GPU": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/gpu-verification.json",
+    "sha256": "833cb04ab2367f81215fe97211d64c019023650e15453719af2a280473428535",
+    "bytes": 5843
+  },
+  "roundtrips": [
+    {
+      "format": "V7",
+      "byte_identical": true
+    },
+    {
+      "format": "V8",
+      "byte_identical": true
+    },
+    {
+      "format": "V7-flying",
+      "byte_identical": true
+    }
+  ],
+  "native_malformed_catalogs": [
+    {
+      "case": "SDF-code",
+      "rejected_by_native_parser": true
+    },
+    {
+      "case": "SDF-material",
+      "rejected_by_native_parser": true
+    }
+  ],
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "6e52211759009d54acc808a849ccaa55e98f8d046ef959395de8b24d22ba99c1",
+    "bytes": 2114048
+  },
+  "source": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+    "sha256": "423a2724248e876215038f49b2be0d9c4ff596cb8ffae692ec61c4ac80ec8670",
+    "bytes": 228718
+  },
+  "shader_bridge": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.cpp",
+    "sha256": "d2e9774ac099d6df949e7a7cad9bcfbc46faf08e98c6c4a8c177f88644670054",
+    "bytes": 19884
+  },
+  "leaf_writer": {
+    "path": "pipeline/scripts/palette_partner_registry.py",
+    "sha256": "ad609acd3104c32c9cf19fb5e83f1e790f4ae933f818e9a7bf9672d478d7efe2",
+    "bytes": 11082
+  },
+  "SDF_encoder": {
+    "path": "pipeline/scripts/sprite_sdf_registry.py",
+    "sha256": "95b6324b6a7b651e7a015aca85af7f6ba499a496b4a5cbbe2b410602c55e0be3",
+    "bytes": 1618
+  },
+  "reference_processor": {
+    "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/sdf_trial.py",
+    "sha256": "b65ffdf855efc187c39c85f15e95069e19fc9ada135cf3ee4c38ee97bc9b3ff3",
+    "bytes": 6250
+  },
+  "ingame_QA": false,
+  "release": false
+}

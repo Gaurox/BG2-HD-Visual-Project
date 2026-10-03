@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-ankheg-Q3m-SDF-V9-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "monster_ankheg",
+  "animation_ids": [
+    "0x3000"
+  ],
+  "resources": 12,
+  "frames": 516,
+  "scale": 2,
+  "registry_version": 9,
+  "colour": "K6-four-partners-eight-levels-unchanged",
+  "mask_recipe": {
+    "method": "bounded-smoothed-SDF-with-area-coverage",
+    "sigma_x2": 2.0,
+    "distance_bias_limit_x2": 1.0,
+    "core_radius_x2": 2.0,
+    "near_core_radius_x2": 3.0,
+    "area_supersampling": 8,
+    "colour_filter": "CatmullRom-premultiplied-16-taps",
+    "native_shadows": "separate unchanged source layer",
+    "topology": "preserve foreground-8 and background-4 components at texel centres",
+    "installation": "V9-adaptive-runtime",
+    "distance_quantization_x2": 0.0625,
+    "sdf_pad_x2": 6
+  },
+  "generation_dir": "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "56be42fbe7ddce563a068907cc1b1d3f75b6a40f3e9521ddbcee5e11ada4fcc8",
+    "bytes": 2030388
+  },
+  "production": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json",
+    "sha256": "d82bc1a5d6e2b365115538d4cea2613954d563781434757644211c6460450b8f",
+    "bytes": 347169
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "dafc2f65ef73bf270da7d9f6df1e1de83a5f487a0e207e305b2d8f7ababd421f",
+    "bytes": 50960
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "6e52211759009d54acc808a849ccaa55e98f8d046ef959395de8b24d22ba99c1",
+    "bytes": 2114048
+  },
+  "host_verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "dc106ff01a5793f9c752bcbeb622d966e32674ff2fbeebd1afaa45d81fab0a59",
+    "bytes": 2794
+  },
+  "composition_verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/composition-verification.json",
+    "sha256": "eb0e1b1440eca66277ff49a5a163b8c164e677082d96a31ac613e2836969028a",
+    "bytes": 710
+  },
+  "replaces_trial": {
+    "path": "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/current-generation.json",
+    "sha256": "168fae6f7009c67bd0bdf6c47160dd3d2849b9ed605c693ee4d79c66b23051d1",
+    "bytes": 2407
+  },
+  "reference_offline": {
+    "path": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/trial.json",
+    "sha256": "0751564397b7e591288c28b3660b893397c35edba8abd957a0ba1d263e607649",
+    "bytes": 13114
+  },
+  "state": "produced-host-verified-ready-to-install",
+  "ingame_QA": false,
+  "release": false
+}

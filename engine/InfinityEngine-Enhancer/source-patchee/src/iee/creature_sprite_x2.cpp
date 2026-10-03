@@ -84,8 +84,10 @@ constexpr std::uint32_t kXnCompressedRegistryVersion = 5;
 constexpr std::uint32_t kXnFractionRegistryVersion = 6;
 constexpr std::uint32_t kXnPartnerRegistryVersion = 7;
 constexpr std::uint32_t kXnContourRegistryVersion = 8;
+constexpr std::uint32_t kXnSdfRegistryVersion = 9;
+constexpr int kSdfPad = 6;
 constexpr bool partner_version(std::uint32_t version) noexcept {
-  return version == kXnPartnerRegistryVersion || version == kXnContourRegistryVersion;
+  return version == kXnPartnerRegistryVersion || version == kXnContourRegistryVersion || version == kXnSdfRegistryVersion;
 }
 constexpr bool fraction_version(std::uint32_t version) noexcept {
   return version == kXnFractionRegistryVersion || partner_version(version);
@@ -167,6 +169,8 @@ struct Frame {
   // V8 immutable coverage stays with shard metadata (bounded by its LRU budget).
   // Empty = identity, so V1-V7 retain their original palette/alpha contract.
   std::vector<std::uint8_t> coverage;
+  std::vector<std::uint8_t> sdf;
+  std::vector<std::uint32_t> sdfMaterial;
   bool fractional{};
   std::shared_ptr<const core::palette_fraction::PartnerProfile> partnerProfile;
   std::uint32_t fractionProfile{core::palette_fraction::kCharacterProfile};
@@ -483,7 +487,7 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
 bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeight,
                             std::uint32_t physicalScale,
                             creature_sprite_filter::TextureProvenance provenance,
-                            std::uint16_t animationId, int maximumMipLevel) noexcept {
+                            std::uint16_t animationId, int maximumMipLevel, bool sdfEncoded = false) noexcept {
 #ifdef _WIN32
   const auto contextIdentity = reinterpret_cast<std::uintptr_t>(game::gl::current_context());
 #else
@@ -492,7 +496,7 @@ bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeig
   const bool published = creature_sprite_filter::registry().publish(
       contextIdentity, glName, physicalWidth, physicalHeight,
       static_cast<int>(physicalScale), provenance, false, animationId, maximumMipLevel,
-      maximumMipLevel > 0);
+      maximumMipLevel > 0, sdfEncoded);
   if (!published && !g_filterRegistryFailureLogged) {
     g_filterRegistryFailureLogged = true;
     LOG_WARN(
@@ -1552,6 +1556,70 @@ bool apply_blend_recipes(const Frame& frame,
       });
 }
 
+
+bool encode_sdf_canvas(const Frame& frame, const std::vector<std::uint8_t>& indices,
+                       const std::vector<std::uint8_t>& fractions,
+                       const std::array<std::uint32_t,256>& realized,
+                       std::vector<std::uint32_t>& canvas, int width, int height,
+                       int offsetX, int offsetY) {
+  if (frame.sdf.empty()) return false;
+  core::palette_fraction::Lut lut;
+  if (!prepare_frame_lut(frame,indices,fractions,realized,lut)) return false;
+  const int sw=frame.logicalWidth*2, sh=frame.logicalHeight*2, fw=sw+12;
+  for (int y=0;y<sh+12;++y) for (int x=0;x<fw;++x) {
+    const int dx=offsetX+x-kSdfPad, dy=offsetY+y-kSdfPad;
+    if (dx<0 || dy<0 || dx>=width || dy>=height) continue;
+    const auto n=static_cast<std::size_t>(y)*fw+x;
+    const auto m=frame.sdfMaterial[n];
+    const auto pixel=m==0xffffffffu ? 0u : frame_pixel(frame,indices,fractions,realized,lut,m);
+    auto& dest=canvas[static_cast<std::size_t>(dy)*width+dx];
+    // Maximum distance implements the union of body/earth silhouettes.
+    if (frame.sdf[n] >= ((dest>>24)&127u)) dest=(pixel&0x00ffffffu)|(static_cast<std::uint32_t>(frame.sdf[n])<<24);
+  }
+  return true;
+}
+
+bool finish_sdf_canvas(const std::vector<std::uint32_t>& source, std::vector<std::uint32_t>& encoded) {
+  if (source.size()!=encoded.size()) return false;
+  for (std::size_t n=0;n<source.size();++n) {
+    const auto alpha=source[n]>>24;
+    if (alpha==255) encoded[n]=(encoded[n]&0xff000000u)|(source[n]&0x00ffffffu);
+    else if (alpha) {
+      // Native kind-0 shadows are black, alpha 127. Reject another contract.
+      if (alpha!=127 || (source[n]&0x00ffffffu)) return false;
+      encoded[n]|=0x80000000u;
+    }
+  }
+  return true;
+}
+
+bool encode_sdf_composite(const CompositeLayer* layers, std::size_t count,
+                           const CompositeBounds& bounds, int width, int height,
+                           const std::vector<std::uint32_t>& source,
+                           std::vector<std::uint32_t>& encoded, bool& present) {
+  present=false;
+  for (std::size_t k=0;k<count;++k) {
+    const auto* r=resource_for_handle_locked(layers[k].frame);
+    if (!r || layers[k].frame.frameIndex>=r->frames.size()) return false;
+    present=present || !r->frames[layers[k].frame.frameIndex].sdf.empty();
+  }
+  if (!present) return true;
+  encoded.assign(source.size(),0);
+  for (std::size_t k=0;k<count;++k) {
+    const auto& layer=layers[k];
+    const auto* r=resource_for_handle_locked(layer.frame);
+    const auto& f=r->frames[layer.frame.frameIndex];
+    const auto* i=frame_indices_locked(layer.frame,true);
+    const auto* fractions=frame_fractions_locked(layer.frame);
+    auto palette=layer.palette.colors;enforce_transparent_entry(f,palette);
+    if (!i || !fractions || f.sdf.empty() ||
+        !encode_sdf_canvas(f,*i,*fractions,palette,encoded,width,height,
+                          static_cast<int>(physical_layer_offset(f.centerX,bounds.left,2)),
+                          static_cast<int>(physical_layer_offset(f.centerY,bounds.top,2)))) return false;
+  }
+  return finish_sdf_canvas(source,encoded);
+}
+
 bool upload_frame_locked(const Frame& frame,
                          const std::vector<std::uint8_t>& indices,
                          const std::vector<std::uint8_t>& fractions,
@@ -1606,6 +1674,16 @@ bool upload_frame_locked(const Frame& frame,
                            static_cast<int>(contentOffset))) {
     return false;
   }
+  const bool sdfEncoded = !frame.sdf.empty();
+  if (sdfEncoded) {
+    if (physicalScale != 2 || creature_sprite_filter::registry().effective_mode(animationId,2) != core::CreatureSpriteFilterMode::CatmullRom) return false;
+    auto encoded = std::vector<std::uint32_t>(replacement.size(),0);
+    if (!encode_sdf_canvas(frame,indices,fractions,realized,encoded,physicalWidth,physicalHeight,
+                          static_cast<int>(contentOffset),static_cast<int>(contentOffset)) ||
+        !finish_sdf_canvas(replacement,encoded)) return false;
+    replacement.swap(encoded);
+  }
+
 
   int unpackAlignment = 4;
   int unpackRowLength = 0;
@@ -1664,8 +1742,8 @@ bool upload_frame_locked(const Frame& frame,
     const bool published = publish_filter_texture(
         static_cast<unsigned>(boundTexture), physicalWidth, physicalHeight,
         physicalScale, creature_sprite_filter::TextureProvenance::Frame,
-        animationId, maximumMipLevel);
-    if (mips && !published) { restoreState(); return false; }
+        animationId, maximumMipLevel, sdfEncoded);
+    if ((mips || sdfEncoded) && !published) { restoreState(); return false; }
     probe::record_creature_texture_trace(
         static_cast<unsigned>(boundTexture), textureLogicalWidth, textureLogicalHeight,
         physicalWidth, physicalHeight, static_cast<int>(physicalScale), "creature-frame-xbr");
@@ -1761,7 +1839,7 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
                                      std::uint32_t physicalScale, int textureId,
                                      int previousTextureId,
                                      const EngineTextureApi& api, bool probeTarget,
-                                     std::uint16_t animationId) noexcept {
+                                     std::uint16_t animationId, bool sdfEncoded) noexcept {
   core::sprite_p4::ScopedMetric uploadMetric(core::sprite_p4::Metric::Upload, probeTarget);
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
@@ -1893,8 +1971,8 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
     const bool published = publish_filter_texture(
         generated.glName, physicalWidth, physicalHeight, physicalScale,
         creature_sprite_filter::TextureProvenance::CharacterComposite,
-        animationId, maximumMipLevel);
-    if (mips && !published) { restoreState(); return false; }
+        animationId, maximumMipLevel, sdfEncoded);
+    if ((mips || sdfEncoded) && !published) { restoreState(); return false; }
     probe::record_creature_texture_trace(
         generated.glName, logicalWidth, logicalHeight, physicalWidth, physicalHeight,
         static_cast<int>(physicalScale), "creature-composite-xbr");
@@ -2303,7 +2381,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
               std::to_integer<std::uint8_t>(frameReserved[1]) > 1)) ||
             (parsed.version == kXnContourRegistryVersion
               ? std::to_integer<std::uint8_t>(frameReserved[2]) > 1
-              : frameReserved[2] != std::byte{0})))) {
+              : (parsed.version == kXnSdfRegistryVersion ? frameReserved[2] != std::byte{2} : frameReserved[2] != std::byte{0}))))) {
         throw std::runtime_error("invalid creature-sprite frame header");
       }
       const auto nativePixels = static_cast<std::uint64_t>(width) * height;
@@ -2336,6 +2414,10 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         frame.fractionRule = parsed.fractionRule;
       }
       const bool fractionPresent = fractionalRegistry && frameReserved[1] == std::byte{1};
+      const bool sdfPresent = parsed.version == kXnSdfRegistryVersion;
+      const auto sdfPixels = static_cast<std::uint64_t>(width * 2 + 12) * (height * 2 + 12);
+      std::array<std::uint32_t, 2> sdfStored{};
+      std::array<std::uint8_t, 2> sdfCodec{};
       const bool coveragePresent = parsed.version == kXnContourRegistryVersion && frameReserved[2] == std::byte{1};
       std::uint32_t fractionStored = 0;
       std::uint8_t fractionCodec = 0;
@@ -2372,6 +2454,20 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
           throw std::runtime_error("invalid V8 coverage header/limit");
         }
       }
+      if (sdfPresent) {
+        if (parsed.scale != 2 || !frame.partnerProfile || frame.partnerProfile->nativeKind != 0 ||
+            !checked_add(decodedCoverageBytes, sdfPixels * 5, kCatalogMetadataCacheBudgetBytes))
+          throw std::runtime_error("invalid V9 SDF scope/limit");
+        for (int k = 0; k < 2; ++k) {
+          std::array<std::byte,3> reserved{};
+          const auto length = sdfPixels * (k == 0 ? 1 : 4);
+          if (!reader.read(sdfStored[k]) || !reader.read(sdfCodec[k]) || !reader.read(reserved) ||
+              reserved != std::array<std::byte,3>{} ||
+              !((sdfCodec[k] == kRegistryFrameCodecRaw && sdfStored[k] == length) ||
+                (sdfCodec[k] == kRegistryFrameCodecXpressHuff && sdfStored[k] > 0 && sdfStored[k] < length)))
+            throw std::runtime_error("invalid V9 SDF header");
+        }
+      }
       if (!checked_add(decodedPayloadBytes, expectedIndices * (fractionPresent ? 2ull : 1ull),
                        maximum_registry_bytes_for_scale(parsed.scale) *
                            (fractionalRegistry ? 2ull : 1ull))) {
@@ -2391,12 +2487,15 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       if (coveragePresent && !reader.read_view(coverageData, coverageStored)) {
         throw std::runtime_error("truncated V8 coverage plane");
       }
+      std::array<const std::byte*,2> sdfData{};
+      if (sdfPresent) for (int k = 0; k < 2; ++k)
+        if (!reader.read_view(sdfData[k], sdfStored[k])) throw std::runtime_error("truncated V9 SDF plane");
       if (fractionalRegistry) {
         // Validate the complete logical contract before publishing metadata.
         // Use a local decompressor: catalog parsing runs outside g_mutex.
         const auto inflate = [&](const std::byte* data, std::uint32_t stored,
-                                 std::uint8_t codec) {
-          std::vector<std::uint8_t> result(static_cast<std::size_t>(expectedIndices));
+                                 std::uint8_t codec, std::size_t decodedLength) {
+          std::vector<std::uint8_t> result(decodedLength);
           if (codec == kRegistryFrameCodecRaw) {
             std::memcpy(result.data(), data, result.size());
           } else {
@@ -2416,14 +2515,27 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
           }
           return result;
         };
-        const auto logicalI = inflate(indexData, storedBytes, frameCodec);
-        const auto logicalF = fractionPresent ? inflate(fractionData, fractionStored, fractionCodec)
+        const auto logicalI = inflate(indexData, storedBytes, frameCodec, static_cast<std::size_t>(expectedIndices));
+        const auto logicalF = fractionPresent ? inflate(fractionData, fractionStored, fractionCodec, static_cast<std::size_t>(expectedIndices))
                                              : std::vector<std::uint8_t>{};
         if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get())) {
           throw std::runtime_error("invalid Q3m fraction/dependency contract");
         }
+        if (sdfPresent) {
+          frame.sdf = inflate(sdfData[0], sdfStored[0], sdfCodec[0], static_cast<std::size_t>(sdfPixels));
+          const auto material = inflate(sdfData[1], sdfStored[1], sdfCodec[1], static_cast<std::size_t>(sdfPixels * 4));
+          frame.sdfMaterial.resize(static_cast<std::size_t>(sdfPixels));
+          std::memcpy(frame.sdfMaterial.data(), material.data(), material.size());
+          const bool foreground = std::any_of(logicalI.begin(), logicalI.end(), [](auto i){ return i >= 2; });
+          for (std::size_t n = 0; n < frame.sdf.size(); ++n) {
+            const auto m = frame.sdfMaterial[n];
+            if (frame.sdf[n] >= 128 || (foreground ? m >= logicalI.size() || logicalI[m] < 2
+                                                 : m != 0xffffffffu || frame.sdf[n] >= 64))
+              throw std::runtime_error("invalid V9 SDF material reference");
+          }
+        }
         if (coveragePresent) {
-          frame.coverage = inflate(coverageData, coverageStored, coverageCodec);
+          frame.coverage = inflate(coverageData, coverageStored, coverageCodec, static_cast<std::size_t>(expectedIndices));
           const auto limit = frame.partnerProfile->nativeKind == 0 ? 3u : 4u;
           for (std::size_t n = 0; n < logicalI.size(); ++n) {
             if (logicalI[n] < limit && frame.coverage[n] != 255) {
@@ -3281,6 +3393,7 @@ std::uint64_t resource_metadata_bytes(
       }
     }
     for (const auto& frame : resource.frames) {
+      if (!add(frame.sdf.size()) || !add(frame.sdfMaterial.size() * 4)) return (std::numeric_limits<std::uint64_t>::max)();
       if (!add(frame.coverage.size())) return (std::numeric_limits<std::uint64_t>::max)();
     }
   }
@@ -4474,6 +4587,49 @@ bool reconstruct_frame_pixels(FrameHandle handle, const PaletteSnapshot& palette
   }
 }
 
+bool reconstruct_frame_sdf_pixels(FrameHandle handle, const PaletteSnapshot& palette,
+                              std::vector<std::uint32_t>& pixels,
+                              std::uint64_t& fingerprint) noexcept {
+  pixels.clear();
+  fingerprint = 0;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) ||
+        !supported_native_pixel_encoding(palette.encoding) ||
+        !validate_lazy_frame_source_locked(handle)) return false;
+    const auto* indices = frame_indices_locked(handle, true);
+    const auto* fractions = frame_fractions_locked(handle);
+    const auto* resource = resource_for_handle_locked(handle);
+    if (!indices || !fractions || !resource || handle.frameIndex >= resource->frames.size()) return false;
+    const auto& frame = resource->frames[handle.frameIndex];
+    auto realized = palette.colors;
+    enforce_transparent_entry(frame, realized);
+    core::palette_fraction::Lut lut;
+    if (!prepare_frame_lut(frame, *indices, *fractions, realized, lut)) return false;
+    pixels.resize(indices->size());
+    for (std::size_t n = 0; n < pixels.size(); ++n) {
+      pixels[n] = frame_pixel(frame, *indices, *fractions, realized, lut, n);
+    }
+    const auto scale = g_loadedScale.load(std::memory_order_acquire);
+    const int width = frame.logicalWidth * static_cast<int>(scale);
+    const int height = frame.logicalHeight * static_cast<int>(scale);
+    if (!apply_blend_recipes(frame, realized, pixels, width, height, width, height, 0, 0)) {
+      pixels.clear();
+      return false;
+    }
+    if (frame.sdf.empty() || scale!=2) return false;
+    std::vector<std::uint32_t> source(static_cast<std::size_t>(width+12)*(height+12),0);
+    for (int y=0;y<height;++y) std::copy_n(pixels.begin()+static_cast<std::size_t>(y)*width,width,source.begin()+static_cast<std::size_t>(y+6)*(width+12)+6);
+    pixels.assign(source.size(),0);
+    if (!encode_sdf_canvas(frame,*indices,*fractions,realized,pixels,width+12,height+12,6,6) || !finish_sdf_canvas(source,pixels)) return false;
+    fingerprint = palette_fingerprint(frame, realized, palette.encoding);
+    return true;
+  } catch (...) {
+    pixels.clear();
+    return false;
+  }
+}
+
 bool frame_uses_q3m_profile(FrameHandle handle) noexcept {
   try {
     std::lock_guard lock(g_mutex);
@@ -4547,6 +4703,40 @@ bool reconstruct_composite_pixels(const CompositeLayer* layers, std::size_t laye
     if (!ensure_composite_pixels_locked(layers, layerCount, bounds, bounds.logical_width(),
           bounds.logical_height(), encoding, g_loadedScale.load(std::memory_order_acquire), keys, cached) || !cached) return false;
     pixels = *cached;
+    return true;
+  } catch (...) {
+    pixels.clear();
+    return false;
+  }
+}
+
+bool reconstruct_composite_sdf_pixels(const CompositeLayer* layers, std::size_t layerCount,
+                                  std::vector<std::uint32_t>& pixels,
+                                  CompositeBounds& bounds) noexcept {
+  pixels.clear();
+  bounds = {};
+  if (!layers || !layerCount || layerCount > kMaximumCompositeLayers) return false;
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire)) return false;
+    std::array<FrameGeometry, kMaximumCompositeLayers> geometries{};
+    const auto encoding = layers[0].palette.encoding;
+    for (std::size_t n = 0; n < layerCount; ++n) {
+      const auto& layer = layers[n];
+      if (!supported_native_pixel_encoding(layer.palette.encoding) ||
+          layer.palette.encoding != encoding || !validate_lazy_frame_source_locked(layer.frame)) return false;
+      const auto* resource = resource_for_handle_locked(layer.frame);
+      if (!resource || layer.frame.frameIndex >= resource->frames.size()) return false;
+      const auto& frame = resource->frames[layer.frame.frameIndex];
+      geometries[n] = {frame.logicalWidth, frame.logicalHeight, frame.centerX, frame.centerY};
+    }
+    if (!calculate_composite_bounds(geometries.data(), layerCount, bounds)) return false;
+    const auto keys = composite_cache_layers_locked(layers, layerCount);
+    const std::vector<std::uint32_t>* cached = nullptr;
+    if (!ensure_composite_pixels_locked(layers, layerCount, bounds, bounds.logical_width(),
+          bounds.logical_height(), encoding, g_loadedScale.load(std::memory_order_acquire), keys, cached) || !cached) return false;
+    bool present=false;
+    if (!encode_sdf_composite(layers,layerCount,bounds,bounds.logical_width()*2,bounds.logical_height()*2,*cached,pixels,present) || !present) return false;
     return true;
   } catch (...) {
     pixels.clear();
@@ -4895,13 +5085,20 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       }
       return false;
     }
+    std::vector<std::uint32_t> sdfPixels;
+    bool sdfEncoded=false;
+    if (!encode_sdf_composite(layers,layerCount,bounds,logicalWidth*physicalScale,logicalHeight*physicalScale,*pixels,sdfPixels,sdfEncoded)) return false;
+    if (sdfEncoded) {
+      if (physicalScale!=2 || creature_sprite_filter::registry().effective_mode(layers[0].frame.animationId,2)!=core::CreatureSpriteFilterMode::CatmullRom) return false;
+      pixels=&sdfPixels;
+    }
     transientTextureId =
         api.DrawGenTexture(sampling_filter(), 0, 0, 0);
     if (transientTextureId <= 0 || transientTextureId == previousTextureId ||
         !upload_composite_texture_locked(*pixels, logicalWidth, logicalHeight,
                                          encoding, physicalScale,
                                          transientTextureId, previousTextureId,
-                                         api, probeTarget, layers[0].frame.animationId)) {
+                                         api, probeTarget, layers[0].frame.animationId, sdfEncoded)) {
       api.DrawBindTexture(previousTextureId);
       if (transientTextureId > 0 && transientTextureId != previousTextureId) {
         api.DrawDeleteTexture(transientTextureId);

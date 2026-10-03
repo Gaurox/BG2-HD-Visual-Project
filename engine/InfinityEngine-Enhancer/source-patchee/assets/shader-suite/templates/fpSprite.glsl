@@ -20,7 +20,11 @@ void main()
 	lowp vec4 texColor = ieeFetchCreatureColor(vTc, gaussianRgb);
 
 	lowp vec4 outColor = texColor;
-	if (!styleActive || uIeeCreatureOutlineMode <= 0.5)
+	if (uIeeCreatureSdfEncoded > 0.5)
+	{
+		outColor = texColor;
+	}
+	else if (!styleActive || uIeeCreatureOutlineMode <= 0.5)
 	{
 		const int mSize = 5;
 		const int kSize = (mSize-1)/2;

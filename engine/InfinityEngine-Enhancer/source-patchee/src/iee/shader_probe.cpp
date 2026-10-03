@@ -1506,7 +1506,7 @@ void prepare_creature_draw(CreatureDrawUniformScope& scope) {
     scope.profileSource = resolved.source;
     (void)uniforms::set_creature_draw(
         scope.program, *scope.locations, decision.mode, decision.texelWidth,
-        decision.texelHeight, resolved.style);
+        decision.texelHeight, resolved.style, metadata->sdfEncoded);
     return;
   }
 

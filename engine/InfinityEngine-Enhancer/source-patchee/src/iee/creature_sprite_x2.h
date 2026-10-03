@@ -283,6 +283,11 @@ bool ensure_frame_payload_available(FrameHandle handle) noexcept;
 bool reconstruct_frame_pixels(FrameHandle handle, const PaletteSnapshot& palette,
                               std::vector<std::uint32_t>& pixels,
                               std::uint64_t& fingerprint) noexcept;
+// V9 host diagnostics expose the exact encoded GPU plane, six-texel border.
+bool reconstruct_frame_sdf_pixels(FrameHandle handle, const PaletteSnapshot& palette,
+                                  std::vector<std::uint32_t>& pixels, std::uint64_t& fingerprint) noexcept;
+bool reconstruct_composite_sdf_pixels(const CompositeLayer* layers, std::size_t layerCount,
+                                      std::vector<std::uint32_t>& pixels, CompositeBounds& bounds) noexcept;
 // Diagnostic routing: V6 uses the Q3m profile even when F is absent.
 [[nodiscard]] bool frame_uses_q3m_profile(FrameHandle handle) noexcept;
 [[nodiscard]] bool frame_requires_fixed_monster_palette(FrameHandle handle) noexcept;

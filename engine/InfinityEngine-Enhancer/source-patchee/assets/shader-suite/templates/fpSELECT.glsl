@@ -56,7 +56,7 @@ void main()
 				sampleCoord = sampleCoord * uTcScale;
 				vec2 coordDiff = abs(vTc - sampleCoord)/uTcScale;
 				vec4 texSample = texture2D(uTex, sampleCoord);
-				if (texSample.a > fSolidThreshold)
+				if (ieeCreatureNativeAlpha(sampleCoord) > fSolidThreshold)
 				{
 					float distance = sqrt((coordDiff.x*coordDiff.x) + (coordDiff.y*coordDiff.y));
 					minDist = min(minDist, distance);
