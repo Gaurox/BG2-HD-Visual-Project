@@ -1,0 +1,49 @@
+{
+  "schema": "bg2-q3m-monster-integration-baseline-v1",
+  "recorded_at_utc": "2026-10-03T01:33:33.402281+00:00",
+  "game_root": "G:\\SteamLibrary\\steamapps\\common\\Baldur's Gate II Enhanced Edition",
+  "parent_pointer": "docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json",
+  "parent_pack": "sprite/.work/q3m-playable-all-x2-pack-20261002-v1/pack.json",
+  "parent_pack_sha256": "a133719b4d7cf9cf1101a7dade3ceb9fd97c40fd0a62f73a62bac02ddfda78c8",
+  "character_catalog_sha256": "C26C03DFB45913EF69A87B7A85A1E2CA795BEE79C03088F5A12F7D91240A61DD",
+  "character_animations": 78,
+  "character_resources": 4510,
+  "character_native_frames": 1564054,
+  "selected_BAM_overrides": [],
+  "box_configuration": {
+    "EnableCreatureSpriteUpscaleTest": "true",
+    "EnableCreatureSpriteX2Test": "false",
+    "EnableCreatureSpriteLinearFiltering": "false",
+    "CreatureSpriteFilter": "Box",
+    "CreatureSpriteFilterAnimation": "0x0"
+  },
+  "live_files": [
+    {
+      "relative_path": "iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+      "sha256": "c26c03dfb45913ef69a87b7a85a1e2ca795bee79c03088f5a12f7d91240a61dd",
+      "bytes": 2020032
+    },
+    {
+      "relative_path": "InfinityEngine-Enhancer.ini",
+      "sha256": "691c6b80c9c027857fdb5b4f3d65b7e27d842a853822fd64b2ffe937e4ca35a3",
+      "bytes": 6291
+    },
+    {
+      "relative_path": "InfinityEngine-Enhancer.dll",
+      "sha256": "9eb0e2b9a9bd727f2a2d346852bfe9750da85a8f9885327538537db02184efd3",
+      "bytes": 2051584
+    }
+  ],
+  "preserved_assets_authority": "docs/measurements/playable-q3m-x2-ingame-20261002-v1/baseline.json",
+  "preserved_assets_authority_sha256": "08e84956872a50fcb4be60ee8e6f3507862fe86cc86fc05d970086b62e12ed12",
+  "paperdolls": 81,
+  "UI_sampler": "Nearest",
+  "shader_writes_required": false,
+  "runtime_manifest": "docs/measurements/q3m-monster-phase3-x2-20261003-v1/runtime.json",
+  "runtime_manifest_sha256": "410096f63b278882b29518cc5886954d9c8b04d5ba1a374eefaaae4b4b6574a0",
+  "runtime_dll": {
+    "path": ".work/q3m-monster-phase3-20261003-v1/candidate/InfinityEngine-Enhancer.dll",
+    "sha256": "ade49a32a4685e490e773843519fd5f221b79aaffda10cbac02b56d94d4f6759",
+    "bytes": 2064384
+  }
+}
