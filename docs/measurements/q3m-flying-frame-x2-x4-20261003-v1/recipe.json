@@ -1,0 +1,36 @@
+{
+  "role": "four-frame-offline-visual-test-not-full-family-or-installation",
+  "scales": [
+    2,
+    4
+  ],
+  "colour": "Q3m-K6-four-partners-eight-levels-V7",
+  "x2": "float32 native x4 target reduced with BOX before encoding; acquired shared cache",
+  "x4": "direct native-source inference and independent xBR4 semantic guide; no enlarged x2 raster",
+  "inference": {
+    "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+    "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+    "batch_size": 86,
+    "canvas_quantum": 32,
+    "fp16": true,
+    "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+    "torch": "2.7.0+cu128",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dependencies": {
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "spandrel": "0.4.1",
+      "chainner_ext": "0.3.10"
+    },
+    "kernels": {
+      "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+      "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+      "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+    }
+  },
+  "encoder_sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "source_scope_sha256": "26fd23d7fc95c4f8cac60e06e3978547e2a1284a5dcdcea8c7b785a94e9cf0e4",
+  "selection": "maximum material pixels among native cycle frames, then width, then first frame",
+  "display": "native x8; source nearest x8 / Q3m x2 nearest x4 / Q3m x4 nearest x2",
+  "palette": "same native neutral draw palette; alpha 0/127/255; transparent entry zero"
+}

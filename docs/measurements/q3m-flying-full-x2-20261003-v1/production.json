@@ -1,0 +1,261 @@
+{
+  "plan": {
+    "schema": "bg2-q3m-family-witness-work-plan-v1",
+    "selection_sha256": "79d84a0d307bf73da54b3b6eb401030acbfca201eefcc9013941a8c9bee1dfab",
+    "families": 1,
+    "resources": 5,
+    "physical_frames": 279,
+    "unique_source_work": 243,
+    "unique_encoded_work": 243,
+    "native_oracle": "pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6",
+    "witnesses": [
+      {
+        "family": "flying",
+        "animation_id": "0xD000",
+        "name": "Aigle",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "AEAGG1"
+        ],
+        "physical_frames": 63,
+        "source_work": 63,
+        "encoded_work": 63
+      },
+      {
+        "family": "flying",
+        "animation_id": "0xD100",
+        "name": "Mouette",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "AGULG1"
+        ],
+        "physical_frames": 72,
+        "source_work": 72,
+        "encoded_work": 72
+      },
+      {
+        "family": "flying",
+        "animation_id": "0xD200",
+        "name": "Vautour",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "AVULG1"
+        ],
+        "physical_frames": 72,
+        "source_work": 72,
+        "encoded_work": 72
+      },
+      {
+        "family": "flying",
+        "animation_id": "0xD300",
+        "name": "Petit oiseau",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "ABIRG1"
+        ],
+        "physical_frames": 36,
+        "source_work": 36,
+        "encoded_work": 36
+      },
+      {
+        "family": "flying",
+        "animation_id": "0xD400",
+        "name": "Petit oiseau interieur",
+        "owner": 15,
+        "native_kind": 0,
+        "refs": [
+          "ABIRG1"
+        ],
+        "physical_frames": 36,
+        "source_work": 36,
+        "encoded_work": 36
+      }
+    ],
+    "source_plans": {
+      "character": {
+        "schema": "bg2-playable-palette-work-plan-pointer-v1",
+        "role": "source-work-plan-not-production-or-QA",
+        "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+        "bytes": 576868352,
+        "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+        "summary": {
+          "absent_families": 246,
+          "available_families": 4896,
+          "canonical_bytes": 407156955,
+          "cross_model_additional_model_work_avoided": 6618307,
+          "cross_model_additional_q32_pixels_avoided": 20365903872,
+          "cycle_slots": 3599209,
+          "cycles": 168192,
+          "distinct_bam_frames": 1564054,
+          "distinct_bam_model_frames": 894348,
+          "distinct_bam_model_q32_pixels": 2309177344,
+          "distinct_bam_native_pixels": 1268986342,
+          "families": 5142,
+          "input_reuses_byte_compared": 1000566,
+          "logical_frame_work_avoided": 13113072,
+          "logical_frames": 13677041,
+          "logical_model_frames": 11448124,
+          "logical_model_q32_pixels": 31296118784,
+          "logical_model_q32_pixels_avoided": 29640327168,
+          "logical_model_work_avoided": 10884327,
+          "logical_native_pixels": 17717563045,
+          "model_local_unique_model_q32_pixels": 22021695488,
+          "model_local_unique_model_work_items": 7182104,
+          "model_local_unique_work_items": 7187637,
+          "models": 78,
+          "original_rle_tail_overflow_frames": 70,
+          "resources": 4510,
+          "shared_between_models_model_work_items": 558741,
+          "shared_between_models_source_occurrences": 1558519,
+          "shared_between_models_work_items": 558913,
+          "six_palette_targets_naive": 68688744,
+          "six_palette_targets_unique_indexed_input": 3379914,
+          "six_palette_targets_unique_work": 3382782,
+          "source_bytes": 189397325,
+          "source_frames_avoided_after_bam_sharing": 1000085,
+          "source_model_frames_avoided_after_bam_sharing": 330551,
+          "strict_full_palette_work_items": 566136,
+          "unique_indexed_inputs": 563488,
+          "unique_model_native_pixels": 960065986,
+          "unique_model_q32_pixels": 1655791616,
+          "unique_model_work_items": 563797,
+          "unique_neural_inputs": 563319,
+          "unique_neural_native_pixels": 959768171,
+          "unique_neural_q32_pixels": 1655021568,
+          "unique_work_items": 563969,
+          "unique_work_native_pixels": 961019931,
+          "unprocessable_work_items": 0,
+          "unreferenced_source_frames": 25466,
+          "unused_native_palette_additional_work_avoided": 2167,
+          "within_model_model_work_avoided": 4266020,
+          "work_items_with_different_centres": 2325,
+          "work_reuses_byte_compared": 1000085
+        },
+        "analysis": "docs/measurements/playable-palettized-frame-dedup-20261001-v1",
+        "consumer": "pipeline/scripts/palette_playable.py",
+        "trusted_seed_runs": [
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110",
+            "sha256": {
+              "recipe.json": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+              "coverage.json": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+              "verification.json": "874df5b09a8243ab3b7c448e973a96815955ab73ef192d5af05cf5222cde9ad6"
+            }
+          },
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110",
+            "sha256": {
+              "recipe.json": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+              "coverage.json": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+              "verification.json": "0cb2522cc85034ee8075b2fc0bcea3bcbe277483d2349be593b5584ceed45fd8"
+            }
+          }
+        ]
+      },
+      "other": {
+        "schema": "bg2-all-creature-source-dedup-v1",
+        "role": "source-plan-not-production-or-QA",
+        "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+        "bytes": 541003776,
+        "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+        "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+        "character_descriptor": "sprite/index/palette-work-plan.json",
+        "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+        "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+      }
+    },
+    "complete_family": "flying"
+  },
+  "stats": {
+    "encoded_cache_hits": 39,
+    "new_guides": 204,
+    "new_neural_targets": 1224,
+    "new_encoded_work": 204
+  },
+  "resume": {
+    "encoded_cache_hits": 243
+  },
+  "resume_torch_import_blocked": true,
+  "accepted_sample_encodings_unchanged": 4,
+  "encoder_namespace": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "pack": {
+    "schema": "bg2-q3m-family-witness-pack-v1",
+    "scale": 2,
+    "registry_version": 7,
+    "catalog_version": 2,
+    "animation_count": 5,
+    "resources": 4,
+    "frames": 243,
+    "index_bytes": 827460,
+    "registry_bytes": 709091,
+    "catalog_sha256": "644ac2ac18c4391bbcd379f55b2a0b32187560d89824863129369d3ece36235f",
+    "oracle_sha256": "5c54795ca24932929d7ab16d174fb6d910c2b3cdce91b3bacd0b326e886ba806",
+    "oracle_palette_stage": "post-CVidCell-transparent-entry-clear",
+    "logical_resource_bindings": 5,
+    "shared_resource_bindings": 1,
+    "leaves": [
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "4C9E030C7105CB5790182BD3498CE2AF9581369176823E2E2E21B83AE29C2899",
+        "crc32": 3691821986,
+        "resource_count": 1,
+        "frame_count": 63,
+        "index_bytes": 377544,
+        "registry_bytes": 272598,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "6F57DDF47C912CE1DF2FA14C389203E4D741540535E936D5C0219181EE187A87",
+        "crc32": 3022893545,
+        "resource_count": 1,
+        "frame_count": 72,
+        "index_bytes": 136244,
+        "registry_bytes": 154606,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "CAD3A507283EAE3F5AAD8519C99F2D902812E322896E78A3B14C301AFC7054FD",
+        "crc32": 3772827844,
+        "resource_count": 1,
+        "frame_count": 72,
+        "index_bytes": 297580,
+        "registry_bytes": 228755,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      },
+      {
+        "version": 7,
+        "scale": 2,
+        "registry_magic": "IEECSXN",
+        "animation_id": "0xFFFF",
+        "sha256": "DA12745D12156E1F54758E375972D6D38B857D7E231C951143F25EB42A2D055C",
+        "crc32": 2058564856,
+        "resource_count": 1,
+        "frame_count": 36,
+        "index_bytes": 16092,
+        "registry_bytes": 53132,
+        "class_profile_id": 8,
+        "decode_rule_id": 3
+      }
+    ],
+    "ingame_validated": false
+  },
+  "pack_directory": "sprite/.work/q3m-flying-full-x2-20261003-v1/isolated"
+}

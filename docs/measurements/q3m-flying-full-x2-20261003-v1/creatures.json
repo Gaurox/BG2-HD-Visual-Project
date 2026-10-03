@@ -1,0 +1,332 @@
+{
+  "schema": "bg2-flying-live-CRE-v1",
+  "stock_cre_scanned": 4735,
+  "override_cre_scanned": 4,
+  "precedence": "override first; KEY/BIF otherwise",
+  "creatures": [
+    {
+      "resref": "BDCUTID",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Patch24.bif",
+      "sha256": "50d2fdbee252be754f4935069bf0fbe95ecff9035a6d21508434fa9a2a95c699",
+      "clua": "C:CreateCreature(\"BDCUTID\")"
+    },
+    {
+      "resref": "BDOFFSCR",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Patch25.bif",
+      "sha256": "89be616580589c1a492f399355cac94a0b7492e009f003e67cbaba344198178b",
+      "clua": "C:CreateCreature(\"BDOFFSCR\")"
+    },
+    {
+      "resref": "BIRD",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "b97f6a53781a3bd455d5e7b5410a7e0233874c53f819a17c62c74d9bb2b632c2",
+      "clua": "C:CreateCreature(\"BIRD\")"
+    },
+    {
+      "resref": "BIRD_IN",
+      "animation_id": "0xD400",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "250e09d7663d257ba22d48354c161bcde9673df0d8811cb2e17ba32e798f0d0f",
+      "clua": "C:CreateCreature(\"BIRD_IN\")"
+    },
+    {
+      "resref": "BIRD_INE",
+      "animation_id": "0xD400",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5bd40a1b910e336a9624d53444e2c3ebe1789a49478d9e4d5397872d5900b1a5",
+      "clua": "C:CreateCreature(\"BIRD_INE\")"
+    },
+    {
+      "resref": "BIRD_INN",
+      "animation_id": "0xD400",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "dd5c63ce9bafdf4aab81d792a9deee55fda7e255a12b29dac05ce863afcb71b8",
+      "clua": "C:CreateCreature(\"BIRD_INN\")"
+    },
+    {
+      "resref": "BIRD_INS",
+      "animation_id": "0xD400",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "4d05d47ee55bc8c2b1dc0f05c5eafe156664db6a85635790abcee004af9dd29f",
+      "clua": "C:CreateCreature(\"BIRD_INS\")"
+    },
+    {
+      "resref": "BIRD_INW",
+      "animation_id": "0xD400",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ce5d8530a74a2acc7ab9f49ea7f4f7ed4bb2c7909294812d8b9c6ea41db5927e",
+      "clua": "C:CreateCreature(\"BIRD_INW\")"
+    },
+    {
+      "resref": "CH7SPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "f3360c8a002ea68327affb048a33d6ef11a96a1599d40668fe02a95dc902f20b",
+      "clua": "C:CreateCreature(\"CH7SPY\")"
+    },
+    {
+      "resref": "CUTSPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "6beed533ac2bd5b03d09a176b3a0182efc7507bfc663683056804aeafe6b54d7",
+      "clua": "C:CreateCreature(\"CUTSPY\")"
+    },
+    {
+      "resref": "CUTSPY2",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "16846bb13e99e87fcc0b158a183c51c340537aec971ecc956dcb6c2995b048f3",
+      "clua": "C:CreateCreature(\"CUTSPY2\")"
+    },
+    {
+      "resref": "DECK",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "1065bc846bd59d6530edac4d778e96b9bd023fd6f3e15d869e9b509ddeff5df1",
+      "clua": "C:CreateCreature(\"DECK\")"
+    },
+    {
+      "resref": "EAGLE",
+      "animation_id": "0xD000",
+      "bam": "AEAGG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ae601d60e5d016704140dd07dd963993ce7df9f19ff546481f6ad0d99bdc7d77",
+      "clua": "C:CreateCreature(\"EAGLE\")"
+    },
+    {
+      "resref": "FSGLOB",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "0231651b3c60115e2ce1f96b70eb1a4bb70c51f2bcff76ea947299535b76ed4c",
+      "clua": "C:CreateCreature(\"FSGLOB\")"
+    },
+    {
+      "resref": "GORBEL",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "ccd24c186d8532858df46fd69c89c668493ae512552b48c76395748624c1aebd",
+      "clua": "C:CreateCreature(\"GORBEL\")"
+    },
+    {
+      "resref": "GORFAN",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "e87eb75589948ecb8f239aba7b2f8903927e7220e51004e2e56a7a4051aae7b6",
+      "clua": "C:CreateCreature(\"GORFAN\")"
+    },
+    {
+      "resref": "GORLUM",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "8fb53e50d5bfe782e0ceb4e56f7a87ffac9e61006141aec18f6efb76839aad86",
+      "clua": "C:CreateCreature(\"GORLUM\")"
+    },
+    {
+      "resref": "GORSPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "7d7d4491c8054691b8d3c63dea6dae46b49192064487edaec5aeadf3b8c1f320",
+      "clua": "C:CreateCreature(\"GORSPY\")"
+    },
+    {
+      "resref": "HELLSPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "e862e6699033102e64e19d06ea21561f92163d381ff8209c71d73d951faac9f2",
+      "clua": "C:CreateCreature(\"HELLSPY\")"
+    },
+    {
+      "resref": "HELLSPY2",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "bbdca2256f3495a14e9de972bff7658d6fbc41024b628da874f834e54b830548",
+      "clua": "C:CreateCreature(\"HELLSPY2\")"
+    },
+    {
+      "resref": "HELLSPY3",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "29d03cd0e74783af6ce12cceaee6761ab2cfd93db848ee12a32ada6de4a8f424",
+      "clua": "C:CreateCreature(\"HELLSPY3\")"
+    },
+    {
+      "resref": "HELLSPY4",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "09994bf3b9baf7d9b363dd20f3c518ed4773e2682e4c81fad8226cc48f37fb33",
+      "clua": "C:CreateCreature(\"HELLSPY4\")"
+    },
+    {
+      "resref": "HELLSPY5",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "b1f9c65b201a0070cebb2eb7268dfaec0cc06e465ee635a45b0c8c1ef313b0e3",
+      "clua": "C:CreateCreature(\"HELLSPY5\")"
+    },
+    {
+      "resref": "HELLSPY6",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "d4a7dd2870ffc4830a31d6c7e35c3d528365f75725412b061e08c9f6e3a06784",
+      "clua": "C:CreateCreature(\"HELLSPY6\")"
+    },
+    {
+      "resref": "INVISABO",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "f17e03495d2043fb74674f5d5f4624a41fa194b0475b05f0f3fa4a2da6bc3a6a",
+      "clua": "C:CreateCreature(\"INVISABO\")"
+    },
+    {
+      "resref": "KOBTAR01",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "9deb7c5e62efccee131842a4072f14195aa66b618911f262a0050153722ac4c5",
+      "clua": "C:CreateCreature(\"KOBTAR01\")"
+    },
+    {
+      "resref": "M05PCSPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "af8d77ecb65c653cba6c50b0503d60010c8b37956216ec4e2559421b6f0bafa4",
+      "clua": "C:CreateCreature(\"M05PCSPY\")"
+    },
+    {
+      "resref": "NOSAVE",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "f66527c943705d04e9013dde621cddb2b2a7d14d0072f9840dafa0c9b8b80f32",
+      "clua": "C:CreateCreature(\"NOSAVE\")"
+    },
+    {
+      "resref": "OBSERVE",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "e3de77e5916067dba32c3fd3f0d801727f9b720a615493a873713e44537ca5aa",
+      "clua": "C:CreateCreature(\"OBSERVE\")"
+    },
+    {
+      "resref": "OHBRFF01",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/BlackPits.bif",
+      "sha256": "06f06aa760e2236399a12754d4a5cc8b80dfedb762cf5f404a727b89487d8166",
+      "clua": "C:CreateCreature(\"OHBRFF01\")"
+    },
+    {
+      "resref": "OHNJEROM",
+      "animation_id": "0xD100",
+      "bam": "AGULG1",
+      "source": "stock:data/Neera.bif",
+      "sha256": "e5da71978b25b02ec5df38a7a00c808a45740634c874638fac1465cb965843b5",
+      "clua": "C:CreateCreature(\"OHNJEROM\")"
+    },
+    {
+      "resref": "PPGUY01",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "7345de1400b66432ea4d0cedf7c81b651d2e087957c917360b76126f71679e9b",
+      "clua": "C:CreateCreature(\"PPGUY01\")"
+    },
+    {
+      "resref": "SEAGUL",
+      "animation_id": "0xD100",
+      "bam": "AGULG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1078a2056a49cd07a8a73375d22add656f1674ce35199c6625584feeaa1844c1",
+      "clua": "C:CreateCreature(\"SEAGUL\")"
+    },
+    {
+      "resref": "SPY406",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "37c0354654f366f6d6339adaf9aa5cd37df817fe5689e661f35c486d5908c570",
+      "clua": "C:CreateCreature(\"SPY406\")"
+    },
+    {
+      "resref": "SUSPY",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1915c3db8ad032f334814f4037ce2e1d9d5a19fc4437d5cac9de9d8c71a45776",
+      "clua": "C:CreateCreature(\"SUSPY\")"
+    },
+    {
+      "resref": "VULTURE",
+      "animation_id": "0xD200",
+      "bam": "AVULG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "184861bd0a747176493cd5953f090d05ca67c0bce05f50cbc4332e48455c7232",
+      "clua": "C:CreateCreature(\"VULTURE\")"
+    }
+  ],
+  "representatives": [
+    {
+      "resref": "EAGLE",
+      "animation_id": "0xD000",
+      "bam": "AEAGG1",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ae601d60e5d016704140dd07dd963993ce7df9f19ff546481f6ad0d99bdc7d77",
+      "clua": "C:CreateCreature(\"EAGLE\")"
+    },
+    {
+      "resref": "OHNJEROM",
+      "animation_id": "0xD100",
+      "bam": "AGULG1",
+      "source": "stock:data/Neera.bif",
+      "sha256": "e5da71978b25b02ec5df38a7a00c808a45740634c874638fac1465cb965843b5",
+      "clua": "C:CreateCreature(\"OHNJEROM\")"
+    },
+    {
+      "resref": "VULTURE",
+      "animation_id": "0xD200",
+      "bam": "AVULG1",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "184861bd0a747176493cd5953f090d05ca67c0bce05f50cbc4332e48455c7232",
+      "clua": "C:CreateCreature(\"VULTURE\")"
+    },
+    {
+      "resref": "BDCUTID",
+      "animation_id": "0xD300",
+      "bam": "ABIRG1",
+      "source": "stock:data/Patch24.bif",
+      "sha256": "50d2fdbee252be754f4935069bf0fbe95ecff9035a6d21508434fa9a2a95c699",
+      "clua": "C:CreateCreature(\"BDCUTID\")"
+    }
+  ],
+  "missing_BAM_representatives": [],
+  "ingame_spawn_verified": false
+}

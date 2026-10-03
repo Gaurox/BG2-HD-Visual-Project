@@ -41,7 +41,7 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-monster-large-full-x2-20261003-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -64,7 +64,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "V7-x2-15-family-pilot-plus-complete-Ogre-installed-ingame-pending",
+    "state": "V7-x2-flying-accepted-Ogre-installed-other-families-pilot",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -79,10 +79,11 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 1,
-    "current_recipe_ingame_accepted_families": 0,
-    "current_recipe_complete_families": 1,
-    "current_recipe_installed_animation_ids": 1
+    "current_recipe_complete_animation_ids": 6,
+    "current_recipe_ingame_accepted_families": 1,
+    "current_recipe_complete_families": 2,
+    "current_recipe_installed_animation_ids": 6,
+    "current_recipe_ingame_accepted_animation_ids": 5
   },
   "families": [
     {
@@ -618,7 +619,7 @@
         "unique_model_candidate_work": 243,
         "source_work_shared_with_character": 0,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0
       },
       "current_colour_witness": {
         "animation_id": "0xD400",
@@ -630,8 +631,52 @@
         "physical_frames": 36,
         "unique_source_work": 36,
         "unique_encoded_work": 36,
-        "state": "host-verified-ingame-pending",
-        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+        "state": "ingame-accepted-via-complete-family",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+        "qa_reference": "sprite/index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-flying-full-x2-20261003-v1/selection.json",
+        "animation_ids": [
+          "0xD000",
+          "0xD100",
+          "0xD200",
+          "0xD300",
+          "0xD400"
+        ],
+        "native_kind": 0,
+        "bams": [
+          "AEAGG1",
+          "AGULG1",
+          "AVULG1",
+          "ABIRG1"
+        ],
+        "physical_frames": 243,
+        "logical_frame_occurrences": 279,
+        "unique_source_work": 243,
+        "unique_encoded_work": 243,
+        "encoded_cache_hits": 39,
+        "new_encoded_work": 204,
+        "new_neural_targets": 1224,
+        "resume_cache_hits": 243,
+        "shared_components": [
+          {
+            "resref": "ABIRG1",
+            "animation_ids": [
+              "0xD300",
+              "0xD400"
+            ]
+          }
+        ],
+        "scope": "complete-native-family-world; five IDs share four physical BAMs",
+        "visual_acceptance_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/visual-acceptance.json",
+        "installation_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-flying-full-x2-20261003-v1/installation-verification.json",
+        "state": "family-complete-produced-installed-ingame-accepted",
+        "qa_ingame": true,
+        "release": false,
+        "qa_reference": "sprite/index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json"
       }
     }
   ],
@@ -733,6 +778,50 @@
       "state": "family-complete-produced-installed-ingame-QA-pending",
       "qa_ingame": false,
       "release": false
+    },
+    {
+      "family": "flying",
+      "reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-flying-full-x2-20261003-v1/selection.json",
+      "animation_ids": [
+        "0xD000",
+        "0xD100",
+        "0xD200",
+        "0xD300",
+        "0xD400"
+      ],
+      "native_kind": 0,
+      "bams": [
+        "AEAGG1",
+        "AGULG1",
+        "AVULG1",
+        "ABIRG1"
+      ],
+      "physical_frames": 243,
+      "logical_frame_occurrences": 279,
+      "unique_source_work": 243,
+      "unique_encoded_work": 243,
+      "encoded_cache_hits": 39,
+      "new_encoded_work": 204,
+      "new_neural_targets": 1224,
+      "resume_cache_hits": 243,
+      "shared_components": [
+        {
+          "resref": "ABIRG1",
+          "animation_ids": [
+            "0xD300",
+            "0xD400"
+          ]
+        }
+      ],
+      "scope": "complete-native-family-world; five IDs share four physical BAMs",
+      "visual_acceptance_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/visual-acceptance.json",
+      "installation_reference": "docs/measurements/q3m-flying-full-x2-20261003-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-flying-full-x2-20261003-v1/installation-verification.json",
+      "state": "family-complete-produced-installed-ingame-accepted",
+      "qa_ingame": true,
+      "release": false,
+      "qa_reference": "sprite/index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json"
     }
   ]
 }

@@ -7,8 +7,9 @@
 - Méthode courante : **Q3m K6, quatre partenaires / huit niveaux, V7 x2** ; indices + B/F + dépendances, palette native vivante. Classes et partenaires propres au profil fixe/rampes ; owner exact par famille.
 - Monde : x2 + BOX. Paperdolls : voie UI distincte ; acquis `6110` conservés.
 - xBR final / ReboutCX première génération : **historique, exclus de l'avancement Q3m**. Sources, runs et QA historiques préservés ; aucun déplacement/suppression. xBR comme guide et ReboutCX comme producteur de cibles restent des briques de Q3m.
-- Pilote quatre partenaires : **15 témoins / 49 BAM / 11 586 frames**, actions retenues uniquement, tests hôte acquis, **QA ingame 0/15**. `../docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json` ; contrat `../pipeline/PALETTE_Q3M_V7.md`.
+- Pilote quatre partenaires : **15 témoins / 49 BAM / 11 586 frames**, actions retenues uniquement, tests hôte acquis ; historique du pilote préservé. Décisions QA des familles complètes ci-dessous. `../docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json` ; contrat `../pipeline/PALETTE_Q3M_V7.md`.
 - Première famille complète V7 : **`monster_large` / ogre `0x9000` / 7 BAM / 434 frames**, produite et installée ; **QA ingame en attente**. `../docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json` ; faits d'installation `installation-verification.json` du même run.
+- Deuxième famille complète V7 : **`flying` / 5 IDs / 4 BAM / 243 frames**, produite, installée et **famille validée par l'utilisateur**. `../docs/measurements/q3m-flying-full-x2-20261003-v1/current-generation.json` ; QA `index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json` ; le comparatif et les faits d'installation restent des états historiques distincts.
 - Comparaison initiale et 16 niveaux : diagnostics préservés, sans promotion du candidat 16 niveaux. `../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md`.
 - Intégration nouveau moteur sprite : **90 %**, estimation utilisateur du 2026-10-03 ; ne mesure ni couverture des assets ni QA.
 
@@ -32,13 +33,13 @@
 | `ambient` | 18/21 | — | Animations ambiantes mobiles ; chats, rats, poules, écureuils, figurants. |
 | `ambient_static` | 13/13 | — | Ambiants statiques et animaux ; vaches, chevaux, enfants/nobles/figurants. |
 | `town_static` | 18/19 | — | PNJ assis/couchés ; poses fixes, humains/nains/elfes/halfelins endormis. |
-| `flying` | 5/5 | — | Oiseaux en vol ; profil et placement distincts. Aigles, mouettes, vautours. |
+| `flying` | 5/5 | — | Aigle, mouette, vautour, petit oiseau ; **famille complète V7 x2 installée et validée**, 4 BAM / 243 frames ; intérieur/extérieur partagent une ressource. |
 
 ## Queue / références
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouveau V7 : **15 IDs témoins partiels, 1 animation/famille complète installée, zéro QA ingame** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouveau V7 : **15 IDs témoins partiels, 6 IDs / 2 familles complètes installées ; 5 IDs / 1 famille validée (`flying`)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -54,5 +55,6 @@
 - Garantie locale : produire une seule fois chaque clé finale compatible ; namespace profil/recette/échelle + clé pixel, cache persistant validé et verrouillé. Centres/cycles/calques restent hors clé pixel, stockés par occurrence.
 - Contrat quatre partenaires défini et testé : V7 fixe/rampes ; **2 730 sources → 2 731 encodages compatibles** pour le pilote. Une source spéciale a deux contrats ; 54 variantes de métadonnées inutiles partagent les mêmes octets. Reprise 2 731/2 731 hits sans import Torch. Centres/cycles restent par occurrence.
 - Ogre complet : **434 clés compatibles = 136 hits du témoin + 298 nouveaux encodages** ; 1 788 nouvelles cibles K6. Reprise 434/434 hits sans import Torch ; les 22 CRE partagent cette production, sans traitement par individu. `../docs/measurements/q3m-monster-large-full-x2-20261003-v1/production.json`.
+- Flying complet : **243 clés compatibles = 39 hits acquis + 204 nouveaux encodages** ; 1 224 nouvelles cibles K6. Reprise 243/243 hits sans import Torch ; `D300/D400` partagent le composant `ABIRG1`, les frames et la feuille physique ; quatre échantillons acceptés inchangés. `../docs/measurements/q3m-flying-full-x2-20261003-v1/production.json`.
 - Coût du reste des 335 animations avec BAM : `null` tant que la sélection exacte et son union de clés finale ne sont pas calculées ; ne pas additionner les compteurs par famille.
 - Sélection CPU : `pipeline/scripts/analyze_sprite_frame_dedup.py plan --animation-id <ID> [...]`. Pas d'inférence indépendante par famille ni addition des compteurs partagés.

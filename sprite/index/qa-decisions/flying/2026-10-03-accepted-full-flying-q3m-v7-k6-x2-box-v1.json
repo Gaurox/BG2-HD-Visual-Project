@@ -1,0 +1,136 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-03T20:57:20.616416+00:00",
+  "scope": {
+    "kind": "installed-complete-native-family",
+    "engine_family": "flying",
+    "animation_ids": [
+      "0xD000",
+      "0xD100",
+      "0xD200",
+      "0xD300",
+      "0xD400"
+    ],
+    "variant_id": "q3m-v7-k6-four-partners-eight-levels-x2-box",
+    "scale": 2,
+    "resources": 4,
+    "frames": 243,
+    "resource_bindings": 5,
+    "ordered_resource_sha256": "118b11927b15db2e9a76e302458d4d74f7da98b889b283ef0c7cf7f018259a0a",
+    "resources_order": "resref ascending"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "famille validée. commite. identifie une autre famille",
+    "scenario": "user acceptance of the complete installed flying family after installation and CLUA handoff",
+    "individual_scenario_details": "not specified by user",
+    "test_commands_provided": [
+      "EAGLE",
+      "SEAGUL",
+      "VULTURE",
+      "BIRD"
+    ]
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "pipeline/runtime/manifests/iee-sprite-q3m-v7-x2-all-families-20261003-v1.json",
+      "sha256": "141af2b91d6e55b6a6c1146503ce5a3f7b22c08104f7e616222291ac4c41526c",
+      "bytes": 48296
+    },
+    "dll": {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-families-20261003-v1/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "cb8d4f5181e3edbd68fb9a5ef252e59812acec846e0186573edea3e26a71c282",
+      "bytes": 2106880
+    },
+    "ini_sha256": "691c6b80c9c027857fdb5b4f3d65b7e27d842a853822fd64b2ffe937e4ca35a3",
+    "catalogue_sha256": "f61e819fd3ac5c97fe8db03c5d5a359c43f41ff2acd31d8b5f9f7a2db33b3a7b",
+    "owner": 15,
+    "native_palette_kind": 0,
+    "class_profile_id": 8,
+    "decode_rule_id": 3,
+    "palette": "live-native",
+    "world_filter": "Box",
+    "native_geometry": true,
+    "shared_alias": {
+      "resref": "ABIRG1",
+      "animation_ids": [
+        "0xD300",
+        "0xD400"
+      ]
+    }
+  },
+  "provenance": {
+    "selected_generation": {
+      "path": "docs/measurements/q3m-flying-full-x2-20261003-v1/current-generation.json",
+      "sha256": "20b860768a4670852d2bd492116e2a3ee2e54979f3d222977bf56037ff9029f4",
+      "bytes": 1619
+    },
+    "production": {
+      "path": "docs/measurements/q3m-flying-full-x2-20261003-v1/production.json",
+      "sha256": "51b88f87e5377fc0bd925dc4cd68627f3a9361a53d1e3a186df08b4ee611c8c5",
+      "bytes": 9480
+    },
+    "installed_receipt": {
+      "path": "docs/measurements/q3m-flying-full-x2-20261003-v1/ingame-installation/active-test.json",
+      "sha256": "6b11cb345c9283662d6e197fd898ca0855780d45c635bb2ecee119ba727393e0",
+      "bytes": 2805
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-flying-full-x2-20261003-v1/installation-verification.json",
+      "sha256": "13747345e8ec89e574dc5681f07225ce4c8c14e88a2adc335f663bc1eae4f8fa",
+      "bytes": 1144
+    },
+    "comparison_acceptance": {
+      "path": "docs/measurements/q3m-flying-full-x2-20261003-v1/visual-acceptance.json",
+      "sha256": "1c9a67f26be6d59be857a2aac41ce3df74170566525caa3b3fa5755996b34de2",
+      "bytes": 2964
+    }
+  },
+  "resources": [
+    {
+      "resref": "ABIRG1",
+      "animation_ids": [
+        "0xD300",
+        "0xD400"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-DA12745D12156E1F54758E375972D6D38B857D7E231C951143F25EB42A2D055C.registry",
+      "sha256": "da12745d12156e1f54758e375972d6d38b857d7e231c951143f25eb42a2d055c",
+      "frames": 36,
+      "bytes": 53132
+    },
+    {
+      "resref": "AEAGG1",
+      "animation_ids": [
+        "0xD000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-4C9E030C7105CB5790182BD3498CE2AF9581369176823E2E2E21B83AE29C2899.registry",
+      "sha256": "4c9e030c7105cb5790182bd3498ce2af9581369176823e2e2e21b83ae29c2899",
+      "frames": 63,
+      "bytes": 272598
+    },
+    {
+      "resref": "AGULG1",
+      "animation_ids": [
+        "0xD100"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-6F57DDF47C912CE1DF2FA14C389203E4D741540535E936D5C0219181EE187A87.registry",
+      "sha256": "6f57ddf47c912ce1df2fa14c389203e4d741540535e936d5c0219181ee187a87",
+      "frames": 72,
+      "bytes": 154606
+    },
+    {
+      "resref": "AVULG1",
+      "animation_ids": [
+        "0xD200"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-CAD3A507283EAE3F5AAD8519C99F2D902812E322896E78A3B14C301AFC7054FD.registry",
+      "sha256": "cad3a507283eae3f5aad8519c99f2d902812e322896e78a3b14c301afc7054fd",
+      "frames": 72,
+      "bytes": 228755
+    }
+  ],
+  "release_state": "not-promoted"
+}

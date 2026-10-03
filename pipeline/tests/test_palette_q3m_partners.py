@@ -91,5 +91,25 @@ class PartnersTests(unittest.TestCase):
             raw = bytearray(path.read_bytes());raw[-1:] = b'\xff';path.write_bytes(raw)
             with self.assertRaises(ValueError): registry.inspect(path)
 
+    def test_aliases_share_one_catalog_component_and_leaf(self):
+        from q3m_family_witnesses import pack,save
+        from run_creature_sprite_x2 import SourceFrame,read_sealed_catalog_index
+        profile=self.profile();g=np.array([[3]],np.uint8);code=np.zeros_like(g)
+        frame=SourceFrame('BIRD',0,1,1,-2,5,0,g,profile.source[:,[2,1,0]],b'\0'*4)
+        with tempfile.TemporaryDirectory() as directory:
+            base=Path(directory);encoded=base/'encoded.npz'
+            guide=np.repeat(np.repeat(g,2,axis=0),2,axis=1);fraction=np.zeros_like(guide)
+            save(encoded,guide=guide,I=guide,F=fraction,dep=profile.dependencies(guide,fraction))
+            work=dict(frame=frame,encoded_path=encoded)
+            resources=[dict(resref='BIRD',source_sha256='00'*32,profile=profile,cycles=[[0,65535]],
+                           frames=[dict(key='same',geometry=(1,1,-2,5,0))],
+                           witness=dict(animation_id=aid,owner=15)) for aid in ('0xD300','0xD400')]
+            report=pack(resources,{'same':work},base/'pack')
+            catalog=read_sealed_catalog_index(base/'pack/CreatureSprites-XN.catalog',report['catalog_sha256'])
+            self.assertEqual((report['resources'],report['frames'],report['shared_resource_bindings']),(1,1,1))
+            self.assertEqual(len(catalog['shards']),1)
+            self.assertEqual([a['component_indices'] for a in catalog['animations']],[[0],[0]])
+            self.assertEqual([r['shard_index'] for r in catalog['directory']],[0,0])
+
 
 if __name__ == '__main__': unittest.main()

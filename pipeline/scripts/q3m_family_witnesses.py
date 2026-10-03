@@ -250,11 +250,21 @@ def produce(resources, works, root):
 def pack(resources,works,output):
     from run_creature_sprite_x2 import catalog_shard_filename,catalog_shard_entry_bytes,catalog_component_digest,catalog_directory_digest
     require(not output.exists(),'fresh immutable pack destination required'); output.mkdir(parents=True)
-    infos,components,directory,animations = [],[],[],{}
+    infos,components,directory,animations,shared = [],[],[],{},{}
     oracle = bytearray(struct.pack('<8sI',b'IEEQP7\0\0',len(resources)))
-    for ordinal,resource in enumerate(resources):
+    for resource in resources:
         material = dict(resref=resource['resref'],source_sha256=resource['source_sha256'],frames=[],cycles=resource['cycles'])
         profile = resource['profile']; witness = resource['witness']; aid = int(witness['animation_id'],16)
+        identity = (resource['resref'],resource['source_sha256'],profile.metadata(),
+                    tuple((row['key'],tuple(row['geometry'])) for row in resource['frames']),
+                    tuple(tuple(cycle) for cycle in resource['cycles']))
+        oracle.extend(struct.pack('<II8sII',aid,witness['owner'],resource['resref'].encode().ljust(8,b'\0'),len(resource['frames']),len(resource['cycles'])))
+        if identity in shared:
+            ordinal,body = shared[identity]; oracle.extend(body)
+            animations.setdefault(aid,dict(owner=witness['owner'],components=[]))['components'].append(ordinal)
+            directory.append((aid,resource['resref'],ordinal,ordinal,0))
+            continue
+        ordinal = len(infos); body = bytearray()
         palettes = []
         for rgb in profile.fitting:
             alpha = np.full(256,255,np.uint8); alpha[0] = 0; alpha[1] = 127
@@ -263,18 +273,18 @@ def pack(resources,works,output):
             # Pixel oracle is at the draw boundary, not the Realize return.
             palette[0] = 0
             palettes.append(palette)
-        oracle.extend(struct.pack('<II8sII',aid,witness['owner'],resource['resref'].encode().ljust(8,b'\0'),len(resource['frames']),len(resource['cycles'])))
-        for palette in palettes: oracle.extend(palette.tobytes())
-        oracle.extend(profile.metadata())
-        for cycle in resource['cycles']: oracle.extend(struct.pack('<I',len(cycle))+struct.pack(f'<{len(cycle)}I',*cycle))
+        for palette in palettes: body.extend(palette.tobytes())
+        body.extend(profile.metadata())
+        for cycle in resource['cycles']: body.extend(struct.pack('<I',len(cycle))+struct.pack(f'<{len(cycle)}I',*cycle))
         for row in resource['frames']:
             work = works[row['key']]
             with np.load(work['encoded_path'],allow_pickle=False) as data: arrays = {name:data[name].copy() for name in data.files}
             profile.validate(arrays['I'],arrays['F'],arrays['guide'],arrays['dep'])
             reps = np.full(256,0xffff,np.uint16); values,offsets = np.unique(work['frame'].indices,return_index=True); reps[values] = offsets
             material['frames'].append(dict(geometry=row['geometry'],representatives=reps,**arrays))
-            w,h,cx,cy,_ = row['geometry']; oracle.extend(struct.pack('<IIii',w,h,cx,cy))
-            for palette in palettes: oracle.extend(hashlib.sha256(profile.decode(arrays['I'],arrays['F'],palette).tobytes()).digest())
+            w,h,cx,cy,_ = row['geometry']; body.extend(struct.pack('<IIii',w,h,cx,cy))
+            for palette in palettes: body.extend(hashlib.sha256(profile.decode(arrays['I'],arrays['F'],palette).tobytes()).digest())
+        shared[identity] = ordinal,bytes(body); oracle.extend(body)
         leaf = output/(resource['resref']+'.registry'); info = write_leaf(leaf,[material],profile)
         sealed = output/catalog_shard_filename(info['sha256']); leaf.replace(sealed); infos.append(info)
         entry = catalog_shard_entry_bytes(info,output); digest = catalog_component_digest(2,[entry])
@@ -293,7 +303,7 @@ def pack(resources,works,output):
         raw.extend(struct.pack('<32s4I3Q',bytes.fromhex(component['digest']),component['shard_start'],1,1,0,component['frame_count'],component['index_bytes'],component['registry_bytes']))
     for info in infos: raw.extend(catalog_shard_entry_bytes(info,output))
     raw.extend(directory_raw); (output/'CreatureSprites-XN.catalog').write_bytes(raw); (output/'witnesses.oracle').write_bytes(oracle)
-    report = dict(schema='bg2-q3m-family-witness-pack-v1',scale=2,registry_version=7,catalog_version=2,animation_count=len(animations),resources=totals[0],frames=totals[1],index_bytes=totals[2],registry_bytes=totals[3],catalog_sha256=hashlib.sha256(raw).hexdigest(),oracle_sha256=hashlib.sha256(oracle).hexdigest(),oracle_palette_stage='post-CVidCell-transparent-entry-clear',leaves=infos,ingame_validated=False)
+    report = dict(schema='bg2-q3m-family-witness-pack-v1',scale=2,registry_version=7,catalog_version=2,animation_count=len(animations),resources=totals[0],frames=totals[1],index_bytes=totals[2],registry_bytes=totals[3],catalog_sha256=hashlib.sha256(raw).hexdigest(),oracle_sha256=hashlib.sha256(oracle).hexdigest(),oracle_palette_stage='post-CVidCell-transparent-entry-clear',logical_resource_bindings=len(resources),shared_resource_bindings=len(resources)-len(infos),leaves=infos,ingame_validated=False)
     write_json(output/'pack.json',report); return report
 
 

@@ -1,0 +1,428 @@
+{
+  "role": "offline-four-frame-comparison-not-production-QA-installation-or-release",
+  "distinct_models": 4,
+  "selected_source_frames": 4,
+  "source_scope_animation_ids": 5,
+  "method": "Q3m K6 V7 four partners/eight levels",
+  "scales": [
+    2,
+    4
+  ],
+  "palette": "native neutral",
+  "lossless_PNG_roundtrip_verified": true,
+  "display_nearest_native_x8": true,
+  "stats": {
+    "new_neural_targets_x4_shared_with_x2": 24,
+    "new_x2_targets_from_same_forward_pass": 18,
+    "existing_x2_targets_byte_identical": 6,
+    "x2_encoded_cache_hits": 1,
+    "x2_new_guides": 3,
+    "x2_target_cache_hits": 18,
+    "x2_new_encoded_work": 3
+  },
+  "inference_timings": [
+    {
+      "canvas": [
+        32,
+        32
+      ],
+      "unique_inputs": 6,
+      "timing": {
+        "pack_seconds": 0.0003963999915868044,
+        "h2d_submit_seconds": 0.0006901000015204772,
+        "model_cuda_seconds": 0.1372918701171875,
+        "model_wait_and_d2h_seconds": 0.13918890000786632,
+        "crop_seconds": 5.809999129269272e-05,
+        "dispatch_wall_seconds": 0.14033359999302775,
+        "gpu_slots": 86,
+        "gpu_filler_frames": 80
+      }
+    },
+    {
+      "canvas": [
+        32,
+        64
+      ],
+      "unique_inputs": 12,
+      "timing": {
+        "pack_seconds": 0.0006590000120922923,
+        "h2d_submit_seconds": 0.00029919999360572547,
+        "model_cuda_seconds": 0.08049267578125,
+        "model_wait_and_d2h_seconds": 0.08101829999941401,
+        "crop_seconds": 0.0005193999968469143,
+        "dispatch_wall_seconds": 0.0824960000027204,
+        "gpu_slots": 86,
+        "gpu_filler_frames": 74
+      }
+    },
+    {
+      "canvas": [
+        64,
+        32
+      ],
+      "unique_inputs": 6,
+      "timing": {
+        "pack_seconds": 0.0006679000071017072,
+        "h2d_submit_seconds": 0.00034869999217335135,
+        "model_cuda_seconds": 0.07888742065429688,
+        "model_wait_and_d2h_seconds": 0.07924300000013318,
+        "crop_seconds": 0.00030390000029001385,
+        "dispatch_wall_seconds": 0.08056370000122115,
+        "gpu_slots": 86,
+        "gpu_filler_frames": 80
+      }
+    }
+  ],
+  "x2_encoder_namespace": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+  "source_scope": {
+    "resources": 5,
+    "physical_frames": 279,
+    "unique_source_work": 243
+  },
+  "samples": [
+    {
+      "name": "Aigle",
+      "animation_ids": [
+        "0xD000"
+      ],
+      "resref": "AEAGG1",
+      "frame": 49,
+      "cycle": 7,
+      "slot": 0,
+      "geometry": [
+        61,
+        28,
+        35,
+        47,
+        0
+      ],
+      "source_bam_sha256": "620fbc597206a4573d0cda15f7d79518ece8c2b9eab0494d1590ec0e2c3a3196",
+      "source_work_key": "b79a6fb2f11a194e1f738ec7b8ec65706b2856099d3fff7f26f46198fa12c09f",
+      "encoded_work_key": "7d5c333853ec1d5f3cdcf9ffa8693e851416c96f74daf2a588825f1c7fc86f8a",
+      "native_kind": 0,
+      "profile_id": 8,
+      "PNGs": [
+        {
+          "scale": 1,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AEAGG1-frame-49-source.png",
+          "bytes": 1819,
+          "sha256": "b74ed2faa0dd718bec9099c6a6ac9a713503301285d80763b435b19abe7d3c59",
+          "size": [
+            61,
+            28
+          ],
+          "opaque_RGB_colours": 41
+        },
+        {
+          "scale": 2,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AEAGG1-frame-49-q3m-x2.png",
+          "bytes": 6637,
+          "sha256": "9bab0864e581cea340396da497c806124a4460d16732745ac7a2a270d79d0899",
+          "size": [
+            122,
+            56
+          ],
+          "opaque_RGB_colours": 487
+        },
+        {
+          "scale": 4,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AEAGG1-frame-49-q3m-x4.png",
+          "bytes": 20816,
+          "sha256": "b0e9f076f96e2462f87b037fc18aea4822f1ce8c68f3cb1904e289333a876954",
+          "size": [
+            244,
+            112
+          ],
+          "opaque_RGB_colours": 850
+        }
+      ],
+      "encodings": [
+        {
+          "scale": 2,
+          "encoded_sha256": "bceecab5edc2691676a8efdd14aa43b1e67fcffbbe14188bfe9421add77224f2",
+          "fitting_target_sha256": [
+            "d145836f19b85d587fbb9d91b338d78d797ead270c060112cdaefaab08b95b5c",
+            "3cddd54911a8e1560d0db581d2e927c69d4463ce90ea8a40a4503b1ca1df35c0",
+            "2af02dfe3c57c5adfe3a0bf7b42e45e1d33f395f0b3abe1f40acb196150121dd",
+            "1d4d02341cf7353f779707e75dc6225408d2d9795cedf1760a81dac51b57a3b1",
+            "975224f3b4613e02e1e377011e6c0b12fae41aa8ad58e07ccf2a9b8cb465df28",
+            "d3a0da1c9d19e1c7eefbdef7e029515d447830dbc6be83b7b825c06eec9aac92"
+          ]
+        },
+        {
+          "scale": 4,
+          "encoded_sha256": "cddfcfeaa0a73df30ded0ddd41d3d6ba7def724978e2b41b44457cd9d2cdbf0f",
+          "fitting_target_sha256": [
+            "d145836f19b85d587fbb9d91b338d78d797ead270c060112cdaefaab08b95b5c",
+            "3cddd54911a8e1560d0db581d2e927c69d4463ce90ea8a40a4503b1ca1df35c0",
+            "2af02dfe3c57c5adfe3a0bf7b42e45e1d33f395f0b3abe1f40acb196150121dd",
+            "1d4d02341cf7353f779707e75dc6225408d2d9795cedf1760a81dac51b57a3b1",
+            "975224f3b4613e02e1e377011e6c0b12fae41aa8ad58e07ccf2a9b8cb465df28",
+            "d3a0da1c9d19e1c7eefbdef7e029515d447830dbc6be83b7b825c06eec9aac92"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mouette",
+      "animation_ids": [
+        "0xD100"
+      ],
+      "resref": "AGULG1",
+      "frame": 67,
+      "cycle": 17,
+      "slot": 3,
+      "geometry": [
+        41,
+        13,
+        20,
+        24,
+        0
+      ],
+      "source_bam_sha256": "a15bd89acc8364049e1fe00384a2fa0d59edb70926fc36cc4393f98e16995fb0",
+      "source_work_key": "afaee7fdd845be69133a8ec869ffa69fb1ce2c66444c76331df920756aeebff2",
+      "encoded_work_key": "b1373c2f7b274ae35771e7e23c7c167b857e68c5f19727ccc4763791a03049cb",
+      "native_kind": 0,
+      "profile_id": 8,
+      "PNGs": [
+        {
+          "scale": 1,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AGULG1-frame-67-source.png",
+          "bytes": 471,
+          "sha256": "a1c31055d633e5521b0aca47d6b76214007829f965167e2e1a2dd7cd19d23c28",
+          "size": [
+            41,
+            13
+          ],
+          "opaque_RGB_colours": 16
+        },
+        {
+          "scale": 2,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AGULG1-frame-67-q3m-x2.png",
+          "bytes": 1975,
+          "sha256": "204fa2d320a90afd5c66dae6a0ce17f6c980a8ab0fdc6ab7e3fcb4a89e7ba3e6",
+          "size": [
+            82,
+            26
+          ],
+          "opaque_RGB_colours": 239
+        },
+        {
+          "scale": 4,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AGULG1-frame-67-q3m-x4.png",
+          "bytes": 5565,
+          "sha256": "323d71796c1527f5b6c0d8af50f90471e050e28c59668e52276d78933ec0c3e2",
+          "size": [
+            164,
+            52
+          ],
+          "opaque_RGB_colours": 500
+        }
+      ],
+      "encodings": [
+        {
+          "scale": 2,
+          "encoded_sha256": "66f3e51e8eaea9e4fc4ce29929e388952fb13aa375a025b541b1f69f82c6b464",
+          "fitting_target_sha256": [
+            "f93b4c999a123b9c2119e011293ffbdd8f5f40ab3cbe3fbe8677fe47c6833e50",
+            "d6dfdd849a008aede9150efef710c5208a2fe6a7a00f4b93a02b0101f8ccfdb6",
+            "2afc991f698340653fe9d17aba4e842f6c7f90e091cbfd576bd0afe135c4055b",
+            "35b2383c10f85b4f9c168a5889c250aef5d9bacc5343f377b0598f1f7a7fd23c",
+            "fd463e90abc6bc4dd4c05684ae100612db8790ebe44c1c778510208daa3e3e65",
+            "7b0796da104e311021d862c41ad7f79a455ae94cd6cfdb6f2233afe387002d80"
+          ]
+        },
+        {
+          "scale": 4,
+          "encoded_sha256": "d15da2864b43b0cb938c6bf28630f6936c2ba9769b6e1d9bf1349a1cadedae28",
+          "fitting_target_sha256": [
+            "f93b4c999a123b9c2119e011293ffbdd8f5f40ab3cbe3fbe8677fe47c6833e50",
+            "d6dfdd849a008aede9150efef710c5208a2fe6a7a00f4b93a02b0101f8ccfdb6",
+            "2afc991f698340653fe9d17aba4e842f6c7f90e091cbfd576bd0afe135c4055b",
+            "35b2383c10f85b4f9c168a5889c250aef5d9bacc5343f377b0598f1f7a7fd23c",
+            "fd463e90abc6bc4dd4c05684ae100612db8790ebe44c1c778510208daa3e3e65",
+            "7b0796da104e311021d862c41ad7f79a455ae94cd6cfdb6f2233afe387002d80"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vautour",
+      "animation_ids": [
+        "0xD200"
+      ],
+      "resref": "AVULG1",
+      "frame": 27,
+      "cycle": 12,
+      "slot": 3,
+      "geometry": [
+        28,
+        35,
+        16,
+        28,
+        0
+      ],
+      "source_bam_sha256": "2031029073beefab22740e8cb2f5c9072b6dd11b3b7ae29a9acac9d98d941300",
+      "source_work_key": "0dabe33e0f3267f382c38a71011c8683bd9ce03ed7491961445fe22d971312bf",
+      "encoded_work_key": "b948c79c0038a4d7f072fc1cd619a15b4700a27dd3d91aa6f94dbf7e4f4e3c33",
+      "native_kind": 0,
+      "profile_id": 8,
+      "PNGs": [
+        {
+          "scale": 1,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AVULG1-frame-27-source.png",
+          "bytes": 1172,
+          "sha256": "30e4fa33aed4de657a3c3b4f122c75646caeef3d182ad0e590855a9ff9ee6b12",
+          "size": [
+            28,
+            35
+          ],
+          "opaque_RGB_colours": 49
+        },
+        {
+          "scale": 2,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AVULG1-frame-27-q3m-x2.png",
+          "bytes": 3534,
+          "sha256": "54f5d84343f54eac8907a97582799e975ee81c6cf432d06eaa49bae397d74926",
+          "size": [
+            56,
+            70
+          ],
+          "opaque_RGB_colours": 419
+        },
+        {
+          "scale": 4,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/AVULG1-frame-27-q3m-x4.png",
+          "bytes": 10196,
+          "sha256": "4f64a1a636d62dd36f418971918057f54919b7011ed59012395f9357ba46b362",
+          "size": [
+            112,
+            140
+          ],
+          "opaque_RGB_colours": 681
+        }
+      ],
+      "encodings": [
+        {
+          "scale": 2,
+          "encoded_sha256": "d9e0f06a1bb32bdecdec966e263a6de5f357e2f3a76b3c3d8a6a47fd0c63d3a6",
+          "fitting_target_sha256": [
+            "4ebaff9f0b28f2f384cbdd65fbfa889b491f86ecce90e46e23de0fa42caae7bf",
+            "be4d70bcf74b9a5a3f986f2c3309ffaa9e3b1a4455d0d08dca0b7be71b2c6f6a",
+            "40f08190f35d04f093b11afa7680d0459bc3228e039826d2f5ff103dfa0103d5",
+            "09eb28d68beac5df5377944491fe971289114ecea5638b204935fccbc2f6ddb6",
+            "d257a153cb1c1c7cdf3aab5cdd61cbe928bdafb228a104b9ec5cfbe1022f7b8b",
+            "dfb1d12add2e1878c9ea26e4d0c4fe1e10717e17c8aa912bbde239232212f451"
+          ]
+        },
+        {
+          "scale": 4,
+          "encoded_sha256": "932d912a610509a9d33e4c052caf779b0cf66845d4d40f4ad98d058269a7fffa",
+          "fitting_target_sha256": [
+            "4ebaff9f0b28f2f384cbdd65fbfa889b491f86ecce90e46e23de0fa42caae7bf",
+            "be4d70bcf74b9a5a3f986f2c3309ffaa9e3b1a4455d0d08dca0b7be71b2c6f6a",
+            "40f08190f35d04f093b11afa7680d0459bc3228e039826d2f5ff103dfa0103d5",
+            "09eb28d68beac5df5377944491fe971289114ecea5638b204935fccbc2f6ddb6",
+            "d257a153cb1c1c7cdf3aab5cdd61cbe928bdafb228a104b9ec5cfbe1022f7b8b",
+            "dfb1d12add2e1878c9ea26e4d0c4fe1e10717e17c8aa912bbde239232212f451"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Petit oiseau",
+      "animation_ids": [
+        "0xD300",
+        "0xD400"
+      ],
+      "resref": "ABIRG1",
+      "frame": 32,
+      "cycle": 8,
+      "slot": 0,
+      "geometry": [
+        19,
+        8,
+        9,
+        15,
+        0
+      ],
+      "source_bam_sha256": "4a241d41d7c8060fea95f4d3c903e671f24cfb8d8cfde78899893e181c28df94",
+      "source_work_key": "c687a5f00e2d9308206dde1e0bc9bf26176133747317fc82f38f9754b161872b",
+      "encoded_work_key": "23f6e16fc080d724b2116125523c2f5e2e776afbde16e242c4fed554b602975c",
+      "native_kind": 0,
+      "profile_id": 8,
+      "PNGs": [
+        {
+          "scale": 1,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/ABIRG1-frame-32-source.png",
+          "bytes": 342,
+          "sha256": "e70cefaf89523593c667a56871fbe0265523f5d09abd90a326032c78f9eab069",
+          "size": [
+            19,
+            8
+          ],
+          "opaque_RGB_colours": 44
+        },
+        {
+          "scale": 2,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/ABIRG1-frame-32-q3m-x2.png",
+          "bytes": 804,
+          "sha256": "1010742d30edb9315f77fa9d204a261cefbfa033421ab4dd97fe4d68edda14b7",
+          "size": [
+            38,
+            16
+          ],
+          "opaque_RGB_colours": 188
+        },
+        {
+          "scale": 4,
+          "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/ABIRG1-frame-32-q3m-x4.png",
+          "bytes": 2183,
+          "sha256": "0e5afbc23e1a396ff44a89067119e2cb7941fc4cbcf80782fc56cc3d9c56ec3a",
+          "size": [
+            76,
+            32
+          ],
+          "opaque_RGB_colours": 480
+        }
+      ],
+      "encodings": [
+        {
+          "scale": 2,
+          "encoded_sha256": "57539fc3a530c1b7d38a1cc16bd9dd897a00933667f3176bd4e2acebaf1fcc02",
+          "fitting_target_sha256": [
+            "57d8824d86cd9ea2ba947e7085209488bfe453ac0d1fbab69a64cf3628750aa1",
+            "28223f1f1da32ea09c12f1750c7ee0a370715c6045e426f46b4705b2d81c9502",
+            "4307d0545cdc33624a12a3a15965aeb8eff316d052ba0661715266f78c5edb58",
+            "b3402b792d090f64686df96a50019109ed3ef00b1f600c5886c2ca3438a2b240",
+            "073ea89ea0db0d48c9974be6ba2a070138ca96ad64f56eef369360c45946241a",
+            "3d85b9a2e80077c0110d604f04547b0aa4192502dfe0dc46dfc02d063f2ca2d5"
+          ]
+        },
+        {
+          "scale": 4,
+          "encoded_sha256": "497e9a1fcc5ada918c9461e0406a9e57c4a8520306d7387543efce1d84f82cde",
+          "fitting_target_sha256": [
+            "57d8824d86cd9ea2ba947e7085209488bfe453ac0d1fbab69a64cf3628750aa1",
+            "28223f1f1da32ea09c12f1750c7ee0a370715c6045e426f46b4705b2d81c9502",
+            "4307d0545cdc33624a12a3a15965aeb8eff316d052ba0661715266f78c5edb58",
+            "b3402b792d090f64686df96a50019109ed3ef00b1f600c5886c2ca3438a2b240",
+            "073ea89ea0db0d48c9974be6ba2a070138ca96ad64f56eef369360c45946241a",
+            "3d85b9a2e80077c0110d604f04547b0aa4192502dfe0dc46dfc02d063f2ca2d5"
+          ]
+        }
+      ]
+    }
+  ],
+  "comparison_png": {
+    "path": "docs/measurements/q3m-flying-frame-x2-x4-20261003-v1/comparatif-oiseaux-q3m-x2-x4.png",
+    "sha256": "1b45a8ca28543ce59e2f127c58a66ea6a3a34d5148d361be8043bb86238f5d6f",
+    "size": [
+      1680,
+      1188
+    ]
+  },
+  "installed": false,
+  "ingame_QA": false,
+  "release": false
+}
