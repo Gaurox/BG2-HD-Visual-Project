@@ -1,0 +1,8 @@
+# Character_old complet accepté — 2026-10-04
+
+- Autorité : utilisateur « bien on valide toute la famille. met a jour le suivi et committe » ; sept IDs disponibles6400–6406, six ensembles natifs/cinq corps visibles. 6621/XHFF sans source exclu.
+- Q3m x2/palette améliorée live K6/quatre partenaires/huit niveaux/CatmullRom : **6400–6404 V7 sans SDF ;6405/6406 V9 SDF**, profiles8/9/règle3/owner6/ombre127. Gardes936frames entièrement transparents dans la source ; aucun corps inventé.
+- QA immuable : `sprite/index/qa-decisions/character_old/2026-10-04-accepted-full-character-old-q3m-v7-v9-guards-sdf-x2-catmullrom-v1.json`. **1 066 BAM natifs distincts/2 018 feuilles variantes installées/93 194frames**, 4 962bindings ;952 ombres/équipements clonés pour réserver SDF aux gardes. Aucun coût Q3m doublé ;reconstructions SDF seules ajoutées.
+- `accept.py`/`acceptance-summary.json` : SHA2018feuilles, catalogue actif, DLL/INI/trois shaders etdeuxCREtémoin vérifiés ; appartenance native palette/versions V7-V9 par ID contrôlée. Validation visuelle donnée par utilisateur, aucun scénario individuel inventé ni test de jeu supplémentaire.
+- Production/provenance conservée : `../q3m-character-old-full-x2-20261004-v1`, `../q3m-character-old-runtime-fix-x2-20261004-v1`, `../q3m-doom-guard-sdf-ingame-x2-20261004-v1`. Générations/preuves/snapshots historiques immuables ;décision QA indépendante.
+- Index JSON/CSV/SUIVI : famille entière acceptée +override deuxgardes accepté ;**sept familles/65 IDs acceptés**, huit familles/66 IDs installés, Ogre seul en attente parmi lots complets. Aucun changement ingame/release à cette étape.

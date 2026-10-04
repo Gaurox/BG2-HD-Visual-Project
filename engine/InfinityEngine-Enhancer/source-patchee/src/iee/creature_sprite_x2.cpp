@@ -2469,7 +2469,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       if (sdfPresent) {
         const bool nativeContract = parsed.version == kXnCharacterSdfRegistryVersion
             ? frame.fractionProfile == 1 && frame.fractionRule == 1 && !frame.partnerProfile
-            : frame.partnerProfile && frame.partnerProfile->nativeKind == 0;
+            : frame.partnerProfile && frame.partnerProfile->nativeKind <= 1;
         if (parsed.scale != 2 || !nativeContract ||
             !checked_add(decodedCoverageBytes, sdfPixels * 5, kCatalogMetadataCacheBudgetBytes))
           throw std::runtime_error("invalid V9 SDF scope/limit");

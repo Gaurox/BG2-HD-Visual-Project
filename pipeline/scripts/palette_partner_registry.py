@@ -50,7 +50,7 @@ def write(path, resources, profile, *, compress=True, version=VERSION):
                         require(np.all(coverage[profile.classes[i] < (3 if profile.kind == 0 else 4)] == 255), 'coverage changes a special class')
                     sdf,material=frame.get('S'),frame.get('M')
                     if version==SDF_VERSION:
-                        require(profile.kind==0, 'V9 fixed native palette required')
+                        require(profile.kind in (0,1), 'V9 native palette kind')
                         validate_sdf(i,sdf,material)
                     else:require(sdf is None and material is None,'SDF requires V9')
                     alpha_present = coverage is not None and bool(np.any(coverage != 255))
@@ -107,7 +107,7 @@ def inspect(path, *, include_frames=False):
                     require(ah[5:]==bytes(3) and (res or (sa==0 and ac==0)), 'coverage header')
                 sdf_headers=[];sn=(w*2+12)*(he*2+12)
                 if version==SDF_VERSION:
-                    require(kind==0,'V9 native kind')
+                    require(kind in (0,1),'V9 native kind')
                     for length in (sn,sn*4):
                         sh=take(8);sz,sc=struct.unpack_from('<IB',sh)
                         require(sh[5:]==bytes(3) and ((sc==0 and sz==length) or (sc==1 and 0<sz<length)),'SDF header')

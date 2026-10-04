@@ -1,0 +1,87 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-doom-guard-sdf-ingame-x2-20261004-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "base_commit": "16b01e52",
+  "capability_delta": {
+    "V9_native_palette_kinds": [
+      0,
+      1
+    ],
+    "registry_profiles": [
+      8,
+      9
+    ],
+    "decode_rule": 3,
+    "only_new_SDF_ids": [
+      "0x6405",
+      "0x6406"
+    ]
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0364779e6b44bb057c1de895276f13a35a2d373cea254aebaeb804299e656b6e",
+    "bytes": 2114048
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "410acf6a4ce3e2470aee1bdcb0b92456195e4df78252f1658e700298293569b0",
+      "bytes": 228925
+    },
+    {
+      "path": "sprite/.work/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "7a3ad493b3c52ad7d27dd255e653ca8fc450888e38c374b0f38811a1407b6539",
+      "bytes": 17017
+    },
+    {
+      "path": "sprite/.work/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "1f21b2a9dd4ae6acdcadd43745d30cd29531912b609bf355c64fbdff63f6c0a6",
+      "bytes": 285559
+    }
+  ],
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime-delta.patch",
+    "sha256": "b94f93981539193a2a8518d5abd2cf3540a84e9838e5633806ee81a094284142",
+    "bytes": 569
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "target": "override/fpDraw.glsl",
+      "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827",
+      "bytes": 21082,
+      "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "target": "override/fpSprite.glsl",
+      "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816",
+      "bytes": 22085,
+      "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "target": "override/fpSELECT.glsl",
+      "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815",
+      "bytes": 22346,
+      "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+    }
+  ],
+  "verification": {
+    "path": "docs/measurements/q3m-doom-guard-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "7162df2e5048bfeff6f74ea476b75196eb8e786b6bdb2a9a726c136a5c7c628f",
+    "bytes": 14174
+  },
+  "GPU": {
+    "path": "docs/measurements/q3m-doom-guard-sdf-ingame-x2-20261004-v1/gpu-verification.json",
+    "sha256": "81a2046b9a5ec233fe1961b27c178b6516eab3d6314b843ab6efeb80bf3412da",
+    "bytes": 7154
+  },
+  "ingame_QA": false,
+  "release": false
+}

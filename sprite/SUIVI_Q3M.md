@@ -26,7 +26,7 @@
 | Profil | Stock | Q3m connu | Intégration / exemples |
 |---|---:|---:|---|
 | `character` | 78/78 | 78 | Corps/armures + armes/casques/boucliers ; palettes par couche. Variantes LOW `5000` et standard `6000`. Jouables, compagnons, PNJ partageant ces avatars. |
-| `character_old` | 7/8 | — | Avatars anciens/spéciaux, contrat distinct de Character ; Drizzt, Elminster, Sarevok. |
+| `character_old` | 7/8 | 7 | **Famille disponible complète validée**, Q3m x2 palette améliorée/CatmullRom ; cinq IDs V7 sans SDF +gardes6405/6406 V9 SDF. 1 066 BAM natifs/2 018 feuilles variantes installées ; corps des gardes natifs transparents, XHFF6621 absent. |
 | `monster` | 77/102 | 3 | Monstres BG2, BAM éventuellement divisés ; palette fixe/false-color à résoudre par ID. Spectateurs, Bodhi, golems, trolls. |
 | `monster_old` | 46/54 | — | Anciennes animations BG1, séquences/directions et palettes propres ; ours, loups, basilics, demi-ogres. |
 | `monster_icewind` | 44/132 | — | Séquences de style IWD ; contrat palette propre à l'animation. Orcs, gobelins, ettins, liches. |
@@ -45,7 +45,7 @@
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 59 IDs /7 familles disponibles complètes installées ; 58 IDs /6 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 66 IDs /8 familles disponibles complètes installées ; 65 IDs /7 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -186,3 +186,29 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 - QA immuable `index/qa-decisions/ambient/2026-10-04-accepted-full-available-ambient-q3m-v7-x2-catmullrom-v1.json` : exactes34feuilles/39bindings et runtime/DLL/INI/shaders installés, provenance production/vérification/snapshot ; catalogue `58e78576…afc2d`. Preuves historiques de production/installation non réécrites ; aucune modification ingame à cette étape.
 - Totaux recette : sept familles/59 IDs installés, **six familles/58 IDs validés** ; Ogre QA en attente, aucune release.
 - Prochain lot proposé seulement : **character_old**, sept IDs avec BAM sur8, six ensembles de sprites (cinq corps visibles +un transparent), 99 BAM/4 725 frames physiques →3 771 travaux uniques, **288 hits compatibles →3 483 nouveaux travaux dont41transparents**. Drizzt/Elminster/moine/squelette/Sarevok ; gardes funestes6405/6406 partagent22BAM entièrement transparents natifs ; XHFF6621 sans BAM. `../docs/measurements/q3m-character-old-selection-x2-20261004-v1/README.md` ; aucun traitement/installation.
+
+## Character_old : famille complète disponible installée — 2026-10-04
+
+- Demande utilisateur « go et installe » : **sept IDs/six ensembles/99 BAM/4 725 frames physiques**, Q3m V7 K6 x2/quatre partenaires/huit niveaux, palette améliorée live/CatmullRom, **sans SDF** ; owner6, profils8/9 règle3. Drizzt/Elminster/moine/squelette/Sarevok ; gardes funestes6405/6406 partagent22BAM/936frames transparents source ; 6621/XHFF sans BAM exclu. `../docs/measurements/q3m-character-old-full-x2-20261004-v1/current-generation.json`.
+- 3 771 travaux uniques =288 hits acquis SHA identiques +3442 encodages nouveaux +41 travaux spéciaux ; 20385 cibles nouvelles/0 hits cibles ; reprise3 771 hits sans Torch. 954 répétitions entre BAM distincts ; alias gardes22feuilles partagé, 121bindings/5 661frames liées.
+- Native monde isolé/combiné :120bindings/5 659frames/21143slots, K6 ×trois formats ; CMNKINV auxiliaire/deuxframes/cycle source vide vérifié directement feuille/cache ; couverture totale99BAM/4 725frames physiques, 121bindings/5 661frames liées. Géométries/cycles/profils/représentants conservés, alias exacts, gardes I/F zéro, aucun plan S/M/A. Comparatif six ensembles inspecté ; **QA utilisateur en attente**.
+- Installation `../docs/measurements/q3m-character-old-full-x2-20261004-v1/installation-verification.json` :99feuilles +catalogue +deux témoins QCOL6405/QCOL6406 ; **211 fichiers acquis SHA identiques**, 140IDs/50 356routes/4 670composants hérités identiques ; Ambient accepté/chevalv3/Town_static/Ankheg/Large16/Flying préservés. DLL/shaders/INI inchangés ; actif147IDs/4 769ressources/1 597 856frames/50 477routes, catalogue `27f150c54f849cd495938d0cd2a3ade12a5632f64254a3e5545b0904ff62cd6f`.
+- 160CRE consommateurs ; sept CLUA `../docs/measurements/q3m-character-old-full-x2-20261004-v1/CLUA-generiques.txt`, deux témoins dérivés ARNMAN01, animation0x28 modifiée et cinq scripts/dialogue vidés ; autres octets conservés. Restore dédié vers le parent Ambient accepté. Huit familles/66 IDs installés, six familles/58 IDs acceptés ; aucune release ni commit à cette étape.
+
+## Character_old : correction des dépendances natives — 2026-10-04
+
+- Symptôme confirmé : session 16:19:52–16:20:23, `CSHDG1` absent → composition incomplète → vanilla pour 6400/6401/6403. Première installation non validée ; corps acquis conservés.
+- Delta : 33 CSHD +15 SSHD +919 WPM =967 BAM/44 669 frames/18 576 travaux encodés uniques, Q3m V7 K6 x2, sans SDF ; 4 775 liaisons ajoutées aux seuls sept IDs. Corps 99 BAM/4 725 frames inchangés. Famille : 1 066 BAM/49 394 frames physiques.
+- [Production/installation corrective](../docs/measurements/q3m-character-old-runtime-fix-x2-20261004-v1/README.md), `verification.json` : oracle natif toutes frames nouvelles + compositions corps/ombre/arme/bouclier/casque, séquence16/slot31 et voisins. DLL/INI/shaders/autres familles conservés. QA ingame en attente ; compte accepted inchangé ; release inchangée.
+
+## Gardes 6405/6406 : SDF ciblé — 2026-10-04
+
+- Demande SDF sur QCOL6405/QCOL6406 ; **974 BAM/44 736 frames physiques partagés** : 22 MDGU +33 CSHD +919 WPM. V9 profiles8/9 règle3, x2/CatmullRom ; I/F/couleurs/géométries/cycles acquis identiques, zéro nouvelle inférence. Corps natifs936frames entièrement transparents ; SDF ne crée aucun corps.
+- 33 routes CSHD ajoutées par ID : INI `shadow=` vide utilise néanmoins CSHD en jeu ; parent manque deux liaisons CSHDG1, nouveau complet. 952 feuilles partagées clonées pour seuls deux IDs ; cinq autres Character_old et145IDs/routes héritées conservés. Actif6 688ressources/1 686 325frames/55 318routes.
+- [Run/installation](../docs/measurements/q3m-doom-guard-sdf-ingame-x2-20261004-v1/README.md) ; DLL stable16b01e52 +seul support V9 native-kind1 ; hooks/shaders/INI/CRE inchangés. Oracle natif K6×3 toutes frames/slots, compositions avec/sans équipement et40vues GPU passés ; Ankheg V9 préservé. QA utilisateur en attente, aucun nouvel accepted ni release.
+
+## Character_old : famille complète validée — 2026-10-04
+
+- Validation explicite utilisateur : « bien on valide toute la famille » ; **sept IDs/six ensembles**, cinq corps visibles +gardes6405/6406 transparents natifs. Q3m x2/CatmullRom/palette améliorée ; V7 sans SDF pour6400–6404, V9 SDF pour6405/6406. XHFF6621 sans source exclu.
+- QA immuable `sprite/index/qa-decisions/character_old/2026-10-04-accepted-full-character-old-q3m-v7-v9-guards-sdf-x2-catmullrom-v1.json` : **2 018 feuilles variantes/93 194frames physiques installées**, 1 066 BAM natifs distincts, 4 962bindings/228124frames liées ;952 dépendances clonées pour isoler SDF. SHA2018feuilles +DLL/INI/trois shaders +deuxCREtémoin vérifiés, aucune production/installation historique réécrite.
+- [Décision/suivi](../docs/measurements/q3m-character-old-accepted-x2-20261004-v1/README.md) ; totaux **sept familles/65 IDs acceptés**, huit familles/66 IDs installés. Ogre reste QA en attente ; aucune modification ingame/release.

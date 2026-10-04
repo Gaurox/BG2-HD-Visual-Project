@@ -1,0 +1,166 @@
+{
+  "status": "installed-pending-ingame-qa",
+  "family": "character_old",
+  "resources": 99,
+  "frames": 4725,
+  "scale": 2,
+  "SDF": false,
+  "catalog_sha256": "27f150c54f849cd495938d0cd2a3ade12a5632f64254a3e5545b0904ff62cd6f",
+  "backup_sha256_verified": true,
+  "new_leaf_sha256_verified": 99,
+  "unchanged_files_sha256_verified": 211,
+  "native_combined_test": {
+    "resources": 120,
+    "frames": 5659,
+    "native_cycle_slots": 21143,
+    "decoded_pixels": 525329064,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "catalog_proof": {
+    "inherited_animations_unchanged": 140,
+    "inherited_routes_unchanged": 50356,
+    "inherited_components_and_shards_unchanged": 4670,
+    "new_animation_ids": [
+      "0x6400",
+      "0x6401",
+      "0x6402",
+      "0x6403",
+      "0x6404",
+      "0x6405",
+      "0x6406"
+    ],
+    "new_owner": 6,
+    "new_resources": 99,
+    "new_frames": 4725,
+    "logical_resource_bindings": 121,
+    "shared_resource_bindings": 22,
+    "source_absent_animation_ids": [
+      "0x6621"
+    ],
+    "active_animations": 147,
+    "active_resources": 4769,
+    "active_frames": 1597856,
+    "active_routes": 50477,
+    "accepted_ambient_resources_preserved": 34,
+    "accepted_QA": {
+      "path": "sprite/index/qa-decisions/ambient/2026-10-04-accepted-full-available-ambient-q3m-v7-x2-catmullrom-v1.json",
+      "sha256": "5c44857c57001e31a2621d9865344b0ddbebd15cdb3a8d9bc9f6603a9956ba9b",
+      "bytes": 23763
+    },
+    "SDF": false,
+    "ingame_QA": false,
+    "release": false
+  },
+  "fixtures": [
+    {
+      "path": "sprite/.work/q3m-character-old-full-x2-20261004-v1/QCOL6405.cre",
+      "target": "override/QCOL6405.cre",
+      "sha256": "358e5f0781e1cf9fbb289bdc21cd78ad94a318c8c453aac5baa3845498166612",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "parent_target_existed": false,
+      "changed_fields": [
+        {
+          "offset": 40,
+          "bytes": 2,
+          "field": "animation",
+          "value": "6405"
+        },
+        {
+          "offset": 584,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 592,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 600,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 608,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 616,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 716,
+          "bytes": 8,
+          "field": "dialogue",
+          "value": "empty"
+        }
+      ],
+      "unrelated_bytes_unchanged": true
+    },
+    {
+      "path": "sprite/.work/q3m-character-old-full-x2-20261004-v1/QCOL6406.cre",
+      "target": "override/QCOL6406.cre",
+      "sha256": "9a1b8b95d71065eb42195fce8eead0c034d6b671566942f9398f2f97f9adea29",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "parent_target_existed": false,
+      "changed_fields": [
+        {
+          "offset": 40,
+          "bytes": 2,
+          "field": "animation",
+          "value": "6406"
+        },
+        {
+          "offset": 584,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 592,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 600,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 608,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 616,
+          "bytes": 8,
+          "field": "script",
+          "value": "empty"
+        },
+        {
+          "offset": 716,
+          "bytes": 8,
+          "field": "dialogue",
+          "value": "empty"
+        }
+      ],
+      "unrelated_bytes_unchanged": true
+    }
+  ],
+  "ingame_QA": false,
+  "release": false
+}

@@ -1,0 +1,11 @@
+--- installed-stable/creature_sprite_x2.cpp
++++ native-range-SDF/creature_sprite_x2.cpp
+@@ -2456,7 +2456,7 @@
+         }
+       }
+       if (sdfPresent) {
+-        if (parsed.scale != 2 || !frame.partnerProfile || frame.partnerProfile->nativeKind != 0 ||
++        if (parsed.scale != 2 || !frame.partnerProfile || frame.partnerProfile->nativeKind > 1 ||
+             !checked_add(decodedCoverageBytes, sdfPixels * 5, kCatalogMetadataCacheBudgetBytes))
+           throw std::runtime_error("invalid V9 SDF scope/limit");
+         for (int k = 0; k < 2; ++k) {

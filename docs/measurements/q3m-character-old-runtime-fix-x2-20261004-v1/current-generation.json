@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-character-old-Q3m-V7-dependencies-current-v1",
+  "role": "production-not-QA-installation-or-release",
+  "family": "character_old",
+  "animation_ids": [
+    "0x6400",
+    "0x6401",
+    "0x6402",
+    "0x6403",
+    "0x6404",
+    "0x6405",
+    "0x6406"
+  ],
+  "resources": 1066,
+  "frames": 49394,
+  "scale": 2,
+  "colour": "K6-four-partners-eight-levels",
+  "registry_version": 7,
+  "SDF": false,
+  "source_absent_animation_ids": [
+    "0x6621"
+  ],
+  "generation_dir": "sprite/.work/q3m-character-old-runtime-fix-x2-20261004-v1/combined",
+  "catalog": {
+    "path": "sprite/.work/q3m-character-old-runtime-fix-x2-20261004-v1/combined/iee-assets/creature-sprites/CreatureSprites-XN.catalog",
+    "sha256": "4c09911fce783b9bc96f68b06b56259b9bfdc0eaa83cbcffbb25c4cbb4b3373b",
+    "bytes": 2329608
+  },
+  "production": {
+    "path": "docs/measurements/q3m-character-old-runtime-fix-x2-20261004-v1/production.json",
+    "sha256": "ac0769b9fe48c6ea5f4cde091d7e7043e2d76bded6a7af6a5f4c378947ececf9",
+    "bytes": 744766
+  },
+  "runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+    "bytes": 2114048
+  },
+  "parent_generation": {
+    "path": "docs/measurements/q3m-character-old-full-x2-20261004-v1/current-generation.json",
+    "sha256": "982c900174f95edb8ca791ffbef2a99edf2f9ac3fed0b0648a534e1b5dedd752",
+    "bytes": 1718
+  },
+  "ingame_QA": false,
+  "release": false,
+  "body_resources": 99,
+  "body_frames": 4725,
+  "body_production": {
+    "path": "docs/measurements/q3m-character-old-full-x2-20261004-v1/production.json",
+    "sha256": "d6b7b02cb0f33f15822ab5c705f929bd9ea7bf239b748096edcbc1b0ab5db961",
+    "bytes": 52945
+  },
+  "additional_resources": 967,
+  "additional_frames": 44669,
+  "additional_bindings": 4775,
+  "runtime_fix": "native-shadow-and-equipment-registered"
+}

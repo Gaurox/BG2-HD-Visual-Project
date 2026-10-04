@@ -1,0 +1,6 @@
+@echo off
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul
+if errorlevel 1 exit /b 1
+cd /d "G:\AI\BG2_Upscale\sprite\.work\q3m-doom-guard-sdf-ingame-x2-20261004-v1\runtime-build"
+cl /nologo /std:c++latest /EHsc /MT /O2 /DNOMINMAX /DSPDLOG_COMPILED_LIB /I"G:\AI\BG2_Upscale\sprite\.work\q3m-doom-guard-sdf-ingame-x2-20261004-v1\runtime-src\src" /I"G:\AI\BG2_Upscale\engine\InfinityEngine-Enhancer\source-patchee\build-vs2019-30fps-multicycle\_deps\spdlog-src\include" /I"G:\AI\BG2_Upscale\engine\InfinityEngine-Enhancer\source-patchee\build-vs2019-30fps-multicycle\_deps\zlib-src" "G:\AI\BG2_Upscale\docs\measurements\q3m-doom-guard-sdf-ingame-x2-20261004-v1\composite_probe.cpp" /Fo"G:\AI\BG2_Upscale\docs\measurements\q3m-doom-guard-sdf-ingame-x2-20261004-v1\composite_probe.obj" /Fe"G:\AI\BG2_Upscale\docs\measurements\q3m-doom-guard-sdf-ingame-x2-20261004-v1\composite_probe.exe" /link iee_palette_partner_tests.dir\Release\creature_sprite_x2.obj iee_palette_partner_tests.dir\Release\opengl_types.obj Release\iee_common.lib _deps\spdlog-build\Release\spdlog.lib _deps\zlib-build\Release\zs.lib opengl32.lib Cabinet.lib bcrypt.lib version.lib psapi.lib user32.lib gdi32.lib
+exit /b %errorlevel%
