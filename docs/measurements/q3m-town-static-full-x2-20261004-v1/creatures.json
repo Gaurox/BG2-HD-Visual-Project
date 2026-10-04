@@ -1,0 +1,609 @@
+{
+  "stock_or_override_consumers": [
+    {
+      "resref": "AMFSLEEP",
+      "animation_id": "0x4410",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "ab2217ddb5d429e61dc9f727dbdf3362521bed45647e12413c931ab234ea0690",
+      "clua": "C:CreateCreature(\"AMFSLEEP\")"
+    },
+    {
+      "resref": "AMMSLEEP",
+      "animation_id": "0x4400",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "de313687c2c3d7e53ef37a38ff15b966c5bdc796fac12d8b233181f5c22f31db",
+      "clua": "C:CreateCreature(\"AMMSLEEP\")"
+    },
+    {
+      "resref": "AMSEAT01",
+      "animation_id": "0x4100",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "70a5a8120a079c025799d8c85760312e55dd2ac18aee4dccc8ab0b03ec14a534",
+      "clua": "C:CreateCreature(\"AMSEAT01\")"
+    },
+    {
+      "resref": "ARNMAN07",
+      "animation_id": "0x4700",
+      "source": "stock:data/Creature.bif",
+      "sha256": "2545327204e81e434c8c54dcce13ce83bb2fb9633f0aaf07e2c9fa6b8bd020b1",
+      "clua": "C:CreateCreature(\"ARNMAN07\")"
+    },
+    {
+      "resref": "CENTEO01",
+      "animation_id": "0x4300",
+      "source": "stock:data/Creature.bif",
+      "sha256": "64ed257734af280a045ae4672ee3e43f8f4bc86193eae40ae80adbe8b0a342b7",
+      "clua": "C:CreateCreature(\"CENTEO01\")"
+    },
+    {
+      "resref": "COPCUST1",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "a2760cc47cce59e585ebf9b913883e5b9dbc59d497bd997276e607b619ce1fe4",
+      "clua": "C:CreateCreature(\"COPCUST1\")"
+    },
+    {
+      "resref": "COPCUST3",
+      "animation_id": "0x4000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6d778db165068d4d46b19fe39b1c7df759af1a5bbe088d0de7d8e11e0d2e7bde",
+      "clua": "C:CreateCreature(\"COPCUST3\")"
+    },
+    {
+      "resref": "CRODRU01",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6f3b52884dc7c514981fab8339100e0a267548994fd11ad9019d299872158fc5",
+      "clua": "C:CreateCreature(\"CRODRU01\")"
+    },
+    {
+      "resref": "CROGAM01",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "a24e3a4a4ae80744eb62ddb650ddedb0dd131edef988b2dcea96196abd53d52a",
+      "clua": "C:CreateCreature(\"CROGAM01\")"
+    },
+    {
+      "resref": "CROGAM02",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "503cd480b929a180112c0f09348c3b64bbe5be2501ac5e80063122f241225559",
+      "clua": "C:CreateCreature(\"CROGAM02\")"
+    },
+    {
+      "resref": "DELTOW03",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "f1bc35fa2ecbeca9c8fd96e0d5ca967865a94a154aa22f0a5a3923352105790e",
+      "clua": "C:CreateCreature(\"DELTOW03\")"
+    },
+    {
+      "resref": "DRUNK1",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "2d93e80848132465c7ace58b1708a17d5e4ce48f7999dfa8c476ada131b489aa",
+      "clua": "C:CreateCreature(\"DRUNK1\")"
+    },
+    {
+      "resref": "DRUNK2",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "351eea8a42f8555ad90b5a979022aade13ae268e68753736e53a83f270bb3a91",
+      "clua": "C:CreateCreature(\"DRUNK2\")"
+    },
+    {
+      "resref": "ELEPUZ01",
+      "animation_id": "0x4000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "7d14ad90ce5c272107b1ce79c23f3da8c3c7ee3b79ae315d4d021281a117e217",
+      "clua": "C:CreateCreature(\"ELEPUZ01\")"
+    },
+    {
+      "resref": "ELEPUZ02",
+      "animation_id": "0x4000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "10f7109b583bd747e3fc3a5a75d9c7075f2bffc422e288ffb677a13fc1b8f886",
+      "clua": "C:CreateCreature(\"ELEPUZ02\")"
+    },
+    {
+      "resref": "ELEPUZ03",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "9e61a5b2c3c3d83ba289b7b2eaf01e543e9389d34054ad0040dc8119f899d6b3",
+      "clua": "C:CreateCreature(\"ELEPUZ03\")"
+    },
+    {
+      "resref": "ELEPUZ04",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5946d4d3e8922d931b7153f24df4eab0cae46f9b397d403e6fa6b2bbadd8e43e",
+      "clua": "C:CreateCreature(\"ELEPUZ04\")"
+    },
+    {
+      "resref": "GORALT1",
+      "animation_id": "0x4200",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "239528072ab0dbf28993c55688f86caa47b1e755ae8899fea82259ea79f013e6",
+      "clua": "C:CreateCreature(\"GORALT1\")"
+    },
+    {
+      "resref": "GORAPR",
+      "animation_id": "0x4400",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "f399b4192d9cc3a87121bcbb8801e8939e1a1a5904707655b4a09ce84060c1b6",
+      "clua": "C:CreateCreature(\"GORAPR\")"
+    },
+    {
+      "resref": "HELLVICT",
+      "animation_id": "0x4400",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5eb446801396960b5b65586efffa6d24604a9f0aaba2c4d92007acb9968a39c0",
+      "clua": "C:CreateCreature(\"HELLVICT\")"
+    },
+    {
+      "resref": "KALAH2",
+      "animation_id": "0x4600",
+      "source": "stock:data/Creature.bif",
+      "sha256": "94a100362c3ff0ef61cb2398a238dc560f9b6e2cab7b92317d4366e115ab98f5",
+      "clua": "C:CreateCreature(\"KALAH2\")"
+    },
+    {
+      "resref": "LAVOK02",
+      "animation_id": "0x4400",
+      "source": "stock:data/Creature.bif",
+      "sha256": "d49378cb31073597cca9155d1dcba6bbb7562f8ec33a9aedb06f4ae3a4dd196d",
+      "clua": "C:CreateCreature(\"LAVOK02\")"
+    },
+    {
+      "resref": "LIN",
+      "animation_id": "0x4700",
+      "source": "stock:data/Creature.bif",
+      "sha256": "339dd3b22b49bf673d5bee9339d28f0768a0aa50f5b4cd4d42bbf34ab053dacc",
+      "clua": "C:CreateCreature(\"LIN\")"
+    },
+    {
+      "resref": "LTALOS",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "df2b1dd3920d2682283599ae2d8196c5761a6b21370c0af301e43980795b82cf",
+      "clua": "C:CreateCreature(\"LTALOS\")"
+    },
+    {
+      "resref": "MALLA01",
+      "animation_id": "0x4410",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "be2fa119107f43e4c3c8990141fa6853cd702caea07313decb04291723b51b0e",
+      "clua": "C:CreateCreature(\"MALLA01\")"
+    },
+    {
+      "resref": "MTOWN6",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "67044f0b95b89bd8d907eac20fc9ee9bb40ccf5c614eafc703e54dd8469ad7c8",
+      "clua": "C:CreateCreature(\"MTOWN6\")"
+    },
+    {
+      "resref": "NOBLEM3",
+      "animation_id": "0x4000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ff02befc4075f32761de6861912808d1af55fbcb34fe019ff6aa4137fcf14c39",
+      "clua": "C:CreateCreature(\"NOBLEM3\")"
+    },
+    {
+      "resref": "NOBLEW3",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "f6187fbe79138000e29b0f0d7400fda10f54c24b2d5ce7296c6a3fa09083caeb",
+      "clua": "C:CreateCreature(\"NOBLEW3\")"
+    },
+    {
+      "resref": "OHBBRANS",
+      "animation_id": "0x4400",
+      "source": "stock:data/BlackPits.bif",
+      "sha256": "54cd69abe2717ace66ef99e4ba05641960b8211b128159b321bb056e6cc564e6",
+      "clua": "C:CreateCreature(\"OHBBRANS\")"
+    },
+    {
+      "resref": "OHDPORTL",
+      "animation_id": "0x4200",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "9ea02b9c54b72ba9a63ff82d0c8b974eb9323d26978ee1acf5a848eb19dddaa1",
+      "clua": "C:CreateCreature(\"OHDPORTL\")"
+    },
+    {
+      "resref": "OHDSCROL",
+      "animation_id": "0x4200",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "4f1d5d13d87bcf531b33561d17fdb7661a35fa9576a6ca88ced534a5757934c1",
+      "clua": "C:CreateCreature(\"OHDSCROL\")"
+    },
+    {
+      "resref": "OHDSWAZ",
+      "animation_id": "0x4200",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "024fe6afe4e10eb5794b9cb4b7a18e5d308aad61bd2076bdf9e0f10ec575296d",
+      "clua": "C:CreateCreature(\"OHDSWAZ\")"
+    },
+    {
+      "resref": "OHDSWUR",
+      "animation_id": "0x4200",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "8b32a116f3c9e97072197d44a7f19afa40432610365079e2f7e0ed6cb7485031",
+      "clua": "C:CreateCreature(\"OHDSWUR\")"
+    },
+    {
+      "resref": "OHDVERN",
+      "animation_id": "0x4400",
+      "source": "stock:data/Dorn.bif",
+      "sha256": "139e5b6fb13697c73c52e653eb8e4c3aa2dca064765a305594b642701e2cc70c",
+      "clua": "C:CreateCreature(\"OHDVERN\")"
+    },
+    {
+      "resref": "OHHRAFFI",
+      "animation_id": "0x4300",
+      "source": "stock:data/Hexxat.bif",
+      "sha256": "dddc23b745778a5214e7de7ec066c9e8816b255b43a33303e7ff2c966ea0567d",
+      "clua": "C:CreateCreature(\"OHHRAFFI\")"
+    },
+    {
+      "resref": "OHRTODWA",
+      "animation_id": "0x4600",
+      "source": "stock:data/Rasaad.bif",
+      "sha256": "39dcf1eba5d71a7eaa099108a1ef775dda3caeaf825491fa855ae94d46e56fe4",
+      "clua": "C:CreateCreature(\"OHRTODWA\")"
+    },
+    {
+      "resref": "PIRPIR01",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "7612cf390afc094839fca85f8c3e432639217210876fe020367c8c79682f8af4",
+      "clua": "C:CreateCreature(\"PIRPIR01\")"
+    },
+    {
+      "resref": "PPGIRL",
+      "animation_id": "0x4410",
+      "source": "stock:data/Creature.bif",
+      "sha256": "8691047b1bc3fb46bb45c73a8d0ea1f5df8aa7035aa68b8450b87de051d603a6",
+      "clua": "C:CreateCreature(\"PPGIRL\")"
+    },
+    {
+      "resref": "PPLOVE",
+      "animation_id": "0x4400",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1f2aea938d965deff228735ae3207b3a5dc3b2720c65f0c30e0ee5260fb94319",
+      "clua": "C:CreateCreature(\"PPLOVE\")"
+    },
+    {
+      "resref": "RENFELD",
+      "animation_id": "0x4400",
+      "source": "stock:data/Creature.bif",
+      "sha256": "077088ea6946429365cd7947b15f17654c49ec1ca2de0e6f57e147151f0bc958",
+      "clua": "C:CreateCreature(\"RENFELD\")"
+    },
+    {
+      "resref": "RIFTG01",
+      "animation_id": "0x4200",
+      "source": "stock:data/Creature.bif",
+      "sha256": "e7a41c2d343a9b9f378809c116d80d9d334ad0cee9025a68eef40f3f2e9a0599",
+      "clua": "C:CreateCreature(\"RIFTG01\")"
+    },
+    {
+      "resref": "RIFTG02",
+      "animation_id": "0x4200",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1f16373a83f8f55000ffdb570da67ef26640e4a2466bd56d1b04d29597ccf574",
+      "clua": "C:CreateCreature(\"RIFTG02\")"
+    },
+    {
+      "resref": "SBCUST02",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5da7cbf28b032c0b23d8e174f3025c75957f27a6591693945197162c2d5e8bf4",
+      "clua": "C:CreateCreature(\"SBCUST02\")"
+    },
+    {
+      "resref": "SEWSW",
+      "animation_id": "0x4200",
+      "source": "stock:data/Creature.bif",
+      "sha256": "99382236c7263254103592312a8d0d3ac816e2ceac95ee458f471c794bcceb92",
+      "clua": "C:CreateCreature(\"SEWSW\")"
+    },
+    {
+      "resref": "SHUGOD02",
+      "animation_id": "0x4400",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "3a3a55452f510c9fcac72584c9c5feb91639b229cb23877f73c12eec2c9684d4",
+      "clua": "C:CreateCreature(\"SHUGOD02\")"
+    },
+    {
+      "resref": "SLEEPDW",
+      "animation_id": "0x4600",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6be86f5c69ca037b61e5a97de76e453bde725afb8c547c0febe3577045b3f80e",
+      "clua": "C:CreateCreature(\"SLEEPDW\")"
+    },
+    {
+      "resref": "SLEEPFH",
+      "animation_id": "0x4410",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ef65fec9a7f56da4b5d6466e6277b43577527c860cff71c213c6dd8adce7fd37",
+      "clua": "C:CreateCreature(\"SLEEPFH\")"
+    },
+    {
+      "resref": "SLEEPMH",
+      "animation_id": "0x4400",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5bbd8641238f694560e182ad801bcb37ac9c4cab6026bd1f171f83b3e953eba0",
+      "clua": "C:CreateCreature(\"SLEEPMH\")"
+    },
+    {
+      "resref": "TRMTOW01",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "0d8dacace5e95703ab15c670f7e101fbc086d1d0311c4cad06d3db0430c47bfa",
+      "clua": "C:CreateCreature(\"TRMTOW01\")"
+    },
+    {
+      "resref": "TRTAVP01",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "db2eb80df754e079ea3cb5612e7a2bf20e6e9580c098d3377fb924bf04d64f06",
+      "clua": "C:CreateCreature(\"TRTAVP01\")"
+    },
+    {
+      "resref": "TRTAVP02",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "c712851c53f4c502387805e074b3694ec0136c68d485567bb00dc0da16a8e547",
+      "clua": "C:CreateCreature(\"TRTAVP02\")"
+    },
+    {
+      "resref": "TRTAVP03",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "f8e62eeb429a40cee5a3ddd1f7c99c6afb79d7f4d74c14aff1267a3ad52ac754",
+      "clua": "C:CreateCreature(\"TRTAVP03\")"
+    },
+    {
+      "resref": "UHPAT01",
+      "animation_id": "0x4100",
+      "source": "stock:data/Creature.bif",
+      "sha256": "ccebff315c0c42b6b5c9e8ee4283b9e6aa657b7d13f26aa414742f5a717e287e",
+      "clua": "C:CreateCreature(\"UHPAT01\")"
+    },
+    {
+      "resref": "UHRANG01",
+      "animation_id": "0x4710",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5a150e8d7c27530b65c98061e2eff34e9d6a397238bf1918b2d68d99da689417",
+      "clua": "C:CreateCreature(\"UHRANG01\")"
+    },
+    {
+      "resref": "WPCUST1",
+      "animation_id": "0x4101",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "c1a2b32e0b1b5178e0fa1c99b2d6ebae7f44caa8cdb1b1059b50b8c4df6658d0",
+      "clua": "C:CreateCreature(\"WPCUST1\")"
+    },
+    {
+      "resref": "WPCUST2",
+      "animation_id": "0x4100",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "2c94fda075e9f47f4dc228d729d85be612d6ce4b64cacd4e31a5cd1e99995526",
+      "clua": "C:CreateCreature(\"WPCUST2\")"
+    },
+    {
+      "resref": "ZAVIERA",
+      "animation_id": "0x4410",
+      "source": "stock:data/Creature.bif",
+      "sha256": "eba302894f4df117975774042c994fe3366eb35801b39a40b06c2f80ad3eaa7e",
+      "clua": "C:CreateCreature(\"ZAVIERA\")"
+    }
+  ],
+  "stock_or_override_consumer_count": 57,
+  "representatives": [
+    {
+      "resref": "COPCUST3",
+      "animation_id": "0x4000",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6d778db165068d4d46b19fe39b1c7df759af1a5bbe088d0de7d8e11e0d2e7bde",
+      "clua": "C:CreateCreature(\"COPCUST3\")",
+      "name": "STATIC_NOBLE_MAN_CHAIR"
+    },
+    {
+      "resref": "QTST4002",
+      "animation_id": "0x4002",
+      "name": "STATIC_NOBLE_MAN_MATTE",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4002\")"
+    },
+    {
+      "resref": "ELEPUZ03",
+      "animation_id": "0x4010",
+      "source": "stock:data/Creature.bif",
+      "sha256": "9e61a5b2c3c3d83ba289b7b2eaf01e543e9389d34054ad0040dc8119f899d6b3",
+      "clua": "C:CreateCreature(\"ELEPUZ03\")",
+      "name": "STATIC_NOBLE_WOMAN_CHAIR"
+    },
+    {
+      "resref": "QTST4012",
+      "animation_id": "0x4012",
+      "name": "STATIC_NOBLE_WOMAN_MATTE",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4012\")"
+    },
+    {
+      "resref": "AMSEAT01",
+      "animation_id": "0x4100",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "70a5a8120a079c025799d8c85760312e55dd2ac18aee4dccc8ab0b03ec14a534",
+      "clua": "C:CreateCreature(\"AMSEAT01\")",
+      "name": "STATIC_PEASANT_MAN_CHAIR"
+    },
+    {
+      "resref": "CRODRU01",
+      "animation_id": "0x4101",
+      "source": "stock:data/Creature.bif",
+      "sha256": "6f3b52884dc7c514981fab8339100e0a267548994fd11ad9019d299872158fc5",
+      "clua": "C:CreateCreature(\"CRODRU01\")",
+      "name": "STATIC_PEASANT_MAN_STOOL"
+    },
+    {
+      "resref": "QTST4102",
+      "animation_id": "0x4102",
+      "name": "STATIC_PEASANT_MAN_MATTE",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4102\")"
+    },
+    {
+      "resref": "QTST4110",
+      "animation_id": "0x4110",
+      "name": "STATIC_PEASANT_WOMAN_CHAIR",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4110\")"
+    },
+    {
+      "resref": "QTST4112",
+      "animation_id": "0x4112",
+      "name": "STATIC_PEASANT_WOMAN_MATTE",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4112\")"
+    },
+    {
+      "resref": "GORALT1",
+      "animation_id": "0x4200",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "239528072ab0dbf28993c55688f86caa47b1e755ae8899fea82259ea79f013e6",
+      "clua": "C:CreateCreature(\"GORALT1\")",
+      "name": "STATIC_HUMANCLERIC_MAN_CHAIR"
+    },
+    {
+      "resref": "CENTEO01",
+      "animation_id": "0x4300",
+      "source": "stock:data/Creature.bif",
+      "sha256": "64ed257734af280a045ae4672ee3e43f8f4bc86193eae40ae80adbe8b0a342b7",
+      "clua": "C:CreateCreature(\"CENTEO01\")",
+      "name": "STATIC_SPIDER_WOMAN"
+    },
+    {
+      "resref": "AMMSLEEP",
+      "animation_id": "0x4400",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "de313687c2c3d7e53ef37a38ff15b966c5bdc796fac12d8b233181f5c22f31db",
+      "clua": "C:CreateCreature(\"AMMSLEEP\")",
+      "name": "SLEEPING_MAN_HUMAN"
+    },
+    {
+      "resref": "AMFSLEEP",
+      "animation_id": "0x4410",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "ab2217ddb5d429e61dc9f727dbdf3362521bed45647e12413c931ab234ea0690",
+      "clua": "C:CreateCreature(\"AMFSLEEP\")",
+      "name": "SLEEPING_WOMAN_HUMAN"
+    },
+    {
+      "resref": "QTST4500",
+      "animation_id": "0x4500",
+      "name": "SLEEPING_FAT_MAN_HUMAN",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4500\")"
+    },
+    {
+      "resref": "KALAH2",
+      "animation_id": "0x4600",
+      "source": "stock:data/Creature.bif",
+      "sha256": "94a100362c3ff0ef61cb2398a238dc560f9b6e2cab7b92317d4366e115ab98f5",
+      "clua": "C:CreateCreature(\"KALAH2\")",
+      "name": "SLEEPING_DWARF"
+    },
+    {
+      "resref": "ARNMAN07",
+      "animation_id": "0x4700",
+      "source": "stock:data/Creature.bif",
+      "sha256": "2545327204e81e434c8c54dcce13ce83bb2fb9633f0aaf07e2c9fa6b8bd020b1",
+      "clua": "C:CreateCreature(\"ARNMAN07\")",
+      "name": "SLEEPING_MAN_ELF"
+    },
+    {
+      "resref": "UHRANG01",
+      "animation_id": "0x4710",
+      "source": "stock:data/Creature.bif",
+      "sha256": "5a150e8d7c27530b65c98061e2eff34e9d6a397238bf1918b2d68d99da689417",
+      "clua": "C:CreateCreature(\"UHRANG01\")",
+      "name": "SLEEPING_WOMAN_ELF"
+    },
+    {
+      "resref": "QTST4800",
+      "animation_id": "0x4800",
+      "name": "SLEEPING_MAN_HALFLING",
+      "source": "generated-test-fixture",
+      "clua": "C:CreateCreature(\"QTST4800\")"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4002.cre",
+      "target": "override/QTST4002.cre",
+      "sha256": "fb8ca20f9b5af78edbe16b4bdcfb936a3eb5b72099826b34ddd6652436285a83",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4002",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4012.cre",
+      "target": "override/QTST4012.cre",
+      "sha256": "f9c4b6c17c36e12dc96b33eb929e366f33b91b03f53b3b9d35ee2c99c872e5a5",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4012",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4102.cre",
+      "target": "override/QTST4102.cre",
+      "sha256": "4039c1d92a39176eccaff4d59f2f4b35bd79b3806f94eb8607b48d9605340f90",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4102",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4110.cre",
+      "target": "override/QTST4110.cre",
+      "sha256": "6cd2bcf17d0d771ea46f2e3dc6f815e35f83c825e29832eadf6feb9fd975a75a",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4110",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4112.cre",
+      "target": "override/QTST4112.cre",
+      "sha256": "8a22947b95305928faaab898da02ccda66775e86d97d8c48a4225ff777523fe0",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4112",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4500.cre",
+      "target": "override/QTST4500.cre",
+      "sha256": "a0e290da8787985702ce32e0c0bca6a79bad2e5052e302fe87ca2f07fd4ac5e7",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4500",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4800.cre",
+      "target": "override/QTST4800.cre",
+      "sha256": "b94cc33f2a3e29d0227303c02cde70ca672b523936c817c4a30dd7f236464be7",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4800",
+      "parent_target_existed": false
+    }
+  ],
+  "ingame_spawn_verified": false
+}

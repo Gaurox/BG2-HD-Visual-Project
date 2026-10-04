@@ -1,0 +1,132 @@
+{
+  "status": "installed-pending-ingame-qa",
+  "family": "town_static",
+  "resources": 18,
+  "frames": 1543,
+  "scale": 2,
+  "SDF": false,
+  "catalog_sha256": "41edd1ece80dfea59d47b62740cd0689da05886e181ca4425a8a204bc8cf3a0f",
+  "backup_sha256_verified": true,
+  "new_leaf_sha256_verified": 18,
+  "unchanged_files_sha256_verified": 151,
+  "native_combined_test": {
+    "resources": 18,
+    "frames": 1543,
+    "native_cycle_slots": 24573,
+    "decoded_pixels": 190777248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "catalog_proof": {
+    "inherited_animations_unchanged": 104,
+    "inherited_routes_unchanged": 50299,
+    "inherited_components_and_shards_unchanged": 4618,
+    "new_animation_ids": [
+      "0x4000",
+      "0x4002",
+      "0x4010",
+      "0x4012",
+      "0x4100",
+      "0x4101",
+      "0x4102",
+      "0x4110",
+      "0x4112",
+      "0x4200",
+      "0x4300",
+      "0x4400",
+      "0x4410",
+      "0x4500",
+      "0x4600",
+      "0x4700",
+      "0x4710",
+      "0x4800"
+    ],
+    "new_owner": 14,
+    "new_resources": 18,
+    "new_frames": 1543,
+    "source_absent_animation_ids": [
+      "0x4001"
+    ],
+    "active_animations": 122,
+    "active_resources": 4636,
+    "active_frames": 1590551,
+    "active_routes": 50317,
+    "accepted_ambient_static_resources_preserved": 26,
+    "accepted_QA": {
+      "path": "sprite/index/qa-decisions/ambient_static/2026-10-04-accepted-full-ambient-static-horse-eye-v3-q3m-v7-x2-catmullrom-v1.json",
+      "sha256": "edc145b5a8f2efbe3f34a9196ee829fa0c4f86c1eb53d9c5613464c11596b7b6",
+      "bytes": 18654
+    },
+    "SDF": false,
+    "ingame_QA": false,
+    "release": false
+  },
+  "fixtures": [
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4002.cre",
+      "target": "override/QTST4002.cre",
+      "sha256": "fb8ca20f9b5af78edbe16b4bdcfb936a3eb5b72099826b34ddd6652436285a83",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4002",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4012.cre",
+      "target": "override/QTST4012.cre",
+      "sha256": "f9c4b6c17c36e12dc96b33eb929e366f33b91b03f53b3b9d35ee2c99c872e5a5",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4012",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4102.cre",
+      "target": "override/QTST4102.cre",
+      "sha256": "4039c1d92a39176eccaff4d59f2f4b35bd79b3806f94eb8607b48d9605340f90",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4102",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4110.cre",
+      "target": "override/QTST4110.cre",
+      "sha256": "6cd2bcf17d0d771ea46f2e3dc6f815e35f83c825e29832eadf6feb9fd975a75a",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4110",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4112.cre",
+      "target": "override/QTST4112.cre",
+      "sha256": "8a22947b95305928faaab898da02ccda66775e86d97d8c48a4225ff777523fe0",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4112",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4500.cre",
+      "target": "override/QTST4500.cre",
+      "sha256": "a0e290da8787985702ce32e0c0bca6a79bad2e5052e302fe87ca2f07fd4ac5e7",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4500",
+      "parent_target_existed": false
+    },
+    {
+      "path": "sprite/.work/q3m-town-static-full-x2-20261004-v1/QTST4800.cre",
+      "target": "override/QTST4800.cre",
+      "sha256": "b94cc33f2a3e29d0227303c02cde70ca672b523936c817c4a30dd7f236464be7",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> 4800",
+      "parent_target_existed": false
+    }
+  ],
+  "ingame_QA": false,
+  "release": false
+}

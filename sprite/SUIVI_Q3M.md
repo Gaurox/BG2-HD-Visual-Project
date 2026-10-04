@@ -38,14 +38,14 @@
 | `monster_large16` | 3/5 | — | Wyverne, charognard rampant, wyverne blanche ; **famille disponible complète V7 x2 sans SDF installée**, 20 feuilles / 1 692 frames, palette blanche native ; **validée ingame**. Deux IDs sans BAM. |
 | `ambient` | 18/21 | — | Animations ambiantes mobiles ; chats, rats, poules, écureuils, figurants. |
 | `ambient_static` | 13/13 | — | **Famille complète V7 x2 couleurs améliorées sans SDF installée et validée**, cheval œil v3 inclus ; 13 modèles/26 BAM/1 144 frames. |
-| `town_static` | 18/19 | — | PNJ assis/couchés ; poses fixes, humains/nains/elfes/halfelins endormis. |
+| `town_static` | 18/19 | — | **Famille disponible complète Q3m V7 x2 améliorée sans SDF installée et validée**, 18 modèles/18 BAM/1 543 frames. NULL_ANIMATION/SNONE sans BAM. |
 | `flying` | 5/5 | — | Aigle, mouette, vautour, petit oiseau ; **famille complète V7 x2 installée et validée**, 4 BAM / 243 frames ; intérieur/extérieur partagent une ressource. |
 
 ## Queue / références
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 23 IDs /5 familles disponibles complètes installées ; 22 IDs /4 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 41 IDs /6 familles disponibles complètes installées ; 40 IDs /5 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -155,3 +155,19 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 - Installation active : `../docs/measurements/q3m-horse-eye-ingame-x2-20261004-v1/current-generation.json`, catalogue `211edfd2…d2c55` ; preuve d'installation historique non réécrite. Les mentions QA en attente des essais ci-dessus restent historiques.
 - Totaux recette : cinq familles/23 IDs installés, quatre familles/22 IDs validés ; Ogre installé, QA encore en attente. Aucune release.
 - Prochain lot proposé seulement : `town_static`, 18 modèles/18 BAM/1 543 frames →1 542 travaux uniques, huit hits compatibles →1 534 nouveaux encodages ; aucun traitement/installation. `../docs/measurements/q3m-town-static-selection-x2-20261004-v1/README.md`.
+
+## Town_static : famille complète disponible installée — 2026-10-04
+
+- Demande utilisateur : tout traiter Q3m avec palette améliorée et installer ingame. **18 IDs/18 modèles/18 BAM/1 543 frames**, V7 K6 x2/quatre partenaires/huit niveaux, sans SDF ; owner14, profils8/9 règle3, palettes natives live/CatmullRom. NULL_ANIMATION4001/SNONE sans source, exclu.
+- Production `../docs/measurements/q3m-town-static-full-x2-20261004-v1/current-generation.json` ; 1 542 travaux uniques =huit hits acquis +1 534 nouveaux ; 9 204 cibles, reprise 1 542 hits sans Torch. Doublon exact SNOMM0/4 partagé ; aucune autre variante fusionnée.
+- Native isolé/combiné : 18 BAM/1 543 frames/24 573 slots, K6 ×trois formats ; géométrie/cycles/représentants/profils conservés ; comparatif18poses inspecté. **QA ingame en attente**, aucun ancien verdict réécrit.
+- Installation `installation-verification.json` : 18 feuilles +catalogue +sept CRE témoins QTST ; 151 fichiers acquis préservés SHA ; **104 IDs/50 299 routes et 4 618 composants/feuilles hérités identiques**, Ambient_static/cheval v3 et autres familles validées conservés. Actif122IDs/4 636ressources/50 317routes ; DLL/shaders/INI inchangés.
+- 57 CRE consommateurs ; 18 commandes `CLUA-generiques.txt` ; sept témoins sans CRE d'origine, seuls offsets animation0x28 modifiés. Restore dédié vers le parent cheval v3 validé.
+- Totaux recette : six familles/41 IDs installés, quatre familles/22 IDs validés ; aucune release ni commit à cette étape.
+
+## Town_static : famille complète disponible validée — 2026-10-04
+
+- Utilisateur : « tout est validé » après installation ; **18 IDs/18 modèles/18 BAM/1 543 frames acceptés ingame**, Q3m V7 K6 x2 amélioré, CatmullRom, sans SDF. NULL_ANIMATION4001/SNONE sans source reste exclu.
+- QA immuable `index/qa-decisions/town_static/2026-10-04-accepted-full-available-town-static-q3m-v7-x2-catmullrom-v1.json` : exactes 18 feuilles installées, contrat runtime/DLL/INI/shaders, production et snapshot d'installation. Les mentions en attente du run de production restent historiques ; aucune preuve réécrite.
+- Totaux recette : six familles/41 IDs installés, **cinq familles/40 IDs validés** ; Ogre QA en attente ; aucune release.
+- Prochain lot proposé seulement : **ambient**, 18 IDs/16 modèles/34 BAM/2 580 frames physiques distinctes →2 406 travaux uniques, **1 024 hits compatibles →1 382 nouveaux encodages**. Chauve-souris et rat intérieur/extérieur partagent leurs BAM ; 174 répétitions entre BAM distincts, dont160 mendiant/esclave. KEG1/2/3 sans BAM. `../docs/measurements/q3m-ambient-selection-x2-20261004-v1/README.md` ; aucun traitement/installation.
