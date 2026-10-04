@@ -1,0 +1,82 @@
+{
+  "status": "installed-pending-ingame-qa",
+  "family": "ambient",
+  "resources": 34,
+  "frames": 2580,
+  "scale": 2,
+  "SDF": false,
+  "catalog_sha256": "58e785769464a5471e056446f5e2b48ff6c9df07606454e1aa61f3c3c69afc2d",
+  "backup_sha256_verified": true,
+  "new_leaf_sha256_verified": 34,
+  "unchanged_files_sha256_verified": 176,
+  "native_combined_test": {
+    "resources": 39,
+    "frames": 2734,
+    "native_cycle_slots": 14970,
+    "decoded_pixels": 291168216,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "catalog_proof": {
+    "inherited_animations_unchanged": 122,
+    "inherited_routes_unchanged": 50317,
+    "inherited_components_and_shards_unchanged": 4636,
+    "new_animation_ids": [
+      "0xC000",
+      "0xC100",
+      "0xC200",
+      "0xC300",
+      "0xC400",
+      "0xC500",
+      "0xC600",
+      "0xC610",
+      "0xC700",
+      "0xC710",
+      "0xC800",
+      "0xC810",
+      "0xC900",
+      "0xC910",
+      "0xCA00",
+      "0xCA10",
+      "0xCB00",
+      "0xCC04"
+    ],
+    "new_owner": 12,
+    "new_resources": 34,
+    "new_frames": 2580,
+    "logical_resource_bindings": 39,
+    "shared_resource_bindings": 5,
+    "source_absent_animation_ids": [
+      "0xCC00",
+      "0xCC01",
+      "0xCC02"
+    ],
+    "active_animations": 140,
+    "active_resources": 4670,
+    "active_frames": 1593131,
+    "active_routes": 50356,
+    "accepted_town_static_resources_preserved": 18,
+    "accepted_QA": {
+      "path": "sprite/index/qa-decisions/town_static/2026-10-04-accepted-full-available-town-static-q3m-v7-x2-catmullrom-v1.json",
+      "sha256": "f619b56e7a53f3abfb9931c21d17e64681f945cb38fb8b1552337236d0d6c3e1",
+      "bytes": 13754
+    },
+    "SDF": false,
+    "ingame_QA": false,
+    "release": false
+  },
+  "fixtures": [
+    {
+      "path": "sprite/.work/q3m-ambient-full-x2-20261004-v1/QAMBCC04.cre",
+      "target": "override/QAMBCC04.cre",
+      "sha256": "50eb16b48f3b078f7f5a04de377eeefb1c00cfe69750b0ac28a695f4e3e8387b",
+      "derived_from": "ARNMAN01",
+      "source_sha256": "20c4b71dfe13ccae7a68da81840c0081e4e58d53ec0de3f3eb77b10382bf46e6",
+      "only_change": "CRE animation uint16 at 0x28: B200 -> CC04",
+      "parent_target_existed": false
+    }
+  ],
+  "ingame_QA": false,
+  "release": false
+}
