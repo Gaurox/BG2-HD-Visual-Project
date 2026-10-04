@@ -1,0 +1,23 @@
+{
+  "schema": "bg2-offline-visual-js-consistency-v1",
+  "browser_layout_tested": false,
+  "results": {
+    "Nearest": {
+      "maximum_RGBA8_difference": 0,
+      "rounding_differences": 0
+    },
+    "BOX": {
+      "maximum_RGBA8_difference": 1,
+      "rounding_differences": 4
+    },
+    "Mipmaps": {
+      "maximum_RGBA8_difference": 1,
+      "rounding_differences": 3
+    },
+    "Catmull-Rom": {
+      "maximum_RGBA8_difference": 0,
+      "rounding_differences": 0
+    }
+  },
+  "BOX_magnification_fallback_matches_Nearest": true
+}

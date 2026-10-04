@@ -1,0 +1,71 @@
+{
+  "schema": "bg2-pedagogical-Ankheg-SDF-visual-v1",
+  "scope": "offline diagrams, no installation or QA state edit",
+  "sources": {
+    "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json": "d82bc1a5d6e2b365115538d4cea2613954d563781434757644211c6460450b8f",
+    "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/current-generation.json": "6ee865e8e02eb65e52eb3dc2d0049e5443a482af6a2ff9d72fbb628a726dcd46",
+    "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/sdf.glsl": "6566e60a1c77c80fb6d8bc5fcc3d827894ed80efbf5c28102646caee5bf65b46",
+    "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/isolated/witnesses.oracle": "db682eb001e20f3171eda7e7e0799ccf80231782829faf3d25d5a9f24e18fdb3",
+    "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/isolated/sdf.oracle": "d191dc40591279625143a6d2a376492d598bd7fd4b939f0328a1bff536bbf47a",
+    "docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/production.json": "759baf13139164081e462459a5c4213e866ef5ef3bdad0a7669b8efe43c210e6",
+    "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-B7F42DA5DC71C57526926C2B74944FF1988CDDBB79A50E2E9E2BBDF2A5FD5A17.registry": "b7f42da5dc71c57526926c2b74944ff1988cddbb79a50e2e9e2bbdf2a5fd5a17",
+    "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/isolated/CreatureSprites-XN-6EC220F878B6123A0DF7B18F3B66916400E42D5093EF8297C057D736654D66F8.registry": "6ec220f878b6123a0df7b18f3b66916400e42d5093ef8297c057d736654d66f8",
+    "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-D0D07A1AA041F50107F346F3AD364A922BA616F6ED03582CEF25B2C2B107E0B5.registry": "d0d07a1aa041f50107f346f3ad364a922ba616f6ed03582cef25b2c2b107e0b5",
+    "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/isolated/CreatureSprites-XN-9E4BF86CF88DFB64AC86DE16682A2A42FD8F5B0BD692138ABCA31154B16EB090.registry": "9e4bf86cf88dfb64ac86de16682a2a42fd8f5b0bd692138abca31154b16eb090",
+    "sprite/.work/q3m-ankheg-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-2C0E2A80F7BC06E565BC8E24910B3F680FFFA807F18C463B969F107B80124801.registry": "2c0e2a80f7bc06e565bc8e24910b3f680fffa807f18c463b969f107b80124801",
+    "sprite/.work/q3m-ankheg-alpha-light-x2-20261004-v1/isolated/CreatureSprites-XN-A58FFF018660AC83D4C8373B6C945903F57572FE926A956C2DFB5FA44A26A4FB.registry": "a58fff018660ac83d4c8373b6c945903f57572fe926a956c2dfb5fa44a26a4fb"
+  },
+  "poses": [
+    {
+      "resref": "MAKHG1",
+      "frame": 11,
+      "geometry": [
+        83,
+        122,
+        33,
+        78,
+        0
+      ]
+    },
+    {
+      "resref": "MAKHG1",
+      "frame": 25,
+      "geometry": [
+        73,
+        71,
+        58,
+        29,
+        0
+      ]
+    },
+    {
+      "resref": "MAKHG3",
+      "frame": 20,
+      "geometry": [
+        101,
+        113,
+        55,
+        68,
+        0
+      ]
+    },
+    {
+      "resref": "MAKHG1E",
+      "frame": 25,
+      "geometry": [
+        97,
+        75,
+        15,
+        46,
+        0
+      ]
+    }
+  ],
+  "checks": {
+    "I_F_and_geometry_unchanged": true,
+    "RGBA_matches_native_colour_oracle": true,
+    "V9_upload_bytes_match_native_SDF_oracle": true
+  },
+  "model": "quantized V9 shader equations; neutral K6 #0; body only; source-native shadows; no lighting, selection outline or compositor",
+  "visual_choice": "selected by user; runtime loading stability tracked separately"
+}

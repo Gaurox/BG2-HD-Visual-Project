@@ -1,0 +1,41 @@
+/* Scoped presentation modules; preserves the original page styling. */
+.sprite-visuals{--sv-ink:#090b0c;--sv-card:#101314;--sv-paper:#e9dfca;--sv-muted:#b9ae99;--sv-gold:#caa45b;--sv-teal:#8fbfc3;--sv-line:rgba(202,164,91,.22);margin-top:1.5rem;min-width:0}
+.sprite-visuals .sv-kicker{margin:0 0 .5rem;color:var(--sv-gold);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.sprite-visuals .sv-heading{margin:1.5rem 0 .8rem;font-size:1.15rem;line-height:1.4;color:var(--sv-paper)}
+.sprite-visuals figure{margin:0;min-width:0}
+.sprite-visuals .sv-board{display:block;width:100%;height:auto;border:1px solid var(--sv-line)}
+.sprite-visuals figcaption{font-size:.82rem;line-height:1.65;color:var(--sv-muted);overflow-wrap:anywhere}
+.sprite-visuals .sv-details{margin-top:1rem;padding:1rem;border:1px solid var(--sv-line);border-radius:5px;background:var(--sv-ink)}
+.sprite-visuals summary{color:var(--sv-gold);font-size:.92rem;line-height:1.6;cursor:pointer}
+.sprite-visuals .controls{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px;margin:16px 0}
+.sprite-visuals .controls label{display:flex;flex-direction:column;gap:5px;margin:0;font-size:.76rem;color:var(--sv-muted)}
+.sprite-visuals .controls label.inline{flex-direction:row;align-items:center;color:var(--sv-paper)}
+.sprite-visuals button,.sprite-visuals select{max-width:100%;margin:0;padding:7px 10px;border:1px solid var(--sv-line);border-radius:4px;background:#181c1d;color:var(--sv-paper);font:inherit;line-height:1.5}
+.sprite-visuals button{cursor:pointer}
+.sprite-visuals button:hover,.sprite-visuals button[aria-pressed=true]{border-color:var(--sv-gold);color:var(--sv-gold)}
+.sprite-visuals .controls input[type=range]{width:130px;accent-color:var(--sv-gold)}
+.sprite-visuals .controls input[type=checkbox]{accent-color:var(--sv-gold)}
+.sprite-visuals button:focus-visible,.sprite-visuals select:focus-visible,.sprite-visuals input:focus-visible{outline:2px solid var(--sv-teal);outline-offset:3px}
+.sprite-visuals .cards{display:grid;gap:10px;min-width:0}
+.sprite-visuals .assembly-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sprite-visuals .filter-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sprite-visuals .alpha-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sprite-visuals .canvas-card{min-width:0;overflow:hidden;border:1px solid var(--sv-line);background:var(--sv-ink)}
+.sprite-visuals .canvas-card h3{max-width:none;margin:0;padding:9px 10px;color:var(--sv-gold);font-family:var(--sans,Inter,Arial,sans-serif);font-size:.86rem;line-height:1.5}
+.sprite-visuals .canvas-card canvas{display:block;width:100%;height:auto}
+.sprite-visuals .canvas-card p{margin:8px 10px;font-size:.7rem;line-height:1.6;overflow-wrap:anywhere}
+.sprite-visuals .hint{margin-top:.8rem;font-size:.76rem;line-height:1.65;color:var(--sv-muted)}
+.sprite-visuals .equation{margin-top:1rem;font-family:var(--mono,Consolas,monospace);font-size:.9rem;line-height:1.6;color:var(--sv-gold)}
+.sprite-visuals .gallery{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sprite-visuals .gallery button{min-width:0;padding:0;overflow:hidden;text-align:left;background:var(--sv-ink)}
+.sprite-visuals .gallery canvas{display:block;width:100%;height:auto}
+.sprite-visuals .gallery .name{display:block;padding:8px 10px;font-size:.73rem;line-height:1.6}
+.sprite-visuals .gallery .kind{font-size:.66rem;color:var(--sv-teal)}
+.sprite-visuals .partner-box{margin-top:18px;padding:15px;border:1px solid var(--sv-line)}
+.sprite-visuals .partner-box h3{margin:0;font-size:1rem;line-height:1.4}
+.sprite-visuals .partner-rows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:1rem}
+.sprite-visuals .ramp{display:flex;margin-top:8px}
+.sprite-visuals .ramp div{flex:1;height:34px;border-right:2px solid var(--sv-card)}
+.sprite-visuals .ramp-label{display:flex;justify-content:space-around;font-family:var(--mono,Consolas,monospace);font-size:.66rem;color:var(--sv-muted)}
+@media(max-width:1000px){.sprite-visuals .assembly-grid,.sprite-visuals .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.sprite-visuals .filter-grid,.sprite-visuals .partner-rows{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.sprite-visuals .assembly-grid,.sprite-visuals .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.sprite-visuals .alpha-grid{grid-template-columns:1fr}.sprite-visuals .partner-rows{grid-template-columns:1fr}.sprite-visuals .sv-details{padding:.75rem}.sprite-visuals .controls{gap:9px}.sprite-visuals .controls label{max-width:100%}}

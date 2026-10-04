@@ -1,0 +1,8 @@
+/* Limited to the appended Ankheg SDF module. */
+.sprite-sdf .sdf-steps{margin:1.2rem 0;gap:1rem}
+.sprite-sdf .sdf-steps h4{margin:0 0 .6rem;color:var(--sv-gold);font-size:.95rem;line-height:1.5}
+.sprite-sdf .sdf-steps p{font-size:.86rem;line-height:1.7}
+.sprite-sdf .history-note{margin:1rem 0}
+.sprite-sdf .sdf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sprite-sdf .canvas-card h4{margin:0;padding:9px 10px;color:var(--sv-gold);font-family:var(--sans,Inter,Arial,sans-serif);font-size:.86rem;line-height:1.5}
+@media(max-width:700px){.sprite-sdf .sdf-grid{grid-template-columns:1fr}}
