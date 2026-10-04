@@ -1,0 +1,1243 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-04T18:02:59.630093+00:00",
+  "scope": {
+    "kind": "installed-native-family-complete",
+    "engine_family": "monster_layered",
+    "animation_ids": [
+      "0x2000",
+      "0x2100",
+      "0x2200",
+      "0x2300",
+      "0x8000",
+      "0x8100",
+      "0x8200"
+    ],
+    "models": 7,
+    "resources": 65,
+    "frames": 6422,
+    "scale": 2,
+    "SDF": false,
+    "excluded_non_native_refs": [
+      "MSIRG2BE"
+    ],
+    "source_absent": []
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "ok c'est bo tout validé. met a jour le suivi et committe. puis identifie une nouvelle famille à traiter",
+    "individual_scenario_details": "not specified by user",
+    "Volo": "Acceptance follows diagnosis and stock SARVOLO test suggestion; no assumption about exact spawn command used."
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/runtime.json",
+      "sha256": "bc8fb417f3e4b6452f4fe028aac6f49a1dc8ab2a79776f1b820c1090c4b9b650",
+      "bytes": 2243
+    },
+    "dll": {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "32f94df8af53cda61d93bfbdf11136dda4d83c5f1de6d6c48796bc41d4786514",
+      "bytes": 2116608
+    },
+    "catalogue_sha256": "b99081e290d9711eb57adf44b62a7106e8f6f7be57647e758b0ae9df3af26dc9",
+    "owner": 8,
+    "native_palette_kinds": [
+      0,
+      1
+    ],
+    "registry_version": 7,
+    "world_filter": "CatmullRom",
+    "colour": "K6-four-partners-eight-levels/live native palettes/rule3",
+    "SDF": false,
+    "native_geometry": true,
+    "installed_runtime_files": [
+      {
+        "relative_path": "InfinityEngine-Enhancer.dll",
+        "sha256": "32f94df8af53cda61d93bfbdf11136dda4d83c5f1de6d6c48796bc41d4786514"
+      },
+      {
+        "relative_path": "InfinityEngine-Enhancer.ini",
+        "sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4"
+      },
+      {
+        "relative_path": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827"
+      },
+      {
+        "relative_path": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816"
+      },
+      {
+        "relative_path": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815"
+      }
+    ]
+  },
+  "provenance": {
+    "generation": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/current-generation.json",
+      "sha256": "2592329a18274378b7867484b21f2f89cb269a3f77007c44af5ff3f32479ee55",
+      "bytes": 1660
+    },
+    "production": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/production.json",
+      "sha256": "16eac77e2373a4cace9ed304717973d6caddc7f13fc766c4adc3bd828f0b7ee9",
+      "bytes": 37374
+    },
+    "runtime": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/runtime.json",
+      "sha256": "bc8fb417f3e4b6452f4fe028aac6f49a1dc8ab2a79776f1b820c1090c4b9b650",
+      "bytes": 2243
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/installation-verification.json",
+      "sha256": "c187b262b7d9dbeab62c40fbab4c6b9d8946f7c32050d6447329e124485684a6",
+      "bytes": 1598
+    },
+    "installation_receipt": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/ingame-installation/active-test.json",
+      "sha256": "498bd898f9d957c3b50f0381b202e53dc2ca039e6d8833faf0c44fffc018e368",
+      "bytes": 576071
+    },
+    "verification": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/verification.json",
+      "sha256": "eeb25ae921c8e20ed8b25fbde13f2f6de471fadb813d754589e6220fc2ebd445",
+      "bytes": 5674
+    },
+    "installed_verification": {
+      "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/installed-native-verification.json",
+      "sha256": "ca0490cf3999ebf14368205e98ed26d28667f9d9ae577afd6237625bd57880c7",
+      "bytes": 466
+    },
+    "visibility_diagnosis": {
+      "path": "docs/measurements/q3m-monster-layered-visibility-analysis-20261004-v1/analysis.json",
+      "sha256": "e4658c82dfd6fef072f20cc0bae9c1b8b955d3f0bbfebc798fbe62d07bbc6762",
+      "bytes": 5200
+    },
+    "fixtures": [
+      {
+        "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/QLYR2100.cre",
+        "target": "override/QLYR2100.cre",
+        "sha256": "a156a26cebd5e0a17cd9283bd49fd5bc2c97f92f81407ca511262bb901a31b19",
+        "derived_from": "ENDVOLO",
+        "source_sha256": "0d7501e5cd42072cdb6f8c1104c631d9f22becc12dc4b044769dadc2d1690b75",
+        "parent_target_existed": false
+      }
+    ]
+  },
+  "test_fixture_warning": "QLYR2100 inherits ENDVOLO permanent Avatar Removal opcode271; unsuitable for visible tests. Use stock SARVOLO (same 2100 animation, no CRE effects). Ogre mage OGREMA01 equips native MAGE01 opcode20 invisibility.",
+  "resources": [
+    {
+      "index": 6688,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-2D0AC78DA6DB240E574747B5BFE164A379A73BEB166235D8B190FD739B2425DF.registry",
+      "sha256": "2D0AC78DA6DB240E574747B5BFE164A379A73BEB166235D8B190FD739B2425DF",
+      "crc32": 775144488,
+      "resource_count": 1,
+      "frame_count": 120,
+      "index_bytes": 210836,
+      "registry_bytes": 191087
+    },
+    {
+      "index": 6689,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7E27105FF2CB47517AC82D45370BC0C9126A84F070D270A3A27F79985E0BBC4C.registry",
+      "sha256": "7E27105FF2CB47517AC82D45370BC0C9126A84F070D270A3A27F79985E0BBC4C",
+      "crc32": 3125776437,
+      "resource_count": 1,
+      "frame_count": 72,
+      "index_bytes": 113132,
+      "registry_bytes": 112084
+    },
+    {
+      "index": 6690,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-C21B11B839A306CE6A031B1EC96AFF38C24183973B253DBC29344910145CAEA3.registry",
+      "sha256": "C21B11B839A306CE6A031B1EC96AFF38C24183973B253DBC29344910145CAEA3",
+      "crc32": 3719142350,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 167008,
+      "registry_bytes": 192213
+    },
+    {
+      "index": 6691,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7AAC2134D556F58E6E5438AF7B630F267EA8711D5C5EBCE9772A84B54F6A6AEB.registry",
+      "sha256": "7AAC2134D556F58E6E5438AF7B630F267EA8711D5C5EBCE9772A84B54F6A6AEB",
+      "crc32": 11606019,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 94040,
+      "registry_bytes": 113111
+    },
+    {
+      "index": 6692,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A6D3240EE46E121EF823DA853C1EA678722374C93D1218B21463E330C53002C7.registry",
+      "sha256": "A6D3240EE46E121EF823DA853C1EA678722374C93D1218B21463E330C53002C7",
+      "crc32": 1221227410,
+      "resource_count": 1,
+      "frame_count": 120,
+      "index_bytes": 770680,
+      "registry_bytes": 511407
+    },
+    {
+      "index": 6693,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-366F18942EE30EF713366FF69ABACB45D994D58D224E2F9856DCE18CA9EABDFF.registry",
+      "sha256": "366F18942EE30EF713366FF69ABACB45D994D58D224E2F9856DCE18CA9EABDFF",
+      "crc32": 1601098338,
+      "resource_count": 1,
+      "frame_count": 72,
+      "index_bytes": 451896,
+      "registry_bytes": 299696
+    },
+    {
+      "index": 6694,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-048147031E91B1608F265E381F294EE1D45F7F3C394125F2875E270224550182.registry",
+      "sha256": "048147031E91B1608F265E381F294EE1D45F7F3C394125F2875E270224550182",
+      "crc32": 113579936,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 1172328,
+      "registry_bytes": 669013
+    },
+    {
+      "index": 6695,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A3A9F2F95026CC9FBC9663C3499EC7E3FB0A454A002E8F1C10A37134E72A1DF0.registry",
+      "sha256": "A3A9F2F95026CC9FBC9663C3499EC7E3FB0A454A002E8F1C10A37134E72A1DF0",
+      "crc32": 153309897,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 717452,
+      "registry_bytes": 407456
+    },
+    {
+      "index": 6696,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-D244F54CDFC95DDCA2C1816C64611C8238722B81E0037C7BBF30606BC1423626.registry",
+      "sha256": "D244F54CDFC95DDCA2C1816C64611C8238722B81E0037C7BBF30606BC1423626",
+      "crc32": 2130691230,
+      "resource_count": 1,
+      "frame_count": 155,
+      "index_bytes": 1335552,
+      "registry_bytes": 848177
+    },
+    {
+      "index": 6697,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A0239E2DC33EB097AB1C5888F04E49DB01726B6850041B0B252358C01B14A207.registry",
+      "sha256": "A0239E2DC33EB097AB1C5888F04E49DB01726B6850041B0B252358C01B14A207",
+      "crc32": 3283928846,
+      "resource_count": 1,
+      "frame_count": 93,
+      "index_bytes": 772136,
+      "registry_bytes": 500918
+    },
+    {
+      "index": 6698,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-D0525D1179FFCD4A6EE2B3BC4D6DC6EE5367F5408D602569C61D42A67087BF64.registry",
+      "sha256": "D0525D1179FFCD4A6EE2B3BC4D6DC6EE5367F5408D602569C61D42A67087BF64",
+      "crc32": 3756803669,
+      "resource_count": 1,
+      "frame_count": 155,
+      "index_bytes": 1335552,
+      "registry_bytes": 846877
+    },
+    {
+      "index": 6699,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B9727001DDE38A1EDD8E4203A8711F679527BF2BC672BFDA90C268BB8CDC3D13.registry",
+      "sha256": "B9727001DDE38A1EDD8E4203A8711F679527BF2BC672BFDA90C268BB8CDC3D13",
+      "crc32": 3005431260,
+      "resource_count": 1,
+      "frame_count": 93,
+      "index_bytes": 772136,
+      "registry_bytes": 500274
+    },
+    {
+      "index": 6700,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-8A87A2CECB9774260C33D4C4E1698D38EEA8DA5354C9A82A72784FA84412BDAC.registry",
+      "sha256": "8A87A2CECB9774260C33D4C4E1698D38EEA8DA5354C9A82A72784FA84412BDAC",
+      "crc32": 1869877479,
+      "resource_count": 1,
+      "frame_count": 21,
+      "index_bytes": 23680,
+      "registry_bytes": 23686
+    },
+    {
+      "index": 6701,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-804F1165F83F0FEFD4660C51290AA2EB1F8A285DA8420D2B66D66F0412F76DF5.registry",
+      "sha256": "804F1165F83F0FEFD4660C51290AA2EB1F8A285DA8420D2B66D66F0412F76DF5",
+      "crc32": 3815983526,
+      "resource_count": 1,
+      "frame_count": 13,
+      "index_bytes": 4872,
+      "registry_bytes": 16703
+    },
+    {
+      "index": 6702,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-21DA2AE19E56F9029225E53C9AC63902C0942F0050369D53FBF5103B215C0642.registry",
+      "sha256": "21DA2AE19E56F9029225E53C9AC63902C0942F0050369D53FBF5103B215C0642",
+      "crc32": 791581688,
+      "resource_count": 1,
+      "frame_count": 1,
+      "index_bytes": 2484,
+      "registry_bytes": 3411
+    },
+    {
+      "index": 6703,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-4EAC37AF289B7F158977D3D60DDEA183F408B8380861CFA2138B6CFD72BE67B0.registry",
+      "sha256": "4EAC37AF289B7F158977D3D60DDEA183F408B8380861CFA2138B6CFD72BE67B0",
+      "crc32": 4070573519,
+      "resource_count": 1,
+      "frame_count": 1,
+      "index_bytes": 2484,
+      "registry_bytes": 3411
+    },
+    {
+      "index": 6704,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-009600A7EC9A2D23E1507466B29CC6F3D5A0892D8C118EB1184357380D8F87BC.registry",
+      "sha256": "009600A7EC9A2D23E1507466B29CC6F3D5A0892D8C118EB1184357380D8F87BC",
+      "crc32": 2439256067,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 3275620,
+      "registry_bytes": 1678449
+    },
+    {
+      "index": 6705,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B037803E23B06B837E5062D8BAC59811F8AD14A007B361146A1C2818E516916C.registry",
+      "sha256": "B037803E23B06B837E5062D8BAC59811F8AD14A007B361146A1C2818E516916C",
+      "crc32": 4115761303,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 1955132,
+      "registry_bytes": 999463
+    },
+    {
+      "index": 6706,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-F51F5947EDC76140C83A977C09983FC3E803F64C57E266712D3FD7EDF026478E.registry",
+      "sha256": "F51F5947EDC76140C83A977C09983FC3E803F64C57E266712D3FD7EDF026478E",
+      "crc32": 3499872912,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 3293588,
+      "registry_bytes": 1677438
+    },
+    {
+      "index": 6707,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-D119FE1AAEED114EAA9D6CA7F13E74D63C45EB67B7C0A5741E062E7FC708B514.registry",
+      "sha256": "D119FE1AAEED114EAA9D6CA7F13E74D63C45EB67B7C0A5741E062E7FC708B514",
+      "crc32": 2115965283,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 1940208,
+      "registry_bytes": 1001567
+    },
+    {
+      "index": 6708,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-302C3315363B0615903C22E54E995403BE0BCB3D8E6E652570C3A71B7786B830.registry",
+      "sha256": "302C3315363B0615903C22E54E995403BE0BCB3D8E6E652570C3A71B7786B830",
+      "crc32": 4096568615,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 128784,
+      "registry_bytes": 189932
+    },
+    {
+      "index": 6709,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-C0226033DF41F6011F234370471A327F241A0D7E7209DBB2F8AE58AE0724FD48.registry",
+      "sha256": "C0226033DF41F6011F234370471A327F241A0D7E7209DBB2F8AE58AE0724FD48",
+      "crc32": 3577387830,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 180284,
+      "registry_bytes": 143328
+    },
+    {
+      "index": 6710,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-AEAA769AB2504359C487FE815F7109C655184F8242610E1125E91155D2976160.registry",
+      "sha256": "AEAA769AB2504359C487FE815F7109C655184F8242610E1125E91155D2976160",
+      "crc32": 2210126566,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 128000,
+      "registry_bytes": 173461
+    },
+    {
+      "index": 6711,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A86E0BC250DD7281F0000773C419A241A0B2C6C9496F7F0F617EF609026614F3.registry",
+      "sha256": "A86E0BC250DD7281F0000773C419A241A0B2C6C9496F7F0F617EF609026614F3",
+      "crc32": 1082725413,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 106996,
+      "registry_bytes": 112192
+    },
+    {
+      "index": 6712,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-9796109B140FEFDD0AEBC0B92B8ADAE1BB81383839F82337B27036D1EC1A8080.registry",
+      "sha256": "9796109B140FEFDD0AEBC0B92B8ADAE1BB81383839F82337B27036D1EC1A8080",
+      "crc32": 1904139081,
+      "resource_count": 1,
+      "frame_count": 175,
+      "index_bytes": 4582276,
+      "registry_bytes": 1655032
+    },
+    {
+      "index": 6713,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-2B36CE7A14653473384153F3B81B08015CA8DBF7F60357D2BC42C616E258C192.registry",
+      "sha256": "2B36CE7A14653473384153F3B81B08015CA8DBF7F60357D2BC42C616E258C192",
+      "crc32": 3064748769,
+      "resource_count": 1,
+      "frame_count": 105,
+      "index_bytes": 2659312,
+      "registry_bytes": 982471
+    },
+    {
+      "index": 6714,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7ECD9CBFA7416F64A2EE0BE9F58AFF2890A9872317E529F925DE5DEBD571D61F.registry",
+      "sha256": "7ECD9CBFA7416F64A2EE0BE9F58AFF2890A9872317E529F925DE5DEBD571D61F",
+      "crc32": 3481033725,
+      "resource_count": 1,
+      "frame_count": 170,
+      "index_bytes": 5137144,
+      "registry_bytes": 1654209
+    },
+    {
+      "index": 6715,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-F58D515BDF0C93D8AA0A61EC0854DFDD1735C959C52A516EECEA448B26B4E22D.registry",
+      "sha256": "F58D515BDF0C93D8AA0A61EC0854DFDD1735C959C52A516EECEA448B26B4E22D",
+      "crc32": 1012159385,
+      "resource_count": 1,
+      "frame_count": 102,
+      "index_bytes": 2950320,
+      "registry_bytes": 961279
+    },
+    {
+      "index": 6716,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-ADEE2464733E09EE75F0514D413C4518B66C821F5BC33EC146409B23FDF6D6E9.registry",
+      "sha256": "ADEE2464733E09EE75F0514D413C4518B66C821F5BC33EC146409B23FDF6D6E9",
+      "crc32": 1957801160,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 2793464,
+      "registry_bytes": 1474706
+    },
+    {
+      "index": 6717,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-9267AF2EF7D662CA4180DF2B945E8527A44DB9DA6136918C729E552DB0816602.registry",
+      "sha256": "9267AF2EF7D662CA4180DF2B945E8527A44DB9DA6136918C729E552DB0816602",
+      "crc32": 569694247,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 1736240,
+      "registry_bytes": 884546
+    },
+    {
+      "index": 6718,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-9306B7FB58F21BC975087A1412860BE0BB45533807EED740E3A9526130B13492.registry",
+      "sha256": "9306B7FB58F21BC975087A1412860BE0BB45533807EED740E3A9526130B13492",
+      "crc32": 3167543805,
+      "resource_count": 1,
+      "frame_count": 130,
+      "index_bytes": 2693592,
+      "registry_bytes": 1387041
+    },
+    {
+      "index": 6719,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-467C5DB40DDCC0DDAD9A301A8B6F22D3CDF95CDFFFFDFD85BAE33A7B352DA629.registry",
+      "sha256": "467C5DB40DDCC0DDAD9A301A8B6F22D3CDF95CDFFFFDFD85BAE33A7B352DA629",
+      "crc32": 2430172917,
+      "resource_count": 1,
+      "frame_count": 78,
+      "index_bytes": 1690064,
+      "registry_bytes": 829242
+    },
+    {
+      "index": 6720,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-232C61A8E3322540459CC830D2C83AB3E05973A85505FB7B66F8D92C51BDCE42.registry",
+      "sha256": "232C61A8E3322540459CC830D2C83AB3E05973A85505FB7B66F8D92C51BDCE42",
+      "crc32": 1778145462,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 1438632,
+      "registry_bytes": 420574
+    },
+    {
+      "index": 6721,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-C0745D496330482B91182D7CABBBD47D901A95C6794B6BFEC0FC2F514120028B.registry",
+      "sha256": "C0745D496330482B91182D7CABBBD47D901A95C6794B6BFEC0FC2F514120028B",
+      "crc32": 3316487969,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 1067004,
+      "registry_bytes": 301538
+    },
+    {
+      "index": 6722,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B7206C370CE529F642ED258FD300102A650AB9B3756B8F69DDC1F93E411E62CA.registry",
+      "sha256": "B7206C370CE529F642ED258FD300102A650AB9B3756B8F69DDC1F93E411E62CA",
+      "crc32": 863960646,
+      "resource_count": 1,
+      "frame_count": 30,
+      "index_bytes": 315792,
+      "registry_bytes": 97163
+    },
+    {
+      "index": 6723,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-C986049604B52EBCDC4F9E147F115C866221CD3A6FBA41EF8E0EACF7639CDF78.registry",
+      "sha256": "C986049604B52EBCDC4F9E147F115C866221CD3A6FBA41EF8E0EACF7639CDF78",
+      "crc32": 3256587603,
+      "resource_count": 1,
+      "frame_count": 18,
+      "index_bytes": 240120,
+      "registry_bytes": 65592
+    },
+    {
+      "index": 6724,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-2EA444CD4CC0C1573060F9CD6C4E63C509115D94CCA6F37BFAE2B7A9EC3CAB0A.registry",
+      "sha256": "2EA444CD4CC0C1573060F9CD6C4E63C509115D94CCA6F37BFAE2B7A9EC3CAB0A",
+      "crc32": 2312624877,
+      "resource_count": 1,
+      "frame_count": 2,
+      "index_bytes": 81920,
+      "registry_bytes": 19363
+    },
+    {
+      "index": 6725,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-F739599E1705D93E2FBB66D398DD650682B283CEE5D86D661F32058E703C6E9C.registry",
+      "sha256": "F739599E1705D93E2FBB66D398DD650682B283CEE5D86D661F32058E703C6E9C",
+      "crc32": 1954185050,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 145384,
+      "registry_bytes": 190631
+    },
+    {
+      "index": 6726,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-169B40C22D187E7A1A7BEBF67D9F1FE43A59C62A78B47372494F1ABBB5D49DF9.registry",
+      "sha256": "169B40C22D187E7A1A7BEBF67D9F1FE43A59C62A78B47372494F1ABBB5D49DF9",
+      "crc32": 1370183996,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 149352,
+      "registry_bytes": 141926
+    },
+    {
+      "index": 6727,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-776FCE4F122EC1AD8A57D915B10BFAC2E7210E92C25AA0D3A8E87FF110D010F9.registry",
+      "sha256": "776FCE4F122EC1AD8A57D915B10BFAC2E7210E92C25AA0D3A8E87FF110D010F9",
+      "crc32": 2869319663,
+      "resource_count": 1,
+      "frame_count": 100,
+      "index_bytes": 111188,
+      "registry_bytes": 144535
+    },
+    {
+      "index": 6728,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-452E4AC5F926ED2FE2A60B40732315ABD1613232B51EC0236AA5D950A102FA5D.registry",
+      "sha256": "452E4AC5F926ED2FE2A60B40732315ABD1613232B51EC0236AA5D950A102FA5D",
+      "crc32": 2417053654,
+      "resource_count": 1,
+      "frame_count": 60,
+      "index_bytes": 98212,
+      "registry_bytes": 100986
+    },
+    {
+      "index": 6729,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-1F8B3362094AE4808E3AE43DDE240815F6E55EB022E796ACA37B742E987A9667.registry",
+      "sha256": "1F8B3362094AE4808E3AE43DDE240815F6E55EB022E796ACA37B742E987A9667",
+      "crc32": 1379930273,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 611084,
+      "registry_bytes": 285010
+    },
+    {
+      "index": 6730,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A2FC1BC6EE8B001B96C44DB72B6A8104515FE437708A1865AC88690D7B33E96C.registry",
+      "sha256": "A2FC1BC6EE8B001B96C44DB72B6A8104515FE437708A1865AC88690D7B33E96C",
+      "crc32": 173194410,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 226700,
+      "registry_bytes": 140201
+    },
+    {
+      "index": 6731,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B302F3A49081B3D2707ADDC6F89F3DD04C55884C1ABADC551B46CDA1CE74370C.registry",
+      "sha256": "B302F3A49081B3D2707ADDC6F89F3DD04C55884C1ABADC551B46CDA1CE74370C",
+      "crc32": 3970548101,
+      "resource_count": 1,
+      "frame_count": 50,
+      "index_bytes": 182492,
+      "registry_bytes": 102073
+    },
+    {
+      "index": 6732,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-44EEDEE1B8B46F371A89E88FB5056EB7FCBC34B0B249720517D20DA2C1F7905A.registry",
+      "sha256": "44EEDEE1B8B46F371A89E88FB5056EB7FCBC34B0B249720517D20DA2C1F7905A",
+      "crc32": 754780344,
+      "resource_count": 1,
+      "frame_count": 30,
+      "index_bytes": 99036,
+      "registry_bytes": 62743
+    },
+    {
+      "index": 6733,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7D7A8BB970613B2AB83C0F7C754B383BC75917F073F1350B8A12C6359032D5F5.registry",
+      "sha256": "7D7A8BB970613B2AB83C0F7C754B383BC75917F073F1350B8A12C6359032D5F5",
+      "crc32": 1099749068,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 1925556,
+      "registry_bytes": 1165343
+    },
+    {
+      "index": 6734,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-DB2778F523EAC7C95DB5FE8BC4CC865D677ED6C424667ADEC1AB239AE3352712.registry",
+      "sha256": "DB2778F523EAC7C95DB5FE8BC4CC865D677ED6C424667ADEC1AB239AE3352712",
+      "crc32": 1375724400,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 1081472,
+      "registry_bytes": 667884
+    },
+    {
+      "index": 6735,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-20E09A4CF623D5D22AF25CDA7C91CE4EECBB80F5BC250172E0F1EAD712AE14A7.registry",
+      "sha256": "20E09A4CF623D5D22AF25CDA7C91CE4EECBB80F5BC250172E0F1EAD712AE14A7",
+      "crc32": 2311029839,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 2713196,
+      "registry_bytes": 1487621
+    },
+    {
+      "index": 6736,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-55505FEF861BDA7844CA597A773AD3FB37C8B65954B81AD77F9B1E2510086F8A.registry",
+      "sha256": "55505FEF861BDA7844CA597A773AD3FB37C8B65954B81AD77F9B1E2510086F8A",
+      "crc32": 3597460515,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 1528872,
+      "registry_bytes": 858475
+    },
+    {
+      "index": 6737,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-93EF9F0242030B8912C4A24355E9E567A0EE1AF3C3F44A58D4C67CBB2F2E2F72.registry",
+      "sha256": "93EF9F0242030B8912C4A24355E9E567A0EE1AF3C3F44A58D4C67CBB2F2E2F72",
+      "crc32": 2021277827,
+      "resource_count": 1,
+      "frame_count": 140,
+      "index_bytes": 157200,
+      "registry_bytes": 204096
+    },
+    {
+      "index": 6738,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-CD6734F6B44DF9ACB7E06D6B1EB637676275C4B50CFAB9AB0586619A133F048C.registry",
+      "sha256": "CD6734F6B44DF9ACB7E06D6B1EB637676275C4B50CFAB9AB0586619A133F048C",
+      "crc32": 3478316562,
+      "resource_count": 1,
+      "frame_count": 84,
+      "index_bytes": 180528,
+      "registry_bytes": 150438
+    },
+    {
+      "index": 6739,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-383892798BC4FD9F0CA3964E62E8EE8BA0BECD31D2C7DA29D8C6BD12A7EE7D2E.registry",
+      "sha256": "383892798BC4FD9F0CA3964E62E8EE8BA0BECD31D2C7DA29D8C6BD12A7EE7D2E",
+      "crc32": 1853908886,
+      "resource_count": 1,
+      "frame_count": 100,
+      "index_bytes": 138360,
+      "registry_bytes": 164457
+    },
+    {
+      "index": 6740,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-5980D88F2DC40202F306B29C34C5E8F72BD84A88E06A3934C401952BABA89752.registry",
+      "sha256": "5980D88F2DC40202F306B29C34C5E8F72BD84A88E06A3934C401952BABA89752",
+      "crc32": 1158336281,
+      "resource_count": 1,
+      "frame_count": 60,
+      "index_bytes": 118316,
+      "registry_bytes": 108343
+    },
+    {
+      "index": 6741,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-0E8D7323DF7B72C78A2EA36BC6EC5A5EE57056F0EE7C72047908969762AEFD4F.registry",
+      "sha256": "0E8D7323DF7B72C78A2EA36BC6EC5A5EE57056F0EE7C72047908969762AEFD4F",
+      "crc32": 99778634,
+      "resource_count": 1,
+      "frame_count": 115,
+      "index_bytes": 112860,
+      "registry_bytes": 159446
+    },
+    {
+      "index": 6742,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-7E7E813F52F7646E093C3CBDC3A2C1110B5DAEF5DD63E90AACF5A303AF549E9E.registry",
+      "sha256": "7E7E813F52F7646E093C3CBDC3A2C1110B5DAEF5DD63E90AACF5A303AF549E9E",
+      "crc32": 2057481238,
+      "resource_count": 1,
+      "frame_count": 69,
+      "index_bytes": 62200,
+      "registry_bytes": 93040
+    },
+    {
+      "index": 6743,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-88DE05DD7921266BD07FA2812DB91FF98641DCE1522CDE2B1CBF06B75B857B3A.registry",
+      "sha256": "88DE05DD7921266BD07FA2812DB91FF98641DCE1522CDE2B1CBF06B75B857B3A",
+      "crc32": 1429603517,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 61384,
+      "registry_bytes": 131411
+    },
+    {
+      "index": 6744,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-6BAD90E2779E517487519EEE91D3058328BA3A916A916D1D038E2C9108117142.registry",
+      "sha256": "6BAD90E2779E517487519EEE91D3058328BA3A916A916D1D038E2C9108117142",
+      "crc32": 2952312664,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 18876,
+      "registry_bytes": 75122
+    },
+    {
+      "index": 6745,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-6BAFBD34A06949B0A1209C166C8CA0D5419BD4B2533CA6C3A35665B7EA186725.registry",
+      "sha256": "6BAFBD34A06949B0A1209C166C8CA0D5419BD4B2533CA6C3A35665B7EA186725",
+      "crc32": 875194650,
+      "resource_count": 1,
+      "frame_count": 115,
+      "index_bytes": 825788,
+      "registry_bytes": 442883
+    },
+    {
+      "index": 6746,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A6BEA2AC6A71BB7C3F1962B357BD4AB3C4C5D294A8D105BC7066DE88D23EBD94.registry",
+      "sha256": "A6BEA2AC6A71BB7C3F1962B357BD4AB3C4C5D294A8D105BC7066DE88D23EBD94",
+      "crc32": 513911947,
+      "resource_count": 1,
+      "frame_count": 69,
+      "index_bytes": 519292,
+      "registry_bytes": 263316
+    },
+    {
+      "index": 6747,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-E71F1953570C1D5E25F92EBE157D754D6116E0BA9AC5418A91EA79E05485E1B2.registry",
+      "sha256": "E71F1953570C1D5E25F92EBE157D754D6116E0BA9AC5418A91EA79E05485E1B2",
+      "crc32": 351223526,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 1102184,
+      "registry_bytes": 582897
+    },
+    {
+      "index": 6748,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A9C38F95BEFCBC260CA9B45282C2BB4E7222A0076C746EB7C13417A0A1015C57.registry",
+      "sha256": "A9C38F95BEFCBC260CA9B45282C2BB4E7222A0076C746EB7C13417A0A1015C57",
+      "crc32": 320045984,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 700696,
+      "registry_bytes": 349722
+    },
+    {
+      "index": 6749,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-80AB8A9952954B71A1F0BF495CDBD2D6D2E57E5F6A3F4A0234968450B57ADED6.registry",
+      "sha256": "80AB8A9952954B71A1F0BF495CDBD2D6D2E57E5F6A3F4A0234968450B57ADED6",
+      "crc32": 2313470031,
+      "resource_count": 1,
+      "frame_count": 115,
+      "index_bytes": 28208,
+      "registry_bytes": 120514
+    },
+    {
+      "index": 6750,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-1AB496FC5EC69FE2F013A987B40AEAC1AB69C8DC6ECE54BB43E3A0AB9CF80990.registry",
+      "sha256": "1AB496FC5EC69FE2F013A987B40AEAC1AB69C8DC6ECE54BB43E3A0AB9CF80990",
+      "crc32": 1438544797,
+      "resource_count": 1,
+      "frame_count": 69,
+      "index_bytes": 25576,
+      "registry_bytes": 86274
+    },
+    {
+      "index": 6751,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-19FBF642CFE65C94A184FCFDFB47FAA7C0A4105E9E8E16CA9CD9E43F26486253.registry",
+      "sha256": "19FBF642CFE65C94A184FCFDFB47FAA7C0A4105E9E8E16CA9CD9E43F26486253",
+      "crc32": 927638656,
+      "resource_count": 1,
+      "frame_count": 150,
+      "index_bytes": 21768,
+      "registry_bytes": 128106
+    },
+    {
+      "index": 6752,
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-1ECC1EDCB517D99F7EDEED032E3D4E91E1992401A859149AC2F06449A673B13C.registry",
+      "sha256": "1ECC1EDCB517D99F7EDEED032E3D4E91E1992401A859149AC2F06449A673B13C",
+      "crc32": 3080402096,
+      "resource_count": 1,
+      "frame_count": 90,
+      "index_bytes": 25192,
+      "registry_bytes": 94608
+    }
+  ],
+  "resource_bindings": [
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRBG1",
+      "component_index": 6688,
+      "shard_index": 6688,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRBG1E",
+      "component_index": 6689,
+      "shard_index": 6689,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRBG2",
+      "component_index": 6690,
+      "shard_index": 6690,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRBG2E",
+      "component_index": 6691,
+      "shard_index": 6691,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRG1",
+      "component_index": 6692,
+      "shard_index": 6692,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRG1E",
+      "component_index": 6693,
+      "shard_index": 6693,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRG2",
+      "component_index": 6694,
+      "shard_index": 6694,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2000",
+      "resref": "MSIRG2E",
+      "component_index": 6695,
+      "shard_index": 6695,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLG1",
+      "component_index": 6696,
+      "shard_index": 6696,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLG1E",
+      "component_index": 6697,
+      "shard_index": 6697,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLG2",
+      "component_index": 6698,
+      "shard_index": 6698,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLG2E",
+      "component_index": 6699,
+      "shard_index": 6699,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLMG1",
+      "component_index": 6700,
+      "shard_index": 6700,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLMG1E",
+      "component_index": 6701,
+      "shard_index": 6701,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLMG2",
+      "component_index": 6702,
+      "shard_index": 6702,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2100",
+      "resref": "UVOLMG2E",
+      "component_index": 6703,
+      "shard_index": 6703,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMG1",
+      "component_index": 6704,
+      "shard_index": 6704,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMG1E",
+      "component_index": 6705,
+      "shard_index": 6705,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMG2",
+      "component_index": 6706,
+      "shard_index": 6706,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMG2E",
+      "component_index": 6707,
+      "shard_index": 6707,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMSG1",
+      "component_index": 6708,
+      "shard_index": 6708,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMSG1E",
+      "component_index": 6709,
+      "shard_index": 6709,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMSG2",
+      "component_index": 6710,
+      "shard_index": 6710,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2200",
+      "resref": "MOGMSG2E",
+      "component_index": 6711,
+      "shard_index": 6711,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2300",
+      "resref": "MDKNG1",
+      "component_index": 6712,
+      "shard_index": 6712,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2300",
+      "resref": "MDKNG1E",
+      "component_index": 6713,
+      "shard_index": 6713,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2300",
+      "resref": "MDKNG2",
+      "component_index": 6714,
+      "shard_index": 6714,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x2300",
+      "resref": "MDKNG2E",
+      "component_index": 6715,
+      "shard_index": 6715,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLG1",
+      "component_index": 6716,
+      "shard_index": 6716,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLG1E",
+      "component_index": 6717,
+      "shard_index": 6717,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLG2",
+      "component_index": 6718,
+      "shard_index": 6718,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLG2E",
+      "component_index": 6719,
+      "shard_index": 6719,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLHG1",
+      "component_index": 6720,
+      "shard_index": 6720,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLHG1E",
+      "component_index": 6721,
+      "shard_index": 6721,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLHG2",
+      "component_index": 6722,
+      "shard_index": 6722,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLHG2E",
+      "component_index": 6723,
+      "shard_index": 6723,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLINV",
+      "component_index": 6724,
+      "shard_index": 6724,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLSG1",
+      "component_index": 6725,
+      "shard_index": 6725,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLSG1E",
+      "component_index": 6726,
+      "shard_index": 6726,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLSG2",
+      "component_index": 6727,
+      "shard_index": 6727,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8000",
+      "resref": "MGNLSG2E",
+      "component_index": 6728,
+      "shard_index": 6728,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBBG1",
+      "component_index": 6729,
+      "shard_index": 6729,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBBG1E",
+      "component_index": 6730,
+      "shard_index": 6730,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBBG2",
+      "component_index": 6731,
+      "shard_index": 6731,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBBG2E",
+      "component_index": 6732,
+      "shard_index": 6732,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBG1",
+      "component_index": 6733,
+      "shard_index": 6733,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBG1E",
+      "component_index": 6734,
+      "shard_index": 6734,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBG2",
+      "component_index": 6735,
+      "shard_index": 6735,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBG2E",
+      "component_index": 6736,
+      "shard_index": 6736,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBSG1",
+      "component_index": 6737,
+      "shard_index": 6737,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBSG1E",
+      "component_index": 6738,
+      "shard_index": 6738,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBSG2",
+      "component_index": 6739,
+      "shard_index": 6739,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8100",
+      "resref": "MHOBSG2E",
+      "component_index": 6740,
+      "shard_index": 6740,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBBG1",
+      "component_index": 6741,
+      "shard_index": 6741,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBBG1E",
+      "component_index": 6742,
+      "shard_index": 6742,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBBG2",
+      "component_index": 6743,
+      "shard_index": 6743,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBBG2E",
+      "component_index": 6744,
+      "shard_index": 6744,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBG1",
+      "component_index": 6745,
+      "shard_index": 6745,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBG1E",
+      "component_index": 6746,
+      "shard_index": 6746,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBG2",
+      "component_index": 6747,
+      "shard_index": 6747,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBG2E",
+      "component_index": 6748,
+      "shard_index": 6748,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBSG1",
+      "component_index": 6749,
+      "shard_index": 6749,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBSG1E",
+      "component_index": 6750,
+      "shard_index": 6750,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBSG2",
+      "component_index": 6751,
+      "shard_index": 6751,
+      "resource_ordinal": 0
+    },
+    {
+      "animation_id": "0x8200",
+      "resref": "MKOBSG2E",
+      "component_index": 6752,
+      "shard_index": 6752,
+      "resource_ordinal": 0
+    }
+  ],
+  "release": false
+}

@@ -1,0 +1,5194 @@
+{
+  "role": "proposal-not-production-QA-installation-or-release",
+  "family": "monster_layered",
+  "scale": 2,
+  "SDF": false,
+  "summary": {
+    "schema": "bg2-q3m-family-witness-work-plan-v1",
+    "selection_sha256": "8d9265c5495e5c351106c0ceee1b5ed14b730c79e21cf72d755fb0b3ce6fb1c1",
+    "families": 1,
+    "resources": 66,
+    "physical_frames": 6512,
+    "unique_source_work": 5758,
+    "unique_encoded_work": 5758,
+    "native_oracle": "pinned CVidPalette type0 Realize; K6 byte comparison; type1 acquired Character K6",
+    "witnesses": [
+      {
+        "family": "monster_layered",
+        "animation_id": "0x2000",
+        "name": "SIRINE",
+        "owner": 8,
+        "native_kind": 1,
+        "refs": [
+          "MSIRBG1",
+          "MSIRBG1E",
+          "MSIRBG2",
+          "MSIRBG2E",
+          "MSIRG1",
+          "MSIRG1E",
+          "MSIRG2",
+          "MSIRG2BE",
+          "MSIRG2E"
+        ],
+        "physical_frames": 954,
+        "source_work": 786,
+        "encoded_work": 786
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x2100",
+        "name": "VOLO",
+        "owner": 8,
+        "native_kind": 0,
+        "refs": [
+          "UVOLG1",
+          "UVOLG1E",
+          "UVOLG2",
+          "UVOLG2E",
+          "UVOLMG1",
+          "UVOLMG1E",
+          "UVOLMG2",
+          "UVOLMG2E"
+        ],
+        "physical_frames": 532,
+        "source_work": 277,
+        "encoded_work": 277
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x2200",
+        "name": "OGRE_MAGE",
+        "owner": 8,
+        "native_kind": 1,
+        "refs": [
+          "MOGMG1",
+          "MOGMG1E",
+          "MOGMG2",
+          "MOGMG2E",
+          "MOGMSG1",
+          "MOGMSG1E",
+          "MOGMSG2",
+          "MOGMSG2E"
+        ],
+        "physical_frames": 960,
+        "source_work": 870,
+        "encoded_work": 870
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x2300",
+        "name": "DEATH_KNIGHT",
+        "owner": 8,
+        "native_kind": 0,
+        "refs": [
+          "MDKNG1",
+          "MDKNG1E",
+          "MDKNG2",
+          "MDKNG2E"
+        ],
+        "physical_frames": 552,
+        "source_work": 552,
+        "encoded_work": 552
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x8000",
+        "name": "GNOLL",
+        "owner": 8,
+        "native_kind": 1,
+        "refs": [
+          "MGNLG1",
+          "MGNLG1E",
+          "MGNLG2",
+          "MGNLG2E",
+          "MGNLHG1",
+          "MGNLHG1E",
+          "MGNLHG2",
+          "MGNLHG2E",
+          "MGNLINV",
+          "MGNLSG1",
+          "MGNLSG1E",
+          "MGNLSG2",
+          "MGNLSG2E"
+        ],
+        "physical_frames": 1090,
+        "source_work": 1090,
+        "encoded_work": 1090
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x8100",
+        "name": "HOBGOBLIN",
+        "owner": 8,
+        "native_kind": 1,
+        "refs": [
+          "MHOBBG1",
+          "MHOBBG1E",
+          "MHOBBG2",
+          "MHOBBG2E",
+          "MHOBG1",
+          "MHOBG1E",
+          "MHOBG2",
+          "MHOBG2E",
+          "MHOBSG1",
+          "MHOBSG1E",
+          "MHOBSG2",
+          "MHOBSG2E"
+        ],
+        "physical_frames": 1152,
+        "source_work": 1152,
+        "encoded_work": 1152
+      },
+      {
+        "family": "monster_layered",
+        "animation_id": "0x8200",
+        "name": "KOBOLD",
+        "owner": 8,
+        "native_kind": 1,
+        "refs": [
+          "MKOBBG1",
+          "MKOBBG1E",
+          "MKOBBG2",
+          "MKOBBG2E",
+          "MKOBG1",
+          "MKOBG1E",
+          "MKOBG2",
+          "MKOBG2E",
+          "MKOBSG1",
+          "MKOBSG1E",
+          "MKOBSG2",
+          "MKOBSG2E"
+        ],
+        "physical_frames": 1272,
+        "source_work": 1032,
+        "encoded_work": 1032
+      }
+    ],
+    "source_plans": {
+      "character": {
+        "schema": "bg2-playable-palette-work-plan-pointer-v1",
+        "role": "source-work-plan-not-production-or-QA",
+        "path": "docs/measurements/playable-palettized-frame-dedup-20261001-v1/processing-plan.sqlite",
+        "bytes": 576868352,
+        "sha256": "06b32c785aa4b946a3836275925fea587322b57485163b76bbb79104bd313e25",
+        "summary": {
+          "absent_families": 246,
+          "available_families": 4896,
+          "canonical_bytes": 407156955,
+          "cross_model_additional_model_work_avoided": 6618307,
+          "cross_model_additional_q32_pixels_avoided": 20365903872,
+          "cycle_slots": 3599209,
+          "cycles": 168192,
+          "distinct_bam_frames": 1564054,
+          "distinct_bam_model_frames": 894348,
+          "distinct_bam_model_q32_pixels": 2309177344,
+          "distinct_bam_native_pixels": 1268986342,
+          "families": 5142,
+          "input_reuses_byte_compared": 1000566,
+          "logical_frame_work_avoided": 13113072,
+          "logical_frames": 13677041,
+          "logical_model_frames": 11448124,
+          "logical_model_q32_pixels": 31296118784,
+          "logical_model_q32_pixels_avoided": 29640327168,
+          "logical_model_work_avoided": 10884327,
+          "logical_native_pixels": 17717563045,
+          "model_local_unique_model_q32_pixels": 22021695488,
+          "model_local_unique_model_work_items": 7182104,
+          "model_local_unique_work_items": 7187637,
+          "models": 78,
+          "original_rle_tail_overflow_frames": 70,
+          "resources": 4510,
+          "shared_between_models_model_work_items": 558741,
+          "shared_between_models_source_occurrences": 1558519,
+          "shared_between_models_work_items": 558913,
+          "six_palette_targets_naive": 68688744,
+          "six_palette_targets_unique_indexed_input": 3379914,
+          "six_palette_targets_unique_work": 3382782,
+          "source_bytes": 189397325,
+          "source_frames_avoided_after_bam_sharing": 1000085,
+          "source_model_frames_avoided_after_bam_sharing": 330551,
+          "strict_full_palette_work_items": 566136,
+          "unique_indexed_inputs": 563488,
+          "unique_model_native_pixels": 960065986,
+          "unique_model_q32_pixels": 1655791616,
+          "unique_model_work_items": 563797,
+          "unique_neural_inputs": 563319,
+          "unique_neural_native_pixels": 959768171,
+          "unique_neural_q32_pixels": 1655021568,
+          "unique_work_items": 563969,
+          "unique_work_native_pixels": 961019931,
+          "unprocessable_work_items": 0,
+          "unreferenced_source_frames": 25466,
+          "unused_native_palette_additional_work_avoided": 2167,
+          "within_model_model_work_avoided": 4266020,
+          "work_items_with_different_centres": 2325,
+          "work_reuses_byte_compared": 1000085
+        },
+        "analysis": "docs/measurements/playable-palettized-frame-dedup-20261001-v1",
+        "consumer": "pipeline/scripts/palette_playable.py",
+        "trusted_seed_runs": [
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v3-full-6110",
+            "sha256": {
+              "recipe.json": "6283faeca68477b0d5f8fa04ea662b54cce4d670de2075540b12494c4a0b980c",
+              "coverage.json": "5f446635b0d70f24162c8f72789559b76b2ed6c589cfcc8e227f0ac63d9dce8b",
+              "verification.json": "874df5b09a8243ab3b7c448e973a96815955ab73ef192d5af05cf5222cde9ad6"
+            }
+          },
+          {
+            "path": "sprite/families/playable-characters/6110-human-female-fighter/research/palette-q3m-p3-20261001-v5-full-x4-6110",
+            "sha256": {
+              "recipe.json": "0fd3b5af8bda26df2b6cd4ad486224761a21c08705f9406d524b11752ae3f030",
+              "coverage.json": "467207c3afed063e845b07ee610d9c4ba6989624e7380b5efd3ffd1e3253b86b",
+              "verification.json": "0cb2522cc85034ee8075b2fc0bcea3bcbe277483d2349be593b5584ceed45fd8"
+            }
+          }
+        ]
+      },
+      "other": {
+        "schema": "bg2-all-creature-source-dedup-v1",
+        "role": "source-plan-not-production-or-QA",
+        "path": "docs/measurements/all-creature-source-dedup-20261003-v1/processing-plan.sqlite",
+        "bytes": 541003776,
+        "sha256": "65bc442f3884badbb21dce39b5e471984b5380ae7b07f403008731e2e9247ad0",
+        "summary": "docs/measurements/all-creature-source-dedup-20261003-v1/summary.json",
+        "character_descriptor": "sprite/index/palette-work-plan.json",
+        "monster_descriptor": "docs/measurements/q3m-monster-work-plan-x2-20261003-v1/plan.json",
+        "consumer": "analyze_sprite_frame_dedup.py plan; encoded work requires the demonstrated per-profile plan and shared cache"
+      }
+    },
+    "complete_family": "monster_layered"
+  },
+  "models": 7,
+  "available_animation_ids": 7,
+  "defined_animation_ids": 7,
+  "source_absent": [],
+  "whole_BAM_duplicates": [
+    {
+      "sha256": "efd417e0888b713bb58fd60cb923be80fb3b9909511db838b5932e6cc3d8ebf0",
+      "resrefs": [
+        "UVOLMG2",
+        "UVOLMG2E"
+      ],
+      "count": 2
+    }
+  ],
+  "duplicate_frame_groups": [
+    {
+      "examples": [
+        "MKOBBG2:0",
+        "MKOBBG2:1",
+        "MKOBBG2:2",
+        "MKOBBG2:3",
+        "MKOBBG2:4",
+        "MKOBBG2:5",
+        "MKOBBG2:6",
+        "MKOBBG2:7",
+        "MKOBBG2:8",
+        "MKOBBG2:9",
+        "MKOBBG2:10",
+        "MKOBBG2:11",
+        "MKOBBG2:12",
+        "MKOBBG2:13",
+        "MKOBBG2:14",
+        "MKOBBG2:15",
+        "MKOBBG2:16",
+        "MKOBBG2:17",
+        "MKOBBG2:18",
+        "MKOBBG2:19",
+        "MKOBBG2:30",
+        "MKOBBG2:31",
+        "MKOBBG2:32",
+        "MKOBBG2:33",
+        "MKOBBG2:34",
+        "MKOBBG2:35",
+        "MKOBBG2:36",
+        "MKOBBG2:37",
+        "MKOBBG2:38",
+        "MKOBBG2:39",
+        "MKOBBG2:40",
+        "MKOBBG2:41",
+        "MKOBBG2:42",
+        "MKOBBG2:43",
+        "MKOBBG2:44",
+        "MKOBBG2:45",
+        "MKOBBG2:46",
+        "MKOBBG2:47",
+        "MKOBBG2:48",
+        "MKOBBG2:49",
+        "MKOBBG2:60",
+        "MKOBBG2:61",
+        "MKOBBG2:62",
+        "MKOBBG2:63",
+        "MKOBBG2:64",
+        "MKOBBG2:65",
+        "MKOBBG2:66",
+        "MKOBBG2:67",
+        "MKOBBG2:68",
+        "MKOBBG2:69",
+        "MKOBBG2:70",
+        "MKOBBG2:71",
+        "MKOBBG2:72",
+        "MKOBBG2:73",
+        "MKOBBG2:74",
+        "MKOBBG2:75",
+        "MKOBBG2:76",
+        "MKOBBG2:77",
+        "MKOBBG2:78",
+        "MKOBBG2:79",
+        "MKOBBG2:90",
+        "MKOBBG2:91",
+        "MKOBBG2:92",
+        "MKOBBG2:93",
+        "MKOBBG2:94",
+        "MKOBBG2:95",
+        "MKOBBG2:96",
+        "MKOBBG2:97",
+        "MKOBBG2:98",
+        "MKOBBG2:99",
+        "MKOBBG2:100",
+        "MKOBBG2:101",
+        "MKOBBG2:102",
+        "MKOBBG2:103",
+        "MKOBBG2:104",
+        "MKOBBG2:105",
+        "MKOBBG2:106",
+        "MKOBBG2:107",
+        "MKOBBG2:108",
+        "MKOBBG2:109",
+        "MKOBBG2:120",
+        "MKOBBG2:121",
+        "MKOBBG2:122",
+        "MKOBBG2:123",
+        "MKOBBG2:124",
+        "MKOBBG2:125",
+        "MKOBBG2:126",
+        "MKOBBG2:127",
+        "MKOBBG2:128",
+        "MKOBBG2:129",
+        "MKOBBG2:130",
+        "MKOBBG2:131",
+        "MKOBBG2:132",
+        "MKOBBG2:133",
+        "MKOBBG2:134",
+        "MKOBBG2:135",
+        "MKOBBG2:136",
+        "MKOBBG2:137",
+        "MKOBBG2:138",
+        "MKOBBG2:139",
+        "MKOBBG2E:0",
+        "MKOBBG2E:1",
+        "MKOBBG2E:2",
+        "MKOBBG2E:3",
+        "MKOBBG2E:4",
+        "MKOBBG2E:5",
+        "MKOBBG2E:6",
+        "MKOBBG2E:7",
+        "MKOBBG2E:8",
+        "MKOBBG2E:9",
+        "MKOBBG2E:10",
+        "MKOBBG2E:11",
+        "MKOBBG2E:12",
+        "MKOBBG2E:13",
+        "MKOBBG2E:14",
+        "MKOBBG2E:15",
+        "MKOBBG2E:16",
+        "MKOBBG2E:17",
+        "MKOBBG2E:18",
+        "MKOBBG2E:19",
+        "MKOBBG2E:30",
+        "MKOBBG2E:31",
+        "MKOBBG2E:32",
+        "MKOBBG2E:33",
+        "MKOBBG2E:34",
+        "MKOBBG2E:35",
+        "MKOBBG2E:36",
+        "MKOBBG2E:37",
+        "MKOBBG2E:38",
+        "MKOBBG2E:39",
+        "MKOBBG2E:40",
+        "MKOBBG2E:41",
+        "MKOBBG2E:42",
+        "MKOBBG2E:43",
+        "MKOBBG2E:44",
+        "MKOBBG2E:45",
+        "MKOBBG2E:46",
+        "MKOBBG2E:47",
+        "MKOBBG2E:48",
+        "MKOBBG2E:49",
+        "MKOBBG2E:60",
+        "MKOBBG2E:61",
+        "MKOBBG2E:62",
+        "MKOBBG2E:63",
+        "MKOBBG2E:64",
+        "MKOBBG2E:65",
+        "MKOBBG2E:66",
+        "MKOBBG2E:67",
+        "MKOBBG2E:68",
+        "MKOBBG2E:69",
+        "MKOBBG2E:70",
+        "MKOBBG2E:71",
+        "MKOBBG2E:72",
+        "MKOBBG2E:73",
+        "MKOBBG2E:74",
+        "MKOBBG2E:75",
+        "MKOBBG2E:76",
+        "MKOBBG2E:77",
+        "MKOBBG2E:78",
+        "MKOBBG2E:79",
+        "MKOBSG2:20",
+        "MKOBSG2:21",
+        "MKOBSG2:22",
+        "MKOBSG2:23",
+        "MKOBSG2:24",
+        "MKOBSG2:25",
+        "MKOBSG2:26",
+        "MKOBSG2:27",
+        "MKOBSG2:28",
+        "MKOBSG2:29",
+        "MKOBSG2:50",
+        "MKOBSG2:51",
+        "MKOBSG2:52",
+        "MKOBSG2:53",
+        "MKOBSG2:54",
+        "MKOBSG2:55",
+        "MKOBSG2:56",
+        "MKOBSG2:57",
+        "MKOBSG2:58",
+        "MKOBSG2:59",
+        "MKOBSG2:80",
+        "MKOBSG2:81",
+        "MKOBSG2:82",
+        "MKOBSG2:83",
+        "MKOBSG2:84",
+        "MKOBSG2:85",
+        "MKOBSG2:86",
+        "MKOBSG2:87",
+        "MKOBSG2:88",
+        "MKOBSG2:89",
+        "MKOBSG2:110",
+        "MKOBSG2:111",
+        "MKOBSG2:112",
+        "MKOBSG2:113",
+        "MKOBSG2:114",
+        "MKOBSG2:115",
+        "MKOBSG2:116",
+        "MKOBSG2:117",
+        "MKOBSG2:118",
+        "MKOBSG2:119",
+        "MKOBSG2:140",
+        "MKOBSG2:141",
+        "MKOBSG2:142",
+        "MKOBSG2:143",
+        "MKOBSG2:144",
+        "MKOBSG2:145",
+        "MKOBSG2:146",
+        "MKOBSG2:147",
+        "MKOBSG2:148",
+        "MKOBSG2:149",
+        "MKOBSG2E:20",
+        "MKOBSG2E:21",
+        "MKOBSG2E:22",
+        "MKOBSG2E:23",
+        "MKOBSG2E:24",
+        "MKOBSG2E:25",
+        "MKOBSG2E:26",
+        "MKOBSG2E:27",
+        "MKOBSG2E:28",
+        "MKOBSG2E:29",
+        "MKOBSG2E:50",
+        "MKOBSG2E:51",
+        "MKOBSG2E:52",
+        "MKOBSG2E:53",
+        "MKOBSG2E:54",
+        "MKOBSG2E:55",
+        "MKOBSG2E:56",
+        "MKOBSG2E:57",
+        "MKOBSG2E:58",
+        "MKOBSG2E:59",
+        "MKOBSG2E:80",
+        "MKOBSG2E:81",
+        "MKOBSG2E:82",
+        "MKOBSG2E:83",
+        "MKOBSG2E:84",
+        "MKOBSG2E:85",
+        "MKOBSG2E:86",
+        "MKOBSG2E:87",
+        "MKOBSG2E:88",
+        "MKOBSG2E:89",
+        "MSIRBG2:0",
+        "MSIRBG2:1",
+        "MSIRBG2:2",
+        "MSIRBG2:3",
+        "MSIRBG2:4",
+        "MSIRBG2:5",
+        "MSIRBG2:6",
+        "MSIRBG2:7",
+        "MSIRBG2:8",
+        "MSIRBG2:9",
+        "MSIRBG2:30",
+        "MSIRBG2:31",
+        "MSIRBG2:32",
+        "MSIRBG2:33",
+        "MSIRBG2:34",
+        "MSIRBG2:35",
+        "MSIRBG2:36",
+        "MSIRBG2:37",
+        "MSIRBG2:38",
+        "MSIRBG2:39",
+        "MSIRBG2:60",
+        "MSIRBG2:61",
+        "MSIRBG2:62",
+        "MSIRBG2:63",
+        "MSIRBG2:64",
+        "MSIRBG2:65",
+        "MSIRBG2:66",
+        "MSIRBG2:67",
+        "MSIRBG2:68",
+        "MSIRBG2:69",
+        "MSIRBG2:90",
+        "MSIRBG2:91",
+        "MSIRBG2:92",
+        "MSIRBG2:93",
+        "MSIRBG2:94",
+        "MSIRBG2:95",
+        "MSIRBG2:96",
+        "MSIRBG2:97",
+        "MSIRBG2:98",
+        "MSIRBG2:99",
+        "MSIRBG2:120",
+        "MSIRBG2:121",
+        "MSIRBG2:122",
+        "MSIRBG2:123",
+        "MSIRBG2:124",
+        "MSIRBG2:125",
+        "MSIRBG2:126",
+        "MSIRBG2:127",
+        "MSIRBG2:128",
+        "MSIRBG2:129",
+        "MSIRBG2E:0",
+        "MSIRBG2E:1",
+        "MSIRBG2E:2",
+        "MSIRBG2E:3",
+        "MSIRBG2E:4",
+        "MSIRBG2E:5",
+        "MSIRBG2E:6",
+        "MSIRBG2E:7",
+        "MSIRBG2E:8",
+        "MSIRBG2E:9",
+        "MSIRBG2E:30",
+        "MSIRBG2E:31",
+        "MSIRBG2E:32",
+        "MSIRBG2E:33",
+        "MSIRBG2E:34",
+        "MSIRBG2E:35",
+        "MSIRBG2E:36",
+        "MSIRBG2E:37",
+        "MSIRBG2E:38",
+        "MSIRBG2E:39",
+        "MSIRBG2E:60",
+        "MSIRBG2E:61",
+        "MSIRBG2E:62",
+        "MSIRBG2E:63",
+        "MSIRBG2E:64",
+        "MSIRBG2E:65",
+        "MSIRBG2E:66",
+        "MSIRBG2E:67",
+        "MSIRBG2E:68",
+        "MSIRBG2E:69"
+      ],
+      "count": 320
+    },
+    {
+      "examples": [
+        "MKOBSG1:77",
+        "MKOBSG1:78"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MOGMSG1:64",
+        "MOGMSG1:65",
+        "MOGMSG1:66",
+        "MOGMSG1:67",
+        "MOGMSG1:69",
+        "MOGMSG1:109",
+        "MOGMSG1:110",
+        "MOGMSG1:111",
+        "MOGMSG2:70",
+        "MOGMSG2:108",
+        "MOGMSG2E:17"
+      ],
+      "count": 11
+    },
+    {
+      "examples": [
+        "MOGMSG1:132",
+        "MOGMSG1:133"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MOGMSG2:20",
+        "MOGMSG2:21",
+        "MOGMSG2:22",
+        "MOGMSG2:23",
+        "MOGMSG2:24",
+        "MOGMSG2:25",
+        "MOGMSG2:26",
+        "MOGMSG2:27",
+        "MOGMSG2:28",
+        "MOGMSG2:29",
+        "MOGMSG2:50",
+        "MOGMSG2:51",
+        "MOGMSG2:52",
+        "MOGMSG2:53",
+        "MOGMSG2:54",
+        "MOGMSG2:55",
+        "MOGMSG2:56",
+        "MOGMSG2:57",
+        "MOGMSG2:58",
+        "MOGMSG2:59",
+        "MOGMSG2:80",
+        "MOGMSG2:81",
+        "MOGMSG2:82",
+        "MOGMSG2:83",
+        "MOGMSG2:84",
+        "MOGMSG2:85",
+        "MOGMSG2:86",
+        "MOGMSG2:87",
+        "MOGMSG2:88",
+        "MOGMSG2:89",
+        "MOGMSG2:110",
+        "MOGMSG2:111",
+        "MOGMSG2:112",
+        "MOGMSG2:113",
+        "MOGMSG2:114",
+        "MOGMSG2:115",
+        "MOGMSG2:116",
+        "MOGMSG2:117",
+        "MOGMSG2:118",
+        "MOGMSG2:119",
+        "MOGMSG2:140",
+        "MOGMSG2:141",
+        "MOGMSG2:142",
+        "MOGMSG2:143",
+        "MOGMSG2:144",
+        "MOGMSG2:145",
+        "MOGMSG2:146",
+        "MOGMSG2:147",
+        "MOGMSG2:148",
+        "MOGMSG2:149",
+        "MOGMSG2E:20",
+        "MOGMSG2E:21",
+        "MOGMSG2E:22",
+        "MOGMSG2E:23",
+        "MOGMSG2E:24",
+        "MOGMSG2E:25",
+        "MOGMSG2E:26",
+        "MOGMSG2E:27",
+        "MOGMSG2E:28",
+        "MOGMSG2E:29",
+        "MOGMSG2E:50",
+        "MOGMSG2E:51",
+        "MOGMSG2E:52",
+        "MOGMSG2E:53",
+        "MOGMSG2E:54",
+        "MOGMSG2E:55",
+        "MOGMSG2E:56",
+        "MOGMSG2E:57",
+        "MOGMSG2E:58",
+        "MOGMSG2E:59",
+        "MOGMSG2E:80",
+        "MOGMSG2E:81",
+        "MOGMSG2E:82",
+        "MOGMSG2E:83",
+        "MOGMSG2E:84",
+        "MOGMSG2E:85",
+        "MOGMSG2E:86",
+        "MOGMSG2E:87",
+        "MOGMSG2E:88",
+        "MOGMSG2E:89"
+      ],
+      "count": 80
+    },
+    {
+      "examples": [
+        "MSIRBG2E:10",
+        "MSIRG2BE:10"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:11",
+        "MSIRG2BE:11"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:12",
+        "MSIRG2BE:12"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:13",
+        "MSIRG2BE:13"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:14",
+        "MSIRG2BE:14"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:15",
+        "MSIRG2BE:15"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:16",
+        "MSIRG2BE:16"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:17",
+        "MSIRG2BE:17"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:18",
+        "MSIRG2BE:18"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:19",
+        "MSIRG2BE:19"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:20",
+        "MSIRG2BE:20"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:21",
+        "MSIRG2BE:21"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:22",
+        "MSIRG2BE:22"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:23",
+        "MSIRG2BE:23"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:24",
+        "MSIRG2BE:24"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:25",
+        "MSIRG2BE:25"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:26",
+        "MSIRG2BE:26"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:27",
+        "MSIRG2BE:27"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:28",
+        "MSIRG2BE:28"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:29",
+        "MSIRG2BE:29"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:40",
+        "MSIRG2BE:40"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:41",
+        "MSIRG2BE:41"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:42",
+        "MSIRG2BE:42"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:43",
+        "MSIRG2BE:43"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:44",
+        "MSIRG2BE:44"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:45",
+        "MSIRG2BE:45"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:46",
+        "MSIRG2BE:46"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:47",
+        "MSIRG2BE:47"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:48",
+        "MSIRG2BE:48"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:49",
+        "MSIRG2BE:49"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:50",
+        "MSIRG2BE:50"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:51",
+        "MSIRG2BE:51"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:52",
+        "MSIRG2BE:52"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:53",
+        "MSIRG2BE:53"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:54",
+        "MSIRG2BE:54"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:55",
+        "MSIRG2BE:55"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:56",
+        "MSIRG2BE:56"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:57",
+        "MSIRG2BE:57"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:58",
+        "MSIRG2BE:58"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:59",
+        "MSIRG2BE:59"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:70",
+        "MSIRG2BE:70"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:71",
+        "MSIRG2BE:71"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:72",
+        "MSIRG2BE:72"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:73",
+        "MSIRG2BE:73"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:74",
+        "MSIRG2BE:74"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:75",
+        "MSIRG2BE:75"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:76",
+        "MSIRG2BE:76"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:77",
+        "MSIRG2BE:77"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:78",
+        "MSIRG2BE:78"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:79",
+        "MSIRG2BE:79"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:80",
+        "MSIRG2BE:80"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:81",
+        "MSIRG2BE:81"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:82",
+        "MSIRG2BE:82"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:83",
+        "MSIRG2BE:83"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:84",
+        "MSIRG2BE:84"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:85",
+        "MSIRG2BE:85"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:86",
+        "MSIRG2BE:86"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:87",
+        "MSIRG2BE:87"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:88",
+        "MSIRG2BE:88"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRBG2E:89",
+        "MSIRG2BE:89"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "MSIRG2BE:0",
+        "MSIRG2BE:1",
+        "MSIRG2BE:2",
+        "MSIRG2BE:3",
+        "MSIRG2BE:4",
+        "MSIRG2BE:5",
+        "MSIRG2BE:6",
+        "MSIRG2BE:7",
+        "MSIRG2BE:8",
+        "MSIRG2BE:9",
+        "MSIRG2BE:30",
+        "MSIRG2BE:31",
+        "MSIRG2BE:32",
+        "MSIRG2BE:33",
+        "MSIRG2BE:34",
+        "MSIRG2BE:35",
+        "MSIRG2BE:36",
+        "MSIRG2BE:37",
+        "MSIRG2BE:38",
+        "MSIRG2BE:39",
+        "MSIRG2BE:60",
+        "MSIRG2BE:61",
+        "MSIRG2BE:62",
+        "MSIRG2BE:63",
+        "MSIRG2BE:64",
+        "MSIRG2BE:65",
+        "MSIRG2BE:66",
+        "MSIRG2BE:67",
+        "MSIRG2BE:68",
+        "MSIRG2BE:69"
+      ],
+      "count": 30
+    },
+    {
+      "examples": [
+        "UVOLG1:0",
+        "UVOLG2:0"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:1",
+        "UVOLG2:1"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:2",
+        "UVOLG2:2"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:3",
+        "UVOLG2:3"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:4",
+        "UVOLG2:4"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:5",
+        "UVOLG2:5"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:6",
+        "UVOLG2:6"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:7",
+        "UVOLG2:7"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:8",
+        "UVOLG2:8"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:9",
+        "UVOLG2:9"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:10",
+        "UVOLG2:10"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:11",
+        "UVOLG2:11"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:12",
+        "UVOLG2:12"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:13",
+        "UVOLG2:13"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:14",
+        "UVOLG2:14"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:15",
+        "UVOLG2:15"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:16",
+        "UVOLG2:16"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:17",
+        "UVOLG2:17"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:18",
+        "UVOLG2:18"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:19",
+        "UVOLG2:19"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:20",
+        "UVOLG2:20"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:21",
+        "UVOLG2:21"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:22",
+        "UVOLG2:22"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:23",
+        "UVOLG2:23"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:24",
+        "UVOLG2:24"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:25",
+        "UVOLG2:25"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:26",
+        "UVOLG2:26"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:27",
+        "UVOLG2:27"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:28",
+        "UVOLG2:28"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:29",
+        "UVOLG2:29"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:30",
+        "UVOLG2:30"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:31",
+        "UVOLG2:31"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:32",
+        "UVOLG2:32"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:33",
+        "UVOLG2:33"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:34",
+        "UVOLG2:34"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:35",
+        "UVOLG2:35"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:36",
+        "UVOLG2:36"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:37",
+        "UVOLG1:99",
+        "UVOLG1:129",
+        "UVOLG1:130",
+        "UVOLG1E:5",
+        "UVOLG1E:6",
+        "UVOLG1E:68",
+        "UVOLG2:37",
+        "UVOLG2:99",
+        "UVOLG2:129",
+        "UVOLG2:130",
+        "UVOLG2E:5",
+        "UVOLG2E:6",
+        "UVOLG2E:68"
+      ],
+      "count": 14
+    },
+    {
+      "examples": [
+        "UVOLG1:38",
+        "UVOLG2:38"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:39",
+        "UVOLG2:39"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:40",
+        "UVOLG2:40"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:41",
+        "UVOLG2:41"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:42",
+        "UVOLG2:42"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:43",
+        "UVOLG2:43"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:44",
+        "UVOLG2:44"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:45",
+        "UVOLG2:45"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:46",
+        "UVOLG2:46"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:47",
+        "UVOLG2:47"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:48",
+        "UVOLG2:48"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:49",
+        "UVOLG2:49"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:50",
+        "UVOLG2:50"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:51",
+        "UVOLG2:51"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:52",
+        "UVOLG2:52"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:53",
+        "UVOLG2:53"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:54",
+        "UVOLG2:54"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:55",
+        "UVOLG2:55"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:56",
+        "UVOLG2:56"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:57",
+        "UVOLG2:57"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:58",
+        "UVOLG2:58"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:59",
+        "UVOLG2:59"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:60",
+        "UVOLG2:60"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:61",
+        "UVOLG2:61"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:62",
+        "UVOLG2:62"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:63",
+        "UVOLG2:63"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:64",
+        "UVOLG2:64"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:65",
+        "UVOLG2:65"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:66",
+        "UVOLG2:66"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:67",
+        "UVOLG2:67"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:68",
+        "UVOLG2:68"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:69",
+        "UVOLG2:69"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:70",
+        "UVOLG2:70"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:71",
+        "UVOLG2:71"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:72",
+        "UVOLG2:72"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:73",
+        "UVOLG2:73"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:74",
+        "UVOLG2:74"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:75",
+        "UVOLG2:75"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:76",
+        "UVOLG2:76"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:77",
+        "UVOLG2:77"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:78",
+        "UVOLG2:78"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:79",
+        "UVOLG2:79"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:80",
+        "UVOLG2:80"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:81",
+        "UVOLG2:81"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:82",
+        "UVOLG2:82"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:83",
+        "UVOLG2:83"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:84",
+        "UVOLG2:84"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:85",
+        "UVOLG2:85"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:86",
+        "UVOLG2:86"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:87",
+        "UVOLG2:87"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:88",
+        "UVOLG2:88"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:89",
+        "UVOLG2:89"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:90",
+        "UVOLG2:90"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:91",
+        "UVOLG2:91"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:92",
+        "UVOLG2:92"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:93",
+        "UVOLG2:93"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:94",
+        "UVOLG2:94"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:95",
+        "UVOLG2:95"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:96",
+        "UVOLG2:96"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:97",
+        "UVOLG2:97"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:98",
+        "UVOLG2:98"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:100",
+        "UVOLG2:100"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:101",
+        "UVOLG2:101"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:102",
+        "UVOLG2:102"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:103",
+        "UVOLG2:103"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:104",
+        "UVOLG2:104"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:105",
+        "UVOLG2:105"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:106",
+        "UVOLG2:106"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:107",
+        "UVOLG2:107"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:108",
+        "UVOLG2:108"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:109",
+        "UVOLG2:109"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:110",
+        "UVOLG2:110"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:111",
+        "UVOLG2:111"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:112",
+        "UVOLG2:112"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:113",
+        "UVOLG2:113"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:114",
+        "UVOLG2:114"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:115",
+        "UVOLG2:115"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:116",
+        "UVOLG2:116"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:117",
+        "UVOLG2:117"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:118",
+        "UVOLG2:118"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:119",
+        "UVOLG2:119"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:120",
+        "UVOLG2:120"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:121",
+        "UVOLG2:121"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:122",
+        "UVOLG2:122"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:123",
+        "UVOLG2:123"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:124",
+        "UVOLG2:124"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:125",
+        "UVOLG2:125"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:126",
+        "UVOLG2:126"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:127",
+        "UVOLG2:127"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:128",
+        "UVOLG2:128"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:131",
+        "UVOLG2:131"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:132",
+        "UVOLG2:132"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:133",
+        "UVOLG2:133"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:134",
+        "UVOLG2:134"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:135",
+        "UVOLG2:135"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:136",
+        "UVOLG2:136"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:137",
+        "UVOLG2:137"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:138",
+        "UVOLG2:138"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:139",
+        "UVOLG2:139"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:140",
+        "UVOLG2:140"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:141",
+        "UVOLG2:141"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:142",
+        "UVOLG2:142"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:143",
+        "UVOLG2:143"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:144",
+        "UVOLG2:144"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:145",
+        "UVOLG2:145"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:146",
+        "UVOLG2:146"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:147",
+        "UVOLG2:147"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:148",
+        "UVOLG2:148"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:149",
+        "UVOLG2:149"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:150",
+        "UVOLG2:150"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:151",
+        "UVOLG2:151"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:152",
+        "UVOLG2:152"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:153",
+        "UVOLG2:153"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1:154",
+        "UVOLG2:154"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:0",
+        "UVOLG2E:0"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:1",
+        "UVOLG2E:1"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:2",
+        "UVOLG2E:2"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:3",
+        "UVOLG2E:3"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:4",
+        "UVOLG2E:4"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:7",
+        "UVOLG2E:7"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:8",
+        "UVOLG2E:8"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:9",
+        "UVOLG2E:9"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:10",
+        "UVOLG2E:10"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:11",
+        "UVOLG2E:11"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:12",
+        "UVOLG2E:12"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:13",
+        "UVOLG2E:13"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:14",
+        "UVOLG2E:14"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:15",
+        "UVOLG2E:15"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:16",
+        "UVOLG2E:16"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:17",
+        "UVOLG2E:17"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:18",
+        "UVOLG2E:18"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:19",
+        "UVOLG2E:19"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:20",
+        "UVOLG2E:20"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:21",
+        "UVOLG2E:21"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:22",
+        "UVOLG2E:22"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:23",
+        "UVOLG2E:23"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:24",
+        "UVOLG2E:24"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:25",
+        "UVOLG2E:25"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:26",
+        "UVOLG2E:26"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:27",
+        "UVOLG2E:27"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:28",
+        "UVOLG2E:28"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:29",
+        "UVOLG2E:29"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:30",
+        "UVOLG2E:30"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:31",
+        "UVOLG2E:31"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:32",
+        "UVOLG2E:32"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:33",
+        "UVOLG2E:33"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:34",
+        "UVOLG2E:34"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:35",
+        "UVOLG2E:35"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:36",
+        "UVOLG2E:36"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:37",
+        "UVOLG2E:37"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:38",
+        "UVOLG2E:38"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:39",
+        "UVOLG2E:39"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:40",
+        "UVOLG2E:40"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:41",
+        "UVOLG2E:41"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:42",
+        "UVOLG2E:42"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:43",
+        "UVOLG2E:43"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:44",
+        "UVOLG2E:44"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:45",
+        "UVOLG2E:45"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:46",
+        "UVOLG2E:46"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:47",
+        "UVOLG2E:47"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:48",
+        "UVOLG2E:48"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:49",
+        "UVOLG2E:49"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:50",
+        "UVOLG2E:50"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:51",
+        "UVOLG2E:51"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:52",
+        "UVOLG2E:52"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:53",
+        "UVOLG2E:53"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:54",
+        "UVOLG2E:54"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:55",
+        "UVOLG2E:55"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:56",
+        "UVOLG2E:56"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:57",
+        "UVOLG2E:57"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:58",
+        "UVOLG2E:58"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:59",
+        "UVOLG2E:59"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:60",
+        "UVOLG2E:60"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:61",
+        "UVOLG2E:61"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:62",
+        "UVOLG2E:62"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:63",
+        "UVOLG2E:63"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:64",
+        "UVOLG2E:64"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:65",
+        "UVOLG2E:65"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:66",
+        "UVOLG2E:66"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:67",
+        "UVOLG2E:67"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:69",
+        "UVOLG2E:69"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:70",
+        "UVOLG2E:70"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:71",
+        "UVOLG2E:71"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:72",
+        "UVOLG2E:72"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:73",
+        "UVOLG2E:73"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:74",
+        "UVOLG2E:74"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:75",
+        "UVOLG2E:75"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:76",
+        "UVOLG2E:76"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:77",
+        "UVOLG2E:77"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:78",
+        "UVOLG2E:78"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:79",
+        "UVOLG2E:79"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:80",
+        "UVOLG2E:80"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:81",
+        "UVOLG2E:81"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:82",
+        "UVOLG2E:82"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:83",
+        "UVOLG2E:83"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:84",
+        "UVOLG2E:84"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:85",
+        "UVOLG2E:85"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:86",
+        "UVOLG2E:86"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:87",
+        "UVOLG2E:87"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:88",
+        "UVOLG2E:88"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:89",
+        "UVOLG2E:89"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:90",
+        "UVOLG2E:90"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:91",
+        "UVOLG2E:91"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLG1E:92",
+        "UVOLG2E:92"
+      ],
+      "count": 2
+    },
+    {
+      "examples": [
+        "UVOLMG2:0",
+        "UVOLMG2E:0"
+      ],
+      "count": 2
+    }
+  ],
+  "source_frames": 6512,
+  "unique_source_work": 5758,
+  "unique_encoded_work": 5758,
+  "physical_repetitions": 754,
+  "compatible_encoded_cache_hits": 276,
+  "new_encoded_work": 5482,
+  "special_work_without_inference": 3,
+  "per_model": [
+    {
+      "animation_id": "0x2000",
+      "name": "SIRINE",
+      "BAM": 9,
+      "frames": 954,
+      "unique_source_work": 786,
+      "unique_encoded_work": 786,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 786,
+      "special_work_without_inference": 1,
+      "refs": [
+        "MSIRBG1",
+        "MSIRBG1E",
+        "MSIRBG2",
+        "MSIRBG2E",
+        "MSIRG1",
+        "MSIRG1E",
+        "MSIRG2",
+        "MSIRG2BE",
+        "MSIRG2E"
+      ]
+    },
+    {
+      "animation_id": "0x2100",
+      "name": "VOLO",
+      "BAM": 8,
+      "frames": 532,
+      "unique_source_work": 277,
+      "unique_encoded_work": 277,
+      "compatible_cache_hits": 276,
+      "new_encoded_work": 1,
+      "special_work_without_inference": 1,
+      "refs": [
+        "UVOLG1",
+        "UVOLG1E",
+        "UVOLG2",
+        "UVOLG2E",
+        "UVOLMG1",
+        "UVOLMG1E",
+        "UVOLMG2",
+        "UVOLMG2E"
+      ]
+    },
+    {
+      "animation_id": "0x2200",
+      "name": "OGRE_MAGE",
+      "BAM": 8,
+      "frames": 960,
+      "unique_source_work": 870,
+      "unique_encoded_work": 870,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 870,
+      "special_work_without_inference": 1,
+      "refs": [
+        "MOGMG1",
+        "MOGMG1E",
+        "MOGMG2",
+        "MOGMG2E",
+        "MOGMSG1",
+        "MOGMSG1E",
+        "MOGMSG2",
+        "MOGMSG2E"
+      ]
+    },
+    {
+      "animation_id": "0x2300",
+      "name": "DEATH_KNIGHT",
+      "BAM": 4,
+      "frames": 552,
+      "unique_source_work": 552,
+      "unique_encoded_work": 552,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 552,
+      "special_work_without_inference": 0,
+      "refs": [
+        "MDKNG1",
+        "MDKNG1E",
+        "MDKNG2",
+        "MDKNG2E"
+      ]
+    },
+    {
+      "animation_id": "0x8000",
+      "name": "GNOLL",
+      "BAM": 13,
+      "frames": 1090,
+      "unique_source_work": 1090,
+      "unique_encoded_work": 1090,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 1090,
+      "special_work_without_inference": 0,
+      "refs": [
+        "MGNLG1",
+        "MGNLG1E",
+        "MGNLG2",
+        "MGNLG2E",
+        "MGNLHG1",
+        "MGNLHG1E",
+        "MGNLHG2",
+        "MGNLHG2E",
+        "MGNLINV",
+        "MGNLSG1",
+        "MGNLSG1E",
+        "MGNLSG2",
+        "MGNLSG2E"
+      ]
+    },
+    {
+      "animation_id": "0x8100",
+      "name": "HOBGOBLIN",
+      "BAM": 12,
+      "frames": 1152,
+      "unique_source_work": 1152,
+      "unique_encoded_work": 1152,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 1152,
+      "special_work_without_inference": 0,
+      "refs": [
+        "MHOBBG1",
+        "MHOBBG1E",
+        "MHOBBG2",
+        "MHOBBG2E",
+        "MHOBG1",
+        "MHOBG1E",
+        "MHOBG2",
+        "MHOBG2E",
+        "MHOBSG1",
+        "MHOBSG1E",
+        "MHOBSG2",
+        "MHOBSG2E"
+      ]
+    },
+    {
+      "animation_id": "0x8200",
+      "name": "KOBOLD",
+      "BAM": 12,
+      "frames": 1272,
+      "unique_source_work": 1032,
+      "unique_encoded_work": 1032,
+      "compatible_cache_hits": 0,
+      "new_encoded_work": 1032,
+      "special_work_without_inference": 0,
+      "refs": [
+        "MKOBBG1",
+        "MKOBBG1E",
+        "MKOBBG2",
+        "MKOBBG2E",
+        "MKOBG1",
+        "MKOBG1E",
+        "MKOBG2",
+        "MKOBG2E",
+        "MKOBSG1",
+        "MKOBSG1E",
+        "MKOBSG2",
+        "MKOBSG2E"
+      ]
+    }
+  ],
+  "source_resources_verified": [
+    {
+      "resref": "MDKNG1",
+      "sha256": "904fd1c8c0c7202cfc390ae8731d3510c92c9071a88e149054747f45c44429a9",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 175
+    },
+    {
+      "resref": "MDKNG1E",
+      "sha256": "5b37cbfb79060448b53d780769eb10f9cbf8d0bb27f395782b0d0856d0fd00d7",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 105
+    },
+    {
+      "resref": "MDKNG2",
+      "sha256": "482afa3c5ce6af239c05f8cb0f989b7f17fa85edc3090065238560a276595f81",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 170
+    },
+    {
+      "resref": "MDKNG2E",
+      "sha256": "d5802cf81bdf6a2b9bde8ecba6e6a8538e25e3d470a4859199df5d2e9162dcb4",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 102
+    },
+    {
+      "resref": "MGNLG1",
+      "sha256": "1e3965831ab137c3622b98d2fa5366bb9af00a2efcac7dd6857358a40526d4fa",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MGNLG1E",
+      "sha256": "1262cf6e543efa1d29a83a9e14169c9229976a15393c180bfb1b693475d904c0",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MGNLG2",
+      "sha256": "983709ceba698d794921bebfd8bf5495bc0325a90158f21724d4cf81478fc68b",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 130
+    },
+    {
+      "resref": "MGNLG2E",
+      "sha256": "24b713115ca958a093521b93d25c9a48e10d7668338001dd8bbe6e19557eb9ff",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 78
+    },
+    {
+      "resref": "MGNLHG1",
+      "sha256": "dfacf0595f5ea20db7a2fd55517e2edf6ff0fcf6909d2a1811c14bc47e332487",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MGNLHG1E",
+      "sha256": "55bc6d6253ffd6febfb44b5499434e347c6f4055df8db6f47044a2e1452d0a8a",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MGNLHG2",
+      "sha256": "2d63725bc8f8ef76c9b6b1df36a8676a49653f46fc77383351cfe8c89a493051",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 30
+    },
+    {
+      "resref": "MGNLHG2E",
+      "sha256": "b42b21be9205c3c3979f202bbe7ae221772ed1673a61d0ee34b264b657fc36d9",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 18
+    },
+    {
+      "resref": "MGNLINV",
+      "sha256": "579ee57df7bf39eb62c3de601b2a8f99c1eb3c3f4f6dfc33079de9b3a86aa328",
+      "BIF": "data/PaperDol.bif",
+      "frames": 2
+    },
+    {
+      "resref": "MGNLSG1",
+      "sha256": "256d9834ed8e301b13256b3bb4a85c49e7d6fd10db727d01eb30710cd94f1939",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MGNLSG1E",
+      "sha256": "c9bfaaebe0db71a01c68b91ff47b1f6b80b7e20da459999c668aa735cf153b22",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MGNLSG2",
+      "sha256": "50fffbf45d4d8fbd7129972d3653d4cde550b28d7965aa18a21781b72cf7a951",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 100
+    },
+    {
+      "resref": "MGNLSG2E",
+      "sha256": "e32a35e65065f207b6237bace68826760aa2b1282893b09deeb5e687e46132f3",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 60
+    },
+    {
+      "resref": "MHOBBG1",
+      "sha256": "63c91133cfa6728dd4ad9d672aa87887edee597efdde3fa652b35598963c27d6",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MHOBBG1E",
+      "sha256": "8bd94a7d0e6ab074dd47f32acd03e4c8df151f50788826af2c5c7d03da49d53b",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MHOBBG2",
+      "sha256": "8ef767e3b3e49aa15bc7e14266bc202d127bd6e98e873c5abf64541cd6dd6b04",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 50
+    },
+    {
+      "resref": "MHOBBG2E",
+      "sha256": "20660298951adad4ebf2fdeb0099f47abae407c055e52e265520ab12125e6d2e",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 30
+    },
+    {
+      "resref": "MHOBG1",
+      "sha256": "163eaf5941c7727c65787860d86942bcb6f69b2de174fba541b60098dc0ec0f7",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MHOBG1E",
+      "sha256": "608bcf1bdb8604ae45777be92c6ab2dab33b9eaeb541a15f55018faf1829989a",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MHOBG2",
+      "sha256": "3f8ae859f21f67fd220c58f7dc152d98b0d4df964744f1879f56dc9fd4405814",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MHOBG2E",
+      "sha256": "f6d1818a153bbbfa7170f690e89c381a2577d07f42b86dd34031567bfdade493",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MHOBSG1",
+      "sha256": "8cebd874453304df4840d66d5e8ba7990726db74e47a53d94713f16f19dbf1a5",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 140
+    },
+    {
+      "resref": "MHOBSG1E",
+      "sha256": "b34ee841dce3e6828c399b3397230189ff6860a59290a7958e9b806ae51d65e1",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 84
+    },
+    {
+      "resref": "MHOBSG2",
+      "sha256": "3c6ad5ebceaaeada0aeb42cea0c3b204063b3c9e784c0a70f3fc71dd947c95b3",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 100
+    },
+    {
+      "resref": "MHOBSG2E",
+      "sha256": "5c3bde7571f464875424522ac48719c67d71baf2a5d0ee00643faa1439ad9a4b",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 60
+    },
+    {
+      "resref": "MKOBBG1",
+      "sha256": "4cbcab7a628cb820cf5d9412b6ca430c994e7028a221758ee790e37e2b074b3b",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 115
+    },
+    {
+      "resref": "MKOBBG1E",
+      "sha256": "900850271de262b42bc72a6551a571bf4bf4c091d96d73f3fc657eb04cbeff7c",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 69
+    },
+    {
+      "resref": "MKOBBG2",
+      "sha256": "2bc4f8c1018e93e6d16beefba4a730b44ec6a02d5569d2d4bf0b7d39daea421a",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MKOBBG2E",
+      "sha256": "0e17f35a71f379133eaad2a0641fefd255838c1f215e4c48719805c389454c6e",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MKOBG1",
+      "sha256": "90d064ba5c60d36b7a20846b5b8a668278fb7e1a66b5f03c95c36cfd7a12cbef",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 115
+    },
+    {
+      "resref": "MKOBG1E",
+      "sha256": "5e1424b2efbb03118ca255ea98d9c689d3479ab4d6a5710c8fae3e5eb8e6a966",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 69
+    },
+    {
+      "resref": "MKOBG2",
+      "sha256": "e9b09b4ed882c5ec492feb220f64b3e471182a3ff4af2a9554e487e36bbf514f",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MKOBG2E",
+      "sha256": "6189dfb0b9409ea13b2d0dde0b8a2c6122cd8a5a644395420f8f27617df60a1d",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MKOBSG1",
+      "sha256": "02c9051c355f0a0a136784afcf6c0a2dd2ef11e612f20ebe08dc97b964b451f1",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 115
+    },
+    {
+      "resref": "MKOBSG1E",
+      "sha256": "f55a317397cbf5ffcc8b118f9bc387198bd8ac57b8edf4bff95eeaf86c8be907",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 69
+    },
+    {
+      "resref": "MKOBSG2",
+      "sha256": "ea4d065a403137b7c0a353bc426f6f1b81fb00ac82a6f12721afdb660c65bf8e",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MKOBSG2E",
+      "sha256": "b38586a589c736c8c6afb2cc34e6734306779d75c478fb654a6a7ef999a5611d",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MOGMG1",
+      "sha256": "f3c6b3b612c5ba62ee96bd1aa329d9ca7c38a5d84a13cb0c4c9260d20588ae1c",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MOGMG1E",
+      "sha256": "9b015ec379e3d0451670dfe84a819666b8324900ebd3d93803cd666c7bb14502",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MOGMG2",
+      "sha256": "d3df28a0c18f95bb389b7f00cbf51bcb2f767eb973a9c37121c8b32ad15b27fd",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MOGMG2E",
+      "sha256": "a6633b7a402ff312b3036fc7ed3759c03739625c36dddbbf69acb8b4da4d350e",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MOGMSG1",
+      "sha256": "25a1dda8c4919a230870797e0eeb27a6c7da38c7cff52cbc9fa6421c119dcdf5",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MOGMSG1E",
+      "sha256": "4bfcd47d04bedbf3c1143d7eed4b7dd86c438a58f910e8df090856e7a2403096",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MOGMSG2",
+      "sha256": "ddb0f7b8da7c0b47ac67ed33c43160ce79646f8a792d06aec77dcde7bf63f0c9",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MOGMSG2E",
+      "sha256": "96cf29ca3acd995432ae38d6fabad89af7f69a6ec0ce2c115a97b9a9acb275ac",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MSIRBG1",
+      "sha256": "7533e64e379b3767c8cda2176e938636a399f56f4fa5b3b773347ae715888baa",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 120
+    },
+    {
+      "resref": "MSIRBG1E",
+      "sha256": "f0e64205b676a5b5683a186493035d392e0d90d75e5815569ac60c58de0f26a5",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 72
+    },
+    {
+      "resref": "MSIRBG2",
+      "sha256": "d4d7dcc8165e3f7f15db615bb877df03bcb1da7b839793db26b3ad1b19b6b1d1",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MSIRBG2E",
+      "sha256": "fcaf9b3b9c35187adc75d36fa2d1e0de2beea63282ace3280d43bf3906881910",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MSIRG1",
+      "sha256": "1d2f5ba5758fd351260dd39cc4f3616feed17d05e858aa882967ae8a8bcf65b5",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 120
+    },
+    {
+      "resref": "MSIRG1E",
+      "sha256": "8cf4afe1b4c227af4b6ff66a85745738ee9efae0362a8795d689e9dfb54896b0",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 72
+    },
+    {
+      "resref": "MSIRG2",
+      "sha256": "fe68f864e729793c5efcbf53962666ccee89259d0e368c375b52ecc7caddb17b",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 150
+    },
+    {
+      "resref": "MSIRG2BE",
+      "sha256": "d39c08980fecf3c2603bdf0be183d34b3d18b3e71e20701886d629c9923dd576",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "MSIRG2E",
+      "sha256": "e65eca4ee299c624a9a495dc33f45ff6761dce4457cbb46ebcd51e8d9c8363d7",
+      "BIF": "data/CREAnim1.bif",
+      "frames": 90
+    },
+    {
+      "resref": "UVOLG1",
+      "sha256": "31712cb417e99e3c3258be35f81a12f44029453defcbe1ef240881bb82712bbc",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 155
+    },
+    {
+      "resref": "UVOLG1E",
+      "sha256": "b49ba68082ba262abcbd1bc803faaf84face28ba28ac8eabb03223546159f101",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 93
+    },
+    {
+      "resref": "UVOLG2",
+      "sha256": "367833d7b8ce173a240c3c01faab16d8f39ad2e45234200cd006a940a511ecd0",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 155
+    },
+    {
+      "resref": "UVOLG2E",
+      "sha256": "c9ada166f5becd4c40131a73f28a2be14e47454a7dfb13b966bf460831d61df8",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 93
+    },
+    {
+      "resref": "UVOLMG1",
+      "sha256": "6da2422b7dc9e56b80d4fa38a1694156fb2c463039d323a58a3422b327324c2d",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 21
+    },
+    {
+      "resref": "UVOLMG1E",
+      "sha256": "c1e52004c9ff0c0db96ff9c04c5552f1507566cb2a47e73f47aac36639213c76",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 13
+    },
+    {
+      "resref": "UVOLMG2",
+      "sha256": "efd417e0888b713bb58fd60cb923be80fb3b9909511db838b5932e6cc3d8ebf0",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 1
+    },
+    {
+      "resref": "UVOLMG2E",
+      "sha256": "efd417e0888b713bb58fd60cb923be80fb3b9909511db838b5932e6cc3d8ebf0",
+      "BIF": "data/NPCAnim.bif",
+      "frames": 1
+    }
+  ],
+  "cache_hit_files": [
+    {
+      "key": "ff7e6495dffe7af91cc52ec197e785b12d27223c4974e06ec328e53974bae0e2",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ff7e6495dffe7af91cc52ec197e785b12d27223c4974e06ec328e53974bae0e2.npz",
+      "sha256": "cf49735576642563825701fb5ebb510ca9e1646becddc09cbbb8bd557afffd91"
+    },
+    {
+      "key": "c981e5758b22d8e69f76a6c7f9b6ff4a093fd0b1a45bc193b41e9268adc446e8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c981e5758b22d8e69f76a6c7f9b6ff4a093fd0b1a45bc193b41e9268adc446e8.npz",
+      "sha256": "4ef0864aa849aa9764458b752cc2d549449bb19f9843fe582590c54d1e19585b"
+    },
+    {
+      "key": "3bb70b0b26b565a52fcefa342d8e16232c34a9ae40ebe9f7ac0ba66c1a4e052f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3bb70b0b26b565a52fcefa342d8e16232c34a9ae40ebe9f7ac0ba66c1a4e052f.npz",
+      "sha256": "0633ad83f7eca9e30fab2e4f16a4b0b62eb3bd2f0c01f368862a6687ccc725ce"
+    },
+    {
+      "key": "77b5da70bfbf83fb88a315f67c50dd1353e8b86435d79a8d7ccd68fea5864d3e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/77b5da70bfbf83fb88a315f67c50dd1353e8b86435d79a8d7ccd68fea5864d3e.npz",
+      "sha256": "48d89d7a312521a0c9a75f63649d9bc03b406af8168792763078449351cea3fb"
+    },
+    {
+      "key": "c7eaac2dfb13ac3964fe4add8a67ba0523f7d4eafe761e28ca0f8aa0d7f02979",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c7eaac2dfb13ac3964fe4add8a67ba0523f7d4eafe761e28ca0f8aa0d7f02979.npz",
+      "sha256": "ee00bab2d0ec86e3fceb28d52a645587e0c3aafc8dcf9a0cd2e7ea8021520c00"
+    },
+    {
+      "key": "679cd0da9d9422752004b054fe40172b7baf4c8c9e2f191c7ddd33e6d96ec4c8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/679cd0da9d9422752004b054fe40172b7baf4c8c9e2f191c7ddd33e6d96ec4c8.npz",
+      "sha256": "2a1bb1f542813b8d1162bbc6d1653d4250ebda7363da9dc21e9ab55b7e925038"
+    },
+    {
+      "key": "896c5a4a8d858505cd5ba08842a8e48f726562f935fc0bdc375d49a3a5bb0be1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/896c5a4a8d858505cd5ba08842a8e48f726562f935fc0bdc375d49a3a5bb0be1.npz",
+      "sha256": "2867811760124d196cc8adef8c424fb2c0c72442b05d9600c51f79e8bd946b45"
+    },
+    {
+      "key": "04339a89b9f49634793a2a776b1ec2145509fa77c069ac99c9176eff79c65359",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/04339a89b9f49634793a2a776b1ec2145509fa77c069ac99c9176eff79c65359.npz",
+      "sha256": "eeeabaf953d16917da856294146045363ef7195e27761fe11d2b245785c36412"
+    },
+    {
+      "key": "34d86387e05940e4c11bc32000febbd62d54c97a16cf223068a5dd9fde4fe656",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/34d86387e05940e4c11bc32000febbd62d54c97a16cf223068a5dd9fde4fe656.npz",
+      "sha256": "66cdd3020b37423da12db17caa32fe3852aa453da76671e9c6a750a04fd3de5f"
+    },
+    {
+      "key": "f24a9209944ca60aaf25840dd3a5b9a918adea2216869f5ff8a42b83f9c7be00",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f24a9209944ca60aaf25840dd3a5b9a918adea2216869f5ff8a42b83f9c7be00.npz",
+      "sha256": "efad5019d377a440a454db9483b3b119b2f24f1486490acb60077e879d199cf6"
+    },
+    {
+      "key": "cb244d0625a6d9dbe8f0c477b99b14fc6dd33764e906c4e7e2e1faeca1b966eb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/cb244d0625a6d9dbe8f0c477b99b14fc6dd33764e906c4e7e2e1faeca1b966eb.npz",
+      "sha256": "931854370979dd23a1cdedb0dc38f80de37502569db4a8eb9ceb2832f59508a5"
+    },
+    {
+      "key": "9ad495e8d20b3405d13eba7850fafebf6e8e86349bb7213305ca3c8af1585e50",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/9ad495e8d20b3405d13eba7850fafebf6e8e86349bb7213305ca3c8af1585e50.npz",
+      "sha256": "4315a637968a83c9302d81f159a599726265feec5f6b28b8f497935974669305"
+    },
+    {
+      "key": "ff7e4d38d157a4c6dc22590f9b5fb303c7fcc5e1072f1c7ee41e59334e8f26cd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ff7e4d38d157a4c6dc22590f9b5fb303c7fcc5e1072f1c7ee41e59334e8f26cd.npz",
+      "sha256": "45b0c62276b07e26551b410edd11bcae2445a07994330dd1bbfa6db3b884895a"
+    },
+    {
+      "key": "43c46becf51c6405e35fd4d403cb53d6d220ce48938d255d2f5f944364b8ae85",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/43c46becf51c6405e35fd4d403cb53d6d220ce48938d255d2f5f944364b8ae85.npz",
+      "sha256": "1d46c54c9723bbaa4514a767868264dd7fc2a055622207b896e64397491138b0"
+    },
+    {
+      "key": "5bd289a9722d95ee0b24cfc07d460b3fb0bccbd8cd6fc3107daae0958b4b4d23",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5bd289a9722d95ee0b24cfc07d460b3fb0bccbd8cd6fc3107daae0958b4b4d23.npz",
+      "sha256": "45c21b0580a72e0954515326f5e5ddfb180249c33c30bd096ca72cdf9d59b36a"
+    },
+    {
+      "key": "593d9a9ef660e06f8ccb6c1d5e254d711735fb7b5c44b0e6127f04db730f09bb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/593d9a9ef660e06f8ccb6c1d5e254d711735fb7b5c44b0e6127f04db730f09bb.npz",
+      "sha256": "18ee0b8ec04e7e0b6d8bb6eb3ea9d77926397daa2c068a08f1158f16f9870c8f"
+    },
+    {
+      "key": "2246cd6ee96b7db905b59ddceff37ae60e6b5d5f6281307fe641ae06e468e735",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2246cd6ee96b7db905b59ddceff37ae60e6b5d5f6281307fe641ae06e468e735.npz",
+      "sha256": "13bed453d739bb91761941eac2c5c95427f7fe709ac1ee3b74a52a25123aa0ea"
+    },
+    {
+      "key": "657b72989a6d515c00f965f47df81037159df3dafc22726fbb5b1655298a1250",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/657b72989a6d515c00f965f47df81037159df3dafc22726fbb5b1655298a1250.npz",
+      "sha256": "6d436d9607147046137cd411123102547768f15db41fded1bf5005d1094dc4e0"
+    },
+    {
+      "key": "ec4aeaa463ad3b4e0f872d1aa535f9900a928e67c6299a8e474db26747b44432",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ec4aeaa463ad3b4e0f872d1aa535f9900a928e67c6299a8e474db26747b44432.npz",
+      "sha256": "4f85b0a53ff1b47a082e49ba7e7c2200f97bf05ac19f488472270dc7e6956754"
+    },
+    {
+      "key": "ecbe6b679a502574328a7577a797018ab04ccdc65af02a001c3d4fba2de4d818",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ecbe6b679a502574328a7577a797018ab04ccdc65af02a001c3d4fba2de4d818.npz",
+      "sha256": "1907b8b56f1f0f003780d95fe8d20d929734935a28ef4a418e574cf733100995"
+    },
+    {
+      "key": "b0626f13bbad748559dd11654cb0c7156096ec8370e8880a8698fce56f12e298",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b0626f13bbad748559dd11654cb0c7156096ec8370e8880a8698fce56f12e298.npz",
+      "sha256": "a6e3de8940e3cb7522ee208db789bf966d08e8d71dc48c88c3f1ba2519e3c142"
+    },
+    {
+      "key": "2056338c1d27654d45973c54ba8ecea7b2069204ab9c8de76f0bb814be01cc47",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2056338c1d27654d45973c54ba8ecea7b2069204ab9c8de76f0bb814be01cc47.npz",
+      "sha256": "c90df0843b0685e5d8ac6582724dd0ad8d4ad38b7e50e7b0db46567425329694"
+    },
+    {
+      "key": "33d89229c7d0dcdc9dbd4dba7983765dd23a517ee1009dbd524e0dbcb9890877",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/33d89229c7d0dcdc9dbd4dba7983765dd23a517ee1009dbd524e0dbcb9890877.npz",
+      "sha256": "86d9dc2766905198b89e610a880b9e0f3aae4a81b7bfe43b42272366264fb133"
+    },
+    {
+      "key": "f9584c524c016c87b465198e4c5ff8f7f11c74cb18ca9b61fc2a0a5fcfe94b1d",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f9584c524c016c87b465198e4c5ff8f7f11c74cb18ca9b61fc2a0a5fcfe94b1d.npz",
+      "sha256": "16566b3c398afc99c7cf2a738d721a0f0e7731e9d6cd59ac12ff50b315bab013"
+    },
+    {
+      "key": "3833a52fb28c087d58984e447c7bfa08ab6a5ed8db57ad88cad21d9c62d4aa43",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3833a52fb28c087d58984e447c7bfa08ab6a5ed8db57ad88cad21d9c62d4aa43.npz",
+      "sha256": "439843e3e4135280510eba354cb1a3a1660abba10fe3a74d2539774404925253"
+    },
+    {
+      "key": "d83e4db434a48d34e662b367a2560b26484c2bbdb8090854661678ecec0fa02e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d83e4db434a48d34e662b367a2560b26484c2bbdb8090854661678ecec0fa02e.npz",
+      "sha256": "b3251073ee1dcaefcb8d2360c1db59413a9d8ca21884b549afb53d269a13f305"
+    },
+    {
+      "key": "60c88b5bb84d42999dd13c24d04da8a6922671d37ad25509d99c6d0f5d3de064",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/60c88b5bb84d42999dd13c24d04da8a6922671d37ad25509d99c6d0f5d3de064.npz",
+      "sha256": "fa42588bf7bba3d492f2c60100442664ef782aa9726dddc9c1bcfc0730bb4bd0"
+    },
+    {
+      "key": "15ae6f8ccdeea8c74a2c01319cb498cafb231483017af4fe3f55de73f40b5a5a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/15ae6f8ccdeea8c74a2c01319cb498cafb231483017af4fe3f55de73f40b5a5a.npz",
+      "sha256": "29605a1b62e3bc8ac14ff0c4eea7558ff2d02f7264224a0ca2f2eed2a7534e50"
+    },
+    {
+      "key": "98676ae5119c20a826f84b81597df7e386416cdb2efeb83a159531e425947ab0",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/98676ae5119c20a826f84b81597df7e386416cdb2efeb83a159531e425947ab0.npz",
+      "sha256": "c5a4b6460fde02c73b5d2c9792e55b7bc64257f7f212e7c57426d3be8ce0d25f"
+    },
+    {
+      "key": "4cd30fd3c7e6b810db531041f0a2185bf931e11407b73c0f25f2bcfba8d4221a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4cd30fd3c7e6b810db531041f0a2185bf931e11407b73c0f25f2bcfba8d4221a.npz",
+      "sha256": "6fb71c667bec57d959ad2413013b5e203f40849a965b672da386a4beb5e7b168"
+    },
+    {
+      "key": "5659bf9dc65d49c734cdcc9043cb1f072f6ff9024076ab6b75e13661cf6af084",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5659bf9dc65d49c734cdcc9043cb1f072f6ff9024076ab6b75e13661cf6af084.npz",
+      "sha256": "27965ac9aabddc5b75d53bec6fdc2e37b9b5b19636836756f69ddc2acfdc599c"
+    },
+    {
+      "key": "33dad30b00b39e517d25680d6d10c71be47606b07a35853b6260953974a55440",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/33dad30b00b39e517d25680d6d10c71be47606b07a35853b6260953974a55440.npz",
+      "sha256": "37ccc2297b69aa933857bcf911d1039c43560c5385261b9e79f31c39dc2a68f4"
+    },
+    {
+      "key": "378a8ffa96790d9dac92b644862bf224ef2b67cc67a52de14f7e5be6f627387f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/378a8ffa96790d9dac92b644862bf224ef2b67cc67a52de14f7e5be6f627387f.npz",
+      "sha256": "13dd20d7ceeb3f97f131e53fd07484ebb776e1b97952df957944e42e3605a164"
+    },
+    {
+      "key": "e0bb06f34133d04f47aa28563afc336f4997bd7dc9b17db551995d0994ffb54f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e0bb06f34133d04f47aa28563afc336f4997bd7dc9b17db551995d0994ffb54f.npz",
+      "sha256": "2e6c126bb453d343989f8f389faeecc372737553956d19748dfd3c89a22004da"
+    },
+    {
+      "key": "f32a240803666a355a2641353dc89e41ace79c7fc3b1d219dc02a57d0a394938",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f32a240803666a355a2641353dc89e41ace79c7fc3b1d219dc02a57d0a394938.npz",
+      "sha256": "34de774c2ff7b06821acb48485a4be689809fb44c2aa1a8c7509c65b0dc16380"
+    },
+    {
+      "key": "4b802d1821b3617e7598b5241876d64399e309b79fec8949f3a9baf483fd5e53",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4b802d1821b3617e7598b5241876d64399e309b79fec8949f3a9baf483fd5e53.npz",
+      "sha256": "c0f548b97afb9e85c2e78b0cd8de1d43e220832dee907635b8ddf14b3648ac85"
+    },
+    {
+      "key": "17ea4a9ffb670b450fddf25ef9bfc7d1a98b5372237b15f3bb50844bfd744f40",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/17ea4a9ffb670b450fddf25ef9bfc7d1a98b5372237b15f3bb50844bfd744f40.npz",
+      "sha256": "53fb4da27c1e890831ba5fd7c25a682e2ae85141b46c104474af42e89b4f74b8"
+    },
+    {
+      "key": "61ce5afd26596433465e869405a054e9cbf155018225a09534cd228a4e336977",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/61ce5afd26596433465e869405a054e9cbf155018225a09534cd228a4e336977.npz",
+      "sha256": "ba7231588bca8f97e15795a5d4189131c939d0da7c2ae17d589c053c9452278c"
+    },
+    {
+      "key": "f53ea363f1c33a48cd40fbdd58dd0f104e1bc959a18cd6382d8f3ec49a3e8195",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f53ea363f1c33a48cd40fbdd58dd0f104e1bc959a18cd6382d8f3ec49a3e8195.npz",
+      "sha256": "364678240b53daef416387126a54f4732bacaa0d7892ebe2a6a94cb20236860c"
+    },
+    {
+      "key": "453f497d49a52cb82c31aeda7e19981ff583c95c060681a5977d3a3a91353b48",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/453f497d49a52cb82c31aeda7e19981ff583c95c060681a5977d3a3a91353b48.npz",
+      "sha256": "684d228f534bc98fa1f4d93d1243de3e2900af4a1c0d97e137c87adfbbfb0fed"
+    },
+    {
+      "key": "32d892028dd259a7694f1893a1b720df7c2d58c4dfb706e7535f0a6c6df42b53",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/32d892028dd259a7694f1893a1b720df7c2d58c4dfb706e7535f0a6c6df42b53.npz",
+      "sha256": "16f7ab2e3e3e829472f5ba13bddfa217d96d2200d72054ccfaf2b2ba6bd2e532"
+    },
+    {
+      "key": "798b073d54b608bc57b6d52ab85092ce1eed33248b9353c8df37686cbe5583e4",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/798b073d54b608bc57b6d52ab85092ce1eed33248b9353c8df37686cbe5583e4.npz",
+      "sha256": "2f144458309feaefc717ac6a96d971309fbf956d7a7b6192697f8886123429f7"
+    },
+    {
+      "key": "2202602f9080139d747ee211776018e57781118e084f185ab038e4a6e26963d5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2202602f9080139d747ee211776018e57781118e084f185ab038e4a6e26963d5.npz",
+      "sha256": "3771b2dcf0780393f5622b7e1694f56b5fd83cc74c9feac95d19ec14965b40fa"
+    },
+    {
+      "key": "8fb97c0fa6ba61989be17f843d0d1d4f01c82b72dcad4929c5604ab26d3b0002",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8fb97c0fa6ba61989be17f843d0d1d4f01c82b72dcad4929c5604ab26d3b0002.npz",
+      "sha256": "cc7869a0e9cce355be9df1c5b206393e9212ffde1c985d58a0c0ed7492ec17e9"
+    },
+    {
+      "key": "e69b1250cde5db480777620abe3599045c23c6d671e7210f472236dd6728e24e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e69b1250cde5db480777620abe3599045c23c6d671e7210f472236dd6728e24e.npz",
+      "sha256": "5eaa0d47b21239832050be7fce2173fd363c4c2ec9f652b2cc6af0277082d39d"
+    },
+    {
+      "key": "bf57743a9a3709960c43bd28b3ecb55fbd6cac35b34e385d14a479dadf095239",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/bf57743a9a3709960c43bd28b3ecb55fbd6cac35b34e385d14a479dadf095239.npz",
+      "sha256": "ba6959e7c844009ed53ec2ed5015180d1edce76ea16f944441f31b598838ee0c"
+    },
+    {
+      "key": "098c27db586b47d57fd9828126d876fde8bdd7816cb16dbe1b5e695b5ab7e1ab",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/098c27db586b47d57fd9828126d876fde8bdd7816cb16dbe1b5e695b5ab7e1ab.npz",
+      "sha256": "ab98c2528203d0ef4d88f4c3e403ea4cecb13d343bd35f6d956af4b8e62d277c"
+    },
+    {
+      "key": "edd80aaeb19fd36faf3628beed1c992ec1730a147d6cd156bc486085158bbc55",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/edd80aaeb19fd36faf3628beed1c992ec1730a147d6cd156bc486085158bbc55.npz",
+      "sha256": "3239ae9b4bcadc2f5dff65af078c1fe4b2584a1ccf629f141772862b82bb871c"
+    },
+    {
+      "key": "458700ee0a9bd3f69f03689f42d136c7b787a533fd997aa119559779a917cf5c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/458700ee0a9bd3f69f03689f42d136c7b787a533fd997aa119559779a917cf5c.npz",
+      "sha256": "0617c1f8688205b53f92375e8844d20f91424e83c89e1814b6371857bf49014b"
+    },
+    {
+      "key": "6bc64b3e3ec4a45cac56fe348f3d21c4e904c8e878bb4ffbc6a9b76678b226fa",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/6bc64b3e3ec4a45cac56fe348f3d21c4e904c8e878bb4ffbc6a9b76678b226fa.npz",
+      "sha256": "bff6cb2ebe702a4f6376f633e0679add84d1de7d07b48c93a577cf746b54bd42"
+    },
+    {
+      "key": "85c5a153e4c93fa690b222684b50b5d3646d8fe347c2a8279276d750ee2dcf75",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/85c5a153e4c93fa690b222684b50b5d3646d8fe347c2a8279276d750ee2dcf75.npz",
+      "sha256": "f93efb105037b2ac2a016b47e5dd212c60db01e1cf4f8c8c6a5406228fa5ab2c"
+    },
+    {
+      "key": "c3fab6e3da1c0b0b128c3710775a3a214b7b717ea44be4ad5d94d00d390a991c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c3fab6e3da1c0b0b128c3710775a3a214b7b717ea44be4ad5d94d00d390a991c.npz",
+      "sha256": "4cbd104d20cd09221b1648231b1a64dfacd14033720e568afa2c436fa6da0d63"
+    },
+    {
+      "key": "a98153b8d7fd38a4c2b56f9aa20de3af7db0902fded460e199d032a58b55ce4b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a98153b8d7fd38a4c2b56f9aa20de3af7db0902fded460e199d032a58b55ce4b.npz",
+      "sha256": "5206c4a05e53dbc510de0dc2fd0cf5bf1ae7d36a405e2ad1e4fe441c97b4b24b"
+    },
+    {
+      "key": "741599cc56d0bee502ac59301b055f532e139fe67d1651898956d0318f046e8a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/741599cc56d0bee502ac59301b055f532e139fe67d1651898956d0318f046e8a.npz",
+      "sha256": "dedae42fb3af47c8d29a4a0840ecca1d69561ad5346d604fd9247a08d75afd31"
+    },
+    {
+      "key": "8238b0292eb02e6aaed98ddf3d6c5c984e6868c3e5ba5f1157bda5cbd45acabd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8238b0292eb02e6aaed98ddf3d6c5c984e6868c3e5ba5f1157bda5cbd45acabd.npz",
+      "sha256": "df95bfb0a7db593b7830b76f71e08c7459ed96a48f04d749045432e5c7761a3a"
+    },
+    {
+      "key": "096f09e5ae914c2339432454f95921d4bf81fa142ea4c46c94723ff491ac2024",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/096f09e5ae914c2339432454f95921d4bf81fa142ea4c46c94723ff491ac2024.npz",
+      "sha256": "b46e83bb159f7f9e43ab98bda9a27c5d2b8eb632f986a0d82caf1f5e625c0875"
+    },
+    {
+      "key": "28ffdca37a13945c7d8c056720dd822b0b8c1ef0d916079e67546c469ad34fe1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/28ffdca37a13945c7d8c056720dd822b0b8c1ef0d916079e67546c469ad34fe1.npz",
+      "sha256": "32237b52d342c8e04a80255d3908a6fe7e6f22917fc29bf14f576fe5567cbd54"
+    },
+    {
+      "key": "085ee3c2ffcd84e22eda62ba158664b5e12ab172f1a1e1d2c37152e2227917aa",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/085ee3c2ffcd84e22eda62ba158664b5e12ab172f1a1e1d2c37152e2227917aa.npz",
+      "sha256": "a158f99d1e7fd6b5ed18b0d041af962acc0ec3ea0dcdab0d557a781a3869dd4b"
+    },
+    {
+      "key": "dc6da9bc3d0a0a3ad7040f8b3b3fbef6fc0c7f589c3b55ea5967c50abf6cd4c9",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/dc6da9bc3d0a0a3ad7040f8b3b3fbef6fc0c7f589c3b55ea5967c50abf6cd4c9.npz",
+      "sha256": "c6a2cd2dd377c5b289bad106d04028a7d6987358a60e3c9dc41ea9e8e9bd83a4"
+    },
+    {
+      "key": "757857af6751f9071bfb5d473cc6cb31699cc4ab1e770f143a15894555d131a3",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/757857af6751f9071bfb5d473cc6cb31699cc4ab1e770f143a15894555d131a3.npz",
+      "sha256": "9a344e01d5ee8672a7fa74e230fff61c3535c652331f5d117dc5634a4257c7ce"
+    },
+    {
+      "key": "7d64596945e4dd7db642421a9d53e766d39c840b477cac966280d632f7228117",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/7d64596945e4dd7db642421a9d53e766d39c840b477cac966280d632f7228117.npz",
+      "sha256": "7ebc9ec488edda4dd1a40bf18b6aecc092c0851ba4c1cf45beef36414bb663f8"
+    },
+    {
+      "key": "594633cb83fd0196b49f8db398cf4eeeb2c6ed18d5159696dc4e2900ffe3de73",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/594633cb83fd0196b49f8db398cf4eeeb2c6ed18d5159696dc4e2900ffe3de73.npz",
+      "sha256": "e9bed31a8825ae3582bb152890353bfb1d1710be937cac2ccde0bb1e94ad9295"
+    },
+    {
+      "key": "17bf2859ced957567759f96e29ca0f1d3dbc9a3ee94557f84e07d3981630cfea",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/17bf2859ced957567759f96e29ca0f1d3dbc9a3ee94557f84e07d3981630cfea.npz",
+      "sha256": "de927ac75dc9898586a4da76ee288c089997e444ceea0c38b63d7e9d2425cb4b"
+    },
+    {
+      "key": "b0e496490dec939fd7c0d98c3d843dc43e4616c3b294c4be374ca94b33094c62",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b0e496490dec939fd7c0d98c3d843dc43e4616c3b294c4be374ca94b33094c62.npz",
+      "sha256": "dea057aeb4b799edea522d116f134b38c3eec40628b1d5ca9d0c525a05883732"
+    },
+    {
+      "key": "408e384f8ca85792d7ef0f7e59085b0381c43bd9f6f89dec6e128b4cfa85869e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/408e384f8ca85792d7ef0f7e59085b0381c43bd9f6f89dec6e128b4cfa85869e.npz",
+      "sha256": "357a4e662041594bc4f0f1ad05111b2e1fcf16acb2ce2d530f483f76b775346c"
+    },
+    {
+      "key": "a24c0e4f0a5ef283b0c54d462294f0c9fc8f132ee045dfd4d8531afc5b4836f2",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a24c0e4f0a5ef283b0c54d462294f0c9fc8f132ee045dfd4d8531afc5b4836f2.npz",
+      "sha256": "27dfa0be0ac068a6f1fe1e3fe312f185f035b8b17b1b2e516d6826b052a46083"
+    },
+    {
+      "key": "2840193095d19419f96b0f03ef71d2f318ee1110b85330cdae13fcc51fd6157f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2840193095d19419f96b0f03ef71d2f318ee1110b85330cdae13fcc51fd6157f.npz",
+      "sha256": "1b599cba9352eb8d124b8d6efc134ce1a94f165491b6e339a7e0cbccd1adc9ef"
+    },
+    {
+      "key": "3750aa1b64e2c9b786a06104a63e4ac61c5d8ab79e53c7a6bf23d87421ba3076",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3750aa1b64e2c9b786a06104a63e4ac61c5d8ab79e53c7a6bf23d87421ba3076.npz",
+      "sha256": "be0e995c1f4703b8aaf2f16db2b2a339808c8488a6f7fefa106554c579922b5f"
+    },
+    {
+      "key": "c4f91847f937ae3096617d23d09bd205e07877f3548f5607d454339cdfb7a2e1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c4f91847f937ae3096617d23d09bd205e07877f3548f5607d454339cdfb7a2e1.npz",
+      "sha256": "7a24db5189ba284f7c316e1db4b65f665ada0ffcd47f528271b36c73a080684c"
+    },
+    {
+      "key": "640f8a10cae9de1e20e2250bdd6cdf93fc126e72bac9882d6df13399b78fe01f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/640f8a10cae9de1e20e2250bdd6cdf93fc126e72bac9882d6df13399b78fe01f.npz",
+      "sha256": "3ed90cf7feeccf58783bd4b21a487199498fd811e376d38230b57bef8da66ab7"
+    },
+    {
+      "key": "bc1bfa678b5fa59d70630478a52868eed0a8d0e254cd9dfdcb65dcce06fe7858",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/bc1bfa678b5fa59d70630478a52868eed0a8d0e254cd9dfdcb65dcce06fe7858.npz",
+      "sha256": "29715200357d8d19fb8983a0498aef73d74bab7a87b2e0ea81b93f51a6703a86"
+    },
+    {
+      "key": "fb3ece537be303e9532ba83e80801b87d08248e357c5be8824fc8021be976cb5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/fb3ece537be303e9532ba83e80801b87d08248e357c5be8824fc8021be976cb5.npz",
+      "sha256": "7d3e1662ff9174db5b9e7fb20edda055cd47106d2951297ae96a190865b436d6"
+    },
+    {
+      "key": "2a4a4a92b1de3f1d44dc4e0776538427b7d17ab1f45147ab599cda1af02853ae",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2a4a4a92b1de3f1d44dc4e0776538427b7d17ab1f45147ab599cda1af02853ae.npz",
+      "sha256": "1a1c3bd159cdea5f5c42cd29652501486079d4537a72b0b2e1e75f382dbbd27d"
+    },
+    {
+      "key": "e82ccf010989101e9873f92c1c6de0172e3949d2f0e7a0722c289feb7d5df7c1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e82ccf010989101e9873f92c1c6de0172e3949d2f0e7a0722c289feb7d5df7c1.npz",
+      "sha256": "36b452fa5a26ebe705f0b6b3c87b916e8dc1651bf52afccf0912dc69338b0763"
+    },
+    {
+      "key": "45b0125ed29605bf2e4d76519c225960f7a411999526d28a0169ca2179398173",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/45b0125ed29605bf2e4d76519c225960f7a411999526d28a0169ca2179398173.npz",
+      "sha256": "2b1ed885a3d6a7504265641f1472f6b19fd280ca29eb87ccd0c6117ea866596c"
+    },
+    {
+      "key": "c25cd4ce7f6c4ff6b5a41d2fce3d7036cdd9f553f15f8c31cae91f58c021463c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c25cd4ce7f6c4ff6b5a41d2fce3d7036cdd9f553f15f8c31cae91f58c021463c.npz",
+      "sha256": "2498b02bf9892f7f8297c4af74a8eb7878cf197f090e9eccc70aafa90f3012f0"
+    },
+    {
+      "key": "5c21c3569295e735ae840beed371faaadcc45f664197a98638ad87031e3c3652",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5c21c3569295e735ae840beed371faaadcc45f664197a98638ad87031e3c3652.npz",
+      "sha256": "32af322dcf2f142e12df7952d425519138e2a9672344632c75a99bcfb9201fde"
+    },
+    {
+      "key": "a11dd8db62a5112f6a164f9257c2a38e70784611dbc14a377dc45258d26d8cae",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a11dd8db62a5112f6a164f9257c2a38e70784611dbc14a377dc45258d26d8cae.npz",
+      "sha256": "c05323d1ed649b5d441da679a53bd36521b177a6b2f518c71b878b33070d5848"
+    },
+    {
+      "key": "11a429fda9e2fc4ef7ae19d3b7e56678f55488f243728e943835b821edbc09cd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/11a429fda9e2fc4ef7ae19d3b7e56678f55488f243728e943835b821edbc09cd.npz",
+      "sha256": "8cf4a2c2dfd52eeb398ee7c1274063db6dbda4ceb3a0d68c4b37f44b5e00ec1e"
+    },
+    {
+      "key": "bafdb4764142cb63f0836c6441f81e727b9a736247762886bbd6e5066f781327",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/bafdb4764142cb63f0836c6441f81e727b9a736247762886bbd6e5066f781327.npz",
+      "sha256": "89ed0ba6c0c8c653e6e982dcf4f2f64f2314a4eefa83a7199d97d3d90be3b831"
+    },
+    {
+      "key": "955e67c8792f15bd8b519c1c323fc57b4acb89ef1d0aec63b974176fdd866fa7",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/955e67c8792f15bd8b519c1c323fc57b4acb89ef1d0aec63b974176fdd866fa7.npz",
+      "sha256": "2cd8f16b5006ae92d782938d4fd3e6ce5ab92ee08e042d062700466b8cea1fec"
+    },
+    {
+      "key": "7aa2ba19db1e8aca14489c6a29f9e589c0f8ec53a83f37c3751e48802366cba7",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/7aa2ba19db1e8aca14489c6a29f9e589c0f8ec53a83f37c3751e48802366cba7.npz",
+      "sha256": "41d6ee24f72c8826537fbf2b0c865a48997fa21bee9d8a9e2d8197d69e851f3e"
+    },
+    {
+      "key": "79d5cea3dc0bcabeb2b0ba9e57a92cf044234e9f174efa0f34daa2e53794f27b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/79d5cea3dc0bcabeb2b0ba9e57a92cf044234e9f174efa0f34daa2e53794f27b.npz",
+      "sha256": "236a11d1bfd8bf28a3e5d5f12400d10ac84d7beb0b6475dcb28d1eb74a77dd94"
+    },
+    {
+      "key": "35e8363b104a6f7686164c78991aa45fed32421efcb0e87e89a37fb8ad4a90b9",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/35e8363b104a6f7686164c78991aa45fed32421efcb0e87e89a37fb8ad4a90b9.npz",
+      "sha256": "2d0eb04f0585245399d57756457f2415501f01015b341841d1e3fa7ca20d87c4"
+    },
+    {
+      "key": "b9cba587c4793982ccba6b8b210e66ff127266e5367cabe31d9256b1640d0b68",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b9cba587c4793982ccba6b8b210e66ff127266e5367cabe31d9256b1640d0b68.npz",
+      "sha256": "2db02936261bb20f9a4291d737fdb1e6f9fc7062c483eb443d9b3e6ea34018e9"
+    },
+    {
+      "key": "689c142b50b07b20e3c5a2bd8782a38e32fd5532cd1c9ec849889a3c8f97fa85",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/689c142b50b07b20e3c5a2bd8782a38e32fd5532cd1c9ec849889a3c8f97fa85.npz",
+      "sha256": "33370ff5031edeef20650d0d8661d355c00c1972590f3a38e6f2370f898543a9"
+    },
+    {
+      "key": "f424e5c4c41c08a066012d0a29c6926d7ae00b8ecaf0f4936728b0c3176a743a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f424e5c4c41c08a066012d0a29c6926d7ae00b8ecaf0f4936728b0c3176a743a.npz",
+      "sha256": "3bca7b8009a6748e9106111a6bf20abe7ca490dc6e39af67fe960603d7f20b51"
+    },
+    {
+      "key": "00462fa84c6e94507ab25d0526cd2eca6bc54e96e938f5f9eee81437c1d36317",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/00462fa84c6e94507ab25d0526cd2eca6bc54e96e938f5f9eee81437c1d36317.npz",
+      "sha256": "a4d1837b95cd789df3997664dd50bfc7870ace2ed3c1bd66a64e474cc5fef352"
+    },
+    {
+      "key": "64826819ea008c3e16dade249a26533ffcf49ba234c5858e3fe4d38930d32c29",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/64826819ea008c3e16dade249a26533ffcf49ba234c5858e3fe4d38930d32c29.npz",
+      "sha256": "795b5e5aade888aa84f01e0d9520bd39e9f01574aecb84a3ec74da4d8977a061"
+    },
+    {
+      "key": "3e216b116bba1294e62fddf34d4b3e3c8895ef2b17fec79a1d31559ca1ace6be",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3e216b116bba1294e62fddf34d4b3e3c8895ef2b17fec79a1d31559ca1ace6be.npz",
+      "sha256": "4f4d5798fa78942a131814948598e78b454ba9f8ea33420e9216e933574e6f5f"
+    },
+    {
+      "key": "f0e5c410bbe13520466533b55fba3f2f4298c4d903e6dccfa3ba37ca952d19cb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f0e5c410bbe13520466533b55fba3f2f4298c4d903e6dccfa3ba37ca952d19cb.npz",
+      "sha256": "e65e3f3d812cfe4e2fc22ec32f59a16cf355f6c1f236ea6069663b17c5cf2c66"
+    },
+    {
+      "key": "6d6a73d6442a87daab908a4408ea2195ba73a39ea3825d48b7ba3806914b2928",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/6d6a73d6442a87daab908a4408ea2195ba73a39ea3825d48b7ba3806914b2928.npz",
+      "sha256": "72e488bc413c07128a20620d3b31b43b5acf40065f3ce01437bc2c9385ae415c"
+    },
+    {
+      "key": "11e885ff4201176c906953cf84ff6b0c945ba282a04598ec90a65a45586630b6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/11e885ff4201176c906953cf84ff6b0c945ba282a04598ec90a65a45586630b6.npz",
+      "sha256": "18ee48c72d2d00c41bae2b6a359f87e366eb4065f0a25816b5c93ed6b991b94c"
+    },
+    {
+      "key": "664ada8c69806eb8154a87d6431cf73082596da1721e0902017c19139bf18505",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/664ada8c69806eb8154a87d6431cf73082596da1721e0902017c19139bf18505.npz",
+      "sha256": "e6d6877cb91ef8d2d95cd34e9f0f1bac400a8ee2b0709d42436c6918dfd9b351"
+    },
+    {
+      "key": "ee01313642017848b837fb5d6fbe23fe00571983f3308e6865c64944a6e89517",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ee01313642017848b837fb5d6fbe23fe00571983f3308e6865c64944a6e89517.npz",
+      "sha256": "dbeeab8ecf0a88f0deb6bc6846ed666d0fd33b8cb20f8c18177b4e5609a978d5"
+    },
+    {
+      "key": "41d929cc603a02a646f89d3441999f4c26a5980a3681aa41ca4ff542d7d609cd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/41d929cc603a02a646f89d3441999f4c26a5980a3681aa41ca4ff542d7d609cd.npz",
+      "sha256": "b493f09e0d6f6206e599490fd298a8959092ab06d187499bc4aea5e8a8326a5e"
+    },
+    {
+      "key": "9aacb7089d80c06ceb027b411a9345fdbcf9df50142d46bad1cb94af5cdb0998",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/9aacb7089d80c06ceb027b411a9345fdbcf9df50142d46bad1cb94af5cdb0998.npz",
+      "sha256": "248e6001defbc087c8feb8a37fb545ac2f0023f7b095f3520c1807615609d8d0"
+    },
+    {
+      "key": "0b9729342bb6e12b99dbd483f103f36a4302f602ed8276084d3897baba226a6b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0b9729342bb6e12b99dbd483f103f36a4302f602ed8276084d3897baba226a6b.npz",
+      "sha256": "b12bd5b71be42b4c6e8f85acee31467632f20cff8dba413ac42186c2184f9d64"
+    },
+    {
+      "key": "c3a26f1114746ff873a5014c187c7e31410629f2a896731ff2f3098961d69147",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c3a26f1114746ff873a5014c187c7e31410629f2a896731ff2f3098961d69147.npz",
+      "sha256": "ab64ecedcf918c9be61730c35f52c1a5b8a8e4f1434a17818a526ca9ad158d92"
+    },
+    {
+      "key": "4de707439d31cb53933ccf635e53f6a1fed3994c398a6dab47965f4476b0c517",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4de707439d31cb53933ccf635e53f6a1fed3994c398a6dab47965f4476b0c517.npz",
+      "sha256": "790ac0fc16ad62dcbb16103760e84d01be1c7b612e081a225efb55a9b9f8459c"
+    },
+    {
+      "key": "16d568bc57b1c6974964321ad8cbbc1d055555746f974fee6def3b8b5da62cfb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/16d568bc57b1c6974964321ad8cbbc1d055555746f974fee6def3b8b5da62cfb.npz",
+      "sha256": "3ae5cadcdd8e88cf2601dd84ec285720d2a8dfcf6b1635afd50f263f270f2b32"
+    },
+    {
+      "key": "4457e4e69ed410e6cb95baa3d213161fdfd89efe5b4a24452663ba91bb77f600",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4457e4e69ed410e6cb95baa3d213161fdfd89efe5b4a24452663ba91bb77f600.npz",
+      "sha256": "ebaf13ea31112906b712f64cb971c8983a5dee55ab285c3c374a1043d466257c"
+    },
+    {
+      "key": "09f81f51f633040fef78ea84c9439abafa53dede64ef890d560ed3a1f76dd86b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/09f81f51f633040fef78ea84c9439abafa53dede64ef890d560ed3a1f76dd86b.npz",
+      "sha256": "2da397b8e64a7ec2b87825637891d4ab0c9c8186c13adf7b028a9882a04c7eb6"
+    },
+    {
+      "key": "61ec5172935cfea9cede463139f933973c4cf168e0ca4e605ba562b830e23e13",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/61ec5172935cfea9cede463139f933973c4cf168e0ca4e605ba562b830e23e13.npz",
+      "sha256": "b6daf56b3802edde87cc9c3506aeb29fce937db5135fa1bd6502494be70e3eb8"
+    },
+    {
+      "key": "556f6f416ba40f07cd63e12ef921d423efb1edbfd798715ee2a1e9da4ae7ab31",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/556f6f416ba40f07cd63e12ef921d423efb1edbfd798715ee2a1e9da4ae7ab31.npz",
+      "sha256": "32a79e76ce15977c1d33bd59fd1906ff4ff586fcc4e83bd0d7fc0f0ccf33df3f"
+    },
+    {
+      "key": "7159aefc519e1534de773a356f5601c9b83c367c10b865de47393fa65210d547",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/7159aefc519e1534de773a356f5601c9b83c367c10b865de47393fa65210d547.npz",
+      "sha256": "5b247e0876890f84a92c3fb4a091861a9549ac313f7d7b1734d33611c1bec4f0"
+    },
+    {
+      "key": "18eaa59d2ae4cdb6ffbaaed425b6c71f38085ab91745e41edbded95f94548f48",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/18eaa59d2ae4cdb6ffbaaed425b6c71f38085ab91745e41edbded95f94548f48.npz",
+      "sha256": "a97abd3ee65f7a9322a415151d0146916beca5db1d7588c47548f8ec190f80d1"
+    },
+    {
+      "key": "0b81aeed6c0b3d28b10d9ca46990686f55a6d5239634de018f3dbd9fb5ff10b8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0b81aeed6c0b3d28b10d9ca46990686f55a6d5239634de018f3dbd9fb5ff10b8.npz",
+      "sha256": "3ccd9cf459bd33ea93230d8c8ff8ffdfe64ecccdd94a5ef8c0258fd292f68218"
+    },
+    {
+      "key": "0d2ee9d6d6a657a515c3dbe610b8a5f61d7e7b4e6feb0d4b31baec049759f523",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0d2ee9d6d6a657a515c3dbe610b8a5f61d7e7b4e6feb0d4b31baec049759f523.npz",
+      "sha256": "79dd6fc46a257b872911a976a9c8679827a04e8b8db79d237f966259251c1182"
+    },
+    {
+      "key": "18f6476adb281ac0409436d49898fa552cf025aeee6b8b0d86fe65a8979f72ad",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/18f6476adb281ac0409436d49898fa552cf025aeee6b8b0d86fe65a8979f72ad.npz",
+      "sha256": "8cdb46aa88815af580b30c49f37f00ccad0dc5147bd62cfd2fd073b6e9adc652"
+    },
+    {
+      "key": "89093bcd119de8816986be5edf10923b05a70307aa7bb8399573156c53cdbf89",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/89093bcd119de8816986be5edf10923b05a70307aa7bb8399573156c53cdbf89.npz",
+      "sha256": "0b60651df4ee9a9e2f6ab8ce0eac5590ef6feb72c912e7b04de7ae92b4a4309d"
+    },
+    {
+      "key": "41716d7c57b0b9f752b09fb89f1e61f58cbd46373fc75a0247344bd7fe41adcc",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/41716d7c57b0b9f752b09fb89f1e61f58cbd46373fc75a0247344bd7fe41adcc.npz",
+      "sha256": "9fd0796bd22246e55927069d93516698ed5d38dc90bc9373b2f7b2be1ec218b6"
+    },
+    {
+      "key": "9942f686900d7ecb762eb454da9566628090d5436243bd64b581ef292f4a4044",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/9942f686900d7ecb762eb454da9566628090d5436243bd64b581ef292f4a4044.npz",
+      "sha256": "f63ec29ff1d803ec545e47bc3514a2a78ef4ee844060769c4bb56924d5130506"
+    },
+    {
+      "key": "296ce52727d30e501a1b8799d65e54c379eb884cf162277ab532e62543a2ff16",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/296ce52727d30e501a1b8799d65e54c379eb884cf162277ab532e62543a2ff16.npz",
+      "sha256": "8aa21033e0bde50a43e610f88363702feb333c7a55b25ccbe405738d3809116c"
+    },
+    {
+      "key": "da147362b0dc3886a37be4deb045d15a5a71b56ed575c42b4c8010f3f691e6e7",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/da147362b0dc3886a37be4deb045d15a5a71b56ed575c42b4c8010f3f691e6e7.npz",
+      "sha256": "3587a1a6b7f3c554af437368a97c48db54740138b5484bf05dd98d0197958b5a"
+    },
+    {
+      "key": "99e8bc7903ffa467bb12b88cc65cf8509964236f6ea21478404bf83ece56bc3f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/99e8bc7903ffa467bb12b88cc65cf8509964236f6ea21478404bf83ece56bc3f.npz",
+      "sha256": "79cf57c68949c15f1a7458f68593aab96ccfb5ca3dc3e00bdda6efe822dafa96"
+    },
+    {
+      "key": "a643838e99ccf696018903c3e2ddbaa151eeae8f91dc934f42d145d880166755",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a643838e99ccf696018903c3e2ddbaa151eeae8f91dc934f42d145d880166755.npz",
+      "sha256": "abb05eab2998650e56dd7d1076e46127ef7beb82e62b0dc33fe7566906f999a1"
+    },
+    {
+      "key": "5cc14011498cd2487294666a57df2348457997da71fba1757c3074ef65d2e9bd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5cc14011498cd2487294666a57df2348457997da71fba1757c3074ef65d2e9bd.npz",
+      "sha256": "fefe560791e36efbadb69cd2bae3588f716c58d53b47e6c8659a2a6772a523d9"
+    },
+    {
+      "key": "97d01f18cb3f3a96ef55e8d8a2acc35ec505a9eaaee0d69d0abc3d9aa11b4aac",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/97d01f18cb3f3a96ef55e8d8a2acc35ec505a9eaaee0d69d0abc3d9aa11b4aac.npz",
+      "sha256": "7bf3f4a615a667d43f948a9e25aa61c7e014278aef0f5780e1b9cb1adbdc3dfd"
+    },
+    {
+      "key": "73449ec48d7bce4c1ba089a650dfb4f651ff8c51a4be416dc639fa3e2f876173",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/73449ec48d7bce4c1ba089a650dfb4f651ff8c51a4be416dc639fa3e2f876173.npz",
+      "sha256": "81e399c9251d1080c92aee483b7439abfbf603b9cf95972348978208e624d11c"
+    },
+    {
+      "key": "a132182caae6d7743af668e909d7b10fbf853c6a7936832ef8dd2058b4891038",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a132182caae6d7743af668e909d7b10fbf853c6a7936832ef8dd2058b4891038.npz",
+      "sha256": "754797752c048fb14ff2bddbe325259bbb2d24f81c9ff5a91abf89d2eb7cb783"
+    },
+    {
+      "key": "0ad3c02f8b404f89d5c26772a4592cb42625211b21d26bb92bd87704a1b381f9",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0ad3c02f8b404f89d5c26772a4592cb42625211b21d26bb92bd87704a1b381f9.npz",
+      "sha256": "d893d316c95d6ddfea151b118d9ad6474218b72b3f21388c037b47260795964f"
+    },
+    {
+      "key": "4d1a922d1fa0613ef32103d6c5f8bbc9475c69799297ff7e6333a48ae8a46f89",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4d1a922d1fa0613ef32103d6c5f8bbc9475c69799297ff7e6333a48ae8a46f89.npz",
+      "sha256": "ccb9c3a7b9b32201843fcd0056e57e2bffe5e07c2acf866c59ae4d6784756445"
+    },
+    {
+      "key": "e162698c1bbebc2a7ee842d6c910c2db552a77e1e9d0587f6682c7e884b04aa8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e162698c1bbebc2a7ee842d6c910c2db552a77e1e9d0587f6682c7e884b04aa8.npz",
+      "sha256": "2b6e82c255c2ec48ab9b7055132ec33fe51707d7bec174c4aec8c41af5efe2e3"
+    },
+    {
+      "key": "b1b7fae53a42d4431b82bfaf958e48718a28af3a98e82e73ec1e58a882396e52",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b1b7fae53a42d4431b82bfaf958e48718a28af3a98e82e73ec1e58a882396e52.npz",
+      "sha256": "7f6f27163f804cdafd563ba16c32ae003d8d1a04c42c93872233bdf63248e2f2"
+    },
+    {
+      "key": "c5cf82436edfa9bf82163ad6ebc50418fc75c2e165ddfc1d6905371a43081407",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c5cf82436edfa9bf82163ad6ebc50418fc75c2e165ddfc1d6905371a43081407.npz",
+      "sha256": "db1aff6aba6b2a89128441725424c76283811dd7ca9c9128abc432ddfdaaa35b"
+    },
+    {
+      "key": "90d19bb0299cb3573f369879708a81c14fed6300c512de1bbc303cfe394b3f95",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/90d19bb0299cb3573f369879708a81c14fed6300c512de1bbc303cfe394b3f95.npz",
+      "sha256": "9401795fe40cc8f28d870107ab8ac1b67158a1fefb5f902c8ad098e4e60ca2cf"
+    },
+    {
+      "key": "1cc240194e973b10331779aad23e23ec19b9f2b9d3eb0cd9e94da0f4a18d9df4",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/1cc240194e973b10331779aad23e23ec19b9f2b9d3eb0cd9e94da0f4a18d9df4.npz",
+      "sha256": "040e1838d7206cd847df44184e220d5fc09ac570c6dc17cb8e196748fcabfa42"
+    },
+    {
+      "key": "79e4c7578d786d2c9caab93424281d4c07b47060e8b3da551af405f07502c838",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/79e4c7578d786d2c9caab93424281d4c07b47060e8b3da551af405f07502c838.npz",
+      "sha256": "5d689d919508b4eda108213aca08ef8b29976e73cb632785d45103e50a928016"
+    },
+    {
+      "key": "ff98f3042c8f3909429358737111bc68f18bce81371592a9e19103b9872da468",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ff98f3042c8f3909429358737111bc68f18bce81371592a9e19103b9872da468.npz",
+      "sha256": "86c63296495c618b92222599bb7d003b9b9610652c10095df0999fef77b1f112"
+    },
+    {
+      "key": "4a392d1f50d71e7545b228bd2e4aabf394ee2ffc8742e148d7a661e8eb25f40a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4a392d1f50d71e7545b228bd2e4aabf394ee2ffc8742e148d7a661e8eb25f40a.npz",
+      "sha256": "41cfec0f76eeb17ce008d6241e4ac16cfbb0ada56bfe076c96beb46dbd848fdf"
+    },
+    {
+      "key": "ee9f79e11300e0dd0056bf0155e16b07018eb657515e399996ba55b46da40bb0",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ee9f79e11300e0dd0056bf0155e16b07018eb657515e399996ba55b46da40bb0.npz",
+      "sha256": "52ab2069fab42005225d972d326ca304f5e4c5fb0ef47d90ca05328ac80c3b6b"
+    },
+    {
+      "key": "b100f5c5ba8e1c740d696787d2992c7e28103172bad939b5ea5ae57a895d0844",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b100f5c5ba8e1c740d696787d2992c7e28103172bad939b5ea5ae57a895d0844.npz",
+      "sha256": "4a0da034d67b9ed2d4f51e08f35af340847410c36f2dc2e62de146778bfb32b8"
+    },
+    {
+      "key": "1d7b1489be9715822b8d999628cec806e52531b9eecf564d93cb5a0571bf8bcf",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/1d7b1489be9715822b8d999628cec806e52531b9eecf564d93cb5a0571bf8bcf.npz",
+      "sha256": "0bb5555bf60668b0aed96d2e4260037b37f4d6c408f4e84647c599d6fa1b0a2c"
+    },
+    {
+      "key": "2b46260368790c571356f625dbf0aba5605c43fc33d65c9f8917ea8da4d836a8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2b46260368790c571356f625dbf0aba5605c43fc33d65c9f8917ea8da4d836a8.npz",
+      "sha256": "ec90707ed83807d7f8f7f829565c4653ab1e7d5afc63b16f0975d1f441660d0b"
+    },
+    {
+      "key": "8cbe50369ef587f51299b94b217d0360f30541ea7a88f19c110dfaf9989e55d8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8cbe50369ef587f51299b94b217d0360f30541ea7a88f19c110dfaf9989e55d8.npz",
+      "sha256": "54a2db0b58be5737753ba09af40d83c62e4ae7035ac70125aa8c787c0318002a"
+    },
+    {
+      "key": "c837f87cd8e9d2d786f871665c19ae79c18a02cf1cb0f35f90e5892442ce5eb6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c837f87cd8e9d2d786f871665c19ae79c18a02cf1cb0f35f90e5892442ce5eb6.npz",
+      "sha256": "f036cf7eabb214da8df0c841bac9c6372ade2595f2e9cee2c21f47c1b9fae0f3"
+    },
+    {
+      "key": "2d4a63304f8c44bbe0d28d39dc0f8292d70d0242406eff8611d1eb3f2d25f512",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2d4a63304f8c44bbe0d28d39dc0f8292d70d0242406eff8611d1eb3f2d25f512.npz",
+      "sha256": "3077d7f218f2efa35b9335174485e5c0e3c909b1da349d62fd4214fc730c31d0"
+    },
+    {
+      "key": "aabba3f251706b9405aeef1237ea91b82f94ca50e96f975d684cc56e27ed7c37",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/aabba3f251706b9405aeef1237ea91b82f94ca50e96f975d684cc56e27ed7c37.npz",
+      "sha256": "56bf3e3d349a4209262c8071734987a95439134e68a8d43f842a73b07668ace2"
+    },
+    {
+      "key": "c55bece824882c2acde3da171c3897b49282872e5e3c26b085b4eeab3d5ca2fa",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c55bece824882c2acde3da171c3897b49282872e5e3c26b085b4eeab3d5ca2fa.npz",
+      "sha256": "f372f96a998b72e69fb36fef45f819813d153b83d5e3c38fd1ad92d43ee10194"
+    },
+    {
+      "key": "247fcc9d248ba568d04d3b7f42e71e438acb289f00b2e3e1e9c133bdea94eaf5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/247fcc9d248ba568d04d3b7f42e71e438acb289f00b2e3e1e9c133bdea94eaf5.npz",
+      "sha256": "306cb09b61047b3406e41683a9858254aef3790771d46cf10297866d26719805"
+    },
+    {
+      "key": "320279a7b025aed53528d3991d5d4afcea03005128d1450077c9bfb2fcb34708",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/320279a7b025aed53528d3991d5d4afcea03005128d1450077c9bfb2fcb34708.npz",
+      "sha256": "05594f3b41107da20b99ca79029278762f0ebddf2432e3d82cdfb7eb64e68e25"
+    },
+    {
+      "key": "0273f89d4ca82a43d72483d94aa2b6a48e271a4b7634885f4cb15ad7faee2d77",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0273f89d4ca82a43d72483d94aa2b6a48e271a4b7634885f4cb15ad7faee2d77.npz",
+      "sha256": "77bf6a8c1665c004a068642ddc83005efd3ea187d61c1794c3c2ab72f9243778"
+    },
+    {
+      "key": "04506acbbff9cebeb1e52de520928982b7aa8df2570fb6bbf2441e2f2bb4dbb8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/04506acbbff9cebeb1e52de520928982b7aa8df2570fb6bbf2441e2f2bb4dbb8.npz",
+      "sha256": "77eb89d70cac00cec8454934da884408acdf73ac199c517bda3f71a8fa75f153"
+    },
+    {
+      "key": "f452acd69c6ffeecd5e08a33eadff3833415c3f265d8fb84636e1632182cfadb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f452acd69c6ffeecd5e08a33eadff3833415c3f265d8fb84636e1632182cfadb.npz",
+      "sha256": "d80a5b5435c897cf18e6722e2bd089c655a8ff4f78df01dd21bd9dac6be6e3ad"
+    },
+    {
+      "key": "3c2ae828a77758c2816d7246c539b41596520bac8e30defc13ca56610ec3d134",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3c2ae828a77758c2816d7246c539b41596520bac8e30defc13ca56610ec3d134.npz",
+      "sha256": "6203a0361f4a0a5b452b840c1f732b7df37532d79f4f4c5589dd9c29d9c5c817"
+    },
+    {
+      "key": "a430a3f5a333724161c0c36d1079dc4d04914113f6e338c7ffb817d834f1f6b1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a430a3f5a333724161c0c36d1079dc4d04914113f6e338c7ffb817d834f1f6b1.npz",
+      "sha256": "3db5fde8159a1ad875080aaec1b68f9ad340e3af9b5fbbdb1c15bac78c797335"
+    },
+    {
+      "key": "aa21c0d08d6379dbd7f0a4f2b915842adae68c55b347126a895cc8a2d5b33d79",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/aa21c0d08d6379dbd7f0a4f2b915842adae68c55b347126a895cc8a2d5b33d79.npz",
+      "sha256": "88ba5ea4cd17890cdf1c2b564338349da61c5a69d7afb3abbf52ba64cf9fd9e3"
+    },
+    {
+      "key": "c6b4b7219a5b0d8404bd266380e28b4ed4499dbe5fb13df04104f9ea99edd673",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c6b4b7219a5b0d8404bd266380e28b4ed4499dbe5fb13df04104f9ea99edd673.npz",
+      "sha256": "2b2c8fcc2fe71b1a049ca0a0efa58d6994219cfea84ac88b59b019b7f5656080"
+    },
+    {
+      "key": "ded70ab1b58ba4145e94db0fb47a6b65ac727886458e2992d5e92431f05bbd94",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ded70ab1b58ba4145e94db0fb47a6b65ac727886458e2992d5e92431f05bbd94.npz",
+      "sha256": "7a6ae6befef3825c3adfe49646d1097c65cc66fc092769c66a491bdd92b22044"
+    },
+    {
+      "key": "62c541824dd05c2df422f961da73a311e202d22023f50631c940c092948e2740",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/62c541824dd05c2df422f961da73a311e202d22023f50631c940c092948e2740.npz",
+      "sha256": "401a2cdd1f2f08df1c702c99fd1d967a9e51f8456efaf9dca182a45aad6caff7"
+    },
+    {
+      "key": "814d0a911e31a983a90f3fe65c4e462717bb98cadc8a57993b83ae6815e53e2b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/814d0a911e31a983a90f3fe65c4e462717bb98cadc8a57993b83ae6815e53e2b.npz",
+      "sha256": "5e677bf3767762a17f0ad7df5deef9691fba57cff353f66f1035d8556eb232cc"
+    },
+    {
+      "key": "2593df0b777a562fc4c1398a30039f133fbd506e5deda501027bc76949970fab",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2593df0b777a562fc4c1398a30039f133fbd506e5deda501027bc76949970fab.npz",
+      "sha256": "81ddce80adada096e70212f3810d441c343a24bf490e672c8381b61cf2b37249"
+    },
+    {
+      "key": "5f8b12f640be9a9939c5d4c02fcf46db1892908a4ef23c32183eb3c8d5b9c0b6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5f8b12f640be9a9939c5d4c02fcf46db1892908a4ef23c32183eb3c8d5b9c0b6.npz",
+      "sha256": "bfbb1af53219b0bcd224badb805026bab55e0b699e53df1e39625831cf3e328b"
+    },
+    {
+      "key": "c2980efe3979ca2b67df409f397654dcbe0397be935cfc4a050f0a76c56c61dd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c2980efe3979ca2b67df409f397654dcbe0397be935cfc4a050f0a76c56c61dd.npz",
+      "sha256": "6af75509828ad4f586aa20a88da9187142acea80215897ffcdc92b9768dc8975"
+    },
+    {
+      "key": "6ee461d60c0a416dce67d1722c2ed860643b3f892827848608d43d3b42bf0120",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/6ee461d60c0a416dce67d1722c2ed860643b3f892827848608d43d3b42bf0120.npz",
+      "sha256": "3e6e997f16b038d33c48601dc1c780c681459e4e07aabafec218df0fb7e1caa3"
+    },
+    {
+      "key": "154e0d9e72e721458fc42d59cb07555f3e3caddc71964ceccf0ff7577aac50e5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/154e0d9e72e721458fc42d59cb07555f3e3caddc71964ceccf0ff7577aac50e5.npz",
+      "sha256": "3f7560fecfa960bdd5505f52602131f2090f10b8b0a4560e89352ebb84d2d793"
+    },
+    {
+      "key": "f2209d4b0658f4ae309f1fd4b2384158df9b3dc5bc4dc7ede8f3e96a8291e9c3",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f2209d4b0658f4ae309f1fd4b2384158df9b3dc5bc4dc7ede8f3e96a8291e9c3.npz",
+      "sha256": "fba119a7a222f670faa38ae31459a02f3931bbb072b3dd6cae88fad781b4cbbf"
+    },
+    {
+      "key": "1c30b31c1ae1b94b8e85f01b78bae119c81109aff9d946d2dee2e33659798a29",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/1c30b31c1ae1b94b8e85f01b78bae119c81109aff9d946d2dee2e33659798a29.npz",
+      "sha256": "a2f9452614343aad7f4fe5a6b1166748f69a81ab3f60df172b04024aefbd5379"
+    },
+    {
+      "key": "4a3c0fe085d1cdcf9c83d490f90b9e66aa1613bfebd43e60deec788268380c3c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4a3c0fe085d1cdcf9c83d490f90b9e66aa1613bfebd43e60deec788268380c3c.npz",
+      "sha256": "995cd4ac8919b80a5ace7cd6e97fe1e9bef8d31ebe42193641c46a4407f46f55"
+    },
+    {
+      "key": "fa45c83fc4fe60e858b6cd34a6a929b3fa8ce44f19d5a90a080538dd2a6a8e1c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/fa45c83fc4fe60e858b6cd34a6a929b3fa8ce44f19d5a90a080538dd2a6a8e1c.npz",
+      "sha256": "bda9b2198ede4faeb7e5975890e38f4a21be33c61a39931e3c8d6460d9052cd5"
+    },
+    {
+      "key": "e71a8cb1ce70ba31f43bcb6407f8fbc2f7bac3f0889253b2acc2855ae4b8bb69",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e71a8cb1ce70ba31f43bcb6407f8fbc2f7bac3f0889253b2acc2855ae4b8bb69.npz",
+      "sha256": "fa5bccf773027453db009c40e09505053a2371fc7ce62438fe6a0f92f53e7338"
+    },
+    {
+      "key": "5538a59b3861c32808b1835dfd25ec6124cafa79f89996c98d5124329f818698",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5538a59b3861c32808b1835dfd25ec6124cafa79f89996c98d5124329f818698.npz",
+      "sha256": "299ca53c21b37fb6629910baeea9d93a94f1c509203ff57ab47cea35a8a7a568"
+    },
+    {
+      "key": "138c39df73499c3ea590ad2afae79ea3ffeca6ba676bf26e6f0dc008e2a45bdc",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/138c39df73499c3ea590ad2afae79ea3ffeca6ba676bf26e6f0dc008e2a45bdc.npz",
+      "sha256": "9cc1924ab07fe58e32b1c580c3c0fbf194813a346cc5f4d799eaf71db4940c0a"
+    },
+    {
+      "key": "dceebf3f1e27fd6f4a6b6b91f4cdaf19d74c767dc258adb81f64bf148c47c50b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/dceebf3f1e27fd6f4a6b6b91f4cdaf19d74c767dc258adb81f64bf148c47c50b.npz",
+      "sha256": "881fc7be005955a2c2a6035c4c8766cb207f4828626e7cadf3bf9e5f7023c5f1"
+    },
+    {
+      "key": "400980d03821ed4a27bc28802fa2612a29e8889a0c6219880ae369b86d08a546",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/400980d03821ed4a27bc28802fa2612a29e8889a0c6219880ae369b86d08a546.npz",
+      "sha256": "3210be83858b0a2530110f17c0e2af895006d660395d111b9e1bcb5e0f6ba555"
+    },
+    {
+      "key": "51d7e779d435b03bd3cc2405fddd1f2e3b640caf4813e9ba63f56758b36dfa6b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/51d7e779d435b03bd3cc2405fddd1f2e3b640caf4813e9ba63f56758b36dfa6b.npz",
+      "sha256": "2fcce5d370856dea676a8c8d75a7ff0a3ad9956b79d5c93be49858a7c5eb4774"
+    },
+    {
+      "key": "0e7183e3a8ceb20f4208c9f32666502c51f1ae53dc875dbff18733f6f9fae089",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0e7183e3a8ceb20f4208c9f32666502c51f1ae53dc875dbff18733f6f9fae089.npz",
+      "sha256": "da0e89a9311a0e65d41afaf1cc637fa0a2e748507b43b5a58bad3969b7e16469"
+    },
+    {
+      "key": "bcf8b4de97e69a0feb2216c1dc2389715eaca265d774cb8049996c994f57c7c7",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/bcf8b4de97e69a0feb2216c1dc2389715eaca265d774cb8049996c994f57c7c7.npz",
+      "sha256": "8998270494fadc8ca3eccefe06658e654bad0c50dc76fc687bd2cadd9fd4a793"
+    },
+    {
+      "key": "5ee1cb6dc1ce5cff999a5a7f2bcf93a78b25b61dc623840bd9692849a0b871ee",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5ee1cb6dc1ce5cff999a5a7f2bcf93a78b25b61dc623840bd9692849a0b871ee.npz",
+      "sha256": "71c51276e05c29273b0d4ab6a33c47f65e1b739e727769de76d1680441bd971a"
+    },
+    {
+      "key": "69cefa6653e01cc47ba6e23a924aed6e7b8a79065b703e3d1b950b7c311a2f8a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/69cefa6653e01cc47ba6e23a924aed6e7b8a79065b703e3d1b950b7c311a2f8a.npz",
+      "sha256": "af35fbdf1b75f56d771c58c20d4dce1d9450a2c1904aead9ad2cacdf2aaf437e"
+    },
+    {
+      "key": "c5f65fc1b28aed1a12d32171f6c7a83ee99a0a6928cc890f90440a7ad4c3fadd",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c5f65fc1b28aed1a12d32171f6c7a83ee99a0a6928cc890f90440a7ad4c3fadd.npz",
+      "sha256": "fd16f8cab97bdb7b6c9ec6ca9a0358e7a0afff39e7c0337a95acb88960188f8b"
+    },
+    {
+      "key": "871a7978f6677cf0c3af7a39b3c6a0894a4ff48050e1a6c2298695baa669e285",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/871a7978f6677cf0c3af7a39b3c6a0894a4ff48050e1a6c2298695baa669e285.npz",
+      "sha256": "f082f63a6bc2bf125b40781100475c95fd009303399472411b5081afca4ea5ca"
+    },
+    {
+      "key": "8fb313671ea4669b1bac7592c278291e54a312a4890ad16f3119c9d3764cf35c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8fb313671ea4669b1bac7592c278291e54a312a4890ad16f3119c9d3764cf35c.npz",
+      "sha256": "c23708dd56f25b2c05ee46cef4c9d0a3c0ecd5b63766670e39ef85a1e3b189fd"
+    },
+    {
+      "key": "9229bd24dbdc2a76b5d33c64db1837418b9bf25032578682753de1dc2b6eab4b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/9229bd24dbdc2a76b5d33c64db1837418b9bf25032578682753de1dc2b6eab4b.npz",
+      "sha256": "9b99fd5b8afa6010a3abe9f9079d34853875f5e6e4de688cac4f5673a351529c"
+    },
+    {
+      "key": "5a15a8dfe191ce23a30454f9b1c90df2512c4240b73d929df9bbd526344c4e27",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5a15a8dfe191ce23a30454f9b1c90df2512c4240b73d929df9bbd526344c4e27.npz",
+      "sha256": "ec4becc52d405c055b04f68a4a9aa44e10651c17998b6cf5a32484e52d907e9f"
+    },
+    {
+      "key": "993b88574e6b86c496e1a69581389941139c07a30bcad5780edd391f3ca86db6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/993b88574e6b86c496e1a69581389941139c07a30bcad5780edd391f3ca86db6.npz",
+      "sha256": "ddb9067e19c5c9191100595fd71f781015caeb0ca361f0615a04c7dd68f5765c"
+    },
+    {
+      "key": "90396247d02455c94647315e49a1771bf0fa90e224f0b67766b4bb9eadcf10d5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/90396247d02455c94647315e49a1771bf0fa90e224f0b67766b4bb9eadcf10d5.npz",
+      "sha256": "e87a88b517ce28b55c26e52e9718b47724ea4d102e7eefcad79227e5a314793e"
+    },
+    {
+      "key": "77203a124a0b5d9209e5aa503873efd0c8fa2a99d32c2689d35f955915dc0d50",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/77203a124a0b5d9209e5aa503873efd0c8fa2a99d32c2689d35f955915dc0d50.npz",
+      "sha256": "0a6254858b7e3d18d357a49718a90c784b62fab2163cfc02d126e2d991f825d3"
+    },
+    {
+      "key": "660622c7b23954c6759635f4cc45d0fa041982824b867d3c71b5357e3b1e3f78",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/660622c7b23954c6759635f4cc45d0fa041982824b867d3c71b5357e3b1e3f78.npz",
+      "sha256": "2afd59853eba9ddf52a0365de1ac5d31f35f36618518fe064bdb53f73cee70d3"
+    },
+    {
+      "key": "ef13402a6c30b9aa6c3737c384675348a7b828fdf00e57dc5db9b49d61306c0b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ef13402a6c30b9aa6c3737c384675348a7b828fdf00e57dc5db9b49d61306c0b.npz",
+      "sha256": "1e6bfc5063814857ba747c85c3f942c0e746be617b9cd5370a1841565c126b33"
+    },
+    {
+      "key": "e169dbd75154c977366c4adc042581e453605cd24d0e524aed1bdceb6fd13764",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e169dbd75154c977366c4adc042581e453605cd24d0e524aed1bdceb6fd13764.npz",
+      "sha256": "a6ead18e6a8ee80a7dba762986939a04bed552843adf5ec34eaa418ecd5295fb"
+    },
+    {
+      "key": "5e9aea93fc82725e0ebe0ce855ba9e05364a601817bef0ee64457eab5a25fdca",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/5e9aea93fc82725e0ebe0ce855ba9e05364a601817bef0ee64457eab5a25fdca.npz",
+      "sha256": "b633b74be416be6dbbcda6d01587c47df6bab4eb40d9770d7773d479ff8facc8"
+    },
+    {
+      "key": "ee5e321d8095628bd41e29e52e707a7b9e36de1be31cc9664409d04057d6c2c8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ee5e321d8095628bd41e29e52e707a7b9e36de1be31cc9664409d04057d6c2c8.npz",
+      "sha256": "3dd54b835ea830c21c20bf40a59e3a0232ae9e028557d7866f3ee431c6744018"
+    },
+    {
+      "key": "aa885cb581e6af1c9c7a0d3bb1f0b008f78c3c15dd64ce1d7f2fdb85f258227e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/aa885cb581e6af1c9c7a0d3bb1f0b008f78c3c15dd64ce1d7f2fdb85f258227e.npz",
+      "sha256": "c356a1d9a57e876a718352e6ff6352624c778c0700572db598b5d1e3af61660b"
+    },
+    {
+      "key": "40f8508530331a3f6c9a026f30f3deee7142bc0366c217b50bdedac45e2ee94b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/40f8508530331a3f6c9a026f30f3deee7142bc0366c217b50bdedac45e2ee94b.npz",
+      "sha256": "dfe43da5bc4a7bed0699515743bd46779209b0e946d3a52fa86bc2629b9276ed"
+    },
+    {
+      "key": "a6e023e93219b6cd465e6535cd848f13ed830e07fc8734738a1c429bc233dbd8",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a6e023e93219b6cd465e6535cd848f13ed830e07fc8734738a1c429bc233dbd8.npz",
+      "sha256": "8e54219cbe3770fcb37c020f37ef2ca54289b570ac0a23e8999f2b70b56802a1"
+    },
+    {
+      "key": "23a57eba9812681c5cc046a4260701774f69c65523fecc2ce9c19ce13ba41974",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/23a57eba9812681c5cc046a4260701774f69c65523fecc2ce9c19ce13ba41974.npz",
+      "sha256": "8dc439333d05dc1a5a6dc30abffeddd9cfc7a16f1fa513f5aba0ed0a430cd7bd"
+    },
+    {
+      "key": "705beab43c19319a5469488cd52768788fd83b26cc0edc9b4a2bdc53840a9ae3",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/705beab43c19319a5469488cd52768788fd83b26cc0edc9b4a2bdc53840a9ae3.npz",
+      "sha256": "e575bf5a5115c7011af0d4b0f275d8aba74e1a101364fb63f180ca0d80bdd612"
+    },
+    {
+      "key": "503fb3da98b368fadbb0ef9f7005028b29dbcb5625a86a97ab1425429cae1af6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/503fb3da98b368fadbb0ef9f7005028b29dbcb5625a86a97ab1425429cae1af6.npz",
+      "sha256": "91f23c6163eca1b817c31fe88544a522e3075d5058ec05013ce56c7a5faaf707"
+    },
+    {
+      "key": "339c23b891771acd5762f0c16b16108d848e57a6afa480b4d5a7ed0415b2805e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/339c23b891771acd5762f0c16b16108d848e57a6afa480b4d5a7ed0415b2805e.npz",
+      "sha256": "cbefd6d79b1a8d5244fd973c622b222e0379232ae41221a99e23d4da3196eb6c"
+    },
+    {
+      "key": "f62a0a31e1411f7ed311722df3650095e4f8dee98e27058e9179e5cc48193377",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f62a0a31e1411f7ed311722df3650095e4f8dee98e27058e9179e5cc48193377.npz",
+      "sha256": "9252ec5b685a72833895f1082956f4d3cac85c1db5fe59f8645ec18ce067b966"
+    },
+    {
+      "key": "8423d154991127c0cebf94e2330eefcfdc3f26d5585f31a16b23264109632221",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8423d154991127c0cebf94e2330eefcfdc3f26d5585f31a16b23264109632221.npz",
+      "sha256": "e8290d0c79176a800065956ddfc183fc4ed86d653650b00ad5a4f334a6aa0683"
+    },
+    {
+      "key": "13438749ee199ba9a41d45a504e4e37734249852202c94d3c7eeddf8c09de67a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/13438749ee199ba9a41d45a504e4e37734249852202c94d3c7eeddf8c09de67a.npz",
+      "sha256": "73d9ab0970c581073d24964f2d5c5466ff3aa9e92ab8d0f177bf2bd6292de6ac"
+    },
+    {
+      "key": "256dbd633c703b3573988466a39f36dffbe3a8dbd05b1978a9ab371c988a5967",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/256dbd633c703b3573988466a39f36dffbe3a8dbd05b1978a9ab371c988a5967.npz",
+      "sha256": "e030caf9934237be236a44aa22bd47e01bc3ca95151cd81608247d6cff5fa18f"
+    },
+    {
+      "key": "cecd3277173815461bc8dcb8e99263e9f2c203eb5a93453e460c188a169fe866",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/cecd3277173815461bc8dcb8e99263e9f2c203eb5a93453e460c188a169fe866.npz",
+      "sha256": "77c9d0d8d1a8a3bdba85bfd6a4663dc359d9a6dc527c7876f65bc42e0d775d83"
+    },
+    {
+      "key": "e8771c45ff24663724b1749f184c37b78f0569579a45c623064fb75f26642900",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e8771c45ff24663724b1749f184c37b78f0569579a45c623064fb75f26642900.npz",
+      "sha256": "2def3760517880309d8f474afe13b30841310878464f863ac7b9fa5c9a13a9d8"
+    },
+    {
+      "key": "97a2730d0c3d1afcf203e4de70050b214aa712ef9cf7a8cb7db4393ec515e717",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/97a2730d0c3d1afcf203e4de70050b214aa712ef9cf7a8cb7db4393ec515e717.npz",
+      "sha256": "c1ceaa94b14758fe2ec1d1c722bf0f68eea8cbe1ad636a8f3c4cf7a52a254551"
+    },
+    {
+      "key": "94e9b9aabc219f314f0414299a866c611359bcd10625313187fb5dc3b2f36e4e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/94e9b9aabc219f314f0414299a866c611359bcd10625313187fb5dc3b2f36e4e.npz",
+      "sha256": "45bf0525182a2ead0d0e149c99610d103508e42dc24f828a84514b2fbb9394dd"
+    },
+    {
+      "key": "df0dcdd5535377a695cc089fd7942bd313474d98d6e0b3475e91b88129ef4a07",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/df0dcdd5535377a695cc089fd7942bd313474d98d6e0b3475e91b88129ef4a07.npz",
+      "sha256": "86b6c4bf643ee1456ed1ae015cb8ed02c3f000e8e64f4a79925756a397d42b66"
+    },
+    {
+      "key": "85396d484e339ef05a6d35fff4b777036f0506a08f1918051084ac2425c8f396",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/85396d484e339ef05a6d35fff4b777036f0506a08f1918051084ac2425c8f396.npz",
+      "sha256": "39bbf674305681da30ded3b3a35d7c1117acf53492fc4a4efbae3c8d8780da03"
+    },
+    {
+      "key": "f3d3dc15180ad7765f52052cd0c6f28028447cabd65b02476bac9bc8b30b3cc0",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f3d3dc15180ad7765f52052cd0c6f28028447cabd65b02476bac9bc8b30b3cc0.npz",
+      "sha256": "50d67fa0ba502b25c32abb643029c866c9ddf40dd39095f2f52dca3000e75cd8"
+    },
+    {
+      "key": "bf6c019f599f3415550780dad505b7d6e185006c4822a0ec2e951dd3521b9985",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/bf6c019f599f3415550780dad505b7d6e185006c4822a0ec2e951dd3521b9985.npz",
+      "sha256": "5cb6030111b344052a163337d81f5fd24a53939bb8eefd261c81e99bed59a50b"
+    },
+    {
+      "key": "4d2dab9e84ea1fb1330b1924f8ae4cfc5982b09ff5621c6e2757edb58faa8827",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/4d2dab9e84ea1fb1330b1924f8ae4cfc5982b09ff5621c6e2757edb58faa8827.npz",
+      "sha256": "035e82b2747e2911ed7637b7e18ac4303cdbad45c334259d7e2c0e515319d8ed"
+    },
+    {
+      "key": "3f16d90dd9e08f262fcf60aac3ce4880bc45a30a554b63bbc3e4d9618d9f438c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3f16d90dd9e08f262fcf60aac3ce4880bc45a30a554b63bbc3e4d9618d9f438c.npz",
+      "sha256": "2804949f8eb82c9128dd60b49981ce08cab0ab18eb1d885ec5692ba479dbbad7"
+    },
+    {
+      "key": "50c9d69ed21a5547f8c204b1e533418f396673c9fae52b068d51210e0e3b2cae",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/50c9d69ed21a5547f8c204b1e533418f396673c9fae52b068d51210e0e3b2cae.npz",
+      "sha256": "ba3f42cbe20600eb9485b2a29172e19bc5ec970fa499c0bcab1da3f1865c87c3"
+    },
+    {
+      "key": "617b4bcce9c65fec57a75bc9550c5b41f3479095ebaa0a5e144e556486337de2",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/617b4bcce9c65fec57a75bc9550c5b41f3479095ebaa0a5e144e556486337de2.npz",
+      "sha256": "3a8234a90332cc907fe4de71ec44aefeaef2fb33d75ee0d691d4a8203b78bdc9"
+    },
+    {
+      "key": "55cd1fc96701d045168f678b0889efc9caab6996c0a5af8de8ed888fd1aff133",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/55cd1fc96701d045168f678b0889efc9caab6996c0a5af8de8ed888fd1aff133.npz",
+      "sha256": "fb37d23cdad992e915f6ef837a4401be8566a0ce6c73233d663724a187d188e8"
+    },
+    {
+      "key": "e6a8a15c6385910d0bd9187c95f20f05c3dc8347d220ef5a03503290022e99d5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e6a8a15c6385910d0bd9187c95f20f05c3dc8347d220ef5a03503290022e99d5.npz",
+      "sha256": "a923e5cd34e3db524d99591cad76647dbc824ea84e0fea9be9056d3c909f90fa"
+    },
+    {
+      "key": "f50cfaa4c6a50743cd0f478aac15f1e6c161a9ffbcb024b7b105a9f31a231280",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f50cfaa4c6a50743cd0f478aac15f1e6c161a9ffbcb024b7b105a9f31a231280.npz",
+      "sha256": "c4870c38d1dd651506c1d3e106801c542695b902eda9ffd9271f17550c88ce66"
+    },
+    {
+      "key": "3a10d641b64488465bb8cb949f69f15d402c7ea29b6fa6bd998901ba70b649c5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3a10d641b64488465bb8cb949f69f15d402c7ea29b6fa6bd998901ba70b649c5.npz",
+      "sha256": "34897e7737638b664ca05df9ade2f569581d8b0abfafd8f80596677d63ec9855"
+    },
+    {
+      "key": "d1e0c78d46b244078a1b0aa668edc23816b5bbcfa8d0cb9749e0a5f18dec8d74",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d1e0c78d46b244078a1b0aa668edc23816b5bbcfa8d0cb9749e0a5f18dec8d74.npz",
+      "sha256": "28039ed8ea19e3eb9879b52135f25cd9b38e13f9fd98b977e93488059ca8054f"
+    },
+    {
+      "key": "860bd658d2aada600713005a29a1dce689b4567fd3fe32287ff954f1d5f2296a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/860bd658d2aada600713005a29a1dce689b4567fd3fe32287ff954f1d5f2296a.npz",
+      "sha256": "d046d2a483f774ceaaf27a5f150b08d74a392a1944c3e3e9c7c1b3988d6504e2"
+    },
+    {
+      "key": "d13aa630f9eeaab7ac28a35ab777c09a76fea86bc58ad71c6ab4549ab18675de",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d13aa630f9eeaab7ac28a35ab777c09a76fea86bc58ad71c6ab4549ab18675de.npz",
+      "sha256": "ec2e615e0d3580204ad5f0b989752ac638446574db5d36d4bd317685fd883c2c"
+    },
+    {
+      "key": "7132bf0ed6c0f343b944ab1ec03ebf4cb8d0f08d33db5abdf32fe743beb50ed3",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/7132bf0ed6c0f343b944ab1ec03ebf4cb8d0f08d33db5abdf32fe743beb50ed3.npz",
+      "sha256": "f4008f26463299fcedfd56842db8f88cd3a1e30b8254c637a27db28c839a554a"
+    },
+    {
+      "key": "ebe50181f9f12873cc9af133b02d912d5e7ca8348f2b4e0290194b172f8fa916",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ebe50181f9f12873cc9af133b02d912d5e7ca8348f2b4e0290194b172f8fa916.npz",
+      "sha256": "3ec3678ace2792483fc9c9e8ba62d4e7ef5e814376344c552c7f87b9ae390d48"
+    },
+    {
+      "key": "f2444506b8ab7355d1d2484277937786b4677f00e45ff6a67d0fa8b18e6f27d5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f2444506b8ab7355d1d2484277937786b4677f00e45ff6a67d0fa8b18e6f27d5.npz",
+      "sha256": "aa2f647f9433f7c043a51da118939b352bbf88c040968afb7723d98d938b4e95"
+    },
+    {
+      "key": "e7a61e18c43d8034b13d4673ef7965371a6248e19a34c7c3b6e4062d8c8ff86e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e7a61e18c43d8034b13d4673ef7965371a6248e19a34c7c3b6e4062d8c8ff86e.npz",
+      "sha256": "0cf1885b6e28ec2010e612ae1f2d1c96401220ff56d4d508e5d1a74668b4446b"
+    },
+    {
+      "key": "d76f67b17ce150e4b7da5cb578f16f8347adb1c9c256d2ce5a29acc0ffa72d27",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d76f67b17ce150e4b7da5cb578f16f8347adb1c9c256d2ce5a29acc0ffa72d27.npz",
+      "sha256": "bc0337de51d090b80506c061d5900ce08b1a8696eb81f9993cb5fa6a0dfad710"
+    },
+    {
+      "key": "0e6f10717a8a766f58ed041be73b48b39aff0f85f794acd8e950283304105b46",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0e6f10717a8a766f58ed041be73b48b39aff0f85f794acd8e950283304105b46.npz",
+      "sha256": "25d8a7e2954663349f6e15ff9837ed8800978a5ce7a488c7542b7539bbf7da7c"
+    },
+    {
+      "key": "8763be675b3aeca1603f2407252d399f746daf0af477f3a174ec0ab573dd4a4f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8763be675b3aeca1603f2407252d399f746daf0af477f3a174ec0ab573dd4a4f.npz",
+      "sha256": "113e114ce638d28671fe52cbfc41f76c2302e173d49f9f17a320737e3807a191"
+    },
+    {
+      "key": "ed2e79edacaf555e2e4a9338381c05f8dc4a477a304c4e2e531034a798ad85fb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ed2e79edacaf555e2e4a9338381c05f8dc4a477a304c4e2e531034a798ad85fb.npz",
+      "sha256": "94bb1be21bf7f5c78e70bb8bfed14707b0da5a226aacf044a1d4759afd39af30"
+    },
+    {
+      "key": "c64b2cc7c1b17448d849750ab6aedca3d97e23222ae050999772382bb1970da6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c64b2cc7c1b17448d849750ab6aedca3d97e23222ae050999772382bb1970da6.npz",
+      "sha256": "c0ed7c4769839147dc61e6a1be6b9aa3765b7d7c0b8c593a59a0e34b7248f00c"
+    },
+    {
+      "key": "42ab91858cf0af7eedfdafce01d436e9b37944b50c376b581d537d378f91c35e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/42ab91858cf0af7eedfdafce01d436e9b37944b50c376b581d537d378f91c35e.npz",
+      "sha256": "7ef411de5e22d16aaa7063498c7ded77abebe35cb24f9e8aaa0158c19318501a"
+    },
+    {
+      "key": "e4b67543e13541dfe667d60092c7f74d40de03e1525cad56e91c9b76d106b4c6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e4b67543e13541dfe667d60092c7f74d40de03e1525cad56e91c9b76d106b4c6.npz",
+      "sha256": "2d05be5c86c0669a458d43049bd3167fa8ffcf7784fd9d70f37d1725d9848510"
+    },
+    {
+      "key": "c0ce36338a456bb92cf2647e9f76aae3be08b2f9dfcd891e8ff7b86b3b224864",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c0ce36338a456bb92cf2647e9f76aae3be08b2f9dfcd891e8ff7b86b3b224864.npz",
+      "sha256": "ea92dfaf410d59d0af750194b9c241d2fbdae98a86ca8dad73ea7551b54b3099"
+    },
+    {
+      "key": "77b8b8ce88114f020993bba186c8ef86532a5b5311cc8f8105531b4f46c4fd33",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/77b8b8ce88114f020993bba186c8ef86532a5b5311cc8f8105531b4f46c4fd33.npz",
+      "sha256": "f78d73be29e5fe8b7f8b4c73456baf6db9ab4eff5ca8af0be3b8282678759984"
+    },
+    {
+      "key": "2c9f7f52d024093c6cb93ecf144b8bddad8d4971f5890a79003b202c5211269a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2c9f7f52d024093c6cb93ecf144b8bddad8d4971f5890a79003b202c5211269a.npz",
+      "sha256": "f0fa413c5654a8bf3aec60889432449da0739391dec67cd4a144203bc93380ff"
+    },
+    {
+      "key": "1b88de1f32a926c21f9dba7064ab3db4c971d638a350fd543b676332616dade5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/1b88de1f32a926c21f9dba7064ab3db4c971d638a350fd543b676332616dade5.npz",
+      "sha256": "027850dd2e4821acbecc219bb3df282a9c904fa3e4c5edc733d316035bbcebbd"
+    },
+    {
+      "key": "dc4d0ea888d00f885f19fa33e6082f0894a07abbdef24bda11de269a84970240",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/dc4d0ea888d00f885f19fa33e6082f0894a07abbdef24bda11de269a84970240.npz",
+      "sha256": "c34507a4def9b6d09ed780f10fa28017b1d1e5ca38a575c6df546cdc8ba56c84"
+    },
+    {
+      "key": "a994dab734467cad44f3712829fd4db5aa91f4fb18367c51e6e02369627f3d6a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a994dab734467cad44f3712829fd4db5aa91f4fb18367c51e6e02369627f3d6a.npz",
+      "sha256": "a501d05b902f5b6ce3d998436b061491d8b1a1a78d4c410596014c1dd9d370e2"
+    },
+    {
+      "key": "91162a96ab297a7ddc666b669adc482cbc27d5cd25b78affcb05516172b1ad40",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/91162a96ab297a7ddc666b669adc482cbc27d5cd25b78affcb05516172b1ad40.npz",
+      "sha256": "d36e1364e79e969ff98be8d755786bb9b59ac4d01232c74956857923b7f747a8"
+    },
+    {
+      "key": "3360c7c92fe6c97195bf73253a68283bafda5fdb53b3ba25299843364b3b92da",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/3360c7c92fe6c97195bf73253a68283bafda5fdb53b3ba25299843364b3b92da.npz",
+      "sha256": "b618bea0afe5d444dd67a33664c37a96698557740a90f185745a39d99524958e"
+    },
+    {
+      "key": "130e37c27ab771f9e8fc9b0bb12a9327d9d78b05ad53609ef15a22ce1161f600",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/130e37c27ab771f9e8fc9b0bb12a9327d9d78b05ad53609ef15a22ce1161f600.npz",
+      "sha256": "fd45f1ae3ddfbbbadbbc069cf0a9e9188dc7a104d3c387ebb6a1c6b82710aba8"
+    },
+    {
+      "key": "721ae2560d19b11f9c73b8355a469573b97414017667b7dd63ad153094a044b2",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/721ae2560d19b11f9c73b8355a469573b97414017667b7dd63ad153094a044b2.npz",
+      "sha256": "38a604fe1371a1afd6d514b89db629f21644759452cec26abbf09775bcb3cbd9"
+    },
+    {
+      "key": "962050df07503487b2c8f2afc034704511563363fb5353af33175d2d140f0123",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/962050df07503487b2c8f2afc034704511563363fb5353af33175d2d140f0123.npz",
+      "sha256": "72b7eec62b50a78e43ec64469f9d694633bf57cf0cdc6973fb04175f35286f60"
+    },
+    {
+      "key": "28e415b0c526ce3e50d36ad495a14092aa285081e69238979f4e71181fddd4db",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/28e415b0c526ce3e50d36ad495a14092aa285081e69238979f4e71181fddd4db.npz",
+      "sha256": "92034182264659e7805a843c2030eee1be80350f11eb0c85d4a9524f8a4dc2bf"
+    },
+    {
+      "key": "df977c9c3396a711debbfa14ebe1b024eeb089e9a06c6416b145097d23cd1102",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/df977c9c3396a711debbfa14ebe1b024eeb089e9a06c6416b145097d23cd1102.npz",
+      "sha256": "2692827f48cb37d2923a2ef37280a3a14faf11a0b57d8cda80571352a9cb04d6"
+    },
+    {
+      "key": "b06108277c677b466393a9e897af9a907acf7354c9172d11c39825a8d0f2e829",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b06108277c677b466393a9e897af9a907acf7354c9172d11c39825a8d0f2e829.npz",
+      "sha256": "57d856f77f5ec626b6961f80cb92ca24c9c6c9ff047378253494714a38499803"
+    },
+    {
+      "key": "81fb7b810f7a92399b4f127b39e35f22b0b863909036d37f5d25691173d4ab2c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/81fb7b810f7a92399b4f127b39e35f22b0b863909036d37f5d25691173d4ab2c.npz",
+      "sha256": "655aafe41fd60a9f149ec687556fb2e0fec95f9fc7abfb6e6bdbcc35862fd617"
+    },
+    {
+      "key": "15844e6268ae7e8d0565cf3ecb520deb09f8ac4c44b9a2342221bcfa6dcd0ddf",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/15844e6268ae7e8d0565cf3ecb520deb09f8ac4c44b9a2342221bcfa6dcd0ddf.npz",
+      "sha256": "1a06b565e0304c5f8d60c605c5eaf1092c39bc4042779427faaa58950b813c82"
+    },
+    {
+      "key": "0eaa928e9c3fba5fb0028c33b9b382bb4d3c681231388fc327cfd1ab96fca72d",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/0eaa928e9c3fba5fb0028c33b9b382bb4d3c681231388fc327cfd1ab96fca72d.npz",
+      "sha256": "7705bc5256d6d61d7c72ed7df574ab84c763ae118980f4015261b4ccdbf9270b"
+    },
+    {
+      "key": "2ed35a0b6dd8292a95a3fe3ce94f0593a6da5ecf44b86f77a62d1fa780188488",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2ed35a0b6dd8292a95a3fe3ce94f0593a6da5ecf44b86f77a62d1fa780188488.npz",
+      "sha256": "c7916f8546b5d96fe6f26f5209c3e02e6506dcef212bcc602be2ff10fc4ff980"
+    },
+    {
+      "key": "009aefc87ce2b399029bc83b14df74c0aa678f869ba31e57d9f07d077e62a7fa",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/009aefc87ce2b399029bc83b14df74c0aa678f869ba31e57d9f07d077e62a7fa.npz",
+      "sha256": "2e1b5c68b4c2283de0e7dadfe6e1ad4cc30badd47730db36fa58def2c832bd9f"
+    },
+    {
+      "key": "f589a9cab4a247c174e92292255f5cd8b0e53dcc42fcaa41702a1adc1b53b5ff",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/f589a9cab4a247c174e92292255f5cd8b0e53dcc42fcaa41702a1adc1b53b5ff.npz",
+      "sha256": "bd7e0e9a4e016bd6876009892af643c44006b5413ed3ae538827fe993e221387"
+    },
+    {
+      "key": "d6d65cb94b4900aff4a3c72755097842fd58c34940d80a817423f897079e8a9a",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d6d65cb94b4900aff4a3c72755097842fd58c34940d80a817423f897079e8a9a.npz",
+      "sha256": "c0e439d7041c4be4b46d6cdd291f0f90921286847a6354a7f1a73327fb341c34"
+    },
+    {
+      "key": "47e46c93fc0dd139fd575b0920ade7cabdbf3be1cc3849f1c8329cb50ed9f091",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/47e46c93fc0dd139fd575b0920ade7cabdbf3be1cc3849f1c8329cb50ed9f091.npz",
+      "sha256": "0bb49c548dce7fda9d6befe18406e64011febd678af8a6b6ec73036804ac623a"
+    },
+    {
+      "key": "38c11c4d996743470b59665e106501a01d226366a8db6f537e4c21ea6f1a5a50",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/38c11c4d996743470b59665e106501a01d226366a8db6f537e4c21ea6f1a5a50.npz",
+      "sha256": "29a8ca1a7a27367f0e80ad2af15f74d5f0ec54012a47bebce78abb16d126983f"
+    },
+    {
+      "key": "d11f74abda0e23e0a07a88d9a7866b70c5346f2dbecdc8f7fa3ab59b12799c05",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d11f74abda0e23e0a07a88d9a7866b70c5346f2dbecdc8f7fa3ab59b12799c05.npz",
+      "sha256": "92e5dcf6272c98050a8d49eef677af419d1b4e2ae8958d2b7e7dad7860829ed5"
+    },
+    {
+      "key": "6654601af9375e861d32099dd5745d5d2ed21ff5d21b82858133f5f25219767e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/6654601af9375e861d32099dd5745d5d2ed21ff5d21b82858133f5f25219767e.npz",
+      "sha256": "1f32fa9b4509de6e2bfebcc282de7434e0f5f9ae463f5320df0a808320d5f88f"
+    },
+    {
+      "key": "2f4a50864edbd3c8990d1ccf059a27be9c9e021e28ed8cdd718b7625a12107f6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/2f4a50864edbd3c8990d1ccf059a27be9c9e021e28ed8cdd718b7625a12107f6.npz",
+      "sha256": "b672fac35c923bd8b351b99f0dc2d3d6d39195ce9fcee4c2fb6de7ce5d4ed1a3"
+    },
+    {
+      "key": "288fe2c48c215394cf0d1aa07038edb22692d3abfe60aed602a0db02fd79ffa4",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/288fe2c48c215394cf0d1aa07038edb22692d3abfe60aed602a0db02fd79ffa4.npz",
+      "sha256": "3713f8573d0eb1bb02be95f738f9ee1623b564eed081e3f0add3a7f3df84ada2"
+    },
+    {
+      "key": "828c6af47f1c555710f21bf55813bcb2b3387a5751116c0cd1717e9124947a20",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/828c6af47f1c555710f21bf55813bcb2b3387a5751116c0cd1717e9124947a20.npz",
+      "sha256": "f86950a56a8e37c1b1b282bf8219dc286666dc6df369a8ba619f5f633e0c337a"
+    },
+    {
+      "key": "eb9e80b1e06e5b80e48027642436c410b7397d09d0c053f2496d6526a4d6e7a1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/eb9e80b1e06e5b80e48027642436c410b7397d09d0c053f2496d6526a4d6e7a1.npz",
+      "sha256": "a4d9cc69eba152e3f5a606c11ba866f262914671f46bcee518399e7c61e8285f"
+    },
+    {
+      "key": "e975e00d5bd2fb566eef615e0a401c2e4f5145c417b2f8452ebfd758785414c5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/e975e00d5bd2fb566eef615e0a401c2e4f5145c417b2f8452ebfd758785414c5.npz",
+      "sha256": "75043799d1c869eb39580cc96bf3c7efe1245014343de168dd004d33cd2a185b"
+    },
+    {
+      "key": "344e206ab4e01080765c140492cae035b8d916b8ee89bf765db4833eacfbeff9",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/344e206ab4e01080765c140492cae035b8d916b8ee89bf765db4833eacfbeff9.npz",
+      "sha256": "e38b820493732f1d69aa900707062cdf3c6cf2f78aa8111907caf261424a406c"
+    },
+    {
+      "key": "529dd5bc8a427fe4bcb20a4731677cf512e340af762e671d007aeb402dc513ac",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/529dd5bc8a427fe4bcb20a4731677cf512e340af762e671d007aeb402dc513ac.npz",
+      "sha256": "146c4b0eda87cf147f270678e9a19803e64adfdf028bf72396d08035d28b6fa6"
+    },
+    {
+      "key": "d9eab47759b40f52aeeac62bd07ac957ddbef608da17f2716a7b91c04ea6eba1",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d9eab47759b40f52aeeac62bd07ac957ddbef608da17f2716a7b91c04ea6eba1.npz",
+      "sha256": "d31c187327c46b0d23c25dd947e3d4f7ccbf1eeb0e5b6726c5bf2a2c417b825a"
+    },
+    {
+      "key": "fccc7f5e22273f1132cbefc347cde35ea8ca6278489ca35585ca4cf29cf07ee5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/fccc7f5e22273f1132cbefc347cde35ea8ca6278489ca35585ca4cf29cf07ee5.npz",
+      "sha256": "1159f0c86f2275cd57380d12684811c87bbdbce50774cb870d408fbbc3f29600"
+    },
+    {
+      "key": "c3fed61c5eb2b065201e8adc8f8a2a03313b431aa1e3517e164aa31fb54b6615",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/c3fed61c5eb2b065201e8adc8f8a2a03313b431aa1e3517e164aa31fb54b6615.npz",
+      "sha256": "8e9ca4d2657c071074020fda8cd97e3504dbb79d2faa92262602ff715d3669a4"
+    },
+    {
+      "key": "8fe666fd71b405467652f9a8d49088ec4efe857feda1c399df99c841cb894284",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8fe666fd71b405467652f9a8d49088ec4efe857feda1c399df99c841cb894284.npz",
+      "sha256": "66865587f5c6fddbaf8098bd894d7581bea8c5589a32a0139841fb7e2473af89"
+    },
+    {
+      "key": "75d68077a6f278fe6358be7e406f46df73002d76ab7dc4eea7c99d588d1c0390",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/75d68077a6f278fe6358be7e406f46df73002d76ab7dc4eea7c99d588d1c0390.npz",
+      "sha256": "49bcdf06afc52cc9f6e3067edb9dfbd5261735580c732782070cd43e9ba9fa39"
+    },
+    {
+      "key": "b5bbd43e5c046ffef5237e37d7d8b3a3af75b57926006e5e24bee880e747884e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b5bbd43e5c046ffef5237e37d7d8b3a3af75b57926006e5e24bee880e747884e.npz",
+      "sha256": "78bd9152a25bf40049c805a78252180f3a17ae76adb7a1e20be47938e4f930b4"
+    },
+    {
+      "key": "b277c9b3c86e511858c071cea78bd10c43a21cbb851f0a34f0af709d87089094",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/b277c9b3c86e511858c071cea78bd10c43a21cbb851f0a34f0af709d87089094.npz",
+      "sha256": "c22bf782eef2ecfa952b5f63d25b0fe3722b77b2dad14f511929bd1823b05604"
+    },
+    {
+      "key": "a37d9cc5da433f09c50f3d61e7221d083b01efd2cdc926ef9768140289fa5e81",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/a37d9cc5da433f09c50f3d61e7221d083b01efd2cdc926ef9768140289fa5e81.npz",
+      "sha256": "e1c7f430a9904c7af8c7588096a77adfe0a19690c8354351f24801792041e9c6"
+    },
+    {
+      "key": "59d1356fe7635570363ac724b5df47b184c0e6a3db09dd5337801cef6ae11057",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/59d1356fe7635570363ac724b5df47b184c0e6a3db09dd5337801cef6ae11057.npz",
+      "sha256": "afe701f4a87e9f9899d85859e1dc43133b9705ac5d7e45549c3aacc9e5edfe45"
+    },
+    {
+      "key": "81bd1889d1b867cd6eb0cfc64cbb0a90e3e4998dece3a4934f40a38b4f2417bb",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/81bd1889d1b867cd6eb0cfc64cbb0a90e3e4998dece3a4934f40a38b4f2417bb.npz",
+      "sha256": "4390d48bbde4e74b2ba32e455f5b91637ae424b7ff9f534e8475239663b06f21"
+    },
+    {
+      "key": "d26b573bc82cbeeaee03bfa5980e360225d37e6e049bba431a603c2183c2127b",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/d26b573bc82cbeeaee03bfa5980e360225d37e6e049bba431a603c2183c2127b.npz",
+      "sha256": "fed1047d3fec0d105ce10e8903d6d71851d0a9dbfee8693c9007ebeb029f08d4"
+    },
+    {
+      "key": "835a144ef4446c7b769828664da7b689bef01608e12b33f2b51b7c93d3830300",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/835a144ef4446c7b769828664da7b689bef01608e12b33f2b51b7c93d3830300.npz",
+      "sha256": "440cb426959a2f5d449a25cd9deff276669cf9bb1e9876d96ff273eefcad3978"
+    },
+    {
+      "key": "32fe0f54f334b64e3447a7f4bf7d404eaa67e0a7359a0520f39e592ecfbb03c6",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/32fe0f54f334b64e3447a7f4bf7d404eaa67e0a7359a0520f39e592ecfbb03c6.npz",
+      "sha256": "270781726aacbaa74e6dd94fea5b0abff4c037d4d6a5d0ad1009e0ef8d1741d4"
+    },
+    {
+      "key": "1e6aad684b38b628fe5fcc1f71a341b44b4f704ab595d156813f288c4aa78bb5",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/1e6aad684b38b628fe5fcc1f71a341b44b4f704ab595d156813f288c4aa78bb5.npz",
+      "sha256": "441605f958c436a0cc5b664c4acb7a63098478907a705b111eb91c9582b33953"
+    },
+    {
+      "key": "774f83c4f59fbc81a800ff8ac73cccad103d82762b8712609b9ff09af1e9c01f",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/774f83c4f59fbc81a800ff8ac73cccad103d82762b8712609b9ff09af1e9c01f.npz",
+      "sha256": "0af1ed8e26e764ebf17c367283f217940bc86ffb89456edb696704b74a692b5a"
+    },
+    {
+      "key": "45094edaee0c402f51631d823637ffe6ed47bb9e2b2498838dd6bb3c5fd17a55",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/45094edaee0c402f51631d823637ffe6ed47bb9e2b2498838dd6bb3c5fd17a55.npz",
+      "sha256": "a31dc22b7b0028169ebe15fa3d5a420470ce1486e810389d8d4b9aea730b467d"
+    },
+    {
+      "key": "737fba3e7043364e92b220b1f9342493e7899beac991f1416f30e6b5a41e3720",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/737fba3e7043364e92b220b1f9342493e7899beac991f1416f30e6b5a41e3720.npz",
+      "sha256": "0923b4332d2ca65797c3fccdaa80817aa1c780cc60f8f78b3a49b3c5ae16817c"
+    },
+    {
+      "key": "8a38ace0ef1b82d316532c6307988fbdcd55dd3a68853f66b1a08c797045eb3c",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/8a38ace0ef1b82d316532c6307988fbdcd55dd3a68853f66b1a08c797045eb3c.npz",
+      "sha256": "88e85d99b46778708b006a33587e093c94fd0bb6d01ad85978437ba2da74bda8"
+    },
+    {
+      "key": "ce12bcd0efd00b80ccc905771bed5e8f09ea971de84599eb709e888551d8129e",
+      "path": "sprite/.work/q3m-family-witnesses-x2-20261003-v1/encoded/0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449/ce12bcd0efd00b80ccc905771bed5e8f09ea971de84599eb709e888551d8129e.npz",
+      "sha256": "b146ca8f78014253f747bec4a324de06739f7f57bbaa72a6deee29fc73e513a8"
+    }
+  ],
+  "native_runtime_prerequisite": {
+    "reason": "grouped source index merges monster_layered 2000 and monster_layered_spell 8000; current manifest only hooks the first",
+    "animation_ids": [
+      "0x8000",
+      "0x8100",
+      "0x8200"
+    ],
+    "needed": "add native 8000 render/vtable to scoped owner8 composite hook before installation",
+    "native_paths": [
+      {
+        "animation_type": "2000",
+        "vtable_rva": "0x5aa650",
+        "render_rva": "0x32ee90",
+        "ini_parser_rva": "0x3403f0",
+        "constructor_rva": "0x311300"
+      },
+      {
+        "animation_type": "8000",
+        "vtable_rva": "0x5aa840",
+        "render_rva": "0x32f3b0",
+        "ini_parser_rva": "0x340610",
+        "constructor_rva": "0x3119a0"
+      }
+    ],
+    "no_runtime_changes_made": true
+  },
+  "production_started": false,
+  "installed": false,
+  "release": false,
+  "zero_area_native_frames": [
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 0,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 1,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 2,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 3,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 4,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 5,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 6,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 7,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 8,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 9,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 30,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 31,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 32,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 33,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 34,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 35,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 36,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 37,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 38,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 39,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 60,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 61,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 62,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 63,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 64,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 65,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 66,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 67,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 68,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "resref": "MSIRG2BE",
+      "frame_index": 69,
+      "geometry": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "native_empty_frame_prerequisite": "preserve 30 zero-height MSIRG2BE declarations; V7 producer currently rejects them; establish native active/unused routes before any packing"
+}

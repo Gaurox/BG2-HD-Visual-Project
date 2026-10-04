@@ -1,0 +1,141 @@
+{
+  "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+  "log_snapshot_sha256": "3bb9565567889e21c62fad2464e7afdaceb9af2d4f6619fff920d5844d525ec4",
+  "session_start_line": 32029,
+  "session_start": "[2026-10-04 19:40:54.566] [info] InfinityEngine-Enhancer loaded (config applied)",
+  "session_last_line": "[2026-10-04 19:42:44.801] [info] Map page B1: generation=0, pages=27, prepared=0, hits=0, misses=0, consumed=0, rejected=0, failures=0, reservedBytes=0, peakBytes=0, crcMs=0.000, copyMs=0.000, renderWorkerWaits=0",
+  "witnesses": [
+    {
+      "line": 32223,
+      "text": "[2026-10-04 19:41:00.273] [info] Q3M_FAMILY_WITNESS animation=2000 nativeScope=9 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32229,
+      "text": "[2026-10-04 19:41:00.289] [info] Q3M_FAMILY_WITNESS animation=2000 nativeScope=9 replacements=1 layers=2 incomplete=false"
+    },
+    {
+      "line": 32524,
+      "text": "[2026-10-04 19:41:34.610] [info] Q3M_FAMILY_WITNESS animation=2200 nativeScope=9 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32530,
+      "text": "[2026-10-04 19:41:34.643] [info] Q3M_FAMILY_WITNESS animation=2200 nativeScope=9 replacements=1 layers=2 incomplete=false"
+    },
+    {
+      "line": 32535,
+      "text": "[2026-10-04 19:41:34.933] [info] Q3M_FAMILY_WITNESS animation=2300 nativeScope=9 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32539,
+      "text": "[2026-10-04 19:41:34.966] [info] Q3M_FAMILY_WITNESS animation=2300 nativeScope=9 replacements=1 layers=1 incomplete=false"
+    },
+    {
+      "line": 32791,
+      "text": "[2026-10-04 19:42:05.550] [info] Q3M_FAMILY_WITNESS animation=8000 nativeScope=2 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32798,
+      "text": "[2026-10-04 19:42:05.593] [info] Q3M_FAMILY_WITNESS animation=8000 nativeScope=2 replacements=1 layers=2 incomplete=false"
+    },
+    {
+      "line": 32857,
+      "text": "[2026-10-04 19:42:19.501] [info] Q3M_FAMILY_WITNESS animation=8100 nativeScope=2 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32862,
+      "text": "[2026-10-04 19:42:19.535] [info] Q3M_FAMILY_WITNESS animation=8100 nativeScope=2 replacements=1 layers=2 incomplete=false"
+    },
+    {
+      "line": 32892,
+      "text": "[2026-10-04 19:42:28.775] [info] Q3M_FAMILY_WITNESS animation=8200 nativeScope=2 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 32898,
+      "text": "[2026-10-04 19:42:28.791] [info] Q3M_FAMILY_WITNESS animation=8200 nativeScope=2 replacements=1 layers=2 incomplete=false"
+    }
+  ],
+  "volo_render_matches": [],
+  "creatures": [
+    {
+      "resref": "QLYR2100",
+      "source": "config://bg2ee_game_root/override/QLYR2100.cre",
+      "sha256": "a156a26cebd5e0a17cd9283bd49fd5bc2c97f92f81407ca511262bb901a31b19",
+      "animation": "0x2100",
+      "state": "0x0",
+      "translucency": 0,
+      "effects": [
+        {
+          "opcode": 268,
+          "parameter1": 0,
+          "parameter2": 0,
+          "timing": 1
+        },
+        {
+          "opcode": 271,
+          "parameter1": 0,
+          "parameter2": 0,
+          "timing": 1
+        }
+      ]
+    },
+    {
+      "resref": "ENDVOLO",
+      "source": "stock:data/Creature.bif",
+      "sha256": "0d7501e5cd42072cdb6f8c1104c631d9f22becc12dc4b044769dadc2d1690b75",
+      "animation": "0x2100",
+      "state": "0x0",
+      "translucency": 0,
+      "effects": [
+        {
+          "opcode": 268,
+          "parameter1": 0,
+          "parameter2": 0,
+          "timing": 1
+        },
+        {
+          "opcode": 271,
+          "parameter1": 0,
+          "parameter2": 0,
+          "timing": 1
+        }
+      ]
+    },
+    {
+      "resref": "SARVOLO",
+      "source": "stock:data/25Creatures.bif",
+      "sha256": "1a9006cc288771584ffee344d3d718f5ceedc67fa6f440c989064041389e5674",
+      "animation": "0x2100",
+      "state": "0x0",
+      "translucency": 0,
+      "effects": []
+    },
+    {
+      "resref": "OGREMA01",
+      "source": "stock:data/Creature.bif",
+      "sha256": "1fff3be68f33a7e32ed3d4f08ecabebf8e7c44e54fcea26d5f3d6a0539c64135",
+      "animation": "0x2200",
+      "state": "0x0",
+      "translucency": 0,
+      "effects": []
+    }
+  ],
+  "ogre_equipped_item": {
+    "resref": "MAGE01",
+    "source": "stock:data/Items.bif",
+    "sha256": "f559052480c8afcbca91b8fb1231f3779e7f00cd47cd1e958abcab263e8df35c",
+    "equipped_effects": [
+      {
+        "opcode": 20,
+        "parameter1": 0,
+        "parameter2": 0,
+        "timing": 2,
+        "duration": 0
+      }
+    ]
+  },
+  "decision": {
+    "volo": "QLYR2100 inherits permanent opcode 271 Avatar Removal from ENDVOLO; test fixture defective, not evidence of Q3m sprite failure. SARVOLO uses same animation without CRE effects.",
+    "ogre_mage": "OGREMA01 equips MAGE01 in slot 5; equipment opcode 20 grants invisibility. Logs confirm Q3m body+weapon replacement at 19:41:34.643.",
+    "scope": "Diagnosis only; no game writes, historical production changes, QA acceptance or release updates."
+  }
+}

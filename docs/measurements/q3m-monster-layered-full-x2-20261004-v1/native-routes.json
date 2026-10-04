@@ -1,0 +1,53 @@
+{
+  "exe_sha256": "b51093a49140b2b8a7c046b4652bb8e535be24ebbc12b1d735e0b94217a14d57",
+  "factory_call_sites": [
+    {
+      "call_rva": "0x330e03",
+      "constructor_rva": "0x3119a0"
+    },
+    {
+      "call_rva": "0x3312ca",
+      "constructor_rva": "0x311300"
+    }
+  ],
+  "proposal_constructor_association_corrected": true,
+  "verified_render_hooks": [
+    {
+      "animation_type": "8000",
+      "animation_ids": [
+        "0x8000",
+        "0x8100",
+        "0x8200"
+      ],
+      "constructor": "0x311300",
+      "render": "0x32ee90",
+      "vtable": "0x5aa650",
+      "owner": 8,
+      "already_installed": true
+    },
+    {
+      "animation_type": "2000",
+      "animation_ids": [
+        "0x2000",
+        "0x2100",
+        "0x2200",
+        "0x2300"
+      ],
+      "constructor": "0x3119a0",
+      "render": "0x32f3b0",
+      "vtable": "0x5aa840",
+      "owner": 8,
+      "new": true
+    }
+  ],
+  "additional_prefix_32_bytes": "40 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 F9 48 81 EC A0 00 00 00 48 8B 05 09 56 33 00 48",
+  "weapon_naming": "prefix + first character of allowed weapon resref + G1/G2/G1E/G2E",
+  "excluded_orphan": {
+    "resref": "MSIRG2BE",
+    "expected_native_ref": "MSIRBG2E",
+    "zero_height_frames": 30,
+    "source_bytes_modified": false
+  },
+  "native_palette_default": "311300 always assigns native range palette to both body and weapon cells; 3119a0 false_color1738 defaults1, fixed Volo/MDKN explicit0",
+  "game_executed": false
+}

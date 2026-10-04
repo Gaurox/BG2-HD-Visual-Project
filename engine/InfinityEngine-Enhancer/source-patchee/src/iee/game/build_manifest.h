@@ -240,7 +240,7 @@ struct AreaAnimationRuntime {
   // Each pointer is gated by its corresponding native int32 enable flag.
   std::array<std::uintptr_t, 2> monsterCompositeCells{};
   std::array<std::uintptr_t, 2> monsterCompositeEnabled{};
-  std::array<AdditionalCreatureRender, 9> additionalCreatureRenders{};
+  std::array<AdditionalCreatureRender, 10> additionalCreatureRenders{};
   std::uintptr_t additionalCreatureRenderSlot{};
 
   [[nodiscard]] constexpr bool validate() const noexcept {

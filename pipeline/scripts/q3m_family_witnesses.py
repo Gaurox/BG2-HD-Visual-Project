@@ -80,6 +80,13 @@ def validate_selection(selection, complete_family=None):
                 refs = [ref for ref in refs if ref in useful]
                 require({prefix + suffix for suffix in ('G1','G1E','G2','G2E','G3','G3E')} <= set(refs),
                         'Large16 native world actions incomplete')
+            if complete_family == 'monster_layered':
+                # Native EquipWeapon: prefix + weapon[0] + G1/G2/G1E/G2E.
+                # MSIRG2BE is a misnamed orphan, not MSIR+B+G2E.
+                excluded = {'MSIRG2BE'} if witness['animation_id'] == '0x2000' else set()
+                require(set(witness.get('excluded_non_native_refs', [])) == excluded,
+                        'Layered excluded native naming differs')
+                refs = [ref for ref in refs if ref not in excluded]
             require(refs != [''] and len(witness['refs']) == len(set(refs)) and set(witness['refs']) == set(refs), 'complete family BAM coverage differs')
     for witness in witnesses:
         native = inventory[witness['animation_id']]

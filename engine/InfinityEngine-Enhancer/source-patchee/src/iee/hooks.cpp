@@ -123,8 +123,8 @@ static core::Hook<CharacterRenderFn> g_characterRenderHook;
 static core::Hook<MonsterQuadrantRenderFn> g_monsterQuadrantRenderHook;
 static core::Hook<MultiNewRenderFn> g_multiNewRenderHook;
 static core::Hook<MonsterMultiRenderFn> g_monsterMultiRenderHook;
-static std::array<core::Hook<MonsterRenderFn>, 9> g_additionalCreatureHooks;
-static std::array<bool, 9> g_additionalCreatureEnabled{};
+static std::array<core::Hook<MonsterRenderFn>, 10> g_additionalCreatureHooks;
+static std::array<bool, 10> g_additionalCreatureEnabled{};
 static core::Hook<GameAreaRenderFn> g_gameAreaRenderHook;
 static core::Hook<CResPvrDemandFn> g_pvrDemandHook;
 static core::Hook<CResPvrDemandFn> g_resDemandDiagnosticHook;
@@ -1809,7 +1809,7 @@ bool prepare_creature_sprite_composition_hooks(AppContext& ctx) noexcept {
   const bool targetsMultiNew = creature_sprite_x2::targets_multi_new();
   const bool targetsMonsterMulti = targetsMultiNew;
   bool targetsAdditional = false;
-  std::array<bool, 9> additionalSelected{};
+  std::array<bool, 10> additionalSelected{};
   for (std::size_t index = 0; index < runtime.additionalCreatureRenders.size(); ++index) {
     const auto& entry = runtime.additionalCreatureRenders[index];
     const bool selected = creature_sprite_x2::targets_owner(entry.owner) ||
@@ -5182,12 +5182,12 @@ bool install_all(AppContext& ctx) {
         }
         for (std::size_t index = 0; index < g_additionalCreatureHooks.size(); ++index) {
           if (!g_additionalCreatureEnabled[index]) continue;
-          constexpr std::array<MonsterRenderFn, 9> detours{{
+          constexpr std::array<MonsterRenderFn, 10> detours{{
               detour_additional_creature_render<0>, detour_additional_creature_render<1>,
               detour_additional_creature_render<2>, detour_additional_creature_render<3>,
               detour_additional_creature_render<4>, detour_additional_creature_render<5>,
               detour_additional_creature_render<6>, detour_additional_creature_render<7>,
-              detour_additional_creature_render<8>}};
+              detour_additional_creature_render<8>, detour_additional_creature_render<9>}};
           const auto& entry = runtime.additionalCreatureRenders[index];
           g_additionalCreatureHooks[index].create(reinterpret_cast<void*>(moduleBase + entry.render),
               reinterpret_cast<void*>(detours[index]));

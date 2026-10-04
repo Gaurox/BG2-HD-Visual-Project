@@ -1,0 +1,73 @@
+{"stage": "leaf", "resref": "MSIRBG1", "frames": 120}
+{"stage": "leaf", "resref": "MSIRBG1E", "frames": 192}
+{"stage": "leaf", "resref": "MSIRBG2", "frames": 342}
+{"stage": "leaf", "resref": "MSIRBG2E", "frames": 432}
+{"stage": "leaf", "resref": "MSIRG1", "frames": 552}
+{"stage": "leaf", "resref": "MSIRG1E", "frames": 624}
+{"stage": "leaf", "resref": "MSIRG2", "frames": 774}
+{"stage": "leaf", "resref": "MSIRG2E", "frames": 864}
+{"stage": "leaf", "resref": "UVOLG1", "frames": 1019}
+{"stage": "leaf", "resref": "UVOLG1E", "frames": 1112}
+{"stage": "leaf", "resref": "UVOLG2", "frames": 1267}
+{"stage": "leaf", "resref": "UVOLG2E", "frames": 1360}
+{"stage": "leaf", "resref": "UVOLMG1", "frames": 1381}
+{"stage": "leaf", "resref": "UVOLMG1E", "frames": 1394}
+{"stage": "leaf", "resref": "UVOLMG2", "frames": 1395}
+{"stage": "leaf", "resref": "UVOLMG2E", "frames": 1396}
+{"stage": "leaf", "resref": "MOGMG1", "frames": 1546}
+{"stage": "leaf", "resref": "MOGMG1E", "frames": 1636}
+{"stage": "leaf", "resref": "MOGMG2", "frames": 1786}
+{"stage": "leaf", "resref": "MOGMG2E", "frames": 1876}
+{"stage": "leaf", "resref": "MOGMSG1", "frames": 2026}
+{"stage": "leaf", "resref": "MOGMSG1E", "frames": 2116}
+{"stage": "leaf", "resref": "MOGMSG2", "frames": 2266}
+{"stage": "leaf", "resref": "MOGMSG2E", "frames": 2356}
+{"stage": "leaf", "resref": "MDKNG1", "frames": 2531}
+{"stage": "leaf", "resref": "MDKNG1E", "frames": 2636}
+{"stage": "leaf", "resref": "MDKNG2", "frames": 2806}
+{"stage": "leaf", "resref": "MDKNG2E", "frames": 2908}
+{"stage": "leaf", "resref": "MGNLG1", "frames": 3048}
+{"stage": "leaf", "resref": "MGNLG1E", "frames": 3132}
+{"stage": "leaf", "resref": "MGNLG2", "frames": 3262}
+{"stage": "leaf", "resref": "MGNLG2E", "frames": 3340}
+{"stage": "leaf", "resref": "MGNLHG1", "frames": 3480}
+{"stage": "leaf", "resref": "MGNLHG1E", "frames": 3564}
+{"stage": "leaf", "resref": "MGNLHG2", "frames": 3594}
+{"stage": "leaf", "resref": "MGNLHG2E", "frames": 3612}
+{"stage": "leaf", "resref": "MGNLINV", "frames": 3614}
+{"stage": "leaf", "resref": "MGNLSG1", "frames": 3754}
+{"stage": "leaf", "resref": "MGNLSG1E", "frames": 3838}
+{"stage": "leaf", "resref": "MGNLSG2", "frames": 3938}
+{"stage": "leaf", "resref": "MGNLSG2E", "frames": 3998}
+{"stage": "leaf", "resref": "MHOBBG1", "frames": 4138}
+{"stage": "leaf", "resref": "MHOBBG1E", "frames": 4222}
+{"stage": "leaf", "resref": "MHOBBG2", "frames": 4272}
+{"stage": "leaf", "resref": "MHOBBG2E", "frames": 4302}
+{"stage": "leaf", "resref": "MHOBG1", "frames": 4442}
+{"stage": "leaf", "resref": "MHOBG1E", "frames": 4526}
+{"stage": "leaf", "resref": "MHOBG2", "frames": 4676}
+{"stage": "leaf", "resref": "MHOBG2E", "frames": 4766}
+{"stage": "leaf", "resref": "MHOBSG1", "frames": 4906}
+{"stage": "leaf", "resref": "MHOBSG1E", "frames": 4990}
+{"stage": "leaf", "resref": "MHOBSG2", "frames": 5090}
+{"stage": "leaf", "resref": "MHOBSG2E", "frames": 5150}
+{"stage": "leaf", "resref": "MKOBBG1", "frames": 5265}
+{"stage": "leaf", "resref": "MKOBBG1E", "frames": 5334}
+{"stage": "leaf", "resref": "MKOBBG2", "frames": 5484}
+{"stage": "leaf", "resref": "MKOBBG2E", "frames": 5574}
+{"stage": "leaf", "resref": "MKOBG1", "frames": 5689}
+{"stage": "leaf", "resref": "MKOBG1E", "frames": 5758}
+{"stage": "leaf", "resref": "MKOBG2", "frames": 5908}
+{"stage": "leaf", "resref": "MKOBG2E", "frames": 5998}
+{"stage": "leaf", "resref": "MKOBSG1", "frames": 6113}
+{"stage": "leaf", "resref": "MKOBSG1E", "frames": 6182}
+{"stage": "leaf", "resref": "MKOBSG2", "frames": 6332}
+{"stage": "leaf", "resref": "MKOBSG2E", "frames": 6422}
+Traceback (most recent call last):
+  File "G:\AI\BG2_Upscale\docs\measurements\q3m-monster-layered-full-x2-20261004-v1\verify.py", line 94, in <module>
+    composite=native('native-composite',[HERE/'composite_probe.exe',assets,co])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\AI\BG2_Upscale\docs\measurements\q3m-monster-layered-full-x2-20261004-v1\verify.py", line 58, in native
+    assert p.returncode==0,(label,p.stdout[-1000:],p.stderr)
+           ^^^^^^^^^^^^^^^
+AssertionError: ('native-composite', '', 'both layered native paths required\n')

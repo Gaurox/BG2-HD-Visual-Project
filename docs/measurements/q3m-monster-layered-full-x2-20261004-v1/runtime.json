@@ -1,0 +1,57 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-monster-layered-full-x2-20261004-v1",
+  "base_commit": "16b01e52",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-doom-guard-sdf-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "8ab56eeefb7317b0b85032541d63c89b081a2528c3b6028bc72cdfa2193f6f8d",
+    "bytes": 3285
+  },
+  "capability_delta": {
+    "additional_render_rva": "0x32f3b0",
+    "additional_vtable_rva": "0x5aa840",
+    "owner": 8,
+    "composite": true,
+    "hook_count": 10,
+    "only_family": "monster_layered"
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "32f94df8af53cda61d93bfbdf11136dda4d83c5f1de6d6c48796bc41d4786514",
+    "bytes": 2116608
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "410acf6a4ce3e2470aee1bdcb0b92456195e4df78252f1658e700298293569b0",
+      "bytes": 228925
+    },
+    {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "7a3ad493b3c52ad7d27dd255e653ca8fc450888e38c374b0f38811a1407b6539",
+      "bytes": 17017
+    },
+    {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "94acb8272b4b016b142b07fc52b9f8887d6bcb0fd1474c95f3d25064ba43cfb6",
+      "bytes": 285601
+    },
+    {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-src/src/iee/game/build_manifest.cpp",
+      "sha256": "388da2eb718d7b9a8d2fad08a80c421ff221d32c2182cdb256a37ec2ed81c250",
+      "bytes": 26312
+    },
+    {
+      "path": "sprite/.work/q3m-monster-layered-full-x2-20261004-v1/runtime-src/src/iee/game/build_manifest.h",
+      "sha256": "2815613c90641ceacbedd0d7db5db7805c02d6b4c69c1060290300fbbf48cd40",
+      "bytes": 21297
+    }
+  ],
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/runtime-delta.patch",
+    "sha256": "c2fd9c4a43109f54c2bc795175468d4e118d6c19a65accd6a50edf05e598e74f",
+    "bytes": 3690
+  },
+  "ingame_QA": false,
+  "release": false
+}
