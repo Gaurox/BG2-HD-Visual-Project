@@ -100,6 +100,7 @@ constexpr std::uint32_t kCatalogMonsterIcewindOwner = 2;
 constexpr std::uint32_t kCatalogMonsterOwner = 3;
 constexpr std::uint32_t kCatalogMonsterQuadrantOwner = 4;
 constexpr std::uint32_t kCatalogMultiNewOwner = 5;
+constexpr std::uint32_t kCatalogAnkhegOwner = 9;
 constexpr std::uint16_t kCatalogShardAnimationSentinel = 0xFFFFu;
 constexpr std::uint16_t kLegacyMgo1AnimationId = 0xE400;
 constexpr char kLegacyRegistryFilename[] = "CreatureSprites-X2.registry";
@@ -4464,9 +4465,11 @@ bool resolve_frame(std::uint16_t animationId,
       const auto* animation = find_catalog_animation_locked(animationId);
       if (!animation) return false;
       const bool waitForMetadata =
-          mode == FrameResolveMode::WaitForCharacterMetadata &&
           g_catalog.version == kRegistryCatalogDirectoryVersion &&
-          animation->owner == kCatalogCharacterOwner;
+          ((mode == FrameResolveMode::WaitForCharacterMetadata &&
+            animation->owner == kCatalogCharacterOwner) ||
+           (mode == FrameResolveMode::WaitForAnkhegMetadata &&
+            animationId == 0x3000u && animation->owner == kCatalogAnkhegOwner));
       if (!catalog_resident_resource_locked(
               animationId, resref, catalogShardIndex, resourceOrdinal,
               resourceIndex)) {
@@ -4491,7 +4494,7 @@ bool resolve_frame(std::uint16_t animationId,
           // A stuck/over-budget load must not stall every subsequent draw.
           const auto* entry = find_catalog_directory_entry_locked(animationId, resref);
           if (entry) quarantine_catalog_component_locked(
-              entry->componentIndex, "Character metadata load exceeded the 5-second render deadline");
+              entry->componentIndex, "Registered sprite metadata load exceeded the 5-second render deadline");
           return false;
         }
         if (!catalog_resident_resource_locked(

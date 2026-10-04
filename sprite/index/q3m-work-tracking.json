@@ -41,7 +41,7 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -64,7 +64,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "V7-x2-flying-accepted-Ogre-Ankheg-installed-other-families-pilot",
+    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-other-families-pilot",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -80,10 +80,11 @@
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
     "current_recipe_complete_animation_ids": 7,
-    "current_recipe_ingame_accepted_families": 1,
+    "current_recipe_ingame_accepted_families": 2,
     "current_recipe_complete_families": 3,
     "current_recipe_installed_animation_ids": 7,
-    "current_recipe_ingame_accepted_animation_ids": 5
+    "current_recipe_ingame_accepted_animation_ids": 6,
+    "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime"
   },
   "families": [
     {
@@ -446,11 +447,12 @@
         "release": false
       },
       "current_contour_trial": {
-        "reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/current-generation.json",
+        "family": "monster_ankheg",
+        "reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/current-generation.json",
         "production_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json",
-        "installation_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/ingame-installation/active-test.json",
-        "installation_snapshot": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/installation-verification.json",
-        "runtime_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/runtime.json",
+        "installation_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json",
+        "runtime_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
         "scope": "complete monster_ankheg only",
         "animation_ids": [
           "0x3000"
@@ -483,15 +485,31 @@
           "new_neural_targets": 0,
           "new_Q3m_encodings": 0
         },
-        "state": "SDF-trial-produced-host-verified-installed-ingame-QA-pending",
-        "qa_ingame": false,
+        "state": "SDF-trial-metadata-wait-installed-ingame-accepted",
+        "qa_ingame": true,
         "release": false,
-        "restore_script": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/restore.ps1",
+        "restore_script": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/restore.ps1",
         "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
-        "qa_state": "pending",
+        "qa_state": "passed",
         "reference_offline": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/trial.json",
         "native_Q3m_planes_unchanged": true,
-        "screen_coverage": "8x8 bilinear signed-distance samples per screen pixel"
+        "screen_coverage": "8x8 bilinear signed-distance samples per screen pixel",
+        "metadata_wait": {
+          "catalog_versions": [
+            2
+          ],
+          "owner": 9,
+          "animation_id": "0x3000",
+          "mode": "WaitForAnkhegMetadata",
+          "maximum_wait_ms": 5000,
+          "timeout_policy": "component-quarantine-and-native-fallback",
+          "payloads": "lazy",
+          "other_monster_families": "NonBlocking",
+          "Character": "existing owner-1 wait retained"
+        },
+        "qa_reference": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json",
+        "qa_decision": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json",
+        "qa_decision_sha256": "38652ff202c7611d2a49b9a22bfbcb029ddfb7250ecfc241aeaa266a629b58de"
       }
     },
     {
@@ -949,11 +967,11 @@
   "current_contour_trials": [
     {
       "family": "monster_ankheg",
-      "reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/current-generation.json",
+      "reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/current-generation.json",
       "production_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json",
-      "installation_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/ingame-installation/active-test.json",
-      "installation_snapshot": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/installation-verification.json",
-      "runtime_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/runtime.json",
+      "installation_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json",
+      "runtime_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
       "scope": "complete monster_ankheg only",
       "animation_ids": [
         "0x3000"
@@ -986,15 +1004,31 @@
         "new_neural_targets": 0,
         "new_Q3m_encodings": 0
       },
-      "state": "SDF-trial-produced-host-verified-installed-ingame-QA-pending",
-      "qa_ingame": false,
+      "state": "SDF-trial-metadata-wait-installed-ingame-accepted",
+      "qa_ingame": true,
       "release": false,
-      "restore_script": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/restore.ps1",
+      "restore_script": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/restore.ps1",
       "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
-      "qa_state": "pending",
+      "qa_state": "passed",
       "reference_offline": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/trial.json",
       "native_Q3m_planes_unchanged": true,
-      "screen_coverage": "8x8 bilinear signed-distance samples per screen pixel"
+      "screen_coverage": "8x8 bilinear signed-distance samples per screen pixel",
+      "metadata_wait": {
+        "catalog_versions": [
+          2
+        ],
+        "owner": 9,
+        "animation_id": "0x3000",
+        "mode": "WaitForAnkhegMetadata",
+        "maximum_wait_ms": 5000,
+        "timeout_policy": "component-quarantine-and-native-fallback",
+        "payloads": "lazy",
+        "other_monster_families": "NonBlocking",
+        "Character": "existing owner-1 wait retained"
+      },
+      "qa_reference": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json",
+      "qa_decision": "sprite/index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json",
+      "qa_decision_sha256": "38652ff202c7611d2a49b9a22bfbcb029ddfb7250ecfc241aeaa266a629b58de"
     }
   ],
   "historical_contour_trials": [
@@ -1093,6 +1127,58 @@
       "family": "monster_ankheg",
       "installation_state": "superseded",
       "user_feedback": "les pixels de contours sont encores tres marqués en escalier"
+    },
+    {
+      "family": "monster_ankheg",
+      "reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/current-generation.json",
+      "production_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json",
+      "installation_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/installation-verification.json",
+      "runtime_reference": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/runtime.json",
+      "scope": "complete monster_ankheg only",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "resources": 12,
+      "physical_frames": 516,
+      "registry_version": 9,
+      "colour_profile": 8,
+      "decode_rule": 3,
+      "world_filter": "CatmullRom",
+      "recipe": {
+        "method": "bounded-smoothed-SDF-with-area-coverage",
+        "sigma_x2": 2.0,
+        "distance_bias_limit_x2": 1.0,
+        "core_radius_x2": 2.0,
+        "near_core_radius_x2": 3.0,
+        "area_supersampling": 8,
+        "colour_filter": "CatmullRom-premultiplied-16-taps",
+        "native_shadows": "separate unchanged source layer",
+        "topology": "preserve foreground-8 and background-4 components at texel centres",
+        "installation": "V9-adaptive-runtime",
+        "distance_quantization_x2": 0.0625,
+        "sdf_pad_x2": 6
+      },
+      "stats": {
+        "physical_frames": 516,
+        "unique_masks": 431,
+        "mask_cache_hits": 85,
+        "acquired_offline_masks_reused": 12,
+        "new_neural_targets": 0,
+        "new_Q3m_encodings": 0
+      },
+      "state": "superseded-runtime-by-metadata-wait-patch",
+      "qa_ingame": false,
+      "release": false,
+      "restore_script": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/restore.ps1",
+      "original_Q3m_reference": "docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json",
+      "qa_state": "pending",
+      "reference_offline": "docs/measurements/q3m-ankheg-sdf-offline-x2-20261004-v1/trial.json",
+      "native_Q3m_planes_unchanged": true,
+      "screen_coverage": "8x8 bilinear signed-distance samples per screen pixel",
+      "installation_state": "superseded",
+      "user_feedback": "resultat magnifique; instability with temporary vanilla x1 frames",
+      "stability_analysis": "docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/README.md"
     }
   ]
 }

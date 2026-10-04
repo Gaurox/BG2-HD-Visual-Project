@@ -1,0 +1,252 @@
+{
+  "schema": "bg2-upscale-native-sprite-family-qa-decision-v1",
+  "status": "accepted",
+  "qa_state": "passed",
+  "recorded_at_utc": "2026-10-04T00:13:38.897743+00:00",
+  "scope": {
+    "kind": "installed-complete-native-family-contour-trial",
+    "engine_family": "monster_ankheg",
+    "animation_ids": [
+      "0x3000"
+    ],
+    "variant_id": "q3m-v9-sdf-stable-x2-catmullrom",
+    "scale": 2,
+    "resources": 12,
+    "frames": 516,
+    "resource_bindings": 12,
+    "ordered_resource_sha256": "4a1f8e472f87e46e8b5acad7d3846ad24ed129a1adc31ea55d0e1799927774ef",
+    "resources_order": "resref ascending"
+  },
+  "visual_qa": {
+    "result": "pass",
+    "authority": "user",
+    "user_statement": "validé, committe",
+    "scenario": "user acceptance of installed complete Ankheg SDF x2 and metadata-wait stability patch",
+    "individual_scenario_details": "not specified by user",
+    "test_commands_provided": [
+      "ANKHEG01"
+    ]
+  },
+  "runtime_contract": {
+    "runtime": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+      "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+      "bytes": 3137
+    },
+    "dll": {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+      "bytes": 2114048
+    },
+    "ini_sha256": "68b322543c53bd59621577cb98ec814b2e33123084adea90d6abe00d219c2ad4",
+    "catalogue_sha256": "56be42fbe7ddce563a068907cc1b1d3f75b6a40f3e9521ddbcee5e11ada4fcc8",
+    "owner": 9,
+    "native_palette_kind": 0,
+    "class_profile_id": 8,
+    "decode_rule_id": 3,
+    "registry_version": 9,
+    "palette": "live-native",
+    "world_filter": "CatmullRom",
+    "native_geometry": true,
+    "SDF_recipe": {
+      "method": "bounded-smoothed-SDF-with-area-coverage",
+      "sigma_x2": 2.0,
+      "distance_bias_limit_x2": 1.0,
+      "core_radius_x2": 2.0,
+      "near_core_radius_x2": 3.0,
+      "area_supersampling": 8,
+      "colour_filter": "CatmullRom-premultiplied-16-taps",
+      "native_shadows": "separate unchanged source layer",
+      "topology": "preserve foreground-8 and background-4 components at texel centres",
+      "installation": "V9-adaptive-runtime",
+      "distance_quantization_x2": 0.0625,
+      "sdf_pad_x2": 6
+    },
+    "metadata_wait": {
+      "catalog_versions": [
+        2
+      ],
+      "owner": 9,
+      "animation_id": "0x3000",
+      "mode": "WaitForAnkhegMetadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "other_monster_families": "NonBlocking",
+      "Character": "existing owner-1 wait retained"
+    },
+    "shaders": [
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+        "target": "override/fpDraw.glsl",
+        "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827",
+        "bytes": 21082,
+        "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+      },
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+        "target": "override/fpSprite.glsl",
+        "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816",
+        "bytes": 22085,
+        "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+      },
+      {
+        "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+        "target": "override/fpSELECT.glsl",
+        "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815",
+        "bytes": 22346,
+        "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+      }
+    ]
+  },
+  "provenance": {
+    "selected_generation": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/current-generation.json",
+      "sha256": "52abb9960618af1114fa124cf36b32ab11bbb31c19d17066864f434d917a0783",
+      "bytes": 3506
+    },
+    "production": {
+      "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/production.json",
+      "sha256": "d82bc1a5d6e2b365115538d4cea2613954d563781434757644211c6460450b8f",
+      "bytes": 347169
+    },
+    "installed_receipt_at_decision": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+      "sha256": "dabd2af5b9a04ae63941db9803e136dcf9cc4f892dca8a7bd7399295beef505c",
+      "bytes": 19177
+    },
+    "installation_snapshot": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json",
+      "sha256": "2e85ac9be56868d9577e755bda994a8f77ff1ebbbd2e6442e0b0174476648b77",
+      "bytes": 1606
+    },
+    "native_verification": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/verification.json",
+      "sha256": "868f036ced62544cef866e0f619fe30193cebf314ad44cc48f2615bd4b05089a",
+      "bytes": 3225
+    }
+  },
+  "resources": [
+    {
+      "resref": "MAKHDG1",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B225DF686FEC933289993F4743B46F592A0C77E1BF55420190845AD11D77149A.registry",
+      "sha256": "b225df686fec933289993f4743b46f592a0c77e1bf55420190845ad11d77149a",
+      "frames": 14,
+      "bytes": 655887
+    },
+    {
+      "resref": "MAKHDG1E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-EC47252049543558183F81CA2551C2FB861013BC96373B1B03921D17F7B53FE7.registry",
+      "sha256": "ec47252049543558183f81ca2551c2fb861013bc96373b1b03921d17f7b53fe7",
+      "frames": 14,
+      "bytes": 655887
+    },
+    {
+      "resref": "MAKHDG2",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-C483E5DA90338DACCEC82F6B84F1D246F1CE6346BD5C81323B403EB552D692C2.registry",
+      "sha256": "c483e5da90338daccec82f6b84f1d246f1ce6346bd5c81323b403eb552d692c2",
+      "frames": 14,
+      "bytes": 656423
+    },
+    {
+      "resref": "MAKHDG2E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-A019D849F637E541FF7DDF81CA50D700DA367EE3E83BF0BA290EB73ADDEA87E0.registry",
+      "sha256": "a019d849f637e541ff7ddf81ca50d700da367ee3e83bf0ba290eb73addea87e0",
+      "frames": 14,
+      "bytes": 656183
+    },
+    {
+      "resref": "MAKHDG3",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-ACE92F3E6AF9C3EBFB8A211B66A835E095989826E36B70D2EDB39F1C5D7E6B7B.registry",
+      "sha256": "ace92f3e6af9c3ebfb8a211b66a835e095989826e36b70d2edb39f1c5d7e6b7b",
+      "frames": 14,
+      "bytes": 655759
+    },
+    {
+      "resref": "MAKHDG3E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-498C855C13BB828A8F5ED1F02F3E6733EB37E795F115042465B406036EE6F7BF.registry",
+      "sha256": "498c855c13bb828a8f5ed1f02f3e6733eb37e795f115042465b406036ee6f7bf",
+      "frames": 14,
+      "bytes": 655759
+    },
+    {
+      "resref": "MAKHG1",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-B7F42DA5DC71C57526926C2B74944FF1988CDDBB79A50E2E9E2BBDF2A5FD5A17.registry",
+      "sha256": "b7f42da5dc71c57526926c2b74944ff1988cddbb79a50e2e9e2bbdf2a5fd5a17",
+      "frames": 85,
+      "bytes": 3851429
+    },
+    {
+      "resref": "MAKHG1E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-2C0E2A80F7BC06E565BC8E24910B3F680FFFA807F18C463B969F107B80124801.registry",
+      "sha256": "2c0e2a80f7bc06e565bc8e24910b3f680fffa807f18c463b969f107b80124801",
+      "frames": 51,
+      "bytes": 2404878
+    },
+    {
+      "resref": "MAKHG2",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-094E1F801C6DCE84137FD4FA2AF608A15724C52E670AEA212CB4F4503A184E01.registry",
+      "sha256": "094e1f801c6dce84137fd4fa2af608a15724c52e670aea212cb4f4503a184e01",
+      "frames": 85,
+      "bytes": 2107617
+    },
+    {
+      "resref": "MAKHG2E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-E5B837FC100C55F2225EFA5AD9783DF15CF98B89E79934F296924038A15A81B8.registry",
+      "sha256": "e5b837fc100c55f2225efa5ad9783df15cf98b89e79934f296924038a15a81b8",
+      "frames": 51,
+      "bytes": 1341649
+    },
+    {
+      "resref": "MAKHG3",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-D0D07A1AA041F50107F346F3AD364A922BA616F6ED03582CEF25B2C2B107E0B5.registry",
+      "sha256": "d0d07a1aa041f50107f346f3ad364a922ba616f6ed03582cef25b2c2b107e0b5",
+      "frames": 100,
+      "bytes": 5386193
+    },
+    {
+      "resref": "MAKHG3E",
+      "animation_ids": [
+        "0x3000"
+      ],
+      "registry": "iee-assets/creature-sprites/CreatureSprites-XN-993B1CE64A96D61ED96AAE5D92B06E5B95885695F1BB6EC780F92B0EE9190F6D.registry",
+      "sha256": "993b1ce64a96d61ed96aae5d92b06e5b95885695f1bb6ec780f92b0ee9190f6d",
+      "frames": 60,
+      "bytes": 3238744
+    }
+  ],
+  "release_state": "not-promoted"
+}

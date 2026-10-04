@@ -1,0 +1,43 @@
+{
+  "schema": "bg2-ankheg-SDF-stability-proposed-fix-verification-v1",
+  "base_commit": "a46a319a",
+  "original_probe": {
+    "cold_misses": 12,
+    "warm_hits": 12,
+    "requested_wait_mode": "WaitForCharacterMetadata",
+    "native_owner": 9
+  },
+  "proposed_probe": {
+    "cold_misses": 0,
+    "warm_hits": 12,
+    "requested_wait_mode": "WaitForAnkhegMetadata",
+    "native_owner": 9
+  },
+  "proposed_wait_ms": {
+    "maximum": 67.1278,
+    "total": 302.291
+  },
+  "patch": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/proposed-fix.patch",
+    "sha256": "a6e23559d90b58064cd9b103381f1cdaedfc0d1212fecd9ac663b31207dbc9a0",
+    "bytes": 3839
+  },
+  "applies_cleanly": true,
+  "proposed_resolver_compiled": true,
+  "runtime_hook_change": "patch-reviewed-and-applies-cleanly; no DLL compilation or game installation requested",
+  "game_DLL_byte_identical": true,
+  "game_catalog_byte_identical": true,
+  "assets_changed": false,
+  "engine_source_changed": false,
+  "ingame_QA": false,
+  "session_analysis": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/log-analysis.json",
+    "sha256": "50b2e6235628cde58479122b57f8d1c9753afb1ffcffb300b7234592d7698105",
+    "bytes": 6408
+  },
+  "source_probe": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/cold_lookup_probe.cpp",
+    "sha256": "8e59b16f1fb75ff2837ecb2aaf1d7230d40a1511c8ca4e1075fa22a7e51441db",
+    "bytes": 1741
+  }
+}

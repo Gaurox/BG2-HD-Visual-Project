@@ -1,0 +1,40 @@
+{
+  "schema": "bg2-ankheg-sdf-runtime-patch-installed-verification-v1",
+  "role": "installation-not-ingame-QA-or-release",
+  "status": "installed-pending-ingame-qa",
+  "installed_at_utc": "2026-10-03T23:57:15.5605584Z",
+  "family": "monster_ankheg",
+  "resources": 12,
+  "frames": 516,
+  "replaced_files": [
+    "InfinityEngine-Enhancer.dll"
+  ],
+  "dll_sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+  "parent_dll_sha256": "6e52211759009d54acc808a849ccaa55e98f8d046ef959395de8b24d22ba99c1",
+  "catalog_sha256": "56be42fbe7ddce563a068907cc1b1d3f75b6a40f3e9521ddbcee5e11ada4fcc8",
+  "unchanged_files_sha256_verified": 99,
+  "shaders_catalog_INI_sprites_unchanged": true,
+  "backup_sha256_verified": true,
+  "verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/verification.json",
+    "sha256": "868f036ced62544cef866e0f619fe30193cebf314ad44cc48f2615bd4b05089a",
+    "bytes": 3225
+  },
+  "generation": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/current-generation.json",
+  "metadata_wait": {
+    "catalog_versions": [
+      2
+    ],
+    "owner": 9,
+    "animation_id": "0x3000",
+    "mode": "WaitForAnkhegMetadata",
+    "maximum_wait_ms": 5000,
+    "timeout_policy": "component-quarantine-and-native-fallback",
+    "payloads": "lazy",
+    "other_monster_families": "NonBlocking",
+    "Character": "existing owner-1 wait retained"
+  },
+  "installation_receipt_sha256": "DABD2AF5B9A04AE63941DB9803E136DCF9CC4F892DCA8A7BD7399295BEEF505C",
+  "ingame_QA": false,
+  "release": false
+}

@@ -955,7 +955,9 @@ bool read_registered_creature_cell(std::uint16_t animationId, void* cell,
           currentFrame, resolved.handle,
           waitForCharacterMetadata
               ? creature_sprite_x2::FrameResolveMode::WaitForCharacterMetadata
-              : creature_sprite_x2::FrameResolveMode::NonBlocking)) {
+              : (animationId == 0x3000u
+                  ? creature_sprite_x2::FrameResolveMode::WaitForAnkhegMetadata
+                  : creature_sprite_x2::FrameResolveMode::NonBlocking))) {
     if (g_ctx->cfg.enableCreatureSpritePaletteTrace && animationId == 0x6110) {
       thread_local std::set<std::array<char, 8>> unresolved;
       if (unresolved.size() < 64 && unresolved.insert(resref).second) {

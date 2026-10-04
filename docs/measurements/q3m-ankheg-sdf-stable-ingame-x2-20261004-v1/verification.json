@@ -1,0 +1,90 @@
+{
+  "schema": "bg2-ankheg-sdf-metadata-wait-native-verification-v1",
+  "passed": true,
+  "core": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/core.log",
+      "sha256": "7579975b51e610085c29378edfce2904c116e4da9c2ca9e13db0a5cf3c2e0960",
+      "bytes": 31258
+    }
+  },
+  "cold_lookup": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/cold-lookup.log",
+      "sha256": "62f8caabac26f3f0a71fdb82744ecabd7393892e050591128e1524e12c2f32d5",
+      "bytes": 3019
+    },
+    "cold_misses": 0,
+    "warm_hits": 12,
+    "requested_wait_mode": "WaitForAnkhegMetadata",
+    "native_owner": 9,
+    "maximum_wait_ms": 69.0129,
+    "total_wait_ms": 325.6382
+  },
+  "SDF": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/sdf.log",
+      "sha256": "4c59923d53e1575a19b79b51f11db9e65d4ebd1206f206f2a46cb8ba4c0b6908",
+      "bytes": 2442
+    },
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true,
+    "composite_cases": 48
+  },
+  "probe_build": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/probe-build.log",
+      "sha256": "6ea75f9748c4d8feb036bac0b258393434fd07fc50e2ea4caf76070f0ba25820",
+      "bytes": 23
+    }
+  },
+  "probe_source": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/cold_lookup_probe.cpp",
+    "sha256": "8cb48608633b19de100a39638bca48919bb8e5a715579e7019d03ee1ec265b5a",
+    "bytes": 1766
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+    "bytes": 2114048
+  },
+  "source_provenance": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h",
+      "sha256": "7a3ad493b3c52ad7d27dd255e653ca8fc450888e38c374b0f38811a1407b6539",
+      "bytes": 17017
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+      "sha256": "6f5cae441cd78928085053b3a477401a084699c901d174cc938f9fec274a42ae",
+      "bytes": 228926
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp",
+      "sha256": "1f21b2a9dd4ae6acdcadd43745d30cd29531912b609bf355c64fbdff63f6c0a6",
+      "bytes": 285559
+    }
+  ],
+  "original_SDF_verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "dc106ff01a5793f9c752bcbeb622d966e32674ff2fbeebd1afaa45d81fab0a59",
+    "bytes": 2794
+  },
+  "original_GPU_verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/gpu-verification.json",
+    "sha256": "833cb04ab2367f81215fe97211d64c019023650e15453719af2a280473428535",
+    "bytes": 5843
+  },
+  "shaders_byte_identical": true,
+  "ingame_QA": false,
+  "release": false
+}

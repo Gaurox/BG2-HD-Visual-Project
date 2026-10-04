@@ -1,0 +1,78 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "status": "development-candidate",
+  "runtime_id": "iee-q3m-v9-ankheg-sdf-stable-x2-20261004-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "dafc2f65ef73bf270da7d9f6df1e1de83a5f487a0e207e305b2d8f7ababd421f",
+    "bytes": 50960
+  },
+  "capability_delta": {
+    "ankheg_cold_resolution": {
+      "catalog_versions": [
+        2
+      ],
+      "owner": 9,
+      "animation_id": "0x3000",
+      "mode": "WaitForAnkhegMetadata",
+      "maximum_wait_ms": 5000,
+      "timeout_policy": "component-quarantine-and-native-fallback",
+      "payloads": "lazy",
+      "other_monster_families": "NonBlocking",
+      "Character": "existing owner-1 wait retained"
+    }
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-sdf-stable-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "0bdaf3b6c6dbc35634c20681a68bb06e113604810eee99a85e0948607619e4d5",
+    "bytes": 2114048
+  },
+  "source_provenance": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.h",
+      "sha256": "7a3ad493b3c52ad7d27dd255e653ca8fc450888e38c374b0f38811a1407b6539",
+      "bytes": 17017
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+      "sha256": "6f5cae441cd78928085053b3a477401a084699c901d174cc938f9fec274a42ae",
+      "bytes": 228926
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/hooks.cpp",
+      "sha256": "1f21b2a9dd4ae6acdcadd43745d30cd29531912b609bf355c64fbdff63f6c0a6",
+      "bytes": 285559
+    }
+  ],
+  "verification": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/verification.json",
+    "sha256": "868f036ced62544cef866e0f619fe30193cebf314ad44cc48f2615bd4b05089a",
+    "bytes": 3225
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "target": "override/fpDraw.glsl",
+      "sha256": "c6f1f23d99d16bfd34fc3eac1577f24c096c4c00f0427cea69e8bde779311827",
+      "bytes": 21082,
+      "baseline_sha256": "D2C73E866BCCB0E8E3F5ADF60D116A7270A84A364D3E7774FBD5F0E207CB2FE1"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "target": "override/fpSprite.glsl",
+      "sha256": "065e28c595af84a7addcbd97793bc8eedcb5052bb26bab1d92710cb0e2fd0816",
+      "bytes": 22085,
+      "baseline_sha256": "7CCD93AF45F34461F1D2157FBAF95199D8EECB954323DD45736DB638CF808E32"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "target": "override/fpSELECT.glsl",
+      "sha256": "e4e70c98de1e6826c47f934ac3e600af06f105f69cc80f84e2289d28e5952815",
+      "bytes": 22346,
+      "baseline_sha256": "A177BDF726FF855AE4C54D8D609BCE3F1163FFC4B68C2B7F6851BB7C35CCA391"
+    }
+  ],
+  "assets": "unchanged; no regeneration",
+  "ingame_QA": false,
+  "release": false
+}

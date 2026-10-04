@@ -60,3 +60,7 @@ pipeline/runtime/manifests/iee-sprite-p7-*.json -text -whitespace
 # P7 compiled allowlist and QA decisions are pinned by raw SHA-256 bytes.
 engine/InfinityEngine-Enhancer/source-patchee/src/iee/paperdoll_q3m_scope.h -text whitespace=cr-at-eol
 sprite/index/qa-decisions/paperdolls/*.json -text -whitespace
+
+# Ankheg stability proof/QA references pin raw run bytes, including line endings.
+docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/** -text -whitespace
+docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/** -text -whitespace

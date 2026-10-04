@@ -1,0 +1,153 @@
+{
+  "log": "config://bg2ee_game_root/InfinityEngine-Enhancer.log",
+  "log_sha256": "c91afbddd4da4f45e8c63318782423d5d70310f5b41cda9a71afd2abb2ff7c62",
+  "log_bytes": 4862724,
+  "session_start_line": 12107,
+  "session_first_line": "[2026-10-04 01:32:17.129] [info] Infinity Engine Enhancer initializing...",
+  "session_last_line": "[2026-10-04 01:33:02.167] [info] Map page B1: generation=7, pages=27, prepared=15, hits=0, misses=7, consumed=1, rejected=0, failures=0, reservedBytes=117440876, peakBytes=125446325, crcMs=0.958, copyMs=3.155, renderWorkerWaits=0",
+  "session_lines": 536,
+  "warnings": [
+    {
+      "line": 12113,
+      "text": "[2026-10-04 01:32:17.200] [warning] WATER_ROUTE2 registry rejected wed=AR0900 overlay=WTLAKE slot=1"
+    },
+    {
+      "line": 12115,
+      "text": "[2026-10-04 01:32:17.200] [warning] WATER_ROUTE2 registry has no validated entry; native q=0 fallback is active"
+    },
+    {
+      "line": 12201,
+      "text": "[2026-10-04 01:32:18.091] [warning] RenderTexture prologue is detoured (likely EEex); recovered at reference RVA 0x4257C0 by verifying the un-patched pattern tail"
+    },
+    {
+      "line": 12266,
+      "text": "[2026-10-04 01:32:30.894] [warning] Registered creature CVidCell frame could not be resolved: owner=CGameAnimationType additional native scope, animation=0x3000, resref=MAKHDG1E, sequence=6, slot=0; native rendering retained"
+    }
+  ],
+  "Ankheg_loads": [
+    {
+      "line": 12270,
+      "time": "2026-10-04 01:32:30.903",
+      "shard": 4561,
+      "resref": "MAKHDG1E",
+      "metadata_bytes": 2057912
+    },
+    {
+      "line": 12271,
+      "time": "2026-10-04 01:32:30.933",
+      "shard": 4567,
+      "resref": "MAKHG1E",
+      "metadata_bytes": 8190148
+    },
+    {
+      "line": 12351,
+      "time": "2026-10-04 01:32:34.516",
+      "shard": 4562,
+      "resref": "MAKHDG2",
+      "metadata_bytes": 2058288
+    },
+    {
+      "line": 12354,
+      "time": "2026-10-04 01:32:34.541",
+      "shard": 4568,
+      "resref": "MAKHG2",
+      "metadata_bytes": 7504344
+    },
+    {
+      "line": 12403,
+      "time": "2026-10-04 01:32:36.480",
+      "shard": 4560,
+      "resref": "MAKHDG1",
+      "metadata_bytes": 2057912
+    },
+    {
+      "line": 12406,
+      "time": "2026-10-04 01:32:36.527",
+      "shard": 4566,
+      "resref": "MAKHG1",
+      "metadata_bytes": 13698332
+    },
+    {
+      "line": 12447,
+      "time": "2026-10-04 01:32:42.264",
+      "shard": 4565,
+      "resref": "MAKHDG3E",
+      "metadata_bytes": 2057464
+    },
+    {
+      "line": 12449,
+      "time": "2026-10-04 01:32:42.305",
+      "shard": 4571,
+      "resref": "MAKHG3E",
+      "metadata_bytes": 11184928
+    }
+  ],
+  "Ankheg_resident_metadata_observed": 48809328,
+  "repeated_Ankheg_loads": [],
+  "native_occlusion_Ankheg_draws": 74,
+  "native_occlusion_replacements": {
+    "creature-sprite": 74
+  },
+  "replacement_transitions": [
+    {
+      "line": 12293,
+      "time": "2026-10-04 01:32:31.031",
+      "replacement": "creature-sprite",
+      "text": "[2026-10-04 01:32:31.031] [info] Native occlusion phase0: owner=AdditionalCreature instance=0x7EA03730 subject=0x3000, clip_calls=1 successful_clip_calls=1, native_clip=present infinity=0x7A85DB98 at (1718,2766,z=0) fx_rect=0x15ADD0 clip_rect=0x15AE40 dither=1 clip_flags=0x8030005 result=1, final_draw=(245,135) logical=7x7 draw_flags=0x8030005 native_texture=1 replacement=creature-sprite"
+    }
+  ],
+  "family_witnesses": [
+    {
+      "line": 12267,
+      "text": "[2026-10-04 01:32:30.894] [info] Q3M_FAMILY_WITNESS animation=3000 nativeScope=3 replacements=0 layers=0 incomplete=true"
+    },
+    {
+      "line": 12296,
+      "text": "[2026-10-04 01:32:31.031] [info] Q3M_FAMILY_WITNESS animation=3000 nativeScope=3 replacements=2 layers=2 incomplete=false"
+    }
+  ],
+  "first_fallback": {
+    "line": 12266,
+    "text": "[2026-10-04 01:32:30.894] [warning] Registered creature CVidCell frame could not be resolved: owner=CGameAnimationType additional native scope, animation=0x3000, resref=MAKHDG1E, sequence=6, slot=0; native rendering retained"
+  },
+  "first_compositions": [
+    {
+      "line": 12292,
+      "text": "[2026-10-04 01:32:31.031] [info] Composing creature sprite MAKHDG1E animation=0x3000 frame 013: scale=x2, BAM logical 5x5, upscaled content 10x10, bordered texture 14x14 (NEAREST)"
+    },
+    {
+      "line": 12294,
+      "text": "[2026-10-04 01:32:31.031] [info] Composing creature sprite MAKHG1E animation=0x3000 frame 017: scale=x2, BAM logical 10x10, upscaled content 20x20, bordered texture 24x24 (NEAREST)"
+    },
+    {
+      "line": 12352,
+      "text": "[2026-10-04 01:32:34.522] [info] Composing creature sprite MAKHDG2 animation=0x3000 frame 013: scale=x2, BAM logical 5x5, upscaled content 10x10, bordered texture 14x14 (NEAREST)"
+    },
+    {
+      "line": 12355,
+      "text": "[2026-10-04 01:32:34.556] [info] Composing creature sprite MAKHG2 animation=0x3000 frame 003: scale=x2, BAM logical 27x29, upscaled content 54x58, bordered texture 58x62 (NEAREST)"
+    },
+    {
+      "line": 12404,
+      "text": "[2026-10-04 01:32:36.481] [info] Composing creature sprite MAKHDG1 animation=0x3000 frame 012: scale=x2, BAM logical 92x66, upscaled content 184x132, bordered texture 188x136 (NEAREST)"
+    },
+    {
+      "line": 12407,
+      "text": "[2026-10-04 01:32:36.531] [info] Composing creature sprite MAKHG1 animation=0x3000 frame 016: scale=x2, BAM logical 83x119, upscaled content 166x238, bordered texture 170x242 (NEAREST)"
+    },
+    {
+      "line": 12448,
+      "text": "[2026-10-04 01:32:42.270] [info] Composing creature sprite MAKHDG3E animation=0x3000 frame 012: scale=x2, BAM logical 92x66, upscaled content 184x132, bordered texture 188x136 (NEAREST)"
+    },
+    {
+      "line": 12450,
+      "text": "[2026-10-04 01:32:42.320] [info] Composing creature sprite MAKHG3E animation=0x3000 frame 021: scale=x2, BAM logical 94x86, upscaled content 188x172, bordered texture 192x176 (NEAREST)"
+    }
+  ],
+  "live_DLL_sha256": "6e52211759009d54acc808a849ccaa55e98f8d046ef959395de8b24d22ba99c1",
+  "live_catalog_sha256": "56be42fbe7ddce563a068907cc1b1d3f75b6a40f3e9521ddbcee5e11ada4fcc8",
+  "caveat": "occlusion trace is sampled/deduplicated; the unresolved warning is process-wide once, not a count of failed frames",
+  "runtime_changed": false,
+  "assets_changed": false,
+  "ingame_QA": "visual quality praised by user; temporal stability failed"
+}
