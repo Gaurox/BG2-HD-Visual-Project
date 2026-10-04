@@ -39,7 +39,8 @@ struct TextureMetadata {
   std::uint16_t animationId{};
   int maximumMipLevel{};
   bool premultiplied{};
-  bool sdfEncoded{};
+  // 0=ordinary RGBA, 1=SDF/native shadow127, 2=SDF/Character shadow128.
+  std::uint8_t sdfEncoded{};
 };
 
 struct DrawObservation {
@@ -95,7 +96,7 @@ class TextureRegistry {
                              int physicalWidth, int physicalHeight, int scale,
                              TextureProvenance provenance, bool masked,
                              std::uint16_t animationId = 0, int maximumMipLevel = 0,
-                             bool premultiplied = false, bool sdfEncoded = false) noexcept;
+                             bool premultiplied = false, std::uint8_t sdfEncoded = 0) noexcept;
   [[nodiscard]] bool transfer_masked(std::uintptr_t contextIdentity,
                                      unsigned parentGlName,
                                      unsigned outputGlName, int maximumMipLevel = 0) noexcept;

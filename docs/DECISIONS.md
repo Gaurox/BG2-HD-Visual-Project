@@ -117,6 +117,9 @@ occurrence. L'état d'approbation et le renderer exact se lisent uniquement dans
 | Vérification batch | racine immuable ; `prepare` vérifie seulement le delta, `verify` quotidien contrôle les métadonnées ; `--full-verify` une fois au jalon final |
 | Routage shader D7 x1 | scopes propriétaires créature + appel monde objet au sol manifesté ; ton neutre mis en file sur slot 5 `fpSprite`, slot 7 `fpSELECT` natif conservé ; aucun forçage HD/x2/ton spécial/contrat absent |
 | Sampler Catmull–Rom D7 x1 | `NEAREST` temporaire limité au draw x1 `fpSprite`/`fpSELECT`, puis restauration exacte min/mag, binding et unité active ; jamais sur texture catalogue HD |
+| Familles / doublons Q3m 2026-10-03/04 | 15 profils natifs ; production par clés compatibles, aucun traitement par CRE ; xBR/ReboutCX v1 historiques exclus ; [`../sprite/SUIVI_Q3M.md`](../sprite/SUIVI_Q3M.md) = décisions/preuves/CLUA et état des variantes |
+| Ankheg contour acquis | V9 SDF x2 + CatmullRom, `WaitForAnkhegMetadata` borné pour V2/owner9/id3000 ; 12 BAM/516 frames, validé ingame ; QA `sprite/index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json` |
+| Character contour en stock | V10 = V6 profile1/rule1 + S/M, I/F compressés identiques, ombre128 ; `0x6110 CHFB1`, 23 BAM/10323 frames ; essai retiré, QA en attente, runtime Ankheg validé restauré ; `docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/{stock-decision,restoration-verification}.json`. Ne pas réinstaller sans nouvelle demande |
 
 ## Vidéos
 

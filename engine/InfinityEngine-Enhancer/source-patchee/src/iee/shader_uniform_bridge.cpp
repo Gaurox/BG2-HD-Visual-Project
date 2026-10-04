@@ -333,7 +333,7 @@ int creature_sampler_unit(unsigned program, Locations& locations) noexcept {
 
 bool set_creature_draw(unsigned program, Locations& locations, float mode,
                        float texelWidth, float texelHeight,
-                       const shader_suite::CreatureHdDrawStyle& style, bool sdfEncoded) noexcept {
+                       const shader_suite::CreatureHdDrawStyle& style, std::uint8_t sdfEncoded) noexcept {
   if (!resolve_creature_draw_locations(program, locations)) return false;
   const auto& gl = game::gl::get_gl_functions();
   int currentProgram = 0;
@@ -342,7 +342,10 @@ bool set_creature_draw(unsigned program, Locations& locations, float mode,
     return false;
   }
   if (sdfEncoded && locations.creatureSdfEncoded < 0) return false;
-  if (locations.creatureSdfEncoded >= 0) gl.glUniform1f(locations.creatureSdfEncoded, sdfEncoded ? 1.0f : 0.0f);
+  locations.creatureSdfCharacter = resolve_location(gl, program, locations.creatureSdfCharacter, "uIeeCreatureSdfCharacter");
+  if (sdfEncoded == 2 && locations.creatureSdfCharacter < 0) return false;
+  if (locations.creatureSdfCharacter >= 0) gl.glUniform1f(locations.creatureSdfCharacter, sdfEncoded == 2 ? 1.0f : 0.0f);
+  if (locations.creatureSdfEncoded >= 0) gl.glUniform1f(locations.creatureSdfEncoded, static_cast<float>(sdfEncoded));
   gl.glUniform1f(locations.creatureFilterMode, mode);
   gl.glUniform2f(locations.creatureTexelSize, texelWidth, texelHeight);
 

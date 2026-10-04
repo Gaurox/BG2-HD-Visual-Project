@@ -31,6 +31,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 ## Tables
 
 - [`q3m-work-tracking.json`](q3m-work-tracking.json) et [`q3m-work-items.csv`](q3m-work-items.csv) : nouvelle queue Q3m de tous les profils personnages/créatures ; xBR/ReboutCX historiques exclus des compteurs. Inventaire des 15 familles, règles couleur et estimation moteur : [`../SUIVI_Q3M.md`](../SUIVI_Q3M.md). Suivi de travail uniquement ; production, QA, installation et release gardent leurs autorités indépendantes.
+- Mémoire du chat 2026-10-03/04 : [`../SUIVI_Q3M.md`](../SUIVI_Q3M.md#mémoire-du-chat--décisions--preuves) ; trois familles complètes, deux validées (Flying, Ankheg SDF stable). **Character CHFB1 SDF V10 en stock, non installé** : [décision](../../docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/stock-decision.json), [restauration vérifiée du runtime Ankheg accepté](../../docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json). Queue `stocked_contour_solutions` distincte des essais actifs ; aucune validation/release implicite.
 - [`q3m-source-work-plan.json`](q3m-source-work-plan.json) : analyse exacte des 14 profils hors Character, reliée au plan Character acquis ; doublons entre BAM/IDs et intersections vérifiées par octets. [Résultat et lecture de la queue unique](../../docs/measurements/all-creature-source-dedup-20261003-v1/README.md). Source identique ne prouve pas la compatibilité d'un résultat Q3m entre profils.
 - [`family-groups.csv`](family-groups.csv) : autorité manuelle de classement des
   `engine_section`; macro-groupe, dossier, layout et règle de bucket.
@@ -44,7 +45,7 @@ ne doit jamais utiliser cet instantané comme gate opérationnel.
 - [`qa-decisions/`](qa-decisions/) : décisions ingame immuables.
 - Production : pointeur `current-generation.json` et manifeste scellé du catalogue.
 - Installation : `ingame-installation/active-test.json`, sans autorité QA.
-- Q3m x2 complet, 78 `Character` (2026-10-02) : [production](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json), [installation active BOX](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/ingame-installation/active-test.json), [couverture vérifiée, aucun manquant](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/verification.json). QA visuelle de ce catalogue complet encore distincte.
+- Q3m x2 complet, 78 `Character` (2026-10-02) : [production](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json), [reçu de l'installation initiale BOX](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/ingame-installation/active-test.json), [couverture vérifiée, aucun manquant](../../docs/measurements/playable-q3m-x2-ingame-20261002-v1/verification.json). QA visuelle de ce catalogue complet encore distincte ; filtre global courant CatmullRom, contrats QA historiques conservés.
 - Diagnostics couleur, six frames Spectateur/Bodhi/golem (2026-10-03) : [cinq essais archivés, PNG et mesures](../../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md) — ancien x2, Q3m x2/x4, SeedVR 7B, 16 niveaux et quatre partenaires. Hors production/QA/installation/release ; variantes expérimentales incompatibles V6.
 - Release : `releases/BG2-HD-Upscale/manifests/sprite-release-candidates.json`, puis `content.json`.
 

@@ -41,13 +41,14 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/installation-verification.json",
+    "latest_installation_verification_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
     "colour_contract": "V7 profiles 8/9 rule 3; I + packed B/F + exact dependencies; live native palettes; four same-class partners; eight levels",
     "world_scale": 2,
-    "world_filter": "Box",
+    "world_filter": "CatmullRom",
     "historical_final_rasters_excluded": [
       "xBR",
       "ReboutCX-first-generation"
@@ -56,7 +57,9 @@
     "q3m_internal_primitives_retained": [
       "indexed-xBR-guide",
       "ReboutCX-float32-targets"
-    ]
+    ],
+    "initial_world_filter": "Box",
+    "world_filter_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
   },
   "colour_variants": {
     "reference": "docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md",
@@ -123,7 +126,59 @@
         "unique_encoded_work": 467,
         "state": "host-verified-ingame-pending",
         "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
-      }
+      },
+      "current_contour_trials": [],
+      "stocked_contour_solutions": [
+        {
+          "family": "character",
+          "body": "CHFB1",
+          "scope": "0x6110 unarmoured world body only; equipment/UI/other consumers unchanged",
+          "animation_ids": [
+            "0x6110"
+          ],
+          "resources": 23,
+          "physical_frames": 10323,
+          "registry_version": 10,
+          "colour_profile": 1,
+          "decode_rule": 1,
+          "world_filter": "CatmullRom",
+          "recipe": {
+            "method": "bounded-smoothed-SDF-with-area-coverage",
+            "sigma_x2": 2.0,
+            "distance_bias_limit_x2": 1.0,
+            "core_radius_x2": 2.0,
+            "near_core_radius_x2": 3.0,
+            "area_supersampling": 8,
+            "colour_filter": "CatmullRom-premultiplied-16-taps",
+            "native_shadows": "separate unchanged source layer",
+            "topology": "preserve foreground-8 and background-4 components at texel centres",
+            "installation": false
+          },
+          "stats": {
+            "physical_frames": 10323,
+            "unique_masks": 2388,
+            "mask_cache_hits": 7935,
+            "new_neural_targets": 0,
+            "new_Q3m_encodings": 0
+          },
+          "reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/current-generation.json",
+          "production_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/production.json",
+          "runtime_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/runtime.json",
+          "installation_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+          "restore_script": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restore.ps1",
+          "state": "Character-CHFB1-SDF-stocked-not-installed-ingame-QA-pending",
+          "qa_ingame": false,
+          "qa_state": "pending",
+          "release": false,
+          "colour_I_F_stored_bytes_unchanged": true,
+          "native_shadow_alpha": 128,
+          "currently_installed": false,
+          "decision_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/stock-decision.json",
+          "restoration_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json",
+          "previous_installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/installation-verification.json",
+          "installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
+        }
+      ]
     },
     {
       "engine_section": "character_old",
@@ -1179,6 +1234,57 @@
       "installation_state": "superseded",
       "user_feedback": "resultat magnifique; instability with temporary vanilla x1 frames",
       "stability_analysis": "docs/measurements/q3m-ankheg-sdf-stability-analysis-20261004-v1/README.md"
+    }
+  ],
+  "stocked_contour_solutions": [
+    {
+      "family": "character",
+      "body": "CHFB1",
+      "scope": "0x6110 unarmoured world body only; equipment/UI/other consumers unchanged",
+      "animation_ids": [
+        "0x6110"
+      ],
+      "resources": 23,
+      "physical_frames": 10323,
+      "registry_version": 10,
+      "colour_profile": 1,
+      "decode_rule": 1,
+      "world_filter": "CatmullRom",
+      "recipe": {
+        "method": "bounded-smoothed-SDF-with-area-coverage",
+        "sigma_x2": 2.0,
+        "distance_bias_limit_x2": 1.0,
+        "core_radius_x2": 2.0,
+        "near_core_radius_x2": 3.0,
+        "area_supersampling": 8,
+        "colour_filter": "CatmullRom-premultiplied-16-taps",
+        "native_shadows": "separate unchanged source layer",
+        "topology": "preserve foreground-8 and background-4 components at texel centres",
+        "installation": false
+      },
+      "stats": {
+        "physical_frames": 10323,
+        "unique_masks": 2388,
+        "mask_cache_hits": 7935,
+        "new_neural_targets": 0,
+        "new_Q3m_encodings": 0
+      },
+      "reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/current-generation.json",
+      "production_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/production.json",
+      "runtime_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/runtime.json",
+      "installation_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/ingame-installation/active-test.json",
+      "restore_script": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restore.ps1",
+      "state": "Character-CHFB1-SDF-stocked-not-installed-ingame-QA-pending",
+      "qa_ingame": false,
+      "qa_state": "pending",
+      "release": false,
+      "colour_I_F_stored_bytes_unchanged": true,
+      "native_shadow_alpha": 128,
+      "currently_installed": false,
+      "decision_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/stock-decision.json",
+      "restoration_reference": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json",
+      "previous_installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/installation-verification.json",
+      "installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
     }
   ]
 }

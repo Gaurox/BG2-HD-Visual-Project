@@ -2030,6 +2030,18 @@ void test_creature_sprite_filter_texture_registry() {
   expect_true(linearDecision.owner && !linearDecision.filterActive &&
                   linearDecision.mode == 1.0f,
               "Linear A/B mode should route metadata without enabling Catmull-Rom");
+
+  TextureRegistry characterSdf(2);
+  characterSdf.configure(CreatureSpriteFilterMode::CatmullRom);
+  expect_true(characterSdf.publish(contextA, 21, 64, 64, 2,
+                  TextureProvenance::CharacterComposite, false, 0x6110, 0, false, 2),
+              "Character SDF should register its native shadow128 contract");
+  const auto sdfMetadata = characterSdf.find(contextA, 21);
+  expect_true(sdfMetadata && sdfMetadata->sdfEncoded == 2,
+              "Character SDF routing must retain mode2 rather than bool mode1");
+  expect_true(!characterSdf.publish(contextA, 22, 64, 64, 2,
+                  TextureProvenance::Frame, false, 0x6110, 0, false, 3),
+              "Unknown SDF encoding must fail closed");
 }
 
 void test_native_occlusion_probe_correlation() {

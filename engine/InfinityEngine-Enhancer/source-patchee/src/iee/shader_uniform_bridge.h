@@ -35,6 +35,7 @@ struct Locations {
   int creatureFilterMode{kUnresolved};
   int creatureTexelSize{kUnresolved};
   int creatureSdfEncoded{kUnresolved};
+  int creatureSdfCharacter{kUnresolved};
   int creatureStyleEnabled{kUnresolved};
   int creatureColorSpace{kUnresolved};
   int creatureSharpen{kUnresolved};
@@ -123,6 +124,6 @@ void feed(unsigned program, Locations& locations);
 [[nodiscard]] bool set_creature_draw(unsigned program, Locations& locations,
                                      float mode, float texelWidth,
                                      float texelHeight,
-                                     const shader_suite::CreatureHdDrawStyle& style, bool sdfEncoded = false) noexcept;
+                                     const shader_suite::CreatureHdDrawStyle& style, std::uint8_t sdfEncoded = 0) noexcept;
 
 }  // namespace iee::probe::uniforms

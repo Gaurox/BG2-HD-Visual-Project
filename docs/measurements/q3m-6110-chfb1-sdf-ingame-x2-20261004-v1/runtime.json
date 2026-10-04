@@ -1,0 +1,83 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "iee-q3m-character-sdf-x2-20261004-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/runtime.json",
+    "sha256": "1e752368a91798abc17b07f62e4e1f82ed56cff801fea78489c359ca61745b7e",
+    "bytes": 3137
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-character-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "3636ba3a358b9e5c2cf627e9ccf611e730af02496755f13a2d23ea36faf067e2",
+    "bytes": 2114560
+  },
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "sha256": "36e4d59baeaad0c75ebcd335d6e18ec63f8d8585d59849603c28f6d3c8a32b0f",
+      "bytes": 21213,
+      "target": "override/fpDraw.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "sha256": "7ac9f25b5aca437e137718cbb3452e1b3c35b0dc11b9a641c947a7c6a725dbda",
+      "bytes": 22216,
+      "target": "override/fpSprite.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "sha256": "5c5a9d4338dca9c70d468aeea47bdfa0aa2bfd00e9f7d25f448e87bc6613bebd",
+      "bytes": 22477,
+      "target": "override/fpSELECT.glsl"
+    }
+  ],
+  "source_provenance": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+      "sha256": "3ad399eabf6c7de9eadf3bf834dfe9340e950b104af6afbb653bc0652f6d9060",
+      "bytes": 229826
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.h",
+      "sha256": "9dfd75c86b54b71e223f4293896bfa26ca476167b2183d49a9a3482f4528a6c1",
+      "bytes": 4533
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.cpp",
+      "sha256": "0c3bd8e44511b6552ea4969e5e8faf2f13b2353c9e3b60df9962b46e440c3ec5",
+      "bytes": 9452
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.h",
+      "sha256": "ab82b8167c35026d4e2e47ffa14073e700b54b9c5f61dc3b3224ee9f77c506d6",
+      "bytes": 4489
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.cpp",
+      "sha256": "82296f44decbe01b67f4ea88cd3afe32fa14a3eb6a9f48310d071d462d7490e3",
+      "bytes": 20221
+    }
+  ],
+  "capability_delta": {
+    "character_SDF": {
+      "registry_version": 10,
+      "colour_base": "acquired-V6",
+      "scale": 2,
+      "owner": 1,
+      "profile": 1,
+      "decode_rule": 1,
+      "colour_I_F_stored_bytes_unchanged": true,
+      "shadow_alpha": 128,
+      "shader_marker": "uIeeCreatureSdfCharacter",
+      "metadata_wait": "existing WaitForCharacterMetadata",
+      "installed_scope": "0x6110 CHFB1 only"
+    }
+  },
+  "verification": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "1d9e023a2b6265f410fdb88580cc2aa621d131f6394f7cdc70c6f05deb16ac94",
+    "bytes": 4188
+  },
+  "ingame_QA": false,
+  "release": false
+}

@@ -1,0 +1,295 @@
+{
+  "passed": true,
+  "renderer": "NVIDIA GeForce RTX 5090/PCIe/SSE2",
+  "compiled_shaders": [
+    "fpDraw",
+    "fpSprite",
+    "fpSELECT"
+  ],
+  "Character_SDF_views": [
+    {
+      "witness": "CHFB1A5-0",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.019615384615384614,
+      "mean_composited_error": 0.021987179487179487
+    },
+    {
+      "witness": "CHFB1A5-0",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.005928853754940711,
+      "mean_composited_error": 0.00417215634606939
+    },
+    {
+      "witness": "CHFB1A5-0",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.010149807251256526,
+      "mean_composited_error": 0.018965825729110753
+    },
+    {
+      "witness": "CHFB1A5-0",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.002940028302347143,
+      "mean_composited_error": 0.011934969664438263
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.019742883379247015,
+      "mean_composited_error": 0.01943679216406489
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.006400208986415883,
+      "mean_composited_error": 0.0030912574016022294
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.007953094159990712,
+      "mean_composited_error": 0.01909903634041565
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.0025833043074422386,
+      "mean_composited_error": 0.0119973683192074
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0027548209366391185
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0030234315948601664
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0027548209366391185
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0030234315948601664
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.0,
+      "mean_composited_error": 0.0
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.023172905525846704,
+      "mean_composited_error": 0.027332144979203804
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.008620689655172414,
+      "mean_composited_error": 0.00494421906693712
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.004789272030651341,
+      "mean_composited_error": 0.019081962286830442
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.002732702276312824,
+      "mean_composited_error": 0.013630643828412592
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "zoom": 0.75,
+      "mean_alpha_error": 0.028617216117216116,
+      "mean_composited_error": 0.026175213675213676
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "zoom": 1.0,
+      "mean_alpha_error": 0.009963768115942028,
+      "mean_composited_error": 0.006081780538302277
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "zoom": 1.5,
+      "mean_alpha_error": 0.009029215550954681,
+      "mean_composited_error": 0.02097231807376735
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "zoom": 3.0,
+      "mean_alpha_error": 0.004759029215550954,
+      "mean_composited_error": 0.013682808066866038
+    }
+  ],
+  "neutral_draws": [
+    {
+      "witness": "CHFB1A5-0",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1A5-0",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1A5-0",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1A5-10",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-0",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G11-10",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-0",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "witness": "CHFB1G12-10",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    }
+  ],
+  "Ankheg_unchanged": [
+    {
+      "resref": "MAKHG2",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG2",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG2",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHG1E",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHDG3E",
+      "shader": "fpDraw",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHDG3E",
+      "shader": "fpSprite",
+      "byte_identical": true
+    },
+    {
+      "resref": "MAKHDG3E",
+      "shader": "fpSELECT",
+      "byte_identical": true
+    }
+  ],
+  "ingame_QA": false
+}

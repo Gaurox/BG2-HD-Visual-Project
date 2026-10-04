@@ -4,15 +4,16 @@
 
 - Familles = `engine_section` des INI, autorité `index/family-groups.csv` ; 15 profils personnages/créatures. `effect` et IDs sans INI : hors queue, conservés dans l'inventaire source.
 - Personnages jouables, compagnons, PNJ, monstres, animaux et figurants inclus ; un PNJ utilisant `character` appartient au même profil que les jouables.
-- Méthode courante : **Q3m K6, quatre partenaires / huit niveaux, V7 x2** ; indices + B/F + dépendances, palette native vivante. Classes et partenaires propres au profil fixe/rampes ; owner exact par famille.
-- Monde : x2 + BOX. Paperdolls : voie UI distincte ; acquis `6110` conservés.
+- Nouvelle méthode créatures : **Q3m K6, quatre partenaires / huit niveaux, V7 x2** ; indices + B/F + dépendances, palette native vivante. Classes et partenaires propres au profil fixe/rampes ; owner exact par famille. Character acquis : V6 profile1/rule1 ; l'essai contour V10 conserve ses couleurs, sans conversion V7.
+- Monde installé : **x2 + CatmullRom global**, réactivé à la demande utilisateur. BOX = contrat initial des lots Ogre/Flying ; QA Flying conservée avec ce contrat historique. Paperdolls : voie UI distincte ; acquis `6110` conservés.
 - xBR final / ReboutCX première génération : **historique, exclus de l'avancement Q3m**. Sources, runs et QA historiques préservés ; aucun déplacement/suppression. xBR comme guide et ReboutCX comme producteur de cibles restent des briques de Q3m.
 - Pilote quatre partenaires : **15 témoins / 49 BAM / 11 586 frames**, actions retenues uniquement, tests hôte acquis ; historique du pilote préservé. Décisions QA des familles complètes ci-dessous. `../docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json` ; contrat `../pipeline/PALETTE_Q3M_V7.md`.
 - Première famille complète V7 : **`monster_large` / ogre `0x9000` / 7 BAM / 434 frames**, produite et installée ; **QA ingame en attente**. `../docs/measurements/q3m-monster-large-full-x2-20261003-v1/current-generation.json` ; faits d'installation `installation-verification.json` du même run.
 - Deuxième famille complète V7 : **`flying` / 5 IDs / 4 BAM / 243 frames**, produite, installée et **famille validée par l'utilisateur**. `../docs/measurements/q3m-flying-full-x2-20261003-v1/current-generation.json` ; QA `index/qa-decisions/flying/2026-10-03-accepted-full-flying-q3m-v7-k6-x2-box-v1.json` ; le comparatif et les faits d'installation restent des états historiques distincts.
-- Troisième famille complète V7 : **`monster_ankheg` / `0x3000` / 12 BAM / 516 frames**, produite et installée ; corps/terre, toutes actions/directions et enfouissement/émergence. **QA ingame en attente**. `../docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/current-generation.json` ; faits d'installation `installation-verification.json` du même run. Les 87 animations précédentes et l'acquis QA Flying sont préservés.
+- Troisième famille complète : **`monster_ankheg` / `0x3000` / 12 BAM / 516 frames** ; couleurs V7 acquises, corps/terre, toutes actions/directions et enfouissement/émergence. Variante actuellement installée et **validée ingame : V9 SDF + attente des métadonnées HD**, `../docs/measurements/q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/current-generation.json`. QA immuable `index/qa-decisions/monster_ankheg/2026-10-04-accepted-full-ankheg-q3m-v9-sdf-stable-x2-catmullrom-v1.json`. Le lot V7 sans contour garde sa QA distincte, en attente.
 - Essai Spline Fit 1 Ankheg **rejeté ingame** : pixels flottants isolés sur le contour ; catalogue/DLL parent restaurés avant nouvel essai. Décision immuable `index/qa-decisions/monster_ankheg/2026-10-04-rejected-spline-fit1-q3m-x2-catmullrom-v1.json` ; preuves de production/test spline conservées.
-- Essai actuellement installé sur **Ankheg uniquement** : **alpha léger gaussien σ 0,65 px x2 / intensité 0,8 / minimum 176 sur 255 / V8 alpha8**, bande intérieure 2 px, classes spéciales/ombres/parties fines protégées. Couleurs Q3m V7 inchangées ; 431 masques uniques / 85 réutilisations / 494 frames modifiées / 22 identiques / **0 pixel effacé**, support visible conservé sur K6. Catmull-Rom actif. `../docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/current-generation.json` ; `restore.ps1` du run restaure catalogue/DLL Q3m sans lissage. **QA ingame du nouvel essai en attente** ; aucune nouvelle validation Flying déduite.
+- Essai **historique, remplacé par SDF** : alpha léger gaussien σ 0,65 px x2 / intensité 0,8 / minimum 176 sur 255 / V8 alpha8, bande intérieure 2 px ; escaliers encore trop visibles selon le retour utilisateur. Couleurs V7 conservées ; 431 masques uniques / 85 réutilisations / 494 frames modifiées / 22 identiques / 0 pixel effacé. `../docs/measurements/q3m-ankheg-alpha-light-x2-20261004-v1/current-generation.json` ; aucun verdict QA accepté déduit.
+- **En stock, non installé** : guerrière humaine sans équipement `0x6110 CHFB1`, même contour SDF, V10 dérivé du V6 Character ; 23 BAM / 10 323 frames / 2 388 masques uniques / 7 935 réutilisations / 0 inférence / 0 encodage Q3m. Décision explicite utilisateur, **QA visuelle en attente** : `../docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/stock-decision.json`. Code, assets locaux, comparaison PNG et preuves gardés ; DLL/catalogue/trois shaders Ankheg stable restaurés et vérifiés (`restoration-verification.json`). Aucun équipement/paperdoll ni autre avatar modifié.
 - Comparaison initiale et 16 niveaux : diagnostics préservés, sans promotion du candidat 16 niveaux. `../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md`.
 - Intégration nouveau moteur sprite : **90 %**, estimation utilisateur du 2026-10-03 ; ne mesure ni couverture des assets ni QA.
 
@@ -30,7 +31,7 @@
 | `monster_quadrant` | 7/9 | — | Assemblage de plusieurs quadrants ; centres et ordre de dessin conservés. Grandes wyvernes, tanar'ri. |
 | `multi_new` | 10/10 | — | Grands composites, quadrants et BAM divisés selon l'INI ; dragons, Démogorgon. |
 | `monster_layered` | 7/7 | — | Corps et armes superposées ; sous-types `2000` et `8000` à conserver séparément. Sirines, ogres mages, gnolls, hobgobelins, kobolds. |
-| `monster_ankheg` | 1/1 | — | Ankheg ; **famille complète V7 x2 installée**, 12 BAM / 516 frames ; corps/terre et enfouissement/émergence ; QA ingame en attente. |
+| `monster_ankheg` | 1/1 | — | Ankheg ; **famille complète V9 SDF x2 + attente HD installée et validée**, 12 BAM / 516 frames ; couleurs V7, corps/terre et enfouissement/émergence. |
 | `monster_large` | 1/1 | — | Ogre ; **famille complète V7 x2 installée**, 7 BAM / 434 frames ; QA ingame en attente. |
 | `monster_large16` | 3/5 | — | Profil grands monstres à 16 directions ; wyvernes, charognards rampants. |
 | `ambient` | 18/21 | — | Animations ambiantes mobiles ; chats, rats, poules, écureuils, figurants. |
@@ -42,7 +43,7 @@
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouveau V7 : **15 IDs témoins partiels, 7 IDs / 3 familles complètes installées ; 5 IDs / 1 famille validée (`flying`)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 7 IDs / 3 familles complètes installées ; 6 IDs / 2 familles validées (`flying`, `monster_ankheg` V9 stable)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -62,3 +63,51 @@
 - Ankheg complet : **516 frames → 431 sources / 432 contrats compatibles = 143 hits du témoin + 288 nouveaux encodages + 1 encodage spécial sans GPU** ; 1 728 nouvelles cibles K6. Reprise 432/432 hits sans import Torch ; 143 encodages acquis inchangés. Deux CRE, un seul modèle : `C:CreateCreature("ANKHEG01")`. `../docs/measurements/q3m-monster-ankheg-full-x2-20261003-v1/production.json`.
 - Coût du reste des 335 animations avec BAM : `null` tant que la sélection exacte et son union de clés finale ne sont pas calculées ; ne pas additionner les compteurs par famille.
 - Sélection CPU : `pipeline/scripts/analyze_sprite_frame_dedup.py plan --animation-id <ID> [...]`. Pas d'inférence indépendante par famille ni addition des compteurs partagés.
+
+## Mémoire du chat : décisions / preuves
+
+Préfixe des runs ci-dessous : `../docs/measurements/`. Les instantanés scellés restent historiques ; les décisions QA et reçus actifs font autorité séparément.
+
+| Étape | Résultat / référence | Commit déjà acquis |
+|---|---|---|
+| Nouvelle queue | 15 familles natives ; xBR/ReboutCX première version exclus des compteurs ; moteur 90 % = estimation utilisateur | `221a708d` |
+| Doublons globaux | `all-creature-source-dedup-20261003-v1/summary.json` ; 212 BAM identiques décodés une fois ; hors Character 194 573 travaux source / 194 158 candidats modèle ; total source avec Character 758 537 uniques / 2 263 428 frames physiques | `753be430` |
+| Un témoin par famille + moteur | `q3m-families-engine-x2-20261003-v2/current-generation.json` ; 15 profils, 49 BAM, 11 586 frames, 2 731 encodages compatibles ; scopes/owners natifs, palettes live, composites, géométrie/cycles ; pilote ≠ famille entièrement traitée | `1fbb3574` |
+| Ogre complet | `q3m-monster-large-full-x2-20261003-v1/` ; unique profil `monster_large`, modèle partagé par 22 CRE ; 7 BAM / 434 frames ; installé, QA en attente ; `CLUA.txt` recense les consommateurs | `4442c265` |
+| Flying x2/x4 puis complet | `q3m-flying-frame-x2-x4-20261003-v1/comparatif-oiseaux-q3m-x2-x4.png` : une frame par modèle, PNG sans perte ; x2 choisi, famille complète ensuite validée ; 4 modèles pour 5 IDs, `D300/D400` partagent `ABIRG1` | `b8c21595` |
+| Ankheg + Spline Fit 1 + alpha léger | `q3m-monster-ankheg-full-x2-20261003-v1/`, `q3m-ankheg-spline-fit1-x2-20261003-v1/`, `q3m-ankheg-alpha-light-x2-20261004-v1/` ; famille complète 1 ID, CatmullRom réactivé ; spline rejetée (pixels flottants), alpha léger insuffisant (escaliers) | `552254c3` |
+| Simulation SDF hors jeu | `q3m-ankheg-sdf-offline-x2-20261004-v1/` ; comparaison de poses, zooms, détails, séquences ; PDF 5 pages `../output/pdf/ankheg-contour-sdf-comparatif-20261004-v1.pdf`, identité dans `pdf.json` | `552254c3` |
+| SDF V9 ingame | `q3m-ankheg-sdf-ingame-x2-20261004-v1/` ; 12 BAM / 516 frames ; couleurs inchangées, 431 masques / 85 hits, 0 nouveau Q3m ; rendu apprécié, retours temporaires x1 constatés | `a46a319a` |
+| Diagnostic + stabilité validée | `q3m-ankheg-sdf-stability-analysis-20261004-v1/` → `q3m-ankheg-sdf-stable-ingame-x2-20261004-v1/` ; retard du chargement initial confirmé ; attente HD owner9/id3000 ; DLL seule remplacée ; utilisateur « validé, committe » | `16b01e52` |
+| Character CHFB1 SDF en réserve | `q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/` ; V10 + ombres Character128, palette V6 intacte ; preuves natives/GPU et comparaison ; essai installé puis retiré à la demande utilisateur ; **en stock, QA en attente** | présent commit |
+
+`Famille` = profil d'intégration native ; `modèle` = ensemble de BAM physiques ; `CRE` = consommateur. Tester une fois chaque modèle ; variantes de CRE appelant les mêmes ressources ne créent aucun travail sprite supplémentaire. Choix CLUA vérifiés :
+
+```lua
+C:CreateCreature("OGRE01")
+C:CreateCreature("EAGLE")
+C:CreateCreature("SEAGUL")
+C:CreateCreature("VULTURE")
+C:CreateCreature("BIRD")
+C:CreateCreature("ANKHEG01")
+```
+
+Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.txt` / `CLUA.txt` dans le run complet. Ankheg : deux CRE, un modèle. Ogre : 22 CRE, un modèle. Character : sélectionner la guerrière humaine existante, corps `CHFB1` sans armure/arme/bouclier/casque ; aucun changement automatique de sauvegarde.
+
+## Contour SDF : contrat conservé
+
+- Recette retenue Ankheg : distance signée lissée et bornée, σ=2 px x2, biais ≤1 px x2 ; noyau fin rayon2/voisinage3 ; topologie foreground8/background4 conservée ; pad6 ; distance quantifiée 1/16 px x2 ; couverture **8×8 échantillons par pixel écran**, couleur CatmullRom 16 taps prémultipliée. Ombres natives séparées ; palette live. Références : `q3m-ankheg-sdf-offline-x2-20261004-v1/sdf_trial.py`, `pipeline/scripts/sprite_sdf_registry.py`, shaders monde.
+- V9 : V7 + plans S (distance) / M (référence au matériau natif) ; pas de raster couleur figé ni de nouveau modèle neural. Contrat Ankheg profile8/rule3 ; ombre127. Assemblage corps/terre conserve les deux draws natifs.
+- Instabilité : session 2026-10-04 01:32:17–01:33:02 ; `MAKHDG1E` non résolu à 01:32:30.894, terre prête +9 ms / corps +39 ms, deux draws HD à 01:32:31.031. Aucune preuve d'éviction ; avertissement émis une seule fois/processus, pas de comptage exhaustif des frames x1. Cause confirmée : lecture NonBlocking au premier resref ; logs complets/extrait et sonde dans le run d'analyse.
+- Correctif installé/validé : lecteur commun capture/draw `WaitForAnkhegMetadata`, catalogue V2 / owner9 / ID3000 ; attente existante ≤5 s, worker/payloads paresseux/authentification/quarantaine/fallback sur erreur conservés. Sonde finale : **12/12 premiers accès HD, 0 miss, attente max69,013 ms**, 516 frames / 1 485 slots / 48 compositions vérifiés. Mesure hôte, pas promesse de latence. Character owner1 possède déjà son attente ; autres familles restent NonBlocking. Généralisation par contrat natif, jamais par seule présence d'un contour.
+- Extension **Character V10 en stock** : V6 x2 profile1/rule1 + S/M ; I/F compressés, deps, représentants, géométrie/cycles conservés ; retirer les seules données SDF restitue les 23 feuilles V6 octet pour octet. `pipeline/scripts/character_sdf_registry.py` ; parser/plafonds/authentification natifs conservés.
+- CHFB1 partagé par six IDs : ajout de 23 composants/feuilles, remplacement des seules routes `0x6110.CHFB1` ; **50 230 routes hors périmètre identiques**. 23 BAM / 10 323 frames / 24 868 slots. Armour `CHFB2/3`, `CHFF4`, équipements/paperdolls et cinq autres avatars restent sur leurs acquis.
+- Métadonnée SDF `0=ordinaire / 1=ombre127 / 2=Character ombre128` ; uniforme `uIeeCreatureSdfCharacter` requis pour mode2 et remis à zéro sur les autres draws. Composite SDF uniquement si toutes les couches ont SDF et le même mode ; équipement sans SDF + corps SDF revient au fallback natif. Ce test couvre le corps sans équipement.
+- Preuves Character : 23/23 chargements HD à froid, 0 miss, attente max84,8784 ms ; toutes frames/cycles ×6 palettes ×3 formats ; suite core/mode2 ; trois registres malformés rejetés. GPU : 24 vues/four zooms, trois shaders compilés ; **18 draws ordinaires et neuf draws Ankheg V9 identiques** au moteur `16b01e52`. `verification.json`, `gpu-verification.json`, `comparatif-chfb1-sdf.png` ; aucune QA ingame déduite.
+
+## État installé / réserve après ce chat
+
+- **Actif : Ankheg SDF stable validé**, DLL `0bdaf3b6…e4d5`, catalogue `56be42fb…fcc8`, trois shaders du runtime validé. Reçu stable conservé ; vérification de restauration du test Character : `../docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json` (**5 fichiers restaurés +95 préservés**, INI/exécutable/81 packs UI/12 feuilles Ankheg inchangés). Catalogue parent exact ⇒ CHFB1 V6 actif ; feuilles V10 résiduelles non référencées.
+- **Réserve : Character SDF V10**, DLL `3636ba3a…67e2`, catalogue `a13177c3…0eb`, 23 nouvelles feuilles + trois shaders ; code/protocole/scripts/preuves versionnés, build et pack locaux conservés. Identités complètes : `stock-decision.json`, `runtime.json`, `current-generation.json`. Assets locaux : `sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/{isolated,combined}` ; DLL : `engine/InfinityEngine-Enhancer/source-patchee/build-q3m-character-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll`. `.work` reste un cache ; solution reproductible par sources/recette, vérifier sa présence et ses SHA avant réemploi.
+- Retrait déjà effectué par `restore.ps1` du test Character ; `stock.py` a scellé la décision et vérifié la restauration/les 23 feuilles conservées. `installation-verification.json` historique garde l'installation d'essai initiale ; le reçu local porte `restored-parent`. **Ne pas rejouer `install.ps1`, `track.py`, `produce.py`, `verify.py` dans ce run scellé** ; futur réemploi = demande explicite + nouveau run/reçu, jeu/InfinityLoader fermés.
+- Source du dépôt contient V10 ; installation active reste le runtime stable antérieur. Ne pas inférer l'installation depuis HEAD ni la QA depuis les tests natifs/GPU. Release/payload/staging/TP2/content/manifeste inchangés.

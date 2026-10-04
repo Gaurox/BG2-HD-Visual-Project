@@ -85,12 +85,18 @@ constexpr std::uint32_t kXnFractionRegistryVersion = 6;
 constexpr std::uint32_t kXnPartnerRegistryVersion = 7;
 constexpr std::uint32_t kXnContourRegistryVersion = 8;
 constexpr std::uint32_t kXnSdfRegistryVersion = 9;
+// V10 adds the same SDF planes to acquired V6 Character colours, without partners.
+constexpr std::uint32_t kXnCharacterSdfRegistryVersion = 10;
 constexpr int kSdfPad = 6;
 constexpr bool partner_version(std::uint32_t version) noexcept {
   return version == kXnPartnerRegistryVersion || version == kXnContourRegistryVersion || version == kXnSdfRegistryVersion;
 }
 constexpr bool fraction_version(std::uint32_t version) noexcept {
-  return version == kXnFractionRegistryVersion || partner_version(version);
+  return version == kXnFractionRegistryVersion || partner_version(version) ||
+         version == kXnCharacterSdfRegistryVersion;
+}
+constexpr bool sdf_version(std::uint32_t version) noexcept {
+  return version == kXnSdfRegistryVersion || version == kXnCharacterSdfRegistryVersion;
 }
 constexpr std::uint32_t kRegistrySetVersion = 1;
 constexpr std::uint32_t kRegistryCatalogVersion = 1;
@@ -488,7 +494,7 @@ void quarantine_catalog_component_locked(std::uint32_t componentIndex,
 bool publish_filter_texture(unsigned glName, int physicalWidth, int physicalHeight,
                             std::uint32_t physicalScale,
                             creature_sprite_filter::TextureProvenance provenance,
-                            std::uint16_t animationId, int maximumMipLevel, bool sdfEncoded = false) noexcept {
+                            std::uint16_t animationId, int maximumMipLevel, std::uint8_t sdfEncoded = 0) noexcept {
 #ifdef _WIN32
   const auto contextIdentity = reinterpret_cast<std::uintptr_t>(game::gl::current_context());
 #else
@@ -1580,14 +1586,14 @@ bool encode_sdf_canvas(const Frame& frame, const std::vector<std::uint8_t>& indi
   return true;
 }
 
-bool finish_sdf_canvas(const std::vector<std::uint32_t>& source, std::vector<std::uint32_t>& encoded) {
+bool finish_sdf_canvas(const std::vector<std::uint32_t>& source, std::vector<std::uint32_t>& encoded, unsigned shadowAlpha = 127) {
   if (source.size()!=encoded.size()) return false;
   for (std::size_t n=0;n<source.size();++n) {
     const auto alpha=source[n]>>24;
     if (alpha==255) encoded[n]=(encoded[n]&0xff000000u)|(source[n]&0x00ffffffu);
     else if (alpha) {
-      // Native kind-0 shadows are black, alpha 127. Reject another contract.
-      if (alpha!=127 || (source[n]&0x00ffffffu)) return false;
+      // Preserve black native shadows: kind-0=127, Character=128.
+      if (alpha!=shadowAlpha || (source[n]&0x00ffffffu)) return false;
       encoded[n]|=0x80000000u;
     }
   }
@@ -1597,12 +1603,17 @@ bool finish_sdf_canvas(const std::vector<std::uint32_t>& source, std::vector<std
 bool encode_sdf_composite(const CompositeLayer* layers, std::size_t count,
                            const CompositeBounds& bounds, int width, int height,
                            const std::vector<std::uint32_t>& source,
-                           std::vector<std::uint32_t>& encoded, bool& present) {
-  present=false;
+                           std::vector<std::uint32_t>& encoded, std::uint8_t& present) {
+  present=0;
   for (std::size_t k=0;k<count;++k) {
     const auto* r=resource_for_handle_locked(layers[k].frame);
     if (!r || layers[k].frame.frameIndex>=r->frames.size()) return false;
-    present=present || !r->frames[layers[k].frame.frameIndex].sdf.empty();
+    const auto& f=r->frames[layers[k].frame.frameIndex];
+    if (!f.sdf.empty()) {
+      const std::uint8_t mode=f.fractionProfile==1 && f.fractionRule==1 ? 2 : 1;
+      if (present && present!=mode) return false;
+      present=mode;
+    }
   }
   if (!present) return true;
   encoded.assign(source.size(),0);
@@ -1618,7 +1629,7 @@ bool encode_sdf_composite(const CompositeLayer* layers, std::size_t count,
                           static_cast<int>(physical_layer_offset(f.centerX,bounds.left,2)),
                           static_cast<int>(physical_layer_offset(f.centerY,bounds.top,2)))) return false;
   }
-  return finish_sdf_canvas(source,encoded);
+  return finish_sdf_canvas(source,encoded,present==2 ? 128 : 127);
 }
 
 bool upload_frame_locked(const Frame& frame,
@@ -1675,13 +1686,13 @@ bool upload_frame_locked(const Frame& frame,
                            static_cast<int>(contentOffset))) {
     return false;
   }
-  const bool sdfEncoded = !frame.sdf.empty();
+  const std::uint8_t sdfEncoded = frame.sdf.empty() ? 0 : (frame.fractionProfile==1 && frame.fractionRule==1 ? 2 : 1);
   if (sdfEncoded) {
     if (physicalScale != 2 || creature_sprite_filter::registry().effective_mode(animationId,2) != core::CreatureSpriteFilterMode::CatmullRom) return false;
     auto encoded = std::vector<std::uint32_t>(replacement.size(),0);
     if (!encode_sdf_canvas(frame,indices,fractions,realized,encoded,physicalWidth,physicalHeight,
                           static_cast<int>(contentOffset),static_cast<int>(contentOffset)) ||
-        !finish_sdf_canvas(replacement,encoded)) return false;
+        !finish_sdf_canvas(replacement,encoded,sdfEncoded==2 ? 128 : 127)) return false;
     replacement.swap(encoded);
   }
 
@@ -1840,7 +1851,7 @@ bool upload_composite_texture_locked(const std::vector<std::uint32_t>& replaceme
                                      std::uint32_t physicalScale, int textureId,
                                      int previousTextureId,
                                      const EngineTextureApi& api, bool probeTarget,
-                                     std::uint16_t animationId, bool sdfEncoded) noexcept {
+                                     std::uint16_t animationId, std::uint8_t sdfEncoded) noexcept {
   core::sprite_p4::ScopedMetric uploadMetric(core::sprite_p4::Metric::Upload, probeTarget);
   auto& gl = game::gl::get_gl_functions();
   if ((!gl.valid && !gl.initialize()) || !gl.glGetIntegerv || !gl.glTexImage2D ||
@@ -2244,7 +2255,7 @@ std::uint64_t registry_read_limit(const std::filesystem::path& path,
       (version != kXnRegistryVersion &&
        version != kXnAntialiasRegistryVersion &&
        version != kXnCompressedRegistryVersion &&
-       version != kXnFractionRegistryVersion && !partner_version(version)) ||
+       !fraction_version(version)) ||
       !supported_physical_scale(scale) ||
       (version == kXnAntialiasRegistryVersion && scale != 2)) {
     throw std::runtime_error("invalid creature-sprite xN registry prefix: " +
@@ -2382,7 +2393,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
               std::to_integer<std::uint8_t>(frameReserved[1]) > 1)) ||
             (parsed.version == kXnContourRegistryVersion
               ? std::to_integer<std::uint8_t>(frameReserved[2]) > 1
-              : (parsed.version == kXnSdfRegistryVersion ? frameReserved[2] != std::byte{2} : frameReserved[2] != std::byte{0}))))) {
+              : (sdf_version(parsed.version) ? frameReserved[2] != std::byte{2} : frameReserved[2] != std::byte{0}))))) {
         throw std::runtime_error("invalid creature-sprite frame header");
       }
       const auto nativePixels = static_cast<std::uint64_t>(width) * height;
@@ -2415,7 +2426,7 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         frame.fractionRule = parsed.fractionRule;
       }
       const bool fractionPresent = fractionalRegistry && frameReserved[1] == std::byte{1};
-      const bool sdfPresent = parsed.version == kXnSdfRegistryVersion;
+      const bool sdfPresent = sdf_version(parsed.version);
       const auto sdfPixels = static_cast<std::uint64_t>(width * 2 + 12) * (height * 2 + 12);
       std::array<std::uint32_t, 2> sdfStored{};
       std::array<std::uint8_t, 2> sdfCodec{};
@@ -2456,7 +2467,10 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         }
       }
       if (sdfPresent) {
-        if (parsed.scale != 2 || !frame.partnerProfile || frame.partnerProfile->nativeKind != 0 ||
+        const bool nativeContract = parsed.version == kXnCharacterSdfRegistryVersion
+            ? frame.fractionProfile == 1 && frame.fractionRule == 1 && !frame.partnerProfile
+            : frame.partnerProfile && frame.partnerProfile->nativeKind == 0;
+        if (parsed.scale != 2 || !nativeContract ||
             !checked_add(decodedCoverageBytes, sdfPixels * 5, kCatalogMetadataCacheBudgetBytes))
           throw std::runtime_error("invalid V9 SDF scope/limit");
         for (int k = 0; k < 2; ++k) {
@@ -4624,7 +4638,8 @@ bool reconstruct_frame_sdf_pixels(FrameHandle handle, const PaletteSnapshot& pal
     std::vector<std::uint32_t> source(static_cast<std::size_t>(width+12)*(height+12),0);
     for (int y=0;y<height;++y) std::copy_n(pixels.begin()+static_cast<std::size_t>(y)*width,width,source.begin()+static_cast<std::size_t>(y+6)*(width+12)+6);
     pixels.assign(source.size(),0);
-    if (!encode_sdf_canvas(frame,*indices,*fractions,realized,pixels,width+12,height+12,6,6) || !finish_sdf_canvas(source,pixels)) return false;
+    if (!encode_sdf_canvas(frame,*indices,*fractions,realized,pixels,width+12,height+12,6,6) ||
+        !finish_sdf_canvas(source,pixels,frame.fractionProfile==1 && frame.fractionRule==1 ? 128 : 127)) return false;
     fingerprint = palette_fingerprint(frame, realized, palette.encoding);
     return true;
   } catch (...) {
@@ -4738,7 +4753,7 @@ bool reconstruct_composite_sdf_pixels(const CompositeLayer* layers, std::size_t 
     const std::vector<std::uint32_t>* cached = nullptr;
     if (!ensure_composite_pixels_locked(layers, layerCount, bounds, bounds.logical_width(),
           bounds.logical_height(), encoding, g_loadedScale.load(std::memory_order_acquire), keys, cached) || !cached) return false;
-    bool present=false;
+    std::uint8_t present=0;
     if (!encode_sdf_composite(layers,layerCount,bounds,bounds.logical_width()*2,bounds.logical_height()*2,*cached,pixels,present) || !present) return false;
     return true;
   } catch (...) {
@@ -5089,7 +5104,7 @@ bool bind_composite_texture(const CompositeLayer* layers, std::size_t layerCount
       return false;
     }
     std::vector<std::uint32_t> sdfPixels;
-    bool sdfEncoded=false;
+    std::uint8_t sdfEncoded=0;
     if (!encode_sdf_composite(layers,layerCount,bounds,logicalWidth*physicalScale,logicalHeight*physicalScale,*pixels,sdfPixels,sdfEncoded)) return false;
     if (sdfEncoded) {
       if (physicalScale!=2 || creature_sprite_filter::registry().effective_mode(layers[0].frame.animationId,2)!=core::CreatureSpriteFilterMode::CatmullRom) return false;

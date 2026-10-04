@@ -1,0 +1,196 @@
+{
+  "schema": "bg2-character-SDF-stock-decision-v1",
+  "recorded_at_utc": "2026-10-04T01:02:25.914450+00:00",
+  "authority": "explicit-user-request",
+  "user_request": "on garde cette solution en stock mais on ne l'installe pas",
+  "state": "stocked-not-installed",
+  "animation_ids": [
+    "0x6110"
+  ],
+  "body": "CHFB1",
+  "resources": 23,
+  "frames": 10323,
+  "registry_version": 10,
+  "QA": "pending-no-visual-acceptance-or-rejection",
+  "currently_installed": false,
+  "release": false,
+  "generation": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/current-generation.json",
+    "sha256": "d2f8bf26459f7eecad7c0625523735fbee550a9aefc8ed09ccfc81a4969f83d7",
+    "bytes": 1422
+  },
+  "previous_installation": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/installation-verification.json",
+    "sha256": "3c03c627c3c8e0fd953b7df0603896386e3ef31913b579ee55c3caf3772e413f",
+    "bytes": 1881
+  },
+  "restoration": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json",
+    "sha256": "9cb947705c08d2029db7e63b8c2478d8b5157a5c8fb728f96b5c4fc3c149fe03",
+    "bytes": 18802
+  },
+  "reserved_files": [
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/production.json",
+      "sha256": "ddbce603183b93e0f5934f2991a543ed53e1a7f85d69a09a063675eba3319344",
+      "bytes": 1411282
+    },
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/runtime.json",
+      "sha256": "5cf3e0b5fae9e4bb9e7779e89f14ed075545d1477738086a3a020a71a55da481",
+      "bytes": 3154
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-character-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+      "sha256": "3636ba3a358b9e5c2cf627e9ccf611e730af02496755f13a2d23ea36faf067e2",
+      "bytes": 2114560
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/combined/CreatureSprites-XN.catalog",
+      "sha256": "a13177c326469de652a64a0c06e7d541a82c3807089e21928e06617973c890eb",
+      "bytes": 2033516
+    },
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/verification.json",
+      "sha256": "1d9e023a2b6265f410fdb88580cc2aa621d131f6394f7cdc70c6f05deb16ac94",
+      "bytes": 4188
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "sha256": "36e4d59baeaad0c75ebcd335d6e18ec63f8d8585d59849603c28f6d3c8a32b0f",
+      "bytes": 21213,
+      "target": "override/fpDraw.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "sha256": "7ac9f25b5aca437e137718cbb3452e1b3c35b0dc11b9a641c947a7c6a725dbda",
+      "bytes": 22216,
+      "target": "override/fpSprite.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "sha256": "5c5a9d4338dca9c70d468aeea47bdfa0aa2bfd00e9f7d25f448e87bc6613bebd",
+      "bytes": 22477,
+      "target": "override/fpSELECT.glsl"
+    }
+  ],
+  "reserved_leaves": [
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-2B1AA1465DC4D0063CE9CB400B548171119A7E06A1CE34506A72E6218563C0C1.registry",
+      "sha256": "2b1aa1465dc4d0063ce9cb400b548171119a7e06a1ce34506a72e6218563c0c1",
+      "bytes": 2078249
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-6B23A930877D051EC378A262F196F6EF9870683ED97FA60ED71F581A6A860137.registry",
+      "sha256": "6b23a930877d051ec378a262f196f6ef9870683ed97fa60ed71f581a6a860137",
+      "bytes": 1886624
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-50800FE7D1ED3C73E339B92FEEE6F8D83780650B63BEBD99EC3D694C388F2CD1.registry",
+      "sha256": "50800fe7d1ed3c73e339b92feee6f8d83780650b63bebd99ec3d694c388f2cd1",
+      "bytes": 2048520
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-9606E414ACE902CE6178A33F77CDD91B4534BECA6E5D65210EB96B5584BBF76F.registry",
+      "sha256": "9606e414ace902ce6178a33f77cdd91b4534beca6e5d65210eb96b5584bbf76f",
+      "bytes": 1982161
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-67A505FEC5850AD857322EB25295A59D2C86C40A3E250BB6D1FC34A4EBF51ADB.registry",
+      "sha256": "67a505fec5850ad857322eb25295a59d2c86c40a3e250bb6d1fc34a4ebf51adb",
+      "bytes": 2018084
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-04EABCD9B4FC23EF5D3BED266D252E45FA77555D5BB49D6F26AC38F3BF5E09F4.registry",
+      "sha256": "04eabcd9b4fc23ef5d3bed266d252e45fa77555d5bb49d6f26ac38f3bf5e09f4",
+      "bytes": 1810192
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-868288AF657731A5BAF3D515636A0DFA3A21D00B09F7B15BB1350C8E9970BADF.registry",
+      "sha256": "868288af657731a5baf3d515636a0dfa3a21d00b09f7b15bb1350c8e9970badf",
+      "bytes": 2040550
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-9D225020241488933760357068086CD0AD3591D5286491DF613105E97D305D83.registry",
+      "sha256": "9d225020241488933760357068086cd0ad3591d5286491df613105e97d305d83",
+      "bytes": 2060419
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-6CB64BA053790E90A33AB0D6E7069494B01C0599C8EC7DEC4245811324DEFEB9.registry",
+      "sha256": "6cb64ba053790e90a33ab0d6e7069494b01c0599c8ec7dec4245811324defeb9",
+      "bytes": 2040519
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-D1A9225EA37EF614E5E471EF12017D105B9F275DF5BE4AE93B532000AABA2A9A.registry",
+      "sha256": "d1a9225ea37ef614e5e471ef12017d105b9f275df5be4ae93b532000aaba2a9a",
+      "bytes": 4169388
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-AC9649E62E72C27BB3F31F2FFB107BC5E56AA19E2913B5C7875FAFC446FA11E0.registry",
+      "sha256": "ac9649e62e72c27bb3f31f2ffb107bc5e56aa19e2913b5c7875fafc446fa11e0",
+      "bytes": 1654978
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-A085B3D3B3886D4C45B1A36008D87D2F6A8E583D9DDDFD80C662ABA2529D6F1A.registry",
+      "sha256": "a085b3d3b3886d4c45b1a36008d87d2f6a8e583d9dddfd80c662aba2529d6f1a",
+      "bytes": 2107004
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-B730DD7E19FDB7D3558DE094E894063A3E4F0AA2CFD05109D55ABF0AEA61E120.registry",
+      "sha256": "b730dd7e19fdb7d3558de094e894063a3e4f0aa2cfd05109d55abf0aea61e120",
+      "bytes": 2170792
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-61839E23C51E574518DD6F3B93873D3FBC60CC062B1C6B3CC2D3ECC6C8D57994.registry",
+      "sha256": "61839e23c51e574518dd6f3b93873d3fbc60cc062b1c6b3cc2d3ecc6c8d57994",
+      "bytes": 1624380
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-9EFA8AC0E2029E5C78BF277D6BD961BE1BC6A333D925EAD5AC0CC02396376414.registry",
+      "sha256": "9efa8ac0e2029e5c78bf277d6bd961be1bc6a333d925ead5ac0cc02396376414",
+      "bytes": 1694625
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-DF6DBCFC82DA3CE7BA36D002911D89A20FD293C8A1933E7E204CC41710BDB0C6.registry",
+      "sha256": "df6dbcfc82da3ce7ba36d002911d89a20fd293c8a1933e7e204cc41710bdb0c6",
+      "bytes": 3356436
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-14EDBF1802F6BFB84EC81863C3E7027D7B483ECFAD3D97639BD5BED0FD6DC23A.registry",
+      "sha256": "14edbf1802f6bfb84ec81863c3e7027d7b483ecfad3d97639bd5bed0fd6dc23a",
+      "bytes": 1217526
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-0495D408D8C7E05002FA815A2E642E9A121075ACC96D456109BA3E1AB3D010D3.registry",
+      "sha256": "0495d408d8c7e05002fa815a2e642e9a121075acc96d456109ba3e1ab3d010d3",
+      "bytes": 2042381
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-6ED30D10D3F2436D6DCD1BCA68BE84E5923BE0428BB012717D0BD14FACB7DAA7.registry",
+      "sha256": "6ed30d10d3f2436d6dcd1bca68be84e5923be0428bb012717d0bd14facb7daa7",
+      "bytes": 2915721
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-AD7CF45260E567A7D7E5808C7E290E4DE47D28BB254215B060D6027121599860.registry",
+      "sha256": "ad7cf45260e567a7d7e5808c7e290e4de47d28bb254215b060d6027121599860",
+      "bytes": 2606977
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-6B5553BFD49B8715C25DEC6E324D986E1C60FEF7B32C18683837E228FDF52746.registry",
+      "sha256": "6b5553bfd49b8715c25dec6e324d986e1c60fef7b32c18683837e228fdf52746",
+      "bytes": 1925868
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-49DCD526C88DA78CFB20D46AA9AB5C017CF64E49FD718921E66720B1CC5B73C7.registry",
+      "sha256": "49dcd526c88da78cfb20d46aa9ab5c017cf64e49fd718921e66720b1cc5b73c7",
+      "bytes": 2087653
+    },
+    {
+      "path": "sprite/.work/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/isolated/CreatureSprites-XN-51BBA3C12DA2A9F02355B269612480B6F9DC4DFF5DC08010E5F7B14C8B8D4597.registry",
+      "sha256": "51bba3c12da2a9f02355b269612480b6f9dc4dff5dc08010e5f7b14c8b8d4597",
+      "bytes": 1862720
+    }
+  ],
+  "source_and_recipe": "committed; generated DLL/leaves retained locally outside Git",
+  "reuse": "explicit future request; verify identities; new installation run/receipt"
+}

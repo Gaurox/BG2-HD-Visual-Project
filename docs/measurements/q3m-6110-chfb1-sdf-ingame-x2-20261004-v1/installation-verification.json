@@ -1,0 +1,47 @@
+{
+  "schema": "bg2-character-SDF-installed-verification-v1",
+  "role": "installation-not-ingame-QA-or-release",
+  "status": "installed-pending-ingame-qa",
+  "installed_at_utc": "2026-10-04T00:49:23.9799389Z",
+  "animation_ids": [
+    "0x6110"
+  ],
+  "body": "CHFB1",
+  "resources": 23,
+  "frames": 10323,
+  "dll_sha256": "3636ba3a358b9e5c2cf627e9ccf611e730af02496755f13a2d23ea36faf067e2",
+  "catalog_sha256": "a13177c326469de652a64a0c06e7d541a82c3807089e21928e06617973c890eb",
+  "shaders": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpDraw.glsl",
+      "sha256": "36e4d59baeaad0c75ebcd335d6e18ec63f8d8585d59849603c28f6d3c8a32b0f",
+      "bytes": 21213,
+      "target": "override/fpDraw.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSprite.glsl",
+      "sha256": "7ac9f25b5aca437e137718cbb3452e1b3c35b0dc11b9a641c947a7c6a725dbda",
+      "bytes": 22216,
+      "target": "override/fpSprite.glsl"
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/assets/override/fpSELECT.glsl",
+      "sha256": "5c5a9d4338dca9c70d468aeea47bdfa0aa2bfd00e9f7d25f448e87bc6613bebd",
+      "bytes": 22477,
+      "target": "override/fpSELECT.glsl"
+    }
+  ],
+  "new_leaves_sha256_verified": 23,
+  "preserved_files_sha256_verified": 95,
+  "directory_entries_outside_6110_CHFB1_unchanged": 50230,
+  "armour_equipment_UI_other_consumers_unchanged": true,
+  "INI_byte_identical": true,
+  "verification": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/verification.json",
+    "sha256": "1d9e023a2b6265f410fdb88580cc2aa621d131f6394f7cdc70c6f05deb16ac94",
+    "bytes": 4188
+  },
+  "installation_receipt_sha256": "2C8D80953AD35F48D97F1068FEC07F413525158BC9CDAF59B0FDFF720D9101D6",
+  "ingame_QA": false,
+  "release": false
+}

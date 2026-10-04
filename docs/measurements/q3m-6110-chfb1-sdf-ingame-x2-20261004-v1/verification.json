@@ -1,0 +1,130 @@
+{
+  "passed": true,
+  "Character_SDF": {
+    "passed": true,
+    "resources": 23,
+    "frames": 10323,
+    "slots": 24868,
+    "cold_misses": 0,
+    "maximum_wait_ms": 84.8784,
+    "palettes": 6,
+    "encodings": 3,
+    "SDF": true
+  },
+  "Character_original": {
+    "passed": true,
+    "resources": 23,
+    "frames": 10323,
+    "slots": 24868,
+    "cold_misses": 0,
+    "maximum_wait_ms": 24.5007,
+    "palettes": 6,
+    "encodings": 3,
+    "SDF": false
+  },
+  "Ankheg_SDF": {
+    "resources": 12,
+    "frames": 516,
+    "native_cycle_slots": 1485,
+    "decoded_pixels": 241492248,
+    "palette_encodings": 3,
+    "K": 6,
+    "passed": true
+  },
+  "core_passed": true,
+  "malformed": [
+    {
+      "case": "SDF-code",
+      "rejected": true,
+      "log": {
+        "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/SDF-code.log",
+        "sha256": "a15727ee9b4e6b64414f30443eee4e7d9fa038b391ba0e2e58133289d2434d83",
+        "bytes": 612
+      }
+    },
+    {
+      "case": "SDF-material",
+      "rejected": true,
+      "log": {
+        "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/SDF-material.log",
+        "sha256": "eeb1ba1261fb87beed326a41e4f18ce8e2e6a0600188d5f2da4669a47bbf8032",
+        "bytes": 612
+      }
+    },
+    {
+      "case": "profile",
+      "rejected": true,
+      "log": {
+        "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/profile.log",
+        "sha256": "8a9944899ad92bfbbd240fdcdf59baf604e9da51bb7917d9cf79fc5a80da3153",
+        "bytes": 629
+      }
+    }
+  ],
+  "GPU": {
+    "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/gpu-verification.json",
+    "sha256": "1253380dc41add8a4a709f0c0579adc041004bc83f32591e64ee13157e5f42b2",
+    "bytes": 6645
+  },
+  "native_logs": [
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/native-sdf.log",
+      "sha256": "ed05dbb65afbc56436f01cf1974be424b570877e79f6c9597dfaef5d57e893a2",
+      "bytes": 4155
+    },
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/native-original.log",
+      "sha256": "c82ff2a2658095e7d9fb49b95209ff81925e0fd025babae2bf0a6ddea390cccb",
+      "bytes": 4131
+    },
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/native-ankheg.log",
+      "sha256": "1a210991dfb45c975897ef549091a5d6c1ce948c500ce0fb718e3ec620424661",
+      "bytes": 2442
+    },
+    {
+      "path": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/core.log",
+      "sha256": "c49185015ac786bf483fe4e5b57ef0779a71f13a4b2c496d60226af679a59fc1",
+      "bytes": 31258
+    }
+  ],
+  "source_provenance": [
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_x2.cpp",
+      "sha256": "3ad399eabf6c7de9eadf3bf834dfe9340e950b104af6afbb653bc0652f6d9060",
+      "bytes": 229826
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.h",
+      "sha256": "9dfd75c86b54b71e223f4293896bfa26ca476167b2183d49a9a3482f4528a6c1",
+      "bytes": 4533
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/creature_sprite_filter.cpp",
+      "sha256": "0c3bd8e44511b6552ea4969e5e8faf2f13b2353c9e3b60df9962b46e440c3ec5",
+      "bytes": 9452
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.h",
+      "sha256": "ab82b8167c35026d4e2e47ffa14073e700b54b9c5f61dc3b3224ee9f77c506d6",
+      "bytes": 4489
+    },
+    {
+      "path": "engine/InfinityEngine-Enhancer/source-patchee/src/iee/shader_uniform_bridge.cpp",
+      "sha256": "82296f44decbe01b67f4ea88cd3afe32fa14a3eb6a9f48310d071d462d7490e3",
+      "bytes": 20221
+    }
+  ],
+  "writer": {
+    "path": "pipeline/scripts/character_sdf_registry.py",
+    "sha256": "d4649812b12f90f42086eba4abfb839684af44487ef72150472c54c26ccfe786",
+    "bytes": 2991
+  },
+  "dll": {
+    "path": "engine/InfinityEngine-Enhancer/source-patchee/build-q3m-character-sdf-20261004-v1/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "3636ba3a358b9e5c2cf627e9ccf611e730af02496755f13a2d23ea36faf067e2",
+    "bytes": 2114560
+  },
+  "ingame_QA": false,
+  "release": false
+}

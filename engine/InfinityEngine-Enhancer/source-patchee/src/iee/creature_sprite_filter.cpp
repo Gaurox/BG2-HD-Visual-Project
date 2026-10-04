@@ -88,9 +88,9 @@ bool TextureRegistry::publish(std::uintptr_t contextIdentity, unsigned glName,
                               int physicalWidth, int physicalHeight, int scale,
                               TextureProvenance provenance, bool masked,
                               std::uint16_t animationId, int maximumMipLevel,
-                              bool premultiplied, bool sdfEncoded) noexcept {
+                              bool premultiplied, std::uint8_t sdfEncoded) noexcept {
   const auto mode = effective_mode(animationId, scale);
-  if (sdfEncoded && (mode != core::CreatureSpriteFilterMode::CatmullRom || masked || scale != 2)) return false;
+  if (sdfEncoded > 2 || (sdfEncoded && (mode != core::CreatureSpriteFilterMode::CatmullRom || masked || scale != 2))) return false;
   const bool mips = mode == core::CreatureSpriteFilterMode::Mipmaps;
   if (contextIdentity == 0 || glName == 0 || physicalWidth <= 0 ||
       physicalHeight <= 0 || (scale != 2 && scale != 4) ||

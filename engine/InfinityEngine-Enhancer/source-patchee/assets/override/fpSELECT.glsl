@@ -19,6 +19,7 @@ varying lowp vec4 vColor;
 uniform lowp float uIeeShaderSuiteEnabled;
 uniform lowp float uIeeCreatureFilterMode;
 uniform lowp float uIeeCreatureSdfEncoded;
+uniform lowp float uIeeCreatureSdfCharacter;
 lowp vec4 ieeFetchCreatureSdf(in mediump vec2 texCoord);
 uniform mediump vec2 uIeeCreatureTexelSize;
 uniform lowp float uIeeCreatureStyleEnabled;
@@ -122,7 +123,7 @@ lowp vec4 ieeFetchCreatureSdf(in mediump vec2 texCoord)
             distances[y*4+x] = (mod(code, 128.0) - 64.0) / 16.0;
             mediump float weight = wx[x] * wy[y];
             rgb += tap.rgb * weight;
-            shadow += floor(code / 128.0) * (127.0/255.0) * weight;
+            shadow += floor(code / 128.0) * ((uIeeCreatureSdfCharacter > 0.5 ? 128.0 : 127.0)/255.0) * weight;
         }
     }
     // Integrate the bilinear field over one screen pixel: same 8x8 rule as PDF.
@@ -161,7 +162,7 @@ mediump float ieeCreatureNativeAlpha(in mediump vec2 texCoord)
     mediump float a = texture2D(uTex,texCoord).a;
     if (uIeeCreatureSdfEncoded < 0.5) return a;
     mediump float code = floor(a*255.0+0.5);
-    return mod(code,128.0) > 64.0 ? 1.0 : floor(code/128.0)*(127.0/255.0);
+    return mod(code,128.0) > 64.0 ? 1.0 : floor(code/128.0)*((uIeeCreatureSdfCharacter > 0.5 ? 128.0 : 127.0)/255.0);
 }
 
 mediump float ieeCreatureNormalCdf(in mediump float x, in mediump float invScale)
