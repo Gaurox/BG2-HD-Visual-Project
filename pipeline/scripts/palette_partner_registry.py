@@ -20,6 +20,10 @@ def require(ok, message):
     if not ok: raise ValueError('V7 ' + message)
 
 
+def native_empty(ref, version, kind, w, h):
+    return (w,h) == (0,0) and version == VERSION and kind == 0 and ref in ('MWYVG22','MWYVG23','MWYVG24','MTANG21E')
+
+
 def write(path, resources, profile, *, compress=True, version=VERSION):
     path = Path(path); temporary = path.with_suffix(path.suffix+'.part')
     require(not path.exists() and not temporary.exists(), 'fresh leaf destination required')
@@ -38,9 +42,12 @@ def write(path, resources, profile, *, compress=True, version=VERSION):
                 output.write(profile.metadata())
                 for frame in frames:
                     w,h,cx,cy,tr = frame['geometry']; i, code = frame['I'], frame['F']
-                    require(0 < w <= 65535 and 0 < h <= 65535 and tr == 0 and -32768 <= cx < 32768 and -32768 <= cy < 32768, 'geometry')
+                    empty = native_empty(ref,version,profile.kind,w,h)
+                    require(((0 < w <= 65535 and 0 < h <= 65535) or empty) and tr == 0 and -32768 <= cx < 32768 and -32768 <= cy < 32768, 'geometry')
                     require(i.shape == (h*2,w*2), 'physical x2 extent')
-                    profile.validate(i, code, frame['guide'], frame['dep'])
+                    if empty:
+                        require(i.dtype == code.dtype == np.uint8 and i.shape == code.shape == frame['guide'].shape == (0,0) and frame['dep'].dtype == np.uint8 and frame['dep'].shape == (32,) and not np.any(frame['dep']), 'empty planes/dependencies')
+                    else:profile.validate(i, code, frame['guide'], frame['dep'])
                     reps = np.asarray(frame['representatives'], dtype=np.uint16)
                     require(reps.shape == (256,) and np.all((reps == 0xffff) | (reps < w*h)), 'representatives')
                     coverage = frame.get('A')
@@ -100,7 +107,9 @@ def inspect(path, *, include_frames=False):
             for _ in range(nf):
                 h = take(v6.FRAME_BYTES); w,he,cx,cy,tr,ic,flags,res,si = struct.unpack_from('<HHhhBBBBI',h)
                 sf,fc = struct.unpack_from('<IB',h,560); n = w*he*4
-                require(w > 0 and he > 0 and tr == 0 and flags in (0,1) and res in ((2,) if version==SDF_VERSION else ((0,1) if version==CONTOUR_VERSION else (0,))) and h[565:568] == bytes(3) and n*(1+flags) <= registry.MAX_LAZY_FRAME_INDEX_BYTES, 'frame header')
+                empty = native_empty(ref,version,kind,w,he)
+                require(((w > 0 and he > 0) or empty) and tr == 0 and flags in (0,1) and res in ((2,) if version==SDF_VERSION else ((0,1) if version==CONTOUR_VERSION else (0,))) and h[565:568] == bytes(3) and n*(1+flags) <= registry.MAX_LAZY_FRAME_INDEX_BYTES, 'frame header')
+                if empty:require(ic == flags == si == sf == fc == 0 and h[528:560] == bytes(32), 'empty storage/dependencies')
                 sa,ac = 0,0
                 if version == CONTOUR_VERSION:
                     ah=take(8);sa,ac=struct.unpack_from('<IB',ah)
@@ -119,7 +128,7 @@ def inspect(path, *, include_frames=False):
                 if flags: fp = v6._decode_plane(fc,take(sf),n,decoder)
                 else: require(sf == 0 and fc == 0, 'absent blend storage'); fp = bytes(n)
                 i = np.frombuffer(ip,np.uint8).reshape(he*2,w*2); f = np.frombuffer(fp,np.uint8).reshape(i.shape)
-                profile.validate(i,f,dep=np.frombuffer(h,np.uint8,32,528))
+                if not empty:profile.validate(i,f,dep=np.frombuffer(h,np.uint8,32,528))
                 if version==CONTOUR_VERSION:
                     a=np.frombuffer(v6._decode_plane(ac,take(sa),n,decoder),np.uint8).reshape(i.shape) if res else np.full(i.shape,255,np.uint8)
                     require(np.all(a[profile.classes[i] < (3 if kind==0 else 4)]==255), 'coverage changes a special class')

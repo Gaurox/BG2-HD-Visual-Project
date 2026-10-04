@@ -19,6 +19,8 @@
 - Comparaison initiale et 16 niveaux : diagnostics préservés, sans promotion du candidat 16 niveaux. `../docs/measurements/q3m4partners-colour-comparison-x4-20261003-v1/README.md`.
 - Intégration nouveau moteur sprite : **90 %**, estimation utilisateur du 2026-10-03 ; ne mesure ni couverture des assets ni QA.
 
+- Gros sprites divisés en tuiles : **méthode contextuelle systématique**, assemblage avant RGB-fill/inférence K6, correction limitée aux bandes4px natifs ; [pipeline/cache/commandes](../pipeline/SPRITES_Q3M_MULTIPART.md).
+
 ## Inventaire des familles
 
 `Stock` = IDs avec au moins un BAM / IDs définis ; `Q3m connu` = références **V6 antérieures**, pas couverture du nouveau contrat V7. Les sous-types restent dans `index/q3m-work-items.csv` (`animation_type`, INI source). Chaque famille a un témoin V7, listé dans `index/q3m-family-witnesses.json` ; les témoins restent partiels. Le lot complet Ogre possède une référence distincte.
@@ -30,7 +32,7 @@
 | `monster` | 77/102 | 3 | Monstres BG2, BAM éventuellement divisés ; palette fixe/false-color à résoudre par ID. Spectateurs, Bodhi, golems, trolls. |
 | `monster_old` | 46/54 | — | Anciennes animations BG1, séquences/directions et palettes propres ; ours, loups, basilics, demi-ogres. |
 | `monster_icewind` | 44/132 | — | Séquences de style IWD ; contrat palette propre à l'animation. Orcs, gobelins, ettins, liches. |
-| `monster_quadrant` | 7/9 | — | Assemblage de plusieurs quadrants ; centres et ordre de dessin conservés. Grandes wyvernes, tanar'ri. |
+| `monster_quadrant` | 7/9 | — | **Famille disponible complète Q3m V7 x2 contextuel palette améliorée sans SDF installée et validée ingame** ; deux modèles/sept palettes, 36 BAM natifs/132 feuilles/12 928 frames ; quadrants vides préservés, MWDR1101/1105 sans source. |
 | `multi_new` | 10/10 | — | Grands composites, quadrants et BAM divisés selon l'INI ; dragons, Démogorgon. |
 | `monster_layered` | 7/7 | — | **Famille complète Q3m V7 x2 palette améliorée sans SDF installée et validée ingame** ; 65 BAM utiles/6 422 frames, sept modèles, corps/armes, deux chemins natifs. MSIRG2BE orphelin exclu. |
 | `monster_ankheg` | 1/1 | — | Ankheg ; **famille complète V9 SDF x2 + attente HD installée et validée**, 12 BAM / 516 frames ; couleurs V7, corps/terre et enfouissement/émergence. |
@@ -45,7 +47,7 @@
 
 - `index/q3m-work-tracking.json` : décisions de méthode, estimation moteur, familles et références ; **plan**, aucune autorité supplémentaire sur les états métier.
 - `index/q3m-work-items.csv` : 465 IDs, dont 335 avec BAM et 130 sans BAM. Une ligne par animation ; composants/équipement reliés par `family_ids`. `q3m-reference-available` / `to-produce-or-extend-profile` / `source-absent` = état de queue, pas validation.
-- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 73 IDs /9 familles disponibles complètes installées ; 72 IDs /8 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
+- Historique V6 : 81 IDs avec référence Q3m ; 254 IDs avec BAM sans référence V6 inscrite. Nouvelle recette : **15 IDs témoins partiels, 80 IDs /10 familles disponibles complètes installées ; 79 IDs /9 familles validées (`flying`, `monster_ankheg` V9 stable, `monster_large16` V7 sans SDF, `ambient_static` V7 sans SDF +cheval œil v3, `town_static` V7 sans SDF, `ambient` V7 sans SDF, `character_old` V7/V9 SDF gardes seulement, `monster_layered` V7 sans SDF, `monster_quadrant` V7 contextuel sans SDF)** ; colonnes `q3m_v7_witness_*`, `q3m_v7_full_production_reference`, `q3m_v7_installation_reference` du CSV. QA propre à chaque variante/runtime. Ogre reste QA en attente ; V10 Character en stock exclu de l'installation et des validations. Pas de taux global à partir des frames/BAM partagés.
 - Character : `../docs/measurements/playable-q3m-x2-ingame-20261002-v1/current-generation.json` ; 78 IDs / 4 510 BAM.
 - Monster `0x7F02`, `0x7F07`, `0x7F30` : `../docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json` ; delta 39 BAM / 20 925 frames, catalogue mixte prêt à installer selon son pointeur. Cela ne prouve pas l'installation actuelle.
 - QA = `index/qa-decisions/` ; installation = reçu actif du run concerné ; release = candidats puis `content.json`. Références indépendantes, aucun état réconcilié dans cette queue.
@@ -232,3 +234,24 @@ Flying : alias intérieur `BIRD_IN` = même ressource ; listes `CLUA-generiques.
 - [Décision](../docs/measurements/q3m-monster-layered-accepted-x2-20261004-v1/README.md) ; **neuf familles/73 IDs installés, huit familles/72 IDs acceptés** ; Ogre reste QA en attente. Aucune installation/release modifiée.
 
 - Prochain lot **proposé seulement** : `monster_quadrant`, deux modèles/sept variantes disponibles (grandes wyvernes normale/blanche/albinos, tanar’ri normal/bleu/vert/rouge). 36 BAM natifs/3 552 frames ; palettes propres →12 476 encodages uniques,200 hits acquis,12 276 nouveaux dont29 spéciaux sans GPU. 1101/1105 MWDR sans BAM ;33 hits de préfixe hors Quadrant exclus ;21 déclarations0×0 natives à préserver. [Sélection/doublons](../docs/measurements/q3m-monster-quadrant-selection-x2-20261004-v1/README.md). Aucun traitement ni installation.
+
+## Monster_quadrant : famille complète disponible installée — 2026-10-04
+
+- Demande utilisateur : lot complet Q3m amélioré +installation. **Sept IDs/deux modèles/sept palettes**, 36 BAM natifs/3 552 frames source ;132 feuilles variantes/12 928 frames. Q3m V7 K6 x2/CatmullRom sans SDF ;33 BAM hors appels natifs exclus ;1101/1105 MWDR sans source.
+- Travail :12 476 identités ;200 hits acquis SHA inchangés +12238 nouveaux encodages +38 spéciaux ;73418 nouvelles cibles K6. Reprise12 476 hits sans Torch.
+- **65 déclarations0×0 natives (21 physiques) conservées**, plans vides, centres/cycles/représentants exacts ; lecteur V7 limité à quatre resrefs fixes, native per-cell owner4 saute leurs dessins sans pixels inventés. DLL basée exactement sur le parent Layered accepté ; V10 Character en stock non activé, shaders/INI inchangés.
+- 6916 assemblages offline quatre parties/136 cas avec quadrants vides, tous12928frames K6×3formats isolé/combiné, Ankheg V9 hérité. Catalogue parent154IDs/6753ressources/55383routes préservé ; actif161IDs/6885ressources/55515routes.
+- [Run/CLUA](../docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/README.md) ;132 feuilles +DLL +catalogue +sept CRE neutres sans effets/inventaire/scripts. SHA2318 fichiers acquis conservés. **Dix familles/80 IDs installés ; huit familles/72 IDs acceptés inchangés**, QA ingame en attente ; aucune release.
+
+## Monster_quadrant : raccords contextuels installés — 2026-10-04
+
+- Sept palettes/132 feuilles/12 928 frames Q3m V7 x2 amélioré sans SDF ; reconstruction native des quatre parties sous K6 avant inférence, réparation limitée aux bandes4px natifs ;6010622 pixels I/F modifiés, **zéro hors bande**, masques/classes/centres/cycles/palettes inchangés.
+- 3 144 contextes dédupliqués ;18552 nouvelles cibles ;encodeur ROI uniquement. **272 frames non référencées** conservées (rectifie l'estimation352 du rapport de prototype) ;65 déclarations0×0 inchangées.
+- DLL/shaders/INI/sept CLUA acquis inchangés ;6753 autres composants +55515 routes inchangés. [Run/CLUA](../docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/README.md). Catalogue actif161IDs/6885ressources/1705675frames. **Validation ingame en attente**, compteurs dix familles/80IDs installés et huit familles/72IDs acceptés inchangés.
+
+## Monster_quadrant : famille corrigée validée — 2026-10-04
+
+- Validation utilisateur explicite : deux modèles/sept palettes, 36 BAM natifs/132 feuilles/12 928 frames, Q3m V7 K6 x2 amélioré/CatmullRom sans SDF. QA immuable `index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json`.
+- [Décision](../docs/measurements/q3m-monster-quadrant-accepted-x2-20261004-v1/README.md) ; 3 144 contextes, 18 552 cibles ; zéro pixel hors bande ; dimensions/cycles/classes/acquis runtime préservés. MWDR1101/1105 restent absents.
+- Dix familles/80 IDs installés ; **neuf familles/79 IDs acceptés** ; Ogre reste QA en attente. Les mentions QA en attente précédentes sont les états historiques avant cette décision.
+- Méthode incorporée aux commandes `q3m_family_witnesses.py plan/run/pack` via `q3m_multipart_seams.py` ; groupes natifs et clés de voisinage, checkpoint SHA, encodeur ROI, aucun GPU sur reprise complète/pack. [Contrat](../pipeline/SPRITES_Q3M_MULTIPART.md). Aucun payload/release modifié.

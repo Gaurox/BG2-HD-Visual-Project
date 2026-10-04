@@ -17,6 +17,10 @@ Une commande de production ne doit pas déclencher implicitement une finalisatio
 
 ## Voie quotidienne
 
+Sprites divisés spatialement : utiliser systématiquement la [production Q3m contextuelle](../pipeline/SPRITES_Q3M_MULTIPART.md)
+validée le 2026-10-04 (demande utilisateur). Cette méthode locale conserve les dessins natifs et
+évite les raccords d'inférence ; elle ne déclenche aucune finalisation globale.
+
 1. Produire ou corriger l'asset dans son domaine.
 2. Utiliser les invariants intégrés au producteur ; lancer un contrôle ciblé seulement s'il révèle
    un risque encore inconnu.

@@ -143,6 +143,12 @@ Valeurs : `palette_registry.maximum_decoded_shard_bytes`, `WorkPlan.frame`, `cre
 
 ## Assemblage natif
 
+- **Gros sprites à plusieurs tuiles : méthode contextuelle systématique**, décision utilisateur du
+  2026-10-04. Assemblage x1 avant remplissage RGB/inférence K6, puis redécoupe et encodage ROI
+  dans les bandes4px natifs ; dessins/cycles/centres conservés, sans ajout de SDF. Intégré aux
+  commandes `q3m_family_witnesses.py plan/run/pack` ; [contrat/cache/commandes](SPRITES_Q3M_MULTIPART.md).
+  La déduplication utilise aussi le voisinage et sa géométrie ; une tuile identique seule ne suffit pas.
+
 - Aucun GPU si cache complet. Un BAM natif = frames complètes dans l'ordre, y compris inutilisées/placeholders ; SHA source canonique, cycles/slots, centres signés x1, dimensions/transparence, representatives de chaque source. Ne jamais réutiliser le centre du représentant de déduplication comme centre de chaque occurrence.
 - Partager I/F/dep par tâche ; matérialiser chaque BAM distinct une fois ; partager sa feuille/composant entre consommateurs compatibles. Nom de feuille = SHA des octets ; routes `(animation_id,resref)` uniques et ordinal exact ; memberships/owner natifs conservés.
 - Character : `palette_playable.py pack --scale 2 --output <dossier-neuf>` séquentiel. `--workers` de cette CLI concerne la production, **ne parallélise pas pack**.

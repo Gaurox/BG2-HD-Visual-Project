@@ -1,0 +1,9 @@
+# Monster_quadrant complet — Q3m x2 palette améliorée, sans SDF
+
+- **Produit/installé, QA ingame en attente**. Sept IDs1000/1003/1004/1100/1102/1103/1104 ;deux modèles/sept palettes BMP natives.
+- 36 BAM monde natifs/3 552 frames ;132 feuilles variantes/12 928 frames. 12 476 encodages uniques,200 hits acquis, 12238 nouveaux encodages +38 spéciaux ;73418 nouvelles cibles ;reprise12 476 hits sans Torch.
+- 33 ressources de préfixe hors constructeur exclues, natives Large16/ancien MTAN conservées ;MWDR1101/1105 sans source.65 déclarations0×0 variantes exactes :aucun pixel inventé, centres/cycles/représentants inchangés.
+- Native owner4/render3305A0 per-cell, quatre quadrants ;lecteur V7 nativeKind0 seulement accepte les quatre resrefs vides connus et ignore leurs dessins. Contrat palette source/partenaires natif conservé ;runtime parent Layered accepté +delta vide, V10 Character stock non activé, shaders/INI inchangés.
+- Vérifications :toutes frames/slots, K6×trois formats isolé/combiné ;6916 assemblages offline/136 cas partiellement vides ;65 quadrants vides metadata ;Ankheg V9. Parent154IDs/6753composants/55383routes inchangés ;2318 fichiers acquis SHA conservés.
+- Installation132 feuilles +catalogue +DLL +septCRE tests neutres, sources BAM/BMP/INI/CRE stock inchangées. `CLUA.txt`, `creatures.json` ;sauvegarde `work/before`, restauration `restore.ps1`. Catalogue 556fa5ed30b638f5305d5be420516dc60cafae68099ec455236f267272d6f041 ; DLL 06b7b1f646f4f62bb6c93c55aa1f76ed9193d23850f19abb8cd3b35e773b4d32.
+- Autorités : `current-generation.json`, `production.json`, `verification.json`, `runtime.json`, `ingame-installation/active-test.json`, `installation-verification.json`, `installed-native-verification.json`. Catalogue actif161IDs/6885ressources/1 705 675frames/55515routes. Dix familles/80 IDs installés ;huit familles/72 IDs acceptés inchangés. Pas de QA/release/commit déduit.

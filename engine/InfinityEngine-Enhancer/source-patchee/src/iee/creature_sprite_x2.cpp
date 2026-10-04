@@ -165,6 +165,7 @@ constexpr std::size_t kEngineTextureDescriptorStride = 0x28;
 constexpr std::uint64_t kCompositePixelCacheBudgetBytes = 4ull * 1024ull * 1024ull;
 
 struct Frame {
+  bool nativeEmptyQuadrant{};
   int logicalWidth{};
   int logicalHeight{};
   int centerX{};
@@ -1249,7 +1250,7 @@ const std::vector<std::uint8_t>* frame_indices_locked(
       return nullptr;
     }
     const auto& frame = resource->frames[handle.frameIndex];
-    if (frame.lazyShardIndex == kResidentFrameShard) return &frame.indices;
+    if (frame.nativeEmptyQuadrant || frame.lazyShardIndex == kResidentFrameShard) return &frame.indices;
     const auto decodedBytes = static_cast<std::uint64_t>(frame.lazyIndexBytes) *
                               (frame.lazyFractionStoredBytes ? 2u : 1u);
     if (!g_lazyPackLoaded || frame.lazyShardIndex >= g_lazyShards.size() ||
@@ -1392,7 +1393,7 @@ const std::vector<std::uint8_t>* frame_fractions_locked(FrameHandle handle) noex
   const auto* resource = resource_for_handle_locked(handle);
   if (!resource || handle.frameIndex >= resource->frames.size()) return nullptr;
   const auto& frame = resource->frames[handle.frameIndex];
-  if (!frame.fractional || frame.lazyShardIndex == kResidentFrameShard) return &frame.fractions;
+  if (frame.nativeEmptyQuadrant || !frame.fractional || frame.lazyShardIndex == kResidentFrameShard) return &frame.fractions;
   const auto entry = std::find_if(g_lazyIndexCache.begin(), g_lazyIndexCache.end(),
       [&](const LazyIndexCacheEntry& e) { return e.handle == handle; });
   return entry == g_lazyIndexCache.end() ? nullptr : &entry->fractions;
@@ -2376,10 +2377,19 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
       std::uint32_t storedBytes = 0;
       if (!reader.read(width) || !reader.read(height) || !reader.read(centerX) ||
           !reader.read(centerY) || !reader.read(frame.transparent) ||
-          !reader.read(frameReserved) || !reader.read(storedBytes) || width == 0 ||
-          height == 0) {
+          !reader.read(frameReserved) || !reader.read(storedBytes)) {
         throw std::runtime_error("invalid creature-sprite frame header");
       }
+      const std::string_view nativeRef(resource.resref.data(),
+          std::find(resource.resref.begin(), resource.resref.end(), '\0') - resource.resref.begin());
+      const bool nativeEmpty = width == 0 && height == 0 &&
+          parsed.version == kXnPartnerRegistryVersion && resource.partnerProfile &&
+          resource.partnerProfile->nativeKind == 0 &&
+          (nativeRef == "MWYVG22" || nativeRef == "MWYVG23" ||
+           nativeRef == "MWYVG24" || nativeRef == "MTANG21E");
+      if ((width == 0 || height == 0) && !nativeEmpty)
+        throw std::runtime_error("invalid non-quadrant empty frame");
+      frame.nativeEmptyQuadrant = nativeEmpty;
       const bool compressedRegistry =
           parsed.version == kXnCompressedRegistryVersion || fractionalRegistry;
       const auto frameCodec = compressedRegistry
@@ -2533,7 +2543,9 @@ ParsedRegistry parse_registry(const std::filesystem::path& path, RegistryFormat 
         const auto logicalI = inflate(indexData, storedBytes, frameCodec, static_cast<std::size_t>(expectedIndices));
         const auto logicalF = fractionPresent ? inflate(fractionData, fractionStored, fractionCodec, static_cast<std::size_t>(expectedIndices))
                                              : std::vector<std::uint8_t>{};
-        if (!core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get())) {
+        if ((nativeEmpty && (fractionPresent || frameCodec != kRegistryFrameCodecRaw ||
+              std::any_of(frame.dependencies.begin(), frame.dependencies.end(), [](auto b){return b != 0;}))) ||
+            (!nativeEmpty && !core::palette_fraction::validate(logicalI, logicalF, frame.dependencies, frame.fractionProfile, frame.fractionRule, frame.partnerProfile.get()))) {
           throw std::runtime_error("invalid Q3m fraction/dependency contract");
         }
         if (sdfPresent) {
@@ -4581,6 +4593,7 @@ bool reconstruct_frame_pixels(FrameHandle handle, const PaletteSnapshot& palette
     const auto* resource = resource_for_handle_locked(handle);
     if (!indices || !fractions || !resource || handle.frameIndex >= resource->frames.size()) return false;
     const auto& frame = resource->frames[handle.frameIndex];
+    if (frame.nativeEmptyQuadrant) return true;
     auto realized = palette.colors;
     enforce_transparent_entry(frame, realized);
     core::palette_fraction::Lut lut;
@@ -4760,6 +4773,16 @@ bool reconstruct_composite_sdf_pixels(const CompositeLayer* layers, std::size_t 
     pixels.clear();
     return false;
   }
+}
+
+bool frame_is_native_empty_quadrant(FrameHandle handle) noexcept {
+  try {
+    std::lock_guard lock(g_mutex);
+    if (!g_ready.load(std::memory_order_acquire) || !validate_lazy_frame_source_locked(handle)) return false;
+    const auto* resource = resource_for_handle_locked(handle);
+    return resource && handle.frameIndex < resource->frames.size() &&
+           resource->frames[handle.frameIndex].nativeEmptyQuadrant;
+  } catch (...) { return false; }
 }
 
 bool ensure_frame_payload_available(FrameHandle handle) noexcept {

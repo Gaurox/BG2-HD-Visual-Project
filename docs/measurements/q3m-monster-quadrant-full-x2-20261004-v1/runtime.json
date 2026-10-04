@@ -1,0 +1,62 @@
+{
+  "schema": "bg2-upscale-runtime-capabilities-delta-v1",
+  "runtime_id": "q3m-monster-quadrant-full-x2-20261004-v1",
+  "inherited_runtime": {
+    "path": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/runtime.json",
+    "sha256": "bc8fb417f3e4b6452f4fe028aac6f49a1dc8ab2a79776f1b820c1090c4b9b650",
+    "bytes": 2243
+  },
+  "capability_delta": {
+    "owner": 4,
+    "native_empty_quadrant_zero_geometry": true,
+    "only_V7_native_kind": 0,
+    "resrefs": [
+      "MWYVG22",
+      "MWYVG23",
+      "MWYVG24",
+      "MTANG21E"
+    ],
+    "no_pixels_drawn_for_empty_parts": true,
+    "existing_render": "3305A0",
+    "hook_count": 10
+  },
+  "dll": {
+    "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-build/Release/InfinityEngine-Enhancer.dll",
+    "sha256": "06b7b1f646f4f62bb6c93c55aa1f76ed9193d23850f19abb8cd3b35e773b4d32",
+    "bytes": 2118144
+  },
+  "source_provenance": [
+    {
+      "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.cpp",
+      "sha256": "113eaf5561c47a4490d3a2453bba30193ef9c1769398b69798518b99a1ab2f25",
+      "bytes": 230360
+    },
+    {
+      "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-src/src/iee/creature_sprite_x2.h",
+      "sha256": "2af7ecf988d6da5848c61699b1528cb89d8a2a7df3e52ea3c1e77e62528fb976",
+      "bytes": 17162
+    },
+    {
+      "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-src/src/iee/hooks.cpp",
+      "sha256": "a2473f3a6c3e77ead144b7c6b2bda178cf5e03a02f04f8ec58927ba4201fd2f7",
+      "bytes": 285841
+    },
+    {
+      "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-src/src/iee/game/build_manifest.cpp",
+      "sha256": "388da2eb718d7b9a8d2fad08a80c421ff221d32c2182cdb256a37ec2ed81c250",
+      "bytes": 26312
+    },
+    {
+      "path": "sprite/.work/q3m-monster-quadrant-full-x2-20261004-v1/runtime-src/src/iee/game/build_manifest.h",
+      "sha256": "2815613c90641ceacbedd0d7db5db7805c02d6b4c69c1060290300fbbf48cd40",
+      "bytes": 21297
+    }
+  ],
+  "runtime_patch": {
+    "path": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime-delta.patch",
+    "sha256": "8447569248778c7f93df710fc6346a9199e7bd8fb0e313c487fa7c61fb14b554",
+    "bytes": 6601
+  },
+  "ingame_QA": false,
+  "release": false
+}

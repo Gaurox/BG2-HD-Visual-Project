@@ -41,8 +41,8 @@
     "does_not_measure": "asset-coverage-or-QA",
     "integration_reference": "docs/measurements/q3m-monster-integration-x2-20261003-v1/current-generation.json",
     "candidate_reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
-    "installed_candidate_reference": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/current-generation.json",
-    "latest_installation_verification_reference": "docs/measurements/q3m-monster-layered-full-x2-20261004-v1/installation-verification.json"
+    "installed_candidate_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/current-generation.json",
+    "latest_installation_verification_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/installation-verification.json"
   },
   "method": {
     "current": "Q3m-K6-four-partners-eight-levels",
@@ -67,7 +67,7 @@
       "four-partners-eight-levels",
       "sixteen-levels"
     ],
-    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-Ambient_static-V7-no-SDF-horse-eye-v3-accepted-Town_static-V7-no-SDF-accepted-Ambient-V7-no-SDF-accepted-Character_old-V7-V9-guards-SDF-accepted-other-families-pilot-Monster_layered-V7-no-SDF-accepted",
+    "state": "Q3m-x2-flying-accepted-Ankheg-V9-SDF-stable-accepted-Ogre-installed-Large16-V7-no-SDF-accepted-Ambient_static-V7-no-SDF-horse-eye-v3-accepted-Town_static-V7-no-SDF-accepted-Ambient-V7-no-SDF-accepted-Character_old-V7-V9-guards-SDF-accepted-other-families-pilot-Monster_layered-V7-no-SDF-accepted-Monster_quadrant-contextual-V7-no-SDF-accepted",
     "format_compatibility": "V7 reader implemented; V6 unchanged",
     "next_recipe_selection": "selected-for-pilot; sixteen-levels remains diagnostic",
     "selected": "four-partners-eight-levels",
@@ -82,11 +82,11 @@
     "with_bam_without_q3m_reference": 254,
     "counting_rule": "IDs count consumers; BAMs/frames shared; family counts not summed as physical work",
     "current_recipe_witness_ids": 15,
-    "current_recipe_complete_animation_ids": 73,
-    "current_recipe_ingame_accepted_families": 8,
-    "current_recipe_complete_families": 9,
-    "current_recipe_installed_animation_ids": 73,
-    "current_recipe_ingame_accepted_animation_ids": 72,
+    "current_recipe_complete_animation_ids": 80,
+    "current_recipe_ingame_accepted_families": 9,
+    "current_recipe_complete_families": 10,
+    "current_recipe_installed_animation_ids": 80,
+    "current_recipe_ingame_accepted_animation_ids": 79,
     "ingame_acceptance_counting_rule": "unique families/IDs across accepted full productions and current contour trials; QA belongs to exact variant/runtime"
   },
   "families": [
@@ -470,7 +470,7 @@
         "unique_model_candidate_work": 5759,
         "source_work_shared_with_character": 1,
         "descriptor": "sprite/index/q3m-source-work-plan.json",
-        "remaining_gpu_work": null
+        "remaining_gpu_work": 0
       },
       "current_colour_witness": {
         "animation_id": "0x1000",
@@ -485,8 +485,114 @@
         "physical_frames": 200,
         "unique_source_work": 200,
         "unique_encoded_work": 200,
-        "state": "host-verified-ingame-pending",
-        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json"
+        "state": "installed-via-seam-corrected-complete-family-ingame-accepted",
+        "reference": "docs/measurements/q3m-families-engine-x2-20261003-v2/current-generation.json",
+        "installation_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/installation-verification.json",
+        "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json"
+      },
+      "current_full_production": {
+        "reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/current-generation.json",
+        "selection": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/selection.json",
+        "animation_ids": [
+          "0x1000",
+          "0x1003",
+          "0x1004",
+          "0x1100",
+          "0x1102",
+          "0x1103",
+          "0x1104"
+        ],
+        "source_absent_animation_ids": [
+          "0x1101",
+          "0x1105"
+        ],
+        "models": 2,
+        "colour_variants": 7,
+        "physical_resources": 132,
+        "unique_native_BAM": 36,
+        "physical_frames": 12928,
+        "original_native_frames": 3552,
+        "unique_source_work": 12447,
+        "unique_encoded_work": 12476,
+        "encoded_cache_hits": 200,
+        "new_encoded_work": 12238,
+        "special_work": 38,
+        "new_neural_targets": 73418,
+        "resume_cache_hits": 12476,
+        "scope": "complete native four-quadrant G1/G2/G3, native E directions, all geometry/cycles including 65 zero-area variant declarations; contextual seam repair in four-native-pixel bands",
+        "runtime_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+        "installation_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/ingame-installation/active-test.json",
+        "installation_snapshot": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/installation-verification.json",
+        "state": "family-complete-seam-corrected-installed-ingame-accepted",
+        "registry_version": 7,
+        "SDF": false,
+        "qa_ingame": true,
+        "release": false,
+        "seam_repair_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/recipe.json",
+        "parent_production_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/current-generation.json",
+        "seam_changed_encoded_pixels": 6010622,
+        "seam_changed_outside_band": 0,
+        "seam_contexts": 3144,
+        "seam_new_neural_targets": 18552,
+        "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json",
+        "visual_QA": {
+          "state": "accepted-full-family-contextual-V7-no-SDF",
+          "animation_ids": [
+            "0x1000",
+            "0x1003",
+            "0x1004",
+            "0x1100",
+            "0x1102",
+            "0x1103",
+            "0x1104"
+          ],
+          "models": 2,
+          "colour_variants": 7,
+          "resources": 132,
+          "frames": 12928,
+          "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json",
+          "catalogue_sha256": "b6b33e10b4c17acf93ece23f6b4e09f0bf7996a27c9850f58da5685ae86baa06",
+          "SDF": false
+        }
+      },
+      "state": "family-complete-seam-corrected-installed-ingame-accepted",
+      "current_installation": {
+        "state": "installed-ingame-accepted",
+        "reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/installation-verification.json",
+        "receipt": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/ingame-installation/active-test.json",
+        "catalogue_sha256": "b6b33e10b4c17acf93ece23f6b4e09f0bf7996a27c9850f58da5685ae86baa06",
+        "dll_sha256": "06b7b1f646f4f62bb6c93c55aa1f76ed9193d23850f19abb8cd3b35e773b4d32",
+        "animation_ids": [
+          "0x1000",
+          "0x1003",
+          "0x1004",
+          "0x1100",
+          "0x1102",
+          "0x1103",
+          "0x1104"
+        ],
+        "SDF": false,
+        "qa_ingame": true,
+        "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json"
+      },
+      "current_visual_QA": {
+        "state": "accepted-full-family-contextual-V7-no-SDF",
+        "animation_ids": [
+          "0x1000",
+          "0x1003",
+          "0x1004",
+          "0x1100",
+          "0x1102",
+          "0x1103",
+          "0x1104"
+        ],
+        "models": 2,
+        "colour_variants": 7,
+        "resources": 132,
+        "frames": 12928,
+        "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json",
+        "catalogue_sha256": "b6b33e10b4c17acf93ece23f6b4e09f0bf7996a27c9850f58da5685ae86baa06",
+        "SDF": false
       }
     },
     {
@@ -2312,6 +2418,72 @@
         "catalogue_sha256": "b99081e290d9711eb57adf44b62a7106e8f6f7be57647e758b0ae9df3af26dc9",
         "SDF": false
       }
+    },
+    {
+      "family": "monster_quadrant",
+      "reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/current-generation.json",
+      "selection": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/selection.json",
+      "animation_ids": [
+        "0x1000",
+        "0x1003",
+        "0x1004",
+        "0x1100",
+        "0x1102",
+        "0x1103",
+        "0x1104"
+      ],
+      "source_absent_animation_ids": [
+        "0x1101",
+        "0x1105"
+      ],
+      "models": 2,
+      "colour_variants": 7,
+      "physical_resources": 132,
+      "unique_native_BAM": 36,
+      "physical_frames": 12928,
+      "original_native_frames": 3552,
+      "unique_source_work": 12447,
+      "unique_encoded_work": 12476,
+      "encoded_cache_hits": 200,
+      "new_encoded_work": 12238,
+      "special_work": 38,
+      "new_neural_targets": 73418,
+      "resume_cache_hits": 12476,
+      "scope": "complete native four-quadrant G1/G2/G3, native E directions, all geometry/cycles including 65 zero-area variant declarations; contextual seam repair in four-native-pixel bands",
+      "runtime_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/runtime.json",
+      "installation_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/ingame-installation/active-test.json",
+      "installation_snapshot": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/installation-verification.json",
+      "state": "family-complete-seam-corrected-installed-ingame-accepted",
+      "registry_version": 7,
+      "SDF": false,
+      "qa_ingame": true,
+      "release": false,
+      "seam_repair_reference": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/recipe.json",
+      "parent_production_reference": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/current-generation.json",
+      "seam_changed_encoded_pixels": 6010622,
+      "seam_changed_outside_band": 0,
+      "seam_contexts": 3144,
+      "seam_new_neural_targets": 18552,
+      "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json",
+      "visual_QA": {
+        "state": "accepted-full-family-contextual-V7-no-SDF",
+        "animation_ids": [
+          "0x1000",
+          "0x1003",
+          "0x1004",
+          "0x1100",
+          "0x1102",
+          "0x1103",
+          "0x1104"
+        ],
+        "models": 2,
+        "colour_variants": 7,
+        "resources": 132,
+        "frames": 12928,
+        "qa_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json",
+        "catalogue_sha256": "b6b33e10b4c17acf93ece23f6b4e09f0bf7996a27c9850f58da5685ae86baa06",
+        "SDF": false
+      }
     }
   ],
   "current_contour_trials": [
@@ -2651,5 +2823,11 @@
       "previous_installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/installation-verification.json",
       "installation_snapshot": "docs/measurements/q3m-6110-chfb1-sdf-ingame-x2-20261004-v1/restoration-verification.json"
     }
-  ]
+  ],
+  "multipart_production_method": {
+    "reference": "pipeline/SPRITES_Q3M_MULTIPART.md",
+    "producer": "pipeline/scripts/q3m_multipart_seams.py",
+    "policy": "systematic for native spatial tile groups",
+    "accepted_reference": "sprite/index/qa-decisions/monster_quadrant/2026-10-04-accepted-full-quadrant-contextual-q3m-v7-x2-catmullrom-v1.json"
+  }
 }

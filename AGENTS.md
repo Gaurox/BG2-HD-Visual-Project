@@ -12,6 +12,9 @@
   tâche ajoute ou corrige un asset autonome puis s'arrête ; la compilation globale appartient à une
   finalisation explicitement demandée.
 - Partir de la demande utilisateur et du plus petit périmètre utile.
+- Gros sprites divisés spatialement : utiliser systématiquement le [pipeline Q3m contextuel](pipeline/SPRITES_Q3M_MULTIPART.md)
+  (demande utilisateur, 2026-10-04) ; assemblage avant inférence, bandes de raccord seules,
+  dessins/centres/cycles natifs conservés. Ne pas confondre tuiles et équipements superposés.
 - Ne jamais exiger la lecture intégrale d'un document. Ouvrir uniquement la rubrique liée au
   symptôme, au format ou à l'outil rencontré.
 - Les runbooks, recettes, audits, manifests historiques et commandes sont des aides facultatives.

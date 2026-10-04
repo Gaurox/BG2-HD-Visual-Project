@@ -32,6 +32,16 @@ def require(ok, message):
     if not ok: raise ValueError(message)
 
 
+def validate_encoded(profile, i, code, guide=None, dep=None):
+    if i.size:
+        return profile.validate(i, code, guide, dep)
+    require(profile.kind == 0 and i.shape == code.shape == (0, 0) and
+            i.dtype == code.dtype == np.uint8 and
+            (guide is None or (guide.shape == (0, 0) and guide.dtype == np.uint8)) and
+            (dep is None or (dep.dtype == np.uint8 and dep.shape == (32,) and not np.any(dep))),
+            'native empty quadrant planes')
+
+
 def save(path, **arrays):
     path.parent.mkdir(parents=True, exist_ok=True); temporary = path.with_suffix('.part')
     with temporary.open('wb') as stream: np.savez_compressed(stream, **arrays)
@@ -87,6 +97,17 @@ def validate_selection(selection, complete_family=None):
                 require(set(witness.get('excluded_non_native_refs', [])) == excluded,
                         'Layered excluded native naming differs')
                 refs = [ref for ref in refs if ref not in excluded]
+            if complete_family == 'monster_quadrant':
+                native = json.loads(inventory[witness['animation_id']]['ini_sections_json'])['monster_quadrant']
+                require(native['quadrants'] == '4', 'stock four-quadrant scope')
+                directions = ('', 'E') if native['extend_direction'] == '1' else ('',)
+                groups = [[native['resref']+'G'+str(bank)+str(part)+direction
+                           for part in range(1,5)] for bank in range(1,4) for direction in directions]
+                useful = {ref for group in groups for ref in group}
+                require(witness.get('multipart_groups') == groups and useful <= set(refs) and
+                        set(witness.get('excluded_non_native_refs', [])) == set(refs)-useful,
+                        'Quadrant native naming/exclusions differ')
+                refs = [ref for ref in refs if ref in useful]
             require(refs != [''] and len(witness['refs']) == len(set(refs)) and set(witness['refs']) == set(refs), 'complete family BAM coverage differs')
     for witness in witnesses:
         native = inventory[witness['animation_id']]
@@ -180,7 +201,10 @@ def source_plan(selection_path=SELECTION, complete_family=None):
             queue = 'processing_queue' if char else 'source_work_queue'
             frames = []
             for row in db.execute(f'SELECT f.*,q.* FROM frames f JOIN {queue} q USING(work_id) WHERE f.resource_id=? ORDER BY f.frame_index',(rid,)):
-                w,h = row['width'],row['height']; require(0 < w*h < 65535 and row['transparent_index'] == 0, 'source geometry contract')
+                w,h = row['width'],row['height']
+                empty = (complete_family == 'monster_quadrant' and (w,h) == (0,0) and
+                         ref in ('MWYVG22','MWYVG23','MWYVG24','MTANG21E'))
+                require((0 < w*h < 65535 or empty) and row['transparent_index'] == 0, 'source geometry contract')
                 indices = np.frombuffer(zlib.decompress(row['indices_zlib']),np.uint8).reshape(h,w).copy()
                 rgb = p[:,[2,1,0]].copy(); rgba = np.dstack((rgb[indices],np.where(indices == 0,0,255).astype(np.uint8))).tobytes()
                 frame = SourceFrame(ref,row['frame_index'],w,h,row['center_x'],row['center_y'],0,indices,rgb,rgba)
@@ -241,8 +265,13 @@ def produce(resources, works, root):
                 arrays = {n:data[n].copy() for n in data.files}
             shape = (work['frame'].height*2,work['frame'].width*2)
             require(all(arrays[n].dtype == np.uint8 and arrays[n].shape == shape for n in ('guide','I','F')),'cached planes differ')
-            work['profile'].validate(arrays['I'],arrays['F'],arrays['guide'],arrays['dep']); stats['encoded_cache_hits'] += 1
+            validate_encoded(work['profile'],arrays['I'],arrays['F'],arrays['guide'],arrays['dep']); stats['encoded_cache_hits'] += 1
         else:
+            if (work['frame'].width,work['frame'].height) == (0,0):
+                require(work['frame'].resref in ('MWYVG22','MWYVG23','MWYVG24','MTANG21E') and work['profile'].kind == 0, 'empty quadrant source')
+                i = np.empty((0,0),np.uint8)
+                save(path,guide=i,I=i,F=i,dep=np.zeros(32,np.uint8)); stats['special_work'] += 1
+                continue
             guide = guide_dir/(work['source_key']+'.npz'); work['guide_path'] = guide
             if not guide.exists(): missing_guides.setdefault(work['source_key'],work['frame'])
     keys = list(missing_guides)
@@ -343,11 +372,13 @@ def pack(resources,works,output):
         for row in resource['frames']:
             work = works[row['key']]
             with np.load(work['encoded_path'],allow_pickle=False) as data: arrays = {name:data[name].copy() for name in data.files}
-            profile.validate(arrays['I'],arrays['F'],arrays['guide'],arrays['dep'])
+            validate_encoded(profile,arrays['I'],arrays['F'],arrays['guide'],arrays['dep'])
             reps = np.full(256,0xffff,np.uint16); values,offsets = np.unique(work['frame'].indices,return_index=True); reps[values] = offsets
             material['frames'].append(dict(geometry=row['geometry'],representatives=reps,**arrays))
             w,h,cx,cy,_ = row['geometry']; body.extend(struct.pack('<IIii',w,h,cx,cy))
-            for palette in palettes: body.extend(hashlib.sha256(profile.decode(arrays['I'],arrays['F'],palette).tobytes()).digest())
+            for palette in palettes:
+                pixels = profile.decode(arrays['I'],arrays['F'],palette).tobytes() if w*h else b''
+                body.extend(hashlib.sha256(pixels).digest())
         shared[identity] = ordinal,bytes(body); oracle.extend(body)
         leaf = output/(resource['resref']+'.registry'); info = write_leaf(leaf,[material],profile)
         sealed = output/catalog_shard_filename(info['sha256']); leaf.replace(sealed); infos.append(info)
@@ -377,15 +408,21 @@ def main():
     args = parser.parse_args(); args.cache = args.cache.resolve(); args.cache.mkdir(parents=True,exist_ok=True)
     if args.output: args.output = args.output.resolve()
     resources,works,summary = source_plan(args.selection,args.complete_family); print(json.dumps(dict(stage='plan',**{k:summary[k] for k in ('families','resources','physical_frames','unique_source_work','unique_encoded_work')})),flush=True)
+    from q3m_multipart_seams import apply_context
     with exclusive(args.cache):
         if args.command == 'plan':
+            summary['multipart_context'] = apply_context(resources,works,args.selection,args.cache,'plan')
             if args.output: write_json(args.output,summary)
         elif args.command == 'run':
-            stats,directory = produce(resources,works,args.cache); write_json(args.cache/'production.json',dict(plan=summary,stats=stats,encoded_directory=str(directory.relative_to(ROOT)))); print(json.dumps(stats),flush=True)
+            stats,directory = produce(resources,works,args.cache)
+            contextual = apply_context(resources,works,args.selection,args.cache,'run')
+            write_json(args.cache/'production.json',dict(plan=summary,stats=stats,multipart_context=contextual,encoded_directory=str(directory.relative_to(ROOT))))
+            print(json.dumps(dict(stats=stats,multipart_context=contextual)),flush=True)
         else:
             require(args.output is not None,'--output required')
             directory = args.cache/'encoded'/file_sha(Path(__file__).with_name('palette_q3m_partners.py'))
             for key,work in works.items(): work['encoded_path'] = directory/(key+'.npz')
+            apply_context(resources,works,args.selection,args.cache,'bind')
             print(json.dumps(pack(resources,works,args.output)),flush=True)
 
 

@@ -1128,7 +1128,12 @@ bool read_multipart_creature_sprite_scope(void* animation,
     }
   }
   scope.animationId = animationId;
+  std::size_t nativeEmptyParts = 0;
   for (std::size_t index = 0; index < expectedCount; ++index) {
+    if (owner == CreatureSpriteOwner::MonsterQuadrant &&
+        creature_sprite_x2::frame_is_native_empty_quadrant(resolved[index].handle)) {
+      ++nativeEmptyParts; continue;
+    }
     if (!append_creature_sprite_layer(scope, resolved[index])) return false;
   }
   if (scope.layerCount == 0) return false;
@@ -1141,7 +1146,7 @@ bool read_multipart_creature_sprite_scope(void* animation,
         animationId, creature_sprite_owner_label(owner), scope.layerCount,
         expectedCount);
   }
-  return scope.layerCount == expectedCount;
+  return scope.layerCount + nativeEmptyParts == expectedCount;
 }
 
 bool append_unregistered_palette_owner(CreatureSpriteScope& scope, void* cell) noexcept {

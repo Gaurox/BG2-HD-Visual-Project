@@ -1,0 +1,55 @@
+{
+  "schema": "bg2-q3m-quadrant-contextual-seam-repair-v1",
+  "parent_generation": {
+    "path": "docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/current-generation.json",
+    "sha256": "a4da5551d682888a54bc221475f0dd0ba458ca3592f7994150b40ef4d0c34e43",
+    "bytes": 1729
+  },
+  "band_native_pixels": 4,
+  "encoder_scope": "ROI only; unchanged I/F outside four-pixel native bands",
+  "scale": 2,
+  "neural_batch": 6,
+  "fp16": true,
+  "reduce": "Box x4 to x2",
+  "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+  "parent_backend": {
+    "id": "reboutcx-multipal-float32-p12-fixed86-q32-box-v1",
+    "model_sha256": "c36a14ddb51ae094324a53b67c345da2d6b6bbf6a2249726056d5b94bdedab05",
+    "batch_size": 86,
+    "canvas_quantum": 32,
+    "fp16": true,
+    "target": "float32[0,1]; direct x4; BOX float32 to x2 before encoding",
+    "torch": "2.7.0+cu128",
+    "device": "NVIDIA GeForce RTX 5090",
+    "dependencies": {
+      "numpy": "1.24.4",
+      "scipy": "1.9.3",
+      "spandrel": "0.4.1",
+      "chainner_ext": "0.3.10"
+    },
+    "kernels": {
+      "reboutcx_batch.py": "da5dc3b3e2361c74e2a9c18a95c7f7d99f6e2aaa41eac220a01007a875e21ab1",
+      "reboutcx_batch_p10.py": "df8337393c79891f270d5e49d2d35e9f882f029739668a0ebf4b564e8b1d66d4",
+      "reboutcx_batch_p12.py": "1726dc0d641281c8f8d6b9b1f350100fe4c6f7e86956c40dafded4c8d4da626d"
+    }
+  },
+  "producer": {
+    "path": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/produce.py",
+    "sha256": "c6deb772cd2cf103714f147edaeb3012c6e889233b6fd99721ac0de8262e0333",
+    "bytes": 8000
+  },
+  "common": {
+    "path": "docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/common.py",
+    "sha256": "1e5cc9d90845aef380bf690a573b2cb8ca33fce90a334d60265cbc600f51237a",
+    "bytes": 4761
+  },
+  "encoder": {
+    "path": "pipeline/scripts/palette_q3m_partners.py",
+    "sha256": "0715ee220a0a2fe28079e943123490c902e519c97e1294d2eb33bffa9fc19449",
+    "bytes": 6554
+  },
+  "contexts": 3144,
+  "native_bindings": 12656,
+  "unreferenced_native_frames": 272,
+  "SDF": false
+}

@@ -191,3 +191,10 @@ $m.stock_cre_usage | Select-Object cre_resource_count, animation_id_count, `
 - Monster_layered **complet produit/installé, QA ingame en attente** : [run](../../docs/measurements/q3m-monster-layered-full-x2-20261004-v1/README.md), [sept CLUA](../../docs/measurements/q3m-monster-layered-full-x2-20261004-v1/CLUA.txt). Sept modèles, 65 BAM/6 422 frames Q3m V7 x2 palette améliorée sans SDF ; 65 feuilles ajoutées au catalogue, dont quatre Volo identiques au pilote local acquis. Sirine MSIRG2BE orphelin exclu ; hook type2000 ajouté, type8000 déjà couvert. Neuf familles/73 IDs complets installés, sept familles/65 IDs acceptés inchangés.
 
 - Monster_layered complet **validé ingame**, sept modèles/65 BAM/6 422 frames Q3m V7 x2 palette améliorée/CatmullRom sans SDF : [QA/décision](../../docs/measurements/q3m-monster-layered-accepted-x2-20261004-v1/README.md). Volo visible : `SARVOLO`; fixture QLYR2100 masquée nativement, à éviter. Huit familles/72 IDs acceptés ; neuf familles/73 IDs installés.
+
+- Monster_quadrant complet disponible **produit/installé, QA ingame en attente** : [run/sept CLUA](../../docs/measurements/q3m-monster-quadrant-full-x2-20261004-v1/README.md), deux modèles/sept palettes natives, 36 BAM/132 feuilles/12 928 frames Q3m V7 x2 amélioré sans SDF. MWDR1101/1105 absents ;65 déclarations0×0 préservées. Dix familles/80 IDs installés ; huit familles/72 IDs acceptés.
+
+- Monster_quadrant : [raccords contextuels Q3m installés, état avant validation](../../docs/measurements/q3m-monster-quadrant-seam-fixed-x2-20261004-v1/README.md), sept palettes ;bandes4px natifs, aucune modification hors bandes, DLL/CLUA acquis conservés.
+
+- Monster_quadrant complet **validé ingame**, deux modèles/sept palettes, 132 feuilles/12 928 frames Q3m V7 x2 contextuel amélioré/CatmullRom sans SDF : [QA/décision](../../docs/measurements/q3m-monster-quadrant-accepted-x2-20261004-v1/README.md). Dix familles/80 IDs installés ; neuf familles/79 IDs acceptés.
+- Gros sprites divisés spatialement : [pipeline contextuel systématique](../../pipeline/SPRITES_Q3M_MULTIPART.md), intégré au producteur `q3m_family_witnesses.py` (plan/run/pack).

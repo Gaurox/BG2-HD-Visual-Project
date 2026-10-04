@@ -278,6 +278,8 @@ bool resolve_frame(const std::array<char, 8>& resref, int sequence, int currentF
 // and each newly read lazy payload must match the SHA-256 captured while its
 // fully validated shard was parsed.
 bool ensure_frame_payload_available(FrameHandle handle) noexcept;
+// Authenticated V7 0x0 stock quadrant declaration: no draw, unchanged cycles.
+bool frame_is_native_empty_quadrant(FrameHandle handle) noexcept;
 [[nodiscard]] std::uint64_t resident_index_bytes() noexcept;
 // Host diagnostics use the same validated lazy payload, LUT, fingerprint and
 // CPU compositor as rendering; no game or GL context is needed. The reported
